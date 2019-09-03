@@ -43,6 +43,7 @@ REST_AUTH_REGISTER_SERIALIZERS = {
 }
 
 ACCOUNT_ADAPTER = 'mysite.adapter.MyAccountAdapter'
+AUTH_USER_MODEL = 'users.User'
 
 SITE_ID = 1
 
