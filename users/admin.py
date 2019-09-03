@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from users.models import Users
+from users.models import User
 
 
 class UsersAdmin(admin.ModelAdmin):
@@ -8,4 +8,4 @@ class UsersAdmin(admin.ModelAdmin):
     #exclude = ['communities']
 
 
-admin.site.register(Users, UsersAdmin)
+admin.site.register(User, UserAdmin)
