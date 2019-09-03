@@ -6,7 +6,6 @@ from django.db.models import Q
 from django.db.models import Count
 from pilkit.processors import ResizeToFill, ResizeToFit
 from communities.helpers import upload_to_community_avatar_directory, upload_to_community_cover_directory
-from communities.validators import community_name_characters_validator
 #from posts.models import Post
 from imagekit.models import ProcessedImageField
 #from users.models import User
@@ -18,7 +17,7 @@ class Community(models.Model):
     #moderated_object = GenericRelation(ModeratedObject, related_query_name='communities',verbose_name="Модерация")
     #creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_communities', null=False,blank=False,verbose_name="Создатель")
     name = models.CharField(max_length=100, blank=False, null=False,
-                            unique=True, validators=(community_name_characters_validator,),verbose_name="Имя")
+                            unique=True, verbose_name="Имя")
     title = models.CharField(max_length=100, blank=False, null=False,verbose_name="Заголовок" )
     description = models.CharField(max_length=300, blank=False,
                                    null=True,verbose_name="Описание" )
