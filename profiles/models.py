@@ -11,8 +11,6 @@ from pilkit.processors import ResizeToFill, ResizeToFit
 class UserProfile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, null=True, related_name="profile",
                                 verbose_name='Пользователь', on_delete=models.CASCADE)
-    email = models.EmailField(
-        unique=True, verbose_name='Email')
     last_activity= models.DateTimeField(
         default=timezone.now, blank=True, verbose_name='Activity')
     avatar = ProcessedImageField(blank=True, null=True, format='JPEG',
