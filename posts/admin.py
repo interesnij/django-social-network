@@ -15,9 +15,6 @@ class PostCommentInline(admin.TabularInline):
         'created'
     )
 
-    def has_add_permission(self, request, obj):
-        return False
-
 
 class PostReactionInline(admin.TabularInline):
     model = PostReaction
@@ -25,10 +22,6 @@ class PostReactionInline(admin.TabularInline):
     readonly_fields = [
         'emoji'
     ]
-
-
-class PostCircleInline(admin.TabularInline):
-    model = Circle.posts.through
 
 
 class PostAdmin(admin.ModelAdmin):
