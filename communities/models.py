@@ -43,8 +43,7 @@ class Community(models.Model):
     color = models.CharField(max_length=10, blank=False, null=False,verbose_name="Цвет")
     user_adjective = models.CharField(max_length=100,
                                       blank=False, null=True,verbose_name="Какой-то пользователь")
-    users_adjective = models.CharField(100,
-                                       blank=False, null=True,verbose_name="Какие-то пользователи")
+    users_adjective = models.CharField(max_length=100,blank=False, null=True,verbose_name="Какие-то пользователи")
     invites_enabled = models.BooleanField(default=True,verbose_name="Разрешить приглашения")
     is_deleted = models.BooleanField(
         default=False,
