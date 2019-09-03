@@ -5,6 +5,7 @@ from django.conf import settings
 from imagekit.models import ProcessedImageField
 from profiles.helpers import upload_to_user_cover_directory, upload_to_user_avatar_directory
 #from common.models import Badge
+from pilkit.processors import ResizeToFill, ResizeToFit
 
 
 class UserProfile(models.Model):
