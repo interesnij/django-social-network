@@ -1,4 +1,4 @@
-from categories.views import ListsView
+from lists.views import ListsView
 from django.conf.urls import url
 
 urlpatterns = [
