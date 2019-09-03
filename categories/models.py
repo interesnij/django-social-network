@@ -1,7 +1,6 @@
 from django.conf import settings
 from django.db import models
 from django.utils import timezone
-from common.validators import hex_color_validator
 #from communities.models import Community
 from users.models import User
 
