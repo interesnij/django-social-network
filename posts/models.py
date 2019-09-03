@@ -21,7 +21,7 @@ from posts.helpers import upload_to_post_image_directory, upload_to_post_video_d
 
 class Post(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, db_index=True,verbose_name="uuid")
-    text = models.TextField(max_length=settings.POST_MAX_LENGTH, blank=False, null=True,verbose_name="Текст")
+    text = models.TextField(max_length=1000, blank=False, null=True,verbose_name="Текст")
     created = models.DateTimeField(editable=False, db_index=True,verbose_name="Создан")
     #creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='posts',verbose_name="Создатель")
     comments_enabled = models.BooleanField(default=True, editable=False, null=False,verbose_name="Разрешить комментарии")
@@ -59,7 +59,7 @@ class PostComment(models.Model):
     parent_comment = models.ForeignKey('self', on_delete=models.CASCADE, related_name='replies', null=True, blank=True,verbose_name="Родительский комментарий")
     created = models.DateTimeField(editable=False, db_index=True,verbose_name="Создан")
     commenter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='posts_comments',verbose_name="Комментатор")
-    text = models.TextField(max_length=settings.POST_COMMENT_MAX_LENGTH, blank=False, null=False,verbose_name="Текст")
+    text = models.TextField(max_length=200, blank=False, null=False,verbose_name="Текст")
     is_edited = models.BooleanField(default=False, null=False, blank=False,verbose_name="Изменено")
     # Это происходит только в том случае, если комментарий был сообщен и найден с критическим содержанием серьезности
     is_deleted = models.BooleanField(default=False,verbose_name="Удаено")
