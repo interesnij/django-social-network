@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'posts',
     'connections',
     'lists',
+    'follows',
 ]
 
 REST_SESSION_LOGIN = True
