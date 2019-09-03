@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'profiles',
     'common',
     'communities',
+    'posts',
 ]
 
 REST_SESSION_LOGIN = True
