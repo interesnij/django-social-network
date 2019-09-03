@@ -29,7 +29,6 @@ class PostAdmin(admin.ModelAdmin):
         PostReactionInline,
         PostImageInline,
         PostCommentInline,
-        PostCircleInline
     ]
 
     list_display = (
