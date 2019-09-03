@@ -34,7 +34,6 @@ class PostAdmin(admin.ModelAdmin):
     list_display = (
         'id',
         'created',
-        'count_comments',
     )
 
 
