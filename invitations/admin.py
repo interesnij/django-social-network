@@ -5,7 +5,7 @@ from invitations.models import UserInvite
 
 class UserInviteAdmin(admin.ModelAdmin):
     model = UserInvite
-    search_fields = ('email')
+    search_fields = ('email',)
     list_display = ('name', 'email',) #'created_user', 'badge'
     list_display_links = ['email']
 
