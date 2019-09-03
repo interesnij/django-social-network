@@ -1,4 +1,4 @@
-from categories.views import ModerationView
+from moderation.views import ModerationView
 from django.conf.urls import url
 
 urlpatterns = [
