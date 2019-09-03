@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'connections',
     'lists',
     'follows',
+    'invitations',
 ]
 
 REST_SESSION_LOGIN = True

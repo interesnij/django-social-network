@@ -36,5 +36,6 @@ urlpatterns = [
     url(r'^connections/', include('connections.urls')),
     url(r'^lists/', include('lists.urls')),
     url(r'^follows/', include('follows.urls')),
+    url(r'^invitations/', include('invitations.urls')),
 
 ]  +static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
