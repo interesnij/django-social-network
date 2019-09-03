@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'circles',
     'profiles',
     'common',
+    'communities',
 ]
 
 REST_SESSION_LOGIN = True
