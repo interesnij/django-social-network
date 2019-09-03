@@ -7,7 +7,7 @@ from django.utils import timezone
 
 
 class ConnectionCircle(models.Model):
-    connection = models.ForeignKey(Connection, on_delete=models.CASCADE,verbose_name="Соединение")
+    #connection = models.ForeignKey(Connection, on_delete=models.CASCADE,verbose_name="Соединение")
     circle = models.ForeignKey('circles.Circle', on_delete=models.CASCADE,verbose_name="Круг")
 
 
