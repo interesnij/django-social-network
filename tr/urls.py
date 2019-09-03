@@ -34,5 +34,6 @@ urlpatterns = [
     url(r'^users/', include('users.urls')),
     url(r'^posts/', include('posts.urls')),
     url(r'^connections/', include('connections.urls')),
+    url(r'^lists/', include('lists.urls')),
 
 ]  +static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
