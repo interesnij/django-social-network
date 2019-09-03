@@ -21,11 +21,11 @@ class UserProfile(models.Model):
     cover = ProcessedImageField(blank=True, null=True, format='JPEG', options={'quality': 90},
                                 upload_to=upload_to_user_cover_directory,
                                 processors=[ResizeToFit(width=1024, upscale=False)],verbose_name="Фон")
-    bio = models.TextField(max_length=settings.PROFILE_BIO_MAX_LENGTH, blank=True, null=True, verbose_name="Биография")
+    bio = models.TextField(max_length=300, blank=True, null=True, verbose_name="Биография")
     url = models.URLField(blank=True, null=True,verbose_name="УРЛ")
     followers_count_visible = models.BooleanField(blank=False, null=False, default=False,verbose_name="Число подписчиков видно")
     #badges = models.ManyToManyField(Badge, related_name='users_profiles',verbose_name="Значки")
-    location = models.CharField(max_length=settings.PROFILE_LOCATION_MAX_LENGTH, blank=True, null=True, verbose_name="Местоположение")
+    location = models.CharField(max_length=100, blank=True, null=True, verbose_name="Местоположение")
 
     def __str__(self):
         return self.user.last_name
