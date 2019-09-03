@@ -18,4 +18,6 @@ class Circle(models.Model):
     #posts = models.ManyToManyField(Post, related_name='circles', db_index=True, verbose_name="Посты")
     #connections = models.ManyToManyField(Connection, related_name='circles', db_index=True, verbose_name="Соединение")
     created = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создан")
+
+    def __str__(self):
         return self.name
