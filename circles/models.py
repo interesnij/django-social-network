@@ -1,8 +1,8 @@
 from django.conf import settings
 from django.db import models
 from django.utils import timezone
-from connections.models import Connection
-from posts.models import Post
+#from connections.models import Connection
+#from posts.models import Post
 from django.utils import timezone
 
 
