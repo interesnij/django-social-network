@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'categories',
     'users',
     'circles',
+    'profiles',
 ]
 
 REST_SESSION_LOGIN = True
