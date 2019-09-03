@@ -40,8 +40,7 @@ class Community(models.Model):
         (COMMUNITY_TYPE_PRIVATE, 'Приватное'),
     )
     type = models.CharField(editable=False, blank=False, null=False, choices=COMMUNITY_TYPES, default='P', max_length=2)
-    color = models.CharField(max_length=10, blank=False, null=False,
-                             validators=[hex_color_validator],verbose_name="Цвет")
+    color = models.CharField(max_length=10, blank=False, null=False,verbose_name="Цвет")
     user_adjective = models.CharField(max_length=100,
                                       blank=False, null=True,verbose_name="Какой-то пользователь")
     users_adjective = models.CharField(100,
