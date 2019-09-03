@@ -18,8 +18,7 @@ class User(AbstractUser):
         verbose_name="Удален",
         default=False,
     )
-    
-    username = None
+
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True,verbose_name="uuid")
     invite_count = models.SmallIntegerField(default=0,verbose_name="Кол-во приглашений")
 
