@@ -25,7 +25,7 @@ class ModerationCategory(models.Model):
         (SEVERITY_LOW, 'Низкий'),
     )
 
-    severity = models.CharField(max_length=5, choices=SEVERITIES,verbose_name="Строгость")default=timezone.now,
+    severity = models.CharField(max_length=5, choices=SEVERITIES,verbose_name="Строгость"),
 
 
 class ModeratedObject(models.Model):
