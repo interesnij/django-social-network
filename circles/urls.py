@@ -1,4 +1,4 @@
-from django.urls import url, include
+from django.conf.urls import url
 from circles.views import CircleView
 
 categories_patterns = [

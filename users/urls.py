@@ -1,4 +1,4 @@
-from django.urls import url, include
+from django.conf.urls import url
 from users.views import AllUsers
 
 categories_patterns = [
