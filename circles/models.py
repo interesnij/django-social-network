@@ -13,7 +13,7 @@ class ConnectionCircle(models.Model):
 
 
 class Circle(models.Model):
-    creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='circles', null=True, verbose_name="Создатель")
+    #creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='circles', null=True, verbose_name="Создатель")
     name = models.CharField(max_length=100, blank=False, null=False,verbose_name="Название")
     #posts = models.ManyToManyField(Post, related_name='circles', db_index=True, verbose_name="Посты")
     #connections = models.ManyToManyField(Connection, related_name='circles', db_index=True, verbose_name="Соединение")

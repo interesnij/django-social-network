@@ -10,7 +10,7 @@ class Category(models.Model):
                             unique=True,verbose_name="Название")
     description = models.CharField(max_length=300, blank=False,
                                    null=True,verbose_name="Описание" )
-    created = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Когда создана")
+    #created = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Когда создана")
     avatar = models.ImageField(blank=False, null=True,verbose_name="Аватар")
 
     order = models.IntegerField(unique=False, default=0,verbose_name="Порядковый номер")
