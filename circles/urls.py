@@ -1,6 +1,6 @@
 from django.conf.urls import url
 from circles.views import CircleView
 
-categories_patterns = [
+urlpatterns = [
     url(r'^circles/$', CircleView.as_view(), name='circles')
 ]
