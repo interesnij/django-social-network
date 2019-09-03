@@ -1,0 +1,18 @@
+<style>
+#messages-list{
+  color:black;
+}
+</style>
+
+{% if messages %}
+<div style="color:black;border:1px #A8BF00 dashed">
+<div id="messages-list">
+  {% for message in messages %}
+  <p class="{{ message.tags }}">{{ message }}</p>
+  <br>
+</div>
+</div>
+  {% endfor %}
+
+
+{% endif %}
