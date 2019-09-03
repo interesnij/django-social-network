@@ -30,7 +30,9 @@ INSTALLED_APPS = [
     'rest_auth',
     'imagekit',
     'django_extensions',
-
+    'categories',
+    'users',
+    'circles',
 ]
 
 REST_SESSION_LOGIN = True
