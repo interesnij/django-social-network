@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'invitations',
     'moderation',
     'notifications',
+    'headline',
 ]
 
 REST_SESSION_LOGIN = True
@@ -52,6 +53,11 @@ REST_AUTH_REGISTER_SERIALIZERS = {
         'REGISTER_SERIALIZER': 'tr.serializers.RegisterSerializer',
 }
 
+GRIP_URL=http://localhost:5561
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+GRIP_PROXY_REQUIRED = True
+GRIP_PREFIX = 'headline-'
+
 ACCOUNT_ADAPTER = 'mysite.adapter.MyAccountAdapter'
 AUTH_USER_MODEL = 'users.User'
 
@@ -59,6 +65,7 @@ SITE_ID = 1
 
 
 MIDDLEWARE = [
+    'django_grip.GripMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -81,7 +88,6 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                "django.template.context_processors.i18n",
                 "django.template.context_processors.media",
                 "django.template.context_processors.static",
                 "django.template.context_processors.tz",
