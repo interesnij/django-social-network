@@ -39,6 +39,6 @@ urlpatterns = [
     url(r'^invitations/', include('invitations.urls')),
     url(r'^moderation/', include('moderation.urls')),
     url(r'^notifications/', include('notifications.urls')),
-    url('', include('headline.urls')),
+    url(r'headline/', include('headline.urls')),
 
 ]  +static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
