@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'follows',
     'invitations',
     'moderation',
+    'notifications',
 ]
 
 REST_SESSION_LOGIN = True
