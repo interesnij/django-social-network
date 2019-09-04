@@ -1,0 +1,137 @@
+{% load staticfiles %}
+
+<div class="modal fade" id="createOrder" tabindex="-1" role="dialog" aria-labelledby="createOrderTitle" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header p-0" id="createOrderTitle">
+                    <div class="row no-gutters align-items-center has-background-img min-height-300 w-100 ">
+                        <figure class="background-img pink-gradient">
+                            <img src="{% static 'images/singer-690117_640.jpg' %}" alt="" class="">
+                        </figure>
+                        <div class="container">
+                            <div class="row align-items-center ">
+                                <div class="col-12 col-sm-auto text-center">
+                                    <a href="profile.html ">
+                                        <figure class="avatar avatar-150 mx-auto my-3">
+                                            <img src="{% static 'images/user1.png' %}" alt="">
+                                        </figure>
+                                    </a>
+                                </div>
+                                <div class="col-12 col-sm text-center text-sm-left text-white">
+                                    <h3 class="mb-0">John McMohan</h3>
+                                    <p class="">South Africa</p>
+                                    <p class="small"><i class="material-icons">call</i> +0 0000 0000 0000 <span class="mx-2">|</span> <i class="material-icons">mail_outline</i> info@maxartkiller.in</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="close absolute" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row justify-content-center">
+                        <div class="col-md-10 ">
+                            <div class="form-group row">
+                                <div class="col-lg-6 col-md-6">
+                                    <label>First Name</label>
+                                    <input type="text" class="form-control" placeholder="">
+                                </div>
+                                <div class="col-lg-6 col-md-6">
+                                    <label>Last Name</label>
+                                    <input type="text" class="form-control" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-lg-6 col-md-6">
+                                    <label>Email</label>
+                                    <input type="email" class="form-control" placeholder="">
+                                </div>
+                                <div class="col-lg-6 col-md-6">
+                                    <label>Phone Number</label>
+                                    <input type="text" class="form-control" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <label>Country</label>
+                                            <select class="form-control " data-live-search="true" tabindex="-1" aria-hidden="true">
+                                                <option value="AF">Afghanistan</option>
+                                                <option value="AX">Åland Islands</option>
+                                                <option value="AL">Albania</option>
+                                                <option value="DZ">Algeria</option>
+                                                <option value="BN">Brunei Darussalam</option>
+                                                <option value="BG">Bulgaria</option>
+                                                <option value="BF">Burkina Faso</option>
+                                                <option value="BI">Burundi</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <label>City</label>
+                                            <input type="text" class="form-control" placeholder="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <label>State/Province</label>
+                                            <select class="form-control" data-live-search="true" tabindex="-1" aria-hidden="true">
+                                                <option value="AL">Alabama</option>
+                                                <option value="AK">Alaska</option>
+                                                <option value="AZ">Arizona</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <label>Postal Code</label>
+                                            <input type="text" class="form-control" placeholder="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-lg-12 col-md-12">
+                                    <label>Bio</label>
+                                    <textarea class="form-control editor" placeholder="Type here" rows="4"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-lg-12 col-md-12">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <label>Twitter Url</label>
+                                            <input type="text" class="form-control" placeholder="">
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <label>Linkedin Url</label>
+                                            <input type="text" class="form-control" placeholder="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-lg-12 col-md-12">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <label>Facebook Url</label>
+                                            <input type="text" class="form-control" placeholder="">
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <label>Instargam Url</label>
+                                            <input type="text" class="form-control" placeholder="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                    <button type="button" class="btn btn-primary">Сохранить</button>
+                </div>
+            </div>
+        </div>
+    </div>

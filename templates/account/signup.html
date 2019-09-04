@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block title %}Регистрация {% endblock %}
+{% block content %}
+
+<div class="container-fluid h-100 h-sm-auto">
+            <div class="row h-100 h-sm-auto">
+                <div class="col-12 col-md-6 h-md-100 order-2 order-md-1">
+                    <form action="{% url 'rest_register' %}" class="row align-items-center h-100 h-sm-auto ajax-form">
+                        <div class="col-12 col-md-10 col-lg-8 col-xl-6 mx-auto mt-2">
+                            <h1 class="font-weight-light mb-3 content-color-secondary text-left">We are Go<span class="font-weight-normal content-color-primary">PRO</span></h1>
+                            <h4 class="font-weight-light mb-5 content-color-secondary text-left">Provide few details and sign up now<br> Its easy and Quick.</h4>
+                            <div class="card mb-2">
+                                <div class="card-body p-0">
+                                    <input type="email" name="email" id="email" class="form-control form-control-lg border-0" placeholder="Email">
+                                    <hr class="my-0">
+                                    <input type="text" name="first_name" id="id_first_name" class="form-control form-control-lg border-0" placeholder="Имя">
+                                    <hr class="my-0">
+                                    <input type="text" name="last_name" id="id_last_name" class="form-control form-control-lg border-0" placeholder="Фамилия">
+                                    <hr class="my-0">
+                                    <input type="password" name="password1" id="password1" class="form-control form-control-lg border-0" placeholder="Пароль">
+                                    <hr class="my-0">
+                                    <input type="password" name="password2" id="password2" class="form-control form-control-lg border-0" placeholder="Повторите пароль">
+                                </div>
+                            </div>
+
+                            <div class="my-4 row">
+                                <div class="col">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="customCheck111" checked>
+                                        <label name="are_guidelines_accepted" id="id_are_guidelines_accepted" class="custom-control-label" for="customCheck111">
+                                           Я принимаю <a href="">Правила пользования сайтом трезвый.рус</a>.
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <small class="form-text text-muted api-response"></small>
+                            <div class="text-left mb-4">
+                                <button type="submit" class=" btn btn-primary pink-gradient">Создать аккаунт</button>
+                                <a href="" class="float-right btn btn-outline-primary">Уже есть аккаунт</a>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+                <div class="col-12 col-md-6 h-md-100 order-1 order-md-2 min-height-300 p-0 bg-dark ">
+                    <div class="carosel swiper-location-carousel h-100">
+                        <div data-pagination='{"el": ".swiper-pagination"}' data-space-between="0" data-slides-per-view="1" class="swiper-container swiper-init swiper-signin h-100">
+                            <div class="swiper-pagination"></div>
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide text-center ">
+                                    <div class="background-img"><img src="img/banner.png" alt="" class="w-auto float-right"></div>
+                                    <div class="row align-items-center h-100 text-white">
+                                        <div class="col-10 col-md-8 col-lg-6 mx-auto my-4">
+                                            <h1 class="font-weight-light mb-4">We are growing and you also Join Us</h1>
+                                            <p>GoTRI-Mobile is very unique and flexible with large number of customized components. Get this now, share with beautiful world. </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide text-center">
+                                    <div class="background-img"><img src="img/banner2.png" alt="" class="w-auto"></div>
+                                    <div class="row align-items-center h-100 text-white">
+                                        <div class="col-10 col-md-8 col-lg-6 mx-auto my-4">
+                                            <h1 class="font-weight-light mb-4">Save 1000s hours, Efforts and your own Money</h1>
+                                            <p>GoTRI has many more flexible unique component with very creative design you can save much more with this template.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+          var error_response = function(data){
+            $('.api-response').html("Что-то пошло не так... ");
+          }
+          var susccess_response = function(data){
+          }
+          $().ready(function(){
+            $('form.ajax-form button[type=submit]').click(function(){
+              var form = $('form.ajax-form');
+              $.post(form.attr('action'), form.serialize())
+              .fail(function(data){error_response(data);})
+              .done(function(data){susccess_response(data);});
+              return false;
+            });
+          });
+        </script>
+
+    {% endblock %}

@@ -1,0 +1,48 @@
+{% load staticfiles %}
+
+<p class="sidebar-color-primary page-sub-title-small mt-2">
+  <span class="icon-circle mr-2"><i class="material-icons">foto_fon</i></span>
+  Фото на фон</p>
+<div class="row">
+    <ul class="list-group list-group-flush w-100">
+        <li class="list-group-item">
+            <div class="sidebar-image">
+                <div class="custom-control custom-radio">
+                    <input type="radio" id="customRadio12img" name="background-image-sidebar" class="custom-control-input" checked="">
+                    <label class="custom-control-label " for="customRadio12img" data-title="none"></label>
+                </div>
+                <div class="custom-control custom-radio">
+                    <input type="radio" id="customRadio22img" name="background-image-sidebar" class="custom-control-input">
+                    <label class="custom-control-label " for="customRadio22img" data-title="{% static 'images/sidebar-1.png' %}">
+                        <img src="{% static 'images/sidebar-11.png' %}" alt="" class="w-100">
+                    </label>
+                </div>
+                <div class="custom-control custom-radio">
+                    <input type="radio" id="customRadio32img" name="background-image-sidebar" class="custom-control-input">
+                    <label class="custom-control-label " for="customRadio32img" data-title="{% static 'images/sidebar-2.png' %}">
+                        <img src="{% static 'images/sidebar-12.png' %}" alt="" class="w-100">
+                    </label>
+                </div>
+                <div class="custom-control custom-radio">
+                    <input type="radio" id="customRadio43img" name="background-image-sidebar" class="custom-control-input">
+                    <label class="custom-control-label " for="customRadio43img" data-title="{% static 'images/sidebar-3.png' %}">
+                        <img src="{% static 'images/sidebar-13.png' %}" alt="" class="w-100">
+                    </label>
+                </div>
+                <div class="custom-control custom-radio">
+                    <input type="radio" id="customRadio52img" name="background-image-sidebar" class="custom-control-input">
+                    <label class="custom-control-label " for="customRadio52img" data-title="{% static 'images/sidebar-4.png' %}">
+                        <img src="{% static 'images/sidebar-14.png' %}" alt="" class="w-100">
+                    </label>
+                </div>
+                <div class="custom-control custom-radio">
+                    <input type="radio" id="customRadio63img" name="background-image-sidebar" class="custom-control-input">
+                    <label class="custom-control-label " for="customRadio63img" data-title="{% static 'images/sidebar-5.png' %}">
+                        <img src="{% static 'images/sidebar-15.png' %}" alt="" class="w-100">
+                    </label>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </li>
+    </ul>
+</div>

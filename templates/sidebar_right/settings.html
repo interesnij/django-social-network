@@ -1,0 +1,88 @@
+{% load staticfiles %}
+
+<div class="tab-pane fade" id="tabhome2settings" role="tabpanel" aria-labelledby="tabhome2settings-tab">
+    <div class="row mx-0">
+        <div class="col-12">
+            <div class="alert alert-success alert-dismissible  mt-2 p-2" role="alert" id="settingalert">
+                <strong>Настройки приняты</strong>
+                <br>Ваши настройки изменены
+                <button type="button" class="close btn-sm" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="row mx-0 mt-2">
+        <div class="col-12">
+            <p class="page-sub-title-small">
+                <span class="icon-circle mr-2">
+                     <i class="material-icons">settings</i>
+                 </span>Генеральные</p>
+        </div>
+    </div>
+
+    <ul class="list-group  list-group-flush w-100">
+        <li class="list-group-item">
+            <label class="d-inline-block mr-2">Скрыть Фон</label>
+            <input type="checkbox" id="hidebackdrop" class="switch switch-sm">
+            <label for="hidebackdrop" class="pink-gradient float-right"></label>
+        </li>
+    </ul>
+    <div class="row mx-0 mt-2">
+        <div class="col-12">
+            <p class="page-sub-title-small">
+                <span class="icon-circle mr-2">
+                     <i class="material-icons">email</i>
+                 </span>Email настройки</p>
+        </div>
+    </div>
+    <ul class="list-group list-group-flush w-100">
+        <li class="list-group-item">
+            <label class="d-inline-block mr-2">Получать обновления</label>
+            <input type="checkbox" id="dead1" class="switch switch-sm" checked>
+            <label for="dead1" class="pink-gradient float-right"></label>
+        </li>
+        <li class="list-group-item">
+            <label class="d-inline-block mr-2">Получать уведомления</label>
+            <input type="checkbox" id="dead2" class="switch switch-sm" checked>
+            <label for="dead2" class="pink-gradient float-right"></label>
+        </li>
+        <li class="list-group-item">
+            <label class="d-inline-block mr-2">Получать сигналы</label>
+            <input type="checkbox" id="dead3" class="switch switch-sm">
+            <label for="dead3" class="pink-gradient float-right"></label>
+        </li>
+    </ul>
+    <div class="row mx-0 mt-2">
+        <div class="col-12">
+            <p class="page-sub-title-small">
+                <span class="icon-circle mr-2">
+                     <i class="material-icons">profil</i>
+                 </span>Приватность</p>
+        </div>
+    </div>
+    <ul class="list-group list-group-flush w-100">
+        <li class="list-group-item">
+
+            <label class="d-inline-block mr-2">Список друзей</label>
+            <input type="checkbox" id="dead11" class="switch switch-sm">
+            <label for="dead11" class="pink-gradient float-right"></label>
+            <hr class="mt-2">
+            <p class="content-color-secondary small mb-2">Ваши друзья могут видеть ваш список друзей</p>
+        </li>
+        <li class="list-group-item">
+            <label class="d-inline-block mr-2">Комментарии</label>
+            <input type="checkbox" id="dead21" class="switch switch-sm" checked>
+            <label for="dead21" class="pink-gradient float-right"></label>
+            <hr class="mt-2">
+            <p class="content-color-secondary small mb-2">Ваши друзья могут комментировать ваш профиль и публикации</p>
+        </li>
+        <li class="list-group-item">
+            <label class="d-inline-block mr-2">Репосты</label>
+            <input type="checkbox" id="dead31" class="switch switch-sm" checked>
+            <label for="dead31" class="pink-gradient float-right"></label>
+            <hr class="mt-2">
+            <p class="content-color-secondary small mb-2">Ваши друзья могут поделиться вашими публикациями.</p>
+        </li>
+    </ul>
+</div>

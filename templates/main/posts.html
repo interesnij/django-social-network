@@ -1,0 +1,352 @@
+{% load staticfiles humanize %}
+
+<div class="card mb-4">
+    <div class="card-header border-bottom">
+        <div class="media">
+            <figure class="avatar avatar-40 mr-2">
+                <img src="{% static 'images/user1.png' %}" alt="Generic placeholder image">
+            </figure>
+            <div class="media-body">
+                <h6 class="mb-0">alizeechotali</h6>
+                <p class="mb-0">7-11-2018 | Public</p>
+            </div>
+            <div class="dropdown d-inline-block">
+                <a href="javascript:void(0)" class="icon-circle icon-30 dropdown-toggle caret-none" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="material-icons ">more_vertical</i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a href="" class="dropdown-item">Refresh</a>
+                    <a href="" class="dropdown-item">Setting</a>
+                    <a href="" class="dropdown-item">Close</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <p class="mb-0 content-color-secondary">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+    </div>
+    <div class="card-footer border-top py-2">
+        <div class="row">
+            <div class="col">
+                <button class="btn btn-link btn-sm text-secondary">
+                  <i class="material-icons text-danger">favorite_border</i>
+                  <span class="text-hide-xs">Like</span>
+                  <span class="text-primary">1.2k</span>
+                </button>
+                <button class="btn btn-link btn-sm text-secondary">
+                  <i class="material-icons">chat</i>
+                  <span class="text-hide-xs">Comments</span>
+                  <span class="text-primary">1.2k</span>
+                </button>
+                <button class="btn btn-link btn-sm text-secondary">
+                  <i class="material-icons">share</i>
+                  <span class="text-hide-xs">Share</span>
+                  <span class="text-primary">500</span>
+                </button>
+            </div>
+            <div class="col-auto ">
+                <button class="btn btn-link btn-sm text-secondary">
+                  <i class="material-icons">equalizer</i>
+                  <span class="text-hide-xs">Analytics</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card mb-4">
+    <div class="card-header border-bottom">
+        <div class="media">
+            <figure class="avatar avatar-40 mr-2">
+                <img src="{% static 'images/user1.png' %}" alt="Generic placeholder image">
+            </figure>
+            <div class="media-body">
+                <h6 class="mb-0">John McMohan</h6>
+                <p class="mb-0">7-11-2018 | Public</p>
+            </div>
+            <div class="dropdown d-inline-block">
+                <a href="javascript:void(0)" class="icon-circle icon-30 dropdown-toggle caret-none" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="material-icons ">more_vertical</i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a href="" class="dropdown-item">Refresh</a>
+                    <a href="" class="dropdown-item">Setting</a>
+                    <a href="" class="dropdown-item">Close</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="carosel mb-2">
+            <div data-space-between="0" data-slides-per-view="auto" class="swiper-container swiper-init swiper-post">
+                <div class="swiper-wrapper swipegallery" itemscope>
+                    <figure class="m-0 swiper-slide" itemprop="associatedMedia" itemscope>
+                        <a href="{% static 'images/fashion-1063100_640.jpg' %}" class="   swipebox" itemprop="contentUrl" data-size="640x426">
+                            <img src="{% static 'images/fashion-1063100_640.jpg' %}" alt="" itemprop="thumbnail">
+                        </a>
+                    </figure>
+                    <figure class="m-0 swiper-slide" itemprop="associatedMedia" itemscope>
+                        <a href="{% static 'sunflowers-3640935_640.jpg' %}" class=" swipebox" itemprop="contentUrl" data-size="640x426">
+                            <img src="{% static 'sunflowers-3640935_640.jpg' %}" alt="" itemprop="thumbnail">
+                        </a>
+                    </figure>
+                    <figure class="m-0 swiper-slide" itemprop="associatedMedia" itemscope>
+                        <a href="{% static 'images/singer-690117_640.jpg' %}" class=" swipebox" itemprop="contentUrl" data-size="640x426">
+                            <img src="{% static 'images/singer-690117_640.jpg' %}" alt="" itemprop="thumbnail">
+                        </a>
+                    </figure>
+                    <figure class="m-0 swiper-slide" itemprop="associatedMedia" itemscope>
+                        <a href="{% static 'images/news_small3.jpg' %}" class="   swipebox" itemprop="contentUrl" data-size="300x300">
+                            <img src="{% static 'images/news_small3.jpg' %}" alt="" itemprop="thumbnail">
+                        </a>
+                    </figure>
+                </div>
+                <!-- Add Arrows -->
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+        </div>
+        <p class="mb-0 content-color-secondary">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+    </div>
+    <div class="card-footer border-top py-2">
+        <div class="row">
+            <div class="col pl-0">
+                <button class="btn btn-link btn-sm text-secondary"><i class="material-icons text-danger">favorite_border</i> <span class="text-hide-xs">Like</span> <span class="text-primary">1.2k</span></button>
+                <button class="btn btn-link btn-sm text-secondary"><i class="material-icons">chat</i> <span class="text-hide-xs">Comments</span> <span class="text-primary">1.2k</span></button>
+                <button class="btn btn-link btn-sm text-secondary"><i class="material-icons">share</i> <span class="text-hide-xs">Share</span> <span class="text-primary">500</span></button>
+
+            </div>
+            <div class="col-auto pr-0">
+                <button class="btn btn-link btn-sm text-secondary"><i class="material-icons">equalizer</i> <span class="text-hide-xs">Analytics</span></button>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer bg-light-secondary border-top">
+        <div class="media pt-2">
+            <figure class="avatar avatar-30">
+                <img src="{% static 'images/user1.png' %}" alt="Generic placeholder image">
+            </figure>
+            <div class="media-body">
+                <h5 class="mt-0">Alizee Johnson <small class="text-muted float-right">4:05 am</small></h5>
+                <p class="mb-2">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin.</p>
+                <button class="btn btn-link btn-sm text-secondary pl-0"><i class="material-icons text-danger">favorite</i> Like <span class="text-primary">1k</span></button>
+                <button type="button" class="btn btn-link">Reply</button>
+            </div>
+        </div>
+        <div class="media pt-2">
+            <figure class="avatar avatar-30">
+                <img src="{% static 'images/user1.png' %}" alt="Generic placeholder image">
+            </figure>
+            <div class="media-body">
+                <h5 class="mt-0">John McMohan <small class="text-muted float-right">5:05 am</small></h5>
+                <p class="mb-2">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin.</p>
+                <button class="btn btn-link btn-sm text-secondary pl-0"><i class="material-icons text-danger">favorite_border</i> <span class="text-hide-xs">Like</span> <span class="text-primary">15</span></button>
+                <button type="button" class="btn btn-link">Reply</button>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer border-top">
+        <div class="row no-gutters">
+            <div class="col">
+                <div class="input-group input-group-sm">
+                    <div class="input-group-prepend">
+                        <button class="btn btn-link content-color-secondary" type="button"><i class="material-icons">face</i></button>
+                        <button class="btn btn-link content-color-secondary text-hide-xs" type="button"><i class="material-icons">collections</i></button>
+                        <button class="btn btn-link content-color-secondary" type="button"><i class="material-icons">camera_alt</i></button>
+                    </div>
+                    <input type="text" class="form-control form-control-rounded" placeholder="">
+                </div>
+            </div>
+            <div class="col-auto">
+                <button class="btn btn-outline-primary btn-rounded btn-sm ml-2" type="button"><span class="text-hide-xs">Comment</span> <i class="material-icons">send</i></button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card mb-4">
+    <div class="card-header border-bottom">
+        <div class="media">
+            <figure class="avatar avatar-40 mr-2">
+                <img src="{% static 'images/user1.png' %}" alt="Generic placeholder image">
+            </figure>
+            <div class="media-body">
+                <h6 class="mb-0">John McMohan</h6>
+                <p class="mb-0">7-11-2018 | Public</p>
+            </div>
+            <div class="dropdown d-inline-block">
+                <a href="javascript:void(0)" class="icon-circle icon-30 dropdown-toggle caret-none" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="material-icons ">more_vertical</i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a href="" class="dropdown-item">Refresh</a>
+                    <a href="" class="dropdown-item">Setting</a>
+                    <a href="" class="dropdown-item">Close</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="carosel mb-2">
+            <div data-space-between="0" data-slides-per-view="auto" class="swiper-container swiper-init swiper-post">
+                <div class="swiper-wrapper swipegallery" itemscope>
+                    <figure class="m-0 swiper-slide" itemprop="associatedMedia" itemscope>
+                        <a href="{% static 'images/singer-690117_640.jpg' %}" class=" swipebox" itemprop="contentUrl" data-size="640x426">
+                            <img src="{% static 'images/singer-690117_640.jpg' %}" alt="" itemprop="thumbnail">
+                        </a>
+                    </figure>
+                    <figure class="m-0 swiper-slide" itemprop="associatedMedia" itemscope>
+                        <a href="{% static 'images/news_small3.jpg' %}" class="   swipebox" itemprop="contentUrl" data-size="300x300">
+                            <img src="{% static 'images/news_small3.jpg' %}" alt="" itemprop="thumbnail">
+                        </a>
+                    </figure>
+                    <figure class="m-0 swiper-slide" itemprop="associatedMedia" itemscope>
+                        <a href="{% static 'images/fashion-1063100_640.jpg' %}" class="   swipebox" itemprop="contentUrl" data-size="640x426">
+                            <img src="{% static 'images/fashion-1063100_640.jpg' %}" alt="" itemprop="thumbnail">
+                        </a>
+                    </figure>
+                    <figure class="m-0 swiper-slide" itemprop="associatedMedia" itemscope>
+                        <a href="{% static 'images/sunflowers-3640935_640.jpg' %}" class=" swipebox" itemprop="contentUrl" data-size="640x426">
+                            <img src="{% static 'images/sunflowers-3640935_640.jpg' %}" alt="" itemprop="thumbnail">
+                        </a>
+                    </figure>
+                </div>
+                <!-- Add Arrows -->
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+        </div>
+        <p class="mb-0 content-color-secondary">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+    </div>
+    <div class="card-footer border-top py-2">
+        <div class="row">
+            <div class="col pl-0">
+                <button class="btn btn-link btn-sm text-secondary"><i class="material-icons text-danger">favorite_border</i> <span class="text-hide-xs">Like</span> <span class="text-primary">1.2k</span></button>
+                <button class="btn btn-link btn-sm text-secondary"><i class="material-icons">chat</i> <span class="text-hide-xs">Comments</span> <span class="text-primary">1.2k</span></button>
+                <button class="btn btn-link btn-sm text-secondary"><i class="material-icons">share</i> <span class="text-hide-xs">Share</span> <span class="text-primary">500</span></button>
+
+            </div>
+            <div class="col-auto pr-0">
+                <button class="btn btn-link btn-sm text-secondary"><i class="material-icons">equalizer</i> <span class="text-hide-xs">Analytics</span></button>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer bg-light-secondary border-top">
+        <div class="media pt-2">
+            <figure class="avatar avatar-30">
+                <img src="{% static 'images/user1.png' %}" alt="Generic placeholder image">
+            </figure>
+            <div class="media-body">
+                <h5 class="mt-0">Alizee Johnson <small class="text-muted float-right">4:05 am</small></h5>
+                <p class="mb-2">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin.</p>
+                <button class="btn btn-link btn-sm text-secondary pl-0"><i class="material-icons text-danger">favorite</i> Like <span class="text-primary">1k</span></button>
+                <button type="button" class="btn btn-link">Reply</button>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer border-top">
+        <div class="row no-gutters">
+            <div class="col">
+                <div class="input-group input-group-sm">
+                    <div class="input-group-prepend">
+                        <button class="btn btn-link content-color-secondary" type="button"><i class="material-icons">face</i></button>
+                        <button class="btn btn-link content-color-secondary text-hide-xs" type="button"><i class="material-icons">collections</i></button>
+                        <button class="btn btn-link content-color-secondary" type="button"><i class="material-icons">camera_alt</i></button>
+                    </div>
+                    <input type="text" class="form-control form-control-rounded" placeholder="">
+                </div>
+            </div>
+            <div class="col-auto">
+                <button class="btn btn-outline-primary btn-rounded btn-sm ml-2" type="button"><span class="text-hide-xs">Comment</span> <i class="material-icons">send</i></button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card mb-4">
+    <div class="card-header border-bottom">
+        <div class="media">
+            <figure class="avatar avatar-40 mr-2">
+                <img src="{% static 'images/user1.png' %}" alt="Generic placeholder image">
+            </figure>
+            <div class="media-body">
+                <h6 class="mb-0">alizeechotali</h6>
+                <p class="mb-0">7-11-2018 | Public</p>
+            </div>
+            <div class="dropdown d-inline-block">
+                <a href="javascript:void(0)" class="icon-circle icon-30 dropdown-toggle caret-none" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="material-icons ">more_vertical</i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a href="" class="dropdown-item">Refresh</a>
+                    <a href="" class="dropdown-item">Setting</a>
+                    <a href="" class="dropdown-item">Close</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body warning-gradient">
+        <h3 class="my-4 text-white text-center">
+            #1 template we have ever seen<br>
+            Creative, amazing, awesome and unique
+            <br><br>
+            ❤
+        </h3>
+    </div>
+    <div class="card-footer border-top py-2">
+        <div class="row">
+            <div class="col px-0">
+                <button class="btn btn-link btn-sm text-secondary"><i class="material-icons text-danger">favorite_border</i> <span class="text-hide-xs">Like</span> <span class="text-primary">1.2k</span></button>
+                <button class="btn btn-link btn-sm text-secondary"><i class="material-icons">chat</i> <span class="text-hide-xs">Comments</span> <span class="text-primary">1.2k</span></button>
+                <button class="btn btn-link btn-sm text-secondary"><i class="material-icons">share</i> <span class="text-hide-xs">Share</span> <span class="text-primary">500</span></button>
+
+            </div>
+            <div class="col-auto px-0">
+                <button class="btn btn-link btn-sm text-secondary"><i class="material-icons">equalizer</i> <span class="text-hide-xs">Analytics</span></button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card mb-4">
+    <div class="card-header border-bottom">
+        <div class="media">
+            <figure class="avatar avatar-40 mr-2">
+                <img src="{% static 'images/user1.png' %}" alt="Generic placeholder image">
+            </figure>
+            <div class="media-body">
+                <h6 class="mb-0">alizeechotali</h6>
+                <p class="mb-0">7-11-2018 | Public</p>
+            </div>
+            <div class="dropdown d-inline-block">
+                <a href="javascript:void(0)" class="icon-circle icon-30 dropdown-toggle caret-none" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="material-icons ">more_vertical</i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a href="" class="dropdown-item">Refresh</a>
+                    <a href="" class="dropdown-item">Setting</a>
+                    <a href="" class="dropdown-item">Close</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body  has-background-img">
+        <div class="background-img primary-gradient">
+            <img src="{% static 'images/fashion-1063100_640.jpg' %}" alt="">
+        </div>
+        <h3 class="my-4 text-white text-center position-relative z-index-1">
+            #1 template we have ever seen<br>
+            Creative, amazing, awesome and unique
+            <br><br>
+            ❤
+        </h3>
+    </div>
+    <div class="card-footer border-top py-2">
+        <div class="row">
+            <div class="col pl-0">
+                <button class="btn btn-link btn-sm text-secondary"><i class="material-icons text-danger">favorite_border</i> <span class="text-hide-xs">Like</span> <span class="text-primary">1.2k</span></button>
+                <button class="btn btn-link btn-sm text-secondary"><i class="material-icons">chat</i> <span class="text-hide-xs">Comments</span> <span class="text-primary">1.2k</span></button>
+                <button class="btn btn-link btn-sm text-secondary"><i class="material-icons">share</i> <span class="text-hide-xs">Share</span> <span class="text-primary">500</span></button>
+
+            </div>
+            <div class="col-auto pr-0">
+                <button class="btn btn-link btn-sm text-secondary"><i class="material-icons">equalizer</i> <span class="text-hide-xs">Analytics</span></button>
+            </div>
+        </div>
+    </div>

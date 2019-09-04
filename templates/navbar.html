@@ -1,0 +1,185 @@
+{% load staticfiles %}
+
+<header class="main-header">
+    <div class="container-fluid">
+        <div class="row align-items-center">
+            <div class="col-auto px-0">
+                <button class="btn pink-gradient btn-icon" id="left-menu">
+                  <i class="material-icons">widgets</i>
+                </button>
+                <a href="{% url 'main' %}" class="logo">
+                  <img src="{% static 'images/logo-icon.png' %}" alt="">
+                  <span class="text-hide-xs"><b>Go</b>TRI
+                    <br>
+                    <span class="small">- M O B I L E -</span>
+                  </span>
+                </a>
+                <form class="search-header">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Поиск...">
+                        <div class="input-group-append">
+                            <button class="btn " type="button"><i class="material-icons">search</i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="col px-0 text-right">
+                <button class="btn btn-search btn-icon header-color-secondary" type="button">
+                  <i class="material-icons">search</i>
+                </button>
+
+                <div class="dropdown d-inline-block">
+                    <a class="btn header-color-secondary btn-icon dropdown-toggle caret-none"
+                       href="#"
+                       role="button"
+                       id="dropdownmessage"
+                       data-toggle="dropdown"
+                       aria-haspopup="true"
+                       aria-expanded="false">
+                       <i class="material-icons">mail_outline</i>
+                       <span class="status-number bg-danger text-white">9+</span>
+                    </a>
+                    <div class="dropdown-menu notification-dropdown align-center arrow-top pt-0" aria-labelledby="dropdownmessage">
+                        <div class="arrow pink-gradient"></div>
+                        <div class="pink-gradient py-3 text-center">
+                            <h5 class="mb-0">Сообщения</h5>
+                            <p class="mb-0">Новые сообщения</p>
+                        </div>
+                        <div class="media new">
+                            <figure class="avatar avatar-40">
+                                <img src="{% static 'images/user2.png' %}" alt="Generic placeholder image">
+                            </figure>
+                            <div class="media-body">
+                                <h5 class="mt-0">Сергей Зубарев</h5>
+                                <p class="mb-2">
+                                  Почему молчишь дв, надо поговорить да. Слышишь поганец?
+                                </p>
+                                <a href="">Ответить</a>
+                                <a href="" class="ml-2">Смотреть</a>
+                            </div>
+                        </div>
+                        <a href="#" class="media pink-gradient-active new">
+                            <figure class="avatar avatar-40">
+                                <img src="{% static 'images/user3.png' %}" alt="Generic placeholder image">
+                            </figure>
+                            <div class="media-body">
+                                <h5 class="my-0">Сенатор Мейсон </h5>
+                                <small class="text-muted d-block mb-2">23:45</small>
+                                <p>
+                                  Айм нот андестенд, а ю крейзи бой ха?
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="dropdown text-hide-lg d-inline-block">
+                    <a class="btn header-color-secondary btn-icon dropdown-toggle caret-none"
+                       href="#"
+                       role="button"
+                       id="dropdownnotification"
+                       data-toggle="dropdown"
+                       aria-haspopup="true"
+                       aria-expanded="false">
+                       <i class="material-icons">notifications_none</i>
+                       <span class="status-dot pink-gradient"></span>
+                    </a>
+                    <div class="dropdown-menu notification-dropdown" aria-labelledby="dropdownnotification">
+                        <a href="#" class="media  pink-gradient-active new">
+                            <figure class="avatar avatar-40">
+                                <img src="{% static 'images/user1.png' %}" alt="Generic placeholder image">
+                            </figure>
+                            <div class="media-body">
+                                <h5 class="mt-0">Уведомление 1</h5>
+                                <p>Новый комментарий и упоминание в посте в сообществе "Сумки и венки"</p>
+                            </div>
+                        </a>
+                        <a href="#" class="media  pink-gradient-active">
+                            <figure class="avatar avatar-40">
+                                <img src="{% static 'images/user1.png' %}" alt="Generic placeholder image">
+                            </figure>
+                            <div class="media-body">
+                                <h5 class="mt-0">Уведомление 1</h5>
+                                <p>Ваш пост получил много положительных реакций. Посмотрите.</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="dropdown d-inline-block">
+                    <a class="btn header-color-secondary dropdown-toggle username"
+                       href="#"
+                       role="button"
+                       id="dropdownMenuLink"
+                       data-toggle="dropdown"
+                       aria-haspopup="true"
+                       aria-expanded="false">
+                       <figure class="userpic"><img src="{% static 'images/user1.png' %}" alt=""></figure>
+                       <h5 class="text-hide-xs">
+                          <span class="header-color-primary">Мой профиль</span>
+                       </h5>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right profile-dropdown" aria-labelledby="dropdownMenuLink">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <a href="profile.html">
+                                    <figure class="avatar avatar-120 mx-auto my-3">
+                                        <img src="{% static 'images/user1.png' %}" alt="">
+                                    </figure>
+                                    <h5 class="card-title mb-2 header-color-primary">Сергей Зубарев</h5>
+                                    <h6 class="card-subtitle mb-3 header-color-secondary">Микунь, Р. Коми</h6>
+                                </a>
+                                <p class="card-text">Немного биографии Немного биографии Немного биографии</p>
+                                <button class="btn btn-sm pink-gradient border-0 mb-3">Изменить</button>
+                            </div>
+                        </div>
+                        <div class="dropdown-divider m-0"></div>
+                        <a class="dropdown-item pink-gradient-active" href="">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    5458 <small class="header-color-secondary font-italic">Пункт меню</small>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="header-color-secondary material-icons vm">local_play</i>
+                                </div>
+                            </div>
+                        </a>
+                        <div class="dropdown-divider m-0"></div>
+                        {% if user.is_authenticated %}
+                        <a class="dropdown-item pink-gradient-active" href="{% url 'logout' %}">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    Выход
+                                </div>
+                                <div class="col-auto">
+                                    <div class="text-danger ml-2"><i class="material-icons vm">exit_to_app</i></div>
+                                </div>
+                            </div>
+                        </a>
+                        {% else %}
+                        <a class="dropdown-item pink-gradient-active" href="{% url 'login' %}">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    Вход
+                                </div>
+                                <div class="col-auto">
+                                    <div class="text-danger ml-2"><i class="material-icons vm">exit_to_app</i></div>
+                                </div>
+                            </div>
+                        </a>
+                        <a class="dropdown-item pink-gradient-active" href="{% url 'signup' %}">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    Регистрация
+                                </div>
+                                <div class="col-auto">
+                                    <div class="text-danger ml-2"><i class="material-icons vm">exit_to_app</i></div>
+                                </div>
+                            </div>
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>

@@ -43,7 +43,6 @@ INSTALLED_APPS = [
     'invitations',
     'moderation',
     'notifications',
-    'headline',
 ]
 
 REST_SESSION_LOGIN = True
@@ -53,10 +52,6 @@ REST_AUTH_REGISTER_SERIALIZERS = {
         'REGISTER_SERIALIZER': 'tr.serializers.RegisterSerializer',
 }
 
-GRIP_URL="http://localhost:5561"
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-GRIP_PROXY_REQUIRED = True
-GRIP_PREFIX = 'headline-'
 
 ACCOUNT_ADAPTER = 'mysite.adapter.MyAccountAdapter'
 AUTH_USER_MODEL = 'users.User'
@@ -65,11 +60,10 @@ SITE_ID = 1
 
 
 MIDDLEWARE = [
-    'django_grip.GripMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    #'django.middleware.csrf.CsrfViewMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
 ]
@@ -166,3 +160,6 @@ REST_FRAMEWORK = {
 }
 
 UNICODE_JSON = True
+
+ONE_SIGNAL_APP_ID = "608dcb86-a851-4acf-bca5-a292361bc538"
+ONE_SIGNAL_API_KEY = "ZjEwZWU1NDQtZmYyMy00ZTEyLTliYWUtYmVhMTE4Y2U5MWU2"
