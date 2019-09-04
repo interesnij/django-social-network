@@ -3,6 +3,7 @@ from allauth.utils import email_address_exists
 from allauth.account.adapter import get_adapter
 from allauth.account.utils import setup_user_email
 from rest_framework import serializers
+from rest_framework.response import Response
 
 
 class RegisterSerializer(serializers.Serializer):
@@ -41,4 +42,5 @@ class RegisterSerializer(serializers.Serializer):
         self.cleaned_data = self.get_cleaned_data()
         setup_user_email(request, user, [])
         user.save()
-        return user
+
+        return Response(_('Прощай 😔'), status=status.HTTP_200_OK)
