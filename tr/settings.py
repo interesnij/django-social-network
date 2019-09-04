@@ -53,7 +53,7 @@ REST_AUTH_REGISTER_SERIALIZERS = {
         'REGISTER_SERIALIZER': 'tr.serializers.RegisterSerializer',
 }
 
-GRIP_URL=http://localhost:5561
+GRIP_URL="http://localhost:5561"
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 GRIP_PROXY_REQUIRED = True
 GRIP_PREFIX = 'headline-'
