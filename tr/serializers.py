@@ -42,4 +42,4 @@ class RegisterSerializer(serializers.Serializer):
         self.cleaned_data = self.get_cleaned_data()
         setup_user_email(request, user, [])
         user.save()
-        return user and Response(_('Прощай 😔'), status=status.HTTP_200_OK)
+        return user 
