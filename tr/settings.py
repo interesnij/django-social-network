@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'invitations',
     'moderation',
     'notifications',
+    'main',
 ]
 
 REST_SESSION_LOGIN = True
