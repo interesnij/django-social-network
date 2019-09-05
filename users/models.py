@@ -9,7 +9,7 @@ from django.conf import settings
 
 
 class User(AbstractUser):
-
+    username = None
     email = models.EmailField(unique=True, null=False, blank=False,verbose_name="Емаил")
     connections_circle = models.ForeignKey('circles.Circle', on_delete=models.CASCADE, related_name='+',null=True, blank=True)
     is_email_verified = models.BooleanField(default=False)
