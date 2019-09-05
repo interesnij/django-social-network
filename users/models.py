@@ -9,9 +9,9 @@ from django.conf import settings
 
 
 class User(AbstractUser):
-    username = models.CharField(null=True,max_length=35)
-    first_name = models.CharField(null=True,max_length=35)
-    last_name = models.CharField(null=True,max_length=35)
+    username = models.CharField(blank=True,max_length=35)
+    first_name = models.CharField(blank=False,max_length=35)
+    last_name = models.CharField(blank=False,max_length=35)
     email = models.EmailField(unique=True, null=False, blank=False,verbose_name="Емаил")
     connections_circle = models.ForeignKey('circles.Circle', on_delete=models.CASCADE, related_name='+',null=True, blank=True)
     is_email_verified = models.BooleanField(default=False)
