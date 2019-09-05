@@ -38,7 +38,6 @@ class PostImage(models.Model):
                                 processors=[ResizeToFit(width=1024, upscale=False)])
     width = models.PositiveIntegerField(editable=False, null=False, blank=False,verbose_name="Высота")
     height = models.PositiveIntegerField(editable=False, null=False, blank=False,verbose_name="Ширина")
-    hash = models.CharField(max_length=64, blank=False, null=True,verbose_name="Хэш")
 
 
 class PostVideo(models.Model):
