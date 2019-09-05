@@ -39,7 +39,9 @@ class RegisterSerializer(serializers.Serializer):
         }
 
     def save(self, request):
+        adapter = get_adapter()
+        user = adapter.new_user(request)
         self.cleaned_data = self.get_cleaned_data()
         setup_user_email(request, user, [])
         user.save()
-        return user 
+        return user
