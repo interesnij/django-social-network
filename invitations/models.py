@@ -8,7 +8,7 @@ from common.models import Badge
 
 class UserInvite(models.Model):
     invited_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='invited_users',null=True, blank=True,verbose_name="Кого приглашает")
-    created = models.DateTimeField(null=False, blank=False,verbose_name="Приглашение создано")
+    created = models.DateTimeField(default=timezone.now, null=False, blank=False,verbose_name="Приглашение создано")
     created_user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True,verbose_name="Кто приглашает")
     name = models.CharField(max_length=35, null=True, blank=True)
     nickname = models.CharField(max_length=35, null=True, blank=True)

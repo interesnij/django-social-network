@@ -53,7 +53,7 @@ class PostComment(models.Model):
     moderated_object = GenericRelation(ModeratedObject, related_query_name='post_comments',verbose_name="Модерация")
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments',verbose_name="Пост")
     parent_comment = models.ForeignKey('self', on_delete=models.CASCADE, related_name='replies', null=True, blank=True,verbose_name="Родительский комментарий")
-    created = models.DateTimeField(editable=False, db_index=True,verbose_name="Создан")
+    created = models.DateTimeField(default=timezone.now, editable=False, db_index=True,verbose_name="Создан")
     commenter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='posts_comments',verbose_name="Комментатор")
     text = models.TextField(max_length=200, blank=False, null=False,verbose_name="Текст")
     is_edited = models.BooleanField(default=False, null=False, blank=False,verbose_name="Изменено")
@@ -63,7 +63,7 @@ class PostComment(models.Model):
 
 class PostReaction(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='reactions')
-    created = models.DateTimeField(editable=False)
+    created = models.DateTimeField(default=timezone.now, editable=False)
     reactor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='post_reactions')
     emoji = models.ForeignKey(Emoji, on_delete=models.CASCADE, related_name='post_reactions')
 
@@ -71,7 +71,7 @@ class PostReaction(models.Model):
 
 class PostCommentReaction(models.Model):
     post_comment = models.ForeignKey(PostComment, on_delete=models.CASCADE, related_name='reactions',verbose_name="Комментарий к посту")
-    created = models.DateTimeField(editable=False,verbose_name="Создан")
+    created = models.DateTimeField(default=timezone.now, editable=False,verbose_name="Создан")
     reactor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='post_comment_reactions',verbose_name="Кто отреагировал")
     emoji = models.ForeignKey(Emoji, on_delete=models.CASCADE, related_name='post_comment_reactions',verbose_name="Смайл")
 

@@ -7,7 +7,7 @@ from users.models import User
 
 class Notification(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notifications',verbose_name="Владелец")
-    created = models.DateTimeField(editable=False, db_index=True,verbose_name="Создано")
+    created = models.DateTimeField(default=timezone.now, editable=False, db_index=True,verbose_name="Создано")
     read = models.BooleanField(default=False,verbose_name="Прочитано")
 
     POST_REACTION = 'PR'

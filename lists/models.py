@@ -12,4 +12,4 @@ class List(models.Model):
     emoji = models.ForeignKey(Emoji, on_delete=models.SET_NULL, related_name='lists', null=True,verbose_name="Смайл")
     name = models.CharField(max_length=100, blank=False, null=False,verbose_name="Название")
     follows = models.ManyToManyField(Follow, related_name='lists', db_index=True,verbose_name="Подписчики")
-    created = models.DateTimeField(editable=False,verbose_name="Создан")
+    created = models.DateTimeField(default=timezone.now, editable=False,verbose_name="Создан")

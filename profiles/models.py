@@ -12,7 +12,7 @@ class UserProfile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, null=True, related_name="profile",
                                 verbose_name='Пользователь', on_delete=models.CASCADE)
     last_activity= models.DateTimeField(
-        default=timezone.now, blank=True, verbose_name='Activity')
+        default=timezone.now, blank=True, verbose_name='Активность')
     avatar = ProcessedImageField(blank=True, null=True, format='JPEG',
                                  options={'quality': 90}, processors=[ResizeToFill(500, 500)],
                                  upload_to="user/list",verbose_name="Аватар")
