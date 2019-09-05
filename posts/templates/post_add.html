@@ -19,7 +19,7 @@
                 url: "{% url 'post_add_user' pk=request.user.pk %}",
                 data: frm.serialize(),
                 success: function (data) {
-                    console.log("Success!")
+                    $('#FORM-POST').remove();
                 },
                 error: function(data) {
                     console.log("Error!")
