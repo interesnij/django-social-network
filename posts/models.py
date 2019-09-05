@@ -22,7 +22,7 @@ class Post(models.Model):
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='posts',verbose_name="Создатель")
     comments_enabled = models.BooleanField(default=True, editable=False, null=False,verbose_name="Разрешить комментарии")
     public_reactions = models.BooleanField(default=True, editable=False, null=False,verbose_name="Публичная реакция")
-    community = models.ForeignKey('communities.Community', on_delete=models.CASCADE, related_name='posts',null=True,blank=False,verbose_name="Сообщество")
+    community = models.ForeignKey('communities.Community', on_delete=models.CASCADE, related_name='posts',null=True,blank=True,verbose_name="Сообщество")
     is_edited = models.BooleanField(default=False,verbose_name="Изменено")
     is_closed = models.BooleanField(default=False,verbose_name="Закрыто")
     is_deleted = models.BooleanField(default=False,verbose_name="Удалено")
