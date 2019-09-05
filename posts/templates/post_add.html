@@ -2,7 +2,7 @@
   {% csrf_token %}
 
     <br>
-
+    {{ form.media }}
     {{ form.text|safe }}
     <br>
     {{ form.comments_enabled.label }}
