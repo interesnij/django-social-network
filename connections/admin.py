@@ -1,11 +1,11 @@
 from django.contrib import admin
 
-from connections.models import Connections
+from connections.models import Connection
 
 
-class ConnectionsAdmin(admin.ModelAdmin):
+class ConnectionAdmin(admin.ModelAdmin):
     search_fields = ('name',)
     #exclude = ['communities']
 
 
-admin.site.register(Connections, ConnectionsAdmin)
+admin.site.register(Connection, ConnectionAdmin)
