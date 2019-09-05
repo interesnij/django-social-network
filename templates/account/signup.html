@@ -8,8 +8,7 @@
                 <div class="col-12 col-md-6 h-md-100 order-2 order-md-1">
                     <form action="{% url 'rest_register' %}" class="row align-items-center h-100 h-sm-auto ajax-form">
                         <div class="col-12 col-md-10 col-lg-8 col-xl-6 mx-auto mt-2">
-                            <h1 class="font-weight-light mb-3 content-color-secondary text-left">We are Go<span class="font-weight-normal content-color-primary">PRO</span></h1>
-                            <h4 class="font-weight-light mb-5 content-color-secondary text-left">Provide few details and sign up now<br> Its easy and Quick.</h4>
+                            <h1 class="font-weight-light mb-3 content-color-secondary text-left">Регистрация</h1>
                             <div class="card mb-2">
                                 <div class="card-body p-0">
                                     <input type="email" name="email" id="email" class="form-control form-control-lg border-0" placeholder="Email">
@@ -37,7 +36,7 @@
                             <small class="form-text text-muted api-response"></small>
                             <div class="text-left mb-4">
                                 <button type="submit" class=" btn btn-primary pink-gradient" id="register_ajax">Создать аккаунт</button>
-                                <a href="" class="float-right btn btn-outline-primary">Уже есть аккаунт</a>
+                                <a href="{% url 'login' %}" class="float-right btn btn-outline-primary">Уже есть аккаунт</a>
                             </div>
 
                         </div>
@@ -49,7 +48,7 @@
                             <div class="swiper-pagination"></div>
                             <div class="swiper-wrapper">
                                 <div class="swiper-slide text-center ">
-                                    <div class="background-img"><img src="img/banner.png" alt="" class="w-auto float-right"></div>
+                                    <div class="background-img"><img src="{% static 'images/banner.png' %}" alt="" class="w-auto float-right"></div>
                                     <div class="row align-items-center h-100 text-white">
                                         <div class="col-10 col-md-8 col-lg-6 mx-auto my-4">
                                             <h1 class="font-weight-light mb-4">We are growing and you also Join Us</h1>
@@ -58,7 +57,7 @@
                                     </div>
                                 </div>
                                 <div class="swiper-slide text-center">
-                                    <div class="background-img"><img src="img/banner2.png" alt="" class="w-auto"></div>
+                                    <div class="background-img"><img src="{% static 'images/banner2.png' %}" alt="" class="w-auto"></div>
                                     <div class="row align-items-center h-100 text-white">
                                         <div class="col-10 col-md-8 col-lg-6 mx-auto my-4">
                                             <h1 class="font-weight-light mb-4">Save 1000s hours, Efforts and your own Money</h1>

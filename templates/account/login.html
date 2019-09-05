@@ -10,8 +10,8 @@
                     <form action="{% url 'rest_login' %}" class="row align-items-center h-100 h-sm-auto ajax-form">
                       {% csrf_token %}
                         <div class="col-12 col-md-10 col-lg-8 col-xl-6 mx-auto">
-                            <h1 class="font-weight-light mb-3 mt-4 content-color-secondary text-left">We are Go<span class="font-weight-normal content-color-primary">PRO</span></h1>
-                            <h4 class="font-weight-light mb-4 content-color-secondary text-left">Welcome back,<br>Please sign in to your account.</h4>
+                            <h1 class="font-weight-light mb-3 mt-4 content-color-secondary text-left">Вход</h1>
+
                             <div class="card mb-2">
                                 <div class="card-body p-0">
                                     <input type="text" id="username" name="username" class="form-control form-control-lg border-0" placeholder="Ваш логин">
@@ -27,7 +27,7 @@
                             </div>
                             <div class="text-left mb-4">
                                 <button type="submit" class=" btn btn-primary pink-gradient">Войти</button>
-                                <a href="" class="float-right btn btn-outline-primary">Sign Up</a>
+                                <a href="{% url 'register' %}" class="float-right btn btn-outline-primary">Регистрация</a>
                             </div>
 
                         </div>
@@ -39,7 +39,9 @@
                             <div class="swiper-pagination"></div>
                             <div class="swiper-wrapper">
                                 <div class="swiper-slide text-center ">
-                                    <div class="background-img"><img src="{% static 'images/banner.png' %}" alt="" class="w-auto float-right"></div>
+                                    <div class="background-img">
+                                      <img src="{% static 'images/banner.png' %}" alt="" class="w-auto float-right">
+                                    </div>
                                     <div class="row align-items-center h-100 text-white">
                                         <div class="col-10 col-md-8 col-lg-6 mx-auto my-4">
                                             <h1 class="font-weight-light mb-4">Easy, Unique and Creative multipurpose template</h1>
