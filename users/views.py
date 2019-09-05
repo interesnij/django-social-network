@@ -17,7 +17,7 @@ class ProfileUserView(TemplateView, CategoryListMixin):
 		user=User.models.get(pk=self.kwargs["pk"])
 		return super(ProfileUserView,self).get(request,*args,**kwargs)
 
-    def get_context_data(self, **kwargs):
-        context = super(ProfileUserView, self).get_context_data(**kwargs)
-        context['user'] = self.user
-        return context
+	def get_context_data(self, **kwargs):
+		context = super(ProfileUserView, self).get_context_data(**kwargs)
+		context['user'] = self.user
+		return context
