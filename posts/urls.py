@@ -1,4 +1,4 @@
-from posts.views import PostsView
+from posts.views import PostsView, PostUserCreate
 from django.conf.urls import url
 
 urlpatterns = [

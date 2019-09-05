@@ -1,19 +1,22 @@
 from django.views.generic.base import TemplateView
+from posts.forms import PostForm
+from django.http import HttpResponse
 
 
 class PostsView(TemplateView):
     template_name="posts.html"
 
-class PostCreate(TemplateView):
+
+class PostUserCreate(TemplateView):
     template_name="post_add.html"
     form=None
 
     def get(self,request,*args,**kwargs):
         self.form=BlogForm(initial={"creator":request.user})
-        return super(PostCreate,self).get(request,*args,**kwargs)
+        return super(PostUserCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context=super(PostCreate,self).get_context_data(**kwargs)
+        context=super(PostUserCreate,self).get_context_data(**kwargs)
         context["form"]=self.form
         return context
 
@@ -26,4 +29,4 @@ class PostCreate(TemplateView):
 
             if request.is_ajax() :
                 return HttpResponse ('!')
-        return super(PostCreate,self).post(request,*args,**kwargs)
+        return super(PostUserCreate,self).post(request,*args,**kwargs)
