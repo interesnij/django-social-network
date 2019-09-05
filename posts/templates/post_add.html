@@ -4,7 +4,7 @@
     <br>
     {{ form.media }}
     {{ form.text|safe }}
-    <br>
+    <br><br><br>
     {{ form.comments_enabled.label }}
     {{ form.comments_enabled }}
     <br>
@@ -19,7 +19,7 @@
                 url: "{% url 'post_add_user' pk=request.user.pk %}",
                 data: frm.serialize(),
                 success: function (data) {
-                    
+
                 },
                 error: function(data) {
                     console.log("Error!")
