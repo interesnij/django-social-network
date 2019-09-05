@@ -10,7 +10,6 @@ class RegisterSerializer(serializers.Serializer):
     first_name = serializers.CharField(required=True, write_only=True)
     last_name = serializers.CharField(required=True, write_only=True)
     email = serializers.EmailField(required=allauth_settings.EMAIL_REQUIRED)
-    are_guidelines_accepted = serializers.BooleanField()
 
     def get_cleaned_data(self):
         return {
