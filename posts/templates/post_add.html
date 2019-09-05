@@ -15,7 +15,7 @@
         frm.submit(function () {
             $.ajax({
                 type: frm.attr('method'),
-                url: "{% url 'post_add_user' uuid=request.user.uuid %}",
+                url: "{% url 'post_add_user' pk=request.user.pk %}",
                 data: frm.serialize(),
                 success: function (data) {
                     console.log("Success!")
