@@ -18,7 +18,7 @@ from posts.helpers import upload_to_post_image_directory, upload_to_post_video_d
 class Post(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, db_index=True,verbose_name="uuid")
     text = models.TextField(max_length=1000, blank=False, null=True,verbose_name="Текст")
-    created = models.DateTimeField(editable=False, db_index=True,verbose_name="Создан")
+    created = models.DateTimeField(default=timezone.now, editable=False, db_index=True,verbose_name="Создан")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='posts',verbose_name="Создатель")
     comments_enabled = models.BooleanField(default=True, editable=False, null=False,verbose_name="Разрешить комментарии")
     public_reactions = models.BooleanField(default=True, editable=False, null=False,verbose_name="Публичная реакция")
