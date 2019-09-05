@@ -39,7 +39,7 @@
 
 <script>
   $( "#post_link" ).click(function(){
-    $('#post_create').html('').load("{% url 'post_add_user' uuid=user.uuid %}");
+    $('#post_create').html('').load("{% url 'post_add_user' pk=user.pk %}");
   })
 </script>
 {% endblock %}
