@@ -12,7 +12,7 @@ class PostUserCreate(TemplateView):
     form=None
 
     def get(self,request,*args,**kwargs):
-        self.form=BlogForm(initial={"creator":request.user})
+        self.form=PostForm(initial={"creator":request.user})
         return super(PostUserCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -21,7 +21,7 @@ class PostUserCreate(TemplateView):
         return context
 
     def post(self,request,*args,**kwargs):
-        self.form=BlogForm(request.POST,request.FILES)
+        self.form=PostForm(request.POST,request.FILES)
         if self.form.is_valid():
             new_post=self.form.save(commit=False)
             new_post.creator=self.request.user
