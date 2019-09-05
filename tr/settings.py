@@ -52,7 +52,8 @@ REST_AUTH_REGISTER_SERIALIZERS = {
         'REGISTER_SERIALIZER': 'tr.serializers.RegisterSerializer',
 }
 
-ACCOUNT_AUTHENTICATION_METHOD="email"
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_REQUIRED = True  
 ACCOUNT_ADAPTER = 'tr.adapter.MyAccountAdapter'
 AUTH_USER_MODEL = 'users.User'
 
