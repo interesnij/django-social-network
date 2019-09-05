@@ -3,7 +3,7 @@ from generic.mixins import CategoryListMixin
 from generic.mixins import CategoryListMixin
 from profiles.models import UserProfile
 from datetime import datetime, timedelta
-from users.models import User
+from django.contrib.auth.models import User
 
 
 class AllUsers(TemplateView,CategoryListMixin):
