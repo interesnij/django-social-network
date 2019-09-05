@@ -8,47 +8,74 @@
                 <img src="{% static 'images/user1.png' %}" alt="Generic placeholder image">
             </figure>
             <div class="media-body">
-                <h6 class="mb-0">alizeechotali</h6>
-                <p class="mb-0">7-11-2018 | Public</p>
+                <h6 class="mb-0">{{ object.creator.first_name }} {{ object.creator.last_name }}</h6>
+                <p class="mb-0">{{ object.created.naturaltime }}</p>
             </div>
             <div class="dropdown d-inline-block">
                 <a href="javascript:void(0)" class="icon-circle icon-30 dropdown-toggle caret-none" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="material-icons ">more_vertical</i>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
-                    <a href="" class="dropdown-item">Refresh</a>
-                    <a href="" class="dropdown-item">Setting</a>
-                    <a href="" class="dropdown-item">Close</a>
+                    <a href="" class="dropdown-item">Удалить запись</a>
+                    <a href="" class="dropdown-item">Закрепить</a>
+                    <a href="" class="dropdown-item">Выключить комментарии</a>
                 </div>
             </div>
         </div>
     </div>
     <div class="card-body">
-        <p class="mb-0 content-color-secondary">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+        <div class="carosel mb-2">
+            <div data-space-between="0" data-slides-per-view="auto" class="swiper-container swiper-init swiper-post">
+                <div class="swiper-wrapper swipegallery" itemscope>
+                    <figure class="m-0 swiper-slide" itemprop="associatedMedia" itemscope>
+                        <a href="{% static 'images/fashion-1063100_640.jpg' %}" class="   swipebox" itemprop="contentUrl" data-size="640x426">
+                            <img src="{% static 'images/fashion-1063100_640.jpg' %}" alt="" itemprop="thumbnail">
+                        </a>
+                    </figure>
+                    <figure class="m-0 swiper-slide" itemprop="associatedMedia" itemscope>
+                        <a href="{% static 'sunflowers-3640935_640.jpg' %}" class=" swipebox" itemprop="contentUrl" data-size="640x426">
+                            <img src="{% static 'sunflowers-3640935_640.jpg' %}" alt="" itemprop="thumbnail">
+                        </a>
+                    </figure>
+                    <figure class="m-0 swiper-slide" itemprop="associatedMedia" itemscope>
+                        <a href="{% static 'images/singer-690117_640.jpg' %}" class=" swipebox" itemprop="contentUrl" data-size="640x426">
+                            <img src="{% static 'images/singer-690117_640.jpg' %}" alt="" itemprop="thumbnail">
+                        </a>
+                    </figure>
+                    <figure class="m-0 swiper-slide" itemprop="associatedMedia" itemscope>
+                        <a href="{% static 'images/news_small3.jpg' %}" class="   swipebox" itemprop="contentUrl" data-size="300x300">
+                            <img src="{% static 'images/news_small3.jpg' %}" alt="" itemprop="thumbnail">
+                        </a>
+                    </figure>
+                </div>
+                <!-- Add Arrows -->
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+        </div>
+        <p class="mb-0 content-color-secondary">{{ object.text|safe }}</p>
     </div>
     <div class="card-footer border-top py-2">
         <div class="row">
             <div class="col">
                 <button class="btn btn-link btn-sm text-secondary">
                   <i class="material-icons text-danger">favorite_border</i>
-                  <span class="text-hide-xs">Like</span>
-                  <span class="text-primary">1.2k</span>
+                  <span class="text-hide-xs"></span>
+                  <span class="text-primary">12</span>
                 </button>
                 <button class="btn btn-link btn-sm text-secondary">
                   <i class="material-icons">chat</i>
-                  <span class="text-hide-xs">Comments</span>
-                  <span class="text-primary">1.2k</span>
+                  <span class="text-primary">0</span>
                 </button>
                 <button class="btn btn-link btn-sm text-secondary">
                   <i class="material-icons">share</i>
-                  <span class="text-hide-xs">Share</span>
-                  <span class="text-primary">500</span>
+                  <span class="text-hide-xs">Импорт</span>
                 </button>
             </div>
             <div class="col-auto ">
                 <button class="btn btn-link btn-sm text-secondary">
                   <i class="material-icons">equalizer</i>
-                  <span class="text-hide-xs">Analytics</span>
+                  <span class="text-hide-xs">Аналитика</span>
                 </button>
             </div>
         </div>
