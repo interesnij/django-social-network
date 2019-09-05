@@ -4,6 +4,7 @@ from generic.mixins import CategoryListMixin
 from profiles.models import UserProfile
 from datetime import datetime, timedelta
 from users.models import User
+from posts.models import Post
 
 
 class AllUsers(TemplateView,CategoryListMixin):
@@ -15,9 +16,11 @@ class ProfileUserView(TemplateView, CategoryListMixin):
 
 	def get(self,request,*args,**kwargs):
 		self.user=User.objects.get(pk=self.kwargs["pk"])
+		self.posts=Post.objects.filter(creator=self.user)
 		return super(ProfileUserView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self, **kwargs):
 		context = super(ProfileUserView, self).get_context_data(**kwargs)
 		context['user'] = self.user
+		context['posts'] = self.posts
 		return context
