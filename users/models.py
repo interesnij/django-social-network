@@ -11,6 +11,8 @@ from django.conf import settings
 class User(AbstractUser):
 
     email = models.EmailField(unique=True, null=False, blank=False,verbose_name="Емаил")
+    first_name = None
+    last_name = None
     connections_circle = models.ForeignKey('circles.Circle', on_delete=models.CASCADE, related_name='+',null=True, blank=True)
     is_email_verified = models.BooleanField(default=False)
     are_guidelines_accepted = models.BooleanField(default=False)
@@ -22,29 +24,12 @@ class User(AbstractUser):
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True,verbose_name="uuid")
     invite_count = models.SmallIntegerField(default=0,verbose_name="Кол-во приглашений")
 
-    @classmethod
-    def create_user(cls, email=None, password=None, are_guidelines_accepted=None, badge=None):
-        ''' создаем пользователя '''
-
-        if not are_guidelines_accepted:
-            raise ValidationError(
-                'Вы должны принять рекомендации по созданию учетной записи',
-            )
-
-        new_user = cls.objects.create_user(first_name=first_name, last_name=last_name, email=email, password=password,
-                                           are_guidelines_accepted=are_guidelines_accepted)
-
-        if badge:
-            user_profile.badges.add(badge)
-
-        return new_user
-
     class Meta:
         verbose_name = 'пользователь'
         verbose_name_plural = 'пользователи'
 
     def __str__(self):
-        return self.last_name 
+        return self.last_name
 
 
 class UserBlock(models.Model):
