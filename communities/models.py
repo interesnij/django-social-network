@@ -48,25 +48,31 @@ class Community(models.Model):
     class Meta:
         verbose_name_plural = 'сообщества'
 
+    def __str__(self):
+        return self.name
+
 
 class CommunityMembership(models.Model):
     """
     Объект, представляющий членство пользователя в сообществе
     """
-    #user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='communities_memberships', null=False,blank=False,verbose_name="Члены сообщества")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='communities_memberships', null=False,blank=False,verbose_name="Члены сообщества")
     community = models.ForeignKey(Community, on_delete=models.CASCADE, related_name='memberships', null=False,blank=False,verbose_name="Сообщество")
     is_administrator = models.BooleanField(default=False,verbose_name="Это администратор")
     is_moderator = models.BooleanField(default=False,verbose_name="Это модератор")
     created = models.DateTimeField(editable=False,verbose_name="Создано")
+
+    def __str__(self):
+        return self.user.last_name
 
 
 class CommunityLog(models.Model):
     """
     Журнал для действий пользователей модераторов сообщества, таких как запрет / снятие блокировки
     """
-    #source_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='+', null=False,blank=False,verbose_name="Кто модерирует")
-    #target_user = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='+', null=True,blank=False,verbose_name="Кого модерируют")
-    #post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='+', null=True, blank=True,verbose_name="Пост")
+    source_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='+', null=False,blank=False,verbose_name="Кто модерирует")
+    target_user = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='+', null=True,blank=False,verbose_name="Кого модерируют")
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='+', null=True, blank=True,verbose_name="Пост")
     community = models.ForeignKey(Community, on_delete=models.CASCADE, related_name='logs',null=False,blank=False,verbose_name="Сообщество")
     created = models.DateTimeField(editable=False,verbose_name="Создан")
 
@@ -88,6 +94,6 @@ class CommunityLog(models.Model):
 
 
 class CommunityInvite(models.Model):
-    #creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_communities_invites', null=False,blank=False,verbose_name="Кто приглашает в сообщество")
-    #invited_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='communities_invites', null=False,blank=False,verbose_name="Кого приглашают в сообщество")
+    creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_communities_invites', null=False,blank=False,verbose_name="Кто приглашает в сообщество")
+    invited_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='communities_invites', null=False,blank=False,verbose_name="Кого приглашают в сообщество")
     community = models.ForeignKey(Community, on_delete=models.CASCADE, related_name='invites', null=False,blank=False,verbose_name="Сообщество")
