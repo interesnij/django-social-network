@@ -5,7 +5,7 @@ from users.models import User
 
 class UserAdmin(admin.ModelAdmin):
     search_fields = ('last_name',)
-    #exclude = ['communities']
+    list_filter = ['all']
 
     class Meta:
             model = User
