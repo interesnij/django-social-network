@@ -24,23 +24,9 @@
         </div>
         <div class="col-12 col-md-12 col-lg-8 order-1 order-lg-2">
             <div class="card mb-4">
-                <div class="card-body p-0">
-                    <textarea class="form-control bg-light-secondary border-0" rows="4" placeholder="Write your post here..."></textarea>
-                </div>
-                <div class="card-footer border-top">
-                    <div class="row">
-                        <div class="col">
-                            <button class="btn btn-link btn-sm text-secondary"><i class="material-icons">chat</i></button>
-                            <button class="btn btn-link btn-sm text-secondary"><i class="material-icons">collections</i></button>
-                            <button class="btn btn-link btn-sm text-secondary"><i class="material-icons">camera_alt</i></button>
-                            <button class="btn btn-link btn-sm text-secondary"><i class="material-icons">date_range</i></button>
 
-                        </div>
-                        <div class="col-auto ">
-                            <button class="btn btn-rounded btn-sm pink-gradient text-uppercase pl-3"><span class="text-hide-xs">Post</span> <i class="material-icons">send</i> </button>
-                        </div>
-                    </div>
-                </div>
+            <span id="post_link">написать</span>
+            <span id="post_create"></span>
             </div>
 
             {% include 'profile/posts.html' %}
@@ -51,4 +37,9 @@
 
 {% include 'profile/foto_swiper_modal.html' %}
 
+<script>
+  $( "#post_link" ).click(function(){
+    $('#post_create').html('').load("{% url 'post_add_user' uuid=user.uuid %}");
+  }
+</script>
 {% endblock %}
