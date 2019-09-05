@@ -11,7 +11,6 @@ from moderation.models import ModeratedObject
 
 from django.conf import settings
 from common.models import Emoji
-from common.utils.helpers import delete_file_field, sha256sum, extract_usernames_from_string
 from imagekit.models import ProcessedImageField
 from posts.helpers import upload_to_post_image_directory, upload_to_post_video_directory
 
