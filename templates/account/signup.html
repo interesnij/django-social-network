@@ -27,8 +27,8 @@
                             <div class="my-4 row">
                                 <div class="col">
                                     <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" name="are_guidelines_accepted" class="custom-control-input" id="id_are_guidelines_accepted" checked>
-                                        <label class="custom-control-label" for="id_are_guidelines_accepted">
+                                        <input type="checkbox" id="id_accepted" onchange="document.getElementById('register_ajax').disabled = !this.checked;" class="custom-control-input">
+                                        <label class="custom-control-label" for="id_accepted">
                                            Я принимаю <a href="">Правила пользования сайтом трезвый.рус</a>.
                                         </label>
                                     </div>
@@ -36,7 +36,7 @@
                             </div>
                             <small class="form-text text-muted api-response"></small>
                             <div class="text-left mb-4">
-                                <button type="submit" class=" btn btn-primary pink-gradient">Создать аккаунт</button>
+                                <button type="submit" class=" btn btn-primary pink-gradient" id="register_ajax">Создать аккаунт</button>
                                 <a href="" class="float-right btn btn-outline-primary">Уже есть аккаунт</a>
                             </div>
 
