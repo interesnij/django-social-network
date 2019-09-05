@@ -9,6 +9,7 @@ from rest_framework.response import Response
 class RegisterSerializer(serializers.Serializer):
     first_name = serializers.CharField(required=True, write_only=True)
     last_name = serializers.CharField(required=True, write_only=True)
+    email = serializers.EmailField(required=allauth_settings.EMAIL_REQUIRED)
     are_guidelines_accepted = serializers.BooleanField()
 
     def get_cleaned_data(self):
@@ -17,6 +18,7 @@ class RegisterSerializer(serializers.Serializer):
             'last_name': self.validated_data.get('last_name', ''),
             'password1': self.validated_data.get('password1', ''),
             'email': self.validated_data.get('email', ''),
+            'are_guidelines_accepted': self.validated_data.get('are_guidelines_accepted', ''),
             }
 
 
