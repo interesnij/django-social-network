@@ -44,7 +44,7 @@ class User(AbstractUser):
         verbose_name_plural = 'пользователи'
 
     def __str__(self):
-        return str(self.uuid)
+        return self.last_name 
 
 
 class UserBlock(models.Model):
