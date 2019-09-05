@@ -40,6 +40,6 @@
 <script>
   $( "#post_link" ).click(function(){
     $('#post_create').html('').load("{% url 'post_add_user' uuid=1 %}");
-  }
+  })
 </script>
 {% endblock %}
