@@ -6,16 +6,16 @@ from django.db.models import Q
 from django.db.models import Count
 from pilkit.processors import ResizeToFill, ResizeToFit
 from communities.helpers import upload_to_community_avatar_directory, upload_to_community_cover_directory
-#from posts.models import Post
+from posts.models import Post
 from imagekit.models import ProcessedImageField
-#from users.models import User
-#from moderation.models import ModeratedObject, ModerationCategory
+from users.models import User
+from moderation.models import ModeratedObject, ModerationCategory
 
 
 
 class Community(models.Model):
-    #moderated_object = GenericRelation(ModeratedObject, related_query_name='communities',verbose_name="Модерация")
-    #creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_communities', null=False,blank=False,verbose_name="Создатель")
+    moderated_object = GenericRelation(ModeratedObject, related_query_name='communities',verbose_name="Модерация")
+    creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_communities', null=False,blank=False,verbose_name="Создатель")
     name = models.CharField(max_length=100, blank=False, null=False,
                             unique=True, verbose_name="Имя")
     title = models.CharField(max_length=100, blank=False, null=False,verbose_name="Заголовок" )
@@ -31,8 +31,8 @@ class Community(models.Model):
                                 upload_to=upload_to_community_cover_directory,
                                 processors=[ResizeToFit(width=1024, upscale=False)],verbose_name="Фон")
     created = models.DateTimeField(editable=False,verbose_name="Создано")
-    #starrers = models.ManyToManyField(User, related_name='favorite_communities',verbose_name="Подписчики")
-    #banned_users = models.ManyToManyField(User, related_name='banned_of_communities',verbose_name="Черный список")
+    starrers = models.ManyToManyField(User, related_name='favorite_communities',verbose_name="Подписчики")
+    banned_users = models.ManyToManyField(User, related_name='banned_of_communities',verbose_name="Черный список")
     COMMUNITY_TYPE_PRIVATE = 'T'
     COMMUNITY_TYPE_PUBLIC = 'P'
     COMMUNITY_TYPES = (
