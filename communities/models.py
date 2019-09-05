@@ -60,7 +60,7 @@ class CommunityMembership(models.Model):
     community = models.ForeignKey(Community, on_delete=models.CASCADE, related_name='memberships', null=False,blank=False,verbose_name="Сообщество")
     is_administrator = models.BooleanField(default=False,verbose_name="Это администратор")
     is_moderator = models.BooleanField(default=False,verbose_name="Это модератор")
-    created = models.DateTimeField(editable=False,verbose_name="Создано")
+    created = models.DateTimeField(default=timezone.now, editable=False,verbose_name="Создано")
 
     def __str__(self):
         return self.user.last_name
@@ -74,7 +74,7 @@ class CommunityLog(models.Model):
     target_user = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='+', null=True,blank=False,verbose_name="Кого модерируют")
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='+', null=True, blank=True,verbose_name="Пост")
     community = models.ForeignKey(Community, on_delete=models.CASCADE, related_name='logs',null=False,blank=False,verbose_name="Сообщество")
-    created = models.DateTimeField(editable=False,verbose_name="Создан")
+    created = models.DateTimeField(default=timezone.now, editable=False,verbose_name="Создан")
 
     ACTION_TYPES = (
         ('B', 'Заблокировать'),
