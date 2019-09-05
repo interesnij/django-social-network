@@ -11,8 +11,6 @@ from django.conf import settings
 class User(AbstractUser):
 
     email = models.EmailField(unique=True, null=False, blank=False,verbose_name="Емаил")
-    first_name = None
-    last_name = None
     connections_circle = models.ForeignKey('circles.Circle', on_delete=models.CASCADE, related_name='+',null=True, blank=True)
     is_email_verified = models.BooleanField(default=False)
     are_guidelines_accepted = models.BooleanField(default=False)
