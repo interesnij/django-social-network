@@ -3,7 +3,7 @@
   {{ form.media }}
     <br>
 
-    {{ form.text }}
+    {{ form.text|safe }}
     <br>
     {{ form.comments_enabled.label }}
     {{ form.comments_enabled }}
