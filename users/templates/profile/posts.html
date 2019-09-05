@@ -1,6 +1,6 @@
 {% load staticfiles humanize %}
 
-{% for object in user.post.set_all %}
+{% for object in user.post.creator.set_all %}
 <div class="card mb-4">
     <div class="card-header border-bottom">
         <div class="media">
