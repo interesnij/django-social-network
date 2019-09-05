@@ -152,6 +152,17 @@
                         </a>
                     </div>
                     {% else %}
+                    <a class="btn header-color-secondary dropdown-toggle username"
+                       href="#"
+                       role="button"
+                       id="dropdownMenuLink"
+                       data-toggle="dropdown"
+                       aria-haspopup="true"
+                       aria-expanded="false">
+                       <h5 class="text-hide-xs">
+                          <span class="header-color-primary">Привет, гость!</span>
+                       </h5>
+                    </a>
                     <div class="dropdown-menu dropdown-menu-right profile-dropdown" aria-labelledby="dropdownMenuLink">
                         <a class="dropdown-item pink-gradient-active" href="{% url 'login' %}">
                             <div class="row align-items-center">
