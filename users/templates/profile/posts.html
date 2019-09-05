@@ -24,35 +24,6 @@
         </div>
     </div>
     <div class="card-body">
-        <div class="carosel mb-2">
-            <div data-space-between="0" data-slides-per-view="auto" class="swiper-container swiper-init swiper-post">
-                <div class="swiper-wrapper swipegallery" itemscope>
-                    <figure class="m-0 swiper-slide" itemprop="associatedMedia" itemscope>
-                        <a href="{% static 'images/fashion-1063100_640.jpg' %}" class="   swipebox" itemprop="contentUrl" data-size="640x426">
-                            <img src="{% static 'images/fashion-1063100_640.jpg' %}" alt="" itemprop="thumbnail">
-                        </a>
-                    </figure>
-                    <figure class="m-0 swiper-slide" itemprop="associatedMedia" itemscope>
-                        <a href="{% static 'sunflowers-3640935_640.jpg' %}" class=" swipebox" itemprop="contentUrl" data-size="640x426">
-                            <img src="{% static 'sunflowers-3640935_640.jpg' %}" alt="" itemprop="thumbnail">
-                        </a>
-                    </figure>
-                    <figure class="m-0 swiper-slide" itemprop="associatedMedia" itemscope>
-                        <a href="{% static 'images/singer-690117_640.jpg' %}" class=" swipebox" itemprop="contentUrl" data-size="640x426">
-                            <img src="{% static 'images/singer-690117_640.jpg' %}" alt="" itemprop="thumbnail">
-                        </a>
-                    </figure>
-                    <figure class="m-0 swiper-slide" itemprop="associatedMedia" itemscope>
-                        <a href="{% static 'images/news_small3.jpg' %}" class="   swipebox" itemprop="contentUrl" data-size="300x300">
-                            <img src="{% static 'images/news_small3.jpg' %}" alt="" itemprop="thumbnail">
-                        </a>
-                    </figure>
-                </div>
-                <!-- Add Arrows -->
-                <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div>
-            </div>
-        </div>
         <p class="mb-0 content-color-secondary">{{ object.text|safe }}</p>
     </div>
     <div class="card-footer border-top py-2">

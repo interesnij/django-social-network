@@ -66,8 +66,8 @@ CKEDITOR_UPLOAD_PATH = 'media/'
 CKEDITOR_CONFIGS = {
        'default': {
            'toolbar': None,
-           'height': 400,
-           'width': 900,
+           'height': 300,
+           'width': 100%,
            'removePlugins': 'stylesheetparser',
            'extraPlugins': 'codesnippet',
        },
