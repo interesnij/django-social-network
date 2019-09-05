@@ -26,11 +26,7 @@ class Community(models.Model):
     avatar = ProcessedImageField(blank=False, null=True, format='JPEG',
                                  options={'quality': 90}, processors=[ResizeToFill(500, 500)],
                                  upload_to=upload_to_community_avatar_directory,verbose_name="Аватар")
-    cover = ProcessedImageField(blank=False, null=True, format='JPEG',
-                                options={'quality': 90},
-                                upload_to=upload_to_community_cover_directory,
-                                processors=[ResizeToFit(width=1024, upscale=False)],verbose_name="Фон")
-    created = models.DateTimeField(editable=False,verbose_name="Создано")
+    created = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создано")
     starrers = models.ManyToManyField(User, related_name='favorite_communities',verbose_name="Подписчики")
     banned_users = models.ManyToManyField(User, related_name='banned_of_communities',verbose_name="Черный список")
     COMMUNITY_TYPE_PRIVATE = 'T'
@@ -40,7 +36,6 @@ class Community(models.Model):
         (COMMUNITY_TYPE_PRIVATE, 'Приватное'),
     )
     type = models.CharField(editable=False, blank=False, null=False, choices=COMMUNITY_TYPES, default='P', max_length=2)
-    color = models.CharField(max_length=10, blank=False, null=False,verbose_name="Цвет")
     user_adjective = models.CharField(max_length=100,
                                       blank=False, null=True,verbose_name="Какой-то пользователь")
     users_adjective = models.CharField(max_length=100,blank=False, null=True,verbose_name="Какие-то пользователи")
