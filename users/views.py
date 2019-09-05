@@ -11,11 +11,11 @@ class AllUsers(TemplateView,CategoryListMixin):
 
 
 class ProfileUserView(TemplateView, CategoryListMixin):
-    template_name = 'user.html'
+	template_name = 'user.html'
 
-    def get(self,request,*args,**kwargs):
+	def get(self,request,*args,**kwargs):
 		user=User.models.get(pk=self.kwargs["pk"])
-        return super(ProfileUserView,self).get(request,*args,**kwargs)
+		return super(ProfileUserView,self).get(request,*args,**kwargs)
 
     def get_context_data(self, **kwargs):
         context = super(ProfileUserView, self).get_context_data(**kwargs)
