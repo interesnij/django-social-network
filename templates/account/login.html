@@ -7,6 +7,7 @@
 <div class="container-fluid h-100 h-sm-auto">
             <div class="row h-100 h-sm-auto">
                 <div class="col-12 col-md-6 h-md-100  h-sm-auto order-2 order-md-1">
+                  {% if user.is_anonymous %}
                     <form action="{% url 'rest_login' %}" class="row align-items-center h-100 h-sm-auto ajax-form">
                       {% csrf_token %}
                         <div class="col-12 col-md-10 col-lg-8 col-xl-6 mx-auto">
@@ -32,6 +33,12 @@
 
                         </div>
                     </form>
+                    {% else %}
+                    <h4 class="font-weight-light mb-3 mt-4 content-color-secondary text-left">Вход
+                      Вы уже вошли в систему. <a href="{% url 'profile-home' %}">Перейти на свою страницу</a>
+                    </h4>
+                    {% endif %}
+
                 </div>
                 <div class="col-12 col-md-6 h-md-100 order-1 order-md-2 min-height-300 p-0 bg-dark ">
                     <div class="carosel swiper-location-carousel h-100 h-sm-auto">
