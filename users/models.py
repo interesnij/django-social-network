@@ -9,7 +9,7 @@ from django.conf import settings
 
 
 class User(AbstractUser):
-    
+
     email = models.EmailField(unique=True, null=False, blank=False,verbose_name="Емаил")
     connections_circle = models.ForeignKey('circles.Circle', on_delete=models.CASCADE, related_name='+',null=True, blank=True)
     is_email_verified = models.BooleanField(default=False)
@@ -27,7 +27,7 @@ class User(AbstractUser):
         verbose_name_plural = 'пользователи'
 
     def __str__(self):
-        return self.last_name
+        return self.uuid
 
 
 class UserBlock(models.Model):
