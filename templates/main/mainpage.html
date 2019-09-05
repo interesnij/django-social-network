@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load staticfiles humanize %}
-{% block title %}Главная страница{% endblock %}
+{% block title %}Новости{% endblock %}
 {% block meta %}
 <meta property="og:url" content="dvizhenie.tv" />
 <meta property="og:type" content="website" />
@@ -9,66 +9,8 @@
 {% endblock %}
 {% block content %}
 
-<div class="container-fluid bg-light-opac">
-    <div class="row">
-        <div class="container my-3 main-container">
-            <div class="row align-items-center">
-                <div class="col">
-                    <h2 class="content-color-primary page-title">Social</h2>
-                    <p class="content-color-secondary page-sub-title">Creative, amazing, awesome and unique</p>
-                </div>
-                <div class="col-auto">
-                    <button class="btn btn-rounded pink-gradient text-uppercase" data-toggle="modal" data-target="#createOrder"><i class="material-icons">add</i> <span class="text-hide-xs">Profile Edit</span></button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
+ЗДЕСЬ БУДЕТ ЛЕНТА ТАЙМЛАЙН. ОБНОВЛЕНИЯ ДРУЗЕЙ, СООБЩЕСТВ И ПРОЧИХ НОВОСТЕЙ
 
-{% include 'main/carusel.html' %}
-
-<div class="container mt-4 main-container">
-    <div class="row">
-        <div class="col-12 col-md-12 col-lg-4 order-2 order-lg-1">
-
-            {% include 'main/card_profile.html' %}
-
-            {% include 'main/gallery.html' %}
-
-            {% include 'main/frends.html' %}
-        </div>
-        <div class="col-12 col-md-12 col-lg-8 order-1 order-lg-2">
-            <div class="card mb-4">
-                <div class="card-body p-0">
-                    <textarea class="form-control bg-light-secondary border-0" rows="4" placeholder="Write your post here..."></textarea>
-                </div>
-                <div class="card-footer border-top">
-                    <div class="row">
-                        <div class="col">
-                            <button class="btn btn-link btn-sm text-secondary"><i class="material-icons">chat</i></button>
-                            <button class="btn btn-link btn-sm text-secondary"><i class="material-icons">collections</i></button>
-                            <button class="btn btn-link btn-sm text-secondary"><i class="material-icons">camera_alt</i></button>
-                            <button class="btn btn-link btn-sm text-secondary"><i class="material-icons">date_range</i></button>
-
-                        </div>
-                        <div class="col-auto ">
-                            <button class="btn btn-rounded btn-sm pink-gradient text-uppercase pl-3"><span class="text-hide-xs">Post</span> <i class="material-icons">send</i> </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            {% include 'main/posts.html' %}
-
-        </div>
-      </div>
-    </div>
-
-
-
-{% include 'main/modal_form.html' %}
-
-{% include 'main/foto_swiper_modal.html' %}
 
 {% endblock %}
