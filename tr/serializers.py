@@ -4,7 +4,6 @@ from allauth.account.adapter import get_adapter
 from allauth.account.utils import setup_user_email
 from rest_framework import serializers
 from rest_framework.response import Response
-from profiles.models import UserProfile
 
 
 class RegisterSerializer(serializers.Serializer):
@@ -27,7 +26,5 @@ class RegisterSerializer(serializers.Serializer):
         self.cleaned_data = self.get_cleaned_data()
         adapter.save_user(request, user, self)
         setup_user_email(request, user, [])
-        new_profile=UserProfile()
-        new_profile.save(pk=user.pk)
         user.save()
         return user
