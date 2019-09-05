@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'moderation',
     'notifications',
     'main',
+    'ckeditor',
+    'ckeditor_uploader',
 ]
 
 REST_SESSION_LOGIN = True
@@ -53,11 +55,23 @@ REST_AUTH_REGISTER_SERIALIZERS = {
 }
 
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
-ACCOUNT_EMAIL_REQUIRED = True  
+ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_ADAPTER = 'tr.adapter.MyAccountAdapter'
 AUTH_USER_MODEL = 'users.User'
 
 SITE_ID = 1
+
+CKEDITOR_UPLOAD_PATH = 'media/'
+
+CKEDITOR_CONFIGS = {
+       'default': {
+           'toolbar': None,
+           'height': 400,
+           'width': 900,
+           'removePlugins': 'stylesheetparser',
+           'extraPlugins': 'codesnippet',
+       },
+    }
 
 
 MIDDLEWARE = [

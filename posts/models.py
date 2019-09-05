@@ -2,13 +2,10 @@ import uuid
 from datetime import timedelta
 from django.contrib.contenttypes.fields import GenericRelation
 from django.db import models
-from django.db.models import Q
 from django.utils import timezone
-from django.db.models import Count
 from pilkit.processors import ResizeToFit
-from rest_framework.exceptions import ValidationError
 from moderation.models import ModeratedObject
-
+from ckeditor_uploader.fields import RichTextUploadingField
 from django.conf import settings
 from common.models import Emoji
 from imagekit.models import ProcessedImageField
@@ -17,15 +14,25 @@ from posts.helpers import upload_to_post_image_directory, upload_to_post_video_d
 
 class Post(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, db_index=True,verbose_name="uuid")
-    text = models.TextField(max_length=1000, blank=False, null=True,verbose_name="Текст")
+    text = RichTextUploadingField(default='', verbose_name="Полное содержание")
     created = models.DateTimeField(default=timezone.now, editable=False, db_index=True,verbose_name="Создан")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='posts',verbose_name="Создатель")
-    comments_enabled = models.BooleanField(default=True, editable=False, null=False,verbose_name="Разрешить комментарии")
-    public_reactions = models.BooleanField(default=True, editable=False, null=False,verbose_name="Публичная реакция")
+    comments_enabled = models.BooleanField(default=True, null=False,verbose_name="Разрешить комментарии")
+    public_reactions = models.BooleanField(default=True, null=False,verbose_name="Публичная реакция")
     community = models.ForeignKey('communities.Community', on_delete=models.CASCADE, related_name='posts',null=True,blank=True,verbose_name="Сообщество")
     is_edited = models.BooleanField(default=False,verbose_name="Изменено")
     is_closed = models.BooleanField(default=False,verbose_name="Закрыто")
     is_deleted = models.BooleanField(default=False,verbose_name="Удалено")
+    views=models.IntegerField(default=0,verbose_name="Просмотры")
+
+    def __str__(self):
+        return "Пост %s %s" % (self.creator, self.created)
+
+    class Meta:
+        ordering=["-created"]
+        verbose_name="пост"
+        verbose_name_plural="посты"
+
 
 
 class PostImage(models.Model):

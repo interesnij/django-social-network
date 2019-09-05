@@ -1,0 +1,29 @@
+<form action="" id="FORM-POST" method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+    <br>
+    {{ form.text.label }}
+    {{ form.text }}
+    <br>
+    {{ form.comments_enabled.label }}
+    {{ form.comments_enabled }}
+    <br>
+    <button type="submit" class="btn btn-round btn-b">Добавить</button>
+</form>
+
+      <script type="text/javascript">
+        var frm = $('#FORM-POST');
+        frm.submit(function () {
+            $.ajax({
+                type: frm.attr('method'),
+                url: "{% url 'post_add_user' uuid=request.user.uuid %}",
+                data: frm.serialize(),
+                success: function (data) {
+                    console.log("Success!")
+                },
+                error: function(data) {
+                    console.log("Error!")
+                }
+            });
+            return false;
+        });
+        </script>
