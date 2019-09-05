@@ -78,6 +78,30 @@
                 tour.start();
             });
         </script>
+				<script>
+								'use strict';
+								var mySwiper = new Swiper('.swiper-signin', {
+										slidesPerView: 1,
+										spaceBetween: 0,
+										autoplay: true,
+										pagination: {
+												el: '.swiper-pagination',
+												clickable: true,
+										}
+								});
 
+								$(window).on('resize', function() {
+										var mySwiper = new Swiper('.swiper-signin', {
+												slidesPerView: 1,
+												spaceBetween: 0,
+												autoplay: true,
+												pagination: {
+														el: '.swiper-pagination',
+														clickable: true,
+												}
+										});
+								});
+
+						</script>
 	</body>
 </html>
