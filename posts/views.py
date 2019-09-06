@@ -39,7 +39,7 @@ class PostUserMediumCreate(TemplateView):
     success_url="/"
 
     def get(self,request,*args,**kwargs):
-        self.form=PostMediumForm(initial={"creator":request.user})
+        self.form=PostMediumForm(initial={"user":request.user})
         return super(PostUserMediumCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
