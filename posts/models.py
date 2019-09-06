@@ -29,7 +29,7 @@ class Post(models.Model):
                                           'plugin.js',
                                           )],
                                       )
-    content_medium = RichTextUploadingField(default='',
+    content_medium = RichTextUploadingField(blank=True,
                                       config_name='medium',
                                       external_plugin_resources=[(
                                           'youtube',
