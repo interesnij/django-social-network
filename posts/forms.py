@@ -4,7 +4,7 @@ from ckeditor_uploader.widgets import CKEditorUploadingWidget
 
 
 class PostHardForm(forms.ModelForm):
-	content_hard = forms.CharField(widget=CKEditorUploadingWidget, label='')
+	content = forms.CharField(widget=CKEditorUploadingWidget, label='')
 
 	class Meta:
 		model = Post
