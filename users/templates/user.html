@@ -48,7 +48,13 @@ iframe{
             </div>
 
             {% include 'profile/posts.html' %}
-
+            <div class="load">
+              {% if page_obj.has_next %}
+                <a class="infinite-more-link" href="?page={{ page_obj.next_page_number }}">
+                  <img src="{% static 'images/loading.gif' %}">
+                </a>
+              {% endif %}
+            </div>
         </div>
       </div>
     </div>
@@ -69,7 +75,18 @@ iframe{
   });
 
 </script>
-
+<script src="{% static 'scripts/infinite.min.js' %}" type="text/javascript"></script>
+<script>
+    var infinite = new Waypoint.Infinite({
+      element: $('.infinite-container')[0],
+      onBeforePageLoad: function () {
+        $('.load').show();
+      },
+      onAfterPageLoad: function ($items) {
+        $('.load').hide();
+      }
+    });
+  </script>
 <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
 <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
 {% endblock %}
