@@ -1,4 +1,4 @@
-<form action="" id="FORM-POST" method="post">
+<form action="" id="FORM-POST2" method="post">
   {% csrf_token %}
 
     <br>
@@ -11,7 +11,7 @@
 
 
 <script type="text/javascript">
-    var frm = $('#FORM-POST');
+    var frm = $('#FORM-POST2');
     frm.submit(function () {
         $.ajax({
             type: frm.attr('method'),
