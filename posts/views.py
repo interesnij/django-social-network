@@ -31,7 +31,7 @@ class PostUserHardCreate(TemplateView):
                 return HttpResponse ('!')
         else:
             self.form=PostHardForm()
-        return super(PostUserHardCreate,self).post(request,*args,**kwargs)
+        return super(PostUserHardCreate,self).get(request,*args,**kwargs)
 
 class PostUserMediumCreate(TemplateView):
     template_name="post_medium_add.html"
@@ -57,7 +57,7 @@ class PostUserMediumCreate(TemplateView):
                 return HttpResponse ('!')
         else:
             self.form=PostMediumForm()
-        return super(PostUserMediumCreate,self).post(request,*args,**kwargs)
+        return super(PostUserMediumCreate,self).get(request,*args,**kwargs)
 
 class PostUserLiteCreate(TemplateView):
     template_name="post_lite_add.html"
@@ -83,4 +83,4 @@ class PostUserLiteCreate(TemplateView):
                 return HttpResponse ('!')
         else:
             self.form=PostLiteForm()
-        return super(PostUserLiteCreate,self).post(request,*args,**kwargs)
+        return super(PostUserLiteCreate,self).get(request,*args,**kwargs)
