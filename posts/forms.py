@@ -11,7 +11,7 @@ class PostHardForm(forms.ModelForm):
 		fields = ['content_hard']
 
 class PostMediumForm(forms.ModelForm):
-	content_medium = forms.CharField(widget=CKEditorUploadingWidget, label='')
+	
 
 	class Meta:
 		model = Post
