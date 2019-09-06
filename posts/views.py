@@ -73,7 +73,7 @@ class PostUserLiteCreate(TemplateView):
         return context
 
     def post(self,request,*args,**kwargs):
-        self.form=PostLiteForm(request.POST)
+        self.form=PostLiteForm(request.POST,request.FILES)
         if self.form.is_valid():
             new_post=self.form.save(commit=False)
             new_post.creator=self.request.user

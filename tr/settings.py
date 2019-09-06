@@ -78,6 +78,7 @@ CKEDITOR_CONFIGS = {
         'toolbar_ver2': [
             ['Bold', 'Link', 'Unlink', 'Image'],
         ],
+        'removePlugins': 'stylesheetparser',
         'extraPlugins': ','.join(['youtube']),
     },
     'medium': {
@@ -88,6 +89,7 @@ CKEDITOR_CONFIGS = {
             ['Link', 'Unlink', 'Image'],
             ['RemoveFormat', 'Source']
         ],
+        'removePlugins': 'stylesheetparser',
         'extraPlugins': ','.join(['youtube']),
     }
     }
