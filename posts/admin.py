@@ -11,7 +11,7 @@ class PostCommentInline(admin.TabularInline):
     model = PostComment
 
     readonly_fields = (
-        'text',
+        'content',
         'created'
     )
 
