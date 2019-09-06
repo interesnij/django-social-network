@@ -69,6 +69,9 @@ iframe{
   $( "#post_lite" ).click(function(){
     $('#post_create').empty();
     $('#post_create').html('').load("{% url 'post_add_lite_user' pk=user.pk %}");
-  })
+  });
+  $params = array();
+      $params ['toolbar'] = "lite";
+      $editor = new Ckeditor($params);
 </script>
 {% endblock %}
