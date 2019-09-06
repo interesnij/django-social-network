@@ -62,6 +62,7 @@ AUTH_USER_MODEL = 'users.User'
 SITE_ID = 1
 
 CKEDITOR_UPLOAD_PATH = 'uploads/'
+CKEDITOR_FILENAME_GENERATOR = 'posts.helpers.generate_uuid4_filename'
 
 CKEDITOR_CONFIGS = {
        'default': {
