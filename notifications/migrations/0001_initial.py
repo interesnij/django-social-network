@@ -10,7 +10,6 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('posts', '0001_initial'),
         ('contenttypes', '0002_remove_content_type_name'),
         ('communities', '0001_initial'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
