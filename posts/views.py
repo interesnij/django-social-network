@@ -21,7 +21,7 @@ class PostUserCreate(TemplateView):
         return context
 
     def post(self,request,*args,**kwargs):
-        self.form=PostForm(request.POST,request.FILES)
+        self.form=PostForm(request.POST)
         if self.form.is_valid():
             new_post=self.form.save(commit=False)
             new_post.creator=self.request.user
