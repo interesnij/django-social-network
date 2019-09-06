@@ -5,7 +5,7 @@ from profiles.models import UserProfile
 from datetime import datetime, timedelta
 from users.models import User
 from posts.models import Post
-from posts.forms import PostHardForm, PostLiteForm, PostMediumForm 
+from posts.forms import PostHardForm, PostLiteForm, PostMediumForm
 
 
 class AllUsers(TemplateView,CategoryListMixin):
@@ -14,7 +14,7 @@ class AllUsers(TemplateView,CategoryListMixin):
 
 class ProfileUserView(TemplateView, CategoryListMixin):
 	template_name = 'user.html'
-	post_form=PostForm
+	post_form=PostHardForm
 
 	def get(self,request,*args,**kwargs):
 		self.user=User.objects.get(pk=self.kwargs["pk"])
