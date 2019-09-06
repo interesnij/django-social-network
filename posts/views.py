@@ -27,6 +27,5 @@ class PostUserCreate(TemplateView):
             new_post.creator=self.request.user
             new_post=self.form.save()
 
-            if request.is_ajax() :
-                return HttpResponse ('!')
+            return super(PostUserCreate,self).post(request,*args,**kwargs)
         return super(PostUserCreate,self).post(request,*args,**kwargs)
