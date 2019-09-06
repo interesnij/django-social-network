@@ -8,14 +8,14 @@ class PostHardForm(forms.ModelForm):
 
 	class Meta:
 		model = Post
-		fields = ['content_hard', 'content_medium']
+		fields = ['content_hard']
 
 class PostMediumForm(forms.ModelForm):
 	content_medium = forms.CharField(widget=CKEditorUploadingWidget, label='')
 
 	class Meta:
 		model = Post
-		fields = ['content_medium']
+		fields = ['content_hard', 'content_medium']
 
 class PostLiteForm(forms.ModelForm):
 	content_lite = forms.CharField(widget=CKEditorUploadingWidget, label='')
