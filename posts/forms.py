@@ -14,7 +14,7 @@ class PostMediumForm(forms.ModelForm):
 
 	class Meta:
 		model = Post
-		fields = ['all']
+		fields = ['__all__']
 
 class PostLiteForm(forms.ModelForm):
 
