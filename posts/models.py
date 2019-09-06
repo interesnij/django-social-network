@@ -18,7 +18,7 @@ class Post(models.Model):
                                       config_name='default',
                                       external_plugin_resources=[(
                                           'youtube',
-                                          '/static/base/vendor/ckeditor_plugins/youtube/youtube/',
+                                          '/static/ckeditor_plugins/youtube/youtube/',
                                           'plugin.js',
                                           )],
                                       )
