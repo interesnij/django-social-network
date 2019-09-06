@@ -21,6 +21,8 @@ class User(AbstractUser):
 
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True,verbose_name="uuid")
     invite_count = models.SmallIntegerField(default=0,verbose_name="Кол-во приглашений")
+    last_activity= models.DateTimeField(
+        default=timezone.now, blank=True, verbose_name='Активность')
 
     class Meta:
         verbose_name = 'пользователь'

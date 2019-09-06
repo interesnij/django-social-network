@@ -44,18 +44,12 @@ iframe{
             </div>
            </span>
             <div class="card mb-4">
-            <span id="post_create"></span>
-            </div>
-            <div class="infinite-container">
-            {% include 'profile/posts.html' %}
+              <span id="post_create"></span>
             </div>
 
-            <div class="load">
-              {% if page_obj.has_next %}
-                <a class="infinite-more-link" href="?page={{ page_obj.next_page_number }}">
-                  <img src="{% static 'images/loading.gif' %}">
-                </a>
-              {% endif %}
+            {% include 'profile/posts.html' %}
+
+
             </div>
         </div>
       </div>
@@ -77,19 +71,7 @@ iframe{
   });
 
 </script>
-<script src="{% static 'scripts/jquery.waypoints.min.js' %}" type="text/javascript"></script>
-<script src="{% static 'scripts/infinite.min.js' %}" type="text/javascript"></script>
-<script>
-    var infinite = new Waypoint.Infinite({
-      element: $('.infinite-container')[0],
-      onBeforePageLoad: function () {
-        $('.load').show();
-      },
-      onAfterPageLoad: function ($items) {
-        $('.load').hide();
-      }
-    });
-  </script>
+
 <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
 <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
 {% endblock %}
