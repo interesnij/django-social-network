@@ -12,12 +12,12 @@
 
 
 <script type="text/javascript">
-    var frm = $('#FORM-POST3');
-    frm.submit(function () {
+    var frm2 = $('#FORM-POST3');
+    frm2.submit(function () {
         $.ajax({
-            type: frm.attr('method'),
+            type: frm2.attr('method'),
             url: "{% url 'post_add_medium_user' pk=request.user.pk %}",
-            data: frm.serialize(),
+            data: frm2.serialize(),
             success: function (data) {
 
             },
