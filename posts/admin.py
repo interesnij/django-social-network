@@ -10,7 +10,7 @@ class PostAdmin(admin.ModelAdmin):
     list_display = (
         'creator',
         'created',
-        'community',
+        #'community',
     )
 
 
