@@ -11,6 +11,7 @@ class PostsView(TemplateView):
 class PostUserHardCreate(TemplateView):
     template_name="post_hard_add.html"
     form=None
+    success_url="/"
 
     def get(self,request,*args,**kwargs):
         self.form=PostHardForm(initial={"creator":request.user})
@@ -30,8 +31,6 @@ class PostUserHardCreate(TemplateView):
 
             if request.is_ajax() :
                 return HttpResponse ('!')
-        else:
-            self.form=PostHardForm()
         return super(PostUserHardCreate,self).get(request,*args,**kwargs)
 
 class PostUserMediumCreate(TemplateView):
@@ -62,6 +61,7 @@ class PostUserMediumCreate(TemplateView):
 class PostUserLiteCreate(TemplateView):
     template_name="post_lite_add.html"
     form=None
+    success_url="/"
 
     def get(self,request,*args,**kwargs):
         self.form=PostLiteForm(initial={"creator":request.user})
@@ -81,6 +81,4 @@ class PostUserLiteCreate(TemplateView):
 
             if request.is_ajax() :
                 return HttpResponse ('!')
-        else:
-            self.form=PostLiteForm()
         return super(PostUserLiteCreate,self).get(request,*args,**kwargs)
