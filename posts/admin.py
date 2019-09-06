@@ -3,34 +3,9 @@ from circles.models import Circle
 from posts.models import Post, PostImage, PostComment, PostReaction
 
 
-class PostImageInline(admin.TabularInline):
-    model = PostImage
-
-
-class PostCommentInline(admin.TabularInline):
-    model = PostComment
-
-    readonly_fields = (
-        'content',
-        'created',
-        'uuid',
-    )
-
-
-class PostReactionInline(admin.TabularInline):
-    model = PostReaction
-
-    readonly_fields = [
-        'emoji'
-    ]
-
 
 class PostAdmin(admin.ModelAdmin):
-    inlines = [
-        PostReactionInline,
-        PostImageInline,
-        PostCommentInline,
-    ]
+
 
     list_display = (
         'creator',
