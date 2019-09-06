@@ -15,7 +15,7 @@ class PostMediumForm(forms.ModelForm):
 
 	class Meta:
 		model = Post
-		fields = ['content_medium']
+		exclude = ['content_hard','content_lite','created','creator','comments_enabled','community','is_edited','is_closed','is_deleted','views']
 
 class PostLiteForm(forms.ModelForm):
 	content_lite = forms.CharField(widget=CKEditorUploadingWidget, label='')
