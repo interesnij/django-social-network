@@ -22,9 +22,3 @@ def _upload_to_post_directory_directory(post, filename):
 
     return '%(path)s%(new_filename)s' % {'path': path,
                                          'new_filename': new_filename, }
-
-def generate_uuid4_filename(filename):
-
-    discard, ext = os.path.splitext(filename)
-    basename = uuid.uuid4().urn
-    return ''.join(basename, ext)
