@@ -64,13 +64,22 @@ SITE_ID = 1
 CKEDITOR_UPLOAD_PATH = 'media/'
 
 CKEDITOR_CONFIGS = {
-       'default': {
+       'hard': {
            'toolbar': None,
            'height': 400,
            'width': '100%',
            'removePlugins': 'stylesheetparser',
            'extraPlugins': ','.join(['youtube']),
        },
+       'lite': {
+        'toolbar': 'lite_version',
+        'height': 350,
+        'width': '100%',
+        'lite_version': [
+            ['Bold', 'Link', 'Unlink', 'Image'],
+        ],
+        'extraPlugins': ','.join(['youtube']),
+    },
     }
 
 

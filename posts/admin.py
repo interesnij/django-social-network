@@ -1,6 +1,6 @@
 from django.contrib import admin
 from circles.models import Circle
-from posts.models import Post, PostImage, PostComment, PostReaction
+from posts.models import Post, PostComment
 
 
 

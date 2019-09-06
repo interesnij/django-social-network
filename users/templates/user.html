@@ -16,7 +16,6 @@
   }
 iframe{
   width:100% !important;
-  height:auto !important;
 }
 </style>
 {% include 'profile/carusel.html' %}
@@ -32,7 +31,18 @@ iframe{
             {% include 'profile/frends.html' %}
         </div>
         <div class="col-12 col-md-12 col-lg-8 order-1 order-lg-2">
-          <span id="post_link">написать</span>
+          <span id="post_link">
+            <div class="dropdown d-inline-block">
+                <a href="javascript:void(0)" class="icon-circle icon-30 dropdown-toggle caret-none" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="material-icons ">add</i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a id="post_lite" style="cursoor:pointer" class="dropdown-item">Легкий пост</a>
+                    <a id="post_medium" style="cursoor:pointer" class="dropdown-item">Средний пост</a>
+                    <a id="post_hard" style="cursoor:pointer" class="dropdown-item">Сложный пост</a>
+                </div>
+            </div>
+           </span>
             <div class="card mb-4">
             <span id="post_create"></span>
             </div>
@@ -44,8 +54,8 @@ iframe{
     </div>
 
 <script>
-  $( "#post_link" ).click(function(){
-    $('#post_create').html('').load("{% url 'post_add_user' pk=user.pk %}");
+  $( "#post_hard" ).click(function(){
+    $('#post_create').html('').load("{% url 'post_add_hard_user' pk=user.pk %}");
   })
 </script>
 {% endblock %}
