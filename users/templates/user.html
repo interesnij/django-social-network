@@ -46,8 +46,10 @@ iframe{
             <div class="card mb-4">
             <span id="post_create"></span>
             </div>
-
+            <div class="infinite-container">
             {% include 'profile/posts.html' %}
+            </div>
+
             <div class="load">
               {% if page_obj.has_next %}
                 <a class="infinite-more-link" href="?page={{ page_obj.next_page_number }}">
