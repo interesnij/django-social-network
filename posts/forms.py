@@ -4,8 +4,8 @@ from ckeditor_uploader.widgets import CKEditorUploadingWidget
 
 
 class PostForm(forms.ModelForm):
-	content = forms.CharField(widget=CKEditorUploadingWidget, label='')
+	content_hard = forms.CharField(widget=CKEditorUploadingWidget, label='')
 
 	class Meta:
 		model = Post
-		fields = ['content', 'comments_enabled']
+		fields = ['content_hard', 'comments_enabled']
