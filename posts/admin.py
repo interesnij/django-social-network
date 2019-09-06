@@ -12,7 +12,8 @@ class PostCommentInline(admin.TabularInline):
 
     readonly_fields = (
         'content',
-        'created'
+        'created',
+        'uuid',
     )
 
 
