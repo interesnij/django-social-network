@@ -65,21 +65,21 @@ CKEDITOR_UPLOAD_PATH = 'media/'
 
 CKEDITOR_CONFIGS = {
     'default': {
-        'toolbar': 'Custom',
+        'toolbar': 'a1',
         'height': 500,
-        'toolbar_Custom': [
+        'toolbar_a1': [
             ['Bold', 'Link', 'Unlink', 'Image'],
         ],
     },
     'lite': {
-        'toolbar': 'Special',
-        'toolbar_Special': [
+        'toolbar': 'a2',
+        'toolbar_a2': [
             ['Bold'],
         ],
     },
     'medium': {
-        'toolbar': 'Special',
-        'toolbar_Special': [
+        'toolbar': 'a3',
+        'toolbar_a3': [
             ['Bold'],
         ],
     },
