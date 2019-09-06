@@ -70,8 +70,10 @@ iframe{
     $('#post_create').empty();
     $('#post_create').html('').load("{% url 'post_add_lite_user' pk=user.pk %}");
   });
-  
+
       $params ['toolbar'] = "lite";
       $editor = new Ckeditor($params);
 </script>
+<script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+<script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
 {% endblock %}
