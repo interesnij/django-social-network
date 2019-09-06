@@ -69,24 +69,6 @@ iframe{
   });
 
 </script>
-<script type="text/javascript">
-    var frm2 = $('#FORM-POST3');
-    frm2.submit(function () {
-        $.ajax({
-            type: frm2.attr('method'),
-            url: "{% url 'post_add_medium_user' %}",
-            data: frm2.serialize(),
-            success: function (data) {
-              console.log("Nice!!");
-            },
-            error: function(data) {
-                console.log("Возникла непредвидинная ошибка!!");
-            }
-        });
-        return false;
-    });
-</script>
-<script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
-<script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+
 
 {% endblock %}
