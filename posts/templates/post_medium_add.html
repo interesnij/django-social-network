@@ -1,8 +1,10 @@
+{% load staticfiles %}
+
 <form action="" id="FORM-POST3" method="post">
   {% csrf_token %}
 
     <br>
-    {{ form.media }}
+
     {{ form }}
 
     <br>
@@ -30,3 +32,5 @@
         return false;
     });
 </script>
+<script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+<script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
