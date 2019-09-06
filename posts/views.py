@@ -52,6 +52,7 @@ class PostUserMediumCreate(TemplateView):
         if self.form.is_valid():
             new_post=self.form.save(commit=False)
             new_post.creator=self.request.user
+            new_post.content_medium=self.form.cleaned_data['content_medium']
             new_post=self.form.save()
 
             if request.is_ajax() :
