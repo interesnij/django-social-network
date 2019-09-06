@@ -28,4 +28,6 @@ class PostUserCreate(TemplateView):
             new_post=self.form.save()
 
             return super(PostUserCreate,self).post(request,*args,**kwargs)
+        else:
+            self.form=PostForm()
         return super(PostUserCreate,self).post(request,*args,**kwargs)
