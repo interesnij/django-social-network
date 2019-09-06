@@ -70,7 +70,7 @@ iframe{
     $('#post_create').empty();
     $('#post_create').html('').load("{% url 'post_add_lite_user' pk=user.pk %}");
   });
-  $params = array();
+  
       $params ['toolbar'] = "lite";
       $editor = new Ckeditor($params);
 </script>
