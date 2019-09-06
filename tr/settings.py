@@ -64,7 +64,7 @@ SITE_ID = 1
 CKEDITOR_UPLOAD_PATH = 'media/'
 
 CKEDITOR_CONFIGS = {
-       'hard': {
+       'default': {
            'toolbar': None,
            'height': 400,
            'width': '100%',
