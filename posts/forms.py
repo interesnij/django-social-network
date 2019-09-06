@@ -8,18 +8,18 @@ class PostHardForm(forms.ModelForm):
 
 	class Meta:
 		model = Post
-		fields = ['content_hard', 'comments_enabled']
+		exclude = ['views', 'creator']
 
 class PostMediumForm(forms.ModelForm):
 	content_medium = forms.CharField(widget=CKEditorUploadingWidget, label='')
 
 	class Meta:
 		model = Post
-		fields = ['content_medium', 'comments_enabled']
+		exclude = ['views', 'creator']
 
 class PostLiteForm(forms.ModelForm):
 	content_lite = forms.CharField(widget=CKEditorUploadingWidget, label='')
 
 	class Meta:
 		model = Post
-		fields = ['content_lite', 'comments_enabled']
+		exclude = ['views', 'creator']
