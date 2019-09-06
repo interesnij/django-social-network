@@ -14,7 +14,7 @@ class PostMediumForm(forms.ModelForm):
 
 	class Meta:
 		model = Post
-		fields = ['content_medium']
+		
 
 class PostLiteForm(forms.ModelForm):
 
