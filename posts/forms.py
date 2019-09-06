@@ -9,7 +9,7 @@ class PostHardForm(forms.ModelForm):
 		model = Post
 		fields = ['content_hard']
 
-class PostHardForm(forms.ModelForm):
+class PostMediumForm(forms.ModelForm):
 
 	class Meta:
 		model = Post
