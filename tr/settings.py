@@ -61,30 +61,37 @@ AUTH_USER_MODEL = 'users.User'
 
 SITE_ID = 1
 
-CKEDITOR_UPLOAD_PATH = 'media/'
+CKEDITOR_UPLOAD_PATH = 'uploads/'
 
 CKEDITOR_CONFIGS = {
-    'default': {
-        'toolbar': 'Custom',
+       'default': {
+           'toolbar': None,
+           'height': 400,
+           'width': '100%',
+           'removePlugins': 'stylesheetparser',
+           'extraPlugins': ','.join(['youtube']),
+       },
+       'lite': {
+        'toolbar': 'ver2',
+        'height': 350,
         'width': '100%',
-        'height':300,
-        'toolbar_Custom': [
+        'toolbar_ver2': [
             ['Bold', 'Link', 'Unlink', 'Image'],
         ],
-    },
-    'lite': {
-        'toolbar': 'Special',
-        'toolbar_Special': [
-            ['Bold'],
-        ],
+        'extraPlugins': ','.join(['youtube']),
     },
     'medium': {
-        'toolbar': 'Special',
-        'toolbar_Special': [
-            ['Bold'],
+        'toolbar': 'ver3',
+        'toolbar_ver3': [
+            ['Bold', 'Italic', 'Underline'],
+            ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+            ['Link', 'Unlink', 'Image'],
+            ['RemoveFormat', 'Source']
         ],
-    },
-}
+        'extraPlugins': ','.join(['youtube']),
+    }
+    }
+
 
 
 MIDDLEWARE = [
