@@ -27,7 +27,5 @@ class ProfileUserView(TemplateView, CategoryListMixin):
 		context = super(ProfileUserView, self).get_context_data(**kwargs)
 		context['user'] = self.user
 		context['posts'] = self.posts
-		context['hard_form'] = self.hard_form
-		context['medium_form'] = self.medium_form
-		context['lite_form'] = self.lite_form
+		
 		return context
