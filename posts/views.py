@@ -40,8 +40,7 @@ class PostUserMediumCreate(TemplateView):
     success_url="/"
 
     def get(self,request,*args,**kwargs):
-        self.user=User.objects.get(pk=self.kwargs["pk"])
-        self.form=PostMediumForm(initial={"creator":self.user})
+        self.form=PostMediumForm(initial={"creator":self.request.user})
         return super(PostUserMediumCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -51,10 +50,9 @@ class PostUserMediumCreate(TemplateView):
 
     def post(self,request,*args,**kwargs):
         self.form=PostMediumForm(request.POST)
-        self.user=User.objects.get(pk=self.kwargs["pk"])
         if self.form.is_valid():
             new_post=self.form.save(commit=False)
-            new_post.creator=self.user
+            new_post.creator=self.request.user
             new_post=self.form.save()
 
             if request.is_ajax() :
