@@ -1,0 +1,32 @@
+<form action="" id="FORM-POST" method="post">
+  {% csrf_token %}
+
+    <br>
+    {{ form.media }}
+    {{ form }}
+
+    <br>
+    <button type="submit" class="btn btn-round btn-b">Добавить</button>
+</form>
+
+
+<script type="text/javascript">
+    var frm = $('#FORM-POST');
+    frm.submit(function () {
+        $.ajax({
+            type: frm.attr('method'),
+            url: "{% url 'post_add_medium_user' pk=request.user.pk %}",
+            data: new FormData($('form')[0]),
+            contentType: false,
+            cache: false,
+            processData:false,
+            success: function (data) {
+              $('#FORM-POST').
+            },
+            error: function(data) {
+                $("#hack").html("Возникла непредвидинная ошибка!!");
+            }
+        });
+        return false;
+    });
+</script>
