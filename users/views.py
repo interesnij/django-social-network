@@ -14,7 +14,7 @@ class AllUsers(TemplateView,CategoryListMixin):
 
 class ProfileUserView(TemplateView, CategoryListMixin):
 	template_name = 'user.html'
-	forms = PostHardForm
+	form = PostHardForm
 
 	def get(self,request,*args,**kwargs):
 		self.user=User.objects.get(pk=self.kwargs["pk"])
@@ -25,5 +25,6 @@ class ProfileUserView(TemplateView, CategoryListMixin):
 		context = super(ProfileUserView, self).get_context_data(**kwargs)
 		context['user'] = self.user
 		context['posts'] = self.posts
+		context['form'] = self.form
 
 		return context
