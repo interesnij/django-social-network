@@ -4,6 +4,7 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic import TemplateView, RedirectView
+from django.contrib.auth.decorators import login_required
 
 
 urlpatterns = [
@@ -41,5 +42,6 @@ urlpatterns = [
     url(r'^moderation/', include('moderation.urls')),
     url(r'^notifications/', include('notifications.urls')),
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),
+    url(r'^browse/', login_required(never_cache(browse)), name='ckeditor_browse'),
 
 ]  +static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
