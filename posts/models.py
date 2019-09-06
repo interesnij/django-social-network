@@ -21,7 +21,7 @@ class Post(models.Model):
                                           'plugin.js',
                                           )],
                                       )
-    content_lite = RichTextUploadingField(blank=True,
+    content_lite = RichTextUploadingField(blank=True,null=True,
                                       config_name='lite',
                                       external_plugin_resources=[(
                                           'youtube',
