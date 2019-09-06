@@ -57,7 +57,7 @@ class PostUserMediumCreate(TemplateView):
 
             if request.is_ajax() :
                 return HttpResponse ('!')
-        return super(PostUserMediumCreate,self).post(request,*args,**kwargs)
+        return HttpResponse ('!')
 
 class PostUserLiteCreate(TemplateView):
     template_name="post_lite_add.html"
