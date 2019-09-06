@@ -80,6 +80,16 @@ CKEDITOR_CONFIGS = {
         ],
         'extraPlugins': ','.join(['youtube']),
     },
+    'medium': {
+        'toolbar': 'medium_version',
+        'medium_version': [
+            ['Bold', 'Italic', 'Underline'],
+            ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+            ['Link', 'Unlink', 'Image'],
+            ['RemoveFormat', 'Source']
+        ],
+        'extraPlugins': ','.join(['youtube']),
+    }
     }
 
 
