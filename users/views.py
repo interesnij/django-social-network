@@ -19,6 +19,7 @@ class ProfileUserView(LoginRequiredMixin, ListView):
 	template_name = 'user.html'
 	form = PostMediumForm
 	model=Post
+	paginate_by = 10
 
 	def get(self,request,*args,**kwargs):
 		self.user=User.objects.get(pk=self.kwargs["pk"])
