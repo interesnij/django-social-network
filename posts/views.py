@@ -36,6 +36,7 @@ class PostUserHardCreate(TemplateView):
 class PostUserMediumCreate(TemplateView):
     template_name="post_medium_add.html"
     form=None
+    success_url="/"
 
     def get(self,request,*args,**kwargs):
         self.form=PostMediumForm(initial={"creator":request.user})

@@ -1,6 +1,8 @@
 {% load staticfiles %}
-<form action="" id="FORM-POST3" method="post">
+<form action="" id="FORM-POST3" method="post" enctype="multipart/form-data">
   {% csrf_token %}
+  {{ form.non_field_errors }}
+
     {{ form }}
     <button type="submit" class="btn btn-round btn-b">Добавить</button>
 </form>
