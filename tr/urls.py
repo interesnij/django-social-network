@@ -41,7 +41,7 @@ urlpatterns = [
     url(r'^invitations/', include('invitations.urls')),
     url(r'^moderation/', include('moderation.urls')),
     url(r'^notifications/', include('notifications.urls')),
-    url(r'^ckeditor/', include('ckeditor_uploader.urls')),
-    url(r'^browse/', login_required(never_cache(browse)), name='ckeditor_browse'),
+    url(r'^ckeditor/', login_required(upload), name='ckeditor_upload'),
+    url(r'^browse/', login_required(browse), name='ckeditor_browse'),
 
 ]  +static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
