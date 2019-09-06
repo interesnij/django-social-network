@@ -14,6 +14,7 @@ class AllUsers(TemplateView,CategoryListMixin):
 
 class ProfileUserView(TemplateView, CategoryListMixin):
 	template_name = 'user.html'
+	forms = PostHardForm
 
 	def get(self,request,*args,**kwargs):
 		self.user=User.objects.get(pk=self.kwargs["pk"])
