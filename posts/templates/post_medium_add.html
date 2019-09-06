@@ -16,7 +16,7 @@
             url: "{% url 'post_add_medium_user' %}",
             data: frm2.serialize(),
             success: function (data) {
-
+              $('#FORM-POST3').empty();
             },
             error: function(data) {
                 $("#hack").html("Возникла непредвидинная ошибка!!");
