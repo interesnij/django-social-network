@@ -72,17 +72,17 @@ CKEDITOR_CONFIGS = {
            'extraPlugins': ','.join(['youtube']),
        },
        'lite': {
-        'toolbar': 'lite_version',
+        'toolbar': 'ver2',
         'height': 350,
         'width': '100%',
-        'lite_version': [
+        'toolbar_ver2': [
             ['Bold', 'Link', 'Unlink', 'Image'],
         ],
         'extraPlugins': ','.join(['youtube']),
     },
     'medium': {
-        'toolbar': 'medium_version',
-        'medium_version': [
+        'toolbar': 'ver3',
+        'toolbar_ver3': [
             ['Bold', 'Italic', 'Underline'],
             ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
             ['Link', 'Unlink', 'Image'],
