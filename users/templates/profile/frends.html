@@ -2,52 +2,33 @@
 
 <div class="media">
     <div class="media-body">
-        <h4 class="content-color-primary mb-0">Friends </h4>
+        <h4 class="content-color-primary mb-0">Друзья </h4>
     </div>
     <a href="javascript:void(0);" class="">
-        View All
+        Показать всех
     </a>
 </div>
 <br>
+
+{% for object in freands %}
 <div class="card mb-2">
     <div class="card-body">
         <div class="media">
+          {% if object.profile.avatar %}
             <figure class="avatar avatar-50 mr-3">
-                <img src="{% static 'images/user1.png' %}" alt="Generic placeholder image">
+                <img src="{{ object.profile.avatar.url }}" alt="image">
             </figure>
+          {% else %}
+            <figure class="avatar avatar-50 mr-3">
+                <img src="{% static 'images/user.png' %}" alt="image">
+            </figure>
+          {% endif %}
             <div class="media-body">
-                <h6 class="my-0 mt-1">John Doe <span class="status vm bg-success"></span></h6>
-                <p class="small">New Jersey, UK</p>
+                <h6 class="my-0 mt-1">{{ user.first_name }} {{ user.last_name }} <span class="status vm bg-success"></span></h6>
+                <p class="small">Регион / Город</p>
             </div>
             <button class="btn btn-link content-color-secondary"><i class="material-icons">chat</i></button>
         </div>
     </div>
 </div>
-<div class="card mb-2 pink-gradient">
-    <div class="card-body ">
-        <div class="media">
-            <figure class="avatar avatar-50 mr-3">
-                <img src="{% static 'images/user2.png' %}" alt="Generic placeholder image">
-            </figure>
-            <div class="media-body">
-                <h6 class="my-0 mt-1">Alizee McMohan <span class="status vm bg-success"></span></h6>
-                <p class="small text-white">New Jersey, UK</p>
-            </div>
-            <button class="btn btn-link text-white"><i class="material-icons">chat</i></button>
-        </div>
-    </div>
-</div>
-<div class="card mb-2">
-    <div class="card-body">
-        <div class="media">
-            <figure class="avatar avatar-50 mr-3">
-                <img src="{% static 'images/user3.png' %}" alt="Generic placeholder image">
-            </figure>
-            <div class="media-body">
-                <h6 class="my-0 mt-1">Mangolia Chetan <span class="status vm bg-success"></span></h6>
-                <p class="small">New Jersey, UK</p>
-            </div>
-            <button class="btn btn-link content-color-secondary"><i class="material-icons">chat</i></button>
-        </div>
-    </div>
-</div>
+{% endfor %}
