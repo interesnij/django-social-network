@@ -9,12 +9,11 @@ class PostHardForm(forms.ModelForm):
 		model = Post
 		fields = ['content_hard']
 
-class PostMediumForm(forms.ModelForm):
-
+class PostHardForm(forms.ModelForm):
 
 	class Meta:
 		model = Post
-		fields = ['']
+		fields = ['content_medium']
 
 class PostLiteForm(forms.ModelForm):
 
