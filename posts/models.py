@@ -13,7 +13,7 @@ from posts.helpers import upload_to_post_image_directory, upload_to_post_video_d
 
 
 class Post(models.Model):
-    uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, db_index=True,verbose_name="uuid")
+    uuid = models.UUIDField(default=uuid.uuid4, unique=True, db_index=True,verbose_name="uuid")
     content_hard = RichTextUploadingField(blank=True, null=True, config_name='default',
                                       external_plugin_resources=[(
                                           'youtube',
@@ -38,7 +38,7 @@ class Post(models.Model):
                                           )],
                                       )
     created = models.DateTimeField(default=timezone.now, editable=False, db_index=True,verbose_name="Создан")
-    creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='posts',verbose_name="Создатель")
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='posts_creator',verbose_name="Создатель")
     comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
     community = models.ForeignKey('communities.Community', on_delete=models.CASCADE, related_name='posts',null=True,blank=True,verbose_name="Сообщество")
     is_edited = models.BooleanField(default=False,verbose_name="Изменено")
