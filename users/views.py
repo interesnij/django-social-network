@@ -23,7 +23,7 @@ class ProfileUserView(LoginRequiredMixin, TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.user=User.objects.get(pk=self.kwargs["pk"])
-		self.frends=Connection.objects.filter(target_connection__user_id=user_id)
+		self.frends=Connection.objects.filter(target_connection__user_id=self.user.id)
 
 		self.posts=Post.objects.filter(creator=self.user)
 		return super(ProfileUserView,self).get(request,*args,**kwargs)
