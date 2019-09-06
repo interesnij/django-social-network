@@ -22,7 +22,7 @@ class Post(models.Model):
                                           )],
                                       )
     content_lite = RichTextUploadingField(blank=True, null=True,
-                                      config_name='lite',
+                                      config_name='toolbar_Basic',
                                       external_plugin_resources=[(
                                           'youtube',
                                           '/static/ckeditor_plugins/youtube/youtube/',
@@ -30,7 +30,7 @@ class Post(models.Model):
                                           )],
                                       )
     content_medium = RichTextUploadingField(blank=True, null=True,
-                                      config_name='medium',
+                                      config_name='toolbar_YourCustomToolbarConfig',
                                       external_plugin_resources=[(
                                           'youtube',
                                           '/static/ckeditor_plugins/youtube/youtube/',
