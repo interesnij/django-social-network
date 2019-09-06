@@ -27,9 +27,9 @@
       {% if object.content_hard %}
         <p class="mb-0 content-color-secondary">{{ object.content_hard|safe }}</p>
       {% endif %}
-
+      {% if object.content_medium %}
         <p class="mb-0 content-color-secondary">{{ object.content_medium|safe }}</p>
-      
+      {% endif %}
       {% if object.content_lite %}
         <p class="mb-0 content-color-secondary">{{ object.content_lite|safe }}</p>
       {% endif %}
