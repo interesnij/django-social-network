@@ -15,7 +15,7 @@ from posts.helpers import upload_to_post_image_directory, upload_to_post_video_d
 class Post(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, db_index=True,verbose_name="uuid")
     content = RichTextUploadingField(blank=True, null=True,
-                                      config_name='special',
+                                      config_name='default',
                                       external_plugin_resources=[(
                                           'youtube',
                                           '/static/base/vendor/ckeditor_plugins/youtube/youtube/',
