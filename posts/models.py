@@ -14,7 +14,14 @@ from posts.helpers import upload_to_post_image_directory, upload_to_post_video_d
 
 class Post(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, db_index=True,verbose_name="uuid")
-    text = RichTextUploadingField(blank=True, verbose_name="Полное содержание")
+    content = RichTextUploadingField(blank=True, null=True,
+                                      config_name='special',
+                                      external_plugin_resources=[(
+                                          'youtube',
+                                          '/static/base/vendor/ckeditor_plugins/youtube/youtube/',
+                                          'plugin.js',
+                                          )],
+                                      )
     created = models.DateTimeField(default=timezone.now, editable=False, db_index=True,verbose_name="Создан")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='posts',verbose_name="Создатель")
     comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
