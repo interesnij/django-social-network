@@ -5,7 +5,7 @@ from profiles.models import UserProfile
 from datetime import datetime, timedelta
 from users.models import User
 from posts.models import Post
-from posts.forms import PostForm
+from posts.forms import PostHardForm, PostLiteForm, PostMediumForm 
 
 
 class AllUsers(TemplateView,CategoryListMixin):
