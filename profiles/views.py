@@ -10,12 +10,16 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.views.generic.base import ContextMixin
 from django.views.generic.edit import UpdateView
+from django.views.generic import ListView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from posts.models import Post
 
 
 
-class ProfileHomeView(TemplateView, CategoryListMixin):
+class ProfileHomeView(LoginRequiredMixin, ListView):
     template_name = 'user_profile.html'
-
+    paginate_by = 15
+    model=Post
     def get_context_data(self, **kwargs):
         context = super(ProfileHomeView, self).get_context_data(**kwargs)
         profile = UserProfile.objects.get_or_create(user=self.request.user)[0]
