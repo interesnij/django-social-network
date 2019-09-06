@@ -17,10 +17,7 @@
         $.ajax({
             type: frm.attr('method'),
             url: "{% url 'post_add_medium_user' pk=request.user.pk %}",
-            data: new FormData($('form')[0]),
-            contentType: false,
-            cache: false,
-            processData:false,
+            data: frm.serialize(),
             success: function (data) {
 
             },
