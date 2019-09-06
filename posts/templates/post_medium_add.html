@@ -1,9 +1,4 @@
 {% load staticfiles %}
-<style>
-  #id_content_hard{
-    display:none
-  }
-</style>
 <form action="" id="FORM-POST3" method="post">
   {% csrf_token %}
 
@@ -35,6 +30,9 @@
         });
         return false;
     });
+</script>
+<script>
+  $('.django-ckeditor-widget[data-field-id='id_content_hard']').hide();
 </script>
 <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
 <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
