@@ -13,7 +13,7 @@ from posts.helpers import upload_to_post_image_directory, upload_to_post_video_d
 
 
 class Post(models.Model):
-    uuid = models.UUIDField(default=uuid.uuid4, db_index=True,verbose_name="uuid")
+    #uuid = models.UUIDField(default=uuid.uuid4, db_index=True,verbose_name="uuid")
     content_hard = RichTextUploadingField(blank=True, null=True, config_name='default',
                                       external_plugin_resources=[(
                                           'youtube',
