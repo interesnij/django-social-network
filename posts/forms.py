@@ -4,8 +4,8 @@ from ckeditor_uploader.widgets import CKEditorUploadingWidget
 
 
 class PostForm(forms.ModelForm):
-	text = forms.CharField(widget=CKEditorUploadingWidget, label='')
+	content = forms.CharField(widget=CKEditorUploadingWidget, label='')
 
 	class Meta:
 		model = Post
-		exclude = ['creator', 'views', 'created']
+		fields = ['content']
