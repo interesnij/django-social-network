@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     'ckeditor',
     'ckeditor_uploader',
     'frends',
+    'groups',
+    'chat',
 ]
 
 REST_SESSION_LOGIN = True

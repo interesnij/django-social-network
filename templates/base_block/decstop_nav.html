@@ -7,13 +7,13 @@
         <a class="nav-link pink-gradient-active" href="{% url 'main' %}">
           Новости
         </a>
-        <a class="nav-link pink-gradient-active" href="#">
+        <a class="nav-link pink-gradient-active" href="{% url 'chat' %}">
           Сообщения
         </a>
         <a class="nav-link pink-gradient-active" href="{% url 'frends' pk=request.user.pk %}">
           Друзья
         </a>
-        <a class="nav-link pink-gradient-active" href="#">
+        <a class="nav-link pink-gradient-active" href="{% url 'groups' pk=request.user.pk %}">
           Сообщества
         </a>
         <a class="nav-link pink-gradient-active" href="#">
