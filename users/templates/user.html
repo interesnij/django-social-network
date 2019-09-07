@@ -39,7 +39,10 @@ iframe{
                <p>Статус не указан</p>
                {% endif %}
                <br><br>
-
+               {% if user == request.user %}
+               <a class="btn btn-sm primary-gradient mr-2">Изменить</a>
+               <br><br>
+               {% endif %}
              </div>
 
              <span id="post_link">

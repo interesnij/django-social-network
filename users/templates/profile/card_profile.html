@@ -16,21 +16,17 @@
             </a>
         </div>
         <span>
-          {% if user != request.user %}
             <h5 class="card-title mb-2 header-color-primary text-center">{{ user.first_name }} {{ user.last_name }}</h5>
           {% if user.profile.sity %}
             <h6 class="card-subtitle mb-3 header-color-secondary text-center">г. {{ user.profile.sity }}</h6>
           {% else %}
             <h6 class="card-subtitle mb-3 header-color-secondary text-center">город не указан</h6>
           {% endif %}
-          {% else %}
-            <a class="btn btn-sm primary-gradient mr-2">Изменить</a>
-          {% endif %}
 
           <br>
           <br>
-          <a class="btn btn-sm btn-success success-gradient">Добавить в друзья</a>
-          <a class="btn btn-sm btn-warning warning-gradient ml-2">Написать сообщение</a>
+          <a class="btn btn-sm btn-success success-gradient">Добавить</a>
+          <a class="btn btn-sm btn-warning warning-gradient ml-2">Написать</a>
           <br>
         </span>
         <div class="row bg-light-secondary py-3">
