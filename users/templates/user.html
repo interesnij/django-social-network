@@ -19,46 +19,7 @@ iframe{
 }
 </style>
 
-<span class="d-sm-none">
-<div class="container mt-4 main-container">
-    <div class="row">
-        <div class="col-12 col-md-12 col-lg-4 order-1 order-lg-1">
 
-            {% include 'profile/card_profile.html' %}
-
-            {% include 'profile/gallery.html' %}
-
-            {% include 'profile/frends.html' %}
-        </div>
-        <div class="col-12 col-md-12 col-lg-8 order-2 order-lg-2">
-          <span id="post_link">
-            <div class="dropdown d-inline-block">
-                <a href="javascript:void(0)" class="icon-circle icon-30 dropdown-toggle caret-none" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="material-icons ">add</i>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right">
-                    <a id="post_lite" style="cursor:pointer" class="dropdown-item">Легкий пост</a>
-                    <a id="post_medium" style="cursor:pointer" class="dropdown-item">Средний пост</a>
-                    <a id="post_hard" style="cursor:pointer" class="dropdown-item">Сложный пост</a>
-                </div>
-            </div>
-           </span>
-            <div class="card mb-4">
-              <span id="post_create"></span>
-            </div>
-
-            {% include 'profile/posts.html' %}
-
-
-            </div>
-        </div>
-      </div>
-</span>
-
-<span class="container col-12 col-md-12 main-container d-none " style="display:flex !important;flex-wrap: wrap;">
-  <div class="col-lg-2 "> fgf fdgety5ey54 54y 45 y4</div>
-
-  <div class="col-lg-10">
     <div class="row">
           <div class=" col-lg-3 order-1">
 
@@ -90,8 +51,7 @@ iframe{
 
               </div>
           </div>
-        </div>
-</span>
+
 <script>
   $( "#post_hard" ).click(function(){
     $('#post_create').html('').load("{% url 'post_add_hard_user' %}");
