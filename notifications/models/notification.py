@@ -9,6 +9,57 @@ from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 from slugify import slugify
 import uuid
+from django.core import serializers
+
+
+class NotificationQuerySet(models.query.QuerySet):
+    """Personalized queryset created to improve model usability"""
+
+    def unread(self):
+        """Return only unread items in the current queryset"""
+        return self.filter(unread=True)
+
+    def read(self):
+        """Return only read items in the current queryset"""
+        return self.filter(unread=False)
+
+    def mark_all_as_read(self, recipient=None):
+        """Mark as read any unread elements in the current queryset with
+        optional filter by recipient first.
+        """
+        qs = self.unread()
+        if recipient:
+            qs = qs.filter(recipient=recipient)
+
+        return qs.update(unread=False)
+
+    def mark_all_as_unread(self, recipient=None):
+        """Mark as unread any read elements in the current queryset with
+        optional filter by recipient first.
+        """
+        qs = self.read()
+        if recipient:
+            qs = qs.filter(recipient=recipient)
+
+        return qs.update(unread=True)
+
+    def serialize_latest_notifications(self, recipient=None):
+        """Returns a serialized version of the most recent unread elements in
+        the queryset"""
+        qs = self.unread()[:5]
+        if recipient:
+            qs = qs.filter(recipient=recipient)[:5]
+
+        notification_dic = serializers.serialize("json", qs)
+        return notification_dic
+
+    def get_most_recent(self, recipient=None):
+        """Returns the most recent unread elements in the queryset"""
+        qs = self.unread()[:5]
+        if recipient:
+            qs = qs.filter(recipient=recipient)[:5]
+
+        return qs
 
 
 
