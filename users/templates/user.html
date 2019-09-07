@@ -44,7 +44,7 @@ iframe{
                <br><br>
                {% endif %}
              </div>
-             {% if request.user %}
+             {% if user == request.user %}
              <span id="post_link">
                <div class="dropdown d-inline-block">
                    <a href="javascript:void(0)" class="icon-circle icon-30 dropdown-toggle caret-none" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -68,7 +68,7 @@ iframe{
               </div>
           </div>
 
-{% if request.user %}
+{% if user == request.user %}
 <script>
   $( "#post_hard" ).click(function(){
     $('#post_create').html('').load("{% url 'post_add_hard_user' %}");
