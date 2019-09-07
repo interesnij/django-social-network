@@ -5,7 +5,7 @@
 {% if user == request.user %}
   Мои сообщества
 {% else %}
-  Сообщества пользователя "{{ user.first_name }} {{ user.last_name }}" {% endblock %}
+  Сообщества пользователя "{{ user.first_name }} {{ user.last_name }}"
 {% endif %}
 {% endblock %}
 
