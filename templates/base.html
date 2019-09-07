@@ -33,17 +33,23 @@
         <div class="jambotron-fluid">
             <div id="ajax">
 							<span class="container col-12 col-md-12 main-container d-none " style="display:flex !important;flex-wrap: wrap;">
-							  <div class="col-lg-2 ">
-									 fgf fdgety5ey54 54y 45 y4
+							  <div class="col-lg-2 d-sm-none">
+									 Реклама
 								 </div>
+								 <div class="col-lg-2 d-sm-none">
+ 									 Панель навигации
+ 								 </div>
 
-							  <div class="col-lg-10">
+							  <div class="col-lg-6">
                 	{% block content %}
                 	{% endblock %}
+								</div>
 
+								<div class="col-lg-2 d-sm-none">
+									Просто отступ
 								</div>
 							</span>
-							
+
                 {% include "base_scripts.html" %}
             </div>
         </div>
