@@ -25,7 +25,7 @@
             </figure>
           {% endif %}
             <div class="media-body">
-              <a href="{% url 'user' pk=object.target_connection.user.pk %}">
+              <a href="{% url 'user' pk=object.target_connection.target_user.pk %}">
                 <h6 class="my-0 mt-1">{{ object.target_connection.target_user.first_name }} {{ object.target_connection.target_user.last_name }}
                   <span class="status vm bg-success"></span>
                 </h6>
