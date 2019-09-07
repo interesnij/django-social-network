@@ -27,12 +27,12 @@
 <body class="fixed-header sidebar-right-close sidebar-left-close">
     <div class="wrapper">
 
-        {% include "navbar.html" %}
+        {% include "base_block/navbar.html" %}
 
         <span class="d-sm-none d-block">
-            {% include "sidebar_left/sidebar_left.html" %}
+            {% include "base_block/sidebar_left.html" %}
 
-            {% include "sidebar_right/sidebar_right.html" %}
+            {% include "base_block/sidebar_right.html" %}
         </span>
 
         <div class="jambotron-fluid">
@@ -40,7 +40,7 @@
 							<span class="container col-12 col-md-12 main-container d-none " style="display:flex !important;flex-wrap: wrap;">
 
 								 <div class="col-lg-2 gadget-only">
- 									 Панель навигации
+ 									 {% include 'base_block/decstop_nav.html' %}
  								 </div>
 
 							  <div class="col-lg-8">
