@@ -43,4 +43,4 @@
 
 {% endfor %}
 
-{% for object in frends2 %}{{ object }}{% endfor %}
+{% for object in frends2 %}{{ object.target_connection.user.first_name}}{% endfor %}
