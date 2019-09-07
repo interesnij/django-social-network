@@ -1,8 +1,8 @@
 from django.conf.urls import url
 
-from messager.views import *
+from chat.views import *
 
-app_name = 'messager'
+app_name = 'chat'
 
 urlpatterns = [
     url(r'^$', MessagesListView.as_view(), name='messages_list'),
