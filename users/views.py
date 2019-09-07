@@ -23,8 +23,8 @@ class ProfileUserView(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.user=User.objects.get(pk=self.kwargs["pk"])
-		frends_out=Connection.objects.filter(target_connection__user=self.user)
-		frends_in=Connection.objects.filter(target_connection__target_user=self.user)
+		self.frends=Connection.objects.filter(target_connection__target_user=self.user)
+		self.frends2=Connection.objects.filter(target_connection__user=self.user)
 		self.frends=str(frends_out) + str(frends_in)
 
 		self.posts=Post.objects.filter(creator=self.user)
@@ -35,6 +35,7 @@ class ProfileUserView(TemplateView):
 		context['user'] = self.user
 		context['posts'] = self.posts
 		context['frends'] = self.frends
+		context['frends2'] = self.frends2
 		context['form'] = self.form
 
 		return context
