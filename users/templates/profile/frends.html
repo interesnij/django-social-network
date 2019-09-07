@@ -15,9 +15,9 @@
 <div class="card mb-2">
     <div class="card-body">
         <div class="media">
-          {% if object.target_connection.user.profile.avatar %}
+          {% if object.target_connection.target_user.profile.avatar %}
             <figure class="avatar avatar-50 mr-3">
-                <img src="{{ object.target_connection.user.profile.avatar.url }}" alt="image">
+                <img src="{{ object.target_connection.target_user.profile.avatar.url }}" alt="image">
             </figure>
           {% else %}
             <figure class="avatar avatar-50 mr-3">
@@ -26,12 +26,12 @@
           {% endif %}
             <div class="media-body">
               <a href="{% url 'user' pk=object.target_connection.user.pk %}">
-                <h6 class="my-0 mt-1">{{ object.target_connection.user.first_name }} {{ object.target_connection.user.last_name }}
+                <h6 class="my-0 mt-1">{{ object.target_connection.target_user.first_name }} {{ object.target_connection.target_user.last_name }}
                   <span class="status vm bg-success"></span>
                 </h6>
               </a>
-              {% if object.target_connection.user.profile.sity %}
-                <p class="small">{{ object.target_connection.user.profile.sity }}</p>
+              {% if object.target_connection.target_user.profile.sity %}
+                <p class="small">{{ object.target_connection.target_user.profile.sity }}</p>
               {% else %}
                 <p class="small">город не указан</p>
               {% endif %}
