@@ -1,12 +1,9 @@
 import uuid
-
+from users.models import User
 from django.conf import settings
-from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-
 from asgiref.sync import async_to_sync
-
 from channels.layers import get_channel_layer
 
 
@@ -31,7 +28,7 @@ class MessageQuerySet(models.query.QuerySet):
             return qs.sender
 
         except self.model.DoesNotExist:
-            return get_user_model().objects.get(username=recipient.username)
+            return User.objects.get(id=recipient.id)
 
     def mark_conversation_as_read(self, sender, recipient):
         """Mark as read any unread elements in the current conversation."""

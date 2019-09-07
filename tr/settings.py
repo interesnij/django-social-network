@@ -22,6 +22,8 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'rest_framework',
     'rest_framework.authtoken',
+    'channels',
+    'django_comments',
     'allauth',
     'allauth.account',
     'rest_auth.registration',
@@ -62,6 +64,10 @@ ACCOUNT_ADAPTER = 'tr.adapter.MyAccountAdapter'
 AUTH_USER_MODEL = 'users.User'
 
 SITE_ID = 1
+
+REDIS_URL = "redis://127.0.0.1:6379"
+
+ASGI_APPLICATION = 'tr.routing.application'
 
 CKEDITOR_UPLOAD_PATH = 'uploads/'
 
@@ -201,3 +207,12 @@ REST_FRAMEWORK = {
 }
 
 UNICODE_JSON = True
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [REDIS_URL, ],
+        },
+    }
+}

@@ -1,6 +1,12 @@
-from chat.views import ChatView
 from django.conf.urls import url
 
-urlpatterns=[
-	url(r'^$', ChatView.as_view(), name="chat"),
+from messager.views import *
+
+app_name = 'messager'
+
+urlpatterns = [
+    url(r'^$', MessagesListView.as_view(), name='messages_list'),
+    url(r'^send-message/$', send_message, name='send_message'),
+    url(r'^receive-message/$', receive_message, name='receive_message'),
+    url(r'^(?P<id>[\w.@+-]+)/$', ConversationListView.as_view(), name='conversation_detail'),
 ]
