@@ -188,7 +188,7 @@ a {
     let ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
     let ws_path = ws_scheme + "://" + window.location.host + "/notifications/";
 
-    
+    var socket = new WebSocket("ws://трезвый.рус/websocket");
     webSocket.connect(ws_path);
 
     // Helpful debugging
