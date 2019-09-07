@@ -46,9 +46,9 @@
                                 <p>Ваш пост получил много положительных реакций. Посмотрите.</p>
                             </div>
                         </a>
+                        <h5><a href="{% url 'unread' %}">Показать все уведомления</a></h5>
                     </div>
 
-                    <h5><a href="{% url 'unread' %}">Показать все уведомления</a></h5>
                 </div>
                 <div class="dropdown d-inline-block">
                   {% if user.is_authenticated %}
