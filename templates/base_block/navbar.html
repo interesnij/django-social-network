@@ -24,50 +24,6 @@
                   <i class="material-icons">search</i>
                 </button>
 
-                <div class="dropdown d-inline-block">
-                    <a class="btn header-color-secondary btn-icon dropdown-toggle caret-none"
-                       href="#"
-                       role="button"
-                       id="dropdownmessage"
-                       data-toggle="dropdown"
-                       aria-haspopup="true"
-                       aria-expanded="false">
-                       <i class="material-icons">mail_outline</i>
-
-                    </a>
-                    <div class="dropdown-menu notification-dropdown align-center arrow-top pt-0" aria-labelledby="dropdownmessage">
-                        <div class="arrow pink-gradient"></div>
-                        <div class="pink-gradient py-3 text-center">
-                            <h5 class="mb-0">Сообщения</h5>
-                            <p class="mb-0">Новые сообщения</p>
-                        </div>
-                        <div class="media new">
-                            <figure class="avatar avatar-40">
-                                <img src="{% static 'images/user2.png' %}" alt="Generic placeholder image">
-                            </figure>
-                            <div class="media-body">
-                                <h5 class="mt-0">Сергей Зубарев</h5>
-                                <p class="mb-2">
-                                  Почему молчишь дв, надо поговорить да. Слышишь поганец?
-                                </p>
-                                <a href="">Ответить</a>
-                                <a href="" class="ml-2">Смотреть</a>
-                            </div>
-                        </div>
-                        <a href="#" class="media pink-gradient-active new">
-                            <figure class="avatar avatar-40">
-                                <img src="{% static 'images/user3.png' %}" alt="Generic placeholder image">
-                            </figure>
-                            <div class="media-body">
-                                <h5 class="my-0">Сенатор Мейсон </h5>
-                                <small class="text-muted d-block mb-2">23:45</small>
-                                <p>
-                                  Айм нот андестенд, а ю крейзи бой ха?
-                                </p>
-                            </div>
-                        </a>
-                    </div>
-                </div>
                 <div class="dropdown text-hide-lg d-inline-block">
                     <a class="btn header-color-secondary btn-icon dropdown-toggle caret-none"
                        href="#"
@@ -79,19 +35,11 @@
                        <i class="material-icons">notifications_none</i>
                        <span class="status-number bg-danger text-white">9+</span>
                     </a>
+
                     <div class="dropdown-menu notification-dropdown" aria-labelledby="dropdownnotification">
-                        <a href="#" class="media  pink-gradient-active new">
-                            <figure class="avatar avatar-40">
-                                <img src="{% static 'images/user1.png' %}" alt="Generic placeholder image">
-                            </figure>
-                            <div class="media-body">
-                                <h5 class="mt-0">Уведомление 1</h5>
-                                <p>Новый комментарий и упоминание в посте в сообществе "Сумки и венки"</p>
-                            </div>
-                        </a>
                         <a href="#" class="media  pink-gradient-active">
                             <figure class="avatar avatar-40">
-                                <img src="{% static 'images/user1.png' %}" alt="Generic placeholder image">
+                                <img src="{% static 'images/user.png' %}" alt="Generic placeholder image">
                             </figure>
                             <div class="media-body">
                                 <h5 class="mt-0">Уведомление 1</h5>
@@ -99,6 +47,8 @@
                             </div>
                         </a>
                     </div>
+
+                    <h5><a href="{% url 'unread' %}">Показать все уведомления</a></h5>
                 </div>
                 <div class="dropdown d-inline-block">
                   {% if user.is_authenticated %}
