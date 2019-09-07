@@ -1,19 +1,14 @@
 from django.views.generic.base import TemplateView
-from generic.mixins import CategoryListMixin
-from generic.mixins import CategoryListMixin
-from profiles.models import UserProfile
-from datetime import datetime, timedelta
 from users.models import User
 from posts.models import Post
 from connections.models import Connection
 from posts.forms import PostHardForm, PostLiteForm, PostMediumForm
 from django.views.generic import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.paginator import Paginator
 
 
 
-class AllUsers(TemplateView,CategoryListMixin):
+class AllUsers(TemplateView):
 	template_name="all_users.html"
 
 

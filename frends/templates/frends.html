@@ -1,0 +1,124 @@
+{% load staticfiles humanize liked_user %}
+
+<span class="d-none d-sm-block">
+    <span class="posted">
+        <span class="fa fa-clock-o"></span>
+        <span style="font-size:18px;">{{ object.posted|naturaltime }}</span>
+    </span>
+
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+    {% if request.user.is_authenticated %}
+    <span id="like"
+          class="like hover-target {% if object.votes.likes.all|user_in:user %}text-success{% endif %}"
+          data-id="{{ object.id }}"
+          data-action="like"
+          data-type="article"
+          data-tooltip="Мне нравится">
+        <span class="fa fa-thumbs-o-up"></span>
+        <span data-count="like">{{ object.votes.likes.count }}</span>
+    </span>
+    {% else %}
+    <span id="like"
+          class="like hover-target {% if object.votes.likes.all|user_in:user %}text-success{% endif %}"
+          data-toggle="modal" href="javascript:void(0)" onclick="openLoginModal()">
+        <span class="fa fa-thumbs-o-up"></span>
+        <span data-count="like">{{ object.votes.likes.count }}</span>
+    </span>
+    {% endif %}
+
+    &nbsp;&nbsp;
+    {% if request.user.is_authenticated %}
+    <span class="dislike hover-target {% if object.votes.dislikes.all|user_in:user %}text-danger{% endif %}"
+          data-id="{{ object.id }}"
+          data-action="dislike"
+          data-type="article"
+          data-tooltip="Мне не нравится">
+        <span class="fa fa-thumbs-o-down"></span>
+        <span data-count="dislike">{{ object.votes.dislikes.count }}</span>
+    </span>
+    {% else %}
+    <span class="dislike hover-target {% if object.votes.dislikes.all|user_in:user %}text-danger{% endif %}"
+          data-toggle="modal" href="javascript:void(0)" onclick="openLoginModal()">
+        <span class="fa fa-thumbs-o-down"></span>
+        <span data-count="dislike">{{ object.votes.dislikes.count }}</span>
+    </span>
+    {% endif %}
+
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <span class="views">
+        <span class="fa fa-eye"></span>
+        <span>{{ object.views }}</span>
+    </span>
+    <span style="font-size:16px;float:right">Поделиться:&nbsp;&nbsp;
+
+  <a style="font-size:20px" href="http://vk.com/share.php?url=http://трезвый-альметьевск.рф{{ object.get_absolute_url }}" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;" target="_blank" rel="nofollow">
+    <i class="fa fa-vk hover-target"></i>
+  </a>
+  &nbsp;
+  <a style="font-size:20px" href="https://www.facebook.com/sharer/sharer.php?u=http://трезвый-альметьевск.рф{{ object.get_absolute_url }}" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;" target="_blank" rel="nofollow">
+    <i class="fa fa-facebook hover-target"></i>
+  </a>
+  &nbsp;
+  <a style="font-size:20px" href="https://twitter.com/share?url=http://трезвый-альметьевск.рф{{ object.get_absolute_url }}" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;" target="_blank" rel="nofollow">
+    <i class="fa fa-twitter hover-target"></i>
+  </a>
+ </span>
+</span>
+<span class="d-sm-none d-block">
+    <span class="posted">
+        <span class="fa fa-clock-o"></span>
+        <span style="font-size:18px;">{{ object.posted|date:"d E / Y" }}</span>
+    </span>
+
+    <br><br>
+    {% load liked_user %}
+
+    {% if request.user.is_authenticated %}
+    <span id="like"
+          class="like {% if object.votes.likes.all|user_in:user %}text-success{% endif %}"
+          data-id="{{ object.id }}"
+          data-action="like"
+          data-type="article"
+          data-tooltip="Мне нравится">
+        <span class="fa fa-thumbs-o-up"></span>
+        <span data-count="like">{{ object.votes.likes.count }}</span>
+    </span>
+    {% else %}
+    <span id="like"
+          class="like {% if object.votes.likes.all|user_in:user %}text-success{% endif %}"
+          data-toggle="modal" href="javascript:void(0)" onclick="openLoginModal()">
+        <span class="fa fa-thumbs-o-up"></span>
+        <span data-count="like">{{ object.votes.likes.count }}</span>
+    </span>
+    {% endif %}
+    &nbsp;&nbsp;
+    {% if request.user.is_authenticated %}
+    <span class="dislike {% if object.votes.dislikes.all|user_in:user %}text-danger{% endif %}"
+          data-id="{{ object.id }}"
+          data-action="dislike"
+          data-type="article"
+          data-tooltip="Мне не нравится">
+        <span class="fa fa-thumbs-o-down"></span>
+        <span data-count="dislike">{{ object.votes.dislikes.count }}</span>
+    </span>
+    {% else %}
+    <span class="dislike {% if object.votes.dislikes.all|user_in:user %}text-danger{% endif %}"
+          data-toggle="modal" href="javascript:void(0)" onclick="openLoginModal()">
+        <span class="fa fa-thumbs-o-down"></span>
+        <span data-count="dislike">{{ object.votes.dislikes.count }}</span>
+    </span>
+    {% endif %}
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <span class="views">
+        <span class="fa fa-eye"></span>
+        <span>{{ object.views }}</span>
+    </span>
+    <br><br>
+    <p style="font-size:16px">Поделиться:&nbsp;&nbsp;
+
+  <a style="font-size:20px" href="http://vk.com/share.php?url=http://трезвый-альметьевск.рф{{ object.get_absolute_url }}" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;" target="_blank" rel="nofollow"><i class="fa fa-vk"></i></a>&nbsp;
+  <a style="font-size:20px" href="https://www.facebook.com/sharer/sharer.php?u=http://трезвый-альметьевск.рф{{ object.get_absolute_url }}" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;" target="_blank" rel="nofollow"><i class="fa fa-facebook"></i></a>&nbsp;
+  <a style="font-size:20px" href="https://twitter.com/share?url=http://трезвый-альметьевск.рф{{ object.get_absolute_url }}" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;" target="_blank" rel="nofollow"><i class="fa fa-twitter"></i></a>&nbsp;
+ </p>
+</span>
