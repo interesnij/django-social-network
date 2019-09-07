@@ -23,9 +23,11 @@
 		<div class="wrapper">
 
 			{% include "navbar.html" %}
-			{% include "sidebar_left/sidebar_left.html" %}
+			<span class="d-sm-none d-block">
+				{% include "sidebar_left/sidebar_left.html" %}
+			
 			{% include "sidebar_right/sidebar_right.html" %}
-
+			</span>
 			<div class="jambotron-fluid">
 				<div id="ajax">
 
