@@ -22,6 +22,7 @@ class UserProfile(models.Model):
     url = models.URLField(blank=True, null=True,verbose_name="УРЛ")
     followers_count_visible = models.BooleanField(blank=False, null=False, default=False,verbose_name="Число подписчиков видно")
     sity = models.CharField(max_length=100, blank=True, null=True, verbose_name="Местоположение")
+    status = models.CharField(max_length=100, blank=True, null=True, verbose_name="статус-слоган")
 
     def __str__(self):
         return self.user.last_name

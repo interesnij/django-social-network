@@ -42,6 +42,15 @@ iframe{
                   </div>
               </div>
              </span>
+             <div class="card mb-4">
+               <h3 class="mb-0">{{ user.first_name }} {{ user.last_name }}</h3>
+               {% if user.profile.status %}
+               <p>{{ user.status }}</p>
+               {% else %}
+               <p>Статус не указан</p>
+               <br><br>
+
+             </div>
               <div class="card mb-4">
                 <span id="post_create"></span>
               </div>
