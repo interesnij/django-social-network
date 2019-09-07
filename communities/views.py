@@ -1,6 +1,6 @@
 from django.views.generic import ListView
 from users.models import User
-from connections.models import Community
+from communities.models import Community
 
 
 class CommunitiesView(ListView):
