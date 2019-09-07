@@ -13,11 +13,11 @@
         <div class="row align-items-center no-gutters">
             <a class="col">
               {% if user.profile.avatar %}
-                <figure class="avatar-120 mx-auto mb-3">
+                <figure class="mx-auto mb-3">
                   <img src="{{ user.profile.avatar.url }}" alt="">
                 </figure>
               {% else %}
-                <figure class="avatar-120 mx-auto mb-3">
+                <figure class="mx-auto mb-3">
                   <img src="{% static 'images/user1.png' %}" alt="">
                 </figure>
               {% endif %}
