@@ -126,6 +126,17 @@
                             </div>
                         </a>
                         <div class="dropdown-divider m-0"></div>
+                        <a class="dropdown-item pink-gradient-active" href="{% url 'user' pk=request.user.pk %}">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    Моя страница
+                                </div>
+                                <div class="col-auto">
+                                    <div class="text-danger ml-2"><i class="material-icons vm">person</i></div>
+                                </div>
+                            </div>
+                        </a>
+                        <div class="dropdown-divider m-0"></div>
                         <a class="dropdown-item pink-gradient-active" href="{% url 'logout' %}">
                             <div class="row align-items-center">
                                 <div class="col">
@@ -156,7 +167,7 @@
                                     Вход
                                 </div>
                                 <div class="col-auto">
-                                    <div class="text-danger ml-2"><i class="material-icons vm">how_to_reg</i></div>
+                                    <div class="text-danger ml-2"><i class="material-icons vm">person</i></div>
                                 </div>
                             </div>
                         </a>
