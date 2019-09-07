@@ -186,7 +186,7 @@ a {
     // Блок кода для управления подключениями WebSocket
     // Попробуйте правильно выбрать между ws: / / и wss://
     let ws_scheme = window.location.protocol == "http:" ? "wss" : "ws";
-    let ws_path2 = 'ws://xn--b1afgj5al1e.xn--p1acf'
+    let ws_path2 = 'wss://xn--b1afgj5al1e.xn--p1acf'
     let ws_path = ws_scheme + '://' + window.location.host + "/notifications/";
     let webSocket = new channels.WebSocketBridge();
     webSocket.connect(ws_path2);
