@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load staticfiles humanize %}
+{% block title %}Мои уведомления{% endblock %}
+
+
+{% block content %}
+
+{% for notification in notification_list %}
+
+<div class="card mb-4 fullscreen">
+    <div class="card-header border-bottom">
+        <div class="media">
+            <figure class="avatar avatar-40 mr-2">
+              {% if notification.actor.profile.avatar %}
+                <img src="{{  notification.actor.profile.avatar }}" alt="image">
+              {% else %}
+                <img src="{% static 'images/user.png' %}" alt="image">
+              {% endif %}
+            </figure>
+            <div class="media-body">
+                <h6 class="mb-0">
+                  <a href="{% url 'user' pk=notification.actor.pk %}">
+                    {{ notification.actor.first_name }} {{ notification.actor.last_name }}
+                  </a>
+                  <p class="mb-0">{{ notification.timestamp|naturaltime }}</p>
+                </h6>
+                <p class="mb-0">
+                  {{ notification.get_verb_display }}
+                  {% if notification.action_object %}
+                    {{ notification.action_object }}
+                  {% endif %}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% empty %}
+  Пока ничего нет...
+{% endfor %}
+
+{% endblock %}
