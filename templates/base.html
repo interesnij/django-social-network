@@ -149,7 +149,6 @@ a {
         });
     };
 
-    
 
     $('#notifications').popover({
         html: true,
@@ -188,8 +187,9 @@ a {
     // Попробуйте правильно выбрать между ws: / / и wss://
     let ws_scheme = window.location.protocol == "http:" ? "wss" : "ws";
     let ws_path = ws_scheme + '://' + window.location.host + "/notifications/";
+    let ws_path2 = ws:'//localhost:3030';
     let webSocket = new channels.WebSocketBridge();
-    webSocket.connect(ws_path);
+    webSocket.connect(ws_path2);
 
     // Helpful debugging
     webSocket.socket.onopen = function () {
