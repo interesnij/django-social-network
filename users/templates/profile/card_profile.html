@@ -15,12 +15,12 @@
               {% endif %}
             </a>
         </div>
-        <span>
-            <h5 class="card-title mb-2 header-color-primary text-center">{{ user.first_name }} {{ user.last_name }}</h5>
+        <span style="text-center">
+            <h5 class="card-title mb-2 header-color-primary">{{ user.first_name }} {{ user.last_name }}</h5>
           {% if user.profile.sity %}
-            <h6 class="card-subtitle mb-3 header-color-secondary text-center">г. {{ user.profile.sity }}</h6>
+            <h6 class="card-subtitle mb-3 header-color-secondary">г. {{ user.profile.sity }}</h6>
           {% else %}
-            <h6 class="card-subtitle mb-3 header-color-secondary text-center">город не указан</h6>
+            <h6 class="card-subtitle mb-3 header-color-secondary">город не указан</h6>
           {% endif %}
 
           <br>
