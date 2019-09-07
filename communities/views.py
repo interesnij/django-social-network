@@ -9,7 +9,7 @@ class CommunitiesView(ListView):
 
 	def get(self,request,*args,**kwargs):
 		self.user=User.objects.get(pk=self.kwargs["pk"])
-		self.groups=Community.objects.filter(target_connection__user=self.user)
+		self.groups=Community.objects.filter(communities_memberships.user=self.user)
 		return super(CommunitiesView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
