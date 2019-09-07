@@ -111,7 +111,7 @@ class Notification(models.Model):
     verb = models.CharField(max_length=5, choices=NOTIFICATION_TYPES,verbose_name="Тип уведомления")
     slug = models.SlugField(max_length=210, null=True, blank=True)
     action_object_content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
-    object_id = models.PositiveIntegerField()
+    action_object_object_id = models.CharField(max_length=50, blank=True, null=True)
     content_object = GenericForeignKey("action_object_content_type", "action_object_object_id")
     uuid_id = models.UUIDField(
         primary_key=True, default=uuid.uuid4, editable=False)
