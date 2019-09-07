@@ -1,100 +1,102 @@
 {% load staticfiles %}
 <!doctype html>
 <html>
-	<head>
-		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-		<title>{% block title %}{% endblock %}</title>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>{% block title %}{% endblock %}</title>
     {% block meta %}{% endblock %}
-		<link rel="shortcut icon" href="{% static 'images/favicon.ico' %}"; type="image/x-icon" />
-    <link rel="icon" href="{% static 'images/favicon.ico' %}"; type="image/x-icon" />
-		<link rel="stylesheet" href="{% static 'styles/material-icons.css' %}" media="none" onload="if(media!='all')media='all'" />
-		<link rel="stylesheet" href="{% static 'styles/bootstrap.min.css' %}"  />
-		<link rel="stylesheet" href="{% static 'styles/animate.css' %}"  />
-		<link rel="stylesheet" href="{% static 'styles/swiper.min.css' %}"  />
-		<link rel="stylesheet" href="{% static 'styles/default-skin.css' %}" />
-		<link rel="stylesheet" href="{% static 'styles/photoswipe.css' %}" />
-		<link rel="stylesheet" href="{% static 'styles/bootstrap-tour-standalone.css' %}" />
-		<link rel="stylesheet" href="{% static 'styles/color/purplesidebar.css' %}" media="all" />
-		<script src="{% static 'scripts/jquery-3.2.1.min.js' %}" type="text/javascript" ></script>
+    <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" ; type="image/x-icon" />
+    <link rel="icon" href="{% static 'images/favicon.ico' %}" ; type="image/x-icon" />
+    <link rel="stylesheet" href="{% static 'styles/material-icons.css' %}" media="none" onload="if(media!='all')media='all'" />
+    <link rel="stylesheet" href="{% static 'styles/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'styles/animate.css' %}" />
+    <link rel="stylesheet" href="{% static 'styles/swiper.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'styles/default-skin.css' %}" />
+    <link rel="stylesheet" href="{% static 'styles/photoswipe.css' %}" />
+    <link rel="stylesheet" href="{% static 'styles/bootstrap-tour-standalone.css' %}" />
+    <link rel="stylesheet" href="{% static 'styles/color/purplesidebar.css' %}" media="all" />
+    <script src="{% static 'scripts/jquery-3.2.1.min.js' %}" type="text/javascript"></script>
 
-	</head>
-	<body class="fixed-header sidebar-right-close sidebar-left-close">
+</head>
 
-		<div class="wrapper">
+<body class="fixed-header sidebar-right-close sidebar-left-close">
 
-			{% include "navbar.html" %}
-			<span class="d-sm-none d-block">
-				{% include "sidebar_left/sidebar_left.html" %}
-			
-			{% include "sidebar_right/sidebar_right.html" %}
-			</span>
-			<div class="jambotron-fluid">
-				<div id="ajax">
+    <div class="wrapper">
 
-					{% block content %}
-					{% endblock %}
+        {% include "navbar.html" %}
+        <span class="d-sm-none d-block">
+            {% include "sidebar_left/sidebar_left.html" %}
 
+            {% include "sidebar_right/sidebar_right.html" %}
+        </span>
+        <div class="jambotron-fluid">
+            <div id="ajax">
+							<span class="d-sm-none">
+                {% block content %}
+                {% endblock %}
+							</span>
 
-		  		{% include "base_scripts.html" %}
-				</div>
-			</div>
-		</div>
-{% include "footer.html" %}
+                {% include "base_scripts.html" %}
+            </div>
+        </div>
+    </div>
+    {% include "footer.html" %}
 
     <script>
-            "use script";
-            $(window).on('load', function() {
-                var tour = new Tour({
-                    steps: [{
-                        element: "#left-menu",
-                        title: "Main Menu",
-                        content: "Access the demo pages from sidebar",
-                        smartPlacement: true,
-                        storage: false
-                    }, {
-                        element: "button[data-target='#createOrder']",
-                        title: "Creative Form",
-                        content: "See beautifully designed form in modal",
-                        smartPlacement: true,
-                        placement: "left",
-                        storage: false
-                    }, {
-                        element: ".close-sidebar",
-                        title: "Customizaton Menu",
-                        content: "Customize your Layout style",
-                        smartPlacement: true,
-                        placement: "left",
-                        storage: false
-                    }]
-                });
-                tour.init();
-                tour.start();
+        "use script";
+        $(window).on('load', function() {
+            var tour = new Tour({
+                steps: [{
+                    element: "#left-menu",
+                    title: "Main Menu",
+                    content: "Access the demo pages from sidebar",
+                    smartPlacement: true,
+                    storage: false
+                }, {
+                    element: "button[data-target='#createOrder']",
+                    title: "Creative Form",
+                    content: "See beautifully designed form in modal",
+                    smartPlacement: true,
+                    placement: "left",
+                    storage: false
+                }, {
+                    element: ".close-sidebar",
+                    title: "Customizaton Menu",
+                    content: "Customize your Layout style",
+                    smartPlacement: true,
+                    placement: "left",
+                    storage: false
+                }]
             });
-        </script>
-				<script>
-								'use strict';
-								var mySwiper = new Swiper('.swiper-signin', {
-										slidesPerView: 1,
-										spaceBetween: 0,
-										autoplay: true,
-										pagination: {
-												el: '.swiper-pagination',
-												clickable: true,
-										}
-								});
+            tour.init();
+            tour.start();
+        });
+    </script>
+    <script>
+        'use strict';
+        var mySwiper = new Swiper('.swiper-signin', {
+            slidesPerView: 1,
+            spaceBetween: 0,
+            autoplay: true,
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            }
+        });
 
-								$(window).on('resize', function() {
-										var mySwiper = new Swiper('.swiper-signin', {
-												slidesPerView: 1,
-												spaceBetween: 0,
-												autoplay: true,
-												pagination: {
-														el: '.swiper-pagination',
-														clickable: true,
-												}
-										});
-								});
+        $(window).on('resize', function() {
+            var mySwiper = new Swiper('.swiper-signin', {
+                slidesPerView: 1,
+                spaceBetween: 0,
+                autoplay: true,
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                }
+            });
+        });
+    </script>
+</body>
 
-						</script>
-	</body>
 </html>
