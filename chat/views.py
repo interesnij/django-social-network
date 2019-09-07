@@ -22,7 +22,7 @@ class MessagesListView(LoginRequiredMixin, ListView):
         context = super().get_context_data(*args, **kwargs)
         context['users_list'] = User.objects.filter(
             is_active=True).exclude(
-                id=self.request.user).order_by('id')
+                id=self.request.user.id).order_by('id')
         last_conversation = Message.objects.get_most_recent_conversation(
             self.request.user
         )
