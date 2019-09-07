@@ -15,15 +15,7 @@
               {% endif %}
             </a>
         </div>
-        <span style="text-center">
-            <h5 class="card-title mb-2 header-color-primary">{{ user.first_name }} {{ user.last_name }}</h5>
-          {% if user.profile.sity %}
-            <h6 class="card-subtitle mb-3 header-color-secondary">г. {{ user.profile.sity }}</h6>
-          {% else %}
-            <h6 class="card-subtitle mb-3 header-color-secondary">город не указан</h6>
-          {% endif %}
-
-          <br>
+        <span class="text-center">
           <br>
           <a class="btn btn-sm btn-success success-gradient">Добавить</a>
           <a class="btn btn-sm btn-warning warning-gradient ml-2">Написать</a>
