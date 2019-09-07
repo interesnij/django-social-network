@@ -4,7 +4,7 @@ from communities.models import Community
 
 
 class CommunitiesView(ListView):
-	template_name="connections.html"
+	template_name="communities.html"
 	model=Community
 
 	def get(self,request,*args,**kwargs):
