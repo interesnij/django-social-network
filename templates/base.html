@@ -32,22 +32,8 @@
         </span>
         <div class="jambotron-fluid">
             <div id="ajax">
-							<span class="d-sm-none">
                 {% block content %}
                 {% endblock %}
-							</span>
-
-							<span class="d-none">
-								<div class="col-12 col-md-12 col-lg-3 order-1">
-								</div>
-								<div class="col-12 col-md-12 col-lg-9 order-2">
-                {% block content2 %}
-                {% endblock %}
-								</div>
-
-
-
-							</span>
 
                 {% include "base_scripts.html" %}
             </div>
