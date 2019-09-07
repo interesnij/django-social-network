@@ -47,7 +47,6 @@ INSTALLED_APPS = [
     'ckeditor',
     'ckeditor_uploader',
     'frends',
-    'groups',
     'chat',
 ]
 

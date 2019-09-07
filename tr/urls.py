@@ -43,7 +43,7 @@ urlpatterns = [
     url(r'^notifications/', include('notifications.urls')),
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),
     url(r'^frends/', include('frends.urls')),
-    url(r'^groups/', include('groups.urls')),
     url(r'^chat/', include('chat.urls')),
+    url(r'^groups/', include('communities.urls')),
 
 ]  +static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
