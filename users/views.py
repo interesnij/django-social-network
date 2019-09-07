@@ -17,7 +17,7 @@ class AllUsers(TemplateView,CategoryListMixin):
 	template_name="all_users.html"
 
 
-class ProfileUserView(LoginRequiredMixin, TemplateView):
+class ProfileUserView(TemplateView):
 	template_name = 'user.html'
 	form = PostMediumForm
 
