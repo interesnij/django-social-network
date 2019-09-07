@@ -14,7 +14,7 @@ application = ProtocolTypeRouter({
         AuthMiddlewareStack(
             URLRouter([
                 url(r'^notifications/$', NotificationsConsumer),
-                url(r'^(?P<username>[^/]+)/$', MessagerConsumer),
+                url(r'^(?P<id>[^/]+)/$', MessagerConsumer),
             ])
         ),
     ),
