@@ -3,6 +3,11 @@ from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.utils import timezone
 from users.models import User
+from django.conf import settings
+from django.utils.translation import ugettext_lazy as _
+from asgiref.sync import async_to_sync
+from channels.layers import get_channel_layer
+from slugify import slugify
 
 
 class Notification(models.Model):
