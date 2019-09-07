@@ -8,6 +8,8 @@ from django.utils.translation import ugettext_lazy as _
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 from slugify import slugify
+import uuid
+
 
 
 class Notification(models.Model):
