@@ -189,7 +189,7 @@ a {
     let ws_path = ws_scheme + "://" + window.location.host + "/notifications";
 
     let webSocket = new channels.WebSocketBridge();
-    webSocket.connect('ws://трезвый.рус/ws/notifications/');
+    webSocket.connect('wss://трезвый.рус/ws/notifications/');
 
     // Helpful debugging
     webSocket.socket.onopen = function () {
