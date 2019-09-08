@@ -118,27 +118,25 @@ a {
     </script>
     <script>
     $(function () {
-    let emptyMessage = 'You have no unread notification';
-    var socket = new WebSocket("ws://xn--b1afgj5al1e.xn--p1acf/notification/")
+      var socket = new WebSocket("wss://151.248.115.197.com/ws/notification")
 
-    socket.onopen = function() {
-        console.log('connected');
-        console.log('connected');
-    }
-    socket.onmessage = function(data) {
-        console.log('onmaeesge');
-        console.log(data);
-    }
-    socket.onclose = function(data) {
-        console.log('onclose');
-        console.log(data);
+  socket.onopen = function() {
+      console.log('connected');
+      console.log('connected');
+  }
+  socket.onmessage = function(data) {
+      console.log('onmaeesge');
+      console.log(data);
+  }
+  socket.onclose = function(data) {
+      console.log('onclose');
+      console.log(data);
 
-    socket.onerror = function(data) {
-        console.log('error');
-        console.log(data);
-    }
-    }
-});
+  socket.onerror = function(data) {
+      console.log('error');
+      console.log(data);
+  }
+  }
     </script>
 </body>
 
