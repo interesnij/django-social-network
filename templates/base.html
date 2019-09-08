@@ -183,18 +183,19 @@ a {
         return false;
     });
 
+    let ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
+        let ws_path = ws_scheme + '://' + window.location.host + "/notifications/";
+        let webSocket = new channels.WebSocketBridge();
+        webSocket.connect(ws_path);
 
-    let webSocket = new channels.WebSocketBridge();
-    webSocket.connect('wss://151.248.115.197.com/ws/notifications');
+        // Helpful debugging
+        webSocket.socket.onopen = function () {
+            console.log("Connected to " + ws_path);
+        };
 
-    // Helpful debugging
-    webSocket.socket.onopen = function () {
-        console.log("Есть контакт! ");
-    };
-
-    webSocket.socket.onclose = function () {
-        console.error("Что-то пошло не так ");
-    };
+        webSocket.socket.onclose = function () {
+            console.error("Disconnected from " + ws_path);
+        };
 
     // Слушайте мост WebSocket, созданный через библиотеку django-channels.
     webSocket.listen(function(event) {
