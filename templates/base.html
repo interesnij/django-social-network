@@ -119,7 +119,7 @@ a {
     <script>
     $(function () {
     let emptyMessage = 'You have no unread notification';
-    var socket = new WebSocket("ws://xn--b1afgj5al1e.xn--p1acf/ws/notification")
+    var socket = new WebSocket("ws://0.0.0.0:8001/notification")
 
     socket.onopen = function() {
         console.log('connected');
