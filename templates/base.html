@@ -189,11 +189,11 @@ a {
 
     // Helpful debugging
     webSocket.socket.onopen = function () {
-        console.log("Connected to " + ws_path);
+        console.log("Есть контакт! ");
     };
 
     webSocket.socket.onclose = function () {
-        console.error("Disconnected from " + ws_path);
+        console.error("Что-то пошло не так ");
     };
 
     // Слушайте мост WebSocket, созданный через библиотеку django-channels.
