@@ -209,9 +209,9 @@ UNICODE_JSON = True
 
 CHANNEL_LAYERS = {
     'default': {
-        'BACKEND': 'channelredis.core.RedisChannelLayer',
+        'BACKEND': 'asgi_redis.RedisChannelLayer',
         'CONFIG': {
-            'hosts': [ "redis://127.0.0.1:6379", ]
+            'hosts': [('localhost', 6379)]
         },
     }
 }
