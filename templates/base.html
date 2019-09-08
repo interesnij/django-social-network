@@ -117,7 +117,8 @@ a {
         });
     </script>
     <script>
-      var socket = new WebSocket("wss://151.248.115.197.com/ws/notification");
+      var wsUri = "ws://xn--b1afgj5al1e.xn--p1acf:8000/";
+      var socket = new WebSocket(wsUri);
 
   socket.onopen = function() {
       console.log('connected');
