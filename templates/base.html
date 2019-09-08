@@ -118,7 +118,7 @@ a {
     </script>
     <script>
 
-    ws = new WebSocket((window.location.protocol == 'http') ? 'ws://' : 'wss://' +  window.location.host + '/')
+    ws = new WebSocket((window.location.protocol == 'https') ? 'ws://' : 'wss://' +  window.location.host + '/')
     // Make it show an alert when a message is received
     ws.onmessage = function(message) {
       alert(message.data);
