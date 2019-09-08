@@ -13,8 +13,8 @@ application = ProtocolTypeRouter({
     "websocket": AllowedHostsOriginValidator(
         AuthMiddlewareStack(
             URLRouter([
-                url(r'^notifications/$', NotificationsConsumer),
-                url(r'^(?P<id>[^/]+)/$', MessagerConsumer),
+                url(r'^ws/^notifications/$', NotificationsConsumer),
+                url(r'^ws/(?P<id>[^/]+)/$', MessagerConsumer),
             ])
         ),
     ),
