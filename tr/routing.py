@@ -6,15 +6,14 @@ from channels.security.websocket import AllowedHostsOriginValidator
 
 from chat.consumers import MessagerConsumer
 from notifications.consumers import NotificationsConsumer
-# from bootcamp.notifications.routing import notifications_urlpatterns
-# from bootcamp.messager.routing import messager_urlpatterns
+
 
 application = ProtocolTypeRouter({
     "websocket": AllowedHostsOriginValidator(
         AuthMiddlewareStack(
             URLRouter([
-                url(r'^ws/^notifications/$', NotificationsConsumer),
-                url(r'^ws/(?P<id>[^/]+)/$', MessagerConsumer),
+                url(r'^ws/notifications/$', NotificationsConsumer),
+                url(r'^ws/(?P<username>[^/]+)/$', MessagerConsumer),
             ])
         ),
     ),
