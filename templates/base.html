@@ -165,7 +165,7 @@ a {
         else {
             $("#notifications").popover('dispose');
             $.ajax({
-                url: '/notifications/latest-notifications/',
+                url: 'wss://трезвый.рус/ws/notifications/latest-notifications/',
                 cache: false,
                 success: function (data) {
                     $("#notifications").popover({
