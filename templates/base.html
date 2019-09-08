@@ -120,7 +120,7 @@ a {
     var loc = window.location;
 var wsStart = loc.protocol == "https:" ? "wss://" : "ws://"
 var endpoint = wsStart + loc.host + loc.pathname
-var socket = new WebSocket(endpoint + '/notifications');
+var socket = new WebSocket(endpoint + 'notifications');
 
 socket.onmessage = function(e){
     // code
