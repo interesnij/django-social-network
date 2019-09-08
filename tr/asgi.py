@@ -1,5 +1,12 @@
-import os
-import channels.asgi
+"""
+ASGI entrypoint. Configures Django and then runs the application
+defined in the ASGI_APPLICATION setting.
+"""
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tr.settings")
-channel_layer = channels.asgi.get_channel_layer()
+import os
+import django
+from tr.routing import get_default_application
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'tr.production')
+django.setup()
+application = get_default_application()
