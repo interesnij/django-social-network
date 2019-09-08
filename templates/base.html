@@ -117,14 +117,18 @@ a {
         });
     </script>
     <script>
+
+
     var loc = window.location;
 var wsStart = loc.protocol == "https:" ? "wss://" : "ws://"
 var endpoint = wsStart + loc.host + loc.pathname
-var socket = new WebSocket(endpoint + 'ws/');
+var socket = new WebSocket(endpoint + 'ws/notifications/');
 
 socket.onmessage = function(e){
     // code
 }
+
+
     </script>
 </body>
 
