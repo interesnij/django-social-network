@@ -183,22 +183,29 @@ a {
         return false;
     });
 
-    let ws_scheme = window.location.protocol == "http:" ? "wss" : "ws";
-        let ws_path = ws_scheme + '://' + window.location.host + "/ws" + "/notifications/&grreeey";
-        let webSocket = new channels.WebSocketBridge();
-        webSocket.connect(ws_path);
+    websocket calling file:
+    var socket = new WebSocket("wss://YOUR_IP.com/ws/notify")
 
-        // Helpful debugging
-        webSocket.socket.onopen = function () {
-            console.log("Connected to " + ws_path);
-        };
+    socket.onopen = function() {
+        console.log('connected');
+        console.log('connected');
+    }
+    socket.onmessage = function(data) {
+        console.log('onmaeesge');
+        console.log(data);
+    }
+    socket.onclose = function(data) {
+        console.log('onclose');
+        console.log(data);
 
-        webSocket.socket.onclose = function () {
-            console.error("Disconnected from " + ws_path);
-        };
+    socket.onerror = function(data) {
+        console.log('error');
+        console.log(data);
+    }
+    }
 
     // Слушайте мост WebSocket, созданный через библиотеку django-channels.
-    webSocket.listen(function(event) {
+    WebSocket.listen(function(event) {
         switch (event.key) {
             case "notification":
                 $("#notifications").addClass("btn-danger");
