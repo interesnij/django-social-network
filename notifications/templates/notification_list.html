@@ -4,7 +4,7 @@
 
 
 {% block content %}
-
+<ul id="notifylist"></ul>
 {% for notification in notification_list %}
 
 <div class="card mb-4 fullscreen">
@@ -39,4 +39,22 @@
   Пока ничего нет...
 {% endfor %}
 
+
+<script>
+   document.addEventListener('DOMContentLoaded', function() {
+     const webSocketBridge = new channels.WebSocketBridge();
+     const nl = document.querySelector("#notifylist");
+
+     webSocketBridge.connect('/notifications/');
+     webSocketBridge.listen(function(action, stream) {
+       console.log("RESPONSE:", action);
+       if(action.event == "New User") {
+         var el = document.createElement("li");
+         el.innerHTML = `New user <b>${action.first_name}</b> has joined!`;
+         nl.appendChild(el);
+       }
+     })
+     document.ws = webSocketBridge; /* for debugging */
+   })
+   </script>
 {% endblock %}

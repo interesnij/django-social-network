@@ -1,20 +1,9 @@
-from django.conf.urls import url
-
-from channels.auth import AuthMiddlewareStack
 from channels.routing import ProtocolTypeRouter, URLRouter
-from channels.security.websocket import AllowedHostsOriginValidator
-
-from chat.consumers import MessagerConsumer
-from notifications.consumers import NotificationsConsumer
-
+from django.urls import path
+from notifiocation.consumers import NoseyConsumer
 
 application = ProtocolTypeRouter({
-    "websocket": AllowedHostsOriginValidator(
-        AuthMiddlewareStack(
-            URLRouter([
-                url(r'^ws/notifications/$', NotificationsConsumer),
-                url(r'^ws/(?P<username>[^/]+)/$', MessagerConsumer),
-            ])
-        ),
-    ),
+    "websocket": URLRouter([
+        path("notifications/", NoseyConsumer),
+    ])
 })
