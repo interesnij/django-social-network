@@ -116,7 +116,17 @@ a {
             });
         });
     </script>
-  
+    <script>
+      ws = new WebSocket((window.location.protocol == 'http') ? 'wss://' : 'ws://' +  window.location.host + '/')
+      // Make it show an alert when a message is received
+      ws.onmessage = function(message) {
+        alert(message.data);
+      }
+      // Send a new message when the WebSocket opens
+      ws.onopen = function() {
+        ws.send('Hello, world');
+      }
+      </script>
 </body>
 
 </html>
