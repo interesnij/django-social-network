@@ -117,26 +117,14 @@ a {
         });
     </script>
     <script>
-      var wsUri = "ws://xn--b1afgj5al1e.xn--p1acf:8001/notification";
-      var socket = new WebSocket(wsUri);
+    var loc = window.location;
+var wsStart = loc.protocol == "https:" ? "wss://" : "ws://"
+var endpoint = wsStart + loc.host + loc.pathname
+var socket = new ReconnectingWebSocket(endpoint);
 
-  socket.onopen = function() {
-      console.log('connected');
-      console.log('connected');
-  }
-  socket.onmessage = function(data) {
-      console.log('onmaeesge');
-      console.log(data);
-  }
-  socket.onclose = function(data) {
-      console.log('onclose');
-      console.log(data);
-
-  socket.onerror = function(data) {
-      console.log('error');
-      console.log(data);
-  }
-  }
+socket.onmessage = function(e){
+    // code
+}
     </script>
 </body>
 
