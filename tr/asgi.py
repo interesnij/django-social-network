@@ -5,8 +5,8 @@ defined in the ASGI_APPLICATION setting.
 
 import os
 import django
-from tr.routing import get_default_application
+from channels.routing import get_default_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'tr.production')
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tr.settings")
 django.setup()
 application = get_default_application()
