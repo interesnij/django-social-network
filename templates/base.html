@@ -148,7 +148,7 @@ a {
             },
         });
     };
-
+checkNotifications();
 
     $('#notifications').popover({
         html: true,
@@ -183,10 +183,7 @@ a {
         return false;
     });
 
-    let ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
-        let ws_path = ws_scheme + '://' + window.location.host + "/ws/notifications/";
-        let webSocket = new channels.WebSocketBridge();
-        webSocket.connect(ws_path);
+    var socket = new WebSocket("wss://трезвый.com/ws/notifications")
 
     socket.onopen = function() {
         console.log('connected');
