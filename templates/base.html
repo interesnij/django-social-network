@@ -118,15 +118,15 @@ a {
     </script>
     <script>
 
-
-    var loc = window.location;
-var wsStart = loc.protocol == "https:" ? "wss://" : "ws://"
-var endpoint = wsStart + loc.host + loc.pathname
-var socket = new WebSocket(endpoint);
-
-socket.onmessage = function(e){
-    // code
-}
+    ws = new WebSocket((window.location.protocol == 'http') ? 'ws://' : 'wss://' +  window.location.host + '/')
+    // Make it show an alert when a message is received
+    ws.onmessage = function(message) {
+      alert(message.data);
+    }
+    // Send a new message when the WebSocket opens
+    ws.onopen = function() {
+      ws.send('Hello, world');
+    }
 
 
     </script>
