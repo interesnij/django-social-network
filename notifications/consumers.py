@@ -47,7 +47,7 @@ class NoseyConsumer(AsyncJsonWebsocketConsumer):
         await self.send_json(event)
         print(f"Got message {event} at {self.channel_name}")
 
-def ws_connect(message):
-    message.reply_channel.send({
-     'accept': True
-}) 
+    def ws_connect(message):
+        message.reply_channel.send({
+         'accept': True
+    }) 
