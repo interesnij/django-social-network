@@ -117,15 +117,19 @@ a {
         });
     </script>
     <script>
-      ws = new WebSocket((window.location.protocol == 'http') ? 'wss://' : 'ws://' +  window.location.host + '/')
-      // Make it show an alert when a message is received
-      ws.onmessage = function(message) {
-        alert(message.data);
-      }
-      // Send a new message when the WebSocket opens
-      ws.onopen = function() {
-        ws.send('Hello, world');
-      }
+    let ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
+  let ws_path = ws_scheme + '://' + window.location.host + "/notifications/";
+  let webSocket = new channels.WebSocketBridge();
+  webSocket.connect(ws_path);
+
+  // Helpful debugging
+  webSocket.socket.onopen = function () {
+      console.log("Connected to " + ws_path);
+  };
+
+  webSocket.socket.onclose = function () {
+      console.error("Disconnected from " + ws_path);
+  };
       </script>
 </body>
 
