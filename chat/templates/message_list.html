@@ -11,9 +11,25 @@
     <input id="room-name-submit" type="button" value="Enter"/>
 
     <script>
-var chatSocket = new WebSocket(
-    'wss://' + window.location.host + '/ws/chat/'
-);
+    var socket = new WebSocket("wss://xn--b1afgj5al1e.xn--p1acf/chat/ws/notify")
+
+    socket.onopen = function() {
+        console.log('connected');
+        console.log('connected');
+    }
+    socket.onmessage = function(data) {
+        console.log('onmaeesge');
+        console.log(data);
+    }
+    socket.onclose = function(data) {
+        console.log('onclose');
+        console.log(data);
+
+    socket.onerror = function(data) {
+        console.log('error');
+        console.log(data);
+    }
+    }
     </script>
 </body>
 </html>
