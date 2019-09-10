@@ -11,7 +11,7 @@
     <input id="room-name-submit" type="button" value="Enter"/>
 
     <script>
-    var socket = new WebSocket("wss://xn--b1afgj5al1e.xn--p1acf/chat/ws/notify")
+    var socket = new WebSocket("ws://xn--b1afgj5al1e.xn--p1acf/chat/ws/notify")
 
     socket.onopen = function() {
         console.log('connected');
