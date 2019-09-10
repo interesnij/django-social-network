@@ -4,6 +4,6 @@ from notifications.consumers import NoseyConsumer
 
 application = ProtocolTypeRouter({
     "websocket": URLRouter([
-        path("notifications/", NoseyConsumer),
+        path("about/", NoseyConsumer),
     ])
 })
