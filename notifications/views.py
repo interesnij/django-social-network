@@ -2,7 +2,9 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404, redirect, render
+from django.utils.translation import ugettext_lazy as _
 from django.views.generic import ListView
+
 from notifications.models import Notification
 
 
@@ -11,7 +13,7 @@ class NotificationUnreadListView(LoginRequiredMixin, ListView):
     the actual user"""
     model = Notification
     context_object_name = 'notification_list'
-    template_name = 'notification_list.html'
+    template_name = 'notifications/notification_list.html'
 
     def get_queryset(self, **kwargs):
         return self.request.user.notifications.unread()
@@ -25,12 +27,12 @@ def mark_all_as_read(request):
     _next = request.GET.get('next')
     messages.add_message(
         request, messages.SUCCESS,
-        'Все уведомления были отмечены как прочитанные')
+        _(f'All notifications to {request.user.username} have been marked as read.'))
 
     if _next:
         return redirect(_next)
 
-    return redirect('unread')
+    return redirect('notifications:unread')
 
 
 @login_required
@@ -43,18 +45,18 @@ def mark_as_read(request, slug=None):
 
     messages.add_message(
         request, messages.SUCCESS,
-        'The notification {notification.slug} has been marked as read.')
+        _(f'The notification {notification.slug} has been marked as read.'))
     _next = request.GET.get('next')
 
     if _next:
         return redirect(_next)
 
-    return redirect('unread')
+    return redirect('notifications:unread')
 
 
 @login_required
 def get_latest_notifications(request):
     notifications = request.user.notifications.get_most_recent()
     return render(request,
-                  'most_recent.html',
+                  'notifications/most_recent.html',
                   {'notifications': notifications})
