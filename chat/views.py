@@ -10,7 +10,7 @@ from chat.models import Message
 from chat.helpers import ajax_required
 
 
-class MessagesListView(LoginRequiredMixin, ListView):
+class MessagesListView(LoginRequiredMixin):
     template_name = "message_list.html"
 
 
