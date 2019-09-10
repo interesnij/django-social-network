@@ -13,7 +13,7 @@ class NotificationUnreadListView(LoginRequiredMixin, ListView):
     the actual user"""
     model = Notification
     context_object_name = 'notification_list'
-    template_name = 'notifications/notification_list.html'
+    template_name = 'notification_list.html'
 
     def get_queryset(self, **kwargs):
         return self.request.user.notifications.unread()
@@ -58,5 +58,5 @@ def mark_as_read(request, slug=None):
 def get_latest_notifications(request):
     notifications = request.user.notifications.get_most_recent()
     return render(request,
-                  'notifications/most_recent.html',
+                  'most_recent.html',
                   {'notifications': notifications})
