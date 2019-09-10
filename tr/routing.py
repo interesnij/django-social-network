@@ -3,7 +3,5 @@ from django.urls import path
 from notifications.consumers import NoseyConsumer
 
 application = ProtocolTypeRouter({
-    "websocket": URLRouter([
-        path("/notifications/about/", NoseyConsumer),
-    ])
+    # Empty for now (http->django views is added by default)
 })

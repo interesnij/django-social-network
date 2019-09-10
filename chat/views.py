@@ -11,28 +11,15 @@ from chat.helpers import ajax_required
 
 
 class MessagesListView(LoginRequiredMixin, ListView):
-    """CBV to render the inbox, showing by default the most recent
-    conversation as the active one.
-    """
-    model = Message
-    paginate_by = 50
     template_name = "message_list.html"
 
-    def get_context_data(self, *args, **kwargs):
-        context = super().get_context_data(*args, **kwargs)
-        context['users_list'] = User.objects.filter(
-            is_active=True).exclude(
-                id=self.request.user.id).order_by('id')
-        last_conversation = Message.objects.get_most_recent_conversation(
-            self.request.user
-        )
-        context['active'] = last_conversation.id
-        return context
 
-    def get_queryset(self):
-        active_user = Message.objects.get_most_recent_conversation(
-            self.request.user)
-        return Message.objects.get_conversation(active_user, self.request.user)
+def room(request, room_name):
+    return render(request, 'room.html', {
+        'room_name_json': mark_safe(json.dumps(room_name))
+    })
+
+
 
 
 class ConversationListView(MessagesListView):
