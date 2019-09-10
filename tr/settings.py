@@ -65,8 +65,6 @@ AUTH_USER_MODEL = 'users.User'
 
 SITE_ID = 1
 
-ASGI_APPLICATION = 'tr.routing.application'
-
 CKEDITOR_UPLOAD_PATH = 'uploads/'
 
 
@@ -206,6 +204,7 @@ REST_FRAMEWORK = {
 
 UNICODE_JSON = True
 
+ASGI_APPLICATION = 'tr.routing.application'
 
 CHANNEL_LAYERS = {
     'default': {
