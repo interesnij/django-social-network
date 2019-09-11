@@ -117,11 +117,9 @@ a {
         });
     </script>
     <script>
+    const webSocketBridge = new channels.WebSocketBridge();
+    webSocketBridge.connect('ws://xn--b1afgj5al1e.xn--p1acf:8001/notifications/');
 
-    var ws = new WebSocket('ws://xn--b1afgj5al1e.xn--p1acf:8001/notifications2/', {
-    origin: 'xn--b1afgj5al1e.xn--p1acf:8001',
-    headers: { Authorization: 'base64 auth' }
-});
     </script>
 
 </body>
