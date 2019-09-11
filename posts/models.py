@@ -36,8 +36,8 @@ class Post(models.Model):
                                           'plugin.js',
                                           )],
                                       )
-    #created = models.DateTimeField(default=timezone.now, verbose_name="Создан")
-    creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='posts_creator',verbose_name="Создатель")
+    created = models.DateTimeField(default=timezone.now, verbose_name="Создан")
+    #creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='posts_creator',verbose_name="Создатель")
     comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
     community = models.ForeignKey('communities.Community', on_delete=models.CASCADE, related_name='posts',null=True,blank=True,verbose_name="Сообщество")
     is_edited = models.BooleanField(default=False,verbose_name="Изменено")
