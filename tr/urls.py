@@ -38,6 +38,7 @@ urlpatterns = [
     url(r'^lists/', include('lists.urls')),
     url(r'^follows/', include('follows.urls')),
     url(r'^invitations/', include('invitations.urls')),
+    url(r'^communities/', include('communities.urls')),
     url(r'^moderation/', include('moderation.urls')),
     url(r'^notifications/', include('notifications.urls')),
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),
