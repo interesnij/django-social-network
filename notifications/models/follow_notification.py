@@ -6,4 +6,4 @@ from users.models import User
 
 class FollowNotification(models.Model):
     notification = GenericRelation(Notification)
-    follower = models.ForeignKey(User, on_delete=models.CASCADE,verbose_name="Подписка")
+    #follower = models.ForeignKey(User, on_delete=models.CASCADE,verbose_name="Подписка")
