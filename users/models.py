@@ -33,8 +33,11 @@ class User(AbstractUser):
         verbose_name = 'пользователь'
         verbose_name_plural = 'пользователи'
 
+    def get_full_name(self):
+        return  str(self.last_name) + " " + str(self.first_name)
+
     def __str__(self):
-        return str(self.last_name) + " " + str(self.first_name)
+        return get_full_name()
 
 
 class UserBlock(models.Model):
