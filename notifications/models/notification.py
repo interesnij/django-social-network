@@ -124,9 +124,9 @@ class Notification(models.Model):
 
     def __str__(self):
         if self.action_object:
-            return f'{self.actor} {self.get_verb_display()} {self.action_object} {self.time_since()} ago'
+            return '{self.actor} {self.get_verb_display()} {self.action_object} {self.time_since()} ago'
 
-        return f'{self.actor} {self.get_verb_display()} {self.time_since()} ago'
+        return '{self.actor} {self.get_verb_display()} {self.time_since()} ago'
 
     def save(self, *args, **kwargs):
         if not self.slug:
