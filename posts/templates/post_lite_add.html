@@ -1,12 +1,10 @@
 {% load staticfiles %}
-
+<br><br>
 <form action="" id="FORM-POST2" method="post">
   {% csrf_token %}
 
-    <br>
     {{ form.content_lite }}
 
-    <br>
     <button type="submit" class="btn btn-round btn-b">Добавить</button>
 </form>
 
