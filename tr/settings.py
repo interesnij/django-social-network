@@ -201,14 +201,14 @@ REST_FRAMEWORK = {
 }
 
 UNICODE_JSON = True
-
+REDIS_URL = "redis://127.0.0.1:6379"
 ASGI_APPLICATION = 'tr.routing.application'
 
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            'hosts': [("redis://127.0.0.1", 6379)]
+            'hosts': [REDIS_URL, ],
         },
     }
 }
