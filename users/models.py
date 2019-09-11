@@ -37,7 +37,7 @@ class User(AbstractUser):
         return  str(self.last_name) + " " + str(self.first_name)
 
     def __str__(self):
-        return user.get_full_name()
+        return get_full_name
 
 
 class UserBlock(models.Model):
