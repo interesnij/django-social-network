@@ -16,12 +16,12 @@
     <div class="card-body">
         <div class="media">
           {% if object.target_connection.target_user.profile.avatar %}
-            <figure class="">
+            <figure>
                 <img src="{{ object.target_connection.target_user.profile.avatar.url }}" alt="image">
             </figure>
           {% else %}
-            <figure class="avatar">
-                <img src="{% static 'images/user.png' %}" alt="image">
+            <figure style="width:50px;">
+                <img src="{% static 'images/user.png' %}" alt="image" style="border-radius: 50px;">
             </figure>
           {% endif %}
             <div class="media-body">
