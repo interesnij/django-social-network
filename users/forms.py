@@ -1,6 +1,6 @@
 from django import forms
 from django.http import Http404
-from .models import UserProfile
+from users.models import UserProfile
 from django import forms
 
 class IdentiteForm(forms.ModelForm):

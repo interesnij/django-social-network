@@ -35,7 +35,6 @@ INSTALLED_APPS = [
     'categories',
     'users',
     'circles',
-    'profiles',
     'common',
     'communities',
     'posts',

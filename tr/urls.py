@@ -32,7 +32,6 @@ urlpatterns = [
     url(r'^rest-auth/', include('rest_auth.urls')),
     url(r'^rest-auth/registration/', include('rest_auth.registration.urls')),
     url(r'^account/', include('allauth.urls')),
-    url(r'^profile/', include('profiles.urls')),
     url(r'^users/', include('users.urls')),
     url(r'^posts/', include('posts.urls')),
     url(r'^connections/', include('connections.urls')),
@@ -44,6 +43,5 @@ urlpatterns = [
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),
     url(r'^frends/', include('frends.urls')),
     url(r'^chat/', include('chat.urls')),
-    url(r'^groups/', include('communities.urls')),
 
 ]  +static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
