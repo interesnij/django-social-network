@@ -16,8 +16,8 @@
     <div class="card-body">
         <div class="media">
           {% if object.target_connection.target_user.profile.avatar %}
-            <figure>
-                <img src="{{ object.target_connection.target_user.profile.avatar.url }}" alt="image">
+            <figure style="width:50px;">
+                <img src="{{ object.target_connection.target_user.profile.avatar.url }}" style="border-radius: 50px;" alt="image">
             </figure>
           {% else %}
             <figure style="width:50px;">
