@@ -19,7 +19,6 @@ iframe{
 }
 </style>
 
-
     <div class="row">
           <div class=" col-lg-3 order-1">
 
@@ -69,7 +68,7 @@ iframe{
 {% if user == request.user %}
 <script>
   $( "#post_hard" ).click(function(){
-    $('#post_create').html('').html('<br><br>').load("{% url 'post_add_hard_user' %}");
+    $('#post_create').html('').load("{% url 'post_add_hard_user' %}");
   })
 </script>
 <script>
