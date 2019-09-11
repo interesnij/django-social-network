@@ -21,6 +21,10 @@
           <br>
           <a class="btn btn-sm btn-warning warning-gradient ml-2">Написать</a>
           <br>
+          {% if user == request.user %}
+          <a class="btn btn-sm btn-link warning-gradient">Редактировать профиль</a>
+          <br>
+          {% endif %}
         </span>
         <br>
         <div class="row bg-light-secondary py-3">
