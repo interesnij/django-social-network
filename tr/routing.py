@@ -4,7 +4,6 @@ from channels.auth import AuthMiddlewareStack
 from channels.routing import ProtocolTypeRouter, URLRouter
 from channels.security.websocket import AllowedHostsOriginValidator
 
-from messager.consumers import MessagerConsumer
 from notifications.consumers import NotificationsConsumer
 
 
@@ -13,7 +12,6 @@ application = ProtocolTypeRouter({
         AuthMiddlewareStack(
             URLRouter([
                 url(r'^notifications/$', NotificationsConsumer),
-                url(r'^(?P<username>[^/]+)/$', MessagerConsumer),
             ])
         ),
     ),
