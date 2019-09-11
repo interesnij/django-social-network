@@ -1,5 +1,5 @@
 from django.apps import AppConfig
 
 
-class GuestbookConfig(AppConfig):
-    name = 'guestbook'
+class GalleryConfig(AppConfig):
+    name = 'gallery'
