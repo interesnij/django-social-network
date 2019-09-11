@@ -90,7 +90,7 @@ class ModerationPenalty(models.Model):
 
 
 class ModeratedObjectLog(models.Model):
-    #actor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='+', null=True,verbose_name="инициатор")
+    actor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='+', null=True,verbose_name="инициатор")
 
     LOG_TYPE_DESCRIPTION_CHANGED = 'DC'
     LOG_TYPE_STATUS_CHANGED = 'AC'

@@ -7,4 +7,4 @@ from users.models import User
 
 class ConnectionRequestNotification(models.Model):
     notification = GenericRelation(Notification)
-    #connection_requester = models.ForeignKey(User, on_delete=models.CASCADE, related_name='+',verbose_name="Запрос в друзья")
+    connection_requester = models.ForeignKey(User, on_delete=models.CASCADE, related_name='+',verbose_name="Запрос в друзья")
