@@ -3,7 +3,7 @@ from django.db import models
 from django.conf import settings
 from django.utils import timezone
 from django.utils import six
-from common.models import Badge
+from main.models import Badge
 
 
 class UserInvite(models.Model):
