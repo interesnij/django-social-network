@@ -130,7 +130,7 @@ class Notification(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(f'{self.recipient} {self.uuid_id} {self.verb}',
+            self.slug = slugify('{self.recipient} {self.uuid_id} {self.verb}',
                                 to_lower=True, max_length=200)
 
         super().save(*args, **kwargs)
