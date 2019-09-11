@@ -79,6 +79,7 @@ CKEDITOR_CONFIGS = {
         'toolbar': 'ver2',
         'height': 350,
         'width': '100%',
+        'removePlugins': 'stylesheetparser',
         'toolbar_ver2': [
             ['Bold', 'Link', 'Unlink', 'Image'],
         ],
