@@ -7,7 +7,6 @@ from pilkit.processors import ResizeToFit
 from moderation.models import ModeratedObject
 from ckeditor_uploader.fields import RichTextUploadingField
 from django.conf import settings
-from common.models import Emoji
 from imagekit.models import ProcessedImageField
 from posts.helpers import upload_to_post_image_directory, upload_to_post_video_directory
 
