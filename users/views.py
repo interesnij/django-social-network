@@ -8,7 +8,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect,HttpResponse,Http404
 from users.forms import IdentiteForm
-
+from django.views.generic.edit import UpdateView
 
 
 class AllUsers(TemplateView):
