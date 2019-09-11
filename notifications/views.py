@@ -24,7 +24,7 @@ def mark_all_as_read(request):
     _next = request.GET.get('next')
     messages.add_message(
         request, messages.SUCCESS,
-        ('All notifications to {request.user.username} have been marked as read.'))
+        ('All notifications to {request.user.last_name} have been marked as read.'))
 
     if _next:
         return redirect(_next)
