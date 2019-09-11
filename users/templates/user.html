@@ -29,7 +29,7 @@ iframe{
 
               {% include 'profile/frends.html' %}
           </div>
-          <div class="col-lg-8 order-2 ">
+          <div class="col-lg-9 order-2 ">
 
              <div class="card mb-4" style="padding:10px;margin:10px">
                <h3 class="mb-0">{{ user.first_name }} {{ user.last_name }}</h3>
@@ -39,7 +39,7 @@ iframe{
                <p>Статус не указан</p>
                {% endif %}
                <br><br>
-               
+
              </div>
              {% if user == request.user %}
              <span id="post_link">
