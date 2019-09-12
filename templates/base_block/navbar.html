@@ -3,7 +3,7 @@
 <header class="main-header">
     <div class="container-fluid">
         <div class="row align-items-center">
-            <div class="col-auto px-0">
+            <div class="col-auto">
               {% if user.is_authenticated %}
               <button class="btn pink-gradient btn-icon d-sm-none" id="left-menu"><i class="material-icons">widgets</i></button>
               {% endif %}
@@ -21,7 +21,7 @@
                 </form>
             </div>
 
-            <div class="col px-0 text-right">
+            <div class="col text-right">
               {% if user.is_authenticated %}
                 <button class="btn btn-search btn-icon header-color-secondary" type="button">
                   <i class="material-icons">search</i>
