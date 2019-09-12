@@ -77,7 +77,7 @@ CKEDITOR_CONFIGS = {
        },
        'lite': {
         'toolbar': 'ver2',
-        'height': 350,
+        'height': 200,
         'width': '100%',
         'removePlugins': 'stylesheetparser',
         'toolbar_ver2': [
@@ -88,6 +88,8 @@ CKEDITOR_CONFIGS = {
     },
     'medium': {
         'toolbar': 'ver3',
+        'height': 200,
+        'width': '100%',
         'toolbar_ver3': [
             ['Bold', 'Italic', 'Underline'],
             ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
