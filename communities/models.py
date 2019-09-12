@@ -27,8 +27,8 @@ class Community(models.Model):
                                  options={'quality': 90}, processors=[ResizeToFill(500, 500)],
                                  upload_to=upload_to_community_avatar_directory,verbose_name="Аватар")
     created = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создано")
-    starrers = models.ManyToManyField(User, blank=True, null=True, related_name='favorite_communities',verbose_name="Подписчики")
-    banned_users = models.ManyToManyField(User, blank=True, null=True, related_name='banned_of_communities',verbose_name="Черный список")
+    starrers = models.ManyToManyField(User, blank=True, related_name='favorite_communities',verbose_name="Подписчики")
+    banned_users = models.ManyToManyField(User, blank=True, related_name='banned_of_communities',verbose_name="Черный список")
     status = models.CharField(max_length=100, blank=True, null=True, verbose_name="статус-слоган")
     COMMUNITY_TYPE_PRIVATE = 'T'
     COMMUNITY_TYPE_PUBLIC = 'P'
