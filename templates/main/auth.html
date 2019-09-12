@@ -3,5 +3,111 @@
 {% block title %}Рады Вас видеть | трезвый.рус{% endblock %}
 {% block content %}
 
+<div class="container-fluid h-100 h-sm-auto"">
+            <div class="row h-100 h-sm-auto">
+                <div class="col-12 col-md-6 h-md-100  h-sm-auto order-2 order-md-1">
+                    <form action="{% url 'rest_login' %}" id="login_form" class="row align-items-center h-100 h-sm-auto">
+                      {% csrf_token %}
+                        <div class="col-12">
+                            <h1 class="font-weight-light mb-3 mt-4 content-color-secondary text-left">Вход</h1>
+                            <div class="card mb-2">
+                                <div class="card-body p-0">
+                                    <input type="email" name="email" id="id_email" class="form-control form-control-lg border-0" placeholder="Email">
+                                    <hr class="my-0">
+                                    <input type="password" id="password" name="password" class="form-control form-control-lg border-0" placeholder="Ваш пароль">
+                                </div>
+                            </div>
+                            <small class="form-text text-muted login-response"></small>
+                            <div class="my-4 row">
+                                <div class="col-6 col-md text-right">
+                                    <a href="" class="content-color-primary">Забыли пароль?</a>
+                                </div>
+                            </div>
+                            <div class="text-left mb-4">
+                                <button type="submit" class=" btn btn-primary pink-gradient">Войти</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="col-12 col-md-6 h-md-100  h-sm-auto order-2 order-md-1">
+                    <form action="{% url 'rest_register' %}" id="reg_form" class="row align-items-center h-100 h-sm-auto">
+                        <div class="col-12">
+                            <h1 class="font-weight-light mb-3 content-color-secondary text-left">Регистрация</h1>
+                            <div class="card mb-2">
+                                <div class="card-body p-0">
+                                    <input type="email" name="email" id="id_email" class="form-control form-control-lg border-0" placeholder="Email">
+                                    <hr class="my-0">
+                                    <input type="text" name="first_name" id="id_first_name" class="form-control form-control-lg border-0" placeholder="Имя">
+                                    <hr class="my-0">
+                                    <input type="text" name="last_name" id="id_last_name" class="form-control form-control-lg border-0" placeholder="Фамилия">
+                                    <hr class="my-0">
+                                    <input type="password" name="password1" id="password1" class="form-control form-control-lg border-0" placeholder="Пароль">
+                                    <hr class="my-0">
+                                    <input type="password" name="password2" id="password2" class="form-control form-control-lg border-0" placeholder="Повторите пароль">
+                                </div>
+                            </div>
+
+                            <div class="my-4 row">
+                                <div class="col">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" id="register_" checked onchange="document.getElementById('register_ajax').disabled = !this.checked;" class="custom-control-input">
+                                        &nbsp;&nbsp;&nbsp;
+                                        <label class="custom-control-label" for="register_">
+                                           Я принимаю <a href="">Правила пользования сайтом трезвый.рус</a>.
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <small class="form-text text-muted reg-response"></small>
+                            <div class="text-left mb-4">
+                                <button type="submit" class=" btn btn-primary pink-gradient" id="register_ajax">Создать аккаунт</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+            var error_response = function(data) {
+                $('.login-response').html("ошибка");
+            }
+            var susccess_response = function(data) {
+              window.location = "{% url 'main' %}";
+            }
+            $().ready(function() {
+                $('form#login_form button[type=submit]').click(function() {
+                    var form = $('form#login_form');
+                    $.post(form.attr('action'), form.serialize())
+                        .fail(function(data) {
+                            error_response(data);
+                            console.log(data);
+                        })
+                        .done(function(data) {
+                            susccess_response(data);
+                        });
+                    return false;
+                });
+            });
+        </script>
+
+        <script type="text/javascript">
+          var error_response = function(data){
+            $('.reg-response').html("Что-то пошло не так... ");
+          }
+          var susccess_response = function(data){
+            window.location = "{% url 'profile-home' %}";
+          }
+          $().ready(function(){
+            $('form#reg_form button[type=submit]').click(function(){
+              var form = $('form#reg_form');
+              $.post(form.attr('action'), form.serialize())
+              .fail(function(data){error_response(data);})
+              .done(function(data){susccess_response(data);});
+              return false;
+            });
+          });
+        </script>
 
 {% endblock %}
