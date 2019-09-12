@@ -8,9 +8,9 @@ class MainPageView(TemplateView,CategoryListMixin):
 
 	def get(self,request,*args,**kwargs):
 		if request.user.is_authenticated:
-			template_name="main/mainpage.html"
+			self.template_name="main/mainpage.html"
 		else:
-			template_name="main/auth.html"
+			self.template_name="main/auth.html"
 		return super(MainPageView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
