@@ -1,8 +1,9 @@
 
 <div class="col-auto sidebar-inner position-relative ">
-  {% if user.is_authenticated %}
+
     <br><br>
     <div class="nav flex-column nav-pills faqnav">
+      {% if user.is_authenticated %}
         <a class="nav-link pink-gradient-active" href="{% url 'user' pk=request.user.pk %}">
           Моя страница
         </a>
@@ -21,9 +22,9 @@
         <a class="nav-link pink-gradient-active" href="{% url 'gallery' pk=request.user.pk %}">
           Фотографии
         </a>
-    </div>
-    {% else %}
-    Нужно войти или зарегистрироваться для доступа ко всем функциям сайта
-    {% endif %}
 
+        {% else %}
+        Нужно войти или зарегистрироваться для доступа ко всем функциям сайта
+        {% endif %}
+    </div>
 </div>
