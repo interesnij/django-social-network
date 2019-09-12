@@ -11,48 +11,83 @@
 
 {% block content %}
 <div class="row">
-{% if object_list %}
-<div class="card mb-2">
-      <div class="card-header">
-<div class="media">
-    <div class="media-body">
-        <h4 class="content-color-primary mb-0">Группы </h4>
-    </div>
-    <a href="{% url 'communities' pk=user.pk %}" class="">
-         все
-    </a>
-    </div>
-          </div>
-  </div>
-
-<br>
-
-{% for object in object_list %}
-<div class="card mb-2">
-    <div class="card-body">
-        <div class="media">
-            <figure">
-              {% if object.avatar %}
-                <img src="{{ object.avatar.url }}" style="border-radius:50px;width:50px;" alt="image">
-              {% else %}
-                <img src="{% static 'images/user.png' %}" alt="image" style="border-radius:50px;width:50px;">
-              {% endif %}
-            </figure>
-            <div class="media-body">
-              <a href="{% url 'community_detail' pk=object.pk %}">
-                <h6 class="my-0 mt-1">{{ object.name }}
-                  <span class="status vm bg-success"></span>
-                </h6>
-              </a>
-              {% if object.status %}
-                <p class="small">{{ object.status }}</p>
-              {% endif %}
+<div class="col-12 col-md-8">
+<br><br><br>
+  <div class="card mb-2">
+        <div class="card-header">
+            <div class="media">
+                <div class="icon-circle icon-30 bg-light-danger mr-3">
+                    <i class="material-icons">group</i>
+                </div>
+                <div class="media-body">
+                  {% if user == request.user %}
+                  <h5 class="mt-1">Мои группы</h5>
+                  {% else %}
+                    <h5 class="mt-1">Группы пользователя {{ user.get_full_name }}</h5>
+                  {% endif %}
+                </div>
             </div>
+        </div>
+        <br><br>
+        <div class="card-body px-0 py-0">
+            <ul class="list-group border-top border-bottom list-group-flush">
+              {% for object in object_list %}
+                <li class="list-group-item">
+                    <div class="media">
+                      <figure>
+                        {% if object.avatar %}
+                          <img src="{{ object.avatar.url }}" style="border-radius:50px;width:50px;" alt="image">
+                        {% else %}
+                          <img src="{% static 'images/user.png' %}" alt="image" style="border-radius:50px;width:50px;">
+                        {% endif %}
+                      </figure>
+                        <div class="media-body">
+                          <a href="{% url 'community_detail' pk=object.pk %}">
+                            <h6 class="my-0 mt-1">{{ object.name }}
+                              <span class="status vm bg-success"></span>
+                            </h6>
+                          </a>
+                          {% if object.status %}
+                            <p>Написать сообщение</p>
+                          {% endif %}
+                        </div>
+                    </div>
+                </li>
+              {% endfor %}
+            </ul>
         </div>
     </div>
 </div>
-{% endfor %}
 
-{% endif %}
+<div class="col-12 col-md-4">
+  <br><br><br>
+  <div class="card mb-2">
+        <div class="card-header">
+            <div class="media">
+                <div class="icon-circle icon-30 bg-light-danger mr-3">
+                    <i class="material-icons">tag_faces</i>
+                </div>
+                <div class="media-body">
+                    <h5 class="mt-1">Популярные группы</h5>
+                </div>
+            </div>
+        </div>
+        <br><br>
+  </div>
+
+  <div class="card mb-2">
+        <div class="card-header">
+            <div class="media">
+                <div class="icon-circle icon-30 bg-light-danger mr-3">
+                    <i class="material-icons">search</i>
+                </div>
+                <div class="media-body">
+                    <h5 class="mt-1">Поиск групп</h5>
+                </div>
+            </div>
+        </div>
+        <br><br>
+  </div>
+</div>
 </div>
 {% endblock %}
