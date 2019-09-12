@@ -1,5 +1,7 @@
 {% load staticfiles %}
 
+<div class="card mb-4">
+    <div class="card-header">
 <div class="media">
     <div class="media-body">
         <h4 class="content-color-primary mb-0">Друзья </h4>
@@ -7,6 +9,7 @@
     <a href="{% url 'frends' pk=user.pk %}" class="">
          все
     </a>
+</div>
 </div>
 <br>
 {% if user == request.user %}
@@ -78,3 +81,4 @@
 {% endif %}
 
 {% endif %}
+</div>
