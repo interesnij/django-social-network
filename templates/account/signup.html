@@ -5,7 +5,7 @@
 
 <div class="container-fluid h-100 h-sm-auto">
             <div class="row h-100 h-sm-auto">
-                <div class="col-12 col-md-6 h-md-100 order-2 order-md-1" style="height: 700px !important;">
+                <div class="col-12 col-md-6 h-md-100  h-sm-auto order-2 order-md-1" style="height: 700px !important;">
                   {% if user.is_anonymous %}
                     <form action="{% url 'rest_register' %}" class="row align-items-center h-100 h-sm-auto ajax-form">
                         <div class="col-12">
@@ -49,7 +49,7 @@
                     </h4>
                     {% endif %}
                 </div>
-                <div class="col-12 bg-dark " style="height: 700px !important;">
+                <div class="col-12 col-md-6 h-md-100 order-1 order-md-2 min-height-300 p-0 bg-dark " style="height: 700px !important;">
                     <div class="carosel swiper-location-carousel h-100">
                         <div data-pagination='{"el": ".swiper-pagination"}' data-space-between="0" data-slides-per-view="1" class="swiper-container swiper-init swiper-signin h-100">
                             <div class="swiper-pagination"></div>
