@@ -32,11 +32,12 @@ a {
         {% include "generic/messages.html" %}
         {% include "base_block/navbar.html" %}
 
+        {% if user.is_authenticated %}
         <span class="d-sm-none d-block">
             {% include "base_block/mobile_nav.html" %}
-
             {% include "base_block/sidebar_right.html" %}
         </span>
+        {% endif %}
 
         <div class="jambotron-fluid">
 							<span class="main-container col-xs-12 col-md-12 d-none" style="display:flex !important;flex-wrap: wrap;">

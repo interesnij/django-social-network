@@ -20,6 +20,7 @@
             </div>
 
             <div class="col px-0 text-right">
+              {% if user.is_authenticated %}
                 <button class="btn btn-search btn-icon header-color-secondary" type="button">
                   <i class="material-icons">search</i>
                 </button>
@@ -61,7 +62,6 @@
 
                 </div>
                 <div class="dropdown d-inline-block">
-                  {% if user.is_authenticated %}
                     <a class="btn header-color-secondary dropdown-toggle username"
                        href="#"
                        role="button"
@@ -108,9 +108,9 @@
                             </div>
                         </a>
                     </div>
-                    {% endif %}
                 </div>
             </div>
+            {% endif %}
         </div>
     </div>
 </header>
