@@ -4,18 +4,16 @@
     <div class="media-body">
         <h4 class="content-color-primary mb-0">Друзья </h4>
     </div>
-    <a href="" class="">
+    <a href="{% url 'frends' pk=user.pk %}" class="">
          все
     </a>
 </div>
 <br>
 
 {% for object in frends %}
-
 <div class="card mb-2">
     <div class="card-body">
         <div class="media">
-
             <figure style="width:50px;">
               {% if object.target_connection.target_user.profile.avatar %}
                 <img src="{{ object.target_connection.target_user.profile.avatar.url }}" style="border-radius: 50px;" alt="image">
