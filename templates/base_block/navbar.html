@@ -11,19 +11,11 @@
                   <img src="{% static 'images/logo-icon.png' %}" alt="">
                   <span style="margin-top:10px;float:left;"class="d-none d-sm-block">ТРЕЗВЫЙ.РУС</span>
                 </a>
-                <form class="search-header">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Поиск...">
-                        <div class="input-group-append">
-                            <button class="btn " type="button"><i class="material-icons">search</i></button>
-                        </div>
-                    </div>
-                </form>
             </div>
 
             <div class="col text-right">
               {% if user.is_authenticated %}
-                <button class="btn btn-search btn-icon header-color-secondary d-none d-inline-block" type="button">
+                <button class="btn btn-search btn-icon header-color-secondary desc-only" type="button">
                   <i class="material-icons">search</i>
                 </button>
 
@@ -63,7 +55,7 @@
                     </div>
 
                 </div>
-                <div class="dropdown d-none">
+                <div class="dropdown desc-only">
                     <a class="btn header-color-secondary dropdown-toggle username"
                        href="#"
                        role="button"
