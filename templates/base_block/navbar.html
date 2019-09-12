@@ -23,7 +23,7 @@
 
             <div class="col text-right">
               {% if user.is_authenticated %}
-                <button class="btn btn-search btn-icon header-color-secondary" type="button">
+                <button class="btn btn-search btn-icon header-color-secondary d-none" type="button">
                   <i class="material-icons">search</i>
                 </button>
 
@@ -63,7 +63,7 @@
                     </div>
 
                 </div>
-                <div class="dropdown d-inline-block d-none">
+                <div class="dropdown d-none">
                     <a class="btn header-color-secondary dropdown-toggle username"
                        href="#"
                        role="button"
