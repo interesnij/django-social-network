@@ -1,5 +1,8 @@
 {% load staticfiles %}
 {% if communities %}
+
+<div class="card mb-4">
+    <div class="card-header">
 <div class="media">
     <div class="media-body">
         <h4 class="content-color-primary mb-0">Группы </h4>
@@ -7,6 +10,7 @@
     <a href="{% url 'communities' pk=user.pk %}" class="">
          все
     </a>
+</div>
 </div>
 <br>
 
@@ -36,3 +40,4 @@
 </div>
 {% endfor %}
 {% endif %}
+</div>
