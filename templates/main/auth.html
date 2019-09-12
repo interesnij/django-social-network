@@ -6,31 +6,33 @@
 <div class="container-fluid h-100 h-sm-auto"">
             <div class="row h-100 h-sm-auto">
                 <div class="col-12 col-md-6 h-md-100  h-sm-auto order-1 order-md-1">
-                    <form action="{% url 'rest_login' %}" id="login_form" class="row align-items-center h-100 h-sm-auto">
-                      {% csrf_token %}
-                        <div class="col-12">
-                            <h1 class="font-weight-light mb-3 mt-4 content-color-secondary text-left">Вход</h1>
-                            <div class="card mb-2">
-                                <div class="card-body p-0">
-                                    <input type="email" name="email" id="id_email" class="form-control form-control-lg border-0" placeholder="Email">
-                                    <hr class="my-0">
-                                    <input type="password" id="password" name="password" class="form-control form-control-lg border-0" placeholder="Ваш пароль">
-                                </div>
-                            </div>
-                            <small class="form-text text-muted login-response"></small>
-                            <div class="my-4 row">
-                                <div class="col-6 col-md text-right">
-                                    <a href="" class="content-color-primary">Забыли пароль?</a>
-                                </div>
-                            </div>
-                            <div class="text-left mb-4">
-                                <button type="submit" class=" btn btn-primary pink-gradient">Войти</button>
-                            </div>
-                        </div>
-                    </form>
+
                 </div>
 
                 <div class="col-12 col-md-6 h-md-100  h-sm-auto order-2 order-md-2">
+                  <form action="{% url 'rest_login' %}" id="login_form" class="row align-items-center h-100 h-sm-auto">
+                    {% csrf_token %}
+                      <div class="col-12">
+                          <h1 class="font-weight-light mb-3 mt-4 content-color-secondary text-left">Вход</h1>
+                          <div class="card mb-2">
+                              <div class="card-body p-0">
+                                  <input type="email" name="email" id="id_email" class="form-control form-control-lg border-0" placeholder="Email">
+                                  <hr class="my-0">
+                                  <input type="password" id="password" name="password" class="form-control form-control-lg border-0" placeholder="Ваш пароль">
+                              </div>
+                          </div>
+                          <small class="form-text text-muted login-response"></small>
+                          <div class="my-4 row">
+                              <div class="col-6 col-md text-right">
+                                  <a href="" class="content-color-primary">Забыли пароль?</a>
+                              </div>
+                          </div>
+                          <div class="text-left mb-4">
+                              <button type="submit" class=" btn btn-primary pink-gradient">Войти</button>
+                          </div>
+                      </div>
+                  </form>
+                  <br><br><br>
                     <form action="{% url 'rest_register' %}" id="reg_form" class="row align-items-center h-100 h-sm-auto">
                         <div class="col-12">
                             <h1 class="font-weight-light mb-3 content-color-secondary text-left">Регистрация</h1>
