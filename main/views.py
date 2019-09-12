@@ -4,12 +4,13 @@ from users.models import User
 
 
 class MainPageView(TemplateView,CategoryListMixin):
-	if request.user.is_authenticated:
-		template_name="main/mainpage.html"
-	else:
-		template_name="main/auth.html"
+	template_name=None
 
 	def get(self,request,*args,**kwargs):
+		if request.user.is_authenticated:
+			template_name="main/mainpage.html"
+		else:
+			template_name="main/auth.html"
 		return super(MainPageView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
