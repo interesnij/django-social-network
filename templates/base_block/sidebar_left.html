@@ -3,7 +3,11 @@
 <div class="sidebar sidebar-left">
     <div class="container has-background-img">
         <figure class="background-img pink-gradient">
-            <img src="{% static 'images/singer-690117_640.jpg' %}" alt="" class="">
+          {% if user.profile.avatar %}
+            <img src="{{ user.profile.avatar.url }}" alt="">
+          {% else %}
+            <img src="{% static 'images/user.png' %}" alt="" class="">
+          {% endif %}
         </figure>
         <div class="media w-100 my-3">
             <figure class="avatar avatar-40 rounded-circle align-self-start ">
@@ -14,185 +18,54 @@
                 <img src="{% static 'images/user1.png' %}" alt="Generic placeholder image">
             </figure>
             <div class="media-body mx-70">
-                <h5 class="time-title mb-0 text-white">Сергей Зубарев</h5>
-                <p class="mb-0 text-truncate text-white">почта@example.com</p>
+                <h5 class="time-title mb-0 text-white">{{ user.get_full_name }}</h5>
+                {% if user.profile.status %}
+                  <p class="mb-0 text-truncate text-white">{{ user.status }}</p>
+                {% else %}
+                  <p class="mb-0 text-truncate text-white">Статус не указан</p>
+                {% endif %}
             </div>
         </div>
     </div>
 
     <ul class="nav flex-column">
         <li class="nav-item">
-            <a href="javascript:void(0);" class="nav-link dropdwown-toggle">
+            <a href="{% url 'user' pk=request.user.pk %}" class="nav-link dropdwown-toggle">
                 <i class="material-icons icon">insert_chart_outlined</i>
-                <span>Dashboard</span>
-                <i class="material-icons icon arrow">expand_more</i>
+                <span>Моя страница</span>
             </a>
-            <ul class="nav flex-column">
-                <li class="nav-item">
-                    <a href="" class="nav-link pink-gradient-active">
-                      <i class="material-icons icon"></i>
-                      <span>Production</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="" class="nav-link pink-gradient-active">
-                      <i class="material-icons icon"></i>
-                      <span>eCommerce</span>
-                    </a>
-                </li>
-            </ul>
         </li>
         <li class="nav-item">
-            <a href="javascript:void(0);" class="nav-link dropdwown-toggle"><i class="material-icons icon">filter_none</i> <span>App Pages</span><i class="material-icons icon arrow">expand_more</i></a>
-            <ul class="nav flex-column">
-                <li class="nav-item">
-                    <a href="" class="nav-link pink-gradient-active">
-                      <i class="material-icons icon"></i>
-                      <span>Profile</span>
-                    </a>
-                    <a href="" class="nav-link pink-gradient-active">
-                      <i class="material-icons icon"></i>
-                      <span>Mail</span>
-                    </a>
-                </li>
-            </ul>
+            <a href="{% url 'main' %}" class="nav-link dropdwown-toggle">
+                <i class="material-icons icon">insert_chart_outlined</i>
+                <span>Новости</span>
+            </a>
         </li>
         <li class="nav-item">
-            <a href="javascript:void(0);" class="nav-link dropdwown-toggle">
-              <i class="material-icons icon">shopping_cart</i>
-              <span>eCommerce</span>
-              <i class="material-icons icon arrow">expand_more</i>
+            <a href="{% url 'messages_list' %}" class="nav-link dropdwown-toggle">
+                <i class="material-icons icon">insert_chart_outlined</i>
+                <span>Сообщения</span>
             </a>
-            <ul class="nav flex-column">
-                <li class="nav-item">
-                    <a href="" class="nav-link pink-gradient-active">
-                      <i class="material-icons icon"></i>
-                      <span>Products</span>
-                    </a>
-                    <a href="" class="nav-link pink-gradient-active">
-                      <i class="material-icons icon"></i>
-                      <span>Product Detail</span>
-                    </a>
-                </li>
-            </ul>
         </li>
         <li class="nav-item">
-            <a href="javascript:void(0);" class="nav-link dropdwown-toggle">
-              <i class="material-icons icon">assignment</i>
-              <span>Other Pages</span>
-              <i class="material-icons icon arrow">expand_more</i>
+            <a href="{% url 'frends' pk=request.user.pk %}" class="nav-link dropdwown-toggle">
+                <i class="material-icons icon">insert_chart_outlined</i>
+                <span>Друзья</span>
             </a>
-            <ul class="nav flex-column">
-                <li class="nav-item">
-                    <a href="" class="nav-link pink-gradient-active">
-                      <i class="material-icons icon"></i>
-                      <span>Sign in</span>
-                    </a>
-                    <a href="" class="nav-link pink-gradient-active">
-                      <i class="material-icons icon"></i>
-                      <span>Sign in 2</span>
-                    </a>
-                </li>
-            </ul>
         </li>
         <li class="nav-item">
-            <a href="javascript:void(0);" class="nav-link dropdwown-toggle">
-              <i class="material-icons icon">equalizer</i>
-              <span>Charts & Map</span>
-              <i class="material-icons icon arrow">expand_more</i>
+            <a href="{% url 'communities' pk=request.user.pk %}" class="nav-link dropdwown-toggle">
+                <i class="material-icons icon">insert_chart_outlined</i>
+                <span>Сообщества</span>
             </a>
-            <ul class="nav flex-column">
-                <li class="nav-item">
-                    <a href="" class="nav-link pink-gradient-active">
-                      <i class="material-icons icon"></i>
-                      <span>Chart js</span>
-                    </a>
-                    <a href="" class="nav-link pink-gradient-active">
-                      <i class="material-icons icon"></i>
-                      <span>Sparklines</span>
-                    </a>
-                </li>
-            </ul>
         </li>
         <li class="nav-item">
-            <a href="javascript:void(0);" class="nav-link dropdwown-toggle">
-              <i class="material-icons icon">devices</i>
-              <span>Layouts</span>
-              <i class="material-icons icon arrow">expand_more</i>
+            <a href="{% url 'gallery' pk=request.user.pk %}" class="nav-link dropdwown-toggle">
+                <i class="material-icons icon">insert_chart_outlined</i>
+                <span>Фотографии</span>
             </a>
-            <ul class="nav flex-column">
-                <li class="nav-item">
-                    <a href="" class="nav-link pink-gradient-active">
-                      <i class="material-icons icon"></i>
-                      <span>Boxed layout</span>
-                    </a>
-                    <a href="" class="nav-link pink-gradient-active">
-                      <i class="material-icons icon"></i>
-                      <span>Full width</span>
-                    </a>
-                </li>
-            </ul>
         </li>
-        <li class="nav-item">
-            <a href="javascript:void(0);" class="nav-link dropdwown-toggle">
-              <i class="material-icons icon">web</i>
-              <span>Rich Controls</span>
-              <i class="material-icons icon arrow">expand_more</i>
-            </a>
-            <ul class="nav flex-column">
-                <li class="nav-item">
-                    <a class="nav-link  pink-gradient-active" href="">
-                      <i class="material-icons icon"></i> <span>Multi Select</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link pink-gradient-active" href="">
-                      <i class="material-icons icon"></i>
-                      <span>Picker</span>
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <li class="nav-item">
-            <a href="javascript:void(0);" class="nav-link dropdwown-toggle">
-              <i class="material-icons icon">description</i>
-              <span>Forms</span>
-              <i class="material-icons icon arrow">expand_more</i>
-            </a>
-            <ul class="nav flex-column">
-                <li class="nav-item">
-                    <a href="" class="nav-link  pink-gradient-active">
-                      <i class="material-icons icon"></i>
-                      <span>Credit Card</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link pink-gradient-active" href="">
-                      <i class="material-icons icon"></i>
-                      <span>Donation Form</span>
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <li class="nav-item">
-            <a href="javascript:void(0);" class="nav-link dropdwown-toggle">
-              <i class="material-icons icon">grid_on</i>
-              <span>Tables</span>
-              <i class="material-icons icon arrow">expand_more</i>
-            </a>
-            <ul class="nav flex-column">
-                <li class="nav-item">
-                    <a href="" class="nav-link pink-gradient-active">
-                      <i class="material-icons icon"></i>
-                      <span>DataTable</span>
-                    </a>
-                    <a href="" class="nav-link pink-gradient-active">
-                      <i class="material-icons icon"></i>
-                      <span>FooTable</span>
-                    </a>
-                </li>
-            </ul>
-        </li>
+
     </ul>
 </div>
 <div class="backdrop"></div>
