@@ -4,11 +4,7 @@
   {% if user.is_authenticated %}
     <div class="container has-background-img">
         <figure class="background-img pink-gradient">
-          {% if user.profile.avatar %}
             <img src="{{ user.profile.avatar.url }}" alt="">
-          {% else %}
-            <img src="{% static 'images/user.png' %}" alt="" class="">
-          {% endif %}
         </figure>
         <div class="media w-100 my-3">
             <figure class="avatar avatar-40 rounded-circle align-self-start ">
