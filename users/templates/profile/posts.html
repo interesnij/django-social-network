@@ -1,5 +1,6 @@
 {% load staticfiles humanize %}
 
+{% if posts %}
 {% for object in posts %}
 <div class="card mb-4 fullscreen">
     <div class="card-header border-bottom">
@@ -69,3 +70,16 @@
     </div>
 </div>
 {% endfor %}
+
+{% else %}
+<div class="card mb-4 fullscreen">
+    <div class="card-header border-bottom">
+        <div class="media">
+        <h6>  Пока ничего нет...</h6>
+          <br><br>
+        </div>
+    </div>
+</div>
+
+
+{% endif %}

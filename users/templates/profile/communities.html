@@ -10,6 +10,7 @@
 </div>
 <br>
 
+{% if communities %}
 {% for object in communities %}
 <div class="card mb-2">
     <div class="card-body">
@@ -34,5 +35,5 @@
         </div>
     </div>
 </div>
-
 {% endfor %}
+{% endif %}
