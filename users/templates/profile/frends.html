@@ -27,9 +27,7 @@
             </figure>
             <div class="media-body">
               <a href="{% url 'user' pk=object.target_connection.target_user.pk %}">
-                <h6 class="my-0 mt-1">{{ object.target_connection.target_user.first_name }}
-                  <span class="status vm bg-success"></span>
-                </h6>
+                <h6 class="my-0 mt-1">{{ object.target_connection.target_user.first_name }}</h6>
               </a>
               {% if object.target_connection.target_user.profile.sity %}
                 <p class="small">{{ object.target_connection.target_user.profile.sity }}</p>
@@ -61,9 +59,7 @@
 
             <div class="media-body">
               <a href="{% url 'user' pk=object.target_connection.user.pk %}">
-                <h6 class="my-0 mt-1">{{ object.target_connection.user.first_name }}
-                  <span class="status vm bg-success"></span>
-                </h6>
+                <h6 class="my-0 mt-1">{{ object.target_connection.user.first_name }}</h6>
               </a>
               {% if object.target_connection.user.profile.sity %}
                 <p class="small">{{ object.target_connection.user.profile.sity }}</p>
