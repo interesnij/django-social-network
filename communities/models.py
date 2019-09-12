@@ -27,8 +27,8 @@ class Community(models.Model):
                                  options={'quality': 90}, processors=[ResizeToFill(500, 500)],
                                  upload_to=upload_to_community_avatar_directory,verbose_name="Аватар")
     created = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создано")
-    starrers = models.ManyToManyField(User, related_name='favorite_communities',verbose_name="Подписчики")
-    banned_users = models.ManyToManyField(User, related_name='banned_of_communities',verbose_name="Черный список")
+    starrers = models.ManyToManyField(User, blank=True, null=True, related_name='favorite_communities',verbose_name="Подписчики")
+    banned_users = models.ManyToManyField(User, blank=True, null=True, related_name='banned_of_communities',verbose_name="Черный список")
     status = models.CharField(max_length=100, blank=True, null=True, verbose_name="статус-слоган")
     COMMUNITY_TYPE_PRIVATE = 'T'
     COMMUNITY_TYPE_PUBLIC = 'P'
@@ -38,8 +38,8 @@ class Community(models.Model):
     )
     type = models.CharField(editable=False, blank=False, null=False, choices=COMMUNITY_TYPES, default='P', max_length=2)
     user_adjective = models.CharField(max_length=100,
-                                      blank=False, null=True,verbose_name="Какой-то пользователь")
-    users_adjective = models.CharField(max_length=100,blank=False, null=True,verbose_name="Какие-то пользователи")
+                                      blank=True, null=True,verbose_name="Какой-то пользователь")
+    users_adjective = models.CharField(max_length=100,blank=True, null=True,verbose_name="Какие-то пользователи")
     invites_enabled = models.BooleanField(default=True,verbose_name="Разрешить приглашения")
     is_deleted = models.BooleanField(
         default=False,
