@@ -1,5 +1,6 @@
-{% if user.is_authenticated %}
+
 <div class="col-auto sidebar-inner position-relative ">
+  {% if user.is_authenticated %}
     <br><br>
     <div class="nav flex-column nav-pills faqnav">
         <a class="nav-link pink-gradient-active" href="{% url 'user' pk=request.user.pk %}">
