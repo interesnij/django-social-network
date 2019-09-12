@@ -43,7 +43,7 @@ iframe{
              </div>
 
              {% if user == request.user %}
-             <span id="post_link">
+             <span id="post_link" style="padding:10px;margin:10px">
                <div class="dropdown d-inline-block">
                    <a href="javascript:void(0)" class="icon-circle dropdown-toggle caret-none" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                        <i class="material-icons ">add</i>
@@ -56,7 +56,7 @@ iframe{
                    </div>
                </div>
               </span>
-              <div class="card mb-4" style="margin-top:20px">
+              <div class="card mb-4" style="padding:10px;margin:10px">
                 <span id="post_create"></span>
               </div>
               {% endif %}
