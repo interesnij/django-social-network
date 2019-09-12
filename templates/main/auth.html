@@ -93,18 +93,18 @@
         </script>
 
         <script type="text/javascript">
-          var error_response = function(data){
+          var error_response2 = function(data){
             $('.reg-response').html("Что-то пошло не так... ");
           }
-          var susccess_response = function(data){
+          var susccess_response2 = function(data){
             window.location = "{% url 'main' %}";
           }
           $().ready(function(){
             $('form#reg_form button[type=submit]').click(function(){
               var form = $('form#reg_form');
               $.post(form.attr('action'), form.serialize())
-              .fail(function(data){error_response(data);})
-              .done(function(data){susccess_response(data);});
+              .fail(function(data){error_response2(data);})
+              .done(function(data){susccess_response2(data);});
               return false;
             });
           });
