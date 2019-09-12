@@ -108,41 +108,6 @@
                             </div>
                         </a>
                     </div>
-                    {% else %}
-                    <a class="btn header-color-secondary dropdown-toggle username"
-                       href="#"
-                       role="button"
-                       id="dropdownMenuLink"
-                       data-toggle="dropdown"
-                       aria-haspopup="true"
-                       aria-expanded="false">
-                       <figure class="userpic"><img src="{% static 'images/user1.png' %}" alt=""></figure>
-                       <h5 class="text-hide-xs">
-                          <span class="header-color-primary">Привет, гость!</span>
-                       </h5>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right profile-dropdown" aria-labelledby="dropdownMenuLink">
-                        <a class="dropdown-item pink-gradient-active" href="{% url 'login' %}">
-                            <div class="row align-items-center">
-                                <div class="col">
-                                    Вход
-                                </div>
-                                <div class="col-auto">
-                                    <i class="material-icons vm">person</i>
-                                </div>
-                            </div>
-                        </a>
-                        <a class="dropdown-item pink-gradient-active" href="{% url 'signup' %}">
-                            <div class="row align-items-center">
-                                <div class="col">
-                                    Регистрация
-                                </div>
-                                <div class="col-auto">
-                                    <i class="material-icons vm">person_add</i>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
                     {% endif %}
                 </div>
             </div>
