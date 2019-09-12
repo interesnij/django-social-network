@@ -1,6 +1,7 @@
 {% load staticfiles %}
 
 <div class="sidebar sidebar-left">
+  {% if user.is_authenticated %}
     <div class="container has-background-img">
         <figure class="background-img pink-gradient">
           {% if user.profile.avatar %}
@@ -29,7 +30,7 @@
     </div>
 
     <ul class="nav flex-column">
-      {% if user.is_authenticated %}
+
         <li class="nav-item">
             <a href="{% url 'user' pk=request.user.pk %}" class="nav-link dropdwown-toggle">
                 <i class="material-icons icon">insert_chart_outlined</i>
@@ -66,9 +67,9 @@
                 <span>Фотографии</span>
             </a>
         </li>
-{% else %}
-Нужно войти или зарегистрироваться для полного доступа к функциям сайта
-{% endif %}
     </ul>
+    {% else %}
+    Нужно войти или зарегистрироваться для полного доступа к функциям сайта
+    {% endif %}
 </div>
 <div class="backdrop"></div>
