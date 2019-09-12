@@ -17,9 +17,9 @@
                     <i class="material-icons">check</i>
                 </label>
                 {% if user.profile.avatar %}
-                  <img src="{{ user.profile.avatar.url }}" alt="image" style="border-radius:50px">
+                  <img src="{{ user.profile.avatar.url }}" alt="image" style="border-radius:50px;width:100%;">
                 {% else %}
-                  <img src="{% static 'images/user1.png' %}" alt="image" style="width: 100%;" style="border-radius:50px">
+                  <img src="{% static 'images/user1.png' %}" alt="image" style="width:100%;width:100%;">
                 {% endif %}
             </figure>
             <div class="media-body mx-70">
