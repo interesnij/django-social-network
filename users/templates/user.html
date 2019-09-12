@@ -83,11 +83,7 @@ iframe{
     $('#post_create').html('').load("{% url 'post_add_lite_user' %}");
   });
 </script>
-<script>
-  $( ".remove_form" ).click(function(){
-    $('#post_create').empty();
-  });
-</script>
+
 
 <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
 <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
