@@ -77,7 +77,7 @@ CKEDITOR_CONFIGS = {
        },
        'lite': {
         'toolbar': 'ver2',
-        'height': 200,
+        'height': 100,
         'width': '100%',
         'removePlugins': 'stylesheetparser',
         'toolbar_ver2': [
