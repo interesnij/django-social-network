@@ -1,6 +1,8 @@
 from django.views.generic import ListView
 from users.models import User
 from communities.models import Community
+from django.views.generic.detail import DetailView
+
 
 
 class CommunitiesView(ListView):
@@ -17,3 +19,7 @@ class CommunitiesView(ListView):
 		context["groups"]=self.groups
 		context['user'] = self.user
 		return context
+
+class CommunityDetailView(DetailView):
+	template_name="community_detail.html"
+	model=Community
