@@ -11,17 +11,19 @@
 
 {% block content %}
 <div class="col-12 col-md-6">
+<br><br><br>
   <div class="card mb-2">
         <div class="card-header">
             <div class="media">
                 <div class="icon-circle icon-30 bg-light-danger mr-3">
-                    <i class="material-icons">notifications</i>
+                    <i class="material-icons">person</i>
                 </div>
                 <div class="media-body">
-                    <h5 class="mt-1">Заголовок</h5>
+                    <h5 class="mt-1">Друзья пользователя {{ self.user.get_full_name }}</h5>
                 </div>
             </div>
         </div>
+        <br><br>
         <div class="card-body px-0 py-0">
             <ul class="list-group border-top border-bottom list-group-flush">
               {% for object in frends %}
