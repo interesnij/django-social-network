@@ -11,6 +11,7 @@
 
 {% block content %}
 <div class="col-12 col-md-6">
+  <div class="card mb-2">
         <div class="card-header">
             <div class="media">
                 <div class="icon-circle icon-30 bg-light-danger mr-3">
@@ -44,7 +45,30 @@
                     </div>
                 </li>
               {% endfor %}
+
+              {% for object in frends2 %}
+                <li class="list-group-item">
+                    <div class="media">
+                      <figure>
+                        {% if object.target_connection.user.profile.avatar %}
+                          <img src="{{ object.target_connection.user.profile.avatar.url }}" style="border-radius:50px;width:50px;" alt="image">
+                        {% else %}
+                          <img src="{% static 'images/user.png' %}" alt="image" style="border-radius:50px;width:50px;">
+                        {% endif %}
+                      </figure>
+                        <div class="media-body">
+                          <a href="{% url 'user' pk=object.target_connection.user.pk %}">
+                            <h6 class="my-0 mt-1">{{ object.target_connection.user.get_full_name }}
+                              <span class="status vm bg-success"></span>
+                            </h6>
+                          </a>
+                          <a href="" class="small">Написать сообщение</a>
+                        </div>
+                    </div>
+                </li>
+              {% endfor %}
             </ul>
         </div>
+    </div>
 </div>
 {% endblock %}
