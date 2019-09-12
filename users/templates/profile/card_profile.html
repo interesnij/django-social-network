@@ -30,20 +30,24 @@
         <br>
         <div class="row bg-light-secondary py-3">
             <div class="col text-center">
-                <div class="media">
-                    <div class="media-body">
-                        <h4 class="content-color-primary mb-0">208</h4>
-                        <p class="content-color-secondary mb-0">Сообществ</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col text-center">
-                <div class="media">
-                    <div class="media-body">
-                        <h4 class="content-color-primary mb-0">165</h4>
-                        <p class="content-color-secondary mb-0">Друзей</p>
-                    </div>
-                </div>
+              <div class="col text-center">
+                  <div class="media">
+                    <a href="{% url 'frends' pk=user.pk %}" class="">
+                      <div class="media-body">
+                          <h4 class="content-color-primary mb-0">165</h4>
+                          <p class="content-color-secondary mb-0">Друзей</p>
+                      </div>
+                    </a>
+                  </div>
+              </div>
+              <div class="media">
+                <a href="{% url 'communities' pk=user.pk %}" class="">
+                  <div class="media-body">
+                      <h4 class="content-color-primary mb-0">208</h4>
+                      <p class="content-color-secondary mb-0">Сообществ</p>
+                  </div>
+                </a>
+              </div>
             </div>
         </div>
     </div>
