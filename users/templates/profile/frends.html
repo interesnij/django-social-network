@@ -27,17 +27,16 @@
             </figure>
             <div class="media-body">
               <a href="{% url 'user' pk=object.target_connection.target_user.pk %}">
-                <h6 class="my-0 mt-1">{{ object.target_connection.target_user.get_full_name }}
+                <h6 class="my-0 mt-1">{{ object.target_connection.target_user.first_name }}
                   <span class="status vm bg-success"></span>
                 </h6>
               </a>
               {% if object.target_connection.target_user.profile.sity %}
                 <p class="small">{{ object.target_connection.target_user.profile.sity }}</p>
               {% else %}
-                <p class="small">город не указан</p>
+                <p class="small">Онлайн</p>
               {% endif %}
             </div>
-            <button class="btn btn-link content-color-secondary"><i class="material-icons">chat</i></button>
         </div>
     </div>
 </div>
