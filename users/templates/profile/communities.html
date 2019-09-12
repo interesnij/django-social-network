@@ -1,5 +1,5 @@
 {% load staticfiles %}
-
+{% if communities %}
 <div class="media">
     <div class="media-body">
         <h4 class="content-color-primary mb-0">Группы </h4>
@@ -10,7 +10,6 @@
 </div>
 <br>
 
-{% if communities %}
 {% for object in communities %}
 <div class="card mb-2">
     <div class="card-body">
