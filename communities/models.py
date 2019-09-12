@@ -29,6 +29,7 @@ class Community(models.Model):
     created = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создано")
     starrers = models.ManyToManyField(User, related_name='favorite_communities',verbose_name="Подписчики")
     banned_users = models.ManyToManyField(User, related_name='banned_of_communities',verbose_name="Черный список")
+    status = models.CharField(max_length=100, blank=True, null=True, verbose_name="статус-слоган")
     COMMUNITY_TYPE_PRIVATE = 'T'
     COMMUNITY_TYPE_PUBLIC = 'P'
     COMMUNITY_TYPES = (

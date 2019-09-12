@@ -1,0 +1,38 @@
+{% load staticfiles %}
+
+<div class="media">
+    <div class="media-body">
+        <h4 class="content-color-primary mb-0">Группы </h4>
+    </div>
+    <a href="{% url 'communities' pk=user.pk %}" class="">
+         все
+    </a>
+</div>
+<br>
+
+{% for object in communities %}
+<div class="card mb-2">
+    <div class="card-body">
+        <div class="media">
+            <figure style="width:50px;">
+              {% if object.community.avatar %}
+                <img src="{{ object.community.avatar.url }}" style="border-radius: 50px;" alt="image">
+              {% else %}
+                <img src="{% static 'images/user.png' %}" alt="image" style="border-radius: 50px;">
+              {% endif %}
+            </figure>
+            <div class="media-body">
+              <a href="{% url 'communities' pk=object.community.pk %}">
+                <h6 class="my-0 mt-1">{{ object.community.name }}
+                  <span class="status vm bg-success"></span>
+                </h6>
+              </a>
+              {% if object.community.status %}
+                <p class="small">{{ object.community.status }}</p>
+              {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endfor %}

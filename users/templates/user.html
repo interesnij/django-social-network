@@ -24,12 +24,14 @@ iframe{
 
               {% include 'profile/card_profile.html' %}
 
+              {% include 'profile/frends.html' %}
+
+              {% include 'profile/communities.html' %}
+
               {% include 'profile/gallery.html' %}
 
-              {% include 'profile/frends.html' %}
           </div>
           <div class="col-lg-8 col-md-7 col-sm-12 order-2 ">
-
              <div class="card mb-4" style="padding:10px;margin:10px">
                <h3 class="mb-0">{{ user.first_name }} {{ user.last_name }}</h3>
                {% if user.profile.status %}
@@ -38,8 +40,8 @@ iframe{
                <p>Статус не указан</p>
                {% endif %}
                <br><br>
-
              </div>
+
              {% if user == request.user %}
              <span id="post_link">
                <div class="dropdown d-inline-block">

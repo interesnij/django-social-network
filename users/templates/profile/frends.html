@@ -9,7 +9,7 @@
     </a>
 </div>
 <br>
-
+{% if user == request.user %}
 {% for object in frends %}
 <div class="card mb-2">
     <div class="card-body">
@@ -37,8 +37,9 @@
         </div>
     </div>
 </div>
-
 {% endfor %}
+
+{% else %}
 
 {% for object in frends2 %}
 
@@ -70,5 +71,6 @@
         </div>
     </div>
 </div>
-
 {% endfor %}
+
+{% endif %}
