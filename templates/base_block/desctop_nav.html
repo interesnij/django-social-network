@@ -13,7 +13,11 @@
         <a class="nav-link pink-gradient-active" href="{% url 'messages_list' %}">
           Сообщения
         </a>
+
         <a class="nav-link pink-gradient-active" href="{% url 'frends' pk=request.user.pk %}">
+        <div class="icon-circle icon-30 bg-light-success mr-3">
+            <i class="material-icons">person</i>
+        </div>
           Друзья
         </a>
         <a class="nav-link pink-gradient-active" href="{% url 'communities' pk=request.user.pk %}">
