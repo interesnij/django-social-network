@@ -14,15 +14,15 @@
 <div class="card mb-2">
     <div class="card-body">
         <div class="media">
-            <figure style="width:50px;">
+            <figure>
               {% if object.avatar %}
-                <img src="{{ object.avatar.url }}" style="border-radius: 50px;" alt="image">
+                <img src="{{ object.avatar.url }}" style="border-radius:50px;width:50px;" alt="image">
               {% else %}
-                <img src="{% static 'images/user.png' %}" alt="image" style="border-radius: 50px;">
+                <img src="{% static 'images/user.png' %}" alt="image" style="border-radius:50px;width:50px;">
               {% endif %}
             </figure>
             <div class="media-body">
-              <a href="{% url 'community_detail' pk=object.pk %}"> 
+              <a href="{% url 'community_detail' pk=object.pk %}">
                 <h6 class="my-0 mt-1">{{ object.name }}
                   <span class="status vm bg-success"></span>
                 </h6>
