@@ -20,7 +20,7 @@
             <div class="media-body mx-70">
                 <h5 class="time-title mb-0 text-white">{{ user.get_full_name }}</h5>
                 {% if user.profile.status %}
-                  <p class="mb-0 text-truncate text-white">{{ user.status }}</p>
+                  <p class="mb-0 text-truncate text-white">{{ user.profile.status }}</p>
                 {% else %}
                   <p class="mb-0 text-truncate text-white">Статус не указан</p>
                 {% endif %}
