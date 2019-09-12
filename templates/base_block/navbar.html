@@ -68,7 +68,7 @@
                        data-toggle="dropdown"
                        aria-haspopup="true"
                        aria-expanded="false">
-                       <figure class="userpic"><img src="{% static 'images/user1.png' %}" alt=""></figure>
+                       <figure class="userpic"><img src="{{ user.profile.avatar }}" alt=""></figure>
                        <h5 class="text-hide-xs">
                           <span class="header-color-primary">Мой профиль</span>
                        </h5>
@@ -115,6 +115,7 @@
                        data-toggle="dropdown"
                        aria-haspopup="true"
                        aria-expanded="false">
+                       <figure class="userpic"><img src="{% static 'images/user1.png' %}" alt=""></figure>
                        <h5 class="text-hide-xs">
                           <span class="header-color-primary">Привет, гость!</span>
                        </h5>
