@@ -11,15 +11,15 @@
             {% endif %}
         </figure>
         <div class="media w-100 my-3">
-            <figure class="avatar-40 rounded-circle align-self-start ">
+            <figure class="avatar-40 rounded-circle align-self-start " style="width: 100%;">
                 <label class="checkbox-user-check">
                     <input type="checkbox">
                     <i class="material-icons">check</i>
                 </label>
                 {% if user.profile.avatar %}
-                  <img src="{{ user.profile.avatar.url }}" alt="image">
+                  <img src="{{ user.profile.avatar.url }}" alt="image" style="border-radius:50px">
                 {% else %}
-                  <img src="{% static 'images/user1.png' %}" alt="image">
+                  <img src="{% static 'images/user1.png' %}" alt="image" style="width: 100%;" style="border-radius:50px">
                 {% endif %}
             </figure>
             <div class="media-body mx-70">
