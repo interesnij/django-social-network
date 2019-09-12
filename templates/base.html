@@ -23,6 +23,11 @@
     display: none;
   }
 }
+@media screen and (min-width: 621px) {
+   .desc-only{
+    display: none;
+  }
+}
 a {
   color: inherit;
 }
@@ -30,7 +35,11 @@ a {
 <body class="fixed-header sidebar-right-close sidebar-left-close">
     <div class="wrapper">
         {% include "generic/messages.html" %}
-        {% include "base_block/navbar.html" %}
+        <div class="col-md-1 desc-only"></div>
+        <div class="col-md-10 desc-only">
+          {% include "base_block/navbar.html" %}
+        </div>
+        <div class="col-md-1 desc-only"></div>
 
         {% if user.is_authenticated %}
         <span class="d-sm-none d-block">
