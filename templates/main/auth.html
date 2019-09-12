@@ -97,7 +97,7 @@
             $('.reg-response').html("Что-то пошло не так... ");
           }
           var susccess_response = function(data){
-            window.location = "{% url 'user' pk=request.user.pk %}";
+            window.location = "{% url 'main' %}";
           }
           $().ready(function(){
             $('form#reg_form button[type=submit]').click(function(){
