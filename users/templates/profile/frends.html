@@ -45,15 +45,15 @@
 <div class="card mb-2">
     <div class="card-body">
         <div class="media">
-          {% if object.target_connection.user.profile.avatar %}
+
             <figure class="avatar avatar-50 mr-3">
+              {% if object.target_connection.user.profile.avatar %}
                 <img src="{{ object.target_connection.user.profile.avatar.url }}" alt="image">
-            </figure>
-          {% else %}
-            <figure class="avatar avatar-50 mr-3">
+              {% else %}
                 <img src="{% static 'images/user.png' %}" alt="image">
+              {% endif %}
             </figure>
-          {% endif %}
+
             <div class="media-body">
               <a href="{% url 'user' pk=object.target_connection.user.pk %}">
                 <h6 class="my-0 mt-1">{{ object.target_connection.user.get_full_name }}
