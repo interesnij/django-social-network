@@ -12,7 +12,8 @@
 {% block content %}
 <div class="row">
 {% if object_list %}
-
+<div class="card mb-2">
+      <div class="card-header">
 <div class="media">
     <div class="media-body">
         <h4 class="content-color-primary mb-0">Группы </h4>
@@ -20,7 +21,10 @@
     <a href="{% url 'communities' pk=user.pk %}" class="">
          все
     </a>
-</div>
+    </div>
+          </div>
+  </div>
+
 <br>
 
 {% for object in object_list %}
