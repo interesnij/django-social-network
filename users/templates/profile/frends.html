@@ -10,6 +10,8 @@
 </div>
 <br>
 {% if user == request.user %}
+
+{% if frends %}
 {% for object in frends %}
 <div class="card mb-2">
     <div class="card-body">
@@ -38,11 +40,12 @@
     </div>
 </div>
 {% endfor %}
+{% endif %}
 
 {% else %}
 
+{% if frends2 %}
 {% for object in frends2 %}
-
 <div class="card mb-2">
     <div class="card-body">
         <div class="media">
@@ -64,7 +67,7 @@
               {% if object.target_connection.user.profile.sity %}
                 <p class="small">{{ object.target_connection.user.profile.sity }}</p>
               {% else %}
-                <p class="small">город не указан</p>
+                <p class="small">Онлайн</p>
               {% endif %}
             </div>
             <button class="btn btn-link content-color-secondary"><i class="material-icons">chat</i></button>
@@ -72,5 +75,6 @@
     </div>
 </div>
 {% endfor %}
+{% endif %}
 
 {% endif %}

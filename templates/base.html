@@ -41,12 +41,11 @@ a {
 
         <div class="jambotron-fluid">
 							<span class="main-container col-xs-12 col-md-12 d-none" style="display:flex !important;flex-wrap: wrap;">
-                <div class="col-md-1 col-xs-0 gadget-only">
-                  еще чуток подожмем
-                </div>
-								 <div class="{% if user.is_anonymous %}col-md-1{% endif %} gadget-only">
- 									 {% include 'base_block/desctop_nav.html' %}
- 								 </div>
+
+                <div class="col-md-1 col-xs-0 gadget-only"></div>
+								<div class="{% if user.is_anonymous %}col-md-1{% endif %} gadget-only">
+ 								  {% include 'base_block/desctop_nav.html' %}
+ 								</div>
 
 							  <div class="col-md-7" id="ajax">
                 	{% block content %}
