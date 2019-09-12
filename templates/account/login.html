@@ -3,14 +3,13 @@
 {% block title %}Вход {% endblock %}
 {% block content %}
 
-
 <div class="container-fluid h-100 h-sm-auto"">
             <div class="row h-100 h-sm-auto">
                 <div class="col-12 col-md-6 h-md-100  h-sm-auto order-2 order-md-1" style="height: 700px !important;">
                   {% if user.is_anonymous %}
                     <form action="{% url 'rest_login' %}" class="row align-items-center h-100 h-sm-auto ajax-form">
                       {% csrf_token %}
-                        <div class="col-12 col-md-10 col-lg-8 col-xl-6 mx-auto">
+                        <div class="col-12">
                             <h1 class="font-weight-light mb-3 mt-4 content-color-secondary text-left">Вход</h1>
 
                             <div class="card mb-2">
