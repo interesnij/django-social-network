@@ -103,7 +103,7 @@
           }
           $().ready(function(){
             $('#register_ajax').click(function(){
-              var form2 = $('#register_ajax');
+              var form2 = $('#signup');
               $.post(form2.attr('action'), form2.serialize())
               .fail(function(data){error_response2(data);})
               return false;
@@ -119,7 +119,7 @@
             }
             $().ready(function() {
                 $('.logg').click(function() {
-                    var form = $('.logg');
+                    var form = $('#login_form');
                     $.post(form.attr('action'), form.serialize())
                         .fail(function(data) {
                             error_response(data);
