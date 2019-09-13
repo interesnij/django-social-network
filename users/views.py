@@ -9,7 +9,7 @@ from django.http import HttpResponseRedirect,HttpResponse,Http404
 from users.forms import IdentiteForm
 from django.views.generic.edit import UpdateView
 from django.urls import reverse_lazy
-
+from django.views.generic import ListView
 
 
 class AllUsers(TemplateView):
@@ -38,6 +38,7 @@ class ProfileUserView(TemplateView):
 		context['communities'] = self.communities
 		return context
 
+
 class ProfileIdentite(TemplateView):
     template_name = "identity_form.html"
     form_class = IdentiteForm
@@ -46,3 +47,13 @@ class ProfileIdentite(TemplateView):
     def get(self,request,*args,**kwargs):
         self.user=User.objects.get(pk=self.kwargs["pk"])
         return super(ProfileIdentite,self).get(request,*args,**kwargs)
+
+
+class PostUserView(ListView):
+	template_name = 'post_list.html'
+	model = Post
+	paginate_by = 10
+
+	def get_queryset(self, **kwargs):
+		self.user=User.objects.get(pk=self.kwargs["pk"])
+        return Post.objects.filter(creator=self.user)
