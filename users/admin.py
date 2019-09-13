@@ -5,11 +5,11 @@ from users.models import User, UserProfile
 
 class UserAdmin(admin.ModelAdmin):
     search_fields = ('last_name',)
-    list_filter = ['uuid']
+    list_filter = ['email']
 
     class Meta:
             model = User
-            
+
 
 class UserProfileAdmin(admin.ModelAdmin):
 
