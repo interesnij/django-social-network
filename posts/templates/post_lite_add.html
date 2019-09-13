@@ -21,7 +21,7 @@
             url: "{% url 'post_add_lite_user' %}",
             data: frm.serialize(),
             success: function (data) {
-
+              $('#post_create').empty();
             },
             error: function(data) {
                 $("#hack").html("Возникла непредвидинная ошибка!!");
