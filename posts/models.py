@@ -8,7 +8,9 @@ from moderation.models import ModeratedObject
 from ckeditor_uploader.fields import RichTextUploadingField
 from django.conf import settings
 from imagekit.models import ProcessedImageField
-from posts.helpers import upload_to_post_image_directory, upload_to_post_video_directory
+from asgiref.sync import async_to_sync
+from channels.layers import get_channel_layer
+from notifications.models.notification import Notification, notification_handler
 
 
 class Post(models.Model):
@@ -44,6 +46,60 @@ class Post(models.Model):
     is_closed = models.BooleanField(default=False,verbose_name="Закрыто")
     is_deleted = models.BooleanField(default=False,verbose_name="Удалено")
     views=models.IntegerField(default=0,verbose_name="Просмотры")
+    reply = models.BooleanField(verbose_name=_("Это ответ?"), default=False)
+    parent = models.ForeignKey("self", blank=True,
+        null=True, on_delete=models.CASCADE, related_name="thread")
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        if not self.reply:
+            channel_layer = get_channel_layer()
+            payload = {
+                    "type": "receive",
+                    "key": "additional_post",
+                    "actor_name": self.user.get_full_name()
+
+                }
+            async_to_sync(channel_layer.group_send)('notifications', payload)
+
+    def notification_like(self, creator):
+        notification_handler(creator, self.user,Notification.LIKED, action_object=self,id_value=str(self.uuid_id),key='social_update')
+
+    def notification_dislike(self, creator):
+        notification_handler(creator, self.user,Notification.DISLIKED, action_object=self,id_value=str(self.uuid_id),key='social_update')
+
+    def reply_this(self, creator, text):
+        """Функция обработчика для создания экземпляра Новости в качестве ответа на любой
+        опубликованные новости.
+        :требует:
+        : param user: вошедший в систему пользователь, который выполняет ответ.
+        содержание параметра : строку с ответом.
+        """
+        parent = self.get_parent()
+        reply_post = Post.objects.create(
+            creator=creator,
+            content_hard=content_hard,
+            content_lite=content_lite,
+            content_medium=content_medium,
+            reply=True,
+            parent=parent
+        )
+        notification_handler(
+            creator, parent.creator, Notification.REPLY, action_object=reply_post,
+            id_value=str(parent.uuid), key='social_update')
+
+    def get_thread(self):
+        parent = self.get_parent()
+        return parent.thread.all()
+
+    def count_thread(self):
+        return self.get_thread().count()
+
+    def count_likers(self):
+        return self.liked.count()
+
+    def get_likers(self):
+        return self.liked.all()
 
     def __str__(self):
         return "Пост %s %s" % (self.creator, self.created)

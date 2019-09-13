@@ -71,10 +71,8 @@ class Notification(models.Model):
     timestamp = models.DateTimeField(default=timezone.now, editable=False, db_index=True,verbose_name="Создано")
     unread  = models.BooleanField(default=False,verbose_name="Прочитано")
 
-    POST_REACTION = 'PR'
     POST_COMMENT = 'PC'
     POST_COMMENT_REPLY = 'PCR'
-    POST_COMMENT_REACTION = 'PCRA'
     CONNECTION_REQUEST = 'CR'
     CONNECTION_CONFIRMED = 'CC'
     FOLLOW = 'F'
@@ -88,13 +86,12 @@ class Notification(models.Model):
     LOGGED_IN = 'I'
     LOGGED_OUT = 'O'
     SIGNUP = 'U'
+    REPLY = 'R'
 
 
     NOTIFICATION_TYPES = (
-        (POST_REACTION, 'Рекция на пост'),
         (POST_COMMENT, 'Комментарий к посту'),
         (POST_COMMENT_REPLY, 'Ответ на комментарий к посту'),
-        (POST_COMMENT_REACTION, 'Рефкция на комментарий к посту'),
         (CONNECTION_REQUEST, 'Заявка в друзья'),
         (CONNECTION_CONFIRMED, 'Одобренная заявка в друзья'),
         (FOLLOW, 'Подписка'),
@@ -106,6 +103,7 @@ class Notification(models.Model):
         (DISLIKED, 'Упоминание пользователя в дизлайке к посту'),
         (DISLIKED_COMMENT, 'Упоминание пользователя в дизлайке на комментарий к посту'),
         (SIGNUP, 'Упоминание пользователя о созданном аккаунте'),
+        (REply, 'Упоминание пользователя о ответе на пост'),
     )
 
     verb = models.CharField(max_length=5, choices=NOTIFICATION_TYPES,verbose_name="Тип уведомления")
@@ -188,16 +186,16 @@ class Notification(models.Model):
 
 def notification_handler(actor, recipient, verb, **kwargs):
     """
-    Handler function to create a Notification instance.
-    :requires:
-    :param actor: User instance of that user who makes the action.
-    :param recipient: User instance, a list of User instances or string
-                      'global' defining who should be notified.
-    :param verb: Notification attribute with the right choice from the list.
-    :optional:
-    :param action_object: Model instance on which the verb was executed.
-    :param key: String defining what kind of notification is going to be created.
-    :param id_value: UUID value assigned to a specific element in the DOM.
+    Функция обработчика для создания экземпляра уведомления.
+    :требует:
+    : param actor: пользовательский экземпляр того пользователя, который выполняет действие.
+    : param recipient: экземпляр пользователя, список экземпляров пользователя или строка
+                      "глобальный", определяющий, кто должен быть уведомлен.
+    : param verb: атрибут уведомления с правильным выбором из списка.
+    :Факультативный:
+    : param action_object: экземпляр модели, на котором была выполнена команда.
+    :param key: строка, определяющая, какое уведомление будет создано.
+    : param id_value: значение UUID, присвоенное определенному элементу в DOM.
     """
     key = kwargs.pop('key', 'notification')
     id_value = kwargs.pop('id_value', None)
@@ -236,16 +234,16 @@ def notification_handler(actor, recipient, verb, **kwargs):
 
 
 def notification_broadcast(actor, key, **kwargs):
-    """Notification handler to broadcast calls to the recieve layer of the
-    WebSocket consumer of this app.
-    :requires:
-    :param actor: User instance of that user who makes the action.
-    :param key: String parameter to indicate the client which action to
-                perform.
-    :optional:
-    :param id_value: UUID value assigned to a specific element in the DOM.
-    :param recipient: String indicating the name of that who needs to be
-                      notified.
+    """Обработчик уведомлений для широковещательных вызовов на уровень recieve
+    WebSocket потребитель этого приложения.
+    :требует:
+    : param actor: пользовательский экземпляр того пользователя, который выполняет действие.
+    : param key: Строковый параметр, указывающий клиенту, какое действие
+                выполнять.
+    :Факультативный:
+    : param id_value: значение UUID, присвоенное определенному элементу в DOM.
+    :парам получателя: строка, указывающая имя того, кто должен быть
+                      предупрежденный.
     """
     channel_layer = get_channel_layer()
     id_value = kwargs.pop('id_value', None)
