@@ -34,7 +34,7 @@ class ProfileUserView(TemplateView):
 		context['posts'] = self.posts
 		context['frends'] = self.frends
 		context['frends2'] = self.frends2
-		context['form'] = self.form
+		context['form_medium'] = self.form
 		context['communities'] = self.communities
 		return context
 
