@@ -106,6 +106,9 @@
               var form2 = $('#signup');
               $.post(form2.attr('action'), form2.serialize())
               .fail(function(data){error_response2(data);})
+              .done(function(data) {
+                  susccess_response(data);
+              });
               return false;
             });
           });
