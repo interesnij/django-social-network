@@ -44,7 +44,7 @@ class PostUserMediumCreate(TemplateView):
 
     def get_context_data(self,**kwargs):
         context=super(PostUserMediumCreate,self).get_context_data(**kwargs)
-        context["form"]=self.form
+        context["form_medium"]=self.form
         return context
 
     def post(self,request,*args,**kwargs):
