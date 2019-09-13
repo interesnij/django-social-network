@@ -17,7 +17,7 @@
         $.ajax({
             type: frm.attr('method'),
             url: "{% url 'post_add_hard_user' %}",
-            data: frm2.serialize(),
+            data: frm.serialize(),
             success: function (data) {
 
             },

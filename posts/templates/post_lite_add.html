@@ -2,7 +2,7 @@
 <script src="{% static 'scripts/jquery-3.2.1.min.js' %}" type="text/javascript"></script>
 
 <form action="" id="FORM-POST2" method="post">
-  {% csrf_token %} 
+  {% csrf_token %}
 
     {{ form_lite.content_lite }}
 
@@ -19,7 +19,7 @@
         $.ajax({
             type: frm.attr('method'),
             url: "{% url 'post_add_lite_user' %}",
-            data: frm2.serialize(),
+            data: frm.serialize(),
             success: function (data) {
 
             },
