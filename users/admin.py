@@ -5,7 +5,7 @@ from users.models import User, UserProfile
 
 class UserAdmin(admin.ModelAdmin):
     search_fields = ('last_name',)
-    list_filter = ['email']
+    list_filter = ['uuid']
 
     class Meta:
             model = User
