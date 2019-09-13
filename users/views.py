@@ -45,7 +45,7 @@ class ProfileIdentite(LoginRequiredMixin, UpdateView):
 
     def get(self,request,*args,**kwargs):
         self.user=User.objects.get(pk=self.kwargs["pk"])
-        return super(ProfileUserView,self).get(request,*args,**kwargs)
+        return super(ProfileIdentite,self).get(request,*args,**kwargs)
 
     def form_valid(self, form, **kwargs):
         super(ProfileIdentite, self).form_valid(form)
