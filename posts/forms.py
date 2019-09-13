@@ -13,7 +13,7 @@ class PostMediumForm(forms.ModelForm):
 
 	class Meta:
 		model = Post
-		exclude = ['views']
+		fields = ['content_medium']
 
 class PostLiteForm(forms.ModelForm):
 
