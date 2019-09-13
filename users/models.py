@@ -16,19 +16,7 @@ from pilkit.processors import ResizeToFill, ResizeToFit
 class User(AbstractUser):
 
     email = models.EmailField(unique=True, null=False, blank=False,verbose_name="Емаил")
-    connections_circle = models.ForeignKey('circles.Circle', on_delete=models.CASCADE, related_name='+',null=True, blank=True)
-    is_email_verified = models.BooleanField(default=False)
-    are_guidelines_accepted = models.BooleanField(default=False)
-    username = models.CharField(max_length=100, blank=True, null=True, verbose_name="Username")
-    is_deleted = models.BooleanField(
-        verbose_name="Удален",
-        default=False,
-    )
-
-    uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True,verbose_name="uuid")
-    invite_count = models.SmallIntegerField(default=0,verbose_name="Кол-во приглашений")
-    last_activity= models.DateTimeField(
-        default=timezone.now, blank=True, verbose_name='Активность')
+    
 
     class Meta:
         verbose_name = 'пользователь'
