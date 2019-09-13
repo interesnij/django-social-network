@@ -15,7 +15,7 @@ from pilkit.processors import ResizeToFill, ResizeToFit
 
 class User(AbstractUser):
 
-    
+
     connections_circle = models.ForeignKey('circles.Circle', on_delete=models.CASCADE, related_name='+',null=True, blank=True)
     is_email_verified = models.BooleanField(default=False)
     are_guidelines_accepted = models.BooleanField(default=False)
@@ -38,7 +38,7 @@ class User(AbstractUser):
         return  str(self.last_name) + " " + str(self.first_name)
 
     def __str__(self):
-        return self.get_full_name()
+        return self.uuid
 
 
 class UserBlock(models.Model):
