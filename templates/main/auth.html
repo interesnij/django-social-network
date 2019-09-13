@@ -49,7 +49,7 @@
                           </div>
                           <small class="form-text text-muted login-response"></small>
                           <div class="text-left mb-4">
-                              <button type="submit" class=" btn btn-primary pink-gradient">Войти</button>
+                              <button type="submit" class=" btn btn-primary logg pink-gradient">Войти</button>
                               <a href="" style="float:right;padding-top: 9px;">Забыли пароль?</a>
                           </div>
                       </div>
@@ -102,8 +102,8 @@
 
           }
           $().ready(function(){
-            $('#signup').click(function(){
-              var form2 = $('#signup');
+            $('#register_ajax').click(function(){
+              var form2 = $('#register_ajax');
               $.post(form2.attr('action'), form2.serialize())
               .fail(function(data){error_response2(data);})
               return false;
@@ -118,8 +118,8 @@
               window.location = "{% url 'main' %}";
             }
             $().ready(function() {
-                $('#login_form').click(function() {
-                    var form = $('#login_form');
+                $('.logg').click(function() {
+                    var form = $('.logg');
                     $.post(form.attr('action'), form.serialize())
                         .fail(function(data) {
                             error_response(data);
