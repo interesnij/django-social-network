@@ -114,7 +114,7 @@
                 $('.login-response').html("ошибка");
             }
             var susccess_response = function(data) {
-              window.location = "{% url 'user' pk=request.user.pk %}";
+              window.location = "{% url 'main' %}";
             }
             $().ready(function() {
                 $('form#login_form button[type=submit]').click(function() {
