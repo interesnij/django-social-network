@@ -19,6 +19,7 @@ class User(AbstractUser):
     connections_circle = models.ForeignKey('circles.Circle', on_delete=models.CASCADE, related_name='+',null=True, blank=True)
     is_email_verified = models.BooleanField(default=False)
     are_guidelines_accepted = models.BooleanField(default=False)
+    username = models.CharField(max_length=100, blank=True, null=True, verbose_name="Username")
     is_deleted = models.BooleanField(
         verbose_name="Удален",
         default=False,
