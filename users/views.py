@@ -38,7 +38,7 @@ class ProfileUserView(TemplateView):
 		context['communities'] = self.communities
 		return context
 
-class ProfileIdentite(LoginRequiredMixin, UpdateView):
+class ProfileIdentite(TemplateView):
     template_name = "identity_form.html"
     form_class = IdentiteForm
     success_url = reverse_lazy("profile-home")
