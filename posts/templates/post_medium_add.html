@@ -1,6 +1,7 @@
 {% load staticfiles %}
 
 <form action="" id="FORM-POST3" method="post">
+  {% csrf_token %}
     {{ form.content_medium }}
     <div class="card-footer">
       <button class="btn btn-secondary remove_form">Отмена</button>
