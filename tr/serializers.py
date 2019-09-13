@@ -7,7 +7,7 @@ from rest_framework.response import Response
 
 
 
-class RegisterSerializer(RegisterSerializer):
+class MyRegisterSerializer(serializers.Serializer):
     first_name = serializers.CharField(required=True, write_only=True)
     last_name = serializers.CharField(required=True, write_only=True)
 

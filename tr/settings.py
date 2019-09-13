@@ -54,7 +54,7 @@ INSTALLED_APPS = [
 REST_SESSION_LOGIN = True
 ACCOUNT_USERNAME_REQUIRED = False
 REST_AUTH_REGISTER_SERIALIZERS = {
-        'REGISTER_SERIALIZER': 'tr.serializers.RegisterSerializer',
+        'REGISTER_SERIALIZER': 'tr.serializers.MyRegisterSerializer',
 }
 
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
