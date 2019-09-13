@@ -44,7 +44,7 @@ class ProfileIdentite(LoginRequiredMixin, UpdateView):
     success_url = reverse_lazy("profile-home")
 
     def get_queryset(self):
-        queryset = UserProfile.objects.filter(user=self.request.user)
+        queryset = User.objects.filter(user=self.request.user)
         return queryset
 
     def form_valid(self, form, **kwargs):
