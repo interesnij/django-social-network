@@ -91,28 +91,7 @@
             </div>
         </div>
 
-        <script type="text/javascript">
-            var error_response = function(data) {
-                $('.login-response').html("ошибка");
-            }
-            var susccess_response = function(data) {
-              window.location = "{% url 'main' %}";
-            }
-            $().ready(function() {
-                $('form#login_form button[type=submit]').click(function() {
-                    var form = $('form#login_form');
-                    $.post(form.attr('action'), form.serialize())
-                        .fail(function(data) {
-                            error_response(data);
-                            console.log(data);
-                        })
-                        .done(function(data) {
-                            susccess_response(data);
-                        });
-                    return false;
-                });
-            });
-        </script>
+        
 
         <script type="text/javascript">
           var error_response2 = function(data){
