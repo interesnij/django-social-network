@@ -56,4 +56,4 @@ class PostUserView(ListView):
 
 	def get_queryset(self, **kwargs):
 		self.user=User.objects.get(pk=self.kwargs["pk"])
-        return Post.objects.filter(creator=self.user)
+		return Post.objects.filter(creator=self.user)
