@@ -46,7 +46,7 @@ class Post(models.Model):
     is_closed = models.BooleanField(default=False,verbose_name="Закрыто")
     is_deleted = models.BooleanField(default=False,verbose_name="Удалено")
     views=models.IntegerField(default=0,verbose_name="Просмотры")
-    reply = models.BooleanField(verbose_name=_("Это ответ?"), default=False)
+    reply = models.BooleanField(verbose_name="Это репост?", default=False)
     parent = models.ForeignKey("self", blank=True,
         null=True, on_delete=models.CASCADE, related_name="thread")
 
