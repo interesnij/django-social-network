@@ -59,7 +59,7 @@ class PostComment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments',verbose_name="Пост")
     parent_comment = models.ForeignKey('self', on_delete=models.CASCADE, related_name='replies', null=True, blank=True,verbose_name="Родительский комментарий")
     created = models.DateTimeField(default=timezone.now, editable=False, db_index=True,verbose_name="Создан")
-    c#ommenter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='posts_comments',verbose_name="Комментатор")
+    #commenter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='posts_comments',verbose_name="Комментатор")
     text = models.TextField(max_length=200, blank=False, null=False,verbose_name="Текст")
     is_edited = models.BooleanField(default=False, null=False, blank=False,verbose_name="Изменено")
     # Это происходит только в том случае, если комментарий был сообщен и найден с критическим содержанием серьезности
