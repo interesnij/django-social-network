@@ -34,7 +34,7 @@ class PostUserHardCreate(TemplateView):
         return super(PostUserHardCreate,self).get(request,*args,**kwargs)
 
 class PostUserMediumCreate(TemplateView):
-    template_name="post_medium_add2.html"
+    template_name="post_medium_add.html"
     form=None
     success_url="/"
 
