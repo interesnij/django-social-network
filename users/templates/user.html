@@ -62,7 +62,33 @@ iframe{
               {% endif %}
 
               {% include 'profile/posts.html' %}
+              <form action="" id="FORM-POST3" method="post">
+                {% csrf_token %}
+                  {{ form_medium.content_medium }}
+                  <div class="card-footer">
+                    <button class="btn btn-secondary remove_form">Отмена</button>
+                    <button type="submit" class="btn btn-success float-right">Опубликовать</button>
+                 </div>
+              </form>
 
+              <script type="text/javascript">
+                  var frm2 = $('#FORM-POST3');
+                  frm2.submit(function () {
+                      $.ajax({
+                          type: frm2.attr('method'),
+                          url: "{% url 'post_add_medium' %}",
+
+                          data: frm2.serialize(),
+                          success: function (data) {
+                            console.log(data);
+                          },
+                          error: function(data) {
+                              console.log("Возникла непредвидинная ошибка!!");
+                          }
+                      });
+                      return false;
+                  });
+              </script>
 
               </div>
           </div>
