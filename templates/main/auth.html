@@ -119,7 +119,7 @@
             $('.reg-response').html("Что-то пошло не так... ");
           }
           var susccess_response2 = function(data){
-            window.location = "{% url 'main' %}";
+
           }
           $().ready(function(){
             $('form#signup button[type=submit]').click(function(){
@@ -127,6 +127,7 @@
               $.post(form.attr('action'), form.serialize())
               .fail(function(data){error_response2(data);})
               .done(function(data){susccess_response2(data);});
+              window.location = "{% url 'main' %}";
               return false;
             });
           });
