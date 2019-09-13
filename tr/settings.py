@@ -51,17 +51,6 @@ INSTALLED_APPS = [
     'gallery',
 ]
 
-REST_SESSION_LOGIN = True
-REST_AUTH_REGISTER_SERIALIZERS = {
-        'REGISTER_SERIALIZER': 'tr.serializers.MyRegisterSerializer',
-}
-
-ACCOUNT_AUTHENTICATION_METHOD = 'email'
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_ADAPTER = 'tr.adapter.MyAccountAdapter'
-AUTH_USER_MODEL = 'users.User'
-ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
-ACCOUNT_USERNAME_REQUIRED = False
 
 SITE_ID = 1
 
@@ -186,6 +175,18 @@ STATIC_ROOT = os.path.join(PROJECT_PATH, 'static')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(PROJECT_PATH, 'media')
+
+REST_SESSION_LOGIN = True
+REST_AUTH_REGISTER_SERIALIZERS = {
+        'REGISTER_SERIALIZER': 'tr.serializers.MyRegisterSerializer',
+}
+
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_ADAPTER = 'tr.adapter.MyAccountAdapter'
+AUTH_USER_MODEL = 'users.User'
+ACCOUNT_EMAIL_VERIFICATION = 'optional'
+ACCOUNT_USERNAME_REQUIRED = False
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
