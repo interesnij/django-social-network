@@ -126,8 +126,7 @@
               var form = $('form#signup');
               $.post(form.attr('action'), form.serialize())
               .fail(function(data){error_response2(data);})
-              .done(function(data){susccess_response2(data);});
-              window.location = "{% url 'main' %}";
+              window.location = "{% url 'login' %}";
               return false;
             });
           });
