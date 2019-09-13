@@ -103,7 +103,7 @@ class Notification(models.Model):
         (DISLIKED, 'Упоминание пользователя в дизлайке к посту'),
         (DISLIKED_COMMENT, 'Упоминание пользователя в дизлайке на комментарий к посту'),
         (SIGNUP, 'Упоминание пользователя о созданном аккаунте'),
-        (REply, 'Упоминание пользователя о ответе на пост'),
+        (REPLY, 'Упоминание пользователя о ответе на пост'),
     )
 
     verb = models.CharField(max_length=5, choices=NOTIFICATION_TYPES,verbose_name="Тип уведомления")
