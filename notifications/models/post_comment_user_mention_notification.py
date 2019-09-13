@@ -1,7 +1,7 @@
 from django.contrib.contenttypes.fields import GenericRelation
 from django.db import models
 from notifications.models.notification import Notification
-from posts.models import PostCommentUserMention
+#from posts.models import PostCommentUserMention
 
 
 class PostCommentUserMentionNotification(models.Model):
