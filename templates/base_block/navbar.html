@@ -63,7 +63,13 @@
                        data-toggle="dropdown"
                        aria-haspopup="true"
                        aria-expanded="false">
-                       <figure class="userpic"><img src="{{ user.profile.avatar.url }}" alt=""></figure>
+                       <figure class="userpic">
+                         {% if request.user.profile.avatar %}
+                         <img src="{{ user.profile.avatar.url }}" alt="">
+                         {% else %}
+                         <img src="{% static 'images.user.png' %}" alt="">
+                         {% endif %}
+                       </figure>
                        <h5 class="text-hide-xs">
                           <span class="header-color-primary">Мой профиль</span>
                        </h5>
