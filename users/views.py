@@ -58,29 +58,3 @@ class ProfileIdentite(LoginRequiredMixin, UpdateView):
         profile.avatar = form.cleaned_data['avatar']
         profile.save()
         return HttpResponseRedirect(self.get_success_url())
-
-
-class PostMediumCreate(TemplateView):
-    template_name="post/post_medium_add.html"
-    form=None
-    success_url="/"
-
-    def get(self,request,*args,**kwargs):
-        self.form=PostMediumForm(initial={"creator":self.request.user})
-        return super(PostMediumCreate,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        context=super(PostMediumCreate,self).get_context_data(**kwargs)
-        context["form_medium"]=self.form
-        return context
-
-    def post(self,request,*args,**kwargs):
-        self.form=PostMediumForm(request.POST)
-        if self.form.is_valid():
-            new_post=self.form.save(commit=False)
-            new_post.creator=self.request.user
-            new_post=self.form.save()
-
-            if request.is_ajax() :
-                return HttpResponse ('!')
-        return super(PostMediumCreate,self).get(request,*args,**kwargs)
