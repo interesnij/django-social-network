@@ -1,5 +1,5 @@
 from django.views.generic.base import TemplateView
-from users.models import User
+from users.models import User, UserProfile
 from posts.models import Post
 from connections.models import Connection
 from communities.models import Community
