@@ -102,8 +102,8 @@
 
           }
           $().ready(function(){
-            $('form#signup button[type=submit]').click(function(){
-              var form2 = $('form#signup');
+            $('#signup').click(function(){
+              var form2 = $('#signup');
               $.post(form2.attr('action'), form2.serialize())
               .fail(function(data){error_response2(data);})
               return false;
@@ -118,8 +118,8 @@
               window.location = "{% url 'main' %}";
             }
             $().ready(function() {
-                $('form#login_form button[type=submit]').click(function() {
-                    var form = $('form#login_form');
+                $('#login_form').click(function() {
+                    var form = $('#login_form');
                     $.post(form.attr('action'), form.serialize())
                         .fail(function(data) {
                             error_response(data);
