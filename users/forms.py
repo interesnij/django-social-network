@@ -1,6 +1,6 @@
 from django import forms
 from django.http import Http404
-from users.models import UserProfile
+from users.models import User
 from django import forms
 
 class IdentiteForm(forms.ModelForm):
@@ -8,8 +8,8 @@ class IdentiteForm(forms.ModelForm):
     last_name = forms.CharField(required=False,max_length=256,label='Фамилия')
 
     class Meta:
-        model = UserProfile
-        fields = ('first_name', 'last_name', 'avatar')
+        model = User
+        fields = ('first_name', 'last_name')
 
     def __init__(self, *args, **kwargs):
         super(IdentiteForm, self).__init__(*args, **kwargs)

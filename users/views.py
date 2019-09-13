@@ -46,15 +46,3 @@ class ProfileIdentite(LoginRequiredMixin, UpdateView):
     def get(self,request,*args,**kwargs):
         self.user=User.objects.get(pk=self.kwargs["pk"])
         return super(ProfileIdentite,self).get(request,*args,**kwargs)
-
-    def form_valid(self, form, **kwargs):
-        super(ProfileIdentite, self).form_valid(form)
-        profile = form.save(commit=False)
-        user = self.request.user
-        user.first_name = form.cleaned_data['first_name']
-        user.last_name = form.cleaned_data['last_name']
-        user.save()
-        profile.email = form.cleaned_data['email']
-        profile.avatar = form.cleaned_data['avatar']
-        profile.save()
-        return HttpResponseRedirect(self.get_success_url())
