@@ -6,6 +6,8 @@
 <div class="container mt-4 main-container">
   <div class="row">
         <div class="col-lg-7 col-md-8 col-sm-12 order-1">
+          <form action="" method="post" class="contact-form">
+            {% csrf_token %}
             <div class="card mb-4">
                 <div class="card-header border-bottom">
                     <h5 class="content-color-primary mb-0">Главная информация</h5>
@@ -16,13 +18,23 @@
                             <div class="form-group row">
                                 <div class="col-lg-12 col-md-12">
                                     <label>Имя</label>
-                                    <input type="text" class="form-control" placeholder="">
+                                    <input type="text"
+                                           value="{{ user.first_name }}"
+                                           name="first_name"
+                                           id="id_first_name"
+                                           class="form-control"
+                                           placeholder="Имя">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-lg-12 col-md-12">
                                     <label>Фамилия</label>
-                                    <input type="text" class="form-control" placeholder="">
+                                    <input  type="text"
+                                            value="{{ user.last_name }}"
+                                            name="last_name"
+                                            id="id_last_name"
+                                            class="form-control"
+                                            placeholder="Фамилия">
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -71,10 +83,11 @@
                     </div>
                 </div>
                 <div class="card-footer">
-                    <button class="btn btn-secondary">Отмена</button>
-                    <button class="btn btn-success float-right">Сохранить</button>
+                    <a class="btn btn-secondary">Отмена</a>
+                    <button type="submit" class="btn btn-success float-right">Сохранить</button>
                 </div>
             </div>
+          </form>
         </div>
         <div class="col-lg-5 col-md-4 col-sm-12 order-2">
           <ul style="list-style-type:none">
