@@ -67,10 +67,10 @@ class UserGeneralChange(TemplateView):
 		self.user=User.objects.get(pk=self.kwargs["pk"])
 		self.form=GeneralUserForm(request.POST,instance=self.user.profile)
 		if self.form.is_valid():
-			
+
 			user = self.request.user
-			user.first_name = form.cleaned_data['first_name']
-			user.last_name = form.cleaned_data['last_name']
+			user.first_name = self.form.cleaned_data['first_name']
+			user.last_name = self.form.cleaned_data['last_name']
 			user.save()
 			self.form.save()
 			if request.is_ajax():
