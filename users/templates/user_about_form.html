@@ -18,7 +18,12 @@
                           <div class="form-group row">
                               <div class="col-lg-12 col-md-12">
                                   <label>Биография</label>
-                                  {{ form.bio }}
+                                  <input type="text"
+                                         value="{{ profile.bio }}"
+                                         name="bio"
+                                         id="id_bio"
+                                         class="form-control"
+                                         placeholder="">
                               </div>
                           </div>
                         </div>
