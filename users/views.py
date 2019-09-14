@@ -55,7 +55,7 @@ class UserGeneralChange(LoginRequiredMixin, UpdateView):
 		try:
 			queryset = UserProfile.objects.filter(user=self.request.user)
 		except:
-			queryset = UserProfile.objects.create(user=self.request.user)
+			queryset = User.objects.filter(id=self.request.user.id)
 		return queryset
 
 	def form_valid(self, form, **kwargs):
