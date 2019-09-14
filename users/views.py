@@ -52,8 +52,8 @@ class UserGeneralChange(LoginRequiredMixin, TemplateView):
     success_url = "/"
 
 	def get_queryset(self):
-        queryset = User.objects.filter(id=self.request.user.id)
-        return queryset
+		queryset = User.objects.filter(id=self.request.user.id)
+		return queryset
 
     def form_valid(self, form, **kwargs):
         super(UserGeneralChange, self).form_valid(form)
