@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %}Изменение профиля - внешний вид{% endblock %}
+{% block content %}
+<div class="container mt-4 main-container">
+  <div class="row">
+        <div class="col-lg-7 col-md-8 col-sm-12 order-1">
+            <div class="card mb-4">
+                <div class="card-header border-bottom">
+                    <h5 class="content-color-primary mb-0">Внешний вид</h5>
+                </div>
+
+                <p class="content-color-primary page-sub-title-small mt-2">
+                  <span class="icon-circle mr-2">
+                    <i class="material-icons">palette</i>
+                  </span>
+                  Ночной режим вкл-выкл
+                </p>
+
+                <ul class="list-group border-top border-bottom list-group-flush w-100">
+                    <li class="list-group-item">
+                        <input type="checkbox" id="darktheme" class="switch switch-sm">
+                        <label for="darktheme" class="bg-dark mb-2 border float-right"></label>
+                    </li>
+                <ul>
+
+                <p class="content-color-primary page-sub-title-small mt-2">
+                  <span class="icon-circle mr-2">
+                    <i class="material-icons">palette</i>
+                  </span>
+                  Цвет фона
+                </p>
+                <div class="row">
+                <ul class="list-group list-group-flush w-100">
+                    <li class="list-group-item">
+                        <div class="theme-color">
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="customRadioonpage1" name="style-sheet-color-2" class="custom-control-input" checked="">
+                                <label class="custom-control-label bg-white" for="customRadioonpage1" data-title="default"></label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="customRadioonpage2" name="style-sheet-color-2" class="custom-control-input">
+                                <label class="custom-control-label dark-blue" for="customRadioonpage2" data-title="dark-blue"></label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="customRadioonpage3" name="style-sheet-color-2" class="custom-control-input">
+                                <label class="custom-control-label dark-purple" for="customRadioonpage3" data-title="dark-purple"></label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="customRadioonpage4" name="style-sheet-color-2" class="custom-control-input">
+                                <label class="custom-control-label dark-maroon" for="customRadioonpage4" data-title="dark-maroon"></label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="customRadioonpage5" name="style-sheet-color-2" class="custom-control-input">
+                                <label class="custom-control-label dark-grey" for="customRadioonpage5" data-title="dark-grey"></label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="customRadioonpage6" name="style-sheet-color-2" class="custom-control-input">
+                                <label class="custom-control-label dark-pink" for="customRadioonpage6" data-title="dark-pink"></label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="customRadioonpage7" name="style-sheet-color-2" class="custom-control-input">
+                                <label class="custom-control-label dark-brown" for="customRadioonpage7" data-title="dark-brown"></label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="customRadioonpage8" name="style-sheet-color-2" class="custom-control-input">
+                                <label class="custom-control-label dark-green" for="customRadioonpage8" data-title="dark-green"></label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="customRadioonpage1mat" name="style-sheet-color-2" class="custom-control-input">
+                                <label class="custom-control-label red" for="customRadioonpage1mat" data-title="red"></label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="customRadioonpage2mat" name="style-sheet-color-2" class="custom-control-input">
+                                <label class="custom-control-label purple" for="customRadioonpage2mat" data-title="purple"></label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="customRadioonpage4mat" name="style-sheet-color-2" class="custom-control-input">
+                                <label class="custom-control-label blue" for="customRadioonpage4mat" data-title="blue"></label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="customRadioonpage6mat" name="style-sheet-color-2" class="custom-control-input">
+                                <label class="custom-control-label skyblue" for="customRadioonpage6mat" data-title="skyblue"></label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="customRadioonpage5mat" name="style-sheet-color-2" class="custom-control-input">
+                                <label class="custom-control-label teal" for="customRadioonpage5mat" data-title="teal"></label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="customRadioonpage7mat" name="style-sheet-color-2" class="custom-control-input">
+                                <label class="custom-control-label orange" for="customRadioonpage7mat" data-title="orange"></label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="customRadioonpage3mat" name="style-sheet-color-2" class="custom-control-input">
+                                <label class="custom-control-label brown" for="customRadioonpage3mat" data-title="brown"></label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="customRadioonpage8mat" name="style-sheet-color-2" class="custom-control-input">
+                                <label class="custom-control-label grey" for="customRadioonpage8mat" data-title="grey"></label>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            </div>
+        </div>
+        <div class="col-lg-5 col-md-4 col-sm-12 order-2">
+          <ul style="list-style-type:none">
+            <li style="margin-bottom:8px;"><a href="{% url 'user_general_form' user.pk %}">Мои контакты</a></li>
+            <li style="margin-bottom:8px;"><a href="{% url 'user_about_form' user.pk %}">Обо мне</a></li>
+            <li style="margin-bottom:8px;"><a href="{% url 'user_design' user.id %}">Внешний вид</a></li>
+          </ul>
+        </div>
+
+      </div>
+  </div>
+
+{% endblock %}
