@@ -81,7 +81,9 @@
                 </div>
                 <div class="media-body">
                     <h5 class="mt-1">Возможные друзья</h5>
+                    <ul class="list-group border-top border-bottom list-group-flush">
                     {% for object in all_user %}
+                       <li class="list-group-item">
                           <div class="media">
                             <figure>
                               {% if object.profile.avatar %}
@@ -97,7 +99,10 @@
                                 <a href="" class="small">Написать сообщение</a>
                               </div>
                           </div>
+                      </li>
                     {% endfor %}
+
+                    </ul>
                 </div>
             </div>
         </div>
