@@ -47,7 +47,7 @@ class ProfileUserView(TemplateView):
 
 
 class UserGeneralChange(LoginRequiredMixin, UpdateView):
-	template_name = "general_change_form.html"
+	template_name = "user_general_form.html"
 	form_class = GeneralUserForm
 	success_url = "/"
 
@@ -74,7 +74,7 @@ class UserGeneralChange(LoginRequiredMixin, UpdateView):
 		return HttpResponseRedirect(self.get_success_url())
 
 class UserAboutChange(LoginRequiredMixin, UpdateView):
-	template_name = "general_about_form.html"
+	template_name = "user_about_form.html"
 	form_class = AboutUserForm
 	success_url = "/"
 
