@@ -71,7 +71,7 @@ class UserGeneralChange(LoginRequiredMixin, TemplateView):
 		profile.twitter_url = form.cleaned_data['twitter_url']
 		#profile.avatar = form.cleaned_data['avatar']
 		profile.save()
-		return HttpResponse("!")
+		return HttpResponseRedirect(self.get_success_url())
 
 
 class PostUserView(ListView):
