@@ -1,0 +1,69 @@
+{% load staticfiles humanize %}
+
+<div class="card mb-4 fullscreen" style="margin:10px">
+    <div class="card-header border-bottom">
+        <div class="media">
+            <figure>
+              {% if object.creator.profile.avatar %}
+                <img src="{{ object.creator.profile.avatar.url }}" style="border-radius: 50px;width:50px;" alt="image">
+              {% else %}
+                <img src="{% static 'images/user1.png' %}" style="border-radius: 50px;width:50px;" alt="image">
+              {% endif %}
+
+            </figure>
+            <div class="media-body">
+                <h6 class="mb-0">{{ object.creator.first_name }} {{ object.creator.last_name }}</h6>
+                <p class="mb-0">{{ object.created|naturaltime }}</p>
+            </div>
+            <div class="dropdown d-inline-block">
+              <a href="javascript:void(0);" class="icon-circle icon-30 content-color-secondary fullscreenbtn">
+                  <i class="material-icons ">crop_free</i>
+              </a>
+                <a href="javascript:void(0)" class="icon-circle icon-30 dropdown-toggle caret-none" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="material-icons ">more_vertical</i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a href="" class="dropdown-item">Удалить запись</a>
+                    <a href="" class="dropdown-item">Закрепить</a>
+                    <a href="" class="dropdown-item">Выключить комментарии</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+      {% if object.content_hard %}
+        <p class="mb-0 content-color-secondary">{{ object.content_hard|safe }}</p>
+      {% endif %}
+      {% if object.content_medium %}
+        <p class="mb-0 content-color-secondary">{{ object.content_medium|safe }}</p>
+      {% endif %}
+      {% if object.content_lite %}
+        <p class="mb-0 content-color-secondary">{{ object.content_lite|safe }}</p>
+      {% endif %}
+    </div>
+    <div class="card-footer border-top py-2">
+        <div class="row" style="color: rgba(255, 255, 255, 0.65);">
+            <div class="col">
+                <span class="content-color-secondary" style="font-size:15px;cursor:pointer">
+                  <i class="material-icons">thumb_up</i>&nbsp;12
+                </span>
+                &nbsp;&nbsp;
+                <span class="content-color-secondary" style="font-size:15px;cursor:pointer">
+                  <i class="material-icons">thumb_down</i>&nbsp;12
+                </span>
+                &nbsp;&nbsp;
+                <span class="content-color-secondary" style="font-size:15px;cursor:pointer">
+                  <i class="material-icons">chat</i>&nbsp;0
+                </span>
+                &nbsp;&nbsp;
+                <span class="content-color-secondary" style="font-size:15px;cursor:pointer">
+                  <i class="material-icons">share</i>&nbsp;0
+                </span>
+
+            </div>
+            <span class="col-auto content-color-secondary" style="font-size:12px">
+              <i class="material-icons">visibility</i>&nbsp;115
+            </span>
+        </div>
+    </div>
+</div>
