@@ -62,7 +62,7 @@ class UserNotificationsSettings(models.Model):
 
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, null=True, related_name="profile",
+    user = models.OneToOneField(User, null=True, related_name="profile",
                                 verbose_name='Пользователь', on_delete=models.CASCADE)
     avatar = ProcessedImageField(blank=True, null=True, format='JPEG',
                                  options={'quality': 90}, processors=[ResizeToFill(500, 500)],
