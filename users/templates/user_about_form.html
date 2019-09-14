@@ -52,7 +52,7 @@
       frm.submit(function () {
           $.ajax({
               type: frm.attr('method'),
-              url: "{% url 'user_about_form' pk=request.users.pk %}",
+              url: "{% url 'user_about_form' pk=request.user.pk %}",
               data: frm.serialize(),
               success: function (data) {
                 console.log("Все ОК")
