@@ -22,7 +22,7 @@ class GeneralUserForm(forms.ModelForm):
         'phone',
         )
     def __init__(self, *args, **kwargs):
-        super(IdentiteForm, self).__init__(*args, **kwargs)
+        super(GeneralUserForm, self).__init__(*args, **kwargs)
         try:
             self.fields['first_name'].initial = self.instance.user.first_name
             self.fields['last_name'].initial = self.instance.user.last_name
