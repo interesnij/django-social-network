@@ -46,10 +46,14 @@ class ProfileUserView(TemplateView):
 		return context
 
 
-class UserGeneralChange(LoginRequiredMixin, UpdateView):
+class UserGeneralChange(LoginRequiredMixin, TemplateView):
     template_name = "general_change_form.html"
     form_class = GeneralUserForm
     success_url = "/"
+
+	def get_queryset(self):
+        queryset = User.objects.filter(id=self.request.user.id)
+        return queryset
 
     def form_valid(self, form, **kwargs):
         super(UserGeneralChange, self).form_valid(form)
