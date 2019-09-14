@@ -53,7 +53,7 @@ class UserGeneralChange(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.user=User.objects.get(pk=self.kwargs["pk"])
-		self.form=GeneralUserForm(instance=self.user.profile)
+		self.form=GeneralUserForm()
 		return super(UserGeneralChange,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
