@@ -10,7 +10,7 @@ class GeneralUserForm(forms.ModelForm):
 
     class Meta:
         model = UserProfile
-        fields = ('first_name', 'last_name', 'email',)
+        fields = ('first_name', 'last_name',)
 
     def __init__(self, *args, **kwargs):
         super(IdentiteForm, self).__init__(*args, **kwargs)
