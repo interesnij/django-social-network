@@ -63,7 +63,7 @@ class UserGeneralChange(LoginRequiredMixin, TemplateView):
         user.last_name = form.cleaned_data['last_name']
         user.save()
         profile.sity = form.cleaned_data['sity']
-	    profile.phone = form.cleaned_data['phone']
+		profile.phone = form.cleaned_data['phone']
 	    profile.vk_url = form.cleaned_data['vk_url']
 	    profile.youtube_url = form.cleaned_data['youtube_url']
 	    profile.facebook_url = form.cleaned_data['facebook_url']
