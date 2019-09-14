@@ -90,7 +90,7 @@ class UserAboutChange(LoginRequiredMixin, UpdateView):
 		profile = form.save(commit=False)
 		profile.bio = form.cleaned_data['bio']
 		profile.save()
-		return HttpResponse(profile.bio)
+		return HttpResponse(profile)
 
 
 class PostUserView(ListView):
