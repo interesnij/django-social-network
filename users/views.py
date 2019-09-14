@@ -6,7 +6,7 @@ from communities.models import Community
 from posts.forms import PostHardForm, PostLiteForm, PostMediumForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect,HttpResponse,Http404
-from users.forms import IdentiteForm
+from users.forms import GeneralUserForm
 from django.views.generic.edit import UpdateView
 from django.urls import reverse_lazy
 from django.views.generic import ListView
@@ -46,14 +46,26 @@ class ProfileUserView(TemplateView):
 		return context
 
 
-class ProfileIdentite(TemplateView):
-    template_name = "identity_form.html"
-    form_class = IdentiteForm
-    success_url = reverse_lazy("profile-home")
+class UserGeneralChange(LoginRequiredMixin, UpdateView):
+    template_name = "general_change_form.html"
+    form_class = GeneralUserForm
+    success_url = "/"
 
-    def get(self,request,*args,**kwargs):
-        self.user=User.objects.get(pk=self.kwargs["pk"])
-        return super(ProfileIdentite,self).get(request,*args,**kwargs)
+    def get_queryset(self):
+        queryset = User.objects.filter(user=self.request.user)
+        return queryset
+
+    def form_valid(self, form, **kwargs):
+        super(UserGeneralChange, self).form_valid(form)
+        profile = form.save(commit=False)
+        user = self.request.user
+        user.first_name = form.cleaned_data['first_name']
+        user.last_name = form.cleaned_data['last_name']
+        user.save()
+        profile.email = form.cleaned_data['email']
+        #profile.avatar = form.cleaned_data['avatar']
+        profile.save()
+        return HttpResponse("!")
 
 
 class PostUserView(ListView):
