@@ -10,7 +10,7 @@ from users.forms import GeneralUserForm, AboutUserForm
 from django.views.generic.edit import UpdateView
 from django.urls import reverse_lazy
 from django.views.generic import ListView
-from django.shortcuts import get_or_create,
+from django.shortcuts import get_or_create
 
 
 class AllUsers(ListView):
