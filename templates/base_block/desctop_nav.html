@@ -1,7 +1,6 @@
 
 <div class="col-auto sidebar-inner position-relative ">
-
-    <br><br>
+    <br>
     <div class="nav flex-column nav-pills faqnav">
       {% if user.is_authenticated %}
         <a class="nav-link pink-gradient-active" href="{% url 'user' pk=request.user.pk %}">
