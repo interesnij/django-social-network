@@ -88,7 +88,7 @@ class UserAboutChange(LoginRequiredMixin, UpdateView):
 	def form_valid(self, form, **kwargs):
 		super(UserAboutChange, self).form_valid(form)
 		profile = form.save(commit=False)
-		profile.bio = form.cleaned_data['bio']
+		user.profile.bio = form.cleaned_data['bio']
 		profile.save()
 		return HttpResponseRedirect(self.get_success_url())
 
