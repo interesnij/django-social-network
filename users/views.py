@@ -46,35 +46,32 @@ class ProfileUserView(TemplateView):
 		return context
 
 
-class UserGeneralChange(LoginRequiredMixin, UpdateView):
+class UserGeneralChange(TemplateView):
 	template_name = "user_general_form.html"
-	form_class = GeneralUserForm
-	success_url = "/"
+	form=None
+	profile=None
 
-	def get_queryset(self):
-		try:
-			queryset = User.objects.filter(id=self.request.user.id)
-		except:
-			queryset = User.objects.filter(id=self.request.user.id)
-		return queryset
+	def get(self,request,*args,**kwargs):
+		self.user=User.objects.get(pk=self.kwargs["pk"])
+		self.form=GeneralUserForm(instance=self.user.profile)
+		return super(UserGeneralChange,self).get(request,*args,**kwargs)
 
-	def form_valid(self, form, **kwargs):
-		super(UserGeneralChange, self).form_valid(form)
-		profile = form.save(commit=False)
-		user = self.request.user
-		user.first_name = form.cleaned_data['first_name']
-		user.last_name = form.cleaned_data['last_name']
-		user.save()
-		profile.sity = form.cleaned_data['sity']
-		profile.phone = form.cleaned_data['phone']
-		profile.vk_url = form.cleaned_data['vk_url']
-		profile.youtube_url = form.cleaned_data['youtube_url']
-		profile.facebook_url = form.cleaned_data['facebook_url']
-		profile.instagram_url = form.cleaned_data['instagram_url']
-		profile.twitter_url = form.cleaned_data['twitter_url']
-		#profile.avatar = form.cleaned_data['avatar']
-		profile.save()
-		return HttpResponseRedirect(self.get_success_url())
+	def get_context_data(self,**kwargs):
+		context=super(UserGeneralChange,self).get_context_data(**kwargs)
+
+		context["profile"]=self.profile
+		context["form"]=self.form
+		return context
+
+	def post(self,request,*args,**kwargs):
+		self.user=User.objects.get(pk=self.kwargs["pk"])
+		self.form=GeneralUserForm(request.POST,instance=self.user.profile)
+		if self.form.is_valid():
+			self.form.save()
+			if request.is_ajax():
+				return HttpResponse ('!')
+		return super(UserGeneralChange,self).post(request,*args,**kwargs)
+
 
 class UserAboutChange(TemplateView):
 	template_name = "user_about_form.html"
