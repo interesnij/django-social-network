@@ -99,5 +99,5 @@ class PostUserView(ListView):
 		self.user=User.objects.get(pk=self.kwargs["pk"])
 		return Post.objects.filter(creator=self.user)
 
-class AllUsers(TemplateView):
+class UserDesign(TemplateView):
 	template_name="user_design.html"
