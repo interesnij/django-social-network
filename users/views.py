@@ -47,9 +47,9 @@ class ProfileUserView(TemplateView):
 
 
 class UserGeneralChange(LoginRequiredMixin, TemplateView):
-    template_name = "general_change_form.html"
-    form_class = GeneralUserForm
-    success_url = "/"
+	template_name = "general_change_form.html"
+	form_class = GeneralUserForm
+	success_url = "/"
 
     def get_queryset(self):
 	    queryset = UserProfile.objects.filter(user=self.request.user)
