@@ -38,9 +38,9 @@
         </div>
         <div class="col-lg-5 col-md-4 col-sm-12 order-2">
           <ul style="list-style-type:none">
-            <li><a href="{% url 'user_general_form' user.profile.pk %}">Мои контакты</a></li>
-            <li><a href="{% url 'user_about_form' user.profile.pk %}">Обо мне</a></li>
-            <li><a href="{% url 'user_design' pk=request.user.id %}">Внешний вид</a></li>
+            <li><a href="{% url 'user_general_form' user.pk %}">Мои контакты</a></li>
+            <li><a href="{% url 'user_about_form' user.pk %}">Обо мне</a></li>
+            <li><a href="{% url 'user_design' user.id %}">Внешний вид</a></li>
           </ul>
         </div>
 

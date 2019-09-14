@@ -22,7 +22,7 @@
         </span>
         {% else %}
         <span style="display: flex;align-items: center;justify-content: center;">
-        <a href="{% url 'user_general_form' user.profile.pk %}" class="mb-2 btn btn-sm btn-light">Редактировать</a>
+        <a href="{% url 'user_general_form' user.pk %}" class="mb-2 btn btn-sm btn-light">Редактировать</a>
         </span>
         {% endif %}
 
