@@ -82,7 +82,8 @@ class UserAboutChange(LoginRequiredMixin, UpdateView):
 	success_url = "/"
 
 	def get_queryset(self):
-		queryset = User.objects.filter(id=self.request.user.id)
+		user = User.objects.filter(id=self.request.user.id)
+		profile = user.profile
 		return queryset
 
 	def form_valid(self, form, **kwargs):
