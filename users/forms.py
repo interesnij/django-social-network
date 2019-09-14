@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from .models import UserProfile
 from django import forms
 
-class IdentiteForm(forms.ModelForm):
+class GeneralUserForm(forms.ModelForm):
     first_name = forms.CharField(required=False,max_length=256,label='Имя')
     last_name = forms.CharField(required=False,max_length=256,label='Фамилия')
 
