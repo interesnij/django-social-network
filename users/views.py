@@ -76,22 +76,32 @@ class UserGeneralChange(LoginRequiredMixin, UpdateView):
 		profile.save()
 		return HttpResponseRedirect(self.get_success_url())
 
-class UserAboutChange(LoginRequiredMixin, UpdateView):
+class UserAboutChange(TemplateView):
 	template_name = "user_about_form.html"
-	form_class = AboutUserForm
-	success_url = "/"
+	form=None
+	profile=None
 
-	def get_queryset(self):
-		queryset = User.objects.filter(id=self.request.user.id)
-		return queryset
+	def get(self,request,*args,**kwargs):
+		self.profile=UserProfile.objects.get(pk=self.kwargs["pk"])
+		self.form=AboutUserForm(instance=self.profile)
+		return super(UserAboutChange,self).get(request,*args,**kwargs)
 
-	def form_valid(self, form, **kwargs):
-		super(UserAboutChange, self).form_valid(form)
+	def get_context_data(self,**kwargs):
+		context=super(UserAboutChange,self).get_context_data(**kwargs)
 
-		profile = form.save(commit=False)
-		profile.bio = form.cleaned_data['bio']
-		profile.save()
-		return HttpResponse(profile)
+		context["profile"]=self.profile
+		context["form"]=self.form
+		return context
+
+	def post(self,request,*args,**kwargs):
+		self.profile=UserProfile.objects.get(pk=self.kwargs["pk"])
+		self.form=Blog2Form(request.POST,instance=self.profile)
+		if self.form.is_valid():
+			self.form.save()
+			if request.is_ajax():
+				return HttpResponse ('!')
+		return super(UserAboutChange,self).post(request,*args,**kwargs)
+
 
 
 class PostUserView(ListView):
