@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %}Изменение профиля - обо мне{% endblock %}
+{% block content %}
+<div class="container mt-4 main-container">
+  <div class="row">
+        <div class="col-lg-7 col-md-8 col-sm-12 order-1">
+          <form action="" method="post" class="contact-form">
+            {% csrf_token %}
+            <div class="card mb-4">
+                <div class="card-header border-bottom">
+                    <h5 class="content-color-primary mb-0">Обо мне</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row justify-content-center">
+                        <div class="col-md-10 ">
+                          <div class="form-group row">
+                              <div class="col-lg-12 col-md-12">
+                                  <label>Биография</label>
+                                  <input type="text"
+                                         value="{{ profile.bio }}"
+                                         name="bio"
+                                         id="id_bio"
+                                         class="form-control"
+                                         placeholder="">
+                              </div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a class="btn btn-secondary">Отмена</a>
+                    <button type="submit" class="btn btn-success float-right">Сохранить</button>
+                </div>
+            </div>
+          </form>
+        </div>
+        <div class="col-lg-5 col-md-4 col-sm-12 order-2">
+          <ul style="list-style-type:none">
+            <li><a href="{% url 'user_general_form' %}">Мои контакты</a></li>
+            <li><a href="{% url 'user_about_form' %}">Обо мне</a></li>
+            <li><a href="{% url 'user_design_form' %}">Внешний вид</a></li>
+          </ul>
+        </div>
+
+      </div>
+  </div>
+{% endblock %}

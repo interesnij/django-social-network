@@ -31,3 +31,11 @@ class GeneralUserForm(forms.ModelForm):
             raise Http404
 
         return
+
+class GeneralUserForm(forms.ModelForm):
+
+    class Meta:
+        model = UserProfile
+        fields = (
+        'bio',
+        )

@@ -6,7 +6,7 @@ from communities.models import Community
 from posts.forms import PostHardForm, PostLiteForm, PostMediumForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect,HttpResponse,Http404
-from users.forms import GeneralUserForm
+from users.forms import GeneralUserForm, AboutUserForm
 from django.views.generic.edit import UpdateView
 from django.urls import reverse_lazy
 from django.views.generic import ListView
@@ -46,7 +46,7 @@ class ProfileUserView(TemplateView):
 		return context
 
 
-class UserGeneralChange(LoginRequiredMixin, TemplateView):
+class UserGeneralChange(LoginRequiredMixin, UpdateView):
 	template_name = "general_change_form.html"
 	form_class = GeneralUserForm
 	success_url = "/"
@@ -73,6 +73,22 @@ class UserGeneralChange(LoginRequiredMixin, TemplateView):
 		profile.save()
 		return HttpResponseRedirect(self.get_success_url())
 
+class UserAboutChange(LoginRequiredMixin, UpdateView):
+	template_name = "general_about_form.html"
+	form_class = AboutUserForm
+	success_url = "/"
+
+	def get_queryset(self):
+		queryset = UserProfile.objects.filter(user=self.request.user)
+		return queryset
+
+	def form_valid(self, form, **kwargs):
+		super(UserAboutChange, self).form_valid(form)
+		profile = form.save(commit=False)
+		profile.bio = form.cleaned_data['bio']
+		profile.save()
+		return HttpResponseRedirect(self.get_success_url())
+
 
 class PostUserView(ListView):
 	template_name = 'post_list.html'
@@ -82,3 +98,6 @@ class PostUserView(ListView):
 	def get_queryset(self, **kwargs):
 		self.user=User.objects.get(pk=self.kwargs["pk"])
 		return Post.objects.filter(creator=self.user)
+
+class AllUsers(TemplateView):
+	template_name="user_design.html"

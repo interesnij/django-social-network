@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load staticfiles %}
 
-{% block title %}Изменение профиля{% endblock %}
+{% block title %}Изменение профиля - главная информация{% endblock %}
 {% block content %}
 <div class="container mt-4 main-container">
   <div class="row">
@@ -128,9 +128,9 @@
         </div>
         <div class="col-lg-5 col-md-4 col-sm-12 order-2">
           <ul style="list-style-type:none">
-            <li><a href="">Мои контакты</a></li>
-            <li><a href="">Обо мне</a></li>
-            <li><a href="">Внешний вид</a></li>
+            <li><a href="{% url 'user_general_form' %}">Мои контакты</a></li>
+            <li><a href="{% url 'user_about_form' %}">Обо мне</a></li>
+            <li><a href="{% url 'user_design_form' %}">Внешний вид</a></li>
           </ul>
         </div>
 
