@@ -52,6 +52,7 @@ class UserGeneralChange(LoginRequiredMixin, UpdateView):
 	success_url = "/"
 
 	def get_queryset(self):
+		new_profile = UserProfile.objects.create(user=self.request.user)
 		queryset = UserProfile.objects.filter(user=self.request.user)
 		return queryset
 
