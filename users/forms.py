@@ -21,16 +21,7 @@ class GeneralUserForm(forms.ModelForm):
         'twitter_url',
         'phone',
         )
-    def __init__(self, *args, **kwargs):
-        super(GeneralUserForm, self).__init__(*args, **kwargs)
-        try:
-            self.fields['first_name'].initial = self.user.first_name
-            self.fields['last_name'].initial = self.user.last_name
 
-        except User.DoesNotExist:
-            raise Http404
-
-        return
 
 class AboutUserForm(forms.ModelForm):
 
