@@ -84,7 +84,7 @@ class UserAboutChange(LoginRequiredMixin, UpdateView):
 	def get_queryset(self):
 		user = User.objects.filter(id=self.request.user.id)
 		profile = user.profile
-		return queryset
+		return profile
 
 	def form_valid(self, form, **kwargs):
 		super(UserAboutChange, self).form_valid(form)
