@@ -10,7 +10,6 @@ from users.forms import GeneralUserForm, AboutUserForm
 from django.views.generic.edit import UpdateView
 from django.urls import reverse_lazy
 from django.views.generic import ListView
-from django.shortcuts import get_or_create
 
 
 class AllUsers(ListView):
@@ -83,7 +82,6 @@ class UserAboutChange(LoginRequiredMixin, UpdateView):
 	success_url = "/"
 
 	def get_queryset(self):
-		profile = UserProfile.get_or_create(user=self.request.user)
 		queryset = UserProfile.objects.filter(user=self.request.user)
 		return queryset
 
