@@ -24,8 +24,8 @@ class GeneralUserForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(GeneralUserForm, self).__init__(*args, **kwargs)
         try:
-            self.fields['first_name'].initial = self.instance.user.first_name
-            self.fields['last_name'].initial = self.instance.user.last_name
+            self.fields['first_name'].initial = self.user.first_name
+            self.fields['last_name'].initial = self.user.last_name
 
         except User.DoesNotExist:
             raise Http404
