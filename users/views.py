@@ -82,8 +82,8 @@ class UserAboutChange(TemplateView):
 	profile=None
 
 	def get(self,request,*args,**kwargs):
-		self.profile=UserProfile.objects.get(pk=self.kwargs["pk"])
-		self.form=AboutUserForm(instance=self.profile)
+		self.user=User.objects.get(pk=self.kwargs["pk"])
+		self.form=AboutUserForm(instance=self.user.profile)
 		return super(UserAboutChange,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -94,8 +94,8 @@ class UserAboutChange(TemplateView):
 		return context
 
 	def post(self,request,*args,**kwargs):
-		self.profile=UserProfile.objects.get(pk=self.kwargs["pk"])
-		self.form=Blog2Form(request.POST,instance=self.profile)
+		self.user=User.objects.get(pk=self.kwargs["pk"])
+		self.form=AboutUserForm(request.POST,instance=self.user.profile)
 		if self.form.is_valid():
 			self.form.save()
 			if request.is_ajax():
