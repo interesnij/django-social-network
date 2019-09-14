@@ -72,14 +72,14 @@ class UserProfile(models.Model):
                                 processors=[ResizeToFit(width=1024, upscale=False)],verbose_name="Фон")
     bio = models.TextField(max_length=300, blank=True, null=True, verbose_name="Биография")
     followers_count_visible = models.BooleanField(blank=False, null=False, default=False,verbose_name="Число подписчиков видно")
-    sity = models.CharField(max_length=100, blank=True, null=True, verbose_name="Местоположение")
-    status = models.CharField(max_length=100, blank=True, null=True, verbose_name="статус-слоган")
-    vk_url = models.URLField(blank=True, null=True,verbose_name="Ссылка на vk")
-    youtube_url = models.URLField(blank=True, null=True,verbose_name="Ссылка на youtube")
-    facebook_url = models.URLField(blank=True, null=True,verbose_name="Ссылка на facebook")
-    instagram_url = models.URLField(blank=True, null=True,verbose_name="Ссылка на instagram")
-    twitter_url = models.URLField(blank=True, null=True,verbose_name="Ссылка на twitter")
-    phone = models.CharField(max_length=15,blank=True, null=True,verbose_name="Телефон")
+    sity = models.CharField(max_length=100, blank=True, verbose_name="Местоположение")
+    status = models.CharField(max_length=100, blank=True, verbose_name="статус-слоган")
+    vk_url = models.URLField(blank=True, verbose_name="Ссылка на vk")
+    youtube_url = models.URLField(blank=True, verbose_name="Ссылка на youtube")
+    facebook_url = models.URLField(blank=True, verbose_name="Ссылка на facebook")
+    instagram_url = models.URLField(blank=True, verbose_name="Ссылка на instagram")
+    twitter_url = models.URLField(blank=True, verbose_name="Ссылка на twitter")
+    phone = models.CharField(max_length=15,blank=True, verbose_name="Телефон")
 
     def __str__(self):
         return self.user.last_name
