@@ -7,8 +7,16 @@
     {% for object in posts %}
       {% include 'profile/post.html' %}
     {% endfor %}
-    
+
   </span>
+</div>
+
+<div class="load">
+  {% if page_obj.has_next %}
+    <a class="infinite-more-link" href="?page={{ page_obj.next_page_number }}">
+      <img src="{% static 'images/loading.gif' %}">
+    </a>
+  {% endif %}
 </div>
 
 {% else %}
@@ -24,5 +32,20 @@
     </div>
 </div>
 
-
 {% endif %}
+
+  <script src="{% static 'scripts/jquery.waypoints.min.js' %}" type="text/javascript"></script>
+  <script src="{% static 'scripts/infinite.min.js' %}" type="text/javascript"></script>
+  <script src="{% static 'scripts/posts.js' %}" type="text/javascript"></script>
+  <script>
+    var infinite = new Waypoint.Infinite({
+      element: $('.infinite-container')[0],
+      onBeforePageLoad: function () {
+        $('.load').show();
+      },
+      onAfterPageLoad: function ($items) {
+        $('.load').hide();
+      }
+    });
+  </script>
+{% endblock %}

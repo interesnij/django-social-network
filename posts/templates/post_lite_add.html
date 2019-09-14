@@ -21,6 +21,7 @@
             url: "{% url 'post_add_lite_user' %}",
             data: frm.serialize(),
             success: function (data) {
+              $("div.stream").prepend(data);
               $('#post_create').empty();
             },
             error: function(data) {

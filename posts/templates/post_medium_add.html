@@ -21,6 +21,7 @@
 
             data: frm2.serialize(),
             success: function (data) {
+              $("div.stream").prepend(data);
               $('#post_create').empty();
             },
             error: function(data) {
