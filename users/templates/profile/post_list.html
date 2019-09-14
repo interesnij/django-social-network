@@ -1,11 +1,15 @@
 {% load staticfiles humanize %}
 
 {% if posts %}
-{% for object in posts %}
+<div class="infinite-container">
+  <span class="stream">
 
-{% include 'profile/post.html' %}
-
-{% endfor %}
+    {% for object in posts %}
+      {% include 'profile/post.html' %}
+    {% endfor %}
+    
+  </span>
+</div>
 
 {% else %}
 <div class="card mb-4 fullscreen">
