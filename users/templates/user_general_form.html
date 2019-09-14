@@ -130,7 +130,7 @@
           <ul style="list-style-type:none">
             <li><a href="{% url 'user_general_form' pk=request.user.id %}">Мои контакты</a></li>
             <li><a href="{% url 'user_about_form' pk=request.user.id %}">Обо мне</a></li>
-            <li><a href="{% url 'user_design_form' pk=request.user.id %}">Внешний вид</a></li>
+            <li><a href="{% url 'user_design' pk=request.user.id %}">Внешний вид</a></li>
           </ul>
         </div>
 
