@@ -35,7 +35,7 @@ class GeneralUserForm(forms.ModelForm):
 class AboutUserForm(forms.ModelForm):
 
     class Meta:
-        model = UserProfile
+        model = User
         fields = (
         'bio',
         )
