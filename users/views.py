@@ -12,8 +12,15 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView
 
 
-class AllUsers(TemplateView):
+class AllUsers(ListView):
 	template_name="all_users.html"
+	model = User
+	paginate_by = 15
+
+	def get_queryset(self, **kwargs):
+		users=User.objects.all()
+		return users
+
 
 
 class ProfileUserView(TemplateView):

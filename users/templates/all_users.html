@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block title %}Все пользователи{% endblock %}
+
+{% block content %}
+<div class="row">
+<div class="col-12 col-md-8">
+<br><br><br>
+  <div class="card mb-2">
+        <div class="card-header">
+            <div class="media">
+                <div class="icon-circle icon-30 bg-light-danger mr-3">
+                    <i class="material-icons">person</i>
+                </div>
+                <div class="media-body">
+                    <h5 class="mt-1">Все пользователи</h5>
+                </div>
+            </div>
+        </div>
+        <br><br>
+        <div class="card-body px-0 py-0">
+            <ul class="list-group border-top border-bottom list-group-flush">
+              {% for object in object_list %}
+                <li class="list-group-item">
+                    <div class="media">
+                      <figure>
+                        {% if object.profile.avatar %}
+                          <img src="{{ object.profile.avatar.url }}" style="border-radius:50px;width:50px;" alt="image">
+                        {% else %}
+                          <img src="{% static 'images/user.png' %}" alt="image" style="border-radius:50px;width:50px;">
+                        {% endif %}
+                      </figure>
+                        <div class="media-body">
+                          <a href="{% url 'user' pk=object.pk %}">
+                            <h6 class="my-0 mt-1">{{ object.get_full_name }}</h6>
+                          </a>
+                          <a href="" class="small">Написать сообщение</a>
+                        </div>
+                    </div>
+                </li>
+              {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="col-12 col-md-4">
+  <br><br><br>
+  <div class="card mb-2">
+        <div class="card-header">
+            <div class="media">
+                <div class="icon-circle icon-30 bg-light-danger mr-3">
+                    <i class="material-icons">tag_faces</i>
+                </div>
+                <div class="media-body">
+                    <h5 class="mt-1">Возможные друзья</h5>
+                </div>
+            </div>
+        </div>
+        <br><br>
+  </div>
+
+  <div class="card mb-2">
+        <div class="card-header">
+            <div class="media">
+                <div class="icon-circle icon-30 bg-light-danger mr-3">
+                    <i class="material-icons">search</i>
+                </div>
+                <div class="media-body">
+                    <h5 class="mt-1">Фильтрация</h5>
+                </div>
+            </div>
+        </div>
+        <br><br>
+  </div>
+</div>
+</div>
+{% endblock %}
