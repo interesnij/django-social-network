@@ -53,7 +53,7 @@ class UserGeneralChange(LoginRequiredMixin, UpdateView):
 
 	def get_queryset(self):
 		try:
-			queryset = UserProfile.objects.filter(user=self.request.user)
+			queryset = User.objects.filter(id=self.request.user.id)
 		except:
 			queryset = User.objects.filter(id=self.request.user.id)
 		return queryset
