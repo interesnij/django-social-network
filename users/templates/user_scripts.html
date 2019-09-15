@@ -48,7 +48,7 @@
         var action = dislike.data('action');
         var like = dislike.prev();
         $.ajax({
-            url: "{% url 'post_dislike' pk=object.pk %}",
+            url: "{% url 'post_dislike' pk %}",
             type: 'POST',
             data: {
                 'obj': pk
