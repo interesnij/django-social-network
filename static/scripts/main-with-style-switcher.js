@@ -13,20 +13,6 @@ $(document).ready(function () {
         $('body').addClass('sidebar-left-close');
     });
 
-    /* right sidebar open */
-    $('#open-right-sidebar, #opencolorpanel').on('click', function () {
-        $('body').toggleClass('sidebar-right-close');
-        $('.chat-window').hide();
-        $('.close-sidebar').toggleClass('active');
-        $('body').addClass('sidebar-left-close');
-    });
-
-    /* right sidebar open  with setting icon on right side */
-    $('.close-sidebar').on('click', function () {
-        $(this).toggleClass('active');
-        $('.chat-window').hide();
-        $('body').toggleClass('sidebar-right-close');
-    });
 
 
     /* left sidebar accordion menu */
@@ -192,7 +178,7 @@ $(document).ready(function () {
     /* theme selection and image background script*/
     $("#customRadio32img").prop('checked', true);
     $('body .wrapper > .sidebar').css({
-        'background-image': 'url(img/sidebar-2.png)',
+        'background-image': 'url(/static/images/sidebar-2.png)',
         'background-repeat': 'no-repeat',
         'background-size': 'auto'
     });
