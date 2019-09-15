@@ -2,7 +2,7 @@ from posts.views import PostsView, PostUserHardCreate, PostUserMediumCreate, Pos
 from django.conf.urls import url
 from main.models import LikeDislike
 from main.views import VotesView
-from posts.models import Post
+from posts.models import Post, PostComment
 from django.contrib.auth.decorators import login_required
 
 
@@ -12,11 +12,20 @@ urlpatterns = [
     url(r'^add_medium/$', PostUserMediumCreate.as_view(), name="post_add_medium_user"),
     url(r'^add_lite/$', PostUserLiteCreate.as_view(), name="post_add_lite_user"),
     url(r'^like/(?P<pk>\d+)/$',login_required(
-                                        VotesView.as_view(model=Post, vote_type=LikeDislike.LIKE)
+                                            VotesView.as_view(model=Post, vote_type=LikeDislike.LIKE)
                                         ),
                                         name='post_like'),
     url(r'^dislike/(?P<pk>\d+)/$',login_required(
-                                        VotesView.as_view(model=Post, vote_type=LikeDislike.DISLIKE)
+                                            VotesView.as_view(model=Post, vote_type=LikeDislike.DISLIKE)
                                         ),
                                         name='post_dislike'),
+    url(r'^comment/(?P<pk>\d+)/like/$',login_required(
+                                            VotesView.as_view(model=PostComment, vote_type=LikeDislike.LIKE)
+                                        ),
+                                        name='comment_like'),
+    url(r'^comment/(?P<pk>\d+)/dislike/$',login_required(
+                                            VotesView.as_view(model=PostComment, vote_type=LikeDislike.DISLIKE)
+                                        ),
+                                        name='comment_dislike'),
+
 ]
