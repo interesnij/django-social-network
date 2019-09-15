@@ -28,7 +28,7 @@
         console.log(pk);
         $.ajax({
             pk: 10,
-            url: "{% url 'post_like' 10 %}",
+            url: "{% url 'post_like' pk %}",
             type: 'POST',
             data: {
                 'obj': pk
