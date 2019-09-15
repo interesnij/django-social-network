@@ -121,10 +121,8 @@ class Notification(models.Model):
         ordering = ("-timestamp",)
 
     def __str__(self):
-        if self.action_object:
-            return '{self.actor} {self.get_verb_display()} {self.action_object} {self.time_since()} ago'
-
         return '{self.actor} {self.get_verb_display()} {self.time_since()} ago'
+
 
     def save(self, *args, **kwargs):
         if not self.slug:
