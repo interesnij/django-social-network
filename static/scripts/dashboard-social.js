@@ -1,71 +1,3 @@
-"use strict";
-var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-
-var config5 = {
-    type: 'line',
-    data: {
-        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-        datasets: [{
-            label: 'My First dataset',
-            backgroundColor: window.chartColors.red,
-            borderColor: window.chartColors.red,
-            data: [
-						randomScalingFactor(),
-						randomScalingFactor(),
-						randomScalingFactor(),
-						randomScalingFactor(),
-						randomScalingFactor(),
-						randomScalingFactor(),
-						randomScalingFactor()
-					],
-            fill: false,
-				}]
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        legend: {
-            display: false,
-        },
-        spanGaps: false,
-        elements: {
-            line: {
-                tension: 0.000001
-            }
-        },
-        title: {
-            display: false,
-            text: 'Chart.js Line Chart'
-        },
-        tooltips: {
-            mode: 'index',
-            intersect: false,
-        },
-        hover: {
-            mode: 'nearest',
-            intersect: true
-        },
-        scales: {
-            xAxes: [{
-                ticks: {
-                    display: false,
-                },
-                display: true,
-                scaleLabel: {
-                    display: false,
-                    labelString: 'Month'
-                }
-					}],
-            yAxes: [{
-                display: true,
-                scaleLabel: {
-                    display: false,
-                    labelString: 'Value'
-                }
-					}]
-        }
-    }
-};
 
 
 /* swiper control */
@@ -90,7 +22,7 @@ $(document).ready(function(){
          itemSelector: '.grid-item',
          percentPosition: true
     });
-    
+
 
 });
 $(window).on("load resize", function () {

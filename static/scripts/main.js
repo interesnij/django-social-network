@@ -14,8 +14,6 @@ $(document).ready(function () {
     });
 
 
-    /* left sidebar accordion menu */
-    /* url  navigation active */
     var url = window.location;
 
     function menuitems() {
@@ -264,61 +262,6 @@ $(document).ready(function () {
         });
         var linkurl = $('#theme')
         $('head').append("<link id='theme' rel='stylesheet' href='" + stylesheetname + "' type='text/css'>");
-
-        $(".loader-logo").show();
-        setTimeout(function () {
-            $(".loader-logo").fadeOut();
-            linkurl.remove();
-        }, 1500);
-    });
-
-
-
-    if ($.type($.cookie("sidebarimgrepeat")) != 'undefined' && $.cookie("sidebarimgrepeat") != '') {
-        $('body .wrapper > .sidebar').css({
-            'background-image': 'url(' + $.cookie("sidebarimgrepeat") + ')',
-            'background-repeat': 'repeat',
-            'background-size': 'auto'
-        });
-        $('.sidebar-image input[type="radio"]').prop("checked", false);
-        $("label[data-title='" + $.cookie("sidebarimgrepeat") + "']").prev().prop("checked", true);
-    }
-    if ($.type($.cookie("sidebarimg")) != 'undefined' && $.cookie("sidebarimg") != '') {
-        $('body .wrapper > .sidebar').css({
-            'background-image': 'url(' + $.cookie("sidebarimg") + ')',
-            'background-repeat': 'no-repeat',
-            'background-size': '100%'
-        });
-        $('.sidebar-image input[type="radio"]').prop("checked", false);
-        $("label[data-title='" + $.cookie("sidebarimg") + "']").prev().prop("checked", true);
-    }
-
-    $('.sidebar-image input[type="radio"]').on('click', function () {
-        if ($(this).hasClass('bg-repeat') === true) {
-            $.cookie("sidebarimgrepeat", $(this).next().attr('data-title'), {
-                expires: 7
-            });
-            $.removeCookie('sidebarimg', {
-                path: '/'
-            });
-            $('body .wrapper > .sidebar').css({
-                'background-image': 'url(' + $(this).next().attr('data-title') + ')',
-                'background-repeat': 'repeat',
-                'background-size': 'auto'
-            });
-        } else {
-            $.cookie("sidebarimg", $(this).next().attr('data-title'), {
-                expires: 7
-            });
-            $.removeCookie('sidebarimgrepeat', {
-                path: '/'
-            });
-            $('body .wrapper > .sidebar').css({
-                'background-image': 'url(' + $(this).next().attr('data-title') + ')',
-                'background-repeat': 'no-repeat',
-                'background-size': '100%'
-            });
-        }
     });
 
 });
