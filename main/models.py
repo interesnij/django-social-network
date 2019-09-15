@@ -16,8 +16,8 @@ class LikeDislikeManager(models.Manager):
     def dislikes(self):
         return self.get_queryset().filter(vote__lt=0)
 
-    def articles(self):
-        return self.get_queryset().filter(content_type__model='blog').order_by('-articles__posted')
+    def posts(self):
+        return self.get_queryset().filter(content_type__model='posts').order_by('-posts__posted')
     def comments(self):
         return self.get_queryset().filter(content_type__model='comment').order_by('-comments__posted')
 

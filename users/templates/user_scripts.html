@@ -26,7 +26,6 @@
         var action  = like.data('action');
         var dislike = like.next();
         var url = "/posts/like/" + pk + "/";
-        console.log(url);
         $.ajax({
             url: url,
             type: 'POST',
