@@ -3,6 +3,7 @@ from django.conf.urls import url
 from main.models import LikeDislike
 from main.views import VotesView
 from posts.models import Post
+from django.contrib.auth.decorators import login_required
 
 
 urlpatterns = [
