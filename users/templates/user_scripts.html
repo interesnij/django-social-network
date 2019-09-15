@@ -27,7 +27,7 @@
         var dislike = like.next();
         console.log(pk);
         $.ajax({
-            pk: like.data('id');,
+            pk: like.data('id'),
             url: "{% url 'post_like' pk %}",
             type: 'POST',
             data: {
