@@ -25,9 +25,10 @@
         var pk = like.data('id');
         var action  = like.data('action');
         var dislike = like.next();
+        var url = "{% url 'post_like' pk %}";
         console.log(pk);
         $.ajax({
-            url: "{% url 'post_like' obj %}",
+            url: $(url),
             type: 'POST',
             data: {
                 'obj': pk
