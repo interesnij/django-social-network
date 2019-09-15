@@ -30,9 +30,7 @@
           &nbsp;&nbsp;
           {% if request.user.is_authenticated %}
           <span class="content-color-secondary
-                       {% if object.votes.dislikes.all|user_in:user %}
-                       text-danger
-                       {% endif %}"
+                       "
                 style="font-size:15px;cursor:pointer"
                 id="dislike"
                 data-id="{{ object.id }}"
