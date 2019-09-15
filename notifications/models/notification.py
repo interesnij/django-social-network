@@ -118,7 +118,7 @@ class Notification(models.Model):
     class Meta:
         verbose_name = "Уведомление"
         verbose_name_plural = "Уведомления"
-        ordering = "-timestamp"
+        ordering = ["-timestamp"]
 
     def __str__(self):
         return '{self.actor} {self.get_verb_display()} {self.time_since()} ago'
