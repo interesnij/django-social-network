@@ -1,12 +1,54 @@
+{% load liked_user %}
+
 <div class="row" style="color: rgba(255, 255, 255, 0.65);">
     <div class="col">
-        <span class="content-color-secondary" style="font-size:15px;cursor:pointer">
-          <i class="material-icons">thumb_up</i>&nbsp;12
+        {% if request.user.is_authenticated %}
+        <span class="content-color-secondary
+                     {% if object.votes.likes.all|user_in:user %}
+                     text-success
+                     {% endif %}"
+              style="font-size:15px;cursor:pointer"
+              id="like"
+              data-id="{{ object.id }}"
+              data-action="like"
+              data-type="posts"
+              data-tooltip="Мне нравится">
+          <i class="material-icons">thumb_up</i>&nbsp;
+          <span data-count="like">{{ object.votes.likes.count }}</span>
         </span>
+        {% else %}
+        <span class="content-color-secondary"
+              style="font-size:15px;cursor:pointer"
+              data-tooltip="Гости не могут ставить лайки">
+          <i class="material-icons">thumb_up</i>&nbsp;
+          <span data-count="like">{{ object.votes.likes.count }}</span>
+        </span>
+        {% endif %}
+
         &nbsp;&nbsp;
-        <span class="content-color-secondary" style="font-size:15px;cursor:pointer">
-          <i class="material-icons">thumb_down</i>&nbsp;12
+        {% if request.user.is_authenticated %}
+        <span class="content-color-secondary
+                     {% if object.votes.dislikes.all|user_in:user %}
+                     text-danger
+                     {% endif %}"
+              style="font-size:15px;cursor:pointer"
+              id="dislike"
+              data-id="{{ object.id }}"
+              data-action="dislike"
+              data-type="posts"
+              data-tooltip="Мне не нравится">
+          <i class="material-icons">thumb_down</i>&nbsp;
+          <span data-count="dislike">{{ object.votes.dislikes.count }}</span>
         </span>
+        {% else %}
+        <span class="content-color-secondary"
+              style="font-size:15px;cursor:pointer"
+              data-tooltip="Гости не могут ставить дизлайки">
+          <i class="material-icons">thumb_down</i>&nbsp;
+          <span data-count="dislike">{{ object.votes.dislike.count }}</span>
+        </span>
+        {% endif %}
+
         &nbsp;&nbsp;
         <span class="content-color-secondary" style="font-size:15px;cursor:pointer">
           <i class="material-icons">chat</i>&nbsp;0
@@ -18,6 +60,6 @@
 
     </div>
     <span class="col-auto content-color-secondary" style="font-size:12px">
-      <i class="material-icons">visibility</i>&nbsp;115
+      <i class="material-icons">visibility</i>&nbsp;{{ object.views }}
     </span>
 </div>

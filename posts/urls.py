@@ -22,10 +22,10 @@ urlpatterns = [
     url(r'^comment/(?P<pk>\d+)/like/$',login_required(
                                             VotesView.as_view(model=PostComment, vote_type=LikeDislike.LIKE)
                                         ),
-                                        name='comment_like'),
+                                        name='post_like'),
     url(r'^comment/(?P<pk>\d+)/dislike/$',login_required(
                                             VotesView.as_view(model=PostComment, vote_type=LikeDislike.DISLIKE)
                                         ),
-                                        name='comment_dislike'),
+                                        name='post_dislike'),
 
 ]
