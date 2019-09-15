@@ -23,10 +23,10 @@
         var like = $(this);
         var type = like.data('type');
         var pk3 = like.data('id');
-        var pk2 = like.data('id');
         var action = like.data('action');
         var dislike = like.next();
         $.ajax({
+          var pk2 = like.data('id').
             url: "{% url 'post_like' pk=pk2 %}",
             type: 'POST',
             data: {
