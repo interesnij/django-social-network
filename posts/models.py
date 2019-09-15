@@ -11,6 +11,8 @@ from imagekit.models import ProcessedImageField
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 from notifications.models.notification import Notification, notification_handler
+from main.models import LikeDislike
+
 
 
 class Post(models.Model):
@@ -49,6 +51,7 @@ class Post(models.Model):
     reply = models.BooleanField(verbose_name="Это репост?", default=False)
     parent = models.ForeignKey("self", blank=True,
         null=True, on_delete=models.CASCADE, related_name="thread")
+    votes = GenericRelation(LikeDislike, related_query_name='posts')
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
@@ -118,8 +121,8 @@ class PostComment(models.Model):
     commenter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='posts_comments',verbose_name="Комментатор")
     text = models.TextField(max_length=200, blank=False, null=False,verbose_name="Текст")
     is_edited = models.BooleanField(default=False, null=False, blank=False,verbose_name="Изменено")
-    # Это происходит только в том случае, если комментарий был сообщен и найден с критическим содержанием серьезности
     is_deleted = models.BooleanField(default=False,verbose_name="Удаено")
+    votes = GenericRelation(LikeDislike, related_query_name='comments')
 
 
 

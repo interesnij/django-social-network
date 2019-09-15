@@ -4,7 +4,6 @@ from django.db import models
 from django.utils import timezone
 from users.models import User
 from django.conf import settings
-from django.utils.translation import ugettext_lazy as _
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 from slugify import slugify
@@ -64,9 +63,10 @@ class NotificationQuerySet(models.query.QuerySet):
 
 
 class Notification(models.Model):
-    recipient = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notifications',verbose_name="Владелец")
+    recipient = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notifications',verbose_name="Получатель")
     actor = models.ForeignKey(settings.AUTH_USER_MODEL,
                               related_name="notify_actor",
+                              verbose_name="Получатель",
                               on_delete=models.CASCADE)
     timestamp = models.DateTimeField(default=timezone.now, editable=False, db_index=True,verbose_name="Создано")
     unread  = models.BooleanField(default=False,verbose_name="Прочитано")
@@ -116,9 +116,9 @@ class Notification(models.Model):
     objects = NotificationQuerySet.as_manager()
 
     class Meta:
-        verbose_name = _("Уведомление")
-        verbose_name_plural = _("Уведомления")
-        ordering = ("-timestamp",)
+        verbose_name = "Уведомление"
+        verbose_name_plural = "Уведомления"
+        ordering = "-timestamp"
 
     def __str__(self):
         return '{self.actor} {self.get_verb_display()} {self.time_since()} ago'
