@@ -12,9 +12,11 @@ urlpatterns = [
     url(r'^add_medium/$', PostUserMediumCreate.as_view(), name="post_add_medium_user"),
     url(r'^add_lite/$', PostUserLiteCreate.as_view(), name="post_add_lite_user"),
     url(r'^like/(?P<pk>\d+)/$',login_required(
-    VotesView.as_view(model=Post, vote_type=LikeDislike.LIKE)
-    ),name='post_like'),
+                                        VotesView.as_view(model=Post, vote_type=LikeDislike.LIKE)
+                                        ),
+                                        name='post_like'),
     url(r'^dislike/(?P<pk>\d+)/$',login_required(
-    VotesView.as_view(model=Post, vote_type=LikeDislike.DISLIKE)
-    ),name='post_dislike'),
+                                        VotesView.as_view(model=Post, vote_type=LikeDislike.DISLIKE)
+                                        ),
+                                        name='post_dislike'),
 ]

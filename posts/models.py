@@ -72,12 +72,7 @@ class Post(models.Model):
         notification_handler(creator, self.user,Notification.DISLIKED, action_object=self,id_value=str(self.uuid_id),key='social_update')
 
     def reply_this(self, creator, text):
-        """Функция обработчика для создания экземпляра Новости в качестве ответа на любой
-        опубликованные новости.
-        :требует:
-        : param user: вошедший в систему пользователь, который выполняет ответ.
-        содержание параметра : строку с ответом.
-        """
+
         parent = self.get_parent()
         reply_post = Post.objects.create(
             creator=creator,
