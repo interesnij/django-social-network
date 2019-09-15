@@ -2,7 +2,7 @@ from posts.views import PostsView, PostUserHardCreate, PostUserMediumCreate, Pos
 from django.conf.urls import url
 from main.models import LikeDislike
 from main.views import VotesView
-from post.models import Post
+from posts.models import Post
 
 
 urlpatterns = [
