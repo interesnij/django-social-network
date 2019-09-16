@@ -36,7 +36,7 @@ class ProfileUserView(TemplateView):
 		self.communities=Community.objects.filter(starrers=self.user)
 		self.posts=Post.objects.filter(creator=self.user)
 		try:
-			self.connect = Connect.objects.get(target_user=self.request.user,user=self.user)
+			self.connect = Connect.objects.get(target_user=self.user,user=self.request.user)
 		except:
 			self.connect = None
 
