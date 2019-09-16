@@ -37,6 +37,7 @@ class ProfileUserView(TemplateView):
 		self.posts=Post.objects.filter(creator=self.user)
 		try:
 			self.connect = Connect.objects.get(target_user=self.user,user=self.request.user)
+			self.connect2 = Connect.objects.get(user=self.user,target_user=self.request.user)
 		except:
 			self.connect = None
 
@@ -51,6 +52,7 @@ class ProfileUserView(TemplateView):
 		context['form_medium'] = self.form
 		context['communities'] = self.communities
 		context['connect'] = self.connect
+		context['connect2'] = self.connect2
 		return context
 
 

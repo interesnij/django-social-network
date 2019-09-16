@@ -15,10 +15,10 @@
               {% endif %}
             </a>
         </div>
-        
+
         {% if user != request.user %}
         <span style="display: flex;align-items: center;justify-content: center;">
-          {% if connect %}
+          {% if connect or connect2 %}
           <a href="" class="btn btn-sm btn-success success-gradient">У Вас в друзьях</a>
           {% else %}
           <a href="" class="btn btn-sm btn-success success-gradient">Добавить</a>
