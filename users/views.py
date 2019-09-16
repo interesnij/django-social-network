@@ -99,7 +99,11 @@ class UserAboutChange(TemplateView):
 
 	def post(self,request,*args,**kwargs):
 		self.user=request.user
-		if not self.user.profile:
+		try:
+			self.profile=UserProfile.objects.get(user=request.user)
+		except:
+			self.profile = None
+		if not self.profile:
 			self.user.profile = UserProfile.objects.create(user=request.user)
 		self.form=AboutUserForm(request.POST,instance=self.user.profile)
 		if self.form.is_valid():
