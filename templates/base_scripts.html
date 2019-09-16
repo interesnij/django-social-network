@@ -150,7 +150,7 @@ webSocket.listen(function(event) {
             $("#notifications").addClass("btn-danger");
             update_social_activity(event.id_value);
             break;
-        case "additional_news":
+        case "additional_post":
             if (event.actor_name !== currentUser) {
                 $(".stream-update").show();
             }
