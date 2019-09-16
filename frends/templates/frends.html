@@ -5,7 +5,7 @@
 {% if user == request.user %}
 Мои друзья
 {% else %}
-Друзья пользователя "{{ user.first_name }} {{ user.last_name }}"
+Друзья пользователя "{{ user.get_full_name }}"
 {% endif %}
 {% endblock %}
 
@@ -33,19 +33,19 @@
         <br><br>
         <div class="card-body px-0 py-0">
             <ul class="list-group border-top border-bottom list-group-flush">
-              {% for object in frends %}
+              {% for object in frends_users %}
                 <li class="list-group-item">
                     <div class="media">
                       <figure>
-                        {% if object.target_connection.target_user.profile.avatar %}
-                          <img src="{{ object.target_connection.target_user.profile.avatar.url }}" style="border-radius:50px;width:50px;" alt="image">
+                        {% if object.target_user.profile.avatar %}
+                          <img src="{{ object.target_user.profile.avatar.url }}" style="border-radius:50px;width:50px;" alt="image">
                         {% else %}
                           <img src="{% static 'images/user.png' %}" alt="image" style="border-radius:50px;width:50px;">
                         {% endif %}
                       </figure>
                         <div class="media-body">
-                          <a href="{% url 'user' pk=object.target_connection.target_user.pk %}">
-                            <h6 class="my-0 mt-1">{{ object.target_connection.target_user.get_full_name }}</h6>
+                          <a href="{% url 'user' pk=object.target_user.pk %}">
+                            <h6 class="my-0 mt-1">{{ object.target_user.get_full_name }}</h6>
                           </a>
                           <a href="" class="small">Написать сообщение</a>
                         </div>
@@ -53,19 +53,19 @@
                 </li>
               {% endfor %}
 
-              {% for object in frends2 %}
+              {% for object in target_users %}
                 <li class="list-group-item">
                     <div class="media">
                       <figure>
-                        {% if object.target_connection.user.profile.avatar %}
-                          <img src="{{ object.target_connection.user.profile.avatar.url }}" style="border-radius:50px;width:50px;" alt="image">
+                        {% if object.user.profile.avatar %}
+                          <img src="{{ object.user.profile.avatar.url }}" style="border-radius:50px;width:50px;" alt="image">
                         {% else %}
                           <img src="{% static 'images/user.png' %}" alt="image" style="border-radius:50px;width:50px;">
                         {% endif %}
                       </figure>
                         <div class="media-body">
-                          <a href="{% url 'user' pk=object.target_connection.user.pk %}">
-                            <h6 class="my-0 mt-1">{{ object.target_connection.user.get_full_name }}</h6>
+                          <a href="{% url 'user' pk=object.user.pk %}">
+                            <h6 class="my-0 mt-1">{{ object.user.get_full_name }}</h6>
                           </a>
                           <a href="" class="small">Написать сообщение</a>
                         </div>
