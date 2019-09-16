@@ -47,7 +47,7 @@
               {% if object.target_connection.user.profile.avatar %}
                 <img src="{{ object.target_connection.user.profile.avatar.url }}" alt="image" style="border-radius: 50px;">
               {% else %}
-                <img src="{% static 'images/user.png' %}" alt="image">
+                <img src="{% static 'images/user.png' %}" alt="image" style="border-radius: 50px;">
               {% endif %}
             </figure>
 
