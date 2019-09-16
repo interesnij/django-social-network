@@ -18,6 +18,5 @@ class Connect(models.Model):
 
     @classmethod
     def connection_exists(cls, user_a_id, user_b_id):
-        count = Connect.objects.select_related('target_connection__user_id').filter(user_id=user_a_id,
-                                                                                       target_connection__user_id=user_b_id).count()
+        count = Connect.objects.filter(user_id=user_a_id,target_connection__user_id=user_b_id).count()
         return count > 0
