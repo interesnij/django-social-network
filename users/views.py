@@ -1,7 +1,7 @@
 from django.views.generic.base import TemplateView
 from users.models import User, UserProfile
 from posts.models import Post
-from connections.models import Connection
+from frends.models import Connect
 from communities.models import Community
 from posts.forms import PostHardForm, PostLiteForm, PostMediumForm
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -31,8 +31,8 @@ class ProfileUserView(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.user=User.objects.get(pk=self.kwargs["pk"])
-		self.frends=Connection.objects.filter(target_connection__user=self.user)
-		self.frends2=Connection.objects.filter(target_connection__target_user=self.user)
+		self.frends=Connect.objects.filter(target_connection__user=self.user)
+		self.frends2=Connect.objects.filter(target_connection__target_user=self.user)
 		self.communities=Community.objects.filter(starrers=self.user)
 		self.posts=Post.objects.filter(creator=self.user)
 		return super(ProfileUserView,self).get(request,*args,**kwargs)
