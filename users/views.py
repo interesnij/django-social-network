@@ -86,7 +86,7 @@ class UserAboutChange(TemplateView):
 	profile=None
 
 	def get(self,request,*args,**kwargs):
-		self.user=User.objects.get(pk=self.kwargs["pk"])
+		self.user=request.user
 		self.form=AboutUserForm(instance=self.user)
 		return super(UserAboutChange,self).get(request,*args,**kwargs)
 
@@ -98,7 +98,7 @@ class UserAboutChange(TemplateView):
 		return context
 
 	def post(self,request,*args,**kwargs):
-		self.user=User.objects.get(pk=self.kwargs["pk"])
+		self.user=request.user
 		if not self.user.profile:
 			self.user.profile = UserProfile.objects.create(user=self.request.user)
 		self.form=AboutUserForm(request.POST,instance=self.user.profile)
