@@ -37,7 +37,6 @@ INSTALLED_APPS = [
     'circles',
     'communities',
     'posts',
-    'connections',
     'lists',
     'follows',
     'invitations',
