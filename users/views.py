@@ -67,7 +67,7 @@ class UserGeneralChange(TemplateView):
 
 	def post(self,request,*args,**kwargs):
 		self.user=User.objects.get(pk=self.kwargs["pk"])
-		self.form=GeneralUserForm(request.POST,instance=self.user.profile)
+		self.form=GeneralUserForm(request.POST,instance=self.user)
 		if self.form.is_valid():
 
 			user = self.request.user
@@ -99,7 +99,7 @@ class UserAboutChange(TemplateView):
 
 	def post(self,request,*args,**kwargs):
 		self.user=User.objects.get(pk=self.kwargs["pk"])
-		self.form=AboutUserForm(request.POST,instance=self.user.profile)
+		self.form=AboutUserForm(request.POST,instance=self.user)
 		if self.form.is_valid():
 			self.form.save()
 			if request.is_ajax():
