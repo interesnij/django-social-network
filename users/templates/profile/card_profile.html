@@ -19,11 +19,11 @@
         <span style="display: flex;align-items: center;justify-content: center;">
           {% if connect %}
           <a href="" class="btn btn-sm btn-success success-gradient">У Вас в друзьях</a>
-          {% else %}
+          {% endif %}
           {% if connect2 %}
           <a href="" class="btn btn-sm btn-success success-gradient">У Вас в друзьях</a>
-          {% else %}
-
+          {% endif %}
+          {% if not connect and not connect2 %}
           <a href="" class="btn btn-sm btn-success success-gradient">Добавить</a>
           {% endif %}
           &nbsp;
