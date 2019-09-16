@@ -54,7 +54,7 @@ class UserGeneralChange(TemplateView):
 	profile=None
 
 	def get(self,request,*args,**kwargs):
-		self.user=User.objects.get(pk=self.kwargs["pk"])
+		self.user=request.user
 		self.form=GeneralUserForm(instance=self.user)
 		return super(UserGeneralChange,self).get(request,*args,**kwargs)
 
@@ -66,7 +66,13 @@ class UserGeneralChange(TemplateView):
 		return context
 
 	def post(self,request,*args,**kwargs):
-		self.user=User.objects.get(pk=self.kwargs["pk"])
+		self.user=request.user
+		try:
+			self.profile=UserProfile.objects.get(user=request.user)
+		except:
+			self.profile = None
+		if not self.profile:
+			self.user.profile = UserProfile.objects.create(user=request.user)
 		self.form=GeneralUserForm(request.POST,instance=self.user.profile)
 		if self.form.is_valid():
 
