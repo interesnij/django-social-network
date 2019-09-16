@@ -15,14 +15,14 @@
                 data-action="like"
                 data-type="posts"
                 data-tooltip="Мне нравится">
-            <i class="material-icons">thumb_up</i>&nbsp;
+            <i class="material-icons">thumb_up</i>
             <span data-count="like">{{ object.votes.likes.count }}</span>
           </span>
           {% else %}
           <span class="content-color-secondary"
                 style="font-size:15px;cursor:pointer"
                 data-tooltip="Гости не могут ставить лайки">
-            <i class="material-icons">thumb_up</i>&nbsp;
+            <i class="material-icons">thumb_up</i>
             <span data-count="like">{{ object.votes.likes.count }}</span>
           </span>
           {% endif %}
