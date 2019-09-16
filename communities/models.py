@@ -73,7 +73,7 @@ class CommunityLog(models.Model):
     """
     #source_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='+', null=False,blank=False,verbose_name="Кто модерирует")
     #target_user = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='+', null=True,blank=False,verbose_name="Кого модерируют")
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='+', null=True, blank=True,verbose_name="Пост")
+    #post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='+', null=True, blank=True,verbose_name="Пост")
     community = models.ForeignKey(Community, on_delete=models.CASCADE, related_name='logs',null=False,blank=False,verbose_name="Сообщество")
     created = models.DateTimeField(default=timezone.now, editable=False,verbose_name="Создан")
 

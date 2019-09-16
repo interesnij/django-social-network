@@ -34,7 +34,6 @@ urlpatterns = [
     url(r'^account/', include('allauth.urls')),
     url(r'^users/', include('users.urls')),
     url(r'^posts/', include('posts.urls')),
-    url(r'^lists/', include('lists.urls')),
     url(r'^follows/', include('follows.urls')),
     url(r'^invitations/', include('invitations.urls')),
     url(r'^communities/', include('communities.urls')),

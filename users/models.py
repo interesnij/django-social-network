@@ -49,12 +49,10 @@ class UserNotificationsSettings(models.Model):
                                 related_name='notifications_settings',verbose_name="Пользователь")
     post_comment_notifications = models.BooleanField(default=True,verbose_name="Отправлять уведомления о комментариях к постам")
     post_comment_reply_notifications = models.BooleanField(default=True,verbose_name="Отправлять уведомления об ответах на комментарии к постам")
-    post_reaction_notifications = models.BooleanField(default=True,verbose_name="Отправлять уведомления о реакциях к постам")
     follow_notifications = models.BooleanField(default=True,verbose_name="Отправлять уведомления о подписках")
     connection_request_notifications = models.BooleanField(default=True,verbose_name="Отправлять уведомления о заявках в друзья")
     connection_confirmed_notifications = models.BooleanField(default=True,verbose_name="Отправлять уведомления о приеме заявки в друзья")
     community_invite_notifications = models.BooleanField(default=True,verbose_name="Отправлять уведомления о приглашениях в сообщества")
-    post_comment_reaction_notifications = models.BooleanField(default=True,verbose_name="Отправлять уведомления о реакциях на комментарии к постам")
     post_comment_user_mention_notifications = models.BooleanField(default=True,verbose_name="Отправлять уведомления об упоминаниях в комментариях к постам")
     post_user_mention_notifications = models.BooleanField(default=True,verbose_name="Отправлять уведомления об упоминаниях в постам")
 
