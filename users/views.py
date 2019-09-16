@@ -36,11 +36,9 @@ class ProfileUserView(TemplateView):
 		self.communities=Community.objects.filter(starrers=self.user)
 		self.posts=Post.objects.filter(creator=self.user)
 		try:
-			self.connect = Connect.objects.get(target_user=self.user,user=self.request.user)
-			self.connect2 = Connect.objects.get(user=self.user,target_user=self.request.user)
+			self.connect = Connect.objects.connection_exists(self.user_id,self.request.user_id)
 		except:
 			self.connect = None
-			self.connect2 = None
 
 		return super(ProfileUserView,self).get(request,*args,**kwargs)
 
@@ -53,7 +51,6 @@ class ProfileUserView(TemplateView):
 		context['form_medium'] = self.form
 		context['communities'] = self.communities
 		context['connect'] = self.connect
-		context['connect2'] = self.connect2
 		return context
 
 
