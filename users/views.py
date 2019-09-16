@@ -99,7 +99,8 @@ class UserAboutChange(TemplateView):
 
 	def post(self,request,*args,**kwargs):
 		self.user=User.objects.get(pk=self.kwargs["pk"])
-		self.form=AboutUserForm(request.POST,instance=self.user.profile)
+		self.profile = UserProfile.objects.get_or_create(user=self.request.user)
+		self.form=AboutUserForm(request.POST,instance=self.profile)
 		if self.form.is_valid():
 			self.form.save()
 			if request.is_ajax():
