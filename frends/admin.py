@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from connections.models import Connection
+from frends.models import Connect
 
 
 class ConnectionAdmin(admin.ModelAdmin):
