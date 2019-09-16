@@ -36,9 +36,9 @@ class ProfileUserView(TemplateView):
 		self.communities=Community.objects.filter(starrers=self.user)
 		self.posts=Post.objects.filter(creator=self.user)
 		self.connect = None
-		if self.user in self.frends:
+		if self.request.user in self.frends:
 			self.connect = True
-		if self.user in self.frends2:
+		if self.request.user in self.frends2:
 			self.connect = True
 
 		return super(ProfileUserView,self).get(request,*args,**kwargs)
