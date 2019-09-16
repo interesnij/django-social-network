@@ -7,4 +7,4 @@ from notifications.models.notification import Notification
 
 class CommunityInviteNotification(models.Model):
     notification = GenericRelation(Notification)
-    community_invite = models.ForeignKey('communities.CommunityInvite', on_delete=models.CASCADE,verbose_name="Приглашение в сообщество")
+    #community_invite = models.ForeignKey('communities.CommunityInvite', on_delete=models.CASCADE,verbose_name="Приглашение в сообщество")

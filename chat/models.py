@@ -40,10 +40,10 @@ class Message(models.Model):
     """A private message sent between users."""
     uuid_id = models.UUIDField(
         primary_key=True, default=uuid.uuid4, editable=False)
-    sender = models.ForeignKey(
+    #sender = models.ForeignKey(
         settings.AUTH_USER_MODEL, related_name='sent_messages',
         verbose_name=_("Sender"), null=True, on_delete=models.SET_NULL)
-    recipient = models.ForeignKey(
+    #recipient = models.ForeignKey(
         settings.AUTH_USER_MODEL, related_name='received_messages', null=True,
         blank=True, verbose_name=_("Recipient"), on_delete=models.SET_NULL)
     timestamp = models.DateTimeField(auto_now_add=True)

@@ -99,8 +99,6 @@ class Post(models.Model):
     def get_likers(self):
         return self.liked.all()
 
-    def __str__(self):
-        return "Пост %s %s" % (self.creator, self.created)
 
     class Meta:
         ordering=["-created"]
