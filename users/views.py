@@ -35,7 +35,7 @@ class ProfileUserView(TemplateView):
 		self.frends2=Connect.objects.filter(target_user=self.user)
 		self.communities=Community.objects.filter(starrers=self.user)
 		self.posts=Post.objects.filter(creator=self.user)
-		self.connect = Connect.connection_exists(self.user_id,self.request.user_id)
+		self.connect = Connect.connection_exists(self.user,self.request.user)
 
 		return super(ProfileUserView,self).get(request,*args,**kwargs)
 
