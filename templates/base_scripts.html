@@ -83,12 +83,12 @@ function checkNotifications() {
     });
 };
 function update_social_activity (id_value) {
-    let newsToUpdate = $("[news-id=" + id_value + "]");
+    let newsToUpdate = $("[post-id=" + id_value + "]");
     payload = {
         'id_value': id_value,
     };
     $.ajax({
-        url: '/news/update-interactions/',
+        url: '/posts/update-interactions/',
         data: payload,
         type: 'POST',
         cache: false,
@@ -140,9 +140,8 @@ webSocket.socket.onopen = function () {
 webSocket.socket.onclose = function () {
     console.error("Disconnected from " + ws_path);
 };
-// Listen the WebSocket bridge created throug django-channels library.
+currentUser = {{ request.user }};
 webSocket.listen(function(event) {
-   currentUser = {{ request.user }};
     switch (event.key) {
         case "notification":
             $("#notifications").addClass("btn-danger");
