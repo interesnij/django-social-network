@@ -34,7 +34,6 @@ INSTALLED_APPS = [
     'django_extensions',
     'categories',
     'users',
-    'circles',
     'communities',
     'posts',
     'lists',
