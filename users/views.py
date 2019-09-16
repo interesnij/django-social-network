@@ -35,6 +35,7 @@ class ProfileUserView(TemplateView):
 		self.frends2=Connect.objects.filter(target_user=self.user)
 		self.communities=Community.objects.filter(starrers=self.user)
 		self.posts=Post.objects.filter(creator=self.user)
+		self.connect = Connect.objects.get(target_user=self.target_user,user=self.user)
 		return super(ProfileUserView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self, **kwargs):
@@ -45,6 +46,7 @@ class ProfileUserView(TemplateView):
 		context['frends2'] = self.frends2
 		context['form_medium'] = self.form
 		context['communities'] = self.communities
+		context['connect'] = self.connect
 		return context
 
 
