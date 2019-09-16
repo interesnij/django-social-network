@@ -19,4 +19,6 @@ class Connect(models.Model):
     @classmethod
     def connection_exists(cls, user_a_id, user_b_id):
         count = Connect.objects.filter(user_id=user_a_id,target_connection__user_id=user_b_id).count()
-        return count > 0
+        count2 = Connect.objects.filter(user_id=user_a_id,target_connection__target_user_id=user_b_id).count()
+        count_all = count + count2
+        return count_all > 0
