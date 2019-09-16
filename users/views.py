@@ -35,10 +35,8 @@ class ProfileUserView(TemplateView):
 		self.frends2=Connect.objects.filter(target_user=self.user)
 		self.communities=Community.objects.filter(starrers=self.user)
 		self.posts=Post.objects.filter(creator=self.user)
-		try:
-			self.connect = Connect.objects.get(target_user=self.request.user,user=self.user)
-		except:
-			self.connect = None
+		self.connect = Connect.objects.get(target_user=self.request.user,user=self.user)
+
 		return super(ProfileUserView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self, **kwargs):
