@@ -29,7 +29,7 @@ class ModerationCategory(models.Model):
 
 
 class ModeratedObject(models.Model):
-    #community = models.ForeignKey('communities.Community', on_delete=models.CASCADE,related_name='moderated_objects',null=True,blank=False,verbose_name="Сообщество")
+    community = models.ForeignKey('communities.Community', on_delete=models.CASCADE,related_name='moderated_objects',null=True,blank=False,verbose_name="Сообщество")
     description = models.CharField(max_length=300,
                                    blank=False, null=True,verbose_name="Описание")
     verified = models.BooleanField(default=False,
@@ -68,7 +68,7 @@ class ModeratedObject(models.Model):
 
 
 class ModerationReport(models.Model):
-    #reporter = models.ForeignKey(User, on_delete=models.CASCADE, related_name='moderation_reports', null=False,verbose_name="Репортер")
+    reporter = models.ForeignKey(User, on_delete=models.CASCADE, related_name='moderation_reports', null=False,verbose_name="Репортер")
     moderated_object = models.ForeignKey(ModeratedObject, on_delete=models.CASCADE, related_name='reports', null=False,verbose_name="Объект")
     category = models.ForeignKey(ModerationCategory, on_delete=models.CASCADE, related_name='reports', null=False,verbose_name="Категория")
     description = models.CharField(max_length=300,
@@ -76,7 +76,7 @@ class ModerationReport(models.Model):
 
 
 class ModerationPenalty(models.Model):
-    #user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='moderation_penalties',verbose_name="Оштрафованный пользователь")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='moderation_penalties',verbose_name="Оштрафованный пользователь")
     expiration = models.DateTimeField(null=True,verbose_name="Окончание")
     moderated_object = models.ForeignKey(ModeratedObject, on_delete=models.CASCADE, related_name='user_penalties',verbose_name="Объект")
 
@@ -90,7 +90,7 @@ class ModerationPenalty(models.Model):
 
 
 class ModeratedObjectLog(models.Model):
-    #actor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='+', null=True,verbose_name="инициатор")
+    actor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='+', null=True,verbose_name="инициатор")
 
     LOG_TYPE_DESCRIPTION_CHANGED = 'DC'
     LOG_TYPE_STATUS_CHANGED = 'AC'
