@@ -142,6 +142,7 @@ webSocket.socket.onclose = function () {
 };
 // Listen the WebSocket bridge created throug django-channels library.
 webSocket.listen(function(event) {
+   currentUser = {{ request.user }};
     switch (event.key) {
         case "notification":
             $("#notifications").addClass("btn-danger");
@@ -151,7 +152,7 @@ webSocket.listen(function(event) {
             update_social_activity(event.id_value);
             break;
         case "additional_post":
-            if (event.actor_name !== {{ request.user }} {
+            if (event.actor_name !== currentUser {
                 $(".stream-update").show();
             }
             break;
