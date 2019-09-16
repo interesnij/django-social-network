@@ -9,9 +9,9 @@ import json
 
 
 class MainPageView(TemplateView,CategoryListMixin):
-	template_name="main/mainpage.html"
+	template_name="main/auth.html"
 
-	
+
 
 	def get_context_data(self,**kwargs):
 		context=super(MainPageView,self).get_context_data(**kwargs)
