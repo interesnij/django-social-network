@@ -5,6 +5,7 @@ from django.views import View
 from django.contrib.contenttypes.models import ContentType
 from main.models import LikeDislike
 from django.http import HttpResponse
+import json
 
 
 class MainPageView(TemplateView,CategoryListMixin):
