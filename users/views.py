@@ -67,7 +67,7 @@ class UserGeneralChange(TemplateView):
 
 	def post(self,request,*args,**kwargs):
 		self.user=User.objects.get(pk=self.kwargs["pk"])
-		self.form=GeneralUserForm(request.POST,instance=self.user)
+		self.form=GeneralUserForm(request.POST,instance=self.user.profile)
 		if self.form.is_valid():
 
 			user = self.request.user
