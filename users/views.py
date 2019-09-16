@@ -40,6 +40,7 @@ class ProfileUserView(TemplateView):
 			self.connect2 = Connect.objects.get(user=self.user,target_user=self.request.user)
 		except:
 			self.connect = None
+			self.connect2 = None
 
 		return super(ProfileUserView,self).get(request,*args,**kwargs)
 
