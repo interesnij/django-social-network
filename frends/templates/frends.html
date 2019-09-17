@@ -26,7 +26,12 @@
                     <i class="material-icons">person</i>
                 </div>
                 <div class="media-body">
-                    <h5 class="mt-1">Друзья пользователя {{ user.get_full_name }}</h5>
+                    <h5 class="mt-1">{% if request.user %}
+                                     Мои друзья
+                                     {% else %}
+                                     Друзья пользователя {{ user.get_full_name }}
+                                     {% endif %}
+                    </h5>
                 </div>
             </div>
         </div>

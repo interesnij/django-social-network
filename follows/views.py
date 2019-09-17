@@ -5,7 +5,7 @@ from users.models import User
 from django.http import HttpResponse
 
 
-class FrendsListView(ListView):
+class FollowsListView(ListView):
 	template_name="frends.html"
 	model=User
 
@@ -13,10 +13,10 @@ class FrendsListView(ListView):
 		self.user=User.objects.get(pk=self.kwargs["pk"])
 		self.follow_user=Follow.objects.filter(user=self.user)
 		self.followeds_user=Follow.objects.filter(followed_user=self.user)
-		return super(FrendsListView,self).get(request,*args,**kwargs)
+		return super(FollowsListView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context=super(FrendsListView,self).get_context_data(**kwargs)
+		context=super(FollowsListView,self).get_context_data(**kwargs)
 		context["follow_user"]=self.follow_user
 		context['followeds_user'] = self.followeds_user
 		context['user'] = self.user
