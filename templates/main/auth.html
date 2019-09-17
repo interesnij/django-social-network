@@ -48,7 +48,7 @@
                           </div>
                           <small class="form-text text-muted login-response"></small>
                           <div class="text-left mb-4">
-                              <button type="submit" class=" btn btn-primary logg pink-gradient">Войти</button>
+                              <button type="submit" id="logg" class=" btn btn-primary pink-gradient">Войти</button>
                               <a href="" style="float:right;padding-top: 9px;">Забыли пароль?</a>
                           </div>
                       </div>
@@ -120,7 +120,7 @@
               window.location = "{% url 'main' %}";
             }
             $().ready(function() {
-                $('.logg').click(function() {
+                $('#logg').click(function() {
                     var form = $('#login_form');
                     $.post(form.attr('action'), form.serialize())
                         .fail(function(data) {
