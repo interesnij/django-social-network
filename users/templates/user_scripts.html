@@ -65,3 +65,34 @@
     $('[data-action="like"]').click(like);
     $('[data-action="dislike"]').click(dislike);
 </script>
+
+<script>
+function avatar_change_popap(avatar_change) {
+
+	if ($(".wrapper").length == 0){
+		$(avatar_change).wrapInner("<div class='wrapper'></div>");
+	}
+	$(avatar_change).show();
+
+	$(avatar_change).click(function(e) {
+		if ( e.target == this ) {
+			if ($(avatar_change).is(':visible')) {
+				$(avatar_change).hide();
+			}
+		}
+	});
+
+	$(avatar_change).find("button[name=avatar_close]").on("click", function() {
+		if ($(".formElementError").is(':visible')) {
+			$(".formElementError").remove();
+		}
+		$(avatar_change).hide();
+	});
+}
+
+$(document).ready(function () {
+	$("[data-js=avatar_change]").on("click", function() {
+		avatar_change_popap($(".avatar_change"));
+	});
+});
+</script>
