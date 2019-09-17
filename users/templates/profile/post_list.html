@@ -1,7 +1,6 @@
 {% load staticfiles humanize %}
 
 {% if user == request.user %}
-<div class="card mb-4">
 <span id="post_link" style="">
   <div class="dropdown d-inline-block">
       <a href="javascript:void(0)" class="icon-circle dropdown-toggle caret-none" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -18,8 +17,8 @@
  <div class="card mb-4" style="">
    <span id="post_create"></span>
  </div>
-</div>
-{% endif %} 
+
+{% endif %}
 
 {% if posts %}
 <div class="infinite-container">
