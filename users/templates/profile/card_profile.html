@@ -43,6 +43,17 @@
 	padding: 0.5em;
 	width: calc(100%/2 - 1em);
 }
+img {
+  max-width: 100%; /* This rule is very important, please do not ignore this! */
+}
+
+#canvas {
+  height: 600px;
+  width: 600px;
+  background-color: #ffffff;
+  cursor: default;
+  border: 1px solid black;
+}
 
 </style>
 <div class="card mb-4" style="">
@@ -96,17 +107,19 @@
        {% endif %}
      </h2>
      <br>
-     <input type="file" id="file-input">
-     <!-- leftbox -->
-	<div class="box-2">
-		<div class="result"></div>
+     <input type="file" id="fileInput" accept="image/*" />
+		<input type="button" id="btnCrop" value="Crop" />
+		<input type="button" id="btnRestore" value="Restore" />
+
+
+    <div class="box-2">
+		<canvas id="canvas"></canvas>
 	</div>
-	<!--rightbox-->
+
 	<div class="box-2 img-result hide">
-		<!-- result of crop -->
-		<img class="cropped" src="" alt="">
+
+		<div id="result"></div>
 	</div>
-  <button class="btn save hide">Сохранить</button>
      <button class="btn btn-sm btn-warning success-gradient ml-2" name="avatar_close">Close</button>
   </div>
 
