@@ -50,7 +50,7 @@
                       </figure>
                         <div class="media-body">
                           <a href="{% url 'user' pk=object.pk %}">
-                            <h6 class="my-0 mt-1">{{ object.get_full_name }}</h6>
+                            <h6 class="my-0 mt-1">{{ object.user.get_full_name }}</h6>
                           </a>
                           <a href="" class="small">Принять заявку</a>
                         </div>
