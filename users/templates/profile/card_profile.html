@@ -107,7 +107,10 @@ img {
        {% endif %}
      </h2>
      <br>
-     <div class="box">
+     <main class="page">
+	<h2>Upload ,Crop and save.</h2>
+	<!-- input file -->
+	<div class="box">
 		<input type="file" id="file-input">
 	</div>
 	<!-- leftbox -->
@@ -119,7 +122,8 @@ img {
 		<!-- result of crop -->
 		<img class="cropped" src="" alt="">
 	</div>
-  <div class="box">
+	<!-- input file -->
+	<div class="box">
 		<div class="options hide">
 			<label> Width</label>
 			<input type="number" class="img-w" value="300" min="100" max="1200" />
@@ -129,6 +133,7 @@ img {
 		<!-- download btn -->
 		<a href="" class="btn download hide">Download</a>
 	</div>
+</main>
      <button class="btn btn-sm btn-warning success-gradient ml-2" name="avatar_close">Close</button>
   </div>
 </div>
