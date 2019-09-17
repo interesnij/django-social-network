@@ -1,6 +1,12 @@
 {% extends "base.html" %}
 {% load staticfiles %}
-{% block title %}Мои фотографии{% endblock %}
+{% block title %}
+{% if user == request.user %}
+Мои фотографии
+{% else %}
+Фотографии пользователя "{{ user.get_full_name }}"
+{% endif %}
+{% endblock %}
 {% block content %}
 
 {% endblock %}
