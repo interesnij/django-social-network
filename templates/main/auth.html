@@ -121,8 +121,8 @@
             }
             $().ready(function() {
                 $('#logg').click(function() {
-                    var form = $('#login_form');
-                    $.post(form.attr('action'), form.serialize())
+                    var form3 = $('#login_form');
+                    $.post(form3.attr('action'), form3.serialize())
                         .fail(function(data) {
                             error_response(data);
                             console.log(data);
