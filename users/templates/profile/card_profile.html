@@ -60,10 +60,11 @@
         {% else %}
         <span style="display: flex;align-items: center;justify-content: center;">
         <a href="{% url 'user_general_form' user.pk %}" class="btn btn-sm btn-warning warning-gradient ml-2">Редактировать</a>
+        <a href="#" data-js="avatar_change" class="btn btn-sm btn-warning success-gradient ml-2">Аватар</a>
         </span>
         &nbsp;
         {% endif %}
-        <a href="#" data-js="avatar_change" class="btn btn-sm btn-warning success-gradient ml-2">Аватар</a>
+
     </div>
 </div>
 
