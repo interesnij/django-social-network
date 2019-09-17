@@ -102,33 +102,8 @@ $(document).ready(function () {
 <script src="/static/scripts/cropper.min.js" type="text/javascript"></script>
 
 <script>
-  /**
-   * @file Allows uploading, cropping (with automatic resizing) and exporting
-   * of images.
-   * @author Billy Brown
-   * @license MIT
-   * @version 2.1.0
-   */
-
-  /** Class used for uploading images. */
   class Uploader {
-    /**
-                   * <p>Creates an Uploader instance with parameters passed as an object.</p>
-                   * <p>Available parameters are:</p>
-                   * <ul>
-                   *  <li>exceptions {function}: the exceptions handler to use, function that takes a string.</li>
-                   *  <li>input {HTMLElement} (required): the file input element. Instantiation fails if not provided.</li>
-                   *  <li>types {array}: the file types accepted by the uploader.</li>
-                   * </ul>
-                   *
-                   * @example
-                   * var uploader = new Uploader({
-                   *  input: document.querySelector('.js-fileinput'),
-                   *  types: [ 'gif', 'jpg', 'jpeg', 'png' ]
-                   * });
-                   * *
-                   * @param {object} options the parameters to be passed for instantiation
-                   */
+
     constructor(options) {
       if (!options.input) {
         throw '[Uploader] Missing input file element.';
@@ -137,9 +112,6 @@ $(document).ready(function () {
       this.types = options.types || ['gif', 'jpg', 'jpeg', 'png'];
     }
 
-    /**
-       * Listen for an image file to be uploaded, then validate it and resolve with the image data.
-       */
     listen(resolve, reject) {
       this.fileInput.onchange = e => {
         // Do not submit the form
@@ -180,30 +152,10 @@ $(document).ready(function () {
     coordinate.y <= square.pos.y + square.size.y;
   }
 
-  /** Class for cropping an image. */
   class Cropper {
-    /**
-                  * <p>Creates a Cropper instance with parameters passed as an object.</p>
-                  * <p>Available parameters are:</p>
-                  * <ul>
-                  *  <li>size {object} (required): the dimensions of the cropped, resized image. Must have 'width' and 'height' fields. </li>
-                  *  <li>limit {integer}: the longest side that the cropping area will be limited to, resizing any larger images.</li>
-                  *  <li>canvas {HTMLElement} (required): the cropping canvas element. Instantiation fails if not provided.</li>
-                  *  <li>preview {HTMLElement} (required): the preview canvas element. Instantiation fails if not provided.</li>
-                  * </ul>
-                  *
-                  * @example
-                  * var editor = new Cropper({
-                  *  size: { width: 128, height: 128 },
-                  *  limit: 600,
-                  *  canvas: document.querySelector('.js-editorcanvas'),
-                  *  preview: document.querySelector('.js-previewcanvas')
-                  * });
-                  *
-                  * @param {object} options the parameters to be passed for instantiation
-                  */
+
     constructor(options) {
-      // Check the inputs
+
       if (!options.size) {throw 'Size field in options is required';}
       if (!options.canvas) {throw 'Could not find image canvas element.';}
       if (!options.preview) {throw 'Could not find preview canvas element.';}
@@ -213,32 +165,22 @@ $(document).ready(function () {
       this.previewCanvas = options.preview;
       this.c = this.imageCanvas.getContext("2d");
 
-      // Images larger than options.limit are resized
       this.limit = options.limit || 800; // default to 600px
-      // Create the cropping square with the handle's size
+
       this.crop = {
         size: { x: options.size.width, y: options.size.height },
         pos: { x: 0, y: 0 },
         handleSize: 10 };
 
-
-      // Set the preview canvas size
       this.previewCanvas.width = options.size.width;
       this.previewCanvas.height = options.size.height;
 
-      //ระบบสัมผัส เพิ่มขึ้นเอง START
-      // Bind the methods, ready to be added and removed as events
       this.boundDrag = this.drag.bind(this);
       this.boundClickStop = this.clickStop.bind(this);
       this.boundTouchtest = this.touchtest.bind(this);
 
     }
 
-    /**
-       * Set the source image data for the cropper.
-       *
-       * @param {String} source the source of the image to crop.
-       */
     setImageSource(source) {
       this.image = new Image();
       this.image.src = source;
@@ -248,18 +190,9 @@ $(document).ready(function () {
         // Listen for events on the canvas when the image is ready
         this.imageCanvas.onmousedown = this.clickStart.bind(this);
         this.imageCanvas.ontouchmove = this.clickStart.bind(this);
-
-
-
-
       };
     }
 
-    /**
-       * Export the result to a given image tag.
-       *
-       * @param {HTMLElement} img the image tag to export the result to.
-       */
     export(img) {
       img.setAttribute('src', this.previewCanvas.toDataURL());
     }
@@ -292,8 +225,6 @@ $(document).ready(function () {
     }
 
 
-
-
     /** @private */
     clickStop(e) {
       // Stop listening for mouse movement and mouse release
@@ -302,12 +233,6 @@ $(document).ready(function () {
     }
 
 
-
-
-
-
-
-    /** @private */
     isResizing(coord) {
       const size = this.crop.handleSize;
       const handle = {
@@ -325,8 +250,6 @@ $(document).ready(function () {
       return squareContains(this.crop, coord);
     }
 
-
-    //ระบบสัมผัส เพิ่มขึ้นเอง START
     touchtest(e) {
       const position = {
         x: e.targetTouches[0].pageX - e.target.getBoundingClientRect().left,
@@ -344,10 +267,6 @@ $(document).ready(function () {
       this.lastEvent.position = position;
       this.render();
     }
-
-    //ระบบสัมผัส เพิ่มขึ้นเอง END
-
-
 
     /** @private */
     drag(e) {
@@ -473,7 +392,7 @@ $(document).ready(function () {
   }
 
   // Auto-resize the cropped image
-  var dimensions = { width: 720, height: 300 };
+  var dimensions = { width: 300, height: 300 };
 
   try {
     var uploader = new Uploader({

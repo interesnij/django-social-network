@@ -33,6 +33,9 @@
 .img-export {
     display: block;
 }
+img{
+  max-width:100%;
+}
 
 </style>
 <div class="card mb-4" style="">
@@ -92,8 +95,14 @@
 </label>
 
 <button class="js-export img-export">Export</button>
-<canvas class="js-editorcanvas"></canvas>
-<canvas class="js-previewcanvas"></canvas>
+<div class="row">
+      <div class=" col-md-6 col-sm-12 order-1">
+        <canvas class="js-editorcanvas"></canvas>
+      </div>
+      <div class=" col-md-6 col-sm-12 order-2">
+        <canvas class="js-previewcanvas"></canvas>
+      </div>
+
      <button class="btn btn-sm btn-warning success-gradient ml-2" name="avatar_close">Close</button>
   </div>
 </div>
