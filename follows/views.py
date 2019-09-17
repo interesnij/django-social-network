@@ -6,7 +6,7 @@ from django.http import HttpResponse
 
 
 class FollowsListView(ListView):
-	template_name="frends.html"
+	template_name="follows.html"
 	model=User
 
 	def get(self,request,*args,**kwargs):
