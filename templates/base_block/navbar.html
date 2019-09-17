@@ -14,7 +14,7 @@
             </div>
 
             <div class="col text-right">
-              {% if user.is_authenticated %}
+              {% if request.user.is_authenticated %}
                 <button class="btn btn-search btn-icon header-color-secondary text-hide-xs" type="button">
                   <i class="material-icons">search</i>
                 </button>
@@ -86,7 +86,7 @@
                             </div>
                         </a>
                         <div class="dropdown-divider m-0"></div>
-                        <a class="dropdown-item pink-gradient-active" href="{% url 'user' pk=user.pk %}">
+                        <a class="dropdown-item pink-gradient-active" href="{% url 'user' pk=request.user.pk %}">
                             <div class="row align-items-center">
                                 <div class="col">
                                     Моя страница

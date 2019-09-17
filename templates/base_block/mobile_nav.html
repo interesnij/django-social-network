@@ -1,7 +1,7 @@
 {% load staticfiles %}
 
 <div class="sidebar sidebar-left">
-  {% if user.is_authenticated %}
+  {% if request.user.is_authenticated %}
     <div class="container has-background-img">
         <figure class="background-img pink-gradient">
           {% if user.profile.avatar %}
@@ -35,7 +35,7 @@
 
     <ul class="nav flex-column">
         <li class="nav-item">
-            <a href="{% url 'user' pk=user.pk %}" class="nav-link dropdwown-toggle">
+            <a href="{% url 'user' pk=request.user.pk %}" class="nav-link dropdwown-toggle">
                 <i class="material-icons icon">home</i>
                 <span>Моя страница</span>
             </a>
@@ -53,19 +53,19 @@
             </a>
         </li>
         <li class="nav-item">
-            <a href="{% url 'frends' pk=user.pk %}" class="nav-link dropdwown-toggle">
+            <a href="{% url 'frends' pk=request.user.pk %}" class="nav-link dropdwown-toggle">
                 <i class="material-icons icon">person</i>
                 <span>Друзья</span>
             </a>
         </li>
         <li class="nav-item">
-            <a href="{% url 'communities' pk=user.pk %}" class="nav-link dropdwown-toggle">
+            <a href="{% url 'communities' pk=request.user.pk %}" class="nav-link dropdwown-toggle">
                 <i class="material-icons icon">group</i>
                 <span>Сообщества</span>
             </a>
         </li>
         <li class="nav-item">
-            <a href="{% url 'gallery' pk=user.pk %}" class="nav-link dropdwown-toggle">
+            <a href="{% url 'gallery' pk=request.user.pk %}" class="nav-link dropdwown-toggle">
                 <i class="material-icons icon">photo</i>
                 <span>Фотографии</span>
             </a>
