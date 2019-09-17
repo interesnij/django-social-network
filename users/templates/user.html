@@ -33,7 +33,7 @@ iframe{
 
           </div>
           <div class="col-lg-8 col-md-7 col-sm-12 order-2 ">
-             <div class="card mb-4" style="padding:10px;margin:10px">
+             <div class="card mb-4" style="padding:10px">
                <h3 class="mb-0">{{ user.first_name }} {{ user.last_name }}</h3>
                {% if user.profile.status %}
                <p>{{ user.profile.status }}</p>
@@ -77,7 +77,7 @@ iframe{
                 </div>
               </div>
              {% if user == request.user %}
-             <span id="post_link" style="margin:10px">
+             <span id="post_link" style="">
                <div class="dropdown d-inline-block">
                    <a href="javascript:void(0)" class="icon-circle dropdown-toggle caret-none" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                        <i class="material-icons ">add</i>
@@ -90,7 +90,7 @@ iframe{
                    </div>
                </div>
               </span>
-              <div class="card mb-4" style="margin:10px">
+              <div class="card mb-4" style="">
                 <span id="post_create"></span>
               </div>
               {% endif %}
