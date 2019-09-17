@@ -116,8 +116,7 @@ $('#fileInput').on( 'change', function(){
              context.canvas.height = img.height;
              context.canvas.width  = img.width;
              context.drawImage(img, 0, 0);
-             var canvas=$('#canvas');
-             var cropper = canvas.cropper({
+             var cropper = $('#canvas').cropper({
                aspectRatio: 4 / 3
              });
              $('#btnCrop').click(function() {
