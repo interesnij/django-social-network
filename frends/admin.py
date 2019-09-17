@@ -4,7 +4,7 @@ from frends.models import Connect
 
 
 class ConnectAdmin(admin.ModelAdmin):
-    search_fields = ('name',)
+    search_fields = ('user',)
     #exclude = ['communities']
 
 
