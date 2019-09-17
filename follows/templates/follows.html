@@ -42,8 +42,8 @@
                 <li class="list-group-item">
                     <div class="media">
                       <figure>
-                        {% if object.profile.avatar %}
-                          <img src="{{ object.profile.avatar.url }}" style="border-radius:50px;width:50px;" alt="image">
+                        {% if object.user.profile.avatar %}
+                          <img src="{{ object.profile.user.avatar.url }}" style="border-radius:50px;width:50px;" alt="image">
                         {% else %}
                           <img src="{% static 'images/user.png' %}" alt="image" style="border-radius:50px;width:50px;">
                         {% endif %}
