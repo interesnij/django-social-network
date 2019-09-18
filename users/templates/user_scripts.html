@@ -21,13 +21,13 @@
 
 <script>
 function remove() {
-  var remove1 = $(this);
-  var pk = remove1.data('id');
+  var remove = $(this);
+  var pk = remove.data('id');
 
 $.ajax({
     url: "/posts/delete/" + pk + "/",
     success: function (data) {
-      $(remove1).hide();
+      $(remove).remove();
 
     },
     error: function(data) {
