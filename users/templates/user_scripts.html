@@ -319,7 +319,7 @@ $(document).ready(function () {
     if (uploader && editor) {
       uploader.listen(editor.setImageSource.bind(editor), error => {throw error;});
     }
-    var img = $('#id_avatar input');
+    var img = document.createElement('img');
     document.querySelector('.js-export').onclick = e => editor.export(img);
     var frm10 = $('#AVATAR-FORM');
     frm10.submit(function () {
