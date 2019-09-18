@@ -80,5 +80,6 @@ class PostUserLiteCreate(TemplateView):
             new_post=self.form.save()
 
             if request.is_ajax() :
-                return HttpResponse ('!')
+                 html = render_to_string('news/news_single.html',{'news': new_post,'request': request})
+                 return HttpResponse(html)
         return super(PostUserLiteCreate,self).get(request,*args,**kwargs)

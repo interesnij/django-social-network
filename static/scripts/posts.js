@@ -1,9 +1,5 @@
 $(function () {
 
-    $("#replyInput").keyup(function () {
-        var charCount = $(this).val().length;
-        $("#replyCounter").text(280 - charCount);
-    });
 
     $("#replyPosts").click(function () {
         // Ajax call to register a reply to any given News object.
@@ -22,9 +18,9 @@ $(function () {
         });
     });
 
-    $("ul.stream").on("click", ".comment", function () {
+    $("div.stream").on("click", ".comment", function () {
         var post = $(this).closest(".card");
-        var posts = $(post).closest("li").attr("posts-id");
+        var posts = $(post).closest("div").attr("posts-id");
         $("#newsThreadModal").modal("show");
         $.ajax({
             url: '/users/get-thread/',
