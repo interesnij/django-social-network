@@ -136,7 +136,7 @@ class UserAvatarChange(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.user=request.user
-		self.form=UserAvatarChange(instance=self.user)
+		self.form=AvatarUserForm(instance=self.user)
 		return super(UserAvatarChange,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
