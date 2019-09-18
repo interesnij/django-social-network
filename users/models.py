@@ -56,10 +56,9 @@ class UserNotificationsSettings(models.Model):
 
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(User, null=True, related_name="profile",
-                                verbose_name="Пользователь', on_delete=models.CASCADE)
-    avatar = ImageField(blank=True,upload_to=upload_to_user_avatar_directory,verbose_name="Аватар")
-    cover = ImageField(blank=True, null=True, upload_to=upload_to_user_cover_directory,verbose_name="Фон")
+    user = models.OneToOneField(User, null=True, related_name="profile", verbose_name="Пользователь", on_delete=models.CASCADE)
+    avatar = models.ImageField(blank=True,upload_to=upload_to_user_avatar_directory,verbose_name="Аватар")
+    cover = models.ImageField(blank=True, null=True, upload_to=upload_to_user_cover_directory,verbose_name="Фон")
     bio = models.TextField(max_length=300, blank=True, verbose_name="Биография")
     followers_count_visible = models.BooleanField(blank=False, null=False, default=False,verbose_name="Число подписчиков видно")
     sity = models.CharField(max_length=100, blank=True, verbose_name="Местоположение")
