@@ -95,3 +95,4 @@ class PostUserLiteCreate(TemplateView):
 class PostDeleteView(LoginRequiredMixin, AuthorRequiredMixin, DeleteView):
     model = Post
     success_url = '/'
+    template_name="post_confirm_delete.html"
