@@ -22,8 +22,8 @@
 <script>
 $('.post_remove').on('click', function(e) {
   e.preventDefault();
-  var post = $(this);
-  var pk = post.data('id');
+  var remove = $(this);
+  var pk = remove.data('id');
 
 $.ajax({
     url: "/posts/delete/" + pk + "/",
@@ -35,6 +35,8 @@ $.ajax({
     }
 });
 });
+
+$('[data-action="remove"]').click(remove);
 </script>
 {% endif %}
 

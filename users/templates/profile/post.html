@@ -1,6 +1,6 @@
 {% load staticfiles humanize liked_user %}
 
-<div class="card mb-4 fullscreen infinite-item" data-id="{{ object.pk }}" posts-id="{{ object.uuid }}" style="">
+<div class="card mb-4 fullscreen infinite-item" posts-id="{{ object.uuid }}" style="">
     <div class="card-header border-bottom">
         <div class="media">
             <figure>
@@ -23,7 +23,7 @@
                     <i class="material-icons ">more_vertical</i>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
-                    <a href="#" class="dropdown-item post_remove">Удалить запись</a>
+                    <a data-action="remove" data-id="{{ object.pk }}" href="#" class="dropdown-item post_remove">Удалить запись</a>
                     <a href="#" id="post_update" class="dropdown-item">Редактировать</a>
                     <a href="#" id="post_up" class="dropdown-item">Закрепить</a>
                     <a href="#" id="post_check_comment" class="dropdown-item">Выключить комментарии</a>
