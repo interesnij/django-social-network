@@ -93,7 +93,7 @@
         Загрузите фото:
 
       </label>
-      {{ form_avatar }}
+      {{ form_avatar.avatar }}
 
 
           <button class="btn btn-sm btn-warning success-gradient ml-2 js-export img-export float-right" name="avatar_close">Выбрать</button>
@@ -107,7 +107,10 @@
         $.ajax({
             type: frm10.attr('method'),
             url: "{% url 'user_avatar_form' pk=request.user.pk %}",
-            data: frm10.serialize(),
+            data: new FormData($('form')[0]),
+            contentType: false,
+            cache: false,
+            processData:false,
             success: function (data) {
               console.log("Все ОК")
             },
