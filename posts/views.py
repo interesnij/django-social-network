@@ -7,7 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from posts.helpers import ajax_required, AuthorRequiredMixin
 from posts.models import Post
 from django.views.generic import DeleteView
-
+from django.urls import reverse_lazy
 
 
 class PostsView(TemplateView):
