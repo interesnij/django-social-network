@@ -164,7 +164,7 @@ $(document).ready(function () {
       };
     }
     export(img) {
-      input.setAttribute('src', this.previewCanvas.toDataURL());
+      img.setAttribute('src', this.previewCanvas.toDataURL());
     }
     /** @private */
     render() {
@@ -319,7 +319,7 @@ $(document).ready(function () {
     if (uploader && editor) {
       uploader.listen(editor.setImageSource.bind(editor), error => {throw error;});
     }
-    var img = $('#id_avatar');
+    var img = $('#id_avatar input');
     document.querySelector('.js-export').onclick = e => editor.export(img);
     var frm10 = $('#AVATAR-FORM');
     frm10.submit(function () {
