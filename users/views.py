@@ -3,9 +3,9 @@ from users.models import User, UserProfile
 from posts.models import Post
 from frends.models import Connect
 from communities.models import Community
-from posts.forms import PostHardForm, PostLiteForm, PostMediumForm, AvatarUserForm
+from posts.forms import PostHardForm, PostLiteForm, PostMediumForm
 from django.contrib.auth.mixins import LoginRequiredMixin
-from users.forms import GeneralUserForm, AboutUserForm
+from users.forms import GeneralUserForm, AboutUserForm, AvatarUserForm
 from django.views.generic import ListView
 from posts.helpers import ajax_required, AuthorRequiredMixin
 from django.contrib.auth.decorators import login_required
@@ -134,7 +134,7 @@ class UserAvatarChange(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.user=request.user
-		self.form=AvatarUserForm(instance=self.user)
+		self.form=UserAvatarChange(instance=self.user)
 		return super(UserAvatarChange,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
