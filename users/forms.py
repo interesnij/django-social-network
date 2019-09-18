@@ -30,3 +30,11 @@ class AboutUserForm(forms.ModelForm):
         fields = (
         'bio',
         )
+
+class AvatarUserForm(forms.ModelForm):
+
+    class Meta:
+        model = UserProfile
+        fields = (
+        'avatar',
+        )

@@ -3,7 +3,7 @@ from users.models import User, UserProfile
 from posts.models import Post
 from frends.models import Connect
 from communities.models import Community
-from posts.forms import PostHardForm, PostLiteForm, PostMediumForm
+from posts.forms import PostHardForm, PostLiteForm, PostMediumForm, AvatarUserForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from users.forms import GeneralUserForm, AboutUserForm
 from django.views.generic import ListView
@@ -71,7 +71,6 @@ class UserGeneralChange(TemplateView):
 
 	def get_context_data(self,**kwargs):
 		context=super(UserGeneralChange,self).get_context_data(**kwargs)
-
 		context["profile"]=self.profile
 		context["form"]=self.form
 		return context
@@ -86,7 +85,6 @@ class UserGeneralChange(TemplateView):
 			self.user.profile = UserProfile.objects.create(user=request.user)
 		self.form=GeneralUserForm(request.POST,instance=self.user.profile)
 		if self.form.is_valid():
-
 			user = self.request.user
 			user.first_name = self.form.cleaned_data['first_name']
 			user.last_name = self.form.cleaned_data['last_name']
@@ -109,7 +107,6 @@ class UserAboutChange(TemplateView):
 
 	def get_context_data(self,**kwargs):
 		context=super(UserAboutChange,self).get_context_data(**kwargs)
-
 		context["profile"]=self.profile
 		context["form"]=self.form
 		return context
@@ -129,6 +126,37 @@ class UserAboutChange(TemplateView):
 				return HttpResponse ('!')
 		return super(UserAboutChange,self).post(request,*args,**kwargs)
 
+
+class UserAvatarChange(TemplateView):
+	template_name = "user_avatar_form.html"
+	form=None
+	profile=None
+
+	def get(self,request,*args,**kwargs):
+		self.user=request.user
+		self.form=AvatarUserForm(instance=self.user)
+		return super(UserAvatarChange,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context=super(UserAvatarChange,self).get_context_data(**kwargs)
+		context["profile"]=self.profile
+		context["form"]=self.form
+		return context
+
+	def post(self,request,*args,**kwargs):
+		self.user=request.user
+		try:
+			self.profile=UserProfile.objects.get(user=request.user)
+		except:
+			self.profile = None
+		if not self.profile:
+			self.user.profile = UserProfile.objects.create(user=request.user)
+		self.form=AvatarUserForm(request.POST,request.FILES, instance=self.user.profile)
+		if self.form.is_valid():
+			self.form.save()
+			if request.is_ajax():
+				return HttpResponse ('!')
+		return super(UserAvatarChange,self).post(request,*args,**kwargs)
 
 
 class PostUserView(ListView):

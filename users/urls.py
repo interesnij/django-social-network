@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from users.views import AllUsers, ProfileUserView, UserGeneralChange, UserAboutChange, UserDesign, PostUserView
+from users.views import AllUsers, ProfileUserView, UserGeneralChange, UserAboutChange, UserDesign, PostUserView, UserAvatarChange
 from users.views import get_thread, post_comment, update_interactions
 
 urlpatterns = [
@@ -14,4 +14,6 @@ urlpatterns = [
     url(r'^get-thread/$', get_thread, name='get_thread'),
     url(r'^post-comment/$', post_comment, name='post_comments'),
     url(r'^update-interactions/$', update_interactions, name='update_interactions'),
+    url(r'^avatar/(?P<pk>[0-9]+)/$',
+        UserAvatarChange.as_view(), name='user_avatar_form'),
 ]

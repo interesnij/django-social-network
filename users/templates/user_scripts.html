@@ -307,7 +307,7 @@ $(document).ready(function () {
   function exceptionHandler(message) {
     console.log(message);
   }
-  var dimensions = { width: 300, height: 300 };
+  var dimensions = { width: 250, height: 250 };
   try {
     var uploader = new Uploader({
       input: document.querySelector('.js-fileinput'),
@@ -319,9 +319,7 @@ $(document).ready(function () {
     if (uploader && editor) {
       uploader.listen(editor.setImageSource.bind(editor), error => {throw error;});
     }
-    var img = document.createElement('img');
-    document.body.appendChild(img);
-    document.querySelector('.js-export').onclick = e => editor.export(img);
+
   } catch (error) {
     exceptionHandler(error.message);
   }
