@@ -319,8 +319,9 @@ $(document).ready(function () {
     if (uploader && editor) {
       uploader.listen(editor.setImageSource.bind(editor), error => {throw error;});
     }
-    var img = document.createElement('img');
-    $('#id_avatar').append(img);
+
+    var img = document.createElement('img');  
+
   } catch (error) {
     exceptionHandler(error.message);
   }
