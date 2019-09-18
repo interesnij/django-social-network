@@ -102,3 +102,20 @@
      </form>
 </div>
 </div>
+<script type="text/javascript">
+    var frm = $('#AVATAR-FORM');
+    frm.submit(function () {
+        $.ajax({
+            type: frm.attr('method'),
+            url: "{% url 'user_avatar_form' pk=request.user.pk %}",
+            data: frm.serialize(),
+            success: function (data) {
+              console.log("Все ОК")
+            },
+            error: function(data) {
+                console.log("Все не ОК")
+            }
+        });
+        return false;
+    });
+</script>
