@@ -18,6 +18,23 @@
     $('#post_create').html('').load("{% url 'post_add_lite_user' %}");
   });
 </script>
+
+<script>
+$('.post_remove').on('click', function() {
+  var post = $(this);
+  var pk = post.data('id');
+
+$.ajax({
+    url: '{% url "delete_post" pk %}',
+    success: function (data) {
+      $(post).hide();
+
+    },
+    error: function(data) {
+    }
+});
+});
+</script>
 {% endif %}
 
 <script>
