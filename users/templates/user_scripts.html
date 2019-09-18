@@ -319,7 +319,8 @@ $(document).ready(function () {
     if (uploader && editor) {
       uploader.listen(editor.setImageSource.bind(editor), error => {throw error;});
     }
-
+    var img = document.createElement('img');
+    $('#id_avatar').appendChild(img);
   } catch (error) {
     exceptionHandler(error.message);
   }
