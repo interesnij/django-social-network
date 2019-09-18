@@ -27,7 +27,7 @@ function remove() {
 $.ajax({
     url: "/posts/delete/" + pk + "/",
     success: function (data) {
-      $(post).hide();
+      $(remove).hide();
 
     },
     error: function(data) {
