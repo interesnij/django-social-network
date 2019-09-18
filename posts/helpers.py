@@ -1,4 +1,4 @@
-
+from users.models import User
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseBadRequest
 from django.views.generic import View
@@ -45,7 +45,7 @@ def ajax_required(f):
 class AuthorRequiredMixin(View):
     """Mixin для проверки, чем пользователь loggedin является создателем объекта
     для редактирования или обновления."""
-    
+
     def dispatch(self, request, *args, **kwargs):
         obj = self.get_object()
         if obj.user != self.request.user:
