@@ -1,5 +1,11 @@
 {% load staticfiles humanize liked_user %}
-
+<style>
+  .stream-update {
+  text-align: center;
+  border-bottom: 1px solid #eeeeee;
+  display: none;
+}
+</style>
 <div class="card mb-4 fullscreen infinite-item" posts-id="{{ post.uuid_id }}" style="">
     <div class="card-header border-bottom">
         <div class="media">
