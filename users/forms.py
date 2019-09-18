@@ -3,7 +3,6 @@ from django.http import Http404
 from django.contrib.auth.models import User
 from .models import UserProfile
 from django import forms
-from cropper_widget.widgets import CropperWidget
 
 
 class GeneralUserForm(forms.ModelForm):
@@ -34,7 +33,6 @@ class AboutUserForm(forms.ModelForm):
         )
 
 class AvatarUserForm(forms.ModelForm):
-    avatar = forms.ImageField(widget=CropperWidget(cropper_options={'aspectRatio': 1}))
 
     class Meta:
         model = UserProfile
