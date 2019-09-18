@@ -23,17 +23,18 @@
 function remove() {
   var remove = $(this);
   var pk = remove.data('id');
+  var type = remove.data('type');
 
 $.ajax({
     url: "/posts/delete/" + pk + "/",
     success: function (data) {
       $(remove).parents('.card').hide();
       $.toast({
-          heading: 'Error',
-          text: 'Report any <a href="https://github.com/kamranahmedse/jquery-toast-plugin/issues">issues</a>',
+          heading: '{{ request.user.first_name }}',
+          text: type + 'успешно удален',
           showHideTransition: 'fade',
           icon: 'error'
-      }) 
+      })
     },
     error: function(data) {
     }
