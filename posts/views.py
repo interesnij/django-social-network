@@ -94,4 +94,4 @@ class PostUserLiteCreate(TemplateView):
 
 class PostDeleteView(LoginRequiredMixin, AuthorRequiredMixin, DeleteView):
     model = Post
-    success_url = reverse_lazy("user, pk=request.user.pk")
+    success_url = '/'
