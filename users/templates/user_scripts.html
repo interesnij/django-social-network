@@ -20,7 +20,7 @@
 </script>
 
 <script>
-$('.post_remove').on('click', function(e) {
+function remove() {
   e.preventDefault();
   var remove = $(this);
   var pk = remove.data('id');
@@ -34,7 +34,7 @@ $.ajax({
     error: function(data) {
     }
 });
-});
+};
 
 $('[data-action="remove"]').click(remove);
 </script>
