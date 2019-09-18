@@ -36,5 +36,5 @@ class AvatarUserForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = (
-        'avatar',
+        'bio',
         )
