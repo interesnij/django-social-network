@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'frends',
     'chat',
     'gallery',
+    'cropper_widget',
 ]
 
 
