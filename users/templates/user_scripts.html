@@ -321,7 +321,7 @@ $(document).ready(function () {
     }
     var img = document.createElement('img');
     document.querySelector('.js-export').onclick = e => editor.export(img);
-    $('#id_avatar').add(img);
+    $('#id_avatar').value(img);
     var frm10 = $('#AVATAR-FORM');
     frm10.submit(function () {
         $.ajax({
