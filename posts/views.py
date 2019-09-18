@@ -81,6 +81,6 @@ class PostUserLiteCreate(TemplateView):
             new_post=self.form.save()
 
             if request.is_ajax() :
-                 html = render_to_string('users/profile/post.html',{'news': new_post,'request': request})
+                 html = render_to_string('profile/post.html',{'news': new_post,'request': request})
                  return HttpResponse(html)
         return super(PostUserLiteCreate,self).get(request,*args,**kwargs)
