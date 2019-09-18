@@ -31,7 +31,7 @@ $.ajax({
       $(remove).parents('.card').hide();
       $.toast({
           heading: '{{ request.user.first_name }}',
-          text: type + 'успешно удален',
+          text: type + ' успешно удален!',
           showHideTransition: 'fade',
           icon: 'error'
       })
