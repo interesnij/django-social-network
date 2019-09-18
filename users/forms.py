@@ -3,7 +3,7 @@ from django.http import Http404
 from django.contrib.auth.models import User
 from .models import UserProfile
 from django import forms
-from cropper_widget.widgetss import CropperWidget
+from cropper_widget.widgets import CropperWidget
 
 
 class GeneralUserForm(forms.ModelForm):
