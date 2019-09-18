@@ -92,7 +92,7 @@ class PostUserLiteCreate(TemplateView):
                  return HttpResponse(html)
         return super(PostUserLiteCreate,self).get(request,*args,**kwargs)
 
-class PostDeleteView(TemplateView, AuthorRequiredMixin):
+class PostDeleteView(TemplateView):
     success_url = '/'
     template_name="post_confirm_delete.html"
 
