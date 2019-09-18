@@ -320,7 +320,8 @@ $(document).ready(function () {
       uploader.listen(editor.setImageSource.bind(editor), error => {throw error;});
     }
     var img = document.createElement('img');
-    $('#id_avatar').attr('src', img);
+    $('#id_avatar').appendChild(img[0]);
+
     document.querySelector('.js-export').onclick = e => editor.export(img);
 
     var frm10 = $('#AVATAR-FORM');
