@@ -91,7 +91,7 @@
       {% csrf_token %}
       <label class="img-upload-label">
         Загрузите фото:
-        <input type="file" name="avatar" id="id_avatar" >
+        {{ form.avatar }}
       </label>
       <div style="width: 100%;height: 30em;max-height: 100%;">
           <canvas class="js-editorcanvas"></canvas>
