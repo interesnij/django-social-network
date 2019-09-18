@@ -2,6 +2,7 @@ from django.views.generic.base import TemplateView
 from posts.forms import PostHardForm, PostLiteForm, PostMediumForm
 from django.http import HttpResponse
 from users.models import User
+from django.template.loader import render_to_string
 
 
 class PostsView(TemplateView):
