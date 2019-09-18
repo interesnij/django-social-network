@@ -92,7 +92,13 @@ class PostUserLiteCreate(TemplateView):
                  return HttpResponse(html)
         return super(PostUserLiteCreate,self).get(request,*args,**kwargs)
 
-class PostDeleteView(LoginRequiredMixin, AuthorRequiredMixin, DeleteView):
-    model = Post
+class PostDeleteView(TemplateView, AuthorRequiredMixin):
     success_url = '/'
     template_name="post_confirm_delete.html"
+
+    def get(self,request,*args,**kwargs):
+        post = Post.objects.get(pk=self.kwargs["pk"])
+        if post.creator = self.reqiest.user:
+            post.delete()
+            return HttpResponse("!")
+        return super(PostDeleteView,self).get(request,*args,**kwargs)
