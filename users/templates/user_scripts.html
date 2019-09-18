@@ -121,7 +121,7 @@ $(document).ready(function () {
 
         let file = this.fileInput.files[0];
         let reader = new FileReader();
-        // Make sure the file is of the correct type
+
         if (!this.validFileType(file.type)) {
           reject(`[Uploader:listen] Invalid file type: ${file.type}`);
         } else {
@@ -130,12 +130,6 @@ $(document).ready(function () {
         }
       };
     }
-
-    /** @private */
-    validFileType(filename) {
-      let extension = filename.split('/').pop().toLowerCase();
-      return this.types.includes(extension);
-    }}
 
 
   function squareContains(square, coordinate) {
@@ -185,36 +179,6 @@ $(document).ready(function () {
       img.setAttribute('src', this.previewCanvas.toDataURL());
     }
 
-    /** @private */
-    render() {
-      this.c.clearRect(0, 0, this.imageCanvas.width, this.imageCanvas.height);
-      this.displayImage();
-      this.preview();
-      this.drawCropWindow();
-    }
-
-    /** @private */
-    clickStart(e) {
-
-      const position = { x: e.offsetX, y: e.offsetY };
-      this.lastEvent = {
-        position: position,
-        resizing: this.isResizing(position),
-        moving: this.isMoving(position) };
-
-      this.imageCanvas.addEventListener("touchmove", this.boundTouchtest);
-
-      this.imageCanvas.addEventListener('mousemove', this.boundDrag);
-      this.imageCanvas.addEventListener('mouseup', this.boundClickStop);
-    }
-
-
-    /** @private */
-    clickStop(e) {
-      this.imageCanvas.removeEventListener("mousemove", this.boundDrag);
-      this.imageCanvas.removeEventListener("mouseup", this.boundClickStop);
-    }
-
 
     isResizing(coord) {
       const size = this.crop.handleSize;
@@ -225,11 +189,6 @@ $(document).ready(function () {
 
         size: { x: size, y: size } };
       return squareContains(handle, coord);
-    }
-
-    /** @private */
-    isMoving(coord) {
-      return squareContains(this.crop, coord);
     }
 
     touchtest(e) {
@@ -249,81 +208,7 @@ $(document).ready(function () {
       this.render();
     }
 
-    /** @private */
-    drag(e) {
-      const position = {
-        x: e.offsetX,
-        y: e.offsetY };
 
-      const dx = position.x - this.lastEvent.position.x;
-      const dy = position.y - this.lastEvent.position.y;
-
-      if (this.lastEvent.resizing) {
-        this.resize(dx, dy);
-      } else if (this.lastEvent.moving) {
-        this.move(dx, dy);
-      }
-
-      this.lastEvent.position = position;
-      this.render();
-    }
-
-    /** @private */
-    resize(dx, dy) {
-      let handle = {
-        x: this.crop.pos.x + this.crop.size.x,
-        y: this.crop.pos.y + this.crop.size.y };
-
-      const amount = Math.abs(dx) > Math.abs(dy) ? dx : dy;
-      if (this.inBounds(handle.x + amount, handle.y + amount)) {
-        this.crop.size.x += amount;
-        this.crop.size.y += amount;
-      }
-    }
-
-    /** @private */
-    move(dx, dy) {
-      const tl = {
-        x: this.crop.pos.x,
-        y: this.crop.pos.y };
-
-      const br = {
-        x: this.crop.pos.x + this.crop.size.x,
-        y: this.crop.pos.y + this.crop.size.y };
-
-      if (this.inBounds(tl.x + dx, tl.y + dy) &&
-      this.inBounds(br.x + dx, tl.y + dy) &&
-      this.inBounds(br.x + dx, br.y + dy) &&
-      this.inBounds(tl.x + dx, br.y + dy)) {
-        this.crop.pos.x += dx;
-        this.crop.pos.y += dy;
-      }
-    }
-
-    /** @private */
-    displayImage() {
-      const ratio = this.limit / Math.max(this.image.width, this.image.height);
-      this.image.width *= ratio;
-      this.image.height *= ratio;
-      this.imageCanvas.width = this.image.width;
-      this.imageCanvas.height = this.image.height;
-      this.c.drawImage(this.image, 0, 0, this.image.width, this.image.height);
-    }
-
-    /** @private */
-    drawCropWindow() {
-      const pos = this.crop.pos;
-      const size = this.crop.size;
-      const radius = this.crop.handleSize / 2;
-      this.c.strokeStyle = 'blue';
-      this.c.fillStyle = 'blue';
-      this.c.strokeRect(pos.x, pos.y, size.x, size.y);
-      const path = new Path2D();
-      path.arc(pos.x + size.x, pos.y + size.y, radius, 0, Math.PI * 2, true);
-      this.c.fill(path);
-    }
-
-    /** @private */
     preview() {
       const pos = this.crop.pos;
       const size = this.crop.size;
@@ -340,23 +225,11 @@ $(document).ready(function () {
       this.previewCanvas.width, this.previewCanvas.height);
     }
 
-    /** @private */
-    inBounds(x, y) {
-      return squareContains({
-        pos: { x: 0, y: 0 },
-        size: {
-          x: this.imageCanvas.width,
-          y: this.imageCanvas.height } },
-
-      { x: x, y: y });
-    }}
-
-
   function exceptionHandler(message) {
     console.log(message);
   }
 
-  var dimensions = { width: 300, height: 300 };
+  var dimensions = { width: 250, height: 250 };
 
   try {
     var uploader = new Uploader({
@@ -388,7 +261,6 @@ $(document).ready(function () {
   $('.right').click(function (event) {
 
   });
-
 
   function myFunction(event) {
     var x = event.touches[0].clientX;
