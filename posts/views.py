@@ -3,6 +3,11 @@ from posts.forms import PostHardForm, PostLiteForm, PostMediumForm
 from django.http import HttpResponse
 from users.models import User
 from django.template.loader import render_to_string
+from django.contrib.auth.mixins import LoginRequiredMixin
+from posts.helpers import ajax_required, AuthorRequiredMixin
+from posts.models import Post
+from django.views.generic import DeleteView
+
 
 
 class PostsView(TemplateView):
@@ -31,7 +36,8 @@ class PostUserHardCreate(TemplateView):
             new_post=self.form.save()
 
             if request.is_ajax() :
-                return HttpResponse ('!')
+                 html = render_to_string('profile/post.html',{'object': new_post,'request': request})
+                 return HttpResponse(html)
         return super(PostUserHardCreate,self).get(request,*args,**kwargs)
 
 class PostUserMediumCreate(TemplateView):
@@ -56,7 +62,8 @@ class PostUserMediumCreate(TemplateView):
             new_post=self.form.save()
 
             if request.is_ajax() :
-                return HttpResponse ('!')
+                 html = render_to_string('profile/post.html',{'object': new_post,'request': request})
+                 return HttpResponse(html)
         return super(PostUserMediumCreate,self).get(request,*args,**kwargs)
 
 class PostUserLiteCreate(TemplateView):
@@ -81,6 +88,10 @@ class PostUserLiteCreate(TemplateView):
             new_post=self.form.save()
 
             if request.is_ajax() :
-                 html = render_to_string('profile/post.html',{'object': new_post,'request': request}) 
+                 html = render_to_string('profile/post.html',{'object': new_post,'request': request})
                  return HttpResponse(html)
         return super(PostUserLiteCreate,self).get(request,*args,**kwargs)
+
+class PostDeleteView(LoginRequiredMixin, AuthorRequiredMixin, DeleteView):
+    model = Post
+    success_url = reverse_lazy("user, pk=request.user.pk")

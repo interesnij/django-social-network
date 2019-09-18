@@ -1,4 +1,4 @@
-from posts.views import PostsView, PostUserHardCreate, PostUserMediumCreate, PostUserLiteCreate
+from posts.views import PostsView, PostUserHardCreate, PostUserMediumCreate, PostUserLiteCreate, PostDeleteView
 from django.conf.urls import url
 from main.models import LikeDislike
 from main.views import VotesView
@@ -27,5 +27,6 @@ urlpatterns = [
                                             VotesView.as_view(model=PostComment, vote_type=LikeDislike.DISLIKE)
                                         ),
                                         name='post_comment_dislike'),
+    url(r'^delete/(?P<pk>[-\w]+)/$', PostDeleteView.as_view(), name='delete_post'),
 
 ]
