@@ -28,6 +28,12 @@ $.ajax({
     url: "/posts/delete/" + pk + "/",
     success: function (data) {
       $(remove).parents('.card').hide();
+      $.toast({
+          heading: 'Error',
+          text: 'Report any <a href="https://github.com/kamranahmedse/jquery-toast-plugin/issues">issues</a>',
+          showHideTransition: 'fade',
+          icon: 'error'
+      }) 
     },
     error: function(data) {
     }
