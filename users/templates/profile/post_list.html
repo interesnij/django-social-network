@@ -22,11 +22,13 @@
 
 {% if posts %}
 <div class="infinite-container">
-
+  <div class="stream-update">
+    <a href=""><span class="new-posts"></span> Загрузить новые посты</a>
+  </div>
   <span class="stream">
 
     {% for object in posts %}
-      {% include 'profile/post.html' %}
+      {% include 'profile/post.html' with post=post  %}
 
     {% endfor %}
 
