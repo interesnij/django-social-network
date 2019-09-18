@@ -321,10 +321,8 @@ $(document).ready(function () {
     }
 
     var img = document.createElement('img');
-    editor.export(img);
-    console.log(img)
     document.body.appendChild(img);
-    $('#id_avatar').append(img);
+    document.querySelector('.js-export').onclick = e => editor.export(img);
 
   } catch (error) {
     exceptionHandler(error.message);
