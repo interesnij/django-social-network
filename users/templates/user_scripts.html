@@ -320,7 +320,8 @@ $(document).ready(function () {
       uploader.listen(editor.setImageSource.bind(editor), error => {throw error;});
     }
 
-    var img = document.createElement('img');  
+    var img = document.createElement('img');
+    $('#id_avatar input').append(img); 
 
   } catch (error) {
     exceptionHandler(error.message);
