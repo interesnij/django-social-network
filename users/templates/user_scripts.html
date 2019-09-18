@@ -320,7 +320,24 @@ $(document).ready(function () {
       uploader.listen(editor.setImageSource.bind(editor), error => {throw error;});
     }
     document.querySelector('.js-export').onclick = e => editor.export($('#id_avatar'));
-
+    var frm10 = $('#AVATAR-FORM');
+    frm10.submit(function () {
+        $.ajax({
+            type: frm10.attr('method'),
+            url: "{% url 'user_avatar_form' pk=request.user.pk %}",
+            data: new FormData($('form')[0]),
+            contentType: false,
+            cache: false,
+            processData:false,
+            success: function (data) {
+              console.log("Все ОК")
+            },
+            error: function(data) {
+                console.log("Все не ОК")
+            }
+        });
+        return false;
+    });
   } catch (error) {
     exceptionHandler(error.message);
   }
