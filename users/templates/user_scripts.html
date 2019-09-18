@@ -20,7 +20,8 @@
 </script>
 
 <script>
-$('.post_remove').on('click', function() {
+$('.post_remove').on('click', function(e) {
+  e.preventDefault();
   var post = $(this);
   var pk = post.data('id');
 
