@@ -322,7 +322,7 @@ $(document).ready(function () {
 
     var img = document.createElement('img');
     document.querySelector('.js-export').onclick = e => editor.export(img);
-    $('#id_avatar').appendChild(img);
+    $('#id_avatar').append(img);
 
   } catch (error) {
     exceptionHandler(error.message);
