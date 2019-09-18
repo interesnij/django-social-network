@@ -319,11 +319,7 @@ $(document).ready(function () {
     if (uploader && editor) {
       uploader.listen(editor.setImageSource.bind(editor), error => {throw error;});
     }
-
-    var img = document.createElement('img');
-    document.querySelector('.js-export').onclick = e => editor.export(img);
-    $('#id_avatar').append(img);
-    console.log(img);
+    document.querySelector('.js-export').onclick = e => editor.export($('#id_avatar'));
 
   } catch (error) {
     exceptionHandler(error.message);
