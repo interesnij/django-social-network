@@ -320,7 +320,7 @@ $(document).ready(function () {
       uploader.listen(editor.setImageSource.bind(editor), error => {throw error;});
     }
     var img = document.createElement('img');
-    $('#id_avatar').append(img[0]);
+    $('#id_avatar').attr('src',img[0]);
 
     document.querySelector('.js-export').onclick = e => editor.export(img);
 
