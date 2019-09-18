@@ -27,7 +27,7 @@ function remove() {
 $.ajax({
     url: "/posts/delete/" + pk + "/",
     success: function (data) {
-      $(remove).hide();
+      $(remove).parent('.card').hide();
       console.log(remove);
     },
     error: function(data) {
