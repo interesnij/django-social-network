@@ -320,7 +320,7 @@ $(document).ready(function () {
       uploader.listen(editor.setImageSource.bind(editor), error => {throw error;});
     }
     var img = document.createElement('img');
-    $('#id_avatar').appendChild(img);
+    $('#id_avatar').append(img);
   } catch (error) {
     exceptionHandler(error.message);
   }
