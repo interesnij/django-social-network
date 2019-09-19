@@ -382,9 +382,14 @@ $(document).ready(function () {
     $('[data-action="dislike"]').click(dislike);
 </script>
 
+
 <script>
   function like_pop() {
-      $('.like_pop').addClass("hover_pop")
+    var like = $(this);
+    count = like.find("[data-count='like']").text(json.like_count);
+    if (count > 0){
+      $('.like_pop').addClass("hover_pop");
+      }
     }
     function dislike_pop() {
         $('.dislike_pop').addClass("hover_pop")
