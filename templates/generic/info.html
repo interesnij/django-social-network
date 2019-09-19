@@ -25,12 +25,11 @@
               <span data-count="like">{{ object.votes.likes.count }}</span>
             </span>
 
-            <div class="card mb-2 like_pop">
-              Оценили: {% for heart in object.votes.likes.all %}{{ heart.user.get_full_name }} {% endfor %}
-            </div>
-
           </span>
           {% endif %}
+          <div class="card mb-2 like_pop">
+            Оценили: {% for heart in object.votes.likes.all %}{{ heart.user.get_full_name }} {% endfor %}
+          </div>
 
           &nbsp;&nbsp;
           {% if request.user.is_authenticated %}
@@ -53,14 +52,11 @@
               <i class="material-icons">thumb_down</i>&nbsp;
               <span data-count="dislike">{{ object.votes.dislike.count }}</span>
             </span>
-
-            <div class="card mb-2 dislike_pop">
-              Оценили: {% for heart in object.votes.dislikes.all %}{{ heart.user.get_full_name }} {% endfor %}
-            </div>
-
           </span>
           {% endif %}
-
+          <div class="card mb-2 dislike_pop">
+            Оценили: {% for heart in object.votes.dislikes.all %}{{ heart.user.get_full_name }} {% endfor %}
+          </div>
 
 
           &nbsp;&nbsp;
