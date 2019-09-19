@@ -24,9 +24,12 @@
             <span data-count="like">{{ object.votes.likes.count }}</span>
           </span>
           {% endif %}
+
+          {% if object.votes.likes.all %}
           <div class="card mb-2 like_pop">
             Оценили: {% for heart in object.votes.likes.all %}{{ heart.user.get_full_name }} {% endfor %}
           </div>
+          {% endif %}
 
           &nbsp;&nbsp;
           {% if request.user.is_authenticated %}
@@ -50,9 +53,11 @@
           </span>
           {% endif %}
 
+          {% if object.votes.dislikes.all %}
           <div class="card mb-2 dislike_pop">
             Осудили: {% for sheet in object.votes.dislikes.all %}{{ sheet.user.get_full_name }} {% endfor %}
           </div>
+          {% endif %}
 
           &nbsp;&nbsp;
           <span class="content-color-secondary" style="font-size:15px;cursor:pointer">

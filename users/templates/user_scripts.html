@@ -20,31 +20,6 @@
 </script>
 
 <script>
-function remove() {
-  var remove = $(this);
-  var pk = remove.data('id');
-  var type = remove.data('type');
-
-$.ajax({
-    url: "/posts/delete/" + pk + "/",
-    success: function (data) {
-      $(remove).parents('.card').hide();
-      $.toast({
-          heading: '{{ request.user.first_name }}',
-          text: type + ' успешно удален!',
-          showHideTransition: 'fade',
-          icon: 'error'
-      })
-    },
-    error: function(data) {
-    }
-});
-};
-
-$('[data-action="remove"]').click(remove);
-</script>
-
-<script>
 function avatar_change_popap(avatar_change) {
 	if ($(".wrapper").length == 0){
 		$(avatar_change).wrapInner("<div class='wrapper'></div>");
@@ -381,20 +356,40 @@ $(document).ready(function () {
     $('[data-action="like"]').click(like);
     $('[data-action="dislike"]').click(dislike);
 </script>
+<script>
+function remove() {
+  var remove = $(this);
+  var pk = remove.data('id');
+  var type = remove.data('type');
 
+$.ajax({
+    url: "/posts/delete/" + pk + "/",
+    success: function (data) {
+      $(remove).parents('.card').hide();
+      $.toast({
+          heading: '{{ request.user.first_name }}',
+          text: type + ' успешно удален!',
+          showHideTransition: 'fade',
+          icon: 'error'
+      })
+    },
+    error: function(data) {
+    }
+});
+};
+
+$('[data-action="remove"]').click(remove);
+</script>
 
 <script>
-  function like_pop(json) {
-    var like = $(this);
-    count = like.find("[data-count='like']").text(json.like_count);
-    console.log(count);
-    if (count > 0){
+  function like_pop() {
       $('.like_pop').addClass("hover_pop");
       }
-    }
+  $('[data-action="like"]').hover(like_pop);
+</script>
+<script>
     function dislike_pop() {
         $('.dislike_pop').addClass("hover_pop")
       }
-    $('[data-action="like"]').hover(like_pop);
     $('[data-action="dislike"]').hover(dislike_pop);
 </script>
