@@ -1,5 +1,5 @@
 {% load liked_user %}
-
+ {% for object.votes.likes.all %}{{ object.get_full_name }} {% endfor %}
 <div class="card-footer border-top py-2">
 
   <div class="row" style="color: rgba(255, 255, 255, 0.65);">
