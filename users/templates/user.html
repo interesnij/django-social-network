@@ -28,6 +28,14 @@ display: none;
   position: absolute;
   transform: translate(0, 10px);
 }
+.like_pop:before, .dislike_pop:before{
+  position: absolute;
+  z-index: -1;
+  content: "";
+  right: calc(50% - 10px);
+  top: 80px;
+}
+
 .like_pop:hover, .dislike_pop:hover{
   z-index: 10;
   opacity: 1;
