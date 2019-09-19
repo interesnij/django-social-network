@@ -384,7 +384,7 @@ $(document).ready(function () {
 
 
 <script>
-  function like_pop() {
+  function like_pop(json) {
     var like = $(this);
     count = like.find("[data-count='like']").text(json.like_count);
     if (count > 0){
