@@ -28,9 +28,9 @@
                 {% else %}
                   <img src="{% static 'images/user.png' %}" alt="image" style="border-radius: 50px;width:50px;">
                 {% endif %}
-                {{ heart.user.first_name }}
-              </figure>
 
+              </figure>
+              {{ heart.user.first_name }}
             </a>
             {% endfor %}
           </div>
