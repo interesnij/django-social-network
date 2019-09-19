@@ -61,8 +61,8 @@ $('[data-action="remove"]').click(remove);
             success: function(json) {
                 like.find("[data-count='like']").text(json.like_count);
                 dislike.find("[data-count='dislike']").text(json.dislike_count);
-                $(".like").addClass("text-success");
-                $(".dislike").removeClass("text-danger");
+                $(like).addClass("text-success");
+                $(dislike).removeClass("text-danger");
             }
         });
         return false;
