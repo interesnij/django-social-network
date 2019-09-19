@@ -15,8 +15,10 @@
                 data-id="{{ object.id }}"
                 data-action="like"
                 data-type="posts"
+                data-container="body"
                 data-toggle="popover"
-                data-content="А здесь потрясающий контент. Это очень интересно. Не так ли?">
+                data-placement="top"
+                data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">
             <i class="material-icons">thumb_up</i>
             <span data-count="like">{{ object.votes.likes.count }}</span>
           </span>
