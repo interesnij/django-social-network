@@ -387,6 +387,7 @@ $(document).ready(function () {
   function like_pop(json) {
     var like = $(this);
     count = like.find("[data-count='like']").text(json.like_count);
+    console.log(count);
     if (count > 0){
       $('.like_pop').addClass("hover_pop");
       }
