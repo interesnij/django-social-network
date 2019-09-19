@@ -15,7 +15,8 @@
                 data-id="{{ object.id }}"
                 data-action="like"
                 data-type="posts"
-                data-tooltip="Мне нравится">
+                data-toggle="popover"
+                data-content="А здесь потрясающий контент. Это очень интересно. Не так ли?">
             <i class="material-icons">thumb_up</i>
             <span data-count="like">{{ object.votes.likes.count }}</span>
           </span>
