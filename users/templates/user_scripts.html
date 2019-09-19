@@ -43,55 +43,6 @@ $.ajax({
 
 $('[data-action="remove"]').click(remove);
 </script>
-{% endif %}
-
-<script>
-    function like() {
-        var like = $(this);
-        var type = like.data('type');
-        var pk = like.data('id');
-        var action  = like.data('action');
-        var dislike = like.next();
-        $.ajax({
-            url: "/posts/like/" + pk + "/",
-            type: 'POST',
-            data: {
-                'obj': pk
-            },
-            success: function(json) {
-                like.find("[data-count='like']").text(json.like_count);
-                dislike.find("[data-count='dislike']").text(json.dislike_count);
-                $(like).addClass("text-success");
-                $(dislike).removeClass("text-danger");
-            }
-        });
-        return false;
-    }
-    function dislike() {
-        var dislike = $(this);
-        var type = dislike.data('type');
-        var pk = dislike.data('id');
-        var action = dislike.data('action');
-        var like = dislike.prev();
-        $.ajax({
-            url: "/posts/dislike/" + pk + "/",
-            type: 'POST',
-            data: {
-                'obj': pk
-            },
-            success: function(json) {
-                dislike.find("[data-count='dislike']").text(json.dislike_count);
-                like.find("[data-count='like']").text(json.like_count);
-                $(dislike).addClass("text-danger");
-                $(like).removeClass("text-success");
-            }
-        });
-        return false;
-    }
-    // Подключение обработчиков
-    $('[data-action="like"]').click(like);
-    $('[data-action="dislike"]').click(dislike);
-</script>
 
 <script>
 function avatar_change_popap(avatar_change) {
@@ -380,6 +331,58 @@ $(document).ready(function () {
     document.getElementById("demo").innerHTML = x + ", " + y;
   }
 </script>
+{% endif %}
+
+
+{% if request.user.is_authenticated %}
+<script>
+    function like() {
+        var like = $(this);
+        var type = like.data('type');
+        var pk = like.data('id');
+        var action  = like.data('action');
+        var dislike = like.next();
+        $.ajax({
+            url: "/posts/like/" + pk + "/",
+            type: 'POST',
+            data: {
+                'obj': pk
+            },
+            success: function(json) {
+                like.find("[data-count='like']").text(json.like_count);
+                dislike.find("[data-count='dislike']").text(json.dislike_count);
+                $(like).addClass("text-success");
+                $(dislike).removeClass("text-danger");
+            }
+        });
+        return false;
+    }
+    function dislike() {
+        var dislike = $(this);
+        var type = dislike.data('type');
+        var pk = dislike.data('id');
+        var action = dislike.data('action');
+        var like = dislike.prev();
+        $.ajax({
+            url: "/posts/dislike/" + pk + "/",
+            type: 'POST',
+            data: {
+                'obj': pk
+            },
+            success: function(json) {
+                dislike.find("[data-count='dislike']").text(json.dislike_count);
+                like.find("[data-count='like']").text(json.like_count);
+                $(dislike).addClass("text-danger");
+                $(like).removeClass("text-success");
+            }
+        });
+        return false;
+    }
+    // Подключение обработчиков
+    $('[data-action="like"]').click(like);
+    $('[data-action="dislike"]').click(dislike);
+</script>
 
 
 <script src="/static/scripts/jquery.toast.min.js" type="text/javascript"></script>
+{% endif %}
