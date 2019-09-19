@@ -333,8 +333,7 @@ $(document).ready(function () {
 </script>
 {% endif %}
 
-
-{% if request.user.is_authenticated %}
+<script src="/static/scripts/jquery.toast.min.js" type="text/javascript"></script>
 <script>
     function like() {
         var like = $(this);
@@ -382,10 +381,6 @@ $(document).ready(function () {
     $('[data-action="like"]').click(like);
     $('[data-action="dislike"]').click(dislike);
 </script>
-
-
-<script src="/static/scripts/jquery.toast.min.js" type="text/javascript"></script>
-{% endif %}
 
 <script>
   function like_pop() {

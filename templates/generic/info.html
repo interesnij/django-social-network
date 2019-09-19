@@ -19,8 +19,7 @@
           </span>
           {% else %}
           <span class="content-color-secondary"
-                style="font-size:15px;cursor:pointer"
-                data-tooltip="Гости не могут ставить лайки">
+                style="font-size:15px;cursor:pointer">
             <i class="material-icons">thumb_up</i>
             <span data-count="like">{{ object.votes.likes.count }}</span>
           </span>
@@ -45,8 +44,7 @@
           </span>
           {% else %}
           <span class="content-color-secondary"
-                style="font-size:15px;cursor:pointer"
-                data-tooltip="Гости не могут ставить дизлайки">
+                style="font-size:15px;cursor:pointer">
             <i class="material-icons">thumb_down</i>&nbsp;
             <span data-count="dislike">{{ object.votes.dislike.count }}</span>
           </span>
