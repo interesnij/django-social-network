@@ -30,14 +30,16 @@ display: none;
 }
 
 
-.like_box:hover .like_pop{
+.like_box:hover .like_pop,
 .dislike_box:hover .dislike_pop{
   z-index: 10;
   opacity: 1;
   visibility: visible;
   background: white;
   color: black;
-}
+  transform: translate(0, -20px);
+  transition: all 0.5s cubic-bezier(0.75, -0.02, 0.2, 0.97);
+
 }
 </style>
 
