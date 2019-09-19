@@ -100,5 +100,6 @@ class PostDeleteView(TemplateView):
         post = Post.objects.get(pk=self.kwargs["pk"])
         if post.creator == self.request.user:
             post.is_deleted=True
+            post.save()
             return HttpResponse("!")
         return super(PostDeleteView,self).get(request,*args,**kwargs)
