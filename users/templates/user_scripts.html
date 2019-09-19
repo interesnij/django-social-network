@@ -389,4 +389,6 @@ $(document).ready(function () {
     function dislike_pop() {
         $('.dislike_pop').addClass("hover_pop")
       }
+    $('[data-action="like"]').hover(like_pop);
+    $('[data-action="dislike"]').hover(dislike_pop);
 </script>
