@@ -21,11 +21,11 @@
           <div class="like_pop">
             Оценили: <br>
             {% for heart in object.votes.likes.all %}
-            <figure style="width:50px;">
+            <figure>
               {% if object.target_connection.target_user.profile.avatar %}
-                <img src="{{ object.target_connection.target_user.profile.avatar.url }}" style="border-radius: 50px;" alt="image">
+                <img src="{{ object.target_connection.target_user.profile.avatar.url }}" style="border-radius: 50px;width:50px;" alt="image">
               {% else %}
-                <img src="{% static 'images/user.png' %}" alt="image" style="border-radius: 50px;">
+                <img src="{% static 'images/user.png' %}" alt="image" style="border-radius: 50px;width:50px;">
               {% endif %}
             </figure>
             {{ heart.user.first_name }}
