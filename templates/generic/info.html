@@ -21,19 +21,20 @@
           <div class="like_pop">
             <span>Лайков: {{ object.votes.likes.count }}</span>
             <br><br>
-            {% for heart in object.votes.likes.all %}
-            <a href="{% url 'user' pk=heart.user.pk %}">
-              <figure style="margin: 0;">
-                {% if heart.user.profile.avatar %}
-                  <img src="{{ heart.user.profile.avatar.url }}" style="border-radius: 50px;width:50px;" alt="image">
-                {% else %}
-                  <img src="{% static 'images/user.png' %}" alt="image" style="border-radius: 50px;width:50px;">
-                {% endif %}
-
-              </figure>
-              {{ heart.user.first_name }}
-            </a>
-            {% endfor %}
+            <span>
+              {% for heart in object.votes.likes.all %}
+              <a href="{% url 'user' pk=heart.user.pk %}">
+                <figure style="margin: 0;">
+                  {% if heart.user.profile.avatar %}
+                    <img src="{{ heart.user.profile.avatar.url }}" style="border-radius: 50px;width:50px;" alt="image">
+                    {% else %}
+                    <img src="{% static 'images/user.png' %}" alt="image" style="border-radius: 50px;width:50px;">
+                    {% endif %}
+                </figure>
+                {{ heart.user.first_name }}
+              </a>
+              {% endfor %}
+            </span>
           </div>
           {% endif %}
         </span>
