@@ -1,6 +1,5 @@
 {% load liked_user %}
- Оценили: {% for heart in object.votes.likes.all %}{{ heart.user.get_full_name }} {% endfor %}<br>
- Осудили: {% for sheet in object.votes.dislikes.all %}{{ sheet.user.get_full_name }} {% endfor %}
+
 <div class="card-footer border-top py-2">
 
   <div class="row" style="color: rgba(255, 255, 255, 0.65);">
@@ -14,12 +13,7 @@
                 id="like"
                 data-id="{{ object.id }}"
                 data-action="like"
-                data-type="posts"
-                data-container="body"
-                data-toggle="popover"
-                data-placement="top"
-                data-trigger="hover"
-                data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">
+                data-type="posts">
             <i class="material-icons">thumb_up</i>
             <span data-count="like">{{ object.votes.likes.count }}</span>
           </span>
@@ -31,6 +25,9 @@
             <span data-count="like">{{ object.votes.likes.count }}</span>
           </span>
           {% endif %}
+          <div class="card mb-2 like_pop">
+            Оценили: {% for heart in object.votes.likes.all %}{{ heart.user.get_full_name }} {% endfor %}
+          </div>
 
           &nbsp;&nbsp;
           {% if request.user.is_authenticated %}
@@ -56,6 +53,10 @@
           </span>
           {% endif %}
 
+          <div class="card mb-2 dislike_pop">
+            Осудили: {% for sheet in object.votes.dislikes.all %}{{ sheet.user.get_full_name }} {% endfor %}
+          </div>
+
           &nbsp;&nbsp;
           <span class="content-color-secondary" style="font-size:15px;cursor:pointer">
             <i class="material-icons">chat</i>&nbsp;0
@@ -71,9 +72,3 @@
       </span>
   </div>
 </div>
-
-<script>
-$(document).ready(function(){
-    $('[data-toggle="popover"]').popover();
-});
-</script>
