@@ -5,7 +5,7 @@
   <div class="row" style="color: rgba(255, 255, 255, 0.65);">
       <div class="col">
           {% if request.user.is_authenticated %}
-          <span class="like_pop">
+          <span class="like_box">
             <span class="like content-color-secondary
                        {% if object.votes.likes.all|user_in:user %}
                        text-success
@@ -25,7 +25,7 @@
               <span data-count="like">{{ object.votes.likes.count }}</span>
             </span>
 
-            <div class="card mb-2">
+            <div class="card mb-2 like_pop">
               Оценили: {% for heart in object.votes.likes.all %}{{ heart.user.get_full_name }} {% endfor %}
             </div>
 
@@ -34,7 +34,7 @@
 
           &nbsp;&nbsp;
           {% if request.user.is_authenticated %}
-          <span class="dislike_pop">
+          <span class="dislike_box">
             <span class="dislike content-color-secondary
                         {% if object.votes.dislikes.all|user_in:user %}
                         text-danger
@@ -54,7 +54,7 @@
               <span data-count="dislike">{{ object.votes.dislike.count }}</span>
             </span>
 
-            <div class="card mb-2">
+            <div class="card mb-2 dislike_pop">
               Оценили: {% for heart in object.votes.dislikes.all %}{{ heart.user.get_full_name }} {% endfor %}
             </div>
 
