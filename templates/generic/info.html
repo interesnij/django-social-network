@@ -19,7 +19,8 @@
             </span>
           {% if object.votes.likes.all %}
           <div class="like_pop">
-            <span>Лайков: {{ object.votes.likes.count }}</span><br>
+            <span>Лайков: {{ object.votes.likes.count }}</span>
+            <br><br>
             {% for heart in object.votes.likes.all %}
             <a href="{% url 'user' pk=heart.user.pk %}">
               <figure style="margin: 0;">
@@ -53,7 +54,7 @@
             </span>
           {% if object.votes.dislikes.all %}
           <div class="dislike_pop">
-            <span>Дизлайков: {{ object.votes.dislikes.count }}</span><br>
+            <span>Дизлайков: {{ object.votes.dislikes.count }}</span><br><br>
             {% for sheet in object.votes.dislikes.all %}
             <a href="{% url 'user' pk=sheet.user.pk %}">
               <figure style="margin: 0;">
