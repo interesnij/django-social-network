@@ -5,7 +5,8 @@
   <div class="row" style="color: rgba(255, 255, 255, 0.65);">
       <div class="col">
           {% if request.user.is_authenticated %}
-          <span class="like content-color-secondary
+          <span class="">
+            <span class="like content-color-secondary
                        {% if object.votes.likes.all|user_in:user %}
                        text-success
                        {% endif %}"
@@ -14,26 +15,27 @@
                 data-id="{{ object.id }}"
                 data-action="like"
                 data-type="posts">
-            <i class="material-icons">thumb_up</i>
-            <span data-count="like">{{ object.votes.likes.count }}</span>
-          </span>
+              <i class="material-icons">thumb_up</i>
+              <span data-count="like">{{ object.votes.likes.count }}</span>
+            </span>
           {% else %}
-          <span class="content-color-secondary"
+            <span class="content-color-secondary"
                 style="font-size:15px;cursor:pointer">
-            <i class="material-icons">thumb_up</i>
-            <span data-count="like">{{ object.votes.likes.count }}</span>
+              <i class="material-icons">thumb_up</i>
+              <span data-count="like">{{ object.votes.likes.count }}</span>
+            </span>
+            {% if object.votes.likes.all %}
+            <div class="card mb-2 like_pop">
+              Оценили: {% for heart in object.votes.likes.all %}{{ heart.user.get_full_name }} {% endfor %}
+            </div>
+            {% endif %}
           </span>
-          {% endif %}
-
-          {% if object.votes.likes.all %}
-          <div class="card mb-2 like_pop">
-            Оценили: {% for heart in object.votes.likes.all %}{{ heart.user.get_full_name }} {% endfor %}
-          </div>
           {% endif %}
 
           &nbsp;&nbsp;
           {% if request.user.is_authenticated %}
-          <span class="dislike content-color-secondary
+          <span class="">
+            <span class="dislike content-color-secondary
                         {% if object.votes.dislikes.all|user_in:user %}
                         text-danger
                         {% endif %}"
@@ -42,22 +44,24 @@
                 data-id="{{ object.id }}"
                 data-action="dislike"
                 data-type="posts">
-            <i class="material-icons">thumb_down</i>&nbsp;
-            <span data-count="dislike">{{ object.votes.dislikes.count }}</span>
-          </span>
+              <i class="material-icons">thumb_down</i>&nbsp;
+              <span data-count="dislike">{{ object.votes.dislikes.count }}</span>
+            </span>
           {% else %}
-          <span class="content-color-secondary"
+            <span class="content-color-secondary"
                 style="font-size:15px;cursor:pointer">
-            <i class="material-icons">thumb_down</i>&nbsp;
-            <span data-count="dislike">{{ object.votes.dislike.count }}</span>
+              <i class="material-icons">thumb_down</i>&nbsp;
+              <span data-count="dislike">{{ object.votes.dislike.count }}</span>
+            </span>
+            {% if object.votes.dislikes.all %}
+            <div class="card mb-2 dislike_pop">
+              Оценили: {% for heart in object.votes.dislikes.all %}{{ heart.user.get_full_name }} {% endfor %}
+            </div>
+            {% endif %}
           </span>
           {% endif %}
 
-          {% if object.votes.dislikes.all %}
-          <div class="card mb-2 dislike_pop">
-            Осудили: {% for sheet in object.votes.dislikes.all %}{{ sheet.user.get_full_name }} {% endfor %}
-          </div>
-          {% endif %}
+
 
           &nbsp;&nbsp;
           <span class="content-color-secondary" style="font-size:15px;cursor:pointer">
