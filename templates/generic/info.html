@@ -56,7 +56,7 @@
           {% endif %}
           {% if object.votes.dislikes.all %}
           <div class="dislike_pop">
-            Оценили: {% for heart in object.votes.dislikes.all %}{{ heart.user.get_full_name }} {% endfor %}
+            Не оценили: {% for heart in object.votes.dislikes.all %}{{ heart.user.get_full_name }} {% endfor %}
           </div>
           {% endif %}
         </span>
