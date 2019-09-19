@@ -41,7 +41,6 @@
               <i class="material-icons">thumb_down</i>&nbsp;
               <span data-count="dislike">{{ object.votes.dislikes.count }}</span>
             </span>
-          {% endif %}
           {% if object.votes.dislikes.all %}
           <div class="dislike_pop">
             Не оценили: {% for heart in object.votes.dislikes.all %}{{ heart.user.get_full_name }} {% endfor %}
