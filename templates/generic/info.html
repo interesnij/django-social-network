@@ -30,7 +30,7 @@
           &nbsp;&nbsp;
           <span class="dislike_box">
             <span class="dislike content-color-secondary
-                        {% if object.votes.dislikes.all|user_in:user %}
+                        {% if object.votes.dislikes.all|user_in:request.user %}
                         text-danger
                         {% endif %}"
                 style="font-size:15px;cursor:pointer"
