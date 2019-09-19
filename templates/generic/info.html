@@ -1,5 +1,5 @@
 {% load liked_user %}
- {% for object in votes.likes.all %}{{ object }} {% endfor %}
+ {% for heart in object.votes.likes.all %}{{ heart }} {% endfor %}
 <div class="card-footer border-top py-2">
 
   <div class="row" style="color: rgba(255, 255, 255, 0.65);">
