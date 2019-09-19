@@ -24,11 +24,11 @@
               <i class="material-icons">thumb_up</i>
               <span data-count="like">{{ object.votes.likes.count }}</span>
             </span>
-            {% if object.votes.likes %}
+            
             <div class="card mb-2 like_pop">
               Оценили: {% for heart in object.votes.likes.all %}{{ heart.user.get_full_name }} {% endfor %}
             </div>
-            {% endif %}
+
           </span>
           {% endif %}
 
@@ -53,11 +53,11 @@
               <i class="material-icons">thumb_down</i>&nbsp;
               <span data-count="dislike">{{ object.votes.dislike.count }}</span>
             </span>
-            {% if object.votes.dislikes %}
+
             <div class="card mb-2 dislike_pop">
               Оценили: {% for heart in object.votes.dislikes.all %}{{ heart.user.get_full_name }} {% endfor %}
             </div>
-            {% endif %}
+
           </span>
           {% endif %}
 
