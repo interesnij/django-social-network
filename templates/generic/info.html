@@ -53,8 +53,20 @@
             </span>
           {% if object.votes.dislikes.all %}
           <div class="dislike_pop">
-            Не оценили: {% for heart in object.votes.dislikes.all %}{{ heart.user.get_full_name }} {% endfor %}
-            <br><br>
+            <span>Дизлайков: {{ object.votes.dislikes.count }}</span><br>
+            {% for sheet in object.votes.dislikes.all %}
+            <a href="{% url 'user' pk=sheet.user.pk %}">
+              <figure style="margin: 0;">
+                {% if sheet.user.profile.avatar %}
+                  <img src="{{ sheet.user.profile.avatar.url }}" style="border-radius: 50px;width:50px;" alt="image">
+                {% else %}
+                  <img src="{% static 'images/user.png' %}" alt="image" style="border-radius: 50px;width:50px;">
+                {% endif %}
+
+              </figure>
+              {{ sheet.user.first_name }}
+            </a>
+            {% endfor %}
           </div>
           {% endif %}
         </span>
