@@ -18,6 +18,7 @@
                 data-container="body"
                 data-toggle="popover"
                 data-placement="top"
+                data-trigger="hover"
                 data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">
             <i class="material-icons">thumb_up</i>
             <span data-count="like">{{ object.votes.likes.count }}</span>
@@ -72,5 +73,5 @@
 </div>
 
 <script>
-  $('#like').popover(options)
+  $('#like').popover();
 </script>
