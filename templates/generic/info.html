@@ -6,7 +6,7 @@
       <div class="col">
         <span class="like_box">
             <span class="like content-color-secondary
-                       {% if object.votes.likes.all|user_in:user %}
+                       {% if object.votes.likes.all|user_in:request.user %}
                        text-success
                        {% endif %}"
                 style="font-size:15px;cursor:pointer"
