@@ -5,7 +5,6 @@
   <div class="row" style="color: rgba(255, 255, 255, 0.65);">
       <div class="col">
         <span class="like_box">
-          {% if request.user.is_authenticated %}
             <span class="like content-color-secondary
                        {% if object.votes.likes.all|user_in:user %}
                        text-success
@@ -18,24 +17,18 @@
               <i class="material-icons">thumb_up</i>
               <span data-count="like">{{ object.votes.likes.count }}</span>
             </span>
-          {% else %}
-            <span class="content-color-secondary"
-                style="font-size:15px;cursor:pointer">
-              <i class="material-icons">thumb_up</i>
-              <span data-count="like">{{ object.votes.likes.count }}</span>
-            </span>
-          {% endif %}
           {% if object.votes.likes.all %}
           <div class="like_pop">
-            Оценили: {% for heart in object.votes.likes.all %}{{ heart.user.get_full_name }} {% endfor %}
-            <br><br>
+            Оценили: <br>
+            {% for heart in object.votes.likes.all %}
+            {{ heart.user.get_full_name }}
+            {% endfor %}
           </div>
           {% endif %}
         </span>
 
           &nbsp;&nbsp;
           <span class="dislike_box">
-          {% if request.user.is_authenticated %}
             <span class="dislike content-color-secondary
                         {% if object.votes.dislikes.all|user_in:user %}
                         text-danger
@@ -47,12 +40,6 @@
                 data-type="posts">
               <i class="material-icons">thumb_down</i>&nbsp;
               <span data-count="dislike">{{ object.votes.dislikes.count }}</span>
-            </span>
-          {% else %}
-            <span class="content-color-secondary"
-                style="font-size:15px;cursor:pointer">
-              <i class="material-icons">thumb_down</i>&nbsp;
-              <span data-count="dislike">{{ object.votes.dislike.count }}</span>
             </span>
           {% endif %}
           {% if object.votes.dislikes.all %}
