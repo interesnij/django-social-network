@@ -19,10 +19,10 @@
             </span>
           {% if object.votes.likes.all %}
           <div class="like_pop">
-            <span style="margin-bottom:10px">Лайков: {{ object.votes.likes.count }}</span>
+            <span>Лайков: {{ object.votes.likes.count }}</span><br>
             {% for heart in object.votes.likes.all %}
             <a href="{% url 'user' pk=heart.user.pk %}">
-              <figure>
+              <figure style="margin: 0;">
                 {% if heart.user.profile.avatar %}
                   <img src="{{ heart.user.profile.avatar.url }}" style="border-radius: 50px;width:50px;" alt="image">
                 {% else %}
