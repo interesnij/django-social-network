@@ -23,6 +23,12 @@
             success: function (data) {
               $("div.stream").prepend(data);
               $('#post_create').empty();
+              $.toast({
+                  heading: '{{ request.user.first_name }}',
+                  text: 'Пост успешно создан!',
+                  showHideTransition: 'fade',
+                  icon: 'error'
+              })
             },
             error: function(data) {
                 console.log("Возникла непредвидинная ошибка!!");
