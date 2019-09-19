@@ -25,9 +25,11 @@
               <span data-count="like">{{ object.votes.likes.count }}</span>
             </span>
           {% endif %}
+          {% if object.votes.likes.all %}
           <div class="like_pop">
             Оценили: {% for heart in object.votes.likes.all %}{{ heart.user.get_full_name }} {% endfor %}
           </div>
+          {% endif %}
         </span>
 
           &nbsp;&nbsp;
@@ -52,9 +54,11 @@
               <span data-count="dislike">{{ object.votes.dislike.count }}</span>
             </span>
           {% endif %}
-          <div class=" dislike_pop">
+          {% if object.votes.dislikes.all %}
+          <div class="dislike_pop">
             Оценили: {% for heart in object.votes.dislikes.all %}{{ heart.user.get_full_name }} {% endfor %}
           </div>
+          {% endif %}
         </span>
 
 
