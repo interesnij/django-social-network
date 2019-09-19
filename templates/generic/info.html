@@ -28,6 +28,7 @@
           {% if object.votes.likes.all %}
           <div class="like_pop">
             Оценили: {% for heart in object.votes.likes.all %}{{ heart.user.get_full_name }} {% endfor %}
+            <br><br>
           </div>
           {% endif %}
         </span>
