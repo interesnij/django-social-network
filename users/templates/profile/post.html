@@ -22,12 +22,14 @@
                 <a href="javascript:void(0)" class="icon-circle icon-30 dropdown-toggle caret-none" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="material-icons ">more_vertical</i>
                 </a>
+                {% if user != request.user and user.is_authenticated %}
                 <div class="dropdown-menu dropdown-menu-right">
                     <span data-action="remove" data-id="{{ object.pk }}" data-type="Пост" style="cursor:pointer" class="dropdown-item post_remove">Удалить запись</span>
                     <a href="#" id="post_update" class="dropdown-item">Редактировать</a>
                     <a href="#" id="post_up" class="dropdown-item">Закрепить</a>
                     <a href="#" id="post_check_comment" class="dropdown-item">Выключить комментарии</a>
                 </div>
+                {% endif %}
             </div>
         </div>
     </div>

@@ -51,7 +51,7 @@
               {% endif %}
             </a>
         </div>
-        {% if user != request.user %}
+        {% if user != request.user and user.is_authenticated %}
         <span style="display: flex;align-items: center;justify-content: center;">
           {% if connect %}
           <a href="" class="btn btn-sm btn-success success-gradient">У Вас в друзьях</a>
@@ -66,7 +66,8 @@
           <a href="" class="btn btn-sm btn-warning warning-gradient ml-2">Написать</a>
 
         </span>
-        {% else %}
+        {% endif %}
+        {% if user != request.user %}
         <span style="display: flex;align-items: center;justify-content: center;">
         <a href="{% url 'user_general_form' user.pk %}" class="btn btn-sm btn-warning warning-gradient ml-2">Редактировать</a>
         <a href="#" data-js="avatar_change" class="btn btn-sm btn-warning success-gradient ml-2">Аватар</a>
