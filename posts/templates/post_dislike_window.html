@@ -1,9 +1,12 @@
 {% load liked_user staticfiles %}
 
+<span class="dislikes_window">
+{% if post_dislike.votes.dislikes.all %}
+<div class="dislike_pop">
   <span>Дизлайков: {{ post_dislike.votes.dislikes.count }}</span>
   <br><br>
   <span style="display: flex;">
-    {% for sheet in object.votes.dislikes.all %}
+    {% for sheet in post_dislike.votes.dislikes.all %}
     <a href="{% url 'user' pk=sheet.user.pk %}">
       <figure style="margin: 0;">
         {% if sheet.user.profile.avatar %}
@@ -17,3 +20,6 @@
       </a>
       {% endfor %}
   </span>
+
+</div>
+{% endif %}
