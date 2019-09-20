@@ -17,9 +17,8 @@
               <i class="material-icons">thumb_up</i>
               <span data-count="like">{{ object.votes.likes.count }}</span>
             </span>
-            <div class="like_pop">
             {% if object.votes.likes.all %}
-
+            <div class="like_pop">
               <span>Лайков: {{ object.votes.likes.count }}</span>
               <br><br>
               <span style="display: flex;">
@@ -36,9 +35,8 @@
                 </a>
                 {% endfor %}
               </span>
-
-            {% endif %}
             </div>
+            {% endif %}
         </span>
 
           &nbsp;&nbsp;
@@ -55,7 +53,6 @@
               <i class="material-icons">thumb_down</i>&nbsp;
               <span data-count="dislike">{{ object.votes.dislikes.count }}</span>
             </span>
-          <span class="dislike_window">
           {% if object.votes.dislikes.all %}
           <div class="dislike_pop">
             <span>Дизлайков: {{ object.votes.dislikes.count }}</span>
@@ -77,9 +74,7 @@
             </span>
           </div>
           {% endif %}
-          </span>
         </span>
-
 
           &nbsp;&nbsp;
           <span class="content-color-secondary" style="font-size:15px;cursor:pointer">

@@ -1,6 +1,6 @@
 {% load liked_user staticfiles %}
 
-  <span>Дизлайков: {{ object.votes.dislikes.count }}</span>
+  <span>Дизлайков: {{ post_dislike.votes.dislikes.count }}</span>
   <br><br>
   <span style="display: flex;">
     {% for sheet in object.votes.dislikes.all %}
