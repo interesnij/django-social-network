@@ -7,9 +7,9 @@
             <span class="like content-color-secondary {% if object.votes.likes.all|user_in:request.user %} text-success {% endif %}" style="font-size:15px;cursor:pointer" id="like" data-id="{{ object.id }}" data-action="like" data-type="posts">
               <i class="material-icons">thumb_up</i><span data-count="like">{{ object.votes.likes.count }}</span>
             </span>
-
-            <span class="like_window">
             {% if object.votes.likes.all %}
+            <span class="like_window">
+
             <div class="like_pop">
               <span>Лайков: {{ object.votes.likes.count }}</span>
               <br><br>
@@ -28,8 +28,9 @@
                 {% endfor %}
               </span>
             </div>
-            {% endif %}
+
           </span>
+          {% endif %}
 
           &nbsp;&nbsp;
           <span class="dislike content-color-secondary {% if object.votes.dislikes.all|user_in:request.user %} text-danger {% endif %}" style="font-size:15px;cursor:pointer" id="dislike" data-id="{{ object.id }}" data-action="dislike" data-type="posts">
