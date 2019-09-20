@@ -16,7 +16,7 @@
                 data-type="posts">
               <i class="material-icons">thumb_up</i>
               <span data-count="like">{{ object.votes.likes.count }}</span>
-            </span>
+
             <span class="like_window">
             {% if object.votes.likes.all %}
             <div class="like_pop">
@@ -39,7 +39,7 @@
             </div>
             {% endif %}
           </span>
-
+</span>
           &nbsp;&nbsp;
             <span class="dislike content-color-secondary
                         {% if object.votes.dislikes.all|user_in:request.user %}
