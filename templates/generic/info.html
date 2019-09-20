@@ -10,7 +10,7 @@
 
             <span class="like_window">
               {% if object.votes.likes.all %}
-            <div class="like_pop">
+            <div class="like_pop" style="margin:15px">
               <span>Лайков: {{ object.votes.likes.count }}</span>
               <br><br>
               <span style="display: flex;">
@@ -38,7 +38,7 @@
 
           <span class="dislike_window">
             {% if object.votes.dislikes.all %}
-          <div class="dislike_pop">
+          <div class="dislike_pop" style="margin:15px">
             <span>Дизлайков: {{ object.votes.dislikes.count }}</span>
             <br><br>
             <span style="display: flex;">
