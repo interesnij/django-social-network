@@ -1,7 +1,5 @@
 {% load liked_user staticfiles %}
 
-{% if object.votes.dislikes.all %}
-<div class="dislike_pop">
   <span>Дизлайков: {{ object.votes.dislikes.count }}</span>
   <br><br>
   <span style="display: flex;">
@@ -19,5 +17,3 @@
       </a>
       {% endfor %}
   </span>
-</div>
-{% endif %}
