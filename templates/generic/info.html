@@ -9,6 +9,7 @@
             </span>
 
             <span class="like_window">
+              {% if object.votes.dislikes.all %}
             <div class="like_pop">
               <span>Лайков: {{ object.votes.likes.count }}</span>
               <br><br>
@@ -27,7 +28,7 @@
                 {% endfor %}
               </span>
             </div>
-
+            {% endif %}
           </span>
 
           &nbsp;&nbsp;
