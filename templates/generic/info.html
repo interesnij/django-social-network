@@ -23,7 +23,7 @@
             <br><br>
             <span style="display: flex;">
               {% for heart in object.votes.likes.all %}
-              <a href="{% url 'user' pk=heart.user.pk %}" style="padding-left:10px;padding-right:10px">
+              <a href="{% url 'user' pk=heart.user.pk %}" style="padding-right:10px">
                 <figure style="margin: 0;">
                   {% if heart.user.profile.avatar %}
                     <img src="{{ heart.user.profile.avatar.url }}" style="border-radius: 50px;width:50px;" alt="image">
