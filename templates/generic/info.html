@@ -4,7 +4,7 @@
 
   <div class="row" style="color: rgba(255, 255, 255, 0.65);">
       <div class="col">
-        <span class="like_box">
+
             <span class="like content-color-secondary
                        {% if object.votes.likes.all|user_in:request.user %}
                        text-success
@@ -39,10 +39,8 @@
             </div>
             {% endif %}
           </span>
-        </span>
 
           &nbsp;&nbsp;
-          <span class="dislike_box">
             <span class="dislike content-color-secondary
                         {% if object.votes.dislikes.all|user_in:request.user %}
                         text-danger
@@ -55,7 +53,7 @@
               <i class="material-icons">thumb_down</i>&nbsp;
               <span data-count="dislike">{{ object.votes.dislikes.count }}</span>
             </span>
-          <span class="dislike_window"> 
+          <span class="dislike_window">
           {% if object.votes.dislikes.all %}
           <div class="dislike_pop">
             <span>Дизлайков: {{ object.votes.dislikes.count }}</span>
@@ -77,7 +75,6 @@
             </span>
           </div>
           {% endif %}
-        </span>
         </span>
 
           &nbsp;&nbsp;
