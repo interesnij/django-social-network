@@ -62,7 +62,7 @@
                 like.find("[data-count='like']").text(json.like_count);
                 $(dislike).addClass("text-danger");
                 $(like).removeClass("text-success");
-                $(dislike).next().html('').load("/posts/dislike_window/" + pk + "/")
+                $(like).next().html('').load("/posts/dislike_window/" + pk + "/")
             }
         });
         return false;
