@@ -20,7 +20,6 @@
 
             {% if object.votes.likes.all %}
             <div class="like_pop">
-              <span class="like_window">
               <span>Лайков: {{ object.votes.likes.count }}</span>
               <br><br>
               <span style="display: flex;">
@@ -36,7 +35,6 @@
                   {{ heart.user.first_name }}
                 </a>
                 {% endfor %}
-              </span>
               </span>
             </div>
             {% endif %}
