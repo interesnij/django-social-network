@@ -17,6 +17,7 @@
               <i class="material-icons">thumb_up</i>
               <span data-count="like">{{ object.votes.likes.count }}</span>
             </span>
+            <span class="like_window">
             {% if object.votes.likes.all %}
             <div class="like_pop">
               <span>Лайков: {{ object.votes.likes.count }}</span>
@@ -37,6 +38,7 @@
               </span>
             </div>
             {% endif %}
+          </span>
         </span>
 
           &nbsp;&nbsp;
