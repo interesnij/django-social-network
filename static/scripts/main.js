@@ -90,7 +90,6 @@ $(document).ready(function () {
     /* fullscreen feature */
     $('.fullscreenbtn').on('click', function () {
         $(this).closest('.fullscreen').toggleClass('activefullscreen');
-        $('.jambotron-fluid').toggleClass('body-activefullscreen');
     });
 
 
