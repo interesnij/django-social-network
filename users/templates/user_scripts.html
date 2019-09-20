@@ -28,7 +28,7 @@
         var type = like.data('type');
         var pk = like.data('id');
         var action  = like.data('action');
-        var dislike = like.next();
+        var dislike = like.next().next();
         $.ajax({
             url: "/posts/like/" + pk + "/",
             type: 'POST',
@@ -51,7 +51,7 @@
         var type = dislike.data('type');
         var pk = dislike.data('id');
         var action = dislike.data('action');
-        var like = dislike.prev();
+        var like = dislike.prev().prev();
         $.ajax({
             url: "/posts/dislike/" + pk + "/",
             type: 'POST',
