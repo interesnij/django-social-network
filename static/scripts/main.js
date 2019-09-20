@@ -89,7 +89,8 @@ $(document).ready(function () {
 
     /* fullscreen feature */
     $('.fullscreenbtn').on('click', function () {
-        $(this).closest('.fullscreen').toggleClass('activefullscreen')
+        $(this).closest('.fullscreen').toggleClass('activefullscreen');
+        $(body).toggleClass('body-activefullscreen');
     });
 
 
@@ -214,7 +215,7 @@ $(window).on("load resize", function () {
          percentPosition: true
      });
  });
- 
+
 
 $(window).on('load', function () {
     /* hide loader  */
