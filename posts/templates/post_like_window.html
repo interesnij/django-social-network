@@ -1,11 +1,11 @@
 {% load liked_user staticfiles %}
 
-{% if post_like.votes.likes.all %}
+{% if object.votes.likes.all %}
 <div class="like_pop">
-  <span>Лайков: {{ post_like.votes.likes.count }}</span>
+  <span>Лайков: {{ object.votes.likes.count }}</span>
   <br><br>
   <span style="display: flex;">
-    {% for heart in post_like.votes.likes.all %}
+    {% for heart in object.votes.likes.all %}
     <a href="{% url 'user' pk=heart.user.pk %}" style="padding-right:10px">
       <figure style="margin: 0;">
         {% if heart.user.profile.avatar %}
