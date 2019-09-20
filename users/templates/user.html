@@ -31,16 +31,9 @@ display: none;
   padding:15px;
   margin-bottom:0px;
   display: flex;
-  transition: 0.5s;
+
 }
-.like_window:hover,
-.dislike_window:hover{
-  z-index: 10;
-  opacity: 1;
-  visibility: visible;
-  background: #D6DAE1;
-  color:black;
-}
+
 
 .like:hover ~ .like_window,
 .dislike:hover ~ .dislike_window{
@@ -49,6 +42,7 @@ display: none;
   visibility: visible;
   background: #D6DAE1;
   color:black;
+  transition: 0.3s;
 }
 </style>
 
