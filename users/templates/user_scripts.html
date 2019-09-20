@@ -41,7 +41,7 @@
                 $(like).addClass("text-success");
                 $(dislike).removeClass("text-danger");
                 $(like).next('.like_window').html('').load("/posts/like_window/" + pk + "/")
-                $(dislike).next('.dislike_window').html('').load("/posts/dislike_window/" + pk + "/")
+
             }
         });
         return false;
@@ -63,7 +63,7 @@
                 like.find("[data-count='like']").text(json.like_count);
                 $(dislike).addClass("text-danger");
                 $(like).removeClass("text-success");
-                $(like).next('.like_window').html('').load("/posts/like_window/" + pk + "/")
+
                 $(dislike).next('.dislike_window').html('').load("/posts/dislike_window/" + pk + "/")
             }
         });
