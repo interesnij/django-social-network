@@ -40,8 +40,8 @@
                 dislike.find("[data-count='dislike']").text(json.dislike_count);
                 $(like).addClass("text-success");
                 $(dislike).removeClass("text-danger");
-                $(like).next().next().html('').load("/posts/like_window/" + pk + "/");
-                $(dislike).next().next().html('').load("/posts/dislike_window/" + pk + "/")
+                $(like).next().find('.like_window').html('').load("/posts/like_window/" + pk + "/");
+                $(dislike).next().find('.dislike_window').html('').load("/posts/dislike_window/" + pk + "/")
             }
         });
         return false;
