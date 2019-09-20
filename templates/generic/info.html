@@ -36,8 +36,9 @@
           <span class="dislike content-color-secondary {% if object.votes.dislikes.all|user_in:request.user %} text-danger {% endif %}" style="font-size:15px;cursor:pointer" id="dislike" data-id="{{ object.id }}" data-action="dislike" data-type="posts">
             <i class="material-icons">thumb_down</i>&nbsp;<span data-count="dislike">{{ object.votes.dislikes.count }}</span>
           </span>
-          <span class="dislike_window">
           {% if object.votes.dislikes.all %}
+          <span class="dislike_window">
+
           <div class="dislike_pop">
             <span>Дизлайков: {{ object.votes.dislikes.count }}</span>
             <br><br>
@@ -57,8 +58,9 @@
                 {% endfor %}
             </span>
           </div>
-          {% endif %}
+
         </span>
+        {% endif %}
 
           &nbsp;&nbsp;
           <span class="content-color-secondary" style="font-size:15px;cursor:pointer">
