@@ -109,7 +109,7 @@ class PostLikeView(TemplateView):
     template_name="post_like_window.html"
 
     def get(self,request,*args,**kwargs):
-        post = Post.objects.get(pk=self.kwargs["pk"])
+        self.post = Post.objects.get(pk=self.kwargs["pk"])
         return super(PostLikeView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
