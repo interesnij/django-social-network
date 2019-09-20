@@ -108,5 +108,14 @@ class PostDeleteView(TemplateView):
 class PostLikeView(TemplateView):
     template_name="post_like_window.html"
 
+    def get(self,request,*args,**kwargs):
+        post = Post.objects.get(pk=self.kwargs["pk"])
+        return super(PostLikeView,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context=super(PostLikeView,self).get_context_data(**kwargs)
+        context["post"]=self.post
+        return context
+
 class PostDislikeView(TemplateView):
     template_name="post_dislike_window.html"
