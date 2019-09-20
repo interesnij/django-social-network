@@ -108,5 +108,5 @@ class PostDeleteView(TemplateView):
 class PostLikeView(TemplateView):
     template_name="post_like_window.html"
 
-class PostLikeView(TemplateView):
+class PostDislikeView(TemplateView):
     template_name="post_dislike_window.html"
