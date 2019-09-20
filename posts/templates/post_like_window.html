@@ -1,7 +1,5 @@
 {% load liked_user staticfiles %}
 
-{% if post.votes.likes.all %}
-<div class="like_pop">
   <span>Лайков: {{ post.votes.likes.count }}</span>
   <br><br>
   <span style="display: flex;">
@@ -18,5 +16,3 @@
     </a>
     {% endfor %}
   </span>
-</div>
-{% endif %}
