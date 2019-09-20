@@ -1,6 +1,5 @@
 {% load liked_user staticfiles %}
 
-<span class="dislikes_window">
 {% if post_dislike.votes.dislikes.all %}
 <div class="dislike_pop">
   <span>Дизлайков: {{ post_dislike.votes.dislikes.count }}</span>
