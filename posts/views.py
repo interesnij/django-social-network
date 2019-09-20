@@ -103,3 +103,7 @@ class PostDeleteView(TemplateView):
             post.save()
             return HttpResponse("!")
         return super(PostDeleteView,self).get(request,*args,**kwargs)
+
+
+class PostLikeView(TemplateView):
+    template_name="post_like_window.html"
