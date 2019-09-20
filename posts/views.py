@@ -119,3 +119,12 @@ class PostLikeView(TemplateView):
 
 class PostDislikeView(TemplateView):
     template_name="post_dislike_window.html"
+
+    def get(self,request,*args,**kwargs):
+        self.post = Post.objects.get(pk=self.kwargs["pk"])
+        return super(PostDislikeView,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context=super(PostDislikeView,self).get_context_data(**kwargs)
+        context["post"]=self.post
+        return context
