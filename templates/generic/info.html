@@ -17,8 +17,9 @@
               <i class="material-icons">thumb_up</i>
               <span data-count="like">{{ object.votes.likes.count }}</span>
             </span>
-            {% if object.votes.likes.all %}
             <div class="like_pop">
+            {% if object.votes.likes.all %}
+
               <span>Лайков: {{ object.votes.likes.count }}</span>
               <br><br>
               <span style="display: flex;">
@@ -35,8 +36,9 @@
                 </a>
                 {% endfor %}
               </span>
-            </div>
+
             {% endif %}
+            </div>
         </span>
 
           &nbsp;&nbsp;
