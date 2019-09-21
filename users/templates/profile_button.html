@@ -87,7 +87,7 @@
   $('.connect_create').on('click', function() {
 
   $.ajax({
-      url: '{% url "create_connect" follow2.pk %}', 
+      url: '{% url "create_connect" follow2.user.pk %}',  
       success: function (data) {
         $('#button_reload').html('').load("{% url 'profile_button_reload' user.pk %}");
       },
