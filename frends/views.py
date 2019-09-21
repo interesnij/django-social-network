@@ -25,16 +25,15 @@ class FrendsListView(ListView):
 
 
 class ConnectCreate(TemplateView):
-    template_name = "connect_add.html"
-    success_url = "/"
-
-    def get(self,request,*args,**kwargs):
-        self.user=request.user
-        self.target_user = Follow.objects.get(pk=self.kwargs["pk"])
-        try:
-            self.connect = Connect.objects.get(target_user=self.target_user,user=self.user)
-        except:
-            self.connect = None
+	template_name = "connect_add.html"
+	success_url = "/"
+	def get(self,request,*args,**kwargs):
+		self.user=request.user
+		self.target_user = Follow.objects.get(pk=self.kwargs["pk"])
+		try:
+			self.connect = Connect.objects.get(target_user=self.target_user,user=self.user)
+		except:
+			self.connect = None
         if not self.connect and self.target_user != self.user:
             Connect.objects.create(target_user=self.target_user, user=self.user)
 			fol=Follow.objects.get(followed_user=request.user, user=self.user)
