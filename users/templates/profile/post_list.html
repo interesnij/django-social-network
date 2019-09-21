@@ -1,6 +1,24 @@
 {% load staticfiles humanize %}
 
+{% if user == request.user %}
+<span id="post_link" style="">
+  <div class="dropdown d-inline-block">
+      <a href="javascript:void(0)" class="icon-circle dropdown-toggle caret-none" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="material-icons ">add</i>
+          добавить пост
+      </a>
+      <div class="dropdown-menu dropdown-menu-right">
+          <a id="post_lite" style="cursor:pointer" class="dropdown-item">Легкий пост</a>
+          <a id="post_medium" style="cursor:pointer" class="dropdown-item">Средний пост</a>
+          <a id="post_hard" style="cursor:pointer" class="dropdown-item">Сложный пост</a>
+      </div>
+  </div>
+ </span>
+ <div class="card mb-4" style="">
+   <span id="post_create"></span>
+ </div>
 
+{% endif %}
 
 {% if posts %}
 <div class="infinite-container">
