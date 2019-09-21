@@ -185,6 +185,36 @@ class UserDesign(TemplateView):
 class ProfileButtonReload(TemplateView):
 	template_name="profile_button.html"
 
+	def get(self,request,*args,**kwargs):
+		self.user=User.objects.get(pk=self.kwargs["pk"])
+		try:
+			self.connect = Connect.objects.get(target_user=self.request.user,user=self.user)
+		except:
+			self.connect = None
+		try:
+			self.connect2 = Connect.objects.get(user=self.request.user,target_user=self.user)
+		except:
+			self.connect2 = None
+		try:
+			self.follow = Follow.objects.get(user=self.request.user,followed_user=self.user)
+		except:
+			self.follow = None
+		try:
+			self.follow2 = Follow.objects.get(followed_user=self.request.user,user=self.user)
+		except:
+			self.follow2 = None
+
+		return super(ProfileUserView,self).get(request,*args,**kwargs)
+
+	def get_context_data(self, **kwargs):
+		context = super(ProfileUserView, self).get_context_data(**kwargs)
+		context['user'] = self.user
+		context['connect'] = self.connect
+		context['connect2'] = self.connect2
+		context['follow'] = self.follow
+		context['follow2'] = self.follow2
+		return context
+
 
 @login_required
 @require_http_methods(["GET"])
