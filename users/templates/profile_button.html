@@ -110,3 +110,16 @@
   });
   });
 </script>
+<script>
+  $('.connect_delete').on('click', function() {
+  $.ajax({
+      url: '{% url "delete_connect" user.pk %}',
+      success: function (data) {
+        $('#button_reload').html('').load("{% url 'profile_button_reload' user.pk %}");
+      },
+      error: function(data) {
+        console.log("Все не ок")
+      }
+  });
+  });
+</script>
