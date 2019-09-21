@@ -43,19 +43,19 @@ class ConnectCreate(TemplateView):
 
 
 class ConnectDelete(TemplateView):
-    template_name = "connect_delete.html"
-    success_url = "/"
+	template_name = "connect_delete.html"
+	success_url = "/"
 
-    def get(self,request,*args,**kwargs):
-        self.user=request.user
-        self.target_user = Follow.objects.get(pk=self.kwargs["pk"])
-        try:
-            self.connect = Connect.objects.get(target_user=self.target_user,user=self.user)
-        except:
-            self.connect = None
-        if self.connect and self.target_user != self.user:
-            conn=Connect.objects.get(target_user=self.target_user, user=self.user)
+	def get(self,request,*args,**kwargs):
+		self.user=request.user
+		self.target_user = Follow.objects.get(pk=self.kwargs["pk"])
+		try:
+			self.connect = Connect.objects.get(target_user=self.target_user,user=self.user)
+		except:
+			self.connect = None
+		if self.connect and self.target_user != self.user:
+			conn=Connect.objects.get(target_user=self.target_user, user=self.user)
 			conn.delete()
-        else:
-            return HttpResponse("Пользователь уже с Вами дружит :-)")
-        return super(ConnectCreate,self).get(request,*args,**kwargs)
+		else:
+			return HttpResponse("Пользователь уже с Вами дружит :-)")
+		return super(ConnectCreate,self).get(request,*args,**kwargs)
