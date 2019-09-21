@@ -24,7 +24,7 @@ class FollowsListView(ListView):
 
 
 class FollowCreate(TemplateView):
-    template_name = "follow_add.html" 
+    template_name = "follow_add.html"
     success_url = "/"
 
     def get(self,request,*args,**kwargs):
@@ -52,7 +52,8 @@ class FollowDelete(TemplateView):
             self.follows = None
 
         if self.follows:
-            Follow.objects.delete(followed_user=self.followed_user, user=request.user)
+			follow = Follow.objects.create(followed_user=self.followed_user, user=request.user)
+            follow.delete()
         else:
             return HttpResponse("Подписка не найдена!")
         return super(FollowDelete,self).get(request,*args,**kwargs)
