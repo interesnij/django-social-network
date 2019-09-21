@@ -10,9 +10,6 @@ class Connect(models.Model):
     @classmethod
     def create_connection(cls, user_id, target_user_id):
         target_connection = cls.objects.create(user_id=target_user_id, target_user_id=user_id)
-        connection = cls.objects.create(user_id=user_id, target_user_id=target_user_id,
-                                        target_connection=target_connection)
-        target_connection.target_connection = connection
+
         target_connection.save()
-        connection.save()
-        return connection
+        return target_connection
