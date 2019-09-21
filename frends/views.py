@@ -34,7 +34,7 @@ class ConnectCreate(TemplateView):
 		except:
 			self.connect = None
 		if not self.connect and self.target_user != request.user:
-			Connect.create_connection(target_user=self.target_user,user=request.user)
+			Connect.create_connection(user_id=request.user, target_user_id=self.target_user)
 			fol=Follow.objects.get(user=self.target_user, followed_user=request.user)
 			fol.delete()
 		else:
