@@ -63,7 +63,15 @@ display: none;
               {% include 'profile/gallery.html' %}
 
           </div>
-          
+          <div class="col-lg-8 col-md-7 col-sm-12 order-2 ">
+             
+
+             {% include 'profile/stat.html' %}
+
+             <div id="post-reload">
+               {% include 'profile/post_list.html' %}
+              </div>
+            </div>
           </div>
 
 {% include 'user_scripts.html' %}
