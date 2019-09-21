@@ -58,4 +58,4 @@ class ConnectDelete(TemplateView):
 			Follow.objects.create(user=self.target_user, followed_user=request.user)
 		else:
 			return HttpResponse("Пользователь уже удален :-)")
-		return super(ConnectCreate,self).get(request,*args,**kwargs)
+		return super(ConnectDelete,self).get(request,*args,**kwargs)
