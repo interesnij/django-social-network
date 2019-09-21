@@ -73,6 +73,28 @@
               </div>
           </div>
           {% endif %}
+          {% if follow %}
+          <div class="btn-group">
+              <button type="button" class="btn btn-sm btn-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Вы подписаны
+              </button>
+              <div class="dropdown-menu" x-placement="bottom-start">
+                  <a class="dropdown-item" href="#">Отменить подписку</a>
+                  <a class="dropdown-item" href="#">Заблокировать</a>
+              </div>
+          </div>
+          {% endif %}
+          {% if follow2 %}
+          <div class="btn-group">
+              <button type="button" class="btn btn-sm btn-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Ваш подписчик
+              </button>
+              <div class="dropdown-menu" x-placement="bottom-start">
+                  <a class="dropdown-item" href="#">Добавить в друзья</a>
+                  <a class="dropdown-item" href="#">Заблокировать</a>
+              </div>
+          </div>
+          {% endif %}
           {% if not connect and not connect2 %}
           <a href="#" id="follow_create" class="btn btn-sm btn-success success-gradient">Добавить в друзья</a>
           {% endif %}

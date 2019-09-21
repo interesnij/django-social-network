@@ -113,6 +113,21 @@ $('[data-action="remove"]').click(remove);
   });
   });
 </script>
+<script>
+
+  $('#follow_delete').on('click', function() {
+
+  $.ajax({
+      url: '{% url "delete_follow" user.pk %}',
+      success: function (data) {
+        console.log("Все ок")
+      },
+      error: function(data) {
+        console.log("Все не ок")
+      }
+  });
+  });
+</script>
 
 <script>
 function avatar_change_popap(avatar_change) {

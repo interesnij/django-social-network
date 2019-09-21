@@ -24,7 +24,7 @@ class FollowsListView(ListView):
 
 
 class FollowCreate(TemplateView):
-    template_name = "follow_add.html"
+    template_name = "follow_add.html" 
     success_url = "/"
 
     def get(self,request,*args,**kwargs):

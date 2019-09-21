@@ -2,12 +2,11 @@ from django.views.generic.base import TemplateView
 from users.models import User, UserProfile
 from posts.models import Post
 from frends.models import Connect
+from follows.models import Follow
 from communities.models import Community
-from posts.forms import PostHardForm, PostLiteForm, PostMediumForm
-from django.contrib.auth.mixins import LoginRequiredMixin
+from posts.forms import PostMediumForm
 from users.forms import GeneralUserForm, AboutUserForm, AvatarUserForm
 from django.views.generic import ListView
-from posts.helpers import ajax_required, AuthorRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.views.decorators.http import require_http_methods
@@ -44,6 +43,14 @@ class ProfileUserView(TemplateView):
 			self.connect2 = Connect.objects.get(user=self.request.user,target_user=self.user)
 		except:
 			self.connect2 = None
+		try:
+			self.follow = Follow.objects.get(user=self.request.user,followed_user=self.user)
+		except:
+			self.follow = None 
+		try:
+			self.follow2 = Follow.objects.get(followed_user=self.request.user,user=self.user)
+		except:
+			self.follow2 = None
 
 		return super(ProfileUserView,self).get(request,*args,**kwargs)
 
@@ -58,6 +65,8 @@ class ProfileUserView(TemplateView):
 		context['communities'] = self.communities
 		context['connect'] = self.connect
 		context['connect2'] = self.connect2
+		context['follow'] = self.follow
+		context['follow2'] = self.follow2
 		return context
 
 
@@ -175,7 +184,6 @@ class UserDesign(TemplateView):
 
 
 @login_required
-@ajax_required
 @require_http_methods(["GET"])
 def get_thread(request):
     """Returns a list of news with the given news as parent."""
@@ -191,7 +199,6 @@ def get_thread(request):
     })
 
 @login_required
-@ajax_required
 @require_http_methods(["POST"])
 def post_comment(request):
     """A function view to implement the post functionality with AJAX, creating
@@ -210,7 +217,6 @@ def post_comment(request):
         return HttpResponseBadRequest()
 
 @login_required
-@ajax_required
 @require_http_methods(["POST"])
 def update_interactions(request):
     data_point = request.POST['id_value']
