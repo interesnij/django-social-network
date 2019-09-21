@@ -41,15 +41,15 @@ class FollowCreate(TemplateView):
         return super(FollowCreate,self).get(request,*args,**kwargs)
 
 class FollowDelete(TemplateView):
-    template_name = "follow_delete.html"
-    success_url = "/"
+	template_name = "follow_delete.html"
+	success_url = "/"
 
-    def get(self,request,*args,**kwargs):
-        self.followed_user = User.objects.get(pk=self.kwargs["pk"])
-        try:
-            self.follows = Follow.objects.get(followed_user=self.followed_user,user=request.user)
-        except:
-            self.follows = None
+	def get(self,request,*args,**kwargs):
+		self.followed_user = User.objects.get(pk=self.kwargs["pk"])
+		try:
+			self.follows = Follow.objects.get(followed_user=self.followed_user,user=request.user)
+		except:
+			self.follows = None
 		if self.follows:
 			follow = Follow.objects.get(followed_user=self.followed_user, user=request.user)
 			follow.delete()
