@@ -46,7 +46,7 @@ class ProfileUserView(TemplateView):
 		try:
 			self.follow = Follow.objects.get(user=self.request.user,followed_user=self.user)
 		except:
-			self.follow = None 
+			self.follow = None
 		try:
 			self.follow2 = Follow.objects.get(followed_user=self.request.user,user=self.user)
 		except:
@@ -181,6 +181,9 @@ class PostUserView(ListView):
 
 class UserDesign(TemplateView):
 	template_name="user_design.html"
+
+class ProfileButtonReload(TemplateView):
+	template_name="profile_button.html"
 
 
 @login_required

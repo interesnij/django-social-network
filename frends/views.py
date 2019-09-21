@@ -54,7 +54,8 @@ class ConnectDelete(TemplateView):
         except:
             self.connect = None
         if self.connect and self.target_user != self.user:
-            Connect.objects.delete(target_user=self.target_user, user=self.user)
+            conn=Connect.objects.get(target_user=self.target_user, user=self.user)
+			conn.delete()
         else:
             return HttpResponse("Пользователь уже с Вами дружит :-)")
         return super(ConnectCreate,self).get(request,*args,**kwargs)

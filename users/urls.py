@@ -1,6 +1,7 @@
 from django.conf.urls import url
 from users.views import AllUsers, ProfileUserView, UserGeneralChange, UserAboutChange, UserDesign, PostUserView, UserAvatarChange
 from users.views import get_thread, post_comment, update_interactions
+from users.views import ProfileButtonReload
 
 urlpatterns = [
     url(r'^all-users/$', AllUsers.as_view(), name='all_users'),
@@ -16,4 +17,5 @@ urlpatterns = [
     url(r'^update-interactions/$', update_interactions, name='update_interactions'),
     url(r'^avatar/(?P<pk>[0-9]+)/$',
         UserAvatarChange.as_view(), name='user_avatar_form'),
+    url(r'^profile_button/$', ProfileButtonReload.as_view(), name='profile_btton_reload'),
 ]
