@@ -105,7 +105,7 @@ $('[data-action="remove"]').click(remove);
   $.ajax({
       url: '{% url "create_follow" user.pk %}',
       success: function (data) {
-        $('#button_reload').html('').load("profile_btton_reload");
+        $('#button_reload').html('').load("/users/profile_button/" + pk + "/");
       },
       error: function(data) {
         console.log("Все не ок")
@@ -118,7 +118,7 @@ $('[data-action="remove"]').click(remove);
   $.ajax({
       url: '{% url "delete_follow" user.pk %}',
       success: function (data) {
-        $('#button_reload').html('').load("profile_btton_reload");
+        $('#button_reload').html('').load("profile_button_reload");
       },
       error: function(data) {
         console.log("Все не ок")
