@@ -174,7 +174,7 @@ MEDIA_ROOT = os.path.join(PROJECT_PATH, 'media')
 
 REST_SESSION_LOGIN = True
 REST_AUTH_REGISTER_SERIALIZERS = {
-        'REGISTER_SERIALIZER': 'tr.serializers.MyRegisterSerializer',
+        'REGISTER_SERIALIZER': 'tr.serializers.RegisterSerializer',
 }
 
 ACCOUNT_AUTHENTICATION_METHOD = 'email'

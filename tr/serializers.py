@@ -6,7 +6,7 @@ from rest_framework import serializers
 from rest_framework.response import Response
 
 
-class MyRegisterSerializer(serializers.Serializer):
+class RegisterSerializer(serializers.Serializer):
     email = serializers.EmailField(required=allauth_settings.EMAIL_REQUIRED)
     first_name = serializers.CharField(required=True, write_only=True)
     last_name = serializers.CharField(required=True, write_only=True)
