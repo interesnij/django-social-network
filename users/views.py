@@ -204,10 +204,10 @@ class ProfileButtonReload(TemplateView):
 		except:
 			self.follow2 = None
 
-		return super(ProfileUserView,self).get(request,*args,**kwargs)
+		return super(ProfileButtonReload,self).get(request,*args,**kwargs)
 
 	def get_context_data(self, **kwargs):
-		context = super(ProfileUserView, self).get_context_data(**kwargs)
+		context = super(ProfileButtonReload, self).get_context_data(**kwargs)
 		context['user'] = self.user
 		context['connect'] = self.connect
 		context['connect2'] = self.connect2
