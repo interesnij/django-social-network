@@ -52,8 +52,8 @@ class FollowDelete(TemplateView):
             self.follows = None
 
         if self.follows:
-			follow = Follow.objects.get(followed_user=self.followed_user, user=request.user)
-			follow.delete()
+		    follow = Follow.objects.get(followed_user=self.followed_user, user=request.user)
+		    follow.delete()
 		else:
             return HttpResponse("Подписка не найдена!")
         return super(FollowDelete,self).get(request,*args,**kwargs)
