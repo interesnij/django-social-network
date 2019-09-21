@@ -98,34 +98,6 @@ $.ajax({
 $('[data-action="remove"]').click(remove);
 </script>
 
-<script>
-
-  $('.follow_create').on('click', function() {
-
-  $.ajax({
-      url: '{% url "create_follow" user.pk %}',
-      success: function (data) {
-        $('#button_reload').html('').load("{% url 'profile_button_reload' user.pk %}");
-      },
-      error: function(data) {
-        console.log("Все не ок")
-      }
-  });
-  });
-</script>
-<script>
-  $('.follow_delete').on('click', function() {
-  $.ajax({
-      url: '{% url "delete_follow" user.pk %}',
-      success: function (data) {
-        $('#button_reload').html('').load("{% url 'profile_button_reload' user.pk %}");
-      },
-      error: function(data) {
-        console.log("Все не ок")
-      }
-  });
-  });
-</script>
 
 <script>
 function avatar_change_popap(avatar_change) {
