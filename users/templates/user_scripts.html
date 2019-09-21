@@ -105,7 +105,7 @@ $('[data-action="remove"]').click(remove);
   $.ajax({
       url: '{% url "create_follow" user.pk %}',
       success: function (data) {
-        console.log("Все ок")
+        $('#button_reload').html('').load("profile_button");
       },
       error: function(data) {
         console.log("Все не ок")
@@ -114,13 +114,11 @@ $('[data-action="remove"]').click(remove);
   });
 </script>
 <script>
-
   $('#follow_delete').on('click', function() {
-
   $.ajax({
       url: '{% url "delete_follow" user.pk %}',
       success: function (data) {
-        console.log("Все ок")
+        $('#button_reload').html('').load("profile_button");
       },
       error: function(data) {
         console.log("Все не ок")
