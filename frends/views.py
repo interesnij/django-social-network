@@ -70,7 +70,7 @@ class ConnectDelete(TemplateView):
 			self.connect = Connect.objects.get(target_user=request.user,user=self.user)
 		except:
 			self.connect = None
-		if self.connect and self.target_user != request.user:
+		if self.connect and self.user != request.user:
 			conn = Connect.objects.get(target_user=request.user, user=self.user)
 			conn.delete()
 			Follow.objects.create(user=self.user, followed_user=request.user)
