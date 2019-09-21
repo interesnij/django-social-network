@@ -49,11 +49,11 @@ class ConnectDelete(TemplateView):
 	def get(self,request,*args,**kwargs):
 		self.target_user = User.objects.get(pk=self.kwargs["pk"])
 		try:
-			self.connect = Connect.objects.get(target_user=self.target_user,user=request.user)
+			self.connect = Connect.objects.get(target_user=self.target_user,target_user_id=self.target_user.id)
 		except:
 			self.connect = None
 		if self.connect and self.target_user != request.user:
-			Connect.delete_connection(user_id=self.target_user.id, target_user_id=request.user.id)
+			Connect.delete_connection(user_id=request.user.id, target_user_id=request.user.id)
 			Follow.objects.create(user=self.target_user, followed_user=request.user)
 		else:
 			return HttpResponse("Пользователь уже удален :-)")
