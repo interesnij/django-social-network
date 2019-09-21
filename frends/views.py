@@ -37,7 +37,7 @@ class ConnectCreate(TemplateView):
 			target_connection = Connect.objects.create(target_user=self.target_user, user=request.user)
 			connection = Connect.objects.create(target_user=self.target_user, user=request.user,target_connection =target_connection)
 			target_connection.target_connection = connection
-			target_connection.save()
+			
 			connection.save()
 			fol=Follow.objects.get(user=self.target_user, followed_user=request.user)
 			fol.delete()
