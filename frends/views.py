@@ -67,7 +67,7 @@ class ConnectDelete(TemplateView):
 	def get(self,request,*args,**kwargs):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
 		try:
-			self.connect = Connect.objects.get(target_user=self.request.user,user=self.user)
+			self.connect = Connect.objects.get(target_user=request.user,user=self.user)
 		except:
 			self.connect = None
 		if self.connect and self.target_user != request.user:
