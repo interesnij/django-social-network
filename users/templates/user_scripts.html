@@ -100,7 +100,7 @@ $('[data-action="remove"]').click(remove);
 
 <script>
 
-  $('#follow_create').on('click', function() {
+  $('.follow_create').on('click', function() {
 
   $.ajax({
       url: '{% url "create_follow" user.pk %}',
@@ -114,7 +114,7 @@ $('[data-action="remove"]').click(remove);
   });
 </script>
 <script>
-  $('#follow_delete').on('click', function() {
+  $('.follow_delete').on('click', function() {
   $.ajax({
       url: '{% url "delete_follow" user.pk %}',
       success: function (data) {
