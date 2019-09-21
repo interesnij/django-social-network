@@ -63,21 +63,7 @@ display: none;
               {% include 'profile/gallery.html' %}
 
           </div>
-          <div class="col-lg-8 col-md-7 col-sm-12 order-2 ">
-             <div class="card mb-4" style="padding:10px">
-               <h3 class="mb-0">{{ user.first_name }} {{ user.last_name }}</h3>
-               {% if user.profile.status %}
-               <p>{{ user.profile.status }}</p>
-               {% else %}
-               <p>Статус не указан</p>
-               {% endif %}
-               <br><br>
-             </div>
-
-             {% include 'profile/stat.html' %}
-
-             
-            </div>
+          
           </div>
 
 {% include 'user_scripts.html' %}
