@@ -28,15 +28,14 @@ class FollowCreate(TemplateView):
     success_url = "/"
 
     def get(self,request,*args,**kwargs):
-        self.user=request.user
         self.followed_user = User.objects.get(pk=self.kwargs["pk"])
         try:
-            self.follows = Follow.objects.get(followed_user=self.followed_user,user=self.user)
+            self.follows = Follow.objects.get(followed_user=self.followed_user,user=request.user)
         except:
             self.follows = None
 
-        if not self.follows and self.followed_user != self.user:
-            Follow.objects.create(followed_user=self.followed_user, user=self.user)
+        if not self.follows and self.followed_user != request.user:
+            Follow.objects.create(followed_user=self.followed_user, user=request.user)
         else:
             return HttpResponse("Подписка уже есть :-)")
         return super(FollowCreate,self).get(request,*args,**kwargs)
@@ -46,15 +45,14 @@ class FollowDelete(TemplateView):
     success_url = "/"
 
     def get(self,request,*args,**kwargs):
-        self.user=request.user
         self.followed_user = User.objects.get(pk=self.kwargs["pk"])
         try:
-            self.follows = Follow.objects.get(followed_user=self.followed_user,user=self.user)
+            self.follows = Follow.objects.get(followed_user=self.followed_user,user=request.user)
         except:
             self.follows = None
 
-        if self.follows and self.followed_user != self.user:
-            Follow.objects.delete(followed_user=self.followed_user, user=self.user)
+        if self.follows:
+            Follow.objects.delete(followed_user=self.followed_user, user=request.user)
         else:
             return HttpResponse("Подписка не найдена!")
         return super(FollowDelete,self).get(request,*args,**kwargs)
