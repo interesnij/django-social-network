@@ -1,26 +1,44 @@
 {% load staticfiles humanize %}
 
-{% if user == request.user %}
-<span id="post_link" style="">
-  <div class="dropdown d-inline-block">
-      <a href="javascript:void(0)" class="icon-circle dropdown-toggle caret-none" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <i class="material-icons ">add</i>
-          добавить пост
-      </a>
-      <div class="dropdown-menu dropdown-menu-right">
-          <a id="post_lite" style="cursor:pointer" class="dropdown-item">Легкий пост</a>
-          <a id="post_medium" style="cursor:pointer" class="dropdown-item">Средний пост</a>
-          <a id="post_hard" style="cursor:pointer" class="dropdown-item">Сложный пост</a>
-      </div>
+
+
+{% if posts %}
+<div class="infinite-container">
+  <div class="stream-update">
+    <a href=""><span class="new-posts"></span> Загрузить новые посты</a>
   </div>
- </span>
- <div class="card mb-4" style="">
-   <span id="post_create"></span>
- </div>
+  <span class="stream">
+
+    {% for object in posts %}
+      {% include 'profile/post.html' with post=post  %}
+
+    {% endfor %}
+
+  </span>
+</div>
+
+<div class="load">
+  {% if page_obj.has_next %}
+    <a class="infinite-more-link" href="?page={{ page_obj.next_page_number }}">
+      <img src="{% static 'images/loading.gif' %}">
+    </a>
+  {% endif %}
+</div>
+
+{% else %}
+<div class="card mb-4 fullscreen">
+    <div class="card-header border-bottom">
+
+    </div>
+    <div class="card-body">
+      <div class="media">
+      <h6>  Пока ничего нет...</h6>
+        <br><br>
+      </div>
+    </div>
+</div>
 
 {% endif %}
-
-
 
   <script src="{% static 'scripts/jquery.waypoints.min.js' %}" type="text/javascript"></script>
   <script src="{% static 'scripts/infinite.min.js' %}" type="text/javascript"></script>
