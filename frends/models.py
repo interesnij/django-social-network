@@ -14,5 +14,5 @@ class Connect(models.Model):
 
     @classmethod
     def delete_connection(cls, user_id, target_user_id):
-        target_connection = cls.objects.get(user_id=target_user_id, target_user_id=user_id)
+        target_connection = cls.objects.get(user_id=user_id, target_user_id=target_user_id)
         target_connection.delete()
