@@ -8,7 +8,7 @@
           У Вас в друзьях
       </button>
       <div class="dropdown-menu" x-placement="bottom-start">
-          <a class="dropdown-item" href="#">Убрать из друзей</a>
+          <a class="dropdown-item connect_delete" href="#">Убрать из друзей</a>
       </div>
   </div>
   {% endif %}
@@ -18,7 +18,7 @@
           У Вас в друзьях
       </button>
       <div class="dropdown-menu" x-placement="bottom-start">
-          <a class="dropdown-item" href="#">Убрать из друзей</a>
+          <a class="dropdown-item connect_delete" href="#">Убрать из друзей</a>
       </div>
   </div>
   {% endif %}
@@ -39,7 +39,7 @@
           Ваш подписчик
       </button>
       <div class="dropdown-menu" x-placement="bottom-start">
-          <a class="dropdown-item" href="#">Добавить в друзья</a>
+          <a class="dropdown-item connect_create" href="#">Добавить в друзья</a>
           <a class="dropdown-item" href="#">Заблокировать</a>
       </div>
   </div>
@@ -74,6 +74,33 @@
   $('.follow_delete').on('click', function() {
   $.ajax({
       url: '{% url "delete_follow" user.pk %}',
+      success: function (data) {
+        $('#button_reload').html('').load("{% url 'profile_button_reload' user.pk %}");
+      },
+      error: function(data) {
+        console.log("Все не ок")
+      }
+  });
+  });
+</script>
+<script>
+  $('.connect_create').on('click', function() {
+
+  $.ajax({
+      url: '{% url "create_connect" user.pk %}',
+      success: function (data) {
+        $('#button_reload').html('').load("{% url 'profile_button_reload' user.pk %}");
+      },
+      error: function(data) {
+        console.log("Все не ок")
+      }
+  });
+  });
+</script>
+<script>
+  $('.connect_delete').on('click', function() {
+  $.ajax({
+      url: '{% url "delete_connect" user.pk %}',
       success: function (data) {
         $('#button_reload').html('').load("{% url 'profile_button_reload' user.pk %}");
       },
