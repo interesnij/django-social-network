@@ -37,6 +37,8 @@ class ConnectCreate(TemplateView):
             self.connect = None
         if not self.connect and self.target_user != self.user:
             Connect.objects.create(target_user=self.target_user, user=self.user)
+			fol=Follow.objects.get(followed_user=request.user, user=self.user)
+			fol.delete()
         else:
             return HttpResponse("Пользователь уже с Вами дружит :-)")
         return super(ConnectCreate,self).get(request,*args,**kwargs)
@@ -56,6 +58,7 @@ class ConnectDelete(TemplateView):
 		if self.connect and self.target_user != self.user:
 			conn=Connect.objects.get(target_user=self.target_user, user=self.user)
 			conn.delete()
+			Follow.objects.create(followed_user=request.user, user=self.user)
 		else:
 			return HttpResponse("Пользователь уже с Вами дружит :-)")
 		return super(ConnectCreate,self).get(request,*args,**kwargs)
