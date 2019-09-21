@@ -5,7 +5,7 @@
   <div class="row" style="color: rgba(255, 255, 255, 0.65);">
       <div class="col">
             <span class="like content-color-secondary {% if object.votes.likes.all|user_in:request.user %} text-success {% endif %}" style="font-size:15px;cursor:pointer" id="like" data-id="{{ object.id }}" data-action="like" data-type="posts">
-              <i class="material-icons">thumb_up</i><span data-count="like"> {{ object.votes.likes.count }}</span>
+              <i class="material-icons">thumb_up</i><span data-count="like">{% if object.votes.likes.count %} {{ object.votes.likes.count }}{% endif %}</span>
             </span>
 
             <span class="like_window">
@@ -33,7 +33,7 @@
 
           &nbsp;&nbsp;
           <span class="dislike content-color-secondary {% if object.votes.dislikes.all|user_in:request.user %} text-danger {% endif %}" style="font-size:15px;cursor:pointer" id="dislike" data-id="{{ object.id }}" data-action="dislike" data-type="posts">
-            <i class="material-icons">thumb_down</i>&nbsp;<span data-count="dislike"> {{ object.votes.dislikes.count }}</span>
+            <i class="material-icons">thumb_down</i>&nbsp;<span data-count="dislike">{% if object.votes.dislikes.count %} {{ object.votes.dislikes.count }}{% endif %}</span>
           </span>
 
           <span class="dislike_window">
@@ -63,11 +63,11 @@
 
           &nbsp;&nbsp;
           <span class="content-color-secondary" style="font-size:15px;cursor:pointer">
-            <i class="material-icons">chat</i>&nbsp;0
+            <i class="material-icons">chat</i>&nbsp;
           </span>
           &nbsp;&nbsp;
           <span class="content-color-secondary" style="font-size:15px;cursor:pointer">
-            <i class="material-icons">share</i>&nbsp;0
+            <i class="material-icons">share</i>&nbsp;
           </span>
 
       </div>
