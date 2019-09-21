@@ -12,7 +12,7 @@ urlpatterns = [
     url(r'^$', include ('main.urls')),
 
     url(r'^logout/$', auth_views.LogoutView.as_view(template_name="account/logout.html"), name='logout'),
-    url(r'^signup/$', TemplateView.as_view(template_name="account/signup.html"),
+    url(r'^signup/$', TemplateView.as_view(template_name="main/auth.html"),
         name='signup'),
     url(r'^email-verification/$',
         TemplateView.as_view(template_name="account/email_verification.html"),
