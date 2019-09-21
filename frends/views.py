@@ -28,7 +28,7 @@ class ConnectCreate(TemplateView):
 	template_name = "connect_add.html"
 	success_url = "/"
 	def get(self,request,*args,**kwargs):
-		self.target_user = Follow.objects.get(pk=self.kwargs["pk"])
+		self.target_user = User.objects.get(pk=self.kwargs["pk"])
 		try:
 			self.connect = Connect.objects.get(target_user=self.target_user,user=request.user)
 		except:
@@ -47,7 +47,7 @@ class ConnectDelete(TemplateView):
 	success_url = "/"
 
 	def get(self,request,*args,**kwargs):
-		self.target_user = Follow.objects.get(pk=self.kwargs["pk"])
+		self.target_user = User.objects.get(pk=self.kwargs["pk"])
 		try:
 			self.connect = Connect.objects.get(target_user=self.target_user,user=request.user)
 		except:
