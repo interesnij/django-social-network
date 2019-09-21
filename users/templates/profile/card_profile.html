@@ -65,7 +65,7 @@
           {% endif %}
           {% if connect2 %}
           <div class="btn-group">
-              <button type="button" class="btn btn-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <button type="button" class="btn btn-sm btn-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   У Вас в друзьях
               </button>
               <div class="dropdown-menu" x-placement="bottom-start">
@@ -76,9 +76,10 @@
           {% if not connect and not connect2 %}
           <a href="" class="btn btn-sm btn-success success-gradient">Добавить в друзья</a>
           {% endif %}
-          &nbsp;
-          <a href="" class="btn btn-sm btn-warning warning-gradient ml-2">Написать сообщение</a>
+          </span>
 
+        <span style="display: flex;align-items: center;justify-content: center;">
+          <a href="" class="btn btn-sm btn-warning warning-gradient ml-2">Написать сообщение</a>
         </span>
         {% endif %}
         {% if user == request.user and request.user.is_authenticated %}
