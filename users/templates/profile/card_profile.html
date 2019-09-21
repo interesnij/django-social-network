@@ -54,16 +54,30 @@
         {% if user != request.user and request.user.is_authenticated %}
         <span style="display: flex;align-items: center;justify-content: center;">
           {% if connect %}
-          <a href="" class="btn btn-sm btn-success success-gradient">У Вас в друзьях</a>
+          <div class="btn-group">
+              <button type="button" class="btn btn-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  У Вас в друзьях
+              </button>
+              <div class="dropdown-menu" x-placement="bottom-start">
+                  <a class="dropdown-item" href="#">Убрать из друзей</a>
+              </div>
+          </div>
           {% endif %}
           {% if connect2 %}
-          <a href="" class="btn btn-sm btn-success success-gradient">У Вас в друзьях</a>
+          <div class="btn-group">
+              <button type="button" class="btn btn-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  У Вас в друзьях
+              </button>
+              <div class="dropdown-menu" x-placement="bottom-start">
+                  <a class="dropdown-item" href="#">Убрать из друзей</a>
+              </div>
+          </div>
           {% endif %}
           {% if not connect and not connect2 %}
-          <a href="" class="btn btn-sm btn-success success-gradient">Добавить</a>
+          <a href="" class="btn btn-sm btn-success success-gradient">Добавить в друзья</a>
           {% endif %}
           &nbsp;
-          <a href="" class="btn btn-sm btn-warning warning-gradient ml-2">Написать</a>
+          <a href="" class="btn btn-sm btn-warning warning-gradient ml-2">Написать сообщение</a>
 
         </span>
         {% endif %}
@@ -76,7 +90,7 @@
                 </button>
                 <div class="dropdown-menu" x-placement="bottom-start">
                     <a class="dropdown-item" data-js="avatar_change" href="#">Аватар</a>
-                    <a class="dropdown-item" href="{% url 'user_general_form' user.pk %}">Контакты</a>
+                    <a class="dropdown-item" href="{% url 'user_general_form' user.pk %}">Мои контакты</a>
                     <a class="dropdown-item" href="{% url 'user_about_form' user.pk %}">Обо мне</a>
                     <a class="dropdown-item" href="{% url 'user_design' user.pk %}">Внешний вид</a>
                 </div>
