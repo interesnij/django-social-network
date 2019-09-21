@@ -18,7 +18,7 @@
           У Вас в друзьях
       </button>
       <div class="dropdown-menu" x-placement="bottom-start">
-          <a class="dropdown-item connect_delete" href="#">Убрать из друзей</a>
+          <a class="dropdown-item" href="#">Убрать из друзей</a>
       </div>
   </div>
   {% endif %}
@@ -87,7 +87,7 @@
   $('.connect_create').on('click', function() {
 
   $.ajax({
-      url: '{% url "create_connect" user.pk %}',  
+      url: '{% url "create_connect" user.pk %}',
       success: function (data) {
         $('#button_reload').html('').load("{% url 'profile_button_reload' user.pk %}");
       },
