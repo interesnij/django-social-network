@@ -118,7 +118,7 @@ $('[data-action="remove"]').click(remove);
   $.ajax({
       url: '{% url "delete_follow" user.pk %}',
       success: function (data) {
-        $('#button_reload').html('').load("profile_button_reload");
+        $('#button_reload').html('').load("{% url 'create_follow' user.pk %}");
       },
       error: function(data) {
         console.log("Все не ок")
