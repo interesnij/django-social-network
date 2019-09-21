@@ -8,7 +8,7 @@
           У Вас в друзьях
       </button>
       <div class="dropdown-menu" x-placement="bottom-start">
-          <a class="dropdown-item connect_delete" href="#">Убрать из друзей</a>
+          <a class="dropdown-item " href="#">Убрать из друзей</a>
       </div>
   </div>
   {% endif %}
@@ -18,7 +18,7 @@
           У Вас в друзьях
       </button>
       <div class="dropdown-menu" x-placement="bottom-start">
-          <a class="dropdown-item connect_delete" href="#">Убрать из друзей</a>
+          <a class="dropdown-item connect_delete2" href="#">Убрать из друзей</a>
       </div>
   </div>
   {% endif %}
@@ -98,9 +98,9 @@
   });
 </script>
 <script>
-  $('.connect_delete').on('click', function() {
+  $('.connect_delete2').on('click', function() {
   $.ajax({
-      url: '{% url "delete_connect" user.pk %}',
+      url: '{% url "delete_connect2" user.pk %}',
       success: function (data) {
         $('#button_reload').html('').load("{% url 'profile_button_reload' user.pk %}");
       },

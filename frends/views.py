@@ -42,7 +42,7 @@ class ConnectCreate(TemplateView):
 		return super(ConnectCreate,self).get(request,*args,**kwargs)
 
 
-class ConnectDelete(TemplateView):
+class ConnectDelete2(TemplateView):
 	template_name = "connect_delete.html"
 	success_url = "/"
 
@@ -58,4 +58,4 @@ class ConnectDelete(TemplateView):
 			Follow.objects.create(user=self.target_user, followed_user=request.user)
 		else:
 			return HttpResponse("Пользователь уже удален :-)")
-		return super(ConnectDelete,self).get(request,*args,**kwargs)
+		return super(ConnectDelete2,self).get(request,*args,**kwargs)
