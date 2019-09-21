@@ -95,9 +95,9 @@
               </div>
           </div>
           {% endif %}
-          {% if not connect and not connect2 %}
+          {% if not connect and not connect2 %}{% if not follow and not follow2 %}
           <a href="#" id="follow_create" class="btn btn-sm btn-success success-gradient">Добавить в друзья</a>
-          {% endif %}
+          {% endif %}{% endif %}
           </span>
 
         <span style="display: flex;align-items: center;justify-content: center;">
