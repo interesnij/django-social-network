@@ -28,15 +28,14 @@ class ConnectCreate(TemplateView):
 	template_name = "connect_add.html"
 	success_url = "/"
 	def get(self,request,*args,**kwargs):
-		self.user=request.user
 		self.target_user = Follow.objects.get(pk=self.kwargs["pk"])
 		try:
-			self.connect = Connect.objects.get(target_user=self.target_user,user=self.user)
+			self.connect = Connect.objects.get(target_user=self.target_user,user=request.user)
 		except:
 			self.connect = None
-		if not self.connect and self.target_user != self.user:
-			Connect.objects.create(target_user=self.target_user, user=self.user)
-			fol=Follow.objects.get(followed_user=request.user, user=self.user)
+		if not self.connect and self.target_user != request.user:
+			Connect.objects.create(target_user=self.target_user, user=request.user)
+			fol=Follow.objects.get(followed_user=self.target_user, user=request.user)
 			fol.delete()
 		else:
 			return HttpResponse("Пользователь уже с Вами дружит :-)")
@@ -48,16 +47,15 @@ class ConnectDelete(TemplateView):
 	success_url = "/"
 
 	def get(self,request,*args,**kwargs):
-		self.user=request.user
 		self.target_user = Follow.objects.get(pk=self.kwargs["pk"])
 		try:
-			self.connect = Connect.objects.get(target_user=self.target_user,user=self.user)
+			self.connect = Connect.objects.get(target_user=self.target_user,user=request.user)
 		except:
 			self.connect = None
-		if self.connect and self.target_user != self.user:
-			conn=Connect.objects.get(target_user=self.target_user, user=self.user)
+		if self.connect and self.target_user != request.user:
+			conn=Connect.objects.get(target_user=self.target_user, request.user)
 			conn.delete()
-			Follow.objects.create(followed_user=request.user, user=self.user)
+			Follow.objects.create(followed_user=target_user, request.user)
 		else:
 			return HttpResponse("Пользователь уже с Вами дружит :-)")
 		return super(ConnectCreate,self).get(request,*args,**kwargs)
