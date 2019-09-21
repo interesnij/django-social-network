@@ -68,9 +68,19 @@
         </span>
         {% endif %}
         {% if user == request.user and request.user.is_authenticated %}
-        <span style="display: flex;align-items: center;justify-content: center;">
-        <a href="{% url 'user_general_form' user.pk %}" class="btn btn-sm btn-warning warning-gradient ml-2">Редактировать</a>
-        <a href="#" data-js="avatar_change" class="btn btn-sm btn-warning success-gradient ml-2">Аватар</a>
+
+          <span style="display: flex;align-items: center;justify-content: center;">
+            <div class="btn-group">
+                <button type="button" class="btn btn-secondary dropdown-toggle mb-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Редактировать
+                </button>
+                <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;">
+                    <a class="dropdown-item" data-js="avatar_change" href="#">Аватар</a>
+                    <a class="dropdown-item" href="{% url 'user_general_form' user.pk %}">Контакты</a>
+                    <a class="dropdown-item" href="{% url 'user_about_form' user.pk %}">Обо мне</a>
+                    <a class="dropdown-item" href="{% url 'user_design' user.pk %}">Внешний вид</a>
+                </div>
+            </div>
         </span>
         &nbsp;
         {% endif %}
