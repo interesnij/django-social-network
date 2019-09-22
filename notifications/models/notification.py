@@ -198,7 +198,7 @@ def notification_handler(actor, recipient, verb, **kwargs):
         for user in recipient:
             Notification.objects.create(
                 actor=actor,
-                recipient=User.objects.get(username=user),
+                recipient=User.objects.get(username=user.username),
                 verb=verb,
                 action_object=kwargs.pop('action_object', None)
             )
