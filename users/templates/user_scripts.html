@@ -32,7 +32,6 @@
         var dislike = like.next().next();
         payload = {
             'like': like,
-            'csrf_token': csrftoken
           }
         $.ajax({
             url: "/posts/like/" + pk + "/",
