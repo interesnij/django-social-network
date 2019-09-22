@@ -33,6 +33,7 @@
         payload = {
             'like': like,
             'csrf_token': csrftoken
+          }
         $.ajax({
             url: "/posts/like/" + pk + "/",
             type: 'POST',
