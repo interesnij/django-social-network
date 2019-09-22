@@ -170,6 +170,6 @@ def post_comment(request):
 @require_http_methods(["POST"])
 def update_interactions(request):
     data_point = request.POST['id_value']
-    post = Post.objects.get(pk=data_point) 
+    post = Post.objects.get(uuid=data_point) 
     data = {'likes': post.votes.likes.all(), 'dislikes': post.votes.dislikes.all(), 'comments': post.comments.all()}
     return JsonResponse(data)
