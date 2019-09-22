@@ -1,10 +1,8 @@
 $(function () {
 
-
     $("#replyPosts").click(function () {
-        // Ajax call to register a reply to any given News object.
         $.ajax({
-            url: '/users/posts/post-comment/',
+            url: '/posts/posts/post-comment/',
             data: $("#replyPostsForm").serialize(),
             type: 'POST',
             cache: false,
@@ -23,7 +21,7 @@ $(function () {
         var posts = $(post).closest("div").attr("posts-id");
         $("#newsThreadModal").modal("show");
         $.ajax({
-            url: '/users/get-thread/',
+            url: '/posts/get-thread/',
             data: {'posts': posts},
             cache: false,
             beforeSend: function () {

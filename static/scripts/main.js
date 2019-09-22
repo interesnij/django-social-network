@@ -1,18 +1,15 @@
 "use strict";
 $(document).ready(function () {
-    /* hide loader if 3sec or more time */
     setTimeout(function () {
         $(".loader-logo").fadeOut();
     }, 3000);
 
-    /* left sidebar open */
     $('#left-menu').on('click', function () {
         $('body').toggleClass('sidebar-left-close');
     });
     $('.sidebar-left + div.backdrop').on('click', function () {
         $('body').addClass('sidebar-left-close');
     });
-
 
     var url = window.location;
 
@@ -33,7 +30,6 @@ $(document).ready(function () {
         }
     });
 
-    /* new message hide color */
     $('.new').on('click', function () {
         var itemnew = $(this);
         setTimeout(function () {
@@ -41,13 +37,10 @@ $(document).ready(function () {
         }, 500);
     });
 
-
-    /* sidebar hide below 1100px resolution  */
     if ($(window).width() <= 1100) {
         $('body').addClass('sidebar-left-close');
     }
 
-    /* accessiblity font size change  */
     var fontsize = 16;
     $('.font-big').on('click', function () {
         fontsize = fontsize + 1;
@@ -69,8 +62,6 @@ $(document).ready(function () {
 
     });
 
-
-    /* flip color setting block*/
     function setIntervalX(callback, delay, repetitions) {
         var x = 0;
         var intervalID = window.setInterval(function () {
@@ -87,13 +78,10 @@ $(document).ready(function () {
         }, 1000)
     }, 2000, 3);
 
-    /* fullscreen feature */
     $('.fullscreenbtn').on('click', function () {
         $(this).closest('.fullscreen').toggleClass('activefullscreen');
     });
 
-
-    /* full container active */
     $('#boxlayout').on('click', function () {
         if ($(this).is(':checked') === true) {
             $('body').addClass('boxed-page sidebar-left-close');
@@ -102,7 +90,6 @@ $(document).ready(function () {
         }
     });
 
-    /* chat window minimize */
     $('.chat-minmax').on('click', function () {
         $(this).closest('.chat-window').toggleClass('active');
         $(this).toggleClass('active');
@@ -183,7 +170,6 @@ $(document).ready(function () {
 
 });
 
-/* swiper control */
 var mySwiper = new Swiper('.swiper-story', {
     slidesPerView: 'auto',
     centeredSlides: false,
@@ -217,7 +203,7 @@ $(window).on("load resize", function () {
 
 
 $(window).on('load', function () {
-    /* hide loader  */
+
     $('.loader').hide();
     $('.animatejack').addClass('jackInTheBox');
     $('.wrapper').css('padding-bottom', $('body > footer').outerHeight() );
