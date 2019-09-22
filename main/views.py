@@ -28,6 +28,7 @@ class VotesView(View):
 
     def post(self, request, pk):
         obj = self.model.objects.get(pk=pk)
+		obj.notification_like(1)
         try:
             likedislike = LikeDislike.objects.get(content_type=ContentType.objects.get_for_model(obj), object_id=obj.id, user=request.user)
             if likedislike.vote is not self.vote_type:
