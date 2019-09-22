@@ -94,7 +94,7 @@ class Post(models.Model):
         return self.get_thread().count()
 
     def count_likers(self):
-        return self.votes.LIKE.count()
+        return self.votes.1.count() 
 
     def count_dislikers(self):
         return self.votes.dislikes.count()
