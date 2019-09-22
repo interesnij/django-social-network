@@ -20,7 +20,7 @@
    <div class="col text-center">
      <div class="media">
        <div class="media-body">
-         <h4 class="content-color-primary mb-0">{% if communities_count %}<a href="{% url 'communities' pk=user.pk %}">{% if communities_count %}{{ communities_count }}</a>{% else %}Нет{% endif %}</h4>
+         <h4 class="content-color-primary mb-0">{% if communities_count %}<a href="{% url 'communities' pk=user.pk %}">{{ communities_count }}</a>{% else %}Нет{% endif %}</h4>
          <p class="content-color-secondary mb-0">Групп</p>
        </div>
      </div>
