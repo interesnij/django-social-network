@@ -82,7 +82,7 @@ function checkNotifications() {
     });
 };
 function update_social_activity (id_value) {
-    let newsToUpdate = $("[post-id=" + id_value + "]");
+    let postToUpdate = $("[post-id=" + id_value + "]");
     payload = {
         'id_value': id_value,
     };
@@ -91,10 +91,10 @@ function update_social_activity (id_value) {
         data: payload,
         type: 'POST',
         cache: false,
-        success: function (data) { 
-            $(".like", newsToUpdate).text(data.likes);
-            $(".dislike", newsToUpdate).text(data.dislikes);
-            $(".comment-count", newsToUpdate).text(data.comments);
+        success: function (data) {
+            $(".like-count", postToUpdate).text(data.likes);
+            $(".dislike-count", postToUpdate).text(data.dislikes);
+            $(".comment-count", postToUpdate).text(data.comments);
         },
     });
 };
