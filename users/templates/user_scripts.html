@@ -38,9 +38,9 @@
             type: 'POST',
             cache: false,
             data: payload,
-            success: function(json) {
-                like.find("[data-count='like']").text(json.like_count);
-                dislike.find("[data-count='dislike']").text(json.dislike_count);
+            success: function(data) {
+                like.find("[data-count='like']").text(data.like_count);
+                dislike.find("[data-count='dislike']").text(data.dislike_count);
                 $(like).addClass("text-success");
 
                 $(dislike).removeClass("text-danger");
