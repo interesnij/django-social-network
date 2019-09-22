@@ -66,7 +66,7 @@ class Post(models.Model):
             async_to_sync(channel_layer.group_send)('notifications', payload)
 
     def notification_like(self, creator):
-        notification_handler(creator, self.user,Notification.LIKED, action_object=self,id_value=str(self.uuid),key='social_update')
+        notification_handler(creator, self.creator,Notification.LIKED, action_object=self,id_value=str(self.uuid),key='social_update')
 
     def notification_dislike(self, creator):
         notification_handler(creator, self.user,Notification.DISLIKED, action_object=self,id_value=str(self.uuid),key='social_update')
