@@ -14,7 +14,7 @@
 <div class="col-12 col-md-8">
 <br><br><br>
 <div class="input-group mb-3">
-  <input type="text" class="form-control" placeholder="Поиск людей" aria-label="Recipient's username">
+  <input type="text" class="form-control" placeholder="Поиск друзей" aria-label="Recipient's username">
   <div class="input-group-append">
     <button class="btn btn-outline-link" type="button">Искать</button>
   </div>
@@ -100,7 +100,7 @@
         </div>
         <div class="card-body px-0 py-0">
           <ul class="list-group border-top border-bottom list-group-flush">
-            {% for object in all_user %}
+            {% for object in featured_users %}
               <li class="list-group-item">
                   <div class="media">
                     <figure>
@@ -124,19 +124,6 @@
         <br><br>
   </div>
 
-  <div class="card mb-2">
-        <div class="card-header">
-            <div class="media">
-                <div class="icon-circle icon-30 bg-light-danger mr-3">
-                    <i class="material-icons">search</i>
-                </div>
-                <div class="media-body">
-                    <h5 class="mt-1">Поиск друзей</h5>
-                </div>
-            </div>
-        </div>
-        <br><br>
-  </div>
 </div>
 </div>
 {% endblock %}
