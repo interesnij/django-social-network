@@ -57,7 +57,7 @@ function update_social_activity (id_value) {
         'id_value': id_value,
     };
     $.ajax({
-        url: '/posts/update-interactions/',
+        url: 'ws://xn--b1afgj5al1e.xn--p1acf:8001/posts/update-interactions/', 
         data: payload,
         type: 'POST',
         cache: false,
