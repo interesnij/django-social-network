@@ -23,15 +23,15 @@
                     <a class="btn header-color-secondary btn-icon dropdown-toggle caret-none"
                        href="#"
                        role="button"
-                       id="notifications"
+                       id="dropdownnotification"
                        data-toggle="dropdown"
                        aria-haspopup="true"
                        aria-expanded="false">
                        <i class="material-icons">notifications_none</i>
-                       <span class="status-number bg-danger text-white">9+</span>
+                       <span id="notifications" class="status-number bg-danger text-white">9+</span>
                     </a>
 
-                    <div class="dropdown-menu notification-dropdown" aria-labelledby="notifications">
+                    <div class="dropdown-menu notification-dropdown" aria-labelledby="dropdownnotification">
                       {% if notifications %}
                         <a href="#" class="media  pink-gradient-active">
                             <figure class="avatar avatar-40">
