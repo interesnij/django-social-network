@@ -86,6 +86,12 @@ class Post(models.Model):
             creator, parent.creator, Notification.REPLY, action_object=reply_post,
             id_value=str(parent.uuid), key='social_update')
 
+    def get_parent(self):
+        if self.parent:
+            return self.parent
+        else:
+            return self
+
     def get_thread(self):
         parent = self.get_parent()
         return parent.thread.all()
