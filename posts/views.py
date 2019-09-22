@@ -110,7 +110,7 @@ class PostLikeView(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.post_like = Post.objects.get(pk=self.kwargs["pk"])
-        self.post_like.notification_like(self.post_like.creator, request.user)
+        self.post_like.notification_like(request.user)
         return super(PostLikeView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
