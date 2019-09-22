@@ -214,7 +214,7 @@ def notification_handler(actor, recipient, verb, **kwargs):
                 action_object=kwargs.pop('action_object', None)
             )
 
-    elif isinstance(recipient, actor):
+    elif isinstance(recipient, User):
         Notification.objects.create(
             actor=actor,
             recipient=recipient,
