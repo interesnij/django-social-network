@@ -91,7 +91,7 @@ function update_social_activity (id_value) {
         data: payload,
         type: 'POST',
         cache: false,
-        success: function (data) {
+        success: function (data) { 
             $(".like", newsToUpdate).text(data.likes);
             $(".dislike", newsToUpdate).text(data.dislikes);
             $(".comment-count", newsToUpdate).text(data.comments);

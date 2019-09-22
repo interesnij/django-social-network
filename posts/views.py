@@ -1,6 +1,5 @@
 from django.views.generic.base import TemplateView
 from posts.forms import PostHardForm, PostLiteForm, PostMediumForm
-from django.http import HttpResponse
 from users.models import User
 from django.template.loader import render_to_string
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -8,6 +7,9 @@ from posts.helpers import ajax_required, AuthorRequiredMixin
 from posts.models import Post
 from django.views.generic import DeleteView
 from django.urls import reverse_lazy
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
+from django.views.decorators.http import require_http_methods
 
 
 class PostsView(TemplateView):
@@ -129,3 +131,45 @@ class PostDislikeView(TemplateView):
         context=super(PostDislikeView,self).get_context_data(**kwargs)
         context["post_dislike"]=self.post_dislike
         return context
+
+
+@login_required
+@require_http_methods(["GET"])
+def get_thread(request):
+    """Returns a list of news with the given news as parent."""
+    post_id = request.GET['post']
+    post = Post.objects.get(pk=post_id)
+    posts_html = render_to_string("profile/post.html", {"post": post})
+    thread_html = render_to_string(
+        "profile/post_thread.html", {"thread": post.get_thread()})
+    return JsonResponse({
+        "uuid": post_id,
+        "post": posts_html,
+        "thread": thread_html,
+    })
+
+@login_required
+@require_http_methods(["POST"])
+def post_comment(request):
+    """A function view to implement the post functionality with AJAX, creating
+    News instances who happens to be the children and commenters of the root
+    post."""
+    user = request.user
+    post = request.POST['reply']
+    par = request.POST['parent']
+    parent = Post.objects.get(pk=par)
+    post = post.strip()
+    if post:
+        parent.reply_this(user, post)
+        return JsonResponse({'comments': parent.count_thread()})
+
+    else:
+        return HttpResponseBadRequest()
+
+@login_required
+@require_http_methods(["POST"])
+def update_interactions(request):
+    data_point = request.POST['id_value']
+    post = Post.objects.get(pk=data_point) 
+    data = {'likes': post.votes.likes.all(), 'dislikes': post.votes.dislikes.all(), 'comments': post.comments.all()}
+    return JsonResponse(data)

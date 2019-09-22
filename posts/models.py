@@ -90,15 +90,6 @@ class Post(models.Model):
         parent = self.get_parent()
         return parent.thread.all()
 
-    def count_thread(self):
-        return self.get_thread().count()
-
-    def count_likers(self):
-        return self.liked.count()
-
-    def get_likers(self):
-        return self.liked.all()
-
 
     class Meta:
         ordering=["-created"]
