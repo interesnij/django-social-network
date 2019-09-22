@@ -47,10 +47,3 @@
 
     {% include 'generic/info.html' %}
 </div>
-
-<script>
-  post = {{ object }};
-  $('.like').on('click', function() {
-  post.notification_like({{ object.creator }})
-}
-</script>
