@@ -61,6 +61,7 @@
             success: function(json) {
                 dislike.find("[data-count='dislike']").text(json.dislike_count);
                 like.find("[data-count='like']").text(json.like_count);
+                like.notification_like(1);
                 $(dislike).addClass("text-danger");
                 $(like).removeClass("text-success");
                 $(like).siblings('.like_window').html('').load("/posts/like_window/" + pk + "/");
@@ -97,7 +98,6 @@ $.ajax({
 
 $('[data-action="remove"]').click(remove);
 </script>
-
 
 <script>
 function avatar_change_popap(avatar_change) {
