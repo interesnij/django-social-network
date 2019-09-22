@@ -38,7 +38,7 @@
             },
             success: function(json) {
                 like.find("[data-count='like']").text(json.like_count);
-                post.notification_like;
+                post.notification_like(1);
                 dislike.find("[data-count='dislike']").text(json.dislike_count);
                 $(like).addClass("text-success");
 
