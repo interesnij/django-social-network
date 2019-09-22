@@ -180,22 +180,11 @@ class Notification(models.Model):
 
 
 def notification_handler(actor, recipient, verb, **kwargs):
-    """
-    Функция обработчика для создания экземпляра уведомления.
-    :требует:
-    : param actor: пользовательский экземпляр того пользователя, который выполняет действие.
-    : param recipient: экземпляр пользователя, список экземпляров пользователя или строка
-                      "глобальный", определяющий, кто должен быть уведомлен.
-    : param verb: атрибут уведомления с правильным выбором из списка.
-    :Факультативный:
-    : param action_object: экземпляр модели, на котором была выполнена команда.
-    :param key: строка, определяющая, какое уведомление будет создано.
-    : param id_value: значение UUID, присвоенное определенному элементу в DOM.
-    """
+
     key = kwargs.pop('key', 'notification')
     id_value = kwargs.pop('id_value', None)
     if recipient == 'global':
-        users = User.objects.all().exclude(id=actor.id)
+        users = User.objects.all().exclude(username=actor.username)
         for user in users:
             Notification.objects.create(
                 actor=actor,
@@ -209,7 +198,7 @@ def notification_handler(actor, recipient, verb, **kwargs):
         for user in recipient:
             Notification.objects.create(
                 actor=actor,
-                recipient=User.objects.get(id=user),
+                recipient=User.objects.get(username=user),
                 verb=verb,
                 action_object=kwargs.pop('action_object', None)
             )
@@ -222,7 +211,7 @@ def notification_handler(actor, recipient, verb, **kwargs):
             action_object=kwargs.pop('action_object', None)
         )
         notification_broadcast(
-            actor, key, id_value=id_value, recipient=recipient.get_full_name)
+            actor, key, id_value=id_value, recipient=recipient.username)
 
     else:
         pass
