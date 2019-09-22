@@ -38,16 +38,17 @@ class VotesView(View):
 			else:
 				likedislike.delete()
 				result = False
-        except LikeDislike.DoesNotExist:
-            obj.votes.create(user=request.user, vote=self.vote_type)
-            result = True
 
-        return HttpResponse(
-            json.dumps({
-                "result": result,
-                "like_count": obj.votes.likes().count(),
-                "dislike_count": obj.votes.dislikes().count(),
-                "sum_rating": obj.votes.sum_rating()
-            }),
-            content_type="application/json"
-        )
+		except LikeDislike.DoesNotExist:
+			obj.votes.create(user=request.user, vote=self.vote_type)
+			result = True
+
+		return HttpResponse(
+			json.dumps({
+				"result": result,
+				"like_count": obj.votes.likes().count(),
+				"dislike_count": obj.votes.dislikes().count(),
+				"sum_rating": obj.votes.sum_rating()
+			}),
+			content_type="application/json"
+		)
