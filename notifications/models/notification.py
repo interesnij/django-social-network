@@ -222,7 +222,7 @@ def notification_handler(actor, recipient, verb, **kwargs):
             action_object=kwargs.pop('action_object', None)
         )
         notification_broadcast(
-            actor, key, id_value=id_value, recipient=recipient.det_full_name)
+            actor, key, id_value=id_value, recipient=recipient.get_full_name)
 
     else:
         pass
