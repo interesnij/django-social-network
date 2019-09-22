@@ -40,7 +40,7 @@
             cache: false,
             data: payload,
             success: function(data) {
-                like.find("[data-count='like']").text(data.likes);
+                like.find("[data-count='like']").text(data.like_count);
                 dislike.find("[data-count='dislike']").text(data.dislike_count);
                 $(like).addClass("text-success");
 
@@ -53,19 +53,23 @@
     }
     function dislike() {
         var dislike = $(this);
+        var post = $('.infinite-item').attr("posts-id");
         var type = dislike.data('type');
         var pk = dislike.data('id');
         var action = dislike.data('action');
         var like = dislike.prev().prev();
+        payload = {
+            'post': post,
+            'csrf_token': csrftoken
+          }
         $.ajax({
             url: "/posts/dislike/" + pk + "/",
             type: 'POST',
-            data: {
-                'obj': pk
-            },
-            success: function(json) {
-                dislike.find("[data-count='dislike']").text(json.dislike_count);
-                like.find("[data-count='like']").text(json.like_count);
+            cache: false,
+            data: payload,
+            success: function(data) {
+                dislike.find("[data-count='dislike']").text(data.dislike_count);
+                like.find("[data-count='like']").text(data.like_count);
                 $(dislike).addClass("text-danger");
                 $(like).removeClass("text-success");
                 $(like).siblings('.like_window').html('').load("/posts/like_window/" + pk + "/");
