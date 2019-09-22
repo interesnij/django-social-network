@@ -5,7 +5,7 @@ from main.models import LikeDislike
 from main.views import VotesView
 from posts.models import Post, PostComment
 from django.contrib.auth.decorators import login_required
-from users.views import get_thread, post_comment, update_interactions
+from posts.views import get_thread, post_comment, update_interactions
 
 
 urlpatterns = [
