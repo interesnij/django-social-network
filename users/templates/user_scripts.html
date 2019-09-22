@@ -40,7 +40,7 @@
             cache: false,
             data: payload,
             success: function(data) {
-                like.find("[data-count='like']").text(data.like_count);
+                like.find("[data-count='like']").text(data.likes);
                 dislike.find("[data-count='dislike']").text(data.dislike_count);
                 $(like).addClass("text-success");
 
