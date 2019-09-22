@@ -25,6 +25,7 @@
 <script>
     function like() {
         var like = $(this);
+        var post = $('.infinite-item').attr("posts-id");
         var type = like.data('type');
         var pk = like.data('id');
         var action  = like.data('action');
@@ -37,6 +38,7 @@
             },
             success: function(json) {
                 like.find("[data-count='like']").text(json.like_count);
+                post.notification_like();
                 dislike.find("[data-count='dislike']").text(json.dislike_count);
                 $(like).addClass("text-success");
 
