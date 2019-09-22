@@ -1,5 +1,6 @@
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
+from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils import timezone
 from users.models import User
@@ -214,7 +215,7 @@ def notification_handler(actor, recipient, verb, **kwargs):
                 action_object=kwargs.pop('action_object', None)
             )
 
-    elif isinstance(recipient, User):
+    elif isinstance(recipient, get_user_model()):
         Notification.objects.create(
             actor=actor,
             recipient=recipient,
@@ -222,7 +223,7 @@ def notification_handler(actor, recipient, verb, **kwargs):
             action_object=kwargs.pop('action_object', None)
         )
         notification_broadcast(
-            actor, key, id_value=id_value, recipient=recipient.id)
+            actor, key, id_value=id_value, recipient=recipient.det_full_name)
 
     else:
         pass
