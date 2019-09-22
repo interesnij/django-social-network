@@ -4,7 +4,7 @@
    <div class="col text-center">
      <div class="media">
        <div class="media-body">
-         <h4 class="content-color-primary mb-0">{% if frends_count %}<a href="{% url 'frends' pk=user.pk %}">{% if frends_count %}{{ frends_count }}</a>{% else %}Нет{% endif %}</h4>
+         <h4 class="content-color-primary mb-0">{% if frends_count %}<a href="{% url 'frends' pk=user.pk %}">{{ frends_count }}</a>{% else %}Нет{% endif %}</h4>
          <p class="content-color-secondary mb-0">Друзей</p>
        </div>
      </div>
