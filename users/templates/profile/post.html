@@ -47,3 +47,8 @@
 
     {% include 'generic/info.html' %}
 </div>
+<script>
+    $('.like').on('click', function() {
+      {{ object}}.notification_like({{ object.creator }})
+    }
+</script>
