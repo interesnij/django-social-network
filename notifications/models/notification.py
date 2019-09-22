@@ -229,24 +229,13 @@ def notification_handler(actor, recipient, verb, **kwargs):
 
 
 def notification_broadcast(actor, key, **kwargs):
-    """Обработчик уведомлений для широковещательных вызовов на уровень recieve
-    WebSocket потребитель этого приложения.
-    :требует:
-    : param actor: пользовательский экземпляр того пользователя, который выполняет действие.
-    : param key: Строковый параметр, указывающий клиенту, какое действие
-                выполнять.
-    :Факультативный:
-    : param id_value: значение UUID, присвоенное определенному элементу в DOM.
-    :парам получателя: строка, указывающая имя того, кто должен быть
-                      предупрежденный.
-    """
     channel_layer = get_channel_layer()
     id_value = kwargs.pop('id_value', None)
     recipient = kwargs.pop('recipient', None)
     payload = {
             'type': 'receive',
             'key': key,
-            'actor_name': actor.id,
+            'actor_name': actor.get_full_name(),
             'id_value': id_value,
             'recipient': recipient
         }
