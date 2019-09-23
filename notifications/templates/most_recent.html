@@ -1,7 +1,7 @@
 {% load staticfiles %}<!DOCTYPE html>
   {% if notifications %}
     {% for notification in notifications %}
-      <p class="media pink-gradient-active">
+      <a class="media pink-gradient-active">
         <figure class="avatar avatar-40">
           {% if notification.actor.profile.avatar %}
             <img src="{{ notification.actor.profile.avatar.url }}" alt="image">
@@ -10,10 +10,10 @@
           {% endif %}
         </figure>
         <div class="media-body">
-            <h5 class="mt-0">{{ notification.actor }} - {{ notification.verb }}</h5>
+            <h5 class="mt-0">{{ notification|safe }}</h5>
             <p>{{ notification.timestamp }}</p>
         </div>
-      </p>
+      </a>
     {% endfor %}
     <a class="text-center float-left" href="{% url 'unread' %}">Смотреть все</a>
     <a class="text-center float-right" href="{% url 'mark_all_read' %}">Пометить прочитанными</a>
