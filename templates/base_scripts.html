@@ -46,8 +46,6 @@ function checkNotifications() {
         success: function (data) {
             if (!data.includes(emptyMessage)) {
                 $("#notification").addClass("btn-danger");
-
-                $(".notification-dropdown").html("").load("{% url 'latest_notifications' %}");
             }
         },
     });
@@ -79,6 +77,7 @@ $("#notification").click(function () {
             cache: false,
             success: function (data) {
                 $(".notification-dropdown").toggleClass("show");
+                $(".notification-dropdown").html("").load("{% url 'latest_notifications' %}");
                 $("#notification").removeClass("btn-danger")
             },
         });
