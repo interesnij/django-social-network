@@ -57,7 +57,7 @@ function update_social_activity (id_value) {
         'id_value': id_value,
     };
     $.ajax({
-        url: 'ws://xn--b1afgj5al1e.xn--p1acf:8001/posts/update-interactions/', 
+        url: 'ws://xn--b1afgj5al1e.xn--p1acf:8001/posts/update-interactions/',
         data: payload,
         type: 'POST',
         cache: false,
@@ -121,7 +121,7 @@ webSocket.listen(function(event) {
             update_social_activity(event.id_value);
             break;
         case "additional_post":
-            if (event.actor_name !== "{{ request.user }}") {
+            if (event.actor_name !== currentUser) {
                 $(".stream-update").show();
             }
             break;
@@ -133,3 +133,6 @@ webSocket.listen(function(event) {
 });
 </script>
 {% endif %}
+<script type="text/javascript">
+          var currentUser = "{{ request.user.username }}"
+        </script>
