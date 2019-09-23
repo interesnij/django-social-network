@@ -36,7 +36,7 @@ class FollowCreate(TemplateView):
 
 		if not self.follows and self.followed_user != request.user:
 			new_follow = Follow.objects.create(followed_user=self.followed_user, user=request.user)
-			new_follow.notification_follow(self.followed_user)
+			new_follow.notification_follow(request.user)
 		else:
 			return HttpResponse("Подписка уже есть :-)")
 		return super(FollowCreate,self).get(request,*args,**kwargs)
