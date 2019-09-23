@@ -32,26 +32,7 @@
                     </a>
 
                     <div class="dropdown-menu notification-dropdown" aria-labelledby="notification">
-                      {% if notifications %}
-                        <a href="#" class="media pink-gradient-active">
-                            <figure class="avatar avatar-40">
-                                <img src="{% static 'images/user.png' %}" alt="Generic placeholder image">
-                            </figure>
-                            <div class="media-body">
-                              {{ notification.get_icon }}
-                                <h5 class="mt-0">{{ notification|safe }}</h5>
-                                <p>{{ notification.timestamp|naturaltime }}</p>
-                            </div>
-                        </a>
-                        <br>
-                        <p class="mt-0" style="display: flex;align-items: center;justify-content: center;">
-                          <a href="{% url 'unread' %}">Показать все уведомления</a>
-                          <a href="{% url 'mark_all_read' %}">Отметить как прочитанные</a>
-                        </p>
-                        {% else %}
-                          <br>
-                          <p class="text-center">Нет непрочитанных уведомлений</p>
-                        {% endif %}
+
                     </div>
 
                 </div>
