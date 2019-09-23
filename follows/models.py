@@ -1,5 +1,7 @@
 from django.db import models
 from users.models import User
+from notifications.models.notification import Notification, notification_handler
+
 
 
 class Follow(models.Model):
