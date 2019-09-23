@@ -74,9 +74,9 @@ $('#notification').popover({
     container: "body" ,
     placement: "bottom",
 });
-$("#dropdownnotification").click(function () {
+$("#notification").click(function () {
     if ($(".popover").is(":visible")) {
-        $("#dropdownnotification").popover('hide');
+        $("#notification").popover('hide');
         checkNotifications();
     }
     else {
@@ -92,8 +92,8 @@ $("#dropdownnotification").click(function () {
                     placement: "bottom",
                     content: data,
                 });
-                $("#dropdownnotification").popover('show');
-                $("#dropdownnotification").removeClass("btn-danger")
+                $("#notification").popover('show');
+                $("#notification").removeClass("btn-danger")
             },
         });
     }
