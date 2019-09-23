@@ -75,12 +75,8 @@ $('#notification').dropdown({
     placement: "bottom",
 });
 $("#notification").click(function () {
-    if ($(".popover").is(":visible")) {
-        $("#notification").dropdown('hide');
-        checkNotifications();
-    }
-    else {
-        $("#otification").addClass('show');
+
+        $("#notification").addClass('show');
         $.ajax({
             url: '/notifications/latest-notifications/',
             cache: false,
@@ -96,7 +92,6 @@ $("#notification").click(function () {
                 $("#notification").removeClass("btn-danger")
             },
         });
-    }
     return false;
 });
 let ws_path = "ws://xn--b1afgj5al1e.xn--p1acf:8001/notifications/";
