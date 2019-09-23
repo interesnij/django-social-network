@@ -68,7 +68,7 @@ function update_social_activity (id_value) {
     });
 };
 checkNotifications();
-$('#notification').popover({
+$('#notification').dropdown({
     html: true,
     trigger: 'manual',
     container: "body" ,
@@ -76,23 +76,23 @@ $('#notification').popover({
 });
 $("#notification").click(function () {
     if ($(".popover").is(":visible")) {
-        $("#notification").popover('hide');
+        $("#notification").dropdown('hide');
         checkNotifications();
     }
     else {
-        $("#otification").popover('dispose');
+        $("#otification").dropdown('dispose');
         $.ajax({
             url: '/notifications/latest-notifications/',
             cache: false,
             success: function (data) {
-                $("#dropdownnotification").popover({
+                $("#dropdownnotification").dropdown({
                     html: true,
                     trigger: 'focus',
                     container: "body",
                     placement: "bottom",
                     content: data,
                 });
-                $("#notification").popover('show');
+                $("#notification").dropdown('show');
                 $("#notification").removeClass("btn-danger")
             },
         });
