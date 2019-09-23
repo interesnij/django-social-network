@@ -24,9 +24,6 @@ class NotificationQuerySet(models.query.QuerySet):
         return self.filter(unread=False)
 
     def mark_all_as_read(self, recipient=None):
-        """Mark as read any unread elements in the current queryset with
-        optional filter by recipient first.
-        """
         qs = self.unread()
         if recipient:
             qs = qs.filter(recipient=recipient)
@@ -44,8 +41,6 @@ class NotificationQuerySet(models.query.QuerySet):
         return qs.update(unread=True)
 
     def serialize_latest_notifications(self, recipient=None):
-        """Returns a serialized version of the most recent unread elements in
-        the queryset"""
         qs = self.unread()[:5]
         if recipient:
             qs = qs.filter(recipient=recipient)[:5]
@@ -54,11 +49,9 @@ class NotificationQuerySet(models.query.QuerySet):
         return notification_dic
 
     def get_most_recent(self, recipient=None):
-        """Returns the most recent unread elements in the queryset"""
         qs = self.unread()[:5]
         if recipient:
             qs = qs.filter(recipient=recipient)[:5]
-
         return qs
 
 
@@ -85,7 +78,6 @@ class Notification(models.Model):
     LOGGED_OUT = 'O'
     SIGNUP = 'U'
     REPLY = 'R'
-
 
     NOTIFICATION_TYPES = (
         (POST_COMMENT, 'Комментарий к посту'),
