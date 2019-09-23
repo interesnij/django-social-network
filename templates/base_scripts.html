@@ -41,7 +41,7 @@ $(function () {
 let emptyMessage = 'You have no unread notification';
 function checkNotifications() {
     $.ajax({
-        url: 'xn--b1afgj5al1e.xn--p1acf:8001/notifications/latest-notifications/',
+        url: '/notifications/latest-notifications/',
         cache: false,
         success: function (data) {
             if (!data.includes(emptyMessage)) {
@@ -82,7 +82,7 @@ $("#notification").click(function () {
     else {
         $("#otification").popover('dispose');
         $.ajax({
-            url: 'xn--b1afgj5al1e.xn--p1acf:8001/notifications/latest-notifications/',
+            url: '/notifications/latest-notifications/',
             cache: false,
             success: function (data) {
                 $("#dropdownnotification").popover({
