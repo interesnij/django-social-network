@@ -24,22 +24,23 @@ class FollowsListView(ListView):
 
 
 class FollowCreate(TemplateView):
-    template_name = "follow_add.html"
-    success_url = "/"
+	template_name = "follow_add.html"
+	success_url = "/"
 
-    def get(self,request,*args,**kwargs):
-        self.followed_user = User.objects.get(pk=self.kwargs["pk"])
-        try:
-            self.follows = Follow.objects.get(followed_user=self.followed_user,user=request.user)
-        except:
-            self.follows = None
+	def get(self,request,*args,**kwargs):
+		self.followed_user = User.objects.get(pk=self.kwargs["pk"])
+		try:
+			self.follows = Follow.objects.get(followed_user=self.followed_user,user=request.user)
+		except:
+			self.follows = None
 
-        if not self.follows and self.followed_user != request.user:
-            new_follow = Follow.objects.create(followed_user=self.followed_user, user=request.user)
+		if not self.follows and self.followed_user != request.user:
+			new_follow = Follow.objects.create(followed_user=self.followed_user, user=request.user)
 			new_follow.notification_follow(request.user)
-        else:
-            return HttpResponse("Подписка уже есть :-)")
-        return super(FollowCreate,self).get(request,*args,**kwargs)
+		else:
+			return HttpResponse("Подписка уже есть :-)")
+		return super(FollowCreate,self).get(request,*args,**kwargs)
+		
 
 class FollowDelete(TemplateView):
 	template_name = "follow_delete.html"
