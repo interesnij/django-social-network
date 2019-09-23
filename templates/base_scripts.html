@@ -113,10 +113,10 @@ webSocket.socket.onclose = function () {
 webSocket.listen(function(event) {
     switch (event.key) {
         case "notification":
-            $("#dropdownnotification").addClass("btn-danger");
+            $("#notification").addClass("btn-danger");
             break;
         case "social_update":
-            $("#dropdownnotification").addClass("btn-danger");
+            $("#notification").addClass("btn-danger");
             update_social_activity(event.id_value);
             break;
         case "additional_post":
