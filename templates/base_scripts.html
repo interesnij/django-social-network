@@ -45,7 +45,7 @@ function checkNotifications() {
         cache: false,
         success: function (data) {
             if (!data.includes(emptyMessage)) {
-                $("#dropdownnotification").addClass("btn-danger");
+                $("#notification").addClass("btn-danger");
             }
         },
     });
@@ -56,7 +56,7 @@ function update_social_activity (id_value) {
         'id_value': id_value,
     };
     $.ajax({
-        url: 'ws://xn--b1afgj5al1e.xn--p1acf:8001/posts/update-interactions/',
+        url: 'xn--b1afgj5al1e.xn--p1acf:8001/posts/update-interactions/',
         data: payload,
         type: 'POST',
         cache: false,
@@ -68,7 +68,7 @@ function update_social_activity (id_value) {
     });
 };
 checkNotifications();
-$('#dropdownnotification').popover({
+$('#notification').popover({
     html: true,
     trigger: 'manual',
     container: "body" ,
@@ -80,7 +80,7 @@ $("#dropdownnotification").click(function () {
         checkNotifications();
     }
     else {
-        $("#dropdownnotification").popover('dispose');
+        $("#otification").popover('dispose');
         $.ajax({
             url: '/notifications/latest-notifications/',
             cache: false,
