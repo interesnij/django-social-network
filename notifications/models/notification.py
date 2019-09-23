@@ -111,7 +111,7 @@ class Notification(models.Model):
         ordering = ["-timestamp"]
 
     def __str__(self):
-        return '{self.actor} {self.get_verb_display()} {self.time_since()} ago'
+        return '{} {} {}'.format(actor, get_verb_display(), time_since())
 
 
     def save(self, *args, **kwargs):
