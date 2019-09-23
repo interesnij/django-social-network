@@ -46,6 +46,7 @@ function checkNotifications() {
         success: function (data) {
             if (!data.includes(emptyMessage)) {
                 $("#notification").addClass("btn-danger");
+                $(".notification-dropdown").addClass("show");
                 $(".notification-dropdown").html("").load("{% url 'latest_notifications' %}");
             }
         },
