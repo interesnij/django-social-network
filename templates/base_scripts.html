@@ -46,7 +46,7 @@ function checkNotifications() {
         success: function (data) {
             if (!data.includes(emptyMessage)) {
                 $("#notification").addClass("btn-danger");
-                $(".notification-dropdown").toggleClass("show");
+
                 $(".notification-dropdown").html("").load("{% url 'latest_notifications' %}");
             }
         },
@@ -78,7 +78,7 @@ $("#notification").click(function () {
             url: '/notifications/latest-notifications/',
             cache: false,
             success: function (data) {
-
+                $(".notification-dropdown").toggleClass("show");
                 $("#notification").removeClass("btn-danger")
             },
         });
