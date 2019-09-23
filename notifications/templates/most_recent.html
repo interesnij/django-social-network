@@ -1,16 +1,7 @@
 {% load staticfiles %}<!DOCTYPE html>
-<a href="#" class="media  pink-gradient-active">
-                                    <figure class="avatar avatar-40">
-                                        <img src="img/user1.png" alt="Generic placeholder image">
-                                    </figure>
-                                    <div class="media-body">
-                                        <h5 class="mt-0">Media heading</h5>
-                                        <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin.</p>
-                                    </div>
-                                </a>
   {% if notifications %}
     {% for notification in notifications %}
-      <a class="media pink-gradient-active">
+      <p class="media pink-gradient-active">
         <figure class="avatar avatar-40">
           {% if notification.actor.profile.avatar %}
             <img src="{{ notification.actor.profile.avatar.url }}" alt="image">
@@ -19,10 +10,10 @@
           {% endif %}
         </figure>
         <div class="media-body">
-            <h5 class="mt-0">{{ notification|safe }}</h5>
+            <h5 class="mt-0">{{ notification.actor }} - {{ notification.verb }}</h5>
             <p>{{ notification.timestamp }}</p>
         </div>
-      </a>
+      </p>
     {% endfor %}
     <a class="text-center float-left" href="{% url 'unread' %}">Смотреть все</a>
     <a class="text-center float-right" href="{% url 'mark_all_read' %}">Пометить прочитанными</a>
