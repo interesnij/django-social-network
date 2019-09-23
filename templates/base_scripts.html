@@ -80,19 +80,19 @@ $("#notification").click(function () {
         checkNotifications();
     }
     else {
-        $("#otification").dropdown('dispose');
+        $("#otification").addClass('show');
         $.ajax({
             url: '/notifications/latest-notifications/',
             cache: false,
             success: function (data) {
-                $("#dropdownnotification").dropdown({
+                $("#notification").show({
                     html: true,
                     trigger: 'focus',
                     container: "body",
                     placement: "bottom",
                     content: data,
                 });
-                $("#notification").addClass('show'); 
+                $("#notification").addClass('show');
                 $("#notification").removeClass("btn-danger")
             },
         });
