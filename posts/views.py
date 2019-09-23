@@ -125,7 +125,7 @@ class PostDislikeView(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.post_dislike = Post.objects.get(pk=self.kwargs["pk"])
-        self.post_like.notification_dislike(request.user)
+        self.post_dislike.notification_dislike(request.user)
         return super(PostDislikeView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
