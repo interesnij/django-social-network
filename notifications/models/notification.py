@@ -114,12 +114,6 @@ class Notification(models.Model):
         return '{} - {}'.format(self.actor, self.get_verb_display())
 
 
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify('{} {} {}'.format(self.actor, self.get_verb_display(), self.time_since()), to_lower=True, max_length=200)
-
-        super().save(*args, **kwargs)
-
     def time_since(self, now=None):
         from django.utils.timesince import timesince
 
