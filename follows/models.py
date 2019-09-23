@@ -7,4 +7,4 @@ class Follow(models.Model):
     followed_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='followers', null=False,verbose_name="На кого подписывается")
 
     def notification_follow(self, user):
-        notification_handler(user, self.user,Notification.CONNECTION_REQUEST, action_object=self,id_value=str(self.uuid),key='social_update')
+        notification_handler(user, self.user,Notification.CONNECTION_REQUEST, action_object=self,id_value=str(user.uuid),key='notification')
