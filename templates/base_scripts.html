@@ -41,7 +41,7 @@ $(function () {
 let emptyMessage = 'You have no unread notification';
 function checkNotifications() {
     $.ajax({
-        url: '/notifications/latest-notifications/',
+        url: 'xn--b1afgj5al1e.xn--p1acf:8001/notifications/latest-notifications/',
         cache: false,
         success: function (data) {
             if (!data.includes(emptyMessage)) {
@@ -56,7 +56,7 @@ function update_social_activity (id_value) {
         'id_value': id_value,
     };
     $.ajax({
-        url: '/posts/update-interactions/',
+        url: 'xn--b1afgj5al1e.xn--p1acf:8001/posts/update-interactions/',
         data: payload,
         type: 'POST',
         cache: false,
@@ -82,7 +82,7 @@ $("#notification").click(function () {
     else {
         $("#otification").popover('dispose');
         $.ajax({
-            url: '/notifications/latest-notifications/',
+            url: 'xn--b1afgj5al1e.xn--p1acf:8001/notifications/latest-notifications/',
             cache: false,
             success: function (data) {
                 $("#dropdownnotification").popover({
