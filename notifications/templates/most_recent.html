@@ -1,4 +1,4 @@
-{% load staticfiles %}<!DOCTYPE html>
+{% load staticfiles humanize %}<!DOCTYPE html>
   {% if notifications %}
     {% for notification in notifications %}
       <a class="media pink-gradient-active">
@@ -11,12 +11,11 @@
         </figure>
         <div class="media-body">
             <h5 class="mt-0">{{ notification|safe }}</h5>
-            <p>{{ notification.timestamp }}</p>
+            <p>{{ notification.timestamp|naturaltime }}</p>
         </div>
       </a>
     {% endfor %}
-    <a class="text-center float-left" href="{% url 'unread' %}">Смотреть все</a>
-    <a class="text-center float-right" href="{% url 'mark_all_read' %}">Пометить прочитанными</a>
+    <a class="text-center float-left" href="{% url 'unread' %}">Все уведомления</a>
   {% else %}
     <a class="media pink-gradient-active">У Вас нет уведомлений</a>
   {% endif %}
