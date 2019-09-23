@@ -4,10 +4,10 @@
 
 
 {% block content %}
-<ul id="notifylist"></ul>
-{% for notification in notification_list %}
+<span class="notifications">
 
-<div class="card mb-4 fullscreen">
+{% for notification in notification_list %}
+<div class="card mb-4 notification">
     <div class="card-header border-bottom">
         <div class="media">
             <figure class="avatar avatar-40 mr-2">
@@ -39,6 +39,6 @@
   Пока ничего нет...
 {% endfor %}
 
-
+</span>
 
 {% endblock %}

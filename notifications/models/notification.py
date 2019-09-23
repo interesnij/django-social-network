@@ -129,18 +129,11 @@ class Notification(models.Model):
         super().save(*args, **kwargs)
 
     def time_since(self, now=None):
-        """
-        Shortcut for the ``django.utils.timesince.timesince`` function of the
-        current timestamp.
-        """
         from django.utils.timesince import timesince
 
         return timesince(self.timestamp, now)
 
     def get_icon(self):
-        """Model method to validate notification type and return the closest
-        icon to the verb.
-        """
         if self.verb == 'C' or self.verb == 'A' or self.verb == 'K':
             return 'fa-comment'
 
