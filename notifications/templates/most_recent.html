@@ -12,8 +12,8 @@
         <p><small>{{ notification.timestamp }}</small></p>
       </li>
     {% endfor %}
-    <a type="button" class="btn btn-light text-center float-left" href="{% url 'notifications:unread' %}">See all</a>
-    <a type="button" class="btn btn-light text-center float-right" href="{% url 'notifications:mark_all_read' %}">Mark all as read</a>
+    <a type="button" class="btn btn-light text-center float-left" href="{% url 'unread' %}">See all</a>
+    <a type="button" class="btn btn-light text-center float-right" href="{% url 'mark_all_read' %}">Mark all as read</a>
   {% else %}
     <li class="text-center">You have no unread notification</li>
   {% endif %}
