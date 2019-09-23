@@ -12,7 +12,7 @@
         <div class="media">
             <figure class="avatar avatar-40 mr-2">
               {% if notification.actor.profile.avatar %}
-                <img src="{{  notification.actor.profile.avatar }}" alt="image">
+                <img src="{{ notification.actor.profile.avatar }}" alt="image">
               {% else %}
                 <img src="{% static 'images/user.png' %}" alt="image">
               {% endif %}
