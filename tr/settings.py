@@ -21,6 +21,7 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'django.contrib.sites',
     'rest_framework',
+    'imagekit',
     'rest_framework.authtoken',
     'channels',
     'django_comments',

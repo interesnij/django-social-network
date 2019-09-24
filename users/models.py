@@ -9,6 +9,7 @@ from django.conf import settings
 from users.helpers import upload_to_user_cover_directory, upload_to_user_avatar_directory
 from main.models import Badge
 from pilkit.processors import ResizeToFill, ResizeToFit
+from imagekit.models import ProcessedImageField
 
 
 
@@ -57,7 +58,9 @@ class UserNotificationsSettings(models.Model):
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, null=True, related_name="profile", verbose_name="Пользователь", on_delete=models.CASCADE)
-    avatar = models.ImageField(blank=True,upload_to=upload_to_user_avatar_directory,verbose_name="Аватар")
+    avatar = ProcessedImageField(verbose_name='Аватар', blank=False, null=True, format='JPEG',
+                                 options={'quality': 90}, processors=[ResizeToFill(500, 500)],
+                                 upload_to=upload_to_user_avatar_directory)
     cover = models.ImageField(blank=True, null=True, upload_to=upload_to_user_cover_directory,verbose_name="Фон")
     bio = models.TextField(max_length=300, blank=True, verbose_name="Биография")
     followers_count_visible = models.BooleanField(blank=False, null=False, default=False,verbose_name="Число подписчиков видно")
