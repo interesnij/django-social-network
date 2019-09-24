@@ -65,7 +65,7 @@
                        aria-expanded="false">
                        <figure class="userpic">
                          {% if request.user.profile.avatar %}
-                         <img src="{{ user.profile.avatar.url }}" alt="">
+                         <img src="{{ request.user.profile.avatar.url }}" alt="">
                          {% else %}
                          <img src="{% static 'images/user.png' %}" alt="">
                          {% endif %}
