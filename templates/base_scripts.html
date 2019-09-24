@@ -72,13 +72,14 @@ checkNotifications();
 $("#notification").click(function () {
 
         $("#notification").addClass('show');
+
         $.ajax({
             url: '/notifications/latest-notifications/',
             cache: false,
             success: function (data) {
                 $(".notification-dropdown").toggleClass("show");
+                $("#notification").removeClass("btn-danger");
                 $(".notification-dropdown").html("").load("{% url 'latest_notifications' %}");
-                $("#notification").removeClass("btn-danger")
             },
         });
     return false;
