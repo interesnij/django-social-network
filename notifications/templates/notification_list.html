@@ -28,7 +28,7 @@
                 <p class="mb-0">
                   {{ notification.get_verb_display }}
                   {% if notification.action_object %}
-                    {{ notification.action_object.content_lite }}
+                    {{ notification.action_object.content_lite }}{{ notification.action_object.content_medium }}
                   {% endif %}
                 </p>
             </div>
