@@ -66,7 +66,6 @@ class Notification(models.Model):
     POST_COMMENT_REPLY = 'PCR'
     CONNECTION_REQUEST = 'CR'
     CONNECTION_CONFIRMED = 'CC'
-    FOLLOW = 'F'
     COMMUNITY_INVITE = 'CI'
     POST_USER_MENTION = 'PUM'
     POST_COMMENT_USER_MENTION = 'PCUM'
@@ -80,20 +79,19 @@ class Notification(models.Model):
     REPLY = 'R'
 
     NOTIFICATION_TYPES = (
-        (POST_COMMENT, 'Комментарий к посту'),
-        (POST_COMMENT_REPLY, 'Ответ на комментарий к посту'),
-        (CONNECTION_REQUEST, 'Заявка в друзья'),
-        (CONNECTION_CONFIRMED, 'Одобренная заявка в друзья'),
-        (FOLLOW, 'Подписка'),
+        (POST_COMMENT, 'оставил комментарий'),
+        (POST_COMMENT_REPLY, 'ответил на Ваш комментарий к посту'),
+        (CONNECTION_REQUEST, 'подал заявку в друзья'),
+        (CONNECTION_CONFIRMED, 'подтвердил что он Ваш друг'),
         (COMMUNITY_INVITE, 'Приглашение в сообщество'),
-        (POST_USER_MENTION, 'Упоминание пользователя в посте'),
-        (POST_COMMENT_USER_MENTION, 'Упоминание пользователя в комментарии к посту'),
-        (LIKED, 'Упоминание пользователя о лайке к посту'),
-        (LIKED_COMMENT, 'Упоминание пользователя о лайке на комментарий к посту'),
-        (DISLIKED, 'Упоминание пользователя о дизлайке к посту'),
-        (DISLIKED_COMMENT, 'Упоминание пользователя о дизлайке на комментарий к посту'),
-        (SIGNUP, 'Упоминание пользователя о созданном аккаунте'),
-        (REPLY, 'Упоминание пользователя о ответе на пост'),
+        (POST_USER_MENTION, 'упомянул Вас в посте'),
+        (POST_COMMENT_USER_MENTION, 'упомянул Вас в комментарии к посту'),
+        (LIKED, 'понравился Ваш пост'),
+        (LIKED_COMMENT, 'понравился Ваш комментарий к посту'),
+        (DISLIKED, 'не понравился Ваш пост'),
+        (DISLIKED_COMMENT, 'не понравился Ваш комментарий к посту'),
+        (SIGNUP, 'создал аккаунт'),
+        (REPLY, 'поделился Вашим постом'),
     )
 
     verb = models.CharField(max_length=5, choices=NOTIFICATION_TYPES,verbose_name="Тип уведомления")
@@ -118,34 +116,6 @@ class Notification(models.Model):
         from django.utils.timesince import timesince
 
         return timesince(self.timestamp, now)
-
-    def get_icon(self):
-        if self.verb == 'C' or self.verb == 'A' or self.verb == 'K':
-            return 'fa-comment'
-
-        elif self.verb == 'I' or self.verb == 'U' or self.verb == 'O':
-            return 'fa-users'
-
-        elif self.verb == 'L':
-            return 'fa-heart'
-
-        elif self.verb == 'F':
-            return 'fa-star'
-
-        elif self.verb == 'W':
-            return 'fa-check-circle'
-
-        elif self.verb == 'E':
-            return 'fa-pencil'
-
-        elif self.verb == 'V':
-            return 'fa-plus'
-
-        elif self.verb == 'S':
-            return 'fa-share-alt'
-
-        elif self.verb == 'R':
-            return 'fa-reply'
 
     def mark_as_read(self):
         if self.unread:
