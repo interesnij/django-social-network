@@ -117,5 +117,5 @@ webSocket.listen(function(event) {
 </script>
 {% endif %}
 <script type="text/javascript">
-          var currentUser = "{{ request.user.username }}"
+          var currentUser = "{{ request.user.get_full_name }}";
         </script>

@@ -4,7 +4,7 @@
 
 
 {% block content %}
-<span class="notifications">
+<span class="notifications" style="padding:20px">
 {% if notification_list %}
 
 {% for notification in notification_list %}
@@ -37,7 +37,6 @@
 </div>
 
 {% endfor %}
-  <a class="btn btn-dark pull-right" href="{% url 'mark_all_read' %}">Пометить все прочитанными</a>
 {% else %}
 Пока ничего нет...
 {% endif %}
