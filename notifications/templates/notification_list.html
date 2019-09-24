@@ -27,8 +27,14 @@
                 </h6>
                 <p class="mb-0">
                   {{ notification.get_verb_display }}
-                  {% if notification.action_object %}
-                    {{ notification.action_object.content_hard|safe }}/{{ notification.action_object.content_medium|safe }}/{{ notification.action_object.content_lite|safe }}
+                  {% if notification.action_object.content_hard %}
+                    {{ notification.action_object.content_hard|safe }}
+                  {% endif %}
+                  {% if notification.action_object.content_medium %}
+                    {{ notification.action_object.content_medium|safe }}
+                  {% endif %}
+                  {% if notification.action_object.content_lite %}
+                  {{ notification.action_object.content_lite|safe }}
                   {% endif %}
                 </p>
             </div>
