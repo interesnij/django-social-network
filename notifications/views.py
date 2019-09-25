@@ -54,6 +54,8 @@ def get_latest_notifications(request):
 
 class NotificationCleanView(LoginRequiredMixin):
     template_name = 'notification_clean.html'
-    notifications = Notification.objects.filter(recipient=request.user)
-    notifications.mark_all_as_read()
-    
+
+    def get(self,request,*args,**kwargs):
+        notifications = Notification.objects.filter(recipient=request.user)
+        notifications.mark_all_as_read()
+        return HttpResponse("!")
