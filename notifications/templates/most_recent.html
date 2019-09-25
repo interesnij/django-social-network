@@ -1,6 +1,6 @@
 {% load staticfiles humanize %}<!DOCTYPE html>
   {% if notifications %}
-  <a class="clean_notify" href="{% url 'mark_all_read' %}">Очистить</a>
+  <span class="clean_notify" style="cursor:pointer">Очистить</span>
     {% for notification in notifications %}
       <a class="media pink-gradient-active">
         <figure class="avatar avatar-40">
