@@ -38,7 +38,7 @@
 {% if request.user.is_authenticated %}
 <script>
 $(function () {
-let emptyMessage = 'You have no unread notification';
+let emptyMessage = 'У Вас нет новых уведомлений';
 function checkNotifications() {
     $.ajax({
         url: '/notifications/latest-notifications/',
