@@ -26,8 +26,8 @@ def room(request, room_name):
 
 
 class ConversationListView(MessagesListView):
-    """CBV to render the inbox, showing an specific conversation with a given
-    user, who requires to be active too."""
+    """CBV для отображения почтового ящика, показывая конкретный разговор с данным
+    пользователь, который тоже должен быть активным."""
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         context['active'] = self.kwargs["id"]
@@ -35,7 +35,7 @@ class ConversationListView(MessagesListView):
 
     def get_queryset(self):
         active_user = User.objects.get(
-            username=self.kwargs["id"])
+            username=self.kwargs["username"])
         return Message.objects.get_conversation(active_user, self.request.user)
 
 
@@ -43,9 +43,9 @@ class ConversationListView(MessagesListView):
 @ajax_required
 @require_http_methods(["POST"])
 def send_message(request):
-    """AJAX Functional view to recieve just the minimum information, process
-    and create the new message and return the new data to be attached to the
-    conversation stream."""
+    """AJAX функциональный вид, чтобы получить только минимальную информацию, процесс
+    и создать новое сообщение и вернуть новые данные, которые будут прикреплены к
+    поток разговоров."""
     sender = request.user
     recipient_id = request.POST.get('to')
     recipient = User.objects.get(id=recipient_id)
@@ -65,8 +65,8 @@ def send_message(request):
 @ajax_required
 @require_http_methods(["GET"])
 def receive_message(request):
-    """Simple AJAX functional view to return a rendered single message on the
-    receiver side providing realtime connections."""
+    """Простой индикатор функциональный вид, чтобы вернуть оказанные одно сообщение на
+    сторона приемника обеспечивая соединения в реальном времени."""
     message_id = request.GET.get('message_id')
     message = Message.objects.get(pk=message_id)
     return render(request,
