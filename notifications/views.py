@@ -5,6 +5,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import ListView
 from django.http import HttpResponse
 from notifications.models import Notification
+from django.views.generic.base import TemplateView
 
 
 class NotificationUnreadListView(LoginRequiredMixin, ListView):
@@ -52,8 +53,9 @@ def get_latest_notifications(request):
                   'most_recent.html',
                   {'notifications': notifications})
 
-class NotificationCleanView(LoginRequiredMixin):
+class NotificationCleanView(TemplateView):
     template_name = 'notification_clean.html'
+
 
     def get(self,request,*args,**kwargs):
         self.notifications = Notification.objects.filter(recipient=request.user)
