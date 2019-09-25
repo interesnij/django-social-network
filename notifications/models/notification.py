@@ -49,7 +49,7 @@ class NotificationQuerySet(models.query.QuerySet):
         return notification_dic
 
     def get_most_recent(self, recipient=None):
-        qs = self.unread()[:5]
+        qs = self.read()[:5]
         if recipient:
             qs = qs.filter(recipient=recipient)[:5]
         return qs
