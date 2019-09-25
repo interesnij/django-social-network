@@ -6,7 +6,7 @@
 {% block content %}
 <span class="notifications" style="padding:20px">
 {% if notification_list %}
-
+<a class="btn btn-dark pull-right" href="{% url 'mark_all_read' %}">{% trans 'Mark all as read' %}</a>
 {% for notification in notification_list %}
 <div class="card mb-4 notification">
     <div class="card-header border-bottom">
