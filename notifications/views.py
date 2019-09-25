@@ -14,7 +14,7 @@ class NotificationUnreadListView(LoginRequiredMixin, ListView):
     template_name = 'notification_list.html'
 
     def get_queryset(self, **kwargs):
-        notify = Notification.objects.filter(recipient=self.user)
+        notify = Notification.objects.filter(recipient=request.user)
         return notify
 
 
