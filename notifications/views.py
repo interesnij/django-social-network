@@ -53,7 +53,7 @@ def mark_as_read(request, slug=None):
 
 @login_required
 def get_latest_notifications(request):
-    notifications = Notification.objects.filter(recipient=request.user)[0:7]
+    notifications = Notification.objects.filter(recipient=request.user)
     notifications.mark_all_as_read()
     return render(request,
                   'most_recent.html',
