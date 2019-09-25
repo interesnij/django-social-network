@@ -36,6 +36,13 @@
 </script>
 
 {% if request.user.is_authenticated %}
+
+<script>
+  $( ".clean_notify" ).click(function(){
+    $(".notification-dropdown").html("").load("{% url 'clean_notifications' %}");
+  })
+</script>
+
 <script>
 $(function () {
 let emptyMessage = 'У Вас нет новых уведомлений';
