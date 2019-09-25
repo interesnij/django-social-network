@@ -56,6 +56,6 @@ class NotificationCleanView(LoginRequiredMixin):
     template_name = 'notification_clean.html'
 
     def get(self,request,*args,**kwargs):
-        notifications = Notification.objects.filter(recipient=request.user)
-        notifications.mark_all_as_read()
+        self.notifications = Notification.objects.filter(recipient=request.user)
+        self.notifications.mark_all_as_read()
         return HttpResponse("!")
