@@ -71,8 +71,6 @@ checkNotifications();
 
 $("#notification").click(function () {
 
-        $("#notification").addClass('show');
-
         $.ajax({
             url: '/notifications/latest-notifications/',
             cache: false,
