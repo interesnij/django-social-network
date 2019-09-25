@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import ListView
-
+from django.http import HttpResponse
 from notifications.models import Notification
 
 
@@ -23,9 +23,6 @@ def mark_all_as_read(request):
 
     request.user.notifications.mark_all_as_read()
     _next = request.GET.get('next')
-    messages.add_message(
-        request, messages.SUCCESS,
-        ('All notifications to {request.user.last_name} have been marked as read.'))
 
     if _next:
         return redirect(_next)
@@ -40,9 +37,6 @@ def mark_as_read(request, slug=None):
         notification = get_object_or_404(Notification, slug=slug)
         notification.mark_as_read()
 
-    messages.add_message(
-        request, messages.SUCCESS,
-        ('The notification {notification.slug} has been marked as read.'))
     _next = request.GET.get('next')
 
     if _next:
@@ -57,3 +51,9 @@ def get_latest_notifications(request):
     return render(request,
                   'most_recent.html',
                   {'notifications': notifications})
+
+class NotificationCleanView(LoginRequiredMixin):
+    template_name = 'notification_clean.html'
+    notifications = Notification.objects.filter(recipient=request.user)
+    notifications.mark_all_as_read()
+    return HttpResponse("!")

@@ -1,0 +1,22 @@
+{% load staticfiles humanize %}<!DOCTYPE html>
+  {% if notifications %}
+  <a class="" href="{% url 'mark_all_read' %}">Очистить</a>
+    {% for notification in notifications %}
+      <a class="media pink-gradient-active">
+        <figure class="avatar avatar-40">
+          {% if notification.actor.profile.avatar %}
+            <img src="{{ notification.actor.profile.avatar.url }}" alt="image">
+          {% else %}
+            <img src="{% static 'images/user.png' %}" alt="image">
+          {% endif %}
+        </figure>
+        <div class="media-body">
+            <h5 class="mt-0">{{ notification|safe }}</h5>
+            <p>{{ notification.timestamp|naturaltime }}</p>
+        </div>
+      </a>
+    {% endfor %}
+  <a href="{% url 'unread' %}" class="media pink-gradient-active text-center">все уведомления</a>
+  {% else %}
+      У Вас нет новых уведомлений
+  {% endif %}
