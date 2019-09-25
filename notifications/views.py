@@ -54,6 +54,7 @@ def mark_as_read(request, slug=None):
 @login_required
 def get_latest_notifications(request):
     notifications = request.user.notifications.get_most_recent()
+    notifications.mark_all_as_read()
     return render(request,
                   'most_recent.html',
                   {'notifications': notifications})
