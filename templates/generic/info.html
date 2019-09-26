@@ -80,7 +80,8 @@
 
 <script>
 $(".comment").on("click", function () {
-    var post = $('.infinite-item').attr("posts-id");
+    var post = $(this).closest(".card").attr("posts-id");
+    var posts = $(post).closest("li").attr("posts-id");
     $("#postThreadModal").modal("show");
     console.log(post);
     $.ajax({
