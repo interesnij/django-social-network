@@ -7,9 +7,9 @@
       <div class="profile-picture">
         {% if reply.user.profile.avatar %}
           <img src="{{ reply.user.profile.avatar }}" class="pull-left" style="border-radius: 50%;" alt="User Image" class="user-image">
-
+        {% else %}
           <img src="{% static 'img/user.png' %}" class="pull-left" height="60px" alt="No Profile Picture" />
-
+        {% endif %}
       </div>
       <div class="post">
         {% if reply.user == request.user %}
