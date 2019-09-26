@@ -27,4 +27,13 @@
     {% endfor %}
 </div>
 
-{% endfor %}
+  <form id="replyPostsForm" role="form" method="post" action="#" onsubmit="return false">
+    {% csrf_token %}
+    <input type="hidden" name="parent" value="">
+    <div class="form-group">
+      <textarea id="replyInput" name="reply" rows="2" class="form-control" maxlength="280"></textarea>
+      <span id="replyCounter" class="pull-right">280</span>
+    </div>
+  </form>
+
+<ul class="stream" id="threadContent"></ul>
