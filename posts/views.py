@@ -38,7 +38,7 @@ class PostUserHardCreate(TemplateView):
             new_post=self.form.save()
 
             if request.is_ajax() :
-                 html = render_to_string('profile/post.html',{'object': new_post,'request': request})
+                 html = render_to_string('generic/post.html',{'object': new_post,'request': request})
                  return HttpResponse(html)
         return super(PostUserHardCreate,self).get(request,*args,**kwargs)
 
@@ -64,7 +64,7 @@ class PostUserMediumCreate(TemplateView):
             new_post=self.form.save()
 
             if request.is_ajax() :
-                 html = render_to_string('profile/post.html',{'object': new_post,'request': request})
+                 html = render_to_string('generic/post.html',{'object': new_post,'request': request})
                  return HttpResponse(html)
         return super(PostUserMediumCreate,self).get(request,*args,**kwargs)
 
@@ -90,7 +90,7 @@ class PostUserLiteCreate(TemplateView):
             new_post=self.form.save()
 
             if request.is_ajax() :
-                 html = render_to_string('profile/post.html',{'object': new_post,'request': request})
+                 html = render_to_string('generic/post.html',{'object': new_post,'request': request})
                  return HttpResponse(html)
         return super(PostUserLiteCreate,self).get(request,*args,**kwargs)
 
