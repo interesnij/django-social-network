@@ -126,7 +126,7 @@ $('[data-action="remove"]').click(remove);
 <script>
 $(".comment").on("click", function () {
 	var post = $(this).closest(".infinite-item").attr("posts-id");
-	var url = $(this);
+	var url = $(this).parents(".infinite-item");
 
 	console.log(url)
 	$.ajax({
