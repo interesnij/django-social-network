@@ -137,7 +137,7 @@ $(".comment").on("click", function () {
 					$(".load_comments").html("<li class='loadcomment'><img src='/static/images/loading.gif'></li>");
 			},
 			success: function (data) {
-				url.find(".load_comments").html(data.thread);
+				$(this).find(".load_comments").html(data.thread);
 			}
 	});
 	return false;
