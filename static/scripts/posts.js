@@ -25,8 +25,8 @@ $(function () {
             },
         });
     });
-
-    $(".stream").on("click", ".comment", function () {
+    
+    $(".comment").on("click", function () {
         var post = $(this).closest(".card");
         var posts = $(post).closest("div").attr("posts-id");
         $("#postThreadModal").modal("show");
@@ -45,4 +45,4 @@ $(function () {
         });
         return false;
     });
-});
+    });
