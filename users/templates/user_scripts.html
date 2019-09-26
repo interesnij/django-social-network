@@ -126,7 +126,7 @@ $(".comment").on("click", function () {
 	var post = $(this).closest(".card").attr("posts-id");
 
 	$.ajax({
-			url: '/posts/get-thread/',
+			url: '/posts/get-comment/',
 			data: {'post': post},
 			cache: false,
 			beforeSend: function () {
