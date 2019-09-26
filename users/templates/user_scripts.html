@@ -125,11 +125,12 @@ $('[data-action="remove"]').click(remove);
 
 <script>
 $(".comment").on("click", function () {
-	var post = $(this).attr("posts-id");
+	var post = $(this).closest(".card");
+	var news = $(post).closest("div").attr("posts-id");
 
 	$.ajax({
 			url: '/posts/get-comment/',
-			data: {'post': post},
+			data: {'news': news},
 			cache: false,
 			beforeSend: function () {
 					$("#load_comments").html("<li class='loadcomment'><img src='/static/images/loading.gif'></li>");
