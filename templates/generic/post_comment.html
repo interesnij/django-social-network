@@ -45,3 +45,24 @@
 </div>
 
 <ul class="stream" id="threadContent"></ul>
+
+<script>
+$(".comment").on("click", function () {
+	var post = $(this).closest(".card").attr("posts-id");
+
+	$.ajax({
+			url: '/posts/get-comment/',
+			data: {'post': post},
+			cache: false,
+			beforeSend: function () {
+					$("#threadContent").html("<li class='loadcomment'><img src='/static/images/loading.gif'></li>");
+			},
+			success: function (data) {
+					$("input[name=parent]").val(data.uuid)
+					$("#postsContent").html(data.post);
+					$("#threadContent").html(data.thread);
+			}
+	});
+	return false;
+});
+</script>
