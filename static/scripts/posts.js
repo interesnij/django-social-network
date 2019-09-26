@@ -1,5 +1,15 @@
 $(function () {
 
+  $('#newsFormModal').on('shown.bs.modal', function () {
+      $('#newsInput').trigger('focus')
+  });
+
+  $('#newsThreadModal').on('shown.bs.modal', function () {
+      $('#replyInput').trigger('focus')
+  });
+
+
+
     $("#replyPosts").click(function () {
         $.ajax({
             url: '/posts/posts/post-comment/',
