@@ -77,22 +77,3 @@
       </span>
   </div>
 </div>
-
-<script>
-$(".comment").on("click", function () {
-	var post = $(this).closest(".card").attr("posts-id");
-
-	$.ajax({
-			url: '/posts/get-comment/',
-			data: {'post': post},
-			cache: false,
-			beforeSend: function () {
-					$("#threadContent").html("<li class='loadcomment'><img src='/static/images/loading.gif'></li>");
-			},
-			success: function (data) {
-        console.log("Все ОК")
-			}
-	});
-	return false;
-});
-</script>
