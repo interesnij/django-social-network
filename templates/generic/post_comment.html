@@ -26,14 +26,22 @@
     </div>
     {% endfor %}
 </div>
-
-  <form id="replyPostsForm" role="form" method="post" action="#" onsubmit="return false">
-    {% csrf_token %}
-    <input type="hidden" name="parent" value="">
-    <div class="form-group">
-      <textarea id="replyInput" name="reply" rows="2" class="form-control" maxlength="280"></textarea>
-      <span id="replyCounter" class="pull-right">280</span>
+<div class="card-footer border-top">
+    <div class="row no-gutters">
+        <div class="col">
+            <div class="input-group input-group-sm">
+                <div class="input-group-prepend">
+                    <button class="btn btn-link content-color-secondary" type="button"><i class="material-icons">face</i></button>
+                    <button class="btn btn-link content-color-secondary text-hide-xs" type="button"><i class="material-icons">collections</i></button>
+                    <button class="btn btn-link content-color-secondary" type="button"><i class="material-icons">camera_alt</i></button>
+                </div>
+                <input type="text" class="form-control form-control-rounded" placeholder="">
+            </div>
+        </div>
+        <div class="col-auto">
+            <button class="btn btn-outline-primary btn-rounded btn-sm ml-2" type="button"><span class="text-hide-xs">Comment</span> <i class="material-icons">send</i></button>
+        </div>
     </div>
-  </form>
+</div>
 
 <ul class="stream" id="threadContent"></ul>

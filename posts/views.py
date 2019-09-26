@@ -136,13 +136,13 @@ class PostDislikeView(TemplateView):
 
 @login_required
 @require_http_methods(["GET"])
-def get_thread(request):
+def get_comment(request):
 
     post_id = request.GET['post']
     post = Post.objects.get(uuid=post_id)
     posts_html = render_to_string("generic/post.html", {"object": post})
     thread_html = render_to_string(
-        "generic/post_thread.html", {"thread": post.get_thread()})
+        "generic/post_comment.html", {"thread": post.get_thread()})
     return JsonResponse({
         "uuid": post_id,
         "post": posts_html,
