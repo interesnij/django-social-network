@@ -135,7 +135,8 @@ $(".comment").on("click", function () {
 					$("#threadContent").html("<li class='loadcomment'><img src='/static/images/loading.gif'></li>");
 			},
 			success: function (data) {
-        console.log("Все ОК")
+        console.log("Все ОК")ж
+				$("#load_comments").html("").load("/posts/get-comment/");
 			}
 	});
 	return false;
