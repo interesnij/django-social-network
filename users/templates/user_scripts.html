@@ -133,10 +133,10 @@ $(".comment").on("click", function () {
 			data: {'post': post},
 			cache: false,
 			beforeSend: function () {
-					$("#load_comments").html("<li class='loadcomment'><img src='/static/images/loading.gif'></li>");
+					$(".load_comments").html("<li class='loadcomment'><img src='/static/images/loading.gif'></li>");
 			},
 			success: function (data) {
-				$(this).parent().next().html(data.thread);
+				$(".comment").find(".load_comments").html(data.thread);
 			}
 	});
 	return false;
