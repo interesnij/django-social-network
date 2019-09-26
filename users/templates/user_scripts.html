@@ -125,7 +125,7 @@ $('[data-action="remove"]').click(remove);
 
 <script>
 $(".comment").on("click", function () {
-	var post = $(this).closest(".card").attr("posts-id");
+	var post = $(this).attr("posts-id");
 
 	$.ajax({
 			url: '/posts/get-comment/',
