@@ -26,15 +26,15 @@ $('#postThreadModal').on('shown.bs.modal', function () {
   });
 
     $( "#post_hard" ).click(function(){
-      $('#post_create').html('').load("{% url 'post_add_hard_user' %}");
+      $('#post_create').html('').load("/posts/add_hard/");
     })
 
     $( "#post_medium" ).click(function(){
-      $('#post_create').html('').load("{% url 'post_add_medium_user' %}");
+      $('#post_create').html('').load("/posts/add_medium/");
     })
 
     $( "#post_lite" ).click(function(){
-      $('#post_create').html('').load("{% url 'post_add_lite_user' %}");
+      $('#post_create').html('').load("/posts/add_lite/");
     });
 
       function like() {
