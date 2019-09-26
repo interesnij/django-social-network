@@ -2,7 +2,7 @@
 
 
 {% for reply in thread %}
-  <li class="card" news-id="{{ reply.uuid_id }}">
+  <li class="card" posts-id="{{ reply.uuid }}">
     <div class="card-body">
       <div class="profile-picture">
         {% if reply.user.profile.avatar %}
@@ -13,8 +13,8 @@
       </div>
       <div class="post">
         {% if reply.user == request.user %}
-          <a href="{% url 'delete_news' reply.pk %}">
-            <i class="fa fa-times pull-right" aria-hidden="true" title="Click to remove this news"></i>
+          <a href="{% url 'delete_post' reply.pk %}">
+            <i class="fa fa-times pull-right" aria-hidden="true" title="Нажмите чтобы удалить запись"></i>
           </a>
         {% endif %}
         <p>
@@ -29,7 +29,7 @@
     <div class="interaction" id="interaction">
 
       {% include 'generic/info.html' %}
-    
+
     </div>
   </li>
 {% endfor %}
