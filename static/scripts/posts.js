@@ -1,10 +1,10 @@
 $(function () {
 
-  $('#newsFormModal').on('shown.bs.modal', function () {
-      $('#newsInput').trigger('focus')
+  $('#postFormModal').on('shown.bs.modal', function () {
+      $('#postInput').trigger('focus')
   });
 
-  $('#newsThreadModal').on('shown.bs.modal', function () {
+  $('#postThreadModal').on('shown.bs.modal', function () {
       $('#replyInput').trigger('focus')
   });
 

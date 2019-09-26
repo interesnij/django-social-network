@@ -1,0 +1,43 @@
+{% load staticfiles %}
+
+
+<div class="modal fade" id="postThreadModal" tabindex="-1" role="dialog" aria-labelledby="postThreadModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- Body -->
+      <div class="modal-body" >
+        <ul class="stream" id="newsContent"></ul>
+        <ul class="stream">
+          <li class="card">
+            <div class="card-body">
+              <div class="profile-picture">
+                {% if request.user.profile.avatar %}
+                  <img src="{{ request.user.profile.avatar.url }}" class="pull-left" style="border-radius: 50%;" alt="User Image" class="user-image">
+                {% else %}
+                  <img src="{% static 'img/user.png' %}" class="pull-left" height="60px" alt="No Profile Picture" />
+                {% endif %}
+              </div>
+              <div class="post">
+                <form id="replyPostsForm" role="form" method="post" action="#" onsubmit="return false">
+                  {% csrf_token %}
+                  <input type="hidden" name="parent" value="">
+                  <div class="form-group">
+                    <textarea id="replyInput" name="reply" rows="2" class="form-control" maxlength="280"></textarea>
+                    <span id="replyCounter" class="pull-right">280</span>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <div class="card-footer">
+              <button type="button" id="replyNews" class="btn btn-primary pull-right">
+                <i class="fa fa-paper-plane" aria-hidden="true"></i> Ответить
+              </button>
+            </div>
+          </li>
+        </ul>
+        <ul class="stream" id="threadContent"></ul>
+      </div>
+      <!-- Body -->
+    </div>
+  </div>
+</div>
