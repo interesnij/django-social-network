@@ -126,6 +126,7 @@ $('[data-action="remove"]').click(remove);
 <script>
 $(".comment").on("click", function () {
 	var post = $(this).closest(".infinite-item").attr("posts-id");
+	var url = $(this);
 
 	console.log(post)
 	$.ajax({
@@ -136,7 +137,7 @@ $(".comment").on("click", function () {
 					$(".load_comments").html("<li class='loadcomment'><img src='/static/images/loading.gif'></li>");
 			},
 			success: function (data) {
-				$(".comment").find(".load_comments").html(data.thread);
+				url.find(".load_comments").html(data.thread);
 			}
 	});
 	return false;
