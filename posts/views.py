@@ -144,7 +144,7 @@ def get_comment(request):
     thread_html = render_to_string(
         "generic/post_comment.html", {"thread": post.get_thread()})
     return JsonResponse({
-        "uuid": post_id,
+        "uuid": post_id, 
         "post": posts_html,
         "thread": thread_html,
     })
