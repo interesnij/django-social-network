@@ -128,7 +128,7 @@ $(".comment").on("click", function () {
 	var post = $(this).closest(".infinite-item").attr("posts-id");
 	var url = $(this);
 
-	console.log(post)
+	console.log(url)
 	$.ajax({
 			url: '/posts/get-comment/',
 			data: {'post': post},
