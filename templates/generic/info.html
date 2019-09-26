@@ -77,27 +77,3 @@
       </span>
   </div>
 </div>
-
-<script>
-$(".comment").on("click", function () {
-    var post = $(this).closest(".card").attr("posts-id");
-    var posts = $(post).closest("li").attr("posts-id");
-    $("#postThreadModal").modal("show");
-    console.log(post);
-    $.ajax({
-        url: '/posts/get-thread/',
-        data: {'post': post},
-        cache: false,
-        beforeSend: function () {
-            $("#threadContent").html("<li class='loadcomment'><img src='/static/images/loading.gif'></li>");
-        },
-        success: function (data) {
-            $("input[name=parent]").val(data.uuid)
-            $("#postsContent").html(data.post);
-            $("#threadContent").html(data.thread);
-        }
-    });
-    return false;
-});
-
-</script>
