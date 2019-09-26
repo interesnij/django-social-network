@@ -20,7 +20,7 @@ urlpatterns = [
     url(r'^delete/(?P<pk>\d+)/$', PostDeleteView.as_view(), name='delete_post'),
     url(r'^like_window/(?P<pk>\d+)/$', PostLikeView.as_view(), name='post_like_window'),
     url(r'^dislike_window/(?P<pk>\d+)/$', PostDislikeView.as_view(), name='post_dislike_window'),
-    url(r'^get-comment/$', get_thread, name='get_comment'),
+    url(r'^get-comment/$', get_comment, name='get_comment'),
     url(r'^post-comment/$', post_comment, name='post_comments'),
     url(r'^update-interactions/$', update_interactions, name='update_interactions'),
 
