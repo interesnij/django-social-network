@@ -82,6 +82,7 @@
 $(".comment").on("click", function () {
     var post = $('.infinite-item').attr("posts-id");
     $("#postThreadModal").modal("show");
+    console.log(post);
     $.ajax({
         url: '/posts/get-thread/',
         data: {'post': post},
