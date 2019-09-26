@@ -137,10 +137,10 @@ class PostDislikeView(TemplateView):
 @login_required
 @require_http_methods(["GET"])
 def get_thread(request):
-    """Returns a list of news with the given news as parent."""
+
     post_id = request.GET['post']
     post = Post.objects.get(pk=post_id)
-    posts_html = render_to_string("profile/post.html", {"post": post})
+    posts_html = render_to_string("profile/post.html", {"object": post})
     thread_html = render_to_string(
         "profile/post_thread.html", {"thread": post.get_thread()})
     return JsonResponse({
@@ -152,9 +152,7 @@ def get_thread(request):
 @login_required
 @require_http_methods(["POST"])
 def post_comment(request):
-    """A function view to implement the post functionality with AJAX, creating
-    News instances who happens to be the children and commenters of the root
-    post."""
+
     user = request.user
     post = request.POST['reply']
     par = request.POST['parent']

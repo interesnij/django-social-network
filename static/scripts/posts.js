@@ -26,10 +26,10 @@ $(function () {
         });
     });
 
-    $("div.stream").on("click", ".comment", function () {
+    $(".stream").on("click", ".comment", function () {
         var post = $(this).closest(".card");
         var posts = $(post).closest("div").attr("posts-id");
-        $("#newsThreadModal").modal("show");
+        $("#postThreadModal").modal("show");
         $.ajax({
             url: '/posts/get-thread/',
             data: {'posts': posts},
