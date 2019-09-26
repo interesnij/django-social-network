@@ -90,9 +90,7 @@ $(".comment").on("click", function () {
 					$("#threadContent").html("<li class='loadcomment'><img src='/static/images/loading.gif'></li>");
 			},
 			success: function (data) {
-					$("input[name=parent]").val(data.uuid)
-					$("#postsContent").html(data.post);
-					$("#threadContent").html(data.thread);
+        console.log("Все ОК")
 			}
 	});
 	return false;
