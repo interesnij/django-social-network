@@ -1,5 +1,7 @@
 {% load staticfiles humanize %}
 
+{% include 'generic/post_thread_modal.html' %}
+
 {% if user == request.user %}
 <span id="post_link" style="">
   <div class="dropdown d-inline-block">
@@ -28,7 +30,7 @@
   <span class="stream">
 
     {% for object in posts %}
-      {% include 'profile/post.html' with post=post  %}
+      {% include 'generic/post.html' with post=post  %}
 
     {% endfor %}
 
