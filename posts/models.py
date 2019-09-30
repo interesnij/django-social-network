@@ -96,7 +96,7 @@ class PostComment(models.Model):
     parent_comment = models.ForeignKey('self', on_delete=models.CASCADE, related_name='replies', null=True, blank=True,verbose_name="Родительский комментарий")
     created = models.DateTimeField(default=timezone.now, editable=False, db_index=True,verbose_name="Создан")
     commenter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='posts_comments',verbose_name="Комментатор")
-    content_lite = RichTextUploadingField(blank=True,null=True,
+    text = RichTextUploadingField(blank=True,null=True,
                                       config_name='lite',
                                       external_plugin_resources=[(
                                           'youtube',
