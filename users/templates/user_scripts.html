@@ -130,7 +130,7 @@ $(".comment").on("click", function () {
 
 	console.log(url)
 	$.ajax({
-			url: '/posts/get-comment/' + post + '/',
+			url: '/posts/get-comment/',
 			data: {'post': post},
 			cache: false,
 			beforeSend: function () {
