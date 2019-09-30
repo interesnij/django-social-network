@@ -4,7 +4,7 @@ from posts.models import Post, PostComment
 from frends.models import Connect
 from follows.models import Follow
 from communities.models import Community
-from posts.forms import PostMediumForm, PostLiteForm
+from posts.forms import PostMediumForm, PostCommentForm
 from users.forms import GeneralUserForm, AboutUserForm, AvatarUserForm
 from django.views.generic import ListView
 from django.contrib.auth.decorators import login_required
@@ -27,7 +27,7 @@ class ProfileUserView(TemplateView):
 	template_name = 'user.html'
 	form = PostMediumForm
 	form_avatar = AvatarUserForm
-	form_comment = PostComment
+	form_comment = PostCommentForm
 
 	def get(self,request,*args,**kwargs):
 		self.user=User.objects.get(pk=self.kwargs["pk"])
