@@ -87,7 +87,7 @@ class Post(models.Model):
         verbose_name_plural="посты"
 
     def __str__(self):
-        return self.creator
+        return self.creator.get_full_name()
 
 
 class PostComment(models.Model):
@@ -102,7 +102,7 @@ class PostComment(models.Model):
     votes = GenericRelation(LikeDislike, related_query_name='comments')
 
     def __str__(self):
-        return self.commenter
+        return self.commenter.get_full_name()
 
 
 class PostMute(models.Model):
