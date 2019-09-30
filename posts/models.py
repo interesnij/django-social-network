@@ -92,7 +92,7 @@ class Post(models.Model):
 
 class PostComment(models.Model):
     moderated_object = GenericRelation(ModeratedObject, related_query_name='post_comments',verbose_name="Модерация")
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post_comments',verbose_name="Пост")
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post_comment',verbose_name="Пост")
     parent_comment = models.ForeignKey('self', on_delete=models.CASCADE, related_name='replies', null=True, blank=True,verbose_name="Родительский комментарий")
     created = models.DateTimeField(default=timezone.now, editable=False, db_index=True,verbose_name="Создан")
     commenter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='posts_comments',verbose_name="Комментатор")
