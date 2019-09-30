@@ -1,20 +1,20 @@
 {% load humanize staticfiles %}
 
 <div class="card-footer bg-light-secondary border-top">
-    {% for reply in thread %}
+    {% for object in comments %}
     <div class="media pt-2" posts-id="{{ reply.uuid }}">
         <figure class="avatar avatar-30">
-            {% if reply.user.profile.avatar %}
-            <img src="{{ reply.user.profile.avatar.url }}" class="pull-left" style="border-radius: 50%;" alt="User Image" class="user-image">
+            {% if object.commenter.profile.avatar %}
+              <img src="{{ object.commenter.profile.avatar.url }}" class="pull-left" style="border-radius: 50%;" alt="User Image" class="user-image">
             {% else %}
-            <img src="{% static 'img/user.png' %}" alt="No Profile Picture" />
+              <img src="{% static 'img/user.png' %}" alt="No Profile Picture" />
             {% endif %}
         </figure>
         <div class="media-body">
-            <h5 class="mt-0">{{ reply.user.get_full_name }}
-                <small class="text-muted float-right">{{ reply.comments.created|naturaltime }}</small>
+            <h5 class="mt-0">{{ object.commenter.get_full_name }}
+                <small class="text-muted float-right">{{ object.created|naturaltime }}</small>
             </h5>
-            <p class="mb-2">{{ reply.text|safe }}</p>
+            <p class="mb-2">{{ object.text|safe }}</p>
 
             <button class="btn btn-link btn-sm text-secondary pl-0">
                 <i class="material-icons text-danger">favorite</i> Like

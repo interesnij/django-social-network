@@ -142,11 +142,11 @@ def get_comment(request):
     post = Post.objects.get(uuid=post_id)
     posts_html = render_to_string("generic/post.html", {"object": post})
     thread_html = render_to_string(
-        "generic/post_comment.html", {"thread": post.get_thread()})
+        "generic/post_comment.html", {"comments": post.get_thread()})
     return JsonResponse({
-        "uuid": post_id, 
+        "uuid": post_id,
         "post": posts_html,
-        "thread": thread_html,
+        "comments": thread_html,
     })
 
 @login_required
