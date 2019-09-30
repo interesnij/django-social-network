@@ -3,11 +3,11 @@
 <div class="card-footer bg-light-secondary border-top">
     {% for object in comments %}
     <div class="media pt-2" posts-id="{{ object.uuid }}">
-        <figure class="avatar avatar-30">
+        <figure>
             {% if object.commenter.profile.avatar %}
-              <img src="{{ object.commenter.profile.avatar.url }}" class="pull-left" style="border-radius: 50%;" alt="User Image" class="user-image">
+              <img src="{{ object.commenter.profile.avatar.url }}" class="pull-left" style="border-radius:50%;width:50px;" alt="User Image" class="user-image">
             {% else %}
-              <img src="{% static 'img/user.png' %}" alt="No Profile Picture" />
+              <img src="{% static 'img/user.png' %}" class="pull-left" style="border-radius:50%;width:50px;" alt="No Profile Picture" />
             {% endif %}
         </figure>
         <div class="media-body">
@@ -16,13 +16,8 @@
             </h5>
             <p class="mb-2">{{ object.text|safe }}</p>
 
-            <button class="btn btn-link btn-sm text-secondary pl-0">
-                <i class="material-icons text-danger">favorite</i> Like
-                <span class="text-primary">1k</span></button>
-            <button type="button" class="btn btn-link">Reply
-            </button>
+            {% include 'generic/comment_info.html' %}
         </div>
-        {% include 'generic/comment_info.html' %}
     </div>
     {% endfor %}
 </div>

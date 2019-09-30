@@ -24,7 +24,6 @@ INSTALLED_APPS = [
     'imagekit',
     'rest_framework.authtoken',
     'channels',
-    'django_comments',
     'allauth',
     'allauth.account',
     'rest_auth.registration',
