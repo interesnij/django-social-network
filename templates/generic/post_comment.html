@@ -5,9 +5,9 @@
     <div class="media pt-2" posts-id="{{ object.uuid }}">
         <figure>
             {% if object.commenter.profile.avatar %}
-              <img src="{{ object.commenter.profile.avatar.url }}" class="pull-left" style="border-radius:50%;width:50px;" alt="User Image" class="user-image">
+              <img src="{{ object.commenter.profile.avatar.url }}" class="pull-left" style="border-radius:30%;width:50px;" alt="User Image" class="user-image">
             {% else %}
-              <img src="{% static 'images/user.png' %}" class="pull-left" style="border-radius:50%;width:50px;" alt="No Profile Picture" />
+              <img src="{% static 'images/user.png' %}" class="pull-left" style="border-radius:50%;width:30px;" alt="No Profile Picture" />
             {% endif %}
         </figure>
         <div class="media-body">
