@@ -39,7 +39,7 @@ class ProfileUserView(TemplateView):
 		self.frends2=Connect.objects.filter(target_user=self.user)
 		self.communities=Community.objects.filter(starrers=self.user)
 		self.posts=Post.objects.filter(creator=self.user,is_deleted=False)
-		self.comment_count=PostComment.objects.filter(post=self.posts).count()
+		self.comment_count=PostComment.objects.filter(post=self.posts)
 		try:
 			self.connect = Connect.objects.get(target_user=self.request.user,user=self.user)
 		except:
