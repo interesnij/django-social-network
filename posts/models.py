@@ -96,7 +96,14 @@ class PostComment(models.Model):
     parent_comment = models.ForeignKey('self', on_delete=models.CASCADE, related_name='replies', null=True, blank=True,verbose_name="Родительский комментарий")
     created = models.DateTimeField(default=timezone.now, editable=False, db_index=True,verbose_name="Создан")
     commenter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='posts_comments',verbose_name="Комментатор")
-    text = models.TextField(max_length=200, blank=False, null=False,verbose_name="Текст")
+    content_lite = RichTextUploadingField(blank=True,null=True,
+                                      config_name='lite',
+                                      external_plugin_resources=[(
+                                          'youtube',
+                                          '/static/ckeditor_plugins/youtube/youtube/',
+                                          'plugin.js',
+                                          )],
+                                      )
     is_edited = models.BooleanField(default=False, null=False, blank=False,verbose_name="Изменено")
     is_deleted = models.BooleanField(default=False,verbose_name="Удаено")
     votes = GenericRelation(LikeDislike, related_query_name='comments')

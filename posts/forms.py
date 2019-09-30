@@ -1,4 +1,4 @@
-from posts.models import Post
+from posts.models import Post,PostComment
 from django import forms
 
 
@@ -19,3 +19,9 @@ class PostLiteForm(forms.ModelForm):
 	class Meta:
 		model = Post
 		fields = ['content_lite']
+
+class PostLiteForm(forms.ModelForm):
+
+	class Meta:
+		model = PostComment
+		fields = ['text']
