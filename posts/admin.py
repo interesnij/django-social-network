@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from posts.models import Post
+from posts.models import Post, PostComment
 
 
 class PostAdmin(admin.ModelAdmin):
@@ -8,5 +8,9 @@ class PostAdmin(admin.ModelAdmin):
     list_display = ['creator', 'created', 'community', 'is_deleted',]
     list_filter = ['community', 'is_deleted', 'created',]
 
+class PostCommentAdmin(admin.ModelAdmin):
+    list_filter = ['post', 'parent_comment', 'commenter',]
+
 
 admin.site.register(Post, PostAdmin)
+admin.site.register(PostComment, PostCommentAdmin)
