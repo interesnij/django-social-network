@@ -86,6 +86,9 @@ class Post(models.Model):
         verbose_name="пост"
         verbose_name_plural="посты"
 
+    def __str__(self):
+        return self.creator
+
 
 class PostComment(models.Model):
     moderated_object = GenericRelation(ModeratedObject, related_query_name='post_comments',verbose_name="Модерация")
@@ -98,7 +101,8 @@ class PostComment(models.Model):
     is_deleted = models.BooleanField(default=False,verbose_name="Удаено")
     votes = GenericRelation(LikeDislike, related_query_name='comments')
 
-
+    def __str__(self):
+        return self.commenter
 
 
 class PostMute(models.Model):
