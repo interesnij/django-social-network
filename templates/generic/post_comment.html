@@ -2,7 +2,7 @@
 
 <div class="card-footer bg-light-secondary border-top">
     {% for object in comments %}
-    <div class="media pt-2" posts-id="{{ reply.uuid }}">
+    <div class="media pt-2" posts-id="{{ object.uuid }}">
         <figure class="avatar avatar-30">
             {% if object.commenter.profile.avatar %}
               <img src="{{ object.commenter.profile.avatar.url }}" class="pull-left" style="border-radius: 50%;" alt="User Image" class="user-image">
