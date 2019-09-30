@@ -138,7 +138,7 @@ class PostDislikeView(TemplateView):
 @require_http_methods(["GET"])
 def get_comment(request):
 
-    post_id = request.GET['news'] 
+    post_id = request.GET['post'] 
     post = Post.objects.get(uuid=post_id)
     posts_html = render_to_string("generic/post.html", {"object": post})
     thread_html = render_to_string(
