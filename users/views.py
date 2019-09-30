@@ -30,6 +30,9 @@ class ProfileUserView(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.user=User.objects.get(pk=self.kwargs["pk"])
+		self.post_id = request.GET['post']
+		self.post = Post.objects.get(uuid=self.post_id)
+		self.post_comment = PostComment.objects.filter(post=self.post).count()
 		self.frends=Connect.objects.filter(user=self.user)
 		self.follows_count=Follow.objects.filter(followed_user=self.user).count()
 		self.connect_count=Connect.objects.filter(user=self.user).count()
@@ -39,7 +42,7 @@ class ProfileUserView(TemplateView):
 		self.frends2=Connect.objects.filter(target_user=self.user)
 		self.communities=Community.objects.filter(starrers=self.user)
 		self.posts=Post.objects.filter(creator=self.user,is_deleted=False)
-		self.comment_count=PostComment.objects.filter(post=self.posts)
+
 		try:
 			self.connect = Connect.objects.get(target_user=self.request.user,user=self.user)
 		except:
