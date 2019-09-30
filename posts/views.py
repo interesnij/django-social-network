@@ -133,20 +133,22 @@ class PostDislikeView(TemplateView):
         context["post_dislike"]=self.post_dislike
         return context
 
-class PostCommentView(TemplateView):
-    template_name="generic/post_comment.html"
 
-    def get(self,request,*args,**kwargs):
-        self.post = Post.objects.get(pk=self.kwargs["pk"])
-        self.comments = PostComment.objects.filter(post=self.post)
-        self.posts_html = render_to_string("generic/post.html", {"object": post})
-        thread_html = render_to_string(
-            "generic/post_comment.html", {"comments": self.comments})
-        return JsonResponse({
-            "uuid": self.post.uuid,
-            "post": posts_html,
-            "comments": self.comments,
-        })
+@login_required
+@require_http_methods(["GET"])
+def get_comment(request):
+
+    post_id = request.GET['post']
+    post = Post.objects.get(uuid=post_id)
+    comments = PostComment.objects.filter(post=post)
+    posts_html = render_to_string("generic/post.html", {"object": post})
+    thread_html = render_to_string(
+        "generic/post_comment.html", {"comments": comments})
+    return JsonResponse({
+        "uuid": post_id,
+        "post": posts_html,
+        "comments": thread_html,
+    })
 
 
 @login_required
