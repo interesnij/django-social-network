@@ -81,14 +81,6 @@ class Post(models.Model):
     def get_dislikers(self):
         return self.votes.dislikes.all()
 
-    def get_comments_count(self):
-        if self.post:
-            comments = PostComment.objects.filter(post=self.post)
-            count = comments.count()
-            return count
-        else:
-            return self
-
     class Meta:
         ordering=["-created"]
         verbose_name="пост"
@@ -106,13 +98,6 @@ class PostComment(models.Model):
     is_deleted = models.BooleanField(default=False,verbose_name="Удаено")
     votes = GenericRelation(LikeDislike, related_query_name='comments')
 
-    def get_comments_count(self):
-        if self.post:
-            comments = PostComment.objects.filter(post=self.post)
-            count = comments.count()
-            return count
-        else:
-            return self
 
 
 
