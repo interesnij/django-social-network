@@ -49,8 +49,6 @@ class Post(models.Model):
     is_deleted = models.BooleanField(default=False,verbose_name="Удалено")
     views=models.IntegerField(default=0,verbose_name="Просмотры")
     reply = models.BooleanField(verbose_name="Это репост?", default=False)
-    parent = models.ForeignKey("self", blank=True,
-        null=True, on_delete=models.CASCADE, related_name="thread")
     votes = GenericRelation(LikeDislike, related_query_name='posts')
 
     def save(self, *args, **kwargs):
@@ -70,34 +68,6 @@ class Post(models.Model):
 
     def notification_dislike(self, user):
         notification_handler(user, self.creator,Notification.DISLIKED, action_object=self,id_value=str(self.uuid),key='social_update')
-
-    def reply_this(self, creator, text):
-
-        parent = self.get_parent()
-        reply_post = Post.objects.create(
-            creator=creator,
-            content_hard=content_hard,
-            content_lite=content_lite,
-            content_medium=content_medium,
-            reply=True,
-            parent=parent
-        )
-        notification_handler(
-            creator, parent.creator, Notification.REPLY, action_object=reply_post,
-            id_value=str(parent.uuid), key='social_update')
-
-    def get_parent(self):
-        if self.parent:
-            return self.parent
-        else:
-            return self
-
-    def get_thread(self):
-        parent = self.get_parent()
-        return parent.thread.all()
-
-    def count_thread(self):
-        return self.get_thread().count()
 
     def count_likers(self):
         return self.votes.likes().count()

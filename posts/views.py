@@ -4,7 +4,7 @@ from users.models import User
 from django.template.loader import render_to_string
 from django.contrib.auth.mixins import LoginRequiredMixin
 from posts.helpers import ajax_required, AuthorRequiredMixin
-from posts.models import Post
+from posts.models import Post, PostComment
 from django.views.generic import DeleteView
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
@@ -133,21 +133,21 @@ class PostDislikeView(TemplateView):
         context["post_dislike"]=self.post_dislike
         return context
 
+class PostCommentView(TemplateView):
+    template_name="generic/post_comment.html"
 
-@login_required
-@require_http_methods(["GET"])
-def get_comment(request):
+    def get(self,request,*args,**kwargs):
+        self.post = Post.objects.get(pk=self.kwargs["pk"])
+        self.comments = PostComment.objects.filter(post=self.post)
+        self.posts_html = render_to_string("generic/post.html", {"object": post})
+        thread_html = render_to_string(
+            "generic/post_comment.html", {"comments": self.comments})
+        return JsonResponse({
+            "uuid": self.post.uuid,
+            "post": posts_html,
+            "comments": self.comments,
+        })
 
-    post_id = request.GET['post'] 
-    post = Post.objects.get(uuid=post_id)
-    posts_html = render_to_string("generic/post.html", {"object": post})
-    thread_html = render_to_string(
-        "generic/post_comment.html", {"comments": post.get_thread()})
-    return JsonResponse({
-        "uuid": post_id,
-        "post": posts_html,
-        "comments": thread_html,
-    })
 
 @login_required
 @require_http_methods(["POST"])

@@ -189,6 +189,7 @@ class PostUserView(ListView):
 
 class UserDesign(TemplateView):
 	template_name="user_design.html"
+	
 
 class ProfileButtonReload(TemplateView):
 	template_name="profile_button.html"
