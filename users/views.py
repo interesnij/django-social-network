@@ -1,6 +1,6 @@
 from django.views.generic.base import TemplateView
 from users.models import User, UserProfile
-from posts.models import Post
+from posts.models import Post, PostComment
 from frends.models import Connect
 from follows.models import Follow
 from communities.models import Community
@@ -23,7 +23,6 @@ class AllUsers(ListView):
 		return users
 
 
-
 class ProfileUserView(TemplateView):
 	template_name = 'user.html'
 	form = PostMediumForm
@@ -40,6 +39,7 @@ class ProfileUserView(TemplateView):
 		self.frends2=Connect.objects.filter(target_user=self.user)
 		self.communities=Community.objects.filter(starrers=self.user)
 		self.posts=Post.objects.filter(creator=self.user,is_deleted=False)
+		self.comment_count=PostComment.objects.filter(post=self.posts).count()
 		try:
 			self.connect = Connect.objects.get(target_user=self.request.user,user=self.user)
 		except:
@@ -75,6 +75,7 @@ class ProfileUserView(TemplateView):
 		context['follows_count'] = self.follows_count
 		context['frends_count'] = self.frends_count
 		context['communities_count'] = self.communities_count
+		context['comment_count'] = self.comment_count
 		return context
 
 
@@ -189,7 +190,7 @@ class PostUserView(ListView):
 
 class UserDesign(TemplateView):
 	template_name="user_design.html"
-	
+
 
 class ProfileButtonReload(TemplateView):
 	template_name="profile_button.html"
