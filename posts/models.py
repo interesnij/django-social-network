@@ -69,6 +69,9 @@ class Post(models.Model):
     def notification_dislike(self, user):
         notification_handler(user, self.creator,Notification.DISLIKED, action_object=self,id_value=str(self.uuid),key='social_update')
 
+    def notification_comment(self, user):
+        notification_handler(user, self.creator,Notification.POST_COMMENT, action_object=self,id_value=str(self.uuid),key='notification')
+
     def count_likers(self):
         return self.votes.likes().count()
 
@@ -80,6 +83,19 @@ class Post(models.Model):
 
     def get_dislikers(self):
         return self.votes.dislikes.all()
+
+    def reply_this(self, user, text):
+
+        parent = self.get_parent()
+        reply_news = News.objects.create(
+            user=user,
+            content=text,
+            reply=True,
+            parent=parent
+        )
+        notification_handler(
+            user, parent.user, Notification.REPLY, action_object=reply_news,
+            id_value=str(parent.uuid_id), key='social_update')
 
     class Meta:
         ordering=["-created"]

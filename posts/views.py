@@ -157,12 +157,14 @@ def post_comment(request):
 
     user = request.user
     post = request.POST['reply']
-    par = request.POST['parent']
-    parent = Post.objects.get(pk=par)
-    post = post.strip()
+    comments = PostComment.objects.filter(post=post)
     if post:
-        parent.reply_this(user, post)
-        return JsonResponse({'comments': parent.count_thread()})
+        new_comment= PostComment.objects.create(post=post,commenter=user)
+        return JsonResponse({'comments': comments})
+
+        notification_handler(
+            user, post.creator, Notification.POST_COMMENT, action_object=reply_posts,
+            id_value=str(post.uuid), key='social_update')
 
     else:
         return HttpResponseBadRequest()
