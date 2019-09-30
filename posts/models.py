@@ -81,7 +81,13 @@ class Post(models.Model):
     def get_dislikers(self):
         return self.votes.dislikes.all()
 
-
+    def get_comments_count(self):
+        if self.post:
+            comments = PostComment.objects.filter(post=self.post)
+            count = comments.count()
+            return count
+        else:
+            return self
 
     class Meta:
         ordering=["-created"]
