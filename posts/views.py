@@ -1,5 +1,5 @@
 from django.views.generic.base import TemplateView
-from posts.forms import PostHardForm, PostLiteForm, PostMediumForm
+from posts.forms import PostHardForm, PostLiteForm, PostMediumForm, PostCommentForm
 from users.models import User
 from django.template.loader import render_to_string
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -156,6 +156,7 @@ def get_comment(request):
 def post_comment(request):
 
     user = request.user
+    form = PostCommentForm
     post = request.POST['reply']
     comments = PostComment.objects.filter(post=post)
     if post:
