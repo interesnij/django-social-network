@@ -161,7 +161,7 @@ def post_comment(request):
     comments = PostComment.objects.filter(post=post)
     if post:
         new_comment= PostComment.objects.create(post=post,commenter=user)
-        return JsonResponse({'comments': comments})
+        return JsonResponse({'comments': comments,"form_comment": form,})
 
         notification_handler(
             user, post.creator, Notification.POST_COMMENT, action_object=reply_posts,
