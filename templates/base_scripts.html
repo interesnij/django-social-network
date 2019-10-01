@@ -47,7 +47,7 @@
 
 <script>
 $(function () {
-let emptyMessage = 'У Вас нет новых уведомлений';
+let emptyMessage = 'Нет новых уведомлений';
 function checkNotifications() {
     $.ajax({
         url: '/notifications/latest-notifications/',
@@ -121,7 +121,7 @@ $("#notification").click(function () {
 //            break;
 //    };
 //});
-//});
+});
 </script>
 {% endif %}
 <script type="text/javascript">
