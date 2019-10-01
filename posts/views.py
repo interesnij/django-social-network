@@ -3,7 +3,6 @@ from posts.forms import (
                             PostHardForm,
                             PostLiteForm,
                             PostMediumForm,
-                            PostCommentForm,
                             PostCommentForm
                         )
 from users.models import User
