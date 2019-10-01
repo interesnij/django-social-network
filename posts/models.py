@@ -1,6 +1,6 @@
 import uuid
-from datetime import timedelta
 from django.contrib.contenttypes.fields import GenericRelation
+from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.utils import timezone
 from pilkit.processors import ResizeToFit
@@ -116,7 +116,7 @@ class PostComment(models.Model):
 
     def __str__(self):
         return "{0}/{1}".format(self.commenter.get_full_name(), self.text[:10])
-        
+
 
 class Repost(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
