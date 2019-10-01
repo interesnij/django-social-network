@@ -53,7 +53,15 @@ display: none;
 
     <div class="row">
           <div class="col-lg-4 col-md-5 col-sm-12 order-1">
+            <form action="" id="FORM-COMMENT" method="post">
+              {% csrf_token %}
             {{ form_comment }}
+            <button class="btn btn-outline-primary btn-rounded btn-sm ml-2" type="submit">
+              <span class="text-hide-xs">Отправить</span>
+              <i class="material-icons">send</i>
+            </button>
+            </form>
+
               {% include 'profile/card_profile.html' %}
 
               {% include 'profile/frends.html' %}
