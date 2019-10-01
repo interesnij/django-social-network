@@ -1,5 +1,11 @@
 from django.views.generic.base import TemplateView
-from posts.forms import PostHardForm, PostLiteForm, PostMediumForm, PostCommentForm, PostCommentForm
+from posts.forms import (
+                            PostHardForm,
+                            PostLiteForm,
+                            PostMediumForm,
+                            PostCommentForm,
+                            PostCommentForm
+                        )
 from users.models import User
 from django.template.loader import render_to_string
 from django.contrib.auth.mixins import LoginRequiredMixin
