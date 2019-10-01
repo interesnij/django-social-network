@@ -145,10 +145,11 @@ def get_comment(request):
 
     post_id = request.GET['post']
     post = Post.objects.get(uuid=post_id)
+    form_comment = PostCommentForm()
     comments = post.comments.all().order_by("-created")
     posts_html = render_to_string("generic/post.html", {"object": post})
     thread_html = render_to_string(
-        "generic/post_comment.html", {"comments": comments})
+        "generic/post_comment.html", {"comments": comments, "form_comment": form_comment})
     return JsonResponse({
         "uuid": post_id,
         "post": posts_html,
