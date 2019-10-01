@@ -150,7 +150,7 @@ def get_comment(request):
         "comments": thread_html,
     })
 
-@login_required
+
 class CommentCreateView(TemplateView):
     template_name = "user.html"
 
