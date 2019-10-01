@@ -160,9 +160,8 @@ def get_comment(request):
 class CommentCreateView(TemplateView):
     template_name = "generic/post_comment.html"
 
-
     def post(self, request, *args, **kwargs):
-        post_id = self.request.POST.get('post')
+        post_id = request.POST['post'] 
         post = Post.objects.get(uuid=post_id)
         comment = self.request.POST.get("comment")
         data = [
