@@ -55,15 +55,14 @@ class Post(models.Model):
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
-        if not self.reply:
-            channel_layer = get_channel_layer()
-            payload = {
-                    "type": "receive",
-                    "key": "additional_post",
-                    "actor_name": self.creator.get_full_name()
+        channel_layer = get_channel_layer()
+        payload = {
+                "type": "receive",
+                "key": "additional_post",
+                "actor_name": self.creator.get_full_name()
 
-                }
-            async_to_sync(channel_layer.group_send)('notifications', payload)
+            }
+        async_to_sync(channel_layer.group_send)('notifications', payload)
 
     def notification_like(self, user):
         notification_handler(user, self.creator,Notification.LIKED, action_object=self,id_value=str(self.uuid),key='social_update')
