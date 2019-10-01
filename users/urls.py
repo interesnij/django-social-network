@@ -1,7 +1,14 @@
 from django.conf.urls import url
-from users.views import AllUsers, ProfileUserView, UserGeneralChange, UserAboutChange, UserDesign, PostUserView, UserAvatarChange
-from users.views import ProfileButtonReload
-
+from users.views import (
+                            AllUsers,
+                            ProfileUserView,
+                            UserGeneralChange,
+                            UserAboutChange,
+                            UserDesign,
+                            PostUserView,
+                            UserAvatarChange,
+                            ProfileButtonReload
+                        )
 
 urlpatterns = [
     url(r'^all-users/$', AllUsers.as_view(), name='all_users'),
