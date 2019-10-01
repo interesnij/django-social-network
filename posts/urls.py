@@ -1,11 +1,18 @@
-from posts.views import PostsView, PostUserHardCreate, PostUserMediumCreate, PostUserLiteCreate, PostDeleteView
+from posts.views import (
+                            PostsView,
+                            PostUserHardCreate,
+                            PostUserMediumCreate,
+                            PostUserLiteCreate,
+                            PostDeleteView,
+                            CommentCreateView
+                        )
 from posts.views import PostLikeView, PostDislikeView
 from django.conf.urls import url
 from main.models import LikeDislike
 from main.views import VotesView
 from posts.models import Post, PostComment
 from django.contrib.auth.decorators import login_required
-from posts.views import post_comment, update_interactions, get_comment
+from posts.views import update_interactions, get_comment
 
 
 urlpatterns = [
@@ -21,7 +28,7 @@ urlpatterns = [
     url(r'^like_window/(?P<pk>\d+)/$', PostLikeView.as_view(), name='post_like_window'),
     url(r'^dislike_window/(?P<pk>\d+)/$', PostDislikeView.as_view(), name='post_dislike_window'),
     url(r'^get-comment/$', get_comment, name='get_comment'),
-    url(r'^post-comment/$', post_comment, name='post_comments'),
+    url(r'^post-comment/$', CommentCreateView.as_view(), name='post_comments'),
     url(r'^update-interactions/$', update_interactions, name='update_interactions'),
 
 ]
