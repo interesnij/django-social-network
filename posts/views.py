@@ -150,30 +150,27 @@ def get_comment(request):
         "comments": thread_html,
     })
 
-
 @login_required
-@require_http_methods(["POST"])
-def post_comment(request):
-    post_id = request.POST.get('post')
-    post = Post.objects.get(uuid=post_id)
-    comment = request.POST.get("comment")
+class CommentCreateView(TemplateView):
+    template_name = "user.html"
 
-    if post:
-        new_comment= post.comments.create(text=comment,commenter=request.user)
-        return JsonResponse(
+    def post(self, request, *args, **kwargs):
+        post_id = self.request.POST.get('post')
+        post = Post.objects.get(uuid=post_id)
+        comment = self.request.POST.get("comment")
+        data = [
             {
                 'commenter': new_comment.commenter.get_full_name(),
                 "comment": new_comment.text,
                 "comment_id": new_comment.pk,
             }
-        )
+        ]
+        return JsonResponse(data, safe=False)
 
         notification_handler(
             user, post.creator, Notification.POST_COMMENT, action_object=reply_posts,
             id_value=str(post.uuid), key='social_update')
 
-    else:
-        return HttpResponseBadRequest()
 
 @login_required
 @require_http_methods(["POST"])
