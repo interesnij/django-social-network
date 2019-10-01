@@ -152,7 +152,7 @@ def get_comment(request):
 
 
 class CommentCreateView(TemplateView):
-    template_name = "user.html"
+    template_name = "posts.html"
 
     def get_context_data(self,**kwargs):
         context=super(CommentCreateView,self).get_context_data(**kwargs)
