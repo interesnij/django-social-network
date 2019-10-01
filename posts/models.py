@@ -112,7 +112,7 @@ class PostComment(models.Model):
     is_deleted = models.BooleanField(default=False,verbose_name="Удаено")
     votes = GenericRelation(LikeDislike, related_query_name='comments')
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
-    object_id = models.PositiveIntegerField()
+    object_id = models.PositiveIntegerField(default=0)
     content_object = GenericForeignKey("content_type", "object_id")
 
     def __str__(self):
@@ -124,7 +124,7 @@ class Repost(models.Model):
     content = models.TextField(blank=True)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
-    object_id = models.PositiveIntegerField()
+    object_id = models.PositiveIntegerField(default=0,)
     content_object = GenericForeignKey("content_type", "object_id")
 
     def get_object_for_content_type(self):
