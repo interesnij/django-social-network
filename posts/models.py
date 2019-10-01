@@ -48,8 +48,9 @@ class Post(models.Model):
     is_closed = models.BooleanField(default=False,verbose_name="Закрыто")
     is_deleted = models.BooleanField(default=False,verbose_name="Удалено")
     views=models.IntegerField(default=0,verbose_name="Просмотры")
-    reply = models.BooleanField(verbose_name="Это репост?", default=False)
     votes = GenericRelation(LikeDislike, related_query_name='posts')
+    comments = GenericRelation("postcomment")
+    reposts = GenericRelation("repost")
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
@@ -84,19 +85,6 @@ class Post(models.Model):
     def get_dislikers(self):
         return self.votes.dislikes.all()
 
-    def reply_this(self, user, text):
-
-        parent = self.get_parent()
-        reply_news = News.objects.create(
-            user=user,
-            content=text,
-            reply=True,
-            parent=parent
-        )
-        notification_handler(
-            user, parent.user, Notification.REPLY, action_object=reply_news,
-            id_value=str(parent.uuid_id), key='social_update')
-
     class Meta:
         ordering=["-created"]
         verbose_name="пост"
@@ -108,7 +96,6 @@ class Post(models.Model):
 
 class PostComment(models.Model):
     moderated_object = GenericRelation(ModeratedObject, related_query_name='post_comments',verbose_name="Модерация")
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post_comment',verbose_name="Пост")
     parent_comment = models.ForeignKey('self', on_delete=models.CASCADE, related_name='replies', null=True, blank=True,verbose_name="Родительский комментарий")
     created = models.DateTimeField(default=timezone.now, editable=False, db_index=True,verbose_name="Создан")
     commenter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='posts_comments',verbose_name="Комментатор")
@@ -123,9 +110,28 @@ class PostComment(models.Model):
     is_edited = models.BooleanField(default=False, null=False, blank=False,verbose_name="Изменено")
     is_deleted = models.BooleanField(default=False,verbose_name="Удаено")
     votes = GenericRelation(LikeDislike, related_query_name='comments')
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField()
+    content_object = GenericForeignKey("content_type", "object_id")
 
     def __str__(self):
-        return self.commenter.get_full_name()
+        return "{0}/{1}".format(self.commenter.get_full_name(), self.text[:10])
+        
+
+class Repost(models.Model):
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    content = models.TextField(blank=True)
+    created = models.DateTimeField(auto_now_add=True, auto_now=False)
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField()
+    content_object = GenericForeignKey("content_type", "object_id")
+
+    def get_object_for_content_type(self):
+        ct = self.content_type
+        model = ct.model_class()
+        pk = self.object_id
+        object = model.objects.get(pk=pk)
+        return object
 
 
 class PostMute(models.Model):

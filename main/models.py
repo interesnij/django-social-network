@@ -17,9 +17,9 @@ class LikeDislikeManager(models.Manager):
         return self.get_queryset().filter(vote__lt=0)
 
     def posts(self):
-        return self.get_queryset().filter(content_type__model='posts').order_by('-posts__posted')
+        return self.get_queryset().filter(content_type__model='posts').order_by('-posts__created')
     def comments(self):
-        return self.get_queryset().filter(content_type__model='comment').order_by('-comments__posted')
+        return self.get_queryset().filter(content_type__model='comment').order_by('-comments__created')
 
     def sum_rating(self):
         return self.get_queryset().aggregate(Sum('vote')).get('vote__sum') or 0
