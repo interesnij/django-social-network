@@ -9,7 +9,7 @@ class PostAdmin(admin.ModelAdmin):
     list_filter = ['community', 'is_deleted', 'created',]
 
 class PostCommentAdmin(admin.ModelAdmin):
-    list_filter = ['post', 'parent_comment', 'commenter',]
+    list_filter = ['parent_comment', 'commenter',]
 
 
 admin.site.register(Post, PostAdmin)
