@@ -3,6 +3,7 @@
 
 <form action="" id="FORM-POST3" method="post">
   {% csrf_token %}
+
     {{ form_medium.content_medium }}
     <div class="card-footer">
       <button class="btn btn-secondary remove_form">Отмена</button>
@@ -22,7 +23,7 @@
 
             data: frm2.serialize(),
             success: function (data) {
-              $("div.stream").prepend(data);
+              $(".stream").prepend(data);
               $('#post_create').empty();
               $.toast({
                   heading: '{{ request.user.first_name }}',
