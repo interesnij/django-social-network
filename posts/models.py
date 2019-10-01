@@ -111,10 +111,11 @@ class PostComment(models.Model):
     is_edited = models.BooleanField(default=False, null=False, blank=False,verbose_name="Изменено")
     is_deleted = models.BooleanField(default=False,verbose_name="Удаено")
     votes = GenericRelation(LikeDislike, related_query_name='comments')
-    
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField()
+    content_object = GenericForeignKey("content_type", "object_id")
 
-    def __str__(self):
-        return "{0}/{1}".format(self.commenter.get_full_name(), self.text[:10])
+    
 
 
 class Repost(models.Model):
