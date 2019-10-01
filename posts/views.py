@@ -1,5 +1,5 @@
 from django.views.generic.base import TemplateView
-from posts.forms import PostHardForm, PostLiteForm, PostMediumForm, PostCommentForm
+from posts.forms import PostHardForm, PostLiteForm, PostMediumForm, PostCommentForm, CommentCreateView
 from users.models import User
 from django.template.loader import render_to_string
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -153,6 +153,11 @@ def get_comment(request):
 
 class CommentCreateView(TemplateView):
     template_name = "user.html"
+
+    def get_context_data(self,**kwargs):
+        context=super(CommentCreateView,self).get_context_data(**kwargs)
+        context["form_comment"]=PostCommentForm()
+        return context
 
     def post(self, request, *args, **kwargs):
         post_id = self.request.POST.get('post')
