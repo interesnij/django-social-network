@@ -27,7 +27,6 @@ class ProfileUserView(TemplateView):
 	template_name = 'user.html'
 	form = PostMediumForm
 	form_avatar = AvatarUserForm
-	form_comment = PostCommentForm
 
 	def get(self,request,*args,**kwargs):
 		self.user=User.objects.get(pk=self.kwargs["pk"])
@@ -68,7 +67,7 @@ class ProfileUserView(TemplateView):
 		context['frends2'] = self.frends2
 		context['form_medium'] = self.form
 		context['form_avatar'] = self.form_avatar
-		context['form_comment'] = self.form_comment
+		context['form_comment'] = PostCommentForm()
 		context['communities'] = self.communities
 		context['connect'] = self.connect
 		context['connect2'] = self.connect2
