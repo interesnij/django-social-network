@@ -83,7 +83,7 @@ class PostUserLiteCreate(TemplateView):
         return context
 
     def post(self,request,*args,**kwargs):
-        self.form=PostLiteForm(request.POST,request.FILES)
+        self.form=PostLiteForm(request.POST)
         if self.form.is_valid():
             new_post=self.form.save(commit=False)
             new_post.creator=self.request.user
@@ -154,14 +154,19 @@ def get_comment(request):
 @login_required
 @require_http_methods(["POST"])
 def post_comment(request):
+    post_id = request.POST.get('post')
+    post = Post.objects.get(uuid=post_id)
+    comment = request.POST.get("comment")
 
-    user = request.user
-    form = PostCommentForm
-    post = request.POST['reply']
-    comments = PostComment.objects.filter(post=post)
     if post:
-        new_comment= PostComment.objects.create(post=post,commenter=user)
-        return JsonResponse({'comments': comments,"form_comment": form,})
+        new_comment= post.comments.create(text=comment,commenter=request.user)
+        return JsonResponse(
+            {
+                'commenter': new_comment.commenter.get_full_name(),
+                "comment": new_comment.text,
+                "comment_id": new_comment.pk,
+            }
+        )
 
         notification_handler(
             user, post.creator, Notification.POST_COMMENT, action_object=reply_posts,
