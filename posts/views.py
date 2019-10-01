@@ -160,10 +160,6 @@ def get_comment(request):
 class CommentCreateView(TemplateView):
     template_name = "generic/post_comment.html"
 
-    def get_context_data(self,**kwargs):
-        context=super(CommentCreateView,self).get_context_data(**kwargs)
-        context["form_comment"]=PostCommentForm()
-        return context
 
     def post(self, request, *args, **kwargs):
         post_id = self.request.POST.get('post')
