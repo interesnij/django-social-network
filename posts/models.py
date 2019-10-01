@@ -111,27 +111,17 @@ class PostComment(models.Model):
     is_edited = models.BooleanField(default=False, null=False, blank=False,verbose_name="Изменено")
     is_deleted = models.BooleanField(default=False,verbose_name="Удаено")
     votes = GenericRelation(LikeDislike, related_query_name='comments')
-    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
-    object_id = models.PositiveIntegerField()
-    content_object = GenericForeignKey("content_type", "object_id")
-
     
+
+    def __str__(self):
+        return "{0}/{1}".format(self.commenter.get_full_name(), self.text[:10])
 
 
 class Repost(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     content = models.TextField(blank=True)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
-    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
-    object_id = models.PositiveIntegerField()
-    content_object = GenericForeignKey("content_type", "object_id")
 
-    def get_object_for_content_type(self):
-        ct = self.content_type
-        model = ct.model_class()
-        pk = self.object_id
-        object = model.objects.get(pk=pk)
-        return object
 
 
 class PostMute(models.Model):
