@@ -1,5 +1,6 @@
 {% load humanize staticfiles %}
 <script src="{% static 'scripts/jquery-3.2.1.min.js' %}" type="text/javascript"></script>
+<script src="/static/scripts/cockie.js" type="text/javascript"></script>
 
     {% for object in comments %}
     <div class="media pt-2" posts-id="{{ object.uuid }}">
