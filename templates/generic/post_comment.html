@@ -1,8 +1,6 @@
 {% load humanize staticfiles %}
 <script src="{% static 'scripts/jquery-3.2.1.min.js' %}" type="text/javascript"></script>
 
-
-<div class="card-footer bg-light-secondary border-top">
     {% for object in comments %}
     <div class="media pt-2" posts-id="{{ object.uuid }}">
         <figure>
@@ -22,8 +20,8 @@
         </div>
     </div>
     {% endfor %}
-</div>
-<div class="card-footer border-top">
+
+
     <div class="row no-gutters">
       <form action="" id="FORM-COMMENT" method="post">
         {% csrf_token %}
@@ -40,7 +38,7 @@
         </div>
       </form>
     </div>
-</div>
+
 
 <ul class="stream" id="threadContent"></ul>
 
