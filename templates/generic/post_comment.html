@@ -20,7 +20,27 @@
         </div>
     </div>
     {% endfor %}
-
+    <div class="row no-gutters">
+      <form action="" id="replyPostForm" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="parent" value="{{ object.pk }}">
+          <div class="col">
+            <div class="input-group input-group-sm">
+              <div class="input-group-prepend">
+                  <button class="btn btn-link content-color-secondary" type="button"><i class="material-icons">face</i></button>
+                  <button class="btn btn-link content-color-secondary text-hide-xs" type="button"><i class="material-icons">collections</i></button>
+                  <button class="btn btn-link content-color-secondary" type="button"><i class="material-icons">camera_alt</i></button>
+              </div>
+              <textarea id="id_text" name="text" rows="2" class="form-control form-control-rounded" maxlength="280"></textarea>
+            </div>
+          </div>
+          <div class="col-auto">
+            <button class="btn btn-outline-primary btn-rounded btn-sm ml-2" id="replyPost" type="button">
+              <i class="material-icons">send</i>
+            </button>
+        </div>
+      </form>
+    </div>
 
 <div class="stream" id="threadContent"></div>
 
