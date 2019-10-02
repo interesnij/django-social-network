@@ -43,3 +43,20 @@
 
 
 <script src="/static/scripts/jquery.toast.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+  $("#replyPost").click(function () {
+
+      $.ajax({
+          url: '/posts/post-comment/',
+          data: $("#replyPostForm").serialize(),
+          type: 'POST',
+          cache: false,
+          success: function (data) {
+              $("#id_text").val("");
+          },
+          error: function(data){
+              alert(data.responseText);
+          },
+      });
+  });
+</script>
