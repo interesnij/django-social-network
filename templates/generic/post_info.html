@@ -84,21 +84,5 @@
   </div>
 
   <div class="load_comments" style="margin-top:25px"></div>
-  <div class="row no-gutters">
-    <form action="" id="replyPostForm" method="post">
-      <input type="hidden" name="parent" value="{{ object.pk }}">
-      {% csrf_token %}
-      <div class="col">
-          <div class="input-group input-group-sm">
-          {{ form_comment.text }}
-          </div>
-      </div>
-      <div class="col-auto">
-          <button class="btn btn-outline-primary btn-rounded btn-sm ml-2" id="replyPost" type="button">
-            <span class="text-hide-xs">Отправить</span>
-            <i class="material-icons">send</i>
-          </button>
-      </div>
-    </form>
-  </div>
+  
 </div>
