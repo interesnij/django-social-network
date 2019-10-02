@@ -1,29 +1,5 @@
 {% load staticfiles %}
 
-	<script type="text/javascript">
-	    var frm = $('#FORM-COMMENT');
-	    frm.submit(function () {
-	        $.ajax({
-	            type: frm.attr('method'),
-	            url: "/posts/post-comment/",
-	            data: frm.serialize(),
-	            success: function (data) {
-	              $('#id_text').val("");
-	              $.toast({
-	                  heading: '{{ request.user.first_name }}',
-	                  text: 'Комментарий успешно создан!',
-	                  showHideTransition: 'fade',
-	                  icon: 'success'
-	              })
-	            },
-	            error: function(data) {
-	                $("#hack").html("Возникла непредвидинная ошибка!!");
-	            }
-	        });
-	        return false;
-	    });
-	</script>
-
 <script>
 function avatar_change_popap(avatar_change) {
 	if ($(".wrapper").length == 0){
