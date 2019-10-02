@@ -161,7 +161,7 @@ class CommentCreateView(TemplateView):
     template_name = "generic/post_comment.html"
 
     def post(self, request, *args, **kwargs):
-        post = self.request.POST.get('reply')
+        post = self.request.POST.get('object')
         par = self.request.POST.get('parent')
         if par:
             parent = PostComment.objects.get(pk=par)
