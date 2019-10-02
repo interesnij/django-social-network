@@ -109,3 +109,20 @@
     </div>
   </div>
 </div>
+
+<script type="text/javascript">
+  $("#replyPost").click(function () {
+      $.ajax({
+          url: '/posts/post-comment/',
+          data: $("#replyPostForm").serialize(),
+          type: 'POST',
+          cache: false,
+          success: function (data) {
+              $("#id_text").val("");
+          },
+          error: function(data){
+              alert(data.responseText);
+          },
+      });
+  });
+</script>
