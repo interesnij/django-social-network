@@ -164,6 +164,7 @@ class CommentCreateView(TemplateView):
         post_id = request.POST.get('post')
         post = Post.objects.get(uuid=post_id)
         comment = self.request.POST.get("comment")
+        new_comment = post.comments.create(creator=request.user, text=comment)
         data = [
             {
                 'commenter': new_comment.commenter.get_full_name(),
