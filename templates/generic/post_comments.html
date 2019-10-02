@@ -1,39 +1,39 @@
 {% load humanize staticfiles %}
 <script src="{% static 'scripts/jquery-3.2.1.min.js' %}" type="text/javascript"></script>
 
-  <span class="stream_comments">
+<span class="stream_comments">
     {% for comment in comments %}
-      {% include 'generic/comment.html' with comment=comment  %}
+    {% include 'generic/comment.html' with comment=comment  %}
     {% endfor %}
-  </span>
+</span>
 
-    <div class="card-footer border-top" style="margin-top:10px">
-      <form action="" id="replyPostForm" method="post">
+<div class="card-footer border-top" style="margin-top:10px">
+    <form action="" id="replyPostForm" method="post">
         {% csrf_token %}
         <div class="row no-gutters">
 
-        <input type="hidden" name="parent" value="{{ parent.pk }}">
-          <div class="col">
-            <div class="input-group input-group-sm">
-              <div class="input-group-prepend">
-                  <button class="btn btn-link content-color-secondary" type="button"><i class="material-icons">face</i></button>
-                  <button class="btn btn-link content-color-secondary text-hide-xs" type="button"><i class="material-icons">collections</i></button>
-              </div>
-              <textarea id="id_text" name="text" class="form-control form-control-rounded" ></textarea>
+            <input type="hidden" name="parent" value="{{ parent.pk }}">
+            <div class="col">
+                <div class="input-group input-group-sm">
+                    <div class="input-group-prepend">
+                        <button class="btn btn-link content-color-secondary" type="button"><i class="material-icons">face</i></button>
+                        <button class="btn btn-link content-color-secondary text-hide-xs" type="button"><i class="material-icons">collections</i></button>
+                    </div>
+                    <textarea id="id_text" name="text" class="form-control form-control-rounded"></textarea>
+                </div>
             </div>
-          </div>
-          <div class="col-auto">
-            <button class="btn btn-outline-primary btn-rounded btn-sm ml-2" id="replyPost" type="button">
-              <i class="material-icons">send</i>
-            </button>
+            <div class="col-auto">
+                <button class="btn btn-outline-primary btn-rounded btn-sm ml-2" id="replyPost" type="button">
+                    <i class="material-icons">send</i>
+                </button>
+            </div>
         </div>
-        </div>
-      </form>
-    </div>
+    </form>
+</div>
 
 <script src="/static/scripts/jquery.toast.min.js" type="text/javascript"></script>
 <script>
-  function getCookie(name) {
+    function getCookie(name) {
         var cookieValue = null;
         if (document.cookie && document.cookie !== '') {
             var cookies = document.cookie.split(';');
@@ -62,20 +62,20 @@
         }
     });
 
-  $("#replyPost").click(function () {
-      $.ajax({
-          url: '/posts/post-comment/',
-          data: $("#replyPostForm").serialize(),
-          type: 'POST',
-          cache: false,
-          success: function (data) {
-              $("#id_text").val("");
-              $(".stream_comments").append(data);
-          },
-          error: function(data){
-              alert(data.responseText);
-          },
-      });
-      return false;
-  });
+    $("#replyPost").click(function() {
+        $.ajax({
+            url: '/posts/post-comment/',
+            data: $("#replyPostForm").serialize(),
+            type: 'POST',
+            cache: false,
+            success: function(data) {
+                $("#id_text").val("");
+                $(".stream_comments").append(data);
+            },
+            error: function(data) {
+                alert(data.responseText);
+            },
+        });
+        return false;
+    });
 </script>
