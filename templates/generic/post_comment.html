@@ -27,7 +27,7 @@
         {% csrf_token %}
         <div class="col">
             <div class="input-group input-group-sm">
-            {{ form_comment.text }}
+            <textarea id="id_text" name="text" rows="2" class="form-control form-control-rounded" maxlength="280"></textarea>
             </div>
         </div>
         <div class="col-auto">
