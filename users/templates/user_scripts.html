@@ -151,6 +151,23 @@ $(".comment").on("click", function () {
 </script>
 
 <script>
+  $("#replyPost").click(function () {
+      $.ajax({
+          url: '/posts/post-comment/',
+          data: $("#replyPostForm").serialize(),
+          type: 'POST',
+          cache: false,
+          success: function (data) {
+              $("#id_text").val("");
+          },
+          error: function(data){
+              alert(data.responseText);
+          },
+      });
+  });
+</script>
+
+<script>
 function new_message_popap(new_message) {
 	if ($(".wrapper").length == 0){
 		$(new_message).wrapInner("<div class='wrapper'></div>");
