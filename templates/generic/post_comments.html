@@ -2,7 +2,7 @@
 <script src="{% static 'scripts/jquery-3.2.1.min.js' %}" type="text/javascript"></script>
 
   <span class="stream">
-    {% for comment in comments  %}
+    {% for comment in comments %}
       {% include 'generic/comment.html' with comment=comment  %}
     {% endfor %}
   </span>
