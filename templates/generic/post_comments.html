@@ -1,16 +1,16 @@
 {% load humanize staticfiles %}
 <script src="{% static 'scripts/jquery-3.2.1.min.js' %}" type="text/javascript"></script>
 
-  <span class="stream">
+  <span class="stream" style="margin-top:25px">
     {% for comment in comments %}
       {% include 'generic/comment.html' with comment=comment  %}
     {% endfor %}
   </span>
 
-    <div class="card-footer border-top">
+    <div class="card-footer border-top" style="margin-top:10px">
       <form action="" id="replyPostForm" method="post">
         {% csrf_token %}
-    <div class="row no-gutters">
+        <div class="row no-gutters">
 
         <input type="hidden" name="parent" value="{{ parent.pk }}">
           <div class="col">
