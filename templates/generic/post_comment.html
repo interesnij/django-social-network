@@ -23,7 +23,7 @@
     <div class="row no-gutters">
       <form action="" id="replyPostForm" method="post">
         {% csrf_token %}
-        <input type="hidden" name="parent" value="{{ object.pk }}">
+        <input type="hidden" name="parent" value="{{ parent.pk }}">
           <div class="col">
             <div class="input-group input-group-sm">
               <div class="input-group-prepend">
