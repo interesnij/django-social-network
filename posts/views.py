@@ -161,29 +161,26 @@ class CommentCreateView(TemplateView):
     template_name = "generic/post_comment.html"
 
     def post(self, request, *args, **kwargs):
-        post = self.request.POST.get('text')
-        par = self.request.POST.get('parent')
-        if par:
-            parent = PostComment.objects.get(pk=par)
+        comment = self.request.POST.get('text')
+        post_uuid = self.request.GET.get("post")
+        post = Post.objects.get(uuid=post_uuid)
 
-        if post:
 
-            comment = self.request.POST.get("comment")
-            new_comment = post.comments.create(creator=request.user, text=comment)
-            data = [
+        comment = self.request.POST.get("comment")
+        new_comment = post.comments.create(creator=request.user, text=comment)
+        data = [
                 {
                 'commenter': new_comment.commenter.get_full_name(),
                 "comment": new_comment.text,
                 "comment_id": new_comment.pk,
                 }
-            ]
-            return JsonResponse(data, safe=False)
+        ]
+        return JsonResponse(data, safe=False)
 
-            notification_handler(
-                user, post.creator, Notification.POST_COMMENT, action_object=reply_posts,
-                id_value=str(post.uuid), key='social_update')
-        else:
-            return HttpResponseBadRequest()
+        notification_handler(
+            user, post.creator, Notification.POST_COMMENT, action_object=reply_posts,
+            id_value=str(post.uuid), key='social_update')
+
 
 
 @login_required
