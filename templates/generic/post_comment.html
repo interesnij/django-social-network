@@ -22,8 +22,9 @@
     {% endfor %}
     <div class="card-footer border-top">
       <form action="" id="replyPostForm" method="post">
-    <div class="row no-gutters">
         {% csrf_token %}
+    <div class="row no-gutters">
+
         <input type="hidden" name="parent" value="{{ parent.pk }}">
           <div class="col">
             <div class="input-group input-group-sm">
