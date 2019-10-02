@@ -162,10 +162,9 @@ class CommentCreateView(TemplateView):
 
     def post(self, request, *args, **kwargs):
         comment = self.request.POST.get('text')
-        post_uuid = self.request.POST.get("post")
-        post = Post.objects.get(uuid=post_uuid)
+        post_id = request.GET['post']
+        post = Post.objects.get(uuid=post_id)
 
-        comment = self.request.POST.get("comment")
         new_comment = post.comments.create(creator=request.user, text=comment)
         data = [
                 {
