@@ -47,11 +47,11 @@
 <script src="/static/scripts/jquery.toast.min.js" type="text/javascript"></script>
 <script type="text/javascript">
     var frm = $('#FORM-COMMENT');
-    var pk = $('.infinite-item').attr("posts-id");
+    var uuid = $('.infinite-item').attr("posts-id");
     frm.submit(function () {
         $.ajax({
             type: frm.attr('method'),
-            url: "/posts/post-comment/" + pk + "/",
+            url: "/posts/post-comment/" + uuid + "/",
             data: frm.serialize(),
             success: function (data) {
               $('#id_text').val("");
