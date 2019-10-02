@@ -86,7 +86,7 @@
   <div class="load_comments" style="margin-top:25px"></div>
   <div class="row no-gutters">
     <form action="" id="replyPostForm" method="post">
-      <input type="hidden" name="parent" value="">
+      <input type="hidden" name="parent" value="{{ object.pk }}">
       {% csrf_token %}
       <div class="col">
           <div class="input-group input-group-sm">
