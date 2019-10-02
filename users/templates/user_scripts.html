@@ -137,10 +137,10 @@ $(".comment").on("click", function () {
 			data: {'post': post},
 			cache: false,
 			beforeSend: function () {
-					url.find(".stream").html("<img src='/static/images/loading.gif'>");
+					url.find(".load_comments").html("<img src='/static/images/loading.gif'>");
 			},
 			success: function (data) {
-				url.find(".stream").html(data.comments);
+				url.find(".load_comments").html(data.comments);
 			}
 	});
 	return false;
