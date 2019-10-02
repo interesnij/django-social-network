@@ -23,8 +23,8 @@
     {% endfor %}
     <div class="row no-gutters">
       <form action="" id="replyPostForm" method="post">
-        <input type="hidden" name="parent" value="{{ parent.pk }}">
         {% csrf_token %}
+        <input type="hidden" name="parent" value="{{ parent.pk }}">
 
           <div class="col">
             <div class="input-group input-group-sm">
@@ -38,7 +38,6 @@
           </div>
           <div class="col-auto">
             <button class="btn btn-outline-primary btn-rounded btn-sm ml-2" type="submit">
-              <span class="text-hide-xs">Отправить</span>
               <i class="material-icons">send</i>
             </button>
         </div>
