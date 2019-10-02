@@ -161,7 +161,7 @@ class CommentCreateView(TemplateView):
     template_name = "generic/post_comment.html"
 
     def post(self, request, *args, **kwargs):
-        post = request.POST['reply']
+        post = self.request.POST.get('reply')
         par = request.POST['parent']
         parent = News.objects.get(pk=par)
         post = post.strip()
