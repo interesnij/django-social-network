@@ -166,7 +166,7 @@ def post_comment(request):
     par = request.POST['parent']
     parent = Post.objects.get(pk=par)
     comment = comment.strip()
-    if post:
+    if parent:
         new_comment = parent.comments.create(creator=request.user, text=comment)
         return JsonResponse({'comments': parent.count_thread()})
 
