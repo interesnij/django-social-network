@@ -132,19 +132,15 @@ $(".comment").on("click", function () {
 	var post = $(this).closest(".infinite-item").attr("posts-id");
 	var url = $(this).parents(".infinite-item");
 
-	console.log(url)
 	$.ajax({
 			url: '/posts/get-comment/',
 			data: {'post': post},
 			cache: false,
 			beforeSend: function () {
-					url.find(".load_comments").html("<li class='loadcomment'><img src='/static/images/loading.gif'></li>");
+					url.find(".stream").html("<img src='/static/images/loading.gif'>");
 			},
 			success: function (data) {
-
-				url.find(".load_comments").html(data.comments);
-				url.find(".load_form").show();
-
+				url.find(".stream").html(data.comments);
 			}
 	});
 	return false;
