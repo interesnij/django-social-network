@@ -168,7 +168,7 @@ def post_comment(request):
     comment = comment.strip()
     if parent:
         new_comment = parent.comments.create(commenter=request.user, text=comment)
-        return JsonResponse({'comments': parent.count_thread()})
+        return JsonResponse({'comments': parent.comments.count()}) 
 
         notification_handler(
             user, parent.creator, Notification.POST_COMMENT, action_object=reply_posts,
