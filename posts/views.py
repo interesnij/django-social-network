@@ -149,7 +149,7 @@ def get_comment(request):
     comments = post.comments.all().order_by("-created")
     posts_html = render_to_string("generic/post.html", {"object": post})
     thread_html = render_to_string(
-        "generic/post_comment.html", {"comments": comments, "form_comment": form_comment})
+        "generic/post_comment.html", {"comments": comments,"form_comment": form_comment})
     return JsonResponse({
         "uuid": post_id,
         "post": posts_html,
@@ -161,22 +161,28 @@ class CommentCreateView(TemplateView):
     template_name = "generic/post_comment.html"
 
     def post(self, request, *args, **kwargs):
-        post_id = request.POST.get('post')
-        post = Post.objects.get(uuid=post_id)
-        comment = self.request.POST.get("comment")
-        new_comment = post.comments.create(creator=request.user, text=comment)
-        data = [
-            {
+        post = request.POST['object']
+        par = request.POST['parent']
+        parent = News.objects.get(pk=par)
+        post = post.strip()
+        if post:
+
+            comment = self.request.POST.get("comment")
+            new_comment = post.comments.create(creator=request.user, text=comment)
+            data = [
+                {
                 'commenter': new_comment.commenter.get_full_name(),
                 "comment": new_comment.text,
                 "comment_id": new_comment.pk,
-            }
-        ]
-        return JsonResponse(data, safe=False)
+                }
+            ]
+            return JsonResponse(data, safe=False)
 
-        notification_handler(
-            user, post.creator, Notification.POST_COMMENT, action_object=reply_posts,
-            id_value=str(post.uuid), key='social_update')
+            notification_handler(
+                user, post.creator, Notification.POST_COMMENT, action_object=reply_posts,
+                id_value=str(post.uuid), key='social_update')
+        else:
+            return HttpResponseBadRequest()
 
 
 @login_required
