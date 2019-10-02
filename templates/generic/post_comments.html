@@ -1,7 +1,7 @@
 {% load humanize staticfiles %}
 <script src="{% static 'scripts/jquery-3.2.1.min.js' %}" type="text/javascript"></script>
 
-  <span class="stream" style="margin-top:25px">
+  <span class="stream">
     {% for comment in comments %}
       {% include 'generic/comment.html' with comment=comment  %}
     {% endfor %}
