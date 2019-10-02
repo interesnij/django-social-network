@@ -84,13 +84,12 @@
   </div>
 
   <div class="load_comments" style="margin-top:25px"></div>
-  
-  <div class="load_form" style="display:none">
+
+  <div class="load_form" style="display:none;margin-top:25px">
     <div class="row no-gutters">
       <form action="" id="replyPostForm" method="post">
         {% csrf_token %}
-        <input type="hidden" name="parent" value="{{ parent.pk }}">
-
+        <input type="hidden" name="parent" value="{{ object.pk }}">
           <div class="col">
             <div class="input-group input-group-sm">
               <div class="input-group-prepend">
