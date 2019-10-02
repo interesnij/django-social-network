@@ -70,6 +70,7 @@
           cache: false,
           success: function (data) {
               $("#id_text").val("");
+              $(".stream").prepend(data);
           },
           error: function(data){
               alert(data.responseText);

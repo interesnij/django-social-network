@@ -3,7 +3,7 @@
 <div class="media pt-2" posts-id="{{ comment.uuid }}">
     <figure>
         {% if comment.commenter.profile.avatar %}
-          <img src="{{ comment.commenter.profile.avatar.url }}" class="pull-left" style="border-radius:30%;width:50px;" alt="User Image" class="user-image">
+          <img src="{{ comment.commenter.profile.avatar.url }}" class="pull-left" style="border-radius:50%;width:30px;" alt="User Image" class="user-image">
         {% else %}
           <img src="{% static 'images/user.png' %}" class="pull-left" style="border-radius:50%;width:30px;" alt="No Profile Picture" />
         {% endif %}
