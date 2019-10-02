@@ -156,13 +156,34 @@ def get_comment(request):
         "comments": thread_html,
     })
 
+@login_required
+@ajax_required
+@require_http_methods(["POST"])
+def post_comment(request):
+
+    user = request.user
+    comment = request.POST['text']
+    par = request.POST['parent']
+    parent = Post.objects.get(pk=par)
+    comment = comment.strip()
+    if post:
+        new_comment = parent.comments.create(creator=request.user, text=comment)
+        return JsonResponse({'comments': parent.count_thread()})
+
+        notification_handler(
+            user, parent.creator, Notification.POST_COMMENT, action_object=reply_posts,
+            id_value=str(parent.uuid), key='social_update')
+
+    else:
+        return HttpResponseBadRequest()
+
 
 class CommentCreateView(TemplateView):
     template_name = "generic/post_comment.html"
 
     def post(self, request, *args, **kwargs):
         comment = self.request.POST.get('text')
-        post = Post.objects.get(pk=self.kwargs["pk"])
+        post = Post.objects.get(pk=post_pk)
 
         new_comment = post.comments.create(creator=request.user, text=comment)
         data = [
