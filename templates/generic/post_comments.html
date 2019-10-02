@@ -70,7 +70,7 @@
           cache: false,
           success: function (data) {
               $("#id_text").val("");
-              $(".stream_comments").prepend(data);
+              $(".stream_comments").append(data);
           },
           error: function(data){
               alert(data.responseText);
