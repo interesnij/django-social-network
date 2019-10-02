@@ -22,7 +22,7 @@
             url: "{% url 'post_add_lite_user' %}",
             data: frm.serialize(),
             success: function (data) {
-              $(".stream").prepend(data);
+              $(".stream_comments").prepend(data); 
               $('#post_create').empty();
               $.toast({
                   heading: '{{ request.user.first_name }}',
