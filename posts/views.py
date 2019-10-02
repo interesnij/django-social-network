@@ -163,7 +163,8 @@ class CommentCreateView(TemplateView):
     def post(self, request, *args, **kwargs):
         post = self.request.POST.get('reply')
         par = self.request.POST.get('parent')
-        parent = News.objects.get(pk=par)
+        if par:
+            parent = PostComment.objects.get(pk=par)
         post = post.strip()
         if post:
 
