@@ -29,7 +29,7 @@ class ModerationCategory(models.Model):
 
 
 class ModeratedObject(models.Model):
-    community = models.ForeignKey('communities.Community', on_delete=models.CASCADE,related_name='moderated_objects',null=True,blank=False,verbose_name="Сообщество")
+    #community = models.ForeignKey('communities.Community', on_delete=models.CASCADE,related_name='moderated_objects',null=True,blank=False,verbose_name="Сообщество")
     description = models.CharField(max_length=300,
                                    blank=False, null=True,verbose_name="Описание")
     verified = models.BooleanField(default=False,
