@@ -135,7 +135,7 @@
 	$( ".reply_comment" ).click(function(){
     var reply_comment_form = $(this);
     var objectUser = reply_comment_form.parent().parent().parent().parent().find(".commenter_first_name").text().trim();
-    var form = reply_comment_form.next().find(".form-control-rounded");
+    var form = reply_comment_form.next().find(".text-comment");
     form.val(objectUser + ', ').focus();
 
 		reply_comment_form.next().show();
