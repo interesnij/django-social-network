@@ -216,8 +216,6 @@ def reply_comment(request):
 
     user = request.user
     text = request.POST['text']
-    par = request.POST['parent']
-    parent = Post.objects.get(pk=par)
     parent_comment = request.POST['comment']
     text = text.strip()
     if parent_comment:
