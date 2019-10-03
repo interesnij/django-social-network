@@ -1,4 +1,5 @@
 {% load staticfiles humanize liked_user %}
+{% if comment.parent_comment %} а он-то родительский!{% endif %}
 
 <div class="media pt-2" comment-id="{{ comment.id }}">
     <figure>
