@@ -103,20 +103,6 @@ class PostComment(models.Model):
     is_edited = models.BooleanField(default=False, null=False, blank=False,verbose_name="Изменено")
     is_deleted = models.BooleanField(default=False,verbose_name="Удаено")
     votes = GenericRelation(LikeDislike, related_query_name='comments')
-    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
-    object_id = models.PositiveIntegerField()
-    content_object = GenericForeignKey("content_type", "object_id")
-
-    @classmethod
-    def create_comment(cls, text, commenter, parent_comment=None):
-        post_comment = PostComment.objects.create(text=text, commenter=commenter, parent_comment=parent_comment)
-        post_comment.save()
-        return post_comment
-
-    def reply_to_comment(self, commenter, text):
-        post_comment = PostComment.create_comment(text=text, commenter=commenter, parent_comment=self)
-        post_comment.save()
-        return post_comment
 
     def count_replies(self):
         return self.replies.count()
