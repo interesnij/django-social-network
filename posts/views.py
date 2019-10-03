@@ -47,6 +47,7 @@ class PostUserHardCreate(TemplateView):
                  return HttpResponse(html)
         return super(PostUserHardCreate,self).get(request,*args,**kwargs)
 
+
 class PostUserMediumCreate(TemplateView):
     template_name="post_medium_add.html"
     form=None
@@ -72,6 +73,7 @@ class PostUserMediumCreate(TemplateView):
                  html = render_to_string('generic/post.html',{'object': new_post,'request': request})
                  return HttpResponse(html)
         return super(PostUserMediumCreate,self).get(request,*args,**kwargs)
+
 
 class PostUserLiteCreate(TemplateView):
     template_name="post_lite_add.html"
@@ -99,6 +101,7 @@ class PostUserLiteCreate(TemplateView):
                  return HttpResponse(html)
         return super(PostUserLiteCreate,self).get(request,*args,**kwargs)
 
+
 class PostDeleteView(TemplateView):
     success_url = '/'
     template_name="post_confirm_delete.html"
@@ -125,6 +128,20 @@ class PostLikeView(TemplateView):
         context["post_like"]=self.post_like
         return context
 
+
+class PostCommentLikeView(TemplateView):
+    template_name="post_comment_like_window.html"
+
+    def get(self,request,*args,**kwargs):
+        self.post_comment_like = PostComment.objects.get(pk=self.kwargs["pk"])
+        return super(PostCommentLikeView,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context=super(PostCommentLikeView,self).get_context_data(**kwargs)
+        context["post_comment_like"]=self.post_comment_like
+        return context
+
+
 class PostDislikeView(TemplateView):
     template_name="post_dislike_window.html"
 
@@ -136,6 +153,19 @@ class PostDislikeView(TemplateView):
     def get_context_data(self,**kwargs):
         context=super(PostDislikeView,self).get_context_data(**kwargs)
         context["post_dislike"]=self.post_dislike
+        return context
+
+
+class PostCommentDislikeView(TemplateView):
+    template_name="post_comment_dislike_window.html"
+
+    def get(self,request,*args,**kwargs):
+        self.post_comment_dislike = PostComment.objects.get(pk=self.kwargs["pk"])
+        return super(PostCommentDislikeView,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context=super(PostCommentDislikeView,self).get_context_data(**kwargs)
+        context["post_comment_dislike"]=self.post_comment_dislike
         return context
 
 
