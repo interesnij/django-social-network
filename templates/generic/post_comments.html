@@ -79,6 +79,23 @@
         });
         return false;
     });
+
+    $("#replyComment").click(function() {
+        $.ajax({
+            url: '/posts/reply-comment/',
+            data: $("#replyCommentForm").serialize(),
+            type: 'POST',
+            cache: false,
+            success: function(data) {
+                $("#id_text").val("");
+
+            },
+            error: function(data) {
+                alert(data.responseText);
+            },
+        });
+        return false;
+    });
 </script>
 <script>
     function like2() {

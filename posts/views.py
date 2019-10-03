@@ -209,6 +209,30 @@ def post_comment(request):
         return HttpResponseBadRequest()
 
 
+@login_required
+@ajax_required
+@require_http_methods(["POST"])
+def reply_comment(request):
+
+    user = request.user
+    text = request.POST['text']
+    par = request.POST['parent']
+    parent = Post.objects.get(pk=par)
+    parent_comment = request.POST['comment']
+    text = text.strip()
+    if parent_comment:
+        new_comment = parent.comments.create(text=text, commenter=request.user,parent_comment=parent_comment)
+        html = render_to_string('generic/post_reply_comment.html',{'reply': new_comment,'request': request})
+        return JsonResponse(html, safe=False)
+
+        notification_handler(
+            user, parent.creator, Notification.POST_COMMENT, action_object=reply_posts,
+            id_value=str(parent.uuid), key='social_update')
+
+    else:
+        return HttpResponseBadRequest()
+
+
 class CommentCreateView(TemplateView):
     template_name = "generic/post_comment.html"
 

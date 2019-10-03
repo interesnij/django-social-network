@@ -98,8 +98,8 @@
                         <form action="" id="replyCommentForm" method="post">
                             {% csrf_token %}
                             <div class="row no-gutters">
-
-                                <input type="hidden" name="parent_comment" value="{{ comment.id }}">
+                                <input type="hidden" name="comment" value="{{ comment.id }}">
+                                <input type="hidden" name="parent" value="{{ parent.pk }}">
                                 <div class="col">
                                     <div class="input-group input-group-sm">
                                         <div class="input-group-prepend">
