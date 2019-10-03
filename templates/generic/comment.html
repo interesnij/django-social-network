@@ -24,7 +24,7 @@
                           data-action="like2"
                           data-type="comment">
                         <i class="material-icons">thumb_up</i>&nbsp;
-                        <span data-count="like">
+                        <span data-count="like2">
                           {% if comment.votes.likes.count != 0 %}{{ comment.votes.likes.count }}{% endif %}
                         </span>
                     </span>
@@ -60,7 +60,7 @@
                           data-action="dislike2"
                           data-type="comment">
                         <i class="material-icons">thumb_down</i>&nbsp;
-                        <span data-count="dislike">
+                        <span data-count="dislike2">
                           {% if comment.votes.dislikes.count %}{{ comment.votes.dislikes.count }}{% endif %}
                         </span>
                     </span>

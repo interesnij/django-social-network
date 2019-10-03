@@ -115,10 +115,10 @@
                 'obj': pk
             },
             success: function(json) {
-                dislike.find("[data-count='dislike']").text(json.dislike_count);
-                like.find("[data-count='like']").text(json.like_count);
-                dislike.addClass("text-danger2");
-                like.removeClass("text-success2");
+                dislike.find("[data-count='dislike2']").text(json.dislike_count);
+                like.find("[data-count='like2']").text(json.like_count);
+                dislike.addClass("text-danger");
+                like.removeClass("text-success");
             }
         });
         return false;
