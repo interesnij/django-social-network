@@ -1,5 +1,7 @@
 {% load staticfiles humanize liked_user %}
- {{comments}}
+ {% for reply in replis %}
+ {{ reply.text }}
+ {% endfor %}
 <div class="media pt-2" comment-id="{{ comment.id }}">
     <figure>
         {% if comment.commenter.profile.avatar %}
