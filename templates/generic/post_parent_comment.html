@@ -1,5 +1,5 @@
 {% load staticfiles humanize liked_user %}
-{% for reply in  comment.parent_comment %} {{reply}} {% endfor %}
+ {{comment.parent_comment}} 
 
 <div class="media pt-2" comment-id="{{ comment.id }}">
     <figure>
