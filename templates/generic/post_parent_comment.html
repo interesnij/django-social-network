@@ -94,6 +94,7 @@
                         ответить
                     </span>
                     {% for reply in replis %}
+                    <br><br>
                       {% include 'generic/post_reply_comment.html' with reply=reply  %}
                     {% endfor %}
                     <div class="card-footer border-top reply_comment_form" style="margin-top:10px;display:none">
