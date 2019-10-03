@@ -131,3 +131,9 @@
     $('[data-action="like2"]').click(like2);
     $('[data-action="dislike2"]').click(dislike2);
 </script>
+<script>
+	$( ".reply_comment" ).click(function(){
+    var reply_comment_form = $(this);
+		reply_comment_form.next().show();
+	})
+</script>
