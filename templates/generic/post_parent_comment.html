@@ -9,7 +9,7 @@
         {% endif %}
     </figure>
     <div class="media-body">
-        <h5 class="mt-0">{{ comment.commenter.get_full_name }}
+        <h5 class="mt-0"><span class="commenter_first_name">{{ comment.commenter.first_name }}</span> {{ comment.commenter.last_name }}
             <small class="text-muted float-right">{{ comment.created|naturaltime }}</small>
         </h5>
         <p class="mb-2">{{ comment.text|safe }}</p>
