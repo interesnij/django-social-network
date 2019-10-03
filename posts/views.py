@@ -220,7 +220,7 @@ def reply_comment(request):
     comment = PostComment.objects.get(pk=com)
     text = text.strip()
     if comment:
-        new_comment = PostComment.objects.create(text=text, commenter=request.user,parent_comment=comment,object_id=10)
+        new_comment = PostComment.objects.create(text=text, commenter=request.user,parent_comment=comment,object_id=com)
         html = render_to_string('generic/post_reply_comment.html',{'reply': new_comment,'request': request})
         return JsonResponse(html, safe=False)
 
