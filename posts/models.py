@@ -104,8 +104,7 @@ class PostComment(models.Model):
     is_deleted = models.BooleanField(default=False,verbose_name="Удаено")
     votes = GenericRelation(LikeDislike, related_query_name='comments')
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
-    object_id = models.PositiveIntegerField()
-    content_object = GenericForeignKey("content_type", "object_id")
+
 
     def count_replies(self):
         return self.replies.count()
