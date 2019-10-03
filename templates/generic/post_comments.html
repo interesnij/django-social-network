@@ -1,4 +1,4 @@
-{% load humanize staticfiles liked_user %}
+{% load humanize staticfiles %}
 <script src="{% static 'scripts/jquery-3.2.1.min.js' %}" type="text/javascript"></script>
 
 <span class="stream_comments">
@@ -94,8 +94,8 @@
                 'obj': pk
             },
             success: function(json) {
-                like.find("[data-count='like2']").text(json.like_count);
-                dislike.find("[data-count='dislike2']").text(json.dislike_count);
+                like.find("[data-count='like']").text(json.like_count);
+                dislike.find("[data-count='dislike']").text(json.dislike_count);
                 like.addClass("text-success");
                 dislike.removeClass("text-danger");
             }
@@ -115,8 +115,8 @@
                 'obj': pk
             },
             success: function(json) {
-                dislike.find("[data-count='dislike2']").text(json.dislike_count);
-                like.find("[data-count='like2']").text(json.like_count);
+                dislike.find("[data-count='dislike']").text(json.dislike_count);
+                like.find("[data-count='like']").text(json.like_count);
                 dislike.addClass("text-danger");
                 like.removeClass("text-success");
             }
