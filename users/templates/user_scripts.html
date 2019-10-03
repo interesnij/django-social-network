@@ -102,53 +102,6 @@ $(document).ready(function () {
 	$('[data-action="dislike"]').click(dislike);
 </script>
 
-<script>
-    function like2() {
-        var like = $(this);
-        var type = like.data('type');
-        var pk = like.data('id');
-        var action = like.data('action');
-        var dislike = like.next();
-        $.ajax({
-            url: "/posts/comment/" + pk + "/like/",
-            type: 'POST',
-            data: {
-                'obj': pk
-            },
-            success: function(json) {
-                like.find("[data-count='like']").text(json.like_count);
-                dislike.find("[data-count='dislike']").text(json.dislike_count);
-                like.addClass("text-success");
-                dislike.removeClass("text-danger");
-            }
-        });
-        return false;
-    }
-    function dislike2() {
-        var dislike = $(this);
-        var type = dislike.data('type');
-        var pk = dislike.data('id');
-        var action = dislike.data('action');
-        var like = dislike.prev();
-        $.ajax({
-            url: "/posts/comment/" + pk + "/dislike/",
-            type: 'POST',
-            data: {
-                'obj': pk
-            },
-            success: function(json) {
-                dislike.find("[data-count='dislike']").text(json.dislike_count);
-                like.find("[data-count='like']").text(json.like_count);
-                dislike.addClass("text-danger");
-                like.removeClass("text-success");
-            }
-        });
-        return false;
-    }
-    // Подключение обработчиков
-    $('[data-action="like2"]').click(like2);
-    $('[data-action="dislike2"]').click(dislike2);
-</script>
 
 <script>
 function remove() {
