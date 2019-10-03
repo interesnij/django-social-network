@@ -90,9 +90,33 @@
                     </span>
 
                     &nbsp;&nbsp;
-                    <span class="content-color-secondary comment" style="font-size:15px;cursor:pointer">
+                    <span class="content-color-secondary reply_comment" data-id="{{ comment.id }}" style="font-size:15px;cursor:pointer">
                         ответить
                     </span>
+
+                    <div class="card-footer border-top" style="margin-top:10px">
+                        <form action="" id="replyCommentForm" method="post">
+                            {% csrf_token %}
+                            <div class="row no-gutters">
+
+                                <input type="hidden" name="parent_comment" value="{{ comment.id }}">
+                                <div class="col">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <button class="btn btn-link content-color-secondary" type="button"><i class="material-icons">face</i></button>
+                                            <button class="btn btn-link content-color-secondary text-hide-xs" type="button"><i class="material-icons">collections</i></button>
+                                        </div>
+                                        <textarea id="id_text" name="text" class="form-control form-control-rounded"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <button class="btn btn-outline-primary btn-rounded btn-sm ml-2" id="replyComment" type="button">
+                                        <i class="material-icons">send</i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
