@@ -1,7 +1,5 @@
 {% load staticfiles humanize liked_user %}
- {% for reply in replis %}
- {{ reply.text }}
- {% endfor %}
+
 <div class="media pt-2" comment-id="{{ comment.id }}">
     <figure>
         {% if comment.commenter.profile.avatar %}
@@ -95,7 +93,9 @@
                     <span class="content-color-secondary reply_comment" data-id="{{ comment.id }}" style="font-size:15px;cursor:pointer">
                         ответить
                     </span>
-
+                    {% for reply in replis %}
+                    {{ reply.text }}
+                    {% endfor %}
                     <div class="card-footer border-top reply_comment_form" style="margin-top:10px;display:none">
                         <form action="" id="replyCommentForm" method="post">
                             {% csrf_token %}
