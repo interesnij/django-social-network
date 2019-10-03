@@ -168,7 +168,7 @@ def post_comment(request):
     comment = comment.strip()
     if parent:
         new_comment = parent.comments.create(commenter=request.user, text=comment)
-        html = render_to_string('generic/comment.html',{'comment': new_comment,'request': request})
+        html = render_to_string('generic/post_parent_comment.html',{'comment': new_comment,'request': request})
         return JsonResponse(html, safe=False)
 
         notification_handler(
