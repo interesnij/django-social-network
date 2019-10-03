@@ -1,6 +1,6 @@
 {% load staticfiles humanize liked_user %}
 
-<div class="media pt-2" posts-id="{{ comment.uuid }}">
+<div class="media pt-2" comment-id="{{ comment.id }}">
     <figure>
         {% if comment.commenter.profile.avatar %}
           <img src="{{ comment.commenter.profile.avatar.url }}" class="pull-left" style="border-radius:50%;width:30px;" alt="User Image" class="user-image">

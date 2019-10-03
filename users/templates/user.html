@@ -31,11 +31,21 @@
         visibility: hidden;
         position: absolute;
         bottom: 25px;
-
         margin-bottom: 10px;
         display: flex;
         transition: 0.5s;
     }
+    .comment_like_window,
+    .comment_dislike_window {
+        opacity: 0;
+        visibility: hidden;
+        position: absolute;
+        bottom: 15px;
+        margin-bottom: 10px;
+        display: flex;
+        transition: 0.5s;
+    }
+
 
     .like_window:hover,
     .dislike_window:hover {
@@ -45,11 +55,25 @@
         background: #D6DAE1;
         color: black;
     }
+    .comment_like_window:hover,
+    .comment_dislike_window:hover {
+        z-index: 10;
+        opacity: 1;
+        visibility: visible;
+        background: #D6DAE1;
+        color: black;
+    }
 
     .like:hover~.like_window,
-    .like2:hover~.like_window,
-    .dislike:hover~.dislike_window,
-    .dislike2:hover~.dislike_window {
+    .dislike:hover~.dislike_window{
+        z-index: 10;
+        opacity: 1;
+        visibility: visible;
+        background: #D6DAE1;
+        color: black;
+    }
+    .like2:hover~.comment_like_window,
+    .dislike2:hover~.comment_dislike_window{
         z-index: 10;
         opacity: 1;
         visibility: visible;

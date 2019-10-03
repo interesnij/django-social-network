@@ -7,7 +7,7 @@
                 <i class="material-icons">thumb_up</i>&nbsp;<span class="like-count" data-count="like">{% if comment.votes.likes.count != 0 %}{{ comment.votes.likes.count }}{% endif %}</span>
             </span>
 
-            <span class="like_window" style="bottom: 15px;">
+            <span class="comment_like_window">
                 {% if comment.votes.likes.all %}
                 <div class="like_pop" style="margin:15px">
                     <span>Лайков: {{ comment.votes.likes.count }}</span>
@@ -35,7 +35,7 @@
                 <i class="material-icons">thumb_down</i>&nbsp;<span class="dislike-count" data-count="dislike">{% if comment.votes.dislikes.count %}{{ comment.votes.dislikes.count }}{% endif %}</span>
             </span>
 
-            <span class="dislike_window" style="bottom: 15px;">
+            <span class="comment_dislike_window">
                 {% if comment.votes.dislikes.all %}
                 <div class="dislike_pop" style="margin:15px">
                     <span>Дизлайков: {{ comment.votes.dislikes.count }}</span>
