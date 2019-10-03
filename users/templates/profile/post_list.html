@@ -26,11 +26,9 @@
     <a href=""><span class="new-posts"></span> Загрузить новые посты</a>
   </div>
   <span class="stream">
-
+<div></div>
     {% for object in posts %}
-      <div></div>
       {% include 'generic/post.html' with post=post  %}
-
     {% endfor %}
 
   </span>
