@@ -28,7 +28,7 @@
                           {% if comment.votes.likes.count != 0 %}{{ comment.votes.likes.count }}{% endif %}
                         </span>
                     </span>
-
+                    <!--
                     <span class="comment_like_window">
                         {% if comment.votes.likes.all %}
                         <div class="like_pop" style="margin:15px">
@@ -51,6 +51,7 @@
                         </div>
                         {% endif %}
                     </span>
+                    -->
 
                     &nbsp;&nbsp;
                     <span class="dislike2 content-color-secondary{% if comment.votes.dislikes.all|user_in:request.user %} text-danger {% endif %}"
@@ -64,7 +65,7 @@
                           {% if comment.votes.dislikes.count %}{{ comment.votes.dislikes.count }}{% endif %}
                         </span>
                     </span>
-
+                    <!--
                     <span class="comment_dislike_window">
                         {% if comment.votes.dislikes.all %}
                         <div class="dislike_pop" style="margin:15px">
@@ -88,7 +89,7 @@
                         </div>
                         {% endif %}
                     </span>
-
+                    -->
                     &nbsp;&nbsp;
                     <span class="content-color-secondary comment" style="font-size:15px;cursor:pointer">
                         ответить
