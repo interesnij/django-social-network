@@ -107,6 +107,32 @@ class PostComment(models.Model):
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey("content_type", "object_id")
 
+    @classmethod
+    def create_comment(cls, text, commenter, parent_comment=None):
+        post_comment = PostComment.objects.create(text=text, commenter=commenter, parent_comment=parent_comment)
+        post_comment.save()
+        return post_comment
+
+    def reply_to_comment(self, commenter, text):
+        post_comment = PostComment.create_comment(text=text, commenter=commenter, parent_comment=self)
+        post_comment.save()
+        return post_comment
+
+    def count_replies(self):
+        return self.replies.count()
+
+    def update_comment(self, text):
+        self.text = text
+        self.is_edited = True
+        self.save()
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.created = timezone.now()
+
+        self.modified = timezone.now()
+        return super(PostComment, self).save(*args, **kwargs)
+
     def __str__(self):
         return "{0}/{1}".format(self.commenter.get_full_name(), self.text[:10])
 
