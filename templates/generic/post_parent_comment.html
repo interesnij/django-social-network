@@ -93,7 +93,7 @@
                     <span class="content-color-secondary reply_comment" data-id="{{ comment.id }}" style="font-size:15px;cursor:pointer">
                         ответить
                     </span>
-                    <br>
+                    <br><br>
                     {% for reply in replis %}
                       {% include 'generic/post_reply_comment.html' with reply=reply  %}
                     {% endfor %}
