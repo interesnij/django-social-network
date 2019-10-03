@@ -12,7 +12,7 @@
         <h5 class="mt-0"><span class="commenter_first_name">{{ comment.commenter.first_name }}</span> {{ comment.commenter.last_name }}
             <small class="text-muted float-right">{{ comment.created|naturaltime }}</small>
         </h5>
-        <p class="mb-2">{{ comment.text|safe }}</p>
+        <p>{{ comment.text|safe }}</p>
 
         <div class="card-footer border-top py-2">
             <div class="row" style="color: rgba(255, 255, 255, 0.65);">
