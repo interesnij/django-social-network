@@ -216,10 +216,10 @@ def reply_comment(request):
 
     user = request.user
     text = request.POST['text']
-    parent_comment = request.POST['comment']
+    comment = request.POST['comment']
     text = text.strip()
-    if parent_comment:
-        new_comment = PostComment.objects.create(text=text, commenter=request.user,parent_comment=parent_comment)
+    if comment:
+        new_comment = PostComment.objects.create(text=text, commenter=request.user,parent_comment=comment)
         html = render_to_string('generic/post_reply_comment.html',{'reply': new_comment,'request': request})
         return JsonResponse(html, safe=False)
 
