@@ -226,7 +226,7 @@ def reply_comment(request):
 
         notification_handler(
             user, parent.creator, Notification.POST_COMMENT, action_object=reply_posts,
-            id_value=str(parent.uuid), key='social_update')
+            id_value=str(com.id), key='social_update')
 
     else:
         return HttpResponseBadRequest()
