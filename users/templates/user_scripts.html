@@ -116,8 +116,8 @@ $(document).ready(function () {
                 'obj': pk
             },
             success: function(json) {
-                like.find("[data-count='like']").text(json.like_count);
-                dislike.find("[data-count='dislike']").text(json.dislike_count);
+                like.find("[data-count='like2']").text(json.like_count);
+                dislike.find("[data-count='dislike2']").text(json.dislike_count);
                 like.addClass("text-success");
                 dislike.removeClass("text-danger");
             }
@@ -137,8 +137,8 @@ $(document).ready(function () {
                 'obj': pk
             },
             success: function(json) {
-                dislike.find("[data-count='dislike']").text(json.dislike_count);
-                like.find("[data-count='like']").text(json.like_count);
+                dislike.find("[data-count='dislike2']").text(json.dislike_count);
+                like.find("[data-count='like2']").text(json.like_count);
                 dislike.addClass("text-danger");
                 like.removeClass("text-success");
             }
