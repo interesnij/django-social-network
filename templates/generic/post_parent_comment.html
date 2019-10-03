@@ -100,7 +100,7 @@
                     <div class="card-footer border-top reply_comment_form" style="margin-top:10px;display:none">
                         <form action="" id="replyCommentForm" method="post">
                             {% csrf_token %}
-                            <div class="row">
+                            <div class="row no-gutters">
                                 <input type="hidden" name="comment" value="{{ comment.id }}">
                                 <div class="col">
                                     <div class="input-group input-group-sm">
