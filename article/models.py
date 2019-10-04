@@ -143,7 +143,7 @@ class ArticleRepost(models.Model):
 
 
 class ArticleMute(models.Model):
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='mutes',verbose_name="Пост")
+    post = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='mutes',verbose_name="Пост")
     muter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='article_mutes',verbose_name="Кто заглушил")
 
 
@@ -154,9 +154,9 @@ class ArticleCommentMute(models.Model):
 
 class ArticleUserMention(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='article_mentions',verbose_name="Упоминаемый")
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='user_mentions',verbose_name="Пост")
+    post = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='user_mentions',verbose_name="Пост")
 
 
 class ArticleCommentUserMention(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='article_comment_mentions',verbose_name="Упомянутый в комментарии")
-    post_comment = models.ForeignKey(PostComment, on_delete=models.CASCADE, related_name='user_mentions',verbose_name="Пост")
+    post_comment = models.ForeignKey(ArticleComment, on_delete=models.CASCADE, related_name='user_mentions',verbose_name="Пост")
