@@ -1,6 +1,6 @@
 {% load staticfiles humanize liked_user %}
 
-<div class="media pt-2" reply-id="{{ reply.id }}">
+<div class="media " reply-id="{{ reply.id }}">
     <figure>
         {% if reply.commenter.profile.avatar %}
           <img src="{{ reply.commenter.profile.avatar.url }}" class="pull-left" style="border-radius:50%;width:30px;" alt="User Image" class="user-image">
@@ -100,7 +100,7 @@
                             <div class="row no-gutters">
                                 <input type="hidden" name="comment" value="{{ comment.id }}">
                                 <div class="col" style="left: -30px;">
-                                    <div class="input-group input-group-sm" style="width: 120%;">
+                                    <div class="input-group input-group-sm" style="width: 117%;">
 
                                         <textarea id="id_text" name="text" class="form-control text-comment form-control-rounded"></textarea>
                                     </div>
