@@ -2,7 +2,6 @@
   {% if notifications %}
   <span class="clean_notify" style="cursor:pointer">Очистить</span>
     {% for notification in notifications %}
-      <a class="media pink-gradient-active">
         <figure>
           <a href="{% url 'user' pk=notification.actor.pk %}">
             {% if notification.actor.profile.avatar %}
@@ -17,7 +16,6 @@
             <h5 class="mt-0">{{ notification|safe }}</h5>
             <p>{{ notification.timestamp|naturaltime }}</p>
         </div>
-      </a>
     {% endfor %}
   <a href="{% url 'unread' %}" class="media pink-gradient-active text-center">все уведомления</a>
   {% else %}
