@@ -25,7 +25,7 @@
               {% endif %}
             </figure>
               <a href="{% url 'user' pk=object.target_user.pk %}">
-                <h6 class="my-0 mt-1">{{ object.target_user.first_name }}</h6>
+                <p>{{ object.target_user.first_name }}</p>
               </a>
         {% endif %}
         {% if object.target_user == user %}
