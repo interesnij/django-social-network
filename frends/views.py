@@ -14,7 +14,7 @@ class FrendsListView(ListView):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
 		self.frends_users = Connect.objects.filter(user=self.user)
 		self.target_users = Connect.objects.filter(target_user=self.user)
-		self.all_frends = self.frends_users + self.target_users
+		self.all_frends = str(self.frends_users) + str(self.target_users)
 		self.featured_users = User.objects.all()
 		return super(FrendsListView,self).get(request,*args,**kwargs)
 
