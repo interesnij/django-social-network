@@ -79,7 +79,6 @@
     $(".replyComment").click(function() {
         button = $(this);
         form = button.parent().parent().parent().parent();
-        console.log(form);
         $.ajax({
             url: '/posts/reply-comment/',
             data: form.serialize(),
@@ -97,14 +96,16 @@
     });
   </script>
   <script>
-    $("#replyParentComment").click(function() {
+    $(".replyParentComment").click(function() {
+      button = $(this);
+      form = button.parent().parent().parent().parent();
         $.ajax({
             url: '/posts/reply-comment/',
-            data: $("#replyParentCommentForm").serialize(),
+            data: form.serialize(),
             type: 'POST',
             cache: false,
             success: function(data) {
-                $("#id_text").val("");
+                $(".form-control-rounded").val("");
 
             },
             error: function(data) {
