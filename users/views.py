@@ -5,6 +5,7 @@ from frends.models import Connect
 from follows.models import Follow
 from communities.models import Community
 from posts.forms import PostCommentForm, PostRepostForm
+from article.forms import ArticleCommentForm
 from users.forms import GeneralUserForm, AboutUserForm, AvatarUserForm
 from django.views.generic import ListView
 from django.contrib.auth.decorators import login_required
@@ -64,7 +65,7 @@ class ProfileUserView(TemplateView):
 		context['popular_frends'] = self.popular_frends
 		context['form_medium'] = PostMediumForm()
 		context['form_avatar'] = AvatarUserForm()
-		context['form_comment'] = PostCommentForm()
+		context['form_comment'] = ArticleCommentForm()
 		context["repost_form"] = PostRepostForm()
 		context['communities'] = self.communities
 		context['connect'] = self.connect
