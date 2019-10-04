@@ -13,7 +13,19 @@
     <div class="card-footer border-top">
         <div class="row">
             <div class="col">
-              <button title="Статья" class="btn btn-link btn-sm text-secondary"><i class="material-icons">receipt</i></button>
+              <button title="Статья"
+                      class="btn btn-link btn-sm text-secondary"
+                      role="button"
+                      data-toggle="dropdown"
+                      aria-haspopup="true"
+                      aria-expanded="false">
+                      <i class="material-icons">receipt</i>
+              </button>
+              <div class="dropdown-menu dropdown-menu-right">
+                <a id="post_lite" style="cursor:pointer" class="dropdown-item">Легкая статья</a>
+                <a id="post_medium" style="cursor:pointer" class="dropdown-item">Средняя статья</a>
+                <a id="post_hard" style="cursor:pointer" class="dropdown-item">Сложная статья</a>
+              </div>
               <button title="Документ" class="btn btn-link btn-sm text-secondary"><i class="material-icons">attachment</i></button>
               <button title="Изображение" class="btn btn-link btn-sm text-secondary"><i class="material-icons">camera_alt</i></button>
 
