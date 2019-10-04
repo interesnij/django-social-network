@@ -8,7 +8,7 @@
     {% endfor %}
 </span>
 
-<div class="card-footer border-top" style="margin-top:10px">
+<div class="border-top" style="margin-top:10px">
     <form action="" id="replyPostForm" method="post">
         {% csrf_token %}
         <div class="row no-gutters">
@@ -16,7 +16,6 @@
             <input type="hidden" name="parent" value="{{ parent.pk }}">
             <div class="col">
                 <div class="input-group input-group-sm">
-
                     <textarea id="id_text" name="text" class="form-control text-comment form-control-rounded"></textarea>
                 </div>
             </div>
