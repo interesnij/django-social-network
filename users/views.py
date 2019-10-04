@@ -10,6 +10,7 @@ from django.views.generic import ListView
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.views.decorators.http import require_http_methods
+from django.db.models import Q
 
 
 
@@ -28,13 +29,12 @@ class ProfileUserView(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.user=User.objects.get(pk=self.kwargs["pk"])
-		self.frends=Connect.objects.filter(user=self.user)
+		self.popular_frends = Connect.objects.filter(Q(user=self.user)|Q(target_user=self.user))[0:5]
 		self.follows_count=Follow.objects.filter(followed_user=self.user).count()
 		self.connect_count=Connect.objects.filter(user=self.user).count()
 		self.connect_count2=Connect.objects.filter(target_user=self.user).count()
 		self.frends_count=self.connect_count + self.connect_count2
 		self.communities_count=Community.objects.filter(starrers=self.user).count()
-		self.frends2=Connect.objects.filter(target_user=self.user)
 		self.communities=Community.objects.filter(starrers=self.user)
 		self.posts=Post.objects.filter(creator=self.user,is_deleted=False)
 
@@ -61,11 +61,10 @@ class ProfileUserView(TemplateView):
 		context = super(ProfileUserView, self).get_context_data(**kwargs)
 		context['user'] = self.user
 		context['posts'] = self.posts
-		context['frends'] = self.frends
-		context['frends2'] = self.frends2
+		context['popular_frends'] = self.popular_frends
 		context['form_medium'] = PostMediumForm()
 		context['form_avatar'] = AvatarUserForm()
-		context['form_comment'] = PostCommentForm() 
+		context['form_comment'] = PostCommentForm()
 		context["repost_form"] = RepostForm()
 		context['communities'] = self.communities
 		context['connect'] = self.connect
