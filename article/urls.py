@@ -11,7 +11,7 @@ from article.views import (
                             ArticleCommentDislikeView,
                             article_update_interactions,
                             article_get_comment,
-                            article_post_comment,
+                            article_comment,
                             article_reply_comment,
                         )
 from django.conf.urls import url
@@ -36,7 +36,7 @@ urlpatterns = [
     url(r'^dislike_window/(?P<pk>\d+)/$', ArticleDislikeView.as_view(), name='article_dislike_window'),
     url(r'^comment_dislike_window/(?P<pk>\d+)/$', ArticleCommentDislikeView.as_view(), name='article_comment_dislike_window'),
     url(r'^get-comment/$', article_get_comment, name='article_get_comment'),
-    url(r'^post-comment/$', article_post_comment, name='article_post_comments'),
+    url(r'^post-comment/$', article_comment, name='article_comments'),
     url(r'^reply-comment/$', article_reply_comment, name='article_reply_comment'),
     url(r'^update-interactions/$', article_update_interactions, name='article_update_interactions'),
 
