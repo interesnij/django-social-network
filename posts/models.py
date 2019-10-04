@@ -51,7 +51,7 @@ class Post(models.Model):
     views=models.IntegerField(default=0,verbose_name="Просмотры")
     votes = GenericRelation(LikeDislike, related_query_name='posts')
     comments = GenericRelation("postcomment")
-    reposts = GenericRelation("repost")
+    reposts = GenericRelation("postrepost")
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
