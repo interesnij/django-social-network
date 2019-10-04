@@ -90,10 +90,11 @@
                     </span>
 
                     &nbsp;&nbsp;
+                    <span class="commenter_first_name" style="display:none">{{ comment.commenter.first_name }}</span>
                     <span class="content-color-secondary reply_comment" data-id="{{ comment.id }}" style="font-size:15px;cursor:pointer">
                         ответить
                     </span>
-                    <span class="commenter_first_name" style="display:none">{{ comment.commenter.first_name }}</span>
+
                     <div class="border-top reply_comment_form" style="margin-top:10px;display:none">
                         <form action="" id="replyCommentForm" method="post">
                             {% csrf_token %}
