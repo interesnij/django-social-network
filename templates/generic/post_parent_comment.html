@@ -101,6 +101,7 @@
                                 <div class="col" style="left: -30px;">
                                     <div class="input-group input-group-sm" style="width: 114%;">
                                         <textarea id="id_text" name="text" class="form-control text-comment form-control-rounded"></textarea>
+                                        <span class="commenter_first_name" style="display:none">{{ comment.commenter.first_name }}</span>
                                     </div>
                                 </div>
                                 <div class="col-auto">
@@ -110,7 +111,7 @@
                                 </div>
                             </div>
                         </form>
-                        <span class="commenter_first_name" style="display:none">{{ comment.commenter.first_name }}</span>
+
                     </div>
 
                     <br><br>
