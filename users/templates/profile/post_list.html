@@ -12,33 +12,35 @@
      <div class="card-footer border-top">
          <div class="row">
              <div class="col">
-               <a title="Статья"
+               <div class="dropdown">
+                 <a title="Статья"
                        class="btn btn-link btn-sm text-secondary"
                        id="dropdown_article"
-                       type="button"
                        data-toggle="dropdown"
                        aria-haspopup="true"
                        aria-expanded="false">
                        <i class="material-icons">receipt</i>
-               </a>
-               <div class="dropdown-menu dropdown-menu-top" aria-labelledby="dropdown_article">
-                 <a id="article_lite" style="cursor:pointer" class="dropdown-item">Легкая статья</a>
-                 <a id="article_medium" style="cursor:pointer" class="dropdown-item">Средняя статья</a>
-                 <a id="article_hard" style="cursor:pointer" class="dropdown-item">Сложная статья</a>
-               </div>
-               <a title="Изображение"
+                 </a>
+                <div class="dropdown-menu dropdown-menu-top" aria-labelledby="dropdown_article">
+                   <a id="article_lite" style="cursor:pointer" class="dropdown-item">Легкая статья</a>
+                   <a id="article_medium" style="cursor:pointer" class="dropdown-item">Средняя статья</a>
+                   <a id="article_hard" style="cursor:pointer" class="dropdown-item">Сложная статья</a>
+                </div>
+                </div>
+                <div class="dropdown">
+                 <a title="Изображение"
                        id="dropdown_image"
                        class="btn btn-link btn-sm text-secondary"
-                       type="button"
                        data-toggle="dropdown"
                        aria-haspopup="true"
                        aria-expanded="false">
                        <i class="material-icons">camera_alt</i>
-                </a>
-                <div class="dropdown-menu dropdown-menu-top" aria-labelledby="dropdown_image">
-                  <a id="" style="cursor:pointer" class="dropdown-item">Загрузить изображение</a>
-                  <a id="" style="cursor:pointer" class="dropdown-item">Мои изображения</a>
-                  <a id="" style="cursor:pointer" class="dropdown-item">Использовать ссылку</a>
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-top" aria-labelledby="dropdown_image">
+                    <a id="" style="cursor:pointer" class="dropdown-item">Загрузить изображение</a>
+                    <a id="" style="cursor:pointer" class="dropdown-item">Мои изображения</a>
+                    <a id="" style="cursor:pointer" class="dropdown-item">Использовать ссылку</a>
+                  </div>
                 </div>
                <button title="Еще" class="btn btn-link btn-sm text-secondary"><i class="material-icons">attachment</i></button>
 
