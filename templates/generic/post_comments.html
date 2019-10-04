@@ -9,7 +9,7 @@
 </span>
 
 <div class="border-top" style="margin-top:10px">
-    <form action="" id="replyPostForm" method="post">
+    <form action="" id="parentCommentForm" method="post">
         {% csrf_token %}
         <div class="row no-gutters">
 
@@ -20,7 +20,7 @@
                 </div>
             </div>
             <div class="col-auto">
-                <button class="btn btn-outline-primary btn-rounded btn-sm ml-2" id="replyPost" type="button">
+                <button class="btn btn-outline-primary btn-rounded btn-sm ml-2" id="parentComment" type="button">
                     <i class="material-icons">send</i>
                 </button>
             </div>
@@ -59,10 +59,10 @@
         }
     });
 
-    $("#replyPost").click(function() {
+    $("#parentComment").click(function() {
         $.ajax({
             url: '/posts/post-comment/',
-            data: $("#replyPostForm").serialize(),
+            data: $("#parentCommentForm").serialize(),
             type: 'POST',
             cache: false,
             success: function(data) {
