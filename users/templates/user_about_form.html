@@ -55,7 +55,7 @@
               url: "{% url 'user_about_form' pk=request.user.pk %}",
               data: frm.serialize(),
               success: function (data) {
-                console.log("Все ОК")
+                $('#ajax').html('').load("{% url 'user' request.user.pk %}");
               },
               error: function(data) {
                   console.log("Все не ОК")
