@@ -25,7 +25,6 @@
                 <img src="{% static 'images/user.png' %}" alt="image" style="border-radius: 50px;">
               {% endif %}
             </figure>
-
                 <p>{{ object.target_user.first_name }}</p>
               </a>
         {% endif %}
@@ -38,7 +37,6 @@
                 <img src="{% static 'images/user.png' %}" alt="image" style="border-radius: 50px;">
               {% endif %}
             </figure>
-              <a href="{% url 'user' pk=object.user.pk %}">
                 <p>{{ object.user.first_name }}</p>
               </a>
         {% endif %}
