@@ -154,3 +154,13 @@
     form.focus();
 	})
 </script>
+<script>
+	$( ".parent_comment" ).click(function(){
+    var parent_comment_form = $(this);
+    var objectUser = parent_comment_form.parent().parent().parent().parent().find(".commenter_first_name").text().trim();
+    var form = parent_comment_form.next().find(".text-comment");
+    form.val(objectUser + ', ');
+		parent_comment_form.parent().find(".parent_comment_form").show();
+    form.focus();
+	})
+</script>

@@ -90,7 +90,7 @@
                     </span>
 
                     &nbsp;&nbsp;
-                    <span class="content-color-secondary reply_comment" data-id="{{ comment.id }}" style="font-size:15px;cursor:pointer">
+                    <span class="content-color-secondary parent_comment" data-id="{{ comment.id }}" style="font-size:15px;cursor:pointer">
                         ответить
                     </span>
                     <br><br>
@@ -99,13 +99,13 @@
                         {% include 'generic/post_reply_comment.html' with reply=reply  %}
                       {% endfor %}
                     </span>
-                    <div class="border-top reply_comment_form" style="margin-top:10px;display:none">
+                    <div class="border-top parent_comment_form" style="margin-top:10px;display:none">
                         <form action="" id="replyCommentForm" method="post">
                             {% csrf_token %}
                             <div class="row no-gutters">
                                 <input type="hidden" name="comment" value="{{ comment.id }}">
-                                <div class="col">
-                                    <div class="input-group input-group-sm">
+                                <div class="col" style="left: -30px;">
+                                    <div class="input-group input-group-sm" style="width: 114%;">
                                         <textarea id="id_text" name="text" class="form-control text-comment form-control-rounded"></textarea>
                                     </div>
                                 </div>
