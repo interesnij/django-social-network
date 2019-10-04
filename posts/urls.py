@@ -28,9 +28,9 @@ urlpatterns = [
     url(r'^comment_like_window/(?P<pk>\d+)/$', PostCommentLikeView.as_view(), name='post_comment_like_window'),
     url(r'^dislike_window/(?P<pk>\d+)/$', PostDislikeView.as_view(), name='post_dislike_window'),
     url(r'^comment_dislike_window/(?P<pk>\d+)/$', PostCommentDislikeView.as_view(), name='post_comment_dislike_window'),
-    url(r'^get-comment/$', get_comment, name='post_get_comment'),
+    url(r'^get-comment/$', post_get_comment, name='post_get_comment'),
     url(r'^post-comment/$', post_comment, name='post_comments'),
     url(r'^reply-comment/$', reply_comment, name='post_reply_comment'),
-    url(r'^update-interactions/$', update_interactions, name='post_update_interactions'),
+    url(r'^update-interactions/$', post_update_interactions, name='post_update_interactions'),
 
 ]
