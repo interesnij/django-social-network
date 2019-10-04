@@ -63,10 +63,10 @@ class ProfileUserView(TemplateView):
 		context['user'] = self.user
 		context['posts'] = self.posts
 		context['popular_frends'] = self.popular_frends
-		context['form_medium'] = PostMediumForm()
+		context['form_medium'] = ArticleMediumForm()
 		context['form_avatar'] = AvatarUserForm()
-		context['form_comment'] = ArticleCommentForm()
-		context["repost_form"] = PostRepostForm()
+		context['form_comment'] = PostCommentForm()
+		context["post_repost_form"] = PostRepostForm()
 		context['communities'] = self.communities
 		context['connect'] = self.connect
 		context['connect2'] = self.connect2
