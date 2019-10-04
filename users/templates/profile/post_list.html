@@ -4,42 +4,42 @@
    <span id="post_create"></span>
  </div>
 
+ <div class="card mb-4">
+     <div class="card-body p-0">
+         <textarea class="form-control bg-light-secondary border-0" rows="4" placeholder="Что у Вас нового?"></textarea>
+     </div>
+     <div class="card-footer border-top">
+         <div class="row">
+             <div class="col">
+               <button title="Статья"
+                       class="btn btn-link btn-sm text-secondary"
+                       role="button"
+                       data-toggle="dropdown"
+                       aria-haspopup="true"
+                       aria-expanded="false">
+                       <i class="material-icons">receipt</i>
+               </button>
+               <div class="dropdown-menu dropdown-menu-right">
+                 <a id="post_lite" style="cursor:pointer" class="dropdown-item">Легкая статья</a>
+                 <a id="post_medium" style="cursor:pointer" class="dropdown-item">Средняя статья</a>
+                 <a id="post_hard" style="cursor:pointer" class="dropdown-item">Сложная статья</a>
+               </div>
+               <button title="Документ" class="btn btn-link btn-sm text-secondary"><i class="material-icons">attachment</i></button>
+               <button title="Изображение" class="btn btn-link btn-sm text-secondary"><i class="material-icons">camera_alt</i></button>
 
+             </div>
+
+             <div class="col-auto ">
+                 <button class="btn btn-rounded btn-sm pink-gradient text-uppercase pl-3">
+                   <span class="text-hide-xs">Опубликовать</span>
+                   <i class="material-icons">send</i>
+                 </button>
+             </div>
+         </div>
+     </div>
+ </div>
+ 
 {% if posts %}
-<div class="card mb-4">
-    <div class="card-body p-0">
-        <textarea class="form-control bg-light-secondary border-0" rows="4" placeholder="Что у Вас нового?"></textarea>
-    </div>
-    <div class="card-footer border-top">
-        <div class="row">
-            <div class="col">
-              <button title="Статья"
-                      class="btn btn-link btn-sm text-secondary"
-                      role="button"
-                      data-toggle="dropdown"
-                      aria-haspopup="true"
-                      aria-expanded="false">
-                      <i class="material-icons">receipt</i>
-              </button>
-              <div class="dropdown-menu dropdown-menu-right">
-                <a id="post_lite" style="cursor:pointer" class="dropdown-item">Легкая статья</a>
-                <a id="post_medium" style="cursor:pointer" class="dropdown-item">Средняя статья</a>
-                <a id="post_hard" style="cursor:pointer" class="dropdown-item">Сложная статья</a>
-              </div>
-              <button title="Документ" class="btn btn-link btn-sm text-secondary"><i class="material-icons">attachment</i></button>
-              <button title="Изображение" class="btn btn-link btn-sm text-secondary"><i class="material-icons">camera_alt</i></button>
-
-            </div>
-
-            <div class="col-auto ">
-                <button class="btn btn-rounded btn-sm pink-gradient text-uppercase pl-3">
-                  <span class="text-hide-xs">Опубликовать</span>
-                  <i class="material-icons">send</i>
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
 
 <div class="infinite-container">
   <div class="stream-update">
