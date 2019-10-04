@@ -4,6 +4,7 @@
    <span id="article_create"></span>
  </div>
 
+{% if user == request.user %}
  <div class="card mb-4">
      <div class="card-body p-0">
          <textarea class="form-control bg-light-secondary border-0" rows="4" placeholder="Что у Вас нового?"></textarea>
@@ -11,27 +12,27 @@
      <div class="card-footer border-top">
          <div class="row">
              <div class="col">
-               <button title="Статья"
+               <a title="Статья"
                        class="btn btn-link btn-sm text-secondary"
                        role="button"
                        data-toggle="dropdown"
                        aria-haspopup="true"
                        aria-expanded="false">
                        <i class="material-icons">receipt</i>
-               </button>
+               </a>
                <div class="dropdown-menu dropdown-menu-top">
                  <a id="article_lite" style="cursor:pointer" class="dropdown-item">Легкая статья</a>
                  <a id="article_medium" style="cursor:pointer" class="dropdown-item">Средняя статья</a>
                  <a id="article_hard" style="cursor:pointer" class="dropdown-item">Сложная статья</a>
                </div>
-               <button title="Изображение"
+               <a title="Изображение"
                        class="btn btn-link btn-sm text-secondary"
                        role="button"
                        data-toggle="dropdown2"
                        aria-haspopup="true"
                        aria-expanded="false">
                        <i class="material-icons">camera_alt</i>
-                </button>
+                </a>
                 <div class="dropdown-menu dropdown-menu-top">
                   <a id="" style="cursor:pointer" class="dropdown-item">Загрузить изображение</a>
                   <a id="" style="cursor:pointer" class="dropdown-item">Мои изображения</a>
@@ -50,6 +51,7 @@
          </div>
      </div>
  </div>
+{% endif %}
 
 {% if posts %}
 
