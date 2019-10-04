@@ -92,6 +92,22 @@
         });
         return false;
     });
+    $("#replyParentComment").click(function() {
+        $.ajax({
+            url: '/posts/reply-comment/',
+            data: $("#replyParentCommentForm").serialize(),
+            type: 'POST',
+            cache: false,
+            success: function(data) {
+                $("#id_text").val("");
+
+            },
+            error: function(data) {
+                alert(data.responseText);
+            },
+        });
+        return false;
+    });
 </script>
 <script>
     function like2() {
