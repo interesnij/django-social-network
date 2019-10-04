@@ -43,5 +43,6 @@ urlpatterns = [
     url(r'^frends/', include('frends.urls')),
     url(r'^chat/', include('chat.urls')),
     url(r'^gallery/', include('gallery.urls')),
+    url(r'^article/', include('article.urls')),
 
 ]  +static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
