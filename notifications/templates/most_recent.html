@@ -2,15 +2,15 @@
   {% if notifications %}
   <span class="clean_notify" style="cursor:pointer">Очистить</span>
     {% for notification in notifications %}
+    <a href="{% url 'user' pk=notification.actor.pk %}">
         <figure>
-          <a href="{% url 'user' pk=notification.actor.pk %}">
             {% if notification.actor.profile.avatar %}
               <img src="{{ notification.actor.profile.avatar.url }}" alt="image" style="border-radius:50px;width:50px;">
             {% else %}
               <img src="{% static 'images/user.png' %}" alt="image" style="border-radius:50px;width:50px;">
             {% endif %}
-          </a>
         </figure>
+    </a>
 
         <div class="media-body">
             <h5 class="mt-0">{{ notification|safe }}</h5>
