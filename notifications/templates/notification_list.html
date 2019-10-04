@@ -20,7 +20,7 @@
             </figure>
             <div class="media-body">
                 <h6 class="mb-0">
-                  <a href="{% url 'user' pk=notification.actor.pk %}">
+                  <a href="{% url 'user' pk=notification.actor.pk %}"> 
                     {{ notification.actor.first_name }} {{ notification.actor.last_name }}
                   </a>
                   <p class="mb-0">{{ notification.timestamp|naturaltime }}</p>

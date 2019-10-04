@@ -2,7 +2,7 @@
   {% if notifications %}
   <span class="clean_notify" style="cursor:pointer">Очистить</span>
     {% for notification in notifications %}
-      <a class="media pink-gradient-active">
+      <a class="media pink-gradient-active" href="{% url 'user' pk=notification.actor.pk %}">
         <figure>
           {% if notification.actor.profile.avatar %}
             <img src="{{ notification.actor.profile.avatar.url }}" alt="image" style="border-radius:50px;width:50px;">

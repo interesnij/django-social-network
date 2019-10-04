@@ -57,26 +57,6 @@
                     </div>
                 </li>
               {% endfor %}
-
-              {% for object in target_users %}
-                <li class="list-group-item">
-                    <div class="media">
-                      <figure>
-                        {% if object.user.profile.avatar %}
-                          <img src="{{ object.user.profile.avatar.url }}" style="border-radius:50px;width:50px;" alt="image">
-                        {% else %}
-                          <img src="{% static 'images/user.png' %}" alt="image" style="border-radius:50px;width:50px;">
-                        {% endif %}
-                      </figure>
-                        <div class="media-body">
-                          <a href="{% url 'user' pk=object.user.pk %}">
-                            <h6 class="my-0 mt-1">{{ object.user.get_full_name }}</h6>
-                          </a>
-                          <a href="" class="small">Написать сообщение</a>
-                        </div>
-                    </div>
-                </li>
-              {% endfor %}
             </ul>
         </div>
     </div>
