@@ -3,9 +3,9 @@
   <span class="clean_notify" style="cursor:pointer">Очистить</span>
     {% for notification in notifications %}
       <a class="media pink-gradient-active">
-        <figure class="avatar avatar-40">
+        <figure>
           {% if notification.actor.profile.avatar %}
-            <img src="{{ notification.actor.profile.avatar.url }}" alt="image">
+            <img src="{{ notification.actor.profile.avatar.url }}" alt="image" style="border-radius:50px;width:50px;">
           {% else %}
             <img src="{% static 'images/user.png' %}" alt="image">
           {% endif %}
