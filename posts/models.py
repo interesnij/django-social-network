@@ -126,7 +126,7 @@ class PostComment(models.Model):
         return "{0}/{1}".format(self.commenter.get_full_name(), self.text[:10])
 
 
-class Repost(models.Model):
+class PostRepost(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     content = models.TextField(blank=True)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
