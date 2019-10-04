@@ -76,10 +76,10 @@
         return false;
     });
 
-    $("#replyComment").click(function() {
+    $(".replyComment").click(function() {
         $.ajax({
             url: '/posts/reply-comment/',
-            data: $("#replyCommentForm").serialize(),
+            data: $(".replyCommentForm").serialize(),
             type: 'POST',
             cache: false,
             success: function(data) {
