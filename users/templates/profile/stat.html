@@ -5,7 +5,7 @@
      <div class="media">
        <div class="media-body">
          <h4 class="content-color-primary mb-0">{% if frends_count %}<a href="{% url 'frends' pk=user.pk %}">{{ frends_count }}</a>{% else %}Нет{% endif %}</h4>
-         <p class="content-color-secondary mb-0">Друзей</p>
+         <p class="content-color-secondary mb-0">Друзья</p>
        </div>
      </div>
    </div>
@@ -13,7 +13,7 @@
      <div class="media">
        <div class="media-body">
          <h4 class="content-color-primary mb-0">{% if follows_count %}<a href="{% url 'follows' pk=user.pk %}">{{ follows_count }}</a>{% else %}Нет{% endif %}</h4>
-         <p class="content-color-secondary mb-0">Подписчиков</p>
+         <p class="content-color-secondary mb-0">Подписчики</p>
        </div>
      </div>
    </div>
@@ -21,7 +21,7 @@
      <div class="media">
        <div class="media-body">
          <h4 class="content-color-primary mb-0">{% if communities_count %}<a href="{% url 'communities' pk=user.pk %}">{{ communities_count }}</a>{% else %}Нет{% endif %}</h4>
-         <p class="content-color-secondary mb-0">Групп</p>
+         <p class="content-color-secondary mb-0">Группы</p>
        </div>
      </div>
    </div>
