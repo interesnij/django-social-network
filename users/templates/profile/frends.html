@@ -13,44 +13,44 @@
 </div>
 
 {% for object in popular_frends %}
+
 <div class="card border-top border-bottom">
     <div class="card-body">
       {% if object.user == user %}
         <div class="media">
-          <figure>
-            {% if object.target_user.profile.avatar %}
-              <img src="{{ object.target_user.profile.avatar.url }}" style="border-radius:50px;width:50px;" alt="image">
-            {% else %}
-              <img src="{% static 'images/user.png' %}" alt="image" style="border-radius:50px;width:50px;">
-            {% endif %}
-          </figure>
+            <figure style="width:50px;">
+              {% if object.target_user.profile.avatar %}
+                <img src="{{ object.target_user.profile.avatar.url }}" style="border-radius: 50px;" alt="image">
+              {% else %}
+                <img src="{% static 'images/user.png' %}" alt="image" style="border-radius: 50px;">
+              {% endif %}
+            </figure>
             <div class="media-body">
               <a href="{% url 'user' pk=object.target_user.pk %}">
-                <h6 class="my-0 mt-1">{{ object.target_user.get_full_name }}</h6>
+                <h6 class="my-0 mt-1">{{ object.target_user.first_name }}</h6>
               </a>
-              <a href="" class="small">Написать сообщение</a>
             </div>
         </div>
-      {% endif %}
-      {% if object.target_user == user %}
-      <div class="media">
-        <figure>
-          {% if object.user.profile.avatar %}
-            <img src="{{ object.user.profile.avatar.url }}" style="border-radius:50px;width:50px;" alt="image">
-          {% else %}
-            <img src="{% static 'images/user.png' %}" alt="image" style="border-radius:50px;width:50px;">
-          {% endif %}
-        </figure>
-          <div class="media-body">
-            <a href="{% url 'user' pk=object.user.pk %}">
-              <h6 class="my-0 mt-1">{{ object.user.get_full_name }}</h6>
-            </a>
-            <a href="" class="small">Написать сообщение</a>
-          </div>
-      </div>
-      {% endif %}
+        {% endif %}
+        {% if object.target_user == user %}
+        <div class="media">
+            <figure style="width:50px;">
+              {% if object.user.profile.avatar %}
+                <img src="{{ object.user.profile.avatar.url }}" style="border-radius: 50px;" alt="image">
+              {% else %}
+                <img src="{% static 'images/user.png' %}" alt="image" style="border-radius: 50px;">
+              {% endif %}
+            </figure>
+            <div class="media-body">
+              <a href="{% url 'user' pk=object.user.pk %}">
+                <h6 class="my-0 mt-1">{{ object.user.first_name }}</h6>
+              </a>
+            </div>
+        </div>
+        {% endif %}
     </div>
 </div>
 {% endfor %}
+
 
 </div>
