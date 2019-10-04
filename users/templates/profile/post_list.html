@@ -1,7 +1,7 @@
 {% load staticfiles humanize %}
 
  <div class="card mb-4" style="">
-   <span id="post_create"></span>
+   <span id="article_create"></span>
  </div>
 
  <div class="card mb-4">
@@ -20,9 +20,9 @@
                        <i class="material-icons">receipt</i>
                </button>
                <div class="dropdown-menu dropdown-menu-right">
-                 <a id="post_lite" style="cursor:pointer" class="dropdown-item">Легкая статья</a>
-                 <a id="post_medium" style="cursor:pointer" class="dropdown-item">Средняя статья</a>
-                 <a id="post_hard" style="cursor:pointer" class="dropdown-item">Сложная статья</a>
+                 <a id="article_lite" style="cursor:pointer" class="dropdown-item">Легкая статья</a>
+                 <a id="article_medium" style="cursor:pointer" class="dropdown-item">Средняя статья</a>
+                 <a id="article_hard" style="cursor:pointer" class="dropdown-item">Сложная статья</a>
                </div>
                <button title="Документ" class="btn btn-link btn-sm text-secondary"><i class="material-icons">attachment</i></button>
                <button title="Изображение" class="btn btn-link btn-sm text-secondary"><i class="material-icons">camera_alt</i></button>
@@ -38,7 +38,7 @@
          </div>
      </div>
  </div>
- 
+
 {% if posts %}
 
 <div class="infinite-container">
