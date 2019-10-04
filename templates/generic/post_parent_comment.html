@@ -125,24 +125,3 @@
         </div>
     </div>
 </div>
-<script>
-$(".replyComment").click(function() {
-    button = $(this);
-    form = button.parent().parent().parent().parent();
-    console.log(form);
-    $.ajax({
-        url: '/posts/reply-comment/',
-        data: form.serialize(),
-        type: 'POST',
-        cache: false,
-        success: function(data) {
-            $("#id_text").val("");
-
-        },
-        error: function(data) {
-            alert(data.responseText);
-        },
-    });
-    return false;
-});
-</script>
