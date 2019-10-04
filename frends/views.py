@@ -4,6 +4,7 @@ from django.views.generic.base import TemplateView
 from django.http import HttpResponse
 from frends.models import Connect
 from follows.models import Follow
+from django.db.models import Q
 
 
 class FrendsListView(ListView):
