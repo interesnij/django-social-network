@@ -21,6 +21,29 @@
 {% endif %}
 
 {% if posts %}
+<div class="card mb-4">
+    <div class="card-body p-0">
+        <textarea class="form-control bg-light-secondary border-0" rows="4" placeholder="Что у Вас нового"></textarea>
+    </div>
+    <div class="card-footer border-top">
+        <div class="row">
+            <div class="col">
+                <button class="btn btn-link btn-sm text-secondary"><i class="material-icons">chat</i></button>
+                <button class="btn btn-link btn-sm text-secondary"><i class="material-icons">collections</i></button>
+                <button class="btn btn-link btn-sm text-secondary"><i class="material-icons">camera_alt</i></button>
+                <button class="btn btn-link btn-sm text-secondary"><i class="material-icons">date_range</i></button>
+
+            </div>
+            <div class="col-auto ">
+                <button class="btn btn-rounded btn-sm pink-gradient text-uppercase pl-3">
+                  <span class="text-hide-xs">Опубликовать</span> 
+                  <i class="material-icons">send</i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="infinite-container">
   <div class="stream-update">
     <a href=""><span class="new-posts"></span> Загрузить новые записи</a>
