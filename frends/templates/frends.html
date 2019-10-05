@@ -126,10 +126,13 @@
                                                 </div>
                                                 {% endif %}
                                             </li>
-                                            {% endif %}
-                                            {% endif %}
-                                            {% empty %}
+                                            {% else % %}
                                             У Вас нет друзей онлайн
+                                            {% endif %}
+                                            {% else % %}
+                                            У Вас нет друзей онлайн
+                                            {% endif %}
+
                                             {% endfor %}
 
                                         </ul>
