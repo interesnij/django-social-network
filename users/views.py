@@ -36,7 +36,7 @@ class ProfileUserView(TemplateView):
 		self.online_frends = ""
 		for i in self.frends:
 			if i.user.get_online():
-				self.online_frends = str(self.online_frends + str(i)
+				self.online_frends = self.online_frends + str(i)
 			if i.target_user.get_online():
 				self.online_frends = self.online_frends + str(i)
 		self.target = Connect.objects.filter(user=self.user)
