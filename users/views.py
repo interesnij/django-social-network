@@ -39,6 +39,8 @@ class ProfileUserView(TemplateView):
 				self.online_frends += ('object',)
 			if object.target_user.get_online():
 				self.online_frends += ('object',)
+			if self.online_frends.count = 5:
+				break
 
 		self.target = Connect.objects.filter(user=self.user)
 		self.communities=Community.objects.filter(starrers=self.user)
