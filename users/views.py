@@ -12,6 +12,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.views.decorators.http import require_http_methods
 from django.db.models import Q
+from datetime import datetime, timedelta
 
 
 
@@ -31,13 +32,16 @@ class ProfileUserView(TemplateView):
 	def get(self,request,*args,**kwargs):
 		self.user=User.objects.get(pk=self.kwargs["pk"])
 		self.popular_frends = Connect.objects.filter(Q(user=self.user)|Q(target_user=self.user))[0:5]
+		self.communities=Community.objects.filter(starrers=self.user)
+		self.posts=Post.objects.filter(creator=self.user,is_deleted=False)
+		now = datetime.now() + timedelta(minutes=1)
+		onl = self.popular_frends.filter(last_activity < now)
+
 		self.follows_count=Follow.objects.filter(followed_user=self.user).count()
 		self.connect_count=Connect.objects.filter(user=self.user).count()
 		self.connect_count2=Connect.objects.filter(target_user=self.user).count()
 		self.frends_count=self.connect_count + self.connect_count2
 		self.communities_count=Community.objects.filter(starrers=self.user).count()
-		self.communities=Community.objects.filter(starrers=self.user)
-		self.posts=Post.objects.filter(creator=self.user,is_deleted=False)
 
 		try:
 			self.connect = Connect.objects.get(target_user=self.request.user,user=self.user)
@@ -70,7 +74,8 @@ class ProfileUserView(TemplateView):
 		context['communities'] = self.communities
 		context['connect'] = self.connect
 		context['connect2'] = self.connect2
-		
+		context['follow'] = self.follow
+		context['follow2'] = self.follow2
 		context['follows_count'] = self.follows_count
 		context['frends_count'] = self.frends_count
 		context['communities_count'] = self.communities_count
