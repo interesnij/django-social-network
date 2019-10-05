@@ -77,19 +77,19 @@
 
 <span style="display: flex;">
 {% for object in online_frends %}
-{% if object.user != request.user %}
+{% if object.target_user != request.user %}
 <div class="card border-top border-bottom">
     <div class="card-body">
 
-        <a href="{% url 'user' pk=object.user.pk %}">
+        <a href="{% url 'user' pk=object.target_user.pk %}">
             <figure style="width:50px;">
-              {% if object.user.profile.avatar %}
-                <img src="{{ object.user.profile.avatar.url }}" style="border-radius: 50px;" alt="image">
+              {% if object.target_user.profile.avatar %}
+                <img src="{{ object.target_user.profile.avatar.url }}" style="border-radius: 50px;" alt="image">
               {% else %}
                 <img src="{% static 'images/user.png' %}" alt="image" style="border-radius: 50px;">
               {% endif %}
             </figure>
-                <p>{{ object.user.first_name }}</p>
+                <p>{{ object.target_user.first_name }}</p>
               </a>
     </div>
 </div>
