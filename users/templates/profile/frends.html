@@ -45,17 +45,10 @@
 {% endfor %}
 </span>
 <span style="display: flex;">
-{% for object in popular_frends %}
+{% for object in online_frends %}
 <div class="card border-top border-bottom">
     <div class="card-body">
-      {% if object.user.get_online %}
-          в сети
-          <p>{{ object.user.first_name }}</p>
-        {% endif %}
-        {% if object.target_user.get_online %}
             в сети
-            <p>{{ object.target_user.first_name }}</p>
-        {% endif %}
     </div>
 </div>
 {% endfor %}
