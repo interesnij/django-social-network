@@ -88,7 +88,7 @@
                 <img src="{% static 'images/user.png' %}" alt="image" style="border-radius: 50px;">
               {% endif %}
             </figure>
-                <p>{{ object.user.first_name }}</p>
+                <p>{{ object.target_user.first_name }}</p>
               </a>
         {% endif %}
         {% if object.target_user == user %}
@@ -100,7 +100,7 @@
                 <img src="{% static 'images/user.png' %}" alt="image" style="border-radius: 50px;">
               {% endif %}
             </figure>
-                <p>{{ object.target_user.first_name }}</p>
+                <p>{{ object.user.first_name }}</p>
               </a>
         {% endif %}
     </div>
