@@ -36,97 +36,45 @@
                 </li>
             </ul>
         </div>
-        <div class="card-body">
-            <div class="tab-content">
-                <div class="tab-pane fade active show" id="all-tab" role="tabpanel" aria-labelledby="all-tab">
-
-                      <ul class="list-group border-top border-bottom list-group-flush">
-                        {% for object in all_frends %}
-                          <li class="list-group-item">
-                            {% if object.user == user %}
-                              <div class="media">
-                                <figure>
-                                  {% if object.target_user.profile.avatar %}
-                                    <img src="{{ object.target_user.profile.avatar.url }}" style="border-radius:50px;width:50px;" alt="image">
-                                  {% else %}
-                                    <img src="{% static 'images/user.png' %}" alt="image" style="border-radius:50px;width:50px;">
-                                  {% endif %}
-                                </figure>
-                                  <div class="media-body">
-                                    <a href="{% url 'user' pk=object.target_user.pk %}">
-                                      <h6 class="my-0 mt-1">{{ object.target_user.get_full_name }}</h6>
+        <div class="col-12 col-md-12">
+                    <div class="card mb-4 fullscreen">
+                        <div class="card-header p-0">
+                             <ul class="nav nav-tabs justify-content-center" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active show" id="tabhome123-tab" data-toggle="tab" href="#tabhome123" role="tab" aria-controls="tabhome123" aria-selected="true">
+                                        Tab 1
                                     </a>
-                                    <a href="" class="small">Написать сообщение</a>
-                                  </div>
-                              </div>
-                            {% endif %}
-                            {% if object.target_user == user %}
-                            <div class="media">
-                              <figure>
-                                {% if object.user.profile.avatar %}
-                                  <img src="{{ object.user.profile.avatar.url }}" style="border-radius:50px;width:50px;" alt="image">
-                                {% else %}
-                                  <img src="{% static 'images/user.png' %}" alt="image" style="border-radius:50px;width:50px;">
-                                {% endif %}
-                              </figure>
-                                <div class="media-body">
-                                  <a href="{% url 'user' pk=object.user.pk %}">
-                                    <h6 class="my-0 mt-1">{{ object.user.get_full_name }}</h6>
-                                  </a>
-                                  <a href="" class="small">Написать сообщение</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="tabhome223-tab" data-toggle="tab" href="#tabhome223" role="tab" aria-controls="tabhome223" aria-selected="false">
+                                        Tab 2
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="tabhome323-tab" data-toggle="tab" href="#tabhome323" role="tab" aria-controls="tabhome323" aria-selected="false">
+                                        Tab 3
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card-body">
+                            <div class="tab-content text-center">
+                                <div class="tab-pane fade active show" id="tabhome123" role="tabpanel" aria-labelledby="tabhome123-tab">
+                                    <b>Tab 1</b><br><p class="content-color-secondary mb-0">GoTRI-Mobile is HTML template based on Bootstrap 4.1 framework. This html template can be used in various business domains like Manufacturing, inventory, IT, administration etc. for admin panel, system development, web applications, even website can be created. This template also considered social pages, ecommerce pages and many more. </p>
+                                </div>
+                                <div class="tab-pane fade" id="tabhome223" role="tabpanel" aria-labelledby="tabhome223-tab">
+                                    <b>Tab 2</b><br><p class="content-color-secondary mb-0">GoTRI-Mobile is HTML template based on Bootstrap 4.1 framework. This html template can be used in various business domains like Manufacturing, inventory, IT, administration etc. for admin panel, system development, web applications, even website can be created. This template also considered social pages, ecommerce pages and many more. </p>
+                                </div>
+                                <div class="tab-pane" id="tabhome323" role="tabpanel" aria-labelledby="tabhome323-tab">
+                                    <b>Tab 3</b><br><p class="content-color-secondary mb-0">GoTRI-Mobile is HTML template based on Bootstrap 4.1 framework. This html template can be used in various business domains like Manufacturing, inventory, IT, administration etc. for admin panel, system development, web applications, even website can be created. This template also considered social pages, ecommerce pages and many more. </p>
                                 </div>
                             </div>
-                            {% endif %}
-                          </li>
-                        {% endfor %}
-                      </ul>
-
-                </div>
-                <div class="tab-pane fade" id="online-tab" role="tabpanel" aria-labelledby="online-tab">
-                  <ul class="list-group border-top border-bottom list-group-flush">
-                    drtgh tr
-                    {% for object in all_frends %}
-                      <li class="list-group-item">
-                        {% if object.user == user and object.user.get_online %}
-                          <div class="media">
-                            <figure>
-                              {% if object.target_user.profile.avatar %}
-                                <img src="{{ object.target_user.profile.avatar.url }}" style="border-radius:50px;width:50px;" alt="image">
-                              {% else %}
-                                <img src="{% static 'images/user.png' %}" alt="image" style="border-radius:50px;width:50px;">
-                              {% endif %}
-                            </figure>
-                              <div class="media-body">
-                                <a href="{% url 'user' pk=object.target_user.pk %}">
-                                  <h6 class="my-0 mt-1">{{ object.target_user.get_full_name }}</h6>
-                                </a>
-                                <a href="" class="small">Написать сообщение</a>
-                              </div>
-                          </div>
-                        {% endif %}
-                        {% if object.target_user == user and object.target_user.get_online  %}
-                        <div class="media">
-                          <figure>
-                            {% if object.user.profile.avatar %}
-                              <img src="{{ object.user.profile.avatar.url }}" style="border-radius:50px;width:50px;" alt="image">
-                            {% else %}
-                              <img src="{% static 'images/user.png' %}" alt="image" style="border-radius:50px;width:50px;">
-                            {% endif %}
-                          </figure>
-                            <div class="media-body">
-                              <a href="{% url 'user' pk=object.user.pk %}">
-                                <h6 class="my-0 mt-1">{{ object.user.get_full_name }}</h6>
-                              </a>
-                              <a href="" class="small">Написать сообщение</a>
-                            </div>
                         </div>
-                        {% endif %}
-                      </li>
-                    {% endfor %}
-                  </ul>
+                        <div class="card-footer border-top mt-1 text-center">
+                           Common Footer display
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
 </div>
     </div>
 </div>
