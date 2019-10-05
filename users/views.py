@@ -34,11 +34,11 @@ class ProfileUserView(TemplateView):
 		self.frends = Connect.objects.filter(Q(user=self.user)|Q(target_user=self.user))
 		self.pop_frends = self.frends[0:5]
 		self.online_frends = ()
-		for object in self.frends:
-			if object.user.get_online():
-				self.online_frends + (object,)
-			if object.target_user.get_online():
-				self.online_frends + (object,)
+		for i in self.frends:
+			if i.user.get_online():
+				self.online_frends += (i,)
+			if i.target_user.get_online():
+				self.online_frends += (i,)
 
 
 		self.target = Connect.objects.filter(user=self.user)
