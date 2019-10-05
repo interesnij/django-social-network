@@ -11,21 +11,21 @@
 
 {% block content %}
 <div class="row">
-<div class="col-12 col-md-8">
-<br><br><br>
-<div class="input-group mb-3">
-  <input type="text" class="form-control" placeholder="Поиск друзей" aria-label="Recipient's username">
-  <div class="input-group-append">
-    <button class="btn btn-outline-link" type="button">Искать</button>
-  </div>
-</div>
-  <div class="card mb-2">
+    <div class="col-12 col-md-8">
+        <br><br><br>
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Поиск друзей" aria-label="Recipient's username">
+            <div class="input-group-append">
+                <button class="btn btn-outline-link" type="button">Искать</button>
+            </div>
+        </div>
+        <div class="card mb-2">
 
-    <div class="col-12 col-md-12">
-        <div class="col-12 col-md-12">
+            <div class="col-12 col-md-12">
+                <div class="col-12 col-md-12">
                     <div class="card mb-4 fullscreen">
                         <div class="card-header p-0">
-                             <ul class="nav nav-tabs justify-content-center" role="tablist">
+                            <ul class="nav nav-tabs justify-content-center" role="tablist">
                                 <li class="nav-item">
                                     <a class="nav-link active show" id="tabhome123-tab" data-toggle="tab" href="#tabhome123" role="tab" aria-controls="tabhome123" aria-selected="true">
                                         Tab 1
@@ -42,144 +42,143 @@
                             <div class="tab-content">
                                 <div class="tab-pane fade active show" id="tabhome123" role="tabpanel" aria-labelledby="tabhome123-tab">
                                     <p class="content-color-secondary mb-0">
-                                      <ul class="list-group border-top border-bottom list-group-flush">
-                        {% for object in all_frends %}
-                          <li class="list-group-item">
-                            {% if object.user == user %}
-                              <div class="media">
-                                <figure>
-                                  {% if object.target_user.profile.avatar %}
-                                    <img src="{{ object.target_user.profile.avatar.url }}" style="border-radius:50px;width:50px;" alt="image">
-                                  {% else %}
-                                    <img src="{% static 'images/user.png' %}" alt="image" style="border-radius:50px;width:50px;">
-                                  {% endif %}
-                                </figure>
-                                  <div class="media-body">
-                                    <a href="{% url 'user' pk=object.target_user.pk %}">
-                                      <h6 class="my-0 mt-1">{{ object.target_user.get_full_name }}</h6>
-                                    </a>
-                                    <a href="" class="small">Написать сообщение</a>
-                                  </div>
-                              </div>
-                            {% endif %}
-                            {% if object.target_user == user %}
-                            <div class="media">
-                              <figure>
-                                {% if object.user.profile.avatar %}
-                                  <img src="{{ object.user.profile.avatar.url }}" style="border-radius:50px;width:50px;" alt="image">
-                                {% else %}
-                                  <img src="{% static 'images/user.png' %}" alt="image" style="border-radius:50px;width:50px;">
-                                {% endif %}
-                              </figure>
-                                <div class="media-body">
-                                  <a href="{% url 'user' pk=object.user.pk %}">
-                                    <h6 class="my-0 mt-1">{{ object.user.get_full_name }}</h6>
-                                  </a>
-                                  <a href="" class="small">Написать сообщение</a>
-                                </div>
-                            </div>
-                            {% endif %}
-                          </li>
-                        {% endfor %}
-                      </ul>
+                                        <ul class="list-group border-top border-bottom list-group-flush">
+                                            {% for object in all_frends %}
+                                            <li class="list-group-item">
+                                                {% if object.user == user %}
+                                                <div class="media">
+                                                    <figure>
+                                                        {% if object.target_user.profile.avatar %}
+                                                        <img src="{{ object.target_user.profile.avatar.url }}" style="border-radius:50px;width:50px;" alt="image">
+                                                        {% else %}
+                                                        <img src="{% static 'images/user.png' %}" alt="image" style="border-radius:50px;width:50px;">
+                                                        {% endif %}
+                                                    </figure>
+                                                    <div class="media-body">
+                                                        <a href="{% url 'user' pk=object.target_user.pk %}">
+                                                            <h6 class="my-0 mt-1">{{ object.target_user.get_full_name }}</h6>
+                                                        </a>
+                                                        <a href="" class="small">Написать сообщение</a>
+                                                    </div>
+                                                </div>
+                                                {% endif %}
+                                                {% if object.target_user == user %}
+                                                <div class="media">
+                                                    <figure>
+                                                        {% if object.user.profile.avatar %}
+                                                        <img src="{{ object.user.profile.avatar.url }}" style="border-radius:50px;width:50px;" alt="image">
+                                                        {% else %}
+                                                        <img src="{% static 'images/user.png' %}" alt="image" style="border-radius:50px;width:50px;">
+                                                        {% endif %}
+                                                    </figure>
+                                                    <div class="media-body">
+                                                        <a href="{% url 'user' pk=object.user.pk %}">
+                                                            <h6 class="my-0 mt-1">{{ object.user.get_full_name }}</h6>
+                                                        </a>
+                                                        <a href="" class="small">Написать сообщение</a>
+                                                    </div>
+                                                </div>
+                                                {% endif %}
+                                            </li>
+                                            {% endfor %}
+                                        </ul>
 
                                     </p>
                                 </div>
                                 <div class="tab-pane fade" id="tabhome223" role="tabpanel" aria-labelledby="tabhome223-tab">
                                     <p class="content-color-secondary mb-0">
-                                      <ul class="list-group border-top border-bottom list-group-flush">
-                    drtgh tr
-                    {% for object in all_frends %}
-                      <li class="list-group-item">
-                        {% if object.user == user and object.user.get_online %}
-                          <div class="media">
-                            <figure>
-                              {% if object.target_user.profile.avatar %}
-                                <img src="{{ object.target_user.profile.avatar.url }}" style="border-radius:50px;width:50px;" alt="image">
-                              {% else %}
-                                <img src="{% static 'images/user.png' %}" alt="image" style="border-radius:50px;width:50px;">
-                              {% endif %}
-                            </figure>
-                              <div class="media-body">
-                                <a href="{% url 'user' pk=object.target_user.pk %}">
-                                  <h6 class="my-0 mt-1">{{ object.target_user.get_full_name }}</h6>
-                                </a>
-                                <a href="" class="small">Написать сообщение</a>
-                              </div>
-                          </div>
-                        {% endif %}
-                        {% if object.target_user == user and object.target_user.get_online  %}
-                        <div class="media">
-                          <figure>
-                            {% if object.user.profile.avatar %}
-                              <img src="{{ object.user.profile.avatar.url }}" style="border-radius:50px;width:50px;" alt="image">
-                            {% else %}
-                              <img src="{% static 'images/user.png' %}" alt="image" style="border-radius:50px;width:50px;">
-                            {% endif %}
-                          </figure>
-                            <div class="media-body">
-                              <a href="{% url 'user' pk=object.user.pk %}">
-                                <h6 class="my-0 mt-1">{{ object.user.get_full_name }}</h6>
-                              </a>
-                              <a href="" class="small">Написать сообщение</a>
-                            </div>
-                        </div>
-                        {% endif %}
-                      </li>
-                    {% endfor %}
-                  </ul>
+                                        <ul class="list-group border-top border-bottom list-group-flush">
+                                            {% for object in all_frends %}
+                                            <li class="list-group-item">
+                                                {% if object.user == user and object.user.get_online %}
+                                                <div class="media">
+                                                    <figure>
+                                                        {% if object.user.profile.avatar %}
+                                                        <img src="{{ object.user.profile.avatar.url }}" style="border-radius:50px;width:50px;" alt="image">
+                                                        {% else %}
+                                                        <img src="{% static 'images/user.png' %}" alt="image" style="border-radius:50px;width:50px;">
+                                                        {% endif %}
+                                                    </figure>
+                                                    <div class="media-body">
+                                                        <a href="{% url 'user' pk=object.user.pk %}">
+                                                            <h6 class="my-0 mt-1">{{ object.user.get_full_name }}</h6>
+                                                        </a>
+                                                        <a href="" class="small">Написать сообщение</a>
+                                                    </div>
+                                                </div>
+                                                {% endif %}
+                                                {% if object.target_user == user and object.target_user.get_online  %}
+                                                <div class="media">
+                                                    <figure>
+                                                        {% if object.target_user.profile.avatar %}
+                                                        <img src="{{ object.target_user.profile.avatar.url }}" style="border-radius:50px;width:50px;" alt="image">
+                                                        {% else %}
+                                                        <img src="{% static 'images/user.png' %}" alt="image" style="border-radius:50px;width:50px;">
+                                                        {% endif %}
+                                                    </figure>
+                                                    <div class="media-body">
+                                                        <a href="{% url 'user' pk=object.target_user.pk %}">
+                                                            <h6 class="my-0 mt-1">{{ object.target_user.get_full_name }}</h6>
+                                                        </a>
+                                                        <a href="" class="small">Написать сообщение</a>
+                                                    </div>
+                                                </div>
+                                                {% endif %}
+                                            </li>
+                                            {% endfor %}
+                                        </ul>
                                     </p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-</div>
-    </div>
-</div>
-
-<div class="col-12 col-md-4">
-  <br><br><br>
-  <div class="card mb-2">
-        <div class="card-header">
-            <div class="media">
-                <div class="icon-circle icon-30 bg-light-danger mr-3">
-                    <i class="material-icons">tag_faces</i>
-                </div>
-                <div class="media-body">
-                    <h5 class="mt-1">Возможные друзья</h5>
-                </div>
-                <a href="{% url 'all_users' %}" class="">
-                     все
-                </a>
             </div>
         </div>
-        <div class="card-body px-0 py-0">
-          <ul class="list-group border-top border-bottom list-group-flush">
-            {% for object in featured_users %}
-              <li class="list-group-item">
-                  <div class="media">
-                    <figure>
-                      {% if object.profile.avatar %}
-                        <img src="{{ object.profile.avatar.url }}" style="border-radius:50px;width:50px;" alt="image">
-                      {% else %}
-                        <img src="{% static 'images/user.png' %}" alt="image" style="border-radius:50px;width:50px;">
-                      {% endif %}
-                    </figure>
-                      <div class="media-body">
-                        <a href="{% url 'user' pk=object.pk %}">
-                          <h6 class="my-0 mt-1">{{ object.get_full_name }}</h6>
-                        </a>
-                        <a href="" class="small">Написать сообщение</a>
-                      </div>
-                  </div>
-              </li>
-            {% endfor %}
-          </ul>
-        </div>
-        <br><br>
-  </div>
+    </div>
 
-</div>
+    <div class="col-12 col-md-4">
+        <br><br><br>
+        <div class="card mb-2">
+            <div class="card-header">
+                <div class="media">
+                    <div class="icon-circle icon-30 bg-light-danger mr-3">
+                        <i class="material-icons">tag_faces</i>
+                    </div>
+                    <div class="media-body">
+                        <h5 class="mt-1">Возможные друзья</h5>
+                    </div>
+                    <a href="{% url 'all_users' %}" class="">
+                        все
+                    </a>
+                </div>
+            </div>
+            <div class="card-body px-0 py-0">
+                <ul class="list-group border-top border-bottom list-group-flush">
+                    {% for object in featured_users %}
+                    <li class="list-group-item">
+                        <div class="media">
+                            <figure>
+                                {% if object.profile.avatar %}
+                                <img src="{{ object.profile.avatar.url }}" style="border-radius:50px;width:50px;" alt="image">
+                                {% else %}
+                                <img src="{% static 'images/user.png' %}" alt="image" style="border-radius:50px;width:50px;">
+                                {% endif %}
+                            </figure>
+                            <div class="media-body">
+                                <a href="{% url 'user' pk=object.pk %}">
+                                    <h6 class="my-0 mt-1">{{ object.get_full_name }}</h6>
+                                </a>
+                                <a href="" class="small">Написать сообщение</a>
+                            </div>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <br><br>
+        </div>
+
+    </div>
 </div>
 {% endblock %}
