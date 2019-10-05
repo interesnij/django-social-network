@@ -33,7 +33,7 @@ class ProfileUserView(TemplateView):
 		self.user=User.objects.get(pk=self.kwargs["pk"])
 		self.frends = Connect.objects.filter(Q(user=self.user)|Q(target_user=self.user))[0:5]
 		self.pop_frends = self.frends[0:5]
-		self.online_frends = self.frends.filter(Q(connect__user=user.get_online())|Q(target_user=target_user.get_online()))[0:5]
+		self.online_frends = self.frends.filter(Q(connect__user.get_online())|Q(target_user=target_user.get_online()))[0:5]
 		self.target = Connect.objects.filter(user=self.user)
 		self.communities=Community.objects.filter(starrers=self.user)
 		self.posts=Post.objects.filter(creator=self.user,is_deleted=False)
