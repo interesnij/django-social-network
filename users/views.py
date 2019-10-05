@@ -36,7 +36,7 @@ class ProfileUserView(TemplateView):
 		self.posts=Post.objects.filter(creator=self.user,is_deleted=False)
 		now = datetime.now() + timedelta(minutes=1)
 
-		self.online_frends = self.popular_frends.filter(user.last_activity = now)[0:5]
+		self.online_frends = self.popular_frends.filter(user.last_activity=now)[0:5]
 
 		self.follows_count=Follow.objects.filter(followed_user=self.user).count()
 		self.connect_count=Connect.objects.filter(user=self.user).count()
