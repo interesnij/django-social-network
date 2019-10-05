@@ -20,26 +20,53 @@
    </div>
    <div class="col text-center">
      <div class="media">
+       {% if follows_count %}
        <div class="media-body">
-         <h4 class="content-color-primary mb-0">{% if follows_count %}<a href="{% url 'follows' pk=user.pk %}">{{ follows_count }}</a>{% else %}Нет{% endif %}</h4>
+         <a href="{% url 'follows' pk=user.pk %}">
+         <h4 class="content-color-primary mb-0">{{ follows_count }}</h4>
          <p class="content-color-secondary mb-0">Подписчики</p>
+         </a>
        </div>
+       {% else %}
+       <div class="media-body">
+         <h4 class="content-color-primary mb-0">Нет</h4>
+         <p class="content-color-secondary mb-0">Подписчиков</p>
+       </div>
+       {% endif %}
      </div>
    </div>
    <div class="col text-center">
      <div class="media">
+       {% if communities_count %}
        <div class="media-body">
-         <h4 class="content-color-primary mb-0">{% if communities_count %}<a href="{% url 'communities' pk=user.pk %}">{{ communities_count }}</a>{% else %}Нет{% endif %}</h4>
-         <p class="content-color-secondary mb-0">Группы</p>
+         <a href="{% url 'communities' pk=user.pk %}">
+         <h4 class="content-color-primary mb-0">{{ communities_count }}</h4>
+         <p class="content-color-secondary mb-0">Сообщества</p>
+         </a>
        </div>
+       {% else %}
+       <div class="media-body">
+         <h4 class="content-color-primary mb-0">Нет</h4>
+         <p class="content-color-secondary mb-0">Сообществ</p>
+       </div>
+       {% endif %}
      </div>
    </div>
    <div class="col text-center">
      <div class="media">
+       {% if images_count %}
        <div class="media-body">
-         <h4 class="content-color-primary mb-0">{% if images_count %}<a href="{% url 'gallery' pk=user.pk %}">{{ images_count }}</a>{% else %}Нет{% endif %}</a></h4>
+         <a href="{% url 'gallery' pk=user.pk %}">
+         <h4 class="content-color-primary mb-0">{{ images_count }}</h4>
+         <p class="content-color-secondary mb-0">Фото</p>
+         </a>
+       </div>
+       {% else %}
+       <div class="media-body">
+         <h4 class="content-color-primary mb-0">Нет</h4>
          <p class="content-color-secondary mb-0">Фото</p>
        </div>
+       {% endif %}
      </div>
    </div>
  </div>
