@@ -16,7 +16,6 @@ from imagekit.models import ProcessedImageField
 class User(AbstractUser):
     is_email_verified = models.BooleanField(default=False)
     are_guidelines_accepted = models.BooleanField(default=False)
-    #username = models.CharField(max_length=100, blank=True, null=True, verbose_name="Username")
     is_deleted = models.BooleanField(
         verbose_name="Удален",
         default=False,
@@ -72,6 +71,8 @@ class UserProfile(models.Model):
     instagram_url = models.URLField(blank=True, verbose_name="Ссылка на instagram")
     twitter_url = models.URLField(blank=True, verbose_name="Ссылка на twitter")
     phone = models.CharField(max_length=15,blank=True, verbose_name="Телефон")
+    last_activity= models.DateTimeField(
+        default=timezone.now, blank=True, verbose_name='Активность')
 
     def __str__(self):
         return self.user.last_name
