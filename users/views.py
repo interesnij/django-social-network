@@ -31,18 +31,18 @@ class ProfileUserView(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.user=User.objects.get(pk=self.kwargs["pk"])
-		self.frends = Connect.objects.filter(Q(user=self.user)|Q(target_user=self.user))[0:5]
-		self.pop_frends = self.frends[0:5]
-		self.online_frends = ""
-		for i in self.frends:
-			if i.user.get_online():
-				self.online_frends = self.online_frends + str(i)
-			if i.target_user.get_online():
-				self.online_frends = self.online_frends + str(i)
+		self.frends = Connect.objects.filter(Q(user=self.user)|Q(target_user=self.user))
+		self.pop_frends = frends[0:5]
+		self.online_frends = []
+		for object in frends:
+			if object.user.get_online():
+				self.online_frends + str(object)
+			if object.target_user.get_online():
+				self.online_frends + str(object)
+
 		self.target = Connect.objects.filter(user=self.user)
 		self.communities=Community.objects.filter(starrers=self.user)
 		self.posts=Post.objects.filter(creator=self.user,is_deleted=False)
-		self.now = datetime.now()
 
 		self.follows_count=Follow.objects.filter(followed_user=self.user).count()
 		self.connect_count=Connect.objects.filter(user=self.user).count()
@@ -86,7 +86,6 @@ class ProfileUserView(TemplateView):
 		context['follows_count'] = self.follows_count
 		context['frends_count'] = self.frends_count
 		context['communities_count'] = self.communities_count
-		context['now'] = self.now
 		return context
 
 
