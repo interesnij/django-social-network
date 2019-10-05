@@ -33,7 +33,12 @@ class User(AbstractUser):
         return  str(self.first_name) + " " + str(self.last_name)
 
     def get_online(self):
-        return self.last_activity + timedelta(minutes=1)
+        now = datetime.now()
+        onl = self.last_activity + timedelta(minutes=1)
+        if aaa < onl:
+            return True
+        else:
+            return False
 
 
     def __str__(self):
