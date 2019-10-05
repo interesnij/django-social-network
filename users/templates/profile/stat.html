@@ -3,10 +3,19 @@
 <div class="row py-3">
    <div class="col text-center">
      <div class="media">
+       {% if frends_count %}
+       <a href="{% url 'frends' pk=user.pk %}">
        <div class="media-body">
-         <h4 class="content-color-primary mb-0">{% if frends_count %}<a href="{% url 'frends' pk=user.pk %}">{{ frends_count }}</a>{% else %}Нет{% endif %}</h4>
+         <h4 class="content-color-primary mb-0"><a href="{% url 'frends' pk=user.pk %}">{{ frends_count }}</a>{% else %}Нет{% endif %}</h4>
          <p class="content-color-secondary mb-0">Друзья</p>
        </div>
+       </a>
+       {% else %}
+       <div class="media-body">
+         <h4 class="content-color-primary mb-0">Нет</h4>
+         <p class="content-color-secondary mb-0">Друзей</p>
+       </div>
+       {% endif %}
      </div>
    </div>
    <div class="col text-center">
