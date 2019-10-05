@@ -38,10 +38,8 @@ class ProfileUserView(TemplateView):
 		self.now = datetime.now()
 		self.online_frends=[]
 		for i in self.popular_frends:
+			self.online_frends + i
 			
-			onl2 = i.target_user.last_activity + timedelta(minutes=1)
-			if self.now < onl2:
-				online_frends = self.online_frends + i
 
 		self.follows_count=Follow.objects.filter(followed_user=self.user).count()
 		self.connect_count=Connect.objects.filter(user=self.user).count()
