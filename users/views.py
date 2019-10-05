@@ -37,7 +37,7 @@ class ProfileUserView(TemplateView):
 		self.posts=Post.objects.filter(creator=self.user,is_deleted=False)
 		self.now = datetime.now()
 		online_frends=[]
-		for i in target:
+		for i in self.target:
 			onl = i.last_activity + timedelta(minutes=1)
 			if self.now < onl:
 				online_frends = online_frends + i
