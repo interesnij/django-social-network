@@ -98,7 +98,7 @@
             {% if user.get_online %}
             <p class="text-success">Онлайн</p>
             {% else %}
-            <p>Был(а) {{ user.last_activity|naturaltime }}</p>
+            <i style="color:#888888">Был(а) {{ user.last_activity|naturaltime }}</i>
             {% endif %}
             <br><br>
         </div>
