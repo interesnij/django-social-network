@@ -47,10 +47,9 @@
 
 <span style="display: flex;">
 {% for object in popular_frends %}
-{{ object.user.last_activity }}
 <div class="card border-top border-bottom">
     <div class="card-body">
-      {% if object.user.last_activity == now %}
+      {% if object.user.last_activity < now %}
       <a href="{% url 'user' pk=object.target_user.pk %}">
             <figure style="width:50px;">
               {% if object.target_user.profile.avatar %}
