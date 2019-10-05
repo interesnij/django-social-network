@@ -79,8 +79,6 @@ class UserProfile(models.Model):
     instagram_url = models.URLField(blank=True, verbose_name="Ссылка на instagram")
     twitter_url = models.URLField(blank=True, verbose_name="Ссылка на twitter")
     phone = models.CharField(max_length=15,blank=True, verbose_name="Телефон")
-    last_activity= models.DateTimeField(
-        default=timezone.now, blank=True, verbose_name='Активность')
 
     def __str__(self):
         return self.user.last_name
