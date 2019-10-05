@@ -35,7 +35,7 @@ class ProfileUserView(TemplateView):
 		self.communities=Community.objects.filter(starrers=self.user)
 		self.posts=Post.objects.filter(creator=self.user,is_deleted=False)
 		now = datetime.now() + timedelta(minutes=1)
-		self.online_frends = Connect.objects.filter(Q(user=self.user)|Q(target_user=self.user)|Q(profile.last_activity < now))[0:5]
+		self.online_frends = Connect.objects.filter(Q(user=self.user)|Q(target_user=self.user)|Q(user.profile.last_activity < now))[0:5]
 
 		self.follows_count=Follow.objects.filter(followed_user=self.user).count()
 		self.connect_count=Connect.objects.filter(user=self.user).count()
