@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load staticfiles %}
+{% load staticfiles humanize %}
 
 {% block title %}{{ user.first_name }} {{ user.last_name }}{% endblock %}
 {% block meta %}
@@ -95,10 +95,10 @@
     <div class="col-lg-8 col-md-7 col-sm-12 order-2 ">
         <div class="card mb-4" style="padding:10px">
             <h3 class="mb-0">{{ user.first_name }} {{ user.last_name }}</h3>
-            {% if user.profile.status %}
-            <p>{{ user.profile.status }}</p>
+            {% if user.get_online %}
+            <p class="text-success">Онлайн</p>
             {% else %}
-            <p>Статус не указан</p>
+            <p>Был(а) {{ user.last_activity|naturaltime }}</p>
             {% endif %}
             <br><br>
         </div>
