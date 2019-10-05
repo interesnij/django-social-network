@@ -39,8 +39,8 @@ class ProfileUserView(TemplateView):
 		online_frends=[]
 		for i in target:
 			onl = i.last_activity + timedelta(minutes=1)
-			if self.now < onl
-			online_frends = online_frends + i
+			if self.now < onl:
+				online_frends = online_frends + i
 
 		self.follows_count=Follow.objects.filter(followed_user=self.user).count()
 		self.connect_count=Connect.objects.filter(user=self.user).count()
