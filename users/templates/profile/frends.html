@@ -80,7 +80,7 @@
 <div class="card border-top border-bottom">
     <div class="card-body">
 
-        {% if object.user == user %}
+        {% if object.user == target_user %}
         <a href="{% url 'user' pk=object.target_user.pk %}">
             <figure style="width:50px;">
               {% if object.target_user.profile.avatar %}
@@ -92,7 +92,7 @@
                 <p>{{ object.target_user.first_name }}</p>
               </a>
         {% endif %}
-        {% if object.target_user == target_user %}
+        {% if object.target_user == user %}
         <a href="{% url 'user' pk=object.user.pk %}">
             <figure style="width:50px;">
               {% if object.user.profile.avatar %}
