@@ -38,9 +38,8 @@
             </ul>
         </div>
         <div class="card-body">
-            <div class="tab-content text-center">
+            <div class="tab-content">
                 <div class="tab-pane fade active show" id="tabhome123" role="tabpanel" aria-labelledby="tabhome123-tab">
-                    <b>Все друзья</b><br>
 
                       <ul class="list-group border-top border-bottom list-group-flush">
                         {% for object in all_frends %}
@@ -85,10 +84,46 @@
 
                 </div>
                 <div class="tab-pane fade" id="tabhome223" role="tabpanel" aria-labelledby="tabhome223-tab">
-                    <b>Друзья онлайн</b><br>
-                    <p class="content-color-secondary mb-0">
-
-                    </p>
+                  <ul class="list-group border-top border-bottom list-group-flush">
+                    {% for object in all_frends %}
+                      <li class="list-group-item">
+                        {% if object.user == user and object.user.get_online %}
+                          <div class="media">
+                            <figure>
+                              {% if object.target_user.profile.avatar %}
+                                <img src="{{ object.target_user.profile.avatar.url }}" style="border-radius:50px;width:50px;" alt="image">
+                              {% else %}
+                                <img src="{% static 'images/user.png' %}" alt="image" style="border-radius:50px;width:50px;">
+                              {% endif %}
+                            </figure>
+                              <div class="media-body">
+                                <a href="{% url 'user' pk=object.target_user.pk %}">
+                                  <h6 class="my-0 mt-1">{{ object.target_user.get_full_name }}</h6>
+                                </a>
+                                <a href="" class="small">Написать сообщение</a>
+                              </div>
+                          </div>
+                        {% endif %}
+                        {% if object.target_user == user and object.target_user.get_online  %}
+                        <div class="media">
+                          <figure>
+                            {% if object.user.profile.avatar %}
+                              <img src="{{ object.user.profile.avatar.url }}" style="border-radius:50px;width:50px;" alt="image">
+                            {% else %}
+                              <img src="{% static 'images/user.png' %}" alt="image" style="border-radius:50px;width:50px;">
+                            {% endif %}
+                          </figure>
+                            <div class="media-body">
+                              <a href="{% url 'user' pk=object.user.pk %}">
+                                <h6 class="my-0 mt-1">{{ object.user.get_full_name }}</h6>
+                              </a>
+                              <a href="" class="small">Написать сообщение</a>
+                            </div>
+                        </div>
+                        {% endif %}
+                      </li>
+                    {% endfor %}
+                  </ul>
                 </div>
             </div>
         </div>
