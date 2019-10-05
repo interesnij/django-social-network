@@ -49,28 +49,12 @@
 <div class="card border-top border-bottom">
     <div class="card-body">
       {% if object.user.get_online %}
-      <a href="{% url 'user' pk=object.target_user.pk %}">
-            <figure style="width:50px;">
-              {% if object.target_user.profile.avatar %}
-                <img src="{{ object.target_user.profile.avatar.url }}" style="border-radius: 50px;" alt="image">
-              {% else %}
-                <img src="{% static 'images/user.png' %}" alt="image" style="border-radius: 50px;">
-              {% endif %}
-            </figure>
-                <p>{{ object.target_user.first_name }}</p>
-              </a>
+          в сети
+          <p>{{ object.user.first_name }}</p>
         {% endif %}
         {% if object.target_user.get_online %}
-        <a href="{% url 'user' pk=object.user.pk %}">
-            <figure style="width:50px;">
-              {% if object.user.profile.avatar %}
-                <img src="{{ object.user.profile.avatar.url }}" style="border-radius: 50px;" alt="image">
-              {% else %}
-                <img src="{% static 'images/user.png' %}" alt="image" style="border-radius: 50px;">
-              {% endif %}
-            </figure>
-                <p>{{ object.user.first_name }}</p>
-              </a>
+            в сети
+            <p>{{ object.target_user.first_name }}</p>
         {% endif %}
     </div>
 </div>
