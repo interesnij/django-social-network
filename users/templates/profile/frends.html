@@ -48,7 +48,7 @@
 {% for object in popular_frends %}
 <div class="card border-top border-bottom">
     <div class="card-body">
-      {% if object.user.get_online < now %}
+      {% if object.user.get_online > now %}
       <a href="{% url 'user' pk=object.target_user.pk %}">
             <figure style="width:50px;">
               {% if object.target_user.profile.avatar %}
@@ -60,7 +60,7 @@
                 <p>{{ object.target_user.first_name }}</p>
               </a>
         {% endif %}
-        {% if object.target_user.get_online < now %}
+        {% if object.target_user.get_online > now %}
         <a href="{% url 'user' pk=object.user.pk %}">
             <figure style="width:50px;">
               {% if object.user.profile.avatar %}
