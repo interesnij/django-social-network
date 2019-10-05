@@ -39,7 +39,7 @@ class ProfileUserView(TemplateView):
 				self.online_frends += (object,)
 			if object.target_user.get_online():
 				self.online_frends += (object,)
-		self.online_frends[0:5]
+		
 
 		self.target = Connect.objects.filter(user=self.user)
 		self.communities=Community.objects.filter(starrers=self.user)
