@@ -33,12 +33,6 @@ class ProfileUserView(TemplateView):
 		self.user=User.objects.get(pk=self.kwargs["pk"])
 		self.frends = Connect.objects.filter(Q(user=self.user)|Q(target_user=self.user))
 		self.pop_frends = self.frends[0:5]
-		self.online_frends = ()
-		for i in self.frends:
-			if i.user.get_online() or i.target_user.get_online():
-				self.online_frends = self.online_frends + (i,)
-
-		self.target = Connect.objects.filter(user=self.user)
 		self.communities=Community.objects.filter(starrers=self.user)
 		self.posts=Post.objects.filter(creator=self.user,is_deleted=False)
 
@@ -71,7 +65,6 @@ class ProfileUserView(TemplateView):
 		context['user'] = self.user
 		context['posts'] = self.posts
 		context['pop_frends'] = self.pop_frends
-		context['online_frends'] = self.online_frends
 		context['form_medium'] = ArticleMediumForm()
 		context['form_avatar'] = AvatarUserForm()
 		context['form_comment'] = PostCommentForm()

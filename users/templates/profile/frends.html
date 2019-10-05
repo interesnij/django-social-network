@@ -18,6 +18,7 @@
     <div class="card-body">
       {% if object.user == user %}
       <a href="{% url 'user' pk=object.target_user.pk %}">
+        {% if object.target_user.get_online %}тт{% endif %}
             <figure style="width:50px;">
               {% if object.target_user.profile.avatar %}
                 <img src="{{ object.target_user.profile.avatar.url }}" style="border-radius: 50px;" alt="image">
@@ -30,6 +31,7 @@
         {% endif %}
         {% if object.target_user == user %}
         <a href="{% url 'user' pk=object.user.pk %}">
+          {% if object.user.get_online %}тт{% endif %}
             <figure style="width:50px;">
               {% if object.user.profile.avatar %}
                 <img src="{{ object.user.profile.avatar.url }}" style="border-radius: 50px;" alt="image">
@@ -44,7 +46,6 @@
 </div>
 {% endfor %}
 </span>
-
 
 </div>
 {% else %}
@@ -61,43 +62,4 @@
 </div>
 </div>
 {% endif %}
-{% endif %}
-{% if online_frends %}
-<div class="card mb-4" style="">
-    <div class="card-header">
-<div class="media">
-    <div class="media-body">
-        <h4 class="content-color-primary mb-0">Друзья </h4>
-    </div>
-    <a href="{% url 'frends' pk=user.pk %}" class="">
-         все
-    </a>
-</div>
-</div>
-
-<span style="display: flex;">
-{% for object in online_frends %}
-{% if object.target_user != request.user or object.user != request.user %}
-<div class="card border-top border-bottom">
-    <div class="card-body">
-
-          <a href="{% url 'user' pk=object.user.pk %}">
-              <figure style="width:50px;">
-                {% if object.user.profile.avatar %}
-                  <img src="{{ object.user.profile.avatar.url }}" style="border-radius: 50px;" alt="image">
-                {% else %}
-                  <img src="{% static 'images/user.png' %}" alt="image" style="border-radius: 50px;">
-                {% endif %}
-              </figure>
-                  <p>{{ object.user.first_name }}</p>
-            </a>
-
-    </div>
-</div>
-{% endif %}
-{% endfor %}
-</span>
-
-</div>
-
 {% endif %}
