@@ -1,5 +1,5 @@
 {% load staticfiles %}
-
+{% if object.popular_frends %}
 <div class="card mb-4" style="">
     <div class="card-header">
 <div class="media">
@@ -44,5 +44,18 @@
 </div>
 {% endfor %}
 
-
 </div>
+{% else %}
+<div class="card mb-4" style="">
+    <div class="card-header">
+<div class="media">
+    <div class="media-body">
+        <h4 class="content-color-primary mb-0">Найдите друзей </h4>
+    </div>
+    <a href="{% url 'frends' pk=user.pk %}" class="">
+         все
+    </a>
+</div>
+</div>
+</div>
+{% endif %}

@@ -1,7 +1,7 @@
 {% load humanize staticfiles liked_user %}
 <script src="{% static 'scripts/jquery-3.2.1.min.js' %}" type="text/javascript"></script>
 
-<span class="stream_comments">
+<span class="stream_comments bg-light-secondary">
   <div></div>
     {% for comment in comments %}
     {% include 'generic/post_parent_comment.html' with comment=comment  %}

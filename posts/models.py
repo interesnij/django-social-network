@@ -18,29 +18,6 @@ from main.models import LikeDislike
 
 class Post(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, db_index=True,verbose_name="uuid")
-    content_hard = RichTextUploadingField(blank=True, null=True, config_name='default',
-                                      external_plugin_resources=[(
-                                          'youtube',
-                                          '/static/ckeditor_plugins/youtube/youtube/',
-                                          'plugin.js',
-                                          )],
-                                      )
-    content_lite = RichTextUploadingField(blank=True,null=True,
-                                      config_name='lite',
-                                      external_plugin_resources=[(
-                                          'youtube',
-                                          '/static/ckeditor_plugins/youtube/youtube/',
-                                          'plugin.js',
-                                          )],
-                                      )
-    content_medium = RichTextUploadingField(blank=True,
-                                      config_name='medium',
-                                      external_plugin_resources=[(
-                                          'youtube',
-                                          '/static/ckeditor_plugins/youtube/youtube/',
-                                          'plugin.js',
-                                          )],
-                                      )
     created = models.DateTimeField(default=timezone.now, verbose_name="Создан")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='posts_creator',verbose_name="Создатель")
     comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
