@@ -9,5 +9,5 @@ class UpdateLastActivityMiddleware(MiddlewareMixin):
         assert hasattr(request, 'user'), 'UpdateLastActivityMiddleware требует установки промежуточного программного обеспечения аутентификации.'
         now = datetime.datetime.now()
 
-        User.objects.filter(user__id=request.user.id) \
+        User.objects.filter(id=request.user.id) \
                     .update(last_activity=now)
