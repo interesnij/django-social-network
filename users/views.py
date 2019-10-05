@@ -67,7 +67,7 @@ class ProfileUserView(TemplateView):
 		context = super(ProfileUserView, self).get_context_data(**kwargs)
 		context['user'] = self.user
 		context['posts'] = self.posts
-		context['popular_frends'] = self.popular_frends
+		context['pop_frends'] = self.pop_frends
 		context['form_medium'] = ArticleMediumForm()
 		context['form_avatar'] = AvatarUserForm()
 		context['form_comment'] = PostCommentForm()
