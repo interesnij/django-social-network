@@ -29,7 +29,7 @@
               <h6 class="my-0 mt-1">{{ object.target_user.get_full_name }}</h6>
             </a>
             {% if object.target_user.get_online %}
-              <p class="small">В сети</p>
+              <p class="small text-success">В сети</p>
             {% else %}
               <p class="small">Был(а) {{ object.target_user.last_activity|naturaltime }}</p>
             {% endif %}
@@ -54,7 +54,7 @@
               <h6 class="my-0 mt-1">{{ object.user.get_full_name }}</h6>
             </a>
             {% if object.user.get_online %}
-              <p class="small">В сети</p>
+              <p class="small text-success">В сети</p>
             {% else %}
               <p class="small">Был(а) {{ object.user.last_activity|naturaltime }}</p>
             {% endif %}
