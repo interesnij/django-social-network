@@ -4,12 +4,12 @@
    <div class="col text-center">
      <div class="media">
        {% if frends_count %}
-       <a href="{% url 'frends' pk=user.pk %}">
        <div class="media-body">
+         <a href="{% url 'frends' pk=user.pk %}">
          <h4 class="content-color-primary mb-0">{{ frends_count }}</h4>
          <p class="content-color-secondary mb-0">Друзья</p>
+         </a>
        </div>
-       </a>
        {% else %}
        <div class="media-body">
          <h4 class="content-color-primary mb-0">Нет</h4>
