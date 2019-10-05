@@ -96,7 +96,7 @@
         <div class="card mb-4" style="padding:10px">
             <h3 class="mb-0">{{ user.first_name }} {{ user.last_name }}</h3>
             {% if user.get_online %}
-            <p class="text-success">Онлайн</p>
+            <i class="text-success">Онлайн</i>
             {% else %}
             <i style="color:#888888">Был(а) {{ user.last_activity|naturaltime }}</i>
             {% endif %}
