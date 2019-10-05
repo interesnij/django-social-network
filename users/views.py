@@ -59,7 +59,6 @@ class ProfileUserView(TemplateView):
 			self.follow2 = Follow.objects.get(followed_user=self.request.user,user=self.user)
 		except:
 			self.follow2 = None
-
 		return super(ProfileUserView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self, **kwargs):
