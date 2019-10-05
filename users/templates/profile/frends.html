@@ -17,11 +17,11 @@
 <div class="card mb-2">
     <div class="card-body">
         <div class="media">
-          <figure>
+          <figure style="width:50px;">
             {% if object.target_user.profile.avatar %}
-              <img src="{{ object.target_user.profile.avatar.url }}" style="border-radius:50px;width:50px;" alt="image">
+              <img src="{{ object.target_user.profile.avatar.url }}" style="border-radius:50px;" alt="image">
             {% else %}
-              <img src="{% static 'images/user.png' %}" alt="image" style="border-radius:50px;width:50px;">
+              <img src="{% static 'images/user.png' %}" alt="image" style="border-radius:50px">
             {% endif %}
           </figure>
           <div class="media-body">
@@ -42,11 +42,11 @@
 <div class="card mb-2">
     <div class="card-body">
         <div class="media">
-          <figure>
+          <figure style="width:50px;">
             {% if object.user.profile.avatar %}
-              <img src="{{ object.user.profile.avatar.url }}" style="border-radius:50px;width:50px;" alt="image">
+              <img src="{{ object.user.profile.avatar.url }}" style="border-radius:50px;" alt="image">
             {% else %}
-              <img src="{% static 'images/user.png' %}" alt="image" style="border-radius:50px;width:50px;">
+              <img src="{% static 'images/user.png' %}" alt="image" style="border-radius:50px;">
             {% endif %}
           </figure>
           <div class="media-body">
