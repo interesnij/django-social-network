@@ -32,9 +32,15 @@ class ProfileUserView(TemplateView):
 	def get(self,request,*args,**kwargs):
 		self.user=User.objects.get(pk=self.kwargs["pk"])
 		self.popular_frends = Connect.objects.filter(Q(user=self.user)|Q(target_user=self.user))[0:5]
+		self.target = Connect.objects.filter(user=self.user)
 		self.communities=Community.objects.filter(starrers=self.user)
 		self.posts=Post.objects.filter(creator=self.user,is_deleted=False)
-		self.now = datetime.now() + timedelta(minutes=1)
+		self.now = datetime.now()
+		online_frends=[]
+		for i in target:
+			onl = i.last_activity + timedelta(minutes=1)
+			if self.now < onl
+			online_frends = online_frends + i
 
 		self.follows_count=Follow.objects.filter(followed_user=self.user).count()
 		self.connect_count=Connect.objects.filter(user=self.user).count()
