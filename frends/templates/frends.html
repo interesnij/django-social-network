@@ -20,21 +20,37 @@
   </div>
 </div>
   <div class="card mb-2">
-        <div class="card-header">
-            <div class="media">
-                <div class="icon-circle icon-30 bg-light-danger mr-3">
-                    <i class="material-icons">person</i>
+
+    <div class="col-12 col-md-12">
+    <div class="card mb-4 fullscreen">
+        <div class="card-header p-0">
+            <ul class="nav nav-tabs justify-content-center" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active show" id="tabhome123-tab" data-toggle="tab" href="#tabhome123" role="tab" aria-controls="tabhome123" aria-selected="true">
+                        Все друзья
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="tabhome223-tab" data-toggle="tab" href="#tabhome223" role="tab" aria-controls="tabhome223" aria-selected="false">
+                        Друзья онлайн
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="card-body">
+            <div class="tab-content text-center">
+                <div class="tab-pane fade active show" id="tabhome123" role="tabpanel" aria-labelledby="tabhome123-tab">
+                    <b>Все друзья</b><br>
+                    <p class="content-color-secondary mb-0">GoTRI-Mobile is HTML template based on Bootstrap 4.1 framework. This html template can be used in various business domains like Manufacturing, inventory, IT, administration etc. for admin panel, system development, web applications, even website can be created. This template also considered social pages, ecommerce pages and many more. </p>
                 </div>
-                <div class="media-body">
-                    <h5 class="mt-1">{% if request.user and request.user.is_authenticated %}
-                                     Мои друзья
-                                     {% else %}
-                                     Друзья пользователя {{ user.get_full_name }}
-                                     {% endif %}
-                    </h5>
+                <div class="tab-pane fade" id="tabhome223" role="tabpanel" aria-labelledby="tabhome223-tab">
+                    <b>Друзья онлайн</b><br>
+                    <p class="content-color-secondary mb-0">GoTRI-Mobile is HTML template based on Bootstrap 4.1 framework. This html template can be used in various business domains like Manufacturing, inventory, IT, administration etc. for admin panel, system development, web applications, even website can be created. This template also considered social pages, ecommerce pages and many more. </p>
                 </div>
             </div>
         </div>
+    </div>
+</div>
         <br><br>
         <div class="card-body px-0 py-0">
             <ul class="list-group border-top border-bottom list-group-flush">
