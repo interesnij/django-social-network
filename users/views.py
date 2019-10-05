@@ -86,7 +86,7 @@ class ProfileUserView(TemplateView):
 		context['follows_count'] = self.follows_count
 		context['frends_count'] = self.frends_count
 		context['communities_count'] = self.communities_count
-		context['now'] = self.now
+		context['online_frends'] = self.online_frends
 		return context
 
 
