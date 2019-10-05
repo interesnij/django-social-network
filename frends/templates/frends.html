@@ -89,8 +89,7 @@
                                     <p class="content-color-secondary mb-0">
                                         <ul class="list-group border-top border-bottom list-group-flush">
                                             {% for object in all_frends %}
-                                              {% if object.user.get_online %}
-                                              {% if object.target_user.get_online %}
+                                              {% if object.user.get_online or object.target_user.get_online %}
                                             <li class="list-group-item">
                                                 {% if object.user == user %}
                                                 <div class="media">
@@ -129,7 +128,6 @@
                                             </li>
                                             {% endif %}
                                             {% endif %}
-                                            {% endfor %}
 
                                         </ul>
                                     </p>
