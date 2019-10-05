@@ -34,7 +34,7 @@ class ProfileUserView(TemplateView):
 		self.popular_frends = Connect.objects.filter(Q(user=self.user)|Q(target_user=self.user))[0:5]
 		self.communities=Community.objects.filter(starrers=self.user)
 		self.posts=Post.objects.filter(creator=self.user,is_deleted=False)
-		now = datetime.now() + timedelta(minutes=1)
+		self.now = datetime.now() + timedelta(minutes=1)
 
 		self.follows_count=Follow.objects.filter(followed_user=self.user).count()
 		self.connect_count=Connect.objects.filter(user=self.user).count()
@@ -77,7 +77,7 @@ class ProfileUserView(TemplateView):
 		context['follows_count'] = self.follows_count
 		context['frends_count'] = self.frends_count
 		context['communities_count'] = self.communities_count
-		context['now'] = self.now 
+		context['now'] = self.now
 		return context
 
 
