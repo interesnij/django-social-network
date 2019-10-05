@@ -35,7 +35,7 @@ class User(AbstractUser):
     def get_online(self):
         now = datetime.now()
         onl = self.last_activity + timedelta(minutes=1)
-        if aaa < onl:
+        if now < onl:
             return True
         else:
             return False
