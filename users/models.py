@@ -4,12 +4,11 @@ from django.utils import six, timezone
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.models import User
-from django.utils import timezone
 from django.conf import settings
 from users.helpers import upload_to_user_cover_directory, upload_to_user_avatar_directory
-from main.models import Badge
 from pilkit.processors import ResizeToFill, ResizeToFit
 from imagekit.models import ProcessedImageField
+
 
 
 
@@ -32,6 +31,10 @@ class User(AbstractUser):
 
     def get_full_name(self):
         return  str(self.first_name) + " " + str(self.last_name)
+
+    def get_online(self):
+        return self.last_activity + timedelta(minutes=1)
+
 
     def __str__(self):
         return self.get_full_name()
