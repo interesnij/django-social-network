@@ -1,7 +1,5 @@
 import uuid
 from django.contrib.contenttypes.fields import GenericRelation
-from django.contrib.contenttypes.models import ContentType
-from django.contrib.contenttypes.fields import GenericForeignKey
 from django.db import models
 from django.utils import timezone
 from pilkit.processors import ResizeToFit
@@ -15,7 +13,6 @@ from notifications.models.notification import Notification, notification_handler
 from main.models import LikeDislike
 
 
-
 class Post(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, db_index=True,verbose_name="uuid")
     created = models.DateTimeField(default=timezone.now, verbose_name="Создан")
@@ -27,8 +24,6 @@ class Post(models.Model):
     is_deleted = models.BooleanField(default=False,verbose_name="Удалено")
     views=models.IntegerField(default=0,verbose_name="Просмотры")
     votes = GenericRelation(LikeDislike, related_query_name='posts')
-    comments = GenericRelation("postcomment")
-    reposts = GenericRelation("postrepost")
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
@@ -79,13 +74,17 @@ class PostComment(models.Model):
     text = models.TextField(blank=True,null=True)
     is_edited = models.BooleanField(default=False, null=False, blank=False,verbose_name="Изменено")
     is_deleted = models.BooleanField(default=False,verbose_name="Удаено")
-    votes = GenericRelation(LikeDislike, related_query_name='comments')
-    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
-    object_id = models.PositiveIntegerField()
-    content_object = GenericForeignKey("content_type", "object_id")
+    votes = GenericRelation(LikeDislike, related_query_name='post_comments_vote')
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post_comments')
 
     def count_replies(self):
         return self.replies.count()
+
+    @classmethod
+    def count_comments_for_post_with_id(cls, post_id):
+        count_query = Q(post_id=post_id, parent_comment__isnull=True, is_deleted=False)
+
+        return cls.objects.filter(count_query).count()
 
     def update_comment(self, text):
         self.text = text
@@ -99,6 +98,15 @@ class PostComment(models.Model):
         self.modified = timezone.now()
         return super(PostComment, self).save(*args, **kwargs)
 
+    def soft_delete(self):
+        self.is_deleted = True
+        self.delete_notifications()
+        self.save()
+
+    def unsoft_delete(self):
+        self.is_deleted = False
+        self.save()
+
     def __str__(self):
         return "{0}/{1}".format(self.commenter.get_full_name(), self.text[:10])
 
@@ -107,26 +115,24 @@ class PostRepost(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     content = models.TextField(blank=True)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
-    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
-    object_id = models.PositiveIntegerField()
-    content_object = GenericForeignKey("content_type", "object_id")
-
-    def get_object_for_content_type(self):
-        ct = self.content_type
-        model = ct.model_class()
-        pk = self.object_id
-        object = model.objects.get(pk=pk)
-        return object
 
 
 class PostMute(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='mutes',verbose_name="Пост")
     muter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='post_mutes',verbose_name="Кто заглушил")
 
+    @classmethod
+    def create_post_mute(cls, post_id, muter_id):
+        return cls.objects.create(post_id=post_id, muter_id=muter_id)
+
 
 class PostCommentMute(models.Model):
     post_comment = models.ForeignKey(PostComment, on_delete=models.CASCADE, related_name='mutes',verbose_name="Пост")
     muter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='post_comment_mutes',verbose_name="Кто заглушил")
+
+    @classmethod
+    def create_post_comment_mute(cls, post_comment_id, muter_id):
+        return cls.objects.create(post_comment_id=post_comment_id, muter_id=muter_id)
 
 
 class PostUserMention(models.Model):

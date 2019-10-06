@@ -1,7 +1,5 @@
 import uuid
 from django.contrib.contenttypes.fields import GenericRelation
-from django.contrib.contenttypes.models import ContentType
-from django.contrib.contenttypes.fields import GenericForeignKey
 from django.db import models
 from django.utils import timezone
 from pilkit.processors import ResizeToFit
@@ -50,8 +48,6 @@ class Article(models.Model):
     is_deleted = models.BooleanField(default=False,verbose_name="Удалено")
     views=models.IntegerField(default=0,verbose_name="Просмотры")
     votes = GenericRelation(LikeDislike, related_query_name='posts')
-    comments = GenericRelation("articlecomment")
-    reposts = GenericRelation("articlerepost")
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
@@ -102,10 +98,8 @@ class ArticleComment(models.Model):
     text = models.TextField(blank=True,null=True)
     is_edited = models.BooleanField(default=False, null=False, blank=False,verbose_name="Изменено")
     is_deleted = models.BooleanField(default=False,verbose_name="Удаено")
-    votes = GenericRelation(LikeDislike, related_query_name='article_comments')
-    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
-    object_id = models.PositiveIntegerField()
-    content_object = GenericForeignKey("content_type", "object_id")
+    votes = GenericRelation(LikeDislike, related_query_name='article_comments_vote')
+    article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='article_comments')
 
     def count_replies(self):
         return self.replies.count()
@@ -113,6 +107,15 @@ class ArticleComment(models.Model):
     def update_comment(self, text):
         self.text = text
         self.is_edited = True
+        self.save()
+
+    def soft_delete(self):
+        self.is_deleted = True
+        self.delete_notifications()
+        self.save()
+
+    def unsoft_delete(self):
+        self.is_deleted = False
         self.save()
 
     def save(self, *args, **kwargs):
@@ -130,33 +133,31 @@ class ArticleRepost(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     content = models.TextField(blank=True)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
-    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
-    object_id = models.PositiveIntegerField()
-    content_object = GenericForeignKey("content_type", "object_id")
-
-    def get_object_for_content_type(self):
-        ct = self.content_type
-        model = ct.model_class()
-        pk = self.object_id
-        object = model.objects.get(pk=pk)
-        return object
 
 
 class ArticleMute(models.Model):
-    post = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='mutes',verbose_name="Пост")
+    article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='mutes',verbose_name="Статья")
     muter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='article_mutes',verbose_name="Кто заглушил")
+
+    @classmethod
+    def create_article_comment_mute(cls, article_comment_id, muter_id):
+        return cls.objects.create(article_comment_id=article_comment_id, muter_id=muter_id)
 
 
 class ArticleCommentMute(models.Model):
-    post_comment = models.ForeignKey(ArticleComment, on_delete=models.CASCADE, related_name='mutes',verbose_name="Пост")
+    article_comment = models.ForeignKey(ArticleComment, on_delete=models.CASCADE, related_name='mutes',verbose_name="Статья")
     muter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='article_comment_mutes',verbose_name="Кто заглушил")
+
+    @classmethod
+    def create_article_comment_mute(cls, article_comment_id, muter_id):
+        return cls.objects.create(article_comment_id=article_comment_id, muter_id=muter_id)
 
 
 class ArticleUserMention(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='article_mentions',verbose_name="Упоминаемый")
-    post = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='user_mentions',verbose_name="Пост")
+    article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='user_mentions',verbose_name="Статья")
 
 
 class ArticleCommentUserMention(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='article_comment_mentions',verbose_name="Упомянутый в комментарии")
-    post_comment = models.ForeignKey(ArticleComment, on_delete=models.CASCADE, related_name='user_mentions',verbose_name="Пост")
+    article_comment = models.ForeignKey(ArticleComment, on_delete=models.CASCADE, related_name='user_mentions',verbose_name="Статья")
