@@ -368,6 +368,86 @@ class ModerationReport(models.Model):
     description = models.CharField(max_length=300,
                                    blank=False, null=True,verbose_name="Описание")
 
+    @classmethod
+    def create_post_moderation_report(cls, reporter_id, post, category_id, description):
+        moderated_object = ModeratedObject.get_or_create_moderated_object_for_post(
+            post=post,
+            category_id=category_id
+        )
+        post_moderation_report = cls.objects.create(reporter_id=reporter_id, category_id=category_id,
+                                                    description=description, moderated_object=moderated_object)
+        return post_moderation_report
+
+    @classmethod
+    def create_post_comment_moderation_report(cls, reporter_id, post_comment, category_id, description):
+        moderated_object = ModeratedObject.get_or_create_moderated_object_for_post_comment(
+            post_comment=post_comment,
+            category_id=category_id
+        )
+        post_comment_moderation_report = cls.objects.create(reporter_id=reporter_id, category_id=category_id,
+                                                            description=description, moderated_object=moderated_object)
+        return post_comment_moderation_report
+
+    @classmethod
+    def create_article_moderation_report(cls, reporter_id, article, category_id, description):
+        moderated_object = ModeratedObject.get_or_create_moderated_object_for_article(
+            article=article,
+            category_id=category_id
+        )
+        article_moderation_report = cls.objects.create(reporter_id=reporter_id, category_id=category_id,
+                                                    description=description, moderated_object=moderated_object)
+        return article_moderation_report
+
+    @classmethod
+    def create_article_comment_moderation_report(cls, reporter_id, article_comment, category_id, description):
+        moderated_object = ModeratedObject.get_or_create_moderated_object_for_article_comment(
+            article_comment=article_comment,
+            category_id=category_id
+        )
+        article_comment_moderation_report = cls.objects.create(reporter_id=reporter_id, category_id=category_id,
+                                                            description=description, moderated_object=moderated_object)
+        return article_comment_moderation_report
+
+    @classmethod
+    def create_good_moderation_report(cls, reporter_id, good, category_id, description):
+        moderated_object = ModeratedObject.get_or_create_moderated_object_for_good(
+            good=good,
+            category_id=category_id
+        )
+        good_moderation_report = cls.objects.create(reporter_id=reporter_id, category_id=category_id,
+                                                    description=description, moderated_object=moderated_object)
+        return good_moderation_report
+
+    @classmethod
+    def create_good_comment_moderation_report(cls, reporter_id, good_comment, category_id, description):
+        moderated_object = ModeratedObject.get_or_create_moderated_object_for_good_comment(
+            good_comment=good_comment,
+            category_id=category_id
+        )
+        good_comment_moderation_report = cls.objects.create(reporter_id=reporter_id, category_id=category_id,
+                                                            description=description, moderated_object=moderated_object)
+        return good_comment_moderation_report
+
+    @classmethod
+    def create_user_moderation_report(cls, reporter_id, user, category_id, description):
+        moderated_object = ModeratedObject.get_or_create_moderated_object_for_user(
+            user=user,
+            category_id=category_id
+        )
+        user_moderation_report = cls.objects.create(reporter_id=reporter_id, category_id=category_id,
+                                                    description=description, moderated_object=moderated_object)
+        return user_moderation_report
+
+    @classmethod
+    def create_community_moderation_report(cls, reporter_id, community, category_id, description):
+        moderated_object = ModeratedObject.get_or_create_moderated_object_for_community(
+            community=community,
+            category_id=category_id
+        )
+        community_moderation_report = cls.objects.create(reporter_id=reporter_id, category_id=category_id,
+                                                         description=description, moderated_object=moderated_object)
+        return community_moderation_report
+
 
 class ModerationPenalty(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='moderation_penalties',verbose_name="Оштрафованный пользователь")
@@ -375,12 +455,15 @@ class ModerationPenalty(models.Model):
     moderated_object = models.ForeignKey(ModeratedObject, on_delete=models.CASCADE, related_name='user_penalties',verbose_name="Объект")
 
     TYPE_SUSPENSION = 'S'
-
     TYPES = (
         (TYPE_SUSPENSION, 'Приостановлено'),
     )
-
     type = models.CharField(max_length=5, choices=TYPES,verbose_name="Тип")
+
+    @classmethod
+    def create_suspension_moderation_penalty(cls, user_id, moderated_object, expiration):
+        return cls.objects.create(moderated_object=moderated_object, user_id=user_id, type=cls.TYPE_SUSPENSION,
+                                  expiration=expiration)
 
 
 class ModeratedObjectLog(models.Model):
@@ -406,11 +489,31 @@ class ModeratedObjectLog(models.Model):
     moderated_object = models.ForeignKey(ModeratedObject, on_delete=models.CASCADE, related_name='logs',verbose_name="Объект")
     created = models.DateTimeField(default=timezone.now, editable=False, db_index=True,verbose_name="Создан")
 
+    @classmethod
+    def create_moderated_object_log(cls, moderated_object_id, log_type, content_object, actor_id):
+        return cls.objects.create(log_type=log_type, content_object=content_object,
+                                  moderated_object_id=moderated_object_id,
+                                  actor_id=actor_id)
+
+    def save(self, *args, **kwargs):
+        if not self.id and not self.created:
+            self.created = timezone.now()
+        return super(ModeratedObjectLog, self).save(*args, **kwargs)
+
 
 class ModeratedObjectCategoryChangedLog(models.Model):
     log = GenericRelation(ModeratedObjectLog)
     changed_from = models.ForeignKey(ModerationCategory, on_delete=models.CASCADE, related_name='+',verbose_name="От")
     changed_to = models.ForeignKey(ModerationCategory, on_delete=models.CASCADE, related_name='+',verbose_name="До")
+
+    @classmethod
+    def create_moderated_object_category_changed_log(cls, moderated_object_id, changed_from_id, changed_to_id,
+                                                     actor_id):
+        moderated_object_category_changed_log = cls.objects.create(changed_from_id=changed_from_id,
+                                                                   changed_to_id=changed_to_id)
+        ModeratedObjectLog.create_moderated_object_log(log_type=ModeratedObjectLog.LOG_TYPE_CATEGORY_CHANGED,
+                                                       content_object=moderated_object_category_changed_log,
+                                                       moderated_object_id=moderated_object_id, actor_id=actor_id)
 
 
 
@@ -437,8 +540,24 @@ class ModeratedObjectStatusChangedLog(models.Model):
                                     blank=False, null=False, max_length=5,verbose_name="От")
     changed_to = models.CharField(blank=False, null=False, max_length=5,verbose_name="До")
 
+    @classmethod
+    def create_moderated_object_status_changed_log(cls, moderated_object_id, changed_from, changed_to, actor_id):
+        moderated_object_description_changed_log = cls.objects.create(changed_from=changed_from,
+                                                                      changed_to=changed_to)
+        ModeratedObjectLog.create_moderated_object_log(log_type=ModeratedObjectLog.LOG_TYPE_STATUS_CHANGED,
+                                                       content_object=moderated_object_description_changed_log,
+                                                       moderated_object_id=moderated_object_id, actor_id=actor_id)
+
 
 class ModeratedObjectVerifiedChangedLog(models.Model):
     log = GenericRelation(ModeratedObjectLog)
     changed_from = models.BooleanField(blank=False, null=False,verbose_name="От")
     changed_to = models.BooleanField(blank=False, null=False,verbose_name="До")
+
+    @classmethod
+    def create_moderated_object_verified_changed_log(cls, moderated_object_id, changed_from, changed_to, actor_id):
+        moderated_object_description_changed_log = cls.objects.create(changed_from=changed_from,
+                                                                      changed_to=changed_to)
+        ModeratedObjectLog.create_moderated_object_log(log_type=ModeratedObjectLog.LOG_TYPE_VERIFIED_CHANGED,
+                                                       content_object=moderated_object_description_changed_log,
+                                                       moderated_object_id=moderated_object_id, actor_id=actor_id)
