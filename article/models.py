@@ -133,6 +133,7 @@ class ArticleRepost(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     content = models.TextField(blank=True)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
+    article = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='article_repost')
 
 
 class ArticleMute(models.Model):

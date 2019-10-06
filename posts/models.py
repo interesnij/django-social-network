@@ -115,6 +115,7 @@ class PostRepost(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     content = models.TextField(blank=True)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post_repost')
 
 
 class PostMute(models.Model):
