@@ -8,11 +8,12 @@ from django.conf import settings
 from users.helpers import upload_to_user_cover_directory, upload_to_user_avatar_directory
 from pilkit.processors import ResizeToFill, ResizeToFit
 from imagekit.models import ProcessedImageField
-
+from django.contrib.contenttypes.fields import GenericRelation
 
 
 
 class User(AbstractUser):
+    moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='users')
     is_email_verified = models.BooleanField(default=False)
     are_guidelines_accepted = models.BooleanField(default=False)
     is_deleted = models.BooleanField(
@@ -49,6 +50,15 @@ class UserBlock(models.Model):
     blocked_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blocked_by_users')
     blocker = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_blocks')
 
+    @classmethod
+    def create_user_block(cls, blocker_id, blocked_user_id):
+        return cls.objects.create(blocker_id=blocker_id, blocked_user_id=blocked_user_id)
+
+    @classmethod
+    def users_are_blocked(cls, user_a_id, user_b_id):
+        return cls.objects.filter(Q(blocked_user_id=user_a_id, blocker_id=user_b_id) | Q(blocked_user_id=user_b_id,
+                                                                                         blocker_id=user_a_id)).exists()
+
 
 class UserNotificationsSettings(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,
@@ -61,6 +71,45 @@ class UserNotificationsSettings(models.Model):
     community_invite_notifications = models.BooleanField(default=True,verbose_name="Отправлять уведомления о приглашениях в сообщества")
     post_comment_user_mention_notifications = models.BooleanField(default=True,verbose_name="Отправлять уведомления об упоминаниях в комментариях к постам")
     post_user_mention_notifications = models.BooleanField(default=True,verbose_name="Отправлять уведомления об упоминаниях в постам")
+
+    @classmethod
+    def create_notifications_settings(cls, user):
+        return UserNotificationsSettings.objects.create(user=user)
+
+    def update(self, post_comment_notifications=None,
+               post_comment_reply_notifications=None,
+               follow_notifications=None,
+               connection_request_notifications=None,
+               connection_confirmed_notifications=None,
+               community_invite_notifications=None,
+               post_comment_user_mention_notifications=None,
+               post_user_mention_notifications=None, ):
+
+        if post_comment_notifications is not None:
+            self.post_comment_notifications = post_comment_notifications
+
+        if post_comment_user_mention_notifications is not None:
+            self.post_comment_user_mention_notifications = post_comment_user_mention_notifications
+
+        if post_user_mention_notifications is not None:
+            self.post_user_mention_notifications = post_user_mention_notifications
+
+        if post_comment_reply_notifications is not None:
+            self.post_comment_reply_notifications = post_comment_reply_notifications
+
+        if follow_notifications is not None:
+            self.follow_notifications = follow_notifications
+
+        if connection_request_notifications is not None:
+            self.connection_request_notifications = connection_request_notifications
+
+        if connection_confirmed_notifications is not None:
+            self.connection_confirmed_notifications = connection_confirmed_notifications
+
+        if community_invite_notifications is not None:
+            self.community_invite_notifications = community_invite_notifications
+
+        self.save()
 
 
 class UserProfile(models.Model):
@@ -82,3 +131,15 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.user.last_name
+
+
+@receiver(post_save, sender=settings.AUTH_USER_MODEL, dispatch_uid='bootstrap_notifications_settings')
+def create_user_notifications_settings(sender, instance=None, created=False, **kwargs):
+    """"
+    Create a user notifications settings for users
+    """
+    if created:
+        bootstrap_user_notifications_settings(instance)
+
+def bootstrap_user_notifications_settings(user):
+    return UserNotificationsSettings.create_notifications_settings(user=user)

@@ -31,7 +31,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.vk',
     'rest_auth',
     'django_extensions',
-    'categories',
+    'goods',
     'users',
     'communities',
     'posts',
