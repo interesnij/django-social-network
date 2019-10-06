@@ -39,32 +39,32 @@ class GoodSubCategory(models.Model):
 
 class Good(models.Model):
 
-    class Meta:
-        verbose_name="Товар"
-        verbose_name_plural="Товары"
+	class Meta:
+		verbose_name="Товар"
+		verbose_name_plural="Товары"
 
-    moderated_object = GenericRelation(ModeratedObject, related_query_name='goods')
-    uuid = models.UUIDField(default=uuid.uuid4, db_index=True,verbose_name="uuid")
-    title = models.CharField(max_length=200, verbose_name="Название")
-    description = models.TextField(max_length=1000, verbose_name="Описание товара")
+	moderated_object = GenericRelation(ModeratedObject, related_query_name='goods')
+	uuid = models.UUIDField(default=uuid.uuid4, db_index=True,verbose_name="uuid")
+	title = models.CharField(max_length=200, verbose_name="Название")
+	description = models.TextField(max_length=1000, verbose_name="Описание товара")
 	community = models.ForeignKey('communities.Community', on_delete=models.CASCADE, related_name='good',null=True,blank=True,verbose_name="Сообщество")
-    price = models.PositiveIntegerField(default=0, verbose_name="Цена товара")
-    creator = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Создатель")
-    sub_category = models.ForeignKey(GoodSubCategory, on_delete=models.CASCADE, verbose_name="Подкатегория")
-    img0 = models.ImageField(upload_to="goods/%Y/%m/%d", blank=True)
-    img1 = models.ImageField(upload_to="goods/%Y/%m/%d", blank=True)
-    img2 = models.ImageField(upload_to="goods/%Y/%m/%d", blank=True)
-    img3 = models.ImageField(upload_to="goods/%Y/%m/%d", blank=True)
-    img4 = models.ImageField(upload_to="goods/%Y/%m/%d", blank=True)
-    img5 = models.ImageField(upload_to="goods/%Y/%m/%d", blank=True)
-    img6 = models.ImageField(upload_to="goods/%Y/%m/%d", blank=True)
-    img7 = models.ImageField(upload_to="goods/%Y/%m/%d", blank=True)
-    views=models.IntegerField(default=0,verbose_name="Просмотры")
-    votes = GenericRelation(LikeDislike, related_query_name='good')
-    is_active=models.BooleanField(default=False, verbose_name='Товар активен')
-    is_sold=models.BooleanField(default=False, verbose_name='Товар не актуален')
-    created=models.DateTimeField(default=timezone.now,db_index=True,verbose_name="Опубликованo")
-    is_reklama=models.BooleanField(default=False, verbose_name='Это реклама')
+	price = models.PositiveIntegerField(default=0, verbose_name="Цена товара")
+	creator = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Создатель")
+	sub_category = models.ForeignKey(GoodSubCategory, on_delete=models.CASCADE, verbose_name="Подкатегория")
+	img0 = models.ImageField(upload_to="goods/%Y/%m/%d", blank=True)
+	img1 = models.ImageField(upload_to="goods/%Y/%m/%d", blank=True)
+	img2 = models.ImageField(upload_to="goods/%Y/%m/%d", blank=True)
+	img3 = models.ImageField(upload_to="goods/%Y/%m/%d", blank=True)
+	img4 = models.ImageField(upload_to="goods/%Y/%m/%d", blank=True)
+	img5 = models.ImageField(upload_to="goods/%Y/%m/%d", blank=True)
+	img6 = models.ImageField(upload_to="goods/%Y/%m/%d", blank=True)
+	img7 = models.ImageField(upload_to="goods/%Y/%m/%d", blank=True)
+	views=models.IntegerField(default=0,verbose_name="Просмотры")
+	votes = GenericRelation(LikeDislike, related_query_name='vote_good')
+	is_active=models.BooleanField(default=False, verbose_name='Товар активен')
+	is_sold=models.BooleanField(default=False, verbose_name='Товар не актуален')
+	created=models.DateTimeField(default=timezone.now,db_index=True,verbose_name="Опубликованo")
+	is_reklama=models.BooleanField(default=False, verbose_name='Это реклама')
 
     def __str__(self):
         return self.title
