@@ -66,25 +66,20 @@ class Good(models.Model):
 	created=models.DateTimeField(default=timezone.now,db_index=True,verbose_name="Опубликованo")
 	is_reklama=models.BooleanField(default=False, verbose_name='Это реклама')
 
-    def __str__(self):
-        return self.title
+	def __str__(self):
+		return self.title
 
-    def notification_like(self, user):
-        notification_handler(user, self.creator,Notification.LIKED, action_object=self,id_value=str(self.uuid),key='social_update')
+	def notification_like(self, user):
+		notification_handler(user, self.creator,Notification.LIKED, action_object=self,id_value=str(self.uuid),key='social_update')
 
-    def notification_dislike(self, user):
-        notification_handler(user, self.creator,Notification.DISLIKED, action_object=self,id_value=str(self.uuid),key='social_update')
+	def notification_dislike(self, user):
+		notification_handler(user, self.creator,Notification.DISLIKED, action_object=self,id_value=str(self.uuid),key='social_update')
 
-    def notification_comment(self, user):
-        notification_handler(user, self.creator,Notification.POST_COMMENT, action_object=self,id_value=str(self.uuid),key='notification')
+	def notification_comment(self, user):
+		notification_handler(user, self.creator,Notification.POST_COMMENT, action_object=self,id_value=str(self.uuid),key='notification')
 
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
-        channel_layer = get_channel_layer()
-        payload = {
-                "type": "receive",
-                "key": "additional_good",
-                "actor_name": self.creator.get_full_name()
-
-            }
-        async_to_sync(channel_layer.group_send)('notifications', payload)
+	def save(self, *args, **kwargs):
+		super().save(*args, **kwargs)
+		channel_layer = get_channel_layer()
+		payload = {"type": "receive","key": "additional_good","actor_name": self.creator.get_full_name()}
+		async_to_sync(channel_layer.group_send)('notifications', payload)
