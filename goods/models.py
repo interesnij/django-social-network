@@ -5,7 +5,6 @@ from django.contrib.contenttypes.fields import GenericRelation
 from goods.helpers import upload_to_good_image_directory
 from main.models import LikeDislike
 from pilkit.processors import ResizeToFill, ResizeToFit
-from moderation.models import ModeratedObject
 from imagekit.models import ProcessedImageField
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
