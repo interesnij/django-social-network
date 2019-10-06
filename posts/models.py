@@ -11,6 +11,7 @@ from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 from notifications.models.notification import Notification, notification_handler
 from main.models import LikeDislike
+from posts.helpers import upload_to_post_image_directory
 
 
 class Post(models.Model):
@@ -166,34 +167,34 @@ class PostImage(models.Model):
     post = models.OneToOneField(Post, on_delete=models.CASCADE, related_name='image', null=True)
     image = ProcessedImageField(verbose_name='Главное изображение', blank=False, null=True, format='JPEG',
                                  options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)],
-                                 upload_to=upload_to_user_avatar_directory)
+                                 upload_to=upload_to_post_image_directory)
     image2 = ProcessedImageField(verbose_name='Изображение 2', blank=False, null=True, format='JPEG',
                                  options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)],
-                                 upload_to=upload_to_user_avatar_directory)
+                                 upload_to=upload_to_post_image_directory)
     image3 = ProcessedImageField(verbose_name='Изображение 3', blank=False, null=True, format='JPEG',
                                  options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)],
-                                 upload_to=upload_to_user_avatar_directory)
+                                 upload_to=upload_to_post_image_directory)
     image4 = ProcessedImageField(verbose_name='Изображение 4', blank=False, null=True, format='JPEG',
                                  options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)],
-                                 upload_to=upload_to_user_avatar_directory)
+                                 upload_to=upload_to_post_image_directory)
     image5 = ProcessedImageField(verbose_name='Изображение 5', blank=False, null=True, format='JPEG',
                                  options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)],
-                                 upload_to=upload_to_user_avatar_directory)
+                                 upload_to=upload_to_post_image_directory)
     image6 = ProcessedImageField(verbose_name='Изображение 6', blank=False, null=True, format='JPEG',
                                  options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)],
-                                 upload_to=upload_to_user_avatar_directory)
+                                 upload_to=upload_to_post_image_directory)
     image7 = ProcessedImageField(verbose_name='Изображение 7', blank=False, null=True, format='JPEG',
                                  options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)],
-                                 upload_to=upload_to_user_avatar_directory)
+                                 upload_to=upload_to_post_image_directory)
     image8 = ProcessedImageField(verbose_name='Изображение 8', blank=False, null=True, format='JPEG',
                                  options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)],
-                                 upload_to=upload_to_user_avatar_directory)
+                                 upload_to=upload_to_post_image_directory)
     image9 = ProcessedImageField(verbose_name='Изображение 9', blank=False, null=True, format='JPEG',
                                  options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)],
-                                 upload_to=upload_to_user_avatar_directory)
+                                 upload_to=upload_to_post_image_directory)
     image10 = ProcessedImageField(verbose_name='Изображение 10', blank=False, null=True, format='JPEG',
                                  options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)],
-                                 upload_to=upload_to_user_avatar_directory)
+                                 upload_to=upload_to_post_image_directory)
 
     @classmethod
     def create_post_image(cls, image, post_id):
