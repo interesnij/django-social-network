@@ -7,7 +7,6 @@ from users.models import User
 from posts.models import Post, PostComment
 from article.models import Article, ArticleComment
 from goods.models import Good, GoodComment
-from communities.models import Community
 
 
 
