@@ -2,7 +2,7 @@ import uuid
 from django.contrib.contenttypes.fields import GenericRelation
 from django.db import models
 from django.utils import timezone
-from pilkit.processors import ResizeToFit
+from pilkit.processors import ResizeToFill, ResizeToFit
 from moderation.models import ModeratedObject
 from ckeditor_uploader.fields import RichTextUploadingField
 from django.conf import settings
