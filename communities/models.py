@@ -497,9 +497,9 @@ class Community(models.Model):
 
 class CommunityCategory(models.Model):
     creator = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='created_categories', null=True, verbose_name="Создатель")
-    name = models.CharField(max_length=settings.CATEGORY_NAME_MAX_LENGTH, blank=False, null=False, unique=True, verbose_name="Имя")
-    title = models.CharField(max_length=settings.CATEGORY_TITLE_MAX_LENGTH, blank=False, null=False, verbose_name="Название")
-    description = models.CharField(max_length=settings.CATEGORY_DESCRIPTION_MAX_LENGTH, blank=False,null=True, verbose_name="Описание")
+    name = models.CharField(max_length=settings.COMMUNITY_CATEGORY_NAME_MAX_LENGTH, blank=False, null=False, unique=True, verbose_name="Имя")
+    title = models.CharField(max_length=settings.COMMUNITY_CATEGORY_TITLE_MAX_LENGTH, blank=False, null=False, verbose_name="Название")
+    description = models.CharField(max_length=settings.COMMUNITY_CATEGORY_DESCRIPTION_MAX_LENGTH, blank=False,null=True, verbose_name="Описание")
     created = models.DateTimeField(editable=False, verbose_name="Когда создана")
     communities = models.ManyToManyField(Community, related_name='categories', blank=True, verbose_name="Сообщество")
     avatar = models.ImageField(blank=False, null=True, verbose_name="Аватар")
