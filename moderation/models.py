@@ -4,6 +4,10 @@ from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.utils import timezone
 from users.models import User
+from posts.models import Post, PostComment
+from article.models import Article, ArticleComment
+from goods.models import Good, GoodComment
+from communities.models import Community
 
 
 
@@ -12,7 +16,7 @@ class ModerationCategory(models.Model):
     title = models.CharField(max_length=64, blank=False, null=False,verbose_name="Заголовок")
     description = models.CharField(max_length=255, blank=False, null=False,verbose_name="Описание")
     created = models.DateTimeField(default=timezone.now, editable=False, db_index=True,verbose_name="Создано")
-    order = models.PositiveSmallIntegerField(editable=False,verbose_name="Порядковый номер")
+    order = models.PositiveIntegerField(editable=False,verbose_name="Порядковый номер")
 
     SEVERITY_CRITICAL = 'C'
     SEVERITY_HIGH = 'H'
@@ -25,7 +29,12 @@ class ModerationCategory(models.Model):
         (SEVERITY_LOW, 'Низкий'),
     )
 
-    severity = models.CharField(max_length=5, choices=SEVERITIES,verbose_name="Строгость"),
+    severity = models.CharField(max_length=5, choices=SEVERITIES,verbose_name="Строгость")
+
+    def save(self, *args, **kwargs):
+        if not self.id and not self.created:
+            self.created = timezone.now()
+        return super(ModerationCategory, self).save(*args, **kwargs)
 
 
 class ModeratedObject(models.Model):
@@ -53,11 +62,19 @@ class ModeratedObject(models.Model):
     OBJECT_TYPE_POST_COMMENT = 'PC'
     OBJECT_TYPE_COMMUNITY = 'C'
     OBJECT_TYPE_USER = 'U'
+    OBJECT_TYPE_ARTICLE = 'A'
+    OBJECT_TYPE_ARTICLE_COMMENT = 'AC'
+    OBJECT_TYPE_GOOD = 'G'
+    OBJECT_TYPE_GOOD_COMMENT = 'GC'
     OBJECT_TYPES = (
-        (OBJECT_TYPE_POST, 'Пост'),
-        (OBJECT_TYPE_POST_COMMENT, 'Комментарий к посту'),
-        (OBJECT_TYPE_COMMUNITY, 'Общество'),
+        (OBJECT_TYPE_POST, 'Запись'),
+        (OBJECT_TYPE_POST_COMMENT, 'Комментарий к запись'),
+        (OBJECT_TYPE_COMMUNITY, 'Сообщество'),
         (OBJECT_TYPE_USER, 'Пользователь'),
+        (OBJECT_TYPE_ARTICLE, 'Статья'),
+        (OBJECT_TYPE_ARTICLE_COMMENT, 'Комментарий к статье'),
+        (OBJECT_TYPE_GOOD, 'Товар'),
+        (OBJECT_TYPE_GOOD_COMMENT, 'Комментарий к товару'),
     )
 
     object_type = models.CharField(max_length=5, choices=OBJECT_TYPES,verbose_name="Тип модерируемого объекта")
@@ -65,6 +82,284 @@ class ModeratedObject(models.Model):
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey()
+
+    @classmethod
+    def create_moderated_object(cls, object_type, content_object, category_id, community_id=None):
+        """"
+        Универсальный метод создания объекта модерации
+        """
+        return cls.objects.create(object_type=object_type, content_object=content_object, category_id=category_id,
+                                  community_id=community_id)
+
+    @classmethod
+    def _get_or_create_moderated_object(cls, object_type, content_object, category_id, community_id=None):
+        """"
+        Универсальный метод получает объект модерации, если его нет-создает
+        """
+        try:
+            moderated_object = cls.objects.get(object_type=object_type, object_id=content_object.pk,
+                                               community_id=community_id)
+        except cls.DoesNotExist:
+            moderated_object = cls.create_moderated_object(object_type=object_type,
+                                                           content_object=content_object, category_id=category_id,
+                                                           community_id=community_id)
+
+        return moderated_object
+
+    @classmethod
+    def get_or_create_moderated_object_for_post(cls, post, category_id):
+        """"
+        Создание или получение объекта модерации к записи
+        """
+        community_id = None
+
+        if post.community:
+            community_id = post.community.pk
+
+        return cls._get_or_create_moderated_object(object_type=cls.OBJECT_TYPE_POST, content_object=post,
+                                                   category_id=category_id, community_id=community_id)
+
+    @classmethod
+    def get_or_create_moderated_object_for_post_comment(cls, post_comment, category_id):
+        """"
+        Создание или получение объекта модерации к комментарию записи
+        """
+        community_id = None
+
+        if post_comment.post.community:
+            community_id = post_comment.post.community.pk
+
+        return cls._get_or_create_moderated_object(object_type=cls.OBJECT_TYPE_POST_COMMENT,
+                                                   content_object=post_comment,
+                                                   category_id=category_id,
+                                                   community_id=community_id)
+
+    @classmethod
+    def get_or_create_moderated_object_for_article(cls, article, category_id):
+        """"
+        Создание или получение объекта модерации к статье
+        """
+        community_id = None
+
+        if article.community:
+            community_id = article.community.pk
+
+        return cls._get_or_create_moderated_object(object_type=cls.OBJECT_TYPE_ARTICLE, content_object=article,
+                                                   category_id=category_id, community_id=community_id)
+
+    @classmethod
+    def get_or_create_moderated_object_for_article_comment(cls, article_comment, category_id):
+        """"
+        Создание или получение объекта модерации к комментрию статьи
+        """
+        community_id = None
+
+        if article_comment.post.community:
+            community_id = article_comment.article.community.pk
+
+        return cls._get_or_create_moderated_object(object_type=cls.OBJECT_TYPE_ARTICLE_COMMENT,
+                                                   content_object=article_comment,
+                                                   category_id=category_id,
+                                                   community_id=community_id)
+
+    @classmethod
+    def get_or_create_moderated_object_for_good(cls, good, category_id):
+        """"
+        Создание или получение объекта модерации к товару
+        """
+        community_id = None
+
+        if good.community:
+            community_id = good.community.pk
+
+        return cls._get_or_create_moderated_object(object_type=cls.OBJECT_TYPE_GOOD, content_object=good,
+                                                   category_id=category_id, community_id=community_id)
+
+    @classmethod
+    def get_or_create_moderated_object_for_good_comment(cls, good_comment, category_id):
+        """"
+        Создание или получение объекта модерации к комментрию товара
+        """
+        community_id = None
+
+        if good_comment.good.community:
+            community_id = good_comment.good.community.pk
+
+        return cls._get_or_create_moderated_object(object_type=cls.OBJECT_TYPE_GOOD_COMMENT,
+                                                   content_object=good_comment,
+                                                   category_id=category_id,
+                                                   community_id=community_id)
+
+    @classmethod
+    def get_or_create_moderated_object_for_community(cls, community, category_id):
+        """"
+        Создание или получение объекта модерации к сообществу
+        """
+        return cls._get_or_create_moderated_object(object_type=cls.OBJECT_TYPE_COMMUNITY, content_object=community,
+                                                   category_id=category_id)
+
+    @classmethod
+    def get_or_create_moderated_object_for_user(cls, user, category_id):
+        """"
+        Создание или получение объекта модерации к пользователю
+        """
+        return cls._get_or_create_moderated_object(object_type=cls.OBJECT_TYPE_USER, content_object=user,
+                                                   category_id=category_id)
+
+    @property
+    def reports_count(self):
+        return self.reports.count()
+
+    def is_verified(self):
+        return self.verified
+
+    def is_approved(self):
+        return self.status == ModeratedObject.STATUS_APPROVED
+
+    def is_pending(self):
+        return self.status == ModeratedObject.STATUS_PENDING
+
+    def update_with_actor_with_id(self, actor_id, description, category_id):
+        if description is not None:
+            current_description = self.description
+            self.description = description
+            ModeratedObjectDescriptionChangedLog.create_moderated_object_description_changed_log(
+                changed_from=current_description, changed_to=description, moderated_object_id=self.pk,
+                actor_id=actor_id)
+
+        if category_id is not None:
+            current_category_id = self.category_id
+            self.category_id = category_id
+            ModeratedObjectCategoryChangedLog.create_moderated_object_category_changed_log(
+                changed_from_id=current_category_id, changed_to_id=category_id, moderated_object_id=self.pk,
+                actor_id=actor_id)
+
+        self.save()
+
+    def verify_with_actor_with_id(self, actor_id):
+        current_verified = self.verified
+        self.verified = True
+        ModeratedObjectVerifiedChangedLog.create_moderated_object_verified_changed_log(
+            changed_from=current_verified, changed_to=self.verified, moderated_object_id=self.pk, actor_id=actor_id)
+
+        content_object = self.content_object
+        moderation_severity = self.category.severity
+        penalty_targets = None
+
+        if self.is_approved():
+            if isinstance(content_object, User):
+                penalty_targets = [content_object]
+            elif isinstance(content_object, Post):
+                penalty_targets = [content_object.creator]
+            elif isinstance(content_object, PostComment):
+                penalty_targets = [content_object.commenter]
+            elif isinstance(content_object, Article):
+                penalty_targets = [content_object.creator]
+            elif isinstance(content_object, ArticleComment):
+                penalty_targets = [content_object.commenter]
+            elif isinstance(content_object, Good):
+                penalty_targets = [content_object.creator]
+            elif isinstance(content_object, GoodComment):
+                penalty_targets = [content_object.commenter]
+            elif isinstance(content_object, Community):
+                penalty_targets = content_object.get_staff_members()
+            elif isinstance(content_object, ModeratedObject):
+                penalty_targets = content_object.get_reporters()
+
+            for penalty_target in penalty_targets:
+                duration_of_penalty = None
+                penalties_count = penalty_target.count_moderation_penalties_for_moderation_severity(
+                    moderation_severity=moderation_severity) + 1
+
+                if moderation_severity == ModerationCategory.SEVERITY_CRITICAL:
+                    duration_of_penalty = timezone.timedelta(weeks=5000)
+                elif moderation_severity == ModerationCategory.SEVERITY_HIGH:
+                    duration_of_penalty = timezone.timedelta(days=penalties_count ** 4)
+                elif moderation_severity == ModerationCategory.SEVERITY_MEDIUM:
+                    duration_of_penalty = timezone.timedelta(hours=penalties_count ** 3)
+                elif moderation_severity == ModerationCategory.SEVERITY_LOW:
+                    duration_of_penalty = timezone.timedelta(minutes=penalties_count ** 2)
+
+                moderation_expiration = timezone.now() + duration_of_penalty
+
+                ModerationPenalty.create_suspension_moderation_penalty(moderated_object=self,
+                                                                       user_id=penalty_target.pk,
+                                                                       expiration=moderation_expiration)
+
+            if (isinstance(content_object, Post) or isinstance(content_object, PostComment) or isinstance(
+                    content_object,
+                    Community)) or (
+                    isinstance(content_object, User) and moderation_severity == ModerationCategory.SEVERITY_CRITICAL):
+                content_object.soft_delete()
+
+                if moderation_severity == ModerationCategory.SEVERITY_CRITICAL and isinstance(content_object, Post):
+                    content_object.delete_media()
+
+            if (isinstance(content_object, Article) or isinstance(content_object, ArticleComment) or isinstance(
+                    content_object,
+                    Community)) or (
+                    isinstance(content_object, User) and moderation_severity == ModerationCategory.SEVERITY_CRITICAL):
+                content_object.soft_delete()
+
+                if moderation_severity == ModerationCategory.SEVERITY_CRITICAL and isinstance(content_object, Article):
+                    content_object.delete_media()
+
+            if (isinstance(content_object, Good) or isinstance(content_object, GoodComment) or isinstance(
+                    content_object,
+                    Community)) or (
+                    isinstance(content_object, User) and moderation_severity == ModerationCategory.SEVERITY_CRITICAL):
+                content_object.soft_delete()
+
+                if moderation_severity == ModerationCategory.SEVERITY_CRITICAL and isinstance(content_object, Good):
+                    content_object.delete_media()
+
+        content_object.save()
+        self.save()
+
+    def unverify_with_actor_with_id(self, actor_id):
+        current_verified = self.verified
+        self.verified = False
+        ModeratedObjectVerifiedChangedLog.create_moderated_object_verified_changed_log(
+            changed_from=current_verified, changed_to=self.verified, moderated_object_id=self.pk, actor_id=actor_id)
+        self.user_penalties.all().delete()
+        content_object = self.content_object
+
+        moderation_severity = self.category.severity
+
+        if (isinstance(content_object, Post) or isinstance(content_object, PostComment) or isinstance(
+                content_object,
+                Community)) or (
+                isinstance(content_object, User) and moderation_severity == ModerationCategory.SEVERITY_CRITICAL):
+            content_object.unsoft_delete()
+        if (isinstance(content_object, Article) or isinstance(content_object, ArticleComment) or isinstance(
+                content_object,
+                Community)) or (
+                isinstance(content_object, User) and moderation_severity == ModerationCategory.SEVERITY_CRITICAL):
+            content_object.unsoft_delete()
+        if (isinstance(content_object, Good) or isinstance(content_object, GoodComment) or isinstance(
+                content_object,
+                Community)) or (
+                isinstance(content_object, User) and moderation_severity == ModerationCategory.SEVERITY_CRITICAL):
+            content_object.unsoft_delete()
+        self.save()
+        content_object.save()
+
+    def approve_with_actor_with_id(self, actor_id):
+        current_status = self.status
+        self.status = ModeratedObject.STATUS_APPROVED
+        ModeratedObjectStatusChangedLog.create_moderated_object_status_changed_log(
+            changed_from=current_status, changed_to=self.status, moderated_object_id=self.pk, actor_id=actor_id)
+        self.save()
+
+    def reject_with_actor_with_id(self, actor_id):
+        current_status = self.status
+        self.status = ModeratedObject.STATUS_REJECTED
+        ModeratedObjectStatusChangedLog.create_moderated_object_status_changed_log(
+            changed_from=current_status, changed_to=self.status, moderated_object_id=self.pk, actor_id=actor_id)
+        self.save()
+
+    def get_reporters(self):
+        return User.objects.filter(moderation_reports__moderated_object_id=self.pk).all()
 
 
 class ModerationReport(models.Model):
@@ -105,8 +400,6 @@ class ModeratedObjectLog(models.Model):
     )
 
     log_type = models.CharField(max_length=5, choices=LOG_TYPES,verbose_name="Тип")
-
-    # Общие типы отношений
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey()
