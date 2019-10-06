@@ -164,46 +164,36 @@ class Post(models.Model):
 
 class PostImage(models.Model):
     post = models.OneToOneField(Post, on_delete=models.CASCADE, related_name='image', null=True)
-    image = ProcessedImageField(verbose_name='Главное изображение', storage=post_image_storage,
-                                upload_to=upload_to_post_image_directory,
-                                blank=False, null=True, format='JPEG', options={'quality': 80},
-                                processors=[ResizeToFit(width=1024, upscale=False)])
-    image2 = ProcessedImageField(verbose_name='Изображение 2', storage=post_image_storage,
-                                upload_to=upload_to_post_image_directory,
-                                blank=False, null=True, format='JPEG', options={'quality': 80},
-                                processors=[ResizeToFit(width=1024, upscale=False)])
-    image3 = ProcessedImageField(verbose_name='Изображение 3', storage=post_image_storage,
-                                upload_to=upload_to_post_image_directory,
-                                blank=False, null=True, format='JPEG', options={'quality': 80},
-                                processors=[ResizeToFit(width=1024, upscale=False)])
-    image4 = ProcessedImageField(verbose_name='Изображение 4', storage=post_image_storage,
-                                upload_to=upload_to_post_image_directory,
-                                blank=False, null=True, format='JPEG', options={'quality': 80},
-                                processors=[ResizeToFit(width=1024, upscale=False)])
-    image5 = ProcessedImageField(verbose_name='Изображение 5', storage=post_image_storage,
-                                upload_to=upload_to_post_image_directory,
-                                blank=False, null=True, format='JPEG', options={'quality': 80},
-                                processors=[ResizeToFit(width=1024, upscale=False)])
-    image6 = ProcessedImageField(verbose_name='Изображение 6', storage=post_image_storage,
-                                upload_to=upload_to_post_image_directory,
-                                blank=False, null=True, format='JPEG', options={'quality': 80},
-                                processors=[ResizeToFit(width=1024, upscale=False)])
-    image7 = ProcessedImageField(verbose_name='Изображение 7', storage=post_image_storage,
-                                upload_to=upload_to_post_image_directory,
-                                blank=False, null=True, format='JPEG', options={'quality': 80},
-                                processors=[ResizeToFit(width=1024, upscale=False)])
-    image8 = ProcessedImageField(verbose_name='Изображение 8', storage=post_image_storage,
-                                upload_to=upload_to_post_image_directory,
-                                blank=False, null=True, format='JPEG', options={'quality': 80},
-                                processors=[ResizeToFit(width=1024, upscale=False)])
-    image9 = ProcessedImageField(verbose_name='Изображение 9', storage=post_image_storage,
-                                upload_to=upload_to_post_image_directory,
-                                blank=False, null=True, format='JPEG', options={'quality': 80},
-                                processors=[ResizeToFit(width=1024, upscale=False)])
-    image10 = ProcessedImageField(verbose_name='Изображение 10', storage=post_image_storage,
-                                upload_to=upload_to_post_image_directory,
-                                blank=False, null=True, format='JPEG', options={'quality': 80},
-                                processors=[ResizeToFit(width=1024, upscale=False)])
+    image = ProcessedImageField(verbose_name='Главное изображение', blank=False, null=True, format='JPEG',
+                                 options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)],
+                                 upload_to=upload_to_user_avatar_directory)
+    image2 = ProcessedImageField(verbose_name='Изображение 2', blank=False, null=True, format='JPEG',
+                                 options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)],
+                                 upload_to=upload_to_user_avatar_directory)
+    image3 = ProcessedImageField(verbose_name='Изображение 3', blank=False, null=True, format='JPEG',
+                                 options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)],
+                                 upload_to=upload_to_user_avatar_directory)
+    image4 = ProcessedImageField(verbose_name='Изображение 4', blank=False, null=True, format='JPEG',
+                                 options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)],
+                                 upload_to=upload_to_user_avatar_directory)
+    image5 = ProcessedImageField(verbose_name='Изображение 5', blank=False, null=True, format='JPEG',
+                                 options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)],
+                                 upload_to=upload_to_user_avatar_directory)
+    image6 = ProcessedImageField(verbose_name='Изображение 6', blank=False, null=True, format='JPEG',
+                                 options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)],
+                                 upload_to=upload_to_user_avatar_directory)
+    image7 = ProcessedImageField(verbose_name='Изображение 7', blank=False, null=True, format='JPEG',
+                                 options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)],
+                                 upload_to=upload_to_user_avatar_directory)
+    image8 = ProcessedImageField(verbose_name='Изображение 8', blank=False, null=True, format='JPEG',
+                                 options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)],
+                                 upload_to=upload_to_user_avatar_directory)
+    image9 = ProcessedImageField(verbose_name='Изображение 9', blank=False, null=True, format='JPEG',
+                                 options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)],
+                                 upload_to=upload_to_user_avatar_directory)
+    image10 = ProcessedImageField(verbose_name='Изображение 10', blank=False, null=True, format='JPEG',
+                                 options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)],
+                                 upload_to=upload_to_user_avatar_directory)
 
     @classmethod
     def create_post_image(cls, image, post_id):
@@ -274,5 +264,10 @@ class PostCommentUserMention(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='post_comment_mentions',verbose_name="Упомянутый в комментарии")
     post_comment = models.ForeignKey(PostComment, on_delete=models.CASCADE, related_name='user_mentions',verbose_name="Запись")
 
+
 class PostDoc(models.Model):
-    doc = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='doc', null=True, verbose_name="Документ")
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post_doc', null=True, verbose_name="Документ")
+    doc = models.FileField(upload_to=user_directory_path, verbose_name="Документ")
+
+    def user_directory_path(instance, filename):
+        return 'user_{0}/{1}'.format(instance.user.id, filename)
