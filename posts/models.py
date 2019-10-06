@@ -14,7 +14,9 @@ from main.models import LikeDislike
 
 
 class Post(models.Model):
+    moderated_object = GenericRelation(ModeratedObject, related_query_name='posts')
     uuid = models.UUIDField(default=uuid.uuid4, db_index=True,verbose_name="uuid")
+    text = models.TextField(_('text'), max_length=settings.POST_MAX_LENGTH, blank=False, null=True, verbose_name="Текст")
     created = models.DateTimeField(default=timezone.now, verbose_name="Создан")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='posts_creator',verbose_name="Создатель")
     comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
@@ -24,17 +26,110 @@ class Post(models.Model):
     is_deleted = models.BooleanField(default=False,verbose_name="Удалено")
     views=models.IntegerField(default=0,verbose_name="Просмотры")
     votes = GenericRelation(LikeDislike, related_query_name='posts')
+    STATUS_DRAFT = 'D'
+    STATUS_PROCESSING = 'PG'
+    STATUS_PUBLISHED = 'P'
+    STATUSES = (
+        (STATUS_DRAFT, 'Черновик'),
+        (STATUS_PROCESSING, 'Обработка'),
+        (STATUS_PUBLISHED, 'Опубликовано'),
+        (STATUS_ARHIVED, 'Архивирован'),
+    )
+    status = models.CharField(blank=False, null=False, choices=STATUSES, default=STATUS_DRAFT, max_length=2, verbose_name="Статус записи")
 
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
-        channel_layer = get_channel_layer()
-        payload = {
-                "type": "receive",
-                "key": "additional_post",
-                "actor_name": self.creator.get_full_name()
+    @classmethod
+    def create_post(cls, creator, community_name=None, image=None, text=None, video=None,
+                    created=None, is_draft=False, good=None, doc=None, question=None):
 
-            }
-        async_to_sync(channel_layer.group_send)('notifications', payload)
+        post = Post.objects.create(creator=creator, created=created)
+
+        if text:
+            post.text = text
+        if image:
+            post.add_media(file=image)
+        if video:
+            post.add_media(file=video)
+        if doc:
+            post.doc = doc
+        if good:
+            post.good = good
+        if question:
+            post.question = question
+        if community_name:
+            post.community = Community.objects.get(name=community_name)
+
+        if not is_draft:
+            post.publish()
+            channel_layer = get_channel_layer()
+            payload = {
+                    "type": "receive",
+                    "key": "additional_post",
+                    "actor_name": self.creator.get_full_name()
+                }
+            async_to_sync(channel_layer.group_send)('notifications', payload)
+        else:
+            post.save()
+        return post
+
+    def is_text_only_post(self):
+        return self.has_text() and not self.has_image()
+
+    def has_text(self):
+        if hasattr(self, 'text'):
+            if self.text:
+                return True
+        return False
+
+    def has_image(self):
+        if hasattr(self, 'image'):
+            if self.image:
+                return True
+        return False
+
+    def get_first_image(self):
+        return self.image.first()
+
+    def _add_media_image(self, image, order):
+        return PostImage.create(image=image, post_id=self.pk, order=order)
+
+    def publish(self):
+        check_can_be_published(post=self)
+
+        if self.has_media():
+            self.status = Post.STATUS_PROCESSING
+            self.save()
+            process_post_media.delay(post_id=self.pk)
+        else:
+            self._publish()
+
+    def _publish(self):
+        self.status = Post.STATUS_PUBLISHED
+        self.created = timezone.now()
+        self.save()
+
+    def is_draft(self):
+        return self.status == Post.STATUS_DRAFT
+
+    def is_empty(self):
+        return not self.text and not hasattr(self, 'image') and not hasattr(self, 'video') and not self.has_media()
+
+    def has_image(self):
+        return self.image.exists()
+
+    def delete(self, *args, **kwargs):
+        self.delete_image()
+        super(Post, self).delete(*args, **kwargs)
+
+    def delete_image(self):
+        if self.has_image():
+            delete_file_field(self.image.image)
+
+    def soft_delete(self):
+        self.delete_notifications()
+        for comment in self.comments.all().iterator():
+            comment.soft_delete()
+        self.is_deleted = True
+        self.save()
 
     def notification_like(self, user):
         notification_handler(user, self.creator,Notification.LIKED, action_object=self,id_value=str(self.uuid),key='social_update')
@@ -59,11 +154,59 @@ class Post(models.Model):
 
     class Meta:
         ordering=["-created"]
-        verbose_name="пост"
-        verbose_name_plural="посты"
+        verbose_name="Запись"
+        verbose_name_plural="Записи"
 
     def __str__(self):
         return self.creator.get_full_name()
+
+
+class PostImage(models.Model):
+    post = models.OneToOneField(Post, on_delete=models.CASCADE, related_name='image', null=True)
+    image = ProcessedImageField(verbose_name='Главное изображение', storage=post_image_storage,
+                                upload_to=upload_to_post_image_directory,
+                                blank=False, null=True, format='JPEG', options={'quality': 80},
+                                processors=[ResizeToFit(width=1024, upscale=False)])
+    image2 = ProcessedImageField(verbose_name='Изображение 2', storage=post_image_storage,
+                                upload_to=upload_to_post_image_directory,
+                                blank=False, null=True, format='JPEG', options={'quality': 80},
+                                processors=[ResizeToFit(width=1024, upscale=False)])
+    image3 = ProcessedImageField(verbose_name='Изображение 3', storage=post_image_storage,
+                                upload_to=upload_to_post_image_directory,
+                                blank=False, null=True, format='JPEG', options={'quality': 80},
+                                processors=[ResizeToFit(width=1024, upscale=False)])
+    image4 = ProcessedImageField(verbose_name='Изображение 4', storage=post_image_storage,
+                                upload_to=upload_to_post_image_directory,
+                                blank=False, null=True, format='JPEG', options={'quality': 80},
+                                processors=[ResizeToFit(width=1024, upscale=False)])
+    image5 = ProcessedImageField(verbose_name='Изображение 5', storage=post_image_storage,
+                                upload_to=upload_to_post_image_directory,
+                                blank=False, null=True, format='JPEG', options={'quality': 80},
+                                processors=[ResizeToFit(width=1024, upscale=False)])
+    image6 = ProcessedImageField(verbose_name='Изображение 6', storage=post_image_storage,
+                                upload_to=upload_to_post_image_directory,
+                                blank=False, null=True, format='JPEG', options={'quality': 80},
+                                processors=[ResizeToFit(width=1024, upscale=False)])
+    image7 = ProcessedImageField(verbose_name='Изображение 7', storage=post_image_storage,
+                                upload_to=upload_to_post_image_directory,
+                                blank=False, null=True, format='JPEG', options={'quality': 80},
+                                processors=[ResizeToFit(width=1024, upscale=False)])
+    image8 = ProcessedImageField(verbose_name='Изображение 8', storage=post_image_storage,
+                                upload_to=upload_to_post_image_directory,
+                                blank=False, null=True, format='JPEG', options={'quality': 80},
+                                processors=[ResizeToFit(width=1024, upscale=False)])
+    image9 = ProcessedImageField(verbose_name='Изображение 9', storage=post_image_storage,
+                                upload_to=upload_to_post_image_directory,
+                                blank=False, null=True, format='JPEG', options={'quality': 80},
+                                processors=[ResizeToFit(width=1024, upscale=False)])
+    image10 = ProcessedImageField(verbose_name='Изображение 10', storage=post_image_storage,
+                                upload_to=upload_to_post_image_directory,
+                                blank=False, null=True, format='JPEG', options={'quality': 80},
+                                processors=[ResizeToFit(width=1024, upscale=False)])
+
+    @classmethod
+    def create_post_image(cls, image, post_id):
+        return cls.objects.create(image=image, post_id=post_id)
 
 
 class PostComment(models.Model):
@@ -75,16 +218,10 @@ class PostComment(models.Model):
     is_edited = models.BooleanField(default=False, null=False, blank=False,verbose_name="Изменено")
     is_deleted = models.BooleanField(default=False,verbose_name="Удаено")
     votes = GenericRelation(LikeDislike, related_query_name='post_comments_vote')
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post_comments')
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post_comments', verbose_name="Запись")
 
     def count_replies(self):
         return self.replies.count()
-
-    @classmethod
-    def count_comments_for_post_with_id(cls, post_id):
-        count_query = Q(post_id=post_id, parent_comment__isnull=True, is_deleted=False)
-
-        return cls.objects.filter(count_query).count()
 
     def update_comment(self, text):
         self.text = text
@@ -98,15 +235,6 @@ class PostComment(models.Model):
         self.modified = timezone.now()
         return super(PostComment, self).save(*args, **kwargs)
 
-    def soft_delete(self):
-        self.is_deleted = True
-        self.delete_notifications()
-        self.save()
-
-    def unsoft_delete(self):
-        self.is_deleted = False
-        self.save()
-
     def __str__(self):
         return "{0}/{1}".format(self.commenter.get_full_name(), self.text[:10])
 
@@ -115,11 +243,11 @@ class PostRepost(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     content = models.TextField(blank=True)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post_repost')
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post_repost', verbose_name="Запись")
 
 
 class PostMute(models.Model):
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='mutes',verbose_name="Пост")
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='mutes',verbose_name="Запись")
     muter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='post_mutes',verbose_name="Кто заглушил")
 
     @classmethod
@@ -128,7 +256,7 @@ class PostMute(models.Model):
 
 
 class PostCommentMute(models.Model):
-    post_comment = models.ForeignKey(PostComment, on_delete=models.CASCADE, related_name='mutes',verbose_name="Пост")
+    post_comment = models.ForeignKey(PostComment, on_delete=models.CASCADE, related_name='mutes',verbose_name="Запись")
     muter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='post_comment_mutes',verbose_name="Кто заглушил")
 
     @classmethod
@@ -138,9 +266,12 @@ class PostCommentMute(models.Model):
 
 class PostUserMention(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='post_mentions',verbose_name="Упоминаемый")
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='user_mentions',verbose_name="Пост")
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='user_mentions',verbose_name="Запись")
 
 
 class PostCommentUserMention(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='post_comment_mentions',verbose_name="Упомянутый в комментарии")
-    post_comment = models.ForeignKey(PostComment, on_delete=models.CASCADE, related_name='user_mentions',verbose_name="Пост")
+    post_comment = models.ForeignKey(PostComment, on_delete=models.CASCADE, related_name='user_mentions',verbose_name="Запись")
+
+class PostDoc(models.Model):
+    doc = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='doc', null=True, verbose_name="Документ")

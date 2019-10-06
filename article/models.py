@@ -15,6 +15,7 @@ from main.models import LikeDislike
 
 
 class Article(models.Model):
+    moderated_object = GenericRelation(ModeratedObject, related_query_name='posts')
     uuid = models.UUIDField(default=uuid.uuid4, db_index=True,verbose_name="uuid")
     content_hard = RichTextUploadingField(blank=True, null=True, config_name='default',
                                       external_plugin_resources=[(
@@ -47,7 +48,7 @@ class Article(models.Model):
     is_closed = models.BooleanField(default=False,verbose_name="Закрыто")
     is_deleted = models.BooleanField(default=False,verbose_name="Удалено")
     views=models.IntegerField(default=0,verbose_name="Просмотры")
-    votes = GenericRelation(LikeDislike, related_query_name='posts')
+    votes = GenericRelation(LikeDislike, related_query_name='article')
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
