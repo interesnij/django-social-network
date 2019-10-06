@@ -15,7 +15,7 @@ from main.models import LikeDislike
 
 
 class Article(models.Model):
-    moderated_object = GenericRelation(ModeratedObject, related_query_name='posts')
+    moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='article')
     uuid = models.UUIDField(default=uuid.uuid4, db_index=True,verbose_name="uuid")
     content_hard = RichTextUploadingField(blank=True, null=True, config_name='default',
                                       external_plugin_resources=[(
