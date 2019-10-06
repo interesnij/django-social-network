@@ -3,7 +3,7 @@ from django.contrib.admin import ModelAdmin
 from moderation.models import ModerationCategory, ModerationReport, ModeratedObject
 
 
-admin.site.register(ModerationCategory, ModerationCategoryAdmin)
+admin.site.register(ModerationCategory)
 
 
 
