@@ -12,31 +12,6 @@ from users.models import User
 from moderation.models import ModeratedObject, ModerationCategory
 
 
-class Category(models.Model):
-    creator = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='created_categories', null=True, verbose_name="Создатель")
-    name = models.CharField(max_length=settings.CATEGORY_NAME_MAX_LENGTH, blank=False, null=False, unique=True, verbose_name="Имя")
-    title = models.CharField(max_length=settings.CATEGORY_TITLE_MAX_LENGTH, blank=False, null=False, verbose_name="Название")
-    description = models.CharField(max_length=settings.CATEGORY_DESCRIPTION_MAX_LENGTH, blank=False,null=True, verbose_name="Описание")
-    created = models.DateTimeField(editable=False, verbose_name="Когда создана")
-    communities = models.ManyToManyField(Community, related_name='categories', blank=True, verbose_name="Сообщество")
-    avatar = models.ImageField(blank=False, null=True, verbose_name="Аватар")
-    order = models.IntegerField(unique=False, default=100, verbose_name="Номер")
-
-    @classmethod
-    def create_category(cls, creator, name, color, order=None, title=None, description=None, avatar=None):
-        category = cls.objects.create(creator=creator, name=name, title=title, order=order,
-                                      description=description, avatar=avatar)
-        return category
-
-    def save(self, *args, **kwargs):
-        if not self.id:
-            self.created = timezone.now()
-        return super(Category, self).save(*args, **kwargs)
-
-    def __str__(self):
-        return 'Категория: ' + self.name
-
-
 class Community(models.Model):
     moderated_object = GenericRelation(ModeratedObject, related_query_name='communities',verbose_name="Модерация")
     creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_communities', null=False,blank=False,verbose_name="Создатель")
@@ -518,6 +493,31 @@ class Community(models.Model):
 
     def __str__(self):
         return self.name
+        
+
+class Category(models.Model):
+    creator = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='created_categories', null=True, verbose_name="Создатель")
+    name = models.CharField(max_length=settings.CATEGORY_NAME_MAX_LENGTH, blank=False, null=False, unique=True, verbose_name="Имя")
+    title = models.CharField(max_length=settings.CATEGORY_TITLE_MAX_LENGTH, blank=False, null=False, verbose_name="Название")
+    description = models.CharField(max_length=settings.CATEGORY_DESCRIPTION_MAX_LENGTH, blank=False,null=True, verbose_name="Описание")
+    created = models.DateTimeField(editable=False, verbose_name="Когда создана")
+    communities = models.ManyToManyField(Community, related_name='categories', blank=True, verbose_name="Сообщество")
+    avatar = models.ImageField(blank=False, null=True, verbose_name="Аватар")
+    order = models.IntegerField(unique=False, default=100, verbose_name="Номер")
+
+    @classmethod
+    def create_category(cls, creator, name, color, order=None, title=None, description=None, avatar=None):
+        category = cls.objects.create(creator=creator, name=name, title=title, order=order,
+                                      description=description, avatar=avatar)
+        return category
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.created = timezone.now()
+        return super(Category, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return 'Категория: ' + self.name
 
 
 class CommunityMembership(models.Model):
