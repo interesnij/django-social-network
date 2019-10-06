@@ -9,7 +9,8 @@ from users.helpers import upload_to_user_cover_directory, upload_to_user_avatar_
 from pilkit.processors import ResizeToFill, ResizeToFit
 from imagekit.models import ProcessedImageField
 from django.contrib.contenttypes.fields import GenericRelation
-
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
 class User(AbstractUser):
