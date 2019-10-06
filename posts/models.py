@@ -11,7 +11,7 @@ from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 from notifications.models.notification import Notification, notification_handler
 from main.models import LikeDislike
-from posts.helpers import upload_to_post_image_directory
+from posts.helpers import upload_to_post_image_directory, upload_to_post_directory
 
 
 class Post(models.Model):
@@ -268,7 +268,4 @@ class PostCommentUserMention(models.Model):
 
 class PostDoc(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post_doc', null=True, verbose_name="Документ")
-    doc = models.FileField(upload_to=user_directory_path, verbose_name="Документ")
-
-    def user_directory_path(instance, filename):
-        return 'user_{0}/{1}'.format(instance.user.id, filename)
+    doc = models.FileField(upload_to=upload_to_post_directory, verbose_name="Документ")
