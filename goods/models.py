@@ -41,7 +41,7 @@ class Good(models.Model):
 
     class Meta:
         verbose_name="Товар"
-		verbose_name_plural="Товары"
+        verbose_name_plural="Товары"
 
     moderated_object = GenericRelation(ModeratedObject, related_query_name='goods')
     uuid = models.UUIDField(default=uuid.uuid4, db_index=True,verbose_name="uuid")
