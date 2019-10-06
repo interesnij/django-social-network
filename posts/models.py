@@ -16,7 +16,7 @@ from main.models import LikeDislike
 class Post(models.Model):
     moderated_object = GenericRelation(ModeratedObject, related_query_name='posts')
     uuid = models.UUIDField(default=uuid.uuid4, db_index=True,verbose_name="uuid")
-    text = models.TextField(_('text'), max_length=settings.POST_MAX_LENGTH, blank=False, null=True, verbose_name="Текст")
+    text = models.TextField(max_length=settings.POST_MAX_LENGTH, blank=False, null=True, verbose_name="Текст")
     created = models.DateTimeField(default=timezone.now, verbose_name="Создан")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='posts_creator',verbose_name="Создатель")
     comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
