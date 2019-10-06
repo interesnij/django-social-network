@@ -10,7 +10,7 @@ from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 from notifications.models.notification import Notification, notification_handler
 from django.utils import timezone
-
+from django.conf import settings
 
 
 class GoodCategory(models.Model):
