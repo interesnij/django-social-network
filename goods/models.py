@@ -82,3 +82,49 @@ class Good(models.Model):
 		channel_layer = get_channel_layer()
 		payload = {"type": "receive","key": "additional_good","actor_name": self.creator.get_full_name()}
 		async_to_sync(channel_layer.group_send)('notifications', payload)
+
+
+class GoodComment(models.Model):
+    moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='good_comment')
+    parent_comment = models.ForeignKey('self', on_delete=models.CASCADE, related_name='good_replies', null=True, blank=True,verbose_name="Родительский комментарий")
+    created = models.DateTimeField(default=timezone.now, editable=False, db_index=True,verbose_name="Создан")
+    commenter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='good_commenter',verbose_name="Комментатор")
+    text = models.TextField(blank=True,null=True)
+    is_edited = models.BooleanField(default=False, null=False, blank=False,verbose_name="Изменено")
+    is_deleted = models.BooleanField(default=False,verbose_name="Удаено")
+    votes = GenericRelation(LikeDislike, related_query_name='good_comments_vote')
+    article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='article_comments')
+
+    def count_replies(self):
+        return self.replies.count()
+
+    def update_comment(self, text):
+        self.text = text
+        self.is_edited = True
+        self.save()
+
+    def soft_delete(self):
+        self.is_deleted = True
+        self.delete_notifications()
+        self.save()
+
+    def unsoft_delete(self):
+        self.is_deleted = False
+        self.save()
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.created = timezone.now()
+
+        self.modified = timezone.now()
+        return super(GoodComment, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return "{0}/{1}".format(self.commenter.get_full_name(), self.text[:10])
+
+
+class GoodRepost(models.Model):
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    content = models.TextField(blank=True)
+    created = models.DateTimeField(auto_now_add=True, auto_now=False)
+    good = models.ForeignKey(Good, on_delete=models.CASCADE, related_name='good_repost')
