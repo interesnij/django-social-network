@@ -285,7 +285,6 @@ $(document).ready(function () {
             });
         }
     });
-    url_theme = "http://трезвый.рус/static/styles/color"
 
     if ($.type($.cookie("stylesheetname")) != 'undefined' && $.cookie("stylesheetname") != '') {
         var linkurl = $('#theme')
@@ -296,6 +295,7 @@ $(document).ready(function () {
             linkurl.remove();
         }, 1500);
     }
+    url_theme = "http://трезвый.рус/static/styles/color";
     if ($.type($.cookie("stylesheetname")) != 'url_theme/dark-grey.css' && $.cookie("stylesheetname") != 'url_theme/dark-grey.css') {
         $('#darktheme').prop("checked", false);
     } else {
