@@ -345,7 +345,9 @@ $(document).ready(function () {
             expires: 7
         });
         var linkurl = $('#theme');
-        $('head').append("<link id='theme' type='text/css' rel='stylesheet' href='"/static/styles/color/" + stylesheetname + "'">");
+        var href_l = "/static/styles/color/" + stylesheetname
+        console.log("<link id='theme' type='text/css' rel='stylesheet' href='" + href_l + "'>");
+        $('head').append("<link id='theme' type='text/css' rel='stylesheet' href='href_l'>");
 
         $(".loader-logo").show();
         setTimeout(function () {
