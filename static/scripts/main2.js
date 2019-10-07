@@ -295,8 +295,8 @@ $(document).ready(function () {
             linkurl.remove();
         }, 1500);
     }
-    url_theme = "http://трезвый.рус/static/styles/color";
-    if ($.type($.cookie("stylesheetname")) != 'url_theme/dark-grey.css' && $.cookie("stylesheetname") != 'url_theme/dark-grey.css') {
+
+    if ($.type($.cookie("stylesheetname")) != 'dark-grey.css' && $.cookie("stylesheetname") != 'dark-grey.css') {
         $('#darktheme').prop("checked", false);
     } else {
         $('#darktheme').prop("checked", true);
@@ -304,7 +304,7 @@ $(document).ready(function () {
 
     $('#darktheme').on('click', function () {
         if ($(this).is(':checked')) {
-            var stylesheetname = "url_theme/dark-grey.css";
+            var stylesheetname = "dark-grey.css";
             $.cookie("stylesheetname", stylesheetname, {
                 expires: 7
             });
@@ -317,7 +317,7 @@ $(document).ready(function () {
                 linkurl.remove();
             }, 1500);
         } else {
-            var stylesheetname = "url_theme/style.css";
+            var stylesheetname = "style.css";
             $.cookie("stylesheetname", stylesheetname, {
                 expires: 7
             });
@@ -336,7 +336,7 @@ $(document).ready(function () {
             expires: 7
         });
 
-        var stylesheetname = "url_theme/color/" + $(this).next().attr('data-title') + $.cookie("headerfill") + $.cookie("sidebarfill") + ".css";
+        var stylesheetname = "/static/styles/color/" + $(this).next().attr('data-title') + $.cookie("headerfill") + $.cookie("sidebarfill") + ".css";
         $.cookie("stylesheetname", stylesheetname, {
             expires: 7
         });
