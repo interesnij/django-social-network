@@ -282,3 +282,23 @@ $(window).on('load', function () {
     $('.wrapper').css('padding-bottom', $('body > footer').outerHeight() );
     $('body > footer').css('margin-top', -( $('body > footer').outerHeight() ));
 });
+var mySwiper = new Swiper('.swiper-signin', {
+    slidesPerView: 1,
+    spaceBetween: 0,
+    autoplay: true,
+    pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+    }
+});
+$(window).on('resize', function() {
+    var mySwiper = new Swiper('.swiper-signin', {
+        slidesPerView: 1,
+        spaceBetween: 0,
+        autoplay: true,
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        }
+    });
+});

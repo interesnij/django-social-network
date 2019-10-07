@@ -13,29 +13,6 @@
 
 <script defer src="{% static 'scripts/main2.js' %}" type="text/javascript"></script>
 
-<script>
-    'use strict';
-    var mySwiper = new Swiper('.swiper-signin', {
-        slidesPerView: 1,
-        spaceBetween: 0,
-        autoplay: true,
-        pagination: {
-            el: '.swiper-pagination',
-            clickable: true,
-        }
-    });
-    $(window).on('resize', function() {
-        var mySwiper = new Swiper('.swiper-signin', {
-            slidesPerView: 1,
-            spaceBetween: 0,
-            autoplay: true,
-            pagination: {
-                el: '.swiper-pagination',
-                clickable: true,
-            }
-        });
-    });
-</script>
 
 {% if request.user.is_authenticated %}
 
