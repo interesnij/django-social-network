@@ -285,6 +285,8 @@ $(document).ready(function () {
             });
         }
     });
+    url_theme = "http://трезвый.рус/static/styles/color"
+
     if ($.type($.cookie("stylesheetname")) != 'undefined' && $.cookie("stylesheetname") != '') {
         var linkurl = $('#theme')
         $('head').append("<link id='theme' rel='stylesheet' href='" + $.cookie("stylesheetname") + "' type='text/css'>");
@@ -294,7 +296,7 @@ $(document).ready(function () {
             linkurl.remove();
         }, 1500);
     }
-    if ($.type($.cookie("stylesheetname")) != 'http://трезвый.рус/static/styles/color/dark-grey.css' && $.cookie("stylesheetname") != 'http://трезвый.рус/static/styles/color/dark-grey.css') {
+    if ($.type($.cookie("stylesheetname")) != 'url_theme/dark-grey.css' && $.cookie("stylesheetname") != 'url_theme/dark-grey.css') {
         $('#darktheme').prop("checked", false);
     } else {
         $('#darktheme').prop("checked", true);
@@ -302,7 +304,7 @@ $(document).ready(function () {
 
     $('#darktheme').on('click', function () {
         if ($(this).is(':checked')) {
-            var stylesheetname = "http://трезвый.рус/static/styles/color/dark-grey.css";
+            var stylesheetname = "url_theme/dark-grey.css";
             $.cookie("stylesheetname", stylesheetname, {
                 expires: 7
             });
@@ -315,7 +317,7 @@ $(document).ready(function () {
                 linkurl.remove();
             }, 1500);
         } else {
-            var stylesheetname = "http://трезвый.рус/static/styles/color/style.css";
+            var stylesheetname = "url_theme/style.css";
             $.cookie("stylesheetname", stylesheetname, {
                 expires: 7
             });
@@ -334,7 +336,7 @@ $(document).ready(function () {
             expires: 7
         });
 
-        var stylesheetname = "http://трезвый.рус/static/styles/color/" + $(this).next().attr('data-title') + $.cookie("headerfill") + $.cookie("sidebarfill") + ".css";
+        var stylesheetname = "url_theme/color/" + $(this).next().attr('data-title') + $.cookie("headerfill") + $.cookie("sidebarfill") + ".css";
         $.cookie("stylesheetname", stylesheetname, {
             expires: 7
         });
