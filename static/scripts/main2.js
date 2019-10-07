@@ -229,7 +229,7 @@ $(document).ready(function () {
             });
             var linkurl = $('#theme');
             var href_l = "/static/styles/color/" + stylesheetname;
-            url = "<link id='theme' rel='stylesheet' href='" + href_l + " type='text/css''>"
+            url = "<link id='theme' rel='stylesheet' href='" + href_l + " type='text/css'>"
             $('head').append(url);
             console.log(url);
             $(".loader-logo").show();
@@ -245,7 +245,7 @@ $(document).ready(function () {
             var linkurl = $('#theme')
 
             var href_l = "/static/styles/color/" + stylesheetname;
-            var url = "<link id='theme' rel='stylesheet' href='" + href_l + " type='text/css''>"
+            var url = "<link id='theme' rel='stylesheet' href='" + href_l + " type='text/css'>"
             $('head').append(url);
             console.log(url);
             $(".loader-logo").show();
@@ -266,7 +266,7 @@ $(document).ready(function () {
         });
         var linkurl = $('#theme');
         var href_l = "/static/styles/color/" + stylesheetname;
-        var url = "<link id='theme' rel='stylesheet' href='" + href_l + "' type='text/css'>"
+        var url = "<link id='theme' rel='stylesheet' href='" + href_l + " type='text/css'>"
         $('head').append(url);
         console.log(url);
         $(".loader-logo").show();
