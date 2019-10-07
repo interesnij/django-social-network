@@ -204,6 +204,9 @@ $(document).ready(function () {
         var cookie_set = $.cookie("stylesheetname");
         var href_l = "<link id='theme' rel='stylesheet' href='/static/styles/color/" + cookie_set + "' type='text/css'>";
         $('head').append(href_l);
+        $.cookie("stylesheetname", cookie_set, {
+            expires: 7
+        });
         console.log(href_l);
         $('.theme-color input[type="radio"]').prop("checked", false);
         $("label[data-title='" + $.cookie("themecolor") + "']").prev().prop("checked", true);
