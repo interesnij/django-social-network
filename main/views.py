@@ -21,6 +21,9 @@ class MainPageView(TemplateView,CategoryListMixin):
 		context=super(MainPageView,self).get_context_data(**kwargs)
 		return context
 
+class ComingView(TemplateView):
+	template_name="main/coming.html"
+
 
 class VotesView(View):
 	model = None

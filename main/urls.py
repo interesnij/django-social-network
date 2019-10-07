@@ -1,7 +1,8 @@
 from django.conf.urls import url
-from main.views import MainPageView
+from main.views import MainPageView, ComingView
 
 
 urlpatterns = [
-	url(r'^$', MainPageView.as_view(), name="main"),
+	url(r'main/$', MainPageView.as_view(), name="main"),
+	url(r'^$', ComingView.as_view(), name="coming"),
 ]
