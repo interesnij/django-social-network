@@ -342,7 +342,7 @@ $(document).ready(function () {
         });
         var linkurl = $('#theme');
         var href_l = "/static/styles/color/" + stylesheetname;
-        $('head').append("<link id='theme' rel='stylesheet' href=" + href_l + "type='text/css'>");
+        $('head').append("<link id='theme' rel='stylesheet' href=" + href_l" + "type='text/css'>");
 
         $(".loader-logo").show();
         setTimeout(function () {
