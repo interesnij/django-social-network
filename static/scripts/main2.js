@@ -336,12 +336,12 @@ $(document).ready(function () {
             expires: 7
         });
 
-        var stylesheetname = "http://трезвый.рус/static/styles/color/" + $(this).next().attr('data-title') + $.cookie("headerfill") + $.cookie("sidebarfill") + ".css";
+        var stylesheetname = $(this).next().attr('data-title') + $.cookie("headerfill") + $.cookie("sidebarfill") + ".css";
         $.cookie("stylesheetname", stylesheetname, {
             expires: 7
         });
         var linkurl = $('#theme')
-        $('head').append("<link id='theme' rel='stylesheet' href='" + stylesheetname + "' type='text/css'>");
+        $('head').append("<link id='theme' rel='stylesheet' href='" + "http://трезвый.рус/static/styles/color/" + stylesheetname + "' type='text/css'>");
 
         $(".loader-logo").show();
         setTimeout(function () {
