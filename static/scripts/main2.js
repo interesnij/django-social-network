@@ -204,7 +204,7 @@ $(document).ready(function () {
         var cookie_set = "/static/" + $.cookie("stylesheetname");
         var href_l = "<link id='theme' rel='stylesheet' href='" + cookie_set + "' type='text/css'>";
         $('head').append(href_l);
-        $.cookie("stylesheetname", cookie_set, {
+        $.cookie("stylesheetname", stylesheetname, {
             expires: 7
         });
         console.log(href_l);
