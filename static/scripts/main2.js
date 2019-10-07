@@ -201,10 +201,10 @@ $(document).ready(function () {
 
     if ($.type($.cookie("stylesheetname")) != 'undefined' && $.cookie("stylesheetname") != '') {
         var linkurl = $('#theme');
-        var cookie_set = "/static/" + $.cookie("stylesheetname");
+        var cookie_set = $.cookie("stylesheetname");
         var href_l = "<link id='theme' rel='stylesheet' href='" + cookie_set + "' type='text/css'>";
         $('head').append(href_l);
-  
+
         console.log(href_l);
         $('.theme-color input[type="radio"]').prop("checked", false);
         $("label[data-title='" + $.cookie("themecolor") + "']").prev().prop("checked", true);
