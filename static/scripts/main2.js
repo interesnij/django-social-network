@@ -294,7 +294,7 @@ $(document).ready(function () {
             linkurl.remove();
         }, 1500);
     }
-    if ($.type($.cookie("stylesheetname")) != 'static/styles/color/dark-grey.css' && $.cookie("stylesheetname") != 'static/styles/color/dark-grey.css') {
+    if ($.type($.cookie("stylesheetname")) != 'http://трезвый.рус/static/styles/color/dark-grey.css' && $.cookie("stylesheetname") != 'http://трезвый.рус/static/styles/color/dark-grey.css') {
         $('#darktheme').prop("checked", false);
     } else {
         $('#darktheme').prop("checked", true);
@@ -302,7 +302,7 @@ $(document).ready(function () {
 
     $('#darktheme').on('click', function () {
         if ($(this).is(':checked')) {
-            var stylesheetname = "static/styles/color/dark-grey.css";
+            var stylesheetname = "http://трезвый.рус/static/styles/color/dark-grey.css";
             $.cookie("stylesheetname", stylesheetname, {
                 expires: 7
             });
@@ -315,7 +315,7 @@ $(document).ready(function () {
                 linkurl.remove();
             }, 1500);
         } else {
-            var stylesheetname = "static/styles/color/style.css";
+            var stylesheetname = "http://трезвый.рус/static/styles/color/style.css";
             $.cookie("stylesheetname", stylesheetname, {
                 expires: 7
             });
@@ -334,7 +334,7 @@ $(document).ready(function () {
             expires: 7
         });
 
-        var stylesheetname = "static/styles/color/" + $(this).next().attr('data-title') + $.cookie("headerfill") + $.cookie("sidebarfill") + ".css";
+        var stylesheetname = "http://трезвый.рус/static/styles/color/" + $(this).next().attr('data-title') + $.cookie("headerfill") + $.cookie("sidebarfill") + ".css";
         $.cookie("stylesheetname", stylesheetname, {
             expires: 7
         });
