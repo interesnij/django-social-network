@@ -202,7 +202,7 @@ $(document).ready(function () {
     if ($.type($.cookie("stylesheetname")) != 'undefined' && $.cookie("stylesheetname") != '') {
         var linkurl = $('#theme');
         var cookie_set = $.cookie("stylesheetname");
-        var href_l = "<link id='theme' rel='stylesheet' href='" + cookie_set + "' type='text/css'>";
+        var href_l = "<link id='theme' rel='stylesheet' href='трезвый.рус/static/styles/color/" + cookie_set + "' type='text/css'>";
         $('head').append(href_l);
         $.cookie("stylesheetname", cookie_set, {
             expires: 7
@@ -228,7 +228,7 @@ $(document).ready(function () {
                 expires: 7
             });
             var linkurl = $('#theme');
-            var href_l = "/static/styles/color/" + stylesheetname;
+            var href_l = "трезвый.рус/static/styles/color/" + stylesheetname;
             url = "<link id='theme' type='text/css' rel='stylesheet' href='" + href_l + "'>"
             $('head').append(url);
             console.log(url);
