@@ -302,7 +302,7 @@ $(document).ready(function () {
 
     $('#darktheme').on('click', function () {
         if ($(this).is(':checked')) {
-            var stylesheetname = "css/dark-grey.css";
+            var stylesheetname = "/static/styles/color/dark-grey.css";
             $.cookie("stylesheetname", stylesheetname, {
                 expires: 7
             });
