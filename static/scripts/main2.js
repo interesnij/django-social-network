@@ -1,5 +1,12 @@
 "use strict";
 $(document).ready(function () {
+  
+  $('#left-menu').on('click', function () {
+      $('body').toggleClass('sidebar-left-close');
+  });
+  $('.sidebar-left + div.backdrop').on('click', function () {
+      $('body').addClass('sidebar-left-close');
+  });
 
     var url = window.location;
 
