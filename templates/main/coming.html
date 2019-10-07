@@ -7,20 +7,33 @@
 <meta property="og:title" content="" />
 <meta property="og:image" content="http://http://xn--b1afgj5al1e.xn--p1acf/{% static 'images/1.jpg' %}" />
 {% endblock %}
+<style>
+img.bg {
+        min-height: 100%;
+        min-width: 1024px;
 
+        width: 100%;
+        height: auto;
+
+        position: fixed;
+        top: 0;
+        left: 0;
+}
+
+@media screen and (max-width: 1024px) {
+        img.bg {
+                left: 50%;
+                margin-left: -512px;
+        }
+}
+</style>
 {% block content %}
+
 <div class="wrapper" style="padding-bottom: 43px;">
         <div class="background-img bg-dark">
-            <img src="img/comingsoon.png" style="
-                                                 -webkit-background-size: cover;
-                                                 -moz-background-size: cover;
-                                                 -o-background-size: cover;
-                                                 background-size: cover;"
-                                          class="w-auto">
+            <img src="img/comingsoon.png" class="bg">
         </div>
 
-
-        <!-- content page -->
         <div class="container main-container h-100 h-sm-auto z-index-1 text-center text-white">
             <div class="row align-items-center h-100">
                 <div class="col-12 mx-auto text-center">
