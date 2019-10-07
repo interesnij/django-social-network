@@ -287,8 +287,9 @@ $(document).ready(function () {
     });
 
     if ($.type($.cookie("stylesheetname")) != 'undefined' && $.cookie("stylesheetname") != '') {
-        var linkurl = $('#theme')
-        $('head').append("<link id='theme' rel='stylesheet' href='" + $.cookie("stylesheetname") + "' type='text/css'>");
+        var linkurl = $('#theme');
+        var href_l = "/static/styles/color/" + $.cookie("stylesheetname") + "'";
+        $('head').append("<link id='theme' type='text/css' rel='stylesheet' href=' + href_l>");
         $('.theme-color input[type="radio"]').prop("checked", false);
         $("label[data-title='" + $.cookie("themecolor") + "']").prev().prop("checked", true);
         setTimeout(function () {
