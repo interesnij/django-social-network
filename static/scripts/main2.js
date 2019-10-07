@@ -1,6 +1,6 @@
 "use strict";
 $(document).ready(function () {
-  
+
   $('#left-menu').on('click', function () {
       $('body').toggleClass('sidebar-left-close');
   });
@@ -16,7 +16,7 @@ $(document).ready(function () {
             console.log(url)
         }).addClass('active').parent("li").addClass('active').closest('.nav').slideDown().addClass('in').prev().addClass('active').parent().addClass('show').closest('.nav').slideDown().addClass('in').parent().addClass('show');
     }
-    menuitems();
+    menuitems(); 
 
     $('.sidebar .nav .nav-item .dropdwown-toggle').on('click', function () {
         if ($(this).hasClass('active') != true) {
