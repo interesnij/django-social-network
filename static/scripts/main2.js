@@ -291,6 +291,7 @@ $(document).ready(function () {
         var href_l = "/static/styles/color/" + $.cookie("stylesheetname");
         var url = "<link id='theme' type='text/css' rel='stylesheet' href='" + href_l + "'>"
         $('head').append(url);
+        console.log(url)
         $('.theme-color input[type="radio"]').prop("checked", false);
         $("label[data-title='" + $.cookie("themecolor") + "']").prev().prop("checked", true);
         setTimeout(function () {
