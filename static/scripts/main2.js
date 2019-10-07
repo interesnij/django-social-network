@@ -288,7 +288,7 @@ $(document).ready(function () {
 
     if ($.type($.cookie("stylesheetname")) != 'undefined' && $.cookie("stylesheetname") != '') {
         var linkurl = $('#theme');
-        var href_l = "/static/styles/color/" + $.cookie("stylesheetname") + "'";
+        var href_l = "/static/styles/color/" + stylesheetname
         $('head').append("<link id='theme' rel='stylesheet' href='" + $.cookie("stylesheetname") + "' type='text/css'>");
         console.log(href_l);
         $('.theme-color input[type="radio"]').prop("checked", false);
@@ -311,7 +311,7 @@ $(document).ready(function () {
                 expires: 7
             });
             var linkurl = $('#theme')
-            $('head').append("<link id='theme' type='text/css' rel='stylesheet' href='"/static/styles/color/" + stylesheetname + "'" >");
+            $('head').append("<link id='theme' type='text/css' rel='stylesheet' href='href_l' >");
 
             $(".loader-logo").show();
             setTimeout(function () {
@@ -325,8 +325,8 @@ $(document).ready(function () {
             });
             var linkurl = $('#theme')
 
-            var href_l = "/static/styles/color/" + stylesheetname + "'";
-            $('head').append("<link id='theme' type='text/css' rel='stylesheet' href='"/static/styles/color/" + stylesheetname + "'">");
+            var href_l = "/static/styles/color/" + stylesheetname;
+            $('head').append("<link id='theme' type='text/css' rel='stylesheet' href='href_l'>");
 
             $(".loader-logo").show();
             setTimeout(function () {
@@ -345,7 +345,7 @@ $(document).ready(function () {
             expires: 7
         });
         var linkurl = $('#theme');
-        var href_l = "/static/styles/color/" + stylesheetname
+        var href_l = "/static/styles/color/" + stylesheetname;
         console.log("<link id='theme' type='text/css' rel='stylesheet' href='" + href_l + "'>");
         $('head').append("<link id='theme' type='text/css' rel='stylesheet' href='href_l'>");
 
