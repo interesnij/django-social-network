@@ -203,8 +203,7 @@ $(document).ready(function () {
         var linkurl = $('#theme');
         var cookie_set = $.cookie("stylesheetname");
         var href_l = "/static/styles/color/" + cookie_set;
-        var url = "<link id='theme' type='text/css' rel='stylesheet' href='" + href_l + "'>";
-        $('head').append(url);
+        $('head').append("<link id='theme' rel='stylesheet' href='" + $.cookie("stylesheetname") + "' type='text/css'>");
         console.log(url);
         $('.theme-color input[type="radio"]').prop("checked", false);
         $("label[data-title='" + $.cookie("themecolor") + "']").prev().prop("checked", true);
