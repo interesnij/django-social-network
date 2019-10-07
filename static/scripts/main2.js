@@ -311,7 +311,7 @@ $(document).ready(function () {
                 expires: 7
             });
             var linkurl = $('#theme')
-            $('head').append("<link id='theme' type='text/css' rel='stylesheet' href='/static/styles/color/' + stylesheetname + "'">");
+            $('head').append("<link id='theme' type='text/css' rel='stylesheet' href='/static/styles/color/' + stylesheetname >");
 
             $(".loader-logo").show();
             setTimeout(function () {
