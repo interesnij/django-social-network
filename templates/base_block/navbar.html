@@ -7,7 +7,7 @@
               {% if user.is_authenticated %}
               <button class="btn pink-gradient btn-icon d-sm-none" id="left-menu"><i class="material-icons">widgets</i></button>
               {% endif %}
-                <a href="{% url 'main' %}" ajax data-target="#ajax" data-el="#ajax" class="logo">
+                <a href="{% url 'main' %}">
                   <img src="{% static 'images/logo-icon.png' %}" alt="">
                   <span style="margin-top:10px;float:left;"class="d-none d-sm-block">ТРЕЗВЫЙ.РУС</span>
                 </a>
@@ -86,7 +86,7 @@
                             </div>
                         </a>
                         <div class="dropdown-divider m-0"></div>
-                        <a class="dropdown-item pink-gradient-active" ajax data-target="#ajax" data-el="#ajax" href="{% url 'user' pk=request.user.pk %}">
+                        <a class="dropdown-item pink-gradient-active" href="{% url 'user' pk=request.user.pk %}">
                             <div class="row align-items-center">
                                 <div class="col">
                                     Моя страница
@@ -97,7 +97,7 @@
                             </div>
                         </a>
                         <div class="dropdown-divider m-0"></div>
-                        <a class="dropdown-item pink-gradient-active" ajax data-target="#ajax" data-el="#ajax" href="{% url 'logout' %}">
+                        <a class="dropdown-item pink-gradient-active" href="{% url 'logout' %}">
                             <div class="row align-items-center">
                                 <div class="col">
                                     Выход

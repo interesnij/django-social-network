@@ -3,38 +3,38 @@
     <br>
     <div class="nav flex-column nav-pills faqnav">
       {% if request.user.is_authenticated %}
-        <a class="nav-link pink-gradient-active" ajax data-target="#ajax" data-el="#ajax" href="{% url 'user' pk=request.user.pk %}">
+        <a class="nav-link pink-gradient-active" href="{% url 'user' pk=request.user.pk %}">
           <div class="icon-30">
               <i class="material-icons">home</i>
           </div>
           Моя страница
         </a>
-        <a class="nav-link pink-gradient-active" ajax data-target="#ajax" data-el="#ajax" href="{% url 'main' %}">
+        <a class="nav-link pink-gradient-active" href="{% url 'main' %}">
           <div class="icon-30">
               <i class="material-icons">public</i>
           </div>
           Новости
         </a>
-        <a class="nav-link pink-gradient-active" ajax data-target="#ajax" data-el="#ajax" href="{% url 'messages_list' %}">
+        <a class="nav-link pink-gradient-active" href="{% url 'messages_list' %}">
           <div class="icon-30">
               <i class="material-icons">chat</i>
           </div>
           Сообщения
         </a>
 
-        <a class="nav-link pink-gradient-active" ajax data-target="#ajax" data-el="#ajax" href="{% url 'frends' pk=request.user.pk %}">
+        <a class="nav-link pink-gradient-active" href="{% url 'frends' pk=request.user.pk %}">
         <div class="icon-30">
             <i class="material-icons">person</i>
         </div>
           Друзья
         </a>
-        <a class="nav-link pink-gradient-active" ajax data-target="#ajax" data-el="#ajax" href="{% url 'communities' pk=request.user.pk %}">
+        <a class="nav-link pink-gradient-active" href="{% url 'communities' pk=request.user.pk %}">
           <div class="icon-30">
               <i class="material-icons">group</i>
           </div>
           Сообщества
         </a>
-        <a class="nav-link pink-gradient-active" ajax data-target="#ajax" data-el="#ajax" href="{% url 'gallery' pk=request.user.pk %}">
+        <a class="nav-link pink-gradient-active" href="{% url 'gallery' pk=request.user.pk %}">
           <div class="icon-30">
               <i class="material-icons">photo</i>
           </div>
