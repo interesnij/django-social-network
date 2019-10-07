@@ -7,7 +7,7 @@
               {% if user.is_authenticated %}
               <button class="btn pink-gradient btn-icon d-sm-none" id="left-menu"><i class="material-icons">widgets</i></button>
               {% endif %}
-                <a href="{% url 'main' %}">
+                <a href="{% url 'main' %}" class="logo">
                   <img src="{% static 'images/logo-icon.png' %}" alt="">
                   <span style="margin-top:10px;float:left;"class="d-none d-sm-block">ТРЕЗВЫЙ.РУС</span>
                 </a>
