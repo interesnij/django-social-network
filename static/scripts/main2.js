@@ -68,15 +68,6 @@ $(document).ready(function () {
         $(this).closest('.fullscreen').toggleClass('activefullscreen')
     });
 
-    $('#hidebackdrop').on('click', function () {
-        if ($(this).is(':checked') === true) {
-            $('.settings-sidebar-backdrop').fadeOut();
-            $('#settingalert').show();
-        } else {
-            $('.settings-sidebar-backdrop').fadeIn();
-            $('#settingalert').hide();
-        }
-    });
 
     $.cookie("themecolor", $('#theme').attr('href'), {
         expires: 1
