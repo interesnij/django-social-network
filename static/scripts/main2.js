@@ -340,8 +340,9 @@ $(document).ready(function () {
         $.cookie("stylesheetname", stylesheetname, {
             expires: 7
         });
-        var linkurl = $('#theme')
-        $('head').append("<link id='theme' rel='stylesheet' href='" + "http://трезвый.рус/static/styles/color/" + stylesheetname + "' type='text/css'>");
+        var linkurl = $('#theme');
+
+        $('head').append("<link id='theme' rel='stylesheet' href='"/static/styles/color/" + stylesheetname + "type='text/css'>");
 
         $(".loader-logo").show();
         setTimeout(function () {
