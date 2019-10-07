@@ -61,7 +61,6 @@ a {
         </span>
         {% endif %}
 
-        <div class="jambotron-fluid">
 							<span class="main-container col-xs-12 col-md-12 text-hide-xs" style="display:flex !important;flex-wrap: wrap;padding-right:0px;padding-left:0px;">
 
                 <div class="col-md-1 col-xs-0 gadget-only"></div>
@@ -70,17 +69,16 @@ a {
  								</div>
 
                 <div class="col-md-7" id="ajax" style="padding-right:0px;padding-left:0px;">
-                	{% block content %}
-                	{% endblock %}
-                  
+                  <div class="jambotron-fluid">
+                	   {% block content %}
+                	    {% endblock %}
+                  </div>
                   {% include "base_scripts.html" %}
 								</div>
 
 								<div class="col-md-2 gadget-only"></div>
 
 							</span>
-
-        </div>
     </div>
 
     {% include "base_block/footer.html" %}
