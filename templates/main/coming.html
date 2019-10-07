@@ -1,3 +1,13 @@
+{% extends "base.html" %}
+{% load staticfiles humanize %}
+{% block title %}Новости{% endblock %}
+{% block meta %}
+<meta property="og:url" content="dvizhenie.tv" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="" />
+<meta property="og:image" content="http://http://xn--b1afgj5al1e.xn--p1acf/{% static 'images/1.jpg' %}" />
+{% endblock %}
+
 <div class="wrapper" style="padding-bottom: 43px;">
         <div class="background-img bg-dark">
             <img src="img/comingsoon.png" alt="" class="w-auto">
@@ -64,6 +74,6 @@
                 </div>
             </div>
         </div>
-        <!-- content page ends -->
 
     </div>
+{% endblock %}
