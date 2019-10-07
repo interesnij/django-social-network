@@ -294,7 +294,7 @@ $(document).ready(function () {
             linkurl.remove();
         }, 1500);
     }
-    if ($.type($.cookie("stylesheetname")) != 'css/dark-grey.css' && $.cookie("stylesheetname") != 'css/dark-grey.css') {
+    if ($.type($.cookie("stylesheetname")) != '/static/styles/color/dark-grey.css' && $.cookie("stylesheetname") != '/static/styles/color/dark-grey.css') {
         $('#darktheme').prop("checked", false);
     } else {
         $('#darktheme').prop("checked", true);
@@ -315,7 +315,7 @@ $(document).ready(function () {
                 linkurl.remove();
             }, 1500);
         } else {
-            var stylesheetname = "css/style.css";
+            var stylesheetname = "/static/styles/color/style.css";
             $.cookie("stylesheetname", stylesheetname, {
                 expires: 7
             });
@@ -334,7 +334,7 @@ $(document).ready(function () {
             expires: 7
         });
 
-        var stylesheetname = "css/" + $(this).next().attr('data-title') + $.cookie("headerfill") + $.cookie("sidebarfill") + ".css";
+        var stylesheetname = "/static/styles/color/" + $(this).next().attr('data-title') + $.cookie("headerfill") + $.cookie("sidebarfill") + ".css";
         $.cookie("stylesheetname", stylesheetname, {
             expires: 7
         });
