@@ -312,7 +312,8 @@ $(document).ready(function () {
             });
             var linkurl = $('#theme');
             var href_l = "/static/styles/color/" + stylesheetname;
-            $('head').append("<link id='theme' type='text/css' rel='stylesheet' href='href_l' >");
+            url = "<link id='theme' type='text/css' rel='stylesheet' href='" + href_l + "'>"
+            $('head').append(url);
 
             $(".loader-logo").show();
             setTimeout(function () {
@@ -327,7 +328,8 @@ $(document).ready(function () {
             var linkurl = $('#theme')
 
             var href_l = "/static/styles/color/" + stylesheetname;
-            $('head').append("<link id='theme' type='text/css' rel='stylesheet' href='href_l'>");
+            url = "<link id='theme' type='text/css' rel='stylesheet' href='" + href_l + "'>"
+            $('head').append(url);
 
             $(".loader-logo").show();
             setTimeout(function () {
