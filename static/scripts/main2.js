@@ -109,93 +109,6 @@ $(document).ready(function () {
         $(this).closest('.fullscreen').toggleClass('activefullscreen')
     });
 
-    /* settings sidebar backdrop close */
-    $('.settings-sidebar-backdrop').on('click', function () {
-        $(this).fadeOut().prev('.settings-sidebar').addClass('close-settings-sidebar-backdrop')
-        $('.close-setting-sidebar').removeClass('active')
-        $('body').removeClass('setting-sidebar-open');
-    });
-    $('.close-setting-sidebar').on('click', function () {
-        if ($(this).hasClass('active') === true) {
-            $('.settings-sidebar').addClass('close-settings-sidebar-backdrop')
-            $(this).removeClass('active');
-            $('body').removeClass('setting-sidebar-open');
-            $('.settings-sidebar-backdrop').fadeOut();
-        } else {
-            $('.settings-sidebar').removeClass('close-settings-sidebar-backdrop')
-            $(this).addClass('active');
-            $('body').addClass('setting-sidebar-open');
-            if ($('#hidebackdrop').is(':checked') != true) {
-                $('.settings-sidebar-backdrop').fadeIn()
-            }
-        }
-    });
-    $('#hidebackdrop').on('click', function () {
-        if ($(this).is(':checked') === true) {
-            $('.settings-sidebar-backdrop').fadeOut();
-            $('#settingalert').show();
-        } else {
-            $('.settings-sidebar-backdrop').fadeIn();
-            $('#settingalert').hide();
-        }
-    });
-
-
-    /* full container active */
-    $('#boxlayout').on('click', function () {
-        if ($(this).is(':checked') === true) {
-            $('body').addClass('boxed-page sidebar-left-close');
-        } else {
-            $('body').removeClass('boxed-page sidebar-left-close');
-        }
-    });
-
-    /* full container active */
-    $('#full-width3').on('click', function () {
-        if ($(this).is(':checked') === true) {
-            $('#full-width2').prop('checked', true);
-            $('.main-container').addClass('container-fluid').removeClass('container');
-        } else {
-            $('#full-width2').prop('checked', false);
-            $('.main-container').removeClass('container-fluid').addClass('container');
-        }
-    });
-    $('#full-width2').on('click', function () {
-        if ($(this).is(':checked') === true) {
-            $('#full-width3').prop('checked', true);
-            $('.main-container').addClass('container-fluid').removeClass('container');
-        } else {
-            $('#full-width3').prop('checked', false);
-            $('.main-container').removeClass('container-fluid').addClass('container');
-        }
-    });
-
-    /* chat window minimize */
-    $('.chat-minmax').on('click', function () {
-        $(this).closest('.chat-window').toggleClass('active');
-        $(this).toggleClass('active');
-    });
-    $('.chat-close').on('click', function () {
-        $(this).closest('.chat-window').hide();
-    });
-    $('#chat-list .list-group-item').on('click', function () {
-        $('.chat-minmax, .chat-window').addClass('active');
-        $('.chat-window').show();
-    });
-
-    if ($('body').hasClass('boxed-page') === true) {
-        $('body').addClass('sidebar-left-close');
-    }
-
-
-
-    /* theme selection and image background script*/
-    $("#customRadio32img").prop('checked', true);
-    $('body .wrapper > .sidebar').css({
-        'background-image': 'url(img/sidebar-2.png)',
-        'background-repeat': 'no-repeat',
-        'background-size': 'auto'
-    });
 
     $.cookie("themecolor", $('#theme').attr('href'), {
         expires: 1
@@ -288,7 +201,8 @@ $(document).ready(function () {
 
     if ($.type($.cookie("stylesheetname")) != 'undefined' && $.cookie("stylesheetname") != '') {
         var linkurl = $('#theme');
-        var href_l = "/static/styles/color/" + $.cookie("stylesheetname");
+        var cookie_set = $.cookie("stylesheetname");
+        var href_l = "/static/styles/color/" + cookie_set;
         var url = "<link id='theme' type='text/css' rel='stylesheet' href='" + href_l + "'>"
         $('head').append(url);
         console.log(url)
