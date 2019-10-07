@@ -8,30 +8,14 @@
 <meta property="og:image" content="http://http://xn--b1afgj5al1e.xn--p1acf/{% static 'images/1.jpg' %}" />
 {% endblock %}
 <style>
-img.bg {
-        min-height: 100%;
-        min-width: 1024px;
 
-        width: 100%;
-        height: auto;
-
-        position: fixed;
-        top: 0;
-        left: 0;
-}
-
-@media screen and (max-width: 1024px) {
-        img.bg {
-                left: 50%;
-                margin-left: -512px;
-        }
-}
 </style>
 {% block content %}
 
 <div class="wrapper" style="padding-bottom: 43px;">
-        <div class="background-img bg-dark">
-            <img src="/static/images/10.jpg" class="bg">
+        <div style="background: linear-gradient(45deg, #292929 25%, transparent 25%, transparent 75%, #292929 75%), linear-gradient(45deg, #292929 25%, transparent 25%, transparent 75%, #292929 75%) 0.1875em 0.1875em, radial-gradient(at 50% 0, #484847, #090909);
+background-size: 0.375em 0.375em, 0.375em 0.375em, 100% 100%;">
+
         </div>
 
         <div class="container main-container h-100 h-sm-auto z-index-1 text-center text-white">
