@@ -336,7 +336,7 @@ $(document).ready(function () {
             expires: 7
         });
 
-        var stylesheetname = "/static/styles/color/" + $(this).next().attr('data-title') + $.cookie("headerfill") + $.cookie("sidebarfill") + ".css";
+        var stylesheetname = "static/styles/color/" + $(this).next().attr('data-title') + $.cookie("headerfill") + $.cookie("sidebarfill") + ".css";
         $.cookie("stylesheetname", stylesheetname, {
             expires: 7
         });
