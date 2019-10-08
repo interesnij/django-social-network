@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="{% static 'styles/default-skin.css' %}" media="none" onload="if(media!='all')media='all'" />
     <link rel="stylesheet" href="{% static 'styles/photoswipe.css' %}" media="none" onload="if(media!='all')media='all'" />
     <link rel="stylesheet" href="{% static 'styles/bootstrap-tour-standalone.css' %}" media="none" onload="if(media!='all')media='all'" />
-    <link rel="stylesheet" href="{% static 'styles/color/purplesidebar.css' %}" media="none" onload="if(media!='all')media='all'" />
+    <link rel="stylesheet" href="{% static 'styles/color/purplesidebar.css' %}" media="all" />
     <script src="{% static 'scripts/jquery-3.2.1.min.js' %}" type="text/javascript"></script>
     <script src="{% static 'scripts/ajax.min.js' %}" type="text/javascript"></script>
 
@@ -53,9 +53,12 @@ a {
         <div class="col-md-10 desc-only">
           {% include "base_block/navbar.html" %}
         </div>
-        <div class="col-md-1 desc-only"></div>
+        <div class="col-md-1 desc-only">
+          {{ block other }}
+          {% endblock %}
+        </div>
 
-        {% if user.is_authenticated %}
+        {% if request.user.is_authenticated %}
         <span class="d-sm-none d-block">
             {% include "base_block/mobile_nav.html" %}
         </span>
@@ -71,12 +74,15 @@ a {
                 <div class="col-md-7" id="ajax" style="padding-right:0px;padding-left:0px;">
                   <div class="jambotron-fluid">
                 	   {% block content %}
-                	    {% endblock %}
+                	   {% endblock %}
                   </div>
                   {% include "base_scripts.html" %}
 								</div>
 
-								<div class="col-md-2 gadget-only"></div>
+								<div class="col-md-2 gadget-only">
+                  {% block reklama %}
+                  {% endblock %}
+                </div>
 
 							</span>
     </div>
