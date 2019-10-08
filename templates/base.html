@@ -7,10 +7,10 @@
     {% block meta %}{% endblock %}
     <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon" />
     <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon" />
-    <link rel="stylesheet" href="{% static 'styles/material-icons.css' %}" />
+    <link rel="stylesheet" href="{% static 'styles/material-icons.css' %}" media="none" onload="if(media!='all')media='all'" />
     <link rel="stylesheet" href="{% static 'styles/bootstrap.min.css' %}" media="all" />
     <link rel="stylesheet" href="{% static 'styles/animate.css' %}" />
-    <link rel="stylesheet" href="{% static 'styles/swiper.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'styles/swiper.min.css' %}" media="none" onload="if(media!='all')media='all'"/>
     <link rel="stylesheet" href="{% static 'styles/default-skin.css' %}" />
     <link rel="stylesheet" href="{% static 'styles/photoswipe.css' %}" media="none" onload="if(media!='all')media='all'" />
     <link rel="stylesheet" href="{% static 'styles/color/purplesidebar.css' %}" />
