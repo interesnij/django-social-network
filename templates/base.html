@@ -49,12 +49,15 @@ a {
   <body class="fixed-header sidebar-right-close sidebar-left-close">
     <div class="wrapper">
 
-      <div class="col-md-1 desc-only"></div>
+      <div class="col-md-1 desc-only">
+        {% block other2 %}
+        {% endblock %}
+      </div>
       <div class="col-md-10 desc-only">
         {% include "base_block/navbar.html" %}
       </div>
       <div class="col-md-1 desc-only">
-        {% block other %}
+        {% block other2 %}
         {% endblock %}
       </div>
 
@@ -71,12 +74,12 @@ a {
  								  {% include 'base_block/desctop_nav.html' %}
  								</div>
 
-                <div class="col-md-7" id="ajax" style="">
+                <div class="col-md-7" id="ajax" style="padding-right:0px;padding-left:0px;">
                   <div class="jambotron-fluid">
                 	   {% block content %}
                 	   {% endblock %}
+                     {% include "base_scripts.html" %}
                   </div>
-                  {% include "base_scripts.html" %}
 								</div>
 
 								<div class="col-md-2 gadget-only">
@@ -87,7 +90,7 @@ a {
 							</span>
     </div>
 
-    {% include "base_block/footer.html" %}
+    
 
   </body>
 </html>
