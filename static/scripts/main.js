@@ -158,18 +158,6 @@ $(document).ready(function () {
 
 });
 
-$(document).ready(function(){
-    $('.grid').masonry({
-         itemSelector: '.grid-item',
-         percentPosition: true
-    });
-});
-$(window).on("load resize", function () {
-     $('.grid').masonry({
-         itemSelector: '.grid-item',
-         percentPosition: true
-     });
- });
 
 $(window).on('load', function () {
 
