@@ -55,7 +55,7 @@ a {
 
         {% if user.is_authenticated %}
         <span class="d-sm-none d-block">
-            {% include "base_block/mobile_nav.html" %}
+          {% include "base_block/mobile_nav.html" %}
         </span>
         {% endif %}
 
@@ -67,7 +67,7 @@ a {
                 <div class="col-md-7" id="ajax" style="padding-right:0px;padding-left:0px;">
 
                 	   {% block content %}
-                	    {% endblock %}
+                	   {% endblock %}
 
                   {% include "base_scripts.html" %}
 								</div>

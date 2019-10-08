@@ -12,8 +12,8 @@
    </div>
 </form>
 
-<script src="/static/scripts/jquery.toast.min.js" type="text/javascript"></script>
-<script type="text/javascript">
+<script defer src="/static/scripts/jquery.toast.min.js" type="text/javascript"></script>
+<script defer type="text/javascript">
     var frm = $('#FORM-POST2');
     frm.submit(function () {
       CKEDITOR.instances.id_content_lite.updateElement();
@@ -38,10 +38,10 @@
         return false;
     });
 </script>
-<script>
+<script defer>
   $( ".remove_form" ).click(function(){
     $('#article_create').empty();
   });
 </script>
-<script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
-<script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+<script defer type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+<script defer type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>

@@ -1,7 +1,7 @@
 {% load staticfiles %}
-<script src="/static/scripts/cockie.js" type="text/javascript"></script>
+<script defer src="/static/scripts/cockie.js" type="text/javascript"></script>
 
-<script>
+<script defer>
 	function like() {
 			var like = $(this);
 			var post = $('.infinite-item').attr("posts-id");
@@ -63,7 +63,7 @@
 </script>
 
 
-<script>
+<script defer>
 $(".comment").on("click", function () {
 	var post = $(this).closest(".infinite-item").attr("posts-id");
 	var url = $(this).parents(".infinite-item");
@@ -83,7 +83,7 @@ $(".comment").on("click", function () {
 });
 </script>
 
-<script>
+<script defer>
 function new_message_popap(new_message) {
 	if ($(".wrapper").length == 0){
 		$(new_message).wrapInner("<div class='wrapper'></div>");
@@ -111,7 +111,7 @@ $(document).ready(function () {
 </script>
 
 {% if user == request.user %}
-<script>
+<script defer>
 function avatar_change_popap(avatar_change) {
 	if ($(".wrapper").length == 0){
 		$(avatar_change).wrapInner("<div class='wrapper'></div>");
@@ -137,7 +137,7 @@ $(document).ready(function () {
 	});
 });
 </script>
-<script>
+<script defer>
 	$( "#article_hard" ).click(function(){
 		$('#article_create').html('').load("/article/add_hard/");
 	})
@@ -150,7 +150,7 @@ $(document).ready(function () {
 		$('#article_create').html('').load("/article/add_lite/");
 	});
 </script>
-<script>
+<script defer>
 function remove() {
 var remove = $(this);
 var pk = remove.data('id');
