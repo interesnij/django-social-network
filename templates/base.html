@@ -49,20 +49,7 @@ a {
   <body class="fixed-header sidebar-right-close sidebar-left-close">
     <div class="wrapper">
 
-        <div class="col-md-1 desc-only"></div>
-        <div class="col-md-10 desc-only">
-          {% include "base_block/navbar.html" %}
-        </div>
-        <div class="col-md-1 desc-only">
-          {% block other %}
-          {% endblock %}
-        </div>
-
-        {% if request.user.is_authenticated %}
-        <span class="d-sm-none d-block">
-            {% include "base_block/mobile_nav.html" %}
-        </span>
-        {% endif %}
+        
 
 							<span class="main-container col-xs-12 col-md-12 text-hide-xs" style="display:flex !important;flex-wrap: wrap;padding-right:0px;padding-left:0px;">
 
