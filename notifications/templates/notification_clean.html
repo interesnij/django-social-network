@@ -2,7 +2,7 @@
   {% if notifications %}
   <a class="" href="{% url 'mark_all_read' %}">Очистить</a>
     {% for notification in notifications %}
-      <a class="media pink-gradient-active">
+      <a class="media pink-gradient-active ajax">
         <figure class="avatar avatar-40">
           {% if notification.actor.profile.avatar %}
             <img src="{{ notification.actor.profile.avatar.url }}" alt="image">
@@ -16,7 +16,7 @@
         </div>
       </a>
     {% endfor %}
-  <a href="{% url 'unread' %}" class="media pink-gradient-active text-center">все уведомления</a>
+  <a href="{% url 'unread' %}" class="media pink-gradient-active text-center ajax">все уведомления</a>
   {% else %}
       У Вас нет новых уведомлений
   {% endif %}

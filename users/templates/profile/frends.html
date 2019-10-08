@@ -6,7 +6,7 @@
     <div class="media-body">
         <h4 class="content-color-primary mb-0">Друзья </h4>
     </div>
-    <a href="{% url 'frends' pk=user.pk %}" class="">
+    <a href="{% url 'frends' pk=user.pk %}" class="ajax">
          все
     </a>
 </div>
@@ -25,7 +25,7 @@
             {% endif %}
           </figure>
           <div class="media-body">
-            <a href="{% url 'user' pk=object.target_user.pk %}">
+            <a href="{% url 'user' pk=object.target_user.pk %}" class="ajax">
               <h6 class="my-0 mt-1">{{ object.target_user.get_full_name }}</h6>
             </a>
             {% if object.target_user.get_online %}
@@ -50,7 +50,7 @@
             {% endif %}
           </figure>
           <div class="media-body">
-            <a href="{% url 'user' pk=object.user.pk %}">
+            <a href="{% url 'user' pk=object.user.pk %}" class="ajax">
               <h6 class="my-0 mt-1">{{ object.user.get_full_name }}</h6>
             </a>
             {% if object.user.get_online %}
@@ -71,7 +71,7 @@
 <div class="card mb-4" style="">
     <div class="card-header">
 <div class="media" style="display: flex;align-items: center;justify-content: center;">
-  <a href="{% url 'all_users' %}" class="">
+  <a href="{% url 'all_users' %}" class="ajax">
     <div class="media-body">
         <h4 class="content-color-primary mb-0">Найдите друзей </h4>
     </div>

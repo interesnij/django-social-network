@@ -26,7 +26,7 @@
               {% endif %}
             </figure>
             <div class="media-body">
-              <a href="{% url 'community_detail' pk=object.pk %}">
+              <a href="{% url 'community_detail' pk=object.pk %}" class="ajax">
                 <h6 class="my-0 mt-1">{{ object.name }}
                 </h6>
               </a>

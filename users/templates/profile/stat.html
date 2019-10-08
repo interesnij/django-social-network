@@ -5,7 +5,7 @@
      <div class="media">
        {% if frends_count %}
        <div class="media-body">
-         <a href="{% url 'frends' pk=user.pk %}">
+         <a href="{% url 'frends' pk=user.pk %}" class="ajax">
          <h4 class="content-color-primary mb-0">{{ frends_count }}</h4>
          <p class="content-color-secondary mb-0">Друзья</p>
          </a>
@@ -22,7 +22,7 @@
      <div class="media">
        {% if follows_count %}
        <div class="media-body">
-         <a href="{% url 'follows' pk=user.pk %}">
+         <a href="{% url 'follows' pk=user.pk %}" class="ajax">
          <h4 class="content-color-primary mb-0">{{ follows_count }}</h4>
          <p class="content-color-secondary mb-0">Подписчики</p>
          </a>
@@ -39,7 +39,7 @@
      <div class="media">
        {% if communities_count %}
        <div class="media-body">
-         <a href="{% url 'communities' pk=user.pk %}">
+         <a href="{% url 'communities' pk=user.pk %}" class="ajax">
          <h4 class="content-color-primary mb-0">{{ communities_count }}</h4>
          <p class="content-color-secondary mb-0">Сообщества</p>
          </a>
@@ -56,7 +56,7 @@
      <div class="media">
        {% if images_count %}
        <div class="media-body">
-         <a href="{% url 'gallery' pk=user.pk %}">
+         <a href="{% url 'gallery' pk=user.pk %}" class="ajax">
          <h4 class="content-color-primary mb-0">{{ images_count }}</h4>
          <p class="content-color-secondary mb-0">Фото</p>
          </a>

@@ -55,7 +55,7 @@
                                                         {% endif %}
                                                     </figure>
                                                     <div class="media-body">
-                                                        <a href="{% url 'user' pk=object.target_user.pk %}">
+                                                        <a href="{% url 'user' pk=object.target_user.pk %}" class="ajax">
                                                             <h6 class="my-0 mt-1">{{ object.target_user.get_full_name }}</h6>
                                                         </a>
                                                         <a href="" class="small">Написать сообщение</a>
@@ -72,7 +72,7 @@
                                                         {% endif %}
                                                     </figure>
                                                     <div class="media-body">
-                                                        <a href="{% url 'user' pk=object.user.pk %}">
+                                                        <a href="{% url 'user' pk=object.user.pk %}" class="ajax">
                                                             <h6 class="my-0 mt-1">{{ object.user.get_full_name }}</h6>
                                                         </a>
                                                         <a href="" class="small">Написать сообщение</a>
@@ -101,7 +101,7 @@
                                                         {% endif %}
                                                     </figure>
                                                     <div class="media-body">
-                                                        <a href="{% url 'user' pk=object.target_user.pk %}">
+                                                        <a href="{% url 'user' pk=object.target_user.pk %}" class="ajax">
                                                             <h6 class="my-0 mt-1">{{ object.target_user.get_full_name }}</h6>
                                                         </a>
                                                         <a href="" class="small">Написать сообщение</a>
@@ -118,7 +118,7 @@
                                                         {% endif %}
                                                     </figure>
                                                     <div class="media-body">
-                                                        <a href="{% url 'user' pk=object.user.pk %}">
+                                                        <a href="{% url 'user' pk=object.user.pk %}" class="ajax">
                                                             <h6 class="my-0 mt-1">{{ object.user.get_full_name }}</h6>
                                                         </a>
                                                         <a href="" class="small">Написать сообщение</a>
@@ -174,7 +174,7 @@
                                 {% endif %}
                             </figure>
                             <div class="media-body">
-                                <a href="{% url 'user' pk=object.pk %}">
+                                <a href="{% url 'user' pk=object.pk %}" class="ajax">
                                     <h6 class="my-0 mt-1">{{ object.get_full_name }}</h6>
                                 </a>
                                 <a href="" class="small">Написать сообщение</a>

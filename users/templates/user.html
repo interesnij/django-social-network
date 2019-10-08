@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 {% load staticfiles humanize %}
 
-{% block title %}{{ user.first_name }} {{ user.last_name }}{% endblock %}
+{% block title %}{{ user.get_full_name }}{% endblock %}
 {% block meta %}
 <meta property="og:url" content="dvizhenie.tv" />
 <meta property="og:type" content="website" />
 <meta property="og:title" content="" />
-<meta property="og:image" content="http://http://xn--b1afgj5al1e.xn--p1acf/{% static 'images/I.jpg' %}" />
+<meta property="og:image" content="{% if user.profile.avatar %}http://xn--b1afgj5al1e.xn--p1acf/{{ user.profile.avatar }}{% else %}{% static 'images/user.png' %}{% endif %}"/>
 {% endblock %}
 {% block content %}
 <style>
@@ -94,7 +94,7 @@
     </div>
     <div class="col-lg-8 col-md-7 col-sm-12 order-2 ">
         <div class="card mb-4" style="padding:10px">
-            <h3 class="mb-0">{{ user.first_name }} {{ user.last_name }}</h3>
+            <h3 class="mb-0">{{ user.get_full_name }}</h3>
             {% if user.get_online %}
             <i class="text-success">Онлайн</i>
             {% else %}
@@ -112,9 +112,9 @@
 </div>
 
 
-<script src="{% static 'scripts/jquery.waypoints.min.js' %}" type="text/javascript"></script>
-<script src="{% static 'scripts/infinite.min.js' %}" type="text/javascript"></script>
-<script>
+<script defer src="{% static 'scripts/jquery.waypoints.min.js' %}" type="text/javascript"></script>
+<script defer src="{% static 'scripts/infinite.min.js' %}" type="text/javascript"></script>
+<script defer>
     var infinite = new Waypoint.Infinite({
         element: $('.infinite-container')[0],
         onBeforePageLoad: function() {

@@ -120,7 +120,6 @@
                     </div>
                 </div>
                 <div class="card-footer">
-                    <a class="mb-2 btn btn-sm">Отмена</a>
                     <button type="submit" class="mb-2 btn btn-sm btn-success float-right">Сохранить</button>
                 </div>
             </div>
@@ -128,16 +127,16 @@
         </div>
         <div class="col-lg-5 col-md-4 col-sm-12 order-2">
           <ul style="list-style-type:none">
-            <li style="margin-bottom:8px;"><a href="{% url 'user_general_form' pk=request.user.id %}">Мои контакты</a></li>
-            <li style="margin-bottom:8px;"><a href="{% url 'user_about_form' pk=request.user.id %}">Обо мне</a></li>
-            <li style="margin-bottom:8px;"><a href="{% url 'user_design' pk=request.user.id %}">Внешний вид</a></li>
+            <li style="margin-bottom:8px;"><a href="{% url 'user_general_form' pk=request.user.id %}" class="ajax">Мои контакты</a></li>
+            <li style="margin-bottom:8px;"><a href="{% url 'user_about_form' pk=request.user.id %}" class="ajax">Обо мне</a></li>
+            <li style="margin-bottom:8px;"><a href="{% url 'user_design' pk=request.user.id %}" class="ajax">Внешний вид</a></li>
           </ul>
         </div>
 
       </div>
   </div>
 
-  <script type="text/javascript">
+  <script defer type="text/javascript">
       var frm = $('#GENERAL-FORM');
       frm.submit(function () {
           $.ajax({

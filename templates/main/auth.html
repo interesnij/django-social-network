@@ -49,7 +49,7 @@
                 <small class="form-text text-muted login-response"></small>
                 <div class="text-left mb-4">
                     <button type="submit" id="logg" class=" btn btn-primary pink-gradient">Войти</button>
-                    <a href="" style="float:right;padding-top: 9px;">Забыли пароль?</a>
+                    <a href="" class="ajax" style="float:right;padding-top: 9px;">Забыли пароль?</a>
                 </div>
             </div>
         </form>
@@ -93,7 +93,7 @@
 
 
 
-<script type="text/javascript">
+<script defer type="text/javascript">
     var error_response2 = function(data) {
         $('.reg-response').html("Что-то пошло не так... ");
     }
@@ -114,7 +114,7 @@
         });
     });
 </script>
-<script type="text/javascript">
+<script defer type="text/javascript">
     var error_response = function(data) {
         $('.login-response').html("ошибка");
     }

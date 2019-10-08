@@ -91,9 +91,9 @@
                 </button>
                 <div class="dropdown-menu" x-placement="bottom-start">
                     <a class="dropdown-item" data-js="avatar_change" href="#">Аватар</a>
-                    <a class="dropdown-item" href="{% url 'user_general_form' user.pk %}">Мои контакты</a>
-                    <a class="dropdown-item" href="{% url 'user_about_form' user.pk %}">Обо мне</a>
-                    <a class="dropdown-item" href="{% url 'user_design' user.pk %}">Внешний вид</a>
+                    <a class="dropdown-item" class="ajax" href="{% url 'user_general_form' user.pk %}">Мои контакты</a>
+                    <a class="dropdown-item" class="ajax" href="{% url 'user_about_form' user.pk %}">Обо мне</a>
+                    <a class="dropdown-item" class="ajax" href="{% url 'user_design' user.pk %}">Внешний вид</a>
                 </div>
             </div>
         </span>

@@ -6,7 +6,7 @@
     <br><br>
     <span style="display: flex;">
         {% for sheet in article_comment_dislike.votes.dislikes.all %}
-        <a href="{% url 'user' pk=sheet.user.pk %}" style="padding-right:10px">
+        <a href="{% url 'user' pk=sheet.user.pk %}" class="ajax" style="padding-right:10px">
             <figure style="margin: 0;">
                 {% if sheet.user.profile.avatar %}
                 <img src="{{ sheet.user.profile.avatar.url }}" style="border-radius: 50px;width:50px;" alt="image">

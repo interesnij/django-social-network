@@ -55,8 +55,8 @@
 {% endif %}
 
 
-<script src="{% static 'scripts/jquery-3.2.1.min.js' %}" type="text/javascript"></script>
-<script>
+<script defer src="{% static 'scripts/jquery.js' %}" type="text/javascript"></script>
+<script defer>
   $('.follow_create').on('click', function() {
 
   $.ajax({
@@ -70,7 +70,7 @@
   });
   });
 </script>
-<script>
+<script defer>
   $('.follow_delete').on('click', function() {
   $.ajax({
       url: '{% url "delete_follow" user.pk %}',
@@ -83,7 +83,7 @@
   });
   });
 </script>
-<script>
+<script defer>
   $('.connect_create').on('click', function() {
 
   $.ajax({
@@ -97,7 +97,7 @@
   });
   });
 </script>
-<script>
+<script defer>
   $('.connect_delete2').on('click', function() {
   $.ajax({
       url: '{% url "delete_connect2" user.pk %}',
@@ -110,7 +110,7 @@
   });
   });
 </script>
-<script>
+<script defer>
   $('.connect_delete').on('click', function() {
   $.ajax({
       url: '{% url "delete_connect" user.pk %}',

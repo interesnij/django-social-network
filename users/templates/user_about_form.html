@@ -30,7 +30,6 @@
                     </div>
                 </div>
                 <div class="card-footer">
-                  <a class="mb-2 btn btn-sm">Отмена</a>
                   <button type="submit" class="mb-2 btn btn-sm btn-success float-right">Сохранить</button>
                 </div>
             </div>
@@ -38,16 +37,16 @@
         </div>
         <div class="col-lg-5 col-md-4 col-sm-12 order-2">
           <ul style="list-style-type:none">
-            <li style="margin-bottom:8px;"><a href="{% url 'user_general_form' user.pk %}">Мои контакты</a></li>
-            <li style="margin-bottom:8px;"><a href="{% url 'user_about_form' user.pk %}">Обо мне</a></li>
-            <li style="margin-bottom:8px;"><a href="{% url 'user_design' user.id %}">Внешний вид</a></li>
+            <li style="margin-bottom:8px;"><a href="{% url 'user_general_form' user.pk %}" class="ajax">Мои контакты</a></li>
+            <li style="margin-bottom:8px;"><a href="{% url 'user_about_form' user.pk %}" class="ajax">Обо мне</a></li>
+            <li style="margin-bottom:8px;"><a href="{% url 'user_design' user.id %}" class="ajax">Внешний вид</a></li>
           </ul>
         </div>
 
       </div>
   </div>
 
-  <script type="text/javascript">
+  <script defer type="text/javascript">
       var frm = $('#ABOUT-FORM');
       frm.submit(function () {
           $.ajax({
