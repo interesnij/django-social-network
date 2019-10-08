@@ -71,12 +71,12 @@ a {
  								  {% include 'base_block/desctop_nav.html' %}
  								</div>
 
-                <div class="col-md-7" id="ajax" style="padding-right:0px;padding-left:0px;">
+                <div class="col-md-7" id="ajax" style="">
                   <div class="jambotron-fluid">
                 	   {% block content %}
                 	   {% endblock %}
                   </div>
-                  
+                  {% include "base_scripts.html" %}
 								</div>
 
 								<div class="col-md-2 gadget-only">
