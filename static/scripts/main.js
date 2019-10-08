@@ -154,14 +154,22 @@ $(document).ready(function () {
         });
         var linkurl = $('#theme')
         $('head').append("<link id='theme' rel='stylesheet' href='" + stylesheetname + "' type='text/css'>");
-        $(".loader-logo").show();
-        setTimeout(function () {
-            $(".loader-logo").fadeOut();
-            linkurl.remove();
-        }, 1500);
     });
 
 });
+
+$(document).ready(function(){
+    $('.grid').masonry({
+         itemSelector: '.grid-item',
+         percentPosition: true
+    });
+});
+$(window).on("load resize", function () {
+     $('.grid').masonry({
+         itemSelector: '.grid-item',
+         percentPosition: true
+     });
+ });
 
 $(window).on('load', function () {
 
