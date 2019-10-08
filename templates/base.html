@@ -7,9 +7,9 @@
     {% block meta %}{% endblock %}
     <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon" />
     <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon" />
-    <link rel="stylesheet" href="{% static 'styles/material-icons.css' %}" media="none" onload="if(media!='all')media='all'" />
+    <link rel="stylesheet" href="{% static 'styles/material-icons.css' %}" />
     <link rel="stylesheet" href="{% static 'styles/bootstrap.min.css' %}" media="all" />
-    <link rel="stylesheet" href="{% static 'styles/animate.css' %}" media="none" onload="if(media!='all')media='all'" />
+    <link rel="stylesheet" href="{% static 'styles/animate.css' %}" />
     <link rel="stylesheet" href="{% static 'styles/swiper.min.css' %}" media="none" onload="if(media!='all')media='all'" />
     <link rel="stylesheet" href="{% static 'styles/default-skin.css' %}" media="none" onload="if(media!='all')media='all'" />
     <link rel="stylesheet" href="{% static 'styles/photoswipe.css' %}" media="none" onload="if(media!='all')media='all'" />
@@ -46,7 +46,7 @@ a {
 }
 </style>
   <body class="fixed-header sidebar-right-close sidebar-left-close">
-    <div class="wrapper jambotron-fluid">
+    <div class="wrapper">
 
         <div class="col-md-1 desc-only"></div>
         <div class="col-md-10 desc-only">
@@ -66,14 +66,15 @@ a {
 								<div class="{% if request.user.is_anonymous %}col-md-2{% endif %} gadget-only">
  								  {% include 'base_block/desctop_nav.html' %}
  								</div>
-
+                <div class="jambotron-fluid">
                 <div class="col-md-7" id="ajax" style="padding-right:0px;padding-left:0px;">
-                  <div class="">
+
                 	   {% block content %}
                 	    {% endblock %}
-                  </div>
+
                   {% include "base_scripts.html" %}
 								</div>
+                </div>
 
 								<div class="col-md-2 gadget-only"></div>
 
