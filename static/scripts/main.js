@@ -163,20 +163,6 @@ $(document).ready(function () {
 
 });
 
-var mySwiper = new Swiper('.swiper-story', {
-    slidesPerView: 'auto',
-    centeredSlides: false,
-    spaceBetween: 15
-});
-var mySwiper2 = new Swiper('.swiper-post', {
-    slidesPerView: 'auto',
-    centeredSlides: false,
-    spaceBetween: 1,
-    navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-      },
-});
 
 $(document).ready(function(){
     /* photos gallery */
