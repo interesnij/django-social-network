@@ -28,8 +28,8 @@
     </form>
 </div>
 
-<script defer src="/static/scripts/jquery.toast.min.js" type="text/javascript"></script>
-<script defer>
+<script src="/static/scripts/jquery.toast.min.js" type="text/javascript"></script>
+<script>
     function getCookie(name) {
         var cookieValue = null;
         if (document.cookie && document.cookie !== '') {
@@ -95,7 +95,7 @@
         return false;
     });
   </script>
-  <script defer>
+  <script>
     $(".replyParentComment").click(function() {
       button = $(this);
       form = button.parent().parent().parent().parent();
@@ -115,7 +115,7 @@
         return false;
     });
 </script>
-<script defer>
+<script>
     function like2() {
         var like = $(this);
         var type = like.data('type');
@@ -166,7 +166,7 @@
     $('[data-action="like2"]').click(like2);
     $('[data-action="dislike2"]').click(dislike2);
 </script>
-<script defer>
+<script>
 	$( ".reply_comment" ).click(function(){
     var reply_comment_form = $(this);
     var objectUser = reply_comment_form.prev().text().trim();
