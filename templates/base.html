@@ -48,7 +48,7 @@ a {
 </style>
   <body class="fixed-header sidebar-left-close">
     <div class="wrapper">
-
+<div class="jambotron-fluid">
       <div class="col-md-1 desc-only">
         {% block other %}
         {% endblock %}
@@ -77,13 +77,12 @@ a {
  								  {% include 'base_block/desctop_nav.html' %}
  								</div>
 
-                <div class="jambotron-fluid">
-                  <div class="col-md-7" style="padding-right:0px;padding-left:0px;">
+
+                  <div class="col-md-7" id="ajax" style="padding-right:0px;padding-left:0px;">
                 	   {% block content %}
                 	   {% endblock %}
                      {% include "base_scripts.html" %}
                   </div>
-								</div>
 
 								<div class="col-md-2 gadget-only">
                   {% block reklama %}
@@ -92,6 +91,7 @@ a {
 
 							</span>
     </div>
+  </div>
 
 {% include "base_block/footer.html" %}
 
