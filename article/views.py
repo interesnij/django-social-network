@@ -193,7 +193,7 @@ def article_get_comment(request):
 def article_comment(request):
 
     user = request.user
-    comment = 'text'
+    comment = request.POST['text']
     par = request.POST['parent']
     parent = Article.objects.get(pk=par)
     comment = comment.strip()
