@@ -79,8 +79,8 @@
           <span title="Комментарий" class="content-color-secondary comment" style="font-size:15px;cursor:pointer">
             <i class="material-icons">chat</i>
             <span class="comment-count">
-              {% if object.comments.count != 0 %}
-                {{ object.comments.count }}
+              {% if object.article_comments.count != 0 %}
+                {{ object.article_comments.count }}
               {% endif %}
             </span>
           </span>
