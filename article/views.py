@@ -194,11 +194,11 @@ def article_comment(request):
 
     user = request.user
     comment = request.POST['text']
-    art = request.POST['article']
-    article = Article.objects.get(pk=art)
+    par = request.POST['parent']
+    parent = Article.objects.get(pk=par)
     comment = comment.strip()
     if article:
-        new_comment = ArticleComment.objects.create(article=article, text=comment, commenter=request.user)
+        new_comment = parent.article_comments.create(text=comment, commenter=request.user)
         html = render_to_string('generic/article_parent_comment.html',{'comment': new_comment,'request': request})
         return JsonResponse(html, safe=False)
     else:
