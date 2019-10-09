@@ -174,7 +174,7 @@ class ArticleCommentDislikeView(TemplateView):
 def article_get_comment(request):
 
     article_id = request.GET['article']
-    article = Article.objects.get(uuid=post_id)
+    article = Article.objects.get(uuid=article_id)
     form_comment = ArticleCommentForm()
     comments = article.comments.filter(parent_comment=None).order_by("created")
     replis = article.comments.exclude(parent_comment=None).order_by("created")
@@ -183,7 +183,7 @@ def article_get_comment(request):
         "generic/article_comments.html", {"comments": comments,"replis": replis,"form_comment": form_comment,"parent": article})
     return JsonResponse({
         "uuid": article_id,
-        "post": article_html,
+        "article": article_html,
         "comments": thread_html,
     })
 
