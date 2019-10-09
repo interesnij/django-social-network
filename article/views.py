@@ -189,7 +189,7 @@ def article_get_comment(request):
 
 @login_required
 @ajax_required
-@require_http_methods(["POST"])
+
 def article_comment(request):
 
     user = request.user
