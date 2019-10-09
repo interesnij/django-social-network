@@ -68,7 +68,7 @@ $(".comment").on("click", function () {
 	var article = $(this).closest(".infinite-item").attr("article-id");
 	var url = $(this).parents(".infinite-item");
 	$.ajax({
-			url: '/article/get-comment/',
+			url: '/article/article-comment/',
 			data: {'article': article},
 			cache: false,
 			beforeSend: function () {
