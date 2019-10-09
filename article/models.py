@@ -150,20 +150,6 @@ class ArticleComment(models.Model):
     def count_replies(self):
         return self.replies.count()
 
-    def update_comment(self, text):
-        self.text = text
-        self.is_edited = True
-        self.save()
-
-    def soft_delete(self):
-        self.is_deleted = True
-        self.delete_notifications()
-        self.save()
-
-    def unsoft_delete(self):
-        self.is_deleted = False
-        self.save()
-
     def __str__(self):
         return "{0}/{1}".format(self.commenter.get_full_name(), self.text[:10])
 
