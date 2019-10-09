@@ -60,7 +60,7 @@
       button1 = $(this);
       form1 = button1.parent().parent().parent().parent();
         $.ajax({
-            url: '/article/post-comment/',
+            url: '{% url "article_comments" %}',
             data: form1.serialize(),
             type: 'POST',
             cache: false,
