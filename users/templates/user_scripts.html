@@ -3,75 +3,75 @@
 
 
 <script>
-	function like() {
-			var like = $(this);
-			var post = $('.infinite-item').attr("posts-id");
+	function article_like() {
+			var article_like = $(this);
+			var article = $('.infinite-item').attr("article-id");
 			var type = like.data('type');
 			var pk = like.data('id');
 			var action  = like.data('action');
-			var dislike = like.next().next();
+			var article_dislike = article_like.next().next();
 			payload = {
-					'post': post,
-					'csrf_token': csrftoken
+					'article': article,
+					'csrf_token': csrftoken 
 				}
 			$.ajax({
-					url: "/posts/like/" + pk + "/",
+					url: "/article/like/" + pk + "/",
 					type: 'POST',
 					cache: false,
 					data: payload,
 					success: function(data) {
-							like.find("[data-count='like']").text(data.like_count);
-							dislike.find("[data-count='dislike']").text(data.dislike_count);
-							$(like).addClass("text-success");
+							article_like.find("[data-count='like']").text(data.like_count);
+							article_dislike.find("[data-count='dislike']").text(data.dislike_count);
+							$(article_like).addClass("text-success");
 
-							$(dislike).removeClass("text-danger");
-							$(like).siblings('.like_window').html('').load("/posts/like_window/" + pk + "/");
-							$(dislike).siblings('.dislike_window').html('').load("/posts/dislike_window/" + pk + "/")
+							$(article_dislike).removeClass("text-danger");
+							$(article_like).siblings('.article_like_window').html('').load("/article/like_window/" + pk + "/");
+							$(article_dislike).siblings('.article_dislike_window').html('').load("/article/dislike_window/" + pk + "/")
 					}
 			});
 			return false;
 	}
-	function dislike() {
-			var dislike = $(this);
-			var post = $('.infinite-item').attr("posts-id");
-			var type = dislike.data('type');
-			var pk = dislike.data('id');
-			var action = dislike.data('action');
-			var like = dislike.prev().prev();
+	function article_dislike() {
+			var article_dislike = $(this);
+			var article = $('.infinite-item').attr("article-id");
+			var type = article_dislikedislike.data('type');
+			var pk = article_dislike.data('id');
+			var action = article_dislike.data('action');
+			var article_like = article_dislike.prev().prev();
 			payload = {
-					'post': post,
+					'article': article,
 					'csrf_token': csrftoken
 				}
 			$.ajax({
-					url: "/posts/dislike/" + pk + "/",
+					url: "/article/dislike/" + pk + "/",
 					type: 'POST',
 					cache: false,
 					data: payload,
 					success: function(data) {
-							dislike.find("[data-count='dislike']").text(data.dislike_count);
-							like.find("[data-count='like']").text(data.like_count);
-							$(dislike).addClass("text-danger");
-							$(like).removeClass("text-success");
-							$(like).siblings('.like_window').html('').load("/posts/like_window/" + pk + "/");
-							$(dislike).siblings('.dislike_window').html('').load("/posts/dislike_window/" + pk + "/")
+							article_dislike.find("[data-count='dislike']").text(data.dislike_count);
+							article_like.find("[data-count='like']").text(data.like_count);
+							$(article_dislike).addClass("text-danger");
+							$(article_like).removeClass("text-success");
+							$(article_like).siblings('.article_like_window').html('').load("/article/like_window/" + pk + "/");
+							$(article_dislike).siblings('.article_dislike_window').html('').load("/article/dislike_window/" + pk + "/")
 					}
 			});
 			return false;
 	}
 	// Подключение обработчиков
-	$('[data-action="like"]').click(like);
-	$('[data-action="dislike"]').click(dislike);
+	$('[data-action="article_like"]').click(article_like);
+	$('[data-action="article_dislike"]').click(article_dislike);
 </script>
 
 
 <script>
 $(".comment").on("click", function () {
-	var post = $(this).closest(".infinite-item").attr("posts-id");
+	var article = $(this).closest(".infinite-item").attr("article-id");
 	var url = $(this).parents(".infinite-item");
 
 	$.ajax({
-			url: '/posts/get-comment/',
-			data: {'post': post},
+			url: '/article/get-comment/',
+			data: {'article': article},
 			cache: false,
 			beforeSend: function () {
 					url.find(".load_comments").html("<img src='/static/images/loading.gif'>");
@@ -158,12 +158,12 @@ var pk = remove.data('id');
 var type = remove.data('type');
 
 $.ajax({
-	url: "/posts/delete/" + pk + "/",
+	url: "/article/delete/" + pk + "/",
 	success: function (data) {
 		$(remove).parents('.card').hide();
 		$.toast({
 				heading: '{{ request.user.first_name }}',
-				text: type + ' успешно удален!',
+				text: type + ' успешно удалена!',
 				showHideTransition: 'fade',
 				icon: 'error'
 		})

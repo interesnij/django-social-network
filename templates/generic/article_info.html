@@ -6,7 +6,7 @@
 
   <div class="row" style="color: rgba(255, 255, 255, 0.65);">
       <div class="col interaction" id="interaction">
-            <span class="like content-color-secondary {% if object.votes.likes.all|user_in:request.user %} text-success {% endif %}"
+            <span class="article_like content-color-secondary {% if object.votes.likes.all|user_in:request.user %} text-success {% endif %}"
                   style="font-size:15px;cursor:pointer"
                   id="like"
                   data-id="{{ object.id }}"
@@ -16,7 +16,7 @@
               <i class="material-icons">thumb_up</i>&nbsp;<span class="like-count" data-count="like">{% if object.votes.likes.count != 0 %}{{ object.votes.likes.count }}{% endif %}</span>
             </span>
 
-            <span class="like_window">
+            <span class="article_like_window">
               {% if object.votes.likes.all %}
             <div class="like_pop" style="margin:15px">
               <span>Лайков: {{ object.votes.likes.count }}</span>
@@ -40,7 +40,7 @@
           </span>
 
           &nbsp;&nbsp;
-          <span class="dislike content-color-secondary {% if object.votes.dislikes.all|user_in:request.user %} text-danger {% endif %}"
+          <span class="article_dislike content-color-secondary {% if object.votes.dislikes.all|user_in:request.user %} text-danger {% endif %}"
                 style="font-size:15px;cursor:pointer"
                 id="dislike"
                 data-id="{{ object.id }}"
@@ -50,7 +50,7 @@
             <i class="material-icons">thumb_down</i>&nbsp;<span class="dislike-count" data-count="dislike">{% if object.votes.dislikes.count %}{{ object.votes.dislikes.count }}{% endif %}</span>
           </span>
 
-          <span class="dislike_window">
+          <span class="article_dislike_window">
             {% if object.votes.dislikes.all %}
           <div class="dislike_pop" style="margin:15px">
             <span>Дизлайков: {{ object.votes.dislikes.count }}</span>
