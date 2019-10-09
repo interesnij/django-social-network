@@ -52,6 +52,10 @@ class Article(models.Model):
     is_deleted = models.BooleanField(default=False,verbose_name="Удалено")
     views=models.IntegerField(default=0,verbose_name="Просмотры")
     votes = GenericRelation(LikeDislike, related_query_name='article')
+    STATUS_DRAFT = 'D'
+    STATUS_PROCESSING = 'PG'
+    STATUS_PUBLISHED = 'P'
+    STATUS_ARHIVED = 'A'
     STATUSES = (
         (STATUS_DRAFT, 'Черновик'),
         (STATUS_PROCESSING, 'Обработка'),
