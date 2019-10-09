@@ -36,7 +36,7 @@ class ProfileUserView(TemplateView):
 		self.pop_frends = self.frends[0:5]
 		self.communities=Community.objects.filter(starrers=self.user)
 		self.posts=Post.objects.filter(creator=self.user,is_deleted=False)
-		self.article=Article.objects.filter(creator=self.user,is_deleted=False)
+		self.articles=Article.objects.filter(creator=self.user,is_deleted=False)
 
 		self.follows_count=Follow.objects.filter(followed_user=self.user).count()
 		self.connect_count=Connect.objects.filter(user=self.user).count()
