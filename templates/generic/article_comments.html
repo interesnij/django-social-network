@@ -9,18 +9,18 @@
 </span>
 
 <div class="border-top" style="margin-top:10px">
-    <form action="" class="articleCommentForm" method="post">
+    <form action="" id="articleCommentForm" method="post">
         {% csrf_token %}
         <div class="row no-gutters">
 
-            <input type="hidden" name="parent" value="">
+            <input type="hidden" name="parent" name="parent" value="{{ parent.pk }}">
             <div class="col">
                 <div class="input-group input-group-sm">
                     <textarea id="id_text" name="text" class="form-control text-comment form-control-rounded"></textarea>
                 </div>
             </div>
             <div class="col-auto">
-                <button class="btn btn-outline-primary btn-rounded btn-sm ml-2 articleComment" type="button">
+                <button class="btn btn-outline-primary btn-rounded btn-sm ml-2" id="articleComment" type="button">
                     <i class="material-icons">send</i>
                 </button>
             </div>
@@ -56,19 +56,15 @@
             }
         }
     });
-    $(".articleComment").click(function() {
-        button = $(this);
-        form = button.parent().parent().parent();
-        console.log(form, button)
+    $("#articleComment").click(function() {
         $.ajax({
             url: '/article/post-comment/',
-            data: form.serialize(),
+            data: $("#articleComment").serialize(),
             type: 'POST',
             cache: false,
             success: function(data) {
                 $(".form-control-rounded").val("");
                 $(".stream_comments").append(data);
-                console.log(data);
             },
             error: function(data) {
                 alert(data.responseText);
