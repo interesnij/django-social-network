@@ -164,13 +164,6 @@ class ArticleComment(models.Model):
         self.is_deleted = False
         self.save()
 
-    def save(self, *args, **kwargs):
-        if not self.id:
-            self.created = timezone.now()
-
-        self.modified = timezone.now()
-        return super(ArticleComment, self).save(*args, **kwargs)
-
     def __str__(self):
         return "{0}/{1}".format(self.commenter.get_full_name(), self.text[:10])
 
