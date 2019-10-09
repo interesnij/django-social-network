@@ -57,9 +57,11 @@
         }
     });
     $(".articleComment").click(function() {
+        button = $(this);
+        form = button.parent().parent().parent().parent();
         $.ajax({
             url: '/article/article-comment/',
-            data: $(".articleCommentForm").serialize(),
+            data: form.serialize(),
             type: 'POST',
             cache: false,
             success: function(data) {
