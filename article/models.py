@@ -73,7 +73,7 @@ class Article(models.Model):
 
     @classmethod
     def create_article(cls, creator, community_name=None, image=None, content_hard=None,
-                    created=None, is_draft=False, content_hard=None, content_medium=None ):
+                    created=None, is_draft=False, content_lite=None, content_medium=None ):
 
         article = Post.objects.create(creator=creator, created=created)
         if community_name:
