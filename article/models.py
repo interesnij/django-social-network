@@ -144,7 +144,7 @@ class ArticleComment(models.Model):
     is_edited = models.BooleanField(default=False, null=False, blank=False,verbose_name="Изменено")
     is_deleted = models.BooleanField(default=False,verbose_name="Удаено")
     votes = GenericRelation(LikeDislike, related_query_name='article_comments_vote')
-    article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='article_comments')
+    article = models.ForeignKey(Article, on_delete=models.CASCADE, null=True, related_name='article_comments')
 
 
     def count_replies(self):
