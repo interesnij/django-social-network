@@ -61,7 +61,7 @@
         form = button.parent().parent().parent();
         console.log(form, button)
         $.ajax({
-            url: '/article/article-comment/',
+            url: '/article/post-comment/', 
             data: form.serialize(),
             type: 'POST',
             cache: false,
