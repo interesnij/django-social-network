@@ -176,7 +176,7 @@ def article_get_comment(request):
     article_id = request.GET['article']
     article = Article.objects.get(uuid=article_id)
     form_comment = ArticleCommentForm()
-    comments = article.article_comments.filter(parent_comment=None).order_by("created")
+    comments = ArticleComment.objects.filter(article=article, parent_comment=None).order_by("created")
     replis = article.article_comments.exclude(parent_comment=None).order_by("created")
     article_html = render_to_string("generic/article.html", {"object": article})
     thread_html = render_to_string(
