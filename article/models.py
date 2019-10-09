@@ -138,12 +138,14 @@ class ArticleComment(models.Model):
     moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='article_comment')
     parent_comment = models.ForeignKey('self', on_delete=models.CASCADE, related_name='article_replies', null=True, blank=True,verbose_name="Родительский комментарий")
     created = models.DateTimeField(default=timezone.now, editable=False, db_index=True,verbose_name="Создан")
+    modified = models.DateTimeField(db_index=True, default=timezone.now)
     commenter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='article_comments',verbose_name="Комментатор")
     text = models.TextField(blank=True,null=True)
     is_edited = models.BooleanField(default=False, null=False, blank=False,verbose_name="Изменено")
     is_deleted = models.BooleanField(default=False,verbose_name="Удаено")
     votes = GenericRelation(LikeDislike, related_query_name='article_comments_vote')
     article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='article_comments')
+
 
     def count_replies(self):
         return self.replies.count()
