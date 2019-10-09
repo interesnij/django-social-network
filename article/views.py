@@ -194,8 +194,8 @@ def article_comment(request):
 
     user = request.user
     text = request.POST['text']
-    par = request.POST['parent']
-    parent = Article.objects.get(pk=par)
+    uuid = request.POST['parent']
+    parent = Article.objects.get(uuid=uuid)
     comment = comment.strip()
     if parent:
         new_comment = ArticleComment.objects.create(article=parent, text=text, commenter=request.user)
