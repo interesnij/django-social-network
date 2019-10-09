@@ -70,7 +70,7 @@
  </div>
 {% endif %}
 
-{% if posts %}
+{% if articles %}
 
 <div class="infinite-container">
   <div class="stream-update">
@@ -78,8 +78,8 @@
   </div>
   <span class="stream">
 <div></div>
-    {% for object in posts %}
-      {% include 'generic/post.html' with post=post  %}
+    {% for object in articles %}
+      {% include 'generic/articles.html' with post=post  %}
     {% endfor %}
 
   </span>

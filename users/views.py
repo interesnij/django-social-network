@@ -1,6 +1,7 @@
 from django.views.generic.base import TemplateView
 from users.models import User, UserProfile
 from posts.models import Post, PostComment
+from article.models import Article, ArticleComment
 from frends.models import Connect
 from follows.models import Follow
 from communities.models import Community
@@ -35,6 +36,7 @@ class ProfileUserView(TemplateView):
 		self.pop_frends = self.frends[0:5]
 		self.communities=Community.objects.filter(starrers=self.user)
 		self.posts=Post.objects.filter(creator=self.user,is_deleted=False)
+		self.article=Article.objects.filter(creator=self.user,is_deleted=False)
 
 		self.follows_count=Follow.objects.filter(followed_user=self.user).count()
 		self.connect_count=Connect.objects.filter(user=self.user).count()
@@ -64,6 +66,7 @@ class ProfileUserView(TemplateView):
 		context = super(ProfileUserView, self).get_context_data(**kwargs)
 		context['user'] = self.user
 		context['posts'] = self.posts
+		context['articles'] = self.articles
 		context['pop_frends'] = self.pop_frends
 		context['form_medium'] = ArticleMediumForm()
 		context['form_avatar'] = AvatarUserForm()
