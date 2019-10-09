@@ -120,6 +120,7 @@ class Article(models.Model):
         return self.votes.dislikes().count()
 
     def count_comments(self):
+        parent_comments = ArticleComment.objects.filter(article=self).count()
         return parent_comments
 
     def get_likers(self):
