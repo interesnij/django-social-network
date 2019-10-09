@@ -202,9 +202,6 @@ def article_comment(request):
         html = render_to_string('generic/article_parent_comment.html',{'comment': new_comment,'request': request})
         return JsonResponse(html, safe=False)
 
-        notification_handler(
-            user, parent.creator, Notification.ARTICLE_COMMENT, action_object=reply_article,
-            id_value=str(parent.uuid), key='social_update')
 
     else:
         return HttpResponse("parent не найден")
