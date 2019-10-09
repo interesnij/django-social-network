@@ -23,7 +23,7 @@ class CommunityCategory(models.Model):
 
 class CommunitySubCategory(models.Model):
     name = models.CharField(max_length=100, blank=False, null=False, verbose_name="Название")
-    sudcategory = models.ForeignKey(CommunityCategory, related_name='community_categories', verbose_name="Подкатегория сообщества")
+    sudcategory = models.ForeignKey(CommunityCategory, on_delete=models.CASCADE, related_name='community_categories', verbose_name="Подкатегория сообщества")
     avatar = models.ImageField(blank=False, null=True, verbose_name="Аватар")
     order = models.IntegerField(default=0, verbose_name="Номер")
 
@@ -44,8 +44,8 @@ class Community(models.Model):
                              null=True,verbose_name="Правила")
     avatar = models.ImageField(blank=False, null=True,upload_to=upload_to_community_avatar_directory,verbose_name="Аватар")
     created = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создано")
-    starrers = models.ForeignKey(User, blank=True, related_name='favorite_communities',verbose_name="Подписчики")
-    banned_users = models.ForeignKey(User, blank=True, related_name='banned_of_communities',verbose_name="Черный список")
+    starrers = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, related_name='favorite_communities',verbose_name="Подписчики")
+    banned_users = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, related_name='banned_of_communities',verbose_name="Черный список")
     status = models.CharField(max_length=100, blank=True, null=True, verbose_name="статус-слоган")
     COMMUNITY_TYPE_PRIVATE = 'T'
     COMMUNITY_TYPE_PUBLIC = 'P'
