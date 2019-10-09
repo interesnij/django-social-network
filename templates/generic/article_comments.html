@@ -44,11 +44,9 @@
         }
         return cookieValue;
     };
-
     function csrfSafeMethod(method) {
         return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
     }
-
     var csrftoken = getCookie('csrftoken');
     var page_title = $(document).attr("title");
     $.ajaxSetup({
@@ -58,7 +56,6 @@
             }
         }
     });
-
     $("#parentComment").click(function() {
         $.ajax({
             url: '/article/article-comment/',
@@ -75,7 +72,6 @@
         });
         return false;
     });
-
     $(".replyComment").click(function() {
         button = $(this);
         form = button.parent().parent().parent().parent();
@@ -86,7 +82,6 @@
             cache: false,
             success: function(data) {
                 $(".form-control-rounded").val("");
-
             },
             error: function(data) {
                 alert(data.responseText);
@@ -106,7 +101,6 @@
             cache: false,
             success: function(data) {
                 $(".form-control-rounded").val("");
-
             },
             error: function(data) {
                 alert(data.responseText);
