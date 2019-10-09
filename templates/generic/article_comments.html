@@ -63,7 +63,7 @@
             type: 'POST',
             cache: false,
             success: function(data) {
-                $("#replyPostForm #id_text").val("");
+                $("#parentCommentForm #id_text").val(""); 
                 $(".stream_comments").append(data);
             },
             error: function(data) {

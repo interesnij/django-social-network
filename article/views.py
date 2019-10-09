@@ -207,7 +207,7 @@ def article_comment(request):
             id_value=str(parent.uuid), key='social_update')
 
     else:
-        return HttpResponseBadRequest()
+        return HttpResponse("parent не найден")
 
 
 @login_required
