@@ -25,8 +25,8 @@
         display: none;
     }
 
-    .article_like_window,
-    .article_dislike_window {
+    .like_window,
+    .dislike_window {
         opacity: 0;
         visibility: hidden;
         position: absolute;
@@ -45,8 +45,8 @@
         transition: 0.5s;
     }
 
-    .article_like_window:hover,
-    .article_dislike_window:hover {
+    .like_window:hover,
+    .dislike_window:hover {
         z-index: 10;
         opacity: 1;
         visibility: visible;
@@ -62,8 +62,8 @@
         color: black;
     }
 
-    .article_like:hover~.article_like_window,
-    .article_dislike:hover~.article_dislike_window{
+    .like:hover~.like_window,
+    .dislike:hover~.dislike_window{
         z-index: 10;
         opacity: 1;
         visibility: visible;
