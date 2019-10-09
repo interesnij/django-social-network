@@ -197,7 +197,7 @@ def article_comment(request):
     par = request.POST['parent']
     parent = Article.objects.get(pk=par)
     comment = comment.strip()
-    if article:
+    if parent:
         new_comment = parent.article_comments.create(text=comment, commenter=request.user)
         html = render_to_string('generic/article_parent_comment.html',{'comment': new_comment,'request': request})
         return JsonResponse(html, safe=False)
