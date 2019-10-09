@@ -201,8 +201,6 @@ def article_comment(request):
         new_comment = ArticleComment.objects.create(article=article, text=comment, commenter=request.user)
         html = render_to_string('generic/article_parent_comment.html',{'comment': new_comment,'request': request})
         return JsonResponse(html, safe=False)
-
-
     else:
         return HttpResponse("parent не найден")
 
@@ -218,7 +216,7 @@ def article_reply_comment(request):
     comment = ArticleComment.objects.get(pk=com)
     text = text.strip()
     if comment:
-        new_comment = ArticleComment.objects.create(text=text, commenter=request.user,parent_comment=comment,object_id=comment.object_id,content_type_id=comment.content_type_id)
+        new_comment = ArticleComment.objects.create(text=text, commenter=request.user,parent_comment=comment)
         html = render_to_string('generic/article_reply_comment.html',{'reply': new_comment,'request': request})
         return JsonResponse(html, safe=False)
 
