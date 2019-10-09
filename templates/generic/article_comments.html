@@ -9,7 +9,7 @@
 </span>
 
 <div class="border-top" style="margin-top:10px">
-    <form action="" id="articleCommentForm" method="post">
+    <form action="" class="articleCommentForm" method="post">
         {% csrf_token %}
         <div class="row no-gutters">
 
@@ -20,7 +20,7 @@
                 </div>
             </div>
             <div class="col-auto">
-                <button class="btn btn-outline-primary btn-rounded btn-sm ml-2" id="articleComment" type="button">
+                <button class="btn btn-outline-primary btn-rounded btn-sm ml-2 articleComment" type="button">
                     <i class="material-icons">send</i>
                 </button>
             </div>
@@ -56,14 +56,14 @@
             }
         }
     });
-    $("#articleComment").click(function() {
+    $(".articleComment").click(function() {
         $.ajax({
             url: '/article/article-comment/',
-            data: $("#articleCommentForm").serialize(),
+            data: $(".articleCommentForm").serialize(),
             type: 'POST',
             cache: false,
             success: function(data) {
-                $("#articleCommentForm #id_text").val("");
+                $(".articleCommentForm #id_text").val("");
                 $(".stream_comments").append(data);
             },
             error: function(data) {
