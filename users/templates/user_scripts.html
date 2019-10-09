@@ -12,7 +12,7 @@
 			var article_dislike = article_like.next().next();
 			payload = {
 					'article': article,
-					'csrf_token': csrftoken 
+					'csrf_token': csrftoken
 				}
 			$.ajax({
 					url: "/article/like/" + pk + "/",
@@ -59,8 +59,8 @@
 			return false;
 	}
 	// Подключение обработчиков
-	$('[data-action="article_like"]').click(article_like);
-	$('[data-action="article_dislike"]').click(article_dislike);
+	$('[data-action="like"]').click(article_like);
+	$('[data-action="dislike"]').click(article_dislike);
 </script>
 
 
