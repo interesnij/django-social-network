@@ -58,7 +58,7 @@
     });
     $(".articleComment").click(function() {
         button = $(this);
-        form = button.parent().parent().parent().parent();
+        form = button.parent().parent().parent();
         $.ajax({
             url: '/article/article-comment/',
             data: form.serialize(),
