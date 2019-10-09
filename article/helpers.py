@@ -5,6 +5,21 @@ from django.views.generic import View
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 
 
+def upload_to_article_image_directory(article_image, filename):
+    article = article_image.post
+    return _upload_to_article_directory_directory(article=article, filename=filename)
+
+def _upload_to_article_directory_directory(article, filename):
+    extension = splitext(filename)[1].lower()
+    new_filename = str(uuid.uuid4()) + extension
+
+    path = 'article/%(article_uuid)s/' % {
+        'article_uuid': str(article.uuid)}
+
+    return '%(path)s%(new_filename)s' % {'path': path,
+                                         'new_filename': new_filename, }
+
+
 def paginate_data(qs, page_size, page, paginated_type, **kwargs):
     """Вспомогательная функция для превращения многих запросов в разбитые на страницы результаты по адресу
     избавьтесь от нашей конечной точки API GraphQL."""

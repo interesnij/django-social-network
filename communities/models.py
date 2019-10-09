@@ -12,11 +12,31 @@ from users.models import User
 from moderation.models import ModeratedObject, ModerationCategory
 
 
+class CommunityCategory(models.Model):
+    name = models.CharField(max_length=100, blank=False, null=False, verbose_name="Название")
+    avatar = models.ImageField(blank=False, null=True, verbose_name="Аватар")
+    order = models.IntegerField(default=0, verbose_name="Номер")
+
+    def __str__(self):
+        return 'Категория: ' + self.name
+
+
+class CommunitySubCategory(models.Model):
+    name = models.CharField(max_length=100, blank=False, null=False, verbose_name="Название")
+    sudcategory = models.ForeignKey(CommunityCategory, related_name='community_categories', verbose_name="Подкатегория сообщества")
+    avatar = models.ImageField(blank=False, null=True, verbose_name="Аватар")
+    order = models.IntegerField(default=0, verbose_name="Номер")
+
+    def __str__(self):
+        return 'ПодКатегория: ' + self.name
+
+
 class Community(models.Model):
     moderated_object = GenericRelation(ModeratedObject, related_query_name='communities',verbose_name="Модерация")
+    category = models.ForeignKey(CommunitySubCategory, related_name='community_sub_categories', verbose_name="Подкатегория сообщества")
     creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_communities', null=False,blank=False,verbose_name="Создатель")
     name = models.CharField(max_length=settings.COMMUNITY_CATEGORY_NAME_MAX_LENGTH, blank=False, null=False,
-                            unique=True, verbose_name="Имя")
+                            verbose_name="Имя")
     title = models.CharField(max_length=settings.COMMUNITY_CATEGORY_TITLE_MAX_LENGTH, blank=False, null=False,verbose_name="Заголовок" )
     description = models.CharField(max_length=300, blank=False,
                                    null=True,verbose_name="Описание" )
@@ -24,8 +44,8 @@ class Community(models.Model):
                              null=True,verbose_name="Правила")
     avatar = models.ImageField(blank=False, null=True,upload_to=upload_to_community_avatar_directory,verbose_name="Аватар")
     created = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создано")
-    starrers = models.ManyToManyField(User, blank=True, related_name='favorite_communities',verbose_name="Подписчики")
-    banned_users = models.ManyToManyField(User, blank=True, related_name='banned_of_communities',verbose_name="Черный список")
+    starrers = models.ForeignKey(User, blank=True, related_name='favorite_communities',verbose_name="Подписчики")
+    banned_users = models.ForeignKey(User, blank=True, related_name='banned_of_communities',verbose_name="Черный список")
     status = models.CharField(max_length=100, blank=True, null=True, verbose_name="статус-слоган")
     COMMUNITY_TYPE_PRIVATE = 'T'
     COMMUNITY_TYPE_PUBLIC = 'P'
@@ -34,9 +54,6 @@ class Community(models.Model):
         (COMMUNITY_TYPE_PRIVATE, 'Приватное'),
     )
     type = models.CharField(editable=False, blank=False, null=False, choices=COMMUNITY_TYPES, default='P', max_length=2)
-    user_adjective = models.CharField(max_length=100,
-                                      blank=True, null=True,verbose_name="Какой-то пользователь")
-    users_adjective = models.CharField(max_length=100,blank=True, null=True,verbose_name="Какие-то пользователи")
     invites_enabled = models.BooleanField(default=True,verbose_name="Разрешить приглашения")
     is_deleted = models.BooleanField(
         default=False,
@@ -153,7 +170,7 @@ class Community(models.Model):
 
     @classmethod
     def create_community(cls, name, title, creator, type=None, avatar=None, description=None,
-                            rules=None, categories_names=None,invites_enabled=None):
+                            rules=None, category=None,invites_enabled=None):
         """"
         Создаем сообщество и список пользователей, создателя делаем администратором
         """
@@ -164,12 +181,10 @@ class Community(models.Model):
 
         community = cls.objects.create(title=title, name=name, creator=creator, avatar=avatar,
                                        description=description, type=type, rules=rules,
-                                       invites_enabled=invites_enabled)
+                                       invites_enabled=invites_enabled, category=category)
 
         CommunityMembership.create_membership(user=creator, is_administrator=True, is_moderator=False,
                                               community=community)
-        if categories_names:
-            community.set_categories_with_names(categories_names=categories_names)
 
         community.save()
         return community
@@ -336,7 +351,7 @@ class Community(models.Model):
 
     def update(self, title=None, name=None, description=None, color=None, type=None,
                user_adjective=None,
-               users_adjective=None, rules=None, categories_names=None, invites_enabled=None):
+               users_adjective=None, rules=None, communitysubcategory_names=None, invites_enabled=None):
         """"
         Обновление группы
         """
@@ -353,9 +368,6 @@ class Community(models.Model):
             self.rules = rules
         if invites_enabled is not None:
             self.invites_enabled = invites_enabled
-        if categories_names is not None:
-            self.set_categories_with_names(categories_names=categories_names)
-
         self.save()
 
     def add_moderator(self, user):
@@ -389,18 +401,6 @@ class Community(models.Model):
     def remove_member(self, user):
         user_membership = self.memberships.get(user=user)
         user_membership.delete()
-
-    def set_categories_with_names(self, categories_names):
-        """"
-        Смена категории группы
-        """
-        self.clear_categories()
-        Category = get_category_model()
-        categories = Category.objects.filter(name__in=categories_names)
-        self.categories.set(categories)
-
-    def clear_categories(self):
-        self.categories.clear()
 
     def create_invite(self, creator, invited_user):
         """"
@@ -493,31 +493,6 @@ class Community(models.Model):
 
     def __str__(self):
         return self.name
-
-
-class CommunityCategory(models.Model):
-    creator = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='created_categories', null=True, verbose_name="Создатель")
-    name = models.CharField(max_length=settings.COMMUNITY_CATEGORY_NAME_MAX_LENGTH, blank=False, null=False, unique=True, verbose_name="Имя")
-    title = models.CharField(max_length=settings.COMMUNITY_CATEGORY_TITLE_MAX_LENGTH, blank=False, null=False, verbose_name="Название")
-    description = models.CharField(max_length=settings.COMMUNITY_CATEGORY_DESCRIPTION_MAX_LENGTH, blank=False,null=True, verbose_name="Описание")
-    created = models.DateTimeField(editable=False, verbose_name="Когда создана")
-    communities = models.ManyToManyField(Community, related_name='categories', blank=True, verbose_name="Сообщество")
-    avatar = models.ImageField(blank=False, null=True, verbose_name="Аватар")
-    order = models.IntegerField(unique=False, default=100, verbose_name="Номер")
-
-    @classmethod
-    def create_category(cls, creator, name, color, order=None, title=None, description=None, avatar=None):
-        category = cls.objects.create(creator=creator, name=name, title=title, order=order,
-                                      description=description, avatar=avatar)
-        return category
-
-    def save(self, *args, **kwargs):
-        if not self.id:
-            self.created = timezone.now()
-        return super(Category, self).save(*args, **kwargs)
-
-    def __str__(self):
-        return 'Категория: ' + self.name
 
 
 class CommunityMembership(models.Model):

@@ -10,12 +10,16 @@ from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 from notifications.models.notification import Notification, notification_handler
 from main.models import LikeDislike
+from article.helpers import upload_to_article_image_directory
 
 
 
 class Article(models.Model):
     moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='article')
     uuid = models.UUIDField(default=uuid.uuid4, db_index=True,verbose_name="uuid")
+    image = ProcessedImageField(verbose_name='Главное изображение', blank=False, null=True, format='JPEG',
+                                 options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)],
+                                 upload_to=upload_to_article_image_directory)
     content_hard = RichTextUploadingField(blank=True, null=True, config_name='default',
                                       external_plugin_resources=[(
                                           'youtube',
@@ -48,6 +52,13 @@ class Article(models.Model):
     is_deleted = models.BooleanField(default=False,verbose_name="Удалено")
     views=models.IntegerField(default=0,verbose_name="Просмотры")
     votes = GenericRelation(LikeDislike, related_query_name='article')
+    STATUSES = (
+        (STATUS_DRAFT, 'Черновик'),
+        (STATUS_PROCESSING, 'Обработка'),
+        (STATUS_PUBLISHED, 'Опубликована'),
+        (STATUS_ARHIVED, 'Архивирована'),
+    )
+    status = models.CharField(blank=False, null=False, choices=STATUSES, default=STATUS_DRAFT, max_length=2, verbose_name="Статус статьи")
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
@@ -59,6 +70,35 @@ class Article(models.Model):
 
             }
         async_to_sync(channel_layer.group_send)('notifications', payload)
+
+    @classmethod
+    def create_article(cls, creator, community_name=None, image=None, content_hard=None,
+                    created=None, is_draft=False, content_hard=None, content_medium=None ):
+
+        article = Post.objects.create(creator=creator, created=created)
+        if community_name:
+            article.community = Community.objects.get(name=community_name)
+
+        if not is_draft:
+            article.publish()
+            channel_layer = get_channel_layer()
+            payload = {
+                    "type": "receive",
+                    "key": "additional_post",
+                    "actor_name": self.creator.get_full_name()
+                }
+            async_to_sync(channel_layer.group_send)('notifications', payload)
+        else:
+            article.save()
+        return article
+
+    def _publish(self):
+        self.status = Article.STATUS_PUBLISHED
+        self.created = timezone.now()
+        self.save()
+
+    def is_draft(self):
+        return self.status == Article.STATUS_DRAFT
 
     def notification_like(self, user):
         notification_handler(user, self.creator,Notification.LIKED, action_object=self,id_value=str(self.uuid),key='social_update')

@@ -41,42 +41,6 @@ $(document).ready(function () {
         $('body').addClass('sidebar-left-close');
     }
 
-    var fontsize = 16;
-    $('.font-big').on('click', function () {
-        fontsize = fontsize + 1;
-        if (fontsize < 20) {
-            $('body').css('font-size', fontsize);
-            $('.font-small').attr('disabled', false);
-        } else {
-            $(this).attr('disabled', 'disabled');
-        }
-    });
-    $('.font-small').on('click', function () {
-        fontsize = fontsize - 1;
-        if (fontsize > 13) {
-            $('body').css('font-size', fontsize);
-            $('.font-big').attr('disabled', false);
-        } else {
-            $(this).attr('disabled', 'disabled');
-        }
-
-    });
-
-    function setIntervalX(callback, delay, repetitions) {
-        var x = 0;
-        var intervalID = window.setInterval(function () {
-            callback();
-            if (++x === repetitions) {
-                window.clearInterval(intervalID);
-            }
-        }, delay);
-    }
-    setIntervalX(function () {
-        $('.animateflipy').addClass('flipInY');
-        setTimeout(function () {
-            $('.animateflipy').removeClass('flipInY');
-        }, 1000)
-    }, 2000, 3);
 
     $('.fullscreenbtn').on('click', function () {
         $(this).closest('.fullscreen').toggleClass('activefullscreen');
@@ -156,18 +120,6 @@ $(document).ready(function () {
         $('head').append("<link id='theme' rel='stylesheet' href='" + stylesheetname + "' type='text/css'>");
     });
 
-});
-$(document).ready(function(){
-  $('.grid').masonry({
-       itemSelector: '.grid-item',
-       percentPosition: true
-  });
-});
-$(window).on("load resize", function () {
-   $('.grid').masonry({
-       itemSelector: '.grid-item',
-       percentPosition: true
-   });
 });
 
 $(window).on('load', function () {
