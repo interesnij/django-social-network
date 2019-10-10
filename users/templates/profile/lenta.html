@@ -84,12 +84,8 @@
     {% for object in lenta %}
       {% if object.uuid %}
         {% include 'generic/article.html' with article=article  %}
-      {% endif %}
-      {% if object.post_uuid %}
+      {% else %}
         {% include 'generic/post.html' with post=post  %}
-      {% endif %}
-      {% if object.good_uuid %}
-        {% include 'generic/good.html' with good=good  %}
       {% endif %}
     {% endfor %}
 
