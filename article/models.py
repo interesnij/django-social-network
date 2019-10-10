@@ -9,12 +9,13 @@ from imagekit.models import ProcessedImageField
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 from notifications.models import Notification, notification_handler
-from main.models import LikeDislike
+from main.models import LikeDislike, Item
 from article.helpers import upload_to_article_image_directory
 
 
 
-class Article(models.Model):
+
+class Article(Item):
     moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='article')
     uuid = models.UUIDField(default=uuid.uuid4, db_index=True, verbose_name="uuid")
     image = ProcessedImageField(verbose_name='Главное изображение', blank=False, format='JPEG', null=True,
@@ -43,14 +44,8 @@ class Article(models.Model):
                                           'plugin.js',
                                           )],
                                       )
-    created = models.DateTimeField(default=timezone.now, verbose_name="Создан")
-    creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='article_creator', verbose_name="Создатель")
     comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
     community = models.ForeignKey('communities.Community', on_delete=models.CASCADE, related_name='article', null=True, blank=True, verbose_name="Сообщество")
-    is_edited = models.BooleanField(default=False, verbose_name="Изменено")
-    is_closed = models.BooleanField(default=False, verbose_name="Закрыто")
-    is_deleted = models.BooleanField(default=False, verbose_name="Удалено")
-    views=models.IntegerField(default=0, verbose_name="Просмотры")
     votes = GenericRelation(LikeDislike, related_query_name='article')
     STATUS_DRAFT = 'D'
     STATUS_PROCESSING = 'PG'
