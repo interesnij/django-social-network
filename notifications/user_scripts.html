@@ -1,0 +1,174 @@
+{% load staticfiles %}
+<script src="/static/scripts/cockie.js" type="text/javascript"></script>
+
+
+<script>
+	function like() {
+			var like = $(this);
+			var article = $('.infinite-item').attr("article-id");
+			var type = like.data('type');
+			var pk = like.data('id');
+			var action  = like.data('action');
+			var dislike = like.next().next();
+			payload = {
+					'article': article,
+					'csrf_token': csrftoken
+				}
+			$.ajax({
+					url: "/article/like/" + pk + "/",
+					type: 'POST',
+					cache: false,
+					data: payload,
+					success: function(data) {
+							like.find("[data-count='like']").text(data.like_count);
+							dislike.find("[data-count='dislike']").text(data.dislike_count);
+							$(like).addClass("text-success");
+							$(dislike).removeClass("text-danger");
+							$(like).siblings('.like_window').html('').load("/article/like_window/" + pk + "/");
+							$(dislike).siblings('.dislike_window').html('').load("/article/dislike_window/" + pk + "/")
+					}
+			});
+			return false;
+	}
+	function dislike() {
+			var dislike = $(this);
+			var article = $('.infinite-item').attr("posts-id");
+			var type = dislike.data('type');
+			var pk = dislike.data('id');
+			var action = dislike.data('action');
+			var like = dislike.prev().prev();
+			payload = {
+					'article': article,
+					'csrf_token': csrftoken
+				}
+			$.ajax({
+					url: "/article/dislike/" + pk + "/",
+					type: 'POST',
+					cache: false,
+					data: payload,
+					success: function(data) {
+							dislike.find("[data-count='dislike']").text(data.dislike_count);
+							like.find("[data-count='like']").text(data.like_count);
+							$(dislike).addClass("text-danger");
+							$(like).removeClass("text-success");
+							$(like).siblings('.like_window').html('').load("/article/like_window/" + pk + "/");
+							$(dislike).siblings('.dislike_window').html('').load("/article/dislike_window/" + pk + "/")
+					}
+			});
+			return false;
+	}
+	// Подключение обработчиков
+	$('[data-action="like"]').click(like);
+	$('[data-action="dislike"]').click(dislike);
+</script>
+
+
+<script>
+$(".comment").on("click", function () {
+	var article = $(this).closest(".infinite-item").attr("article-id");
+	var url = $(this).parents(".infinite-item");
+	$.ajax({
+			url: '/article/article-comment/',
+			data: {'article': article},
+			cache: false,
+			beforeSend: function () {
+					url.find(".load_comments").html("<img src='/static/images/loading.gif'>");
+			},
+			success: function (data) {
+				url.find(".load_comments").html(data.comments);
+			}
+	});
+	return false;
+});
+</script>
+
+<script>
+function new_message_popap(new_message) {
+	if ($(".wrapper").length == 0){
+		$(new_message).wrapInner("<div class='wrapper'></div>");
+	}
+	$(new_message).show();
+	$(new_message).click(function(e) {
+		if ( e.target == this ) {
+			if ($(new_message).is(':visible')) {
+				$(new_message).hide();
+			}
+		}
+	});
+	$(new_message).find("button[name=message_close]").on("click", function() {
+		if ($(".formElementError").is(':visible')) {
+			$(".formElementError").remove();
+		}
+		$(new_message).hide();
+	});
+}
+$(document).ready(function () {
+	$("[data-js=new_message]").on("click", function() {
+		new_message_popap($(".new_message"));
+	});
+});
+</script>
+
+{% if user == request.user %}
+<script>
+function avatar_change_popap(avatar_change) {
+	if ($(".wrapper").length == 0){
+		$(avatar_change).wrapInner("<div class='wrapper'></div>");
+	}
+	$(avatar_change).show();
+	$(avatar_change).click(function(e) {
+		if ( e.target == this ) {
+			if ($(avatar_change).is(':visible')) {
+				$(avatar_change).hide();
+			}
+		}
+	});
+	$(avatar_change).find("button[name=avatar_close]").on("click", function() {
+		if ($(".formElementError").is(':visible')) {
+			$(".formElementError").remove();
+		}
+		$(avatar_change).hide();
+	});
+}
+$(document).ready(function () {
+	$("[data-js=avatar_change]").on("click", function() {
+		avatar_change_popap($(".avatar_change"));
+	});
+});
+</script>
+<script>
+	$( "#article_hard" ).click(function(){
+		$('#article_create').html('').load("/article/add_hard/");
+	})
+	$( "#article_medium" ).click(function(){
+		$('#article_create').html('').load("/article/add_medium/");
+	})
+	$( "#article_lite" ).click(function(){
+		$('#article_create').html('').load("/article/add_lite/");
+	});
+</script>
+<script>
+function remove() {
+var remove = $(this);
+var pk = remove.data('id');
+var type = remove.data('type');
+$.ajax({
+	url: "/posts/delete/" + pk + "/",
+	success: function (data) {
+		$(remove).parents('.card').hide();
+		$.toast({
+				heading: '{{ request.user.first_name }}',
+				text: type + ' успешно удален!',
+				showHideTransition: 'fade',
+				icon: 'error'
+		})
+	},
+	error: function(data) {
+	}
+});
+};
+$('[data-action="remove"]').click(remove);
+</script>
+
+
+{% endif %}

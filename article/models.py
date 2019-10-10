@@ -16,8 +16,8 @@ from article.helpers import upload_to_article_image_directory
 
 class Article(models.Model):
     moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='article')
-    uuid = models.UUIDField(default=uuid.uuid4, db_index=True,verbose_name="uuid")
-    image = ProcessedImageField(verbose_name='Главное изображение', blank=False, null=True, format='JPEG',
+    uuid = models.UUIDField(default=uuid.uuid4, db_index=True, verbose_name="uuid")
+    image = ProcessedImageField(verbose_name='Главное изображение', blank=False, format='JPEG', null=True,
                                  options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)],
                                  upload_to=upload_to_article_image_directory)
     content_hard = RichTextUploadingField(blank=True, null=True, config_name='default',
@@ -35,7 +35,7 @@ class Article(models.Model):
                                           'plugin.js',
                                           )],
                                       )
-    content_medium = RichTextUploadingField(blank=True,
+    content_medium = RichTextUploadingField(blank=True, null=True,
                                       config_name='medium',
                                       external_plugin_resources=[(
                                           'youtube',
@@ -44,13 +44,13 @@ class Article(models.Model):
                                           )],
                                       )
     created = models.DateTimeField(default=timezone.now, verbose_name="Создан")
-    creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='article_creator',verbose_name="Создатель")
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='article_creator', verbose_name="Создатель")
     comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
-    community = models.ForeignKey('communities.Community', on_delete=models.CASCADE, related_name='article',null=True,blank=True,verbose_name="Сообщество")
-    is_edited = models.BooleanField(default=False,verbose_name="Изменено")
-    is_closed = models.BooleanField(default=False,verbose_name="Закрыто")
-    is_deleted = models.BooleanField(default=False,verbose_name="Удалено")
-    views=models.IntegerField(default=0,verbose_name="Просмотры")
+    community = models.ForeignKey('communities.Community', on_delete=models.CASCADE, related_name='article', null=True, blank=True, verbose_name="Сообщество")
+    is_edited = models.BooleanField(default=False, verbose_name="Изменено")
+    is_closed = models.BooleanField(default=False, verbose_name="Закрыто")
+    is_deleted = models.BooleanField(default=False, verbose_name="Удалено")
+    views=models.IntegerField(default=0, verbose_name="Просмотры")
     votes = GenericRelation(LikeDislike, related_query_name='article')
     STATUS_DRAFT = 'D'
     STATUS_PROCESSING = 'PG'
@@ -79,9 +79,17 @@ class Article(models.Model):
     def create_article(cls, creator, community_name=None, image=None, content_hard=None,
                     created=None, is_draft=False, content_lite=None, content_medium=None ):
 
-        article = Post.objects.create(creator=creator, created=created)
+        article = Article.objects.create(creator=creator, created=created)
         if community_name:
             article.community = Community.objects.get(name=community_name)
+        if image:
+            article.image=image
+        if content_medium:
+            article.content_medium=content_medium
+        if content_hard:
+            article.content_hard=content_hard
+        if content_lite:
+            article.content_lite=content_lite
 
         if not is_draft:
             article.publish()

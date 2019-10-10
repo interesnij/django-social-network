@@ -57,9 +57,9 @@ class NotificationQuerySet(models.query.QuerySet):
 
 
 class Notification(models.Model):
-    recipient = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notifications',verbose_name="Получатель")
-    actor = models.ForeignKey(settings.AUTH_USER_MODEL,related_name="notify_actor",verbose_name="Инициатор",on_delete=models.CASCADE)
-    timestamp = models.DateTimeField(default=timezone.now, editable=False, db_index=True,verbose_name="Создано")
+    recipient = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notifications', verbose_name="Получатель")
+    actor = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="notify_actor", verbose_name="Инициатор", on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(default=timezone.now, editable=False, db_index=True, verbose_name="Создано")
     unread  = models.BooleanField(default=True, db_index=True)
 
     POST_COMMENT = 'PC'
@@ -94,7 +94,7 @@ class Notification(models.Model):
         (REPLY, 'поделился Вашим постом'),
     )
 
-    verb = models.CharField(max_length=5, choices=NOTIFICATION_TYPES,verbose_name="Тип уведомления")
+    verb = models.CharField(max_length=5, choices=NOTIFICATION_TYPES, verbose_name="Тип уведомления")
     slug = models.SlugField(max_length=210, null=True, blank=True)
     action_object_content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     action_object_object_id = models.CharField(max_length=50, blank=True, null=True)

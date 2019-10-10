@@ -11,11 +11,11 @@ from goods.models import Good, GoodComment
 
 
 class ModerationCategory(models.Model):
-    name = models.CharField(max_length=32, blank=False, null=False,verbose_name="Название")
-    title = models.CharField(max_length=64, blank=False, null=False,verbose_name="Заголовок")
-    description = models.CharField(max_length=255, blank=False, null=False,verbose_name="Описание")
-    created = models.DateTimeField(default=timezone.now, editable=False, db_index=True,verbose_name="Создано")
-    order = models.PositiveIntegerField(editable=False,verbose_name="Порядковый номер")
+    name = models.CharField(max_length=32, blank=False, null=False, verbose_name="Название")
+    title = models.CharField(max_length=64, blank=False, null=False, verbose_name="Заголовок")
+    description = models.CharField(max_length=255, blank=False, null=False, verbose_name="Описание")
+    created = models.DateTimeField(default=timezone.now, editable=False, db_index=True, verbose_name="Создано")
+    order = models.PositiveIntegerField(editable=False, verbose_name="Порядковый номер")
 
     SEVERITY_CRITICAL = 'C'
     SEVERITY_HIGH = 'H'
@@ -37,11 +37,11 @@ class ModerationCategory(models.Model):
 
 
 class ModeratedObject(models.Model):
-    community = models.ForeignKey('communities.Community', on_delete=models.CASCADE,related_name='moderated_objects',null=True,blank=False,verbose_name="Сообщество")
+    community = models.ForeignKey('communities.Community', on_delete=models.CASCADE, related_name='moderated_objects', null=True, blank=False, verbose_name="Сообщество")
     description = models.CharField(max_length=300,
-                                   blank=False, null=True,verbose_name="Описание")
+                                   blank=False, null=True, verbose_name="Описание")
     verified = models.BooleanField(default=False,
-                                   blank=False, null=False,verbose_name="Одобрено")
+                                   blank=False, null=False, verbose_name="Одобрено")
 
     STATUS_PENDING = 'P'
     STATUS_APPROVED = 'A'
@@ -53,9 +53,9 @@ class ModeratedObject(models.Model):
         (STATUS_REJECTED, 'Отвергнутый'),
     )
 
-    status = models.CharField(max_length=5, choices=STATUSES, default=STATUS_PENDING,verbose_name="Статус")
+    status = models.CharField(max_length=5, choices=STATUSES, default=STATUS_PENDING, verbose_name="Статус")
 
-    category = models.ForeignKey(ModerationCategory, on_delete=models.CASCADE, related_name='moderated_objects',verbose_name="Категория")
+    category = models.ForeignKey(ModerationCategory, on_delete=models.CASCADE, related_name='moderated_objects', verbose_name="Категория")
 
     OBJECT_TYPE_POST = 'P'
     OBJECT_TYPE_POST_COMMENT = 'PC'
@@ -76,7 +76,7 @@ class ModeratedObject(models.Model):
         (OBJECT_TYPE_GOOD_COMMENT, 'Комментарий к товару'),
     )
 
-    object_type = models.CharField(max_length=5, choices=OBJECT_TYPES,verbose_name="Тип модерируемого объекта")
+    object_type = models.CharField(max_length=5, choices=OBJECT_TYPES, verbose_name="Тип модерируемого объекта")
 
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()
@@ -362,9 +362,9 @@ class ModeratedObject(models.Model):
 
 
 class ModerationReport(models.Model):
-    reporter = models.ForeignKey(User, on_delete=models.CASCADE, related_name='moderation_reports', null=False,verbose_name="Репортер")
-    moderated_object = models.ForeignKey(ModeratedObject, on_delete=models.CASCADE, related_name='reports', null=False,verbose_name="Объект")
-    category = models.ForeignKey(ModerationCategory, on_delete=models.CASCADE, related_name='reports', null=False,verbose_name="Категория")
+    reporter = models.ForeignKey(User, on_delete=models.CASCADE, related_name='moderation_reports', null=False, verbose_name="Репортер")
+    moderated_object = models.ForeignKey(ModeratedObject, on_delete=models.CASCADE, related_name='reports', null=False, verbose_name="Объект")
+    category = models.ForeignKey(ModerationCategory, on_delete=models.CASCADE, related_name='reports', null=False, verbose_name="Категория")
     description = models.CharField(max_length=300,
                                    blank=False, null=True,verbose_name="Описание")
 
@@ -450,9 +450,9 @@ class ModerationReport(models.Model):
 
 
 class ModerationPenalty(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='moderation_penalties',verbose_name="Оштрафованный пользователь")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='moderation_penalties', verbose_name="Оштрафованный пользователь")
     expiration = models.DateTimeField(null=True,verbose_name="Окончание")
-    moderated_object = models.ForeignKey(ModeratedObject, on_delete=models.CASCADE, related_name='user_penalties',verbose_name="Объект")
+    moderated_object = models.ForeignKey(ModeratedObject, on_delete=models.CASCADE, related_name='user_penalties', verbose_name="Объект")
 
     TYPE_SUSPENSION = 'S'
     TYPES = (
@@ -467,7 +467,7 @@ class ModerationPenalty(models.Model):
 
 
 class ModeratedObjectLog(models.Model):
-    actor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='+', null=True,verbose_name="инициатор")
+    actor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='+', null=True, verbose_name="инициатор")
 
     LOG_TYPE_DESCRIPTION_CHANGED = 'DC'
     LOG_TYPE_STATUS_CHANGED = 'AC'
@@ -486,8 +486,8 @@ class ModeratedObjectLog(models.Model):
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey()
 
-    moderated_object = models.ForeignKey(ModeratedObject, on_delete=models.CASCADE, related_name='logs',verbose_name="Объект")
-    created = models.DateTimeField(default=timezone.now, editable=False, db_index=True,verbose_name="Создан")
+    moderated_object = models.ForeignKey(ModeratedObject, on_delete=models.CASCADE, related_name='logs', verbose_name="Объект")
+    created = models.DateTimeField(default=timezone.now, editable=False, db_index=True, verbose_name="Создан")
 
     @classmethod
     def create_moderated_object_log(cls, moderated_object_id, log_type, content_object, actor_id):
@@ -503,8 +503,8 @@ class ModeratedObjectLog(models.Model):
 
 class ModeratedObjectCategoryChangedLog(models.Model):
     log = GenericRelation(ModeratedObjectLog)
-    changed_from = models.ForeignKey(ModerationCategory, on_delete=models.CASCADE, related_name='+',verbose_name="От")
-    changed_to = models.ForeignKey(ModerationCategory, on_delete=models.CASCADE, related_name='+',verbose_name="До")
+    changed_from = models.ForeignKey(ModerationCategory, on_delete=models.CASCADE, related_name='+', verbose_name="От")
+    changed_to = models.ForeignKey(ModerationCategory, on_delete=models.CASCADE, related_name='+', verbose_name="До")
 
     @classmethod
     def create_moderated_object_category_changed_log(cls, moderated_object_id, changed_from_id, changed_to_id,
@@ -520,8 +520,8 @@ class ModeratedObjectCategoryChangedLog(models.Model):
 class ModeratedObjectDescriptionChangedLog(models.Model):
     log = GenericRelation(ModeratedObjectLog)
     changed_from = models.CharField(max_length=100,
-                                    blank=False, null=True,verbose_name="От")
-    changed_to = models.CharField(max_length=100,blank=False, null=True,verbose_name="До")
+                                    blank=False, null=True, verbose_name="От")
+    changed_to = models.CharField(max_length=100,blank=False, null=True, verbose_name="До")
 
     @classmethod
     def create_moderated_object_description_changed_log(cls, moderated_object_id, changed_from, changed_to, actor_id):
@@ -537,8 +537,8 @@ class ModeratedObjectDescriptionChangedLog(models.Model):
 class ModeratedObjectStatusChangedLog(models.Model):
     log = GenericRelation(ModeratedObjectLog)
     changed_from = models.CharField(choices=ModeratedObject.STATUSES,
-                                    blank=False, null=False, max_length=5,verbose_name="От")
-    changed_to = models.CharField(blank=False, null=False, max_length=5,verbose_name="До")
+                                    blank=False, null=False, max_length=5, verbose_name="От")
+    changed_to = models.CharField(blank=False, null=False, max_length=5, verbose_name="До")
 
     @classmethod
     def create_moderated_object_status_changed_log(cls, moderated_object_id, changed_from, changed_to, actor_id):
@@ -551,8 +551,8 @@ class ModeratedObjectStatusChangedLog(models.Model):
 
 class ModeratedObjectVerifiedChangedLog(models.Model):
     log = GenericRelation(ModeratedObjectLog)
-    changed_from = models.BooleanField(blank=False, null=False,verbose_name="От")
-    changed_to = models.BooleanField(blank=False, null=False,verbose_name="До")
+    changed_from = models.BooleanField(blank=False, null=False, verbose_name="От")
+    changed_to = models.BooleanField(blank=False, null=False, verbose_name="До")
 
     @classmethod
     def create_moderated_object_verified_changed_log(cls, moderated_object_id, changed_from, changed_to, actor_id):

@@ -18,13 +18,13 @@ class Post(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, db_index=True,verbose_name="uuid")
     text = models.TextField(max_length=settings.POST_MAX_LENGTH, blank=False, null=True, verbose_name="Текст")
     created = models.DateTimeField(default=timezone.now, verbose_name="Создан")
-    creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='posts_creator',verbose_name="Создатель")
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='posts_creator', verbose_name="Создатель")
     comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
-    community = models.ForeignKey('communities.Community', on_delete=models.CASCADE, related_name='posts',null=True,blank=True,verbose_name="Сообщество")
-    is_edited = models.BooleanField(default=False,verbose_name="Изменено")
-    is_closed = models.BooleanField(default=False,verbose_name="Закрыто")
-    is_deleted = models.BooleanField(default=False,verbose_name="Удалено")
-    views=models.IntegerField(default=0,verbose_name="Просмотры")
+    community = models.ForeignKey('communities.Community', on_delete=models.CASCADE, related_name='posts', null=True, blank=True, verbose_name="Сообщество")
+    is_edited = models.BooleanField(default=False, verbose_name="Изменено")
+    is_closed = models.BooleanField(default=False, verbose_name="Закрыто")
+    is_deleted = models.BooleanField(default=False, verbose_name="Удалено")
+    views=models.IntegerField(default=0, verbose_name="Просмотры")
     votes = GenericRelation(LikeDislike, related_query_name='posts')
     STATUS_DRAFT = 'D'
     STATUS_PROCESSING = 'PG'
@@ -202,13 +202,13 @@ class PostImage(models.Model):
 
 class PostComment(models.Model):
     moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='post_comment')
-    parent_comment = models.ForeignKey('self', on_delete=models.CASCADE, related_name='replies', null=True, blank=True,verbose_name="Родительский комментарий")
-    created = models.DateTimeField(default=timezone.now, editable=False, db_index=True,verbose_name="Создан")
+    parent_comment = models.ForeignKey('self', on_delete=models.CASCADE, related_name='replies', null=True, blank=True, verbose_name="Родительский комментарий")
+    created = models.DateTimeField(default=timezone.now, editable=False, db_index=True, verbose_name="Создан")
     modified = models.DateTimeField(db_index=True, default=timezone.now)
-    commenter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='posts_comments',verbose_name="Комментатор")
-    text = models.TextField(max_length=settings.POST_COMMENT_MAX_LENGTH, blank=True,null=True)
-    is_edited = models.BooleanField(default=False, null=False, blank=False,verbose_name="Изменено")
-    is_deleted = models.BooleanField(default=False,verbose_name="Удаено")
+    commenter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='posts_comments', verbose_name="Комментатор")
+    text = models.TextField(max_length=settings.POST_COMMENT_MAX_LENGTH, blank=True, null=True)
+    is_edited = models.BooleanField(default=False, null=False, blank=False, verbose_name="Изменено")
+    is_deleted = models.BooleanField(default=False, verbose_name="Удаено")
     votes = GenericRelation(LikeDislike, related_query_name='post_comments_vote')
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post_comments', verbose_name="Запись")
 
@@ -239,8 +239,8 @@ class PostRepost(models.Model):
 
 
 class PostMute(models.Model):
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='mutes',verbose_name="Запись")
-    muter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='post_mutes',verbose_name="Кто заглушил")
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='mutes', verbose_name="Запись")
+    muter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='post_mutes', verbose_name="Кто заглушил")
 
     @classmethod
     def create_post_mute(cls, post_id, muter_id):
@@ -248,8 +248,8 @@ class PostMute(models.Model):
 
 
 class PostCommentMute(models.Model):
-    post_comment = models.ForeignKey(PostComment, on_delete=models.CASCADE, related_name='mutes',verbose_name="Запись")
-    muter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='post_comment_mutes',verbose_name="Кто заглушил")
+    post_comment = models.ForeignKey(PostComment, on_delete=models.CASCADE, related_name='mutes', verbose_name="Запись")
+    muter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='post_comment_mutes', verbose_name="Кто заглушил")
 
     @classmethod
     def create_post_comment_mute(cls, post_comment_id, muter_id):
@@ -257,13 +257,13 @@ class PostCommentMute(models.Model):
 
 
 class PostUserMention(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='post_mentions',verbose_name="Упоминаемый")
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='user_mentions',verbose_name="Запись")
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='post_mentions', verbose_name="Упоминаемый")
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='user_mentions', verbose_name="Запись")
 
 
 class PostCommentUserMention(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='post_comment_mentions',verbose_name="Упомянутый в комментарии")
-    post_comment = models.ForeignKey(PostComment, on_delete=models.CASCADE, related_name='user_mentions',verbose_name="Запись")
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='post_comment_mentions', verbose_name="Упомянутый в комментарии")
+    post_comment = models.ForeignKey(PostComment, on_delete=models.CASCADE, related_name='user_mentions', verbose_name="Запись")
 
 
 class PostDoc(models.Model):

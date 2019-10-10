@@ -43,9 +43,9 @@ class LikeDislike(models.Model):
 
 
 class Badge(models.Model):
-    keyword = models.CharField(max_length=16, blank=False, null=False, unique=True,verbose_name="Слово")
-    keyword_description = models.CharField(max_length=64, blank=True, null=True, unique=True,verbose_name="Описание")
-    created = models.DateTimeField(default=timezone.now, editable=False,verbose_name="Создан")
+    keyword = models.CharField(max_length=16, blank=False, null=False, unique=True, verbose_name="Слово")
+    keyword_description = models.CharField(max_length=64, blank=True, null=True, unique=True, verbose_name="Описание")
+    created = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создан")
 
     def save(self, *args, **kwargs):
         if not self.id:

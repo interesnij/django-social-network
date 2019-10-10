@@ -22,8 +22,8 @@ class User(AbstractUser):
         default=False,
     )
 
-    uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True,verbose_name="uuid")
-    invite_count = models.SmallIntegerField(default=0,verbose_name="Кол-во приглашений")
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, verbose_name="uuid")
+    invite_count = models.SmallIntegerField(default=0, verbose_name="Кол-во приглашений")
     last_activity= models.DateTimeField(
         default=timezone.now, blank=True, verbose_name='Активность')
 
@@ -63,15 +63,15 @@ class UserBlock(models.Model):
 
 class UserNotificationsSettings(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,
-                                related_name='notifications_settings',verbose_name="Пользователь")
-    post_comment_notifications = models.BooleanField(default=True,verbose_name="Отправлять уведомления о комментариях к постам")
-    post_comment_reply_notifications = models.BooleanField(default=True,verbose_name="Отправлять уведомления об ответах на комментарии к постам")
-    follow_notifications = models.BooleanField(default=True,verbose_name="Отправлять уведомления о подписках")
-    connection_request_notifications = models.BooleanField(default=True,verbose_name="Отправлять уведомления о заявках в друзья")
-    connection_confirmed_notifications = models.BooleanField(default=True,verbose_name="Отправлять уведомления о приеме заявки в друзья")
-    community_invite_notifications = models.BooleanField(default=True,verbose_name="Отправлять уведомления о приглашениях в сообщества")
-    post_comment_user_mention_notifications = models.BooleanField(default=True,verbose_name="Отправлять уведомления об упоминаниях в комментариях к постам")
-    post_user_mention_notifications = models.BooleanField(default=True,verbose_name="Отправлять уведомления об упоминаниях в постам")
+                                related_name='notifications_settings', verbose_name="Пользователь")
+    post_comment_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления о комментариях к постам")
+    post_comment_reply_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления об ответах на комментарии к постам")
+    follow_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления о подписках")
+    connection_request_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления о заявках в друзья")
+    connection_confirmed_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления о приеме заявки в друзья")
+    community_invite_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления о приглашениях в сообщества")
+    post_comment_user_mention_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления об упоминаниях в комментариях к постам")
+    post_user_mention_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления об упоминаниях в постам")
 
     @classmethod
     def create_notifications_settings(cls, user):
@@ -118,9 +118,9 @@ class UserProfile(models.Model):
     avatar = ProcessedImageField(verbose_name='Аватар', blank=False, null=True, format='JPEG',
                                  options={'quality': 90}, processors=[ResizeToFill(500, 500)],
                                  upload_to=upload_to_user_avatar_directory)
-    cover = models.ImageField(blank=True, null=True, upload_to=upload_to_user_cover_directory,verbose_name="Фон")
+    cover = models.ImageField(blank=True, null=True, upload_to=upload_to_user_cover_directory, verbose_name="Фон")
     bio = models.TextField(max_length=settings.PROFILE_BIO_MAX_LENGTH, blank=True, verbose_name="Биография")
-    followers_count_visible = models.BooleanField(blank=False, null=False, default=False,verbose_name="Число подписчиков видно")
+    followers_count_visible = models.BooleanField(blank=False, null=False, default=False, verbose_name="Число подписчиков видно")
     sity = models.CharField(max_length=settings.PROFILE_LOCATION_MAX_LENGTH, blank=True, verbose_name="Местоположение")
     status = models.CharField(max_length=100, blank=True, verbose_name="статус-слоган")
     vk_url = models.URLField(blank=True, verbose_name="Ссылка на vk")
