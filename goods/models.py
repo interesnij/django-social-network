@@ -3,7 +3,7 @@ from django.db import models
 from users.models import User
 from django.contrib.contenttypes.fields import GenericRelation
 from goods.helpers import upload_to_good_image_directory
-from main.models import LikeDislike
+from main.models import LikeDislike, Item
 from pilkit.processors import ResizeToFill, ResizeToFit
 from imagekit.models import ProcessedImageField
 from asgiref.sync import async_to_sync
@@ -37,7 +37,7 @@ class GoodSubCategory(models.Model):
 	def __str__(self):
 		return self.name
 
-class Good(models.Model):
+class Good(Item):
 
 	class Meta:
 		verbose_name="Товар"
@@ -49,7 +49,6 @@ class Good(models.Model):
 	description = models.TextField(max_length=1000, verbose_name="Описание товара")
 	community = models.ForeignKey('communities.Community', on_delete=models.CASCADE, related_name='good', null=True, blank=True, verbose_name="Сообщество")
 	price = models.PositiveIntegerField(default=0, verbose_name="Цена товара")
-	creator = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Создатель")
 	sub_category = models.ForeignKey(GoodSubCategory, on_delete=models.CASCADE, verbose_name="Подкатегория")
 	image = ProcessedImageField(verbose_name='Главное изображение', format='JPEG',options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)],upload_to=upload_to_good_image_directory)
 	image2 = ProcessedImageField(verbose_name='Изображение 2', blank=False, null=True, format='JPEG', options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)],upload_to=upload_to_good_image_directory)
@@ -58,11 +57,9 @@ class Good(models.Model):
 	image5 = ProcessedImageField(verbose_name='Изображение 5', blank=False, null=True, format='JPEG', options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)], upload_to=upload_to_good_image_directory)
 	image6 = ProcessedImageField(verbose_name='Изображение 6', blank=False, null=True, format='JPEG', options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)], upload_to=upload_to_good_image_directory)
 	image7 = ProcessedImageField(verbose_name='Изображение 7', blank=False, null=True, format='JPEG', options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)], upload_to=upload_to_good_image_directory)
-	views=models.IntegerField(default=0, verbose_name="Просмотры")
 	votes = GenericRelation(LikeDislike, related_query_name='vote_good')
 	is_active=models.BooleanField(default=False, verbose_name='Товар активен')
 	is_sold=models.BooleanField(default=False, verbose_name='Товар не актуален')
-	created=models.DateTimeField(default=timezone.now, db_index=True, verbose_name="Опубликованo")
 	is_reklama=models.BooleanField(default=False, verbose_name='Это реклама')
 
 	def __str__(self):

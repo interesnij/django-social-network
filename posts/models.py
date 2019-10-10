@@ -9,23 +9,18 @@ from imagekit.models import ProcessedImageField
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 from notifications.models import Notification, notification_handler
-from main.models import LikeDislike
+from main.models import LikeDislike, Item
 from posts.helpers import upload_to_post_image_directory, upload_to_post_directory
 
 
-class Post(models.Model):
+class Post(Item):
     moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='post')
     post_uuid = models.UUIDField(default=uuid.uuid4, db_index=True,verbose_name="uuid")
     text = models.TextField(max_length=settings.POST_MAX_LENGTH, blank=False, null=True, verbose_name="Текст")
-    created = models.DateTimeField(default=timezone.now, verbose_name="Создан")
-    creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='posts_creator', verbose_name="Создатель")
     comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
     community = models.ForeignKey('communities.Community', on_delete=models.CASCADE, related_name='posts', null=True, blank=True, verbose_name="Сообщество")
-    is_edited = models.BooleanField(default=False, verbose_name="Изменено")
-    is_closed = models.BooleanField(default=False, verbose_name="Закрыто")
     is_deleted = models.BooleanField(default=False, verbose_name="Удалено")
-    views=models.IntegerField(default=0, verbose_name="Просмотры")
-    votes = GenericRelation(LikeDislike, related_query_name='posts')
+    votes = GenericRelation(LikeDislike, related_query_name='vote_post')
     STATUS_DRAFT = 'D'
     STATUS_PROCESSING = 'PG'
     STATUS_PUBLISHED = 'P'
