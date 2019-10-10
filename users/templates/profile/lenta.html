@@ -82,7 +82,15 @@
   <span class="stream">
 <div></div>
     {% for object in lenta %}
-      {{ object.created }}<br><br>
+    {% if object.uuid %}
+      {% include 'generic/article.html' with article=article  %}
+    {% endif %}
+    {% if object.post_uuid %}
+      {% include 'generic/post.html' with post=post  %}
+    {% endif %}
+    {% if object.good_uuid %}
+      {% include 'generic/good.html' with good=good  %}
+    {% endif %}
     {% endfor %}
 
   </span>
