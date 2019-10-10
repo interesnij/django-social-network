@@ -155,6 +155,8 @@ class Post(Item):
         return self.creator.get_full_name()
 
 
+
+
 class PostImage(models.Model):
     post = models.OneToOneField(Post, on_delete=models.CASCADE, related_name='post_image', null=True)
     image = ProcessedImageField(verbose_name='Главное изображение', blank=False, null=True, format='JPEG',
@@ -230,20 +232,24 @@ class PostComment(models.Model):
 
 
 class PostRepost(models.Model):
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE)
     content = models.TextField(blank=True)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post_repost', verbose_name="Запись")
+    post = models.ForeignKey(Post, db_index=False, on_delete=models.CASCADE, related_name='post_repost', verbose_name="Запись")
 
     class Meta:
         indexes = (
             BrinIndex(fields=['created']),
         )
+        unique_together = ('author', 'post',)
 
 
 class PostMute(models.Model):
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='mutes', verbose_name="Запись")
-    muter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='post_mutes', verbose_name="Кто заглушил")
+    post = models.ForeignKey(Post, db_index=False, on_delete=models.CASCADE, related_name='mutes', verbose_name="Запись")
+    muter = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE, related_name='post_mutes', verbose_name="Кто заглушил")
+
+    class Meta:
+        unique_together = ('post', 'muter',)
 
     @classmethod
     def create_post_mute(cls, post_id, muter_id):
@@ -251,8 +257,11 @@ class PostMute(models.Model):
 
 
 class PostCommentMute(models.Model):
-    post_comment = models.ForeignKey(PostComment, on_delete=models.CASCADE, related_name='mutes', verbose_name="Запись")
-    muter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='post_comment_mutes', verbose_name="Кто заглушил")
+    post_comment = models.ForeignKey(PostComment, db_index=False, on_delete=models.CASCADE, related_name='mutes', verbose_name="Запись")
+    muter = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE, related_name='post_comment_mutes', verbose_name="Кто заглушил")
+
+    class Meta:
+        unique_together = ('post_comment', 'muter',)
 
     @classmethod
     def create_post_comment_mute(cls, post_comment_id, muter_id):
@@ -260,13 +269,19 @@ class PostCommentMute(models.Model):
 
 
 class PostUserMention(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='post_mentions', verbose_name="Упоминаемый")
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='user_mentions', verbose_name="Запись")
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE, related_name='post_mentions', verbose_name="Упоминаемый")
+    post = models.ForeignKey(Post, db_index=False, on_delete=models.CASCADE, related_name='user_mentions', verbose_name="Запись")
+
+    class Meta:
+        unique_together = ('user', 'post',)
 
 
 class PostCommentUserMention(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='post_comment_mentions', verbose_name="Упомянутый в комментарии")
-    post_comment = models.ForeignKey(PostComment, on_delete=models.CASCADE, related_name='user_mentions', verbose_name="Запись")
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE, related_name='post_comment_mentions', verbose_name="Упомянутый в комментарии")
+    post_comment = models.ForeignKey(PostComment, db_index=False, on_delete=models.CASCADE, related_name='user_mentions', verbose_name="Запись")
+
+    class Meta:
+        unique_together = ('user', 'post_comment',)
 
 
 class PostDoc(models.Model):
