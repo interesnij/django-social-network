@@ -11,7 +11,7 @@ from channels.layers import get_channel_layer
 from notifications.models import Notification, notification_handler
 from django.utils import timezone
 from django.conf import settings
-from posts.helpers import upload_to_good_image_directory
+from goods.helpers import upload_to_good_image_directory
 
 
 class GoodCategory(models.Model):
