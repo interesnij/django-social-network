@@ -94,9 +94,9 @@ class GoodComment(models.Model):
     article = models.ForeignKey(Good, on_delete=models.CASCADE, related_name='article_comments')
 
 	class Meta:
-        indexes = (
-            BrinIndex(fields=['created']),
-        )
+		indexes = (
+			BrinIndex(fields=['created']),
+		)
 
     def count_replies(self):
         return self.replies.count()
@@ -133,6 +133,4 @@ class GoodRepost(models.Model):
     good = models.ForeignKey(Good, on_delete=models.CASCADE, related_name='good_repost')
 
 	class Meta:
-        indexes = (
-            BrinIndex(fields=['created']),
-        )
+		indexes = (BrinIndex(fields=['created']),)
