@@ -36,13 +36,13 @@
         </div>
     </div>
     <div class="card-body">
-      {% if object.content_hard %}
+      {% if object.article.content_hard %}
         <p class="mb-0 content-color-secondary">{{ object.article.content_hard|safe }}</p>
       {% endif %}
-      {% if object.content_medium %}
+      {% if object.article.content_medium %}
         <p class="mb-0 content-color-secondary">{{ object.article.content_medium|safe }}</p>
       {% endif %}
-      {% if object.content_lite %}
+      {% if object.article.content_lite %}
         <p class="mb-0 content-color-secondary">{{ object.article.content_lite|safe }}</p>
       {% endif %}
     </div>
