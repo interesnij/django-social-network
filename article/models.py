@@ -44,8 +44,6 @@ class Article(Item):
                                           'plugin.js',
                                           )],
                                       )
-    comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
-    community = models.ForeignKey('communities.Community', on_delete=models.CASCADE, related_name='article', null=True, blank=True, verbose_name="Сообщество")
     votes = GenericRelation(LikeDislike, related_query_name='article')
     STATUS_DRAFT = 'D'
     STATUS_PROCESSING = 'PG'
