@@ -42,10 +42,10 @@ class LikeDislike(models.Model):
     objects = LikeDislikeManager()
 
 
-class Item(models.Model): 
+class Item(models.Model):
     id = models.AutoField(primary_key=True)
     created = models.DateTimeField(auto_now_add=True, verbose_name="Создан")
-    creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='creator', verbose_name="Создатель")
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE, related_name='creator', verbose_name="Создатель")
     is_edited = models.BooleanField(default=False, verbose_name="Изменено")
     is_closed = models.BooleanField(default=False, verbose_name="Закрыто")
     is_deleted = models.BooleanField(default=False, verbose_name="Удалено")

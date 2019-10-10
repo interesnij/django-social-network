@@ -19,7 +19,7 @@ class Post(Item):
     post_uuid = models.UUIDField(default=uuid.uuid4, db_index=True,verbose_name="uuid")
     text = models.TextField(max_length=settings.POST_MAX_LENGTH, blank=False, null=True, verbose_name="Текст")
     comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
-    community = models.ForeignKey('communities.Community', on_delete=models.CASCADE, related_name='posts', null=True, blank=True, verbose_name="Сообщество")
+    community = models.ForeignKey('communities.Community', db_index=False, on_delete=models.CASCADE, related_name='posts', null=True, blank=True, verbose_name="Сообщество")
     votes = GenericRelation(LikeDislike, related_query_name='vote_post')
     STATUS_DRAFT = 'D'
     STATUS_PROCESSING = 'PG'
@@ -152,6 +152,9 @@ class Post(Item):
         ordering=["-created"]
         verbose_name="Запись"
         verbose_name_plural="Записи"
+        index_together = [
+            ('creator', 'community'),
+        ]
 
     def __str__(self):
         return self.creator.get_full_name()
