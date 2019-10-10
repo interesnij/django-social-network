@@ -55,7 +55,7 @@ class Badge(models.Model):
 
 class Item(models.Model):
     created = models.DateTimeField(default=timezone.now, verbose_name="Создан")
-    creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='article_creator', verbose_name="Создатель")
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='creator', verbose_name="Создатель")
     is_edited = models.BooleanField(default=False, verbose_name="Изменено")
     is_closed = models.BooleanField(default=False, verbose_name="Закрыто")
     is_deleted = models.BooleanField(default=False, verbose_name="Удалено")
