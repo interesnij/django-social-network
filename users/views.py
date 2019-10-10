@@ -37,9 +37,9 @@ class ProfileUserView(TemplateView):
 		self.frends = Connect.objects.filter(Q(user=self.user)|Q(target_user=self.user))
 		self.pop_frends = self.frends[0:5]
 		self.communities=Community.objects.filter(starrers=self.user)
-		self.posts=Post.objects.filter(creator=self.user,is_deleted=False).order_by("-created")
-		self.articles=Article.objects.filter(creator=self.user,is_deleted=False).order_by("-created")
-		self.lenta = chain(self.articles, self.posts)
+		self.posts=Post.objects.filter(creator=self.user,is_deleted=False)
+		self.articles=Article.objects.filter(creator=self.user,is_deleted=False)
+		self.lenta = sorted(chain(self.articles, self.posts),key=lambda all: all.created)
 
 		self.follows_count=Follow.objects.filter(followed_user=self.user).count()
 		self.connect_count=Connect.objects.filter(user=self.user).count()
