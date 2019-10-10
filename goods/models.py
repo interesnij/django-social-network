@@ -17,7 +17,7 @@ from django.contrib.postgres.indexes import BrinIndex
 
 class GoodCategory(models.Model):
 	name=models.CharField(max_length=100, verbose_name="Название категории")
-	order=models.PositiveSmallIntegerField(default=0, db_index=True, verbose_name="Порядковый номер")
+	order=models.PositiveSmallIntegerField(default=0, verbose_name="Порядковый номер")
 	image=models.ImageField(blank=True, verbose_name="Изображение", upload_to="goods/list")
 
 	def __str__(self):

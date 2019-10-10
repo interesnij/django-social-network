@@ -496,8 +496,8 @@ class Community(models.Model):
 
 
 class CommunityMembership(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='communities_memberships', null=False, blank=False, verbose_name="Члены сообщества")
-    community = models.ForeignKey(Community, on_delete=models.CASCADE, related_name='memberships', null=False, blank=False, verbose_name="Сообщество")
+    user = models.ForeignKey(User, db_index=False, on_delete=models.CASCADE, related_name='communities_memberships', null=False, blank=False, verbose_name="Члены сообщества")
+    community = models.ForeignKey(Community, db_index=False, on_delete=models.CASCADE, related_name='memberships', null=False, blank=False, verbose_name="Сообщество")
     is_administrator = models.BooleanField(default=False, verbose_name="Это администратор")
     is_moderator = models.BooleanField(default=False, verbose_name="Это модератор")
     created = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создано")
@@ -516,6 +516,13 @@ class CommunityMembership(models.Model):
         if not self.id:
             self.created = timezone.now()
         return super(CommunityMembership, self).save(*args, **kwargs)
+
+    class Meta:
+        unique_together = (('user', 'community'),)
+        indexes = [
+            models.Index(fields=['community', 'user']),
+            models.Index(fields=['community', 'user', 'is_administrator']),
+            models.Index(fields=['community', 'user', 'is_moderator']),
 
 
 class CommunityLog(models.Model):
@@ -553,9 +560,9 @@ class CommunityLog(models.Model):
 
 
 class CommunityInvite(models.Model):
-    creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_communities_invites', null=False,blank=False, verbose_name="Кто приглашает в сообщество")
-    invited_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='communities_invites', null=False, blank=False, verbose_name="Кого приглашают в сообщество")
-    community = models.ForeignKey(Community, on_delete=models.CASCADE, related_name='invites', null=False, blank=False, verbose_name="Сообщество")
+    creator = models.ForeignKey(User, db_index=False, on_delete=models.CASCADE, related_name='created_communities_invites', null=False,blank=False, verbose_name="Кто приглашает в сообщество")
+    invited_user = models.ForeignKey(User, db_index=False, on_delete=models.CASCADE, related_name='communities_invites', null=False, blank=False, verbose_name="Кого приглашают в сообщество")
+    community = models.ForeignKey(Community, db_index=False, on_delete=models.CASCADE, related_name='invites', null=False, blank=False, verbose_name="Сообщество")
 
     @classmethod
     def create_community_invite(cls, creator, invited_user, community):
@@ -564,3 +571,6 @@ class CommunityInvite(models.Model):
     @classmethod
     def is_user_with_username_invited_to_community_with_name(cls, username, community_name):
         return cls.objects.filter(community__name=community_name, invited_user__username=username).exists()
+
+    class Meta:
+        unique_together = (('invited_user', 'community', 'creator'),)
