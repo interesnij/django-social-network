@@ -4,6 +4,7 @@ from posts.views import (
                             PostDislikeView,
                             PostLikeView,
                             PostCommentLikeView,
+                            PostUserCreate,
                             PostCommentDislikeView,
                             post_update_interactions,
                             post_get_comment,
@@ -19,6 +20,7 @@ from django.contrib.auth.decorators import login_required
 
 urlpatterns = [
     url(r'^$', PostsView.as_view(), name='posts'),
+    url(r'^add_post/$', PostUserCreate.as_view(), name="post_add_user"),
     url(r'^like/(?P<pk>\d+)/$',login_required(VotesView.as_view(model=Post, vote_type=LikeDislike.LIKE)),name='post_like'),
     url(r'^dislike/(?P<pk>\d+)/$',login_required(VotesView.as_view(model=Post, vote_type=LikeDislike.DISLIKE)),name='post_dislike'),
     url(r'^comment/(?P<pk>\d+)/like/$',login_required(VotesView.as_view(model=PostComment, vote_type=LikeDislike.LIKE)),name='post_comment_like'),

@@ -10,3 +10,9 @@ class PostCommentForm(forms.ModelForm):
 
 class PostRepostForm(forms.Form):
     repost_comment = forms.CharField(widget=forms.Textarea)
+
+class PostUserForm(forms.ModelForm):
+
+	class Meta:
+		model = Post
+		fields = ['text']

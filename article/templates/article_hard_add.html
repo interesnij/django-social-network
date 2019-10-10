@@ -11,7 +11,7 @@
 </form>
 
 <script defer src="/static/scripts/jquery.toast.min.js" type="text/javascript"></script>
-<script defer type="text/javascript">
+<script type="text/javascript">
     var frm = $('#FORM-POST1');
     frm.submit(function () {
       CKEDITOR.instances.id_content_hard.updateElement();
@@ -36,7 +36,7 @@
         return false;
     });
 </script>
-<script defer>
+<script>
   $( ".remove_form" ).click(function(){
     $('#article_create').empty();
   });

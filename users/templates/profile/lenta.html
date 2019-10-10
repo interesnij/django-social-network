@@ -6,8 +6,10 @@
 
 {% if user == request.user %}
  <div class="card mb-4" style="border:1px solid rgba(0, 0, 0, 0.125);">
+   <form action="" id="FORM-POST" method="post" enctype="multipart/form-data">
+     {% csrf_token %}
      <div class="card-body p-0">
-         <textarea class="form-control bg-light-secondary border-0" rows="4" placeholder="Что у Вас нового?"></textarea>
+         <textarea name="text" id="id_text" class="form-control bg-light-secondary border-0" rows="4" placeholder="Что у Вас нового?"></textarea>
      </div>
      <div class="card-footer border-top">
          <div class="row">
@@ -60,13 +62,14 @@
              </div>
 
              <div class="col-auto ">
-                 <button class="btn btn-rounded btn-sm pink-gradient text-uppercase pl-3">
+                 <button type="button" class="btn btn-rounded btn-sm pink-gradient text-uppercase pl-3">
                    <span class="text-hide-xs">Опубликовать</span>
                    <i class="material-icons">send</i>
                  </button>
              </div>
          </div>
      </div>
+   </form>
  </div>
 {% endif %}
 

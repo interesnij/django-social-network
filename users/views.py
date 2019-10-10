@@ -37,6 +37,7 @@ class ProfileUserView(TemplateView):
 		self.communities=Community.objects.filter(starrers=self.user)
 		self.posts=Post.objects.filter(creator=self.user,is_deleted=False)
 		self.articles=Article.objects.filter(creator=self.user,is_deleted=False)
+		self.lenta = set(posts | articles)
 
 		self.follows_count=Follow.objects.filter(followed_user=self.user).count()
 		self.connect_count=Connect.objects.filter(user=self.user).count()
@@ -66,6 +67,7 @@ class ProfileUserView(TemplateView):
 		context = super(ProfileUserView, self).get_context_data(**kwargs)
 		context['user'] = self.user
 		context['posts'] = self.posts
+		context['lenta'] = self.lenta
 		context['articles'] = self.articles
 		context['pop_frends'] = self.pop_frends
 		context['form_medium'] = ArticleMediumForm()

@@ -47,9 +47,9 @@ class Post(models.Model):
         if text:
             post.text = text
         if image:
-            post.add_media(file=image)
+            post.image = image
         if video:
-            post.add_media(file=video)
+            post.video = video
         if doc:
             post.doc = doc
         if good:

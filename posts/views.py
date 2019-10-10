@@ -5,6 +5,7 @@ from django.template.loader import render_to_string
 from django.contrib.auth.mixins import LoginRequiredMixin
 from posts.helpers import ajax_required, AuthorRequiredMixin
 from posts.models import Post, PostComment
+from posts.forms import PostUserForm
 from django.views.generic import DeleteView
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
@@ -14,6 +15,33 @@ from django.views.decorators.http import require_http_methods
 
 class PostsView(TemplateView):
     template_name="posts.html"
+
+
+class PostUserCreate(TemplateView):
+    template_name="post_add.html"
+    form_post=None
+    success_url="/"
+
+    def get(self,request,*args,**kwargs):
+        self.form_post=PostUserForm(initial={"creator":request.user})
+        return super(PostUserCreate,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context=super(PostUserCreate,self).get_context_data(**kwargs)
+        context["form_post"]=self.form_post
+        return context
+
+    def post(self,request,*args,**kwargs):
+        self.form_post=PostUserForm(request.POST, request.FILES)
+        if self.form_post.is_valid():
+            new_post=self.form_post.save(commit=False)
+            new_post.creator=self.request.user
+            new_post=self.form_post.save()
+
+            if request.is_ajax() :
+                 html = render_to_string('generic/post.html',{'object': new_post,'request': request})
+                 return HttpResponse(html)
+        return super(PostUserCreate,self).get(request,*args,**kwargs)
 
 
 class PostDeleteView(TemplateView):

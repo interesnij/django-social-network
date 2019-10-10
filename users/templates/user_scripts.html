@@ -136,6 +136,32 @@ $(document).ready(function () {
 	});
 });
 </script>
+
+<script type="text/javascript">
+    var frm = $('#FORM-POST');
+    frm.submit(function () {
+        $.ajax({
+            type: frm.attr('method'),
+            url: "{% url 'post_add_user' %}",
+            data: frm.serialize(),
+            success: function (data) {
+              $(".stream").prepend(data);
+              $(".form-control-rounded").val("");
+              $.toast({
+                  heading: '{{ request.user.first_name }}',
+                  text: 'Запись успешно создана!',
+                  showHideTransition: 'fade',
+                  icon: 'success'
+              })
+            },
+            error: function(data) {
+                $("#hack").html("Возникла непредвидинная ошибка!!");
+            }
+        });
+        return false;
+    });
+</script>
+
 <script>
 	$( "#article_hard" ).click(function(){
 		$('#article_create').html('').load("/article/add_hard/");
