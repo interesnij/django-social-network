@@ -37,13 +37,13 @@
     </div>
     <div class="card-body">
       {% if object.text %}
-        <p class="mb-0 content-color-secondary">{{ object.text|safe }}</p>
+        <p class="">{{ object.text|safe }}</p>
       {% endif %}
       {% if object.image %}
-        <p class="mb-0 content-color-secondary">{{ object.image.url }}</p>
+        <p class="">{{ object.image.url }}</p>
       {% endif %}
       {% if object.doc %}
-        <p class="mb-0 content-color-secondary">{{ object.doc }}</p>
+        <p class="">{{ object.doc }}</p>
       {% endif %}
     </div>
 
