@@ -360,6 +360,12 @@ class ModeratedObject(models.Model):
     def get_reporters(self):
         return User.objects.filter(moderation_reports__moderated_object_id=self.pk).all()
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(name='reporter_moderated_object_constraint',
+                                    fields=['object_type', 'object_id'])
+        ]
+
 
 
 class ModerationReport(models.Model):
