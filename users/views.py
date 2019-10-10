@@ -7,6 +7,7 @@ from follows.models import Follow
 from communities.models import Community
 from posts.forms import PostCommentForm, PostRepostForm
 from article.forms import ArticleMediumForm
+from posts.forms import PostUserForm
 from users.forms import GeneralUserForm, AboutUserForm, AvatarUserForm
 from django.views.generic import ListView
 from django.contrib.auth.decorators import login_required
