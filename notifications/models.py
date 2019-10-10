@@ -10,6 +10,7 @@ from channels.layers import get_channel_layer
 from slugify import slugify
 import uuid
 from django.core import serializers
+from django.contrib.postgres.indexes import BrinIndex
 
 
 class NotificationQuerySet(models.query.QuerySet):
@@ -107,6 +108,9 @@ class Notification(models.Model):
         verbose_name = "Уведомление"
         verbose_name_plural = "Уведомления"
         ordering = ["-timestamp"]
+        indexes = (
+            BrinIndex(fields=['timestamp']),
+        )
 
     def __str__(self):
         return '{} - {}'.format(self.actor, self.get_verb_display())

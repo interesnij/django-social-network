@@ -360,6 +360,12 @@ class ModeratedObject(models.Model):
     def get_reporters(self):
         return User.objects.filter(moderation_reports__moderated_object_id=self.pk).all()
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(name='reporter_moderated_object_constraint',
+                                    fields=['object_type', 'object_id'])
+        ]
+
 
 class ModerationReport(models.Model):
     reporter = models.ForeignKey(User, on_delete=models.CASCADE, related_name='moderation_reports', null=False, verbose_name="Репортер")
@@ -447,6 +453,12 @@ class ModerationReport(models.Model):
         community_moderation_report = cls.objects.create(reporter_id=reporter_id, category_id=category_id,
                                                          description=description, moderated_object=moderated_object)
         return community_moderation_report
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(name='reporter_moderated_object_constraint',
+                                    fields=['reporter', 'moderated_object'])
+        ]
 
 
 class ModerationPenalty(models.Model):
