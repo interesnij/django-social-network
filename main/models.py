@@ -4,7 +4,7 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 from django.db.models import Sum
 from django.conf import settings
 from django.utils import timezone
-
+from django.contrib.postgres.indexes import BrinIndex
 
 
 class LikeDislikeManager(models.Manager):
@@ -42,21 +42,15 @@ class LikeDislike(models.Model):
     objects = LikeDislikeManager()
 
 
-class Badge(models.Model):
-    keyword = models.CharField(max_length=16, blank=False, null=False, unique=True, verbose_name="Слово")
-    keyword_description = models.CharField(max_length=64, blank=True, null=True, unique=True, verbose_name="Описание")
-    created = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создан")
-
-    def save(self, *args, **kwargs):
-        if not self.id:
-            self.created = timezone.now()
-        return super(Badge, self).save(*args, **kwargs)
-
-
 class Item(models.Model):
-    created = models.DateTimeField(default=timezone.now, verbose_name="Создан")
+    created = models.DateTimeField(auto_now_add=True, verbose_name="Создан")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='creator', verbose_name="Создатель")
     is_edited = models.BooleanField(default=False, verbose_name="Изменено")
     is_closed = models.BooleanField(default=False, verbose_name="Закрыто")
     is_deleted = models.BooleanField(default=False, verbose_name="Удалено")
     views=models.IntegerField(default=0, verbose_name="Просмотры")
+
+    class Meta:
+        indexes = (
+            BrinIndex(fields=['created']),
+        )
