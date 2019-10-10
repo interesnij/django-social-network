@@ -19,7 +19,6 @@ class Post(Item):
     text = models.TextField(max_length=settings.POST_MAX_LENGTH, blank=False, null=True, verbose_name="Текст")
     comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
     community = models.ForeignKey('communities.Community', on_delete=models.CASCADE, related_name='posts', null=True, blank=True, verbose_name="Сообщество")
-    is_deleted = models.BooleanField(default=False, verbose_name="Удалено")
     votes = GenericRelation(LikeDislike, related_query_name='vote_post')
     STATUS_DRAFT = 'D'
     STATUS_PROCESSING = 'PG'
