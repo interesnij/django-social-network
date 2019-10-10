@@ -173,7 +173,7 @@ class ArticleRepost(models.Model):
         indexes = (
             BrinIndex(fields=['created']),
         )
-        unique_together = ('author', 'post',)
+        unique_together = ('author', 'article',)
 
 
 class ArticleMute(models.Model):
@@ -185,7 +185,7 @@ class ArticleMute(models.Model):
         return cls.objects.create(article_comment_id=article_comment_id, muter_id=muter_id)
 
     class Meta:
-        unique_together = ('post', 'muter',)
+        unique_together = ('article', 'muter',)
 
 
 class ArticleCommentMute(models.Model):
@@ -197,7 +197,7 @@ class ArticleCommentMute(models.Model):
         return cls.objects.create(article_comment_id=article_comment_id, muter_id=muter_id)
 
     class Meta:
-        unique_together = ('post_comment', 'muter',)
+        unique_together = ('article_comment', 'muter',)
 
 
 class ArticleUserMention(models.Model):
@@ -205,7 +205,7 @@ class ArticleUserMention(models.Model):
     article = models.ForeignKey(Article, db_index=False, on_delete=models.CASCADE, related_name='user_mentions',verbose_name="Статья")
 
     class Meta:
-        unique_together = ('user', 'post',)
+        unique_together = ('user', 'article',)
 
 
 class ArticleCommentUserMention(models.Model):
@@ -213,4 +213,4 @@ class ArticleCommentUserMention(models.Model):
     article_comment = models.ForeignKey(ArticleComment, db_index=False, on_delete=models.CASCADE, related_name='user_mentions',verbose_name="Статья")
 
     class Meta:
-        unique_together = ('user', 'post_comment',)
+        unique_together = ('user', 'article_comment',)
