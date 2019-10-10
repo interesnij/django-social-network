@@ -163,7 +163,7 @@ class Post(models.Model):
 
 
 class PostImage(models.Model):
-    post = models.OneToOneField(Post, on_delete=models.CASCADE, related_name='image', null=True)
+    post = models.OneToOneField(Post, on_delete=models.CASCADE, related_name='post_image', null=True)
     image = ProcessedImageField(verbose_name='Главное изображение', blank=False, null=True, format='JPEG',
                                  options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)],
                                  upload_to=upload_to_post_image_directory)
