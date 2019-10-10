@@ -523,6 +523,7 @@ class CommunityMembership(models.Model):
             models.Index(fields=['community', 'user']),
             models.Index(fields=['community', 'user', 'is_administrator']),
             models.Index(fields=['community', 'user', 'is_moderator']),
+            ]
 
 
 class CommunityLog(models.Model):
