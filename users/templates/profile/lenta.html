@@ -81,8 +81,12 @@
   </div>
   <span class="stream">
 <div></div>
-    {% for object in articles %}
-      {% include 'generic/article.html' with article=article  %}
+    {% for object in lenta %}
+      {% if object.image %}
+        {% include 'generic/article.html' with article=article  %}
+      {% else %}
+        {% include 'generic/post.html' with post=post  %}
+      {% endif %}
     {% endfor %}
 
   </span>

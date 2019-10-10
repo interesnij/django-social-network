@@ -3,7 +3,7 @@
 
 
 <script>
-	function like() {
+	function art_like() {
 			var like = $(this);
 			var article = $('.infinite-item').attr("article-id");
 			var type = like.data('type');
@@ -30,7 +30,7 @@
 			});
 			return false;
 	}
-	function dislike() {
+	function art_dislike() {
 			var dislike = $(this);
 			var article = $('.infinite-item').attr("posts-id");
 			var type = dislike.data('type');
@@ -58,8 +58,8 @@
 			return false;
 	}
 	// Подключение обработчиков
-	$('[data-action="like"]').click(like);
-	$('[data-action="dislike"]').click(dislike);
+	$('[data-action="art_likelike"]').click(art_like);
+	$('[data-action="art_dislike"]').click(art_dislike);
 </script>
 
 
@@ -177,14 +177,13 @@ $(document).ready(function () {
 function remove() {
 var remove = $(this);
 var pk = remove.data('id');
-var type = remove.data('type');
 $.ajax({
 	url: "/posts/delete/" + pk + "/",
 	success: function (data) {
 		$(remove).parents('.card').hide();
 		$.toast({
 				heading: '{{ request.user.first_name }}',
-				text: type + ' успешно удален!',
+				text: 'Запись успешно удалена!',
 				showHideTransition: 'fade',
 				icon: 'error'
 		})
@@ -193,7 +192,7 @@ $.ajax({
 	}
 });
 };
-$('[data-action="remove"]').click(remove);
+$('[data-action="post_remove"]').click(remove);
 </script>
 
 
