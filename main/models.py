@@ -56,3 +56,4 @@ class Item(models.Model):
             BrinIndex(fields=['created']),
         )
         ordering = ['-id']
+        index_together = ['creator']

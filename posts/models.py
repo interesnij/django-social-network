@@ -152,9 +152,7 @@ class Post(Item):
         ordering=["-created"]
         verbose_name="Запись"
         verbose_name_plural="Записи"
-        index_together = [
-            ('creator', 'community'),
-        ]
+        index_together = ['community']
 
     def __str__(self):
         return self.creator.get_full_name()
