@@ -48,8 +48,8 @@ class User(AbstractUser):
 
 
 class UserBlock(models.Model):
-    blocked_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blocked_by_users')
-    blocker = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_blocks')
+    blocked_user = models.ForeignKey(User, db_index=False, on_delete=models.CASCADE, related_name='blocked_by_users')
+    blocker = models.ForeignKey(User, db_index=False, on_delete=models.CASCADE, related_name='user_blocks')
 
     @classmethod
     def create_user_block(cls, blocker_id, blocked_user_id):
@@ -59,6 +59,12 @@ class UserBlock(models.Model):
     def users_are_blocked(cls, user_a_id, user_b_id):
         return cls.objects.filter(Q(blocked_user_id=user_a_id, blocker_id=user_b_id) | Q(blocked_user_id=user_b_id,
                                                                                          blocker_id=user_a_id)).exists()
+
+    class Meta:
+        unique_together = ('blocked_user', 'blocker',)
+        indexes = [
+            models.Index(fields=['blocked_user', 'blocker']),
+        ]
 
 
 class UserNotificationsSettings(models.Model):
@@ -114,7 +120,8 @@ class UserNotificationsSettings(models.Model):
 
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(User, null=True, related_name="profile", verbose_name="Пользователь", on_delete=models.CASCADE)
+    id = models.AutoField(primary_key=True, db_index=False)
+    user = models.OneToOneField(User, db_index=False, null=True, related_name="profile", verbose_name="Пользователь", on_delete=models.CASCADE)
     avatar = ProcessedImageField(verbose_name='Аватар', blank=False, null=True, format='JPEG',
                                  options={'quality': 90}, processors=[ResizeToFill(500, 500)],
                                  upload_to=upload_to_user_avatar_directory)
@@ -132,6 +139,14 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.user.last_name
+
+    class Meta:
+        verbose_name = 'Профиль пользователя'
+        verbose_name_plural = 'Профили пользователей'
+
+        index_together = [
+            ('id', 'user'),
+        ]
 
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL, dispatch_uid='bootstrap_notifications_settings')
