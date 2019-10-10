@@ -15,7 +15,7 @@ from posts.helpers import upload_to_post_image_directory, upload_to_post_directo
 
 class Post(models.Model):
     moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='post')
-    uuid = models.UUIDField(default=uuid.uuid4, db_index=True,verbose_name="uuid")
+    post_uuid = models.UUIDField(default=uuid.uuid4, db_index=True,verbose_name="uuid")
     text = models.TextField(max_length=settings.POST_MAX_LENGTH, blank=False, null=True, verbose_name="Текст")
     created = models.DateTimeField(default=timezone.now, verbose_name="Создан")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='posts_creator', verbose_name="Создатель")

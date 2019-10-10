@@ -44,7 +44,7 @@ class Good(models.Model):
 		verbose_name_plural="Товары"
 
 	moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='good')
-	uuid = models.UUIDField(default=uuid.uuid4, db_index=True, verbose_name="uuid")
+	good_uuid = models.UUIDField(default=uuid.uuid4, db_index=True, verbose_name="uuid")
 	title = models.CharField(max_length=200, verbose_name="Название")
 	description = models.TextField(max_length=1000, verbose_name="Описание товара")
 	community = models.ForeignKey('communities.Community', on_delete=models.CASCADE, related_name='good', null=True, blank=True, verbose_name="Сообщество")

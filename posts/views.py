@@ -116,7 +116,7 @@ class PostCommentDislikeView(TemplateView):
 def post_get_comment(request):
 
     post_id = request.GET['post']
-    post = Post.objects.get(uuid=post_id)
+    post = Post.objects.get(post_uuid=post_id)
     form_comment = PostCommentForm()
     comments = post.comments.filter(parent_comment=None).order_by("created")
     replis = post.comments.exclude(parent_comment=None).order_by("created")
@@ -179,6 +179,6 @@ def post_reply_comment(request):
 @require_http_methods(["POST"])
 def post_update_interactions(request):
     data_point = request.POST['id_value']
-    post = Post.objects.get(uuid=data_point)
+    post = Post.objects.get(post_uuid=data_point)
     data = {'likes': post.count_likers(), 'dislikes': post.count_dislikers(), 'comments': post.count_thread()}
     return JsonResponse(data)
