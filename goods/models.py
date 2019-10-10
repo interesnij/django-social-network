@@ -8,7 +8,7 @@ from pilkit.processors import ResizeToFill, ResizeToFit
 from imagekit.models import ProcessedImageField
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
-from notifications.models.notification import Notification, notification_handler
+from notifications.models import Notification, notification_handler
 from django.utils import timezone
 from django.conf import settings
 from posts.helpers import upload_to_good_image_directory

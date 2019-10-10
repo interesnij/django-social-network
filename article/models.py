@@ -8,7 +8,7 @@ from django.conf import settings
 from imagekit.models import ProcessedImageField
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
-from notifications.models.notification import Notification, notification_handler
+from notifications.models import Notification, notification_handler
 from main.models import LikeDislike
 from article.helpers import upload_to_article_image_directory
 
