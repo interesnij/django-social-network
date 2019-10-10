@@ -51,27 +51,13 @@ class Good(models.Model):
 	price = models.PositiveIntegerField(default=0, verbose_name="Цена товара")
 	creator = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Создатель")
 	sub_category = models.ForeignKey(GoodSubCategory, on_delete=models.CASCADE, verbose_name="Подкатегория")
-	image = ProcessedImageField(verbose_name='Главное изображение', format='JPEG',
-                                 options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)],
-                                 upload_to=upload_to_good_image_directory)
-    image2 = ProcessedImageField(verbose_name='Изображение 2', blank=False, null=True, format='JPEG',
-                                 options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)],
-                                 upload_to=upload_to_good_image_directory)
-    image3 = ProcessedImageField(verbose_name='Изображение 3', blank=False, null=True, format='JPEG',
-                                 options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)],
-                                 upload_to=upload_to_good_image_directory)
-    image4 = ProcessedImageField(verbose_name='Изображение 4', blank=False, null=True, format='JPEG',
-                                 options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)],
-                                 upload_to=upload_to_good_image_directory)
-    image5 = ProcessedImageField(verbose_name='Изображение 5', blank=False, null=True, format='JPEG',
-                                 options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)],
-                                 upload_to=upload_to_good_image_directory)
-    image6 = ProcessedImageField(verbose_name='Изображение 6', blank=False, null=True, format='JPEG',
-                                 options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)],
-                                 upload_to=upload_to_good_image_directory)
-    image7 = ProcessedImageField(verbose_name='Изображение 7', blank=False, null=True, format='JPEG',
-                                 options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)],
-                                 upload_to=upload_to_good_image_directory)
+	image = ProcessedImageField(verbose_name='Главное изображение', format='JPEG',options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)],upload_to=upload_to_good_image_directory)
+    image2 = ProcessedImageField(verbose_name='Изображение 2', blank=False, null=True, format='JPEG', options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)],upload_to=upload_to_good_image_directory)
+    image3 = ProcessedImageField(verbose_name='Изображение 3', blank=False, null=True, format='JPEG', options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)],upload_to=upload_to_good_image_directory)
+    image4 = ProcessedImageField(verbose_name='Изображение 4', blank=False, null=True, format='JPEG', options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)], upload_to=upload_to_good_image_directory)
+    image5 = ProcessedImageField(verbose_name='Изображение 5', blank=False, null=True, format='JPEG', options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)], upload_to=upload_to_good_image_directory)
+    image6 = ProcessedImageField(verbose_name='Изображение 6', blank=False, null=True, format='JPEG', options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)], upload_to=upload_to_good_image_directory)
+    image7 = ProcessedImageField(verbose_name='Изображение 7', blank=False, null=True, format='JPEG', options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)], upload_to=upload_to_good_image_directory)
 	views=models.IntegerField(default=0, verbose_name="Просмотры")
 	votes = GenericRelation(LikeDislike, related_query_name='vote_good')
 	is_active=models.BooleanField(default=False, verbose_name='Товар активен')
