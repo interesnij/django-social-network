@@ -449,6 +449,12 @@ class ModerationReport(models.Model):
                                                          description=description, moderated_object=moderated_object)
         return community_moderation_report
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(name='reporter_moderated_object_constraints',
+                                    fields=['reporter', 'moderated_object'])
+        ]
+
 
 
 class ModerationPenalty(models.Model):
