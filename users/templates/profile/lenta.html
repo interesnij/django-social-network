@@ -82,11 +82,7 @@
   <span class="stream">
 <div></div>
     {% for object in lenta %}
-      {% if object.uuid %}
-        {% include 'generic/article.html' with article=article  %}
-      {% else %}
-        {% include 'generic/post.html' with post=post  %}
-      {% endif %}
+      {{ object.created }}
     {% endfor %}
 
   </span>
