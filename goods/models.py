@@ -12,6 +12,7 @@ from notifications.models import Notification, notification_handler
 from django.utils import timezone
 from django.conf import settings
 from goods.helpers import upload_to_good_image_directory
+from django.contrib.postgres.indexes import BrinIndex
 
 
 class GoodCategory(models.Model):
@@ -92,6 +93,11 @@ class GoodComment(models.Model):
     votes = GenericRelation(LikeDislike, related_query_name='good_comments_vote')
     article = models.ForeignKey(Good, on_delete=models.CASCADE, related_name='article_comments')
 
+	class Meta:
+        indexes = (
+            BrinIndex(fields=['created']),
+        )
+
     def count_replies(self):
         return self.replies.count()
 
@@ -125,3 +131,8 @@ class GoodRepost(models.Model):
     content = models.TextField(blank=True)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
     good = models.ForeignKey(Good, on_delete=models.CASCADE, related_name='good_repost')
+
+	class Meta:
+        indexes = (
+            BrinIndex(fields=['created']),
+        )

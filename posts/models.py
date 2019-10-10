@@ -11,6 +11,7 @@ from channels.layers import get_channel_layer
 from notifications.models import Notification, notification_handler
 from main.models import LikeDislike, Item
 from posts.helpers import upload_to_post_image_directory, upload_to_post_directory
+from django.contrib.postgres.indexes import BrinIndex
 
 
 class Post(Item):
@@ -206,6 +207,11 @@ class PostComment(models.Model):
     votes = GenericRelation(LikeDislike, related_query_name='post_comments_vote')
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post_comments', verbose_name="Запись")
 
+    class Meta:
+        indexes = (
+            BrinIndex(fields=['created']),
+        )
+
     def count_replies(self):
         return self.replies.count()
 
@@ -230,6 +236,11 @@ class PostRepost(models.Model):
     content = models.TextField(blank=True)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post_repost', verbose_name="Запись")
+
+    class Meta:
+        indexes = (
+            BrinIndex(fields=['created']),
+        )
 
 
 class PostMute(models.Model):
