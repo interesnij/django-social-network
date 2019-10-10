@@ -103,10 +103,10 @@ class GoodComment(models.Model):
 
 
 class GoodRepost(models.Model):
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    content = models.TextField(blank=True)
-    created = models.DateTimeField(auto_now_add=True, auto_now=False)
-    good = models.ForeignKey(Good, on_delete=models.CASCADE, related_name='good_repost')
+	author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+	content = models.TextField(blank=True)
+	created = models.DateTimeField(auto_now_add=True, auto_now=False)
+	good = models.ForeignKey(Good, on_delete=models.CASCADE, related_name='good_repost')
 
 	class Meta:
 		indexes = (BrinIndex(fields=['created']),)
