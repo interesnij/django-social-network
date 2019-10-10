@@ -14,6 +14,7 @@ from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.views.decorators.http import require_http_methods
 from django.db.models import Q
 from datetime import datetime, timedelta
+from itertools import chain
 
 
 
@@ -37,7 +38,7 @@ class ProfileUserView(TemplateView):
 		self.communities=Community.objects.filter(starrers=self.user)
 		self.posts=Post.objects.filter(creator=self.user,is_deleted=False)
 		self.articles=Article.objects.filter(creator=self.user,is_deleted=False)
-		self.lenta = set(self.posts | self.articles)
+		self.lenta = chain(self.posts, self.articles)
 
 		self.follows_count=Follow.objects.filter(followed_user=self.user).count()
 		self.connect_count=Connect.objects.filter(user=self.user).count()
