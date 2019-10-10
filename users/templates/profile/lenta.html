@@ -73,7 +73,7 @@
  </div>
 {% endif %}
 
-{% if articles %}
+{% if lenta %}
 
 <div class="infinite-container">
   <div class="stream-update">
@@ -82,7 +82,7 @@
   <span class="stream">
 <div></div>
     {% for object in lenta %}
-      {% if object.image %}
+      {% if object.article %}
         {% include 'generic/article.html' with article=article  %}
       {% else %}
         {% include 'generic/post.html' with post=post  %}
