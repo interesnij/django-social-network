@@ -189,8 +189,8 @@ class ArticleMute(models.Model):
 
 
 class ArticleCommentMute(models.Model):
-    article_comment = models.ForeignKey(ArticleComment, db_index=False, db_index=False, on_delete=models.CASCADE, related_name='mutes',verbose_name="Статья")
-    muter = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, db_index=False, on_delete=models.CASCADE, related_name='article_comment_mutes',verbose_name="Кто заглушил")
+    article_comment = models.ForeignKey(ArticleComment, db_index=False, on_delete=models.CASCADE, related_name='mutes',verbose_name="Статья")
+    muter = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE, related_name='article_comment_mutes',verbose_name="Кто заглушил")
 
     @classmethod
     def create_article_comment_mute(cls, article_comment_id, muter_id):
@@ -209,8 +209,8 @@ class ArticleUserMention(models.Model):
 
 
 class ArticleCommentUserMention(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='article_comment_mentions',verbose_name="Упомянутый в комментарии")
-    article_comment = models.ForeignKey(ArticleComment, on_delete=models.CASCADE, related_name='user_mentions',verbose_name="Статья")
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE, related_name='article_comment_mentions',verbose_name="Упомянутый в комментарии")
+    article_comment = models.ForeignKey(ArticleComment, db_index=False, on_delete=models.CASCADE, related_name='user_mentions',verbose_name="Статья")
 
     class Meta:
         unique_together = ('user', 'post_comment',)
