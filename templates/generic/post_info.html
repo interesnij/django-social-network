@@ -6,23 +6,23 @@
 
   <div class="row" style="color: rgba(255, 255, 255, 0.65);">
       <div class="col interaction" id="interaction">
-            <span class="like content-color-secondary {% if object.votes.likes.all|user_in:request.user %} text-success {% endif %}"
+            <span class="like content-color-secondary {% if object.post.votes.likes.all|user_in:request.user %} text-success {% endif %}"
                   style="font-size:15px;cursor:pointer"
                   id="like"
                   data-id="{{ object.id }}"
                   data-action="post_like"
-                  data-type="article"
+                  data-type="post"
                   title="Нравится">
-              <i class="material-icons">thumb_up</i>&nbsp;<span class="like-count" data-count="like">{% if object.votes.likes.count != 0 %}{{ object.votes.likes.count }}{% endif %}</span>
+              <i class="material-icons">thumb_up</i>&nbsp;<span class="like-count" data-count="like">{% if object.post.votes.likes.count != 0 %}{{ object.post.votes.likes.count }}{% endif %}</span>
             </span>
 
             <span class="like_window">
-              {% if object.votes.likes.all %}
+              {% if object.post.votes.likes.all %}
             <div class="like_pop" style="margin:15px">
-              <span>Лайков: {{ object.votes.likes.count }}</span>
+              <span>Лайков: {{ object.post.votes.likes.count }}</span>
               <br><br>
               <span style="display: flex;">
-                {% for heart in object.votes.likes.all %}
+                {% for heart in object.post.votes.likes.all %}
                 <a href="{% url 'user' pk=heart.user.pk %}" class="ajax" style="padding-right:10px">
                   <figure style="margin: 0;">
                     {% if heart.user.profile.avatar %}
@@ -40,23 +40,23 @@
           </span>
 
           &nbsp;&nbsp;
-          <span class="dislike content-color-secondary {% if object.votes.dislikes.all|user_in:request.user %} text-danger {% endif %}"
+          <span class="dislike content-color-secondary {% if object.post.votes.dislikes.all|user_in:request.user %} text-danger {% endif %}"
                 style="font-size:15px;cursor:pointer"
                 id="dislike"
                 data-id="{{ object.id }}"
                 data-action="post_dislike"
                 data-type="post"
                 title="Не нравится">
-            <i class="material-icons">thumb_down</i>&nbsp;<span class="dislike-count" data-count="dislike">{% if object.votes.dislikes.count %}{{ object.votes.dislikes.count }}{% endif %}</span>
+            <i class="material-icons">thumb_down</i>&nbsp;<span class="dislike-count" data-count="dislike">{% if object.post.votes.dislikes.count %}{{ object.post.votes.dislikes.count }}{% endif %}</span>
           </span>
 
           <span class="dislike_window">
-            {% if object.votes.dislikes.all %}
+            {% if object.post.votes.dislikes.all %}
           <div class="dislike_pop" style="margin:15px">
-            <span>Дизлайков: {{ object.votes.dislikes.count }}</span>
+            <span>Дизлайков: {{ object.post.votes.dislikes.count }}</span>
             <br><br>
             <span style="display: flex;">
-              {% for sheet in object.votes.dislikes.all %}
+              {% for sheet in object.post.votes.dislikes.all %}
               <a href="{% url 'user' pk=sheet.user.pk %}" class="ajax" style="padding-right:10px">
                 <figure style="margin: 0;">
                   {% if sheet.user.profile.avatar %}
@@ -79,8 +79,8 @@
           <span title="Комментарий" class="content-color-secondary post_comment" style="font-size:15px;cursor:pointer">
             <i class="material-icons">chat</i>
             <span class="comment-count">
-              {% if object.count_comments %}
-                {{ object.count_comments }}
+              {% if object.post.count_comments %}
+                {{ object.post.count_comments }}
               {% endif %}
             </span>
           </span>
