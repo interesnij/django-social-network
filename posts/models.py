@@ -243,7 +243,7 @@ class PostMute(models.Model):
 
 
 class PostCommentMute(models.Model):
-    post_comment = models.ForeignKey(PostComment, db_index=False, on_delete=models.CASCADE, related_name='mutes', verbose_name="Запись")
+    post_comment = models.ForeignKey(PostComment2, db_index=False, on_delete=models.CASCADE, related_name='mutes', verbose_name="Запись")
     muter = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE, related_name='post_comment_mutes', verbose_name="Кто заглушил")
 
     class Meta:
@@ -264,7 +264,7 @@ class PostUserMention(models.Model):
 
 class PostCommentUserMention(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE, related_name='post_comment_mentions', verbose_name="Упомянутый в комментарии")
-    post_comment = models.ForeignKey(PostComment, db_index=False, on_delete=models.CASCADE, related_name='user_mentions', verbose_name="Запись")
+    post_comment = models.ForeignKey(PostComment2, db_index=False, on_delete=models.CASCADE, related_name='user_mentions', verbose_name="Запись")
 
     class Meta:
         unique_together = ('user', 'post_comment',)
