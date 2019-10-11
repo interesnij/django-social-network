@@ -82,13 +82,13 @@
   <span class="stream">
 <div></div>
     {% for object in lenta %}
-    {% if object.article %} 
+    {% if object.article %}
       {% include 'generic/article.html' with article=article  %}
     {% endif %}
-    {% if object.post_uuid %}
+    {% if object.post %}
       {% include 'generic/post.html' with post=post  %}
     {% endif %}
-    {% if object.good_uuid %}
+    {% if object.good %}
       {% include 'generic/good.html' with good=good  %}
     {% endif %}
     {% endfor %}
