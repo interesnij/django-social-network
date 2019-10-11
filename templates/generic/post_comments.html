@@ -78,7 +78,7 @@
         button = $(this);
         form = button.parent().parent().parent().parent();
         $.ajax({
-            url: '/post/reply-comment/',
+            url: '/posts/reply-comment/',
             data: form.serialize(),
             type: 'POST',
             cache: false,
@@ -97,7 +97,7 @@
       button = $(this);
       form = button.parent().parent().parent().parent();
         $.ajax({
-            url: '/post/reply-comment/',
+            url: '/posts/reply-comment/',
             data: form.serialize(),
             type: 'POST',
             cache: false,
@@ -119,7 +119,7 @@
         var action = like.data('action');
         var dislike = like.next().next();
         $.ajax({
-            url: "/post/comment/" + pk + "/like/",
+            url: "/posts/comment/" + pk + "/like/",
             type: 'POST',
             data: {
                 'obj': pk
@@ -142,7 +142,7 @@
         var action = dislike.data('action');
         var like = dislike.prev().prev();
         $.ajax({
-            url: "/post/comment/" + pk + "/dislike/",
+            url: "/posts/comment/" + pk + "/dislike/",
             type: 'POST',
             data: {
                 'obj': pk
