@@ -165,10 +165,10 @@
 <script>
 	$( ".post_reply_comment" ).click(function(){
     var reply_comment_form = $(this);
-    var objectUser = post_reply_comment_form.prev().text().trim();
-    var form = post_reply_comment_form.next().find(".text-comment");
+    var objectUser = reply_comment_form.prev().text().trim();
+    var form = reply_comment_form.next().find(".text-comment");
     form.val(objectUser + ', ');
-		post_reply_comment_form.next().show();
+		reply_comment_form.next().show();
     form.focus();
 	})
 </script>
