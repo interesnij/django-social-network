@@ -6,15 +6,14 @@
 
   <div class="row" style="color: rgba(255, 255, 255, 0.65);">
       <div class="col interaction" id="interaction">
-            <a class="like content-color-secondary {% if object.post.votes.likes.all|user_in:request.user %} text-success {% endif %}"
-                  style="font-size:15px;cursor:pointer"
+            <span class="like content-color-secondary {% if object.post.votes.likes.all|user_in:request.user %} text-success {% endif %}"
                   id="like"
                   data-id="{{ object.id }}"
                   data-action="post_like"
                   data-type="post"
                   title="Нравится">
               <i class="material-icons">thumb_up</i>&nbsp;<span class="like-count" data-count="like">{% if object.post.votes.likes.count != 0 %}{{ object.post.votes.likes.count }}{% endif %}</span>
-            </a>
+            </span>
 
             <span class="like_window">
               {% if object.post.votes.likes.all %}
@@ -40,15 +39,14 @@
           </span>
 
           &nbsp;&nbsp;
-          <a class="dislike content-color-secondary {% if object.post.votes.dislikes.all|user_in:request.user %} text-danger {% endif %}"
-                style="font-size:15px;cursor:pointer"
+          <span class="dislike content-color-secondary {% if object.post.votes.dislikes.all|user_in:request.user %} text-danger {% endif %}"
                 id="dislike"
                 data-id="{{ object.id }}"
                 data-action="post_dislike"
                 data-type="post"
                 title="Не нравится">
             <i class="material-icons">thumb_down</i>&nbsp;<span class="dislike-count" data-count="dislike">{% if object.post.votes.dislikes.count %}{{ object.post.votes.dislikes.count }}{% endif %}</span>
-          </a>
+          </span>
 
           <span class="dislike_window">
             {% if object.post.votes.dislikes.all %}
@@ -78,16 +76,16 @@
           &nbsp;&nbsp;
           <span title="Комментарий" class="content-color-secondary post_comment" style="font-size:15px;cursor:pointer">
             <i class="material-icons">chat</i>
-            <a class="comment-count">
+            <span class="comment-count">
               {% if object.post.count_comments %}
                 {{ object.post.count_comments }}
               {% endif %}
-            </a>
+            </span>
           </span>
           &nbsp;&nbsp;
-          <a title="Поделиться" class="content-color-secondary" style="font-size:15px;cursor:pointer">
+          <span title="Поделиться" class="content-color-secondary" style="font-size:15px;cursor:pointer">
             <i class="material-icons">share</i>&nbsp;
-          </a>
+          </span>
 
       </div>
       <span class="col-auto content-color-secondary" title="Просмотры" style="font-size:12px">
