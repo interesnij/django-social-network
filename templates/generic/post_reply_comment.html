@@ -1,0 +1,118 @@
+{% load staticfiles humanize liked_user %}
+
+<div class="media " reply-id="{{ reply.id }}">
+    <figure>
+        {% if reply.commenter.profile.avatar %}
+          <img src="{{ reply.commenter.profile.avatar.url }}" class="pull-left" style="border-radius:50%;width:30px;" alt="User Image" class="user-image">
+        {% else %}
+          <img src="{% static 'images/user.png' %}" class="pull-left" style="border-radius:50%;width:30px;" alt="No Profile Picture" />
+        {% endif %}
+    </figure>
+    <div class="media-body">
+        <h5 class="mt-0"><span class="commenter_first_name">{{ reply.commenter.first_name }}</span> {{ reply.commenter.last_name }}
+            <small class="text-muted float-right">{{ reply.created|naturaltime }}</small>
+        </h5>
+        <p>{{ reply.text|safe }}</p>
+
+        <div class="border-top py-2">
+            <div class="row" style="color: rgba(255, 255, 255, 0.65);">
+                <div class="col">
+                    <span class="like2 content-color-secondary{% if reply.votes.likes.all|user_in:request.user %} text-success {% endif %}"
+                          style="font-size:13px;cursor:pointer"
+                          id="like2"
+                          data-id="{{ reply.id }}"
+                          data-action="post_like2"
+                          data-type="comment">
+                        <i class="material-icons">thumb_up</i>&nbsp;
+                        <span data-count="like">
+                          {% if reply.votes.likes.count != 0 %}{{ reply.votes.likes.count }}{% endif %}
+                        </span>
+                    </span>
+
+                    <span class="comment_like_window">
+                        {% if reply.votes.likes.all %}
+                        <div class="comment_like_pop" style="margin:15px">
+                            <span>Лайков: {{ reply.votes.likes.count }}</span>
+                            <br><br>
+                            <span style="display: flex;">
+                                {% for heart in reply.votes.likes.all %}
+                                <a href="{% url 'user' pk=heart.user.pk %}" class="ajax" style="padding-right:10px">
+                                    <figure style="margin: 0;">
+                                        {% if heart.user.profile.avatar %}
+                                        <img src="{{ heart.user.profile.avatar.url }}" style="border-radius: 50px;width:50px;" alt="image">
+                                        {% else %}
+                                        <img src="{% static 'images/user.png' %}" alt="image" style="border-radius: 50px;width:50px;">
+                                        {% endif %}
+                                    </figure>
+                                    {{ heart.user.first_name }}
+                                </a>
+                                {% endfor %}
+                            </span>
+                        </div>
+                        {% endif %}
+                    </span>
+
+                    &nbsp;&nbsp;
+                    <span class="dislike2 content-color-secondary{% if reply.votes.dislikes.all|user_in:request.user %} text-danger {% endif %}"
+                          style="font-size:13px;cursor:pointer"
+                          id="dislike2"
+                          data-id="{{ reply.id }}"
+                          data-action="post_dislike2"
+                          data-type="comment">
+                        <i class="material-icons">thumb_down</i>&nbsp;
+                        <span data-count="dislike">
+                          {% if reply.votes.dislikes.count %}{{ reply.votes.dislikes.count }}{% endif %}
+                        </span>
+                    </span>
+
+                    <span class="comment_dislike_window">
+                        {% if reply.votes.dislikes.all %}
+                        <div class="comment_dislike_pop" style="margin:15px">
+                            <span>Дизлайков: {{ reply.votes.dislikes.count }}</span>
+                            <br><br>
+                            <span style="display: flex;">
+                                {% for sheet in reply.votes.dislikes.all %}
+                                <a href="{% url 'user' pk=sheet.user.pk %}" class="ajax" style="padding-right:10px">
+                                    <figure style="margin: 0;">
+                                        {% if sheet.user.profile.avatar %}
+                                        <img src="{{ sheet.user.profile.avatar.url }}" style="border-radius: 50px;width:50px;" alt="image">
+                                        {% else %}
+                                        <img src="{% static 'images/user.png' %}" alt="image" style="border-radius: 50px;width:50px;">
+                                        {% endif %}
+
+                                    </figure>
+                                    {{ sheet.user.first_name }}
+                                </a>
+                                {% endfor %}
+                            </span>
+                        </div>
+                        {% endif %}
+                    </span>
+
+                    &nbsp;&nbsp;
+                    <span class="commenter_first_name" style="display:none">{{ comment.commenter.first_name }}</span>
+                    <span class="content-color-secondary reply_comment" data-id="{{ reply.id }}" style="font-size:15px;cursor:pointer">
+                        ответить
+                    </span>
+
+                    <div class="border-top" style="margin-top:10px;display:none">
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            <div class="row no-gutters">
+                                <input type="hidden" name="comment" value="{{ comment.id }}">
+                                <div class="col" style="left: -30px;">
+                                    <div class="input-group input-group-sm" style="width: 114%;">
+                                        <textarea id="id_text" name="text" class="form-control text-comment form-control-rounded"></textarea>
+                                        <button class="btn btn-outline-primary btn-rounded btn-sm ml-2 post_replyParentComment" type="button">
+                                            <i class="material-icons">send</i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

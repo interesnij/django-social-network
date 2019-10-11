@@ -1,0 +1,128 @@
+{% load staticfiles humanize liked_user %}
+
+<div class="media" comment-id="{{ comment.id }}">
+    <figure>
+        {% if comment.commenter.profile.avatar %}
+          <img src="{{ comment.commenter.profile.avatar.url }}" class="pull-left" style="border-radius:50%;width:30px;" alt="User Image" class="user-image">
+        {% else %}
+          <img src="{% static 'images/user.png' %}" class="pull-left" style="border-radius:50%;width:30px;" alt="No Profile Picture" />
+        {% endif %}
+    </figure>
+    <div class="media-body">
+        <h5 class="mt-0"><span class="commenter_first_name">{{ comment.commenter.first_name }}</span> {{ comment.commenter.last_name }}
+            <small class="text-muted float-right">{{ comment.created|naturaltime }}</small>
+        </h5>
+        <p>{{ comment.text|safe }}</p>
+
+        <div class="border-top py-2">
+            <div class="row" style="color: rgba(255, 255, 255, 0.65);">
+                <div class="col">
+                    <span class="like2 content-color-secondary{% if comment.votes.likes.all|user_in:request.user %} text-success {% endif %}"
+                          style="font-size:13px;cursor:pointer"
+                          id="like2"
+                          data-id="{{ comment.id }}"
+                          data-action="post_like2"
+                          data-type="comment">
+                        <i class="material-icons">thumb_up</i>&nbsp;
+                        <span data-count="like">
+                          {% if comment.votes.likes.count != 0 %}{{ comment.votes.likes.count }}{% endif %}
+                        </span>
+                    </span>
+
+                    <span class="comment_like_window">
+                        {% if comment.votes.likes.all %}
+                        <div class="comment_like_pop" style="margin:15px">
+                            <span>Лайков: {{ comment.votes.likes.count }}</span>
+                            <br><br>
+                            <span style="display: flex;">
+                                {% for heart in comment.votes.likes.all %}
+                                <a href="{% url 'user' pk=heart.user.pk %}" class="ajax" style="padding-right:10px">
+                                    <figure style="margin: 0;">
+                                        {% if heart.user.profile.avatar %}
+                                        <img src="{{ heart.user.profile.avatar.url }}" style="border-radius: 50px;width:50px;" alt="image">
+                                        {% else %}
+                                        <img src="{% static 'images/user.png' %}" alt="image" style="border-radius: 50px;width:50px;">
+                                        {% endif %}
+                                    </figure>
+                                    {{ heart.user.first_name }}
+                                </a>
+                                {% endfor %}
+                            </span>
+                        </div>
+                        {% endif %}
+                    </span>
+
+                    &nbsp;&nbsp;
+                    <span class="dislike2 content-color-secondary{% if comment.votes.dislikes.all|user_in:request.user %} text-danger {% endif %}"
+                          style="font-size:13px;cursor:pointer"
+                          id="dislike2"
+                          data-id="{{ comment.id }}"
+                          data-action="post_dislike2"
+                          data-type="comment">
+                        <i class="material-icons">thumb_down</i>&nbsp;
+                        <span data-count="dislike">
+                          {% if comment.votes.dislikes.count %}{{ comment.votes.dislikes.count }}{% endif %}
+                        </span>
+                    </span>
+
+                    <span class="comment_dislike_window">
+                        {% if comment.votes.dislikes.all %}
+                        <div class="comment_dislike_pop" style="margin:15px">
+                            <span>Дизлайков: {{ comment.votes.dislikes.count }}</span>
+                            <br><br>
+                            <span style="display: flex;">
+                                {% for sheet in comment.votes.dislikes.all %}
+                                <a href="{% url 'user' pk=sheet.user.pk %}" class="ajax" style="padding-right:10px">
+                                    <figure style="margin: 0;">
+                                        {% if sheet.user.profile.avatar %}
+                                        <img src="{{ sheet.user.profile.avatar.url }}" style="border-radius: 50px;width:50px;" alt="image">
+                                        {% else %}
+                                        <img src="{% static 'images/user.png' %}" alt="image" style="border-radius: 50px;width:50px;">
+                                        {% endif %}
+
+                                    </figure>
+                                    {{ sheet.user.first_name }}
+                                </a>
+                                {% endfor %}
+                            </span>
+                        </div>
+                        {% endif %}
+                    </span>
+
+                    &nbsp;&nbsp;
+                    <span class="commenter_first_name" style="display:none">{{ comment.commenter.first_name }}</span>
+                    <span class="content-color-secondary post_reply_comment" style="font-size:15px;cursor:pointer">
+                        ответить
+                    </span>
+
+                    <div class="border-top" style="margin-top:10px;display:none">
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            <div class="row no-gutters">
+                                <input type="hidden" name="comment" value="{{ comment.id }}">
+                                <input type="hidden" name="parent" value="{{ parent.id }}">
+                                <div class="col">
+                                    <div class="input-group input-group-sm">
+                                        <textarea id="id_text" name="text" class="form-control text-comment form-control-rounded"></textarea>
+                                        <button class="btn btn-outline-primary btn-rounded btn-sm ml-2 post_replyComment" type="button">
+                                            <i class="material-icons">send</i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+
+                    <br><br>
+                    <span>
+                      {% for reply in replis %}
+                        {% include 'generic/post_reply_comment.html' with reply=reply  %}
+                      {% endfor %}
+                    </span>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

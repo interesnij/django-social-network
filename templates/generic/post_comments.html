@@ -4,7 +4,7 @@
 <span class="stream_comments bg-light-secondary">
   <div></div>
     {% for comment in comments %}
-    {% include 'generic/article_parent_comment.html' with comment=comment  %}
+    {% include 'generic/post_parent_comment.html' with comment=comment  %}
     {% endfor %}
 </span>
 
@@ -20,7 +20,7 @@
                 </div>
             </div>
             <div class="col-auto">
-                <button class="btn btn-outline-primary btn-rounded btn-sm ml-2 articleComment" type="button">
+                <button class="btn btn-outline-primary btn-rounded btn-sm ml-2 postComment" type="button">
                     <i class="material-icons">send</i>
                 </button>
             </div>
@@ -56,12 +56,12 @@
             }
         }
     });
-    $(".articleComment").click(function() {
+    $(".postComment").click(function() {
       button1 = $(this);
-      form1 = button1.parent().parent().parent();
+      form = button1.parent().parent().parent();
         $.ajax({
-            url: '{% url "article_comments" %}',
-            data: form1.serialize(),
+            url: '{% url "post_comments" %}',
+            data: form.serialize(),
             type: 'POST',
             cache: false,
             success: function(data) {
@@ -74,11 +74,11 @@
         });
         return false;
     });
-    $(".replyComment").click(function() {
+    $(".post_replyComment").click(function() {
         button = $(this);
         form = button.parent().parent().parent().parent();
         $.ajax({
-            url: '/article/reply-comment/',
+            url: '/post/reply-comment/',
             data: form.serialize(),
             type: 'POST',
             cache: false,
@@ -93,11 +93,11 @@
     });
   </script>
   <script>
-    $(".replyParentComment").click(function() {
+    $(".post_replyParentComment").click(function() {
       button = $(this);
       form = button.parent().parent().parent().parent();
         $.ajax({
-            url: '/article/reply-comment/',
+            url: '/post/reply-comment/',
             data: form.serialize(),
             type: 'POST',
             cache: false,
@@ -119,7 +119,7 @@
         var action = like.data('action');
         var dislike = like.next().next();
         $.ajax({
-            url: "/article/comment/" + pk + "/like/",
+            url: "/post/comment/" + pk + "/like/",
             type: 'POST',
             data: {
                 'obj': pk
@@ -129,8 +129,8 @@
                 dislike.find("[data-count='dislike']").text(json.dislike_count);
                 like.addClass("text-success");
                 dislike.removeClass("text-danger");
-                $(like).siblings('.comment_like_window').html('').load("/article/comment_like_window/" + pk + "/");
-                $(dislike).siblings('.comment_dislike_window').html('').load("/article/comment_dislike_window/" + pk + "/")
+                $(like).siblings('.comment_like_window').html('').load("/post/comment_like_window/" + pk + "/");
+                $(dislike).siblings('.comment_dislike_window').html('').load("/post/comment_dislike_window/" + pk + "/")
             }
         });
         return false;
@@ -142,7 +142,7 @@
         var action = dislike.data('action');
         var like = dislike.prev().prev();
         $.ajax({
-            url: "/article/comment/" + pk + "/dislike/",
+            url: "/post/comment/" + pk + "/dislike/",
             type: 'POST',
             data: {
                 'obj': pk
@@ -152,23 +152,23 @@
                 like.find("[data-count='like']").text(json.like_count);
                 dislike.addClass("text-danger");
                 like.removeClass("text-success");
-                $(like).siblings('.comment_like_window').html('').load("/article/comment_like_window/" + pk + "/");
-                $(dislike).siblings('.comment_dislike_window').html('').load("/article/comment_dislike_window/" + pk + "/")
+                $(like).siblings('.comment_like_window').html('').load("/post/comment_like_window/" + pk + "/");
+                $(dislike).siblings('.comment_dislike_window').html('').load("/post/comment_dislike_window/" + pk + "/")
             }
         });
         return false;
     }
     // Подключение обработчиков
-    $('[data-action="like2"]').click(like2);
-    $('[data-action="dislike2"]').click(dislike2);
+    $('[data-action="post_like2"]').click(like2);
+    $('[data-action="post_dislike2"]').click(dislike2);
 </script>
 <script>
-	$( ".reply_comment" ).click(function(){
+	$( ".post_reply_comment" ).click(function(){
     var reply_comment_form = $(this);
-    var objectUser = reply_comment_form.prev().text().trim();
-    var form = reply_comment_form.next().find(".text-comment");
+    var objectUser = post_reply_comment_form.prev().text().trim();
+    var form = post_reply_comment_form.next().find(".text-comment");
     form.val(objectUser + ', ');
-		reply_comment_form.next().show();
+		post_reply_comment_form.next().show();
     form.focus();
 	})
 </script>
