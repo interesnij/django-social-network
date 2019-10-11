@@ -6,7 +6,7 @@
 
   <div class="row">
       <div class="col interaction" id="interaction">
-            <span class="like content-color-secondary {% if object.post.votes.likes.all|user_in:request.user %} text-success {% endif %}"
+            <span class="like{% if object.post.votes.likes.all|user_in:request.user %} text-success {% endif %}"
                   id="like"
                   data-id="{{ object.id }}"
                   data-action="post_like"
@@ -39,7 +39,7 @@
           </span>
 
           &nbsp;&nbsp;
-          <span class="dislike content-color-secondary {% if object.post.votes.dislikes.all|user_in:request.user %} text-danger {% endif %}"
+          <span class="dislike{% if object.post.votes.dislikes.all|user_in:request.user %} text-danger {% endif %}"
                 id="dislike"
                 data-id="{{ object.id }}"
                 data-action="post_dislike"
@@ -74,7 +74,7 @@
         </span>
 
           &nbsp;&nbsp;
-          <span title="Комментарий" class="content-color-secondary post_comment" style="font-size:15px;cursor:pointer">
+          <span title="Комментарий" class="post_comment" style="font-size:15px;cursor:pointer">
             <i class="material-icons">chat</i>
             <span class="comment-count">
               {% if object.post.count_comments %}
@@ -83,12 +83,12 @@
             </span>
           </span>
           &nbsp;&nbsp;
-          <span title="Поделиться" class="repost" style="font-size:15px;cursor:pointer">
+          <span title="Поделиться" class="repost">
             <i class="material-icons">share</i>&nbsp;
           </span>
 
       </div>
-      <span class="col-auto content-color-secondary" title="Просмотры" style="font-size:12px">
+      <span class="col-auto" title="Просмотры" style="font-size:12px">
         <i class="material-icons">visibility</i>&nbsp;{{ object.views }}
       </span>
   </div>

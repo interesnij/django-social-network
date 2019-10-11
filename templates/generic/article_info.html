@@ -4,10 +4,9 @@
 
 <div class="card-footer border-top py-2">
 
-  <div class="row" style="color: rgba(255, 255, 255, 0.65);">
+  <div class="row">
       <div class="col interaction" id="interaction">
-            <span class="like content-color-secondary {% if object.article.votes.likes.all|user_in:request.user %} text-success {% endif %}"
-                  style="font-size:15px;cursor:pointer"
+            <span class="like {% if object.article.votes.likes.all|user_in:request.user %} text-success {% endif %}"
                   id="like"
                   data-id="{{ object.id }}"
                   data-action="art_like"
@@ -40,8 +39,7 @@
           </span>
 
           &nbsp;&nbsp;
-          <span class="dislike content-color-secondary {% if object.article.votes.dislikes.all|user_in:request.user %} text-danger {% endif %}"
-                style="font-size:15px;cursor:pointer"
+          <span class="dislike {% if object.article.votes.dislikes.all|user_in:request.user %} text-danger {% endif %}"
                 id="dislike"
                 data-id="{{ object.id }}"
                 data-action="art_dislike"
@@ -76,7 +74,7 @@
         </span>
 
           &nbsp;&nbsp;
-          <span title="Комментарий" class="content-color-secondary art_comment" style="font-size:15px;cursor:pointer">
+          <span title="Комментарий" class="art_comment" style="font-size:15px;cursor:pointer">
             <i class="material-icons">chat</i>
             <span class="comment-count">
               {% if object.article.count_comments %}
@@ -85,12 +83,12 @@
             </span>
           </span>
           &nbsp;&nbsp;
-          <span title="Поделиться" class="content-color-secondary" style="font-size:15px;cursor:pointer">
+          <span title="Поделиться" class="repost">
             <i class="material-icons">share</i>&nbsp;
           </span>
 
       </div>
-      <span class="col-auto content-color-secondary" title="Просмотры" style="font-size:12px">
+      <span class="col-auto" title="Просмотры" style="font-size:12px">
         <i class="material-icons">visibility</i>&nbsp;{{ object.views }}
       </span>
   </div>
