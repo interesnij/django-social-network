@@ -154,6 +154,10 @@ class Post(Item):
     def __str__(self):
         return self.creator.get_full_name()
 
+    def count_comments(self):
+        parent_comments = PostComment.objects.filter(post=self).count()
+        return parent_comments
+
 
 
 
