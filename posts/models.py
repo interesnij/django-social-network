@@ -158,7 +158,9 @@ class Post(Item):
         parent_comments = PostComment2.objects.filter(post=self).count()
         return parent_comments
 
-
+    def get_replies(self):
+        get_comments = PostComment2.objects.filter(parent_comment=self).all()
+        return get_comments
 
 
 class PostImage(models.Model):

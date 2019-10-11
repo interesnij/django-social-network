@@ -119,7 +119,6 @@ def post_get_comment(request):
     post = Post.objects.get(uuid=post_id)
     form_comment = PostCommentForm()
     comments = PostComment2.objects.filter(post=post, parent_comment=None).order_by("created")
-    replis = PostComment2.objects.exclude(post=post, parent_comment=None).order_by("created")
     posts_html = render_to_string("generic/post.html", {"object": post})
     thread_html = render_to_string(
         "generic/post_comments.html", {"post_comments": comments,"post_replis": replis,"form_comment": form_comment,"parent": post})
