@@ -199,7 +199,7 @@ class PostComment(models.Model):
     moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='post_comment')
     parent_comment = models.ForeignKey('self', on_delete=models.CASCADE, related_name='replies', null=True, blank=True, verbose_name="Родительский комментарий")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
-	modified = models.DateTimeField(auto_now_add=True, auto_now=False, db_index=False)
+    modified = models.DateTimeField(auto_now_add=True, auto_now=False, db_index=False)
     commenter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='posts_comments', verbose_name="Комментатор")
     text = models.TextField(max_length=settings.POST_COMMENT_MAX_LENGTH, blank=True, null=True)
     is_edited = models.BooleanField(default=False, null=False, blank=False, verbose_name="Изменено")
@@ -208,24 +208,7 @@ class PostComment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post_comments', verbose_name="Запись")
 
     class Meta:
-        indexes = (
-            BrinIndex(fields=['created']),
-        )
-
-    def count_replies(self):
-        return self.replies.count()
-
-    def update_comment(self, text):
-        self.text = text
-        self.is_edited = True
-        self.save()
-
-    def save(self, *args, **kwargs):
-        if not self.id:
-            self.created = timezone.now()
-
-        self.modified = timezone.now()
-        return super(PostComment, self).save(*args, **kwargs)
+        indexes = (BrinIndex(fields=['created']),)
 
     def __str__(self):
         return "{0}/{1}".format(self.commenter.get_full_name(), self.text[:10])
