@@ -1,7 +1,7 @@
 {% load humanize staticfiles liked_user %}
 <script defer src="{% static 'scripts/jquery.js' %}" type="text/javascript"></script>
 
-<span class="stream_comments bg-light-secondary">
+<span class="post_stream_comments bg-light-secondary">
   <div></div>
     {% for comment in comments %}
     {% include 'generic/post_parent_comment.html' with comment=comment  %}
@@ -66,7 +66,7 @@
             cache: false,
             success: function(data) {
                 $(".form-control-rounded").val("");
-                $(".stream_comments").append(data);
+                $(".post_stream_comments").append(data);
             },
             error: function(data) {
                 alert(data.responseText);
