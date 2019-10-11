@@ -1,6 +1,6 @@
 from django.views.generic.base import TemplateView
 from users.models import User, UserProfile
-from posts.models import Post, PostComment
+from posts.models import Post, PostComment2
 from main.models import Item
 from article.models import Article, ArticleComment
 from frends.models import Connect
