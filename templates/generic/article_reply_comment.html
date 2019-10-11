@@ -99,7 +99,7 @@
                         <form action="" method="post">
                             {% csrf_token %}
                             <div class="row no-gutters">
-                                <input type="hidden" name="comment" value="{{ comment.id }}">
+                                <input type="hidden" name="art_comment" value="{{ comment.id }}">
                                 <input type="hidden" name="parent" value="{{ parent.id }}">
                                 <div class="col" style="left: -30px;">
                                     <div class="input-group input-group-sm" style="width: 114%;">
