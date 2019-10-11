@@ -3,7 +3,7 @@
 
 <span class="post_stream_comments bg-light-secondary">
   <div></div>
-    {% for comment in comments %}
+    {% for comment in post_comments %}
     {% include 'generic/post_parent_comment.html' with comment=comment  %}
     {% endfor %}
 </span>

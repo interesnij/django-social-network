@@ -180,7 +180,7 @@ def article_get_comment(request):
     replis = ArticleComment.objects.exclude(article=article, parent_comment=None).order_by("created")
     article_html = render_to_string("generic/article.html", {"object": article})
     thread_html = render_to_string(
-        "generic/article_comments.html", {"comments": comments,"replis": replis,"form_comment": form_comment,"parent": article})
+        "generic/article_comments.html", {"art_comments": comments,"replis": replis,"form_comment": form_comment,"parent": article})
     return JsonResponse({
         "uuid": article_id,
         "article": article_html,
