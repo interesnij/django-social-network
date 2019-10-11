@@ -140,7 +140,7 @@ def post_comment(request):
     parent = Post.objects.get(pk=par)
     text = text.strip()
     if parent:
-        new_comment = PostComment.objects.create(article=parent, text=text, commenter=request.user)
+        new_comment = PostComment.objects.create(post=parent, text=text, commenter=request.user)
         html = render_to_string('generic/post_parent_comment.html',{'comment': new_comment,'request': request})
         return JsonResponse(html, safe=False)
 
@@ -158,7 +158,7 @@ def post_comment(request):
 def post_reply_comment(request):
 
     user = request.user
-    text = request.POST['text'] 
+    text = request.POST['text']
     com = request.POST['comment']
     comment = PostComment.objects.get(pk=com)
     text = text.strip()
