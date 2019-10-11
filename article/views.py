@@ -212,7 +212,7 @@ def article_reply_comment(request):
 
     user = request.user
     text = request.POST['text']
-    art_com = request.POST['art_comment']
+    art_com = request.POST['comment']
     comment = ArticleComment.objects.get(pk=art_com)
     text = text.strip()
     if comment:
