@@ -212,8 +212,8 @@ def article_reply_comment(request):
 
     user = request.user
     text = request.POST['text']
-    com = request.POST['comment']
-    comment = ArticleComment.objects.get(pk=com)
+    art_com = request.POST['art_comment']
+    comment = ArticleComment.objects.get(pk=art_com)
     text = text.strip()
     if comment:
         new_comment = ArticleComment.objects.create(text=text, commenter=request.user,parent_comment=comment)
