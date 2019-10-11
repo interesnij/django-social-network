@@ -4,7 +4,7 @@ from users.models import User
 from django.template.loader import render_to_string
 from django.contrib.auth.mixins import LoginRequiredMixin
 from posts.helpers import ajax_required, AuthorRequiredMixin
-from posts.models import Post, PostComment
+from posts.models import Post, PostComment2
 from posts.forms import PostUserForm
 from django.views.generic import DeleteView
 from django.urls import reverse_lazy
@@ -75,7 +75,7 @@ class PostCommentLikeView(TemplateView):
     template_name="post_comment_like_window.html"
 
     def get(self,request,*args,**kwargs):
-        self.post_comment_like = PostComment.objects.get(pk=self.kwargs["pk"])
+        self.post_comment_like = PostComment2.objects.get(pk=self.kwargs["pk"])
         return super(PostCommentLikeView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -102,7 +102,7 @@ class PostCommentDislikeView(TemplateView):
     template_name="post_comment_dislike_window.html"
 
     def get(self,request,*args,**kwargs):
-        self.post_comment_dislike = PostComment.objects.get(pk=self.kwargs["pk"])
+        self.post_comment_dislike = PostComment2.objects.get(pk=self.kwargs["pk"])
         return super(PostCommentDislikeView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -118,8 +118,8 @@ def post_get_comment(request):
     post_id = request.GET['post']
     post = Post.objects.get(uuid=post_id)
     form_comment = PostCommentForm()
-    comments = PostComment.objects.filter(post=post, parent_comment=None).order_by("created")
-    replis = PostComment.objects.exclude(post=post, parent_comment=None).order_by("created")
+    comments = PostComment2.objects.filter(post=post, parent_comment=None).order_by("created")
+    replis = PostComment2.objects.exclude(post=post, parent_comment=None).order_by("created")
     posts_html = render_to_string("generic/post.html", {"object": post})
     thread_html = render_to_string(
         "generic/post_comments.html", {"post_comments": comments,"post_replis": replis,"form_comment": form_comment,"parent": post})
@@ -140,7 +140,7 @@ def post_comment(request):
     parent = Post.objects.get(pk=par)
     text = text.strip()
     if parent:
-        new_comment = PostComment.objects.create(post=parent, text=text, commenter=request.user)
+        new_comment = PostComment2.objects.create(post=parent, text=text, commenter=request.user)
         html = render_to_string('generic/post_parent_comment.html',{'comment': new_comment,'request': request})
         return JsonResponse(html, safe=False)
 
@@ -160,10 +160,10 @@ def post_reply_comment(request):
     user = request.user
     text = request.POST['text']
     com = request.POST['comment']
-    comment = PostComment.objects.get(pk=com)
+    comment = PostComment2.objects.get(pk=com)
     text = text.strip()
     if comment:
-        new_comment = PostComment.objects.create(text=text, commenter=request.user,parent_comment=comment)
+        new_comment = PostComment2.objects.create(text=text, commenter=request.user,parent_comment=comment)
         html = render_to_string('generic/post_reply_comment.html',{'reply': new_comment,'request': request})
         return JsonResponse(html, safe=False)
 

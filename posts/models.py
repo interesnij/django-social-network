@@ -199,7 +199,7 @@ class PostImage(models.Model):
         return cls.objects.create(image=image, post_id=post_id)
 
 
-class PostComment(models.Model):
+class PostComment2(models.Model):
     moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='post_comment')
     parent_comment = models.ForeignKey('self', on_delete=models.CASCADE, related_name='replies', null=True, blank=True, verbose_name="Родительский комментарий")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")

@@ -1,11 +1,11 @@
-from posts.models import Post,PostComment
+from posts.models import Post, PostComment2
 from django import forms
 
 
 class PostCommentForm(forms.ModelForm):
 
 	class Meta:
-		model = PostComment
+		model = PostComment2
 		fields = ['text']
 
 class PostRepostForm(forms.Form):
