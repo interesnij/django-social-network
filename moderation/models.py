@@ -4,7 +4,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.utils import timezone
 from users.models import User
-from posts.models import Post, PostComment
+from posts.models import Post, PostComment2
 from article.models import Article, ArticleComment
 from goods.models import Good, GoodComment
 
