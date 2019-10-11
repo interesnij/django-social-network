@@ -142,8 +142,8 @@ class Article(Item):
 class ArticleComment(models.Model):
     moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='article_comment')
     parent_comment = models.ForeignKey('self', on_delete=models.CASCADE, related_name='article_replies', null=True, blank=True,verbose_name="Родительский комментарий")
-    created = models.DateTimeField(default=timezone.now, editable=False, db_index=True,verbose_name="Создан")
-    modified = models.DateTimeField(db_index=True, default=timezone.now)
+    created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
+    modified = models.DateTimeField(auto_now_add=True, auto_now=False, db_index=False)
     commenter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='article_comments',verbose_name="Комментатор")
     text = models.TextField(blank=True,null=True)
     is_edited = models.BooleanField(default=False, null=False, blank=False,verbose_name="Изменено")
@@ -164,16 +164,15 @@ class ArticleComment(models.Model):
 
 
 class ArticleRepost(models.Model):
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     content = models.TextField(blank=True)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
-    article = models.ForeignKey(Article, db_index=False, on_delete=models.CASCADE, related_name='article_repost')
+    article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='article_repost')
 
     class Meta:
         indexes = (
             BrinIndex(fields=['created']),
         )
-        unique_together = ('author', 'article',)
 
 
 class ArticleMute(models.Model):

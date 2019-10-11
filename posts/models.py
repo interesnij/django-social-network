@@ -16,7 +16,7 @@ from django.contrib.postgres.indexes import BrinIndex
 
 class Post(Item):
     moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='post')
-    post_uuid = models.UUIDField(default=uuid.uuid4, db_index=True,verbose_name="uuid")
+    uuid = models.UUIDField(default=uuid.uuid4, db_index=True,verbose_name="uuid")
     text = models.TextField(max_length=settings.POST_MAX_LENGTH, blank=False, null=True, verbose_name="Текст")
     votes = GenericRelation(LikeDislike, related_query_name='vote_post')
     STATUS_DRAFT = 'D'
@@ -198,8 +198,8 @@ class PostImage(models.Model):
 class PostComment(models.Model):
     moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='post_comment')
     parent_comment = models.ForeignKey('self', on_delete=models.CASCADE, related_name='replies', null=True, blank=True, verbose_name="Родительский комментарий")
-    created = models.DateTimeField(default=timezone.now, editable=False, db_index=True, verbose_name="Создан")
-    modified = models.DateTimeField(db_index=True, default=timezone.now)
+    created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
+	modified = models.DateTimeField(auto_now_add=True, auto_now=False, db_index=False)
     commenter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='posts_comments', verbose_name="Комментатор")
     text = models.TextField(max_length=settings.POST_COMMENT_MAX_LENGTH, blank=True, null=True)
     is_edited = models.BooleanField(default=False, null=False, blank=False, verbose_name="Изменено")
@@ -232,16 +232,15 @@ class PostComment(models.Model):
 
 
 class PostRepost(models.Model):
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     content = models.TextField(blank=True)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
-    post = models.ForeignKey(Post, db_index=False, on_delete=models.CASCADE, related_name='post_repost', verbose_name="Запись")
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post_repost', verbose_name="Запись")
 
     class Meta:
         indexes = (
             BrinIndex(fields=['created']),
         )
-        unique_together = ('author', 'post',)
 
 
 class PostMute(models.Model):

@@ -46,7 +46,7 @@ class Item(models.Model):
     id = models.AutoField(primary_key=True)
     comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
     community = models.ForeignKey('communities.Community', db_index=False, on_delete=models.CASCADE, related_name='communa', null=True, blank=True, verbose_name="Сообщество")
-    created = models.DateTimeField(auto_now_add=True, verbose_name="Создан")
+    created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE, related_name='creator', verbose_name="Создатель")
     is_edited = models.BooleanField(default=False, verbose_name="Изменено")
     is_closed = models.BooleanField(default=False, verbose_name="Закрыто")
