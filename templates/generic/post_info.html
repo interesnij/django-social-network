@@ -4,7 +4,7 @@
 
 <div class="card-footer border-top py-2">
 
-  <div class="row" style="color: rgba(255, 255, 255, 0.65);">
+  <div class="row">
       <div class="col interaction" id="interaction">
             <span class="like content-color-secondary {% if object.post.votes.likes.all|user_in:request.user %} text-success {% endif %}"
                   id="like"
@@ -83,7 +83,7 @@
             </span>
           </span>
           &nbsp;&nbsp;
-          <span title="Поделиться" class="content-color-secondary" style="font-size:15px;cursor:pointer">
+          <span title="Поделиться" class="repost" style="font-size:15px;cursor:pointer">
             <i class="material-icons">share</i>&nbsp;
           </span>
 
