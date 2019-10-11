@@ -83,7 +83,7 @@ $(".art_comment").on("click", function () {
 </script>
 <script>
 $(".post_comment").on("click", function () {
-	var article = $(this).closest(".infinite-item").attr("post-id");
+	var post = $(this).closest(".infinite-item").attr("post-id");
 	var url = $(this).parents(".infinite-item");
 	$.ajax({
 			url: '/posts/post-comment/',
