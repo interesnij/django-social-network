@@ -172,7 +172,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(PROJECT_PATH, 'static')
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = '/users/'
+MEDIA_ROOT = 'http://194.58.96.91:8000/media/'
 
 REST_SESSION_LOGIN = True
 REST_AUTH_REGISTER_SERIALIZERS = {
