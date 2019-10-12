@@ -84,8 +84,8 @@
 							dislike.find("[data-count='dislike']").text(data.dislike_count);
 							$(like).addClass("text-success");
 							$(dislike).removeClass("text-danger");
-							$(like).siblings('.like_window').html('').load("/post/like_window/" + pk + "/");
-							$(dislike).siblings('.dislike_window').html('').load("/post/dislike_window/" + pk + "/")
+							$(like).siblings('.like_window').html('').load("/posts/like_window/" + pk + "/");
+							$(dislike).siblings('.dislike_window').html('').load("/posts/dislike_window/" + pk + "/")
 					}
 			});
 			return false;
@@ -111,8 +111,8 @@
 							like.find("[data-count='like']").text(data.like_count);
 							$(dislike).addClass("text-danger");
 							$(like).removeClass("text-success");
-							$(like).siblings('.like_window').html('').load("/post/like_window/" + pk + "/");
-							$(dislike).siblings('.dislike_window').html('').load("/post/dislike_window/" + pk + "/")
+							$(like).siblings('.like_window').html('').load("/posts/like_window/" + pk + "/");
+							$(dislike).siblings('.dislike_window').html('').load("/posts/dislike_window/" + pk + "/")
 					}
 			});
 			return false;
