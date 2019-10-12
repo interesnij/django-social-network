@@ -74,7 +74,7 @@
         </span>
 
           &nbsp;&nbsp;
-          <span title="Комментарий" class="art_comment" style="font-size:15px;cursor:pointer">
+          <span title="Комментарий" {% if request.user.is_authenticated %}class="art_comment"{% endif %} style="font-size:15px;cursor:pointer">
             <i class="material-icons">chat</i>
             <span class="comment-count">
               {% if object.article.count_comments %}
