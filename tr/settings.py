@@ -171,8 +171,8 @@ USE_TZ = False
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(PROJECT_PATH, 'static')
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = 'http://194.58.96.91/media/'  
+MEDIA_URL = 'http://194.58.96.91/media/'
+MEDIA_ROOT = 'http://194.58.96.91/media/'
 
 REST_SESSION_LOGIN = True
 REST_AUTH_REGISTER_SERIALIZERS = {
