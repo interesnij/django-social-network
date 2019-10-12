@@ -75,7 +75,7 @@
 					'csrf_token': csrftoken
 				}
 			$.ajax({
-					url: "/post/like/" + pk + "/",
+					url: "/posts/like/" + pk + "/",
 					type: 'POST',
 					cache: false,
 					data: payload,
@@ -102,7 +102,7 @@
 					'csrf_token': csrftoken
 				}
 			$.ajax({
-					url: "/post/dislike/" + pk + "/",
+					url: "/posts/dislike/" + pk + "/",
 					type: 'POST',
 					cache: false,
 					data: payload,
