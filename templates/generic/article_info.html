@@ -74,7 +74,7 @@
         </span>
 
           &nbsp;&nbsp;
-          <span title="Комментарий" {% if request.user.is_authenticated %}class="art_comment"{% endif %} style="font-size:15px;cursor:pointer">
+          <span title="Комментарий" class="art_comment" style="font-size:15px;cursor:pointer">
             <i class="material-icons">chat</i>
             <span class="comment-count">
               {% if object.article.count_comments %}
@@ -92,6 +92,8 @@
         <i class="material-icons">visibility</i>&nbsp;{{ object.views }}
       </span>
   </div>
+  {% if request.user.is_authenticated %}
   <div class="load_comments" style="margin-top:25px;display:flex;justify-content: center;"></div>
 
   </div>
+  {% endif %}
