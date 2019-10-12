@@ -158,8 +158,8 @@ def post_reply_comment(request):
 
     user = request.user
     text = request.POST['text']
-    com = request.POST['comment']
-    comment = PostComment2.objects.get(pk=com)
+    post_com = request.POST['comment']
+    comment = PostComment2.objects.get(pk=post_com)
     text = text.strip()
     if comment:
         new_comment = PostComment2.objects.create(text=text, commenter=request.user,parent_comment=comment)
