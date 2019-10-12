@@ -128,7 +128,7 @@ $(".art_comment").on("click", function () {
 	var article = $(this).closest(".infinite-item").attr("article-id");
 	var url = $(this).parents(".infinite-item");
 	$.ajax({
-			url: '{% article_get_comment %}',
+			url: '{% url "article_get_comment" %}',
 			data: {'article': article},
 			cache: false,
 			beforeSend: function () {
@@ -146,7 +146,7 @@ $(".post_comment").on("click", function () {
 	var post = $(this).closest(".infinite-item").attr("post-id");
 	var url = $(this).parents(".infinite-item");
 	$.ajax({
-			url: '{% post_get_comment %}',
+			url: '{% url "post_get_comment" %}',
 			data: {'post': post},
 			cache: false,
 			beforeSend: function () {
