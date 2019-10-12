@@ -18,7 +18,7 @@
             <span class="like_window">
               {% if object.post.votes.likes.all %}
             <div class="like_pop" style="margin:15px">
-              <span>Лайков: {{ object.post.votes.likes.count }}</span>
+              <span>Оценили: {{ object.post.votes.likes.count }} {{ object.post.votes.likes.count|rupluralize:"человек,человека,людей" }}</span>
               <br><br>
               <span style="display: flex;">
                 {% for heart in object.post.votes.likes.all %}
@@ -51,7 +51,7 @@
           <span class="dislike_window">
             {% if object.post.votes.dislikes.all %}
           <div class="dislike_pop" style="margin:15px">
-            <span>Дизлайков: {{ object.post.votes.dislikes.count }}</span>
+            <span>Не оценили: {{ object.post.votes.dislikes.count }} {{ object.post.votes.dislikes.count|rupluralize:"человек,человека,людей" }}</span>
             <br><br>
             <span style="display: flex;">
               {% for sheet in object.post.votes.dislikes.all %}
@@ -78,7 +78,7 @@
             <i class="material-icons">chat</i>
             <span class="comment-count">
               {% if object.post.count_comments %}
-                {{ object.post.count_comments }} 
+                {{ object.post.count_comments }}
               {% endif %}
             </span>
           </span>

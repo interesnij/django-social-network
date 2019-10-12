@@ -18,7 +18,7 @@
             <span class="like_window">
               {% if object.article.votes.likes.all %}
             <div class="like_pop" style="margin:15px">
-              <span>Лайков: {{ object.article.votes.likes.count }}</span>
+              <span>Оценили: {{ object.article.votes.likes.count }} {{ object.article.votes.likes.count|rupluralize:"человек,человека,людей" }}</span>
               <br><br>
               <span style="display: flex;">
                 {% for heart in object.article.votes.likes.all %}
@@ -51,7 +51,7 @@
           <span class="dislike_window">
             {% if object.article.votes.dislikes.all %}
           <div class="dislike_pop" style="margin:15px">
-            <span>Дизлайков: {{ object.article.votes.dislikes.count }}</span>
+            <span>Не оценили: {{ object.article.votes.dislikes.count }} {{ object.article.votes.dislikes.count|rupluralize:"человек,человека,людей" }}</span>
             <br><br>
             <span style="display: flex;">
               {% for sheet in object.article.votes.dislikes.all %}
