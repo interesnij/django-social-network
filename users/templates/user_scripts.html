@@ -32,7 +32,7 @@
 	}
 	function art_dislike() {
 			var dislike = $(this);
-			var article = $('.infinite-item').attr("posts-id");
+			var article = $('.infinite-item').attr("article-id");
 			var type = dislike.data('type');
 			var pk = dislike.data('id');
 			var action = dislike.data('action');
@@ -60,6 +60,66 @@
 	// Подключение обработчиков
 	$('[data-action="art_like"]').click(art_like);
 	$('[data-action="art_dislike"]').click(art_dislike);
+</script>
+
+<script>
+	function art_like() {
+			var like = $(this);
+			var article = $('.infinite-item').attr("post-id");
+			var type = like.data('type');
+			var pk = like.data('id');
+			var action  = like.data('action');
+			var dislike = like.next().next();
+			payload = {
+					'post': post,
+					'csrf_token': csrftoken
+				}
+			$.ajax({
+					url: "/post/like/" + pk + "/",
+					type: 'POST',
+					cache: false,
+					data: payload,
+					success: function(data) {
+							like.find("[data-count='like']").text(data.like_count);
+							dislike.find("[data-count='dislike']").text(data.dislike_count);
+							$(like).addClass("text-success");
+							$(dislike).removeClass("text-danger");
+							$(like).siblings('.like_window').html('').load("/post/like_window/" + pk + "/");
+							$(dislike).siblings('.dislike_window').html('').load("/post/dislike_window/" + pk + "/")
+					}
+			});
+			return false;
+	}
+	function post_dislike() {
+			var dislike = $(this);
+			var post = $('.infinite-item').attr("posts-id");
+			var type = dislike.data('type');
+			var pk = dislike.data('id');
+			var action = dislike.data('action');
+			var like = dislike.prev().prev();
+			payload = {
+					'post': post,
+					'csrf_token': csrftoken
+				}
+			$.ajax({
+					url: "/post/dislike/" + pk + "/",
+					type: 'POST',
+					cache: false,
+					data: payload,
+					success: function(data) {
+							dislike.find("[data-count='dislike']").text(data.dislike_count);
+							like.find("[data-count='like']").text(data.like_count);
+							$(dislike).addClass("text-danger");
+							$(like).removeClass("text-success");
+							$(like).siblings('.like_window').html('').load("/post/like_window/" + pk + "/");
+							$(dislike).siblings('.dislike_window').html('').load("/post/dislike_window/" + pk + "/")
+					}
+			});
+			return false;
+	}
+	// Подключение обработчиков
+	$('[data-action="post_like"]').click(post_like);
+	$('[data-action="post_dislike"]').click(post_dislike);
 </script>
 
 
