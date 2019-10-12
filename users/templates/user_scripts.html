@@ -132,7 +132,7 @@ $(".art_comment").on("click", function () {
 			data: {'article': article},
 			cache: false,
 			beforeSend: function () {
-					url.find(".load_comments").html("<img src='/static/images/loading.gif'>");
+					url.find(".load_comments").html("<img class='preloader' src='/static/images/loading.gif'>");
 			},
 			success: function (data) {
 				url.find(".load_comments").html(data.comments);
