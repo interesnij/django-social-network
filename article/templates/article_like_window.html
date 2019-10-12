@@ -2,7 +2,7 @@
 
 {% if article_like.votes.likes.all %}
 <div class="like_pop" style="margin:15px">
-  <span>Лайков: {{ article_like.votes.likes.count }}</span>
+  <span>Оценили: {{ article_like.votes.likes.count }} {{ article_like.votes.likes.count|rupluralize:"человек,человека,людей" }}</span>
   <br><br>
   <span style="display: flex;">
     {% for heart in article_like.votes.likes.all %}

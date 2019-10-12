@@ -2,7 +2,7 @@
 
 {% if article_dislike.votes.dislikes.all %}
 <div class="dislike_pop" style="margin:15px">
-  <span>Дизлайков: {{ article_dislike.votes.dislikes.count }}</span>
+  <span>Не оценили: {{ article_dislike.votes.likes.count }} {{ article_dislike.votes.likes.count|rupluralize:"человек,человека,людей" }}</span>
   <br><br>
   <span style="display: flex;">
     {% for sheet in article_dislike.votes.dislikes.all %}
