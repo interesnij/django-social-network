@@ -171,7 +171,7 @@ USE_TZ = False
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(PROJECT_PATH, 'static')
 
-MEDIA_URL = 'media/'
+MEDIA_URL = '/media/'
 MEDIA_ROOT = 'http://194.58.96.91/mnt/droplet/'
 
 REST_SESSION_LOGIN = True
