@@ -68,7 +68,7 @@
             <a class="col">
               {% if user.profile.avatar %}
                 <figure class="mx-auto mb-3">
-                  <img src="{{ MEDIA_SERVER }}{{ user.profile.avatar.url }}" alt="">
+                  <img src="{{ MEDIA_ROOT }}{{ user.profile.avatar.url }}" alt="">
                 </figure>
               {% else %}
                 <figure class="mx-auto mb-3">
