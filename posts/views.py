@@ -17,6 +17,22 @@ class PostsView(TemplateView):
     template_name="posts.html"
 
 
+class PostDetailView(TemplateView):
+    model=Post
+    template_name="post.html"
+
+    def get(self,request,*args,**kwargs):
+        self.post = Post.objects.get(uuid=self.kwargs["uuid"])
+        self.post.views += 1
+        self.post.save()
+        return super(PostDetailView,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context=super(PostDetailView,self).get_context_data(**kwargs)
+        context["object"]=self.post
+        return context
+
+
 class PostUserCreate(TemplateView):
     template_name="post_add.html"
     form_post=None

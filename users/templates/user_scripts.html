@@ -5,10 +5,12 @@
 $('.fullscreen').on('click', function () {
 	 var item = $(this);
 	 var article_id = item.parent().attr("article-id");
-	 var pk = item.data('id');
-	 console.log(pk);
+	 var post_id = item.parent().attr("post-id");
 	 if (article_id){
 	 	$('#item_loader').html('').load("/article/detail/" + article_id + "?article=" + article_id)
+ 	 };
+	 if (post_id){
+	 	$('#item_loader').html('').load("/posts/detail/" + post_id + "?post=" + post_id)
  	 };
 	 $('.activefullscreen').show();
 });
