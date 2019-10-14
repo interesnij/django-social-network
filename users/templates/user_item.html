@@ -52,17 +52,6 @@
 <script src="/static/scripts/cockie.js" type="text/javascript"></script>
 
 <script>
-	$('.prev_article').on('click', function () {
-		 var item = $(this);
-		 var article_id = item.parent().attr("article-id");
-     current = {{ object.get_previous_by_posted.uuid }}
-     console.log(current);
-     console.log(current);
-		 $('#item_loader').html('').load("/users/detail/" + current);
-
-	});
-</script>
-<script>
 	function art_like() {
 			var like = $(this);
 			var article = $('.infinite-item').attr("article-id");
@@ -168,13 +157,30 @@ $('[data-action="article_remove"]').click(remove);
 
 <div class="">
   {% if object.get_previous_by_created %}
-    <span class="prev_article">
+    <span class="prev_item">
       Раньше
     </span>
    {% endif %}
    {% if object.get_next_by_created %}
-    <span class="next_article">
+    <span class="next_item">
       Позже
     </span>
     {% endif %}
 </div>
+
+<script>
+	$('.prev_item').on('click', function () {
+		 var item = $(this);
+		 var article_id = item.parent().attr("article-id");
+     current = {{ object.get_previous_by_posted.uuid }};
+		 $('#item_loader').html('').load("/users/detail/" + current);
+
+	});
+
+  $('.next_item').on('click', function () {
+		 var item = $(this);
+     current = {{ object.get_next_by_posted.uuid }};
+		 $('#item_loader').html('').load("/users/detail/" + current);
+
+	});
+</script>
