@@ -80,7 +80,11 @@
     <a href=""><span class="new-posts"></span> Загрузить новые записи</a>
   </div>
   <span class="stream">
-<div></div>
+    <div class="card mb-4 activefullscreen_show" style="display:none">
+      <a href="#" class="activefullscreen_hide">Закрыть</a>
+      <div id="item_loader"></div>
+    </div>
+
     {% for object in lenta %}
     {% if object.article %}
       {% include 'generic/article.html' with article=article  %}

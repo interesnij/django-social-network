@@ -1,8 +1,18 @@
 {% load staticfiles %}
 <script src="/static/scripts/cockie.js" type="text/javascript"></script>
+<!--
 <script>
 $('.fullscreen').on('click', function () {
 		$(this).closest('.fullscreen').toggleClass('activefullscreen');
+});
+</script>
+-->
+<script>
+$('.fullscreen').on('click', function () {
+	 $('.activefullscreen_show').show();
+});
+$('.activefullscreen_hide').on('click', function () {
+	 $('.activefullscreen_show').hide();
 });
 </script>
 <script>
