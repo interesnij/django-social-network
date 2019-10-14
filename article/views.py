@@ -23,19 +23,19 @@ class ArticleView(TemplateView):
 
 
 class ArticleDetailView(TemplateView):
-	model=Article
-	template_name="generic/article.html"
+    model=Article
+    template_name="generic/article.html"
+    
+    def get(self,request,*args,**kwargs):
+        article = Article.objects.get(uuid=self.kwargs["uuid"])
+        article.views += 1
+        article.save()
+        return super(ArticleDetailView,self).get(request,*args,**kwargs)
 
-	def get(self,request,*args,**kwargs):
-		article = Article.objects.get(uuid=self.kwargs["uuid"])
-		article.views += 1
-		article.save()
-		return super(ArticleDetailView,self).get(request,*args,**kwargs)
-
-	def get_context_data(self,**kwargs):
-		context=super(ArticleDetailView,self).get_context_data(**kwargs)
+    def get_context_data(self,**kwargs):
+        context=super(ArticleDetailView,self).get_context_data(**kwargs)
         context["object"]=self.article
-		return context
+        return context
 
 
 class ArticleUserHardCreate(TemplateView):
