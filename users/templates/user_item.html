@@ -173,7 +173,7 @@ $('[data-action="post_remove"]').click(remove);
                     <i class="material-icons ">more_vertical</i>
                 </a>
 
-                <div class="dropdown-menu dropdown-menu-right">
+                <div class="dropdown-menu dropdown-menu-right" style="margin-right: 15px;">
                   {% if user == request.user and request.user.is_authenticated %}
                     <span data-action="remove" data-id="{{ object.pk }}" data-type="Пост" style="cursor:pointer" class="dropdown-item post_remove">Удалить запись</span>
                     <a href="#" id="article_update" class="dropdown-item">Редактировать</a>
