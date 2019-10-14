@@ -9,7 +9,7 @@
                 <img src="{% static 'images/user.png' %}" style="border-radius: 50px;width:50px;" alt="image">
               {% endif %}
             </figure>
-            <div class="media-body fullscreen">
+            <div class="media-body">
                 <h6 class="mb-0">{{ object.creator.first_name }} {{ object.creator.last_name }}</h6>
                 <p class="mb-0">{{ object.created|naturaltime }}</p>
             </div>
@@ -35,7 +35,7 @@
             </div>
         </div>
     </div>
-    <div class="card-body">
+    <div class="card-body fullscreen">
       {% if object.article.content_hard %}
         <p class="mb-0 content-color-secondary">{{ object.article.content_hard|safe }}</p>
       {% endif %}
