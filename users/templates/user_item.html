@@ -310,10 +310,22 @@ $('[data-action="article_remove"]').click(remove);
     <span class="prev_item">
       Раньше
     </span>
+    <script>
+    	$('.prev_item').on('click', function () {
+    		 $('#item_loader').html('').load("{% url 'user_item' pk=object.get_previous_by_created.pk %}");
+    	});
+    </script>
+
    {% endif %}
    {% if object.get_next_by_created %}
     <span class="next_item">
       Позже
     </span>
+
+    <script>
+      $('.next_item').on('click', function () {
+    		 $('#item_loader').html('').load("{% url 'user_item' pk=object.get_next_by_created.pk %}");
+    	});
+    </script>
     {% endif %}
 </div>
