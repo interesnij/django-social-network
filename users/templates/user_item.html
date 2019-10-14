@@ -49,23 +49,6 @@
     {% include 'generic/article_info.html' %}
 </div>
 
-<div class="clearfix mt-40">
-  {% if object.get_previous_by_created %}
-    {% if object.article %}
-    <span class="prev_article">
-      Раньше
-    </span>
-    {% endif %}
-   {% endif %}
-   {% if object.get_next_by_created %}
-   {% if object.article %}
-    <span class="next_article">
-      Позже
-    </span>
-    {% endif %}
-    {% endif %}
-</div>
-
 <script src="/static/scripts/cockie.js" type="text/javascript"></script>
 
 <script>
@@ -75,7 +58,7 @@
      current = {{ object.get_previous_by_posted.uuid }}
      console.log(current);
      console.log(current);
-		 $('#item_loader').html('').load("/article/detail/" + current);
+		 $('#item_loader').html('').load("/users/detail/" + current);
 
 	});
 </script>
@@ -182,3 +165,16 @@ $('[data-action="article_remove"]').click(remove);
 </script>
 
 {% endif %}
+
+<div class="">
+  {% if object.get_previous_by_created %}
+    <span class="prev_article">
+      Раньше
+    </span>
+   {% endif %}
+   {% if object.get_next_by_created %}
+    <span class="next_article">
+      Позже
+    </span>
+    {% endif %}
+</div>
