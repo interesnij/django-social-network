@@ -6,7 +6,7 @@ $('.fullscreen').on('click', function () {
 	 var item = $(this);
 	 var article_id = item.parent().attr("article-id");
 	 var post_id = item.parent().attr("post-id");
-	 console.log(article_id,post_id); 
+	 console.log(article_id,post_id);
 	 if (article_id){
 	 	$('#item_loader').html('').load("/article/detail/" + article_id + "?article=" + article_id)
  	 };
@@ -19,6 +19,15 @@ $('.activefullscreen_hide').on('click', function () {
 	 $('.activefullscreen').hide();
 	 $('#item_loader').empty();
 });
+</script>
+<script>
+	$('.prev_article').on('click', function () {
+		 var item = $(this);
+		 var article_id = item.parent().attr("article-id");
+		 var current = item.get_previous_by_created.uuid;
+		 $('#item_loader').html('').load("/article/detail/" + current + "?article=" + article_id");
+
+	});
 </script>
 <script>
 	function art_like() {

@@ -20,14 +20,12 @@ from itertools import chain
 
 
 
+class UserItemView(ListView):
+	template_name="user_item.html"
+
+
 class AllUsers(ListView):
 	template_name="all_users.html"
-	model = User
-	paginate_by = 15
-
-	def get_queryset(self, **kwargs):
-		users=User.objects.all()
-		return users
 
 
 class ProfileUserView(TemplateView):

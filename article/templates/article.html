@@ -50,18 +50,18 @@
 <div class="clearfix mt-40">
   {% if object.get_previous_by_created %}
     {% if object.article %}
-    <a href="{% url 'article_detail' uuid=object.get_previous_by_created.uuid %}"
-    class="blog-item-more left ajax">
+    <span href="{% url 'article_detail' uuid=object.get_previous_by_created.uuid %}"
+    class="prev_article ajax">
       Раньше
-    </a>
+    </span>
     {% endif %}
    {% endif %}
    {% if object.get_next_by_created %}
    {% if object.article %}
-    <a href="{% url 'article_detail' uuid=object.get_next_by_created.uuid %}"
-    class="blog-item-more right ajax">
+    <span href="{% url 'article_detail' uuid=object.get_next_by_created.uuid %}"
+    class="next_article ajax">
       Позже
-    </a>
+    </span>
     {% endif %}
     {% endif %}
 </div>
