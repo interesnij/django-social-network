@@ -19,9 +19,20 @@ from datetime import datetime, timedelta
 from itertools import chain
 
 
+class UserItemView(TemplateView):
+    model=Item
+    template_name="user_item.html"
 
-class UserItemView(ListView):
-	template_name="user_item.html"
+    def get(self,request,*args,**kwargs):
+        self.item = Item.objects.get(pk=self.kwargs["pk"])
+        self.item.views += 1
+        self.item.save()
+        return super(UserItemView,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context=super(UserItemView,self).get_context_data(**kwargs)
+        context["object"]=self.item
+        return context
 
 
 class AllUsers(ListView):

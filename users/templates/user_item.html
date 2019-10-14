@@ -1,5 +1,6 @@
 {% load staticfiles humanize liked_user %}
 
+{% if object.article %}
 <div class="card mb-4 infinite-item" article-id="{{ object.article.uuid }}">
     <div class="card-header border-bottom">
         <div class="media">
@@ -179,3 +180,5 @@ $.ajax({
 };
 $('[data-action="article_remove"]').click(remove);
 </script>
+
+{% endif %}

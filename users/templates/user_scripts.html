@@ -4,15 +4,10 @@
 <script>
 $('.fullscreen').on('click', function () {
 	 var item = $(this);
-	 var article_id = item.parent().attr("article-id");
-	 var post_id = item.parent().attr("post-id");
-	 console.log(article_id,post_id);
-	 if (article_id){
-	 	$('#item_loader').html('').load("/article/detail/" + article_id + "?article=" + article_id)
- 	 };
-	 if (post_id){
-	 	$('#item_loader').html('').load("/posts/detail/" + post_id + "?post=" + post_id)
- 	 };
+	 var item_id = item.attr("item-id");
+	 console.log(item_id);
+	 $('#item_loader').html('').load("/users/item/" + item_id)
+
 	 $('.activefullscreen').show();
 });
 $('.activefullscreen_hide').on('click', function () {
