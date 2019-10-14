@@ -10,10 +10,10 @@ $('.fullscreen').on('click', function () {
 <script>
 $('.fullscreen').on('click', function () {
 	 var item = $(this);
-	 var article_id = item.attr("article-id");
+	 var article_id = item.parent().attr("article-id");
 	 var pk = item.data('id');
 	 console.log(article);
-	 if (article){
+	 if (article_id){
 	 	$('#item_loader').html('').load("/article/detail/" + pk + "/")
  	 };
 	 $('.activefullscreen').show();
