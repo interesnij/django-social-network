@@ -9,11 +9,12 @@ $('.fullscreen').on('click', function () {
 -->
 <script>
 $('.fullscreen').on('click', function () {
-	 var item = $(this).parent();
-	 var article = item.attr("article-id");
+	 var item = $(this);
+	 var article_id = item.attr("article-id");
+	 var pk = item.data('id');
 	 console.log(article);
 	 if (article){
-	 	$('#item_loader').html('').load("/article/detail/" + article + "/")
+	 	$('#item_loader').html('').load("/article/detail/" + pk + "/")
  	 };
 	 $('.activefullscreen').show();
 });
