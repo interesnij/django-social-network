@@ -6,7 +6,7 @@ $('.fullscreen').on('click', function () {
 	 var item = $(this);
 	 var article_id = item.parent().attr("article-id");
 	 var post_id = item.parent().attr("post-id");
-	 console.log(1.article_id,2.post_id);
+	 console.log(article_id,post_id);
 	 if (article_id){
 	 	$('#item_loader').html('').load("/article/detail/" + article_id + "?article=" + article_id)
  	 };
