@@ -28,7 +28,6 @@ class ArticleDetailView(DetailView):
 
 	def get(self,request,*args,**kwargs):
 		article = Article.objects.get(pk=self.kwargs["pk"])
-		self.comments = article.articlecomment_set.all()
 		article.views += 1
 		article.save()
 		return super(ArticleDetailView,self).get(request,*args,**kwargs)
