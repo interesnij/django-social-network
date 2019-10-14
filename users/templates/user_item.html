@@ -334,9 +334,6 @@ $('[data-action="article_remove"]').click(remove);
 
 <div class="">
   {% if object.get_previous_by_created %}
-    <span class="prev_item">
-      <img style="width: 50px;" src="{% static 'images/icons/left-24px.svg' %}" />
-    </span>
     <script>
     	$('.prev_item').on('click', function () {
     		 $('#item_loader').html('').load("{% url 'user_item' pk=object.get_previous_by_created.pk %}");
@@ -345,9 +342,6 @@ $('[data-action="article_remove"]').click(remove);
 
    {% endif %}
    {% if object.get_next_by_created %}
-    <span class="next_item">
-      Позже
-    </span>
 
     <script>
       $('.next_item').on('click', function () {
