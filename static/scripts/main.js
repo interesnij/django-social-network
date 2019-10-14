@@ -41,11 +41,6 @@ $(document).ready(function () {
         $('body').addClass('sidebar-left-close');
     }
 
-
-    $('.fullscreenbtn').on('click', function () {
-        $(this).closest('.fullscreen').toggleClass('activefullscreen');
-    });
-
     $('#boxlayout').on('click', function () {
         if ($(this).is(':checked') === true) {
             $('body').addClass('boxed-page sidebar-left-close');
