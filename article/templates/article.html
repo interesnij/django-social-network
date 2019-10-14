@@ -47,6 +47,25 @@
     {% include 'generic/article_info.html' %}
 </div>
 
+<div class="clearfix mt-40">
+  {% if object.get_previous_by_created %}
+    {% if object.article %}
+    <a href="{% url 'article_detail' uuid=object.get_previous_by_created.uuid %}"
+    class="blog-item-more left ajax">
+      Раньше
+    </a>
+    {% endif %}
+   {% endif %}
+   {% if object.get_next_by_created %}
+   {% if object.article %}
+    <a href="{% url 'article_detail' uuid=object.get_next_by_created.uuid %}"
+    class="blog-item-more right ajax">
+      Позже
+    </a>
+    {% endif %}
+    {% endif %}
+</div>
+
 <script src="/static/scripts/cockie.js" type="text/javascript"></script>
 <script>
 	function art_like() {
