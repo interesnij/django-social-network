@@ -15,10 +15,29 @@ from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.views.decorators.http import require_http_methods
+from django.views.generic.detail import DetailView
 
 
 class ArticleView(TemplateView):
     template_name="articles.html"
+
+
+class ArticleDetailView(PageNumberView,DetailView,PageNumberMixin):
+	model=Article
+	template_name="article.html"
+
+	def get(self,request,*args,**kwargs):
+		article = Article.objects.get(uuid=self.kwargs["uuid"])
+		self.comments = article.articlecomment_set.all().order_by('path')
+		article = Article.objects.get(pk=self.kwargs["pk"])
+		article.views += 1
+		article.save()
+		return super(ArticleDetailView,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context=super(ArticleDetailView,self).get_context_data(**kwargs)
+
+		return context
 
 
 class ArticleUserHardCreate(TemplateView):

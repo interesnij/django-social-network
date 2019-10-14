@@ -286,6 +286,27 @@ $.ajax({
 };
 $('[data-action="post_remove"]').click(remove);
 </script>
+<script>
+function remove() {
+var remove = $(this);
+var pk = remove.data('id');
+$.ajax({
+	url: "/article/delete/" + pk + "/",
+	success: function (data) {
+		$(remove).parents('.card').hide();
+		$.toast({
+				heading: '{{ request.user.first_name }}',
+				text: 'статья успешно удалена!',
+				showHideTransition: 'fade',
+				icon: 'error'
+		})
+	},
+	error: function(data) {
+	}
+});
+};
+$('[data-action="article_remove"]').click(remove);
+</script>
 
 <script src="/static/scripts/cropper.min.js" type="text/javascript"></script>
 
