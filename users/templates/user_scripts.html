@@ -9,7 +9,8 @@ $('.fullscreen').on('click', function () {
 -->
 <script>
 $('.fullscreen').on('click', function () {
-	 var article = $('.infinite-item').attr("article-id");
+	 var item = $(this);
+	 var article = item.attr("article-id");
 	 console.log(article);
 	 if (article){
 	 	$('#item_loader').html('').load("/article/detail/" + article + "/")
