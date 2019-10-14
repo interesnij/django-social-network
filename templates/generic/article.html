@@ -35,7 +35,7 @@
             </div>
         </div>
     </div>
-    <div class="card-body fullscreen" daia-id="{{ object.pk }}" style="cursor:pointer">
+    <div class="card-body fullscreen" data-id="{{ object.pk }}" style="cursor:pointer">
       {% if object.article.content_hard %}
         <p class="mb-0 content-color-secondary">{{ object.article.content_hard|safe }}</p>
       {% endif %}
