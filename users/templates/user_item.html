@@ -35,7 +35,7 @@
             </div>
         </div>
     </div>
-    <div class="card-body">
+    <div class="card-body fullscreen" data-id="{{ object.pk }}">
       {% if object.post.text %}
         <p class="">{{ object.post.text|safe }}</p>
       {% endif %}
