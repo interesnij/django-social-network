@@ -27,7 +27,7 @@ class ArticleDetailView(DetailView):
 	template_name="generic/article.html"
 
 	def get(self,request,*args,**kwargs):
-		article = Article.objects.get(uuid=self.kwargs["uuid"])
+		article = Article.objects.get(article_id=self.kwargs["article_id"])
 		article.views += 1
 		article.save()
 		return super(ArticleDetailView,self).get(request,*args,**kwargs)
