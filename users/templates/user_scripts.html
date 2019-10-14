@@ -9,7 +9,7 @@ $('.fullscreen').on('click', function () {
 -->
 <script>
 $('.fullscreen').on('click', function () {
-	 var item = $(this);
+	 var item = $(this).parent();
 	 var article = item.attr("article-id");
 	 console.log(article);
 	 if (article){
