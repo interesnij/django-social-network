@@ -479,6 +479,7 @@ p small {
   z-index: 9;
   padding: 5%;
   display: block;
+  overflow: auto;
 }
 
 #settingalert {
