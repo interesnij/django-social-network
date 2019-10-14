@@ -11,10 +11,10 @@ $('.fullscreen').on('click', function () {
 	 	$('#item_loader').html('').load("/article/detail/" + article_id + "/")
  	 };
 	 $('.activefullscreen').show();
-	 $('#item_loader').empty('')
 });
 $('.activefullscreen_hide').on('click', function () {
 	 $('.activefullscreen').hide();
+	 $('#item_loader').empty();
 });
 </script>
 <script>
