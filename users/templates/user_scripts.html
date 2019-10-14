@@ -20,15 +20,7 @@ $('.activefullscreen_hide').on('click', function () {
 	 $('#item_loader').empty();
 });
 </script>
-<script>
-	$('.prev_article').on('click', function () {
-		 var item = $(this);
-		 var article_id = item.parent().attr("article-id");
-		 var current = item.get_previous_by_created.uuid;
-		 $('#item_loader').html('').load("/article/detail/" + current);
 
-	});
-</script>
 <script>
 	function art_like() {
 			var like = $(this);
