@@ -1,5 +1,5 @@
 {% load staticfiles humanize liked_user %}
-<div class="card mb-4 fullscreen infinite-item" article-id="{{ object.article.uuid }}" data-action="" style="cursor:pointer">
+<div class="card mb-4 infinite-item" article-id="{{ object.article.uuid }}" data-action="" style="cursor:pointer">
     <div class="card-header border-bottom">
         <div class="media">
             <figure>
@@ -9,7 +9,7 @@
                 <img src="{% static 'images/user.png' %}" style="border-radius: 50px;width:50px;" alt="image">
               {% endif %}
             </figure>
-            <div class="media-body">
+            <div class="media-body fullscreen">
                 <h6 class="mb-0">{{ object.creator.first_name }} {{ object.creator.last_name }}</h6>
                 <p class="mb-0">{{ object.created|naturaltime }}</p>
             </div>
