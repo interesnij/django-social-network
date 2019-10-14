@@ -1,7 +1,7 @@
 from posts.views import (
                             PostsView,
                             PostDeleteView,
-                            PostDetailView
+                            PostDetailView,
                             PostDislikeView,
                             PostLikeView,
                             PostCommentLikeView,
