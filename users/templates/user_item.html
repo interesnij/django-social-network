@@ -320,14 +320,10 @@ $('[data-action="article_remove"]').click(remove);
 
 <script>
 	$('.prev_item').on('click', function () {
-		 var item = $(this);
 		 $('#item_loader').html('').load("{% url 'user_item' pk=object.get_previous_by_created.pk %}");
-
 	});
 
   $('.next_item').on('click', function () {
-		 var item = $(this);
 		 $('#item_loader').html('').load("{% url 'user_item' pk=object.get_next_by_created.pk %}");
-
 	});
 </script>
