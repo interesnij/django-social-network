@@ -12,7 +12,7 @@ $('.fullscreen').on('click', function () {
 	 var item = $(this);
 	 var article_id = item.parent().attr("article-id");
 	 var pk = item.data('id');
-	 console.log(article_id);
+	 console.log(pk);
 	 if (article_id){
 	 	$('#item_loader').html('').load("/article/detail/" + pk + "/")
  	 };
