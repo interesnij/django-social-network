@@ -9,6 +9,8 @@ $('.fullscreen').on('click', function () {
 -->
 <script>
 $('.fullscreen').on('click', function () {
+	 var article = $('.infinite-item').attr("article-id");
+	 $('.item_loader').html('').load("/article/article_detail/" + article + "/")
 	 $('.activefullscreen').show();
 });
 $('.activefullscreen_hide').on('click', function () {
