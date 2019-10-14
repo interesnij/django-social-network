@@ -171,7 +171,6 @@ $('[data-action="article_remove"]').click(remove);
 <script>
 	$('.prev_item').on('click', function () {
 		 var item = $(this);
-		 var article_id = item.parent().attr("article-id");
 		 $('#item_loader').html('').load("{% url 'user_item' pk=object.get_previous_by_created.pk %}");
 
 	});
