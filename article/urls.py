@@ -32,7 +32,7 @@ urlpatterns = [
     url(r'^comment/(?P<pk>\d+)/like/$',login_required(VotesView.as_view(model=ArticleComment, vote_type=LikeDislike.LIKE)),name='article_comment_like'),
     url(r'^comment/(?P<pk>\d+)/dislike/$',login_required(VotesView.as_view(model=ArticleComment, vote_type=LikeDislike.DISLIKE)),name='article_comment_dislike'),
     url(r'^delete/(?P<pk>\d+)/$', ArticleDeleteView.as_view(), name='article_delete'),
-    url(r'^detail/<uuid:article_id>/$', ArticleDetailView.as_view(), name='article_detail'), 
+    url(r'^detail/<article_id>/$', ArticleDetailView.as_view(), name='article_detail'), 
     url(r'^like_window/(?P<pk>\d+)/$', ArticleLikeView.as_view(), name='article_like_window'),
     url(r'^comment_like_window/(?P<pk>\d+)/$', ArticleCommentLikeView.as_view(), name='article_comment_like_window'),
     url(r'^dislike_window/(?P<pk>\d+)/$', ArticleDislikeView.as_view(), name='article_dislike_window'),
