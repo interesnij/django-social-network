@@ -1,5 +1,4 @@
 {% load staticfiles humanize liked_user %}
-<script src="/static/scripts/cockie.js" type="text/javascript"></script>
 
 {% if object.post %}
 <div class="card mb-4 infinite-item" post-id="{{ object.post.uuid }}" style="cursor:pointer">
@@ -50,6 +49,7 @@
     {% include 'generic/post_info.html' %}
 </div>
 
+<script src="/static/scripts/cockie.js" type="text/javascript"></script>
 <script>
 	function post_like() {
 			var like = $(this);
@@ -201,6 +201,7 @@ $('[data-action="post_remove"]').click(remove);
     {% include 'generic/article_info.html' %}
 </div>
 
+<script src="/static/scripts/cockie.js" type="text/javascript"></script>
 <script>
 	function art_like() {
 			var like = $(this);

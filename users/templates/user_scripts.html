@@ -7,7 +7,6 @@ $('.fullscreen').on('click', function () {
 	 var item_id = item.data("id");
 	 console.log(item_id);
 	 $('#item_loader').html('').load("/users/item/" + item_id)
-
 	 $('.activefullscreen').show();
 });
 $('.activefullscreen_hide').on('click', function () {
