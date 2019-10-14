@@ -172,15 +172,13 @@ $('[data-action="article_remove"]').click(remove);
 	$('.prev_item').on('click', function () {
 		 var item = $(this);
 		 var article_id = item.parent().attr("article-id");
-     current = {{ object.get_previous_by_posted.uuid }};
-		 $('#item_loader').html('').load("/users/detail/" + current);
+		 $('#item_loader').html('').load("{% url 'user_item' pk=object.get_previous_by_created.pk %}");
 
 	});
 
   $('.next_item').on('click', function () {
 		 var item = $(this);
-     current = {{ object.get_next_by_posted.uuid }};
-		 $('#item_loader').html('').load("/users/detail/" + current);
+		 $('#item_loader').html('').load("{% url 'user_item' pk=object.get_next_by_created.pk %}");
 
 	});
 </script>
