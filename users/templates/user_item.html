@@ -31,13 +31,13 @@
     </div>
 
     {% include 'generic/post_info.html' %}
-    <div class="dropdown d-inline-block">
+    <div class="dropdown d-inline-block" style="margin-right: 20px;">
 
         <a style="cursor:pointer" class="icon-circle icon-30 dropdown-toggle caret-none" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="material-icons ">more_vertical</i>
         </a>
 
-        <div class="dropdown-menu dropdown-menu-right" style="margin-right: 20px;">
+        <div class="dropdown-menu dropdown-menu-right">
           {% if user == request.user and request.user.is_authenticated %}
             <span data-action="post_remove" data-id="{{ object.pk }}" data-type="Пост" style="cursor:pointer" class="dropdown-item post_remove">Удалить запись</span>
             <a href="#" id="post_update" class="dropdown-item">Редактировать</a>
@@ -170,12 +170,12 @@ $('[data-action="post_remove"]').click(remove);
                 <h6 class="mb-0">{{ object.creator.first_name }} {{ object.creator.last_name }}</h6>
                 <p class="mb-0">{{ object.created|naturaltime }}</p>
             </div>
-            <div class="dropdown d-inline-block">
+            <div class="dropdown d-inline-block" style="margin-right: 20px;">
                 <a style="cursor:pointer" class="icon-circle icon-30 dropdown-toggle caret-none" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="material-icons ">more_vertical</i>
                 </a>
 
-                <div class="dropdown-menu dropdown-menu-right" style="margin-right: 20px;">
+                <div class="dropdown-menu dropdown-menu-right">
                   {% if user == request.user and request.user.is_authenticated %}
                     <span data-action="remove" data-id="{{ object.pk }}" data-type="Пост" style="cursor:pointer" class="dropdown-item post_remove">Удалить запись</span>
                     <a href="#" id="article_update" class="dropdown-item">Редактировать</a>
