@@ -34,7 +34,7 @@
     </div>
     <div class="card-body fullscreen" data-id="{{ object.pk }}" style="cursor:pointer">
       {% if object.post.text %}
-        <p class="">{{ object.post.text|safe }}</p>
+        <p class="">{{ object.post.text|linebreaks }}</p>
       {% endif %}
       {% if object.post.image %}
         <p class="">{{ object.post.image.url }}</p>
