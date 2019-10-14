@@ -2,6 +2,16 @@
 
 {% if object.post %}
 <div class="card mb-4 infinite-item" post-id="{{ object.post.uuid }}" style="cursor:pointer">
+  {% if object.get_previous_by_created %}
+    <span class="prev_item">
+      <img style="width: 50px;" src="{% static 'images/icons/left-24px.svg' %}" />
+    </span>
+  {% endif %}
+  {% if object.get_next_by_created %}
+    <span class="next_item">
+      <img style="width: 50px;" src="{% static 'images/icons/right-24px.svg' %}" />
+    </span>
+  {% endif %}
     <div class="card-header border-bottom">
         <div class="media">
             <figure>
@@ -15,16 +25,7 @@
                 <h6 class="mb-0">{{ object.creator.get_full_name }}</h6>
                 <p class="mb-0">{{ object.created|naturaltime }}</p>
             </div>
-            {% if object.get_previous_by_created %}
-              <span class="prev_item">
-                <img style="width: 50px;" src="{% static 'images/icons/left-24px.svg' %}" />
-              </span>
-            {% endif %}
-            {% if object.get_next_by_created %}
-              <span class="next_item">
-                <img style="width: 50px;" src="{% static 'images/icons/right-24px.svg' %}" />
-              </span>
-            {% endif %}
+
             <div class="dropdown d-inline-block" style="margin-right: 20px;">
 
                 <a style="cursor:pointer" class="icon-circle icon-30 dropdown-toggle caret-none" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -167,6 +168,16 @@ $('[data-action="post_remove"]').click(remove);
 
 {% if object.article %}
 <div class="card mb-4 infinite-item" article-id="{{ object.article.uuid }}">
+  {% if object.get_previous_by_created %}
+    <span class="prev_item">
+      <img style="width: 50px;" src="{% static 'images/icons/left-24px.svg' %}" />
+    </span>
+  {% endif %}
+  {% if object.get_next_by_created %}
+    <span class="next_item">
+      <img style="width: 50px;" src="{% static 'images/icons/right-24px.svg' %}" />
+    </span>
+  {% endif %}
     <div class="card-header border-bottom">
         <div class="media">
             <figure>
@@ -180,16 +191,7 @@ $('[data-action="post_remove"]').click(remove);
                 <h6 class="mb-0">{{ object.creator.first_name }} {{ object.creator.last_name }}</h6>
                 <p class="mb-0">{{ object.created|naturaltime }}</p>
             </div>
-            {% if object.get_previous_by_created %}
-              <span class="prev_item">
-                <img style="width: 50px;" src="{% static 'images/icons/left-24px.svg' %}" />
-              </span>
-            {% endif %}
-            {% if object.get_next_by_created %}
-              <span class="next_item">
-                <img style="width: 50px;" src="{% static 'images/icons/right-24px.svg' %}" />
-              </span>
-            {% endif %}
+
             <div class="dropdown d-inline-block" style="margin-right: 20px;">
                 <a style="cursor:pointer" class="icon-circle icon-30 dropdown-toggle caret-none" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="material-icons ">more_vertical</i>
