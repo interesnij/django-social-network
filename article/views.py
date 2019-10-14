@@ -24,7 +24,7 @@ class ArticleView(TemplateView):
 
 class ArticleDetailView(TemplateView):
     model=Article
-    template_name="generic/article.html"
+    template_name="article.html"
 
     def get(self,request,*args,**kwargs):
         self.article = Article.objects.get(uuid=self.kwargs["uuid"])
