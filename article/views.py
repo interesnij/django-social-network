@@ -28,7 +28,7 @@ class ArticleDetailView(DetailView):
 
 	def get(self,request,*args,**kwargs):
 		article = Article.objects.get(uuid=self.kwargs["uuid"])
-		self.comments = article.articlecomment_set.all().order_by('path')
+		self.comments = article.articlecomment_set.all()
 		article = Article.objects.get(pk=self.kwargs["pk"])
 		article.views += 1
 		article.save()
