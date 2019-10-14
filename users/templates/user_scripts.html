@@ -8,7 +8,7 @@ $('.fullscreen').on('click', function () {
 	 var pk = item.data('id');
 	 console.log(pk);
 	 if (article_id){
-	 	$('#item_loader').html('').load("/article/detail/" + article_id + "/")
+	 	$('#item_loader').html('').load("/article/detail/" + article_id + "?article=" + article_id)
  	 };
 	 $('.activefullscreen').show();
 });
