@@ -3,7 +3,7 @@
 {% if object.post %}
 <div class="card mb-4 infinite-item" post-id="{{ object.post.uuid }}" style="cursor:pointer">
   <span class="text-hide-xs">
-    {% if object.get_prev_by_created %}
+    {% if object.get_previous_by_created %}
       <span class="prev_item">
         <img style="width: 50px;" src="{% static 'images/icons/right-24px.svg' %}" />
       </span>
@@ -13,7 +13,7 @@
         <img style="width: 50px;" src="{% static 'images/icons/left-24px.svg' %}" />
       </span>
     {% endif %}
-  
+
   </span>
     <div class="card-header border-bottom">
         <div class="media">
@@ -172,7 +172,7 @@ $('[data-action="post_remove"]').click(remove);
 {% if object.article %}
 <div class="card mb-4 infinite-item" article-id="{{ object.article.uuid }}">
   <span class="text-hide-xs">
-    {% if object.get_prev_by_created %}
+    {% if object.get_previous_by_created %}
       <span class="prev_item">
         <img style="width: 50px;" src="{% static 'images/icons/right-24px.svg' %}" />
       </span>
