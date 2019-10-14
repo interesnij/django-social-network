@@ -32,7 +32,7 @@
                     <span class="comment_like_window">
                         {% if reply.votes.likes.all %}
                         <div class="comment_like_pop" style="margin:15px">
-                            <span>Лайков: {{ reply.votes.likes.count }}</span>
+                            <span>Оценили: {{ comment.votes.likes.count }} {{ comment.votes.likes.count|rupluralize:"человек,человека,людей" }}</span>
                             <br><br>
                             <span style="display: flex;">
                                 {% for heart in reply.votes.likes.all %}
@@ -68,7 +68,7 @@
                     <span class="comment_dislike_window">
                         {% if reply.votes.dislikes.all %}
                         <div class="comment_dislike_pop" style="margin:15px">
-                            <span>Дизлайков: {{ reply.votes.dislikes.count }}</span>
+                            <span>Не оценили: {{ comment.votes.dislikes.count }} {{ comment.votes.dislikes.count|rupluralize:"человек,человека,людей" }}</span>
                             <br><br>
                             <span style="display: flex;">
                                 {% for sheet in reply.votes.dislikes.all %}
