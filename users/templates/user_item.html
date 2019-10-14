@@ -35,7 +35,7 @@
             </div>
         </div>
     </div>
-    <div class="card-body fullscreen" data-id="{{ object.pk }}">
+    <div class="card-body fullscreen" data-id="{{ object.pk }}" style="cursor:pointer">
       {% if object.post.text %}
         <p class="">{{ object.post.text|safe }}</p>
       {% endif %}
@@ -317,13 +317,3 @@ $('[data-action="article_remove"]').click(remove);
     </span>
     {% endif %}
 </div>
-
-<script>
-	$('.prev_item').on('click', function () {
-		 $('#item_loader').html('').load("{% url 'user_item' pk=object.get_previous_by_created.pk %}");
-	});
-
-  $('.next_item').on('click', function () {
-		 $('#item_loader').html('').load("{% url 'user_item' pk=object.get_next_by_created.pk %}");
-	});
-</script>
