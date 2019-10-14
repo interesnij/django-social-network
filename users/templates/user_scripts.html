@@ -10,7 +10,7 @@ $('.fullscreen').on('click', function () {
 <script>
 $('.fullscreen').on('click', function () {
 	 var article = $('.infinite-item').attr("article-id");
-	 $('.item_loader').html('').load("/article/detail/" + article + "/")
+	 $('#item_loader').html('').load("/article/detail/" + article + "/")
 	 $('.activefullscreen').show();
 });
 $('.activefullscreen_hide').on('click', function () {
