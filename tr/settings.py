@@ -71,7 +71,7 @@ CKEDITOR_CONFIGS = {
         'width': '100%',
         'removePlugins': 'stylesheetparser',
         'extraPlugins': ','.join(['youtube','autolink']),
-        'contentsCss': '#id_content_lite{display:flex}',
+        'contentsCss': '/static/ckeditor/contents.css',
         },
         'medium': {
         'toolbar': 'ver3',
