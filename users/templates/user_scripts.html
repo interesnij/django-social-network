@@ -299,6 +299,7 @@ $.ajax({
 $('[data-action="article_remove"]').click(remove);
 </script>
 
+{% if request.user.is_authenticated %}
 <script src="/static/scripts/cropper.min.js" type="text/javascript"></script>
 
 <script>
