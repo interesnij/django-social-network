@@ -6,7 +6,7 @@ from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 
 
 def upload_to_article_image_directory(article_image, filename):
-    article = article_image.article
+    article = article.pk
     return _upload_to_article_directory_directory(article=article, filename=filename)
 
 def _upload_to_article_directory_directory(article, filename):
