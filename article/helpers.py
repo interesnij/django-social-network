@@ -5,7 +5,7 @@ from django.views.generic import View
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 
 
-def upload_to_user_avatar_directory(self, article, filename):
+def upload_to_article_image_directory(self, article, filename):
     article = self.article
     return _upload_to_user_directory(article=article, filename=filename)
 
