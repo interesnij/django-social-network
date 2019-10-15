@@ -4,7 +4,7 @@
 <span class="activefullscreen_hide2">Х</span>
 <form action="" id="FORM-POST1" method="post">
   {% csrf_token %}
-    {{ form_hard.content_hard }}
+    {{ form.content }}
     <div class="card-footer">
       <button class="btn btn-secondary remove_form">Отмена</button>
       <button type="submit" class="btn btn-success float-right">Опубликовать</button>
@@ -18,11 +18,12 @@
       CKEDITOR.instances.id_content_hard.updateElement();
         $.ajax({
             type: frm.attr('method'),
-            url: "{% url 'article_add_hard_user' %}",
+            url: "{% url 'article_add_user' %}",
             data: frm.serialize(),
             success: function (data) {
               $(".stream").prepend(data);
-              $('#article_create').empty();
+              $('.activefullscreen2').hide();
+              $('#article_loader').empty();
               $.toast({
                   heading: '{{ request.user.first_name }}',
                   text: 'Статья успешно создана!',

@@ -6,7 +6,7 @@ class ArticleForm(forms.ModelForm):
 
 	class Meta:
 		model = Article
-		fields = ['content_hard']
+		fields = ['content']
 
 class ArticleCommentForm(forms.ModelForm):
 
