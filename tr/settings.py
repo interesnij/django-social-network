@@ -64,12 +64,11 @@ CKEDITOR_CONFIGS = {
        },
        'lite': {
         'toolbar': 'ver2',
-        'height': 500,
-        'width': '100%',
-        'removePlugins': 'stylesheetparser',
         'toolbar_ver2': [
             ['Bold', 'Link', 'Unlink', 'Image'],
         ],
+        'height': 500,
+        'width': '100%',
         'removePlugins': 'stylesheetparser',
         'extraPlugins': ','.join(['youtube']),
         },
