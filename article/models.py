@@ -21,7 +21,7 @@ class Article(Item):
     uuid = models.UUIDField(default=uuid.uuid4, db_index=True, verbose_name="uuid")
     image = ProcessedImageField(verbose_name='Главное изображение', blank=False, format='JPEG', null=True,
                                  options={'quality': 80}, processors=[ResizeToFill(1024, 1024)],
-                                 upload_to=upload_to_article_image_directory())
+                                 upload_to=self.upload_to_article_image_directory())
     content = RichTextUploadingField(blank=True, null=True, config_name='default',
                                       external_plugin_resources=[(
                                           'youtube',
