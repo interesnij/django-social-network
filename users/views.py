@@ -7,7 +7,7 @@ from frends.models import Connect
 from follows.models import Follow
 from communities.models import Community
 from posts.forms import PostCommentForm, PostRepostForm
-from article.forms import ArticleMediumForm
+from article.forms import ArticleForm
 from posts.forms import PostUserForm
 from users.forms import GeneralUserForm, AboutUserForm, AvatarUserForm
 from django.views.generic import ListView
@@ -82,7 +82,7 @@ class ProfileUserView(TemplateView):
 		context['lenta'] = self.lenta
 		context['articles'] = self.articles
 		context['pop_frends'] = self.pop_frends
-		context['form_medium'] = ArticleMediumForm()
+		context['form'] = ArticleForm()
 		context['form_avatar'] = AvatarUserForm()
 		context['form_comment'] = PostCommentForm()
 		context["post_repost_form"] = PostRepostForm()
