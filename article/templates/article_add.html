@@ -63,6 +63,17 @@
 
 
 <script defer src="/static/scripts/jquery.toast.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+FORM_RULES = {
+    '{{ form.title }}': 'required'
+};
+
+$(document).ready(function() {
+    $('#FORM-POST1').validate({
+        rules: FORM_RULES
+    });
+});
+</script>
 <script>
     var frm = $('#FORM-POST1');
     $('#article_post').click(function () {
