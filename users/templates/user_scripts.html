@@ -12,6 +12,21 @@ $('.fullscreen').on('click', function () {
 </script>
 
 <script>
+	$( "#article_hard" ).click(function(){
+		$('#article_loader').html('').load("/article/add_hard/");
+		$('.activefullscreen2').show();
+	})
+	$( "#article_medium" ).click(function(){
+		$('#article_loader').html('').load("/article/add_medium/");
+		$('.activefullscreen2').show();
+	})
+	$( "#article_lite" ).click(function(){
+		$('#article_loader').html('').load("/article/add_lite/");
+		$('.activefullscreen2').show();
+	});
+</script>
+
+<script>
 	function art_like() {
 			var like = $(this);
 			var article = $('.infinite-item').attr("article-id");
@@ -250,17 +265,6 @@ $(document).ready(function () {
     });
 </script>
 
-<script>
-	$( "#article_hard" ).click(function(){
-		$('#article_create').html('').load("/article/add_hard/");
-	})
-	$( "#article_medium" ).click(function(){
-		$('#article_create').html('').load("/article/add_medium/");
-	})
-	$( "#article_lite" ).click(function(){
-		$('#article_create').html('').load("/article/add_lite/");
-	});
-</script>
 <script>
 function remove() {
 var remove = $(this);
