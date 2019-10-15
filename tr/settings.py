@@ -71,7 +71,7 @@ CKEDITOR_CONFIGS = {
         'width': '100%',
         'removePlugins': 'stylesheetparser',
         'extraPlugins': ','.join(['youtube']),
-        'contentsCss': '.django-ckeditor-widget{display:flex}',
+        'contentsCss': '.django-ckeditor-widget{display:flex !important}',
         },
         'medium': {
         'toolbar': 'ver3',
