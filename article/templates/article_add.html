@@ -21,13 +21,13 @@
 </div>
     <div class="card-footer">
       <button class="btn btn-secondary remove_form">Отмена</button>
-      <button type="button" id="article_add" class="btn btn-success float-right">Опубликовать</button>
+      <button type="button" id="article_post" class="btn btn-success float-right">Опубликовать</button>
    </div>
 </form>
 
 <script>
     var frm = $('#FORM-POST1');
-    $( "#article_add" ).click(function() {
+    $( "#article_post" ).click(function() {
       CKEDITOR.instances.content.updateElement();
         $.ajax({
             type: frm.attr('method'),
