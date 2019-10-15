@@ -1,10 +1,11 @@
 from article.models import Article,ArticleComment
 from django import forms
+from ckeditor_uploader.widgets import CKEditorUploadingWidget
 
 
 class ArticleForm(forms.ModelForm):
-	content = forms.CharField( label="",widget=forms.Textarea(
-            attrs={'class': 'form-control', 'placeholder': 'Пишите здесь Ваши мысли и перетаскивайте сюда фотографии'}
+	content = forms.CharField( label="",widget=CKEditorUploadingWidget(
+            attrs={'placeholder': 'Пишите здесь Ваши мысли и перетаскивайте сюда фотографии'}
         ))
 
 	class Meta:
