@@ -70,7 +70,7 @@
             cache: false,
             processData:false,
             success: function (data) {
-              if ($('#id_title') != null && $('#id_title').value.length == 0){
+              if (data.title != null && data.image != 0 ){
                 $(".stream").prepend(data);
               }
               $('.activefullscreen2').hide();
