@@ -66,6 +66,7 @@
 <script>
     var frm = $('#FORM-POST1');
     $('#article_post').click(function () {
+
       CKEDITOR.instances.id_content.updateElement();
         $.ajax({
             type: frm.attr('method'),
@@ -75,7 +76,7 @@
             cache: false,
             processData:false,
             success: function (data) {
-              if(data.title != ""){
+              if(data.title){
                 $(".stream").prepend(data);
                 $('.activefullscreen2').hide();
                 $('#article_loader').empty();
