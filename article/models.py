@@ -12,6 +12,7 @@ from notifications.models import Notification, notification_handler
 from main.models import LikeDislike, Item
 from article.helpers import upload_to_article_image_directory
 from django.contrib.postgres.indexes import BrinIndex
+from users.helpers import _upload_to_article_directory_directory
 
 
 
@@ -21,7 +22,7 @@ class Article(Item):
     uuid = models.UUIDField(default=uuid.uuid4, db_index=True, verbose_name="uuid")
     image = ProcessedImageField(verbose_name='Главное изображение', blank=False, format='JPEG', null=True,
                                  options={'quality': 80}, processors=[ResizeToFill(1024, 1024)],
-                                 upload_to=upload_to_article_image_directory)
+                                 upload_to=upload_to_article_image_directory())
     content = RichTextUploadingField(blank=True, null=True, config_name='default',
                                       external_plugin_resources=[(
                                           'youtube',
@@ -42,6 +43,9 @@ class Article(Item):
     )
     status = models.CharField(blank=False, null=False, choices=STATUSES, default=STATUS_DRAFT, max_length=2, verbose_name="Статус статьи")
 
+    def upload_to_article_image_directory(article, filename):
+        article = self
+        return _upload_to_article_directory_directory(article=article, filename=filename)
 
     @classmethod
     def create_article(cls, creator, community_name=None, image=None, content_hard=None,
