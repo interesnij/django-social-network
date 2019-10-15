@@ -72,8 +72,8 @@ CKEDITOR_CONFIGS = {
         ],
         'removePlugins': 'stylesheetparser',
         'extraPlugins': ','.join(['youtube']),
-    },
-    'medium': {
+        },
+        'medium': {
         'toolbar': 'ver3',
         'height': 500,
         'width': '100%',
@@ -85,7 +85,7 @@ CKEDITOR_CONFIGS = {
         ],
         'removePlugins': 'stylesheetparser',
         'extraPlugins': ','.join(['youtube']),
-    }
+        }
     }
 
 
