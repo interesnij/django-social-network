@@ -1,5 +1,6 @@
 {% load staticfiles %}
-<script src="{% static 'scripts/jquery.js' %}" type="text/javascript"></script>
+<script defer src="{% static 'scripts/jquery.js' %}" type="text/javascript"></script>
+<script defer src="{% static 'scripts/popper.min.js' %}" type="text/javascript"></script>
 
 <span class="activefullscreen_hide2">Х</span>
 <form action="" id="FORM-POST1" method="post" enctype="multipart/form-data">
@@ -67,5 +68,5 @@
   	 $('#article_loader').empty();
   });
 </script>
-<script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
-<script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+<script defer type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+<script defer type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
