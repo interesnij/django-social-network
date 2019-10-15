@@ -87,7 +87,6 @@ $(document).ready(function() {
             cache: false,
             processData:false,
             success: function (data) {
-              if(data.title){
                 $(".stream").prepend(data);
                 $('.activefullscreen2').hide();
                 $('#article_loader').empty();
@@ -97,7 +96,6 @@ $(document).ready(function() {
                     showHideTransition: 'fade',
                     icon: 'success',
                 })
-              }
             },
 
             error: function(data) {
