@@ -232,7 +232,7 @@ $('[data-action="post_remove"]').click(remove);
                       <h2 class="text-white">{{ object.article.title}}</h2>
                       <p class="lead text-white">Автор {{ object.creator.get_full_name }}</p>
                       <hr class="my-3">
-                      <a class="btn btn-primary article_detail" href="#" role="button">Читать</a>
+                      <a class="btn btn-primary article_detail" data-id="{{ object.article.uuid }}" role="button">Читать</a>
                     </div>
             </div>
         </div>
