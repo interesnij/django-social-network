@@ -43,9 +43,15 @@
                         <img src="{% static 'images/no-image.jpg' %}" />
                       {% endif %}
                     </figure>
+                    <div class="container">
+                      <i class="figure avatar120 mr-0 fa fa-gift rounded-circle bg-none text-white border-white "></i>
+                      <br>
+                      <h2 class="text-white">{{ object.article.title}}</h2>
+                      <hr class="my-3">
+                      <a class="btn btn-primary" href="#" role="button">Читать</a>
+                    </div>
                 </a>
             </div>
-            <h5 class="card-title mb-2 content-color-primary text-center">{{ object.article.title }}</h5>
         </div>
     </div>
 
