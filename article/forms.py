@@ -3,6 +3,9 @@ from django import forms
 
 
 class ArticleForm(forms.ModelForm):
+	content = forms.CharField( label="",widget=forms.Textarea(
+            attrs={'class': 'form-control', 'placeholder': 'Пишите здесь Ваши мысли и перетаскивайте сюда фотографии'}
+        ))
 
 	class Meta:
 		model = Article

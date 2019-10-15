@@ -34,14 +34,8 @@
         </div>
     </div>
     <div class="card-body fullscreen" data-id="{{ object.pk }}" style="cursor:pointer">
-      {% if object.article.content_hard %}
-        <p class="mb-0 content-color-secondary">{{ object.article.content_hard|safe }}</p>
-      {% endif %}
-      {% if object.article.content_medium %}
-        <p class="mb-0 content-color-secondary">{{ object.article.content_medium|safe }}</p>
-      {% endif %}
-      {% if object.article.content_lite %}
-        <p class="mb-0 content-color-secondary">{{ object.article.content_lite|safe }}</p>
+      {% if object.article.content %}
+        <p class="mb-0 content-color-secondary">{{ object.article.content|safe }}</p>
       {% endif %}
     </div>
 
