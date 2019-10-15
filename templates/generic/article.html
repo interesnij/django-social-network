@@ -37,7 +37,11 @@
              <div class="row align-items-center no-gutters">
                 <a href="profile.html " class="col">
                     <figure class="avatar avatar-120 mx-auto mb-3">
+                      {% if object.article.image %}
                         <img src="{{ object.article.image.url }}" alt="">
+                      {% else %}
+                        <img src="{% static 'images/no-image.jpg' %}" />
+                      {% endif %}
                     </figure>
                 </a>
             </div>
