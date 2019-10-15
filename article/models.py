@@ -19,7 +19,7 @@ class Article(Item):
     title = models.CharField(max_length=100, blank=False, null=False, verbose_name="Заголовок" )
     uuid = models.UUIDField(default=uuid.uuid4, db_index=True, verbose_name="uuid")
     image = ProcessedImageField(verbose_name='Главное изображение', blank=False, format='JPEG',
-                                 options={'quality': 80}, processors=[ResizeToFill(1024, 1024)],
+                                 options={'quality': 80}, processors=[ResizeToFill(1024, 600)],
                                  upload_to='articles/%Y/%m/%d')
     content = RichTextUploadingField(config_name='default',
                                       external_plugin_resources=[(
