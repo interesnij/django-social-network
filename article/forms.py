@@ -4,13 +4,10 @@ from ckeditor_uploader.widgets import CKEditorUploadingWidget
 
 
 class ArticleForm(forms.ModelForm):
-	content = forms.CharField( label="",widget=CKEditorUploadingWidget(
-            attrs={'placeholder': 'Пишите здесь Ваши мысли и перетаскивайте сюда фотографии'}
-        ))
 
 	class Meta:
 		model = Article
-		fields = ['content']
+		fields = ['title', 'content', 'image', 'comments_enabled']
 
 class ArticleCommentForm(forms.ModelForm):
 
