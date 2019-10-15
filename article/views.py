@@ -1,8 +1,6 @@
 from django.views.generic.base import TemplateView
 from article.forms import (
-                            ArticleHardForm,
-                            ArticleLiteForm,
-                            ArticleMediumForm,
+                            ArticleForm,
                             ArticleCommentForm
                         )
 from users.models import User
@@ -38,22 +36,22 @@ class ArticleDetailView(TemplateView):
         return context
 
 
-class ArticleUserHardCreate(TemplateView):
-    template_name="article_hard_add.html"
+class ArticleUserCreate(TemplateView):
+    template_name="article_add.html"
     form=None
     success_url="/"
 
     def get(self,request,*args,**kwargs):
-        self.form=ArticleHardForm(initial={"creator":request.user})
-        return super(ArticleUserHardCreate,self).get(request,*args,**kwargs)
+        self.form=ArticleForm(initial={"creator":request.user})
+        return super(ArticleUserCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context=super(ArticleUserHardCreate,self).get_context_data(**kwargs)
-        context["form_hard"]=self.form
+        context=super(ArticleUserCreate,self).get_context_data(**kwargs)
+        context["form"]=self.form
         return context
 
     def post(self,request,*args,**kwargs):
-        self.form=ArticleHardForm(request.POST)
+        self.form=ArticleForm(request.POST)
         if self.form.is_valid():
             new_article=self.form.save(commit=False)
             new_article.creator=self.request.user
@@ -62,61 +60,7 @@ class ArticleUserHardCreate(TemplateView):
             if request.is_ajax() :
                  html = render_to_string('article.html',{'object': new_article,'request': request})
                  return HttpResponse(html)
-        return super(ArticleUserHardCreate,self).get(request,*args,**kwargs)
-
-
-class ArticleUserMediumCreate(TemplateView):
-    template_name="article_medium_add.html"
-    form=None
-    success_url="/"
-
-    def get(self,request,*args,**kwargs):
-        self.form=ArticleMediumForm(initial={"creator":self.request.user})
-        return super(ArticleUserMediumCreate,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        context=super(ArticleUserMediumCreate,self).get_context_data(**kwargs)
-        context["form_medium"]=self.form
-        return context
-
-    def post(self,request,*args,**kwargs):
-        self.form=ArticleMediumForm(request.POST)
-        if self.form.is_valid():
-            new_article=self.form.save(commit=False)
-            new_article.creator=self.request.user
-            new_article=self.form.save()
-
-            if request.is_ajax() :
-                 html = render_to_string('generic/article.html',{'object': new_article,'request': request})
-                 return HttpResponse(html)
-        return super(ArticleUserMediumCreate,self).get(request,*args,**kwargs)
-
-
-class ArticleUserLiteCreate(TemplateView):
-    template_name="article_lite_add.html"
-    form=None
-    success_url="/"
-
-    def get(self,request,*args,**kwargs):
-        self.form=ArticleLiteForm(initial={"creator":request.user})
-        return super(ArticleUserLiteCreate,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        context=super(ArticleUserLiteCreate,self).get_context_data(**kwargs)
-        context["form_lite"]=self.form
-        return context
-
-    def post(self,request,*args,**kwargs):
-        self.form=ArticleLiteForm(request.POST)
-        if self.form.is_valid():
-            new_article=self.form.save(commit=False)
-            new_article.creator=self.request.user
-            new_article=self.form.save()
-
-            if request.is_ajax() :
-                 html = render_to_string('generic/article.html',{'object': new_article,'request': request})
-                 return HttpResponse(html)
-        return super(ArticleUserLiteCreate,self).get(request,*args,**kwargs)
+        return super(ArticleUserCreate,self).get(request,*args,**kwargs)
 
 
 class ArticleDeleteView(TemplateView):

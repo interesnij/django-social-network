@@ -63,33 +63,7 @@ CKEDITOR_CONFIGS = {
            'removePlugins': 'stylesheetparser',
            'extraPlugins': ','.join(['youtube']),
        },
-       'lite': {
-        'toolbar': 'ver2',
-        'toolbar_ver2': [
-            ['Bold', 'Link', 'Unlink', 'Image'],
-        ],
-        'height': 500,
-        'width': '100%',
-        'removePlugins': 'stylesheetparser',
-        'extraPlugins': ','.join(['youtube','autolink']),
-        'contentsCss': '/static/ckeditor/contents.css',
-        },
-        'medium': {
-        'toolbar': 'ver3',
-        'height': 500,
-        'width': '100%',
-        'toolbar_ver3': [
-            ['Bold', 'Italic', 'Underline'],
-            ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
-            ['Link', 'Unlink', 'Image'],
-            ['RemoveFormat', 'Source']
-        ],
-        'removePlugins': 'stylesheetparser',
-        'extraPlugins': ','.join(['youtube']),
-        }
     }
-
-
 
 
 MIDDLEWARE = [

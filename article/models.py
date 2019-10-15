@@ -22,23 +22,7 @@ class Article(Item):
     image = ProcessedImageField(verbose_name='Главное изображение', blank=False, format='JPEG', null=True,
                                  options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)],
                                  upload_to=upload_to_article_image_directory)
-    content_hard = RichTextUploadingField(blank=True, null=True, config_name='default',
-                                      external_plugin_resources=[(
-                                          'youtube',
-                                          '/static/ckeditor_plugins/youtube/youtube/',
-                                          'plugin.js',
-                                          )],
-                                      )
-    content_lite = RichTextUploadingField(blank=True,null=True,
-                                      config_name='lite',
-                                      external_plugin_resources=[(
-                                          'youtube',
-                                          '/static/ckeditor_plugins/youtube/youtube/',
-                                          'plugin.js',
-                                          )],
-                                      )
-    content_medium = RichTextUploadingField(blank=True, null=True,
-                                      config_name='medium',
+    content = RichTextUploadingField(blank=True, null=True, config_name='default',
                                       external_plugin_resources=[(
                                           'youtube',
                                           '/static/ckeditor_plugins/youtube/youtube/',
@@ -68,12 +52,8 @@ class Article(Item):
             article.community = Community.objects.get(name=community_name)
         if image:
             article.image=image
-        if content_medium:
+        if content:
             article.content_medium=content_medium
-        if content_hard:
-            article.content_hard=content_hard
-        if content_lite:
-            article.content_lite=content_lite
 
         if not is_draft:
             article.publish()
