@@ -57,7 +57,6 @@ CKEDITOR_UPLOAD_PATH = 'uploads/'
 CKEDITOR_CONFIGS = {
        'default': {
            'toolbar': 'full',
-           'skin': 'moono',
            'height': 500,
            'width': '100%',
            'removePlugins': 'stylesheetparser',
