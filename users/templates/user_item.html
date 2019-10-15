@@ -216,7 +216,7 @@ $('[data-action="post_remove"]').click(remove);
             <span class="activefullscreen_hide">Х</span>
         </div>
     </div>
-    <div class="card-body" data-id="{{ object.pk }}" style="cursor:pointer">
+    <div class="card-body">
          <div class="jumbotron mb-4 bg-dark text-center has-background-img position-relative box-shadow">
              <div class="row align-items-center no-gutters">
                     <figure class="background-img">
@@ -345,6 +345,15 @@ $.ajax({
 $('[data-action="article_remove"]').click(remove);
 </script>
 
+<script>
+$('.article_detail').on('click', function (e) {
+	e.preventDefault();
+	 var item = $(this);
+	 var item_id = item.data("id");
+	 $('#article_loader').html('').load("/article/detail/" + item_id)
+	 $('.activefullscreen2').show();
+});
+</script>
 {% endif %}
 
 <div class="">
