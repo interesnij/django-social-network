@@ -51,7 +51,7 @@ class ArticleUserCreate(TemplateView):
         return context
 
     def post(self,request,*args,**kwargs):
-        self.form=ArticleForm(request.POST)
+        self.form=ArticleForm(request.POST,request.FILES)
         if self.form.is_valid():
             new_article=self.form.save(commit=False)
             new_article.creator=self.request.user
