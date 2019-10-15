@@ -1,4 +1,27 @@
 {% load staticfiles %}
+<style>
+  .id_img0 input {
+      display: none;
+  }
+  #image-holder{
+  width: 200px;
+  min-width: 200px;
+  border: 2px dashed #FF0000;
+  color: rgba(0,0,0,0.8);
+  padding: 10px;
+  text-align: center;
+  margin:10px;
+  }
+  #image-holder:hover{
+  cursor: pointer;
+  margin:9px;
+  }
+  #image-holder img{
+  width: 172px;
+  height: auto;
+  }
+
+</style>
 <script src="{% static 'scripts/jquery.js' %}" type="text/javascript"></script>
 <script defer src="{% static 'scripts/cockie.js' %}" type="text/javascript"></script>
 
