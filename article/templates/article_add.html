@@ -25,7 +25,7 @@
 <span class="activefullscreen_hide2">Х</span>
 <br>
 <h5 class="m-0">Добавление статьи</h5>
-<br>
+<br><br>
 <form action="" id="FORM-POST1" method="post" enctype="multipart/form-data">
   {% csrf_token %}
 <div class="form-group">
@@ -75,6 +75,7 @@
             cache: false,
             processData:false,
             success: function (data) {
+              if(data){
                 $(".stream").prepend(data);
                 $('.activefullscreen2').hide();
                 $('#article_loader').empty();
@@ -84,6 +85,7 @@
                     showHideTransition: 'fade',
                     icon: 'success',
                 })
+              }
             },
 
             error: function(data) {
