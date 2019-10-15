@@ -10,7 +10,6 @@ from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 from notifications.models import Notification, notification_handler
 from main.models import LikeDislike, Item
-from article.helpers import upload_to_article_image_directory
 from django.contrib.postgres.indexes import BrinIndex
 from article.helpers import _upload_to_article_directory_directory
 
