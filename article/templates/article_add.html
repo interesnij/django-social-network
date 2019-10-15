@@ -70,7 +70,6 @@
             cache: false,
             processData:false,
             success: function (data) {
-              if (data.title != null && data.content != 0 ){
                 $(".stream").prepend(data);
                 $('.activefullscreen2').hide();
                 $('#article_loader').empty();
@@ -80,7 +79,6 @@
                     showHideTransition: 'fade',
                     icon: 'success',
                 })
-              }
             },
 
             error: function(data) {
