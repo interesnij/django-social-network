@@ -11,7 +11,14 @@
     <input type="text" name="title" class="form-control" id="id_title">
 </div>
 <div class="form-group">
-    {{ form.image }}
+    <div class="id_img0">{{ form.images }}</div>
+    <div id="image-holder">
+      <h4 style="font-weight:bold;font-size:70px;color:#CECECE">№ 1</h4>
+      <p>Добавьте обложку</p>
+
+      <i style="color:#CECECE">(обязательно)</i>
+
+    </div>
 </div>
 <div class="form-group">
     {{ form.content }}
@@ -70,6 +77,46 @@
   	 $('.activefullscreen2').hide();
   	 $('#article_loader').empty();
   });
+</script>
+<script>
+  var imageLoader = document.getElementById("id_img0");
+var entrou = false;
+$("#image-holder").on("click", function() {
+  $("#id_img0").click();
+});
+
+$("#id_img0").on("change", function() {
+  if (!entrou) {
+    var imgPath = $(this)[0].value;
+    var extn = imgPath.substring(imgPath.lastIndexOf(".") + 1).toLowerCase();
+
+    if (extn == "gif" || extn == "png" || extn == "jpg" || extn == "jpeg") {
+      if (typeof FileReader != "undefined") {
+        var image_holder = $("#image-holder");
+        image_holder.empty();
+
+        var reader = new FileReader();
+        reader.onload = function(e) {
+          $img = $("<img />", {
+            id: "targetImageCrop",
+            src: e.target.result,
+            class: "thumb-image"
+          }).appendTo(image_holder);
+        };
+
+        image_holder.show();
+        reader.readAsDataURL($(this)[0].files[0]);
+      }
+    } else {
+      this.value = null;
+    }
+  }
+  entrou = true;
+  setTimeout(function() {
+    entrou = false;
+  }, 1000);
+});
+
 </script>
 <script defer type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
 <script defer type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
