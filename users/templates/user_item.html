@@ -217,20 +217,25 @@ $('[data-action="post_remove"]').click(remove);
         </div>
     </div>
     <div class="card-body fullscreen" data-id="{{ object.pk }}" style="cursor:pointer">
-      <div class="card-body text-center">
-          <div class="row align-items-center no-gutters">
-             <a class="col">
-                 <figure class="avatar avatar-200 mx-auto mb-3">
-                   {% if object.article.image %}
-                     <img src="{{ object.article.image.url }}" alt="">
-                   {% else %}
-                     <img src="{% static 'images/no-image.jpg' %}" />
-                   {% endif %}
-                 </figure>
-             </a>
-         </div>
-         <h5 class="card-title mb-2 content-color-primary text-center">{{ object.article.title }}</h5>
-     </div>
+         <div class="jumbotron mb-4 bg-dark text-center has-background-img position-relative box-shadow">
+             <div class="row align-items-center no-gutters">
+                    <figure class="background-img">
+                      {% if object.article.image %}
+                        <img src="{{ object.article.image.url }}" alt="">
+                      {% else %}
+                        <img src="{% static 'images/no-image.jpg' %}" />
+                      {% endif %}
+                    </figure>
+                    <div class="container">
+                      <i class="figure avatar120 mr-0 fa fa-gift rounded-circle bg-none text-white border-white "></i>
+                      <br>
+                      <h2 class="text-white">{{ object.article.title}}</h2>
+                      <p class="lead text-white">Автор {{ object.creator.get_full_name }}</p>
+                      <hr class="my-3">
+                      <a class="btn btn-primary" href="#" role="button">Читать</a>
+                    </div>
+            </div>
+        </div>
     </div>
 
     {% include 'generic/article_info.html' %}
