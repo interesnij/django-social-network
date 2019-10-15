@@ -57,14 +57,14 @@ CKEDITOR_UPLOAD_PATH = 'uploads/'
 CKEDITOR_CONFIGS = {
        'default': {
            'toolbar': 'full',
-           'height': 400,
+           'height': 500,
            'width': '100%',
            'removePlugins': 'stylesheetparser',
            'extraPlugins': ','.join(['youtube']),
        },
        'lite': {
         'toolbar': 'ver2',
-        'height': 100,
+        'height': 500,
         'width': '100%',
         'removePlugins': 'stylesheetparser',
         'toolbar_ver2': [
@@ -75,7 +75,7 @@ CKEDITOR_CONFIGS = {
     },
     'medium': {
         'toolbar': 'ver3',
-        'height': 200,
+        'height': 500,
         'width': '100%',
         'toolbar_ver3': [
             ['Bold', 'Italic', 'Underline'],
