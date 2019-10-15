@@ -11,7 +11,8 @@ $('.fullscreen').on('click', function () {
 </script>
 
 <script>
-$('.article_detail').on('click', function () {
+$('.article_detail').on('click', function (e) {
+	e.preventDefault();
 	 var item = $(this);
 	 var item_id = item.data("id");
 	 $('#article_loader').html('').load("/article/detail/" + item_id)
