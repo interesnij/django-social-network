@@ -4,14 +4,20 @@
 <span class="activefullscreen_hide2">Х</span>
 <form action="" id="FORM-POST1" method="post">
   {% csrf_token %}
-
+<div class="form-group">
+    {{ form.title.label }}
     {{ form.title }}
-
+</div>
+<div class="form-group">
     {{ form.image }}
-
+</div>
+<div class="form-group">
     {{ form.content }}
-
+</div>
+<div class="form-group">
     {{ form.comments_enabled }}
+    {{ form.comments_enabled.label }}
+</div>
     <div class="card-footer">
       <button class="btn btn-secondary remove_form">Отмена</button>
       <button type="submit" class="btn btn-success float-right">Опубликовать</button>
@@ -26,7 +32,10 @@
         $.ajax({
             type: frm.attr('method'),
             url: "{% url 'article_add_user' %}",
-            data: frm.serialize(),
+            data: new FormData($('form')[0]),
+            contentType: false,
+            cache: false,
+            processData:false,
             success: function (data) {
               $(".stream").prepend(data);
               $('.activefullscreen2').hide();
