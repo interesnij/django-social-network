@@ -75,7 +75,7 @@
             cache: false,
             processData:false,
             success: function (data) {
-              if(data){
+              if(data.title != ""){
                 $(".stream").prepend(data);
                 $('.activefullscreen2').hide();
                 $('#article_loader').empty();
