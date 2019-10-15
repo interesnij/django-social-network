@@ -5,9 +5,9 @@ from django.views.generic import View
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 
 
-def upload_to_article_avatar_directory(article_profile, filename):
+def upload_to_article_image_directory(article_profile, filename):
     article = article_profile.article
-    return _upload_to_article_directory(article=article, filename=filename)
+    return _upload_to_article_directory_directory(article=article, filename=filename)
 
 def _upload_to_article_directory_directory(article, filename):
     extension = splitext(filename)[1].lower()
