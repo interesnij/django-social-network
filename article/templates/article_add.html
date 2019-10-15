@@ -65,7 +65,7 @@
         $.ajax({
             type: frm.attr('method'),
             url: "{% url 'article_add_user' %}",
-            data: new FormData($('#FORM-POST1')[0]),
+            data: new FormData($(frm)[0]),
             contentType: false,
             cache: false,
             processData:false,
