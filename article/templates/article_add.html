@@ -29,7 +29,7 @@
 <script type="text/javascript">
     var frm = $('#FORM-POST1');
     frm.submit(function () {
-      CKEDITOR.instances.id_content_hard.updateElement();
+      CKEDITOR.instances.content.updateElement();
         $.ajax({
             type: frm.attr('method'),
             url: "{% url 'article_add_user' %}",
