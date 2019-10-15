@@ -5,7 +5,6 @@
 $('.fullscreen').on('click', function () {
 	 var item = $(this);
 	 var item_id = item.data("id");
-	 console.log(item_id);
 	 $('#item_loader').html('').load("/users/item/" + item_id)
 	 $('.activefullscreen').show();
 });
