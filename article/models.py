@@ -18,10 +18,10 @@ class Article(Item):
     moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='article')
     title = models.CharField(max_length=100, blank=False, null=False, verbose_name="Заголовок" )
     uuid = models.UUIDField(default=uuid.uuid4, db_index=True, verbose_name="uuid")
-    image = ProcessedImageField(verbose_name='Главное изображение', blank=False, format='JPEG', null=True,
+    image = ProcessedImageField(verbose_name='Главное изображение', blank=False, format='JPEG',
                                  options={'quality': 80}, processors=[ResizeToFill(1024, 1024)],
                                  upload_to='articles/%Y/%m/%d')
-    content = RichTextUploadingField(blank=True, null=True, config_name='default',
+    content = RichTextUploadingField(config_name='default',
                                       external_plugin_resources=[(
                                           'youtube',
                                           '/static/ckeditor_plugins/youtube/youtube/',
