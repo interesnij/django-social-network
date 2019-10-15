@@ -81,6 +81,9 @@
             cache: false,
             processData:false,
             success: function (data) {
+              if (data.error){
+                 alert(data.error);
+             }
                 $(".stream").prepend(data);
                 $('.activefullscreen2').hide();
                 $('#article_loader').empty();
