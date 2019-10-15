@@ -70,18 +70,19 @@
             cache: false,
             processData:false,
             success: function (data) {
-              if (data.title != null && data.image != 0 ){
+              if (data.title != null && data.content != 0 ){
                 $(".stream").prepend(data);
+                $('.activefullscreen2').hide();
+                $('#article_loader').empty();
+                $.toast({
+                    heading: '{{ request.user.first_name }}',
+                    text: 'Статья успешно создана!',
+                    showHideTransition: 'fade',
+                    icon: 'success'
+                })
+              },
               }
-              $('.activefullscreen2').hide();
-              $('#article_loader').empty();
-              $.toast({
-                  heading: '{{ request.user.first_name }}',
-                  text: 'Статья успешно создана!',
-                  showHideTransition: 'fade',
-                  icon: 'success'
-              })
-            },
+
             error: function(data) {
                 $("#hack").html("Возникла непредвидинная ошибка!!");
             }
