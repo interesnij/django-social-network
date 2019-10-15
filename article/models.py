@@ -17,6 +17,7 @@ from django.contrib.postgres.indexes import BrinIndex
 
 class Article(Item):
     moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='article')
+    title = models.CharField(max_length=100, blank=False, null=False, verbose_name="Заголовок" )
     uuid = models.UUIDField(default=uuid.uuid4, db_index=True, verbose_name="uuid")
     image = ProcessedImageField(verbose_name='Главное изображение', blank=False, format='JPEG', null=True,
                                  options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)],
@@ -57,16 +58,6 @@ class Article(Item):
     )
     status = models.CharField(blank=False, null=False, choices=STATUSES, default=STATUS_DRAFT, max_length=2, verbose_name="Статус статьи")
 
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
-        channel_layer = get_channel_layer()
-        payload = {
-                "type": "receive",
-                "key": "additional_post",
-                "actor_name": self.creator.get_full_name()
-
-            }
-        async_to_sync(channel_layer.group_send)('notifications', payload)
 
     @classmethod
     def create_article(cls, creator, community_name=None, image=None, content_hard=None,
