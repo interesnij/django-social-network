@@ -60,6 +60,8 @@ class ArticleUserCreate(TemplateView):
             if request.is_ajax() :
                  html = render_to_string('article.html',{'object': new_article,'request': request})
                  return HttpResponse(html)
+        else:
+           return JsonResponse({'error': True, 'errors': self.form.errors})
         return super(ArticleUserCreate,self).get(request,*args,**kwargs)
 
 
