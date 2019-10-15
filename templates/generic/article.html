@@ -35,7 +35,6 @@
     <div class="card-body fullscreen" data-id="{{ object.pk }}" style="cursor:pointer">
          <div class="jumbotron mb-4 bg-dark text-center has-background-img position-relative box-shadow">
              <div class="row align-items-center no-gutters">
-                <a class="col">
                     <figure class="background-img">
                       {% if object.article.image %}
                         <img src="{{ object.article.image.url }}" alt="">
@@ -50,7 +49,6 @@
                       <hr class="my-3">
                       <a class="btn btn-primary" href="#" role="button">Читать</a>
                     </div>
-                </a>
             </div>
         </div>
     </div>
