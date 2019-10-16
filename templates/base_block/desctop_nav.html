@@ -6,38 +6,38 @@
       {% if request.user.is_authenticated %}
         <a class="nav-link pink-gradient-active ajax" href="{% url 'user' pk=request.user.pk %}">
           <div class="icon-30">
-              <img style="width: 50px;" src="{% static 'images/icons/home-24px.svg' %}" />
+            <img style="width:22px;margin-bottom:5px" src="{% static 'images/icons/home-24px.svg' %}" />
           </div>
           Моя страница
         </a>
         <a class="nav-link pink-gradient-active ajax" href="{% url 'main' %}">
           <div class="icon-30">
-              <i class="material-icons">public</i>
+            <img style="width:22px;margin-bottom:5px" src="{% static 'images/icons/public-24px.svg' %}" />
           </div>
           Новости
         </a>
         <a class="nav-link pink-gradient-active ajax" href="{% url 'messages_list' %}">
           <div class="icon-30">
-              <i class="material-icons">chat</i>
+            <img style="width:22px;margin-bottom:5px" src="{% static 'images/icons/chat_bubble_outline-24px.svg' %}" />
           </div>
           Сообщения
         </a>
 
         <a class="nav-link pink-gradient-active ajax" href="{% url 'frends' pk=request.user.pk %}">
         <div class="icon-30">
-            <i class="material-icons">person</i>
+          <img style="width:22px;margin-bottom:5px" src="{% static 'images/icons/person-24px.svg' %}" />
         </div>
           Друзья
         </a>
         <a class="nav-link pink-gradient-active ajax" href="{% url 'communities' pk=request.user.pk %}">
           <div class="icon-30">
-              <i class="material-icons">group</i>
+            <img style="width:22px;margin-bottom:5px" src="{% static 'images/icons/group-24px.svg' %}" />
           </div>
           Сообщества
         </a>
         <a class="nav-link pink-gradient-active ajax" href="{% url 'gallery' pk=request.user.pk %}">
           <div class="icon-30">
-              <i class="material-icons">photo</i>
+            <img style="width:22px;margin-bottom:5px" src="{% static 'images/icons/photo-24px.svg' %}" />
           </div>
           Фотографии
         </a>
