@@ -24,7 +24,12 @@
                 <span data-action="item_remove" data-id="{{ object.pk }}" style="cursor:pointer" class="dropdown-item">Удалить запись</span>
                 <span data-action="item_update" style="cursor:pointer" class="dropdown-item">Редактировать</span>
                 <span class="">
-                  <span data-action="item_up" data-id="{{ object.pk }}" style="cursor:pointer" class="dropdown-item fixed">Закрепить</span>
+                  {% if object.is_fixed %}
+                  <span data-action="item_unfixed" data-id="{{ object.pk }}" style="cursor:pointer" class="dropdown-item">Открепить</span>
+                  {% else %}
+                  <span data-action="item_fixed" data-id="{{ object.pk }}" style="cursor:pointer" class="dropdown-item">Закрепить</span>
+                  {% endif %}
+
                 </span>
                 <span data-action="item_check_comment" style="cursor:pointer" class="dropdown-item">Выключить комментарии</span>
               {% else %}
