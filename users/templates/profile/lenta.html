@@ -66,6 +66,7 @@
   <div class="stream-update">
     <a href=""><span class="new-posts"></span> Загрузить новые записи</a>
   </div>
+
   <span class="stream">
 
     <div class="card mb-4 activefullscreen" style="display:none">
@@ -79,7 +80,11 @@
     {% for object in lenta %}
     {% if object.article %}
     <div class="card mb-4 infinite-item" article-id="{{ object.article.uuid }}">
-      {% include 'generic/article.html' with article=article  %}
+      {% if object.is_fixed %}
+        {% include 'generic/article.html' with article=article  %}
+      {% else %}
+        {% include 'generic/article.html' with article=article  %}
+      {% endif %}
     </div>
     {% endif %}
     {% if object.post %}
