@@ -15,7 +15,7 @@
     {% endif %}
   </span>
   <span class="activefullscreen_hide">Х</span>
-  
+
   {% include 'generic/post.html' with post=post  %}
 
 </div>
@@ -137,62 +137,9 @@ $('[data-action="post_remove"]').click(remove);
       </span>
     {% endif %}
   </span>
-    <div class="card-header border-bottom">
-        <div class="media">
-            <figure>
-              {% if object.creator.profile.avatar %}
-                <img src="{{ object.creator.profile.avatar.url }}" style="border-radius: 50px;width:50px;" alt="image">
-              {% else %}
-                <img src="{% static 'images/user.png' %}" style="border-radius: 50px;width:50px;" alt="image">
-              {% endif %}
-            </figure>
-            <div class="media-body">
-                <h6 class="mb-0">{{ object.creator.first_name }} {{ object.creator.last_name }}</h6>
-                <p class="mb-0">{{ object.created|naturaltime }}</p>
-            </div>
+  <span class="activefullscreen_hide">Х</span>
 
-            <div class="dropdown d-inline-block" style="margin-right: 20px;">
-                <a style="cursor:pointer" class="icon-circle icon-30 dropdown-toggle caret-none" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="material-icons ">more_vertical</i>
-                </a>
-
-                <div class="dropdown-menu dropdown-menu-right">
-                  {% if user == request.user and request.user.is_authenticated %}
-                    <span data-action="remove" data-id="{{ object.pk }}" data-type="Пост" style="cursor:pointer" class="dropdown-item post_remove">Удалить запись</span>
-                    <a href="#" id="article_update" class="dropdown-item">Редактировать</a>
-                    <a href="#" id="article_up" class="dropdown-item">Закрепить</a>
-                    <a href="#" id="article_check_comment" class="dropdown-item">Выключить комментарии</a>
-                  {% else %}
-                    <a href="#" id="article_bad" class="dropdown-item">Пожаловаться</a>
-                  {% endif %}
-                </div>
-            </div>
-            <span class="activefullscreen_hide">Х</span>
-        </div>
-    </div>
-    <div class="card-body article_detail" data-id="{{ object.article.uuid }}">
-         <div class="jumbotron mb-4 bg-dark text-center has-background-img position-relative box-shadow">
-             <div class="row align-items-center no-gutters">
-                    <figure class="background-img">
-                      {% if object.article.image %}
-                        <img src="{{ object.article.image.url }}" alt="">
-                      {% else %}
-                        <img src="{% static 'images/no-image.jpg' %}" />
-                      {% endif %}
-                    </figure>
-                    <div class="container">
-                      <i class="figure avatar120 mr-0 fa fa-gift rounded-circle bg-none text-white border-white "></i>
-                      <br>
-                      <h2 class="text-white">{{ object.article.title}}</h2>
-                      <p class="lead text-white">Автор {{ object.creator.get_full_name }}</p>
-                      <hr class="my-3">
-                      <a class="btn btn-primary" data-id="{{ object.article.uuid }}" role="button">Читать</a>
-                    </div>
-            </div>
-        </div>
-    </div>
-
-    {% include 'generic/article_info.html' %}
+    {% include 'generic/article.html' with article=article  %}
 
 </div>
 
