@@ -79,16 +79,16 @@
     {% if fixed %}
     {% if fixed.article %}
     <div class="card mb-4 infinite-item" article-id="{{ object.article.uuid }}">
-        {% include 'generic/article.html' with fixed=article  %}
+        {% include 'generic/article.html' with article=article  %}
     </div>
     {% endif %}
     {% if fixed.post %}
     <div class="card mb-4 infinite-item" post-id="{{ object.post.uuid }}" style="cursor:pointer">
-      {% include 'generic/post.html' with fixed=post  %}
+      {% include 'generic/post.html' with post=post  %}
     </div>
     {% endif %}
     {% if fixed.good %}
-      {% include 'generic/good.html' with fixed=good  %}
+      {% include 'generic/good.html' with good=good  %}
     {% endif %}
     {% endif %}
 
