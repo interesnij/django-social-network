@@ -21,12 +21,12 @@
 
             <div class="dropdown-menu dropdown-menu-right">
               {% if user == request.user and request.user.is_authenticated %}
-                <span data-action="remove" data-id="{{ object.pk }}" tyle="cursor:pointer" class="dropdown-item item_remove">Удалить запись</span>
-                <a href="#" id="article_update" class="dropdown-item">Редактировать</a>
-                <a href="#" id="article_up" class="dropdown-item">Закрепить</a>
-                <a href="#" id="article_check_comment" class="dropdown-item">Выключить комментарии</a>
+                <span data-action="item_remove" data-id="{{ object.pk }}" style="cursor:pointer" class="dropdown-item">Удалить запись</span>
+                <span data-action="item_update" style="cursor:pointer" class="dropdown-item">Редактировать</span>
+                <span data-action="item_up" style="cursor:pointer" class="dropdown-item">Закрепить</span>
+                <span data-action="item_check_comment" style="cursor:pointer" class="dropdown-item">Выключить комментарии</span>
               {% else %}
-                <a href="#" id="article_bad" class="dropdown-item">Пожаловаться</a>
+                <span data-actiond="item_bad" class="dropdown-item">Пожаловаться</span>
               {% endif %}
             </div>
         </div>

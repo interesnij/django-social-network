@@ -60,19 +60,6 @@ class PostUserCreate(TemplateView):
         return super(PostUserCreate,self).get(request,*args,**kwargs)
 
 
-class PostDeleteView(TemplateView):
-    success_url = '/'
-    template_name="post_confirm_delete.html"
-
-    def get(self,request,*args,**kwargs):
-        post = Post.objects.get(pk=self.kwargs["pk"])
-        if post.creator == self.request.user:
-            post.is_deleted=True
-            post.save()
-            return HttpResponse("!")
-        return super(PostDeleteView,self).get(request,*args,**kwargs)
-
-
 class PostLikeView(TemplateView):
     template_name="post_like_window.html"
 

@@ -11,6 +11,7 @@ from users.views import (
                             ProfileButtonReload,
                             fixed,
                             unfixed,
+                            item_delete,
                         )
 
 urlpatterns = [
@@ -28,4 +29,5 @@ urlpatterns = [
     url(r'^profile_button/(?P<pk>[0-9]+)/$', ProfileButtonReload.as_view(), name='profile_button_reload'),
     url(r'^fixed/(?P<id>\d+)/$', fixed, name='fixed'),
     url(r'^unfixed/(?P<id>\d+)/$', unfixed, name='unfixed'),
+    url(r'^delete/(?P<id>\d+)/$', item_delete, name='item_delete'),
 ]
