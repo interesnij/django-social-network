@@ -31,7 +31,6 @@ $.ajax({
 	url: "/users/fixed/" + pk + "/",
 	success: function (data) {
 		fixed.parent().html("<span data-action='item_unfixed' data-id='{{ object.pk }}' style='cursor:pointer' class='dropdown-item'>Открепить</span>");
-		fixed.parent().parent().parent().parent().parent().find(".is_fixed").show();
 		$.toast({
 				heading: '{{ request.user.first_name }}',
 				text: 'Вы успешно закрепили элемент!',
@@ -51,7 +50,6 @@ $.ajax({
 	url: "/users/unfixed/" + pk + "/",
 	success: function (data) {
 		unfixed.parent().html("<span data-action='item_fixed' data-id='{{ object.pk }}' style='cursor:pointer' class='dropdown-item'>Закрепить</span>");
-		unfixed.parent().parent().parent().parent().parent().find(".is_fixed").hide();
 		$.toast({
 				heading: '{{ request.user.first_name }}',
 				text: 'Вы успешно открепили элемент!',
