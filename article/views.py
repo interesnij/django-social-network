@@ -20,7 +20,7 @@ class ArticleView(TemplateView):
     template_name="articles.html"
 
 
-class ArticleDetailView(TemplateView):
+class ArticleNewView(TemplateView):
     model=Article
     template_name="article.html"
 

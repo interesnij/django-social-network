@@ -55,7 +55,7 @@ class PostUserCreate(TemplateView):
             new_post=self.form_post.save()
 
             if request.is_ajax() :
-                 html = render_to_string('generic/post.html',{'object': new_post,'request': request})
+                 html = render_to_string('generic/new_post.html',{'object': new_post,'request': request})
                  return HttpResponse(html)
         return super(PostUserCreate,self).get(request,*args,**kwargs)
 
