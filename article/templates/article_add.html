@@ -83,8 +83,8 @@
             processData:false,
 
             success: function (data) {
-              if(data.errors) {
-                $(".respons_article").html(data.errors);
+              if(data.error) {
+                $(".respons_article").html(data.error);
               }else{
                 $(".stream").prepend(data);
                 $('.activefullscreen2').hide();
