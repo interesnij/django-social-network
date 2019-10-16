@@ -111,7 +111,57 @@
         return false;
     });
 </script>
-
+<script>
+    function like2() {
+        var like = $(this);
+        var type = like.data('type');
+        var pk = like.data('id');
+        var action = like.data('action');
+        var dislike = like.next().next();
+        $.ajax({
+            url: "/posts/comment/" + pk + "/like/",
+            type: 'POST',
+            data: {
+                'obj': pk
+            },
+            success: function(json) {
+                like.find("[data-count='like']").text(json.like_count);
+                dislike.find("[data-count='dislike']").text(json.dislike_count);
+                like.addClass("text-success");
+                dislike.removeClass("text-danger");
+                $(like).siblings('.comment_like_window').html('').load("/posts/comment_like_window/" + pk + "/");
+                $(dislike).siblings('.comment_dislike_window').html('').load("/posts/comment_dislike_window/" + pk + "/")
+            }
+        });
+        return false;
+    }
+    function dislike2() {
+        var dislike = $(this);
+        var type = dislike.data('type');
+        var pk = dislike.data('id');
+        var action = dislike.data('action');
+        var like = dislike.prev().prev();
+        $.ajax({
+            url: "/posts/comment/" + pk + "/dislike/",
+            type: 'POST',
+            data: {
+                'obj': pk
+            },
+            success: function(json) {
+                dislike.find("[data-count='dislike']").text(json.dislike_count);
+                like.find("[data-count='like']").text(json.like_count);
+                dislike.addClass("text-danger");
+                like.removeClass("text-success");
+                $(like).siblings('.comment_like_window').html('').load("/posts/comment_like_window/" + pk + "/");
+                $(dislike).siblings('.comment_dislike_window').html('').load("/posts/comment_dislike_window/" + pk + "/")
+            }
+        });
+        return false;
+    }
+    // Подключение обработчиков
+    $('[data-action="post_like2"]').click(like2);
+    $('[data-action="post_dislike2"]').click(dislike2);
+</script>
 <script>
 	$( ".post_reply_comment" ).click(function(){
     var reply_comment_form = $(this);
