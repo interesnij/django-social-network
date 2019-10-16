@@ -23,7 +23,7 @@
                           data-id="{{ comment.id }}"
                           data-action="post_like2"
                           data-type="comment">
-                        <i class="material-icons">thumb_up</i>&nbsp;
+                        <img style="width:20px" src="{% static 'images/icons/thumb_up-24px.svg' %}" />
                         <span data-count="like">
                           {% if comment.votes.likes.count != 0 %}{{ comment.votes.likes.count }}{% endif %}
                         </span>
@@ -59,7 +59,7 @@
                           data-id="{{ comment.id }}"
                           data-action="post_dislike2"
                           data-type="comment">
-                        <i class="material-icons">thumb_down</i>&nbsp;
+                        <img style="width:20px;" src="{% static 'images/icons/thumb_down-24px.svg' %}" />
                         <span data-count="dislike">
                           {% if comment.votes.dislikes.count %}{{ comment.votes.dislikes.count }}{% endif %}
                         </span>
