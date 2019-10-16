@@ -5,8 +5,9 @@
     <div class="nav flex-column nav-pills faqnav">
       {% if request.user.is_authenticated %}
         <a class="nav-link pink-gradient-active ajax" href="{% url 'user' pk=request.user.pk %}">
-          <div class="icon-30" style="color:red;">
-            <img style="width:22px;margin-bottom:5px" src="{% static 'images/icons/home-24px.svg' %}" />
+          <div class="icon-30" style="width:22px;margin-bottom:5px">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+
           </div>
           Моя страница
         </a>
