@@ -41,60 +41,60 @@ class AllUsers(ListView):
 
 
 class ProfileUserView(TemplateView):
-	template_name = 'user.html'
+    template_name = 'user.html'
 
-	def get(self,request,*args,**kwargs):
-		self.user=User.objects.get(pk=self.kwargs["pk"])
-		self.frends = Connect.objects.filter(Q(user=self.user)|Q(target_user=self.user))
-		self.pop_frends = self.frends[0:5]
-		self.communities=Community.objects.filter(starrers=self.user)
-		self.articles=Article.objects.filter(creator=self.user,is_deleted=False)
-		self.lenta = Item.objects.filter(creator=self.user,is_deleted=False,is_fixed=False)
+    def get(self,request,*args,**kwargs):
+        self.user=User.objects.get(pk=self.kwargs["pk"])
+        self.frends = Connect.objects.filter(Q(user=self.user)|Q(target_user=self.user))
+        self.pop_frends = self.frends[0:5]
+        self.communities=Community.objects.filter(starrers=self.user)
+        self.articles=Article.objects.filter(creator=self.user,is_deleted=False)
+        self.lenta = Item.objects.filter(creator=self.user,is_deleted=False,is_fixed=False)
         self.fixed = Item.objects.filter(creator=self.user,is_deleted=False,is_fixed=True)
-		self.follows_count=Follow.objects.filter(followed_user=self.user).count()
-		self.connect_count=Connect.objects.filter(user=self.user).count()
-		self.connect_count2=Connect.objects.filter(target_user=self.user).count()
-		self.frends_count=self.connect_count + self.connect_count2
-		self.communities_count=Community.objects.filter(starrers=self.user).count()
+        self.follows_count=Follow.objects.filter(followed_user=self.user).count()
+        self.connect_count=Connect.objects.filter(user=self.user).count()
+        self.connect_count2=Connect.objects.filter(target_user=self.user).count()
+        self.frends_count=self.connect_count + self.connect_count2
+        self.communities_count=Community.objects.filter(starrers=self.user).count()
 
-		try:
-			self.connect = Connect.objects.get(target_user=self.request.user,user=self.user)
-		except:
-			self.connect = None
-		try:
-			self.connect2 = Connect.objects.get(user=self.request.user,target_user=self.user)
-		except:
-			self.connect2 = None
-		try:
-			self.follow = Follow.objects.get(user=self.request.user,followed_user=self.user)
-		except:
-			self.follow = None
-		try:
-			self.follow2 = Follow.objects.get(followed_user=self.request.user,user=self.user)
-		except:
-			self.follow2 = None
-		return super(ProfileUserView,self).get(request,*args,**kwargs)
+        try:
+            self.connect = Connect.objects.get(target_user=self.request.user,user=self.user)
+        except:
+            self.connect = None
+        try:
+            self.connect2 = Connect.objects.get(user=self.request.user,target_user=self.user)
+        except:
+            self.connect2 = None
+        try:
+            self.follow = Follow.objects.get(user=self.request.user,followed_user=self.user)
+        except:
+            self.follow = None
+        try:
+            self.follow2 = Follow.objects.get(followed_user=self.request.user,user=self.user)
+        except:
+            self.follow2 = None
+        return super(ProfileUserView,self).get(request,*args,**kwargs)
 
-	def get_context_data(self, **kwargs):
-		context = super(ProfileUserView, self).get_context_data(**kwargs)
-		context['user'] = self.user
-		context['fixed'] = self.fixed
-		context['lenta'] = self.lenta
-		context['articles'] = self.articles
-		context['pop_frends'] = self.pop_frends
-		context['form'] = ArticleForm()
-		context['form_avatar'] = AvatarUserForm()
-		context['form_comment'] = PostCommentForm()
-		context["post_repost_form"] = PostRepostForm()
-		context['communities'] = self.communities
-		context['connect'] = self.connect
-		context['connect2'] = self.connect2
-		context['follow'] = self.follow
-		context['follow2'] = self.follow2
-		context['follows_count'] = self.follows_count
-		context['frends_count'] = self.frends_count
-		context['communities_count'] = self.communities_count
-		return context
+    def get_context_data(self, **kwargs):
+        context = super(ProfileUserView, self).get_context_data(**kwargs)
+        context['user'] = self.user
+        context['fixed'] = self.fixed
+        context['lenta'] = self.lenta
+        context['articles'] = self.articles
+        context['pop_frends'] = self.pop_frends
+        context['form'] = ArticleForm()
+        context['form_avatar'] = AvatarUserForm()
+        context['form_comment'] = PostCommentForm()
+        context["post_repost_form"] = PostRepostForm()
+        context['communities'] = self.communities
+        context['connect'] = self.connect
+        context['connect2'] = self.connect2
+        context['follow'] = self.follow
+        context['follow2'] = self.follow2
+        context['follows_count'] = self.follows_count
+        context['frends_count'] = self.frends_count
+        context['communities_count'] = self.communities_count
+        return context
 
 
 class UserGeneralChange(TemplateView):
