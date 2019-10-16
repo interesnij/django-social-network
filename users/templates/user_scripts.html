@@ -15,7 +15,7 @@ $('.article_detail').on('click', function (e) {
 	e.preventDefault();
 	 var item = $(this);
 	 var item_id = item.data("id");
-	 $('#article_loader').html('').load("/article/new/" + item_id)
+	 $('#article_loader').html('').load("/article/detail/" + item_id)
 	 $('.activefullscreen2').show();
 });
 </script>
