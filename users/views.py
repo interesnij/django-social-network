@@ -248,19 +248,19 @@ class ProfileButtonReload(TemplateView):
 
 
 def fixed(request, item_id):
-    item = Item.objects.get(id=item_id)
+    item = Item.objects.get(pk=item_id)
     fav = item.is_fixed=True
     fav.save()
     return HttpResponse("!")
 
 
 def unfixed(request, item_id):
-    item = Item.objects.get(id=item_id)
+    item = Item.objects.get(pk=item_id)
     fav = item.is_fixed=False
     fav.save()
     return HttpResponse("!")
 
 def item_delete(request, item_id):
-    item = Item.objects.get(id=item_id)
+    item = Item.objects.get(pk=item_id)
     item.delete()
     return HttpResponse("!")
