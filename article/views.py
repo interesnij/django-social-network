@@ -35,6 +35,21 @@ class ArticleNewView(TemplateView):
         context["object"]=self.article
         return context
 
+class ArticleDetailView(TemplateView):
+    model=Article
+    template_name="article_detail.html"
+
+    def get(self,request,*args,**kwargs):
+        self.article = Article.objects.get(uuid=self.kwargs["uuid"])
+        self.article.views += 1
+        self.article.save()
+        return super(ArticleDetailView,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context=super(ArticleDetailView,self).get_context_data(**kwargs)
+        context["object"]=self.article
+        return context
+
 
 class ArticleUserCreate(TemplateView):
     template_name="article_add.html"
