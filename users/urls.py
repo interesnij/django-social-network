@@ -27,7 +27,7 @@ urlpatterns = [
     url(r'^avatar/(?P<pk>[0-9]+)/$',
         UserAvatarChange.as_view(), name='user_avatar_form'),
     url(r'^profile_button/(?P<pk>[0-9]+)/$', ProfileButtonReload.as_view(), name='profile_button_reload'),
-    url(r'^fixed/(?P<pk>\d+)/$', fixed, name='fixed'),
-    url(r'^unfixed/(?P<pk>\d+)/$', unfixed, name='unfixed'),
-    url(r'^delete/(?P<pk>\d+)/$', item_delete, name='item_delete'),
+    url(r'^fixed/(?P<item_id>\d+)/$', fixed, name='fixed'),
+    url(r'^unfixed/(?P<item_id>\d+)/$', unfixed, name='unfixed'),
+    url(r'^delete/(?P<item_id>\d+)/$', item_delete, name='item_delete'),
 ]

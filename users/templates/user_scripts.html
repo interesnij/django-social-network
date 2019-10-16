@@ -4,9 +4,9 @@
 <script>
 function remove() {
 var remove = $(this);
-var id = remove.data('id');
+var pk = remove.data('id');
 $.ajax({
-	url: "/users/delete/" + id + "/",
+	url: "/users/delete/" + pk + "/",
 	success: function (data) {
 		$(remove).parents('.card').hide();
 		$.toast({
