@@ -80,11 +80,12 @@
             contentType: false,
             cache: false,
             processData:false,
-            console.log(data);
+
             success: function (data) {
                 $(".stream").prepend(data);
                 $('.activefullscreen2').hide();
                 $('#article_loader').empty();
+                console.log(data, data.title, data.image, data.content);
                 $.toast({
                     heading: '{{ request.user.first_name }}',
                     text: 'Статья успешно создана!',
