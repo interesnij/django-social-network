@@ -76,10 +76,11 @@ $(document).ready(function () {
     $('#darktheme').on('click', function () {
         if ($(this).is(':checked')) {
             var stylesheetname = "/static/styles/color/dark-grey.css";
+            console.log(stylesheetname);
             $.cookie("stylesheetname", stylesheetname, {
                 expires: 7
             });
-            var linkurl = $('#theme')
+            var linkurl = $('#theme');
             $('head').append("<link id='theme' rel='stylesheet' href='" + stylesheetname + "' type='text/css'>");
 
             $(".loader-logo").show();
@@ -89,6 +90,7 @@ $(document).ready(function () {
             }, 1500);
         } else {
             var stylesheetname = "/static/styles/color/style.css";
+            console.log(stylesheetname);
             $.cookie("stylesheetname", stylesheetname, {
                 expires: 7
             });
@@ -108,6 +110,7 @@ $(document).ready(function () {
         });
 
         var stylesheetname = "/static/styles/color/" + $(this).next().attr('data-title') + $.cookie("headerfill") + $.cookie("sidebarfill") + ".css";
+        console.log(stylesheetname);
         $.cookie("stylesheetname", stylesheetname, {
             expires: 7
         });
