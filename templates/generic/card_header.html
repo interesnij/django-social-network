@@ -11,7 +11,7 @@
         </figure>
         <div class="media-body">
             <h6 class="mb-0">{{ object.creator.get_full_name }} &nbsp;
-              <span class="is_fixed" style="color: #888888;font-size: 13px;{% if not object.is_fixed %}display:none;{% endif %}">закреплено</span>
+              <span id="is_fixed" style="color: #888888;font-size: 13px;{% if not object.is_fixed %}display:none;{% endif %}">закреплено</span>
             </h6>
             <p class="mb-0">{{ object.created|naturaltime }}</p>
         </div>
