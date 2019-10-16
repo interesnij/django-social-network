@@ -5,7 +5,9 @@
         <div class="align-items-center" style="display:flex;flex-wrap:wrap;">
             <div class="col-auto" style="padding-left: 0;">
               {% if user.is_authenticated %}
-              <button class="btn pink-gradient btn-icon d-sm-none" id="left-menu"><i class="material-icons">widgets</i></button>
+              <button class="btn pink-gradient btn-icon d-sm-none" id="left-menu">
+                ггг
+              </button>
               {% endif %}
                 <a href="{% url 'main' %}" class="logo ajax">
                   <img src="{% static 'images/logo-icon.png' %}" alt="">
@@ -16,7 +18,7 @@
             <div class="col text-right">
               {% if request.user.is_authenticated %}
                 <button class="btn btn-search btn-icon header-color-secondary text-hide-xs" type="button">
-                  <i class="material-icons">search</i>
+                  <img style="width:25px;" src="{% static 'images/icons/search-24px.svg' %}" />
                 </button>
 
                 <div class="dropdown text-hide-lg d-inline-block">
@@ -27,7 +29,7 @@
                        data-toggle="dropdown"
                        aria-haspopup="true"
                        aria-expanded="false">
-                       <i class="material-icons">notifications_none</i>
+                       <img style="width:25px;" src="{% static 'images/icons/notifications_none-24px.svg' %}" />
                        <span class="status-number bg-danger text-white">9+</span>
                     </a>
 
