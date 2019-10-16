@@ -12,7 +12,9 @@
                   data-action="art_like"
                   data-type="article"
                   title="Нравится">
-              <i class="material-icons">thumb_up</i>&nbsp;<span class="like-count" data-count="like">{% if object.article.votes.likes.count != 0 %}{{ object.article.votes.likes.count }}{% endif %}</span>
+              <img style="width:22px;margin-bottom:5px" src="{% static 'images/icons/thumb_up-24px.svg' %}" />
+              &nbsp;
+              <span class="like-count" data-count="like">{% if object.article.votes.likes.count != 0 %}{{ object.article.votes.likes.count }}{% endif %}</span>
             </span>
 
             <span class="like_window">
