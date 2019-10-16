@@ -37,6 +37,7 @@ class UserItemView(TemplateView):
 
 class AllUsers(ListView):
 	template_name="all_users.html"
+    model=User
 
 
 class ProfileUserView(TemplateView):
