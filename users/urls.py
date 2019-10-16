@@ -9,8 +9,6 @@ from users.views import (
                             PostUserView,
                             UserAvatarChange,
                             ProfileButtonReload,
-                            fixed,
-                            unfixed,
                         )
 
 urlpatterns = [
@@ -23,8 +21,6 @@ urlpatterns = [
     url(r'^about/(?P<pk>[0-9]+)/$',
         UserAboutChange.as_view(), name='user_about_form'),
     url(r'^design/(?P<pk>\d+)/$', UserDesign.as_view(), name='user_design'),
-    url(r'^fixed/(?P<uuid>[0-9a-f-]+)/$', fixed, name='fixed'),
-    url(r'^unfixed/(?P<uuid>[0-9a-f-]+)/$', unfixed, name='unfixed'),
     url(r'^avatar/(?P<pk>[0-9]+)/$',
         UserAvatarChange.as_view(), name='user_avatar_form'),
     url(r'^profile_button/(?P<pk>[0-9]+)/$', ProfileButtonReload.as_view(), name='profile_button_reload'),

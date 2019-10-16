@@ -69,3 +69,13 @@ class Item(models.Model):
             Item.objects.filter(
                 is_fixed=True).update(is_fixed=False)
             return super(Item, self).save(*args, **kwargs)
+
+    def fixed(self):
+        item = Item.objects.get(uuid=self.uuid)
+        item.is_fixed=True
+        return item
+
+    def unfixed(self):
+        item = Item.objects.get(uuid=self.uuid)
+        item.is_fixed=False
+        return item

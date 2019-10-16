@@ -245,18 +245,3 @@ class ProfileButtonReload(TemplateView):
 		context['follow'] = self.follow
 		context['follow2'] = self.follow2
 		return context
-
-
-def fixed(request, item_id):
-
-    item = Item.objects.get(uuid=item_id)
-    fav = item.is_fixed=True
-    fav.save()
-    return HttpResponse("!")
-
-def unfixed(request, item_id):
-
-    item = Item.objects.get(uuid=item_id)
-    fav = item.is_fixed=False
-    fav.save()
-    return HttpResponse("!")
