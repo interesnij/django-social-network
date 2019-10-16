@@ -76,7 +76,6 @@
     <div class="card mb-4 activefullscreen2" style="display:none">
       <div id="article_loader" style="margin-top:30px"></div>
     </div>
-    {% if fixed %}
     {% if fixed.article %}
     <div class="card mb-4 infinite-item" article-id="{{ object.article.uuid }}">
         {% include 'generic/article.html' with article=article  %}
@@ -89,7 +88,6 @@
     {% endif %}
     {% if fixed.good %}
       {% include 'generic/good.html' with good=good  %}
-    {% endif %}
     {% endif %}
 
     {% for object in lenta %}
