@@ -12,7 +12,8 @@
                   data-action="post_like"
                   data-type="post"
                   title="Нравится">
-              <i class="material-icons">thumb_up</i>&nbsp;<span class="like-count" data-count="like">{% if object.post.votes.likes.count != 0 %}{{ object.post.votes.likes.count }}{% endif %}</span>
+              <img style="width:22px;margin-bottom:5px" src="{% static 'images/icons/thumb_up-24px.svg' %}" />
+              <span class="like-count" data-count="like">{% if object.post.votes.likes.count != 0 %}{{ object.post.votes.likes.count }}{% endif %}</span>
             </span>
 
             <span class="like_window">
@@ -45,7 +46,8 @@
                 data-action="post_dislike"
                 data-type="post"
                 title="Не нравится">
-            <i class="material-icons">thumb_down</i>&nbsp;<span class="dislike-count" data-count="dislike">{% if object.post.votes.dislikes.count %}{{ object.post.votes.dislikes.count }}{% endif %}</span>
+            <img style="width:22px;margin-bottom:5px" src="{% static 'images/icons/thumb_down-24px.svg' %}" />
+            <span class="dislike-count" data-count="dislike">{% if object.post.votes.dislikes.count %}{{ object.post.votes.dislikes.count }}{% endif %}</span>
           </span>
 
           <span class="dislike_window">
@@ -75,7 +77,7 @@
 
           &nbsp;&nbsp;
           <span title="Комментарий" class="post_comment" style="font-size:15px;cursor:pointer">
-            <i class="material-icons">chat</i>
+            <img style="width:22px;margin-bottom:5px" src="{% static 'images/icons/chat-24px.svg' %}" />
             <span class="comment-count">
               {% if object.post.count_comments %}
                 {{ object.post.count_comments }}
@@ -84,12 +86,13 @@
           </span>
           &nbsp;&nbsp;
           <span title="Поделиться" class="repost">
-            <i class="material-icons">share</i>&nbsp;
+            <img style="width:22px;margin-bottom:5px" src="{% static 'images/icons/share-24px.svg' %}" />
           </span>
 
       </div>
       <span class="col-auto text-secondary" title="Просмотры" style="font-size:12px">
-        <i class="material-icons">visibility</i>&nbsp;{{ object.views }}
+        <img style="width:18px;margin-bottom:5px" src="{% static 'images/icons/remove_red_eye-24px.svg' %}" />
+        {{ object.views }}
       </span>
   </div>
   {% if request.user.is_authenticated %}
