@@ -43,7 +43,8 @@ $(document).ready(function () {
 
 
     $.cookie("themecolor", $('#theme').attr('href'), {
-        expires: 1
+        expires: 1;
+        console.log(themecolor);
     });
 
 
