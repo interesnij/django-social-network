@@ -26,7 +26,7 @@ $('[data-action="item_remove"]').click(remove);
 <script>
 function fixed() {
 var fixed = $(this);
-var pk = fixed.prev().prev().('id');
+var pk = fixed.data('id');
 $.ajax({
 	url: "/users/fixed/" + pk + "/",
 	success: function (data) {
@@ -45,7 +45,7 @@ $.ajax({
 
 function fixed() {
 var unfixed = $(this);
-var pk = unfixed.prev().prev().('id');
+var pk = fixed.data('id');
 $.ajax({
 	url: "/users/unfixed/" + pk + "/",
 	success: function (data) {
