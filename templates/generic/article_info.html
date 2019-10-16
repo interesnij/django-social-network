@@ -12,7 +12,7 @@
                   data-action="art_like"
                   data-type="article"
                   title="Нравится">
-              <img style="width:20px;margin-bottom:5px" src="{% static 'images/icons/thumb_up-24px.svg' %}" />
+              <img style="width:22px" src="{% static 'images/icons/thumb_up-24px.svg' %}" />
               <span class="like-count" data-count="like">{% if object.article.votes.likes.count != 0 %}{{ object.article.votes.likes.count }}{% endif %}</span>
             </span>
 
@@ -46,7 +46,7 @@
                 data-action="art_dislike"
                 data-type="article"
                 title="Не нравится">
-            <img style="width:20px;margin-bottom:5px" src="{% static 'images/icons/thumb_down-24px.svg' %}" />
+            <img style="width:22px;" src="{% static 'images/icons/thumb_down-24px.svg' %}" />
             <span class="dislike-count" data-count="dislike">{% if object.article.votes.dislikes.count %}{{ object.article.votes.dislikes.count }}{% endif %}</span>
           </span>
 
@@ -77,7 +77,7 @@
 
           &nbsp;&nbsp;
           <span title="Комментарий" class="art_comment" style="font-size:15px;cursor:pointer">
-            <img style="width:20px;margin-bottom:5px" src="{% static 'images/icons/chat-24px.svg' %}" />
+            <img style="width:22px;" src="{% static 'images/icons/chat-24px.svg' %}" />
             <span class="comment-count">
               {% if object.article.count_comments %}
                 {{ object.article.count_comments }}
@@ -86,12 +86,12 @@
           </span>
           &nbsp;&nbsp;
           <span title="Поделиться" class="repost">
-            <img style="width:20px;margin-bottom:5px" src="{% static 'images/icons/share-24px.svg' %}" />
+            <img style="width:20px" src="{% static 'images/icons/share-24px.svg' %}" />
           </span>
 
       </div>
       <span class="col-auto" title="Просмотры" style="font-size:12px">
-        <img style="width:16px;margin-bottom:5px" src="{% static 'images/icons/remove_red_eye-24px.svg' %}" />
+        <img style="width:17px" src="{% static 'images/icons/remove_red_eye-24px.svg' %}" />
         {{ object.views }}
       </span>
   </div>
