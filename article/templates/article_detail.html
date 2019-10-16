@@ -35,7 +35,7 @@
         </div>
     </div>
     <div class="card-body">
-               <h2 class="text-white">{{ object.article.title }}</h2>
+               <h2 class="">{{ object.article.title }}</h2>
                     <figure class="">
                       {% if object.article.image %}
                         <img src="{{ object.article.image.url }}" alt="">
@@ -45,7 +45,7 @@
                     </figure>
                     <div class="container">
 
-                      {{ article.object.content|safe }}
+                      {{ object.article.content|safe }}
 
                     </div>
     </div>
