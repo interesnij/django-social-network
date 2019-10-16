@@ -48,9 +48,9 @@ class ProfileUserView(TemplateView):
 		self.frends = Connect.objects.filter(Q(user=self.user)|Q(target_user=self.user))
 		self.pop_frends = self.frends[0:5]
 		self.communities=Community.objects.filter(starrers=self.user)
-		self.posts=Post.objects.filter(creator=self.user,is_deleted=False)
 		self.articles=Article.objects.filter(creator=self.user,is_deleted=False)
 		self.lenta = Item.objects.filter(creator=self.user,is_deleted=False,is_fixed=False)
+        self.fixed = Item.objects.filter(creator=self.user,is_deleted=False,is_fixed=True)
 		self.follows_count=Follow.objects.filter(followed_user=self.user).count()
 		self.connect_count=Connect.objects.filter(user=self.user).count()
 		self.connect_count2=Connect.objects.filter(target_user=self.user).count()
@@ -78,7 +78,7 @@ class ProfileUserView(TemplateView):
 	def get_context_data(self, **kwargs):
 		context = super(ProfileUserView, self).get_context_data(**kwargs)
 		context['user'] = self.user
-		context['posts'] = self.posts
+		context['fixed'] = self.fixed
 		context['lenta'] = self.lenta
 		context['articles'] = self.articles
 		context['pop_frends'] = self.pop_frends
