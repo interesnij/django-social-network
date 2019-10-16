@@ -78,7 +78,7 @@
     </div>
     {% if fixed.article %}
     <div class="card mb-4 infinite-item" article-id="{{ object.article.uuid }}">
-        {% include 'generic/article.html' with fixed.article=article  %}
+        {% include 'generic/article.html' with article=fixed.article %}
     </div>
     {% endif %}
     {% if fixed.post %}
