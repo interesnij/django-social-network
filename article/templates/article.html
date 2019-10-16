@@ -1,8 +1,8 @@
 {% load staticfiles humanize liked_user %}
 
 <div class="card mb-4 infinite-item" article-id="{{ object.article.uuid }}">
-  
-    {% include 'gereric/card_header.html' %}
+
+    {% include 'generic/card_header.html' %}
 
     <div class="card-body fullscreen" data-id="{{ object.pk }}" style="cursor:pointer">
          <div class="jumbotron mb-4 bg-dark text-center has-background-img position-relative box-shadow">
