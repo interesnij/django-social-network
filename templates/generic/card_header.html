@@ -25,11 +25,11 @@
               {% if user == request.user and request.user.is_authenticated %}
                 <span data-action="item_remove" data-id="{{ object.pk }}" style="cursor:pointer" class="dropdown-item">Удалить запись</span>
                 <span data-action="item_update" style="cursor:pointer" class="dropdown-item">Редактировать</span>
-                <span>
+                <span data-id="{{ object.pk }}">
                   {% if object.is_fixed %}
-                  <span data-action="item_unfixed" data-id="{{ object.pk }}" style="cursor:pointer" class="dropdown-item">Открепить</span>
+                  <span data-action="item_unfixed" style="cursor:pointer" class="dropdown-item">Открепить</span>
                   {% else %}
-                  <span data-action="item_fixed" data-id="{{ object.pk }}" style="cursor:pointer" class="dropdown-item">Закрепить</span>
+                  <span data-action="item_fixed" style="cursor:pointer" class="dropdown-item">Закрепить</span>
                   {% endif %}
                 </span>
                 <span data-action="item_check_comment" style="cursor:pointer" class="dropdown-item">Выключить комментарии</span>
