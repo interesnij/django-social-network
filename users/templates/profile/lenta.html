@@ -77,17 +77,17 @@
       <div id="article_loader" style="margin-top:30px"></div>
     </div>
     {% if fixed.article %}
-    <div class="card mb-4 infinite-item" article-id="{{ object.article.uuid }}">
+    <div class="card mb-4 infinite-item" article-id="{{ fixed.article.uuid }}">
         {% include 'generic/article.html' with article=fixed.article %}
     </div>
     {% endif %}
     {% if fixed.post %}
-    <div class="card mb-4 infinite-item" post-id="{{ object.post.uuid }}" style="cursor:pointer">
-      {% include 'generic/post.html' with fixed.post=post  %}
+    <div class="card mb-4 infinite-item" post-id="{{ fixed.post.uuid }}" style="cursor:pointer">
+      {% include 'generic/post.html' with post=fixed.post  %}
     </div>
     {% endif %}
     {% if fixed.good %}
-      {% include 'generic/good.html' with fixed.good=good  %}
+      {% include 'generic/good.html' with good=fixed.good  %}
     {% endif %}
 
     {% for object in lenta %}
