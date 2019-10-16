@@ -5,7 +5,7 @@
       {% if request.user.is_authenticated %}
         <a class="nav-link pink-gradient-active ajax" href="{% url 'user' pk=request.user.pk %}">
           <div class="icon-30">
-              <i class="material-icons">home</i>
+              <img style="width: 50px;" src="{% static 'images/icons/home-24px.svg' %}" />
           </div>
           Моя страница
         </a>
