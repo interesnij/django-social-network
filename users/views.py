@@ -66,6 +66,10 @@ class ProfileUserView(TemplateView):
         except:
             self.connect2 = None
         try:
+            self.fixed = Item.objects.get(creator=self.user,is_fixed=True)
+        except:
+            self.fixed = None
+        try:
             self.follow = Follow.objects.get(user=self.request.user,followed_user=self.user)
         except:
             self.follow = None
