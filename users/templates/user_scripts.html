@@ -49,7 +49,7 @@ var unfixed = $(this);
 var pk = unfixed.parent().data('id');
 $.ajax({
 	url: "/users/unfixed/" + pk + "/",
-	success: function (data) {
+	success: function (data) { 
 		unfixed.parent().html("<span data-action='item_fixed' style='cursor:pointer' class='dropdown-item'>Закрепить</span>");
 		$.toast({
 				heading: '{{ request.user.first_name }}',
