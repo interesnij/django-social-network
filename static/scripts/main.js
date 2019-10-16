@@ -43,10 +43,10 @@ $(document).ready(function () {
 
 
     $.cookie("themecolor", $('#theme').attr('href'), {
-        expires: 1;
+        expires: 1,
         console.log(themecolor)
     });
-
+    console.log(themecolor);
 
     if ($.type($.cookie("stylesheetname")) != 'undefined' && $.cookie("stylesheetname") != '') {
         var linkurl = $('#theme');
