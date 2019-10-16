@@ -11,7 +11,7 @@ $.ajax({
 		$(remove).parents('.card').hide();
 		$.toast({
 				heading: '{{ request.user.first_name }}',
-				text: 'Вы успещно удалили элемент!',
+				text: 'Вы успешно удалили элемент!',
 				showHideTransition: 'fade',
 				icon: 'error'
 		})
@@ -21,6 +21,48 @@ $.ajax({
 });
 };
 $('[data-action="item_remove"]').click(remove);
+</script>
+
+<script>
+function fixed() {
+var fixed = $(this);
+var pk = fixed.prev().prev().('id');
+$.ajax({
+	url: "/users/fixed/" + pk + "/",
+	success: function (data) {
+		fixed.parent().html("<span data-action='item_unfixed' style='cursor:pointer' class='dropdown-item'>Открепить</span>");
+		$.toast({
+				heading: '{{ request.user.first_name }}',
+				text: 'Вы успешно закрепили элемент!',
+				showHideTransition: 'fade',
+				icon: 'error'
+		})
+	},
+	error: function(data) {
+	}
+});
+};
+
+function fixed() {
+var unfixed = $(this);
+var pk = unfixed.prev().prev().('id');
+$.ajax({
+	url: "/users/unfixed/" + pk + "/",
+	success: function (data) {
+		fixed.parent().html("<span data-action='item_fixed' style='cursor:pointer' class='dropdown-item'>Закрепить</span>");
+		$.toast({
+				heading: '{{ request.user.first_name }}',
+				text: 'Вы успешно открепили элемент!',
+				showHideTransition: 'fade',
+				icon: 'error'
+		})
+	},
+	error: function(data) {
+	}
+});
+};
+$('[data-action="item_fixed"]').click(fixed);
+$('[data-action="item_unfixed"]').click(unfixed);
 </script>
 
 <script>

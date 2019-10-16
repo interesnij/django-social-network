@@ -262,5 +262,6 @@ def unfixed(request, item_id):
 
 def item_delete(request, item_id):
     item = Item.objects.get(pk=item_id)
-    item.delete()
+    item.is_deleted=True
+    item.save()
     return HttpResponse("!")
