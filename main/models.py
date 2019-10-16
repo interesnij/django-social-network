@@ -60,3 +60,11 @@ class Item(models.Model):
         )
         ordering = ['-id']
         index_together = [('creator', 'community'),]
+
+    def save(self, *args, **kwargs):
+        if not self.is_fixed:
+            return super(Item, self).save(*args, **kwargs)
+        with transaction.atomic():
+            Item.objects.filter(
+                is_fixed=True).update(is_fixed=False)
+            return super(Item, self).save(*args, **kwargs)
