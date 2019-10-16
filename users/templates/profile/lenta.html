@@ -81,7 +81,9 @@
       {% include 'generic/article.html' with article=article  %}
     {% endif %}
     {% if object.post %}
+    <div class="card mb-4 infinite-item" post-id="{{ object.post.uuid }}" style="cursor:pointer">
       {% include 'generic/post.html' with post=post  %}
+    </div>
     {% endif %}
     {% if object.good %}
       {% include 'generic/good.html' with good=good  %}

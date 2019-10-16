@@ -15,54 +15,8 @@
     {% endif %}
 
   </span>
-    <div class="card-header border-bottom">
-        <div class="media">
-            <figure>
-              {% if object.creator.profile.avatar %}
-                <img src="{{ object.creator.profile.avatar.url }}" style="border-radius: 50px;width:50px;" alt="image">
-              {% else %}
-                <img src="{% static 'images/user.png' %}" style="border-radius: 50px;width:50px;" alt="image">
-              {% endif %}
-            </figure>
-            <div class="media-body">
-                <h6 class="mb-0">{{ object.creator.get_full_name }}</h6>
-                <p class="mb-0">{{ object.created|naturaltime }}</p>
-            </div>
 
-            <div class="dropdown d-inline-block" style="margin-right: 20px;">
-
-                <a style="cursor:pointer" class="icon-circle icon-30 dropdown-toggle caret-none" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="material-icons ">more_vertical</i>
-                </a>
-
-                <div class="dropdown-menu dropdown-menu-right">
-                  {% if user == request.user and request.user.is_authenticated %}
-                    <span data-action="post_remove" data-id="{{ object.pk }}" data-type="Пост" style="cursor:pointer" class="dropdown-item post_remove">Удалить запись</span>
-                    <a href="#" id="post_update" class="dropdown-item">Редактировать</a>
-                    <a href="#" id="post_up" class="dropdown-item">Закрепить</a>
-                    <a href="#" id="post_check_comment" class="dropdown-item">Выключить комментарии</a>
-                  {% else %}
-                    <a href="#" id="post_bad" class="dropdown-item">Пожаловаться</a>
-                  {% endif %}
-                </div>
-
-            </div>
-            <span class="activefullscreen_hide">Х</span>
-        </div>
-    </div>
-    <div class="card-body fullscreen" data-id="{{ object.pk }}" style="cursor:pointer">
-      {% if object.post.text %}
-        <p class="">{{ object.post.text|linebreaks }}</p>
-      {% endif %}
-      {% if object.post.image %}
-        <p class="">{{ object.post.image.url }}</p>
-      {% endif %}
-      {% if object.post.doc %}
-        <p class="">{{ object.post.doc }}</p>
-      {% endif %}
-    </div>
-
-    {% include 'generic/post_info.html' %}
+  {% include 'generic/post.html' with post=post  %}
 
 </div>
 
