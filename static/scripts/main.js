@@ -59,7 +59,7 @@ $(document).ready(function () {
 
 
     if ($.type($.cookie("stylesheetname")) != 'undefined' && $.cookie("stylesheetname") != '') {
-        var linkurl = $('#theme')
+        var linkurl = $('#theme');
         $('head').append("<link id='theme' rel='stylesheet' href='" + $.cookie("stylesheetname") + "' type='text/css'>");
         $('.theme-color input[type="radio"]').prop("checked", false);
         $("label[data-title='" + $.cookie("themecolor") + "']").prev().prop("checked", true);
@@ -92,7 +92,7 @@ $(document).ready(function () {
             $.cookie("stylesheetname", stylesheetname, {
                 expires: 7
             });
-            var linkurl = $('#theme')
+            var linkurl = $('#theme');
             $('head').append("<link id='theme' rel='stylesheet' href='" + stylesheetname + "' type='text/css'>");
 
             $(".loader-logo").show();
