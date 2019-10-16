@@ -78,7 +78,7 @@ class ProfileUserView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(ProfileUserView, self).get_context_data(**kwargs)
         context['user'] = self.user
-        context['fixed'] = self.fixed
+        context['object'] = self.fixed
         context['lenta'] = self.lenta
         context['articles'] = self.articles
         context['pop_frends'] = self.pop_frends
