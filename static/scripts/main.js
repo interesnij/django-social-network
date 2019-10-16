@@ -41,17 +41,6 @@ $(document).ready(function () {
         $('body').addClass('sidebar-left-close');
     }
 
-    $('#boxlayout').on('click', function () {
-        if ($(this).is(':checked') === true) {
-            $('body').addClass('boxed-page sidebar-left-close');
-        } else {
-            $('body').removeClass('boxed-page sidebar-left-close');
-        }
-    });
-
-    if ($('body').hasClass('boxed-page') === true) {
-        $('body').addClass('sidebar-left-close');
-    }
 
     $.cookie("themecolor", $('#theme').attr('href'), {
         expires: 1
