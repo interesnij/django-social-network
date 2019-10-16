@@ -30,7 +30,7 @@ var pk = fixed.prev().prev().('id');
 $.ajax({
 	url: "/users/fixed/" + pk + "/",
 	success: function (data) {
-		fixed.parent().html("<span data-action='item_unfixed' style='cursor:pointer' class='dropdown-item'>Открепить</span>");
+		fixed.parent().html("<span data-action='item_unfixed' data-id='{{ object.pk }}' style='cursor:pointer' class='dropdown-item'>Открепить</span>");
 		$.toast({
 				heading: '{{ request.user.first_name }}',
 				text: 'Вы успешно закрепили элемент!',
@@ -49,7 +49,7 @@ var pk = unfixed.prev().prev().('id');
 $.ajax({
 	url: "/users/unfixed/" + pk + "/",
 	success: function (data) {
-		fixed.parent().html("<span data-action='item_fixed' style='cursor:pointer' class='dropdown-item'>Закрепить</span>");
+		fixed.parent().html("<span data-action='item_fixed' data-id='{{ object.pk }}' style='cursor:pointer' class='dropdown-item'>Закрепить</span>");
 		$.toast({
 				heading: '{{ request.user.first_name }}',
 				text: 'Вы успешно открепили элемент!',
