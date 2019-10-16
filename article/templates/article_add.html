@@ -80,6 +80,9 @@
 
             success: function (data) {
               if(data.error) {
+                console.log(data);
+                console.log(data.content);
+                console.log(data.image);
                 $(".respons_article").html(data.errors.content);
               }else{
                 $(".stream").prepend(data);
@@ -93,11 +96,7 @@
                     icon: 'success',
                 })
               }
-
             },
-            console.log(data);
-            console.log(data.content);
-            console.log(data.image);
 
             error: function(data) {
                 error_response(data);
