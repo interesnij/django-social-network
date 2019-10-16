@@ -71,11 +71,11 @@ class Item(models.Model):
             return super(Item, self).save(*args, **kwargs)
 
     def fixed(self):
-        item = Item.objects.get(uuid=self.uuid)
+        item = Item.objects.get(id=self.id)
         item.is_fixed=True
         return item
 
     def unfixed(self):
-        item = Item.objects.get(uuid=self.uuid)
+        item = Item.objects.get(id=self.id)
         item.is_fixed=False
         return item

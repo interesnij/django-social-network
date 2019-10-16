@@ -1,0 +1,34 @@
+{% load staticfiles humanize %}
+
+<div class="card-header border-bottom">
+    <div class="media">
+        <figure>
+          {% if object.creator.profile.avatar %}
+            <img src="{{ object.creator.profile.avatar.url }}" style="border-radius: 50px;width:50px;" alt="image">
+          {% else %}
+            <img src="{% static 'images/user.png' %}" style="border-radius: 50px;width:50px;" alt="image">
+          {% endif %}
+        </figure>
+        <div class="media-body">
+            <h6 class="mb-0">{{ object.creator.first_name }} {{ object.creator.last_name }}</h6>
+            <p class="mb-0">{{ object.created|naturaltime }}</p>
+        </div>
+        <div class="dropdown d-inline-block">
+
+            <a style="cursor:pointer" class="icon-circle icon-30 dropdown-toggle caret-none" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="material-icons ">more_vertical</i>
+            </a>
+
+            <div class="dropdown-menu dropdown-menu-right">
+              {% if user == request.user and request.user.is_authenticated %}
+                <span data-action="remove" data-id="{{ object.pk }}" tyle="cursor:pointer" class="dropdown-item item_remove">Удалить запись</span>
+                <a href="#" id="article_update" class="dropdown-item">Редактировать</a>
+                <a href="#" id="article_up" class="dropdown-item">Закрепить</a>
+                <a href="#" id="article_check_comment" class="dropdown-item">Выключить комментарии</a>
+              {% else %}
+                <a href="#" id="article_bad" class="dropdown-item">Пожаловаться</a>
+              {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
