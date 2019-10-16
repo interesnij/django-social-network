@@ -32,7 +32,7 @@
             </div>
         </div>
     </div>
-    <div class="card-body">
+    <div class="card-body article_detail" data-id="{{ object.article.uuid }}">
          <div class="jumbotron mb-4 bg-dark text-center has-background-img position-relative box-shadow">
              <div class="row align-items-center no-gutters">
                     <figure class="background-img">
@@ -48,7 +48,7 @@
                       <h2 class="text-white">{{ object.article.title}}</h2>
                       <p class="lead text-white">Автор {{ object.creator.get_full_name }}</p>
                       <hr class="my-3">
-                      <a class="btn btn-primary article_detail" data-id="{{ object.article.uuid }}" role="button">Читать</a>
+                      <a class="btn btn-primary" role="button">Читать</a>
                     </div>
             </div>
         </div>
