@@ -83,7 +83,7 @@
     </div>
     {% endif %}
     {% if object.post %}
-    <div class="card mb-4 infinite-item" post-id="{{ object.post.uuid }}" style="cursor:pointer">
+    <div class="card mb-4 infinite-item" post-id="{{ object.post.uuid }}">
       {% include 'generic/post.html' with post=post  %}
     </div>
     {% endif %}
@@ -99,7 +99,7 @@
     </div>
     {% endif %}
     {% if object.post %}
-    <div class="card mb-4 infinite-item" post-id="{{ object.post.uuid }}" style="cursor:pointer">
+    <div class="card mb-4 infinite-item" post-id="{{ object.post.uuid }}">
       {% include 'generic/post.html' with post=post  %}
     </div>
     {% endif %}
