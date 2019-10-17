@@ -65,7 +65,7 @@ class Item(models.Model):
             BrinIndex(fields=['created']),
         )
         index_together = [('creator', 'community'),]
-        order_by=['-pk']
+        ordering = ['-id']
 
     def save(self, *args, **kwargs):
         if not self.is_fixed:
