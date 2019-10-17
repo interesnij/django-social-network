@@ -97,7 +97,7 @@
       button = $(this);
       form = button.parent().parent().parent().parent();
         $.ajax({
-            url: '/main/reply-comment/',
+            url: '{% url "reply_comment" %}',
             data: form.serialize(),
             type: 'POST',
             cache: false,
@@ -119,7 +119,7 @@
         var action = like.data('action');
         var dislike = like.next().next();
         $.ajax({
-            url: "/main/comment/" + pk + "/like/",
+            url: "/comment/" + pk + "/like/",
             type: 'POST',
             data: {
                 'obj': pk
@@ -129,8 +129,8 @@
                 dislike.find("[data-count='dislike']").text(json.dislike_count);
                 like.addClass("text-success");
                 dislike.removeClass("text-danger");
-                $(like).siblings('.comment_like_window').html('').load("/main/comment_like_window/" + pk + "/");
-                $(dislike).siblings('.comment_dislike_window').html('').load("/main/comment_dislike_window/" + pk + "/")
+                $(like).siblings('.comment_like_window').html('').load("/comment_like_window/" + pk + "/");
+                $(dislike).siblings('.comment_dislike_window').html('').load("/comment_dislike_window/" + pk + "/")
             }
         });
         return false;
@@ -142,7 +142,7 @@
         var action = dislike.data('action');
         var like = dislike.prev().prev();
         $.ajax({
-            url: "/main/comment/" + pk + "/dislike/",
+            url: "/comment/" + pk + "/dislike/",
             type: 'POST',
             data: {
                 'obj': pk
@@ -152,8 +152,8 @@
                 like.find("[data-count='like']").text(json.like_count);
                 dislike.addClass("text-danger");
                 like.removeClass("text-success");
-                $(like).siblings('.comment_like_window').html('').load("/main/comment_like_window/" + pk + "/");
-                $(dislike).siblings('.comment_dislike_window').html('').load("/main/comment_dislike_window/" + pk + "/")
+                $(like).siblings('.comment_like_window').html('').load("/comment_like_window/" + pk + "/");
+                $(dislike).siblings('.comment_dislike_window').html('').load("/comment_dislike_window/" + pk + "/")
             }
         });
         return false;
