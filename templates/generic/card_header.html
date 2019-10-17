@@ -22,7 +22,7 @@
             </a>
 
             <div class="dropdown-menu dropdown-menu-right">
-              {% if user == request.user and request.user.is_authenticated %}
+              {% if user == request.user %}
                 <span data-action="item_remove" data-id="{{ object.pk }}" style="cursor:pointer" class="dropdown-item">Удалить запись</span>
                 <span data-action="item_update" style="cursor:pointer" class="dropdown-item">Редактировать</span>
                 <span data-id="{{ object.pk }}">

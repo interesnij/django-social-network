@@ -1,25 +1,25 @@
 {% load staticfiles humanize liked_user %}
 
 <div class="card mb-4 infinite-item" item-id="{{ object.uuid }}">
-  <span class="activefullscreen_hide2">Х</span>
+    <span class="activefullscreen_hide2">Х</span>
 
     {% include 'generic/card_header.html' %}
 
     <div class="card-body">
-               <h2 class="">{{ object.article.title }}</h2>
-               <br><br>
-                    <figure class="">
-                      {% if object.article.image %}
-                        <img class="lazyload" data-src="{{ object.article.image.url }}" alt="">
-                      {% else %}
-                        <img class="lazyload" data-src="{% static 'images/no-image.jpg' %}" />
-                      {% endif %}
-                    </figure>
-                    <div class="container">
-                      <br><br>
-                      {{ object.article.content|safe }}
+        <h2 class="">{{ object.article.title }}</h2>
+        <br><br>
+        <figure class="">
+            {% if object.article.image %}
+            <img class="lazyload" data-src="{{ object.article.image.url }}" alt="">
+            {% else %}
+            <img class="lazyload" data-src="{% static 'images/no-image.jpg' %}" />
+            {% endif %}
+        </figure>
+        <div class="container">
+            <br><br>
+            {{ object.article.content|safe }}
 
-                    </div>
+        </div>
     </div>
 
     {% include 'generic/info.html' %}
@@ -28,8 +28,8 @@
 {% include 'generic/script.html' %}
 
 <script>
-  $('.activefullscreen_hide2').on('click', function () {
-  	 $('.activefullscreen2').hide();
-  	 $('#article_loader').empty();
-  });
+    $('.activefullscreen_hide2').on('click', function() {
+        $('.activefullscreen2').hide();
+        $('#article_loader').empty();
+    });
 </script>
