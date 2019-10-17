@@ -5,7 +5,7 @@ from django.template.loader import render_to_string
 from article.models import Article
 from django.urls import reverse_lazy
 from django.http import HttpResponse
-
+from django.http import JsonResponse
 
 
 class ArticleView(TemplateView):
