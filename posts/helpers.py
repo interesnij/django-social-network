@@ -49,19 +49,6 @@ def paginate_data(qs, page_size, page, paginated_type, **kwargs):
     )
 
 
-def ajax_required(f):
-    """Не миксин, но хороший декоратор для проверки, чем запрос является AJAX"""
-    def wrap(request, *args, **kwargs):
-        if not request.is_ajax():
-            return HttpResponseBadRequest()
-
-        return f(request, *args, **kwargs)
-
-    wrap.__doc__ = f.__doc__
-    wrap.__name__ = f.__name__
-    return wrap
-
-
 class AuthorRequiredMixin(View):
     """Mixin для проверки, чем пользователь loggedin является создателем объекта
     для редактирования или обновления."""
