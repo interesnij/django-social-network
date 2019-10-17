@@ -1,12 +1,10 @@
 from django.db import models
 from django.utils import timezone
 from pilkit.processors import ResizeToFill, ResizeToFit
-from ckeditor_uploader.fields import RichTextUploadingField
 from django.conf import settings
 from imagekit.models import ProcessedImageField
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
-from notifications.models import Notification, notification_handler
 from posts.helpers import upload_to_post_image_directory, upload_to_post_directory
 from django.contrib.postgres.indexes import BrinIndex
 from main.models import Item

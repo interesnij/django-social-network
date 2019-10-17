@@ -8,7 +8,7 @@ from django.conf import settings
 from django.utils import timezone
 from django.contrib.postgres.indexes import BrinIndex
 from django.db import transaction
-
+from notifications.models import Notification, notification_handler
 
 
 class LikeDislikeManager(models.Manager):

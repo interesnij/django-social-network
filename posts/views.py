@@ -3,7 +3,6 @@ from users.models import User
 from django.template.loader import render_to_string
 from posts.models import Post
 from posts.forms import PostUserForm
-from django.urls import reverse_lazy
 from django.http import HttpResponse
 
 

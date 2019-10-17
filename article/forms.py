@@ -1,6 +1,5 @@
 from article.models import Article
 from django import forms
-from ckeditor_uploader.widgets import CKEditorUploadingWidget
 
 
 class ArticleForm(forms.ModelForm):
