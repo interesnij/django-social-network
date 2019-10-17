@@ -1,7 +1,7 @@
 {% load staticfiles humanize liked_user %}
 
 {% if object.post %}
-<div class="card mb-4 infinite-item" item-id="{{ object.uuid }}" style="cursor:pointer">
+<div class="card mb-4 infinite-item" item-id="{{ object.uuid }}">
   <span class="text-hide-xs">
     {% if object.get_previous_by_created %}
       <span class="prev_item">
