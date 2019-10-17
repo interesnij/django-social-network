@@ -10,6 +10,7 @@ from django.utils import timezone
 from django.conf import settings
 from goods.helpers import upload_to_good_image_directory
 from django.contrib.postgres.indexes import BrinIndex
+from main.models import Item
 
 
 class GoodCategory(models.Model):

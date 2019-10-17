@@ -8,7 +8,7 @@ from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 from notifications.models import Notification, notification_handler
 from django.contrib.postgres.indexes import BrinIndex
-
+from main.models import Item
 
 
 class Article(Item):
