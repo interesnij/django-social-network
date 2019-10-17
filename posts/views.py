@@ -34,7 +34,7 @@ class PostDetailView(TemplateView):
 
 
 class PostUserCreate(TemplateView):
-    template_name="post_add.html"
+    template_name="article_add.html"
     form_post=None
     success_url="/"
 
