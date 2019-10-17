@@ -1,4 +1,3 @@
-import uuid
 from django.db import models
 from django.utils import timezone
 from pilkit.processors import ResizeToFit, ResizeToFill
@@ -15,7 +14,6 @@ from django.contrib.postgres.indexes import BrinIndex
 
 class Article(Item):
     title = models.CharField(max_length=100, blank=False, null=False, verbose_name="Заголовок" )
-    uuid = models.UUIDField(default=uuid.uuid4, db_index=True, verbose_name="uuid")
     image = ProcessedImageField(verbose_name='Главное изображение', blank=False, format='JPEG',
                                  options={'quality': 80}, processors=[ResizeToFill(1024, 650)],
                                  upload_to='articles/%Y/%m/%d')
@@ -106,32 +104,6 @@ class Article(Item):
         return self.creator.get_full_name()
 
 
-class ArticleComment(models.Model):
-    parent_comment = models.ForeignKey('self', on_delete=models.CASCADE, related_name='article_replies', null=True, blank=True,verbose_name="Родительский комментарий")
-    created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
-    modified = models.DateTimeField(auto_now_add=True, auto_now=False, db_index=False)
-    commenter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='article_comments',verbose_name="Комментатор")
-    text = models.TextField(blank=True,null=True)
-    is_edited = models.BooleanField(default=False, null=False, blank=False,verbose_name="Изменено")
-    is_deleted = models.BooleanField(default=False,verbose_name="Удаено")
-    article = models.ForeignKey(Article, on_delete=models.CASCADE, null=True, related_name='article_comments')
-
-    class Meta:
-        indexes = (
-            BrinIndex(fields=['created']),
-        )
-
-    def count_replies(self):
-        return self.replies.count()
-
-    def get_replies(self):
-        get_comments = ArticleComment.objects.filter(parent_comment=self).all()
-        return get_comments
-
-    def __str__(self):
-        return "{0}/{1}".format(self.commenter.get_full_name(), self.text[:10])
-
-
 class ArticleRepost(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     content = models.TextField(blank=True)
@@ -156,29 +128,9 @@ class ArticleMute(models.Model):
         unique_together = ('article', 'muter',)
 
 
-class ArticleCommentMute(models.Model):
-    article_comment = models.ForeignKey(ArticleComment, db_index=False, on_delete=models.CASCADE, related_name='mutes',verbose_name="Статья")
-    muter = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE, related_name='article_comment_mutes',verbose_name="Кто заглушил")
-
-    @classmethod
-    def create_article_comment_mute(cls, article_comment_id, muter_id):
-        return cls.objects.create(article_comment_id=article_comment_id, muter_id=muter_id)
-
-    class Meta:
-        unique_together = ('article_comment', 'muter',)
-
-
 class ArticleUserMention(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE, related_name='article_mentions',verbose_name="Упоминаемый")
     article = models.ForeignKey(Article, db_index=False, on_delete=models.CASCADE, related_name='user_mentions',verbose_name="Статья")
 
     class Meta:
         unique_together = ('user', 'article',)
-
-
-class ArticleCommentUserMention(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE, related_name='article_comment_mentions',verbose_name="Упомянутый в комментарии")
-    article_comment = models.ForeignKey(ArticleComment, db_index=False, on_delete=models.CASCADE, related_name='user_mentions',verbose_name="Статья")
-
-    class Meta:
-        unique_together = ('user', 'article_comment',)

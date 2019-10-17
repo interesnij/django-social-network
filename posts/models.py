@@ -15,7 +15,6 @@ from django.contrib.postgres.indexes import BrinIndex
 
 
 class Post(Item):
-    uuid = models.UUIDField(default=uuid.uuid4, db_index=True,verbose_name="uuid")
     text = models.TextField(max_length=settings.POST_MAX_LENGTH, blank=False, null=True, verbose_name="Текст")
     STATUS_DRAFT = 'D'
     STATUS_PROCESSING = 'PG'

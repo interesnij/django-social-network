@@ -1,5 +1,11 @@
 from django.conf.urls import url
-from main.views import MainPageView, ComingView, VotesView
+from main.views import (
+						MainPageView,
+						ComingView,
+						VotesView,
+						get_comment,
+						post_comment,
+						reply_comment)
 from main.models import Item, LikeDislike
 from django.contrib.auth.decorators import login_required
 
@@ -11,4 +17,7 @@ urlpatterns = [
     url(r'^dislike/(?P<pk>\d+)/$',login_required(VotesView.as_view(model=Item, vote_type=LikeDislike.DISLIKE)),name='dislike'),
     url(r'^comment/(?P<pk>\d+)/like/$',login_required(VotesView.as_view(model=Item, vote_type=LikeDislike.LIKE)),name='comment_like'),
     url(r'^comment/(?P<pk>\d+)/dislike/$',login_required(VotesView.as_view(model=Item, vote_type=LikeDislike.DISLIKE)),name='comment_dislike'),
+	url(r'^comment/$', get_comment, name='get_comment'),
+    url(r'^post-comment/$', post_comment, name='post_comment'),
+    url(r'^reply-comment/$', reply_comment, name='reply_comment'),
 ]

@@ -6,11 +6,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from posts.helpers import ajax_required, AuthorRequiredMixin
 from posts.models import Post, PostComment2
 from posts.forms import PostUserForm
-from django.views.generic import DeleteView
 from django.urls import reverse_lazy
-from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
-from django.views.decorators.http import require_http_methods
 
 
 class PostsView(TemplateView):
@@ -112,69 +109,6 @@ class PostCommentDislikeView(TemplateView):
         context=super(PostCommentDislikeView,self).get_context_data(**kwargs)
         context["post_comment_dislike"]=self.post_comment_dislike
         return context
-
-
-@login_required
-@require_http_methods(["GET"])
-def post_get_comment(request):
-
-    post_id = request.GET['post']
-    post = Post.objects.get(uuid=post_id)
-    form_comment = PostCommentForm()
-    comments = PostComment2.objects.filter(post=post, parent_comment=None).order_by("created")
-    posts_html = render_to_string("generic/post.html", {"object": post})
-    thread_html = render_to_string(
-        "generic/post_comments.html", {"post_comments": comments,"form_comment": form_comment,"parent": post})
-    return JsonResponse({
-        "uuid": post_id,
-        "post": posts_html,
-        "comments": thread_html,
-    })
-
-@login_required
-@ajax_required
-@require_http_methods(["POST"])
-def post_comment(request):
-
-    user = request.user
-    text = request.POST['text']
-    par = request.POST['parent']
-    parent = Post.objects.get(pk=par)
-    text = text.strip()
-    if parent:
-        new_comment = PostComment2.objects.create(post=parent, text=text, commenter=request.user)
-        html = render_to_string('generic/post_parent_comment.html',{'comment': new_comment,'request': request})
-        return JsonResponse(html, safe=False)
-
-        notification_handler(
-            user, parent.creator, Notification.POST_COMMENT, action_object=reply_posts,
-            id_value=str(parent.uuid), key='social_update')
-
-    else:
-        return HttpResponseBadRequest()
-
-
-@login_required
-@ajax_required
-@require_http_methods(["POST"])
-def post_reply_comment(request):
-
-    user = request.user
-    text = request.POST['text']
-    post_com = request.POST['comment']
-    comment = PostComment2.objects.get(pk=post_com)
-    text = text.strip()
-    if comment:
-        new_comment = PostComment2.objects.create(text=text, commenter=request.user,parent_comment=comment)
-        html = render_to_string('generic/post_reply_comment.html',{'reply': new_comment,'request': request})
-        return JsonResponse(html, safe=False)
-
-        notification_handler(
-            user, parent.creator, Notification.POST_REPLY_COMMENT, action_object=reply_posts,
-            id_value=str(com.id), key='social_update')
-
-    else:
-        return HttpResponseBadRequest()
 
 
 @login_required

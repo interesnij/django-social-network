@@ -80,19 +80,6 @@ class ArticleUserCreate(TemplateView):
         return super(ArticleUserCreate,self).get(request,*args,**kwargs)
 
 
-class ArticleDeleteView(TemplateView):
-    success_url = '/'
-    template_name="article_confirm_delete.html"
-
-    def get(self,request,*args,**kwargs):
-        article = Article.objects.get(pk=self.kwargs["pk"])
-        if article.creator == self.request.user:
-            article.is_deleted=True
-            article.save()
-            return HttpResponse("!")
-        return super(ArticleDeleteView,self).get(request,*args,**kwargs)
-
-
 class ArticleLikeView(TemplateView):
     template_name="article_like_window.html"
 

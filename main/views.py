@@ -55,3 +55,61 @@ class VotesView(View):
 			}),
 			content_type="application/json"
 		)
+
+
+@login_required
+@require_http_methods(["GET"])
+def get_comment(request):
+
+    item_id = request.GET['item']
+    item = Item.objects.get(uuid=item_id)
+    form_comment = CommentForm()
+    comments = Comment.objects.filter(item=item, parent_comment=None).order_by("created")
+    item_html = render_to_string("generic/item.html", {"object": item})
+    comments_html = render_to_string(
+        "generic/comments.html", {"comments": comments,"form_comment": form_comment,"parent": item})
+    return JsonResponse({
+        "uuid": item_id,
+        "item": item_html,
+        "comments": comments_html,
+    })
+
+@login_required
+@ajax_required
+@require_http_methods(["POST"])
+def post_comment(request):
+
+    user = request.user
+    text = request.POST['text']
+    par = request.POST['parent']
+    item = Item.objects.get(pk=par)
+    text = text.strip()
+    if item:
+        new_comment = Comment.objects.create(item=item, text=text, commenter=request.user)
+        html = render_to_string('generic/parent_comment.html',{'comment': new_comment,'request': request})
+        return JsonResponse(html, safe=False)
+    else:
+        return HttpResponse("parent не найден")
+
+
+@login_required
+@ajax_required
+@require_http_methods(["POST"])
+def reply_comment(request):
+
+    user = request.user
+    text = request.POST['text']
+    com = request.POST['comment']
+    comment = Comment.objects.get(pk=com)
+    text = text.strip()
+    if comment:
+        new_comment = Comment.objects.create(text=text, commenter=request.user,parent_comment=comment)
+        html = render_to_string('generic/reply_comment.html',{'reply': new_comment,'request': request})
+        return JsonResponse(html, safe=False)
+
+        notification_handler(
+            user, parent.creator, Notification.ARTICLE_REPLY_COMMENT, action_object=reply_article,
+            id_value=str(com.id), key='social_update')
+
+    else:
+        return HttpResponseBadRequest()
