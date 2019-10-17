@@ -10,6 +10,7 @@ from django.contrib.postgres.indexes import BrinIndex
 from django.db import transaction
 
 
+
 class LikeDislikeManager(models.Manager):
     use_for_related_fields = True
 
@@ -92,6 +93,15 @@ class Item(models.Model):
     def get_replies(self):
         get_comments = Comment.objects.filter(parent_comment=self).all()
         return get_comments
+
+    def notification_like(self, user):
+        notification_handler(user, self.creator,Notification.LIKED, action_object=self,id_value=str(self.uuid),key='social_update')
+
+    def notification_dislike(self, user):
+        notification_handler(user, self.creator,Notification.DISLIKED, action_object=self,id_value=str(self.uuid),key='social_update')
+
+    def notification_comment(self, user):
+        notification_handler(user, self.creator,Notification.POST_COMMENT, action_object=self,id_value=str(self.uuid),key='notification')
 
 
 class Comment(models.Model):

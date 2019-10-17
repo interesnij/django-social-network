@@ -120,27 +120,6 @@ class Post(Item):
         self.is_deleted = True
         self.save()
 
-    def notification_like(self, user):
-        notification_handler(user, self.creator,Notification.LIKED, action_object=self,id_value=str(self.uuid),key='social_update')
-
-    def notification_dislike(self, user):
-        notification_handler(user, self.creator,Notification.DISLIKED, action_object=self,id_value=str(self.uuid),key='social_update')
-
-    def notification_comment(self, user):
-        notification_handler(user, self.creator,Notification.POST_COMMENT, action_object=self,id_value=str(self.uuid),key='notification')
-
-    def count_likers(self):
-        return self.votes.likes().count()
-
-    def count_dislikers(self):
-        return self.votes.dislikes().count()
-
-    def get_likers(self):
-        return self.votes.likes.all()
-
-    def get_dislikers(self):
-        return self.votes.dislikes.all()
-
     class Meta:
         ordering=["-created"]
         verbose_name="Запись"
