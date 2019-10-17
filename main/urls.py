@@ -1,6 +1,6 @@
 from django.conf.urls import url
-from main.views import MainPageView, ComingView
-from main.models import Item
+from main.views import MainPageView, ComingView, VotesView
+from main.models import Item, LikeDislike
 from django.contrib.auth.decorators import login_required
 
 

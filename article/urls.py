@@ -14,9 +14,6 @@ from article.views import (
                             article_reply_comment,
                         )
 from django.conf.urls import url
-from main.models import LikeDislike
-from main.views import VotesView
-from article.models import Article, ArticleComment
 
 
 urlpatterns = [

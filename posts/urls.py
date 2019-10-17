@@ -12,9 +12,7 @@ from posts.views import (
                             post_reply_comment,
                         )
 from django.conf.urls import url
-from main.models import LikeDislike
-from main.views import VotesView
-from posts.models import Post, PostComment2
+
 
 
 urlpatterns = [
