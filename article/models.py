@@ -107,7 +107,6 @@ class Article(Item):
 
 
 class ArticleComment(models.Model):
-    moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='article_comment')
     parent_comment = models.ForeignKey('self', on_delete=models.CASCADE, related_name='article_replies', null=True, blank=True,verbose_name="Родительский комментарий")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     modified = models.DateTimeField(auto_now_add=True, auto_now=False, db_index=False)
