@@ -126,7 +126,7 @@ def get_comment(request):
     item = Item.objects.get(uuid=item_id)
     form_comment = CommentForm()
     comments = Comment.objects.filter(item=item, parent_comment=None).order_by("created")
-    item_html = render_to_string("generic/item.html", {"object": item})
+    item_html = render_to_string("generic/article.html", {"object": item})
     comments_html = render_to_string(
         "generic/comments.html", {"comments": comments,"form_comment": form_comment,"parent": item})
     return JsonResponse({
