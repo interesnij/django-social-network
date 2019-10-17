@@ -1,7 +1,6 @@
 from article.views import (
                             ArticleView,
                             ArticleUserCreate,
-                            ArticleDeleteView,
                             ArticleNewView,
                             ArticleDetailView,
                             ArticleCommentCreateView,
@@ -24,11 +23,6 @@ from django.contrib.auth.decorators import login_required
 urlpatterns = [
     url(r'^$', ArticleView.as_view(), name='articles'),
     url(r'^add/$', ArticleUserCreate.as_view(), name="article_add_user"),
-    url(r'^like/(?P<pk>\d+)/$',login_required(VotesView.as_view(model=Article, vote_type=LikeDislike.LIKE)),name='article_like'),
-    url(r'^dislike/(?P<pk>\d+)/$',login_required(VotesView.as_view(model=Article, vote_type=LikeDislike.DISLIKE)),name='article_dislike'),
-    url(r'^comment/(?P<pk>\d+)/like/$',login_required(VotesView.as_view(model=ArticleComment, vote_type=LikeDislike.LIKE)),name='article_comment_like'),
-    url(r'^comment/(?P<pk>\d+)/dislike/$',login_required(VotesView.as_view(model=ArticleComment, vote_type=LikeDislike.DISLIKE)),name='article_comment_dislike'),
-    url(r'^delete/(?P<pk>\d+)/$', ArticleDeleteView.as_view(), name='article_delete'),
     url(r'^new/(?P<uuid>[0-9a-f-]+)/$', ArticleNewView.as_view(), name='article_new'),
     url(r'^detail/(?P<uuid>[0-9a-f-]+)/$', ArticleDetailView.as_view(), name='article_detail'),
     url(r'^like_window/(?P<pk>\d+)/$', ArticleLikeView.as_view(), name='article_like_window'),

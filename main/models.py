@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.fields import GenericRelation
 from django.db.models import Sum
 from django.conf import settings
 from django.utils import timezone
@@ -54,6 +55,8 @@ class Item(models.Model):
     is_deleted = models.BooleanField(default=False, verbose_name="Удалено")
     is_fixed = models.BooleanField(default=False, verbose_name="Закреплено")
     views=models.IntegerField(default=0, verbose_name="Просмотры")
+    votes = GenericRelation(LikeDislike, related_query_name='article')
+    moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='article')
 
     class Meta:
         indexes = (

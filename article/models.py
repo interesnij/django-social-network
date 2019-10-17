@@ -1,5 +1,4 @@
 import uuid
-from django.contrib.contenttypes.fields import GenericRelation
 from django.db import models
 from django.utils import timezone
 from pilkit.processors import ResizeToFit, ResizeToFill
@@ -15,7 +14,6 @@ from django.contrib.postgres.indexes import BrinIndex
 
 
 class Article(Item):
-    moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='article')
     title = models.CharField(max_length=100, blank=False, null=False, verbose_name="Заголовок" )
     uuid = models.UUIDField(default=uuid.uuid4, db_index=True, verbose_name="uuid")
     image = ProcessedImageField(verbose_name='Главное изображение', blank=False, format='JPEG',
@@ -28,7 +26,6 @@ class Article(Item):
                                           'plugin.js',
                                           )],
                                       )
-    votes = GenericRelation(LikeDislike, related_query_name='article')
     STATUS_DRAFT = 'D'
     STATUS_PROCESSING = 'PG'
     STATUS_PUBLISHED = 'P'
@@ -118,7 +115,6 @@ class ArticleComment(models.Model):
     text = models.TextField(blank=True,null=True)
     is_edited = models.BooleanField(default=False, null=False, blank=False,verbose_name="Изменено")
     is_deleted = models.BooleanField(default=False,verbose_name="Удаено")
-    votes = GenericRelation(LikeDislike, related_query_name='article_comments_vote')
     article = models.ForeignKey(Article, on_delete=models.CASCADE, null=True, related_name='article_comments')
 
     class Meta:

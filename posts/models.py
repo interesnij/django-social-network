@@ -18,7 +18,6 @@ class Post(Item):
     moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='post')
     uuid = models.UUIDField(default=uuid.uuid4, db_index=True,verbose_name="uuid")
     text = models.TextField(max_length=settings.POST_MAX_LENGTH, blank=False, null=True, verbose_name="Текст")
-    votes = GenericRelation(LikeDislike, related_query_name='vote_post')
     STATUS_DRAFT = 'D'
     STATUS_PROCESSING = 'PG'
     STATUS_PUBLISHED = 'P'
@@ -210,7 +209,6 @@ class PostComment2(models.Model):
     text = models.TextField(max_length=settings.POST_COMMENT_MAX_LENGTH, blank=True, null=True)
     is_edited = models.BooleanField(default=False, null=False, blank=False, verbose_name="Изменено")
     is_deleted = models.BooleanField(default=False, verbose_name="Удаено")
-    votes = GenericRelation(LikeDislike, related_query_name='post_comments_vote')
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post_comments', verbose_name="Запись")
 
     class Meta:

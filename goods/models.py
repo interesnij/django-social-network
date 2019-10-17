@@ -44,7 +44,6 @@ class Good(Item):
 		verbose_name="Товар"
 		verbose_name_plural="Товары"
 
-	moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='good')
 	uuid = models.UUIDField(default=uuid.uuid4, db_index=True, verbose_name="uuid")
 	title = models.CharField(max_length=200, verbose_name="Название")
 	description = models.TextField(max_length=1000, verbose_name="Описание товара")
@@ -57,7 +56,6 @@ class Good(Item):
 	image5 = ProcessedImageField(verbose_name='Изображение 5', blank=False, null=True, format='JPEG', options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)], upload_to=upload_to_good_image_directory)
 	image6 = ProcessedImageField(verbose_name='Изображение 6', blank=False, null=True, format='JPEG', options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)], upload_to=upload_to_good_image_directory)
 	image7 = ProcessedImageField(verbose_name='Изображение 7', blank=False, null=True, format='JPEG', options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)], upload_to=upload_to_good_image_directory)
-	votes = GenericRelation(LikeDislike, related_query_name='vote_good')
 	is_active=models.BooleanField(default=False, verbose_name='Товар активен')
 	is_sold=models.BooleanField(default=False, verbose_name='Товар не актуален')
 	is_reklama=models.BooleanField(default=False, verbose_name='Это реклама')
@@ -82,7 +80,6 @@ class Good(Item):
 
 
 class GoodComment(models.Model):
-	moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='good_comment')
 	parent_comment = models.ForeignKey('self', on_delete=models.CASCADE, related_name='good_replies', null=True, blank=True,verbose_name="Родительский комментарий")
 	created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
 	modified = models.DateTimeField(auto_now_add=True, auto_now=False, db_index=False)
@@ -90,7 +87,6 @@ class GoodComment(models.Model):
 	text = models.TextField(blank=True,null=True)
 	is_edited = models.BooleanField(default=False, null=False, blank=False, verbose_name="Изменено")
 	is_deleted = models.BooleanField(default=False, verbose_name="Удаено")
-	votes = GenericRelation(LikeDislike, related_query_name='good_comments_vote')
 	article = models.ForeignKey(Good, on_delete=models.CASCADE, related_name='article_comments')
 
 	class Meta:
