@@ -56,7 +56,7 @@ class Item(models.Model):
     is_fixed = models.BooleanField(default=False, verbose_name="Закреплено")
     views=models.IntegerField(default=0, verbose_name="Просмотры")
     votes = GenericRelation(LikeDislike, related_query_name='article')
-    moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='article')
+    moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='item')
 
     class Meta:
         indexes = (
