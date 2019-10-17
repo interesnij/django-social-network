@@ -7,7 +7,7 @@ from main.views import (
 						DislikeView,
 						LikeView,
 						CommentLikeView,
-						CommentDisLikeView,
+						CommentDislikeView,
 						VotesView,
 						get_comment,
 						post_comment,
@@ -29,5 +29,5 @@ urlpatterns = [
     url(r'^post-comment/$', post_comment, name='post_comment'),
     url(r'^reply-comment/$', reply_comment, name='reply_comment'),
 	url(r'^comment_like_window/(?P<pk>\d+)/$', CommentLikeView.as_view(), name='comment_like_window'),
-	url(r'^comment_dislike_window/(?P<pk>\d+)/$', CommentDisLikeView.as_view(), name='comment_dislike_window'),
+	url(r'^comment_dislike_window/(?P<pk>\d+)/$', CommentDislikeView.as_view(), name='comment_dislike_window'),
 ]
