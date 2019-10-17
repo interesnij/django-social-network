@@ -11,6 +11,7 @@ from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.views.decorators.http import require_http_methods
 from main.forms import CommentForm
 from main.helpers import ajax_required
+from django.template.loader import render_to_string
 
 
 class MainPageView(TemplateView,CategoryListMixin):
@@ -25,7 +26,7 @@ class MainPageView(TemplateView,CategoryListMixin):
 	def get_context_data(self,**kwargs):
 		context=super(MainPageView,self).get_context_data(**kwargs)
 		return context
-		
+
 
 class ComingView(TemplateView):
 	template_name="main/coming.html"
