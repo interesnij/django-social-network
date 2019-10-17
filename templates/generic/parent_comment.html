@@ -117,7 +117,7 @@
                     <br><br>
                     <span>
                       {% for reply in comment.get_replies %}
-                        {% include 'generic/article_reply_comment.html' with reply=reply  %}
+                        {% include 'generic/reply_comment.html' with reply=reply  %}
                       {% endfor %}
                     </span>
 
