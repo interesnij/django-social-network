@@ -1,0 +1,18 @@
+{% load staticfiles humanize liked_user %}
+<div class="card mb-4 infinite-item" item-id="{{ object.uuid }}">
+    {% include 'generic/card_header.html' %}
+
+    <div class="card-body fullscreen" data-id="{{ object.pk }}" style="cursor:pointer">
+      {% if object.post.text %}
+        <p class="">{{ object.post.text|linebreaks }}</p>
+      {% endif %}
+      {% if object.post.image %}
+        <p class="">{{ object.post.image.url }}</p>
+      {% endif %}
+      {% if object.post.doc %}
+        <p class="">{{ object.post.doc }}</p>
+      {% endif %}
+    </div>
+
+    {% include 'generic/info.html' %}
+</div>
