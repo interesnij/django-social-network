@@ -41,7 +41,6 @@ urlpatterns = [
     url(r'^moderation/', include('moderation.urls')),
     url(r'^notifications/', include('notifications.urls')),
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),
-    url(r'^ckeditor/upload/', login_required(views.upload), name='ckeditor_upload'),
     url(r'^frends/', include('frends.urls')),
     url(r'^chat/', include('chat.urls')),
     url(r'^gallery/', include('gallery.urls')),

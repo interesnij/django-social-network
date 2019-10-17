@@ -1,8 +1,10 @@
 {% load staticfiles %}
 
-{% if request.user == user and  request.user.is_authenticated %}
-
+{% if request.user.is_authenticated %}
 {% include 'generic/script.html' %}
+{% endif %}
+
+{% if request.user == user and  request.user.is_authenticated %}
 
 <script>
 $('.fullscreen').on('click', function () {

@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'notifications',
     'main',
     'ckeditor',
-    
+    'ckeditor_uploader',
     'frends',
     'chat',
     'gallery',
