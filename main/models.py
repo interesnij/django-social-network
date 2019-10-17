@@ -20,9 +20,9 @@ class LikeDislikeManager(models.Manager):
         return self.get_queryset().filter(vote__lt=0)
 
     def posts(self):
-        return self.get_queryset().filter(content_type__model='posts').order_by('-posts__created')
+        return self.get_queryset().filter(content_type__model='items').order_by('-item__created')
     def comments(self):
-        return self.get_queryset().filter(content_type__model='comment').order_by('-comments__created')
+        return self.get_queryset().filter(content_type__model='comments').order_by('-comment__created')
 
     def sum_rating(self):
         return self.get_queryset().aggregate(Sum('vote')).get('vote__sum') or 0
@@ -56,8 +56,8 @@ class Item(models.Model):
     is_deleted = models.BooleanField(default=False, verbose_name="Удалено")
     is_fixed = models.BooleanField(default=False, verbose_name="Закреплено")
     views=models.IntegerField(default=0, verbose_name="Просмотры")
-    votes = GenericRelation(LikeDislike, related_query_name='vote')
-    moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='item')
+    votes = GenericRelation(LikeDislike, related_query_name='items')
+    moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='items')
 
 
     class Meta:
@@ -103,7 +103,7 @@ class Comment(models.Model):
     is_edited = models.BooleanField(default=False, null=False, blank=False,verbose_name="Изменено")
     is_deleted = models.BooleanField(default=False,verbose_name="Удаено")
     item = models.ForeignKey(Item, on_delete=models.CASCADE, null=True, related_name='comments')
-    votes = GenericRelation(LikeDislike)
+    votes = GenericRelation(LikeDislike, related_query_name='comments')
 
     class Meta:
         indexes = (
