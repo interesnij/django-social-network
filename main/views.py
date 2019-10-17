@@ -9,7 +9,7 @@ import json
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.views.decorators.http import require_http_methods
-from article.forms import CommentForm
+from main.forms import CommentForm
 
 
 class MainPageView(TemplateView,CategoryListMixin):
