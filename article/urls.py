@@ -17,7 +17,6 @@ from django.conf.urls import url
 from main.models import LikeDislike
 from main.views import VotesView
 from article.models import Article, ArticleComment
-from django.contrib.auth.decorators import login_required
 
 
 urlpatterns = [
