@@ -1,7 +1,7 @@
 {% load staticfiles humanize liked_user %}
 
 {% if object.post %}
-<div class="card mb-4 infinite-item" post-id="{{ object.post.uuid }}" style="cursor:pointer">
+<div class="card mb-4 infinite-item" item-id="{{ object.uuid }}" style="cursor:pointer">
   <span class="text-hide-xs">
     {% if object.get_previous_by_created %}
       <span class="prev_item">
@@ -24,17 +24,17 @@
 <script>
 	function post_like() {
 			var like = $(this);
-			var post = $('.infinite-item').attr("post-id");
+			var item = $('.infinite-item').attr("item-id");
 			var type = like.data('type');
 			var pk = like.data('id');
 			var action  = like.data('action');
 			var dislike = like.next().next();
 			payload = {
-					'post': post,
+					'item': item,
 					'csrf_token': csrftoken
 				}
 			$.ajax({
-					url: "/posts/like/" + pk + "/",
+					url: "/main/like/" + pk + "/",
 					type: 'POST',
 					cache: false,
 					data: payload,
@@ -43,25 +43,25 @@
 							dislike.find("[data-count='dislike']").text(data.dislike_count);
 							$(like).addClass("text-success");
 							$(dislike).removeClass("text-danger");
-							$(like).siblings('.like_window').html('').load("/posts/like_window/" + pk + "/");
-							$(dislike).siblings('.dislike_window').html('').load("/posts/dislike_window/" + pk + "/")
+							$(like).siblings('.like_window').html('').load("/main/like_window/" + pk + "/");
+							$(dislike).siblings('.dislike_window').html('').load("/main/dislike_window/" + pk + "/")
 					}
 			});
 			return false;
 	}
 	function post_dislike() {
 			var dislike = $(this);
-			var post = $('.infinite-item').attr("posts-id");
+			var item = $('.infinite-item').attr("item-id");
 			var type = dislike.data('type');
 			var pk = dislike.data('id');
 			var action = dislike.data('action');
 			var like = dislike.prev().prev();
 			payload = {
-					'post': post,
+					'item': item,
 					'csrf_token': csrftoken
 				}
 			$.ajax({
-					url: "/posts/dislike/" + pk + "/",
+					url: "/main/dislike/" + pk + "/",
 					type: 'POST',
 					cache: false,
 					data: payload,
@@ -70,24 +70,24 @@
 							like.find("[data-count='like']").text(data.like_count);
 							$(dislike).addClass("text-danger");
 							$(like).removeClass("text-success");
-							$(like).siblings('.like_window').html('').load("/posts/like_window/" + pk + "/");
-							$(dislike).siblings('.dislike_window').html('').load("/posts/dislike_window/" + pk + "/")
+							$(like).siblings('.like_window').html('').load("/main/like_window/" + pk + "/");
+							$(dislike).siblings('.dislike_window').html('').load("/main/dislike_window/" + pk + "/")
 					}
 			});
 			return false;
 	}
 	// Подключение обработчиков
-	$('[data-action="post_like"]').click(post_like);
-	$('[data-action="post_dislike"]').click(post_dislike);
+	$('[data-action="like"]').click(like);
+	$('[data-action="dislike"]').click(dislike);
 </script>
 
 <script>
-$(".post_comment").on("click", function () {
-	var post = $(this).closest(".infinite-item").attr("post-id");
+$(".comment").on("click", function () {
+	var item = $(this).closest(".infinite-item").attr("item-id");
 	var url = $(this).parents(".infinite-item");
 	$.ajax({
-			url: '{% url "post_get_comment" %}',
-			data: {'post': post},
+			url: '{% url "get_comment" %}',
+			data: {'item': item},
 			cache: false,
 			beforeSend: function () {
 					url.find(".load_comments").html("<span style='display:flex;justify-content: center;'><img src='/static/images/loading.gif'></span>");
@@ -105,7 +105,7 @@ function remove() {
 var remove = $(this);
 var pk = remove.data('id');
 $.ajax({
-	url: "/posts/delete/" + pk + "/",
+	url: "/user/delete/" + pk + "/",
 	success: function (data) {
 		$(remove).parents('.card').hide();
 		$.toast({
@@ -119,12 +119,12 @@ $.ajax({
 	}
 });
 };
-$('[data-action="post_remove"]').click(remove);
+$('[data-action="remove"]').click(remove);
 </script>
 {% endif %}
 
 {% if object.article %}
-<div class="card mb-4 infinite-item" article-id="{{ object.article.uuid }}">
+<div class="card mb-4 infinite-item" item-id="{{ object.uuid }}">
   <span class="text-hide-xs">
     {% if object.get_previous_by_created %}
       <span class="prev_item">
@@ -145,19 +145,19 @@ $('[data-action="post_remove"]').click(remove);
 
 <script src="/static/scripts/cockie.js" type="text/javascript"></script>
 <script>
-	function art_like() {
+	function like() {
 			var like = $(this);
-			var article = $('.infinite-item').attr("article-id");
+			var item = $('.infinite-item').attr("item-id");
 			var type = like.data('type');
 			var pk = like.data('id');
 			var action  = like.data('action');
 			var dislike = like.next().next();
 			payload = {
-					'article': article,
+					'item': item,
 					'csrf_token': csrftoken
 				}
 			$.ajax({
-					url: "/article/like/" + pk + "/",
+					url: "/main/like/" + pk + "/",
 					type: 'POST',
 					cache: false,
 					data: payload,
@@ -166,13 +166,13 @@ $('[data-action="post_remove"]').click(remove);
 							dislike.find("[data-count='dislike']").text(data.dislike_count);
 							$(like).addClass("text-success");
 							$(dislike).removeClass("text-danger");
-							$(like).siblings('.like_window').html('').load("/article/like_window/" + pk + "/");
-							$(dislike).siblings('.dislike_window').html('').load("/article/dislike_window/" + pk + "/")
+							$(like).siblings('.like_window').html('').load("/main/like_window/" + pk + "/");
+							$(dislike).siblings('.dislike_window').html('').load("/main/dislike_window/" + pk + "/")
 					}
 			});
 			return false;
 	}
-	function art_dislike() {
+	function dislike() {
 			var dislike = $(this);
 			var article = $('.infinite-item').attr("article-id");
 			var type = dislike.data('type');
@@ -184,7 +184,7 @@ $('[data-action="post_remove"]').click(remove);
 					'csrf_token': csrftoken
 				}
 			$.ajax({
-					url: "/article/dislike/" + pk + "/",
+					url: "/main/dislike/" + pk + "/",
 					type: 'POST',
 					cache: false,
 					data: payload,
@@ -193,24 +193,24 @@ $('[data-action="post_remove"]').click(remove);
 							like.find("[data-count='like']").text(data.like_count);
 							$(dislike).addClass("text-danger");
 							$(like).removeClass("text-success");
-							$(like).siblings('.like_window').html('').load("/article/like_window/" + pk + "/");
-							$(dislike).siblings('.dislike_window').html('').load("/article/dislike_window/" + pk + "/")
+							$(like).siblings('.like_window').html('').load("/main/like_window/" + pk + "/");
+							$(dislike).siblings('.dislike_window').html('').load("/main/dislike_window/" + pk + "/")
 					}
 			});
 			return false;
 	}
 	// Подключение обработчиков
-	$('[data-action="art_like"]').click(art_like);
-	$('[data-action="art_dislike"]').click(art_dislike);
+	$('[data-action="like"]').click(like);
+	$('[data-action="dislike"]').click(dislike);
 </script>
 
 <script>
-$(".art_comment").on("click", function () {
-	var article = $(this).closest(".infinite-item").attr("article-id");
+$(".comment").on("click", function () {
+	var item = $(this).closest(".infinite-item").attr("item-id");
 	var url = $(this).parents(".infinite-item");
 	$.ajax({
-			url: '{% url "article_get_comment" %}',
-			data: {'article': article},
+			url: '{% url "get_comment" %}',
+			data: {'item': item},
 			cache: false,
 			beforeSend: function () {
 					url.find(".load_comments").html("<span style='display:flex;justify-content: center;'><img src='/static/images/loading.gif'></span>");
@@ -228,7 +228,7 @@ function remove() {
 var remove = $(this);
 var pk = remove.data('id');
 $.ajax({
-	url: "/article/delete/" + pk + "/",
+	url: "/users/delete/" + pk + "/",
 	success: function (data) {
 		$(remove).parents('.card').hide();
     $('.activefullscreen').hide();
@@ -243,7 +243,7 @@ $.ajax({
 	}
 });
 };
-$('[data-action="article_remove"]').click(remove);
+$('[data-action="remove"]').click(remove);
 </script>
 
 <script>
