@@ -240,7 +240,7 @@ $(document).ready(function () {
 
 <script>
 $(".comment").on("click", function () {
-	var article = $(this).closest(".infinite-item").attr("item-id");
+	var item = $(this).closest(".infinite-item").attr("item-id");
 	var url = $(this).parents(".infinite-item");
 	$.ajax({
 			url: '{% url "get_comment" %}',
