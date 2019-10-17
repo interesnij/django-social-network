@@ -19,7 +19,7 @@ from django.contrib.auth.decorators import login_required
 urlpatterns = [
 	url(r'^$', ComingView.as_view(), name="coming"),
 	url(r'^main/$', MainPageView.as_view(), name="main"),
-	url(r'^main/like/(?P<item_id>\d+)/$',login_required(VotesView.as_view(model=Item, vote_type=LikeDislike.LIKE)),name='like'),
+	url(r'^main/like/(?P<pk>\d+)/$',login_required(VotesView.as_view(model=Item, vote_type=LikeDislike.LIKE)),name='like'),
     url(r'^main/dislike/(?P<pk>\d+)/$',login_required(VotesView.as_view(model=Item, vote_type=LikeDislike.DISLIKE)),name='dislike'),
     url(r'^main/comment/(?P<pk>\d+)/like/$',login_required(VotesView.as_view(model=Comment, vote_type=LikeDislike.LIKE)),name='comment_like'),
     url(r'^main/comment/(?P<pk>\d+)/dislike/$',login_required(VotesView.as_view(model=Comment, vote_type=LikeDislike.DISLIKE)),name='comment_dislike'),
