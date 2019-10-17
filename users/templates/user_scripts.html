@@ -1,79 +1,8 @@
 {% load staticfiles %}
-<script src="/static/scripts/cockie.js" type="text/javascript"></script>
 
 {% if request.user == user and  request.user.is_authenticated %}
-<script>
-function remove() {
-var remove = $(this);
-var pk = remove.data('id');
-$.ajax({
-	url: "/users/delete/" + pk + "/",
-	success: function (data) {
-		$(remove).parents('.card').hide();
-		$.toast({
-				heading: '{{ request.user.first_name }}',
-				text: 'Вы успешно удалили элемент!',
-				showHideTransition: 'fade',
-				icon: 'error'
-		})
-	},
-	error: function(data) {
-	}
-});
-};
-$('[data-action="item_remove"]').click(remove);
-</script>
 
-<script>
-function fixed() {
-var fixed = $(this);
-var pk = fixed.parent().data('id');
-$.ajax({
-	url: "/users/fixed/" + pk + "/",
-	success: function (data) {
-		fixed.parent().html("<span data-action='item_unfixed' style='cursor:pointer' class='dropdown-item'>Открепить</span>");
-		$.toast({
-				heading: '{{ request.user.first_name }}',
-				text: 'Вы успешно закрепили элемент!',
-				showHideTransition: 'fade',
-				icon: 'info'
-		})
-	},
-	error: function(data) {
-		console.log("Что то пошло не так");
-	}
-});
-};
-
-function unfixed() {
-var unfixed = $(this);
-var pk = unfixed.parent().data('id');
-$.ajax({
-	url: "/users/unfixed/" + pk + "/",
-	success: function (data) {
-		unfixed.parent().html("<span data-action='item_fixed' style='cursor:pointer' class='dropdown-item'>Закрепить</span>");
-		$.toast({
-				heading: '{{ request.user.first_name }}',
-				text: 'Вы успешно открепили элемент!',
-				showHideTransition: 'fade',
-				icon: 'info'
-		})
-	},
-	error: function(data) {
-		console.log("Что то пошло не так");
-	}
-});
-};
-$('[data-action="item_fixed"]').click(fixed);
-$('[data-action="item_unfixed"]').click(unfixed);
-</script>
-
-<script>
-	$( "#article_add" ).click(function(){
-		$('#article_loader').html('').load("/article/add/");
-		$('.activefullscreen2').show();
-	})
-</script>
+{% include 'generic/script.html' %}
 
 <script>
 function avatar_change_popap(avatar_change) {
@@ -150,65 +79,6 @@ frm10.submit(function () {
 {% endif %}
 
 {% if request.user.is_authenticated %}
-<script>
-	function like() {
-			var like = $(this);
-			var item = $('.infinite-item').attr("item-id");
-			var type = like.data('type');
-			var pk = like.data('id');
-			var action  = like.data('action');
-			var dislike = like.next().next();
-			payload = {
-					'item': item,
-					'csrf_token': csrftoken
-				}
-			$.ajax({
-					url: "/main/like/" + pk + "/",
-					type: 'POST',
-					cache: false,
-					data: payload,
-					success: function(data) {
-							like.find("[data-count='like']").text(data.like_count);
-							dislike.find("[data-count='dislike']").text(data.dislike_count);
-							$(like).addClass("text-success");
-							$(dislike).removeClass("text-danger");
-							$(like).siblings('.like_window').html('').load("/main/like_window/" + pk + "/");
-							$(dislike).siblings('.dislike_window').html('').load("/main/dislike_window/" + pk + "/")
-					}
-			});
-			return false;
-	}
-	function dislike() {
-			var dislike = $(this);
-			var item = $('.infinite-item').attr("item-id");
-			var type = dislike.data('type');
-			var pk = dislike.data('id');
-			var action = dislike.data('action');
-			var like = dislike.prev().prev();
-			payload = {
-					'item': item,
-					'csrf_token': csrftoken
-				}
-			$.ajax({
-					url: "/main/dislike/" + pk + "/",
-					type: 'POST',
-					cache: false,
-					data: payload,
-					success: function(data) {
-							dislike.find("[data-count='dislike']").text(data.dislike_count);
-							like.find("[data-count='like']").text(data.like_count);
-							$(dislike).addClass("text-danger");
-							$(like).removeClass("text-success");
-							$(like).siblings('.like_window').html('').load("/main/like_window/" + pk + "/");
-							$(dislike).siblings('.dislike_window').html('').load("/main/dislike_window/" + pk + "/")
-					}
-			});
-			return false;
-	}
-	// Подключение обработчиков
-	$('[data-action="like"]').click(like);
-	$('[data-action="dislike"]').click(dislike);
-</script>
 
 <script>
 function new_message_popap(new_message) {
@@ -237,41 +107,3 @@ $(document).ready(function () {
 });
 </script>
 {% endif %}
-
-<script>
-$(".comment").on("click", function () {
-	var item = $(this).closest(".infinite-item").attr("item-id");
-	var url = $(this).parents(".infinite-item");
-	$.ajax({
-			url: '{% url "get_comment" %}',
-			data: {'item': item},
-			cache: false,
-			beforeSend: function () {
-					url.find(".load_comments").html("<span style='display:flex;justify-content: center;'><img src='/static/images/loading.gif'></span>");
-			},
-			success: function (data) {
-				url.find(".load_comments").html(data.comments);
-			}
-	});
-	return false;
-});
-</script>
-
-<script>
-$('.fullscreen').on('click', function () {
-	 var item = $(this);
-	 var item_id = item.data("id");
-	 $('#item_loader').html('').load("/users/item/" + item_id)
-	 $('.activefullscreen').show();
-});
-</script>
-
-<script>
-$('.article_detail').on('click', function (e) {
-	e.preventDefault();
-	 var item = $(this);
-	 var item_id = item.data("id");
-	 $('#article_loader').html('').load("/article/detail/" + item_id)
-	 $('.activefullscreen2').show();
-});
-</script>
