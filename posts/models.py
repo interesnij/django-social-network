@@ -1,5 +1,3 @@
-import uuid
-from django.contrib.contenttypes.fields import GenericRelation
 from django.db import models
 from django.utils import timezone
 from pilkit.processors import ResizeToFill, ResizeToFit
@@ -9,7 +7,6 @@ from imagekit.models import ProcessedImageField
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 from notifications.models import Notification, notification_handler
-from main.models import LikeDislike, Item
 from posts.helpers import upload_to_post_image_directory, upload_to_post_directory
 from django.contrib.postgres.indexes import BrinIndex
 
@@ -151,14 +148,6 @@ class Post(Item):
     def __str__(self):
         return self.creator.get_full_name()
 
-    def count_comments(self):
-        parent_comments = PostComment2.objects.filter(post=self).count()
-        return parent_comments
-
-    def get_replies(self):
-        get_comments = PostComment2.objects.filter(parent_comment=self).all()
-        return get_comments
-
 
 class PostImage(models.Model):
     post = models.OneToOneField(Post, on_delete=models.CASCADE, related_name='post_image', null=True)
@@ -198,23 +187,6 @@ class PostImage(models.Model):
         return cls.objects.create(image=image, post_id=post_id)
 
 
-class PostComment2(models.Model):
-    parent_comment = models.ForeignKey('self', on_delete=models.CASCADE, related_name='replies', null=True, blank=True, verbose_name="Родительский комментарий")
-    created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
-    modified = models.DateTimeField(auto_now_add=True, auto_now=False, db_index=False)
-    commenter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='posts_comments', verbose_name="Комментатор")
-    text = models.TextField(max_length=settings.POST_COMMENT_MAX_LENGTH, blank=True, null=True)
-    is_edited = models.BooleanField(default=False, null=False, blank=False, verbose_name="Изменено")
-    is_deleted = models.BooleanField(default=False, verbose_name="Удаено")
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post_comments', verbose_name="Запись")
-
-    class Meta:
-        indexes = (BrinIndex(fields=['created']),)
-
-    def __str__(self):
-        return "{0}/{1}".format(self.commenter.get_full_name(), self.text[:10])
-
-
 class PostRepost(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     content = models.TextField(blank=True)
@@ -239,17 +211,6 @@ class PostMute(models.Model):
         return cls.objects.create(post_id=post_id, muter_id=muter_id)
 
 
-class PostCommentMute(models.Model):
-    post_comment = models.ForeignKey(PostComment2, db_index=False, on_delete=models.CASCADE, related_name='mutes', verbose_name="Запись")
-    muter = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE, related_name='post_comment_mutes', verbose_name="Кто заглушил")
-
-    class Meta:
-        unique_together = ('post_comment', 'muter',)
-
-    @classmethod
-    def create_post_comment_mute(cls, post_comment_id, muter_id):
-        return cls.objects.create(post_comment_id=post_comment_id, muter_id=muter_id)
-
 
 class PostUserMention(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE, related_name='post_mentions', verbose_name="Упоминаемый")
@@ -258,13 +219,6 @@ class PostUserMention(models.Model):
     class Meta:
         unique_together = ('user', 'post',)
 
-
-class PostCommentUserMention(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE, related_name='post_comment_mentions', verbose_name="Упомянутый в комментарии")
-    post_comment = models.ForeignKey(PostComment2, db_index=False, on_delete=models.CASCADE, related_name='user_mentions', verbose_name="Запись")
-
-    class Meta:
-        unique_together = ('user', 'post_comment',)
 
 
 class PostDoc(models.Model):

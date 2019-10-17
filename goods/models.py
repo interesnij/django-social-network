@@ -1,9 +1,6 @@
-import uuid
 from django.db import models
 from users.models import User
-from django.contrib.contenttypes.fields import GenericRelation
 from goods.helpers import upload_to_good_image_directory
-from main.models import LikeDislike, Item
 from pilkit.processors import ResizeToFill, ResizeToFit
 from imagekit.models import ProcessedImageField
 from asgiref.sync import async_to_sync
@@ -44,7 +41,6 @@ class Good(Item):
 		verbose_name="Товар"
 		verbose_name_plural="Товары"
 
-	uuid = models.UUIDField(default=uuid.uuid4, db_index=True, verbose_name="uuid")
 	title = models.CharField(max_length=200, verbose_name="Название")
 	description = models.TextField(max_length=1000, verbose_name="Описание товара")
 	price = models.PositiveIntegerField(default=0, verbose_name="Цена товара")
@@ -77,25 +73,6 @@ class Good(Item):
 		channel_layer = get_channel_layer()
 		payload = {"type": "receive","key": "additional_post","actor_name": self.creator.get_full_name()}
 		async_to_sync(channel_layer.group_send)('notifications', payload)
-
-
-class GoodComment(models.Model):
-	parent_comment = models.ForeignKey('self', on_delete=models.CASCADE, related_name='good_replies', null=True, blank=True,verbose_name="Родительский комментарий")
-	created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
-	modified = models.DateTimeField(auto_now_add=True, auto_now=False, db_index=False)
-	commenter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='good_commenter',verbose_name="Комментатор")
-	text = models.TextField(blank=True,null=True)
-	is_edited = models.BooleanField(default=False, null=False, blank=False, verbose_name="Изменено")
-	is_deleted = models.BooleanField(default=False, verbose_name="Удаено")
-	article = models.ForeignKey(Good, on_delete=models.CASCADE, related_name='article_comments')
-
-	class Meta:
-		indexes = (
-		BrinIndex(fields=['created']),
-	)
-
-	def __str__(self):
-		return "{0}/{1}".format(self.commenter.get_full_name(), self.text[:10])
 
 
 class GoodRepost(models.Model):

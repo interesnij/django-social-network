@@ -1,11 +1,11 @@
 {% load liked_user staticfiles %}
 
-{% if article_like.votes.likes.all %}
+{% if like.votes.likes.all %}
 <div class="like_pop" style="margin:15px">
-  <span>Оценили: {{ article_like.votes.likes.count }} {{ article_like.votes.likes.count|rupluralize:"человек,человека,людей" }}</span>
+  <span>Оценили: {{ like.votes.likes.count }} {{ like.votes.likes.count|rupluralize:"человек,человека,людей" }}</span>
   <br><br>
   <span style="display: flex;">
-    {% for heart in article_like.votes.likes.all %}
+    {% for heart in like.votes.likes.all %}
     <a href="{% url 'user' pk=heart.user.pk %}" class="ajax" style="padding-right:10px">
       <figure style="margin: 0;">
         {% if heart.user.profile.avatar %}

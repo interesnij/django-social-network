@@ -1,11 +1,11 @@
 {% load liked_user staticfiles %}
 
-{% if post_dislike.votes.dislikes.all %}
+{% if dislike.votes.dislikes.all %}
 <div class="dislike_pop" style="margin:15px">
-  <span>Не оценили: {{ post_dislike.votes.likes.count }} {{ post_dislike.votes.dislikes.count|rupluralize:"человек,человека,людей" }}</span>
+  <span>Не оценили: {{ dislike.votes.likes.count }} {{ dislike.votes.dislikes.count|rupluralize:"человек,человека,людей" }}</span>
   <br><br>
   <span style="display: flex;">
-    {% for sheet in post_dislike.votes.dislikes.all %}
+    {% for sheet in dislike.votes.dislikes.all %}
     <a href="{% url 'user' pk=sheet.user.pk %}" class="ajax" style="padding-right:10px">
       <figure style="margin: 0;">
         {% if sheet.user.profile.avatar %}

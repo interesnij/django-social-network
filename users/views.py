@@ -1,12 +1,12 @@
 from django.views.generic.base import TemplateView
 from users.models import User, UserProfile
-from posts.models import Post, PostComment2
+from posts.models import Post
 from main.models import Item
-from article.models import Article, ArticleComment
+from article.models import Article
 from frends.models import Connect
 from follows.models import Follow
 from communities.models import Community
-from posts.forms import PostCommentForm, PostRepostForm
+from main.forms import CommentForm
 from article.forms import ArticleForm
 from posts.forms import PostUserForm
 from users.forms import GeneralUserForm, AboutUserForm, AvatarUserForm
@@ -16,7 +16,6 @@ from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.views.decorators.http import require_http_methods
 from django.db.models import Q
 from datetime import datetime, timedelta
-from itertools import chain
 
 
 class UserItemView(TemplateView):
@@ -87,8 +86,7 @@ class ProfileUserView(TemplateView):
         context['pop_frends'] = self.pop_frends
         context['form'] = ArticleForm()
         context['form_avatar'] = AvatarUserForm()
-        context['form_comment'] = PostCommentForm()
-        context["post_repost_form"] = PostRepostForm()
+        context['form_comment'] = CommentForm()
         context['communities'] = self.communities
         context['connect'] = self.connect
         context['connect2'] = self.connect2

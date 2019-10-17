@@ -3,9 +3,13 @@ from generic.mixins import CategoryListMixin
 from users.models import User
 from django.views import View
 from django.contrib.contenttypes.models import ContentType
-from main.models import LikeDislike
+from main.models import LikeDislike, Item, Comment
 from django.http import HttpResponse
 import json
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
+from django.views.decorators.http import require_http_methods
+from article.forms import CommentForm
 
 
 class MainPageView(TemplateView,CategoryListMixin):
@@ -23,6 +27,60 @@ class MainPageView(TemplateView,CategoryListMixin):
 
 class ComingView(TemplateView):
 	template_name="main/coming.html"
+
+
+class LikeView(TemplateView):
+    template_name="like_window.html"
+
+    def get(self,request,*args,**kwargs):
+        self.like = Item.objects.get(pk=self.kwargs["pk"])
+        self.like.notification_like(request.user)
+        return super(LikeView,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context=super(LikeView,self).get_context_data(**kwargs)
+        context["like"]=self.like
+        return context
+
+
+class CommentLikeView(TemplateView):
+    template_name="comment_like_window.html"
+
+    def get(self,request,*args,**kwargs):
+        self.comment_like = Comment.objects.get(pk=self.kwargs["pk"])
+        return super(CommentLikeView,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context=super(CommentLikeView,self).get_context_data(**kwargs)
+        context["comment_like"]=self.comment_like
+        return context
+
+
+class DislikeView(TemplateView):
+    template_name="dislike_window.html"
+
+    def get(self,request,*args,**kwargs):
+        self.dislike = Item.objects.get(pk=self.kwargs["pk"])
+        self.dislike.notification_dislike(request.user)
+        return super(DislikeView,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context=super(DislikeView,self).get_context_data(**kwargs)
+        context["dislike"]=self.dislike
+        return context
+
+
+class CommentDislikeView(TemplateView):
+    template_name="comment_dislike_window.html"
+
+    def get(self,request,*args,**kwargs):
+        self.comment_dislike = Comment.objects.get(pk=self.kwargs["pk"])
+        return super(CommentDislikeView,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context=super(CommentDislikeView,self).get_context_data(**kwargs)
+        context["comment_dislike"]=self.comment_dislike
+        return context
 
 
 class VotesView(View):
@@ -113,3 +171,12 @@ def reply_comment(request):
 
     else:
         return HttpResponseBadRequest()
+
+
+@login_required
+@require_http_methods(["POST"])
+def post_update_interactions(request):
+    data_point = request.POST['id_value']
+    item = Item.objects.get(uuid=data_point)
+    data = {'likes': item.count_likers(), 'dislikes': item.count_dislikers(), 'comments': item.count_thread()}
+    return JsonResponse(data)

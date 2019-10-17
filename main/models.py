@@ -56,7 +56,7 @@ class Item(models.Model):
     is_deleted = models.BooleanField(default=False, verbose_name="Удалено")
     is_fixed = models.BooleanField(default=False, verbose_name="Закреплено")
     views=models.IntegerField(default=0, verbose_name="Просмотры")
-    votes = GenericRelation(LikeDislike, related_query_name='article')
+    votes = GenericRelation(LikeDislike, related_query_name='vote')
     moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='item')
 
 
@@ -84,6 +84,14 @@ class Item(models.Model):
         item.is_fixed=False
         return item
 
+    def count_comments(self):
+        parent_comments = Comment.objects.filter(item=self).count()
+        return parent_comments
+
+    def get_replies(self):
+        get_comments = Comment.objects.filter(parent_comment=self).all()
+        return get_comments
+
 
 class Comment(models.Model):
     parent_comment = models.ForeignKey('self', on_delete=models.CASCADE, related_name='article_replies', null=True, blank=True,verbose_name="Родительский комментарий")
@@ -93,7 +101,8 @@ class Comment(models.Model):
     text = models.TextField(blank=True,null=True)
     is_edited = models.BooleanField(default=False, null=False, blank=False,verbose_name="Изменено")
     is_deleted = models.BooleanField(default=False,verbose_name="Удаено")
-    article = models.ForeignKey(Article, on_delete=models.CASCADE, null=True, related_name='article_comments')
+    item = models.ForeignKey(Item, on_delete=models.CASCADE, null=True, related_name='comments')
+    votes = GenericRelation(LikeDislike, related_query_name='comment_vote')
 
     class Meta:
         indexes = (
