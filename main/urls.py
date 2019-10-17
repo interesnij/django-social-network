@@ -3,7 +3,7 @@ from main.views import (
 						MainPageView,
 						ComingView,
 						CommentLikeView,
-						CommentDisLikeView,
+						CommentDislikeView,
 						DislikeView,
 						LikeView,
 						CommentLikeView,
