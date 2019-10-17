@@ -5,6 +5,15 @@
 {% include 'generic/script.html' %}
 
 <script>
+$('.fullscreen').on('click', function () {
+	 var item = $(this);
+	 var item_id = item.data("id");
+	 $('#item_loader').html('').load("/users/item/" + item_id)
+	 $('.activefullscreen').show();
+});
+</script>
+
+<script>
 function avatar_change_popap(avatar_change) {
 	if ($(".wrapper").length == 0){
 		$(avatar_change).wrapInner("<div class='wrapper'></div>");

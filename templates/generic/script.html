@@ -104,15 +104,6 @@ $('[data-action="remove"]').click(remove);
 </script>
 
 <script>
-$('.fullscreen').on('click', function () {
-	 var item = $(this);
-	 var item_id = item.data("id");
-	 $('#item_loader').html('').load("/users/item/" + item_id)
-	 $('.activefullscreen').show();
-});
-</script>
-
-<script>
 $('.article_detail').on('click', function (e) {
 	e.preventDefault();
 	 var item = $(this);
