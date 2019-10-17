@@ -5,6 +5,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic import TemplateView, RedirectView
 from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import login_required
 from ckeditor_uploader import views
 
 
@@ -41,8 +42,8 @@ urlpatterns = [
     url(r'^moderation/', include('moderation.urls')),
     url(r'^notifications/', include('notifications.urls')),
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),
-    url(r'^ckeditor/upload/', login_required(views.upload), name='ckeditor_upload'),
-    url(r'^ckeditor/browse/', never_cache(login_required(views.browse)), name='ckeditor_browse'),
+    url(r'^ckeditor/upload/', login_requred(views.upload), name='ckeditor_upload'),
+    url(r'^ckeditor/browse/', never_cache(login_requred(views.browse)), name='ckeditor_browse'),
     url(r'^frends/', include('frends.urls')),
     url(r'^chat/', include('chat.urls')),
     url(r'^gallery/', include('gallery.urls')),
