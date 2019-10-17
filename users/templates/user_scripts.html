@@ -4,8 +4,6 @@
 {% include 'generic/script.html' %}
 {% endif %}
 
-{% if request.user == user and  request.user.is_authenticated %}
-
 <script>
 $('.fullscreen').on('click', function () {
 	 var item = $(this);
@@ -14,6 +12,9 @@ $('.fullscreen').on('click', function () {
 	 $('.activefullscreen').show();
 });
 </script>
+
+{% if request.user == user and  request.user.is_authenticated %}
+
 
 <script>
 function avatar_change_popap(avatar_change) {
