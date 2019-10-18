@@ -97,13 +97,8 @@ class ArticleMute(models.Model):
     def create_article_comment_mute(cls, article_comment_id, muter_id):
         return cls.objects.create(article_comment_id=article_comment_id, muter_id=muter_id)
 
-    class Meta:
-        unique_together = ('article', 'muter',)
 
 
 class ArticleUserMention(models.Model):
     #user = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE, related_name='article_mentions',verbose_name="Упоминаемый")
     article = models.ForeignKey(Article, db_index=False, on_delete=models.CASCADE, related_name='user_mentions',verbose_name="Статья")
-
-    class Meta:
-        unique_together = ('user', 'article',)
