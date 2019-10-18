@@ -1,6 +1,7 @@
 from django.views.generic.base import TemplateView
 from users.models import User
 from gallery.models import Album, Photo
+from gallery.helpers import AjaxResponseMixin, JSONResponseMixin
 
 
 class GalleryView(TemplateView):
@@ -18,7 +19,7 @@ class GalleryView(TemplateView):
 		return context
 
 
-class AlbomView(TemplateView):
+class AlbomView(AjaxResponseMixin,JSONResponseMixin,TemplateView):
 	template_name="album.html"
 
 	def get(self,request,*args,**kwargs):
