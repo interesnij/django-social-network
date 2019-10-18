@@ -113,7 +113,7 @@ class Comment(models.Model):
     text = models.TextField(blank=True,null=True)
     is_edited = models.BooleanField(default=False, null=False, blank=False,verbose_name="Изменено")
     is_deleted = models.BooleanField(default=False,verbose_name="Удаено")
-    item = models.ForeignKey(Item, on_delete=models.CASCADE, null=True)
+    #item = models.ForeignKey(Item, on_delete=models.CASCADE, null=True)
     votes = GenericRelation(LikeDislike, related_query_name='comments')
 
     class Meta:
