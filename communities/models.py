@@ -32,7 +32,7 @@ class CommunitySubCategory(models.Model):
 
 
 class Community(models.Model):
-    moderated_object = GenericRelation(ModeratedObject, related_query_name='communities',verbose_name="Модерация")
+    #moderated_object = GenericRelation(ModeratedObject, related_query_name='communities',verbose_name="Модерация")
     category = models.ForeignKey(CommunitySubCategory, on_delete=models.CASCADE, related_name='community_sub_categories', verbose_name="Подкатегория сообщества")
     creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_communities', null=False, blank=False, verbose_name="Создатель")
     name = models.CharField(max_length=settings.COMMUNITY_CATEGORY_NAME_MAX_LENGTH, blank=False, null=False,
