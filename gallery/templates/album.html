@@ -8,6 +8,8 @@
 {% endif %}
 {% endblock %}
 {% block content %}
+<link rel="stylesheet" href="{% static 'styles/dropzone.css' %}" />
+
 
 {{ album.title }} - {{ album.photo_set.count }}
 <br><br>
