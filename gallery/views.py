@@ -24,11 +24,13 @@ class AlbomView(AjaxResponseMixin,JSONResponseMixin,TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.album=Album.objects.get(pk=self.kwargs["pk"])
+		self.photos = Photo.objects.filter(album=self.album)
 		return super(AlbomView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		context=super(AlbomView,self).get_context_data(**kwargs)
 		context['album'] = self.album
+		context['photos'] = self.photos
 		return context
 
 	def post_ajax(self, request, *args, **kwargs):

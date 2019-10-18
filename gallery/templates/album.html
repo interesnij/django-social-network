@@ -10,6 +10,12 @@
 {% block content %}
 
 {{ album.title }} - {{ album.photo_set.count }}
+<br><br>
+
+{% for object in photos %}
+{{ object.description }} - {{ object.created }}
+{% endfor %}
+
 
 <form id="add-photos" method="post" action="{% url 'album' album.id %}" class="dropzone">
     {% csrf_token %}
