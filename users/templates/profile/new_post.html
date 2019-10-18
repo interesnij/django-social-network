@@ -72,20 +72,7 @@
          </div>
          <div id="for_images_upload" style="display:none">
            <div class="card mb-4">
-                <div class="card-header">
-                    <h5>Drop your files</h5>
-                </div>
-                <div class="card-body">
-                    <div class="custom-dropzone text-center align-items-center" id="my-dropzone">
-                        <div class="dz-default dz-message" data-dz-message>
-                            <h3 class="mb-0">
-                              <img style="width:50px" src="{% static 'images/icons/cloud_download-24px.svg' %}" />
-                            </h3>
-                            <p>Drop here or click here to upload</p>
-                        </div>
-                        <input name="file" type="file" multiple />
-                    </div>
-                </div>
+                <div id="dropzone" class="dropzone"></div>
             </div>
          </div>
          <div id="for_gallery" style="display:none">gallery</div>
