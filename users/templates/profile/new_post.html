@@ -40,7 +40,7 @@
                          aria-expanded="false">
                          <img style="width:22px;" src="{% static 'images/icons/attach_file-24px.svg' %}" />
                  </a>
-                 <div class="dropdown-menu dropdown-menu-top" aria-labelledby="dropdown_image">
+                 <div class="dropdown-menu dropdown-menu-top" aria-labelledby="dropdown_more">
                    <a id="doc" style="cursor:pointer" class="dropdown-item">Документ</a>
                    <a id="good" style="cursor:pointer" class="dropdown-item">Товар</a>
                    <a id="question" style="cursor:pointer" class="dropdown-item">Опрос</a>
@@ -49,7 +49,19 @@
              </div>
 
              <div class="col-auto ">
-               <img style="width:22px;color:white" src="{% static 'images/icons/settings_applications-24px.svg' %}" />
+               <div class="dropdown">
+                 <a title="Еще"
+                         class="btn btn-link btn-sm text-secondary"
+                         id="dropdown_settings"
+                         data-toggle="dropdown"
+                         aria-haspopup="true"
+                         aria-expanded="false">
+                         <img style="width:22px" src="{% static 'images/icons/settings_applications-24px.svg' %}" />
+                 </a>
+                 <div class="dropdown-menu dropdown-menu-top" aria-labelledby="dropdown_settings">
+                   <a style="cursor:pointer" class="dropdown-item">Комментарии включены</a>
+                 </div>
+               </div>
                  <button type="submit" class="btn btn-rounded btn-sm text-uppercase pl-3">
                    <span class="text-hide-xs">Опубликовать</span>
                    <a>
