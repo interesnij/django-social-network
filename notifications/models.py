@@ -58,8 +58,8 @@ class NotificationQuerySet(models.query.QuerySet):
 
 
 class Notification(models.Model):
-    #recipient = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notifications', verbose_name="Получатель")
-    #actor = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="notify_actor", verbose_name="Инициатор", on_delete=models.CASCADE)
+    recipient = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notifications', verbose_name="Получатель")
+    actor = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="notify_actor", verbose_name="Инициатор", on_delete=models.CASCADE)
     timestamp = models.DateTimeField(default=timezone.now, editable=False, db_index=True, verbose_name="Создано")
     unread  = models.BooleanField(default=True, db_index=True)
 
