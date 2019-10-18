@@ -44,7 +44,6 @@ class PostUserCreate(TemplateView):
 
     def post(self,request,*args,**kwargs):
         self.form_post=PostUserForm(request.POST, request.FILES)
-        self.formset_post=PostImagesFormset(request.POST,request.FILES)
         if self.form_post.is_valid():
             new_post=self.form_post.save(commit=False)
             new_post.creator=self.request.user
