@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.postgres.indexes import BrinIndex
+from users.models import User
 
 
 class Album(models.Model):
