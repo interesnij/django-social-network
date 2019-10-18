@@ -19,6 +19,7 @@ class GalleryView(TemplateView):
 
 
 class AjaxPhotoUploadView(TemplateView):
+	template_name="add.html"
 
     def post_ajax(self, request, *args, **kwargs):
         try:
