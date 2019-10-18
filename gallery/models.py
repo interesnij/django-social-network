@@ -16,8 +16,7 @@ class Album(models.Model):
         indexes = (
             BrinIndex(fields=['created']),
         )
-        index_together = [('creator',]
-        ordering = ['-id']
+        ordering = ['order']
 
 
 
@@ -33,5 +32,4 @@ class Photo(models.Model):
         indexes = (
             BrinIndex(fields=['created']),
         )
-        index_together = [('creator',]
-        ordering = ['-id']
+        ordering = ['order']
