@@ -23,7 +23,7 @@ class Post(Item):
         (STATUS_ARHIVED, 'Архивирован'),
     )
     status = models.CharField(blank=False, null=False, choices=STATUSES, default=STATUS_DRAFT, max_length=2, verbose_name="Статус записи")
-    image = ProcessedImageField(verbose_name='изображение', null=True, format='JPEG',
+    image = ProcessedImageField(verbose_name='изображение', blank=True, format='JPEG',
                                  options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)],
                                  upload_to=upload_to_post_image_directory)
 
