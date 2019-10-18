@@ -67,6 +67,7 @@ class Item(models.Model):
         )
         index_together = [('creator', 'community'),]
         ordering = ['-id']
+        abstract=True
 
     def save(self, *args, **kwargs):
         if not self.is_fixed:
