@@ -72,7 +72,9 @@
          </div>
          <div id="for_images_upload" style="display:none">
            <div class="card mb-4">
-                <div id="dropzone" class="dropzone"></div>
+                {% for form in formset_post %}
+                {{ form }}
+                {% endfor %}
             </div>
          </div>
          <div id="for_gallery" style="display:none">gallery</div>
@@ -104,18 +106,3 @@ $('#question').on('click', function () {
 </script>
 
 <script src="{% static 'scripts/dropzone.js' %}" type="text/javascript"></script>
-<script>
-        Dropzone.options.myDropzone = {
-                paramName: "image", // el nombre de nuestro input
-                autoProcessQueue : true,
-                parallelUploads: 1,
-
-                init: function() {
-                    this.on("success", function(file, responseText)  {
-                        //событие запущено после завершения загрузки изображений в очереди
-                        console .log(responseText);
-                    });
-                }
-            };
-
-    </script>
