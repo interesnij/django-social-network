@@ -8,11 +8,13 @@ class GalleryView(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.user=User.objects.get(pk=self.kwargs["pk"])
+		self.albums=Album.objects.filter(creator=self.user)
 		return super(GalleryView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		context=super(GalleryView,self).get_context_data(**kwargs)
 		context['user'] = self.user
+		context['albums'] = self.albums
 		return context
 
 

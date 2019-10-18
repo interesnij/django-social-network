@@ -9,6 +9,10 @@
 {% endblock %}
 {% block content %}
 
+{% for albom in alboms %}
+{{ albom.title }} - {{ albom.photo_set.count }}
+{% endfor %}
+
 <form id="add-photos" action="{% url 'ajax_photo_upload_view' 1 %}" class="dropzone">
     {% csrf_token %}
 </form>
