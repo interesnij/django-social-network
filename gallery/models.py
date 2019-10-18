@@ -21,7 +21,7 @@ class Album(models.Model):
 
 
 class Photo(models.Model):
-    album = models.ForeignKey(Album)
+    album = models.ForeignKey(Album, on_delete=models.CASCADE)
     file = models.ImageField(upload_to=upload_to)
     description = models.TextField(blank=True, null=True, verbose_name="Описание")
     is_public = models.BooleanField(default=True, verbose_name="Виден другим")
