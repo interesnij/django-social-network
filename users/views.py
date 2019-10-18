@@ -9,7 +9,6 @@ from communities.models import Community
 from main.forms import CommentForm
 from article.forms import ArticleForm
 from posts.forms import PostUserForm
-from posts.views import PostImagesFormset
 from users.forms import GeneralUserForm, AboutUserForm, AvatarUserForm
 from django.views.generic import ListView
 from django.contrib.auth.decorators import login_required

@@ -23,6 +23,9 @@ class Post(Item):
         (STATUS_ARHIVED, 'Архивирован'),
     )
     status = models.CharField(blank=False, null=False, choices=STATUSES, default=STATUS_DRAFT, max_length=2, verbose_name="Статус записи")
+    image = ProcessedImageField(verbose_name='изображение', null=True, format='JPEG',
+                                 options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)],
+                                 upload_to=upload_to_post_image_directory)
 
     @classmethod
     def create_post(cls, creator, community_name=None, image=None, text=None, video=None,
@@ -125,14 +128,6 @@ class Post(Item):
 
     def __str__(self):
         return self.creator.get_full_name()
-
-
-class PostImage(models.Model):
-    post = models.OneToOneField(Post, on_delete=models.CASCADE, related_name='post_image', null=True)
-    image = ProcessedImageField(verbose_name='изображение', blank=False, null=True, format='JPEG',
-                                 options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)],
-                                 upload_to=upload_to_post_image_directory)
-
 
 
 class PostRepost(models.Model):
