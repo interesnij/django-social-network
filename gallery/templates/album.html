@@ -15,7 +15,7 @@
 <br><br>
 
 {% for object in photos %}
-{{ object.description }} - {{ object.created }}
+<img class="lazyload" data-src="{{ object.url }}" alt="">
 {% endfor %}
 
 

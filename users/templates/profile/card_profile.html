@@ -67,8 +67,8 @@
         <div class="row align-items-center no-gutters">
             <a class="col">
               {% if user.profile.avatar %}
-                <figure class="mx-auto mb-3"> 
-                  <img class="lazyload" data-src="{{ user.profile.avatar.url }}" alt="">
+                <figure class="mx-auto mb-3">
+                  <img src="{{ user.profile.avatar.url }}" alt="">
                 </figure>
               {% else %}
                 <figure class="mx-auto mb-3">
