@@ -77,24 +77,14 @@
                        </h5>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right profile-dropdown" aria-labelledby="dropdownMenuLink">
-                        <a class="dropdown-item pink-gradient-active" href="">
-                            <div class="row align-items-center">
-                                <div class="col">
-                                    5458 <small class="header-color-secondary font-italic">Пункт меню</small>
-                                </div>
-                                <div class="col-auto">
-                                    <i class="header-color-secondary material-icons vm">local_play</i>
-                                </div>
-                            </div>
-                        </a>
-                        <div class="dropdown-divider m-0"></div>
+
                         <a class="dropdown-item pink-gradient-active ajax" href="{% url 'user' pk=request.user.pk %}">
                             <div class="row align-items-center">
                                 <div class="col">
                                     Моя страница
                                 </div>
                                 <div class="col-auto">
-                                    <i class="material-icons vm">person</i>
+                                    <img style="width:25px;" src="{% static 'images/icons/account_box-24px.svg' %}" />
                                 </div>
                             </div>
                         </a>
@@ -105,7 +95,9 @@
                                     Выход
                                 </div>
                                 <div class="col-auto">
-                                    <div class="text-danger ml-2"><i class="material-icons vm">exit_to_app</i></div>
+                                    <div class="text-danger ml-2">
+                                      <img style="width:25px;" src="{% static 'images/icons/directions_run-24px.svg' %}" />
+                                    </div>
                                 </div>
                             </div>
                         </a>
