@@ -32,7 +32,7 @@ class AlbomView(TemplateView):
 
 	def post_ajax(self, request, *args, **kwargs):
 		try:
-			self.album = Album.objects.get(pk=kwargs.get('pk'))
+			self.album = Album.objects.get(pk=self.kwargs["pk"])
 		except Album.DoesNotExist:
 			error_dict = {'message': 'Album not found.'}
 			return self.render_json_response(error_dict, status=404)
