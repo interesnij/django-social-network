@@ -8,7 +8,7 @@ from follows.models import Follow
 from communities.models import Community
 from main.forms import CommentForm
 from article.forms import ArticleForm
-from posts.forms import PostUserForm
+from posts.forms import PostUserForm, PostImagesFormset
 from users.forms import GeneralUserForm, AboutUserForm, AvatarUserForm
 from django.views.generic import ListView
 from django.contrib.auth.decorators import login_required
@@ -87,6 +87,7 @@ class ProfileUserView(TemplateView):
         context['form'] = ArticleForm()
         context['form_avatar'] = AvatarUserForm()
         context['form_comment'] = CommentForm()
+        context['formset_post'] = PostImagesFormset()
         context['communities'] = self.communities
         context['connect'] = self.connect
         context['connect2'] = self.connect2
