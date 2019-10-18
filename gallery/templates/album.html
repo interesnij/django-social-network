@@ -9,11 +9,11 @@
 {% endblock %}
 {% block content %}
 
-{% for object in albums %}
-{{ object.title }} - {{ object.photo_set.count }}
-{% endfor %}
+{{ album.title }} - {{ album.photo_set.count }}
 
-
+<form id="add-photos" action="" class="dropzone">
+    {% csrf_token %}
+</form>
 
 <script src="{% static 'scripts/dropzone.js' %}" type="text/javascript"></script>
 {% endblock %}
