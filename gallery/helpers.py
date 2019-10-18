@@ -1,6 +1,7 @@
+from __future__ import unicode_literals
+
 import uuid
 from os.path import splitext
-from __future__ import unicode_literals
 import json
 from django.core import serializers
 from django.core.exceptions import ImproperlyConfigured
