@@ -83,6 +83,7 @@
                             </h3>
                             <p>Drop here or click here to upload</p>
                         </div>
+                        <input name="file" type="file" multiple />
                     </div>
                 </div>
             </div>
@@ -117,10 +118,17 @@ $('#question').on('click', function () {
 
 <script src="{% static 'scripts/dropzone.js' %}" type="text/javascript"></script>
 <script>
-        "use strict"
-        $("#my-dropzone").dropzone({
-            url: "http://трезвый.рус/media/",
-            addRemoveLinks: "dictRemoveFile"
-        });
+        Dropzone.options.myDropzone = {
+                paramName: "image", // el nombre de nuestro input
+                autoProcessQueue : true,
+                parallelUploads: 1,
+
+                init: function() {
+                    this.on("success", function(file, responseText)  {
+                        //событие запущено после завершения загрузки изображений в очереди
+                        console .log(responseText);
+                    });
+                }
+            };
 
     </script>
