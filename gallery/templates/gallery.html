@@ -13,7 +13,7 @@
 {{ object.title }} - {{ object.photo_set.count }}
 {% endfor %}
 
-<form id="add-photos" action="{% url 'ajax_photo_upload_view' 1 %}" class="dropzone">
+<form id="add-photos" action="" class="dropzone">
     {% csrf_token %}
 </form>
 

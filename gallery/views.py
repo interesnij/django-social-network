@@ -18,8 +18,17 @@ class GalleryView(TemplateView):
 		return context
 
 
-class AjaxPhotoUploadView(TemplateView):
-	template_name="add.html"
+class AlbomView(TemplateView):
+	template_name="album.html"
+
+	def get(self,request,*args,**kwargs):
+		self.album=Album.objects.get(pk=self.kwargs["pk"])
+		return super(AlbomView,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context=super(AlbomView,self).get_context_data(**kwargs)
+		context['album'] = self.album
+		return context
 
 	def post_ajax(self, request, *args, **kwargs):
 		try:
