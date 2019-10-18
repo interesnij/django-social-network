@@ -78,7 +78,7 @@ class Article(Item):
 
 
 class ArticleRepost(models.Model):
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    #author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     content = models.TextField(blank=True)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
     article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='article_repost')
@@ -91,7 +91,7 @@ class ArticleRepost(models.Model):
 
 class ArticleMute(models.Model):
     article = models.ForeignKey(Article, db_index=False, on_delete=models.CASCADE, related_name='mutes',verbose_name="Статья")
-    muter = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE, related_name='article_mutes',verbose_name="Кто заглушил")
+    #muter = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE, related_name='article_mutes',verbose_name="Кто заглушил")
 
     @classmethod
     def create_article_comment_mute(cls, article_comment_id, muter_id):
@@ -102,7 +102,7 @@ class ArticleMute(models.Model):
 
 
 class ArticleUserMention(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE, related_name='article_mentions',verbose_name="Упоминаемый")
+    #user = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE, related_name='article_mentions',verbose_name="Упоминаемый")
     article = models.ForeignKey(Article, db_index=False, on_delete=models.CASCADE, related_name='user_mentions',verbose_name="Статья")
 
     class Meta:
