@@ -87,7 +87,6 @@ class ProfileUserView(TemplateView):
         context['form'] = ArticleForm()
         context['form_avatar'] = AvatarUserForm()
         context['form_comment'] = CommentForm()
-        context['formset_post'] = PostImagesFormset()
         context['communities'] = self.communities
         context['connect'] = self.connect
         context['connect2'] = self.connect2
