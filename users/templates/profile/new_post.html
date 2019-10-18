@@ -26,8 +26,8 @@
                        <img style="width:22px;" src="{% static 'images/icons/camera_alt-24px.svg' %}" />
                   </a>
                   <div class="dropdown-menu dropdown-menu-top" aria-labelledby="dropdown_image">
-                    <a id="" style="cursor:pointer" class="dropdown-item">Загрузить изображение</a>
-                    <a id="" style="cursor:pointer" class="dropdown-item">Мои изображения</a>
+                    <a id="images_upload" style="cursor:pointer" class="dropdown-item">Загрузить изображение</a>
+                    <a id="gallery" style="cursor:pointer" class="dropdown-item">Мои изображения</a>
                     <a id="" style="cursor:pointer" class="dropdown-item">Использовать ссылку</a>
                   </div>
                 </div>
@@ -41,9 +41,9 @@
                          <img style="width:22px;" src="{% static 'images/icons/attach_file-24px.svg' %}" />
                  </a>
                  <div class="dropdown-menu dropdown-menu-top" aria-labelledby="dropdown_image">
-                   <a id="" style="cursor:pointer" class="dropdown-item">Документ</a>
-                   <a id="" style="cursor:pointer" class="dropdown-item">Товар</a>
-                   <a id="" style="cursor:pointer" class="dropdown-item">Опрос</a>
+                   <a id="doc" style="cursor:pointer" class="dropdown-item">Документ</a>
+                   <a id="good" style="cursor:pointer" class="dropdown-item">Товар</a>
+                   <a id="question" style="cursor:pointer" class="dropdown-item">Опрос</a>
                  </div>
                </div>
              </div>
@@ -57,8 +57,31 @@
                  </button>
              </div>
          </div>
-         <div id="images_upload" style="">gigig</div>
+         <div id="for_images_upload" style="display:none">images_upload</div>
+         <div id="for_gallery" style="display:none">gallery</div>
+         <div id="for_doc" style="display:none">doc</div>
+         <div id="for_good" style="display:none">good</div>
+         <div id="for_question" style="display:none">question</div>
      </div>
    </form>
  </div>
 {% endif %}
+
+<script>
+$('#images_upload').on('click', function () {
+	 $('#for_images_upload').show();
+});
+
+$('#gallery').on('click', function () {
+	 $('#for_gallery').show();
+});
+$('#doc').on('click', function () {
+	 $('#for_doc').show();
+});
+$('#good').on('click', function () {
+	 $('#for_good').show();
+});
+$('#question').on('click', function () {
+	 $('#for_question').show();
+});
+</script>
