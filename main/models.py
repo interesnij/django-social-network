@@ -65,7 +65,7 @@ class Item(models.Model):
         indexes = (
             BrinIndex(fields=['created']),
         )
-        index_together = [('creator', 'community'),]
+
         ordering = ['-id']
 
     def save(self, *args, **kwargs):
