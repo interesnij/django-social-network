@@ -78,7 +78,9 @@
                 <div class="card-body">
                     <div class="custom-dropzone text-center align-items-center" id="my-dropzone">
                         <div class="dz-default dz-message" data-dz-message>
-                            <h3 class="mb-0"><i class="material-icons">cloud_download</i></h3>
+                            <h3 class="mb-0">
+                              <img style="width:50px" src="{% static 'images/icons/cloud_download-24px.svg' %}" />
+                            </h3>
                             <p>Drop here or click here to upload</p>
                         </div>
                     </div>
@@ -112,3 +114,5 @@ $('#question').on('click', function () {
 	 $('#for_question').show();
 });
 </script>
+
+<script defer src="{% static 'scripts/dropzone.js' %}" type="text/javascript"></script>
