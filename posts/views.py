@@ -1,7 +1,7 @@
 from django.views.generic.base import TemplateView
 from users.models import User
 from django.template.loader import render_to_string
-from posts.models import Post, PostImage
+from posts.models import Post
 from posts.forms import PostUserForm
 from django.http import HttpResponse
 
