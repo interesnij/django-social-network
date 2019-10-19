@@ -31,13 +31,6 @@ class EmojiAdmin(admin.ModelAdmin):
 admin.site.register(Emoji, EmojiAdmin)
 
 
-class BadgeAdmin(admin.ModelAdmin):
-    pass
-
-
-admin.site.register(Badge, BadgeAdmin)
-
-
 class ProxyBlacklistDomainAdmin(admin.ModelAdmin):
     list_display = (
         'domain',
