@@ -1,6 +1,5 @@
 from django.db import models
 from users.models import User
-from goods.helpers import upload_to_good_image_directory
 from pilkit.processors import ResizeToFill, ResizeToFit
 from imagekit.models import ProcessedImageField
 from asgiref.sync import async_to_sync
@@ -12,6 +11,8 @@ from goods.helpers import upload_to_good_image_directory
 from django.contrib.postgres.indexes import BrinIndex
 from main.models import Item
 import uuid
+from django.contrib.contenttypes.fields import GenericRelation
+
 
 
 class GoodCategory(models.Model):
