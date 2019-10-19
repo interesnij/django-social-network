@@ -49,11 +49,11 @@ class Item(models.Model):
         return item
 
     def count_comments(self):
-        parent_comments = Comment.objects.filter(item=self).count()
+        parent_comments = ItemComment.objects.filter(item=self).count()
         return parent_comments
 
     def get_replies(self):
-        get_comments = Comment.objects.filter(parent_comment=self).all()
+        get_comments = ItemComment.objects.filter(parent_comment=self).all()
         return get_comments
 
     def notification_like(self, user):
