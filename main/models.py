@@ -66,7 +66,7 @@ class Item(models.Model):
         notification_handler(user, self.creator,Notification.POST_COMMENT, action_object=self,id_value=str(self.uuid),key='notification')
 
 
-class Comment(models.Model):
+class ItemComment(models.Model):
     parent_comment = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True,verbose_name="Родительский комментарий")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     modified = models.DateTimeField(auto_now_add=True, auto_now=False, db_index=False)
@@ -85,11 +85,67 @@ class Comment(models.Model):
         return self.replies.count()
 
     def get_replies(self):
-        get_comments = Comment.objects.filter(parent_comment=self).all()
+        get_comments = ItemComment.objects.filter(parent_comment=self).all()
         return get_comments
 
     def __str__(self):
         return "{0}/{1}".format(self.commenter.get_full_name(), self.text[:10])
+
+
+class ItemReaction(models.Model):
+    item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name='reactions')
+    created = models.DateTimeField(editable=False)
+    reactor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='post_reactions')
+    emoji = models.ForeignKey(Emoji, on_delete=models.CASCADE, related_name='post_reactions')
+
+    class Meta:
+        unique_together = ('reactor', 'item',)
+
+    @classmethod
+    def create_reaction(cls, reactor, emoji_id, post):
+        return PostReaction.objects.create(reactor=reactor, emoji_id=emoji_id, post=post)
+
+    @classmethod
+    def count_reactions_for_item_with_id(cls, item_id, reactor_id=None):
+        count_query = Q(item_id=item_id, reactor__is_deleted=False)
+
+        if reactor_id:
+            count_query.add(Q(reactor_id=reactor_id), Q.AND)
+
+        return cls.objects.filter(count_query).count()
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.created = timezone.now()
+        return super(PostReaction, self).save(*args, **kwargs)
+
+
+class ItemCommentReaction(models.Model):
+    item_comment = models.ForeignKey(ItemComment, on_delete=models.CASCADE, related_name='reactions')
+    created = models.DateTimeField(editable=False)
+    reactor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='post_comment_reactions')
+    emoji = models.ForeignKey(Emoji, on_delete=models.CASCADE, related_name='post_comment_reactions')
+
+    class Meta:
+        unique_together = ('reactor', 'item_comment',)
+
+    @classmethod
+    def create_reaction(cls, reactor, emoji_id, item_comment):
+        return ItemCommentReaction.objects.create(reactor=reactor, emoji_id=emoji_id, item_comment=item_comment)
+
+    @classmethod
+    def count_reactions_for_item_with_id(cls, item_comment_id, reactor_id=None):
+        count_query = Q(item_comment_id=item_comment_id, reactor__is_deleted=False)
+
+        if reactor_id:
+            count_query.add(Q(reactor_id=reactor_id), Q.AND)
+
+        return cls.objects.filter(count_query).count()
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.created = timezone.now()
+        return super(ItemCommentReaction, self).save(*args, **kwargs)
 
 
 class EmojiGroup(models.Model):

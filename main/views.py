@@ -1,6 +1,6 @@
 from django.views.generic.base import TemplateView
 from users.models import User
-from main.models import Item, Comment
+from main.models import Item, ItemComment
 import json
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
@@ -46,7 +46,7 @@ class CommentLikeView(TemplateView):
     template_name="comment_like_window.html"
 
     def get(self,request,*args,**kwargs):
-        self.comment_like = Comment.objects.get(pk=self.kwargs["pk"])
+        self.comment_like = ItemComment.objects.get(pk=self.kwargs["pk"])
         return super(CommentLikeView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -73,7 +73,7 @@ class CommentDislikeView(TemplateView):
     template_name="comment_dislike_window.html"
 
     def get(self,request,*args,**kwargs):
-        self.comment_dislike = Comment.objects.get(pk=self.kwargs["pk"])
+        self.comment_dislike = ItemComment.objects.get(pk=self.kwargs["pk"])
         return super(CommentDislikeView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -89,7 +89,7 @@ def get_comment(request):
     item_id = request.GET['item']
     item = Item.objects.get(uuid=item_id)
     form_comment = CommentForm()
-    comments = Comment.objects.filter(item=item, parent_comment=None).order_by("created")
+    comments = ItemComment.objects.filter(item=item, parent_comment=None).order_by("created")
     comments_html = render_to_string(
         "generic/comments.html", {"comments": comments,"form_comment": form_comment,"parent": item})
     return JsonResponse({
@@ -108,7 +108,7 @@ def post_comment(request):
     item = Item.objects.get(pk=par)
     text = text.strip()
     if item:
-        new_comment = Comment.objects.create(item=item, text=text, commenter=request.user)
+        new_comment = ItemComment.objects.create(item=item, text=text, commenter=request.user)
         html = render_to_string('generic/parent_comment.html',{'comment': new_comment,'request': request})
         return JsonResponse(html, safe=False)
     else:
@@ -126,7 +126,7 @@ def reply_comment(request):
     comment = Comment.objects.get(pk=com)
     text = text.strip()
     if comment:
-        new_comment = Comment.objects.create(text=text, commenter=request.user,parent_comment=comment)
+        new_comment = ItemComment.objects.create(text=text, commenter=request.user,parent_comment=comment)
         html = render_to_string('generic/reply_comment.html',{'reply': new_comment,'request': request})
         return JsonResponse(html, safe=False)
 
