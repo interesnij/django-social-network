@@ -20,7 +20,6 @@ class Item(models.Model):
     is_deleted = models.BooleanField(default=False, verbose_name="Удалено")
     is_fixed = models.BooleanField(default=False, verbose_name="Закреплено")
     views=models.IntegerField(default=0, verbose_name="Просмотры")
-    votes = GenericRelation(LikeDislike, related_query_name='items')
     moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='items')
 
     class Meta:
