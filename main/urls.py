@@ -11,7 +11,6 @@ from main.views import (
 						get_comment,
 						post_comment,
 						reply_comment)
-from main.models import Item, Comment
 from django.contrib.auth.decorators import login_required
 
 
