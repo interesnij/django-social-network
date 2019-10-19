@@ -95,7 +95,7 @@ class ItemComment(models.Model):
 class ItemReaction(models.Model):
     item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name='reactions')
     created = models.DateTimeField(editable=False)
-    reactor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='post_reactions')
+    reactor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='post_reactions')
     emoji = models.ForeignKey(Emoji, on_delete=models.CASCADE, related_name='post_reactions')
 
     class Meta:
@@ -123,7 +123,7 @@ class ItemReaction(models.Model):
 class ItemCommentReaction(models.Model):
     item_comment = models.ForeignKey(ItemComment, on_delete=models.CASCADE, related_name='reactions')
     created = models.DateTimeField(editable=False)
-    reactor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='post_comment_reactions')
+    reactor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='post_comment_reactions')
     emoji = models.ForeignKey(Emoji, on_delete=models.CASCADE, related_name='post_comment_reactions')
 
     class Meta:
