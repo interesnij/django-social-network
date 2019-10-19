@@ -155,3 +155,27 @@ class Emoji(models.Model):
         if not self.id:
             self.created = timezone.now()
         return super(Emoji, self).save(*args, **kwargs)
+
+
+class ProxyBlacklistedDomain(models.Model):
+    domain = models.CharField(max_length=100, unique=True)
+
+    @classmethod
+    def is_url_domain_blacklisted(cls, url):
+        url = url.lower()
+
+        if not urlparse(url).scheme:
+            url = 'http://' + url
+
+        # This uses a list of public suffixes
+        tld_extract_result = tldextract.extract(url)
+
+        # given test.blogspot.com
+
+        # blogspot.com
+        url_root_domain = '.'.join([tld_extract_result.domain, tld_extract_result.suffix])
+
+        # test.blogspot.com
+        url_full_domain = '.'.join([tld_extract_result.subdomain, tld_extract_result.domain, tld_extract_result.suffix])
+
+        return cls.objects.filter(Q(domain=url_root_domain) | Q(domain=url_full_domain)).exists()
