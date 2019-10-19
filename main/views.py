@@ -1,10 +1,6 @@
 from django.views.generic.base import TemplateView
-from generic.mixins import CategoryListMixin
 from users.models import User
-from django.views import View
-from django.contrib.contenttypes.models import ContentType
-from main.models import LikeDislike, Item, Comment
-from django.http import HttpResponse
+from main.models import Item, Comment
 import json
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
@@ -14,7 +10,7 @@ from main.helpers import ajax_required
 from django.template.loader import render_to_string
 
 
-class MainPageView(TemplateView,CategoryListMixin):
+class MainPageView(TemplateView):
 	template_name=None
 	def get(self,request,*args,**kwargs):
 		if request.user.is_authenticated:
@@ -84,38 +80,6 @@ class CommentDislikeView(TemplateView):
         context=super(CommentDislikeView,self).get_context_data(**kwargs)
         context["comment_dislike"]=self.comment_dislike
         return context
-
-
-class VotesView(View):
-	model = None
-	vote_type = None
-
-	def post(self, request, pk):
-		obj = self.model.objects.get(pk=pk)
-
-		try:
-			likedislike = LikeDislike.objects.get(content_type=ContentType.objects.get_for_model(obj), object_id=obj.id, user=request.user)
-			if likedislike.vote is not self.vote_type:
-				likedislike.vote = self.vote_type
-				likedislike.save(update_fields=['vote'])
-				result = True
-			else:
-				likedislike.delete()
-				result = False
-
-		except LikeDislike.DoesNotExist:
-			obj.votes.create(user=request.user, vote=self.vote_type)
-			result = True
-
-		return HttpResponse(
-			json.dumps({
-				"result": result,
-				"like_count": obj.votes.likes().count(),
-				"dislike_count": obj.votes.dislikes().count(),
-				"sum_rating": obj.votes.sum_rating()
-			}),
-			content_type="application/json"
-		)
 
 
 @login_required

@@ -11,6 +11,7 @@ from django.conf import settings
 from goods.helpers import upload_to_good_image_directory
 from django.contrib.postgres.indexes import BrinIndex
 from main.models import Item
+import uuid
 
 
 class GoodCategory(models.Model):
@@ -36,12 +37,20 @@ class GoodSubCategory(models.Model):
 	def __str__(self):
 		return self.name
 
-class Good(Item):
+class Good(models.Model):
 
 	class Meta:
 		verbose_name="Товар"
 		verbose_name_plural="Товары"
 
+	uuid = models.UUIDField(default=uuid.uuid4, db_index=True,verbose_name="uuid")
+    comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
+    community = models.ForeignKey('communities.Community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
+    created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE, verbose_name="Создатель")
+    is_deleted = models.BooleanField(default=False, verbose_name="Удалено")
+    views=models.IntegerField(default=0, verbose_name="Просмотры")
+    moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='items')
 	title = models.CharField(max_length=200, verbose_name="Название")
 	description = models.TextField(max_length=1000, verbose_name="Описание товара")
 	price = models.PositiveIntegerField(default=0, verbose_name="Цена товара")
@@ -53,9 +62,6 @@ class Good(Item):
 	image5 = ProcessedImageField(verbose_name='Изображение 5', blank=False, null=True, format='JPEG', options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)], upload_to=upload_to_good_image_directory)
 	image6 = ProcessedImageField(verbose_name='Изображение 6', blank=False, null=True, format='JPEG', options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)], upload_to=upload_to_good_image_directory)
 	image7 = ProcessedImageField(verbose_name='Изображение 7', blank=False, null=True, format='JPEG', options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)], upload_to=upload_to_good_image_directory)
-	is_active=models.BooleanField(default=False, verbose_name='Товар активен')
-	is_sold=models.BooleanField(default=False, verbose_name='Товар не актуален')
-	is_reklama=models.BooleanField(default=False, verbose_name='Это реклама')
 
 	def __str__(self):
 		return self.title
@@ -74,13 +80,3 @@ class Good(Item):
 		channel_layer = get_channel_layer()
 		payload = {"type": "receive","key": "additional_post","actor_name": self.creator.get_full_name()}
 		async_to_sync(channel_layer.group_send)('notifications', payload)
-
-
-class GoodRepost(models.Model):
-	author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-	content = models.TextField(blank=True)
-	created = models.DateTimeField(auto_now_add=True, auto_now=False)
-	good = models.ForeignKey(Good, on_delete=models.CASCADE, related_name='good_repost')
-
-	class Meta:
-		indexes = (BrinIndex(fields=['created']),)

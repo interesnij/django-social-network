@@ -1,8 +1,5 @@
 import uuid
 from django.db import models
-from django.contrib.contenttypes.models import ContentType
-from django.contrib.contenttypes.fields import GenericForeignKey
-from django.contrib.contenttypes.fields import GenericRelation
 from django.db.models import Sum
 from django.conf import settings
 from django.utils import timezone
@@ -11,45 +8,11 @@ from django.db import transaction
 from notifications.models import Notification, notification_handler
 
 
-class LikeDislikeManager(models.Manager):
-    use_for_related_fields = True
-
-    def likes(self):
-        return self.get_queryset().filter(vote__gt=0)
-
-    def dislikes(self):
-        return self.get_queryset().filter(vote__lt=0)
-
-    def posts(self):
-        return self.get_queryset().filter(content_type__model='items').order_by('-item__created')
-    def comments(self):
-        return self.get_queryset().filter(content_type__model='comments').order_by('-comment__created')
-
-    def sum_rating(self):
-        return self.get_queryset().aggregate(Sum('vote')).get('vote__sum') or 0
-
-
-class LikeDislike(models.Model):
-    LIKE = 1
-    DISLIKE = -1
-
-    VOTES = (
-        (DISLIKE, 'Не нравится'),
-        (LIKE, 'Нравится')
-    )
-
-    vote = models.SmallIntegerField(verbose_name="Голос", choices=VOTES)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Пользователь")
-    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
-    object_id = models.PositiveIntegerField()
-    content_object = GenericForeignKey()
-    objects = LikeDislikeManager()
-
 
 class Item(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, db_index=True,verbose_name="uuid")
     comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
-    #community = models.ForeignKey('communities.Community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
+    community = models.ForeignKey('communities.Community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE, verbose_name="Создатель")
     is_edited = models.BooleanField(default=False, verbose_name="Изменено")
@@ -59,7 +22,6 @@ class Item(models.Model):
     views=models.IntegerField(default=0, verbose_name="Просмотры")
     votes = GenericRelation(LikeDislike, related_query_name='items')
     moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='items')
-
 
     class Meta:
         indexes = (
@@ -113,7 +75,6 @@ class Comment(models.Model):
     is_edited = models.BooleanField(default=False, null=False, blank=False,verbose_name="Изменено")
     is_deleted = models.BooleanField(default=False,verbose_name="Удаено")
     item = models.ForeignKey(Item, on_delete=models.CASCADE, null=True)
-    votes = GenericRelation(LikeDislike, related_query_name='comments')
 
     class Meta:
         indexes = (
