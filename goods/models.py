@@ -49,7 +49,6 @@ class Good(models.Model):
 	price = models.PositiveIntegerField(default=0, verbose_name="Цена товара")
 	description = models.TextField(max_length=1000, verbose_name="Описание товара")
 	community = models.ForeignKey('communities.Community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
-	comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
 
 	created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
 	creator = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE, verbose_name="Создатель")
