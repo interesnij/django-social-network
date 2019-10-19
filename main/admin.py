@@ -16,7 +16,6 @@ class EmojiGroupAdmin(admin.ModelAdmin):
         'id',
         'keyword',
         'created',
-        'color',
         'order'
     )
 
