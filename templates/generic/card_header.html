@@ -22,12 +22,12 @@
         &nbsp;
         <span class="reaction_window">
           test<br>
-          {% if emoji %}
+          {% if emojies_1 %}
         <div class="react_pop" style="margin:15px">
           <span> {{ emoji.count }} {{ emoji.count|rupluralize:"реакция,реакции,реакций" }}</span>
           <br>
           <span style="display: flex;">
-            {% for object in emoji %}
+            {% for object in emojies_1 %}
             <span style="padding-right:10px;cursor:pointer">
               <figure style="margin: 0;">
                 {% if object.image %}

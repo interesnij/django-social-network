@@ -11,11 +11,9 @@ from article.forms import ArticleForm
 from posts.forms import PostUserForm
 from users.forms import GeneralUserForm, AboutUserForm, AvatarUserForm
 from django.views.generic import ListView
-from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
-from django.views.decorators.http import require_http_methods
 from django.db.models import Q
-from datetime import datetime, timedelta
+from generic.mixins import CategoryListMixin
 
 
 class UserItemView(TemplateView):
@@ -39,7 +37,7 @@ class AllUsers(ListView):
     model=User
 
 
-class ProfileUserView(TemplateView):
+class ProfileUserView(CategoryListMixin, TemplateView):
     template_name = 'user.html'
 
     def get(self,request,*args,**kwargs):
