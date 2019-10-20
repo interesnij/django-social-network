@@ -1,6 +1,6 @@
 {% load liked_user %}
 
-<div class="row py-3">
+<div class="row" style="padding-bottom: 2rem!important;">
    <div class="col text-center">
      <div class="media">
        {% if frends_count %}
@@ -27,11 +27,6 @@
          <p class="content-color-secondary mb-0">{{ follows_count|rupluralize:"подписчик,подписчика,подписчиков" }}</p>
          </a>
        </div>
-       {% else %}
-       <div class="media-body">
-         <h4 class="content-color-primary mb-0">Нет</h4>
-         <p class="content-color-secondary mb-0">Подписчиков</p>
-       </div>
        {% endif %}
      </div>
    </div>
@@ -44,10 +39,17 @@
          <p class="content-color-secondary mb-0">{{ communities_count|rupluralize:"сообщество,сообщества,сообществ" }}</p>
          </a>
        </div>
-       {% else %}
+       {% endif %}
+     </div>
+   </div>
+   <div class="col text-center">
+     <div class="media">
+       {% if goods_count %}
        <div class="media-body">
-         <h4 class="content-color-primary mb-0">Нет</h4>
-         <p class="content-color-secondary mb-0">Сообществ</p>
+         <a href="{% url 'communities' pk=user.pk %}" class="ajax">
+         <h4 class="content-color-primary mb-0">{{ goods_count }}</h4>
+         <p class="content-color-secondary mb-0">{{ goods_count|rupluralize:"товар,товара,товаров" }}</p>
+         </a>
        </div>
        {% endif %}
      </div>
@@ -60,11 +62,6 @@
          <h4 class="content-color-primary mb-0">{{ images_count }}</h4>
          <p class="content-color-secondary mb-0">{{ images_count|rupluralize:"фотография,фотографии,фотографий" }}</p>
          </a>
-       </div>
-       {% else %}
-       <div class="media-body">
-         <h4 class="content-color-primary mb-0">Нет</h4>
-         <p class="content-color-secondary mb-0">Фото</p>
        </div>
        {% endif %}
      </div>
