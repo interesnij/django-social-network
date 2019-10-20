@@ -1,4 +1,4 @@
-from .views import GoodCategoriesEdit, GoodSubCategoriesEdit, GoodsListView
+from .views import GoodCategoriesView, GoodSubCategoriesView, GoodsListView
 from django.conf.urls import url
 
 urlpatterns=[
