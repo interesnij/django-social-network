@@ -14,17 +14,17 @@ class GoodSubCategoriesView(TemplateView):
 	template_name="good_subcategories.html"
 
 
-class GoodListView(ListView):
+class GoodsListView(ListView):
 	template_name="goods.html"
 	model=Good
 
 	def get(self,request,*args,**kwargs):
 		self.user=User.objects.get(pk=self.kwargs["pk"])
 		self.goods=Good.objects.filter(user=self.user)
-		return super(GoodListView,self).get(request,*args,**kwargs)
+		return super(GoodsListView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context=super(GoodListView,self).get_context_data(**kwargs)
+		context=super(GoodsListView,self).get_context_data(**kwargs)
 		context["user"]=self.user
 		context['goods'] = self.goods
 		return context
