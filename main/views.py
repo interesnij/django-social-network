@@ -92,8 +92,7 @@ def post_comment(request):
 @ajax_required
 @require_http_methods(["POST"])
 def post_react(request):
-
-    react = request.POST['emoji']
+	react = request.POST['emoji']
 	par = request.POST['parent']
 	item = Item.objects.get(pk=par)
 	if item:
