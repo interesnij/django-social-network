@@ -69,14 +69,5 @@
 </script>
 
 
-<script>
-$('.article_detail').on('click', function (e) {
-	e.preventDefault();
-	 var item = $(this);
-	 var item_id = item.data("id");
-	 $('#article_loader').html('').load("/article/detail/" + item_id)
-	 $('.article_fullscreen').show();
-});
-</script>
 
 {% include 'generic/script.html' %}
