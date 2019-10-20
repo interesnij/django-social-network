@@ -1,64 +1,64 @@
 {% load liked_user %}
 
 <div class="row" style="padding-bottom: 2rem!important;">
+  {% if frends_count %}
    <div class="col text-center">
      <div class="media">
-       {% if frends_count %}
        <div class="media-body">
          <a href="{% url 'frends' pk=user.pk %}" class="ajax">
          <h4 class="content-color-primary mb-0">{{ frends_count }}</h4>
          <p class="content-color-secondary mb-0">{{ frends_count|rupluralize:"друг,друга,друзей" }}</p>
          </a>
        </div>
-       {% endif %}
      </div>
    </div>
+   {% endif %}
+   {% if follows_count %}
    <div class="col text-center">
      <div class="media">
-       {% if follows_count %}
        <div class="media-body">
          <a href="{% url 'follows' pk=user.pk %}" class="ajax">
          <h4 class="content-color-primary mb-0">{{ follows_count }}</h4>
          <p class="content-color-secondary mb-0">{{ follows_count|rupluralize:"подписчик,подписчика,подписчиков" }}</p>
          </a>
        </div>
-       {% endif %}
      </div>
    </div>
+   {% endif %}
+   {% if communities_count %}
    <div class="col text-center">
      <div class="media">
-       {% if communities_count %}
        <div class="media-body">
          <a href="{% url 'communities' pk=user.pk %}" class="ajax">
          <h4 class="content-color-primary mb-0">{{ communities_count }}</h4>
          <p class="content-color-secondary mb-0">{{ communities_count|rupluralize:"сообщество,сообщества,сообществ" }}</p>
          </a>
        </div>
-       {% endif %}
      </div>
    </div>
+  {% endif %}
+  {% if goods_count %}
    <div class="col text-center">
      <div class="media">
-       {% if goods_count %}
        <div class="media-body">
          <a href="{% url 'communities' pk=user.pk %}" class="ajax">
          <h4 class="content-color-primary mb-0">{{ goods_count }}</h4>
          <p class="content-color-secondary mb-0">{{ goods_count|rupluralize:"товар,товара,товаров" }}</p>
          </a>
        </div>
-       {% endif %}
      </div>
    </div>
+   {% endif %}
+   {% if images_count %}
    <div class="col text-center">
      <div class="media">
-       {% if images_count %}
        <div class="media-body">
          <a href="{% url 'gallery' pk=user.pk %}" class="ajax">
          <h4 class="content-color-primary mb-0">{{ images_count }}</h4>
          <p class="content-color-secondary mb-0">{{ images_count|rupluralize:"фотография,фотографии,фотографий" }}</p>
          </a>
        </div>
-       {% endif %}
      </div>
    </div>
+   {% endif %}
  </div>
