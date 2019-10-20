@@ -50,7 +50,7 @@ class ProfileUserView(CategoryListMixin, TemplateView):
         self.articles=Article.objects.filter(creator=self.user,is_deleted=False)
         self.items = Item.objects.filter(creator=self.user,is_deleted=False)
         self.lenta = self.items.filter(is_fixed=False)
-        self.follows_count=Follow.objects.filter(followed_user__id=self.user.id))
+        self.follows_count=Follow.objects.filter(followed_user__id=self.user.id)
         self.connect_count=Connect.objects.filter(user=self.user).count()
         self.connect_count2=Connect.objects.filter(target_user=self.user).count()
         self.frends_count=self.connect_count + self.connect_count2
