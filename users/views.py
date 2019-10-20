@@ -65,7 +65,7 @@ class ProfileUserView(TemplateView):
         except:
             self.connect2 = None
         try:
-            self.fixed = Item.objects.get(creator=self.user,is_deleted=False,is_fixed=True)
+            self.fixed = self.items.get(is_fixed=True)
         except:
             self.fixed = None
         try:
