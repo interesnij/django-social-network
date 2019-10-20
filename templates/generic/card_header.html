@@ -21,10 +21,12 @@
         </a>
         &nbsp;
         <span class="reaction_window">
-          {% if emojies_1 %}
+
         <div class="react_pop" style="margin:15px">
+          {% if emojies_1 %}
           <span style="display: flex;flex-wrap: wrap;width: 150px;">
-            {% for object in emojies_1 %}
+            Иконки
+            {% for object in emojies_2 %}
             <span style="padding:5px;cursor:pointer" title="{{ object.keyword }}">
               <figure style="margin: 0;">
                 {% if object.image %}
@@ -34,6 +36,7 @@
             </span>
             {% endfor %}
             <br><br>
+            Эмоции
             {% for object in emojies_1 %}
             <span style="padding:5px;cursor:pointer" title="{{ object.keyword }}">
               <figure style="margin: 0;">
@@ -44,8 +47,9 @@
             </span>
             {% endfor %}
           </span>
+          {% endif %}
         </div>
-        {% endif %}
+
       </span>
         <div class="dropdown d-inline-block">
             <a style="cursor:pointer" class="icon-circle icon-30 dropdown-toggle caret-none" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

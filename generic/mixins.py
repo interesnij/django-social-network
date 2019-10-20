@@ -6,10 +6,12 @@ from main.models import EmojiGroup, Emoji
 
 class CategoryListMixin(ContextMixin):
 	emojies_1 = Emoji.objects.filter(group=1)
+	emojies_2 = Emoji.objects.filter(group=2)
 	def get_context_data(self,**kwargs):
 		context=super(CategoryListMixin,self).get_context_data(**kwargs)
 		context["current_url"]=self.request.path
 		context["emojies_1"]=self.emojies_1
+		context["emojies_2"]=self.emojies_2
 		return context
 
 class PageNumberMixin(CategoryListMixin):
