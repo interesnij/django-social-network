@@ -35,7 +35,7 @@
             {% endfor %}
             <br><br>
             {% for object in emojies_1 %}
-            <span style="padding-right:10px;cursor:pointer" title="{{ object.keyword }}">
+            <span style="padding:5px;cursor:pointer" title="{{ object.keyword }}">
               <figure style="margin: 0;">
                 {% if object.image %}
                   <img src="{{ object.image.url }}" style="border-radius: 50px;width:20px;" alt="emoji">
