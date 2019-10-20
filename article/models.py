@@ -13,7 +13,7 @@ from main.models import Item
 class Article(Item):
     title = models.CharField(max_length=100, blank=False, null=False, verbose_name="Заголовок" )
     image = ProcessedImageField(verbose_name='Главное изображение', blank=False, format='JPEG',
-                                 options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)],
+                                 options={'quality': 80}, processors=[ResizeToFill(1024, upscale=True)],
                                  upload_to='articles/%Y/%m/%d')
     content = RichTextUploadingField(config_name='default',
                                       external_plugin_resources=[(
