@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block title %}
+{% if user == request.user %}
+Мои товары
+{% else %}
+Товары пользователя "{{ user.get_full_name }}"
+{% endif %}
+{% endblock %}
+{% block content %}
+
+
+{% endblock %}
