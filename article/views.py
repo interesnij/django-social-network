@@ -6,13 +6,14 @@ from article.models import Article
 from django.urls import reverse_lazy
 from django.http import HttpResponse
 from django.http import JsonResponse
+from generic.mixins import CategoryListMixin
 
 
 class ArticleView(TemplateView):
     template_name="articles.html"
 
 
-class ArticleNewView(TemplateView):
+class ArticleNewView(CategoryListMixin, TemplateView):
     model=Article
     template_name="article.html"
 
@@ -27,7 +28,7 @@ class ArticleNewView(TemplateView):
         context["object"]=self.article
         return context
 
-class ArticleDetailView(TemplateView):
+class ArticleDetailView(CategoryListMixin, TemplateView):
     model=Article
     template_name="article_detail.html"
 
