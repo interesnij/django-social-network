@@ -21,10 +21,6 @@
       {% include 'generic/post.html' with post=post  %}
     {% endif %}
 
-    {% if object.good %}
-      {% include 'generic/good.html' with good=good  %}
-    {% endif %}
-
     {% for object in lenta %}
 
       {% if object.article %}
@@ -33,10 +29,6 @@
 
       {% if object.post %}
           {% include 'generic/post.html' with post=post  %}
-      {% endif %}
-
-      {% if object.good %}
-          {% include 'generic/good.html' with good=good  %}
       {% endif %}
 
     {% endfor %}
