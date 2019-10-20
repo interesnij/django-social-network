@@ -107,17 +107,16 @@ def post_react(request):
 @ajax_required
 @require_http_methods(["POST"])
 def un_react(request):
-
-    un_react = request.POST['emoji']
+	un_react = request.POST['emoji']
 	par = request.POST['parent']
-    item = Item.objects.get(pk=par)
-    if item:
-        un_react = ItemReaction.objects.get(item=item, emoji=un_react, reactor=request.user)
+	item = Item.objects.get(pk=par)
+	if item:
+		un_react = ItemReaction.objects.get(item=item, emoji=un_react, reactor=request.user)
 		un_react.delete()
-        html = render_to_string('generic/emoji.html',{'react': un_react,'request': request})
-        return JsonResponse(html, safe=False)
-    else:
-        return HttpResponse("react не найден")
+		html = render_to_string('generic/emoji.html',{'react': un_react,'request': request})
+		return JsonResponse(html, safe=False)
+	else:
+		return HttpResponse("react не найден")
 
 
 @login_required
