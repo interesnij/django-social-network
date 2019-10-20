@@ -82,7 +82,7 @@
           {% include 'profile_button.html' %}
         </span>
 
-        {% if user == request.user and request.user.is_authenticated %}
+        {% if object.user == request.user and request.user.is_authenticated %}
 
           <span style="display: flex;align-items: center;justify-content: center;">
             <div class="btn-group">

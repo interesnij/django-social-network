@@ -16,7 +16,7 @@ from django.db.models import Q
 from generic.mixins import CategoryListMixin
 
 
-class UserItemView(TemplateView):
+class UserItemView(CategoryListMixin, TemplateView):
     model=Item
     template_name="user_item.html"
 
