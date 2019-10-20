@@ -17,55 +17,8 @@
         <div class="border-top py-2">
             <div class="row" style="color: rgba(255, 255, 255, 0.65);">
                 <div class="col">
-                    <span class="like2 content-color-secondary{% if reply.votes.likes.all|user_in:request.user %} text-success {% endif %}"
-                          style="font-size:13px;cursor:pointer"
-                          id="like2"
-                          data-id="{{ reply.id }}"
-                          data-action="like2"
-                          data-type="comment">
-                        <img style="width:20px" src="{% static 'images/icons/thumb_up-24px.svg' %}" />
-                        <span data-count="like">
-                          {% if reply.votes.likes.count != 0 %}{{ reply.votes.likes.count }}{% endif %}
-                        </span>
-                    </span>
 
-                    <span class="comment_like_window">
-                        {% if reply.votes.likes.all %}
-                        <div class="comment_like_pop" style="margin:15px">
-                            <span>Оценили: {{ reply.votes.likes.count }} {{ reply.votes.likes.count|rupluralize:"человек,человека,людей" }}</span>
-                            <br><br>
-                            <span style="display: flex;">
-                                {% for heart in reply.votes.likes.all %}
-                                <a href="{% url 'user' pk=heart.user.pk %}" class="ajax" style="padding-right:10px">
-                                    <figure style="margin: 0;">
-                                        {% if heart.user.profile.avatar %}
-                                        <img src="{{ heart.user.profile.avatar.url }}" style="border-radius: 50px;width:50px;" alt="image">
-                                        {% else %}
-                                        <img src="{% static 'images/user.png' %}" alt="image" style="border-radius: 50px;width:50px;">
-                                        {% endif %}
-                                    </figure>
-                                    {{ heart.user.first_name }}
-                                </a>
-                                {% endfor %}
-                            </span>
-                        </div>
-                        {% endif %}
-                    </span>
-
-                    &nbsp;&nbsp;
-                    <span class="dislike2 content-color-secondary{% if reply.votes.dislikes.all|user_in:request.user %} text-danger {% endif %}"
-                          style="font-size:13px;cursor:pointer"
-                          id="dislike2"
-                          data-id="{{ reply.id }}"
-                          data-action="dislike2"
-                          data-type="comment">
-                        <img style="width:20px" src="{% static 'images/icons/thumb_down-24px.svg' %}" />
-                        <span data-count="dislike">
-                          {% if reply.votes.dislikes.count %}{{ reply.votes.dislikes.count }}{% endif %}
-                        </span>
-                    </span>
-
-                    <span class="comment_dislike_window">
+                    <span class="comment_react_window">
                         {% if reply.votes.dislikes.all %}
                         <div class="comment_dislike_pop" style="margin:15px">
                             <span>Не оценили: {{ reply.votes.dislikes.count }} {{ reply.votes.dislikes.count|rupluralize:"человек,человека,людей" }}</span>
