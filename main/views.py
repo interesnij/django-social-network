@@ -1,6 +1,6 @@
 from django.views.generic.base import TemplateView
 from users.models import User
-from main.models import Item, ItemComment
+from main.models import Item, ItemComment, ItemReaction, ItemCommentReaction
 import json
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
@@ -28,57 +28,30 @@ class ComingView(TemplateView):
 	template_name="main/coming.html"
 
 
-class LikeView(TemplateView):
-    template_name="like_window.html"
+class ReactView(TemplateView):
+    template_name="react_window.html"
 
     def get(self,request,*args,**kwargs):
-        self.like = Item.objects.get(pk=self.kwargs["pk"])
-        self.like.notification_like(request.user)
-        return super(LikeView,self).get(request,*args,**kwargs)
+        self.react = Item.objects.get(pk=self.kwargs["pk"])
+        self.react.notification_like(request.user)
+        return super(ReactView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context=super(LikeView,self).get_context_data(**kwargs)
+        context=super(ReactView,self).get_context_data(**kwargs)
         context["like"]=self.like
         return context
 
 
-class CommentLikeView(TemplateView):
-    template_name="comment_like_window.html"
+class CommentReactView(TemplateView):
+    template_name="comment_react_window.html"
 
     def get(self,request,*args,**kwargs):
-        self.comment_like = ItemComment.objects.get(pk=self.kwargs["pk"])
-        return super(CommentLikeView,self).get(request,*args,**kwargs)
+        self.react_like = ItemComment.objects.get(pk=self.kwargs["pk"])
+        return super(CommentReactView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context=super(CommentLikeView,self).get_context_data(**kwargs)
-        context["comment_like"]=self.comment_like
-        return context
-
-
-class DislikeView(TemplateView):
-    template_name="dislike_window.html"
-
-    def get(self,request,*args,**kwargs):
-        self.dislike = Item.objects.get(pk=self.kwargs["pk"])
-        self.dislike.notification_dislike(request.user)
-        return super(DislikeView,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        context=super(DislikeView,self).get_context_data(**kwargs)
-        context["dislike"]=self.dislike
-        return context
-
-
-class CommentDislikeView(TemplateView):
-    template_name="comment_dislike_window.html"
-
-    def get(self,request,*args,**kwargs):
-        self.comment_dislike = ItemComment.objects.get(pk=self.kwargs["pk"])
-        return super(CommentDislikeView,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        context=super(CommentDislikeView,self).get_context_data(**kwargs)
-        context["comment_dislike"]=self.comment_dislike
+        context=super(CommentReactView,self).get_context_data(**kwargs)
+        context["react_like"]=self.react_like
         return context
 
 
@@ -113,6 +86,71 @@ def post_comment(request):
         return JsonResponse(html, safe=False)
     else:
         return HttpResponse("parent не найден")
+
+
+@login_required
+@ajax_required
+@require_http_methods(["POST"])
+def post_react(request):
+
+    react = request.POST['emoji']
+	par = request.POST['parent']
+    item = Item.objects.get(pk=par)
+    if item:
+        new_react = ItemReaction.objects.create(item=item, emoji=react, reactor=request.user)
+        html = render_to_string('generic/emoji.html',{'react': new_react,'request': request})
+        return JsonResponse(html, safe=False)
+    else:
+        return HttpResponse("react не найден")
+
+
+@login_required
+@ajax_required
+@require_http_methods(["POST"])
+def un_react(request):
+
+    un_react = request.POST['emoji']
+	par = request.POST['parent']
+    item = Item.objects.get(pk=par)
+    if item:
+        un_react = ItemReaction.objects.get(item=item, emoji=un_react, reactor=request.user)
+		un_react.delete()
+        html = render_to_string('generic/emoji.html',{'react': un_react,'request': request})
+        return JsonResponse(html, safe=False)
+    else:
+        return HttpResponse("react не найден")
+
+
+@login_required
+@ajax_required
+@require_http_methods(["POST"])
+def post_comment_react(request):
+
+    react = request.POST['emoji']
+	com = request.POST['comment']
+    comment = Comment.objects.get(pk=com)
+    if comment:
+        new_comment_react = ItemCommentReaction.objects.create(comment=comment, emoji=react, reactor=request.user)
+        html = render_to_string('generic/comment_emoji.html',{'comment_react': new_comment_react,'request': request})
+        return JsonResponse(html, safe=False)
+    else:
+        return HttpResponse("react не найден")
+
+
+@login_required
+@ajax_required
+@require_http_methods(["POST"])
+def comment_un_react(request):
+
+    un_react = request.POST['emoji']
+	com = request.POST['comment']
+    comment = Comment.objects.get(pk=com)
+    if comment:
+        un_react = ItemCommentReaction.objects.get(comment=comment, emoji=un_react, reactor=request.user)
+        html = render_to_string('generic/comment_emoji.html',{'comment_react': un_react,'request': request})
+        return JsonResponse(html, safe=False)
+    else:
+        return HttpResponse("react не найден")
 
 
 @login_required
