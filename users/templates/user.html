@@ -78,8 +78,8 @@
     display: none;
   }
 
-    .like_window,
-    .dislike_window {
+    .reaction_window,
+    .react_window {
         opacity: 0;
         visibility: hidden;
         position: absolute;
@@ -98,8 +98,8 @@
         transition: 0.5s;
     }
 
-    .like_window:hover,
-    .dislike_window:hover {
+    .reaction_window:hover,
+    .react_window:hover {
         z-index: 10;
         opacity: 1;
         visibility: visible;
@@ -115,8 +115,8 @@
         color: black;
     }
 
-    .like:hover~.like_window,
-    .dislike:hover~.dislike_window{
+    .reactions:hover~.reaction_window,
+    .react:hover~.react_window{
         z-index: 10;
         opacity: 1;
         visibility: visible;
@@ -131,14 +131,7 @@
         background: #D6DAE1;
         color: black;
     }
-  .like,.dislike,.post_comment,.repost,.art_comment{
-    font-size:15px;
-    cursor:pointer;
-    color: rgba(0, 0, 0, 0.4);
-  }
-  .like:hover,.dislike:hover,.post_comment:hover,.repost:hover,.art_comment:hover{
-    color: #545b62;
-  }
+
 </style>
 
 <div class="row">
