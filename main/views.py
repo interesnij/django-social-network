@@ -123,16 +123,15 @@ def un_react(request):
 @ajax_required
 @require_http_methods(["POST"])
 def post_comment_react(request):
-
-    react = request.POST['emoji']
+	react = request.POST['emoji']
 	com = request.POST['comment']
-    comment = Comment.objects.get(pk=com)
-    if comment:
-        new_comment_react = ItemCommentReaction.objects.create(comment=comment, emoji=react, reactor=request.user)
-        html = render_to_string('generic/comment_emoji.html',{'comment_react': new_comment_react,'request': request})
-        return JsonResponse(html, safe=False)
-    else:
-        return HttpResponse("react не найден")
+	comment = Comment.objects.get(pk=com)
+	if comment:
+		new_comment_react = ItemCommentReaction.objects.create(comment=comment, emoji=react, reactor=request.user)
+		html = render_to_string('generic/comment_emoji.html',{'comment_react': new_comment_react,'request': request})
+		return JsonResponse(html, safe=False)
+	else:
+		return HttpResponse("react не найден")
 
 
 @login_required
