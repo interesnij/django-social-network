@@ -50,7 +50,6 @@ class ProfileUserView(TemplateView):
         self.articles=Article.objects.filter(creator=self.user,is_deleted=False)
         self.items = Item.objects.filter(creator=self.user,is_deleted=False)
         self.lenta = self.items.filter(is_fixed=False)
-        self.fixed = self.items.get(is_fixed=True)
         self.follows_count=Follow.objects.filter(followed_user=self.user).count()
         self.connect_count=Connect.objects.filter(user=self.user).count()
         self.connect_count2=Connect.objects.filter(target_user=self.user).count()
@@ -66,7 +65,7 @@ class ProfileUserView(TemplateView):
         except:
             self.connect2 = None
         try:
-            self.fixed = Item.objects.get(creator=self.user,is_fixed=True)
+            self.fixed = self.items.get(is_fixed=True)
         except:
             self.fixed = None
         try:
