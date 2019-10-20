@@ -95,13 +95,13 @@ def post_react(request):
 
     react = request.POST['emoji']
 	par = request.POST['parent']
-    item = Item.objects.get(pk=par)
-    if item:
-        new_react = ItemReaction.objects.create(item=item, emoji=react, reactor=request.user)
-        html = render_to_string('generic/emoji.html',{'react': new_react,'request': request})
-        return JsonResponse(html, safe=False)
-    else:
-        return HttpResponse("react не найден")
+	item = Item.objects.get(pk=par)
+	if item:
+		new_react = ItemReaction.objects.create(item=item, emoji=react, reactor=request.user)
+		html = render_to_string('generic/emoji.html',{'react': new_react,'request': request})
+		return JsonResponse(html, safe=False)
+	else:
+		return HttpResponse("react не найден")
 
 
 @login_required
