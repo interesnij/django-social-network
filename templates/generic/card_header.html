@@ -1,4 +1,4 @@
-{% load staticfiles humanize liked_user %}
+{% load staticfiles humanize %}
 
 <div class="card-header border-bottom">
     <div class="media">
@@ -24,8 +24,6 @@
           test<br>
           {% if emojies_1 %}
         <div class="react_pop" style="margin:15px">
-          <span> {{ emoji.count }}</span>
-          <br>
           <span style="display: flex;">
             {% for object in emojies_1 %}
             <span style="padding-right:10px;cursor:pointer">

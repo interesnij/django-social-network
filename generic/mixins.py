@@ -5,7 +5,7 @@ from main.models import EmojiGroup, Emoji
 
 
 class CategoryListMixin(ContextMixin):
-	emojies_1 = Emoji.objects.filter(keyword="Эмоции")
+	emojies_1 = Emoji.objects.filter(group=1)
 	def get_context_data(self,**kwargs):
 		context=super(CategoryListMixin,self).get_context_data(**kwargs)
 		context["current_url"]=self.request.path
