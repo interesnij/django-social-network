@@ -41,6 +41,12 @@
           </div>
           Фотографии
         </a>
+        <a class="nav-link pink-gradient-active ajax" href="{% url 'goods' pk=request.user.pk %}">
+          <div class="icon-30">
+            <img style="width:22px;margin-bottom:5px" src="{% static 'images/icons/shop-24px.svg' %}" />
+          </div>
+          Товары
+        </a>
 
         {% endif %}
     </div>
