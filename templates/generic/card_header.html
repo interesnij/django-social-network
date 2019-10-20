@@ -23,7 +23,7 @@
         <span class="reaction_window">
           {% if emojies_1 %}
         <div class="react_pop" style="margin:15px">
-          <span style="display: flex;">
+          <span style="display: flex;flex-wrap: wrap;width: 150px;">
             {% for object in emojies_1 %}
             <span style="padding-right:10px;cursor:pointer" title="{{ object.keyword }}">
               <figure style="margin: 0;">
