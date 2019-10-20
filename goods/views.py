@@ -20,7 +20,7 @@ class GoodsListView(ListView):
 
 	def get(self,request,*args,**kwargs):
 		self.user=User.objects.get(pk=self.kwargs["pk"])
-		self.goods=Good.objects.filter(user=self.user)
+		self.goods=Good.objects.filter(creator=self.user)
 		return super(GoodsListView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
