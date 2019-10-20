@@ -9,7 +9,7 @@ from main.views import (
 						post_comment_react,
 						comment_un_react,
 						post_react,
-						post_unreact,
+						un_react,
 						reply_comment)
 from django.contrib.auth.decorators import login_required
 
