@@ -88,6 +88,8 @@
 <script>
   $('#category').change(function(){
     var val = $(this).val();
+    console.log(val);
+    console.log(order);
     var order = val.data('order');
     ('#subcat').html('').load("/goods/cat/" + pk + "/");
   })
