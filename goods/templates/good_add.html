@@ -89,7 +89,9 @@
 <script>
   $('#category').change(function(){
     var val = $(this).val();
-    console.log(val);
+    if (val == ''){
+      $('#subcat').empty();
+    };
     $('#subcat').html('').load("/goods/cat/" + val + "/");
   })
 </script>
