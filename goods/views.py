@@ -5,6 +5,7 @@ from django.views.generic import ListView
 from users.models import User
 from django.http import HttpResponse, JsonResponse
 from goods.forms import GoodForm
+from django.template.loader import render_to_string
 
 
 
