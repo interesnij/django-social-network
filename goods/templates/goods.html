@@ -152,10 +152,9 @@
 <script>
 $('.good_detail').on('click', function () {
 	 var good = $(this);
-   console.log("click")
 	 var good_id = good.data("id");
-	 $('#item_loader').html('').load("/goods/detail/" + good_id)
-	 $('.item_fullscreen').show();
+	 $('#good_loader').html('').load("/goods/detail/" + good_id)
+	 $('.good_fullscreen').show();
 });
 </script>
 
