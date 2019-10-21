@@ -13,7 +13,7 @@ from django.db.models import Q
 class Item(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, db_index=True,verbose_name="uuid")
     comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
-    #community = models.ForeignKey('communities.Community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
+    community = models.ForeignKey('communities.Community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE, verbose_name="Создатель")
     is_edited = models.BooleanField(default=False, verbose_name="Изменено")
@@ -220,19 +220,9 @@ class ProxyBlacklistedDomain(models.Model):
     @classmethod
     def is_url_domain_blacklisted(cls, url):
         url = url.lower()
-
         if not urlparse(url).scheme:
             url = 'http://' + url
-
-        # This uses a list of public suffixes
         tld_extract_result = tldextract.extract(url)
-
-        # given test.blogspot.com
-
-        # blogspot.com
         url_root_domain = '.'.join([tld_extract_result.domain, tld_extract_result.suffix])
-
-        # test.blogspot.com
         url_full_domain = '.'.join([tld_extract_result.subdomain, tld_extract_result.domain, tld_extract_result.suffix])
-
         return cls.objects.filter(Q(domain=url_root_domain) | Q(domain=url_full_domain)).exists()

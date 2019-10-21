@@ -4,6 +4,7 @@ from goods.models import Good
 from django.views.generic import ListView
 from users.models import User
 from django.http import HttpResponse
+from goods.forms import GoodForm
 
 
 class GoodCategoriesView(TemplateView):
@@ -28,3 +29,32 @@ class GoodsListView(ListView):
 		context["user"]=self.user
 		context['goods'] = self.goods
 		return context
+
+
+class GoodUserCreate(TemplateView):
+    template_name="good_add.html"
+    form=None
+    success_url="/"
+
+    def get(self,request,*args,**kwargs):
+        self.form=GoodForm(initial={"creator":request.user})
+        return super(GoodUserCreate,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context=super(GoodUserCreate,self).get_context_data(**kwargs)
+        context["form"]=self.form
+        return context
+
+    def post(self,request,*args,**kwargs):
+        self.form=GoodForm(request.POST,request.FILES)
+        if self.form.is_valid():
+            new_good=self.form.save(commit=False)
+            new_good.creator=self.request.user
+            new_good=self.form.save()
+
+            if request.is_ajax() :
+                 html = render_to_string('good.html',{'object': new_good,'request': request})
+                 return HttpResponse(html)
+        else:
+           return JsonResponse({'error': True, 'errors': self.form.errors})
+        return super(GoodUserCreate,self).get(request,*args,**kwargs)
