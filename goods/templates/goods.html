@@ -51,8 +51,9 @@
 
 <div class="container mt-4 main-container">
             <div class="row">
+              {% for object in goods %}
                 <div class="col-12 col-md-4 goods_stream">
-                  {% for object in goods %}
+
                     <div class="card mb-4">
                         <div class="card-body pb-0">
                             <div class="row align-items-center no-gutters">
@@ -87,8 +88,9 @@
                             </div>
                         </div>
                     </div>
-                    {% endfor %}
+
                 </div>
+                {% endfor %}
             </div>
 </div>
 
