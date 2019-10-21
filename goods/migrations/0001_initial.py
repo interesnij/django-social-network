@@ -50,7 +50,7 @@ class Migration(migrations.Migration):
                 ('price', models.PositiveIntegerField(default=0, verbose_name='Цена товара')),
                 ('description', models.TextField(max_length=1000, verbose_name='Описание товара')),
                 ('created', models.DateTimeField(auto_now_add=True, verbose_name='Создан')),
-                ('image', imagekit.models.fields.ProcessedImageField(upload_to=goods.helpers.upload_to_good_image_directory, verbose_name='Главное изображение')),
+                ('image', imagekit.models.fields.ProcessedImageField(upload_to="goods/%Y/%m/%d", verbose_name='Главное изображение')),
                 ('is_deleted', models.BooleanField(default=False, verbose_name='Удалено')),
                 ('views', models.IntegerField(default=0, verbose_name='Просмотры')),
                 ('creator', models.ForeignKey(db_index=False, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL, verbose_name='Создатель')),
