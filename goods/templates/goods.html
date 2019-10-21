@@ -51,8 +51,8 @@
 
 <div class="container mt-4 main-container">
             <div class="row">
-                <div class="col-12 col-md-4">
-                  <span class="goods_stream">
+                <div class="col-12 col-md-4 goods_stream">
+                  {% for object in goods %}
                     <div class="card mb-4">
                         <div class="card-body pb-0">
                             <div class="row align-items-center no-gutters">
@@ -60,29 +60,34 @@
                                         <div>
                                             <div class="swiper-wrapper">
                                                 <div class="swiper-slide text-center">
-                                                    <img style="width: 100%;" src="{% static 'images/news_small4.jpg' %}" alt="">
+                                                  {% if object.image %}
+                                                  <img style="width:100%" src="{{ object.image.url }}" alt="">
+                                                  {% else %}
+                                                  <img style="width:100%" src="{% static 'images/no-image.jpg' %}" />
+                                                  {% endif %}
                                                 </div>
                                             </div>
                                         </div>
                                 </div>
                             </div>
-
-                            <h5 class="card-title mb-1 header-color-primary text-center">Название</h5>
-                            <h6 class="card-subtitle mb-2 header-color-secondary text-center">Подкатегория</h6>
+                            <a href="{% url 'good_detail' uuid=object.uuid %}"
+                              <h5 class="card-title mb-1 header-color-primary text-center">{{ object.titLe }}</h5>
+                            </a>
+                            <h6 class="card-subtitle mb-2 header-color-secondary text-center">{{ object.sub_category }}</h6>
                             <br>
                             <div class="row bg-light-secondary text-center">
                                 <div class="col py-3">
-                                    <h5 class="content-color-primary mb-0">1000</h5>
+                                    <h5 class="content-color-primary mb-0">{{ object.price }}</h5>
                                     <p class="content-color-secondary small mb-0">Цена</p>
                                 </div>
                                 <div class="col py-3">
-                                    <h5 class="content-color-primary mb-0">162</h5>
+                                    <h5 class="content-color-primary mb-0">{{ object.views }}</h5>
                                     <p class="content-color-secondary small mb-0">Просмотров</p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                  </span>
+                    {% endfor %}
                 </div>
             </div>
 </div>

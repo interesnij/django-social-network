@@ -6,7 +6,7 @@ from users.models import User
 from django.http import HttpResponse, JsonResponse
 from goods.forms import GoodForm
 from django.template.loader import render_to_string
-
+from django.views.generic.detail import DetailView
 
 
 class GoodCategoriesView(TemplateView):
@@ -78,4 +78,21 @@ class GoodsCatsView(TemplateView):
 	def get_context_data(self,**kwargs):
 		context=super(GoodsCatsView,self).get_context_data(**kwargs)
 		context["categ"]=self.categ
+		return context
+
+
+class GoodDetailView(DetailView):
+	model=Ad
+	template_name="good_detail.html"
+
+
+	def get(self,request,*args,**kwargs):
+		good = Good.objects.get(uuid=self.kwargs["uuid"])
+		good.views += 1
+		good.save()
+		return super(GoodDetailView,self).get(request,*args,**kwargs)
+
+	def get_context_data(self, **kwargs):
+		context=super(GoodDetailView,self).get_context_data(**kwargs)
+
 		return context
