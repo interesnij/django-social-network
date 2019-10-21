@@ -101,7 +101,6 @@
     var frm = $('#FORM-GOOD');
     $('#FORM-GOOD').submit(function(e) {
         e.preventDefault();
-        CKEDITOR.instances.id_content.updateElement();
         $.ajax({
             type: frm.attr('method'),
             url: "{% url 'good_add_user' %}",
