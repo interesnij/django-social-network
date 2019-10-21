@@ -51,6 +51,7 @@
         <label>Категория</label>
         <select class="form-control" id="category" data-live-search="true" tabindex="-1" aria-hidden="true">
           {% for object in categories %}
+          <option value="">Выберите категорию</option>
           <option data-order="{{ object.order }}" value="{{ object.order }}">{{ object.name }}</option>
           {% endfor %}
         </select>
@@ -89,8 +90,8 @@
   $('#category').change(function(){
     var val = $(this).val();
     console.log(val);
-    console.log(order);
     var order = val.data('order');
+    console.log(order);
     ('#subcat').html('').load("/goods/cat/" + pk + "/");
   })
 </script>
