@@ -2,7 +2,7 @@ from django.contrib import admin
 from goods.models import Good, GoodSubCategory, GoodCategory
 
 
-class CategoryAdmin(admin.ModelAdmin):
+class GoodCategoryAdmin(admin.ModelAdmin):
     list_display = ['name','order','image']
     search_fields = ['name']
     class Meta:
@@ -23,6 +23,6 @@ class GoodAdmin(admin.ModelAdmin):
             model = Good
 
 
-admin.site.register(CategoryAdmin,CategoryAdminAdmin)
+admin.site.register(GoodCategory,GoodCategoryAdmin)
 admin.site.register(GoodSubCategory,GoodSubCategoryAdmin)
 admin.site.register(Good,GoodAdmin)
