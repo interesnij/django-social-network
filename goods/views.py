@@ -86,7 +86,7 @@ class GoodDetailView(CategoryListMixin, TemplateView):
 	template_name="good_detail.html"
 
 	def get(self,request,*args,**kwargs):
-		self.good = Good.objects.get(id=self.kwargs["id"])
+		self.good = Good.objects.get(pk=self.kwargs["pk"])
 		self.good.views += 1
 		self.good.save()
 		return super(GoodDetailView,self).get(request,*args,**kwargs)
