@@ -70,7 +70,7 @@ class GoodsCatsView(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 
-		categ = GoodSubCategory.objects.filter(category__order=1)
+		self.categ = GoodSubCategory.objects.filter(category__order=self.kwargs["order"])
 		return super(GoodsCatsView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
