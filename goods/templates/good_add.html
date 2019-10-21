@@ -3,7 +3,11 @@
     .id_image input {
         display: none;
     }
-
+    .good_fullscreen_hide{
+      cursor:pointer;
+      float: right;
+      margin-top: 12px;
+    }
     #image-holder {
         border: 2px dashed #FF0000;
         color: rgba(0, 0, 0, 0.8);
@@ -25,7 +29,7 @@
 <script src="{% static 'scripts/jquery.js' %}" type="text/javascript"></script>
 <script defer src="{% static 'scripts/cockie.js' %}" type="text/javascript"></script>
 
-<span class="article_fullscreen_hide">
+<span class="good_fullscreen_hide">
   <img style="width:35px" src="{% static 'images/icons/close-24px.svg' %}" />
 </span>
 
@@ -51,12 +55,10 @@
         </select>
       </div>
     </div>
-    <br>
     <div class="form-group row">
       <div class="col-lg-6 col-md-6">
         <label>Цена товара</label>
         <input type="number" required name="price" class="form-control" id="id_price">
-        <br>
         <label>Описание товара</label>
         <textarea type="text" rows="4" name="description" class="form-control" id="id_description"></textarea>
       </div>
