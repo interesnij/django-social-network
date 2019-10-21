@@ -51,7 +51,7 @@
         <label>Категория</label>
         <select class="form-control" id="category" data-live-search="true" tabindex="-1" aria-hidden="true">
           {% for object in categories %}
-          <option value="{{ object.order }}">{{ object.name }}</option>
+          <option data-order="{{ object.order }}" value="{{ object.order }}">{{ object.name }}</option>
           {% endfor %}
         </select>
         <div id="subcat"></div>
@@ -85,7 +85,13 @@
     </div>
 </form>
 
-
+<script>
+  $('#category').change(function(){
+    var val = $(this).val();
+    var order = val.data('order');
+    ('#subcat').html('').load("/goods/cat/" + pk + "/");
+  }
+</script>
 <script src="/static/scripts/jquery.toast.min.js" type="text/javascript"></script>
 <script>
     var frm = $('#FORM-GOOD');

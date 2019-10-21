@@ -62,3 +62,18 @@ class GoodUserCreate(TemplateView):
 		else:
 			return JsonResponse({'error': True, 'errors': self.form.errors})
 		return super(GoodUserCreate,self).get(request,*args,**kwargs)
+
+
+class GoodsCatsView(TemplateView):
+	template_name="good_cats.html"
+	categ = None
+
+	def get(self,request,*args,**kwargs):
+
+		categ = GoodSubCategory.objects.filter(category__order=self.kwargs["order"])
+		return super(GoodUserCreate,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context=super(Cat1View,self).get_context_data(**kwargs)
+		context["categ"]=self.categ
+		return context
