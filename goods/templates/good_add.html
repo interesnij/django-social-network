@@ -43,9 +43,10 @@
       <div class="col-lg-6 col-md-6">
         <label>Категория</label>
         <select class="form-control" name="sub_category" id="id_sub_category" data-live-search="true" tabindex="-1" aria-hidden="true">
-            <option value="{{ sub_category.pk }}">{{ sub_category.name }}</option> 
+            <option value="{{ sub_category.pk }}">{{ sub_category.name }}</option>
 
         </select>
+        {{ form.sub_category }}
       </div>
     </div>
     <div class="form-group row">
