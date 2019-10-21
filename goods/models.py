@@ -7,7 +7,6 @@ from channels.layers import get_channel_layer
 from notifications.models import Notification, notification_handler
 from django.utils import timezone
 from django.conf import settings
-from goods.helpers import upload_to_good_image_directory
 from django.contrib.postgres.indexes import BrinIndex
 from main.models import Item
 import uuid
@@ -52,7 +51,7 @@ class Good(models.Model):
 	comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
 	created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
 	creator = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE, verbose_name="Создатель")
-	image = ProcessedImageField(verbose_name='Главное изображение', format='JPEG',options={'quality': 80}, processors=[ResizeToFit(width=512, upscale=False)],upload_to=upload_to_good_image_directory)
+	image = ProcessedImageField(verbose_name='Главное изображение', format='JPEG',options={'quality': 80}, processors=[ResizeToFit(width=512, upscale=False)],upload_to="goods/%Y/%m/%d")
 	is_deleted = models.BooleanField(default=False, verbose_name="Удалено")
 	views=models.IntegerField(default=0, verbose_name="Просмотры")
 	moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='items')
