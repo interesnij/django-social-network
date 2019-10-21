@@ -1,6 +1,26 @@
 {% load staticfiles %}
 <style>
+  .id_image input {
+          display: none;
+      }
+      .good_fullscreen_hide{
+        cursor:pointer;
+        float: right;
+        margin-top: 12px;
+      }
+      #image-holder {
+          border: 2px dashed #FF0000;
+          color: rgba(0, 0, 0, 0.8);
+          padding: 10px;
+          text-align: center;
+          margin: 20px;
+          cursor:pointer;
+      }
 
+      #image-holder img {
+          height: auto;
+          width: 100%;
+      }
 </style>
 <script src="{% static 'scripts/jquery.js' %}" type="text/javascript"></script>
 <script defer src="{% static 'scripts/cockie.js' %}" type="text/javascript"></script>
