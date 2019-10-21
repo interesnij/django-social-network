@@ -8,7 +8,7 @@ import uuid
 
 
 def upload_to_good_image_directory(good_image, filename):
-    good = good_image.post
+    good = good_image.good
     return _upload_to_good_directory_directory(good=good, filename=filename)
 
 def _upload_to_good_directory_directory(good, filename):
