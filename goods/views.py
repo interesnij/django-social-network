@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView
-from goods.models import Good
+from goods.models import Good, GoodSubCategory
 from django.views.generic import ListView
 from users.models import User
 from django.http import HttpResponse
@@ -34,6 +34,7 @@ class GoodsListView(ListView):
 class GoodUserCreate(TemplateView):
     template_name="good_add.html"
     form=None
+	sub_categories = GoodSubCategory.objects.only("id")
     success_url="/"
 
     def get(self,request,*args,**kwargs):
@@ -43,6 +44,7 @@ class GoodUserCreate(TemplateView):
     def get_context_data(self,**kwargs):
         context=super(GoodUserCreate,self).get_context_data(**kwargs)
         context["form"]=self.form
+		context["sub_categories"]=self.sub_categories
         return context
 
     def post(self,request,*args,**kwargs):

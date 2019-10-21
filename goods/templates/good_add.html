@@ -33,7 +33,7 @@
 <h5 class="m-0">Добавление товара</h5>
 <br><br>
 
-<form action="" id="FORM-POST1" method="post" enctype="multipart/form-data">
+<form action="" id="FORM-GOOD" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <div class="form-group row">
       <div class="col-lg-6 col-md-6">
@@ -42,12 +42,9 @@
       </div>
       <div class="col-lg-6 col-md-6">
         <label>Категория</label>
-        <select class="form-control " data-live-search="true" tabindex="-1" aria-hidden="true">
-            <option value="AF">Afghanistan</option>
-            <option value="AX">Åland Islands</option>
-            <option value="AL">Albania</option>
-            <option value="DZ">Algeria</option>
-            <option value="AS">American Samoa</option>
+        <select class="form-control" name="sub_category" id="id_sub_category" data-live-search="true" tabindex="-1" aria-hidden="true">
+            <option value="{{ sub_category.pk }}">{{ sub_category.name }}</option> 
+
         </select>
       </div>
     </div>
