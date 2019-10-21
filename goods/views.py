@@ -82,7 +82,7 @@ class GoodsCatsView(TemplateView):
 
 
 class GoodDetailView(DetailView):
-	model=Ad
+	model=Good
 	template_name="good_detail.html"
 
 
