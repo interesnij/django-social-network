@@ -3,8 +3,9 @@ from django.views.generic import TemplateView
 from goods.models import Good, GoodSubCategory, GoodCategory
 from django.views.generic import ListView
 from users.models import User
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from goods.forms import GoodForm
+
 
 
 class GoodCategoriesView(TemplateView):
