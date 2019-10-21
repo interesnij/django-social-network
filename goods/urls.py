@@ -15,5 +15,5 @@ urlpatterns=[
     url(r'cat/^$', GoodCategoriesView.as_view(), name="good_categories"),
 	url(r'^add/$', GoodUserCreate.as_view(), name="good_add_user"),
 	url(r'^cat/(?P<order>\d+)/$',GoodsCatsView.as_view(), name="good_cats"),
-	url(r'^detail/(?P<uuid>[0-9a-f-]+)/$', GoodDetailView.as_view(), name='good_detail'),
+	url(r'^detail/(?P<pk>\d+)/$', GoodDetailView.as_view(), name='good_detail'),
 ]

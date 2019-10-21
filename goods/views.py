@@ -7,6 +7,7 @@ from django.http import HttpResponse, JsonResponse
 from goods.forms import GoodForm
 from django.template.loader import render_to_string
 from django.views.generic.detail import DetailView
+from generic.mixins import CategoryListMixin
 
 
 class GoodCategoriesView(TemplateView):
@@ -81,18 +82,16 @@ class GoodsCatsView(TemplateView):
 		return context
 
 
-class GoodDetailView(DetailView):
-	model=Good
+class GoodDetailView(CategoryListMixin, TemplateView):
 	template_name="good_detail.html"
 
-
 	def get(self,request,*args,**kwargs):
-		good = Good.objects.get(uuid=self.kwargs["uuid"])
-		good.views += 1
-		good.save()
+		self.good = Good.objects.get(uuid=self.kwargs["uuid"])
+		self.good.views += 1
+		self.good.save()
 		return super(GoodDetailView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self, **kwargs):
 		context=super(GoodDetailView,self).get_context_data(**kwargs)
-
+		context["object"]=self.good
 		return context

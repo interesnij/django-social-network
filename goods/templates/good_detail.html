@@ -1,0 +1,47 @@
+{% load staticfiles humanize liked_user %}
+
+{% if object %}
+<div class="mb-4 infinite-item" style="position: relative;" item-id="{{ object.uuid }}">
+  <span class="text-hide-xs">
+    {% if object.get_previous_by_created %}
+      <span class="prev_item">
+        <img style="width: 50px;" src="{% static 'images/icons/right-24px.svg' %}" />
+      </span>
+    {% endif %}
+    {% if object.get_next_by_created %}
+      <span class="next_item">
+        <img style="width: 50px;" src="{% static 'images/icons/left-24px.svg' %}" />
+      </span>
+    {% endif %}
+  </span>
+  <span class="good_fullscreen_hide">Х</span>
+
+    товарррррр товарррррр
+
+</div>
+
+{% endif %}
+
+<div class="">
+  {% if object.get_previous_by_created %}
+    <script>
+    	$('.prev_item').on('click', function () {
+    		 $('#good_loader').html('').load("{% url 'good_detail' pk=object.get_previous_by_created.pk %}");
+    	});
+    </script>
+
+   {% endif %}
+   {% if object.get_next_by_created %}
+    <script>
+      $('.next_item').on('click', function () {
+    		 $('#good_loader').html('').load("{% url 'good_detail' pk=object.get_next_by_created.pk %}");
+    	});
+    </script>
+    {% endif %}
+</div>
+<script>
+  $('.good_fullscreen_hide').on('click', function () {
+  	 $('.good_fullscreen').hide();
+  	 $('#good_loader').empty();
+  });
+</script>

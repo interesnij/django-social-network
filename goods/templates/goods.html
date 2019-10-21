@@ -32,6 +32,11 @@
   padding-right: 5%;
 }
 }
+.good_fullscreen_hide{
+  cursor:pointer;
+  float: right;
+  margin-top: 12px;
+}
 </style>
 
 <div class="container-fluid bg-light-opac">
@@ -50,9 +55,9 @@
         </div>
 
 <div class="container mt-4 main-container">
-            <div class="row">
+            <div class="row goods_stream">
               {% for object in goods %}
-                <div class="col-12 col-md-4 goods_stream">
+                <div class="col-12 col-md-4">
 
                     <div class="card mb-4">
                         <div class="card-body pb-0">
@@ -71,9 +76,9 @@
                                         </div>
                                 </div>
                             </div>
-                            <a href="{% url 'good_detail' uuid=object.uuid %}">
-                              <h5 class="card-title mb-1 header-color-primary text-center">{{ object.title }}</h5>
-                            </a>
+
+                              <h5 data-uuid="{{ object.id }}" class="card-title good mb-1 header-color-primary text-center">{{ object.title }}</h5>
+
                             <h6 class="card-subtitle mb-2 header-color-secondary text-center">{{ object.sub_category }}</h6>
                             <br>
                             <div class="row bg-light-secondary text-center">
@@ -94,14 +99,28 @@
             </div>
 </div>
 
+<div class="card mb-4 good_add_fullscreen" style="display:none">
+  <div id="good_add_loader" style="margin-top:30px"></div>
+</div>
+
 <div class="card mb-4 good_fullscreen" style="display:none">
-  <div id="good_loader" style="margin-top:30px"></div>
+  <div id="good_loader" style=""></div>
 </div>
 
 <script>
 	$( "#good_add" ).click(function(){
-		$('#good_loader').html('').load("/goods/add/");
-		$('.good_fullscreen').show();
+		$('#good_add_loader').html('').load("/goods/add/");
+		$('.good_add_fullscreen').show();
 	})
 </script>
+<script>
+
+$('.good').on('click', function () {
+	 var good = $(this);
+	 var good_id = good.data("id");
+	 $('#item_loader').html('').load("/goods/detail/" + good_id)
+	 $('.item_fullscreen').show();
+});
+</script>
+
 {% endblock %}
