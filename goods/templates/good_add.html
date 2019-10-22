@@ -1,13 +1,9 @@
 {% load staticfiles %}
 <link rel="stylesheet" href="{% static 'styles/dropzone.css' %}" />
 <style>
-  .id_image input,
-  .id_image2 input,
-  .id_image3 input,
-  .id_image4 input,
-  .id_image5 input {
-          display: none;
-      }
+  .id_image input{
+    display: none;
+  }
   .good_fullscreen_hide{
     cursor:pointer;
     float: right;
@@ -76,7 +72,7 @@
         <br>
         <div class="id_image">{{ form.image }}</div>
         <div id="image-holder">
-            <h4 style="font-weight:bold;font-size:65px;color:#CECECE">обложка</h4>
+            <h4 style="font-weight:bold;font-size:65px;color:#CECECE">фото</h4>
             <p>Нажмите, чтобы добавить</p>
 
             <i style="">(обязательно)</i>
@@ -86,16 +82,44 @@
     </div>
     <div class="form-group row">
       <div class="col-lg-3 col-md-3">
-        фото 1
+        <div class="id_image">{{ form.image2 }}</div>
+        <div id="image-holder2">
+            <h4 style="font-weight:bold;font-size:40px;color:#CECECE">фото 2</h4>
+            <p>Нажмите, чтобы добавить</p>
+
+            <i style="">(не обязательно)</i>
+
+        </div>
       </div>
       <div class="col-lg-3 col-md-3">
-        фото 2
+        <div class="id_image">{{ form.image3 }}</div>
+        <div id="image-holder3">
+            <h4 style="font-weight:bold;font-size:40px;color:#CECECE">фото 3</h4>
+            <p>Нажмите, чтобы добавить</p>
+
+            <i style="">(не обязательно)</i>
+
+        </div>
       </div>
       <div class="col-lg-3 col-md-3">
-        фото 3
+        <div class="id_image4">{{ form.image4 }}</div>
+        <div id="image-holder">
+            <h4 style="font-weight:bold;font-size:40px;color:#CECECE">фото 4</h4>
+            <p>Нажмите, чтобы добавить</p>
+
+            <i style="">(не обязательно)</i>
+
+        </div>
       </div>
       <div class="col-lg-3 col-md-3">
-        фото 4
+        <div class="id_image">{{ form.image5 }}</div>
+        <div id="image-holder5">
+            <h4 style="font-weight:bold;font-size:40px;color:#CECECE">фото 5</h4>
+            <p>Нажмите, чтобы добавить</p>
+
+            <i style="">(не обязательно)</i>
+
+        </div>
       </div>
     </div>
     <br>
@@ -181,6 +205,162 @@
             if (extn == "gif" || extn == "png" || extn == "jpg" || extn == "jpeg") {
                 if (typeof FileReader != "undefined") {
                     var image_holder = $("#image-holder");
+                    image_holder.empty();
+
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        $img = $("<img />", {
+                            id: "targetImageCrop",
+                            src: e.target.result,
+                            class: "thumb-image"
+                        }).appendTo(image_holder);
+                    };
+
+                    image_holder.show();
+                    reader.readAsDataURL($(this)[0].files[0]);
+                }
+            } else {
+                this.value = null;
+            }
+        }
+        entrou = true;
+        setTimeout(function() {
+            entrou = false;
+        }, 1000);
+    });
+</script>
+<script>
+    var imageLoader = document.getElementById("id_image2");
+    var entrou = false;
+    $("#image-holder2").on("click", function() {
+        $("#id_image2").click();
+    });
+
+    $("#id_image2").on("change", function() {
+        if (!entrou) {
+            var imgPath = $(this)[0].value;
+            var extn = imgPath.substring(imgPath.lastIndexOf(".") + 1).toLowerCase();
+
+            if (extn == "gif" || extn == "png" || extn == "jpg" || extn == "jpeg") {
+                if (typeof FileReader != "undefined") {
+                    var image_holder = $("#image-holder2");
+                    image_holder.empty();
+
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        $img = $("<img />", {
+                            id: "targetImageCrop",
+                            src: e.target.result,
+                            class: "thumb-image"
+                        }).appendTo(image_holder);
+                    };
+
+                    image_holder.show();
+                    reader.readAsDataURL($(this)[0].files[0]);
+                }
+            } else {
+                this.value = null;
+            }
+        }
+        entrou = true;
+        setTimeout(function() {
+            entrou = false;
+        }, 1000);
+    });
+</script>
+<script>
+    var imageLoader = document.getElementById("id_image3");
+    var entrou = false;
+    $("#image-holder3").on("click", function() {
+        $("#id_image3").click();
+    });
+
+    $("#id_image3").on("change", function() {
+        if (!entrou) {
+            var imgPath = $(this)[0].value;
+            var extn = imgPath.substring(imgPath.lastIndexOf(".") + 1).toLowerCase();
+
+            if (extn == "gif" || extn == "png" || extn == "jpg" || extn == "jpeg") {
+                if (typeof FileReader != "undefined") {
+                    var image_holder = $("#image-holder3");
+                    image_holder.empty();
+
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        $img = $("<img />", {
+                            id: "targetImageCrop",
+                            src: e.target.result,
+                            class: "thumb-image"
+                        }).appendTo(image_holder);
+                    };
+
+                    image_holder.show();
+                    reader.readAsDataURL($(this)[0].files[0]);
+                }
+            } else {
+                this.value = null;
+            }
+        }
+        entrou = true;
+        setTimeout(function() {
+            entrou = false;
+        }, 1000);
+    });
+</script>
+<script>
+    var imageLoader = document.getElementById("id_image4");
+    var entrou = false;
+    $("#image-holder4").on("click", function() {
+        $("#id_image4").click();
+    });
+
+    $("#id_image4").on("change", function() {
+        if (!entrou) {
+            var imgPath = $(this)[0].value;
+            var extn = imgPath.substring(imgPath.lastIndexOf(".") + 1).toLowerCase();
+
+            if (extn == "gif" || extn == "png" || extn == "jpg" || extn == "jpeg") {
+                if (typeof FileReader != "undefined") {
+                    var image_holder = $("#image-holder4");
+                    image_holder.empty();
+
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        $img = $("<img />", {
+                            id: "targetImageCrop",
+                            src: e.target.result,
+                            class: "thumb-image"
+                        }).appendTo(image_holder);
+                    };
+
+                    image_holder.show();
+                    reader.readAsDataURL($(this)[0].files[0]);
+                }
+            } else {
+                this.value = null;
+            }
+        }
+        entrou = true;
+        setTimeout(function() {
+            entrou = false;
+        }, 1000);
+    });
+</script>
+<script>
+    var imageLoader = document.getElementById("id_image5");
+    var entrou = false;
+    $("#image-holder5").on("click", function() {
+        $("#id_image5").click();
+    });
+
+    $("#id_image5").on("change", function() {
+        if (!entrou) {
+            var imgPath = $(this)[0].value;
+            var extn = imgPath.substring(imgPath.lastIndexOf(".") + 1).toLowerCase();
+
+            if (extn == "gif" || extn == "png" || extn == "jpg" || extn == "jpeg") {
+                if (typeof FileReader != "undefined") {
+                    var image_holder = $("#image-holder5");
                     image_holder.empty();
 
                     var reader = new FileReader();
