@@ -45,6 +45,7 @@ class ItemListView(ListView):
             self.fixed = self.items.get(is_fixed=True)
         except:
             self.fixed = None
+        return super(ItemListView,self).get(request,*args,**kwargs)
 
     def get_queryset(self):
         self.user=User.objects.get(pk=self.kwargs["pk"])
@@ -52,7 +53,7 @@ class ItemListView(ListView):
         return items
 
     def get_context_data(self, **kwargs):
-        context = super(ProfileUserView, self).get_context_data(**kwargs)
+        context = super(ItemListView, self).get_context_data(**kwargs)
         context['object'] = self.fixed
         return context
 
