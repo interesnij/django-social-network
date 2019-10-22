@@ -38,9 +38,6 @@ class GoodSubCategory(models.Model):
 		return self.name
 
 class Good(models.Model):
-	class Meta:
-		verbose_name="Товар"
-		verbose_name_plural="Товары"
 
 	uuid = models.UUIDField(default=uuid.uuid4, db_index=True,verbose_name="uuid")
 	title = models.CharField(max_length=200, verbose_name="Название")
@@ -68,3 +65,12 @@ class Good(models.Model):
 		channel_layer = get_channel_layer()
 		payload = {"type": "receive","key": "additional_post","actor_name": self.creator.get_full_name()}
 		async_to_sync(channel_layer.group_send)('notifications', payload)
+
+	class Meta:
+        indexes = (
+            BrinIndex(fields=['created']),
+        )
+
+        ordering = ['-created']
+		verbose_name="Товар"
+		verbose_name_plural="Товары"
