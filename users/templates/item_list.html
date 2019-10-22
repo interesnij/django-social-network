@@ -63,7 +63,7 @@
 
 <!--  ОТКРЫВАЕМ ОКНО И ГРУЗИМ ТУДА ОТДЕЛЬНУЮ ЗАПИСЬ ИЛИ СТАТЬЮ-->
 <script>
-$('.stream').on('click', '.item_fullscreen', function () {
+$('.stream').on('click', '.fullscreen', function () {
 	 var item = $(this);
 	 var item_id = good.data("id");
 	 $('#item_loader').item('').load("/users/item/" + item_id)
