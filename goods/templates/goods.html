@@ -72,6 +72,9 @@
   float: right;
   margin-top: 12px;
 }
+.load{
+  display:none;
+}
 </style>
 
 <div class="container-fluid bg-light-opac">
@@ -128,13 +131,13 @@
                     </div>
                 </div>
                 {% endfor %}
-
+                <div class="load">
                   {% if page_obj.has_next %}
                     <a class="infinite-more-link" href="?page={{ page_obj.next_page_number }}">
                       <img src="{% static 'images/loading.gif' %}">
                     </a>
                   {% endif %}
-
+                </div>
                 {% else %}
                 <h6>  Пока ничего нет...</h6>
                 {% endif %}
