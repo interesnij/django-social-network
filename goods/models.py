@@ -64,3 +64,8 @@ class Good(models.Model):
 		channel_layer = get_channel_layer()
 		payload = {"type": "receive","key": "additional_post","actor_name": self.creator.get_full_name()}
 		async_to_sync(channel_layer.group_send)('notifications', payload)
+
+
+class GoodPhoto(models.Model):
+    good = models.ForeignKey(Good, on_delete=models.CASCADE)
+    file = models.ImageField(upload_to='good/%Y/%m/%d')
