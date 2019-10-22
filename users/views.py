@@ -35,6 +35,17 @@ class UserItemView(CategoryListMixin, TemplateView):
         return context
 
 
+class ItemListView(ListView):
+	template_name="item_list.html"
+	model=Item
+	paginate_by=6
+
+	def get_queryset(self):
+		self.user=User.objects.get(pk=self.kwargs["pk"])
+		items = Item.objects.filter(creator=self.user,is_deleted=False)
+		return items
+
+
 class AllUsers(ListView):
     template_name="all_users.html"
     model=User
@@ -201,15 +212,6 @@ class UserAvatarChange(TemplateView):
 				return HttpResponse ('!')
 		return super(UserAvatarChange,self).post(request,*args,**kwargs)
 
-
-class PostUserView(ListView):
-	template_name = 'post_list.html'
-	model = Post
-	paginate_by = 10
-
-	def get_queryset(self, **kwargs):
-		self.user=User.objects.get(pk=self.kwargs["pk"])
-		return Post.objects.filter(creator=self.user)
 
 class UserDesign(TemplateView):
 	template_name="user_design.html"

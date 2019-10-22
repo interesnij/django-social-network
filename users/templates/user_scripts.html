@@ -12,6 +12,12 @@ $('.fullscreen').on('click', function () {
 	 $('.item_fullscreen').show();
 });
 </script>
+<script>
+$(document).ready(function(){
+	user_pk = {{ request.user.pk }};
+	$('#lenta-reload').html('').load("/users/list/" + user_pk)
+});
+</script>
 
 {% if request.user == user and  request.user.is_authenticated %}
 

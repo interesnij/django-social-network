@@ -21,7 +21,7 @@ class GoodSubCategoriesView(TemplateView):
 class GoodsListView(ListView):
 	template_name="goods.html"
 	model=Good
-	paginate_by=3
+	paginate_by=6
 
 	def get(self,request,*args,**kwargs):
 
