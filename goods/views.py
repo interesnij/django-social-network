@@ -29,8 +29,8 @@ class GoodsListView(ListView):
 
 	def get_queryset(self):
 		self.user=User.objects.get(pk=self.kwargs["pk"])
-		self.goods=Good.objects.filter(creator=self.user,is_deleted=False)
-		return self.goods
+		goods=Good.objects.filter(creator=self.user,is_deleted=False)
+		return goods
 
 	def get_context_data(self,**kwargs):
 		context=super(GoodsListView,self).get_context_data(**kwargs)
