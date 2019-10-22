@@ -126,16 +126,15 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
                 {% endfor %}
-                <div>
+
                   {% if page_obj.has_next %}
                     <a class="infinite-more-link" href="?page={{ page_obj.next_page_number }}">
                       <img src="{% static 'images/loading.gif' %}">
                     </a>
                   {% endif %}
-                </div>
+
                 {% else %}
                 <h6>  Пока ничего нет...</h6>
                 {% endif %}
