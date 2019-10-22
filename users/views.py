@@ -45,11 +45,6 @@ class ItemListView(ListView):
 		items = Item.objects.filter(creator=self.user,is_deleted=False)
 		return items
 
-    def get_context_data(self,**kwargs):
-		context=super(GoodsListView,self).get_context_data(**kwargs)
-
-		return context
-
 
 class AllUsers(ListView):
     template_name="all_users.html"
