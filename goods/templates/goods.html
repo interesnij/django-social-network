@@ -130,6 +130,16 @@
                         </div>
                     </div>
                 </div>
+                <script>
+                  function good_detail() {
+                     var good = $(this);
+                     var good_id = good.data("id");
+                     console.log(good,good_id);
+                     $('#good_loader').html('').load("/goods/detail/" + good_id)
+                     $('.good_fullscreen').show();
+                  };
+                  $('[data-action="good_detail"]').click(good_detail);
+                  </script>
                 {% endfor %}
                 <div class="load col-12 col-md-12" >
                   {% if page_obj.has_next %}
@@ -173,14 +183,5 @@
         }
     });
 </script>
-<script>
-  function good_detail() {
-     var good = $(this);
-     var good_id = good.data("id");
-     console.log(good,good_id);
-     $('#good_loader').html('').load("/goods/detail/" + good_id)
-     $('.good_fullscreen').show();
-  };
-  $('[data-action="good_detail"]').click(good_detail);
-  </script>
+=
 {% endblock %}
