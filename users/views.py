@@ -36,14 +36,25 @@ class UserItemView(CategoryListMixin, TemplateView):
 
 
 class ItemListView(ListView):
-	template_name="item_list.html"
-	model=Item
-	paginate_by=6
+    template_name="item_list.html"
+    model=Item
+    paginate_by=6
 
-	def get_queryset(self):
-		self.user=User.objects.get(pk=self.kwargs["pk"])
-		items = Item.objects.filter(creator=self.user,is_deleted=False)
-		return items
+    def get(self,request,*args,**kwargs):
+        try:
+            self.fixed = self.items.get(is_fixed=True)
+        except:
+            self.fixed = None
+
+    def get_queryset(self):
+        self.user=User.objects.get(pk=self.kwargs["pk"])
+        items = Item.objects.filter(creator=self.user,is_deleted=False)
+        return items
+
+    def get_context_data(self, **kwargs):
+        context = super(ProfileUserView, self).get_context_data(**kwargs)
+        context['object'] = self.fixed
+        return context
 
 
 class AllUsers(ListView):
@@ -60,8 +71,6 @@ class ProfileUserView(CategoryListMixin, TemplateView):
         self.pop_frends = self.frends[0:5]
         self.communities=Community.objects.filter(starrers=self.user)
         self.articles=Article.objects.filter(creator=self.user,is_deleted=False)
-        self.items = Item.objects.filter(creator=self.user,is_deleted=False)
-        self.lenta = self.items.filter(is_fixed=False)
         self.follows_count=Follow.objects.filter(followed_user=self.user).count()
         self.goods_count=Good.objects.filter(creator=self.user,is_deleted=False).count()
         self.connect_count=Connect.objects.filter(user=self.user).count()
@@ -78,10 +87,6 @@ class ProfileUserView(CategoryListMixin, TemplateView):
         except:
             self.connect2 = None
         try:
-            self.fixed = self.items.get(is_fixed=True)
-        except:
-            self.fixed = None
-        try:
             self.follow = Follow.objects.get(user=self.request.user,followed_user=self.user)
         except:
             self.follow = None
@@ -94,7 +99,6 @@ class ProfileUserView(CategoryListMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super(ProfileUserView, self).get_context_data(**kwargs)
         context['user'] = self.user
-        context['object'] = self.fixed
         context['articles'] = self.articles
         context['pop_frends'] = self.pop_frends
         context['form'] = ArticleForm()
