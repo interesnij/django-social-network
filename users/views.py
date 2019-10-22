@@ -51,7 +51,7 @@ class AllUsers(ListView):
     model=User
 
 
-class ProfileUserView(CategoryListMixin, TemplateView, ItemListView):
+class ProfileUserView(CategoryListMixin, TemplateView):
     template_name = 'user.html'
 
     def get(self,request,*args,**kwargs):
