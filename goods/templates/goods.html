@@ -178,7 +178,7 @@
   function good_detail() {
     var good = $(this);
     var good_id = good.data("id");
-    console.log(good,good_id);
+    console.log(good);
     $('#good_loader').html('').load("/goods/detail/" + good_id)
     $('.good_fullscreen').show();
   };
