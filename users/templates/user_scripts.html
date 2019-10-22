@@ -4,16 +4,6 @@
 {% include 'generic/script.html' %}
 {% endif %}
 
-<!--  ОТКРЫВАЕМ ОКНО И ГРУЗИМ ТУДА ОТДЕЛЬНУЮ ЗАПИСЬ ИЛИ СТАТЬЮ-->
-<script>
-$('.infinite-container').on('click', '.item_fullscreen', function () {
-	 var item = $(this);
-	 var item_id = good.data("id");
-	 $('#item_loader').item('').load("/users/item/" + item_id)
-	 $('.item_fullscreen').show();
-});
-</script>
-
 <!-- ГРУЗИМ ЛЕНТУ ЗАПИСЕЙ ПОЛЬЗОВАТЕЛЕЙ ПРИ ЗАГРУЗКЕ СТРАНИЦЕ ПРОФИЛЯ-->
 <script>
 $(document).ready(function(){
