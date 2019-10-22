@@ -61,6 +61,7 @@
     });
 </script>
 
+
 <!--  ОТКРЫВАЕМ ОКНО И ГРУЗИМ ТУДА ОТДЕЛЬНУЮ ЗАПИСЬ ИЛИ СТАТЬЮ-->
 <script>
 $('.stream').on('click', '.fullscreen', function () {
@@ -68,5 +69,25 @@ $('.stream').on('click', '.fullscreen', function () {
 	 var item_id = item.data("id");
 	 $('#item_loader').html('').load("/users/item/" + item_id)
 	 $('.item_fullscreen').show();
+});
+</script>
+
+<!--  ПОДГРУЖАЕМ КОММЕНТАРИИ К ЗАПИСЯМ И СТАТЬЯМ ЛЕНТЫ ПОЛЬЗОВАТЕЛЯ -->
+<script>
+$(".comment").on("click", function () {
+	var item = $(this).closest(".infinite-item").attr("item-id");
+	var url = $(this).parents(".infinite-item");
+	$.ajax({
+			url: '{% url "get_comment" %}',
+			data: {'item': item},
+			cache: false,
+			beforeSend: function () {
+					url.find(".load_comments").html("<span style='display:flex;justify-content: center;'><img src='/static/images/loading.gif'></span>");
+			},
+			success: function (data) {
+				url.find(".load_comments").html(data.comments);
+			}
+	});
+	return false;
 });
 </script>
