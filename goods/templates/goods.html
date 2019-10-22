@@ -114,7 +114,7 @@
                                         </div>
                                 </div>
                             </div>
-                            <h5 style="cursor:pointer" data-action="good_detail" data-id="{{ object.id }}" class="card-title mb-1 header-color-primary text-center">{{ object.title }}</h5>
+                            <h5 style="cursor:pointer" onclick="good_detail()" data-id="{{ object.id }}" class="card-title mb-1 header-color-primary text-center">{{ object.title }}</h5>
                             <h6 class="card-subtitle mb-2 header-color-secondary text-center">{{ object.sub_category }}</h6>
                             <br>
                             <div class="row bg-light-secondary text-center">
@@ -176,11 +176,10 @@
 </script>
 <script>
   function good_detail() {
-var good = $(this);
-var good_id = good.data("id");
-$('#good_loader').html('').load("/goods/detail/" + good_id)
-$('.good_fullscreen').show();
-};
-$('[data-action="good_detail"]').click(good_detail);
+    var good = $(this);
+    var good_id = good.data("id");
+    $('#good_loader').html('').load("/goods/detail/" + good_id)
+    $('.good_fullscreen').show();
+  };
 </script>
 {% endblock %}
