@@ -21,7 +21,7 @@
       {% include 'generic/post.html' with post=post  %}
     {% endif %}
 
-    {% for object in lenta %}
+    {% for object in object_list %}
 
       {% if object.article %}
           {% include 'generic/article.html' with article=article  %}
