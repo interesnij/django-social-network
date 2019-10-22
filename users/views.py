@@ -35,7 +35,7 @@ class UserItemView(CategoryListMixin, TemplateView):
         return context
 
 
-class ItemListView(ListView):
+class ItemListView(ListView, CategoryListMixin):
     template_name="item_list.html"
     model=Item
     paginate_by=6
@@ -63,7 +63,7 @@ class AllUsers(ListView):
     model=User
 
 
-class ProfileUserView(CategoryListMixin, TemplateView):
+class ProfileUserView(TemplateView):
     template_name = 'user.html'
 
     def get(self,request,*args,**kwargs):
