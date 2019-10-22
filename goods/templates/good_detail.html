@@ -126,3 +126,16 @@
   	 $('#good_loader').empty();
   });
 </script>
+
+<script defer src="{% static 'scripts/swiper.min.js' %}" type="text/javascript"></script>
+<script>
+        'use strict';
+        var mySwiper = new Swiper('.swiper-product', {
+            slidesPerView: 1,
+            spaceBetween: 0,
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            }
+        });
+    </script>
