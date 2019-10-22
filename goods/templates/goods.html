@@ -159,15 +159,6 @@
 	})
 </script>
 
-<script>
-$('.good_detail').on('click', function () {
-	 var good = $(this);
-	 var good_id = good.data("id");
-	 $('#good_loader').html('').load("/goods/detail/" + good_id)
-	 $('.good_fullscreen').show();
-});
-</script>
-
 <script src="{% static 'scripts/jquery.waypoints.min.js' %}" type="text/javascript"></script>
 <script src="{% static 'scripts/infinite.min.js' %}" type="text/javascript"></script>
 <script>
@@ -180,5 +171,13 @@ $('.good_detail').on('click', function () {
             $('.load').hide();
         }
     });
+</script>
+<script>
+$('.good_detail').on('click', function () {
+	 var good = $(this);
+	 var good_id = good.data("id");
+	 $('#good_loader').html('').load("/goods/detail/" + good_id)
+	 $('.good_fullscreen').show();
+});
 </script>
 {% endblock %}
