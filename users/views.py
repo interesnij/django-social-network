@@ -44,7 +44,7 @@ class ProfileUserView(CategoryListMixin, TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.user=User.objects.get(pk=self.kwargs["pk"])
-        self.frends = Connect.objects.filter(Q(user=self.user)|Q(target_user=self.user))
+        self.frends = Connect.objects.filter(Q(user__id=self.user.id))|Q(target_user__id=self.user.id)))
         self.pop_frends = self.frends[0:5]
         self.communities=Community.objects.filter(starrers=self.user)
         self.articles=Article.objects.filter(creator=self.user,is_deleted=False)
