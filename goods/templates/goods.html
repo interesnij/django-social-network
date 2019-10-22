@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load staticfiles %}
+{% load staticfiles liked_user %}
 {% block title %}
 {% if user == request.user %}
 Мои товары
@@ -123,7 +123,7 @@
                                 </div>
                                 <div class="col py-3">
                                     <h5 class="content-color-primary mb-0">{{ object.views }}</h5>
-                                    <p class="content-color-secondary small mb-0">Просмотров</p>
+                                    <p class="content-color-secondary small mb-0">{{ object.views|rupluralize:"просмотр,просмотра,просмотров" }}</p>
                                 </div>
                             </div>
                         </div>
