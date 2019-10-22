@@ -52,6 +52,10 @@ class Good(models.Model):
 	created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
 	creator = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE, verbose_name="Создатель")
 	image = ProcessedImageField(verbose_name='Главное изображение', format='JPEG',options={'quality': 80}, processors=[ResizeToFit(512,512)],upload_to="goods/%Y/%m/%d")
+	image = ProcessedImageField(verbose_name='изображение 2', format='JPEG',options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)],upload_to="goods/%Y/%m/%d")
+	image = ProcessedImageField(verbose_name='изображение 3', format='JPEG',options={'quality': 80}, processors=[ResizeToFit(1024, upscale=False)],upload_to="goods/%Y/%m/%d")
+	image = ProcessedImageField(verbose_name='изображение 4', format='JPEG',options={'quality': 80}, processors=[ResizeToFit(1024, upscale=False)],upload_to="goods/%Y/%m/%d")
+	image = ProcessedImageField(verbose_name='изображение 5', format='JPEG',options={'quality': 80}, processors=[ResizeToFit(1024, upscale=False)],upload_to="goods/%Y/%m/%d")
 	is_deleted = models.BooleanField(default=False, verbose_name="Удалено")
 	views=models.IntegerField(default=0, verbose_name="Просмотры")
 	moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='items')
@@ -64,8 +68,3 @@ class Good(models.Model):
 		channel_layer = get_channel_layer()
 		payload = {"type": "receive","key": "additional_post","actor_name": self.creator.get_full_name()}
 		async_to_sync(channel_layer.group_send)('notifications', payload)
-
-
-class GoodPhoto(models.Model):
-    good = models.ForeignKey(Good, on_delete=models.CASCADE)
-    file = models.ImageField(upload_to='good/%Y/%m/%d')

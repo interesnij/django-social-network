@@ -54,11 +54,8 @@ class GoodUserCreate(TemplateView):
 
 	def post(self,request,*args,**kwargs):
 		self.form=GoodForm(request.POST,request.FILES)
-		uploaded_file = request.FILES['file']
-		GoodPhoto.objects.create(good=self.album, file=uploaded_file)
+
 		if self.form.is_valid():
-			new_good=self.form.save(commit=False)
-			GoodPhoto.objects.create(good=new_good, file=uploaded_file)
 			new_good.creator=self.request.user
 			new_good=self.form.save()
 
