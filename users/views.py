@@ -95,7 +95,6 @@ class ProfileUserView(CategoryListMixin, TemplateView):
         context = super(ProfileUserView, self).get_context_data(**kwargs)
         context['user'] = self.user
         context['object'] = self.fixed
-        context['lenta'] = self.lenta
         context['articles'] = self.articles
         context['pop_frends'] = self.pop_frends
         context['form'] = ArticleForm()
