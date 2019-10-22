@@ -56,6 +56,7 @@ class GoodUserCreate(TemplateView):
 		self.form=GoodForm(request.POST,request.FILES)
 
 		if self.form.is_valid():
+			new_good=self.form.save(commit=False)
 			new_good.creator=self.request.user
 			new_good=self.form.save()
 
