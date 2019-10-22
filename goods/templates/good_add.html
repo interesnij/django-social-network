@@ -79,7 +79,7 @@
             <label class="custom-control-label" for="id_comments_enabled">Разрешить комментарии</label>
         </div>
     </div>
-    <form id="add-photos" method="post" action="{% url 'album' album.id %}" class="dropzone">
+    <form id="add-photos" method="post" action="" class="dropzone">
         {% csrf_token %}
     </form>
     <div class="card-footer">
