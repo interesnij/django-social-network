@@ -133,11 +133,9 @@
                 {% endfor %}
                 <div class="load">
                   {% if page_obj.has_next %}
-                  <span style='display:flex;justify-content: center;'>
-                    <a class="infinite-more-link" href="?page={{ page_obj.next_page_number }}">
+                    <a style='display:flex;justify-content: center;' class="infinite-more-link" href="?page={{ page_obj.next_page_number }}">
                       <img src="{% static 'images/loading.gif' %}">
                     </a>
-                  </span>
                   {% endif %}
                 </div>
                 {% else %}
