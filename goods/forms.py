@@ -6,4 +6,14 @@ class GoodForm(forms.ModelForm):
 
 	class Meta:
 		model = Good
-		fields = ['title', 'sub_category', 'price', 'description', 'image', 'comments_enabled']
+		fields = [	'title',
+					'sub_category',
+					'price',
+					'description',
+					'image',
+					'image2',
+					'image3',
+					'image4', 
+					'image5',
+					'comments_enabled'
+				]
