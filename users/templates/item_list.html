@@ -40,12 +40,12 @@
       {% endif %}
 
     </div>
-    {% else %}
-    <h6>  Пока ничего нет...</h6>
-    {% endif %}
+
   </span>
 </div>
-
+{% else %}
+<h6>  Пока ничего нет...</h6>
+{% endif %}
 
 <script src="{% static 'scripts/jquery.waypoints.min.js' %}" type="text/javascript"></script>
 <script src="{% static 'scripts/infinite.min.js' %}" type="text/javascript"></script>
@@ -60,5 +60,3 @@
         }
     });
 </script>
-
-{% endif %}
