@@ -61,6 +61,16 @@
     });
 </script>
 
+<!--  ОТКРЫВАЕМ ОТДЕЛЬНУЮ СТАТЬЮ -->
+<script>
+$('.stream').on('click', '.article_detail', function (e) {
+	e.preventDefault();
+	 var item = $(this);
+	 var item_id = item.data("id");
+	 $('#article_loader').html('').load("/article/detail/" + item_id)
+	 $('.article_fullscreen').show();
+});
+</script>
 
 <!--  ОТКРЫВАЕМ ОКНО СЛАЙДЕР ОТДЕЛЬНЫХ ЗАПИСЕЙ ИЛИ СТАТЕЙ -->
 <script>
