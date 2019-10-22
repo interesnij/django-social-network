@@ -21,6 +21,7 @@ class GoodSubCategoriesView(TemplateView):
 class GoodsListView(ListView):
 	template_name="goods.html"
 	model=Good
+	paginate_by = 3
 
 	def get(self,request,*args,**kwargs):
 		self.user=User.objects.get(pk=self.kwargs["pk"])
