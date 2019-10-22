@@ -15,7 +15,7 @@ $('.fullscreen').on('click', function () {
 <script>
 $(document).ready(function(){
 	user_pk = {{ request.user.pk }};
-	$('#lenta-reload').html('').load("/users/list/" + user_pk + "/")
+	$('#lenta-reload').html('').load("/users/list/" + {{ request.user.pk }} + "/")
 });
 </script>
 
