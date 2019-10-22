@@ -4,22 +4,25 @@
 {% include 'generic/script.html' %}
 {% endif %}
 
+<!--  ОТКРЫВАЕМ ОКНО И ГРУЗИМ ТУДА ОТДЕЛЬНУЮ ЗАПИСЬ ИЛИ СТАТЬЮ-->
 <script>
-$('.fullscreen').on('click', function () {
+$('.infinite-container').on('click', '.fullscreen', function () {
 	 var item = $(this);
-	 var item_id = item.data("id");
-	 $('#item_loader').html('').load("/users/item/" + item_id)
+	 var item_id = good.data("id");
+	 $('#item_loader').item('').load("/users/item/" + item_id)
 	 $('.item_fullscreen').show();
 });
 </script>
+
+<!-- ГРУЗИМ ЛЕНТУ ЗАПИСЕЙ ПОЛЬЗОВАТЕЛЕЙ ПРИ ЗАГРУЗКЕ СТРАНИЦЕ ПРОФИЛЯ-->
 <script>
 $(document).ready(function(){
 	$('#lenta-reload').html('').load("/users/list/" + {{ user.pk }})
 });
 </script>
 
-{% if request.user == user and  request.user.is_authenticated %}
 
+{% if request.user == user and  request.user.is_authenticated %}
 
 <script>
 function avatar_change_popap(avatar_change) {

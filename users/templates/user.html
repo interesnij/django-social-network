@@ -169,24 +169,10 @@
         {% include 'profile/new_post.html' %}
 
         <div id="lenta-reload">
-            
+
         </div>
     </div>
 </div>
 
-
-<script src="{% static 'scripts/jquery.waypoints.min.js' %}" type="text/javascript"></script>
-<script src="{% static 'scripts/infinite.min.js' %}" type="text/javascript"></script>
-<script>
-    var infinite = new Waypoint.Infinite({
-        element: $('.infinite-container')[0],
-        onBeforePageLoad: function() {
-            $('.load').show();
-        },
-        onAfterPageLoad: function($items) {
-            $('.load').hide();
-        }
-    });
-</script>
 {% include 'user_scripts.html' %}
 {% endblock %}
