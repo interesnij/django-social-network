@@ -1,0 +1,47 @@
+<div class="col-12 col-md-4">
+
+    <div class="card mb-4">
+        <div class="card-body pb-0">
+            <div class="row align-items-center no-gutters">
+                <div class="col">
+                        <div>
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide text-center">
+                                  {% if object.image %}
+                                  <img style="width:100%" src="{{ object.image.url }}" alt="">
+                                  {% else %}
+                                  <img style="width:100%" src="{% static 'images/no-image.jpg' %}" />
+                                  {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+
+              <h5 style="cursor:pointer" data-id="{{ object.id }}" class="card-title good_detail mb-1 header-color-primary text-center">{{ object.title }}</h5>
+
+            <h6 class="card-subtitle mb-2 header-color-secondary text-center">{{ object.sub_category }}</h6>
+            <br>
+            <div class="row bg-light-secondary text-center">
+                <div class="col py-3">
+                    <h5 class="content-color-primary mb-0">{{ object.price }}</h5>
+                    <p class="content-color-secondary small mb-0">Цена</p>
+                </div>
+                <div class="col py-3">
+                    <h5 class="content-color-primary mb-0">{{ object.views }}</h5>
+                    <p class="content-color-secondary small mb-0">{{ object.views|rupluralize:"просмотр,просмотра,просмотров" }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+$('.good_detail').on('click', function () {
+	 var good = $(this);
+	 var good_id = good.data("id");
+	 $('#good_loader').html('').load("/goods/detail/" + good_id)
+	 $('.good_fullscreen').show();
+});
+</script>

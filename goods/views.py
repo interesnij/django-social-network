@@ -61,7 +61,7 @@ class GoodUserCreate(TemplateView):
 			new_good=self.form.save()
 
 			if request.is_ajax() :
-				html = render_to_string('goods.html',{'object': new_good,'request': request})
+				html = render_to_string('good.html',{'object': new_good,'request': request})
 			return HttpResponse(html)
 		else:
 			return JsonResponse({'error': True, 'errors': self.form.errors})
