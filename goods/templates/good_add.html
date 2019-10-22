@@ -86,48 +86,34 @@
       <div class="col-lg-3 col-md-3">
         <div class="id_image">{{ form.image2 }}</div>
         <div id="image-holder2">
-            <h4 style="font-weight:bold;font-size:40px;color:#CECECE">фото 2</h4>
+            <h4 style="font-weight:bold;font-size:30px;color:#CECECE">фото 2</h4>
             <p>Нажмите, чтобы добавить</p>
-
-            <i style="">(не обязательно)</i>
-
         </div>
       </div>
       <div class="col-lg-3 col-md-3">
         <div class="id_image">{{ form.image3 }}</div>
         <div id="image-holder3">
-            <h4 style="font-weight:bold;font-size:40px;color:#CECECE">фото 3</h4>
+            <h4 style="font-weight:bold;font-size:30px;color:#CECECE">фото 3</h4>
             <p>Нажмите, чтобы добавить</p>
-
-            <i style="">(не обязательно)</i>
-
         </div>
       </div>
       <div class="col-lg-3 col-md-3">
         <div class="id_image">{{ form.image4 }}</div>
         <div id="image-holder4">
-            <h4 style="font-weight:bold;font-size:40px;color:#CECECE">фото 4</h4>
+            <h4 style="font-weight:bold;font-size:30px;color:#CECECE">фото 4</h4>
             <p>Нажмите, чтобы добавить</p>
-
-            <i style="">(не обязательно)</i>
-
         </div>
       </div>
       <div class="col-lg-3 col-md-3">
         <div class="id_image">{{ form.image5 }}</div>
         <div id="image-holder5">
-            <h4 style="font-weight:bold;font-size:40px;color:#CECECE">фото 5</h4>
+            <h4 style="font-weight:bold;font-size:30px;color:#CECECE">фото 5</h4>
             <p>Нажмите, чтобы добавить</p>
-
-            <i style="">(не обязательно)</i>
-
         </div>
       </div>
     </div>
     <br>
-    <form id="add-photos" method="post" action="{% url 'good_add_user' %}" class="dropzone">
-        {% csrf_token %}
-    </form>
+
     <div class="form-group ">
         <div class="custom-control custom-checkbox">
             <input type="checkbox" checked class="custom-control-input" name="comments_enabled" id="id_comments_enabled">
@@ -141,8 +127,6 @@
     </div>
 </form>
 
-
-<script src="{% static 'scripts/dropzone.js' %}" type="text/javascript"></script>
 <script>
   $('#category').change(function(){
     var val = $(this).val();
