@@ -101,3 +101,53 @@ $(".comment").on("click", function () {
 	return false;
 });
 </script>
+
+<script>
+	function react() {
+			var react = $(this);
+			var item = $('.infinite-item').attr("item-id");
+			var pk = react.data('id');
+			var action  = react.data('action');
+			payload = {
+					'item': item,
+					'csrf_token': csrftoken
+				}
+			$.ajax({
+					url: "/main/react/" + pk + "/",
+					type: 'POST',
+					cache: false,
+					data: payload,
+					success: function(data) {
+							react.find("[data-count='react']").text(data.react_count);
+							$(react).addClass("text-success");
+							$(react).siblings('.react_window').html('').load("/main/react_window/" + pk + "/");
+					}
+			});
+			return false;
+	}
+	function un_react() {
+			var un_react = $(this);
+			var item = $('.infinite-item').attr("item-id");
+			var pk = un_react.data('id');
+			var action = un_react.data('action');
+			payload = {
+					'item': item,
+					'csrf_token': csrftoken
+				}
+			$.ajax({
+					url: "/main/un_react/" + pk + "/",
+					type: 'POST',
+					cache: false,
+					data: payload,
+					success: function(data) {
+							un_react.find("[data-count='dislike']").text(data.react_count);
+							$(un_react).addClass("text-danger");
+							$(like).siblings('.react_window').html('').load("/main/react_window/" + pk + "/");
+					}
+			});
+			return false;
+	}
+	// Подключение обработчиков
+	$('[data-action="react"]').click(un_react);
+	$('[data-action="un_react"]').click(react);
+</script>
