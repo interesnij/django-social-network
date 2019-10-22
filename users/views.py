@@ -5,6 +5,7 @@ from main.models import Item
 from article.models import Article
 from frends.models import Connect
 from follows.models import Follow
+from goods.models import Good
 from communities.models import Community
 from main.forms import CommentForm
 from article.forms import ArticleForm
