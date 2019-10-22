@@ -58,7 +58,6 @@ class GoodUserCreate(TemplateView):
 		GoodPhoto.objects.create(good=self.album, file=uploaded_file)
 		if self.form.is_valid():
 			new_good=self.form.save(commit=False)
-			uploaded_file = request.FILES['file']
 			if uploaded_file:
 				GoodPhoto.objects.create(good=new_good, file=uploaded_file)
 			new_good.creator=self.request.user
