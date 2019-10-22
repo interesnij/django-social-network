@@ -67,10 +67,7 @@ class Good(models.Model):
 		async_to_sync(channel_layer.group_send)('notifications', payload)
 
 	class Meta:
-        indexes = (
-            BrinIndex(fields=['created']),
-        )
-
-        ordering = ['-created']
+		indexes = (BrinIndex(fields=['created']),)
+		ordering = ['-created']
 		verbose_name="Товар"
 		verbose_name_plural="Товары"
