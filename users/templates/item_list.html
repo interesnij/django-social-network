@@ -65,7 +65,7 @@
 <script>
 $('.stream').on('click', '.fullscreen', function () {
 	 var item = $(this);
-	 var item_id = good.data("id");
+	 var item_id = item.data("id");
 	 $('#item_loader').item('').load("/users/item/" + item_id)
 	 $('.item_fullscreen').show();
 });
