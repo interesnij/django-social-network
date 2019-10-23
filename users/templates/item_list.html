@@ -111,13 +111,12 @@ $(".comment").on("click", function () {
 			var action  = react.data('action');
 			console.log(item);
 			console.log(pk);
-			console.log(action);
 			payload = {
 					'item': item,
 					'csrf_token': csrftoken
 				}
 			$.ajax({
-					url: "/main/react/" + pk + "/",
+					url: "{% url 'post_react' %}",
 					type: 'POST',
 					cache: false,
 					data: payload,
