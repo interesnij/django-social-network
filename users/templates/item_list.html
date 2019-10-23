@@ -102,12 +102,16 @@ $(".comment").on("click", function () {
 });
 </script>
 
+<script src="/static/scripts/cockie.js" type="text/javascript"></script>
 <script>
 	function react() {
 			var react = $(this);
 			var item = $('.infinite-item').attr("item-id");
 			var pk = react.data('id');
 			var action  = react.data('action');
+			console.log(item);
+			console.log(pk);
+			console.log(action);
 			payload = {
 					'item': item,
 					'csrf_token': csrftoken
@@ -148,6 +152,9 @@ $(".comment").on("click", function () {
 			return false;
 	}
 	// Подключение обработчиков
-	$('[data-action="react"]').click(un_react);
-	$('[data-action="un_react"]').click(react);
+  $(".react_pop").on(
+    $('[data-action="react"]').click(un_react);
+    )
+	$('[data-action="react"]').click(react);
+	$('[data-action="un_react"]').click(un_react);
 </script>

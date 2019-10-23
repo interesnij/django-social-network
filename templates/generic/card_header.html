@@ -26,7 +26,7 @@
           {% if emojies_1 %}
           <span style="display: flex;flex-wrap: wrap;width: 180px;">
             {% for object in emojies_2 %}
-            <span style="padding:6px;cursor:pointer" title="{{ object.keyword }}">
+            <span data-id="{{ object.id }}" data-action="react" style="padding:6px;cursor:pointer" title="{{ object.keyword }}">
               <figure style="margin: 0;">
                 {% if object.image %}
                   <img src="{{ object.image.url }}" style="border-radius: 50px;width:23px;" alt="emoji">
