@@ -7,6 +7,9 @@
 			var item = $('.infinite-item').attr("item-id");
 			var pk = react.data('id');
 			var action  = react.data('action');
+			console.log(item);
+			console.log(pk);
+			console.log(action);
 			payload = {
 					'item': item,
 					'csrf_token': csrftoken
