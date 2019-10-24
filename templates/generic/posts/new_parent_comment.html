@@ -68,7 +68,7 @@
                     </div>
 
                     <br><br>
-                    <span class="reply_comments">
+                    <span class="stream_comments">
                       {% for reply in comment.get_replies %}
                         {% include 'generic/posts/reply_comment.html' with reply=reply  %}
                       {% endfor %}
@@ -137,7 +137,7 @@
             cache: false,
             success: function(data) {
                 $(".form-control-rounded").val("");
-                $(".reply_comments").append(data);
+                $(".stream_reply_comments").append(data);
             },
             error: function(data) {
                 alert(data.responseText);
@@ -157,7 +157,7 @@
             cache: false,
             success: function(data) {
                 $(".form-control-rounded").val("");
-                $(".reply_comments").append(data);
+                $(".stream_reply_comments").append(data);
             },
             error: function(data) {
                 alert(data.responseText);

@@ -201,7 +201,7 @@
             cache: false,
             success: function(data) {
                 $(".form-control-rounded").val("");
-                $(".reply_comments").append(data);
+                $(".stream_reply_comments").append(data);
             },
             error: function(data) {
                 alert(data.responseText);
@@ -221,7 +221,7 @@
             cache: false,
             success: function(data) {
                 $(".form-control-rounded").val("");
-                form.parents(".reply_comments").append(data); 
+                $(".stream_reply_comments").append(data);
             },
             error: function(data) {
                 alert(data.responseText);
