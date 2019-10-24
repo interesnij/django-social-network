@@ -68,7 +68,7 @@
                     </div>
 
                     <br><br>
-                    <span>
+                    <span class="reply_comments">
                       {% for reply in comment.get_replies %}
                         {% include 'generic/posts/reply_comment.html' with reply=reply  %}
                       {% endfor %}
