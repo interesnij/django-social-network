@@ -18,7 +18,7 @@
     <img style="width:35px" src="{% static 'images/icons/close-24px.svg' %}" />
   </span>
 
-  {% include 'generic/post.html' %}
+  {% include 'generic/posts/post.html' %}
 
 </div>
 {% endif %}
@@ -39,7 +39,7 @@
   </span>
   <span class="item_fullscreen_hide">Х</span>
 
-    {% include 'generic/article.html' with article=article  %}
+    {% include 'generic/posts/article.html' with article=article  %}
 
 </div>
 
@@ -72,4 +72,4 @@
 
 
 
-{% include 'generic/script.html' %}
+{% include 'generic/posts/script.html' %}

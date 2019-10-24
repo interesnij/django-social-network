@@ -75,7 +75,7 @@ class ArticleUserCreate(TemplateView):
 
 
 class ArticleCommentCreateView(TemplateView):
-    template_name = "generic/article_comment.html"
+    template_name = "generic/posts/article_comment.html"
 
     def post(self, request, *args, **kwargs):
         comment = self.request.POST.get('text')

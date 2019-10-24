@@ -64,7 +64,7 @@ def get_comment(request):
     form_comment = CommentForm()
     comments = ItemComment.objects.filter(item=item, parent_comment=None).order_by("created")
     comments_html = render_to_string(
-        "generic/comments.html", {"comments": comments,"form_comment": form_comment,"parent": item})
+        "generic/posts/comments.html", {"comments": comments,"form_comment": form_comment,"parent": item})
     return JsonResponse({
         "uuid": item_id,
         "comments": comments_html,
@@ -82,7 +82,7 @@ def post_comment(request):
     text = text.strip()
     if item:
         new_comment = ItemComment.objects.create(item=item, text=text, commenter=request.user)
-        html = render_to_string('generic/parent_comment.html',{'comment': new_comment,'request': request})
+        html = render_to_string('generic/posts/parent_comment.html',{'comment': new_comment,'request': request})
         return JsonResponse(html, safe=False)
     else:
         return HttpResponse("parent не найден")
@@ -97,7 +97,7 @@ def post_react(request):
 	item = Item.objects.get(pk=par)
 	if item:
 		new_react = ItemReaction.objects.create(item=item, emoji=react, reactor=request.user)
-		html = render_to_string('generic/emoji.html',{'react': new_react,'request': request})
+		html = render_to_string('generic/posts/emoji.html',{'react': new_react,'request': request})
 		return JsonResponse(html, safe=False)
 	else:
 		return HttpResponse("react не найден")
@@ -113,7 +113,7 @@ def un_react(request):
 	if item:
 		un_react = ItemReaction.objects.get(item=item, emoji=un_react, reactor=request.user)
 		un_react.delete()
-		html = render_to_string('generic/emoji.html',{'react': un_react,'request': request})
+		html = render_to_string('generic/posts/emoji.html',{'react': un_react,'request': request})
 		return JsonResponse(html, safe=False)
 	else:
 		return HttpResponse("react не найден")
@@ -128,7 +128,7 @@ def post_comment_react(request):
 	comment = Comment.objects.get(pk=com)
 	if comment:
 		new_comment_react = ItemCommentReaction.objects.create(comment=comment, emoji=react, reactor=request.user)
-		html = render_to_string('generic/comment_emoji.html',{'comment_react': new_comment_react,'request': request})
+		html = render_to_string('generic/posts/comment_emoji.html',{'comment_react': new_comment_react,'request': request})
 		return JsonResponse(html, safe=False)
 	else:
 		return HttpResponse("react не найден")
@@ -143,7 +143,7 @@ def comment_un_react(request):
 	comment = Comment.objects.get(pk=com)
 	if comment:
 		un_react = ItemCommentReaction.objects.get(comment=comment, emoji=un_react, reactor=request.user)
-		html = render_to_string('generic/comment_emoji.html',{'comment_react': un_react,'request': request})
+		html = render_to_string('generic/posts/comment_emoji.html',{'comment_react': un_react,'request': request})
 		return JsonResponse(html, safe=False)
 	else:
 		return HttpResponse("react не найден")
@@ -161,7 +161,7 @@ def reply_comment(request):
     text = text.strip()
     if comment:
         new_comment = ItemComment.objects.create(text=text, commenter=request.user,parent_comment=comment)
-        html = render_to_string('generic/reply_comment.html',{'reply': new_comment,'request': request})
+        html = render_to_string('generic/posts/reply_comment.html',{'reply': new_comment,'request': request})
         return JsonResponse(html, safe=False)
 
         notification_handler(

@@ -14,21 +14,21 @@
     </div>
 
     {% if object.article %}
-        {% include 'generic/article.html' with article=article %}
+        {% include 'generic/posts/article.html' with article=article %}
     {% endif %}
 
     {% if object.post %}
-      {% include 'generic/post.html' with post=post  %}
+      {% include 'generic/posts/post.html' with post=post  %}
     {% endif %}
 
     {% for object in object_list %}
 
       {% if object.article %}
-          {% include 'generic/article.html' with article=article  %}
+          {% include 'generic/posts/article.html' with article=article  %}
       {% endif %}
 
       {% if object.post %}
-          {% include 'generic/post.html' with post=post  %}
+          {% include 'generic/posts/post.html' with post=post  %}
       {% endif %}
 
     {% endfor %}
