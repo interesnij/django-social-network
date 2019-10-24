@@ -104,7 +104,7 @@
             cache: false,
             success: function(data) {
                 $(".form-control-rounded").val("");
-                $(this).parents(".reply_comments").append(data); 
+                form.next().append(data); 
             },
             error: function(data) {
                 alert(data.responseText);
