@@ -144,3 +144,100 @@
         </div>
     </div>
 </div>
+
+<script src="/static/scripts/jquery.toast.min.js" type="text/javascript"></script>
+<script>
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    };
+    function csrfSafeMethod(method) {
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+    var csrftoken = getCookie('csrftoken');
+    var page_title = $(document).attr("title");
+    $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+        }
+    });
+    $(".itemComment").click(function() {
+      button1 = $(this);
+      form1 = button1.parent().parent().parent();
+        $.ajax({
+            url: '{% url "post_comment" %}',
+            data: form1.serialize(),
+            type: 'POST',
+            cache: false,
+            success: function(data) {
+                $(".form-control-rounded").val("");
+                $(".stream_comments").append(data);
+            },
+            error: function(data) {
+                alert(data.responseText);
+            },
+        });
+        return false;
+    });
+    $(".replyComment").click(function() {
+        button = $(this);
+        form = button.parent().parent().parent().parent();
+        $.ajax({
+            url: '{% url "reply_comment" %}',
+            data: form.serialize(),
+            type: 'POST',
+            cache: false,
+            success: function(data) {
+                $(".form-control-rounded").val("");
+                $(".reply_comments").append(data);
+            },
+            error: function(data) {
+                alert(data.responseText);
+            },
+        });
+        return false;
+    });
+  </script>
+  <script>
+    $(".replyParentComment").click(function() {
+      button = $(this);
+      form = button.parent().parent().parent().parent();
+        $.ajax({
+            url: '{% url "reply_comment" %}',
+            data: form.serialize(),
+            type: 'POST',
+            cache: false,
+            success: function(data) {
+                $(".form-control-rounded").val("");
+                $(".reply_comments").append(data);
+            },
+            error: function(data) {
+                alert(data.responseText);
+            },
+        });
+        return false;
+    });
+</script>
+
+<script>
+	$( ".reply_comment" ).click(function(){
+    var reply_comment_form = $(this);
+    var objectUser = reply_comment_form.prev().text().trim();
+    var form = reply_comment_form.next().find(".text-comment");
+    form.val(objectUser + ', ');
+		reply_comment_form.next().show();
+    form.focus();
+	})
+</script>
