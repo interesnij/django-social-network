@@ -125,7 +125,7 @@ def un_react(request):
 def post_comment_react(request):
 	react = request.POST['emoji']
 	com = request.POST['comment']
-	comment = Comment.objects.get(pk=com)
+	comment = ItemComment.objects.get(pk=com)
 	if comment:
 		new_comment_react = ItemCommentReaction.objects.create(comment=comment, emoji=react, reactor=request.user)
 		html = render_to_string('generic/posts/comment_emoji.html',{'comment_react': new_comment_react,'request': request})
@@ -140,7 +140,7 @@ def post_comment_react(request):
 def comment_un_react(request):
 	un_react = request.POST['emoji']
 	com = request.POST['comment']
-	comment = Comment.objects.get(pk=com)
+	comment = ItemComment.objects.get(pk=com)
 	if comment:
 		un_react = ItemCommentReaction.objects.get(comment=comment, emoji=un_react, reactor=request.user)
 		html = render_to_string('generic/posts/comment_emoji.html',{'comment_react': un_react,'request': request})
@@ -157,7 +157,7 @@ def reply_comment(request):
     user = request.user
     text = request.POST['text']
     com = request.POST['comment']
-    comment = Comment.objects.get(pk=com)
+    comment = ItemComment.objects.get(pk=com)
     text = text.strip()
     if comment:
         new_comment = ItemComment.objects.create(text=text, commenter=request.user,parent_comment=comment)
