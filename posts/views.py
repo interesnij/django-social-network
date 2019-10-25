@@ -57,6 +57,6 @@ class PostUserCreate(TemplateView):
 class RepostUser(View):
 
     def post(self, request, *args, **kwargs):
-        post = Post.objects.get(uuid=self.kwargs["uuid"])
-        new_repost = Post.objects.create(creator=request.user, parent=post)
+        self.post = Post.objects.get(uuid=self.kwargs["uuid"])
+        new_repost = Post.objects.create(creator=request.user, parent=self.post)
         return HttpResponse("!")
