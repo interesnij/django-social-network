@@ -31,5 +31,5 @@ class AllCommunities(ListView):
 	paginate_by=10
 
 	def get_queryset(self):
-        groups=Community.objects.all()
-        return groups
+		groups=Community.objects.all()
+		return groups
