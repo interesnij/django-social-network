@@ -1,6 +1,6 @@
 {% load staticfiles humanize %}
-<span style="margin-left: 5%;border-left: 1px solid #A7A7A7;">
-<div class="card-header border-bottom" style="margin-top: -20px;">
+<span style="margin-left: 5%;border-left: 1px solid #DDDDDD;">
+  <div class="card-header border-bottom" style="margin-top: -20px;">
     <div class="media" style="font-size: 0.8em;">
         <figure>
           {% if object.post.parent.creator.profile.avatar %}
@@ -16,17 +16,17 @@
             <p class="mb-0">{{ object.post.parent.created|naturaltime }}</p>
         </div>
     </div>
-</div>
+  </div>
 
-<div class="card-body">
-  {% if object.post.parent.text %}
-    <p class="">{{ object.post.parent.text|linebreaks }}</p>
-  {% endif %}
-  {% if object.post.parent.image %}
-    <p class="">{{ object.post.parent.image.url }}</p>
-  {% endif %}
-  {% if object.post.parent.doc %}
-    <p class="">{{ object.post.parent.doc }}</p>
-  {% endif %}
-</div>
+  <div class="card-body">
+    {% if object.post.parent.text %}
+      <p class="">{{ object.post.parent.text|linebreaks }}</p>
+    {% endif %}
+    {% if object.post.parent.image %}
+      <p class="">{{ object.post.parent.image.url }}</p>
+    {% endif %}
+    {% if object.post.parent.doc %}
+      <p class="">{{ object.post.parent.doc }}</p>
+    {% endif %}
+  </div>
 </span>
