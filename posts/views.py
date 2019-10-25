@@ -4,7 +4,7 @@ from django.template.loader import render_to_string
 from posts.models import Post
 from posts.forms import PostUserForm
 from django.http import HttpResponse
-
+from django.views import View
 
 
 class PostsView(TemplateView):
@@ -31,7 +31,6 @@ class PostUserCreate(TemplateView):
     template_name="article_add.html"
     form_post=None
     success_url="/"
-    formset_post=None
 
     def get(self,request,*args,**kwargs):
         self.form_post=PostUserForm(initial={"creator":request.user})
@@ -53,3 +52,11 @@ class PostUserCreate(TemplateView):
                  html = render_to_string('new_post.html',{'object': new_post,'request': request})
                  return HttpResponse(html)
         return super(PostUserCreate,self).get(request,*args,**kwargs)
+
+
+class RepostUser(View):
+
+    def post(self, request, *args, **kwargs):
+        post = Post.objects.get(uuid=self.kwargs["uuid"])
+        new_repost = Post.objects.create(creator=request.user, parent=post)
+        return HttpResponse("!")
