@@ -1,8 +1,6 @@
 {% load staticfiles %}
-
-<div class="card mb-4" style="">
 {% if communities %}
-
+<div class="card mb-4" style="">
     <div class="card-header">
 <div class="media">
     <div class="media-body">
@@ -38,5 +36,19 @@
     </div>
 </div>
 {% endfor %}
-{% endif %}
 </div>
+{% else %}
+{% if user == request.user %}
+<div class="card mb-4" style="">
+    <div class="card-header">
+<div class="media" style="display: flex;align-items: center;justify-content: center;">
+  <a href="{% url 'communities' %}" class="ajax">
+    <div class="media-body">
+        <h4 class="content-color-primary mb-0">Вступайте в группы</h4>
+    </div>
+  </a>
+</div>
+</div>
+</div>
+{% endif %}
+{% endif %}
