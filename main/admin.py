@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from main.models import Emoji, EmojiGroup, ProxyBlacklistedDomain
+from main.models import Emoji, EmojiGroup, ProxyBlacklistedDomain, Item
 
 
 class EmojiGroupEmoji(admin.TabularInline):
@@ -37,3 +37,14 @@ class ProxyBlacklistDomainAdmin(admin.ModelAdmin):
 
 
 admin.site.register(ProxyBlacklistedDomain, ProxyBlacklistDomainAdmin)
+
+
+class ItemAdmin(admin.ModelAdmin):
+    list_display = (
+        'creator',
+        'created',
+        'post',
+        'article',
+    )
+
+admin.site.register(Item,ItemAdmin)
