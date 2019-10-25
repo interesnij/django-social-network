@@ -1,22 +1,23 @@
 {% load staticfiles humanize liked_user %}
 
+
+<span class="text-hide-xs">
+  {% if object.get_previous_by_created %}
+    <span class="prev_item">
+      <img style="width: 50px;" src="{% static 'images/icons/right-24px.svg' %}" />
+    </span>
+  {% endif %}
+  {% if object.get_next_by_created %}
+    <span class="next_item">
+      <img style="width: 50px;" src="{% static 'images/icons/left-24px.svg' %}" />
+    </span>
+  {% endif %}
+</span>
+<span class="item_fullscreen_hide">
+  <img style="width:35px" src="{% static 'images/icons/close-24px.svg' %}" />
+</span>
 {% if object.post %}
 <div class="mb-4 infinite-item" style="position: relative;" item-id="{{ object.uuid }}">
-  <span class="text-hide-xs">
-    {% if object.get_previous_by_created %}
-      <span class="prev_item">
-        <img style="width: 50px;" src="{% static 'images/icons/right-24px.svg' %}" />
-      </span>
-    {% endif %}
-    {% if object.get_next_by_created %}
-      <span class="next_item">
-        <img style="width: 50px;" src="{% static 'images/icons/left-24px.svg' %}" />
-      </span>
-    {% endif %}
-  </span>
-  <span class="item_fullscreen_hide">
-    <img style="width:35px" src="{% static 'images/icons/close-24px.svg' %}" />
-  </span>
 
   {% include 'generic/posts/post.html' %}
 
@@ -25,19 +26,6 @@
 
 {% if object.article %}
 <div class="mb-4 infinite-item" style="position: relative;" item-id="{{ object.uuid }}">
-  <span class="text-hide-xs">
-    {% if object.get_previous_by_created %}
-      <span class="prev_item">
-        <img style="width: 50px;" src="{% static 'images/icons/right-24px.svg' %}" />
-      </span>
-    {% endif %}
-    {% if object.get_next_by_created %}
-      <span class="next_item">
-        <img style="width: 50px;" src="{% static 'images/icons/left-24px.svg' %}" />
-      </span>
-    {% endif %}
-  </span>
-  <span class="item_fullscreen_hide">Х</span>
 
     {% include 'generic/posts/article.html' with article=article  %}
 
