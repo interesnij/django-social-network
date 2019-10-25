@@ -34,8 +34,9 @@ class RepostUser(View):
     def post(self, request, *args, **kwargs):
         self.item = Item.objects.get(pk=self.kwargs["pk"])
         if self.item:
-            new_repost = Item.objects.create(creator=request.user, parent=self.item, is_repost=True)
-            return HttpResponse("!")
+			if self.item.post:
+            	new_repost = Post.objects.create(creator=request.user, parent=self.item, is_repost=True)
+            	return HttpResponse("!")
 
 
 class ReactView(TemplateView):
