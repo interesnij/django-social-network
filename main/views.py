@@ -9,6 +9,7 @@ from main.forms import CommentForm
 from main.helpers import ajax_required
 from django.template.loader import render_to_string
 from django.views import View
+from posts.models import Post
 
 
 class MainPageView(TemplateView):
