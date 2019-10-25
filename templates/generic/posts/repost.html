@@ -18,7 +18,7 @@
     </div>
   </div>
 
-  <div class="card-body">
+  <div class="card-body fullscreen" data-id="{{ object.pk }}" style="cursor:pointer" >
     {% if object.parent.post.text %}
       <p class="">{{ object.parent.post.text|linebreaks }}</p>
     {% endif %}
