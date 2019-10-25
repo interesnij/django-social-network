@@ -497,7 +497,7 @@ class Community(models.Model):
 
 class CommunityMembership(models.Model):
     #user = models.ForeignKey(User, db_index=False, on_delete=models.CASCADE, related_name='communities_memberships', null=False, blank=False, verbose_name="Члены сообщества")
-    #community = models.ForeignKey(Community, db_index=False, on_delete=models.CASCADE, related_name='memberships', null=False, blank=False, verbose_name="Сообщество")
+    community = models.ForeignKey(Community, db_index=False, on_delete=models.CASCADE, related_name='memberships', null=False, blank=False, verbose_name="Сообщество")
     is_administrator = models.BooleanField(default=False, verbose_name="Это администратор")
     is_moderator = models.BooleanField(default=False, verbose_name="Это модератор")
     created = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создано")
