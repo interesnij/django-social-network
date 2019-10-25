@@ -4,6 +4,7 @@ from main.views import (
 						ComingView,
 						ReactView,
 						CommentReactView,
+						RepostUser,
 						get_comment,
 						post_comment,
 						post_comment_react,
@@ -26,4 +27,5 @@ urlpatterns = [
     url(r'^main/post-comment/$', post_comment, name='post_comment'),
     url(r'^main/reply-comment/$', reply_comment, name='reply_comment'),
 	url(r'^main/comment_react_window/(?P<pk>\d+)/$', CommentReactView.as_view(), name='comment_react_window'),
+	url(r'^main/repost/(?P<uuid>[0-9a-f-]+)/$', RepostUser.as_view(), name="repost_user"),
 ]

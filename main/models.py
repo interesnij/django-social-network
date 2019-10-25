@@ -20,8 +20,11 @@ class Item(models.Model):
     is_closed = models.BooleanField(default=False, verbose_name="Закрыто")
     is_deleted = models.BooleanField(default=False, verbose_name="Удалено")
     is_fixed = models.BooleanField(default=False, verbose_name="Закреплено")
+    is_repost = models.BooleanField(verbose_name="Это репост", default=False)
     views=models.IntegerField(default=0, verbose_name="Просмотры")
     moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='items')
+    parent = models.ForeignKey("self", blank=True,
+        null=True, on_delete=models.CASCADE, related_name="thread")
 
     class Meta:
         indexes = (
@@ -64,6 +67,19 @@ class Item(models.Model):
 
     def notification_comment(self, user):
         notification_handler(user, self.creator,Notification.POST_COMMENT, action_object=self,id_value=str(self.uuid),key='notification')
+
+    def get_parent(self):
+        if self.parent:
+            return self.parent
+        else:
+            return self
+
+    def get_thread(self):
+        parent = self.get_parent()
+        return parent.thread.all()
+
+    def count_thread(self):
+        return self.get_thread().count()
 
 
 class ItemComment(models.Model):

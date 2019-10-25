@@ -8,6 +8,7 @@ from django.views.decorators.http import require_http_methods
 from main.forms import CommentForm
 from main.helpers import ajax_required
 from django.template.loader import render_to_string
+from django.views import View
 
 
 class MainPageView(TemplateView):
@@ -26,6 +27,15 @@ class MainPageView(TemplateView):
 
 class ComingView(TemplateView):
 	template_name="main/coming.html"
+
+
+class RepostUser(View):
+
+    def post(self, request, *args, **kwargs):
+        self.item = Item.objects.get(uuid=self.kwargs["uuid"])
+        if self.item:
+            new_repost = Item.objects.create(creator=request.user, parent=self.item, is_repost=True)
+            return HttpResponse("!")
 
 
 class ReactView(TemplateView):

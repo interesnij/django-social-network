@@ -3,7 +3,7 @@
 
     {% include 'generic/card_header.html' %}
 
-    {% if object.post.parent %}
+    {% if object.is_repost %}
     {% include 'generic/posts/repost.html' %}
     {% endif %}
 

@@ -25,7 +25,7 @@ $(".comment").on("click", function () {
 		var repost = $(this);
 		var uuid = repost.data('uuid');
 		$.ajax({
-			url: "/posts/repost/" + uuid + "/",
+			url: "/main/repost/" + uuid + "/",
 			type: 'post',
 			success: function (data) {
 

@@ -4,7 +4,6 @@ from django.template.loader import render_to_string
 from posts.models import Post
 from posts.forms import PostUserForm
 from django.http import HttpResponse
-from django.views import View
 
 
 class PostsView(TemplateView):
@@ -52,12 +51,3 @@ class PostUserCreate(TemplateView):
                  html = render_to_string('new_post.html',{'object': new_post,'request': request})
                  return HttpResponse(html)
         return super(PostUserCreate,self).get(request,*args,**kwargs)
-
-
-class RepostUser(View):
-
-    def post(self, request, *args, **kwargs):
-        self.post = Post.objects.get(uuid=self.kwargs["uuid"])
-        if self.post:
-            new_repost = Post.objects.create(creator=request.user, parent=self.post)
-            return HttpResponse("!")

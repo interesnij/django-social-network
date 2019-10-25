@@ -14,7 +14,6 @@ class Post(Item):
     text = models.TextField(max_length=settings.POST_MAX_LENGTH, blank=False, null=True, verbose_name="Текст")
     parent = models.ForeignKey("self", blank=True,
         null=True, on_delete=models.CASCADE, related_name="thread")
-    repost = models.BooleanField(verbose_name="Это репост", default=False)
     STATUS_DRAFT = 'D'
     STATUS_PROCESSING = 'PG'
     STATUS_PUBLISHED = 'P'
@@ -123,19 +122,6 @@ class Post(Item):
             comment.soft_delete()
         self.is_deleted = True
         self.save()
-
-    def get_parent(self):
-        if self.parent:
-            return self.parent
-        else:
-            return self
-
-    def get_thread(self):
-        parent = self.get_parent()
-        return parent.thread.all()
-
-    def count_thread(self):
-        return self.get_thread().count()
 
     class Meta:
         ordering=["-created"]
