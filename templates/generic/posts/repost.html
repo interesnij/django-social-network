@@ -1,10 +1,10 @@
 {% load staticfiles humanize %}
-<span>
+<span style="margin-left: 5%;border-left: 1px solid #A7A7A7;">
 <div class="card-header border-bottom" style="margin-top: -20px;">
     <div class="media" style="font-size: 0.8em;">
         <figure>
           {% if object.post.parent.creator.profile.avatar %}
-            <img src="{{ object.post.parent.creator.profile.avatar.url }}" style="border-radius: 50px;width:50px;" alt="image">
+            <img src="{{ object.post.parent.creator.profile.avatar.url }}" style="border-radius: 50px;width:40px;" alt="image">
           {% else %}
             <img src="{% static 'images/user.png' %}" style="border-radius: 50px;width:40px;" alt="image">
           {% endif %}
