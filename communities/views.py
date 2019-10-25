@@ -23,3 +23,8 @@ class CommunitiesView(ListView):
 class CommunityDetailView(DetailView):
 	template_name="community_detail.html"
 	model=Community
+
+
+class AllCommunities(ListView):
+    template_name="all_communities.html"
+    model=User
