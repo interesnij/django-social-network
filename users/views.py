@@ -215,6 +215,7 @@ class ProfileButtonReload(TemplateView):
 
 	def get_context_data(self, **kwargs):
 		context = super(ProfileButtonReload, self).get_context_data(**kwargs)
+        context['user'] = self.user
 		context['connect'] = self.connect
 		context['connect2'] = self.connect2
 		context['follow'] = self.follow
@@ -237,6 +238,7 @@ class ProfileStatReload(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(ProfileStatReload, self).get_context_data(**kwargs)
+        context['user'] = self.user
         context['follows_count'] = self.follows_count
         context['goods_count'] = self.goods_count
         context['frends_count'] = self.frends_count
