@@ -67,8 +67,4 @@ class Migration(migrations.Migration):
                 ('post', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='post_doc', to='posts.Post', verbose_name='Документ')),
             ],
         ),
-        migrations.AddIndex(
-            model_name='postrepost',
-            index=django.contrib.postgres.indexes.BrinIndex(fields=['created'], name='posts_postr_created_777331_brin'),
-        ),
     ]
