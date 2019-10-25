@@ -20,7 +20,7 @@ $(".comment").on("click", function () {
 </script>
 
 <script>
-	function repost() {
+	$(".repost").on("click", function () {
 		var repost = $(this);
 		var uuid = repost.data('uuid');
 		$.ajax({
@@ -40,7 +40,6 @@ $(".comment").on("click", function () {
 			}
 		});
 	};
-	$('[data-action="repost"]').click(repost);
 </script>
 
 <script>

@@ -11,30 +11,6 @@ $(document).ready(function(){
 });
 </script>
 
-<script>
-function repost() {
-var repost = $(this);
-var uuid = repost.data('uuid');
-$.ajax({
-	url: "/posts/repost/" + uuid + "/",
-	type: 'post',
-	success: function (data) {
-
-		$.toast({
-				heading: '{{ request.user.first_name }}',
-				text: 'Репост выполнен успешно!',
-				showHideTransition: 'fade',
-				icon: 'info'
-		})
-	},
-	error: function(data) {
-		console.log("Что то пошло не так");
-	}
-});
-};
-$('[data-action="repost"]').click(repost);
-</script>
-
 {% if request.user == user and  request.user.is_authenticated %}
 
 <script>
