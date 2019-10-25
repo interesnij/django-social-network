@@ -160,10 +160,10 @@ $(".comment").on("click", function () {
 
 <script>
 	$(".repost").on("click", function () {
-		var repost = $(this);
-		var uuid = repost.data('uuid');
+    var repost = $(this);
+		var pk = remove.data('id');
 		$.ajax({
-			url: "/main/repost/" + uuid + "/",
+			url: "/main/repost/" + pk + "/",
 			type: 'post',
 			success: function (data) {
 

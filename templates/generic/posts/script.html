@@ -23,10 +23,10 @@ $(".comment").on("click", function () {
 <script>
 	$(".repost").on("click", function () {
 		var repost = $(this);
-		var uuid = repost.data('uuid');
+		var pk = remove.data('id');
 		$.ajax({
-			url: "/main/repost/" + uuid + "/",
-			type: 'post',
+			url: "/main/repost/" + pk + "/",
+			type: 'post', 
 			success: function (data) {
 
 				$.toast({
