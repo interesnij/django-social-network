@@ -11,9 +11,9 @@ class CommunitiesView(ListView):
 	paginate_by=10
 
 	def get_queryset(self):
-        self.user=User.objects.get(pk=self.kwargs["pk"])
-        groups=Community.objects.filter(starrers=self.user)
-        return groups
+		self.user=User.objects.get(pk=self.kwargs["pk"])
+		groups=Community.objects.filter(starrers=self.user)
+		return groups
 
 	def get_context_data(self,**kwargs):
 		context=super(CommunitiesView,self).get_context_data(**kwargs)
