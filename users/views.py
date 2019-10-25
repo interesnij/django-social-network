@@ -222,26 +222,26 @@ class ProfileButtonReload(TemplateView):
 		return context
 
 
-class ProfileButtonReload(TemplateView):
-	template_name="profile_stat.html"
+class ProfileStatReload(TemplateView):
+    template_name="profile_stat.html"
 
-	def get(self,request,*args,**kwargs):
-		self.user=User.objects.get(pk=self.kwargs["pk"])
-		self.follows_count=Follow.objects.filter(followed_user=self.user).count()
+    def get(self,request,*args,**kwargs):
+        self.user=User.objects.get(pk=self.kwargs["pk"])
+        self.follows_count=Follow.objects.filter(followed_user=self.user).count()
         self.goods_count=Good.objects.filter(creator=self.user,is_deleted=False).count()
         self.connect_count=Connect.objects.filter(user=self.user).count()
         self.connect_count2=Connect.objects.filter(target_user=self.user).count()
         self.frends_count=self.connect_count + self.connect_count2
         self.communities_count=Community.objects.filter(starrers=self.user).count()
-		return super(ProfileButtonReload,self).get(request,*args,**kwargs)
+        return super(ProfileStatReload,self).get(request,*args,**kwargs)
 
-	def get_context_data(self, **kwargs):
-		context = super(ProfileButtonReload, self).get_context_data(**kwargs)
-		context['follows_count'] = self.follows_count
+    def get_context_data(self, **kwargs):
+        context = super(ProfileStatReload, self).get_context_data(**kwargs)
+        context['follows_count'] = self.follows_count
         context['goods_count'] = self.goods_count
         context['frends_count'] = self.frends_count
         context['communities_count'] = self.communities_count
-		return context
+        return context
 
 
 def fixed(request, item_id):
