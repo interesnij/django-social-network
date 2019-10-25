@@ -3,17 +3,17 @@
 <div class="card-header border-bottom">
     <div class="media">
         <figure>
-          {% if object.post.creator.profile.avatar %}
-            <img src="{{ object.post.creator.profile.avatar.url }}" style="border-radius: 50px;width:50px;" alt="image">
+          {% if object.post.parent.creator.profile.avatar %}
+            <img src="{{ object.post.parent.creator.profile.avatar.url }}" style="border-radius: 50px;width:50px;" alt="image">
           {% else %}
             <img src="{% static 'images/user.png' %}" style="border-radius: 50px;width:50px;" alt="image">
           {% endif %}
         </figure>
         <div class="media-body">
-            <h6 class="mb-0">{{ object.post.creator.get_full_name }} &nbsp;
+            <h6 class="mb-0">{{ object.post.parent.creator.get_full_name }} &nbsp;
               <span class="is_fixed" style="color: #888888;font-size: 13px;{% if not object.is_fixed %}display:none;{% endif %}">закреплено</span>
             </h6>
-            <p class="mb-0">{{ object.post.created|naturaltime }}</p>
+            <p class="mb-0">{{ object.post.parent.created|naturaltime }}</p>
         </div>
     </div>
 </div>
