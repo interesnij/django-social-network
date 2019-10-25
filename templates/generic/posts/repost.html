@@ -1,12 +1,12 @@
 {% load staticfiles humanize %}
-
-<div class="card-header border-bottom">
-    <div class="media">
+<span>
+<div class="card-header border-bottom" style="margin-top: -20px;">
+    <div class="media" style="font-size: 0.8em;">
         <figure>
           {% if object.post.parent.creator.profile.avatar %}
             <img src="{{ object.post.parent.creator.profile.avatar.url }}" style="border-radius: 50px;width:50px;" alt="image">
           {% else %}
-            <img src="{% static 'images/user.png' %}" style="border-radius: 50px;width:50px;" alt="image">
+            <img src="{% static 'images/user.png' %}" style="border-radius: 50px;width:40px;" alt="image">
           {% endif %}
         </figure>
         <div class="media-body">
@@ -29,3 +29,4 @@
     <p class="">{{ object.post.parent.doc }}</p>
   {% endif %}
 </div>
+</span>
