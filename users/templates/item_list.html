@@ -155,3 +155,26 @@ $(".comment").on("click", function () {
 	$('[data-action="react"]').click(react);
 	$('[data-action="un_react"]').click(un_react);
 </script>
+
+<script>
+	$(".repost").on("click", function () {
+		var repost = $(this);
+		var uuid = repost.data('uuid');
+		$.ajax({
+			url: "/posts/repost/" + uuid + "/",
+			type: 'post',
+			success: function (data) {
+
+				$.toast({
+					heading: '{{ request.user.first_name }}',
+					text: 'Репост выполнен успешно!',
+					showHideTransition: 'fade',
+					icon: 'info'
+				})
+			},
+			error: function(data) {
+				console.log("Что то пошло не так");
+			}
+		});
+	});
+</script>
