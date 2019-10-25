@@ -43,6 +43,11 @@
           &nbsp;&nbsp;
           <span title="Поделиться" class="repost" style="cursor:pointer" data-uuid="{{ object.uuid }}">
             <img style="width:20px" src="{% static 'images/icons/share-24px.svg' %}" />
+            <span class="repost-count">
+              {% if object.count_thread %}
+                {{ object.count_thread }}
+              {% endif %}
+            </span>
           </span>
 
 
