@@ -33,7 +33,7 @@ class RepostUser(View):
 
 	def post(self, request, *args, **kwargs):
 		self.item = Item.objects.get(pk=self.kwargs["pk"])
-        if self.item.post:
+		if self.item.post:
 			new_repost = Post.objects.create(creator=request.user, parent=self.item, is_repost=True)
 			return HttpResponse("!")
 		else:
