@@ -19,13 +19,13 @@
   </div>
 
   <div class="card-body">
-    {% if object.parent.post.parent.text %}
+    {% if object.parent.post.text %}
       <p class="">{{ object.parent.post.text|linebreaks }}</p>
     {% endif %}
-    {% if object.parent.post.parent.image %}
+    {% if object.parent.post.image %}
       <p class="">{{ object.parent.post.image.url }}</p>
     {% endif %}
-    {% if object.parent.post.parent.doc %}
+    {% if object.parent.post.doc %}
       <p class="">{{ object.parent.post.doc }}</p>
     {% endif %}
   </div>
