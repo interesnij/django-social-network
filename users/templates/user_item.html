@@ -12,28 +12,22 @@
     </span>
   {% endif %}
 </span>
-<span class="item_fullscreen_hide" style="position: relative;">
+<span class="item_fullscreen_hide">
   <img style="width:35px" src="{% static 'images/icons/close-24px.svg' %}" />
 </span>
 
 {% if object.post %}
-<div class="mb-4 infinite-item" style="position: relative;" item-id="{{ object.uuid }}">
-
+<div class="mb-4 infinite-item" item-id="{{ object.uuid }}">
   {% include 'generic/posts/post.html' %}
-
 </div>
 {% endif %}
 
 {% if object.article %}
 <div class="mb-4 infinite-item" item-id="{{ object.uuid }}">
-
     {% include 'generic/posts/article.html' with article=article  %}
-
 </div>
-
 {% endif %}
 
-<div class="">
   {% if object.get_previous_by_created %}
     <script>
     	$('.prev_item').on('click', function () {
@@ -50,7 +44,7 @@
     	});
     </script>
     {% endif %}
-</div>
+
 <script>
   $('.item_fullscreen_hide').on('click', function () {
   	 $('.item_fullscreen').hide();
