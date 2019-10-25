@@ -1,22 +1,21 @@
 {% load staticfiles humanize liked_user %}
 
-<span style="position: relative;">
 <span class="text-hide-xs">
   {% if object.get_previous_by_created %}
-    <span class="prev_item">
+    <span class="prev_item" style="">
       <img style="width: 50px;" src="{% static 'images/icons/right-24px.svg' %}" />
     </span>
   {% endif %}
   {% if object.get_next_by_created %}
-    <span class="next_item">
+    <span class="next_item" style="">
       <img style="width: 50px;" src="{% static 'images/icons/left-24px.svg' %}" />
     </span>
   {% endif %}
 </span>
-<span class="item_fullscreen_hide">
+<span class="item_fullscreen_hide" style="position: relative;">
   <img style="width:35px" src="{% static 'images/icons/close-24px.svg' %}" />
 </span>
-</span>
+
 {% if object.post %}
 <div class="mb-4 infinite-item" style="position: relative;" item-id="{{ object.uuid }}">
 
