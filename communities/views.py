@@ -26,8 +26,8 @@ class CommunityDetailView(DetailView):
 
 
 class AllCommunities(ListView):
-    template_name="all_communities.html"
-    model=Community
+	template_name="all_communities.html"
+	model=Community
 	paginate_by=10
 
 	def get_queryset(self):
