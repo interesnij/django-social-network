@@ -130,18 +130,6 @@ class Post(Item):
         else:
             return self
 
-    def reply_this(self, user, text):
-        parent = self.get_parent()
-        reply_post = Post.objects.create(
-            creator=creator,
-            text=text,
-            reply=True,
-            parent=parent
-        )
-        notification_handler(
-            creator, parent.creator, Notification.REPLY, action_object=reply_post,
-            id_value=str(parent.uuid), key='social_update')
-
     def get_thread(self):
         parent = self.get_parent()
         return parent.thread.all()
