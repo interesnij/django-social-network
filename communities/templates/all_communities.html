@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% load staticfiles humanize %}
+
+{% block title %}Все сообщества{% endblock %}
+
+{% block content %}
+<div class="row">
+<div class="col-12 col-md-8">
+<br><br><br>
+<div class="input-group mb-3">
+  <input type="text" class="form-control" placeholder="Поиск сообществ" aria-label="Recipient's username">
+  <div class="input-group-append">
+    <button class="btn btn-outline-link" type="button">Искать</button>
+  </div>
+</div>
+
+  <div class="card mb-2">
+        <div class="card-header">
+            <div class="media">
+                <div class="icon-circle icon-30 bg-light-danger mr-3">
+                    <i class="material-icons">group</i>
+                </div>
+                <div class="media-body"><h5 class="mt-1">Все сообщества</h5></div>
+            </div>
+        </div>
+        <br><br>
+        <div class="card-body px-0 py-0">
+            <ul class="list-group border-top border-bottom list-group-flush">
+              {% for object in object_list %}
+                <li class="list-group-item">
+                    <div class="media">
+                      <figure>
+                        {% if object.avatar %}
+                          <img src="{{ object.avatar.url }}" style="border-radius:50px;width:50px;" alt="image">
+                        {% else %}
+                          <img src="{% static 'images/user.png' %}" alt="image" style="border-radius:50px;width:50px;">
+                        {% endif %}
+                      </figure>
+                        <div class="media-body">
+                          <a href="{% url 'community_detail' pk=object.pk %}" class="ajax">
+                            <h6 class="my-0 mt-1">{{ object.name }}
+                            </h6>
+                          </a>
+                            <p>Вступить в сообщество</p>
+                        </div>
+                    </div>
+                </li>
+              {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="col-12 col-md-4">
+  <br><br><br>
+  <button class="btn btn-outline-success" style="margin-bottom:15px;width:100%;" type="button">
+    Создать сообщество
+  </button>
+  
+  <div class="card mb-2">
+        <div class="card-header">
+            <div class="media">
+                <div class="icon-circle icon-30 bg-light-danger mr-3">
+                    <i class="material-icons">tag_faces</i>
+                </div>
+                <div class="media-body">
+                    <h5 class="mt-1">Популярные группы</h5>
+                </div>
+            </div>
+        </div>
+        <br><br>
+  </div>
+
+  <div class="card mb-2">
+        <div class="card-header">
+            <div class="media">
+                <div class="icon-circle icon-30 bg-light-danger mr-3">
+                    <i class="material-icons">search</i>
+                </div>
+                <div class="media-body">
+                    <h5 class="mt-1">Поиск групп</h5>
+                </div>
+            </div>
+        </div>
+        <br><br>
+  </div>
+</div>
+</div>
+{% endblock %}
