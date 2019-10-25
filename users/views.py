@@ -104,10 +104,7 @@ class ProfileUserView(TemplateView):
         context['form_avatar'] = AvatarUserForm()
         context['form_comment'] = CommentForm()
         context['communities'] = self.communities
-        context['connect'] = self.connect
-        context['connect2'] = self.connect2
-        context['follow'] = self.follow
-        context['follow2'] = self.follow2
+        
         context['follows_count'] = self.follows_count
         context['goods_count'] = self.goods_count
         context['frends_count'] = self.frends_count
