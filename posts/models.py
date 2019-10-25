@@ -12,8 +12,6 @@ from main.models import Item
 
 class Post(Item):
     text = models.TextField(max_length=settings.POST_MAX_LENGTH, blank=False, null=True, verbose_name="Текст")
-    parent = models.ForeignKey("self", blank=True,
-        null=True, on_delete=models.CASCADE, related_name="thread")
     STATUS_DRAFT = 'D'
     STATUS_PROCESSING = 'PG'
     STATUS_PUBLISHED = 'P'
