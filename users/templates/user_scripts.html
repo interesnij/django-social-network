@@ -9,6 +9,7 @@
 $(document).ready(function(){
 	$('#lenta_reload').html('').load("/users/list/" + {{ user.pk }});
 	$('#button_reload').html('').load("/users/profile_button/" + {{ user.pk }});
+	$('#button_stat').html('').load("/users/profile_stat/" + {{ user.pk }});
 });
 </script>
 

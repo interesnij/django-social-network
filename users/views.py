@@ -71,29 +71,7 @@ class ProfileUserView(TemplateView):
         self.frends = Connect.objects.filter(Q(user=self.user)|Q(target_user=self.user))
         self.pop_frends = self.frends[0:5]
         self.communities=Community.objects.filter(starrers=self.user)
-        self.follows_count=Follow.objects.filter(followed_user=self.user).count()
-        self.goods_count=Good.objects.filter(creator=self.user,is_deleted=False).count()
-        self.connect_count=Connect.objects.filter(user=self.user).count()
-        self.connect_count2=Connect.objects.filter(target_user=self.user).count()
-        self.frends_count=self.connect_count + self.connect_count2
-        self.communities_count=Community.objects.filter(starrers=self.user).count()
 
-        try:
-            self.connect = Connect.objects.get(target_user=self.request.user,user=self.user)
-        except:
-            self.connect = None
-        try:
-            self.connect2 = Connect.objects.get(user=self.request.user,target_user=self.user)
-        except:
-            self.connect2 = None
-        try:
-            self.follow = Follow.objects.get(user=self.request.user,followed_user=self.user)
-        except:
-            self.follow = None
-        try:
-            self.follow2 = Follow.objects.get(followed_user=self.request.user,user=self.user)
-        except:
-            self.follow2 = None
         return super(ProfileUserView,self).get(request,*args,**kwargs)
 
     def get_context_data(self, **kwargs):
@@ -104,11 +82,6 @@ class ProfileUserView(TemplateView):
         context['form_avatar'] = AvatarUserForm()
         context['form_comment'] = CommentForm()
         context['communities'] = self.communities
-        
-        context['follows_count'] = self.follows_count
-        context['goods_count'] = self.goods_count
-        context['frends_count'] = self.frends_count
-        context['communities_count'] = self.communities_count
         return context
 
 
@@ -242,11 +215,32 @@ class ProfileButtonReload(TemplateView):
 
 	def get_context_data(self, **kwargs):
 		context = super(ProfileButtonReload, self).get_context_data(**kwargs)
-		context['user'] = self.user
 		context['connect'] = self.connect
 		context['connect2'] = self.connect2
 		context['follow'] = self.follow
 		context['follow2'] = self.follow2
+		return context
+
+
+class ProfileButtonReload(TemplateView):
+	template_name="profile_stat.html"
+
+	def get(self,request,*args,**kwargs):
+		self.user=User.objects.get(pk=self.kwargs["pk"])
+		self.follows_count=Follow.objects.filter(followed_user=self.user).count()
+        self.goods_count=Good.objects.filter(creator=self.user,is_deleted=False).count()
+        self.connect_count=Connect.objects.filter(user=self.user).count()
+        self.connect_count2=Connect.objects.filter(target_user=self.user).count()
+        self.frends_count=self.connect_count + self.connect_count2
+        self.communities_count=Community.objects.filter(starrers=self.user).count()
+		return super(ProfileButtonReload,self).get(request,*args,**kwargs)
+
+	def get_context_data(self, **kwargs):
+		context = super(ProfileButtonReload, self).get_context_data(**kwargs)
+		context['follows_count'] = self.follows_count
+        context['goods_count'] = self.goods_count
+        context['frends_count'] = self.frends_count
+        context['communities_count'] = self.communities_count
 		return context
 
 
