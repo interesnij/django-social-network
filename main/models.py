@@ -129,7 +129,7 @@ class EmojiGroup(models.Model):
 class Emoji(models.Model):
     group = models.ForeignKey(EmojiGroup, on_delete=models.CASCADE, related_name='emojis', null=True)
     keyword = models.CharField(max_length=16, blank=False, null=False)
-    image = models.ImageField(blank=False, null=False)
+    image = models.ImageField(blank=False, null=False, upload_to="emoji/")
     created = models.DateTimeField(editable=False)
     order = models.IntegerField(unique=False, default=100)
 
