@@ -130,18 +130,6 @@ class Post(Item):
         return self.creator.get_full_name()
 
 
-class PostRepost(models.Model):
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    content = models.TextField(blank=True)
-    created = models.DateTimeField(auto_now_add=True, auto_now=False)
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post_repost', verbose_name="Запись")
-
-    class Meta:
-        indexes = (
-            BrinIndex(fields=['created']),
-        )
-
-
 class PostMute(models.Model):
     post = models.ForeignKey(Post, db_index=False, on_delete=models.CASCADE, related_name='mutes', verbose_name="Запись")
     muter = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE, related_name='post_mutes', verbose_name="Кто заглушил")
