@@ -7,7 +7,8 @@
 <!-- ГРУЗИМ ЛЕНТУ ЗАПИСЕЙ ПОЛЬЗОВАТЕЛЕЙ ПРИ ЗАГРУЗКЕ СТРАНИЦЕ ПРОФИЛЯ-->
 <script>
 $(document).ready(function(){
-	$('#lenta-reload').html('').load("/users/list/" + {{ user.pk }})
+	$('#lenta_reload').html('').load("/users/list/" + {{ user.pk }});
+	$('#button_reload').html('').load("/users/profile_button/" + {{ user.pk }});
 });
 </script>
 
