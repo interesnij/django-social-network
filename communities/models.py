@@ -44,8 +44,8 @@ class Community(models.Model):
                              null=True, verbose_name="Правила")
     avatar = models.ImageField(blank=False, null=True, upload_to=upload_to_community_avatar_directory, verbose_name="Аватар")
     created = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создано")
-    #starrers = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, related_name='favorite_communities', verbose_name="Подписчики")
-    #banned_users = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, related_name='banned_of_communities', verbose_name="Черный список")
+    starrers = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, related_name='favorite_communities', verbose_name="Подписчики")
+    banned_users = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, related_name='banned_of_communities', verbose_name="Черный список")
     status = models.CharField(max_length=100, blank=True, null=True, verbose_name="статус-слоган")
     COMMUNITY_TYPE_PRIVATE = 'T'
     COMMUNITY_TYPE_PUBLIC = 'P'
@@ -527,10 +527,10 @@ class CommunityMembership(models.Model):
 
 
 class CommunityLog(models.Model):
-    #source_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='+', null=False, blank=False, verbose_name="Кто модерирует")
-    #target_user = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='+', null=True, blank=False, verbose_name="Кого модерируют")
-    #post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='+', null=True, blank=True, verbose_name="Пост")
-    #community = models.ForeignKey(Community, on_delete=models.CASCADE, related_name='logs', null=False, blank=False, verbose_name="Сообщество")
+    source_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='+', null=False, blank=False, verbose_name="Кто модерирует")
+    target_user = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='+', null=True, blank=False, verbose_name="Кого модерируют")
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='+', null=True, blank=True, verbose_name="Пост")
+    community = models.ForeignKey(Community, on_delete=models.CASCADE, related_name='logs', null=False, blank=False, verbose_name="Сообщество")
     created = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создан")
 
     ACTION_TYPES = (
