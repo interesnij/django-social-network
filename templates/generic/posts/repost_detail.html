@@ -12,7 +12,10 @@
         </figure>
       </a>
         <div class="media-body">
-            <h6 class="mb-0">{{ object.parent.creator.get_full_name }} &nbsp;
+            <h6 class="mb-0">
+              <a href="{% url 'user' pk=object.parent.creator.pk %}" class="ajax">
+                {{ object.parent.creator.get_full_name }} &nbsp;
+              </a>
               <span class="is_fixed" style="color: #888888;font-size: 13px;{% if not object.is_fixed %}display:none;{% endif %}">закреплено</span>
             </h6>
             <p class="mb-0">{{ object.parent.created|naturaltime }}</p>

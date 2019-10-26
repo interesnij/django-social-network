@@ -2,15 +2,20 @@
 
 <div class="card-header">
     <div class="media">
+      <a href="{% url 'user' pk=object.creator.pk %}" class="ajax">
         <figure>
-          {% if object.creator.profile.avatar %}
-            <img src="{{ object.creator.profile.avatar.url }}" style="border-radius: 50px;width:50px;" alt="image">
+          {% if object.parent.creator.profile.avatar %}
+            <img src="{{ object.parent.creator.profile.avatar.url }}" style="border-radius: 50px;width:40px;" alt="image">
           {% else %}
-            <img src="{% static 'images/user.png' %}" style="border-radius: 50px;width:50px;" alt="image">
+            <img src="{% static 'images/user.png' %}" style="border-radius: 50px;width:40px;" alt="image">
           {% endif %}
         </figure>
+      </a>
         <div class="media-body">
-            <h6 class="mb-0">{{ object.creator.get_full_name }} &nbsp;
+            <h6 class="mb-0">
+              <a href="{% url 'user' pk=object.parent.creator.pk %}" class="ajax">
+                {{ object.parent.creator.get_full_name }} &nbsp;
+              </a>
               <span class="is_fixed" style="color: #888888;font-size: 13px;{% if not object.is_fixed %}display:none;{% endif %}">закреплено</span>
             </h6>
             <p class="mb-0">{{ object.created|naturaltime }}</p>
