@@ -122,6 +122,7 @@ $('#question').on('click', function () {
             data: frm_post.serialize(),
             success: function (data) {
               $(".stream").prepend(data);
+              console.log(data);
               $(".id_text").val("");
               $.toast({
                   heading: '{{ request.user.first_name }}',
