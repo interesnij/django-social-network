@@ -53,4 +53,3 @@ class PostUserCreate(View):
                     return HttpResponse(html)
             else:
                 return HttpResponse("Нужно ввести текст или добавить фото")
-        return super(PostUserCreate,self).post(request,*args,**kwargs)
