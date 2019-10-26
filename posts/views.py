@@ -43,11 +43,14 @@ class PostUserCreate(TemplateView):
     def post(self,request,*args,**kwargs):
         self.form_post=PostUserForm(request.POST, request.FILES)
         if self.form_post.is_valid():
-            new_post=self.form_post.save(commit=False)
-            new_post.creator=self.request.user
-            new_post=self.form_post.save()
+            if self.form_post.text or self.form_post.image:
+                new_post=self.form_post.save(commit=False)
+                new_post.creator=self.request.user
+                new_post=self.form_post.save()
 
-            if request.is_ajax() :
-                 html = render_to_string('new_post.html',{'object': new_post,'request': request})
-                 return HttpResponse(html)
+                if request.is_ajax() :
+                    html = render_to_string('new_post.html',{'object': new_post,'request': request})
+                    return HttpResponse(html)
+            else:
+                return HttpResponse("Нужно ввести текст или добавить фото")
         return super(PostUserCreate,self).get(request,*args,**kwargs)
