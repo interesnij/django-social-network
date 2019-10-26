@@ -31,7 +31,7 @@
 <h5 class="m-0">Добавление статьи</h5>
 <br><br>
 
-<form action="" id="FORM-POST1" method="post" enctype="multipart/form-data">
+<form action="" id="FORM-ARTICLE" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <div class="form-group">
         <label>Название статьи (обязательно)</label>
@@ -67,14 +67,14 @@
 </form>
 
 <script>
-    var frm = $('#FORM-POST1');
+    var frm_art = $('#FORM-ARTICLE');
     $('#FORM-POST1').submit(function(e) {
         e.preventDefault();
         CKEDITOR.instances.id_content.updateElement();
         $.ajax({
-            type: frm.attr('method'),
+            type: frm_art.attr('method'),
             url: "{% url 'article_add_user' %}",
-            data: new FormData($(frm)[0]),
+            data: new FormData($(form)[0]),
             contentType: false,
             cache: false,
             processData: false,
