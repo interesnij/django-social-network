@@ -19,14 +19,20 @@
   </div>
 
   <div class="card-body fullscreen" data-id="{{ object.pk }}" style="cursor:pointer" >
-    1_{{ object.parent.post.status }} 2_{{ object.parent.post.pk }}
-      <p class="">{{ object.parent.post.text|linebreaks }}</p>
 
+    {% if object.parent.post.text %}
+      <p class="">{{ object.parent.post.text|linebreaks }}</p>
+    {% endif %}
     {% if object.parent.post.image %}
       <p class="">{{ object.parent.post.image.url }}</p>
     {% endif %}
     {% if object.parent.post.doc %}
       <p class="">{{ object.parent.post.doc }}</p>
     {% endif %}
+
+    {% if object.parent.article %}
+    aaaa
+    {% endif %}
+
   </div>
 </span>
