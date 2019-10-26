@@ -38,6 +38,8 @@ class RepostUser(View):
 		if self.item.post:
 			new_repost = Post.objects.create(creator=request.user, parent=self.item, is_repost=True)
 			return HttpResponse("!")
+		else:
+			pass
 		if self.item.article:
 			new_repost = Article.objects.create(creator=request.user, parent=self.item, is_repost=True)
 			return HttpResponse("!")
