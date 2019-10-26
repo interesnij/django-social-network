@@ -1,7 +1,14 @@
 {% load staticfiles %}
 
 {% include 'generic/posts/script.html' %}
-
+<script>
+  var textarea = document.querySelector('.id_text');
+textarea.addEventListener('keyup', function(){
+  if(this.scrollTop > 0){
+    this.style.height = this.scrollHeight + "px";
+  }
+});
+</script>
 
 <!-- ГРУЗИМ
 						СТЕНУ,
