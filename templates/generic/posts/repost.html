@@ -19,9 +19,9 @@
   </div>
 
   <div class="card-body fullscreen" data-id="{{ object.pk }}" style="cursor:pointer" >
-    {% if object.parent.post.text %}
+    1_{{ object.parent.text|linebreaks }} 2_{{ object.parent.post }}
       <p class="">{{ object.parent.post.text|linebreaks }}</p>
-    {% endif %}
+
     {% if object.parent.post.image %}
       <p class="">{{ object.parent.post.image.url }}</p>
     {% endif %}

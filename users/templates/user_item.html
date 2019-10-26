@@ -1,12 +1,12 @@
 {% load staticfiles humanize liked_user %}
 
 <span class="text-hide-xs">
-  {% if object.get_previous_by_created and object.creator == user %}
+  {% if object.get_previous_by_created %}
     <span class="prev_item" style="">
       <img style="width: 50px;" src="{% static 'images/icons/right-24px.svg' %}" />
     </span>
   {% endif %}
-  {% if object.get_next_by_created and object.creator == user %}
+  {% if object.get_next_by_created %}
     <span class="next_item" style="">
       <img style="width: 50px;" src="{% static 'images/icons/left-24px.svg' %}" />
     </span>
