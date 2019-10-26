@@ -20,7 +20,7 @@
 
   <div class="card-body fullscreen" data-id="{{ object.pk }}" style="cursor:pointer" >
     1_{{ object.parent.post.status }} 2_{{ object.parent.post.pk }}
-      <p class="">{{ object.post.text|linebreaks }}</p>
+      <p class="">{{ object.parent.post.text|linebreaks }}</p>
 
     {% if object.parent.post.image %}
       <p class="">{{ object.parent.post.image.url }}</p>
