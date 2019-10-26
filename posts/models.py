@@ -23,15 +23,13 @@ class Post(Item):
         (STATUS_ARHIVED, 'Архивирован'),
     )
     status = models.CharField(blank=False, null=False, choices=STATUSES, default=STATUS_DRAFT, max_length=2, verbose_name="Статус записи")
-    image = ProcessedImageField(verbose_name='изображение', blank=True, format='JPEG',
-                                 options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)],
-                                 upload_to=upload_to_post_image_directory)
+
 
     @classmethod
     def create_post(cls, creator, community_name=None, image=None, text=None, video=None,
-                    created=None, is_draft=False, good=None, doc=None, question=None):
+                    is_draft=False, good=None, doc=None, question=None):
 
-        post = Post.objects.create(creator=creator, created=created)
+        post = Post.objects.create(creator=creator)
 
         if text:
             post.text = text
@@ -49,7 +47,7 @@ class Post(Item):
             post.community = Community.objects.get(name=community_name)
 
         if not is_draft:
-            post.publish()
+            post.STATUS_PUBLISHED
             channel_layer = get_channel_layer()
             payload = {
                     "type": "receive",
@@ -78,24 +76,6 @@ class Post(Item):
 
     def get_first_image(self):
         return self.image.first()
-
-    def _add_media_image(self, image, order):
-        return PostImage.create(image=image, post_id=self.pk, order=order)
-
-    def publish(self):
-        check_can_be_published(post=self)
-
-        if self.has_media():
-            self.status = Post.STATUS_PROCESSING
-            self.save()
-            process_post_media.delay(post_id=self.pk)
-        else:
-            self._publish()
-
-    def _publish(self):
-        self.status = Post.STATUS_PUBLISHED
-        self.created = timezone.now()
-        self.save()
 
     def is_draft(self):
         return self.status == Post.STATUS_DRAFT
@@ -128,6 +108,34 @@ class Post(Item):
 
     def __str__(self):
         return self.creator.get_full_name()
+
+
+class PostImage(models.Model):
+    post = models.OneToOneField(Post, on_delete=models.CASCADE, related_name='post_image', null=True)
+    image = ProcessedImageField(verbose_name='Главное изображение', blank=False, null=True, format='JPEG',
+                                 options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)],
+                                 upload_to=upload_to_post_image_directory)
+    image2 = ProcessedImageField(verbose_name='Изображение 2', blank=False, null=True, format='JPEG',
+                                 options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)],
+                                 upload_to=upload_to_post_image_directory)
+    image3 = ProcessedImageField(verbose_name='Изображение 3', blank=False, null=True, format='JPEG',
+                                 options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)],
+                                 upload_to=upload_to_post_image_directory)
+    image4 = ProcessedImageField(verbose_name='Изображение 4', blank=False, null=True, format='JPEG',
+                                 options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)],
+                                 upload_to=upload_to_post_image_directory)
+    image5 = ProcessedImageField(verbose_name='Изображение 5', blank=False, null=True, format='JPEG',
+                                 options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)],
+                                 upload_to=upload_to_post_image_directory)
+    image6 = ProcessedImageField(verbose_name='Изображение 6', blank=False, null=True, format='JPEG',
+                                 options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)],
+                                 upload_to=upload_to_post_image_directory)
+    image7 = ProcessedImageField(verbose_name='Изображение 7', blank=False, null=True, format='JPEG',
+                                 options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)],
+                                 upload_to=upload_to_post_image_directory)
+    image8 = ProcessedImageField(verbose_name='Изображение 8', blank=False, null=True, format='JPEG',
+                                 options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)],
+                                 upload_to=upload_to_post_image_directory)
 
 
 class PostMute(models.Model):
