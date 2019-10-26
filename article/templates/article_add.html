@@ -68,7 +68,7 @@
 
 <script>
     var frm_art = $('#FORM-ARTICLE');
-    $('#FORM-POST1').submit(function(e) {
+    $('#FORM-ARTICLE').submit(function(e) {
         e.preventDefault();
         CKEDITOR.instances.id_content.updateElement();
         $.ajax({
