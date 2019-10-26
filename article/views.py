@@ -36,7 +36,7 @@ class ArticleDetailView(CategoryListMixin, TemplateView):
         try:
             self.article = Article.objects.get(uuid=self.kwargs["uuid"])
         except:
-            self.article = Article.objects.get(uuid=self.parent["uuid"])
+            self.article = Article.objects.get(uuid=self.parent.uuid)
         self.article.views += 1
         self.article.save()
         return super(ArticleDetailView,self).get(request,*args,**kwargs)
