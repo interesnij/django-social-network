@@ -62,7 +62,7 @@
                    <a style="cursor:pointer" class="dropdown-item">Комментарии включены</a>
                  </div>
 
-                 <button type="button" id="add_post" class="btn btn-rounded btn-sm text-uppercase pl-3">
+                 <button type="submit" class="btn btn-rounded btn-sm text-uppercase pl-3">
                    <span class="text-hide-xs">Опубликовать</span>
                    <a>
                      <img style="width:25px;color:white" src="{% static 'images/icons/send-24px.svg' %}" />
@@ -114,15 +114,15 @@ $('#question').on('click', function () {
 </script>
 
 <script>
-  $( "#add_post" ).click(function(){
     var frm_post = $('#FORM-POST');
+    $('#FORM-POST').submit(function(e) {
         $.ajax({
             type: frm_post.attr('method'),
             url: "{% url 'post_add_user' %}",
-            data_set: frm_post.serialize(),
-            success: function (data_set) {
-              $(".stream").prepend(data_set);
-              console.log(data_set);
+            data: frm_post.serialize(),
+            success: function (data) {
+              $(".stream").prepend(data);
+              console.log(data);
               $(".id_text").val("");
               $.toast({
                   heading: '{{ request.user.first_name }}',
