@@ -17,7 +17,7 @@
         </div>
     </div>
   </div>
-
+  {% if object.parent.post %}
   <div class="card-body fullscreen" data-id="{{ object.pk }}" style="cursor:pointer" >
 
     {% if object.parent.post.text %}
@@ -29,7 +29,9 @@
     {% if object.parent.post.doc %}
       <p class="">{{ object.parent.post.doc }}</p>
     {% endif %}
-
+  </div>
+  {% endif %}
+  
     {% if object.parent.article %}
     <div class="card-body article_detail" data-id="{{ object.uuid }}" style="cursor:pointer">
          <div class="jumbotron mb-4 bg-dark text-center has-background-img position-relative box-shadow">
@@ -53,6 +55,4 @@
         </div>
     </div>
     {% endif %}
-
-  </div>
 </span>

@@ -18,7 +18,9 @@
     </div>
   </div>
 
-  <div class="card-body" >
+  {% if object.parent.post %}
+  <div class="card-body">
+
     {% if object.parent.post.text %}
       <p class="">{{ object.parent.post.text|linebreaks }}</p>
     {% endif %}
@@ -28,6 +30,8 @@
     {% if object.parent.post.doc %}
       <p class="">{{ object.parent.post.doc }}</p>
     {% endif %}
+  </div>
+  {% endif %}
 
     {% if object.parent.article %}
     <div class="card-body article_detail" data-id="{{ object.uuid }}" style="cursor:pointer">
@@ -52,5 +56,4 @@
         </div>
     </div>
     {% endif %}
-  </div>
 </span>
