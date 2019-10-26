@@ -22,8 +22,6 @@
         width: 100%;
     }
 </style>
-<script src="{% static 'scripts/jquery.js' %}" type="text/javascript"></script>
-<script defer src="{% static 'scripts/cockie.js' %}" type="text/javascript"></script>
 
 <span class="article_fullscreen_hide">
   <img style="width:35px" src="{% static 'images/icons/close-24px.svg' %}" />
@@ -68,8 +66,6 @@
     </div>
 </form>
 
-
-<script src="/static/scripts/jquery.toast.min.js" type="text/javascript"></script>
 <script>
     var frm = $('#FORM-POST1');
     $('#FORM-POST1').submit(function(e) {
@@ -104,7 +100,7 @@
             },
 
             error: function(data) {
-              
+
             }
         });
         return false;

@@ -1,4 +1,4 @@
-from django.views.generic.base import TemplateView
+from django.views import View
 from follows.models import Follow
 from django.views.generic import ListView
 from users.models import User
@@ -23,8 +23,7 @@ class FollowsListView(ListView):
 		return context
 
 
-class FollowCreate(TemplateView):
-	template_name = "follow_add.html"
+class FollowCreate(View):
 	success_url = "/"
 
 	def get(self,request,*args,**kwargs):
@@ -42,8 +41,7 @@ class FollowCreate(TemplateView):
 		return super(FollowCreate,self).get(request,*args,**kwargs)
 
 
-class FollowDelete(TemplateView):
-	template_name = "follow_delete.html"
+class FollowDelete(View):
 	success_url = "/"
 
 	def get(self,request,*args,**kwargs):

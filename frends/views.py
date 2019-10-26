@@ -1,6 +1,6 @@
 from django.views.generic import ListView
 from users.models import User
-from django.views.generic.base import TemplateView
+from django.views import View
 from django.http import HttpResponse
 from frends.models import Connect
 from follows.models import Follow
@@ -25,8 +25,7 @@ class FrendsListView(ListView):
 		return context
 
 
-class ConnectCreate(TemplateView):
-	template_name = "connect_add.html"
+class ConnectCreate(View):
 	success_url = "/"
 	def get(self,request,*args,**kwargs):
 		self.target_user = User.objects.get(pk=self.kwargs["pk"])
@@ -43,8 +42,7 @@ class ConnectCreate(TemplateView):
 		return super(ConnectCreate,self).get(request,*args,**kwargs)
 
 
-class ConnectDelete2(TemplateView):
-	template_name = "connect_delete.html"
+class ConnectDelete2(View):
 	success_url = "/"
 
 	def get(self,request,*args,**kwargs):
@@ -61,8 +59,7 @@ class ConnectDelete2(TemplateView):
 			return HttpResponse("Пользователь уже удален :-)")
 		return super(ConnectDelete2,self).get(request,*args,**kwargs)
 
-class ConnectDelete(TemplateView):
-	template_name = "connect_delete.html"
+class ConnectDelete(View):
 	success_url = "/"
 
 	def get(self,request,*args,**kwargs):
