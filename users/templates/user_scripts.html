@@ -4,12 +4,16 @@
 {% include 'generic/posts/script.html' %}
 {% endif %}
 
-<!-- ГРУЗИМ ЛЕНТУ ЗАПИСЕЙ ПОЛЬЗОВАТЕЛЕЙ ПРИ ЗАГРУЗКЕ СТРАНИЦЕ ПРОФИЛЯ-->
+<!-- ГРУЗИМ
+						СТЕНУ,
+						КНОПКИ ДОБАВИТЬ,
+						СЧЕТЧИКИ СТАТИСТИКИ
+																	ПРИ ЗАГРУЗКЕ СТРАНИЦЕ ПРОФИЛЯ-->
 <script>
 $(document).ready(function(){
 	$('#lenta_reload').html('').load("/users/list/" + {{ user.pk }});
 	$('#button_reload').html('').load("/users/profile_button/" + {{ user.pk }});
-	$('#stat_reload').html('').load("/users/profile_stat/" + {{ user.pk }}); 
+	$('#stat_reload').html('').load("/users/profile_stat/" + {{ user.pk }});
 });
 </script>
 
