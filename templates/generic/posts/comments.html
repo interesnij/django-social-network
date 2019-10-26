@@ -16,7 +16,7 @@
             <input type="hidden" name="parent" value="{{ parent.pk }}">
             <div class="col">
                 <div class="input-group input-group-sm">
-                    <textarea name="text" class="form-control text-comment id_text form-control-rounded"></textarea>
+                    <textarea name="text" class="form-control id_text text-comment form-control-rounded"></textarea>
                 </div>
             </div>
             <div class="col-auto">
@@ -122,4 +122,13 @@
 		reply_comment_form.next().show();
     form.focus();
 	})
+</script>
+
+<script>
+  var textarea = document.querySelector('.id_text');
+textarea.addEventListener('keyup', function(){
+  if(this.scrollTop > 0){
+    this.style.height = this.scrollHeight + "px";
+  }
+});
 </script>
