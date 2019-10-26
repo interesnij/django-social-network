@@ -10,6 +10,7 @@ from main.helpers import ajax_required
 from django.template.loader import render_to_string
 from django.views import View
 from posts.models import Post
+from article.models import Article
 
 
 class MainPageView(TemplateView):
@@ -36,6 +37,9 @@ class RepostUser(View):
 		self.item = Item.objects.get(pk=self.kwargs["pk"])
 		if self.item.post:
 			new_repost = Post.objects.create(creator=request.user, parent=self.item, is_repost=True)
+			return HttpResponse("!")
+		else if self.item.article:
+			new_repost = Article.objects.create(creator=request.user, parent=self.item, is_repost=True)
 			return HttpResponse("!")
 		else:
 			return HttpResponse("!!!!")
