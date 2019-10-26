@@ -28,5 +28,29 @@
     {% if object.parent.post.doc %}
       <p class="">{{ object.parent.post.doc }}</p>
     {% endif %}
+
+    {% if object.parent.article %}
+    <div class="card-body article_detail" data-id="{{ object.uuid }}" style="cursor:pointer">
+         <div class="jumbotron mb-4 bg-dark text-center has-background-img position-relative box-shadow">
+             <div class="row align-items-center no-gutters">
+                    <figure class="background-img">
+                      {% if object.parent.article.image %}
+                        <img class="lazyload" data-src="{{ object.parent.article.image.url }}" alt="">
+                      {% else %}
+                        <img class="lazyload" data-src="{% static 'images/no-image.jpg' %}" />
+                      {% endif %}
+                    </figure>
+                    <div class="container">
+                      <i class="figure avatar120 mr-0 fa fa-gift rounded-circle bg-none text-white border-white "></i>
+                      <br>
+                      <h2 class="text-white">{{ object.parent.article.title}}</h2>
+                      <p class="lead text-white">Автор {{ object.parent.creator.get_full_name }}</p>
+                      <hr class="my-3">
+                      <a class="btn btn-primary" role="button">Читать</a>
+                    </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
   </div>
 </span>
