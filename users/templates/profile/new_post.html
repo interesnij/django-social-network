@@ -119,10 +119,10 @@ $('#question').on('click', function () {
         $.ajax({
             type: frm_post.attr('method'),
             url: "{% url 'post_add_user' %}",
-            data: frm_post.serialize(),
-            success: function (data) {
-              $(".stream").prepend(data);
-              console.log(data);
+            data_set: frm_post.serialize(),
+            success: function (data_set) {
+              $(".stream").prepend(data_set);
+              console.log(data_set);
               $(".id_text").val("");
               $.toast({
                   heading: '{{ request.user.first_name }}',
@@ -131,7 +131,7 @@ $('#question').on('click', function () {
                   icon: 'success'
               })
             },
-            error: function(data) {
+            error: function(data_set) {
                 $("#hack").html("Возникла непредвидинная ошибка!!");
             }
         });
