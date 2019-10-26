@@ -4,6 +4,7 @@ from django.template.loader import render_to_string
 from posts.models import Post
 from posts.forms import PostUserForm
 from django.http import HttpResponse
+from django.views import View
 
 
 class PostsView(TemplateView):
@@ -26,8 +27,7 @@ class PostDetailView(TemplateView):
         return context
 
 
-class PostUserCreate(TemplateView):
-    template_name="article_add.html"
+class PostUserCreate(View):
     form_post=None
     success_url="/"
 
