@@ -198,7 +198,7 @@ class ItemReaction(models.Model):
     def save(self, *args, **kwargs):
         if not self.id:
             self.created = timezone.now()
-        return super(PostReaction, self).save(*args, **kwargs)
+        return super(ItemReaction, self).save(*args, **kwargs)
 
 
 class ItemCommentReaction(models.Model):
