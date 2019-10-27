@@ -9,18 +9,18 @@
 </span>
 
 <div class="border-top" style="margin-top:10px">
-    <form action="" method="post">
+    <form action="" method="post" class="itemComment">
         {% csrf_token %}
         <div class="row no-gutters">
 
             <input type="hidden" name="parent" value="{{ parent.pk }}">
             <div class="col">
                 <div class="input-group input-group-sm">
-                    <textarea name="text" class="form-control comm text-comment form-control-rounded"></textarea>
+                    <textarea name="text" class="form-control text-comment form-control-rounded"></textarea>
                 </div>
             </div>
             <div class="col-auto">
-                <button class="btn btn-outline-primary btn-rounded btn-sm ml-2 itemComment" type="button">
+                <button class="btn btn-outline-primary btn-rounded btn-sm ml-2" type="submit">
                     <img style="width:22px" src="{% static 'images/icons/send-24px.svg' %}" />
                 </button>
             </div>
@@ -55,12 +55,12 @@
             }
         }
     });
-    $(".itemComment").click(function() {
-      button1 = $(this);
-      form1 = button1.parent().parent().parent();
+
+      var comment_post = $('.itemComment');
+      comment_post.submit(function(e) {
         $.ajax({
             url: '{% url "post_comment" %}',
-            data: form1.serialize(),
+            data: comment_post.serialize(),
             type: 'POST',
             cache: false,
             success: function(data) {
@@ -125,7 +125,7 @@
 </script>
 
 <script>
-  var textarea = document.querySelector('.comm');
+  var textarea = document.querySelector('.text-comment');
 textarea.addEventListener('keyup', function(){
   if(this.scrollTop > 0){
     this.style.height = this.scrollHeight + "px";
