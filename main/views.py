@@ -86,7 +86,7 @@ class CommentUserCreate(View):
 	form_comment=None
 
 	def get(self,request,*args,**kwargs):
-		self.form_comment=CommentForm(initial={"creator":request.user})
+		self.form_comment=CommentForm(initial={"commenter":request.user})
 		return super(CommentUserCreate,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -98,7 +98,7 @@ class CommentUserCreate(View):
 		self.form_comment=CommentForm(request.POST, request.FILES)
 		if self.form_comment.is_valid():
 			new_comment=self.form_comment.save(commit=False)
-			new_comment.creator=self.request.user
+			new_comment.commenter=self.request.user
 			new_comment=self.form_comment.save()
 
 			if request.is_ajax() :
