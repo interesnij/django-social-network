@@ -1,6 +1,6 @@
 from django.views.generic.base import TemplateView
 from users.models import User
-from main.models import Item, ItemComment, ItemReaction, ItemCommentReaction
+from main.models import Item, ItemComment, ItemReaction, ItemCommentReaction, Emoji
 
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from main.forms import CommentForm
