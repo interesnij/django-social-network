@@ -130,9 +130,9 @@ $('[data-action="item_unfixed"]').click(unfixed);
 
 	$('.stream').on('click', '.emoji', function () {
 			var react = $(this);
-			var item = $('.infinite-item').attr("item-id");
+			var item = react.parents('.infinite-item').attr("item-id");
 			var pk = react.data('id');
-			console.log(item);
+			console.log(uuid);
 			console.log(pk);
 			payload = {
 					'item': item,
