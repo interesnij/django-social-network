@@ -113,6 +113,7 @@ def post_comment(request):
 	img = "frtyh"
 	par = request.POST['parent']
 	item = Item.objects.get(pk=par)
+	text = text.strip()
 
 	if len(text) > 0:
 		new_comment = ItemComment.objects.create(item=item, text=text, commenter=request.user)
@@ -129,7 +130,7 @@ def reply_comment(request):
     com = request.POST['comment']
     comment = ItemComment.objects.get(pk=com)
     text = text.strip()
-    if comment:
+    if len(text) > 0:
         new_comment = ItemComment.objects.create(text=text, commenter=request.user,parent_comment=comment)
         html = render_to_string('generic/posts/new_reply_comment.html',{'reply': new_comment,'request': request})
         return JsonResponse(html, safe=False)

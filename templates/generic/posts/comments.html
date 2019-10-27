@@ -66,9 +66,20 @@
             success: function(data) {
                 $(".form-control-rounded").val("");
                 $(".stream_comments").append(data);
+                $.toast({
+                    heading: '{{ request.user.first_name }}',
+                    text: 'Комментарий успешно создан!',
+                    showHideTransition: 'fade',
+                    icon: 'link'
+                })
             },
             error: function(data) {
-                alert(data.responseText);
+              $.toast({
+                  heading: '{{ request.user.first_name }}',
+                  text: 'Для публикации комментария нужно написать что-нибудь и/или вставить изображение(ия)',
+                  showHideTransition: 'fade',
+                  icon: 'success'
+              })
             },
         });
         return false;
@@ -84,9 +95,20 @@
             success: function(data) {
                 $(".form-control-rounded").val("");
                 $(".stream_reply_comments").append(data);
+                $.toast({
+                    heading: '{{ request.user.first_name }}',
+                    text: 'Ответ успешно создан!',
+                    showHideTransition: 'fade',
+                    icon: 'link'
+                })
             },
             error: function(data) {
-                alert(data.responseText);
+              $.toast({
+                  heading: '{{ request.user.first_name }}',
+                  text: 'Для публикации ответа нужно написать что-нибудь и/или вставить изображение(ия)',
+                  showHideTransition: 'fade',
+                  icon: 'success'
+              })
             },
         });
         return false;
