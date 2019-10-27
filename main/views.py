@@ -74,14 +74,14 @@ class CommentListView(ListView, CategoryListMixin):
 	model=ItemComment
 	paginate_by=10
 
-	def get_queryset(self):
+	def get(self,request,*args,**kwargs):
 		item = Item.objects.get(uuid=self.kwargs["uuid"])
 		comments = ItemComment.objects.filter(item=item, parent_comment=None).order_by("created")
 		comments_html = render_to_string(
 	        "generic/posts/comments.html", {"comments": comments,"parent": item})
 
 		return JsonResponse({
-	        "comments": comments_html
+	        "comments": comments_html,
 	    })
 
 	def get_context_data(self, **kwargs):
