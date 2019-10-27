@@ -21,7 +21,7 @@ from django.db.models import Count
 
 class UserItemView(CategoryListMixin, TemplateView):
     model=Item
-    template_name="user_item.html"
+    template_name="lenta/user_item.html"
 
     def get(self,request,*args,**kwargs):
         self.item = Item.objects.get(pk=self.kwargs["pk"])
@@ -36,7 +36,7 @@ class UserItemView(CategoryListMixin, TemplateView):
 
 
 class ItemListView(ListView, CategoryListMixin):
-    template_name="item_list.html"
+    template_name="lenta/item_list.html"
     model=Item
     paginate_by=6
 
@@ -77,7 +77,7 @@ class ProfileUserView(TemplateView):
         context = super(ProfileUserView, self).get_context_data(**kwargs)
         context['user'] = self.user
         context['pop_frends'] = self.pop_frends
-        
+
         context['form_avatar'] = AvatarUserForm()
         context['form_comment'] = CommentForm()
         context['communities'] = self.communities
