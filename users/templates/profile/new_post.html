@@ -1,10 +1,10 @@
 {% load staticfiles %}
 
 {% if user == request.user %}
+<p class="help" style="display:none">Для публикации записи нужно написать что-нибудь и/или вставить изображение(ия)</p>
  <div class="card mb-4" style="border:1px solid rgba(0, 0, 0, 0.125);">
    <form action="" id="FORM-POST" method="post" enctype="multipart/form-data">
      {% csrf_token %}
-     <p class="help" style="display:none">Для публикации записи нужно написать что-нибудь и/или вставить изображение(ия)</p>
      <div class="card-body p-0">
          <textarea name="text" id="id_text" class="id_text form-control bg-light-secondary border-0" rows="2" placeholder="Что у Вас нового?"></textarea>
      </div>
