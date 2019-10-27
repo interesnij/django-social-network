@@ -165,6 +165,9 @@ class ItemReaction(models.Model):
     class Meta:
         unique_together = ('reactor', 'item', 'emoji')
 
+    def __str__(self):
+        return self.item
+
     @classmethod
     def count_reactions_for_item_with_id(cls, item_id, reactor_id=None):
         count_query = Q(item_id=item_id, reactor__is_deleted=False)
