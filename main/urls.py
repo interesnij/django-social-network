@@ -9,7 +9,7 @@ from main.views import (
 						post_comment,
 						post_comment_react,
 						comment_un_react,
-						post_react,
+						ReactUserCreate,
 						un_react,
 						reply_comment)
 from django.contrib.auth.decorators import login_required
@@ -22,7 +22,7 @@ urlpatterns = [
 	url(r'^main/comment/(?P<uuid>[0-9a-f-]+)/$', CommentListView.as_view(), name='get_comment'),
 	url(r'^main/comment_react/$', post_comment_react, name='post_comment_react'),
 	url(r'^main/comment_un_react/$', comment_un_react, name='comment_un_react'),
-	url(r'^main/react/(?P<uuid>[0-9a-f-]+)/(?P<pk>\d+)/$', post_react, name='post_react'),
+	url(r'^main/react/(?P<uuid>[0-9a-f-]+)/(?P<pk>\d+)/$', ReactUserCreate.as_view(), name='post_react'), 
 	url(r'^main/un_react/$', un_react, name='un_react'),
     url(r'^main/post-comment/$', post_comment, name='post_comment'),
     url(r'^main/reply-comment/$', reply_comment, name='reply_comment'),
