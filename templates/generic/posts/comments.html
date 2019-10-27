@@ -57,7 +57,7 @@
     });
 </script>
 <script>
-  $('.stream_comments').on('click', '.itemComment', function () {
+  $('.stream').on('click', '.itemComment', function () {
   button1 = $(this);
   form1 = button1.parent().parent().parent();
         $.ajax({
@@ -82,7 +82,7 @@
     });
 </script>
 <script>
-  $('.stream_comments').on('click', '.replyComment', function () {
+  $('.stream').on('click', '.replyComment', function () {
   button = $(this);
   form = button.parent().parent().parent().parent();
         $.ajax({
@@ -113,7 +113,7 @@
     });
 </script>
 <script>
-  $('.stream_comments').on('click', '.replyParentComment', function () {
+  $('.stream').on('click', '.replyParentComment', function () {
   button = $(this);
   form = button.parent().parent().parent().parent();
         $.ajax({
@@ -144,7 +144,7 @@
     });
 </script>
 <script>
-	$( ".stream_comments" ).on('click', '.reply_comment', function () {
+	$( ".stream" ).on('click', '.reply_comment', function () {
     var reply_comment_form = $(this);
     var objectUser = reply_comment_form.prev().text().trim();
     var form = reply_comment_form.next().find(".text-comment");
