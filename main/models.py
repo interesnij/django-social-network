@@ -41,16 +41,6 @@ class Item(models.Model):
                 is_fixed=True).update(is_fixed=False)
             return super(Item, self).save(*args, **kwargs)
 
-    def fixed(self):
-        item = Item.objects.get(id=self.id)
-        item.is_fixed=True
-        return item
-
-    def unfixed(self):
-        item = Item.objects.get(id=self.id)
-        item.is_fixed=False
-        return item
-
     def count_comments(self):
         parent_comments = ItemComment.objects.filter(item=self).count()
         return parent_comments
