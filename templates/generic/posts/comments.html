@@ -116,7 +116,7 @@
         return false;
     });
   </script>
-  <script> 
+  <script>
         var reply_parent_comment = $('.replyParentComment');
         reply_parent_comment.submit(function() {
         $.ajax({
@@ -148,7 +148,7 @@
 </script>
 
 <script>
-	$( ".reply_comment" ).click(function(){
+	$( ".stream_comments" ).on('click', '.reply_comment', function () {
     var reply_comment_form = $(this);
     var objectUser = reply_comment_form.prev().text().trim();
     var form = reply_comment_form.next().find(".text-comment");
