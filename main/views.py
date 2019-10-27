@@ -78,7 +78,7 @@ class CommentListView(ListView, CategoryListMixin):
 		item = Item.objects.get(uuid=self.kwargs["uuid"])
 		comments = ItemComment.objects.filter(item=item, parent_comment=None).order_by("created")
 		comments_html = render_to_string(
-	        "generic/posts/comments.html", {"comments": comments})
+	        "generic/posts/comments.html", {"comments": comments,"parent": item})
 
 		return JsonResponse({
 	        "comments": comments_html,
