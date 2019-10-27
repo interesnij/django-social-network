@@ -163,7 +163,7 @@ class ItemReaction(models.Model):
     emoji = models.ForeignKey(Emoji, on_delete=models.CASCADE, related_name='post_emoji')
 
     class Meta:
-        unique_together = ('reactor', 'item',)
+        unique_together = ('reactor', 'item', 'emoji')
 
     @classmethod
     def count_reactions_for_item_with_id(cls, item_id, reactor_id=None):
