@@ -81,6 +81,31 @@ class CommentListView(View, CategoryListMixin):
 	        "comments": comments_html,
 	    })
 
+def post_react(request):
+	react = request.GET['emoji']
+	par = request.GET['parent']
+	item = Item.objects.get(pk=par)
+	if item:
+		new_react = ItemReaction.objects.create(item=item, emoji=react, reactor=request.user)
+		html = render_to_string('generic/posts/emoji.html',{'react': new_react,'request': request})
+		return JsonResponse(html, safe=False)
+	else:
+		return HttpResponse("react не найден")
+
+class ReactUserCreate(View):
+	model=ItemReaction
+
+	def post(self,request,*args,**kwargs):
+		try:
+			item = Item.objects.get(uuid=self.kwargs["uuid"])
+			emoji = Emoji.objects.get(pk=self.kwargs["pk"])
+			new_react = ItemReaction.objects.create(item=item, emoji=emoji, reactor=request.user)
+			html = render_to_string("generic/posts/emoji.html",{'object': new_react,'request': request})
+			return JsonResponse(html, safe=False)
+
+		except:
+			return HttpResponseBadRequest()
+
 
 def post_comment(request):
 	user = request.user
@@ -116,19 +141,6 @@ def reply_comment(request):
 
     else:
         return HttpResponseBadRequest()
-
-
-def post_react(request):
-	react = request.POST['emoji']
-	par = request.POST['parent']
-	item = Item.objects.get(pk=par)
-	if item:
-		new_react = ItemReaction.objects.create(item=item, emoji=react, reactor=request.user)
-		html = render_to_string('generic/posts/emoji.html',{'react': new_react,'request': request})
-		return JsonResponse(html, safe=False)
-	else:
-		return HttpResponse("react не найден")
-
 
 
 def un_react(request):
