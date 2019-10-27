@@ -132,7 +132,7 @@ $('#question').on('click', function () {
               })
             },
             error: function(data_set) {
-                $("#hack").html("Возникла непредвидинная ошибка!!");
+                console.log(data.responseText);
             }
         });
         return false;
