@@ -66,12 +66,6 @@
             success: function(data) {
                 $(".form-control-rounded").val("");
                 $(".stream_comments").append(data);
-                $.toast({
-                    heading: '{{ request.user.first_name }}',
-                    text: 'Комментарий успешно создан!',
-                    showHideTransition: 'fade',
-                    icon: 'link'
-                })
             },
             error: function(data) {
               $.toast({
