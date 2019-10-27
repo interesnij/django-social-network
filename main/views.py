@@ -114,7 +114,7 @@ def post_comment(request):
 	par = request.POST['parent']
 	item = Item.objects.get(pk=par)
 
-	if (text is None) or (str(text).strip()=="") or img !="":
+	if len(text) > 0:
 		new_comment = ItemComment.objects.create(item=item, text=text, commenter=request.user)
 		html = render_to_string('generic/posts/new_parent_comment.html',{'comment': new_comment,'request': request})
 		return JsonResponse(html, safe=False)
