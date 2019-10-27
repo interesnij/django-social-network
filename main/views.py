@@ -72,7 +72,7 @@ class CommentReactView(TemplateView):
 class CommentListView(ListView, CategoryListMixin):
 	template_name="generic/posts/comments.html"
 	model=ItemComment
-	paginate_by=10
+	paginate_by=1
 
 	def get(self,request,*args,**kwargs):
 		item = Item.objects.get(uuid=self.kwargs["uuid"])
