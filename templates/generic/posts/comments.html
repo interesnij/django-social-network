@@ -57,7 +57,7 @@
     });
 </script>
 <script>
-  $(".itemComment").click(function() {
+  $('.stream_comments').on('click', '.itemComment', function () {
   button1 = $(this);
   form1 = button1.parent().parent().parent();
         $.ajax({
@@ -82,7 +82,7 @@
     });
 </script>
 <script>
-  $(".replyComment").click(function() {
+  $('.stream_comments').on('click', '.replyComment', function () {
   button = $(this);
   form = button.parent().parent().parent().parent();
         $.ajax({
@@ -113,7 +113,7 @@
     });
 </script>
 <script>
-  $(".replyParentComment").click(function() {
+  $('.stream_comments').on('click', '.replyParentComment', function () {
   button = $(this);
   form = button.parent().parent().parent().parent();
         $.ajax({

@@ -1,7 +1,7 @@
 {% load staticfiles %}
 
 <script>
-$('.stream').on('click', '.comment', function () {	
+$('.stream').on('click', '.comment', function () {
 	var item = $(this).closest(".infinite-item").attr("item-id");
 	var url = $(this).parents(".infinite-item");
 	$.ajax({
@@ -20,7 +20,7 @@ $('.stream').on('click', '.comment', function () {
 </script>
 
 <script>
-	$(".repost").on("click", function () {
+	$('.stream').on('click', '.repost', function () {
 		var repost = $(this);
 		var pk = repost.data('id');
 		$.ajax({
