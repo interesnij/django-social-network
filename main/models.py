@@ -82,7 +82,7 @@ class Item(models.Model):
         return self.get_thread().count()
 
     def __str__(self):
-        return "{0}/{1}".format(self.creator.get_full_name(), self.pk)
+        return "{0}/{1}".format(self.creator.get_full_name(), self.views)
 
 
 class ItemComment(models.Model):
