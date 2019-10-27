@@ -55,7 +55,8 @@
             }
         }
     });
-
+</script>
+<script>
       var comment_post = $('.itemComment');
       comment_post.submit(function(e) {
         $.ajax({
@@ -78,18 +79,19 @@
                   heading: '{{ request.user.first_name }}',
                   text: 'Для публикации комментария нужно написать что-нибудь и/или вставить изображение(ия)',
                   showHideTransition: 'fade',
-                  icon: 'success'
+                  icon: 'error'
               })
             },
         });
         return false;
     });
-    $(".replyComment").click(function() {
-        button = $(this);
-        form = button.parent().parent().parent().parent();
+    </script>
+    <script>
+        var reply_comment = $('.replyComment');
+        reply_comment.submit(function(e) {
         $.ajax({
             url: '{% url "reply_comment" %}',
-            data: form.serialize(),
+            data: reply_comment.serialize(),
             type: 'POST',
             cache: false,
             success: function(data) {
@@ -107,28 +109,38 @@
                   heading: '{{ request.user.first_name }}',
                   text: 'Для публикации ответа нужно написать что-нибудь и/или вставить изображение(ия)',
                   showHideTransition: 'fade',
-                  icon: 'success'
+                  icon: 'error'
               })
             },
         });
         return false;
     });
   </script>
-  <script>
-    $(".replyParentComment").click(function() {
-      button = $(this);
-      form = button.parent().parent().parent().parent();
+  <script> 
+        var reply_parent_comment = $('.replyParentComment');
+        reply_parent_comment.submit(function() {
         $.ajax({
             url: '{% url "reply_comment" %}',
-            data: form.serialize(),
+            data: reply_parent_comment.serialize(),
             type: 'POST',
             cache: false,
             success: function(data) {
                 $(".form-control-rounded").val("");
                 $(".stream_reply_comments").append(data);
+                $.toast({
+                    heading: '{{ request.user.first_name }}',
+                    text: 'Ответ успешно создан!',
+                    showHideTransition: 'fade',
+                    icon: 'link'
+                })
             },
             error: function(data) {
-                alert(data.responseText);
+              $.toast({
+                  heading: '{{ request.user.first_name }}',
+                  text: 'Для публикации ответа нужно написать что-нибудь и/или вставить изображение(ия)',
+                  showHideTransition: 'fade',
+                  icon: 'error'
+              })
             },
         });
         return false;

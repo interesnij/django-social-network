@@ -49,7 +49,7 @@
                     </span>
 
                     <div class="border-top reply_comment_form" style="margin-top:10px;display:none">
-                        <form action="" method="post">
+                        <form action="" method="post" class="replyParentComment">
                             {% csrf_token %}
                             <div class="row no-gutters">
                                 <input type="hidden" name="comment" value="{{ comment.id }}">
@@ -57,7 +57,7 @@
                                 <div class="col" style="left: -30px;">
                                     <div class="input-group input-group-sm" style="width: 114%;">
                                         <textarea id="id_text" name="text" class="id_text form-control text-comment form-control-rounded"></textarea>
-                                        <button class="btn btn-outline-primary btn-rounded btn-sm ml-2 replyParentComment" type="button">
+                                        <button class="btn btn-outline-primary btn-rounded btn-sm ml-2" type="button">
                                           <img style="width:22px" src="{% static 'images/icons/send-24px.svg' %}" />
                                         </button>
                                     </div>

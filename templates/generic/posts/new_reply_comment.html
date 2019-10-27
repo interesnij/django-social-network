@@ -49,7 +49,7 @@
                     </span>
 
                     <div class="border-top reply_comment_form" style="margin-top:10px;display:none">
-                        <form action="" method="post">
+                        <form action="" method="post" class="replyParentComment">
                             {% csrf_token %}
                             <div class="row no-gutters">
                                 <input type="hidden" name="comment" value="{{ comment.id }}">
@@ -57,7 +57,7 @@
                                 <div class="col" style="left: -30px;">
                                     <div class="input-group input-group-sm" style="width: 114%;">
                                         <textarea id="id_text" name="text" class="id_text form-control text-comment form-control-rounded"></textarea>
-                                        <button class="btn btn-outline-primary btn-rounded btn-sm ml-2 replyParentComment" type="button">
+                                        <button class="btn btn-outline-primary btn-rounded btn-sm ml-2" type="button">
                                           <img style="width:22px" src="{% static 'images/icons/send-24px.svg' %}" />
                                         </button>
                                     </div>
@@ -100,44 +100,64 @@
     });
   </script>
   <script>
-    $(".replyComment").click(function() {
-        button = $(this);
-        form = button.parent().parent().parent().parent();
-        $.ajax({
-            url: '{% url "reply_comment" %}',
-            data: form.serialize(),
-            type: 'POST',
-            cache: false,
-            success: function(data) {
-                $(".form-control-rounded").val("");
-                $(".stream_reply_comments").append(data);
-            },
-            error: function(data) {
-                alert(data.responseText);
-            },
-        });
-        return false;
-    });
-  </script>
-  <script>
-    $(".replyParentComment").click(function() {
-      button = $(this);
-      form = button.parent().parent().parent().parent();
-        $.ajax({
-            url: '{% url "reply_comment" %}',
-            data: form.serialize(),
-            type: 'POST',
-            cache: false,
-            success: function(data) {
-                $(".form-control-rounded").val("");
-                $(".stream_reply_comments").append(data);
-            },
-            error: function(data) {
-                alert(data.responseText);
-            },
-        });
-        return false;
-    });
+      var reply_comment = $('.replyComment');
+      reply_comment.submit(function(e) {
+      $.ajax({
+          url: '{% url "reply_comment" %}',
+          data: reply_comment.serialize(),
+          type: 'POST',
+          cache: false,
+          success: function(data) {
+              $(".form-control-rounded").val("");
+              $(".stream_reply_comments").append(data);
+              $.toast({
+                  heading: '{{ request.user.first_name }}',
+                  text: 'Ответ успешно создан!',
+                  showHideTransition: 'fade',
+                  icon: 'link'
+              })
+          },
+          error: function(data) {
+            $.toast({
+                heading: '{{ request.user.first_name }}',
+                text: 'Для публикации ответа нужно написать что-нибудь и/или вставить изображение(ия)',
+                showHideTransition: 'fade',
+                icon: 'error'
+            })
+          },
+      });
+      return false;
+  });
+</script>
+<script>
+      var reply_parent_comment = $('.replyParentComment');
+      reply_parent_comment.submit(function() {
+      $.ajax({
+          url: '{% url "reply_comment" %}',
+          data: reply_parent_comment.serialize(),
+          type: 'POST',
+          cache: false,
+          success: function(data) {
+              $(".form-control-rounded").val("");
+              $(".stream_reply_comments").append(data);
+              $.toast({
+                  heading: '{{ request.user.first_name }}',
+                  text: 'Ответ успешно создан!',
+                  showHideTransition: 'fade',
+                  icon: 'link'
+              })
+          },
+          error: function(data) {
+            $.toast({
+                heading: '{{ request.user.first_name }}',
+                text: 'Для публикации ответа нужно написать что-нибудь и/или вставить изображение(ия)',
+                showHideTransition: 'fade',
+                icon: 'error'
+            })
+          },
+      });
+      return false;
+  });
 </script>
 
 <script>
