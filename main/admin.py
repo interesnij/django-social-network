@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from main.models import Emoji, EmojiGroup, ProxyBlacklistedDomain, Item
+from main.models import Emoji, EmojiGroup, ProxyBlacklistedDomain, Item, ItemComment
 
 
 class EmojiGroupEmoji(admin.TabularInline):
@@ -47,4 +47,13 @@ class ItemAdmin(admin.ModelAdmin):
         'article',
     )
 
+class ItemCommentAdmin(admin.ModelAdmin):
+    list_display = (
+        'commenter',
+        'created',
+        'text',
+        'parent_comment',
+    )
+
 admin.site.register(Item,ItemAdmin)
+admin.site.register(ItemComment,ItemCommentAdmin)
