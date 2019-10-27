@@ -136,8 +136,14 @@ $('#question').on('click', function () {
               setTimeout(function(){
                 $('.help').hide();
               }, 5000);
+              $.toast({
+                  heading: '{{ request.user.first_name }}',
+                  text: 'Запись успешно создана!',
+                  showHideTransition: 'fade',
+                  icon: 'error'
+              })
             }
-            
+
         });
         return false;
     });
