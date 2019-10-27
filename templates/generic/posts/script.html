@@ -1,7 +1,7 @@
 {% load staticfiles %}
 
 <script>
-$(".comment").on("click", function () {
+$('.stream').on('click', '.comment', function () {	
 	var item = $(this).closest(".infinite-item").attr("item-id");
 	var url = $(this).parents(".infinite-item");
 	$.ajax({
