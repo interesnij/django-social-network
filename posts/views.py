@@ -3,7 +3,7 @@ from users.models import User
 from django.template.loader import render_to_string
 from posts.models import Post
 from posts.forms import PostUserForm
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseBadRequest
 from django.views import View
 
 
