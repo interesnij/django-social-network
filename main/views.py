@@ -81,7 +81,7 @@ class CommentListView(ListView, CategoryListMixin):
 	        "generic/posts/comments.html", {"comments": comments,"parent": item})
 
 		return JsonResponse({
-	        "comments": comments_html,
+	        "comments": comments_html
 	    })
 
 	def get_context_data(self, **kwargs):
