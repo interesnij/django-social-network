@@ -55,8 +55,7 @@
             }
         }
     });
-</script>
-<script>
+
       var comment_post = $('.itemComment');
       comment_post.submit(function(e) {
         $.ajax({
@@ -85,8 +84,7 @@
         });
         return false;
     });
-    </script>
-    <script>
+
         var reply_comment = $('.replyComment');
         reply_comment.submit(function(e) {
         $.ajax({
@@ -115,8 +113,7 @@
         });
         return false;
     });
-  </script>
-  <script>
+
         var reply_parent_comment = $('.replyParentComment');
         reply_parent_comment.submit(function() {
         $.ajax({
@@ -145,9 +142,7 @@
         });
         return false;
     });
-</script>
 
-<script>
 	$( ".stream_comments" ).on('click', '.reply_comment', function () {
     var reply_comment_form = $(this);
     var objectUser = reply_comment_form.prev().text().trim();
@@ -156,9 +151,7 @@
 		reply_comment_form.next().show();
     form.focus();
 	})
-</script>
 
-<script>
   var textarea = document.querySelector('.text-comment');
 textarea.addEventListener('keyup', function(){
   if(this.scrollTop > 0){
