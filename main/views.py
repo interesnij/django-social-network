@@ -73,10 +73,6 @@ class CommentListView(ListView, CategoryListMixin):
     model=ItemComment
     paginate_by=10
 
-    def get(self,request,*args,**kwargs):
-		self.form_comment = CommentForm()
-        return super(CommentListView,self).get(request,*args,**kwargs)
-
     def get_queryset(self):
         item = Item.objects.get(uuid=self.kwargs["uuid"])
 		comments = ItemComment.objects.filter(item=item, parent_comment=None).order_by("created")
@@ -84,7 +80,7 @@ class CommentListView(ListView, CategoryListMixin):
 
     def get_context_data(self, **kwargs):
         context = super(CommentListView, self).get_context_data(**kwargs)
-        context['form_comment'] = self.form_comment
+        context['form_comment'] = CommentForm()
         return context
 
 
