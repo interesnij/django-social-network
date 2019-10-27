@@ -82,31 +82,6 @@ class CommentListView(View, CategoryListMixin):
 	    })
 
 
-class CommentUserCreate(View):
-	form_comment=None
-
-	def get(self,request,*args,**kwargs):
-		self.form_comment=CommentForm(initial={"commenter":request.user})
-		return super(CommentUserCreate,self).get(request,*args,**kwargs)
-
-	def get_context_data(self,**kwargs):
-		context=super(CommentUserCreate,self).get_context_data(**kwargs)
-		context["form_comment"]=self.form_comment
-		return context
-
-	def post(self,request,*args,**kwargs):
-		self.form_comment=CommentForm(request.POST, request.FILES)
-		if self.form_comment.is_valid():
-			new_comment=self.form_comment.save(commit=False)
-			new_comment.commenter=self.request.user
-			new_comment=self.form_comment.save()
-
-			if request.is_ajax() :
-				html = render_to_string('generic/posts/parent_comment.html',{'comment': new_comment,'request': request})
-				return HttpResponse(html)
-		else:
-			return HttpResponseBadRequest()
-
 def post_comment(request):
 	user = request.user
 	text = request.POST['text']

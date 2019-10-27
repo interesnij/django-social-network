@@ -9,7 +9,7 @@
 </span>
 
 <div class="border-top" style="margin-top:10px">
-    <form action="" method="post" class="itemComment">
+    <form action="" method="post" class="itemComment_form">
         {% csrf_token %}
         <div class="row no-gutters">
 
@@ -20,7 +20,7 @@
                 </div>
             </div>
             <div class="col-auto">
-                <button class="btn btn-outline-primary btn-rounded btn-sm ml-2" type="submit">
+                <button class="btn btn-outline-primary btn-rounded btn-sm ml-2 itemComment" type="button">
                     <img style="width:22px" src="{% static 'images/icons/send-24px.svg' %}" />
                 </button>
             </div>
@@ -55,12 +55,14 @@
             }
         }
     });
-
-      var comment_post = $('.itemComment');
-      comment_post.submit(function(e) {
+</script>
+<script>
+  $(".itemComment").click(function() {
+  button1 = $(this);
+  form1 = button1.parent().parent().parent();
         $.ajax({
             url: '{% url "post_comment" %}',
-            data: comment_post.serialize(),
+            data: form1.serialize(),
             type: 'POST',
             cache: false,
             success: function(data) {
@@ -78,12 +80,14 @@
         });
         return false;
     });
-
-        var reply_comment = $('.replyComment');
-        reply_comment.submit(function(e) {
+</script>
+<script>
+  $(".replyComment").click(function() {
+  button = $(this);
+  form = button.parent().parent().parent().parent();
         $.ajax({
             url: '{% url "reply_comment" %}',
-            data: reply_comment.serialize(),
+            data: form.serialize(),
             type: 'POST',
             cache: false,
             success: function(data) {
@@ -107,12 +111,14 @@
         });
         return false;
     });
-
-        var reply_parent_comment = $('.replyParentComment');
-        reply_parent_comment.submit(function() {
+</script>
+<script>
+  $(".replyParentComment").click(function() {
+  button = $(this);
+  form = button.parent().parent().parent().parent();
         $.ajax({
             url: '{% url "reply_comment" %}',
-            data: reply_parent_comment.serialize(),
+            data: form.serialize(),
             type: 'POST',
             cache: false,
             success: function(data) {
@@ -136,7 +142,8 @@
         });
         return false;
     });
-
+</script>
+<script>
 	$( ".stream_comments" ).on('click', '.reply_comment', function () {
     var reply_comment_form = $(this);
     var objectUser = reply_comment_form.prev().text().trim();
@@ -145,7 +152,8 @@
 		reply_comment_form.next().show();
     form.focus();
 	})
-
+</script>
+<script>
   var textarea = document.querySelector('.text-comment');
 textarea.addEventListener('keyup', function(){
   if(this.scrollTop > 0){
