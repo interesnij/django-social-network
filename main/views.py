@@ -69,20 +69,19 @@ class CommentReactView(TemplateView):
 
 
 class CommentListView(ListView, CategoryListMixin):
-    template_name="generic/posts/comments.html"
-    model=ItemComment
-    paginate_by=10
+	template_name="generic/posts/comments.html"
+	model=ItemComment
+	paginate_by=10
 
-    def get_queryset(self):
-        item = Item.objects.get(uuid=self.kwargs["uuid"])
+	def get_queryset(self):
+		item = Item.objects.get(uuid=self.kwargs["uuid"])
 		comments = ItemComment.objects.filter(item=item, parent_comment=None).order_by("created")
-        return comments
+		return comments
 
-    def get_context_data(self, **kwargs):
-        context = super(CommentListView, self).get_context_data(**kwargs)
-        context['form_comment'] = CommentForm()
-        return context
-
+	def get_context_data(self, **kwargs):
+		context = super(CommentListView, self).get_context_data(**kwargs)
+		context['form_comment'] = CommentForm()
+		return context
 
 
 def get_comment(request):
