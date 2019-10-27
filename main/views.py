@@ -1,13 +1,14 @@
 from django.views.generic.base import TemplateView
 from users.models import User
 from main.models import Item, ItemComment, ItemReaction, ItemCommentReaction
-import json
+
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from main.forms import CommentForm
 from django.template.loader import render_to_string
 from django.views import View
 from posts.models import Post
 from django.views.generic import ListView
+from generic.mixins import CategoryListMixin
 
 
 
