@@ -133,6 +133,9 @@ $('#question').on('click', function () {
             },
             error: function(data) {
               $(".help").show();
+              setTimeout(function(){
+                $('#help').hide();
+              }, 5000);
             }
         });
         return false;
