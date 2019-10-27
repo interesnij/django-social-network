@@ -81,7 +81,6 @@ class CommentListView(ListView, CategoryListMixin):
 	        "generic/posts/comments.html", {"comments": comments,"parent": item})
 
 		return JsonResponse({
-	        "item": item,
 	        "comments": comments_html,
 	    })
 
