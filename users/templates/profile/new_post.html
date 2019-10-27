@@ -128,7 +128,7 @@ $('#question').on('click', function () {
                   heading: '{{ request.user.first_name }}',
                   text: 'Запись успешно создана!',
                   showHideTransition: 'fade',
-                  icon: 'error'
+                  icon: 'success'
               })
             },
             error: function(data) {
@@ -138,9 +138,9 @@ $('#question').on('click', function () {
               }, 5000);
               $.toast({
                   heading: '{{ request.user.first_name }}',
-                  text: 'Запись успешно создана!',
+                  text: 'Для публикации записи нужно написать что-нибудь и/или вставить изображение(ия)',
                   showHideTransition: 'fade',
-                  icon: 'error'
+                  icon: 'link'
               })
             }
 
