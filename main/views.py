@@ -102,7 +102,7 @@ class CommentUserCreate(View):
 			new_comment=self.form_comment.save()
 
 			if request.is_ajax() :
-				html = render_to_string('generic/posts/new_parent_comment.html',{'comment': new_comment,'request': request})
+				html = render_to_string('generic/posts/parent_comment.html',{'comment': new_comment,'request': request})
 				return HttpResponse(html)
 		else:
 			return HttpResponseBadRequest()
@@ -117,7 +117,7 @@ def post_comment(request):
 
 	if len(text) > 0:
 		new_comment = ItemComment.objects.create(item=item, text=text, commenter=request.user)
-		html = render_to_string('generic/posts/new_parent_comment.html',{'comment': new_comment,'request': request})
+		html = render_to_string('generic/posts/parent_comment.html',{'comment': new_comment,'request': request})
 		return JsonResponse(html, safe=False)
 	else:
 		return HttpResponseBadRequest()
@@ -132,7 +132,7 @@ def reply_comment(request):
     text = text.strip()
     if len(text) > 0:
         new_comment = ItemComment.objects.create(text=text, commenter=request.user,parent_comment=comment)
-        html = render_to_string('generic/posts/new_reply_comment.html',{'reply': new_comment,'request': request})
+        html = render_to_string('generic/posts/reply_comment.html',{'reply': new_comment,'request': request})
         return JsonResponse(html, safe=False)
 
         notification_handler(
