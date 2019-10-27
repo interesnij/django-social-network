@@ -108,19 +108,18 @@ class CommentUserCreate(View):
 			return HttpResponseBadRequest()
 
 def post_comment(request):
-
-    user = request.user
-    text = request.POST['text']
+	user = request.user
+	text = request.POST['text']
 	img = "frtyh"
-    par = request.POST['parent']
-    item = Item.objects.get(pk=par)
-    text = text.strip()
-    if text or img:
-        new_comment = ItemComment.objects.create(item=item, text=text, commenter=request.user)
-        html = render_to_string('generic/posts/new_parent_comment.html',{'comment': new_comment,'request': request})
-        return JsonResponse(html, safe=False)
-    else:
-        return HttpResponseBadRequest()
+	par = request.POST['parent']
+	item = Item.objects.get(pk=par)
+	text = text.strip()
+	if text or img:
+		new_comment = ItemComment.objects.create(item=item, text=text, commenter=request.user)
+		html = render_to_string('generic/posts/new_parent_comment.html',{'comment': new_comment,'request': request})
+		return JsonResponse(html, safe=False)
+	else:
+		return HttpResponseBadRequest()
 
 
 def reply_comment(request):
