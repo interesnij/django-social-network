@@ -5,7 +5,7 @@ $(".comment").on("click", function () {
 	var item = $(this).closest(".infinite-item").attr("item-id");
 	var url = $(this).parents(".infinite-item");
 	$.ajax({
-			url: '{% url "get_comment" %}',
+			url: "/main/comment/" + item + "/",
 			data: {'item': item},
 			cache: false,
 			beforeSend: function () {

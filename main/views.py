@@ -2,15 +2,13 @@ from django.views.generic.base import TemplateView
 from users.models import User
 from main.models import Item, ItemComment, ItemReaction, ItemCommentReaction
 import json
-from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
-from django.views.decorators.http import require_http_methods
 from main.forms import CommentForm
-from main.helpers import ajax_required
 from django.template.loader import render_to_string
 from django.views import View
 from posts.models import Post
-from article.models import Article
+from django.views.generic import ListView
+
 
 
 class MainPageView(TemplateView):
@@ -70,8 +68,27 @@ class CommentReactView(TemplateView):
         return context
 
 
-@login_required
-@require_http_methods(["GET"])
+class CommentListView(ListView, CategoryListMixin):
+    template_name="generic/posts/comments.html"
+    model=ItemComment
+    paginate_by=10
+
+    def get(self,request,*args,**kwargs):
+		self.form_comment = CommentForm()
+        return super(CommentListView,self).get(request,*args,**kwargs)
+
+    def get_queryset(self):
+        item = Item.objects.get(uuid=self.kwargs["uuid"])
+		comments = ItemComment.objects.filter(item=item, parent_comment=None).order_by("created")
+        return comments
+
+    def get_context_data(self, **kwargs):
+        context = super(CommentListView, self).get_context_data(**kwargs)
+        context['form_comment'] = self.form_comment
+        return context
+
+
+
 def get_comment(request):
 
     item_id = request.GET['item']
@@ -85,9 +102,7 @@ def get_comment(request):
         "comments": comments_html,
     })
 
-@login_required
-@ajax_required
-@require_http_methods(["POST"])
+
 def post_comment(request):
 
     user = request.user
@@ -103,9 +118,7 @@ def post_comment(request):
         return HttpResponse("parent не найден")
 
 
-@login_required
-@ajax_required
-@require_http_methods(["POST"])
+
 def post_react(request):
 	react = request.POST['emoji']
 	par = request.POST['parent']
@@ -118,9 +131,7 @@ def post_react(request):
 		return HttpResponse("react не найден")
 
 
-@login_required
-@ajax_required
-@require_http_methods(["POST"])
+
 def un_react(request):
 	un_react = request.POST['emoji']
 	par = request.POST['parent']
@@ -134,9 +145,7 @@ def un_react(request):
 		return HttpResponse("react не найден")
 
 
-@login_required
-@ajax_required
-@require_http_methods(["POST"])
+
 def post_comment_react(request):
 	react = request.POST['emoji']
 	com = request.POST['comment']
@@ -149,9 +158,7 @@ def post_comment_react(request):
 		return HttpResponse("react не найден")
 
 
-@login_required
-@ajax_required
-@require_http_methods(["POST"])
+
 def comment_un_react(request):
 	un_react = request.POST['emoji']
 	com = request.POST['comment']
@@ -164,9 +171,6 @@ def comment_un_react(request):
 		return HttpResponse("react не найден")
 
 
-@login_required
-@ajax_required
-@require_http_methods(["POST"])
 def reply_comment(request):
 
     user = request.user
@@ -187,8 +191,7 @@ def reply_comment(request):
         return HttpResponseBadRequest()
 
 
-@login_required
-@require_http_methods(["POST"])
+
 def post_update_interactions(request):
     data_point = request.POST['id_value']
     item = Item.objects.get(uuid=data_point)

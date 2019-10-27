@@ -1,7 +1,6 @@
 {% load staticfiles %}
 
 {% if user == request.user %}
-<p class="help" style="display:none">Для публикации записи нужно написать что-нибудь и/или вставить изображение(ия)</p>
  <div class="card mb-4" style="border:1px solid rgba(0, 0, 0, 0.125);">
    <form action="" id="FORM-POST" method="post" enctype="multipart/form-data">
      {% csrf_token %}
@@ -132,10 +131,6 @@ $('#question').on('click', function () {
               })
             },
             error: function(data) {
-              $(".help").show();
-              setTimeout(function(){
-                $('.help').hide();
-              }, 5000);
               $.toast({
                   heading: '{{ request.user.first_name }}',
                   text: 'Для публикации записи нужно написать что-нибудь и/или вставить изображение(ия)',
