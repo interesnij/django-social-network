@@ -166,7 +166,7 @@ class ItemReaction(models.Model):
         unique_together = ('reactor', 'item', 'emoji')
 
     def __str__(self):
-        return self.emoji
+        return self.emoji.image
 
     @classmethod
     def count_reactions_for_item_with_id(cls, item_id, reactor_id=None):
