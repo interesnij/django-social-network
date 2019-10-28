@@ -49,7 +49,7 @@
           </span>
           &nbsp;&nbsp;
           <span class="reactions_stream">
-            {% for react in object.itemreaction_set.all %}
+            {% for react in object.itemreaction.emoji_set.all %}
               {% include 'generic/posts/emoji.html' %}
               {% endfor %}
           <span>
