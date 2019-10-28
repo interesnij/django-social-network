@@ -76,6 +76,9 @@ class Item(models.Model):
     def get_emoji_counts_for_post_with_id(cls, item_id, emoji_id=None, reactor_id=None):
         return Emoji.get_emoji_counts_for_post_with_id(item_id=item_id, emoji_id=emoji_id, reactor_id=reactor_id)
 
+    def get_emoji(self, emoji_id=None, reactor_id=None):
+        return Emoji.get_emoji_counts_for_post_with_id(item_id=self, emoji_id=emoji_id, reactor_id=reactor_id)
+
 
 
 
