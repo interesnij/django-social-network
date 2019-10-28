@@ -38,6 +38,7 @@ class FollowCreate(View):
 			new_follow.notification_follow(request.user)
 		else:
 			return HttpResponse("Подписка уже есть :-)")
+		return HttpResponse("!")
 
 
 class FollowDelete(View):
@@ -54,3 +55,4 @@ class FollowDelete(View):
 			follow.delete()
 		else:
 			return HttpResponse("Подписка не найдена!")
+		return HttpResponse("!")
