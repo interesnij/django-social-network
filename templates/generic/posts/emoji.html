@@ -2,7 +2,7 @@
 
 
 {% for react in object.itemreaction_set.all %}
-<span style="margin-right:5px;cursor:pointer">
+<span class="react" style="margin-right:5px;cursor:pointer">
   <img style="width:22px;" src="{{ react.emoji.image.url }}">
   {{ react.count_emoji }}
 </span>
