@@ -7,7 +7,7 @@
 
 <span class="reaction_window">
 <div style="margin:15px">
-  <span>{{ react.count_emoji }} {{ react.count_emoji|rupluralize:"реакция,реакции,реакций" }}</span>
+  <span>{{ react.count }} {{ react.count|rupluralize:"реакция,реакции,реакций" }}</span>
   <br><br>
   <span style="display: flex;">
     {% for heart in react.get_reactor %}
