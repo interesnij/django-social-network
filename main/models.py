@@ -138,6 +138,10 @@ class ItemReaction(models.Model):
     def __str__(self):
         return "{0}/{1}".format(self.item.creator.get_full_name(), self.emoji.keyword)
 
+    def count_emoji(self):
+        count_emoji = Emoji.objects.filter(emoji=self).count()
+        return count_emoji
+
 
 class ItemCommentReaction(models.Model):
     item_comment = models.ForeignKey(ItemComment, on_delete=models.CASCADE, related_name='reactions')
