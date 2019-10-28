@@ -91,8 +91,11 @@ class ReactUserCreate(View):
 		emoji = Emoji.objects.get(pk=self.kwargs["pk"])
 		new_react = ItemReaction.objects.create(item=item, created=timezone.now(), emoji=emoji, reactor=request.user)
 		new_react.notification_react(request.user)
-		html = render_to_string("generic/posts/emoji.html",{'react': new_react,'request': request})
-		return JsonResponse(html, safe=False)
+		if item.emoji:
+			pass
+		else:
+			html = render_to_string("generic/posts/emoji.html",{'react': new_react,'request': request})
+			return JsonResponse(html, safe=False)
 
 
 def post_comment(request):
