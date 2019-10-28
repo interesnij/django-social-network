@@ -1,7 +1,7 @@
 from django.views.generic.base import TemplateView
 from users.models import User, UserProfile
 from posts.models import Post
-from main.models import Item
+from main.models import Item, Emoji
 from article.models import Article
 from frends.models import Connect
 from follows.models import Follow
@@ -27,11 +27,13 @@ class UserItemView(CategoryListMixin, TemplateView):
         self.item = Item.objects.get(pk=self.kwargs["pk"])
         self.item.views += 1
         self.item.save()
+        self.emo = Emoji.get_emoji_counts_for_post_with_id(self.item.id)
         return super(UserItemView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context=super(UserItemView,self).get_context_data(**kwargs)
         context["object"]=self.item
+        context["emo"]=self.emo
         return context
 
 
