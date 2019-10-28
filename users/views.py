@@ -42,7 +42,7 @@ class ItemListView(ListView, CategoryListMixin):
 
     def get(self,request,*args,**kwargs):
         try:
-            self.fixed = self.items.get(is_fixed=True)
+            self.fixed = Item.objects.get(creator=self.user, is_fixed=True)
         except:
             self.fixed = None
         return super(ItemListView,self).get(request,*args,**kwargs)

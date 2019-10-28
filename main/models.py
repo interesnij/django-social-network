@@ -157,10 +157,10 @@ class Emoji(models.Model):
 
 
 class ItemReaction(models.Model):
-    item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name='item_react')
+    item = models.ForeignKey(Item, on_delete=models.CASCADE)
     created = models.DateTimeField(editable=False)
-    reactor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='post_reactor')
-    emoji = models.ForeignKey(Emoji, on_delete=models.CASCADE, related_name='post_emoji')
+    reactor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    emoji = models.ForeignKey(Emoji, on_delete=models.CASCADE)
 
     class Meta:
         unique_together = ('reactor', 'item', 'emoji')
