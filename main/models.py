@@ -76,8 +76,8 @@ class Item(models.Model):
         return Emoji.get_emoji(item_id=self, emoji_id=emoji_id, reactor_id=reactor_id)
 
     @classmethod
-    def count_reactions_for_post(cls, item_id, reactor_id=None):
-        count_query = Q(post_id=item_id, reactor__is_deleted=False)
+    def count_reactions_for_post(cls, self, reactor_id=None):
+        count_query = Q(self, reactor__is_deleted=False)
 
         if reactor_id:
             count_query.add(Q(reactor_id=reactor_id), Q.AND)
