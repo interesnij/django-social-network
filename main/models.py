@@ -75,13 +75,14 @@ class Item(models.Model):
     def get_emoji_for_post(self, emoji_id=None, reactor_id=None):
         return Emoji.get_emoji(item_id=self, emoji_id=emoji_id, reactor_id=reactor_id)
 
-    def count_reactions_for_post(self, reactor_id=None):
-        count_query = Q(self, reactor__is_deleted=False)
+    @classmethod
+    def count_reactions_for_post_with_id(cls, post_id, reactor_id=None):
+        count_query = Q(post_id=post_id, reactor__is_deleted=False)
 
         if reactor_id:
             count_query.add(Q(reactor_id=reactor_id), Q.AND)
 
-        return count_query.count()
+        return cls.objects.filter(count_query).count()
 
 
 class ItemComment(models.Model):
