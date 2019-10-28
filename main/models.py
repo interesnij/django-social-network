@@ -81,7 +81,7 @@ class Item(models.Model):
         if reactor_id:
             count_query.add(Q(reactor_id=reactor_id), Q.AND)
 
-        return Item.objects.filter(count_query).count()
+        return count_query.count()
 
 
 class ItemComment(models.Model):
