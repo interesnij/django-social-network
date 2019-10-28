@@ -167,9 +167,8 @@ class ItemReaction(models.Model):
     def notification_react(self, user):
         notification_handler(user, self.reactor,Notification.REACT, action_object=self,id_value=str(self.id),key='social_update')
 
-    @classmethod
-    def is_emoji_in_itemreaction(cls, emoji):
-        return cls.objects.filter(item=self, emoji=emoji).exists()
+    def is_emoji_in_itemreaction(self):
+        return ItemReaction.objects.filter(item=self, emoji=self).exists()
 
 
 class ItemCommentReaction(models.Model):
