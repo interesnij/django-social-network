@@ -49,9 +49,11 @@
           </span>
           &nbsp;&nbsp;
           <span class="reactions_stream">
-            {% for react in object.get_emoji %}
+            {% for react in object.get_emoji_for_post %}
               {% include 'generic/posts/emoji.html' %}
             {% endfor %}
+
+            {{ object.count_reactions_for_post }}
 
           <span>
 

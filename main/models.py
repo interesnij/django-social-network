@@ -72,14 +72,17 @@ class Item(models.Model):
     def notification_repost(self, user):
         notification_handler(user, self.creator,Notification.REPOST, action_object=self,id_value=str(self.uuid),key='social_update')
 
+    def get_emoji_for_post(self, emoji_id=None, reactor_id=None):
+        return Emoji.get_emoji(item_id=self, emoji_id=emoji_id, reactor_id=reactor_id)
+
     @classmethod
-    def get_emoji_counts_for_post_with_id(cls, item_id, emoji_id=None, reactor_id=None):
-        return Emoji.get_emoji_counts_for_post_with_id(item_id=item_id, emoji_id=emoji_id, reactor_id=reactor_id)
+    def count_reactions_for_post(cls, self, reactor_id=None):
+        count_query = Q(post_id=self, reactor__is_deleted=False)
 
-    def get_emoji(self, emoji_id=None, reactor_id=None):
-        return Emoji.get_emoji_counts_for_post_with_id(item_id=self, emoji_id=emoji_id, reactor_id=reactor_id)
+        if reactor_id:
+            count_query.add(Q(reactor_id=reactor_id), Q.AND)
 
-
+        return cls.objects.filter(count_query).count()
 
 
 class ItemComment(models.Model):
@@ -110,6 +113,10 @@ class ItemComment(models.Model):
 
     def notification_comment_react(self, user):
         notification_handler(user, self.reactor,Notification.REACT_COMMENT, action_object=self,id_value=str(self.uuid),key='social_update')
+
+    def get_emoji_for_post_comment(self, emoji_id=None, reactor_id=None):
+        return Emoji.get_emoji_comment(post_comment_id=self, emoji_id=emoji_id,
+                                                               reactor_id=reactor_id)
 
 
 class EmojiGroup(models.Model):
@@ -146,7 +153,7 @@ class Emoji(models.Model):
         verbose_name_plural="смайлики"
 
     @classmethod
-    def get_emoji_counts_for_post_comment_with_id(cls, post_comment_id, emoji_id=None, reactor_id=None):
+    def get_emoji_comment(cls, post_comment_id, emoji_id=None, reactor_id=None):
         emoji_query = Q(post_comment_reactions__post_comment_id=post_comment_id, )
 
         if emoji_id:
@@ -156,12 +163,12 @@ class Emoji(models.Model):
             emoji_query.add(Q(post_comment_reactions__reactor_id=reactor_id), Q.AND)
 
         emojis = Emoji.objects.filter(emoji_query).annotate(Count('post_comment_reactions')).distinct().order_by(
-            '-post_comment_reactions__count').cache().all()
+            '-post_comment_reactions__count').all()
 
         return [{'emoji': emoji, 'count': emoji.post_comment_reactions__count} for emoji in emojis]
 
     @classmethod
-    def get_emoji_counts_for_post_with_id(cls, item_id, emoji_id=None, reactor_id=None):
+    def get_emoji(cls, item_id, emoji_id=None, reactor_id=None):
         emoji_query = Q(post_reactions__item_id=item_id, )
 
         if emoji_id:
@@ -198,10 +205,6 @@ class ItemReaction(models.Model):
 
     def __str__(self):
         return "{0}/{1}".format(self.item.creator.get_full_name(), self.emoji.keyword)
-
-    def count_emoji(self):
-        count_emoji = Emoji.objects.filter(itemreaction=self).count()
-        return count_emoji
 
     def get_reactor(self):
         reactors = User.objects.filter(pk=self.reactor.pk).all()
