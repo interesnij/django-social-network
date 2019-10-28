@@ -19,3 +19,5 @@ class Connect(models.Model):
 
     class Meta:
         unique_together = ('user', 'target_user')
+        verbose_name = 'Друг'
+        verbose_name_plural = 'Друзья'

@@ -33,6 +33,8 @@ class Item(models.Model):
         )
 
         ordering = ['-id']
+        verbose_name="запись"
+        verbose_name_plural="записи"
 
     def save(self, *args, **kwargs):
         if not self.is_fixed:
@@ -84,6 +86,8 @@ class ItemComment(models.Model):
         indexes = (
             BrinIndex(fields=['created']),
         )
+        verbose_name="комментарий к записи"
+        verbose_name_plural="комментарии к записи"
 
     def __str__(self):
         return "{0}/{1}".format(self.commenter.get_full_name(), self.text[:10])
@@ -112,6 +116,10 @@ class EmojiGroup(models.Model):
             self.created = timezone.now()
         return super(EmojiGroup, self).save(*args, **kwargs)
 
+    class Meta:
+        verbose_name="группа смайликоа"
+        verbose_name_plural="группы смайликов"
+
 
 class Emoji(models.Model):
     group = models.ForeignKey(EmojiGroup, on_delete=models.CASCADE, related_name='emojis', null=True)
@@ -129,6 +137,10 @@ class Emoji(models.Model):
             self.created = timezone.now()
         return super(Emoji, self).save(*args, **kwargs)
 
+    class Meta:
+        verbose_name="смайлик"
+        verbose_name_plural="смайлики"
+
 
 class ItemReaction(models.Model):
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
@@ -138,6 +150,8 @@ class ItemReaction(models.Model):
 
     class Meta:
         unique_together = ('reactor', 'item', 'emoji')
+        verbose_name="реакция к записи"
+        verbose_name_plural="реакции к записям"
 
     def __str__(self):
         return "{0}/{1}".format(self.item.creator.get_full_name(), self.emoji.keyword)
@@ -161,7 +175,9 @@ class ItemCommentReaction(models.Model):
     emoji = models.ForeignKey(Emoji, on_delete=models.CASCADE, related_name='post_comment_reactions')
 
     class Meta:
-        unique_together = ('reactor', 'item_comment',)
+        unique_together = ('reactor', 'item_comment','emoji')
+        verbose_name="реакция на комментарий"
+        verbose_name_plural="реакции на комментарии"
 
     def save(self, *args, **kwargs):
         if not self.id:

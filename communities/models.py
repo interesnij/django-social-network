@@ -20,6 +20,10 @@ class CommunityCategory(models.Model):
     def __str__(self):
         return 'Категория: ' + self.name
 
+    class Meta:
+        verbose_name="Категория сообществ"
+        verbose_name_plural="Категории сообществ"
+
 
 class CommunitySubCategory(models.Model):
     name = models.CharField(max_length=100, blank=False, null=False, verbose_name="Название")
@@ -29,6 +33,10 @@ class CommunitySubCategory(models.Model):
 
     def __str__(self):
         return 'ПодКатегория: ' + self.name
+
+    class Meta:
+        verbose_name="Подкатегория сообществ"
+        verbose_name_plural="Подкатегории сообществ"
 
 
 class Community(models.Model):
@@ -61,6 +69,7 @@ class Community(models.Model):
     )
 
     class Meta:
+        verbose_name = 'сообщество'
         verbose_name_plural = 'сообщества'
 
     @classmethod
@@ -524,6 +533,8 @@ class CommunityMembership(models.Model):
             models.Index(fields=['community', 'user', 'is_administrator']),
             models.Index(fields=['community', 'user', 'is_moderator']),
             ]
+        verbose_name = 'подписчик сообщества'
+        verbose_name_plural = 'подписчики сообщества'
 
 
 class CommunityLog(models.Model):
@@ -575,3 +586,5 @@ class CommunityInvite(models.Model):
 
     class Meta:
         unique_together = (('invited_user', 'community', 'creator'),)
+        verbose_name = 'Приглашение в сообщество'
+        verbose_name_plural = 'Приглашения в сообщества'

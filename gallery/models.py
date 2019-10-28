@@ -19,6 +19,8 @@ class Album(models.Model):
             BrinIndex(fields=['created']),
         )
         ordering = ['order']
+        verbose_name = 'Фотоальбом'
+        verbose_name_plural = 'Фотоальбомы'
 
 
 
@@ -36,3 +38,5 @@ class Photo(models.Model):
             BrinIndex(fields=['created']),
         )
         ordering = ['order']
+        verbose_name = 'Фото'
+        verbose_name_plural = 'Фото'

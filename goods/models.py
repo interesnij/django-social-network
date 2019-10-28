@@ -37,6 +37,11 @@ class GoodSubCategory(models.Model):
 	def __str__(self):
 		return self.name
 
+	class Meta:
+		ordering=["order","name"]
+		verbose_name="Подкатегория товаров"
+		verbose_name_plural="Подкатегории товаров"
+
 class Good(models.Model):
 
 	uuid = models.UUIDField(default=uuid.uuid4, db_index=True,verbose_name="uuid")
