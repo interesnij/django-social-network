@@ -43,18 +43,18 @@ class RepostUser(View):
 
 
 class ReactView(TemplateView):
-    template_name="react_window.html"
+	template_name="react_window.html"
 
-    def get(self,request,*args,**kwargs):
-        item = Item.objects.get(uuid=self.kwargs["uuid"])
+	def get(self,request,*args,**kwargs):
+		item = Item.objects.get(uuid=self.kwargs["uuid"])
 		emoji = Emoji.objects.get(pk=self.kwargs["pk"])
 		react = ItemComment.objects.filter(item=item, emoji=emoji)
-        return super(ReactView,self).get(request,*args,**kwargs)
+		return super(ReactView,self).get(request,*args,**kwargs)
 
-    def get_context_data(self,**kwargs):
-        context=super(ReactView,self).get_context_data(**kwargs)
-        context["like"]=self.like
-        return context
+	def get_context_data(self,**kwargs):
+		context=super(ReactView,self).get_context_data(**kwargs)
+		context["react"]=self.react
+		return context
 
 
 class CommentReactView(TemplateView):
