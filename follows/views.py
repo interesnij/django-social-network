@@ -26,7 +26,7 @@ class FollowsListView(ListView):
 class FollowCreate(View):
 	success_url = "/"
 
-	def post(self,request,*args,**kwargs):
+	def get(self,request,*args,**kwargs):
 		self.followed_user = User.objects.get(pk=self.kwargs["pk"])
 		try:
 			self.follows = Follow.objects.get(followed_user=self.followed_user,user=request.user)
@@ -43,7 +43,7 @@ class FollowCreate(View):
 class FollowDelete(View):
 	success_url = "/"
 
-	def post(self,request,*args,**kwargs):
+	def get(self,request,*args,**kwargs):
 		self.followed_user = User.objects.get(pk=self.kwargs["pk"])
 		try:
 			self.follows = Follow.objects.get(followed_user=self.followed_user,user=request.user)
