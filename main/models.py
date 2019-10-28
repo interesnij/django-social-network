@@ -142,6 +142,10 @@ class ItemReaction(models.Model):
         count_emoji = Emoji.objects.filter(itemreaction=self).count()
         return count_emoji
 
+    def get_emoji(self):
+        emojis = Emoji.objects.filter(itemreaction=self).all()
+        return emojis
+
 
 class ItemCommentReaction(models.Model):
     item_comment = models.ForeignKey(ItemComment, on_delete=models.CASCADE, related_name='reactions')

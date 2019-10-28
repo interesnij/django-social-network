@@ -5,4 +5,25 @@
   <img style="width:22px;" src="{{ react.emoji.image.url }}">
   {{ react.count_emoji }}
 </span>
+
+<span class="react_window">
+<div class="react_pop" style="margin:15px">
+  <span>{{ react.count_emoji }} {{ react.count_emoji|rupluralize:"реакция,реакции,реакций" }}</span>
+  <br><br>
+  <span style="display: flex;">
+    {% for heart in react.get_emoji %}
+    <a href="{% url 'user' pk=heart.user.pk %}" class="ajax" style="padding-right:10px">
+      <figure style="margin: 0;">
+        {% if heart.user.profile.avatar %}
+          <img src="{{ heart.user.profile.avatar.url }}" style="border-radius: 50px;width:50px;" alt="image">
+          {% else %}
+          <img src="{% static 'images/user.png' %}" alt="image" style="border-radius: 50px;width:50px;">
+          {% endif %}
+      </figure>
+      {{ heart.user.first_name }}
+    </a>
+    {% endfor %}
+  </span>
+</div>
+</span>
 {% endfor %}
