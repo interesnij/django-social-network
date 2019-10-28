@@ -143,15 +143,24 @@ class Emoji(models.Model):
 
 
 class ItemReaction(models.Model):
-    item = models.ForeignKey(Item, on_delete=models.CASCADE)
+    item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name='reactions')
     created = models.DateTimeField(editable=False)
-    reactor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    emoji = models.ForeignKey(Emoji, on_delete=models.CASCADE)
+    reactor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='post_reactions')
+    emoji = models.ForeignKey(Emoji, on_delete=models.CASCADE, related_name='post_reactions')
 
     class Meta:
         unique_together = ('reactor', 'item', 'emoji')
         verbose_name="реакция к записи"
         verbose_name_plural="реакции к записям"
+
+    @classmethod
+    def count_reactions_for_post_with_id(cls, post, reactor_id=None):
+        count_query = Q(post=post, reactor__is_deleted=False)
+
+        if reactor_id:
+            count_query.add(Q(reactor_id=reactor_id), Q.AND)
+
+        return cls.objects.filter(count_query).count()
 
     def __str__(self):
         return "{0}/{1}".format(self.item.creator.get_full_name(), self.emoji.keyword)
@@ -166,9 +175,6 @@ class ItemReaction(models.Model):
 
     def notification_react(self, user):
         notification_handler(user, self.reactor,Notification.REACT, action_object=self,id_value=str(self.id),key='social_update')
-
-    def is_emoji_in_itemreaction(self):
-        return ItemReaction.objects.filter(item=self.item, emoji=self.emoji).exists()
 
 
 class ItemCommentReaction(models.Model):
