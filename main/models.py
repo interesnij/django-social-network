@@ -72,8 +72,8 @@ class Item(models.Model):
         notification_handler(user, self.creator,Notification.REPOST, action_object=self,id_value=str(self.uuid),key='social_update')
 
     @classmethod
-    def get_emoji_counts_for_post_with_id(cls, post_id, emoji_id=None, reactor_id=None):
-        return Emoji.get_emoji_counts_for_post_with_id(post_id=post_id, emoji_id=emoji_id, reactor_id=reactor_id)
+    def get_emoji_counts_for_post_with_id(cls, item_id, emoji_id=None, reactor_id=None):
+        return Emoji.get_emoji_counts_for_post_with_id(item_id=item_id, emoji_id=emoji_id, reactor_id=reactor_id)
 
 
 
@@ -157,8 +157,8 @@ class Emoji(models.Model):
         return [{'emoji': emoji, 'count': emoji.post_comment_reactions__count} for emoji in emojis]
 
     @classmethod
-    def get_emoji_counts_for_post_with_id(cls, post_id, emoji_id=None, reactor_id=None):
-        emoji_query = Q(post_reactions__post_id=post_id, )
+    def get_emoji_counts_for_post_with_id(cls, item_id, emoji_id=None, reactor_id=None):
+        emoji_query = Q(post_reactions__item_id=item_id, )
 
         if emoji_id:
             emoji_query.add(Q(post_reactions__emoji_id=emoji_id), Q.AND)
