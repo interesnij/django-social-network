@@ -116,36 +116,6 @@ class Emoji(models.Model):
     created = models.DateTimeField(editable=False)
     order = models.IntegerField(unique=False, default=100)
 
-    @classmethod
-    def get_emoji_counts_for_item_comment_with_id(cls, post_comment_id, emoji_id=None, reactor_id=None):
-        emoji_query = Q(post_comment_reactions__post_comment_id=post_comment_id, )
-
-        if emoji_id:
-            emoji_query.add(Q(post_comment_reactions__emoji_id=emoji_id), Q.AND)
-
-        if reactor_id:
-            emoji_query.add(Q(post_comment_reactions__reactor_id=reactor_id), Q.AND)
-
-        emojis = Emoji.objects.filter(emoji_query).annotate(Count('post_comment_reactions')).distinct().order_by(
-            '-post_comment_reactions__count').cache().all()
-
-        return [{'emoji': emoji, 'count': emoji.post_comment_reactions__count} for emoji in emojis]
-
-    @classmethod
-    def get_emoji_counts_for_post_with_id(cls, post_id, emoji_id=None, reactor_id=None):
-        emoji_query = Q(post_reactions__post_id=post_id, )
-
-        if emoji_id:
-            emoji_query.add(Q(post_reactions__emoji_id=emoji_id), Q.AND)
-
-        if reactor_id:
-            emoji_query.add(Q(post_reactions__reactor_id=reactor_id), Q.AND)
-
-        emojis = Emoji.objects.filter(emoji_query).annotate(Count('post_reactions')).distinct().order_by(
-            '-post_reactions__count').cache().all()
-
-        return [{'emoji': emoji, 'count': emoji.post_reactions__count} for emoji in emojis]
-
     def __str__(self):
         return 'Emoji: ' + self.keyword
 
@@ -168,20 +138,6 @@ class ItemReaction(models.Model):
     def __str__(self):
         return "{0}/{1}".format(self.item.creator.get_full_name(), self.emoji.keyword)
 
-    @classmethod
-    def count_reactions_for_item_with_id(cls, item_id, reactor_id=None):
-        count_query = Q(item_id=item_id, reactor__is_deleted=False)
-
-        if reactor_id:
-            count_query.add(Q(reactor_id=reactor_id), Q.AND)
-
-        return cls.objects.filter(count_query).count()
-
-    def save(self, *args, **kwargs):
-        if not self.id:
-            self.created = timezone.now()
-        return super(ItemReaction, self).save(*args, **kwargs)
-
 
 class ItemCommentReaction(models.Model):
     item_comment = models.ForeignKey(ItemComment, on_delete=models.CASCADE, related_name='reactions')
@@ -191,15 +147,6 @@ class ItemCommentReaction(models.Model):
 
     class Meta:
         unique_together = ('reactor', 'item_comment',)
-
-    @classmethod
-    def count_reactions_for_item_with_id(cls, item_comment_id, reactor_id=None):
-        count_query = Q(item_comment_id=item_comment_id, reactor__is_deleted=False)
-
-        if reactor_id:
-            count_query.add(Q(reactor_id=reactor_id), Q.AND)
-
-        return cls.objects.filter(count_query).count()
 
     def save(self, *args, **kwargs):
         if not self.id:
