@@ -92,7 +92,7 @@ class ReactUserCreate(View):
 		new_react = ItemReaction.objects.create(item=item, created=timezone.now(), emoji=emoji, reactor=request.user)
 		new_react.notification_react(request.user)
 		if new_react.is_emoji_in_itemreaction():
-			pass
+			return HttpResponse("!")
 		else:
 			html = render_to_string("generic/posts/emoji.html",{'react': new_react,'request': request})
 			return JsonResponse(html, safe=False)
