@@ -11,7 +11,7 @@
           <span>Оценили: {{ object.votes.likes.count }} {{ object.votes.likes.count|rupluralize:"человек,человека,людей" }}</span>
           <br><br>
           <span style="display: flex;">
-            {% for heart in object.react.all %}
+            {% for heart in object.user.all %}
             <a href="{% url 'user' pk=heart.user.pk %}" class="ajax" style="padding-right:10px">
               <figure style="margin: 0;">
                 {% if heart.user.profile.avatar %}
