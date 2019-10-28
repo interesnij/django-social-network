@@ -151,7 +151,7 @@ class ItemReaction(models.Model):
         return reactors
 
     def notification_react(self, user):
-        notification_handler(user, self.reactor,Notification.REACT, action_object=self,id_value=str(self.uuid),key='social_update')
+        notification_handler(user, self.reactor,Notification.REACT, action_object=self,id_value=str(self.id),key='social_update')
 
 
 class ItemCommentReaction(models.Model):
