@@ -1,5 +1,5 @@
 
 
 {% for emoji in object.itemreaction_set.all %}
-{{ emoji }}
+{{ emoji.image.url }}
 {% endfor %}
