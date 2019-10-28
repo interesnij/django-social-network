@@ -139,7 +139,7 @@ class ItemReaction(models.Model):
         return "{0}/{1}".format(self.item.creator.get_full_name(), self.emoji.keyword)
 
     def count_emoji(self):
-        count_emoji = Emoji.objects.filter(emoji=self).count()
+        count_emoji = Emoji.objects.filter(itemreaction=self).count()
         return count_emoji
 
 
