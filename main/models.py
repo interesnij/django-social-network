@@ -142,9 +142,9 @@ class ItemReaction(models.Model):
         count_emoji = Emoji.objects.filter(itemreaction=self).count()
         return count_emoji
 
-    def get_emoji(self):
-        emojis = Emoji.objects.filter(itemreaction=self).all()
-        return emojis
+    def get_reactor(self):
+        reactors = User.objects.filter(reactor=self).all()
+        return reactors
 
 
 class ItemCommentReaction(models.Model):

@@ -12,7 +12,7 @@
   <span>{{ react.count_emoji }} {{ react.count_emoji|rupluralize:"реакция,реакции,реакций" }}</span>
   <br><br>
   <span style="display: flex;">
-    {% for heart in react.get_emoji %}
+    {% for heart in react.get_reactor %}
     <a href="{% url 'user' pk=heart.reactor.pk %}" class="ajax" style="padding-right:10px">
       <figure style="margin: 0;">
         {% if heart.reactor.profile.avatar %}
