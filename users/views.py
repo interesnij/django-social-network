@@ -15,7 +15,6 @@ from django.views.generic import ListView
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.db.models import Q
 from generic.mixins import CategoryListMixin
-from django.db.models import Count
 
 
 
