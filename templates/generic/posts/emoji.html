@@ -1,2 +1,5 @@
 
-1_{{ object.itemcomment }} 2_{{ object.itemreaction.reactor }} 
+
+{% for emoji in object.item_react_set.all %}
+{{ emoji }}
+{% endfor %}
