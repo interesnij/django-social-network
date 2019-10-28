@@ -52,7 +52,7 @@
             {% for react in object.itemreaction.emoji_set.all %}
               {% include 'generic/posts/emoji.html' %}
               {% endfor %}
-          {{ emo }}
+          {{ emo.emoji }} {{ emo.count }}
           <span>
 
       </div>
