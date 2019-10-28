@@ -1,5 +1,6 @@
 
 
 {% for object in object.itemreaction_set.all %}
-{{ object.emoji.image.url }}
+<img src="{{ object.emoji.image.url }}">
+{{ object.emoji.count }}
 {% endfor %}
