@@ -132,8 +132,6 @@ $('[data-action="item_unfixed"]').click(unfixed);
 			var react = $(this);
 			var item = react.parents('.infinite-item').attr("item-id");
 			var pk = react.data('id');
-			console.log(item);
-			console.log(pk);
 			payload = {
 					'item': item,
 					'csrf_token': csrftoken
@@ -145,6 +143,7 @@ $('[data-action="item_unfixed"]').click(unfixed);
 					data: payload,
 					success: function(data) {
 							react.find("[data-count='react']").text(data.react_count);
+							$(".reactions_stream").prepend(data);
 							$(react).siblings('.reaction_window').html('').load("/main/react_window/" + item + "/");
 							$.toast({
 									heading: '{{ request.user.first_name }}',
