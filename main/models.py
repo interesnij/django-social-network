@@ -71,6 +71,12 @@ class Item(models.Model):
     def notification_repost(self, user):
         notification_handler(user, self.creator,Notification.REPOST, action_object=self,id_value=str(self.uuid),key='social_update')
 
+    @classmethod
+    def get_emoji_counts_for_post_with_id(cls, post_id, emoji_id=None, reactor_id=None):
+        return Emoji.get_emoji_counts_for_post_with_id(post_id=post_id, emoji_id=emoji_id, reactor_id=reactor_id)
+
+
+
 
 class ItemComment(models.Model):
     parent_comment = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True,verbose_name="Родительский комментарий")
