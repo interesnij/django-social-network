@@ -27,7 +27,7 @@ class UserItemView(CategoryListMixin, TemplateView):
         self.item = Item.objects.get(pk=self.kwargs["pk"])
         self.item.views += 1
         self.item.save()
-        self.emo = self.item.get_emoji_counts_for_post_with_id(item_id)
+        self.emo = self.item.get_emoji_counts_for_post_with_id(item.id)
         return super(UserItemView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
