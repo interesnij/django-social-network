@@ -145,7 +145,21 @@ $('[data-action="item_unfixed"]').click(unfixed);
 					data: payload,
 					success: function(data) {
 							react.find("[data-count='react']").text(data.react_count);
-							$(react).siblings('.react_window').html('').load("/main/react_window/" + item + "/");
+							$(react).siblings('.reaction_window').html('').load("/main/react_window/" + item + "/");
+							$.toast({
+									heading: '{{ request.user.first_name }}',
+									text: 'Ваша реакция засчитана',
+									showHideTransition: 'fade',
+									icon: 'info'
+							})
+					},
+					error: function(data) {
+						$.toast({
+								heading: '{{ request.user.first_name }}',
+								text: 'Вы уже отреагировали этим смайлом',
+								showHideTransition: 'fade',
+								icon: 'error'
+						})
 					}
 			});
 			return false;

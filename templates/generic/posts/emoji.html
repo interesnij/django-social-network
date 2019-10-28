@@ -1,14 +1,12 @@
 {% load liked_user staticfiles %}
 
-{% for react in object.itemreaction_set.all %}
-
 <span class="react_btn" style="margin-right:5px;cursor:pointer">
   <img style="width:22px;" src="{{ react.emoji.image.url }}">
-  {{ react.count_emoji }}
+  <span data-count="react">{{ react.count_emoji }}</span>
 </span>
 
 <span class="reaction_window">
-<div class="reaction_pop" style="margin:15px">
+<div style="margin:15px">
   <span>{{ react.count_emoji }} {{ react.count_emoji|rupluralize:"реакция,реакции,реакций" }}</span>
   <br><br>
   <span style="display: flex;">
@@ -27,4 +25,3 @@
   </span>
 </div>
 </span>
-{% endfor %}

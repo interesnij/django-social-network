@@ -48,8 +48,11 @@
             </span>
           </span>
           &nbsp;&nbsp;
-          {% include 'generic/posts/emoji.html' %}
 
+          {% for react in object.itemreaction_set.all %}
+            {% include 'generic/posts/emoji.html' %}
+          {% endfor %}
+          
       </div>
       <span class="col-auto" title="Просмотры" style="font-size:12px">
         <img style="width:17px" src="{% static 'images/icons/remove_red_eye-24px.svg' %}" />

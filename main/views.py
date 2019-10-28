@@ -1,7 +1,7 @@
 from django.views.generic.base import TemplateView
 from users.models import User
 from main.models import Item, ItemComment, ItemReaction, ItemCommentReaction, Emoji
-
+from django.utils import timezone
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from main.forms import CommentForm
 from django.template.loader import render_to_string
@@ -46,8 +46,9 @@ class ReactView(TemplateView):
     template_name="react_window.html"
 
     def get(self,request,*args,**kwargs):
-        self.react = Item.objects.get(pk=self.kwargs["pk"])
-        self.react.notification_like(request.user)
+        item = Item.objects.get(uuid=self.kwargs["uuid"])
+		emoji = Emoji.objects.get(pk=self.kwargs["pk"])
+		react = ItemComment.objects.filter(item=item, emoji=emoji)
         return super(ReactView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -88,8 +89,9 @@ class ReactUserCreate(View):
 	def post(self,request,*args,**kwargs):
 		item = Item.objects.get(uuid=self.kwargs["uuid"])
 		emoji = Emoji.objects.get(pk=self.kwargs["pk"])
-		new_react = ItemReaction.objects.create(item=item, emoji=emoji, reactor=request.user)
-		html = render_to_string("generic/posts/emoji.html",{'object': new_react,'request': request})
+		new_react = ItemReaction.objects.create(item=item, created=timezone.now(), emoji=emoji, reactor=request.user)
+		new_react.notification_react(request.user)
+		html = render_to_string("generic/posts/emoji.html",{'react': new_react,'request': request})
 		return JsonResponse(html, safe=False)
 
 

@@ -50,15 +50,6 @@ class Item(models.Model):
         get_comments = ItemComment.objects.filter(parent_comment=self).all()
         return get_comments
 
-    def notification_like(self, user):
-        notification_handler(user, self.creator,Notification.LIKED, action_object=self,id_value=str(self.uuid),key='social_update')
-
-    def notification_dislike(self, user):
-        notification_handler(user, self.creator,Notification.DISLIKED, action_object=self,id_value=str(self.uuid),key='social_update')
-
-    def notification_comment(self, user):
-        notification_handler(user, self.creator,Notification.POST_COMMENT, action_object=self,id_value=str(self.uuid),key='notification')
-
     def get_parent(self):
         if self.parent:
             return self.parent
@@ -74,6 +65,9 @@ class Item(models.Model):
 
     def __str__(self):
         return "{0}/{1}".format(self.creator.get_full_name(), self.views)
+
+    def notification_repost(self, user):
+        notification_handler(user, self.creator,Notification.REPOST, action_object=self,id_value=str(self.uuid),key='social_update')
 
 
 class ItemComment(models.Model):
@@ -93,6 +87,15 @@ class ItemComment(models.Model):
 
     def __str__(self):
         return "{0}/{1}".format(self.commenter.get_full_name(), self.text[:10])
+
+    def notification_comment(self, user):
+        notification_handler(user, self.commenter,Notification.POST_COMMENT, action_object=self,id_value=str(self.uuid),key='social_update')
+
+    def notification_reply_comment(self, user):
+        notification_handler(user, self.commenter,Notification.POST_COMMENT_REPLY, action_object=self,id_value=str(self.uuid),key='social_update')
+
+    def notification_comment_react(self, user):
+        notification_handler(user, self.reactor,Notification.REACT_COMMENT, action_object=self,id_value=str(self.uuid),key='social_update')
 
 
 class EmojiGroup(models.Model):
@@ -146,6 +149,9 @@ class ItemReaction(models.Model):
     def get_reactor(self):
         reactors = User.objects.filter(pk=self.reactor.pk).all()
         return reactors
+
+    def notification_react(self, user):
+        notification_handler(user, self.reactor,Notification.REACT, action_object=self,id_value=str(self.uuid),key='social_update')
 
 
 class ItemCommentReaction(models.Model):

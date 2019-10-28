@@ -70,29 +70,27 @@ class Notification(models.Model):
     COMMUNITY_INVITE = 'CI'
     POST_USER_MENTION = 'PUM'
     POST_COMMENT_USER_MENTION = 'PCUM'
-    LIKED = 'L'
+    REACT = 'RE'
     LIKED_COMMENT =  'LC'
     DISLIKED = 'DL'
     DISLIKED_COMMENT =  'DC'
     LOGGED_IN = 'I'
     LOGGED_OUT = 'O'
     SIGNUP = 'U'
-    REPLY = 'R'
+    REPOST = 'R'
 
     NOTIFICATION_TYPES = (
         (POST_COMMENT, 'оставил комментарий'),
-        (POST_COMMENT_REPLY, 'ответил на Ваш комментарий к посту'),
+        (POST_COMMENT_REPLY, 'ответил на Ваш комментарий к записи'),
         (CONNECTION_REQUEST, 'подал заявку в друзья'),
-        (CONNECTION_CONFIRMED, 'подтвердил что он Ваш друг'),
-        (COMMUNITY_INVITE, 'Приглашение в сообщество'),
-        (POST_USER_MENTION, 'упомянул Вас в посте'),
-        (POST_COMMENT_USER_MENTION, 'упомянул Вас в комментарии к посту'),
-        (LIKED, 'понравился Ваш пост'),
-        (LIKED_COMMENT, 'понравился Ваш комментарий к посту'),
-        (DISLIKED, 'не понравился Ваш пост'),
-        (DISLIKED_COMMENT, 'не понравился Ваш комментарий к посту'),
+        (CONNECTION_CONFIRMED, 'подтвердил, что он Ваш друг'),
+        (COMMUNITY_INVITE, 'пригласил Вас в сообщество'),
+        (POST_USER_MENTION, 'упомянул Вас в записи'),
+        (POST_COMMENT_USER_MENTION, 'упомянул Вас в комментарии к записи'),
+        (REACT, 'отреагировал на Ваш пост'),
+        (REACT_COMMENT, 'отреагировал на Ваш комментарий'),
         (SIGNUP, 'создал аккаунт'),
-        (REPLY, 'поделился Вашим постом'),
+        (REPOST, 'поделился Вашей записью'),
     )
 
     verb = models.CharField(max_length=5, choices=NOTIFICATION_TYPES, verbose_name="Тип уведомления")
