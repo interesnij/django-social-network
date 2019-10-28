@@ -168,7 +168,7 @@ class Emoji(models.Model):
             emoji_query.add(Q(post_reactions__reactor_id=reactor_id), Q.AND)
 
         emojis = Emoji.objects.filter(emoji_query).annotate(Count('post_reactions')).distinct().order_by(
-            '-post_reactions__count').cache().all()
+            '-post_reactions__count').all()
 
         return [{'emoji': emoji, 'count': emoji.post_reactions__count} for emoji in emojis]
 
