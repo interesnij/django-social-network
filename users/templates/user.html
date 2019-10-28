@@ -10,6 +10,27 @@
 {% endblock %}
 {% block content %}
 <style>
+  .react_window {
+      opacity: 0;
+      visibility: hidden;
+      position: absolute;
+      transition: 0.2s;
+      right: 16%;
+  }
+  .react_window:hover {
+      z-index: 10;
+      opacity: 1;
+      visibility: visible;
+      background: #D6DAE1;
+      color: black;
+  }
+  .react:hover~.react_window{
+      z-index: 10;
+      opacity: 1;
+      visibility: visible;
+      background: #D6DAE1;
+      color: black;
+  }
   .article_fullscreen{
     position: fixed;
     top: 0;
