@@ -26,7 +26,7 @@ class FollowsListView(ListView):
 class FollowCreate(View):
 	success_url = "/"
 
-	def get(self,request,*args,**kwargs):
+	def post(self,request,*args,**kwargs):
 		self.followed_user = User.objects.get(pk=self.kwargs["pk"])
 		try:
 			self.follows = Follow.objects.get(followed_user=self.followed_user,user=request.user)
@@ -38,13 +38,12 @@ class FollowCreate(View):
 			new_follow.notification_follow(request.user)
 		else:
 			return HttpResponse("Подписка уже есть :-)")
-		return super(FollowCreate,self).get(request,*args,**kwargs)
 
 
 class FollowDelete(View):
 	success_url = "/"
 
-	def get(self,request,*args,**kwargs):
+	def post(self,request,*args,**kwargs):
 		self.followed_user = User.objects.get(pk=self.kwargs["pk"])
 		try:
 			self.follows = Follow.objects.get(followed_user=self.followed_user,user=request.user)
@@ -55,4 +54,3 @@ class FollowDelete(View):
 			follow.delete()
 		else:
 			return HttpResponse("Подписка не найдена!")
-		return super(FollowDelete,self).get(request,*args,**kwargs)
