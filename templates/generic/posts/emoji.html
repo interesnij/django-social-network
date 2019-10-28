@@ -1,37 +1,13 @@
 {% load liked_user staticfiles %}
 
 {% for react in object.itemreaction_set.all %}
-<style>
-.react_window_{{ react.pk }} {
-  opacity: 0;
-visibility: hidden;
-position: absolute;
-bottom: 25px;
-margin-bottom: 10px;
-display: flex;
-transition: 0.5s;
-}
-.reaction_window_{{ react.pk }}:hover {
-    z-index: 10;
-    opacity: 1;
-    visibility: visible;
-    background: #D6DAE1;
-    color: black;
-}
-.react_btn:hover~.reaction_window_{{ react.pk }}{
-    z-index: 10;
-    opacity: 1;
-    visibility: visible;
-    background: #D6DAE1;
-    color: black;
-}
-</style>
+
 <span class="react_btn" style="margin-right:5px;cursor:pointer">
   <img style="width:22px;" src="{{ react.emoji.image.url }}">
   {{ react.count_emoji }}
 </span>
 
-<span class="react_window_{{ react.pk }}">
+<span class="react_window">
 <div class="reaction_pop" style="margin:15px">
   <span>{{ react.count_emoji }} {{ react.count_emoji|rupluralize:"реакция,реакции,реакций" }}</span>
   <br><br>
