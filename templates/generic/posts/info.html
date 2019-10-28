@@ -49,10 +49,10 @@
           </span>
           &nbsp;&nbsp;
           <span class="reactions_stream">
-            {% for react in object.itemreaction.emoji_set.all %}
+            {% for react in emo %}
               {% include 'generic/posts/emoji.html' %}
-              {% endfor %}
-          {{ emo.emoji }} {{ emo.count }}
+            {% endfor %}
+
           <span>
 
       </div>
