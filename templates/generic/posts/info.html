@@ -52,6 +52,7 @@
             {% for react in object.itemreaction.emoji_set.all %}
               {% include 'generic/posts/emoji.html' %}
               {% endfor %}
+          {{ object.get_emoji_counts_for_post_with_id }}
           <span>
 
       </div>
