@@ -144,7 +144,7 @@ class ItemReaction(models.Model):
         return count_emoji
 
     def get_reactor(self):
-        reactors = User.objects.filter(reactor=self).all()
+        reactors = User.objects.filter(pk=self.reactor.pk).all()
         return reactors
 
 
