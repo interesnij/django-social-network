@@ -10,3 +10,10 @@ class PostUserForm(forms.ModelForm):
 	class Meta:
 		model = Post
 		fields = ['text']
+
+
+class PostUserForm(forms.ModelForm):
+
+	class Meta:
+		model = Post
+		fields = ['text']

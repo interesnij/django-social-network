@@ -2,7 +2,7 @@ from django.views.generic.base import TemplateView
 from users.models import User
 from django.template.loader import render_to_string
 from posts.models import Post
-from posts.forms import PostUserForm
+from posts.forms import PostUserForm, PostCommunityForm
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.views import View
 
@@ -45,6 +45,34 @@ class PostUserCreate(View):
         if self.form_post.is_valid():
             new_post=self.form_post.save(commit=False)
             new_post.creator=self.request.user
+            new_post=self.form_post.save()
+
+            if request.is_ajax() :
+                html = render_to_string('new_post.html',{'object': new_post,'request': request})
+                return HttpResponse(html)
+        else:
+            return HttpResponseBadRequest()
+
+
+class PostCommunityCreate(View):
+    form_post=None
+    success_url="/"
+
+    def get(self,request,*args,**kwargs):
+        self.form_post=PostCommunityForm(initial={"creator":request.user,'community':request.POST.get('community'))
+        return super(PostCommunityCreate,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context=super(PostCommunityCreate,self).get_context_data(**kwargs)
+        context["form_post"]=self.form_post
+        return context
+
+    def post(self,request,*args,**kwargs):
+        self.form_post=PostCommunityForm(request.POST, request.FILES)
+        if self.form_post.is_valid():
+            new_post=self.form_post.save(commit=False)
+            new_post.creator=self.request.user
+            new_post.community=request.POST.get('community')
             new_post=self.form_post.save()
 
             if request.is_ajax() :
