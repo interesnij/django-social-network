@@ -66,21 +66,19 @@
     <div class="card-body">
         <div class="row align-items-center no-gutters">
             <a class="col">
-              {% if user.profile.avatar %}
+
                 <figure class="mx-auto mb-3">
-                  <img src="{{ user.profile.avatar.url }}" alt="">
+                  {% if user.profile.avatar %}
+                    <img src="{{ user.profile.avatar.url }}" alt="">
+                  {% else %}
+                    <img src="{% static 'images/user.png' %}" alt="">
+                  {% endif %}
                 </figure>
-              {% else %}
-                <figure class="mx-auto mb-3">
-                  <img src="{% static 'images/user.png' %}" alt="">
-                </figure>
-              {% endif %}
             </a>
         </div>
-
-        <span id="button_reload">
-          
-        </span>
+        {% if user != request.user %}
+        <span id="button_reload"></span>
+        {% endif %}
 
         {% if user == request.user and request.user.is_authenticated %}
 

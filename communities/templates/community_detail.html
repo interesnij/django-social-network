@@ -5,25 +5,33 @@
 <div class="container-fluid">
             <div class="row align-items-center has-background-img min-height-300">
                 <figure class="background-img pink-gradient">
-                    <img src="img/singer-690117_640.jpg" alt="" class="">
+                  {% if object.cover %}
+                    <img src="{{ object.cover.url }}" alt="" class="">
+                  {% else %}
+                    <img src="{% static 'images/news_small1.jpg' %}" alt="" class="">
+                  {% endif %}
                 </figure>
                 <div class="container">
                     <div class="row align-items-center ">
                         <div class="col-12 col-sm-auto text-center">
                             <a href="profile.html ">
                                 <figure class="avatar avatar-150 mx-auto my-3">
-                                    <img src="img/user1.png" alt="">
+                                  {% if object.avatar %}
+                                    <img src="{{ object.avatar.url }}" alt="" class="">
+                                  {% else %}
+                                    <img src="{% static 'images/no_img.png' %}" alt="" class="">
+                                  {% endif %}
                                 </figure>
                             </a>
                         </div>
                         <div class="col-12 col-sm text-center text-sm-left text-white">
-                            <h3 class="mb-0">John McMohan</h3>
-                            <p class="">South Africa</p>
-                            <p class="small"><i class="material-icons">call</i> +0 0000 0000 0000 <span class="mx-2">|</span> <i class="material-icons">mail_outline</i> info@maxartkiller.in</p>
+                            <h3 class="mb-0">{{ object.name }}</h3>
+                            <p class="">текст</p>
+                            <p class="small"> +0 0000 0000 0000 <span class="mx-2">|</span> info@maxartkiller.in</p>
                         </div>
                         <div class="text-center text-sm-right col-12 col-sm-auto mb-3">
-                            <a class="btn btn-success success-gradient">+ Friend</a>
-                            <a class="btn btn-primary primary-gradient ml-2">Follow</a>
+                            <a class="btn btn-success success-gradient">Подписаться</a>
+                            <a class="btn btn-primary primary-gradient ml-2">Подать заявку</a>
                         </div>
                     </div>
                 </div>
@@ -35,52 +43,8 @@
             <div class="row">
                 <div class="col-12 col-md-12 col-lg-8">
                     <div class="card mb-4">
-                        <div class="card-header">
-                            <div class="media">
-                                <div class="media-body">
-                                    <h4 class="content-color-primary mb-0">Photos </h4>
-                                </div>
-                                <a href="javascript:void(0);" class="">
-                                    View All
-                                </a>
-                            </div>
-                        </div>
-                        <div class="card-body p-1">
-                            <div class="row no-gutters">
-                                <div class="col-12">
-                                    <div class="grid grid-four swipegallery" itemscope="" data-pswp-uid="1" style="position: relative; height: 170.5px;">
-                                        <figure class="grid-item mb-0" itemprop="associatedMedia" itemscope="" style="position: absolute; left: 0%; top: 0px;">
-                                            <a href="img/news_small4.jpg" class="swipebox" itemprop="contentUrl" data-size="300x300">
-                                                <img src="img/news_small4.jpg" alt="image" itemprop="thumbnail">
-                                            </a>
-                                        </figure>
-                                        <figure class="grid-item mb-0" itemprop="associatedMedia" itemscope="" style="position: absolute; left: 24.9267%; top: 0px;">
-                                            <a href="img/news_small1.jpg" class="swipebox" itemprop="contentUrl" data-size="300x300">
-                                                <img src="img/news_small1.jpg" alt="image" itemprop="thumbnail">
-                                            </a>
-                                        </figure>
-                                        <figure class="grid-item mb-0" itemprop="associatedMedia" itemscope="" style="position: absolute; left: 50%; top: 0px;">
-                                            <a href="img/news_small2.jpg" class="swipebox" itemprop="contentUrl" data-size="300x300">
-                                                <img src="img/news_small2.jpg" alt="image" itemprop="thumbnail">
-                                            </a>
-                                        </figure>
-                                        <figure class="grid-item mb-0" itemprop="associatedMedia" itemscope="" style="position: absolute; left: 74.9267%; top: 0px;">
-                                            <a href="img/news_small3.jpg" class="swipebox" itemprop="contentUrl" data-size="300x300">
-                                                <img src="img/news_small3.jpg" alt="image" itemprop="thumbnail">
-                                            </a>
-                                        </figure>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="card mb-4">
                         <div class="card-header border-bottom">
                             <div class="media">
-                                <div class="icon-circle icon-40 bg-light-primary mr-3">
-                                    <i class="material-icons">business</i>
-                                </div>
                                 <div class="media-body">
                                     <h6 class="my-0 content-color-primary">Experience</h6>
                                     <p class="small mb-0">Currently working in Lighthearts since 2017</p>
@@ -93,7 +57,7 @@
                                     <div class="avatar avatar-15 border-success"></div>
                                     <div class="media experience">
                                         <div class="icon-rounded icon-40 bg-light-success mr-3">
-                                            <i class="material-icons">camera</i>
+                                          <img style="width:22px;" src="{% static 'images/icons/chat-24px.svg' %}" />
                                         </div>
                                         <div class="media-body">
                                             <h6 class="my-0 content-color-primary">Lighthearts</h6>
@@ -106,7 +70,7 @@
                                     <div class="avatar avatar-15 border-danger"></div>
                                     <div class="media experience">
                                         <div class="icon-rounded icon-40 bg-light-danger mr-3">
-                                            <i class="material-icons">local_library</i>
+                                          <img style="width:22px;" src="{% static 'images/icons/chat-24px.svg' %}" />
                                         </div>
                                         <div class="media-body">
                                             <h6 class="my-0 content-color-primary">Swastics India</h6>
@@ -119,7 +83,7 @@
                                     <div class="avatar avatar-15 border-danger"></div>
                                     <div class="media experience">
                                         <div class="icon-rounded icon-40 bg-light-danger mr-3">
-                                            <i class="material-icons">all_inclusive</i>
+                                          <img style="width:22px;" src="{% static 'images/icons/chat-24px.svg' %}" />
                                         </div>
                                         <div class="media-body">
                                             <h6 class="my-0 content-color-primary">Microsofty</h6>
@@ -135,7 +99,7 @@
                         <div class="card-header border-bottom">
                             <div class="media">
                                 <div class="icon-circle icon-40 bg-light-primary mr-3">
-                                    <i class="material-icons">ac_unit</i>
+                                  <img style="width:22px;" src="{% static 'images/icons/chat-24px.svg' %}" />
                                 </div>
                                 <div class="media-body">
                                     <h6 class="my-0 content-color-primary">Skills</h6>
@@ -148,7 +112,7 @@
                                 <li class="list-group-item px-0">
                                     <div class="media experience">
                                         <div class="icon-circle icon-40 bg-light-secondary mr-3">
-                                            <i class="material-icons">camera</i>
+                                          <img style="width:22px;" src="{% static 'images/icons/chat-24px.svg' %}" />
                                         </div>
                                         <div class="media-body">
                                             <h6 class="my-0 content-color-primary">User experience Design</h6>
@@ -160,7 +124,7 @@
                                 <li class="list-group-item px-0">
                                     <div class="media experience">
                                         <div class="icon-circle icon-40 bg-light-secondary mr-3">
-                                            <i class="material-icons">local_library</i>
+                                          <img style="width:22px;" src="{% static 'images/icons/chat-24px.svg' %}" />
                                         </div>
                                         <div class="media-body">
                                             <h6 class="my-0 content-color-primary">UI design</h6>
@@ -172,108 +136,7 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="media mt-4">
-                        <div class="media-body">
-                            <h4 class="content-color-primary mb-0">Recommendations</h4>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="row">
-                        <div class="col-6 col-md-6 col-lg-6 col-xl-3">
-                            <div class="card mb-4">
-                                <div class="card-body">
-                                    <div class="media">
-                                        <div class="media-body">
-                                            <div class="content-color-primary">UX</div>
-                                            <span class="mb-0 mt-1 h3">100</span>
-                                            <button class="btn btn-sm btn-rounded btn-outline-primary float-right">+</button>
-                                            <p><small>Recommendations</small></p>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-6 col-md-6 col-lg-6 col-xl-3">
-                            <div class="card mb-4">
-                                <div class="card-body">
-                                    <div class="media">
-                                        <div class="media-body">
-                                            <div class="content-color-primary">UI</div>
-                                            <span class="mb-0 mt-1 h3">150</span>
-                                            <button class="btn btn-sm btn-rounded btn-outline-primary float-right">+</button>
-                                            <p><small>Recommendations</small></p>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-6 col-md-6 col-lg-6 col-xl-3">
-                            <div class="card mb-4">
-                                <div class="card-body">
-                                    <div class="media">
-                                        <div class="media-body">
-                                            <div class="content-color-primary">Web</div>
-                                            <span class="mb-0 mt-1 h3">30</span>
-                                            <button class="btn btn-sm btn-rounded btn-outline-primary float-right">+</button>
-                                            <p><small>Recommendations</small></p>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-6 col-md-6 col-lg-6 col-xl-3">
-                            <div class="card mb-4">
-                                <div class="card-body">
-                                    <div class="media">
-                                        <div class="media-body">
-                                            <div class="content-color-primary">Mobile</div>
-                                            <span class="mb-0 mt-1 h3">50</span>
-                                            <button class="btn btn-sm btn-rounded btn-outline-primary float-right">+</button>
-                                            <p><small>Recommendations</small></p>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="card mb-4">
-                        <div class="card-header border-bottom">
-                            <div class="media">
-                                <div class="icon-circle icon-40 bg-light-primary mr-3">
-                                    <i class="material-icons">public</i>
-                                </div>
-                                <div class="media-body">
-                                    <h6 class="my-0 content-color-primary">What people said</h6>
-                                    <p class="small mb-0">Best testimonial received</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body text-center bg-light-secondary">
-                            <h4 class="my-4">"Working with John is awesome and we have done several project together. He will surely surprise what outcome will be delivered."</h4>
-                        </div>
-                        <div class="card-footer text-center border-top">
-                            <figure class="avatar avatar-60 mx-auto mb-2">
-                                <img src="img/user2.png" alt="">
-                            </figure>
-                            <h6 class="content-color-primary">Angelina D'souza</h6>
-                            <p class="content-color-secondary small mb-0">Vice President, Collsera Tribute, UK</p>
-                        </div>
-                    </div>
-
-                    <div class="media mt-4">
-                        <div class="media-body">
-                            <h4 class="content-color-primary mb-0">Recent Posts</h4>
-                        </div>
-                        <a href="javascript:void(0);" class="">
-                            View All
-                        </a>
-                    </div>
-                    <br>
+                    
                     <div class="card mb-4">
                         <div class="card-header border-bottom">
                             <div class="media">
