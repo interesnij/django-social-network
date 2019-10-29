@@ -65,7 +65,7 @@ class Community(models.Model):
         (COMMUNITY_TYPE_PUBLIC, 'Публичное'),
         (COMMUNITY_TYPE_PRIVATE, 'Приватное'),
     )
-    type = models.CharField(editable=False, blank=False, null=False, choices=COMMUNITY_TYPES, default='P', max_length=2)
+    type = models.CharField(blank=False, null=False, choices=COMMUNITY_TYPES, default='P', max_length=2)
     invites_enabled = models.BooleanField(default=True, verbose_name="Разрешить приглашения")
     is_deleted = models.BooleanField(
         default=False,
