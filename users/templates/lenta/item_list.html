@@ -26,6 +26,7 @@ transition: 0.5s;
 </style>
 
 {% if object_list %}
+<script src="{% static 'scripts/jquery.js' %}" type="text/javascript"></script>
 
 <div class="infinite-container">
   <div class="stream-update">
@@ -70,8 +71,6 @@ transition: 0.5s;
 {% else %}
 <h6>  Пока ничего нет...</h6>
 {% endif %}
-
-<script src="{% static 'scripts/jquery.js' %}" type="text/javascript"></script>
 
 <script src="{% static 'scripts/jquery.waypoints.min.js' %}" type="text/javascript"></script>
 <script src="{% static 'scripts/infinite.min.js' %}" type="text/javascript"></script>
