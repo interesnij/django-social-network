@@ -1,5 +1,6 @@
 from django.views.generic import ListView
 from users.models import User
+from main.models import Item
 from communities.models import *
 from django.views.generic.detail import DetailView
 from django.views.generic.base import TemplateView
@@ -28,12 +29,14 @@ class CommunityDetailView(DetailView):
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
+		items = Item.objects.filter(community=self.community, is_deleted=False)
 		self.membersheeps=CommunityMembership.objects.filter(community__id=self.community.pk)
 		return super(CommunityDetailView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		context=super(CommunityDetailView,self).get_context_data(**kwargs)
 		context["membersheeps"]=self.membersheeps
+		context["items"]=self.items
 		return context
 
 
