@@ -33,3 +33,28 @@ class AllCommunities(ListView):
 	def get_queryset(self):
 		groups=Community.objects.all()
 		return groups
+
+
+class CommunityCreate(TemplateView):
+    template_name="community_add.html"
+    form=None
+
+    def get(self,request,*args,**kwargs):
+        self.form=CommunityForm(initial={"creator":request.user})
+        return super(CommunityCreate,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context=super(CommunityCreate,self).get_context_data(**kwargs)
+        context["form"]=self.form
+        return context
+
+    def post(self,request,*args,**kwargs):
+        self.form=CommunityForm(request.POST,request.FILES)
+        if self.form.is_valid():
+			Community.create_community(name=self.form.name, title=self.form.title, creator=request.user)
+
+            if request.is_ajax() :
+                 return HttpResponse("!")
+        else:
+           return JsonResponse({'error': True, 'errors': self.form.errors})
+        return super(CommunityCreate,self).get(request,*args,**kwargs)

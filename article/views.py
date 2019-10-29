@@ -73,7 +73,6 @@ class ArticleUserCreate(TemplateView):
         return super(ArticleUserCreate,self).get(request,*args,**kwargs)
 
 
-
 class ArticleCommentCreateView(TemplateView):
     template_name = "generic/posts/article_comment.html"
 
