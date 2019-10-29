@@ -2,7 +2,7 @@ from django.views.generic.base import TemplateView
 from users.models import User
 from django.template.loader import render_to_string
 from posts.models import Post
-from posts.forms import PostUserForm, PostCommunityForm
+from posts.forms import PostForm
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.views import View
 
@@ -32,7 +32,7 @@ class PostUserCreate(View):
     success_url="/"
 
     def get(self,request,*args,**kwargs):
-        self.form_post=PostUserForm(initial={"creator":request.user})
+        self.form_post=PostForm(initial={"creator":request.user})
         return super(PostUserCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -41,7 +41,7 @@ class PostUserCreate(View):
         return context
 
     def post(self,request,*args,**kwargs):
-        self.form_post=PostUserForm(request.POST, request.FILES)
+        self.form_post=PostForm(request.POST, request.FILES)
         if self.form_post.is_valid():
             new_post=self.form_post.save(commit=False)
             new_post.creator=self.request.user
@@ -59,7 +59,7 @@ class PostCommunityCreate(View):
     success_url="/"
 
     def get(self,request,*args,**kwargs):
-        self.form_post=PostCommunityForm(initial={"creator":request.user,'community':request.POST.get('community')})
+        self.form_post=PostForm(initial={"creator":request.user,'community':request.POST.get('community')})
         return super(PostCommunityCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -68,7 +68,7 @@ class PostCommunityCreate(View):
         return context
 
     def post(self,request,*args,**kwargs):
-        self.form_post=PostCommunityForm(request.POST, request.FILES)
+        self.form_post=PostForm(request.POST, request.FILES)
         if self.form_post.is_valid():
             new_post=self.form_post.save(commit=False)
             new_post.creator=self.request.user
