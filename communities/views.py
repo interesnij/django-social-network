@@ -48,7 +48,7 @@ class CommunityCreate(TemplateView):
 	def post(self,request,*args,**kwargs):
 		self.form=CommunityForm(request.POST,request.FILES)
 		if self.form.is_valid():
-			Community.create_community(name=self.form.name, title=self.form.title, creator=request.user)
+			Community.create_community(name=self.form.name, creator=request.user)
 			if request.is_ajax() :
 				return HttpResponse("!")
 		else:
