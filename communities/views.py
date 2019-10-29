@@ -41,7 +41,7 @@ class CommunityCreate(TemplateView):
 	form=None
 
 	def get(self,request,*args,**kwargs):
-		self.form=GoodForm()
+		self.form=CommunityForm()
 		return super(CommunityCreate,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
