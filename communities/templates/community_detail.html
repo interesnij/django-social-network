@@ -143,85 +143,18 @@
                     </div>
                     <div class="media">
                         <div class="media-body">
-                            <h4 class="content-color-primary mb-0">Friends </h4>
+                          <h4 class="content-color-primary mb-0">Friends </h4>
+
                         </div>
                         <a href="javascript:void(0);" class="">
-                            View All
+                          Все
                         </a>
                     </div>
                     <br>
-                    <div class="card mb-2">
-                        <div class="card-body">
-                            <div class="media">
-                                <figure class="avatar avatar-50 mr-3">
-                                    <img src="img/user1.png" alt="Generic placeholder image">
-                                </figure>
-                                <div class="media-body">
-                                    <h6 class="my-0 mt-1">John Doe <span class="status vm bg-success"></span></h6>
-                                    <p class="small">New Jersey, UK</p>
-                                </div>
-                                <button class="btn btn-link content-color-secondary"><i class="material-icons">chat</i></button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card mb-2 pink-gradient">
-                        <div class="card-body ">
-                            <div class="media">
-                                <figure class="avatar avatar-50 mr-3">
-                                    <img src="img/user2.png" alt="Generic placeholder image">
-                                </figure>
-                                <div class="media-body">
-                                    <h6 class="my-0 mt-1">Alizee McMohan <span class="status vm bg-success"></span></h6>
-                                    <p class="small text-white">New Jersey, UK</p>
-                                </div>
-                                <button class="btn btn-link text-white"><i class="material-icons">chat</i></button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card mb-2">
-                        <div class="card-body">
-                            <div class="media">
-                                <figure class="avatar avatar-50 mr-3">
-                                    <img src="img/user2.png" alt="Generic placeholder image">
-                                </figure>
-                                <div class="media-body">
-                                    <h6 class="my-0 mt-1">Mangolia Chetan <span class="status vm bg-success"></span></h6>
-                                    <p class="small">New Jersey, UK</p>
-                                </div>
-                                <button class="btn btn-link content-color-secondary"><i class="material-icons">chat</i></button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card mb-4 mt-4">
-                        <div class="card-header">
-                            <div class="media">
-                                <div class="media-body">
-                                    <h4 class="content-color-primary mb-0">Latest Upcomming </h4>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body text-center">
-                            <div class="row align-items-center no-gutters">
-                                <a href="profile.html " class="col">
-                                    <figure class="avatar avatar-120 mx-auto mb-3">
-                                        <img src="img/user1.png" alt="">
-                                    </figure>
-                                </a>
-                            </div>
+                    {% if membersheeps %}
+                      {% include 'lnk/membersheeps.html' %}
+                    {% endif %}
 
-                            <h5 class="card-title mb-2 header-color-primary text-center">John McMohan</h5>
-                            <h6 class="card-subtitle mb-3 header-color-secondary text-center">South Africa</h6>
-                            <a class="btn btn-sm btn-success success-gradient">+ Friend</a><a class="btn btn-sm btn-warning warning-gradient ml-2">Follow</a>
-                        </div>
-                    </div>
-                    <div class="media mt-4">
-                        <div class="media-body">
-                            <h4 class="content-color-primary mb-0">Upcomming Events </h4>
-                        </div>
-                        <a href="javascript:void(0);" class="">
-                            View All
-                        </a>
-                    </div>
                     <br>
                     <ul class="list-group border-bottom list-group-flush">
                         <li class="list-group-item link-media">
