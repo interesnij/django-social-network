@@ -68,7 +68,7 @@ class ProfileUserView(TemplateView):
     def get(self,request,*args,**kwargs):
         self.user=User.objects.get(pk=self.kwargs["pk"])
         self.pop_frends = Connect.objects.filter(Q(user=self.user)|Q(target_user=self.user))[0:5]
-        self.communities=Community.objects.filter(memberships__user=self.user)[0:5] 
+        self.communities=Community.objects.filter(memberships__user__id=self.user.pk)[0:5] 
 
         return super(ProfileUserView,self).get(request,*args,**kwargs)
 
