@@ -14,7 +14,7 @@ class CommunitiesView(ListView):
 
 	def get_queryset(self):
 		self.user=User.objects.get(pk=self.kwargs["pk"])
-		groups=Community.objects.filter(starrers=self.user)
+		groups=Community.objects.filter(memberships__user__id=self.user.pk)
 		return groups
 
 	def get_context_data(self,**kwargs):
