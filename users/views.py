@@ -45,7 +45,7 @@ class ItemListView(ListView, CategoryListMixin):
 
     def get_queryset(self):
         self.user=User.objects.get(pk=self.kwargs["pk"])
-        items = Item.objects.filter(creator=self.user,is_deleted=False).exclude(community=True)
+        items = Item.objects.filter(creator=self.user,is_deleted=False).exclude(community__creator=self.user)
         return items
 
     def get_context_data(self, **kwargs):
