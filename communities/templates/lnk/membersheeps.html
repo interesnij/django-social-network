@@ -1,0 +1,27 @@
+{% load staticfiles humanize %}
+
+{% for object in membersheeps %}
+<div class="card mb-2">
+    <div class="card-body">
+        <div class="media">
+          <figure style="width:50px;">
+            {% if object.user.profile.avatar %}
+              <img src="{{ object.user.profile.avatar.url }}" style="border-radius:50px;" alt="image">
+            {% else %}
+              <img src="{% static 'images/user.png' %}" alt="image" style="border-radius:50px;">
+            {% endif %}
+          </figure>
+          <div class="media-body">
+            <a href="{% url 'user' pk=object.user.pk %}" class="ajax">
+              <h6 class="my-0 mt-1">{{ object.user.get_full_name }}</h6>
+            </a>
+            {% if object.user.get_online %}
+              <p class="text-success">В сети</p>
+            {% else %}
+              <p class="small">Был(а) {{ object.user.last_activity|naturaltime }}</p>
+            {% endif %}
+          </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
