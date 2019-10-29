@@ -50,10 +50,10 @@ class Community(models.Model):
                                    null=True, verbose_name="Описание" )
     rules = models.TextField(max_length=100, blank=False,
                              null=True, verbose_name="Правила")
-    avatar = ProcessedImageField(verbose_name=_('avatar'), blank=False, null=True, format='JPEG',
+    avatar = ProcessedImageField(blank=False, null=True, format='JPEG',
                                  options={'quality': 90}, processors=[ResizeToFill(500, 500)],
                                  upload_to=upload_to_community_avatar_directory)
-    cover = ProcessedImageField(verbose_name=_('cover'), blank=False, null=True, format='JPEG',
+    cover = ProcessedImageField(blank=False, null=True, format='JPEG',
                                 options={'quality': 90},
                                 upload_to=upload_to_community_avatar_directory,
                                 processors=[ResizeToFit(width=1024, upscale=False)])
