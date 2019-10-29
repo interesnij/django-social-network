@@ -1,15 +1,12 @@
 from django.views.generic.base import TemplateView
 from users.models import User, UserProfile
 from posts.models import Post
-from main.models import Item, Emoji
-from article.models import Article
+from main.models import Item
 from frends.models import Connect
 from follows.models import Follow
 from goods.models import Good
 from communities.models import Community
 from main.forms import CommentForm
-from article.forms import ArticleForm
-from posts.forms import PostUserForm
 from users.forms import GeneralUserForm, AboutUserForm, AvatarUserForm
 from django.views.generic import ListView
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
@@ -68,7 +65,7 @@ class ProfileUserView(TemplateView):
     def get(self,request,*args,**kwargs):
         self.user=User.objects.get(pk=self.kwargs["pk"])
         self.pop_frends = Connect.objects.filter(Q(user=self.user)|Q(target_user=self.user))[0:5]
-        self.communities=Community.objects.filter(memberships__user__id=self.user.pk)[0:5] 
+        self.communities=Community.objects.filter(memberships__user__id=self.user.pk)[0:5]
 
         return super(ProfileUserView,self).get(request,*args,**kwargs)
 
