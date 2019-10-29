@@ -1,14 +1,25 @@
 {% load staticfiles humanize %}
 
+{% if membersheeps %}
+<div class="media">
+    <div class="media-body">
+      <h4 class="content-color-primary mb-0">Подписчики </h4>
+
+    </div>
+    <a href="" class="">
+      Все
+    </a>
+</div>
+<br>
 {% for object in membersheeps %}
 <div class="card mb-2">
     <div class="card-body">
         <div class="media">
-          <figure style="width:50px;">
+          <figure>
             {% if object.user.profile.avatar %}
-              <img src="{{ object.user.profile.avatar.url }}" style="border-radius:50px;" alt="image">
+              <img src="{{ object.user.profile.avatar.url }}" style="border-radius:50px;width:50px;" alt="image">
             {% else %}
-              <img src="{% static 'images/user.png' %}" alt="image" style="border-radius:50px;">
+              <img src="{% static 'images/user.png' %}" alt="image" style="border-radius:50px;width:50px;">
             {% endif %}
           </figure>
           <div class="media-body">
@@ -25,3 +36,5 @@
     </div>
 </div>
 {% endfor %}
+
+{% endif %}
