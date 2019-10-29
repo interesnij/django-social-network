@@ -4,6 +4,7 @@ from communities.models import Community
 from django.views.generic.detail import DetailView
 from django.views.generic.base import TemplateView
 from django.http import HttpResponse
+from communities.forms import CommunityForm
 
 
 class CommunitiesView(ListView):
