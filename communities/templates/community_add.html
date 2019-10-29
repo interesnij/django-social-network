@@ -24,6 +24,20 @@
                             <div class="row ">
                                 <div class="col-lg-12 col-md-12">
                                     <div class="form-group ">
+                                      <label>Категория</label>
+                                      <select class="form-control" id="sub_category" data-live-search="true" tabindex="-1" aria-hidden="true">
+                                        {% for object in categories %}
+                                        <option value="">Выберите категорию</option>
+                                        <option data-order="{{ object.order }}" value="{{ object.order }}">{{ object.name }}</option>
+                                        {% endfor %}
+                                      </select>
+                                      <div id="subcat"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row ">
+                                <div class="col-lg-12 col-md-12">
+                                    <div class="form-group ">
                                         <label>Тип сообщества</label>
                                         <select class="form-control" id="id_type" name="type" data-live-search="true" tabindex="-1" aria-hidden="true">
                                           <option value="P">Публичное</option>
@@ -73,7 +87,16 @@
         return false;
     });
 </script>
-
+<script>
+  $('#category').change(function(){
+    var val = $(this).val();
+    if (val == ''){
+      $('#subcat').empty();
+    }else{
+    $('#subcat').html('').load("/communities/cat/" + val + "/");
+  };
+  })
+</script>
 <script>
     $(".remove_form").click(function() {
         $('.community_fullscreen').hide();

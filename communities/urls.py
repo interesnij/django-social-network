@@ -3,6 +3,7 @@ from communities.views import (
                                 CommunityDetailView,
                                 AllCommunities,
                                 CommunityCreate,
+                                CommunitiesCatsView,
                             )
 from django.conf.urls import url
 
@@ -11,4 +12,5 @@ urlpatterns = [
     url(r'^(?P<pk>\d+)/detail/$', CommunityDetailView.as_view(), name='community_detail'),
     url(r'^all-communities/$', AllCommunities.as_view(), name='all_communities'),
     url(r'^add/$', CommunityCreate.as_view(), name="add_community"),
+    url(r'^cat/(?P<order>\d+)/$',CommunitiesCatsView.as_view(), name="communities_cats"),
 ]

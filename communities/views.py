@@ -1,6 +1,6 @@
 from django.views.generic import ListView
 from users.models import User
-from communities.models import Community
+from communities.models import CommunityCategory, CommunitySubCategory, Community
 from django.views.generic.detail import DetailView
 from django.views.generic.base import TemplateView
 from django.http import HttpResponse
@@ -40,6 +40,7 @@ class AllCommunities(ListView):
 class CommunityCreate(TemplateView):
 	template_name="community_add.html"
 	form=None
+	categories = CommunityCategory.objects.only("id")
 
 	def get(self,request,*args,**kwargs):
 		self.form=CommunityForm()
@@ -48,6 +49,7 @@ class CommunityCreate(TemplateView):
 	def get_context_data(self,**kwargs):
 		context=super(CommunityCreate,self).get_context_data(**kwargs)
 		context["form"]=self.form
+		context["categories"]=self.categories
 		return context
 
 	def post(self,request,*args,**kwargs):
@@ -60,3 +62,17 @@ class CommunityCreate(TemplateView):
 		else:
 			return JsonResponse({'error': True, 'errors': self.form.errors})
 		return super(CommunityCreate,self).get(request,*args,**kwargs)
+
+
+class CommunitiesCatsView(TemplateView):
+	template_name="communities_cats.html"
+	categ = None
+
+	def get(self,request,*args,**kwargs):
+		self.categ = CommunitySubCategory.objects.filter(sudcategory__order=self.kwargs["order"])
+		return super(CommunitiesCatsView,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context=super(CommunitiesCatsView,self).get_context_data(**kwargs)
+		context["categ"]=self.categ
+		return context
