@@ -77,7 +77,7 @@ class Community(models.Model):
         verbose_name_plural = 'сообщества'
 
     @classmethod
-    def create_community(cls, name, creator, type=None, avatar=None, description=None,
+    def create_community(cls, name, creator, type, avatar=None, description=None,
                             rules=None, category=None,invites_enabled=None):
         """"
         Создаем сообщество и список пользователей, создателя делаем администратором
