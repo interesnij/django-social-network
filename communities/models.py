@@ -79,6 +79,27 @@ class Community(models.Model):
         verbose_name_plural = 'сообщества'
 
     @classmethod
+    def create_community(cls, name, title, creator, type=None, avatar=None, description=None,
+                            rules=None, category=None,invites_enabled=None):
+        """"
+        Создаем сообщество и список пользователей, создателя делаем администратором
+        """
+        if type is Community.COMMUNITY_TYPE_PRIVATE and invites_enabled is None:
+            invites_enabled = False
+        else:
+            invites_enabled = True
+
+        community = cls.objects.create(title=title, name=name, creator=creator, avatar=avatar,
+                                       description=description, type=type, rules=rules,
+                                       invites_enabled=invites_enabled, category=category)
+
+        CommunityMembership.create_membership(user=creator, is_administrator=True, is_moderator=False,
+                                              community=community)
+
+        community.save()
+        return community
+
+    @classmethod
     def is_user_with_username_member_of_community_with_name(cls, username, community_name):
         """"
         Есть ли пользователь в сообществе?
@@ -182,27 +203,6 @@ class Community(models.Model):
         if category_name:
             trending_communities_query.add(Q(categories__name=category_name), Q.AND)
         return trending_communities_query
-
-    @classmethod
-    def create_community(cls, name, title, creator, type=None, avatar=None, description=None,
-                            rules=None, category=None,invites_enabled=None):
-        """"
-        Создаем сообщество и список пользователей, создателя делаем администратором
-        """
-        if type is Community.COMMUNITY_TYPE_PRIVATE and invites_enabled is None:
-            invites_enabled = False
-        else:
-            invites_enabled = True
-
-        community = cls.objects.create(title=title, name=name, creator=creator, avatar=avatar,
-                                       description=description, type=type, rules=rules,
-                                       invites_enabled=invites_enabled, category=category)
-
-        CommunityMembership.create_membership(user=creator, is_administrator=True, is_moderator=False,
-                                              community=community)
-
-        community.save()
-        return community
 
     @classmethod
     def is_name_taken(cls, name):

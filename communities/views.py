@@ -3,6 +3,7 @@ from users.models import User
 from communities.models import Community
 from django.views.generic.detail import DetailView
 from django.views.generic.base import TemplateView
+from django.http import HttpResponse
 
 
 class CommunitiesView(ListView):

@@ -4,6 +4,39 @@
 {% block title %}Все сообщества{% endblock %}
 
 {% block content %}
+<style>
+.community_fullscreen{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 20;
+  padding: 5%;
+  display: block;
+  overflow: auto;
+}
+
+.id_image input,
+.id_cover {
+    display: none;
+}
+#image-holder {
+    border: 2px dashed #FF0000;
+    color: rgba(0, 0, 0, 0.8);
+    padding: 10px;
+    text-align: center;
+    margin: 10px;
+}
+#image-holder:hover {
+    cursor: pointer;
+    margin: 9px;
+}
+#image-holder img {
+    height: auto;
+    width: 100%;
+}
+</style>
 <div class="row">
 <div class="col-12 col-md-8">
 <br><br><br>
@@ -56,7 +89,7 @@
   <button class="btn btn-outline-success" style="margin-bottom:15px;width:100%;" type="button">
     Создать сообщество
   </button>
-  
+
   <div class="card mb-2">
         <div class="card-header">
             <div class="media">
@@ -86,4 +119,11 @@
   </div>
 </div>
 </div>
+
+<script>
+	$( "#community_add" ).click(function(){
+		$('#community_loader').html('').load("/communities/add/");
+		$('.community_fullscreen').show();
+	})
+</script>
 {% endblock %}

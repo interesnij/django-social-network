@@ -4,8 +4,7 @@ from users.models import User
 from django.template.loader import render_to_string
 from article.models import Article
 from django.urls import reverse_lazy
-from django.http import HttpResponse
-from django.http import JsonResponse
+from django.http import HttpResponse, HttpResponseBadRequest
 from generic.mixins import CategoryListMixin
 
 
