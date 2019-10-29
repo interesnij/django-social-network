@@ -39,7 +39,7 @@ class ConnectCreate(View):
 			fol.delete()
 		else:
 			return HttpResponse("Пользователь уже с Вами дружит :-)")
-		return super(ConnectCreate,self).get(request,*args,**kwargs)
+		return HttpResponse("!")
 
 
 class ConnectDelete2(View):
@@ -57,7 +57,7 @@ class ConnectDelete2(View):
 			Follow.objects.create(user=self.target_user, followed_user=request.user)
 		else:
 			return HttpResponse("Пользователь уже удален :-)")
-		return super(ConnectDelete2,self).get(request,*args,**kwargs)
+		return HttpResponse("!")
 
 class ConnectDelete(View):
 	success_url = "/"
@@ -74,4 +74,4 @@ class ConnectDelete(View):
 			Follow.objects.create(user=self.user, followed_user=request.user)
 		else:
 			return HttpResponse("Пользователь уже удален :-)")
-		return super(ConnectDelete,self).get(request,*args,**kwargs)
+		return HttpResponse("!")

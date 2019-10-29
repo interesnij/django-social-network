@@ -226,12 +226,12 @@ class ProfileStatReload(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.user=User.objects.get(pk=self.kwargs["pk"])
-        self.follows_count=Follow.objects.filter(followed_user=self.user).count()
-        self.goods_count=Good.objects.filter(creator=self.user,is_deleted=False).count()
-        self.connect_count=Connect.objects.filter(user=self.user).count()
-        self.connect_count2=Connect.objects.filter(target_user=self.user).count()
+        self.follows_count=Follow.objects.filter(followed_user__id=self.user.id).count()
+        self.goods_count=Good.objects.filter(creator__id=self.user.id,is_deleted=False).count()
+        self.connect_count=Connect.objects.filter(user__id=self.user.id).count()
+        self.connect_count2=Connect.objects.filter(target_user__id=self.user.id).count()
         self.frends_count=self.connect_count + self.connect_count2
-        self.communities_count=Community.objects.filter(starrers=self.user).count()
+        self.communities_count=Community.objects.filter(starrers__id=self.user.id).count()
         return super(ProfileStatReload,self).get(request,*args,**kwargs)
 
     def get_context_data(self, **kwargs):
