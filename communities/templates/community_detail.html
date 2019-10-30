@@ -15,11 +15,11 @@
                     <div class="row align-items-center ">
                         <div class="col-12 col-sm-auto text-center">
                             <a href="profile.html ">
-                                <figure class="avatar avatar-150 mx-auto my-3">
+                                <figure>
                                   {% if object.avatar %}
-                                    <img src="{{ object.avatar.url }}" alt="" class="">
+                                    <img style="width:50px;border-radius:50px;" src="{{ object.avatar.url }}" alt="" class="">
                                   {% else %}
-                                    <img src="{% static 'images/no_img.png' %}" alt="" class="">
+                                    <img style="width:50px;border-radius:50px;" src="{% static 'images/icons/group-24px.svg' %}" />
                                   {% endif %}
                                 </figure>
                             </a>
@@ -87,7 +87,7 @@
                     {% include 'lnk/new_post.html' %}
                 </div>
                 <div class="col-12 col-md-12 col-lg-4">
-                    
+
                     {% if membersheeps %}
                       {% include 'lnk/membersheeps.html' %}
                     {% endif %}
