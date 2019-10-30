@@ -134,7 +134,42 @@
     }
 
 </style>
+<div class="container-fluid">
+            <div class="row align-items-center has-background-img min-height-300">
+                <figure class="background-img pink-gradient">
+                  {% if object.cover %}
+                    <img src="{{ object.cover.url }}" alt="" class="">
+                  {% else %}
+                    <img src="{% static 'images/news_small1.jpg' %}" alt="" class="">
+                  {% endif %}
+                </figure>
+                <div class="container">
+                    <div class="row align-items-center ">
+                        <div class="col-12 col-sm-auto text-center">
+                            <a href="profile.html ">
+                                <figure>
+                                  {% if object.avatar %}
+                                    <img style="width:50px;border-radius:50px;" src="{{ object.avatar.url }}" alt="" class="">
+                                  {% else %}
+                                    <img style="width:50px;border-radius:50px;" src="{% static 'images/icons/group-24px.svg' %}" />
+                                  {% endif %}
+                                </figure>
+                            </a>
+                        </div>
+                        <div class="col-12 col-sm text-center text-sm-left text-white">
+                            <h3 class="mb-0">{{ object.name }}</h3>
+                            <p class="">текст</p>
+                            <p class="small"> +0 0000 0000 0000 <span class="mx-2">|</span> info@maxartkiller.in</p>
+                        </div>
+                        <div class="text-center text-sm-right col-12 col-sm-auto mb-3">
+                            <a class="btn btn-success success-gradient">Подписаться</a>
+                            <a class="btn btn-primary primary-gradient ml-2">Подать заявку</a>
+                        </div>
+                    </div>
+                </div>
 
+            </div>
+        </div>
 
         <div class="container mt-4 main-container">
             <div class="row">
@@ -179,7 +214,7 @@
                         </div>
                     </div>
 
-                    {% include 'lnk/new_post.html' %}
+                    
 
 
                 </div>
