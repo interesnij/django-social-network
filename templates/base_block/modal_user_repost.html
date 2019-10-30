@@ -36,7 +36,7 @@
                                 </div>
                             </div>
 
-                            <div class="card mb-4" style="border:1px solid rgba(0, 0, 0, 0.125);">
+                            <div class="aaa card mb-4" style="border:1px solid rgba(0, 0, 0, 0.125);">
                               <span class="user_item_pk"></span>
                               <form action="" id="FORM-REPOST" method="post" enctype="multipart/form-data">
                                 {% csrf_token %}
@@ -126,7 +126,7 @@
 <script>
   $('.repost_btn').click(function() {
     var frm_repost = $('#FORM-REPOST');
-		var uuid = frm_repost.parent().find(".user_item_pk").innerHTML;
+		var uuid = $('.aaa').find(".user_item_pk").innerHTML;
     console.log(uuid);
 
 		      $.ajax({
