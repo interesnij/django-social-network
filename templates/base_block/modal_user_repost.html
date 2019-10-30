@@ -126,7 +126,7 @@
 <script>
   $('.repost_btn').click(function() {
     var frm_repost = $('#FORM-REPOST');
-		var uuid = frm_repost.prev().innerHTML();
+		var uuid = frm_repost.prev().innerHTML;
 
 		      $.ajax({
 			         url: "/posts/repost_user_user/" + uuid + "/",
