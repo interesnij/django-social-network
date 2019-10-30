@@ -124,12 +124,11 @@
 
 <script>
   var frm_repost = $('#FORM-REPOST');
-  $('#FORM-REPOST').submit(function() {
+  frm_repost.submit(function() {
 		var pk = {{ user.pk }};
 
 		      $.ajax({
 			         url: "/posts/repost_user_user/" + pk + "/",
-			         type: 'post',
                data: new FormData($(frm_repost)[0]),
                contentType: false,
                cache: false,
