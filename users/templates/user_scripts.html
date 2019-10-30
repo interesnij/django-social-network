@@ -7,7 +7,36 @@ textarea.addEventListener('keyup', function(){
   }
 });
 </script>
+<script>
+  var frm_repost = $('#FORM-REPOST');
+  $('#repost_btn').submit(function() {
 
+		var pk = {{ user.pk }};
+
+    if ($('input["#repost_wall"]:checked').val())
+      {
+		      $.ajax({
+			         url: "/posts/repost_user_user/" + pk + "/",
+			         type: 'post',
+               data: new FormData($(frm_repost)[0]),
+               contentType: false,
+               cache: false,
+               processData: false,
+			         success: function (data) {
+				         $.toast({
+					         heading: '{{ request.user.first_name }}',
+					         text: 'Репост выполнен успешно!',
+					         showHideTransition: 'fade',
+					         icon: 'info'
+				          })
+			          },
+			          error: function(data) {
+				          console.log("Что то пошло не так");
+			           }
+		          });
+        }
+	});
+</script>
 <!-- ГРУЗИМ
 						СТЕНУ,
 						КНОПКИ ДОБАВИТЬ,
