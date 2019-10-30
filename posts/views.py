@@ -84,7 +84,7 @@ class PostCommunityCreate(View):
 
 class RepostUserUser(View):
 
-	def post(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         self.item = Item.objects.get(pk=self.kwargs["pk"])
         self.form_post=PostForm(request.POST, request.FILES)
         if self.form_post.is_valid():
@@ -95,9 +95,8 @@ class RepostUserUser(View):
             if self.item.community:
                 new_post.community=self.item.community
             new_post=self.form_post.save()
-
-            if request.is_ajax() :
-                return HttpResponse("!")
+        if request.is_ajax() :
+            return HttpResponse("!")
         else:
             return HttpResponseBadRequest()
 
