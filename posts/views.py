@@ -2,6 +2,7 @@ from django.views.generic.base import TemplateView
 from users.models import User
 from django.template.loader import render_to_string
 from posts.models import Post
+from main.models import Item
 from posts.forms import PostForm
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.views import View
