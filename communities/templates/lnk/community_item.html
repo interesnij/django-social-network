@@ -1,0 +1,53 @@
+{% load staticfiles humanize liked_user %}
+
+<span class="text-hide-xs">
+  {% if object.get_previous_by_created %}
+    <span class="prev_item" style="">
+      <img style="width: 50px;" src="{% static 'images/icons/right-24px.svg' %}" />
+    </span>
+  {% endif %}
+  {% if object.get_next_by_created %}
+    <span class="next_item" style="">
+      <img style="width: 50px;" src="{% static 'images/icons/left-24px.svg' %}" />
+    </span>
+  {% endif %}
+</span>
+<span class="item_fullscreen_hide">
+  <img style="width:35px" src="{% static 'images/icons/close-24px.svg' %}" />
+</span>
+
+{% if object.post %}
+<div class="mb-4 infinite-item" item-id="{{ object.uuid }}">
+  {% include 'generic/community/post_detail.html' %}
+</div>
+{% endif %}
+
+{% if object.article %}
+<div class="mb-4 infinite-item" item-id="{{ object.uuid }}">
+    {% include 'generic/community/article_detail.html' with article=article  %}
+</div>
+{% endif %}
+
+  {% if object.get_previous_by_created %}
+    <script>
+    	$('.prev_item').on('click', function () {
+    		 $('#item_loader').html('').load("{% url 'community_item' pk=object.get_previous_by_created.pk %}");
+    	});
+    </script>
+
+   {% endif %}
+   {% if object.get_next_by_created %}
+
+    <script>
+      $('.next_item').on('click', function () {
+    		 $('#item_loader').html('').load("{% url 'community_item' pk=object.get_next_by_created.pk %}");
+    	});
+    </script>
+    {% endif %}
+
+<script>
+  $('.item_fullscreen_hide').on('click', function () {
+  	 $('.item_fullscreen').hide();
+  	 $('#item_loader').empty();
+  });
+</script>
