@@ -80,3 +80,53 @@ class PostCommunityCreate(View):
                 return HttpResponse(html)
         else:
             return HttpResponseBadRequest()
+
+
+class RepostUserUser(View):
+
+	def post(self, request, *args, **kwargs):
+		self.item = Item.objects.get(pk=self.kwargs["pk"])
+		if self.item.parent:
+			new_repost = Post.objects.create(creator=request.user, parent=self.item.parent, is_repost=True)
+			return HttpResponse("репост репоста")
+		else:
+			new_repost = Post.objects.create(creator=request.user, parent=self.item, is_repost=True)
+			return HttpResponse("репост item")
+
+
+class RepostCommunityUser(View):
+
+	def post(self, request, *args, **kwargs):
+		self.item = Item.objects.get(pk=self.kwargs["pk"])
+		if self.item.parent:
+			new_repost = Post.objects.create(creator=request.user, community=self.item.community, parent=self.item.parent, is_repost=True)
+			return HttpResponse("репост репоста")
+		else:
+			new_repost = Post.objects.create(creator=request.user, community=self.item.community, parent=self.item, is_repost=True)
+			return HttpResponse("репост item")
+
+
+class RepostCommunityCommunity(View):
+
+	def post(self, request, *args, **kwargs):
+		self.item = Item.objects.get(uuid=self.kwargs["uuid"])
+        self.community = Community.objects.get(pk=self.kwargs["pk"])
+		if self.item.parent:
+			new_repost = Post.objects.create(creator=request.user, community=self.community, parent=self.item.parent, is_repost=True)
+			return HttpResponse("репост репоста")
+		else:
+			new_repost = Post.objects.create(creator=request.user, community=self.community, parent=self.item, is_repost=True)
+			return HttpResponse("репост item")
+
+
+class RepostUserCommunity(View):
+
+	def post(self, request, *args, **kwargs):
+		self.item = Item.objects.get(uuid=self.kwargs["uuid"])
+        self.community = Community.objects.get(pk=self.kwargs["pk"])
+		if self.item.parent:
+			new_repost = Post.objects.create(creator=request.user, community=self.community, parent=self.item.parent, is_repost=True)
+			return HttpResponse("репост репоста")
+		else:
+			new_repost = Post.objects.create(creator=request.user, community=self.community, parent=self.item, is_repost=True)
+			return HttpResponse("репост item")

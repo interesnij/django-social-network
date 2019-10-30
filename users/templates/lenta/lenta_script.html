@@ -22,7 +22,7 @@ $('.stream').on('click', '.comment', function () {
 		var repost = $(this);
 		var pk = repost.data('id');
 		$.ajax({
-			url: "/main/repost/" + pk + "/",
+			url: "/posts/repost_user_user/" + pk + "/",
 			type: 'post',
 			success: function (data) {
 
