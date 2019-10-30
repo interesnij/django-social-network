@@ -7,7 +7,7 @@
           {% if notification.actor.profile.avatar %}
             <img src="{{ notification.actor.profile.avatar.url }}" alt="image" style="border-radius:40px;width:40px;">
           {% else %}
-            <img src="{% static 'images/user.png' %}" alt="image" style="border-radius:40px;width:40px;">
+            <img style="border:#6C757D solid 1px;border-radius:40px;padding:5px;width:40px;" src="{% static 'images/icons/person-24px.svg' %}" />
           {% endif %}
         </figure>
         <div class="media-body">

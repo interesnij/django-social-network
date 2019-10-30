@@ -22,9 +22,7 @@
         <div class="card mb-2">
             <div class="card-header">
                 <div class="media">
-                    <div class="icon-circle icon-30 bg-light-danger mr-3">
-                        <i class="material-icons">person</i>
-                    </div>
+
                     <div class="media-body">
                         <h5 class="mt-1">{% if request.user %}
                             Мои подписчики
@@ -45,7 +43,7 @@
                                 {% if object.user.profile.avatar %}
                                 <img src="{{ object.user.profile.avatar.url }}" style="border-radius:50px;width:50px;" alt="image">
                                 {% else %}
-                                <img src="{% static 'images/user.png' %}" alt="image" style="border-radius:50px;width:50px;">
+                                <img style="border:#6C757D solid 1px;border-radius:50px;padding:5px;width:50px;" src="{% static 'images/icons/person-24px.svg' %}" />
                                 {% endif %}
                             </figure>
                             <div class="media-body">
@@ -67,9 +65,7 @@
         <div class="card mb-2">
             <div class="card-header">
                 <div class="media">
-                    <div class="icon-circle icon-30 bg-light-danger mr-3">
-                        <i class="material-icons">tag_faces</i>
-                    </div>
+
                     <div class="media-body">
                         <h5 class="mt-1">Возможные друзья</h5>
                     </div>
@@ -87,7 +83,7 @@
                                 {% if object.profile.avatar %}
                                 <img src="{{ object.profile.avatar.url }}" style="border-radius:50px;width:50px;" alt="image">
                                 {% else %}
-                                <img src="{% static 'images/user.png' %}" alt="image" style="border-radius:50px;width:50px;">
+                                <img style="border:#6C757D solid 1px;border-radius:50px;padding:5px;width:50px;" src="{% static 'images/icons/person-24px.svg' %}" />
                                 {% endif %}
                             </figure>
                             <div class="media-body">
@@ -107,9 +103,7 @@
         <div class="card mb-2">
             <div class="card-header">
                 <div class="media">
-                    <div class="icon-circle icon-30 bg-light-danger mr-3">
-                        <i class="material-icons">search</i>
-                    </div>
+
                     <div class="media-body">
                         <h5 class="mt-1">Поиск людей</h5>
                     </div>

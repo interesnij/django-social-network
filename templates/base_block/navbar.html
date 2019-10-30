@@ -36,8 +36,8 @@
                     <div class="dropdown-menu notification-dropdown" aria-labelledby="notification" style="position: absolute;transform: translate3d(-189px, 44px, 0px);top: 0px;left: 0px;will-change: transform;">
                       {% if notifications %}
                         <a href="#" class="media pink-gradient-active">
-                            <figure class="avatar avatar-40">
-                                <img src="{% static 'images/user.png' %}" alt="Generic placeholder image">
+                            <figure>
+                                <img style="border:#6C757D solid 1px;border-radius:40px;padding:5px;width:40px;" src="{% static 'images/icons/notifications_none-24px.svg' %}" />
                             </figure>
                             <div class="media-body">
                               {{ notification.get_icon }}
@@ -69,7 +69,7 @@
                          {% if request.user.profile.avatar %}
                          <img src="{{ request.user.profile.avatar.url }}" alt="">
                          {% else %}
-                         <img src="{% static 'images/user.png' %}" alt="">
+                         <img style="width:50px;width:50px;width:50px;border:#6C757D solid 1px;border-radius:50px;padding:5px;" src="{% static 'images/icons/person-24px.svg' %}" />
                          {% endif %}
                        </figure>
                        <h5 class="text-hide-xs">

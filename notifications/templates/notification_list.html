@@ -15,12 +15,12 @@
               {% if notification.actor.profile.avatar %}
                 <img src="{{ notification.actor.profile.avatar.url }}" alt="image" style="border-radius:50px;width:50px;">
               {% else %}
-                <img src="{% static 'images/user.png' %}" alt="image">
+                <img style="border:#6C757D solid 1px;border-radius:50px;padding:5px;width:50px;" src="{% static 'images/icons/person-24px.svg' %}" />
               {% endif %}
             </figure>
             <div class="media-body">
                 <h6 class="mb-0">
-                  <a href="{% url 'user' pk=notification.actor.pk %}" class="ajax"> 
+                  <a href="{% url 'user' pk=notification.actor.pk %}" class="ajax">
                     {{ notification.actor.first_name }} {{ notification.actor.last_name }}
                   </a>
                   <p class="mb-0">{{ notification.timestamp|naturaltime }}</p>
