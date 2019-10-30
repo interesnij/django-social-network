@@ -7,7 +7,7 @@
           {% if object.parent.creator.profile.avatar %}
             <img src="{{ object.parent.creator.profile.avatar.url }}" style="border-radius: 50px;width:40px;" alt="image">
           {% else %}
-            <img src="{% static 'images/user.png' %}" style="border-radius: 50px;width:40px;" alt="image">
+            <img style="width:50px;border:#6C757D solid 1px;border-radius:50px;padding:5px;" src="{% static 'images/icons/person-24px.svg' %}" />
           {% endif %}
         </figure>
       </a>
