@@ -23,7 +23,7 @@
                         <div class="tab-pane fade active show" id="tabhome123" role="tabpanel" aria-labelledby="tabhome123-tab">
                             <div class="form-group ">
                                 <div class="custom-control custom-radio">
-                                    <input type="radio" name="wall" class="custom-control-input" id="feedback111">
+                                    <input type="radio" name="wall" checked="checked" class="custom-control-input" id="feedback111">
                                     <label class="custom-control-label" for="feedback111">На своей стене</label>
                                 </div>
                                 <div class="custom-control custom-radio">
@@ -123,10 +123,12 @@
 </div>
 
 <script>
-  var frm_repost = $('#FORM-POST');
+  var frm_repost = $('#FORM-REPOST');
   frm_repost.submit(function(e) {
-		var repost = {{ user.pk }};
-		var pk = repost.data('id');
+
+		var pk = {{ user.pk }};
+
+    if ($('input[name="menu"]:checked').val()){
 		$.ajax({
 			url: "/posts/repost_user_user/" + pk + "/",
 			type: 'post',
@@ -142,5 +144,9 @@
 				console.log("Что то пошло не так");
 			}
 		});
+  }else if{
+
+    
+  }
 	});
 </script>
