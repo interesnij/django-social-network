@@ -23,15 +23,15 @@
                         <div class="tab-pane fade active show" id="tabhome123" role="tabpanel" aria-labelledby="tabhome123-tab">
                             <div class="form-group ">
                                 <div class="custom-control custom-radio">
-                                    <input type="radio" name="radiogroup-1" class="custom-control-input" id="feedback111">
+                                    <input type="radio" name="wall" class="custom-control-input" id="feedback111">
                                     <label class="custom-control-label" for="feedback111">На своей стене</label>
                                 </div>
                                 <div class="custom-control custom-radio">
-                                    <input type="radio" name="radiogroup-1" class="custom-control-input" id="feedback1112">
+                                    <input type="radio" name="community" class="custom-control-input" id="feedback1112">
                                     <label class="custom-control-label" for="feedback1112">В сообществе</label>
                                 </div>
                                 <div class="custom-control custom-radio">
-                                    <input type="radio" name="radiogroup-1" class="custom-control-input" id="feedback1113">
+                                    <input type="radio" name="message" class="custom-control-input" id="feedback1113">
                                     <label class="custom-control-label" for="feedback1113">В сообщении</label>
                                 </div>
                             </div>
@@ -40,7 +40,7 @@
                               <form action="" id="FORM-REPOST" method="post" enctype="multipart/form-data">
                                 {% csrf_token %}
                                 <div class="card-body p-0">
-                                    <textarea name="text" id="id_text" class="id_text form-control bg-light-secondary border-0" rows="2" placeholder="Добавьте комментарий"></textarea>
+                                    <textarea name="text" id="id_text" class="form-control bg-light-secondary border-0" rows="3" placeholder="Добавьте комментарий"></textarea>
                                 </div>
                                 <div class="card-footer border-top">
                                     <div class="row">
@@ -123,14 +123,14 @@
 </div>
 
 <script>
-	$('.stream').on('click', '.repost', function () {
-		var repost = $(this);
+  var frm_repost = $('#FORM-POST');
+  frm_repost.submit(function(e) {
+		var repost = {{ object.user }};
 		var pk = repost.data('id');
 		$.ajax({
 			url: "/posts/repost_user_user/" + pk + "/",
 			type: 'post',
 			success: function (data) {
-
 				$.toast({
 					heading: '{{ request.user.first_name }}',
 					text: 'Репост выполнен успешно!',
