@@ -44,10 +44,8 @@ class Community(models.Model):
     category = models.ForeignKey(CommunitySubCategory, on_delete=models.CASCADE, related_name='community_sub_categories', verbose_name="Подкатегория сообщества")
     creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_communities', null=False, blank=False, verbose_name="Создатель")
     name = models.CharField(max_length=settings.COMMUNITY_CATEGORY_TITLE_MAX_LENGTH, blank=False, null=False, verbose_name="Заголовок" )
-    description = models.CharField(max_length=300, blank=False,
-                                   null=True, verbose_name="Описание" )
-    rules = models.TextField(max_length=100, blank=False,
-                             null=True, verbose_name="Правила")
+    description = models.CharField(max_length=300, null=True, verbose_name="Описание" )
+    rules = models.TextField(max_length=100, null=True, verbose_name="Правила")
     avatar = ProcessedImageField(blank=False, null=True, format='JPEG',
                                  options={'quality': 90}, processors=[ResizeToFill(500, 500)],
                                  upload_to=upload_to_community_avatar_directory)
