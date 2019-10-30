@@ -141,7 +141,7 @@
                 <div class="container">
                     <div class="row align-items-center ">
                         <div class="col-12 col-sm-auto text-center">
-                            <a href="profile.html ">
+                            <a>
                                 <figure>
                                   {% if object.avatar %}
                                     <img style="width:50px;border-radius:50px;" src="{{ object.avatar.url }}" alt="" class="">
@@ -177,7 +177,13 @@
                                 </div>
                                 <div class="media-body">
                                     <h6 class="my-0 content-color-primary">Статус</h6>
-                                    <p>Статус Статус Статус Статус Статус Статус Статус Статус Статус</p>
+                                    <p>
+                                      {% if object.status %}
+                                        {{ object.status }}
+                                      {% else %}
+                                        Добавьте статус сообщества
+                                      {% endif %}
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -190,8 +196,13 @@
                                         </div>
                                         <div class="media-body">
                                             <h6 class="my-0 content-color-primary">Описание</h6>
-                                            <p class="mb-2">
-                                            <p>{{ object.description }}</p>
+                                            <p>
+                                              {% if object.description %}
+                                                {{ object.description }}
+                                              {% else %}
+                                                Добавьте описание сообщества
+                                              {% endif %}
+                                            </p>
                                         </div>
                                     </div>
                                 </li>
@@ -202,7 +213,13 @@
                                         </div>
                                         <div class="media-body">
                                             <h6 class="my-0 content-color-primary">Правила</h6>
-                                            <p>{{ object.rules }}</p>
+                                            <p>
+                                              {% if object.rules %}
+                                                {{ object.rules }}
+                                              {% else %}
+                                                Добавьте правила сообщетсва
+                                              {% endif %}
+                                            </p>
                                         </div>
                                     </div>
                                 </li>
@@ -211,6 +228,9 @@
                     </div>
 
                     {% include 'lnk/new_post.html' %}
+
+                    <div id="lenta_load"></div>
+
                 </div>
                 <div class="col-12 col-md-12 col-lg-4">
 
@@ -243,4 +263,11 @@
 
         </div>
 
+        <script>
+        $(document).ready(function(){
+        	$('#lenta_load').html('').load("/community/list/" + {{ community.pk }});
+        //  $('#button_load').html('').load("/community/button/" + {{ community.pk }});
+      //  	$('#stat_load').html('').load("/users/profile_stat/" + {{ community.pk }});
+        });
+        </script>
 {% endblock %}
