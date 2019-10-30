@@ -1,6 +1,7 @@
 {% load staticfiles %}
 
-<div class="modal fade" id="modal_user_repost" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="{{ object.uuid }}" tabindex="-1" role="dialog" aria-hidden="true">
+  <span id="user_item_pk"></span>
     <div class="modal-dialog modal-dialog-centered " role="document">
         <div class="modal-content box-shadow">
             <div class="modal-body text-center pr-4 pl-4">
@@ -125,10 +126,10 @@
 <script>
   $('.repost_btn').click(function() {
     var frm_repost = $('#FORM-REPOST');
-		var pk = {{ user.pk }};
+		var uuid = {{ user.uuid }};
 
 		      $.ajax({
-			         url: "/posts/repost_user_user/" + pk + "/",
+			         url: "/posts/repost_user_user/" + uuid + "/",
                data: new FormData($(frm_repost)[0]),
                contentType: false,
                cache: false,

@@ -86,7 +86,7 @@ class PostCommunityCreate(View):
 class RepostUserUser(View):
 
     def post(self, request, *args, **kwargs):
-        self.item = Item.objects.get(pk=self.kwargs["pk"])
+        self.item = Item.objects.get(uuid=self.kwargs["uuid"])
         self.form_post=PostForm(request.POST, request.FILES)
         if self.form_post.is_valid():
             new_post=self.form_post.save(commit=False)
