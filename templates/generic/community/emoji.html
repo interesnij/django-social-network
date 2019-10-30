@@ -1,0 +1,27 @@
+{% load liked_user staticfiles %}
+
+<span class="react_btn" style="margin-right:5px;cursor:pointer">
+  <img style="width:22px;" src="{{ react.emoji.image.url }}">
+  <span data-count="react">{{ react.count }}</span>
+</span>
+
+<span class="reaction_window">
+<div style="margin:15px">
+  <span>{{ react.count }} {{ react.count|rupluralize:"реакция,реакции,реакций" }}</span>
+  <br><br>
+  <span style="display: flex;">
+    {% for heart in object.reactions.get_reactor %}
+    <a href="{% url 'user' pk=heart.pk %}" class="ajax" style="padding-right:10px">
+      <figure style="margin: 0;">
+        {% if heart.profile.avatar %}
+          <img src="{{ heart.profile.avatar.url }}" style="border-radius: 50px;width:50px;" alt="image">
+          {% else %}
+          <img src="{% static 'images/user.png' %}" alt="image" style="border-radius: 50px;width:50px;">
+          {% endif %}
+      </figure>
+      {{ heart.first_name }}
+    </a>
+    {% endfor %}
+  </span>
+</div>
+</span>

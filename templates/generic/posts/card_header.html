@@ -1,0 +1,80 @@
+{% load staticfiles humanize %}
+
+<div class="card-header">
+    <div class="media">
+      <a href="{% url 'user' pk=object.creator.pk %}" class="ajax">
+        <figure>
+          {% if object.creator.profile.avatar %}
+            <img src="{{ object.creator.profile.avatar.url }}" style="border-radius: 50px;width:40px;" alt="image">
+          {% else %}
+            <img style="width:50px;width:50px;width:50px;border:#6C757D solid 1px;border-radius:40px;padding:5px;" src="{% static 'images/icons/person-24px.svg' %}" />
+          {% endif %}
+        </figure>
+      </a>
+        <div class="media-body">
+            <h6 class="mb-0">
+              <a href="{% url 'user' pk=object.creator.pk %}" class="ajax">
+                {{ object.creator.get_full_name }} &nbsp;
+              </a>
+              <span class="is_fixed" style="color: #888888;font-size: 13px;{% if not object.is_fixed %}display:none;{% endif %}">закреплено</span>
+            </h6>
+            <p class="mb-0">{{ object.created|naturaltime }}</p>
+        </div>
+
+        <a style="cursor:pointer" class="icon-circle icon-30 react">
+            <img style="width:22px" src="{% static 'images/icons/react-24px.svg' %}" />
+        </a>
+        &nbsp;
+        <span class="react_window">
+
+        <div class="react_pop" style="margin:15px">
+          {% if emojies_1 %}
+          <span style="display: flex;flex-wrap: wrap;width: 180px;">
+            {% for object in emojies_2 %}
+            <span data-id="{{ object.id }}" class="emoji" style="padding:6px;cursor:pointer" title="{{ object.keyword }}">
+              <figure style="margin: 0;">
+                {% if object.image %}
+                  <img src="{{ object.image.url }}" style="border-radius: 50px;width:23px;" alt="emoji">
+                  {% endif %}
+              </figure>
+            </span>
+            {% endfor %}
+            <br><br><br>
+
+            {% for object in emojies_1 %}
+            <span data-id="{{ object.id }}" class="emoji" style="padding:6px;cursor:pointer" title="{{ object.keyword }}">
+              <figure style="margin: 0;">
+                {% if object.image %}
+                  <img src="{{ object.image.url }}" style="border-radius: 50px;width:23px;" alt="emoji">
+                  {% endif %}
+              </figure>
+            </span>
+            {% endfor %}
+          </span>
+          {% endif %}
+        </div>
+
+      </span>
+        <div class="dropdown d-inline-block">
+            <a style="cursor:pointer" class="icon-circle icon-30 dropdown-toggle caret-none" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <img style="width:22px" src="{% static 'images/icons/more_vert-24px.svg' %}" />
+            </a>
+            <div class="dropdown-menu dropdown-menu-right">
+              {% if user == request.user %}
+                <span data-action="item_remove" data-id="{{ object.pk }}" style="cursor:pointer" class="dropdown-item">Удалить запись</span>
+                <span data-action="item_update" style="cursor:pointer" class="dropdown-item">Редактировать</span>
+                <span data-id="{{ object.pk }}">
+                  {% if object.is_fixed %}
+                  <span data-action="item_unfixed" style="cursor:pointer" class="dropdown-item">Открепить</span>
+                  {% else %}
+                  <span data-action="item_fixed" style="cursor:pointer" class="dropdown-item">Закрепить</span>
+                  {% endif %}
+                </span>
+                <span data-action="item_check_comment" style="cursor:pointer" class="dropdown-item">Выключить комментарии</span>
+              {% else %}
+                <span data-actiond="item_bad" class="dropdown-item">Пожаловаться</span>
+              {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

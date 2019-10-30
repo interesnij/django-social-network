@@ -94,3 +94,43 @@ class CommunitiesCatsView(TemplateView):
 		context=super(CommunitiesCatsView,self).get_context_data(**kwargs)
 		context["categ"]=self.categ
 		return context
+
+
+class CommunityItemView(CategoryListMixin, TemplateView):
+    model=Item
+    template_name="lnk/community_item.html"
+
+    def get(self,request,*args,**kwargs):
+        self.item = Item.objects.get(pk=self.kwargs["pk"])
+        self.item.views += 1
+        self.item.save()
+        return super(CommunityItemView,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context=super(CommunityItemView,self).get_context_data(**kwargs)
+        context["object"]=self.item
+        return context
+
+
+class CommunityListView(ListView, CategoryListMixin):
+    template_name="lnk/community_list.html"
+    model=Item
+    paginate_by=6
+
+    def get(self,request,*args,**kwargs):
+		self.community=Community.objects.get(pk=self.kwargs["pk"])
+        try:
+            self.fixed = Item.objects.get(community=self.community, is_fixed=True)
+        except:
+            self.fixed = None
+        return super(CommunityListView,self).get(request,*args,**kwargs)
+
+    def get_queryset(self):
+        self.community=Community.objects.get(pk=self.kwargs["pk"])
+        communities = Community.objects.filter(community=self.community,is_deleted=False)
+        return communities
+
+    def get_context_data(self, **kwargs):
+        context = super(CommunityListView, self).get_context_data(**kwargs)
+        context['object'] = self.fixed
+        return context

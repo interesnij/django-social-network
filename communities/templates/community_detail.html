@@ -4,38 +4,137 @@
 {% block content %}
 
 <style>
-.article_fullscreen{
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 20;
-  padding: 5%;
-  display: block;
-  overflow: auto;
+  .react_window {
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    transition: 0.2s;
+    right: 16%;
+  }
+  .react_window:hover {
+      z-index: 10;
+      opacity: 1;
+      visibility: visible;
+      background: #D6DAE1;
+      color: black;
+  }
+  .react:hover~.react_window{
+      z-index: 10;
+      opacity: 1;
+      visibility: visible;
+      background: #D6DAE1;
+      color: black;
+  }
+  .article_fullscreen{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 20;
+    padding: 5%;
+    display: block;
+    overflow: auto;
+  }
+  .item_fullscreen{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 18;
+    padding: 5%;
+    display: block;
+    overflow: auto;
+  }
+  .card-body img{
+    width: 100%;
+  }
+  #article_loader .card-body img{
+    width: 100% !important;
+    height: auto !important;
+  }
+  #article_loader iframe {
+    width: 100% !important;
+  }
+
+  @media screen and (min-width: 621px){
+  .article_fullscreen {
+    left: 20%;
+    width: 60%;
+    padding-left: 5%;
+    padding-right: 5%;
 }
-#article_loader .card-body img{
-  width: 100% !important;
-  height: auto !important;
-}
-#article_loader iframe {
-  width: 100% !important;
-}
-.article_fullscreen_hide{
-  cursor:pointer;
-  float: right;
-  margin-top: 12px;
 }
 @media screen and (min-width: 621px){
-.article_fullscreen {
+.item_fullscreen {
   left: 20%;
   width: 60%;
   padding-left: 5%;
   padding-right: 5%;
 }
 }
+  .next_item{
+    position: absolute;
+    left: -10%;
+    top: 120px;
+    cursor:pointer;
+  }
+  .prev_item{
+    position: absolute;
+    right: -10%;
+    top: 120px;
+    cursor:pointer;
+  }
+  .item_fullscreen_hide{
+    cursor:pointer;
+    float: right;
+    margin-top: 12px;
+  }
+  .article_fullscreen_hide{
+    cursor:pointer;
+    float: right;
+    margin-top: 12px;
+  }
+
+  .stream-update {
+    text-align: center;
+    border-bottom: 1px solid #eeeeee;
+    display: none;
+  }
+
+    .comment_like_window,
+    .comment_dislike_window {
+        opacity: 0;
+        visibility: hidden;
+        position: absolute;
+        margin-bottom: 10px;
+        display: flex;
+        transition: 0.5s;
+    }
+
+    .comment_like_window:hover,
+    .comment_dislike_window:hover {
+        z-index: 10;
+        opacity: 1;
+        visibility: visible;
+        background: #D6DAE1;
+        color: black;
+    }
+    .like2:hover~.comment_like_window,
+    .dislike2:hover~.comment_dislike_window{
+        z-index: 10;
+        opacity: 1;
+        visibility: visible;
+        background: #D6DAE1;
+        color: black;
+    }
+    .id_text{
+      overflow:hidden;
+    }
+
 </style>
+
 
 <div class="container-fluid">
             <div class="row align-items-center has-background-img min-height-300">
@@ -84,8 +183,8 @@
                                   <img style="width:22px;" src="{% static 'images/icons/chat-24px.svg' %}" />
                                 </div>
                                 <div class="media-body">
-                                    <h6 class="my-0 content-color-primary">Skills</h6>
-                                    <p class="small mb-0">Head of User Experience design</p>
+                                    <h6 class="my-0 content-color-primary">Статус</h6>
+                                    <p class="small mb-0">Статус Статус Статус Статус Статус Статус Статус Статус Статус</p>
                                 </div>
                             </div>
                         </div>
@@ -97,9 +196,8 @@
                                           <img style="width:22px;" src="{% static 'images/icons/chat-24px.svg' %}" />
                                         </div>
                                         <div class="media-body">
-                                            <h6 class="my-0 content-color-primary">User experience Design</h6>
-                                            <p class="mb-2"><small class="content-color-secondary">Master in interaction design</small></p>
-                                            <p>orem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+                                            <h6 class="my-0 content-color-primary">Описание</h6>
+                                            <p class="mb-2"><small class="content-color-secondary">{{ object.description }}</p>
                                         </div>
                                     </div>
                                 </li>
@@ -109,9 +207,8 @@
                                           <img style="width:22px;" src="{% static 'images/icons/chat-24px.svg' %}" />
                                         </div>
                                         <div class="media-body">
-                                            <h6 class="my-0 content-color-primary">UI design</h6>
-                                            <p class="mb-2"><small class="content-color-secondary">Bechlore from Standform Univercity</small></p>
-                                            <p>orem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                            <h6 class="my-0 content-color-primary">Правила</h6>
+                                            <p class="mb-2"><small class="content-color-secondary">{{ object.rules }}</p>
                                         </div>
                                     </div>
                                 </li>
@@ -120,6 +217,8 @@
                     </div>
 
                     {% include 'lnk/new_post.html' %}
+
+
                 </div>
                 <div class="col-12 col-md-12 col-lg-4">
 

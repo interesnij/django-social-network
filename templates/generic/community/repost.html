@@ -1,0 +1,63 @@
+{% load staticfiles humanize %}
+<span style="margin-left: 5%;border-left: 1px solid #DDDDDD;">
+  <div class="card-header border-bottom" style="margin-top: -20px;">
+    <div class="media" style="font-size: 0.8em;">
+      <a href="{% url 'user' pk=object.parent.creator.pk %}" class="ajax">
+        <figure>
+          {% if object.parent.creator.profile.avatar %}
+            <img src="{{ object.parent.creator.profile.avatar.url }}" style="border-radius: 50px;width:40px;" alt="image">
+          {% else %}
+            <img style="width:50px;border:#6C757D solid 1px;border-radius:50px;padding:5px;" src="{% static 'images/icons/person-24px.svg' %}" />
+          {% endif %}
+        </figure>
+      </a>
+        <div class="media-body">
+            <h6 class="mb-0">
+              <a href="{% url 'user' pk=object.parent.creator.pk %}" class="ajax">
+                {{ object.parent.creator.get_full_name }} &nbsp;
+              </a>
+              <span class="is_fixed" style="color: #888888;font-size: 13px;{% if not object.is_fixed %}display:none;{% endif %}">закреплено</span>
+            </h6>
+            <p class="mb-0">{{ object.parent.created|naturaltime }}</p>
+        </div>
+    </div>
+  </div>
+  {% if object.parent.post %}
+  <div class="card-body fullscreen" data-id="{{ object.pk }}" style="cursor:pointer" >
+
+    {% if object.parent.post.text %}
+      <p class="">{{ object.parent.post.text|linebreaks }}</p>
+    {% endif %}
+    {% if object.parent.post.image %}
+      <p class="">{{ object.parent.post.image.url }}</p>
+    {% endif %}
+    {% if object.parent.post.doc %}
+      <p class="">{{ object.parent.post.doc }}</p>
+    {% endif %}
+  </div>
+  {% endif %}
+
+    {% if object.parent.article %}
+    <div class="card-body article_detail" data-id="{{ object.parent.uuid }}" style="cursor:pointer">
+         <div class="jumbotron mb-4 bg-dark text-center has-background-img position-relative box-shadow">
+             <div class="row align-items-center no-gutters">
+                    <figure class="background-img">
+                      {% if object.parent.article.image %}
+                        <img class="lazyload" data-src="{{ object.parent.article.image.url }}" alt="">
+                      {% else %}
+                        <img class="lazyload" data-src="{% static 'images/no-image.jpg' %}" />
+                      {% endif %}
+                    </figure>
+                    <div class="container">
+                      <i class="figure avatar120 mr-0 fa fa-gift rounded-circle bg-none text-white border-white "></i>
+                      <br>
+                      <h2 class="text-white">{{ object.parent.article.title}}</h2>
+                      <p class="lead text-white">Автор {{ object.parent.creator.get_full_name }}</p>
+                      <hr class="my-3">
+                      <a class="btn btn-primary" role="button">Читать</a>
+                    </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</span>
