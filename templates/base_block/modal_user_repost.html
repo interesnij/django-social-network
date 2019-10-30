@@ -128,8 +128,6 @@
 
 		var pk = {{ user.pk }};
 
-    if ($('input["#repost_wall"]:checked').val())
-      {
 		      $.ajax({
 			         url: "/posts/repost_user_user/" + pk + "/",
 			         type: 'post',
@@ -149,6 +147,6 @@
 				          console.log("Что то пошло не так");
 			           }
 		          });
-        }
+
 	});
 </script>
