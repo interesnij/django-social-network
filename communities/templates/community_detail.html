@@ -138,11 +138,8 @@
 
 <script>
     $(document).ready(function() {
-        $('#lenta_load').html('').load("/communities/list/" + {
-            {
-                community.pk
-            }
-        });
+        $('#lenta_load').html('').load("/communities/list/" + {{ community.pk }});
+
         //  $('#button_load').html('').load("/communities/button/" + {{ community.pk }});
         //  	$('#stat_load').html('').load("/communities/profile_stat/" + {{ community.pk }});
     });
