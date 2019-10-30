@@ -91,7 +91,7 @@
                                               <a style="cursor:pointer" class="dropdown-item">Комментарии включены</a>
                                             </div>
 
-                                            <button id="repost_btn" type="button" class="btn btn-rounded btn-sm text-uppercase pl-3">
+                                            <button id="" type="button" class="btn repost_btn btn-rounded btn-sm text-uppercase pl-3">
                                               <span class="text-hide-xs">Отправить</span>
                                               <a>
                                                 <img style="width:25px;color:white" src="{% static 'images/icons/send-24px.svg' %}" />
@@ -123,7 +123,7 @@
 </div>
 
 <script>
-  $('#repost_btn').submit(function() {
+  $('.repost_btn').submit(function() {
     var frm_repost = $('#FORM-REPOST');
 		var pk = {{ user.pk }};
 
