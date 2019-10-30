@@ -128,7 +128,7 @@ class CommunityListView(ListView, CategoryListMixin):
 
 	def get_queryset(self):
 		self.community=Community.objects.get(pk=self.kwargs["pk"])
-		communities = Community.objects.filter(community=self.community,is_deleted=False)
+		communities = Item.objects.filter(community=self.community,is_deleted=False)
 		return communities
 
 	def get_context_data(self, **kwargs):
