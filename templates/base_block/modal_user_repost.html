@@ -125,7 +125,7 @@
 <script>
   var frm_repost = $('#FORM-POST');
   frm_repost.submit(function(e) {
-		var repost = {{ object.user }};
+		var repost = {{ user.pk }};
 		var pk = repost.data('id');
 		$.ajax({
 			url: "/posts/repost_user_user/" + pk + "/",
