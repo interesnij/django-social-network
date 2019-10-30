@@ -107,9 +107,8 @@ class RepostCommunityUser(View):
 
 
 class RepostCommunityCommunity(View):
-
-	def post(self, request, *args, **kwargs):
-		self.item = Item.objects.get(uuid=self.kwargs["uuid"])
+    def post(self, request, *args, **kwargs):
+        self.item = Item.objects.get(uuid=self.kwargs["uuid"])
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         if self.item.parent:
             new_repost = Post.objects.create(creator=request.user, community=self.community, parent=self.item.parent, is_repost=True)
