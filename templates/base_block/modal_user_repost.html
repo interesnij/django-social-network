@@ -1,6 +1,6 @@
 {% load staticfiles %}
 
-<div class="modal fade" id="{{ object.uuid }}" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modalka modal fade" id="user_repost" data-id="{{ object.uuid }}" tabindex="-1" role="dialog" aria-hidden="true">
   <span id="user_item_pk"></span>
     <div class="modal-dialog modal-dialog-centered " role="document">
         <div class="modal-content box-shadow">
@@ -126,7 +126,7 @@
 <script>
   $('.repost_btn').click(function() {
     var frm_repost = $('#FORM-REPOST');
-		var uuid = {{ user.uuid }};
+		var uuid = frm_repost.parents(".modalka").data(id);
 
 		      $.ajax({
 			         url: "/posts/repost_user_user/" + uuid + "/",
