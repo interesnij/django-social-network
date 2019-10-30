@@ -265,9 +265,9 @@
 
         <script>
         $(document).ready(function(){
-        	$('#lenta_load').html('').load("/community/list/" + {{ community.pk }});
-        //  $('#button_load').html('').load("/community/button/" + {{ community.pk }});
-      //  	$('#stat_load').html('').load("/users/profile_stat/" + {{ community.pk }});
+        	$('#lenta_load').html('').load("/communities/list/" + {{ community.pk }});
+        //  $('#button_load').html('').load("/communities/button/" + {{ community.pk }});
+      //  	$('#stat_load').html('').load("/communities/profile_stat/" + {{ community.pk }});
         });
         </script>
 {% endblock %}
