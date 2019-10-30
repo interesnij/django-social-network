@@ -18,29 +18,6 @@ $('.stream').on('click', '.comment', function () {
 </script>
 
 <script>
-	$('.stream').on('click', '.repost', function () {
-		var repost = $(this);
-		var pk = repost.data('id');
-		$.ajax({
-			url: "/posts/repost_user_user/" + pk + "/",
-			type: 'post',
-			success: function (data) {
-
-				$.toast({
-					heading: '{{ request.user.first_name }}',
-					text: 'Репост выполнен успешно!',
-					showHideTransition: 'fade',
-					icon: 'info'
-				})
-			},
-			error: function(data) {
-				console.log("Что то пошло не так");
-			}
-		});
-	});
-</script>
-
-<script>
 function remove() {
 var remove = $(this);
 var pk = remove.data('id');
