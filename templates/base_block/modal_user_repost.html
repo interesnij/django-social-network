@@ -23,15 +23,15 @@
                         <div class="tab-pane fade active show" id="tabhome123" role="tabpanel" aria-labelledby="tabhome123-tab">
                             <div class="form-group ">
                                 <div class="custom-control custom-radio">
-                                    <input type="radio" name="wall" checked class="custom-control-input" id="feedback111">
+                                    <input type="radio" name="radiogroup-1" checked="checked" class="custom-control-input" id="feedback111">
                                     <label class="custom-control-label" for="feedback111">На своей стене</label>
                                 </div>
                                 <div class="custom-control custom-radio">
-                                    <input type="radio" name="community" class="custom-control-input" id="feedback1112">
+                                    <input type="radio" name="radiogroup-1" class="custom-control-input" id="feedback1112">
                                     <label class="custom-control-label" for="feedback1112">В сообществе</label>
                                 </div>
                                 <div class="custom-control custom-radio">
-                                    <input type="radio" name="message" class="custom-control-input" id="feedback1113">
+                                    <input type="radio" name="radiogroup-1" class="custom-control-input" id="feedback1113">
                                     <label class="custom-control-label" for="feedback1113">В сообщении</label>
                                 </div>
                             </div>
@@ -128,7 +128,7 @@
 
 		var pk = {{ user.pk }};
 
-    if ($('input[name="menu"]:checked').val()){
+    if ($('input[name="wall"]:checked').val()){
 		$.ajax({
 			url: "/posts/repost_user_user/" + pk + "/",
 			type: 'post',
