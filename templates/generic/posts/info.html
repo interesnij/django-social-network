@@ -5,29 +5,6 @@
   <div class="row">
       <div class="col interaction" id="interaction">
 
-        <span class="react_window">
-          {% if object.votes.likes.all %}
-        <div class="react_pop" style="margin:15px">
-          <span>Оценили: {{ object.votes.likes.count }} {{ object.votes.likes.count|rupluralize:"человек,человека,людей" }}</span>
-          <br><br>
-          <span style="display: flex;">
-            {% for heart in object.user.all %}
-            <a href="{% url 'user' pk=heart.user.pk %}" class="ajax" style="padding-right:10px">
-              <figure style="margin: 0;">
-                {% if heart.user.profile.avatar %}
-                  <img src="{{ heart.user.profile.avatar.url }}" style="border-radius: 50px;width:50px;" alt="image">
-                  {% else %}
-                  <img src="{% static 'images/user.png' %}" alt="image" style="border-radius: 50px;width:50px;">
-                  {% endif %}
-              </figure>
-              {{ heart.user.first_name }}
-            </a>
-            {% endfor %}
-          </span>
-        </div>
-        {% endif %}
-      </span>
-
           &nbsp;&nbsp;
           <span title="Комментарий" class="comment" style="cursor:pointer">
             <img style="width:22px;" src="{% static 'images/icons/chat-24px.svg' %}" />

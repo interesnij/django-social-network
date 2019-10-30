@@ -1,10 +1,10 @@
 {% load staticfiles humanize liked_user %}
 <div class="card mb-4 infinite-item" item-id="{{ object.uuid }}">
 
-    {% include 'generic/posts/card_header.html' %}
+    {% include 'generic/community/card_header.html' %}
 
     {% if object.is_repost %}
-    {% include 'generic/posts/repost.html' %}
+    {% include 'generic/community/repost.html' %}
     {% endif %}
 
     <div class="card-body fullscreen" data-id="{{ object.pk }}" style="cursor:pointer">
@@ -19,5 +19,5 @@
       {% endif %}
     </div>
 
-    {% include 'generic/posts/info.html' %}
+    {% include 'generic/community/info.html' %}
 </div>
