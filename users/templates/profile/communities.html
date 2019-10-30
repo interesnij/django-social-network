@@ -20,7 +20,7 @@
               {% if object.avatar %}
                 <img src="{{ object.avatar.url }}" style="border-radius:50px;width:50px;" alt="image">
               {% else %}
-                <img src="{% static 'images/no_img.png' %}" alt="image" style="border-radius:50px">
+                <img style="width:50px" src="{% static 'images/icons/group-24px.svg' %}" />
               {% endif %}
             </figure>
             <div class="media-body">
