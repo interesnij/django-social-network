@@ -16,7 +16,7 @@
           </span>
 
           &nbsp;&nbsp;
-          <span data-toggle="modal" data-target="#user_repost" title="Поделиться" style="cursor:pointer">
+          <span class="R_U" data-uuid="{{ object.uuid }}" data-toggle="modal" data-target="#user_repost" title="Поделиться" style="cursor:pointer">
             <img style="width:20px" src="{% static 'images/icons/share-24px.svg' %}" />
             <span class="repost-count">
               {% if object.count_thread %}
@@ -42,3 +42,13 @@
   <div class="load_comments" style="margin-top:25px"></div>
   {% endif %}
   </div>
+
+<script>
+
+  $('.R_U').on('click', function () {
+  	 var item = $(this);
+  	 var item_id = item.data("uuid");
+  	 $('#user_item_pk').html('item_id');
+  });
+
+</script>
