@@ -2,6 +2,41 @@
 {% load staticfiles humanize %}
 {% block title %}{{ object.name }}{% endblock %}
 {% block content %}
+
+<style>
+.article_fullscreen{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 20;
+  padding: 5%;
+  display: block;
+  overflow: auto;
+}
+#article_loader .card-body img{
+  width: 100% !important;
+  height: auto !important;
+}
+#article_loader iframe {
+  width: 100% !important;
+}
+.article_fullscreen_hide{
+  cursor:pointer;
+  float: right;
+  margin-top: 12px;
+}
+@media screen and (min-width: 621px){
+.article_fullscreen {
+  left: 20%;
+  width: 60%;
+  padding-left: 5%;
+  padding-right: 5%;
+}
+}
+</style>
+
 <div class="container-fluid">
             <div class="row align-items-center has-background-img min-height-300">
                 <figure class="background-img pink-gradient">
