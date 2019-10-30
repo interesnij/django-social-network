@@ -16,7 +16,10 @@
           </span>
 
           &nbsp;&nbsp;
-          <span title="Поделиться" class="repost" style="cursor:pointer" data-id="{{ object.pk }}">
+          <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#exampleModalCenter">
+                Launch vertical centered Modal
+            </button>
+          <span data-toggle="modal" data-target="#modal_repost" title="Поделиться" style="cursor:pointer">
             <img style="width:20px" src="{% static 'images/icons/share-24px.svg' %}" />
             <span class="repost-count">
               {% if object.count_thread %}
