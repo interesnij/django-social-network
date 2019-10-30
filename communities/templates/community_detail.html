@@ -3,43 +3,138 @@
 {% block title %}{{ object.name }}{% endblock %}
 {% block content %}
 
+<style>
+  .react_window {
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    transition: 0.2s;
+    right: 16%;
+  }
+  .react_window:hover {
+      z-index: 10;
+      opacity: 1;
+      visibility: visible;
+      background: #D6DAE1;
+      color: black;
+  }
+  .react:hover~.react_window{
+      z-index: 10;
+      opacity: 1;
+      visibility: visible;
+      background: #D6DAE1;
+      color: black;
+  }
+  .article_fullscreen{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 20;
+    padding: 5%;
+    display: block;
+    overflow: auto;
+  }
+  .item_fullscreen{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 18;
+    padding: 5%;
+    display: block;
+    overflow: auto;
+  }
+  .card-body img{
+    width: 100%;
+  }
+  #article_loader .card-body img{
+    width: 100% !important;
+    height: auto !important;
+  }
+  #article_loader iframe {
+    width: 100% !important;
+  }
 
-<div class="container-fluid">
-            <div class="row align-items-center has-background-img min-height-300">
-                <figure class="background-img pink-gradient">
-                  {% if object.cover %}
-                    <img src="{{ object.cover.url }}" alt="" class="">
-                  {% else %}
-                    <img src="{% static 'images/news_small1.jpg' %}" alt="" class="">
-                  {% endif %}
-                </figure>
-                <div class="container">
-                    <div class="row align-items-center ">
-                        <div class="col-12 col-sm-auto text-center">
-                            <a href="profile.html ">
-                                <figure>
-                                  {% if object.avatar %}
-                                    <img style="width:50px;border-radius:50px;" src="{{ object.avatar.url }}" alt="" class="">
-                                  {% else %}
-                                    <img style="width:50px;border-radius:50px;" src="{% static 'images/icons/group-24px.svg' %}" />
-                                  {% endif %}
-                                </figure>
-                            </a>
-                        </div>
-                        <div class="col-12 col-sm text-center text-sm-left text-white">
-                            <h3 class="mb-0">{{ object.name }}</h3>
-                            <p class="">текст</p>
-                            <p class="small"> +0 0000 0000 0000 <span class="mx-2">|</span> info@maxartkiller.in</p>
-                        </div>
-                        <div class="text-center text-sm-right col-12 col-sm-auto mb-3">
-                            <a class="btn btn-success success-gradient">Подписаться</a>
-                            <a class="btn btn-primary primary-gradient ml-2">Подать заявку</a>
-                        </div>
-                    </div>
-                </div>
+  @media screen and (min-width: 621px){
+  .article_fullscreen {
+    left: 20%;
+    width: 60%;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+}
+@media screen and (min-width: 621px){
+.item_fullscreen {
+  left: 20%;
+  width: 60%;
+  padding-left: 5%;
+  padding-right: 5%;
+}
+}
+  .next_item{
+    position: absolute;
+    left: -10%;
+    top: 120px;
+    cursor:pointer;
+  }
+  .prev_item{
+    position: absolute;
+    right: -10%;
+    top: 120px;
+    cursor:pointer;
+  }
+  .item_fullscreen_hide{
+    cursor:pointer;
+    float: right;
+    margin-top: 12px;
+  }
+  .article_fullscreen_hide{
+    cursor:pointer;
+    float: right;
+    margin-top: 12px;
+  }
 
-            </div>
-        </div>
+  .stream-update {
+    text-align: center;
+    border-bottom: 1px solid #eeeeee;
+    display: none;
+  }
+
+    .comment_like_window,
+    .comment_dislike_window {
+        opacity: 0;
+        visibility: hidden;
+        position: absolute;
+        margin-bottom: 10px;
+        display: flex;
+        transition: 0.5s;
+    }
+
+    .comment_like_window:hover,
+    .comment_dislike_window:hover {
+        z-index: 10;
+        opacity: 1;
+        visibility: visible;
+        background: #D6DAE1;
+        color: black;
+    }
+    .like2:hover~.comment_like_window,
+    .dislike2:hover~.comment_dislike_window{
+        z-index: 10;
+        opacity: 1;
+        visibility: visible;
+        background: #D6DAE1;
+        color: black;
+    }
+    .id_text{
+      overflow:hidden;
+    }
+
+</style>
+
 
         <div class="container mt-4 main-container">
             <div class="row">
