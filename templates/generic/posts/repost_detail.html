@@ -2,20 +2,38 @@
 <span style="margin-left: 5%;border-left: 1px solid #DDDDDD;">
   <div class="card-header border-bottom" style="margin-top: -20px;">
     <div class="media" style="font-size: 0.8em;">
+      {% if object.community %}
+      <a href="{% url 'community_detail' pk=object.community.pk %}" class="ajax">
+        <figure>
+          {% if object.community.avatar %}
+            <img src="{{ object.community.avatar.url }}" style="border-radius: 50px;width:40px;" alt="image">
+          {% else %}
+            <img style="width:50px;width:50px;width:50px;border:#6C757D solid 1px;border-radius:40px;padding:5px;" src="{% static 'images/icons/group-24px.svg' %}" />
+          {% endif %}
+        </figure>
+      </a>
+      {% else %}
       <a href="{% url 'user' pk=object.parent.creator.pk %}" class="ajax">
         <figure>
           {% if object.parent.creator.profile.avatar %}
             <img src="{{ object.parent.creator.profile.avatar.url }}" style="border-radius: 50px;width:40px;" alt="image">
           {% else %}
-            <img style="width:40px;border:#6C757D solid 1px;border-radius:50px;padding:5px;" src="{% static 'images/icons/person-24px.svg' %}" />
+            <img style="width:50px;border:#6C757D solid 1px;border-radius:50px;padding:5px;" src="{% static 'images/icons/person-24px.svg' %}" />
           {% endif %}
         </figure>
       </a>
+      {% endif %}
         <div class="media-body">
             <h6 class="mb-0">
+              {% if object.community %}
+              <a href="{% url 'community_detail' pk=object.community.pk %}" class="ajax">
+                {{ object.community.name }} &nbsp;
+              </a>
+              {% else %}
               <a href="{% url 'user' pk=object.parent.creator.pk %}" class="ajax">
                 {{ object.parent.creator.get_full_name }} &nbsp;
               </a>
+              {% endif %}
               <span class="is_fixed" style="color: #888888;font-size: 13px;{% if not object.is_fixed %}display:none;{% endif %}">закреплено</span>
             </h6>
             <p class="mb-0">{{ object.parent.created|naturaltime }}</p>
