@@ -91,7 +91,7 @@
                                               <a style="cursor:pointer" class="dropdown-item">Комментарии включены</a>
                                             </div>
 
-                                            <button type="submit" class="btn btn-rounded btn-sm text-uppercase pl-3">
+                                            <button id="repost_btn" type="button" class="btn btn-rounded btn-sm text-uppercase pl-3">
                                               <span class="text-hide-xs">Отправить</span>
                                               <a>
                                                 <img style="width:25px;color:white" src="{% static 'images/icons/send-24px.svg' %}" />
@@ -124,26 +124,31 @@
 
 <script>
   var frm_repost = $('#FORM-REPOST');
-  frm_repost.submit(function(e) {
+  $('#repost_btn').submit(function(e) {
 
 		var pk = {{ user.pk }};
 
-    if ($('input["#repost_wall"]:checked').val()){
-		$.ajax({
-			url: "/posts/repost_user_user/" + pk + "/",
-			type: 'post',
-			success: function (data) {
-				$.toast({
-					heading: '{{ request.user.first_name }}',
-					text: 'Репост выполнен успешно!',
-					showHideTransition: 'fade',
-					icon: 'info'
-				})
-			},
-			error: function(data) {
-				console.log("Что то пошло не так");
-			}
-		});
-  }
+    if ($('input["#repost_wall"]:checked').val())
+      {
+		      $.ajax({
+			         url: "/posts/repost_user_user/" + pk + "/",
+			         type: 'post',
+               data: new FormData($(form)[0]),
+               contentType: false,
+               cache: false,
+               processData: false,
+			         success: function (data) {
+				         $.toast({
+					         heading: '{{ request.user.first_name }}',
+					         text: 'Репост выполнен успешно!',
+					         showHideTransition: 'fade',
+					         icon: 'info'
+				          })
+			          },
+			          error: function(data) {
+				          console.log("Что то пошло не так");
+			           }
+		          });
+        }
 	});
 </script>
