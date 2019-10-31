@@ -1,4 +1,4 @@
-from users.models import User
+
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseBadRequest
 from django.views.generic import View
