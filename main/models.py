@@ -15,7 +15,7 @@ from django.db.models import Count
 class Item(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, db_index=True,verbose_name="uuid")
     comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
-    community = models.ForeignKey('communities.Community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
+    #community = models.ForeignKey('communities.Community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE, verbose_name="Создатель")
     is_edited = models.BooleanField(default=False, verbose_name="Изменено")
@@ -24,7 +24,7 @@ class Item(models.Model):
     is_fixed = models.BooleanField(default=False, verbose_name="Закреплено")
     is_repost = models.BooleanField(verbose_name="Это репост", default=False)
     views=models.IntegerField(default=0, verbose_name="Просмотры")
-    moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='items')
+    #moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='items')
     parent = models.ForeignKey("self", blank=True,
         null=True, on_delete=models.CASCADE, related_name="thread")
 
