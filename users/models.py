@@ -3,7 +3,6 @@ import uuid
 from django.utils import six, timezone
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from django.contrib.auth.models import User
 from django.conf import settings
 from users.helpers import upload_to_user_cover_directory, upload_to_user_avatar_directory
 from pilkit.processors import ResizeToFill, ResizeToFit
