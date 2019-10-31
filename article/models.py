@@ -22,17 +22,6 @@ class Article(Item):
                                           'plugin.js',
                                           )],
                                       )
-    STATUS_DRAFT = 'D'
-    STATUS_PROCESSING = 'PG'
-    STATUS_PUBLISHED = 'P'
-    STATUS_ARHIVED = 'A'
-    STATUSES = (
-        (STATUS_DRAFT, 'Черновик'),
-        (STATUS_PROCESSING, 'Обработка'),
-        (STATUS_PUBLISHED, 'Опубликована'),
-        (STATUS_ARHIVED, 'Архивирована'),
-    )
-    status = models.CharField(blank=False, null=False, choices=STATUSES, default=STATUS_DRAFT, max_length=2, verbose_name="Статус статьи")
 
 
     @classmethod

@@ -12,18 +12,6 @@ from main.models import Item
 
 class Post(Item):
     text = models.TextField(max_length=settings.POST_MAX_LENGTH, blank=False, null=True, verbose_name="Текст")
-    STATUS_DRAFT = 'D'
-    STATUS_PROCESSING = 'PG'
-    STATUS_PUBLISHED = 'P'
-    STATUS_ARHIVED = 'A'
-    STATUSES = (
-        (STATUS_DRAFT, 'Черновик'),
-        (STATUS_PROCESSING, 'Обработка'),
-        (STATUS_PUBLISHED, 'Опубликовано'),
-        (STATUS_ARHIVED, 'Архивирован'),
-    )
-    status = models.CharField(blank=False, null=False, choices=STATUSES, default=STATUS_DRAFT, max_length=2, verbose_name="Статус записи")
-
 
     @classmethod
     def create_post(cls, creator, community_name=None, image=None, text=None, video=None,

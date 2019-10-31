@@ -26,6 +26,17 @@ class Item(models.Model):
     #moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='items')
     parent = models.ForeignKey("self", blank=True,
         null=True, on_delete=models.CASCADE, related_name="thread")
+    STATUS_DRAFT = 'D'
+    STATUS_PROCESSING = 'PG'
+    STATUS_PUBLISHED = 'P'
+    STATUS_ARHIVED = 'A'
+    STATUSES = (
+        (STATUS_DRAFT, 'Черновик'),
+        (STATUS_PROCESSING, 'Обработка'),
+        (STATUS_PUBLISHED, 'Опубликована'),
+        (STATUS_ARHIVED, 'Архивирована'),
+    )
+    status = models.CharField(blank=False, null=False, choices=STATUSES, default=STATUS_DRAFT, max_length=2, verbose_name="Статус статьи")
 
     class Meta:
         indexes = (
