@@ -367,7 +367,7 @@ class ModeratedObject(models.Model):
 
 
 class ModerationReport(models.Model):
-    reporter = models.ForeignKey(User, on_delete=models.CASCADE, related_name='moderation_reports', null=False, verbose_name="Репортер")
+    reporter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='moderation_reports', null=False, verbose_name="Репортер")
     moderated_object = models.ForeignKey(ModeratedObject, on_delete=models.CASCADE, related_name='reports', null=False, verbose_name="Объект")
     category = models.ForeignKey(ModerationCategory, on_delete=models.CASCADE, related_name='reports', null=False, verbose_name="Категория")
     description = models.CharField(max_length=300,
