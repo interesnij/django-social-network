@@ -8,7 +8,6 @@ from pilkit.processors import ResizeToFill, ResizeToFit
 from communities.helpers import upload_to_community_avatar_directory, upload_to_community_cover_directory
 from posts.models import Post
 from imagekit.models import ProcessedImageField
-from users.models import User
 from moderation.models import ModeratedObject, ModerationCategory
 
 
@@ -42,7 +41,7 @@ class CommunitySubCategory(models.Model):
 class Community(models.Model):
     moderated_object = GenericRelation(ModeratedObject, related_query_name='communities',verbose_name="Модерация")
     category = models.ForeignKey(CommunitySubCategory, on_delete=models.CASCADE, related_name='community_sub_categories', verbose_name="Подкатегория сообщества")
-    creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_communities', null=False, blank=False, verbose_name="Создатель")
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='created_communities', null=False, blank=False, verbose_name="Создатель")
     name = models.CharField(max_length=settings.COMMUNITY_CATEGORY_TITLE_MAX_LENGTH, blank=False, null=False, verbose_name="Заголовок" )
     description = models.CharField(max_length=300, null=True, verbose_name="Описание" )
     rules = models.TextField(max_length=100, null=True, verbose_name="Правила")

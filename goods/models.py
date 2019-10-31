@@ -1,5 +1,4 @@
 from django.db import models
-from users.models import User
 from pilkit.processors import ResizeToFill, ResizeToFit
 from imagekit.models import ProcessedImageField
 from asgiref.sync import async_to_sync
