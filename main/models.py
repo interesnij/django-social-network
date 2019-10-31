@@ -8,7 +8,6 @@ from django.db import transaction
 from notifications.models import Notification, notification_handler
 from django.contrib.contenttypes.fields import GenericRelation
 from django.db.models import Q
-from users.models import User
 from django.db.models import Count
 
 
