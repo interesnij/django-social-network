@@ -11,6 +11,7 @@ from imagekit.models import ProcessedImageField
 from django.contrib.contenttypes.fields import GenericRelation
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from communities.models import Community
 
 
 class User(AbstractUser):
@@ -42,9 +43,14 @@ class User(AbstractUser):
         else:
             return False
 
-
     def __str__(self):
         return self.get_full_name()
+
+    def get_administrated_communities(self):
+        return Community.objects.filter(memberships__user=self, memberships__is_administrator=True)
+
+    def get_moderated_communities(self):
+        return Community.objects.filter(memberships__user=self, memberships__is_moderator=True)
 
 
 class UserBlock(models.Model):
@@ -124,7 +130,7 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User, db_index=False, null=True, related_name="profile", verbose_name="Пользователь", on_delete=models.CASCADE)
     avatar = ProcessedImageField(verbose_name='Аватар', blank=False, null=True, format='JPEG',
                                  options={'quality': 90}, processors=[ResizeToFill(500, 500)],
-                                 upload_to=upload_to_user_avatar_directory) 
+                                 upload_to=upload_to_user_avatar_directory)
     cover = models.ImageField(blank=True, null=True, upload_to=upload_to_user_cover_directory, verbose_name="Фон")
     bio = models.TextField(max_length=settings.PROFILE_BIO_MAX_LENGTH, blank=True, verbose_name="Биография")
     followers_count_visible = models.BooleanField(blank=False, null=False, default=False, verbose_name="Число подписчиков видно")

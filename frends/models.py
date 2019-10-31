@@ -6,8 +6,9 @@ from notifications.models import Notification, notification_handler
 class Connect(models.Model):
     user = models.ForeignKey('users.User', db_index=False, on_delete=models.CASCADE, related_name='connections', verbose_name="Инициатор перевода из подписчика в друзья")
     target_user = models.ForeignKey('users.User', db_index=False, on_delete=models.CASCADE, related_name='targeted_connections', null=False, verbose_name="Кого переводит из подписчика в друзья")
+    target_connection = models.OneToOneField('self', on_delete=models.CASCADE, null=True)
 
-    def notification_follow(self, user):
+    def notification_connect(self, user):
         notification_handler(user, self.target_user, Notification.CONNECTION_CONFIRMED, action_object=self, id_value=str(user.uuid), key='notification')
 
     @classmethod
