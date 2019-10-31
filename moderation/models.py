@@ -462,7 +462,7 @@ class ModerationReport(models.Model):
 
 
 class ModerationPenalty(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='moderation_penalties', verbose_name="Оштрафованный пользователь")
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='moderation_penalties', verbose_name="Оштрафованный пользователь")
     expiration = models.DateTimeField(null=True,verbose_name="Окончание")
     moderated_object = models.ForeignKey(ModeratedObject, on_delete=models.CASCADE, related_name='user_penalties', verbose_name="Объект")
 
@@ -479,7 +479,7 @@ class ModerationPenalty(models.Model):
 
 
 class ModeratedObjectLog(models.Model):
-    actor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='+', null=True, verbose_name="инициатор")
+    actor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='+', null=True, verbose_name="инициатор")
 
     LOG_TYPE_DESCRIPTION_CHANGED = 'DC'
     LOG_TYPE_STATUS_CHANGED = 'AC'
