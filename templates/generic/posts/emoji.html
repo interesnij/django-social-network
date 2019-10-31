@@ -10,7 +10,7 @@
   <span>{{ react.count }} {{ react.count|rupluralize:"реакция,реакции,реакций" }}</span>
   <br><br>
   <span style="display: flex;">
-    {% for heart in react.reactions.get_reactor %}
+    {% for heart in react.post_reactions.get_reactor %}
     <a href="{% url 'user' pk=heart.pk %}" class="ajax" style="padding-right:10px">
       <figure style="margin: 0;">
         {% if heart.profile.avatar %}
