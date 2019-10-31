@@ -6,8 +6,6 @@ from django.utils import timezone
 from main.models import Item, ItemComment
 
 
-
-
 class ModerationCategory(models.Model):
     name = models.CharField(max_length=32, blank=False, null=False, verbose_name="Название")
     title = models.CharField(max_length=64, blank=False, null=False, verbose_name="Заголовок")

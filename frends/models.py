@@ -14,10 +14,13 @@ class Connect(models.Model):
 
     @classmethod
     def create_connection(cls, user_id, target_user_id):
-        target_connection = cls.objects.create(user_id=user_id, target_user_id=target_user_id)
-        target_connection.notification_follow(user_id)
+        target_connection = cls.objects.create(user_id=target_user_id, target_user_id=user_id)
+        connection = cls.objects.create(user_id=user_id, target_user_id=target_user_id,target_connection=target_connection)
+        target_connection.target_connection = connection
         target_connection.save()
-        return target_connection
+        connection.save()
+        target_connection.notification_connect(user_id)
+        return connection
 
     class Meta:
         unique_together = ('user', 'target_user')
