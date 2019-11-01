@@ -5,6 +5,7 @@ from invitations.models import UserInvite
 from main.models import Item, ItemComment
 from common.models import EmojiGroup
 import jwt
+from django.conf import settings
 
 ''''' common '''''
 
