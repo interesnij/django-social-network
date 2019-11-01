@@ -1,7 +1,6 @@
 from django.db import models
 from django.conf import settings
 from notifications.models import Notification, notification_handler
-from users.models import User
 
 
 class Connect(models.Model):
