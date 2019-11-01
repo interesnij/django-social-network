@@ -14,7 +14,6 @@
 
 {% for object in user.get_pop_connection %}
 
-{% if object.target_user == user %}
 <div class="card mb-2">
     <div class="card-body">
         <div class="media">
@@ -38,7 +37,6 @@
         </div>
     </div>
 </div>
-{% endif %}
 {% endfor %}
 </div>
 
