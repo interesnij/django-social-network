@@ -190,15 +190,11 @@ class ProfileButtonReload(TemplateView):
     def get(self,request,*args,**kwargs):
         self.user=User.objects.get(pk=self.kwargs["pk"])
         try:
-            self.connect = Connect.objects.get(target_user=self.request.user,user=self.user)
+            self.connect = Connect.objects.get(user=self.request.user,target_user=self.user)
         except:
             self.connect = None
         try:
-            self.connect2 = Connect.objects.get(user=self.request.user,target_user=self.user)
-        except:
-            self.connect2 = None
-        try:
-            self.follow = self.user.count_followers()
+            self.follow = Follow.objects.get(followed_user=self.user,user=self.request.user)
         except:
             self.follow = None
         try:
@@ -212,7 +208,6 @@ class ProfileButtonReload(TemplateView):
         context = super(ProfileButtonReload, self).get_context_data(**kwargs)
         context['user'] = self.user
         context['connect'] = self.connect
-        context['connect2'] = self.connect2
         context['follow'] = self.follow
         context['follow2'] = self.follow2
         return context
@@ -223,12 +218,10 @@ class ProfileStatReload(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.user=User.objects.get(pk=self.kwargs["pk"])
-        self.follows_count=Follow.objects.filter(followed_user__id=self.user.id).count()
-        self.goods_count=Good.objects.filter(creator__id=self.user.id,is_deleted=False).count()
-        self.connect_count=Connect.objects.filter(user__id=self.user.id).count()
-        self.connect_count2=Connect.objects.filter(target_user__id=self.user.id).count()
-        self.frends_count=self.connect_count + self.connect_count2
-        self.communities_count=Community.objects.filter(starrers__id=self.user.id).count()
+        self.follows_count=self.user.count_following()
+        self.goods_count=self.user.count_goods()
+        self.connect_count=self.user.count_connections()
+        self.communities_count=self.user.community_connections()
         return super(ProfileStatReload,self).get(request,*args,**kwargs)
 
     def get_context_data(self, **kwargs):

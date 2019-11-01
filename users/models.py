@@ -204,6 +204,13 @@ class User(AbstractUser):
     def count_connections(self):
         return self.connections.count()
 
+    def count_community(self):
+        return self.communities.count()
+
+    def count_goods(self):
+        goods = Good.objects.filter(creator__id=self.user.id,is_deleted=False).count()
+        return goods
+
     def count_posts(self):
         return self.posts.count()
 
