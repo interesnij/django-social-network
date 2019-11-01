@@ -220,7 +220,7 @@ class ProfileStatReload(TemplateView):
         self.user=User.objects.get(pk=self.kwargs["pk"])
         self.follows_count=self.user.count_following()
         self.goods_count=self.user.count_goods()
-        self.connect_count=self.user.count_connections()
+        self.connect_count=self.user.count_community()
         self.communities_count=self.user.community_connections()
         return super(ProfileStatReload,self).get(request,*args,**kwargs)
 
