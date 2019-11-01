@@ -200,7 +200,7 @@ class User(AbstractUser):
         return Follow.objects.filter(followed_user__id=self.pk).count()
 
     def count_following(self):
-        return self.follows.count()
+        return self.followers.count() 
 
     def count_connections(self):
         return self.connections.count()
