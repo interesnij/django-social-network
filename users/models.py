@@ -200,13 +200,13 @@ class User(AbstractUser):
         return Follow.objects.filter(followed_user__id=self.pk).count()
 
     def count_following(self):
-        return self.followers.count() 
+        return self.followers.count()
 
     def count_connections(self):
         return self.connections.count()
 
     def count_community(self):
-        return Community.objects.filter(memberships__user__id=self.pk).count()
+        return self.memberships__user__id.count()
 
     def count_goods(self):
         goods = Good.objects.filter(creator__id=self.pk,is_deleted=False).count()
