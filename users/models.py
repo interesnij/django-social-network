@@ -71,13 +71,13 @@ class User(AbstractUser):
         return follow
 
     def frend_user(self, user):
-        return self.frend_user_with_id(user.id)
+        return self.frend_user_with_id(user.pk)
 
     def frend_user_with_id(self, user_id):
         check_can_connect_with_user_with_id(user=self, user_id=user_id)
         if self.pk == user_id:
             raise ValidationError('Вы не можете добавить сами на себя',)
-        frend = Connect.create_connection(user_id=self, target_user_id=user_id)
+        frend = Connect.create_connection(user_id=self.pk, target_user_id=user_id)
         follow = Follow.objects.get(user=user_id, followed_user_id=self.pk)
         follow.delete()
         return frend
