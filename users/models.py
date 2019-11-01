@@ -225,6 +225,10 @@ class User(AbstractUser):
         connection = Connect.objects.filter(target_connection__user_id=self.id)
         return connection
 
+    def get_online_connection(self):
+        online_connection = self.get_all_connection().get_online()
+        return online_connection
+
 
 
 
