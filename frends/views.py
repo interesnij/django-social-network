@@ -31,7 +31,7 @@ class ConnectCreate(View):
 		self.target_user = User.objects.get(pk=self.kwargs["pk"])
 
 		new_frend = request.user.frend_user(self.target_user)
-		new_follow.notification_connect(request.user)
+		new_frend.notification_connect(request.user)
 		return HttpResponse("!")
 
 
