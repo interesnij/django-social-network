@@ -219,7 +219,7 @@ class User(AbstractUser):
     ''''' GET всякие  219-186 '''''
     def get_connection(self):
         connection = Connect.objects.filter(target_connection__user_id=self.id)
-        return connection
+        return connection[0:5]
 
 
 
