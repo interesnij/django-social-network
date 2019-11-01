@@ -88,7 +88,7 @@ class User(AbstractUser):
 
     def unfollow_user_with_id(self, user_id):
         check_not_can_follow_user_with_id(user=self, user_id=user_id)
-        follow = Follow.create_follow(user_id=user_id)
+        follow = Follow.objects.get(user_id=user.pk)
         follow.delete()
 
     def unfrend_user(self, user):
