@@ -229,7 +229,7 @@ class ProfileStatReload(TemplateView):
         context['user'] = self.user
         context['follows_count'] = self.follows_count
         context['frends_count'] = self.connect_count
-        context['frends_count'] = self.frends_count
+        context['goods_count'] = self.goods_count
         context['communities_count'] = self.communities_count
         return context
 
