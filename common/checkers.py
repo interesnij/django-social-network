@@ -1,4 +1,4 @@
-from cpmmon.models import ProxyBlacklistDomain
+from common.models import ProxyBlacklistDomain
 from rest_framework.exceptions import PermissionDenied
 
 
