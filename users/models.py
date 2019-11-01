@@ -60,6 +60,7 @@ class User(AbstractUser):
 
 
         '''''проверки is для пользователей 62-112'''''
+
         def is_blocked_with_user_with_id(self, user_id):
             return UserBlock.users_are_blocked(user_a_id=self.pk, user_b_id=user_id)
 
@@ -122,9 +123,6 @@ class User(AbstractUser):
 
     def follow_user(self, user):
         return self.follow_user_with_id(user.pk)
-
-    def is_blocked_with_user_with_id(self, user_id):
-        return UserBlock.users_are_blocked(user_a_id=self.pk, user_b_id=user_id)
 
     def follow_user_with_id(self, user_id):
         check_can_follow_user_with_id(user=self, user_id=user_id)
