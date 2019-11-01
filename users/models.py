@@ -170,6 +170,22 @@ class User(AbstractUser):
         return self.follows.filter(followed_user__username=user_username).exists()
 
 
+    ''''' количества всякие  173-186 '''''
+
+
+    def count_followers(self):
+        return Follow.objects.filter(followed_user__id=self.pk).count()
+
+    def count_following(self):
+        return self.follows.count()
+
+    def count_connections(self):
+        return self.connections.count()
+
+     def count_posts(self):
+        return self.posts.count()
+
+
 
 
 class UserBlock(models.Model):
