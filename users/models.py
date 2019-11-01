@@ -96,7 +96,7 @@ class User(AbstractUser):
 
     def unfrend_user_with_id(self, user_id):
         check_is_following_user_with_id(user=self, user_id=user_id)
-        follow = Follow.create_follow(user_id=self)
+        follow = Follow.create_follow(user_id=self, followed_user_id=user_id)
         connection = self.connections.get(target_connection__user_id=user_id)
         connection.delete()
 
