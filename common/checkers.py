@@ -356,7 +356,7 @@ def check_has_not_reached_max_follows(user):
         )
 
 
-def check_is_following_user_with_id(user, user_id):
+def check_is_not_following_user_with_id(user, user_id):
     if not user.is_following_user_with_id(user_id):
         raise ValidationError(
             'Пользователь не подписан',
