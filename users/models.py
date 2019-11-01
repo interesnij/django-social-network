@@ -12,6 +12,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from communities.models import Community
 from follows.models import Follow
+from goods.models import Good
 from frends.models import Connect
 from common.checkers import *
 from django.db.models import Q, F, Count
