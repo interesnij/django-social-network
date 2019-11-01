@@ -198,7 +198,7 @@ class ProfileButtonReload(TemplateView):
         except:
             self.connect2 = None
         try:
-            self.follow = Follow.objects.get(user=self.request.user,followed_user=self.user)
+            self.follow = self.user.count_followers()
         except:
             self.follow = None
         try:
