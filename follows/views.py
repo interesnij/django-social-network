@@ -28,16 +28,8 @@ class FollowCreate(View):
 
 	def get(self,request,*args,**kwargs):
 		self.followed_user = User.objects.get(pk=self.kwargs["pk"])
-		try:
-			self.follows = Follow.objects.get(followed_user=self.followed_user,user=request.user)
-		except:
-			self.follows = None
-
-		if not self.follows and self.followed_user != request.user:
-			new_follow = Follow.objects.create(followed_user=self.followed_user, user=request.user)
-			new_follow.notification_follow(request.user)
-		else:
-			return HttpResponse("Подписка уже есть :-)")
+		follow_user_with_id(self.followed_user.pk)
+		new_follow.notification_follow(request.user)
 		return HttpResponse("!")
 
 

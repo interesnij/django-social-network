@@ -28,13 +28,3 @@ def disconnect_from_user_with_id(self, user_id):
     connection.delete()
 
     return connection
-
-def search_followings_with_query(self, query):
-    followings_query = Q(followers__user_id=self.pk, is_deleted=False)
-
-    names_query = Q(username__icontains=query)
-    names_query.add(Q(profile__name__icontains=query), Q.OR)
-
-    followings_query.add(names_query, Q.AND)
-
-    return User.objects.filter(followings_query).distinct()

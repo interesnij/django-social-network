@@ -11,7 +11,9 @@ from django.contrib.contenttypes.fields import GenericRelation
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from communities.models import Community
+from follow.models import Follow
 from follows.chekers import *
+
 
 
 
@@ -56,7 +58,7 @@ class User(AbstractUser):
         return Community.objects.filter(memberships__user=self, memberships__is_moderator=True)
 
 
-        '''''проги для подписчиков'''''
+        '''''проги для подписчиков  59-110'''''
 
 
     def follow_user(self, user):
