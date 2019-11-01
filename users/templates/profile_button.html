@@ -2,6 +2,7 @@
 
 {% if user != request.user and request.user.is_authenticated %}
 <span style="display: flex;align-items: center;justify-content: center;margin-bottom: 10px;">
+
   {% if connect %}
   <div class="btn-group">
       <button type="button" class="btn btn-sm btn-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -12,16 +13,7 @@
       </div>
   </div>
   {% endif %}
-  {% if connect2 %}
-  <div class="btn-group">
-      <button type="button" class="btn btn-sm btn-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          У Вас в друзьях
-      </button>
-      <div class="dropdown-menu" x-placement="bottom-start">
-          <a class="dropdown-item connect_delete2" href="#">Убрать из друзей</a>
-      </div>
-  </div>
-  {% endif %}
+
   {% if follow %}
   <div class="btn-group">
       <button type="button" class="btn btn-sm btn-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -29,7 +21,7 @@
       </button>
       <div class="dropdown-menu" x-placement="bottom-start">
           <a class="dropdown-item follow_delete" href="#" >Отменить подписку</a>
-          <a class="dropdown-item" href="#">Заблокировать</a>
+          <a class="dropdown-item user_block" href="#">Заблокировать</a>
       </div>
   </div>
   {% endif %}
@@ -40,13 +32,15 @@
       </button>
       <div class="dropdown-menu" x-placement="bottom-start">
           <a class="dropdown-item connect_create" href="#">Добавить в друзья</a>
-          <a class="dropdown-item" href="#">Заблокировать</a>
+          <a class="dropdown-item user_block" href="#">Заблокировать</a>
       </div>
   </div>
   {% endif %}
-  {% if not connect and not connect2 %}{% if not follow and not follow2 %}
-  <a href="#" class="btn btn-sm btn-success success-gradient follow_create">Добавить в друзья</a>
-  {% endif %}{% endif %}
+
+  {% if not connect and not follow and not follow2 %}
+    <a href="#" class="btn btn-sm btn-success success-gradient follow_create">Добавить в друзья</a>
+  {% endif %}
+
   </span>
 
 <span style="display: flex;align-items: center;justify-content: center;">
@@ -54,69 +48,44 @@
 </span>
 {% endif %}
 
+
 <script>
   $('.follow_create').on('click', function() {
-
   $.ajax({
       url: '{% url "create_follow" user.pk %}',
       success: function (data) {
         $('#button_reload').html('').load("{% url 'profile_button_reload' user.pk %}");
-      },
-      error: function(data) {
-        console.log("Все не ок")
       }
   });
   });
 </script>
-<script defer>
+<script>
   $('.follow_delete').on('click', function() {
   $.ajax({
       url: '{% url "delete_follow" user.pk %}',
       success: function (data) {
         $('#button_reload').html('').load("{% url 'profile_button_reload' user.pk %}");
-      },
-      error: function(data) {
-        console.log("Все не ок")
       }
   });
   });
 </script>
-<script defer>
+<script>
   $('.connect_create').on('click', function() {
-
   $.ajax({
       url: '{% url "create_connect" user.pk %}',
       success: function (data) {
         $('#button_reload').html('').load("{% url 'profile_button_reload' user.pk %}");
-      },
-      error: function(data) {
-        console.log("Все не ок")
       }
   });
   });
 </script>
-<script defer>
-  $('.connect_delete2').on('click', function() {
-  $.ajax({
-      url: '{% url "delete_connect" user.pk %}',
-      success: function (data) {
-        $('#button_reload').html('').load("{% url 'profile_button_reload' user.pk %}");
-      },
-      error: function(data) {
-        console.log("Все не ок")
-      }
-  });
-  });
-</script>
-<script defer>
+
+<script>
   $('.connect_delete').on('click', function() {
   $.ajax({
       url: '{% url "delete_connect" user.pk %}',
       success: function (data) {
         $('#button_reload').html('').load("{% url 'profile_button_reload' user.pk %}");
-      },
-      error: function(data) {
-        console.log("Все не ок")
       }
   });
   });
