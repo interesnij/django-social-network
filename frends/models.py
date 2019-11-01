@@ -18,7 +18,6 @@ class Connect(models.Model):
         target_connection.target_connection = connection
         target_connection.save()
         connection.save()
-        target_connection.notification_connect(user_id)
         return connection
 
     class Meta:
