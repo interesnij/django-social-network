@@ -322,7 +322,7 @@ def check_is_staff_of_community_with_name(user, community_name):
 
 def check_can_follow_user_with_id(user, user_id):
     check_is_not_blocked_with_user_with_id(user=user, user_id=user_id)
-    check_is_not_following_user_with_id(user=user, user_id=user_id)
+    check_is_not_following_user_with_id(user_id=user_id, user=user)
     check_has_not_reached_max_follows(user=user)
 
 def check_not_can_follow_user_with_id(user, user_id):

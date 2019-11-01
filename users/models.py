@@ -65,7 +65,7 @@ class User(AbstractUser):
         return self.follow_user_with_id(user.pk)
 
     def follow_user_with_id(self, user_id):
-        check_can_follow_user_with_id(user=self, user_id=user_id)
+        check_can_follow_user_with_id(user_id=user_id, user=self)
         if self.pk == user_id:
             raise ValidationError('Вы не можете подписаться сами на себя',)
         follow = Follow.create_follow(user_id=self.pk, followed_user_id=user_id)
