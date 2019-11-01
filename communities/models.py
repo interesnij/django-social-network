@@ -605,4 +605,4 @@ class TopPostCommunityExclusion(models.Model):
             self.created = timezone.now()
         self.modified = timezone.now()
 
-        return super(TopPostCommunityExclusion, self).save(*args, **kwargs)a
+        return super(TopPostCommunityExclusion, self).save(*args, **kwargs)
