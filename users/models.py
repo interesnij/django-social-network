@@ -56,10 +56,6 @@ class User(AbstractUser):
     def get_moderated_communities(self):
         return Community.objects.filter(memberships__user=self, memberships__is_moderator=True)
 
-
-
-        '''''проверки is для пользователей 62-112'''''
-
         def is_connected_with_user(self, user):
             return self.is_connected_with_user_with_id(user.pk)
 
