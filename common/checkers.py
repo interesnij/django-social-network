@@ -710,7 +710,7 @@ def check_can_get_preview_link_data_for_post(user, item):
 
 
 
-'''' moderation ''''
+""" moderation """
 
 def check_can_report_comment_for_post(user, post_comment, item):
     check_has_not_reported_post_comment_with_id(user=user, post_comment_id=post_comment.pk)
