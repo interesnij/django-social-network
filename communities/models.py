@@ -6,7 +6,6 @@ from django.db.models import Q
 from django.db.models import Count
 from pilkit.processors import ResizeToFill, ResizeToFit
 from communities.helpers import upload_to_community_avatar_directory, upload_to_community_cover_directory
-from posts.models import Post
 from imagekit.models import ProcessedImageField
 from moderation.models import ModeratedObject, ModerationCategory
 

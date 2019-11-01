@@ -181,7 +181,7 @@ class ItemCommentReaction(models.Model):
 
 class ItemMute(models.Model):
     item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name='mutes')
-    muter = models.ForeignKey(User, on_delete=models.CASCADE, related_name='post_mutes')
+    muter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='post_mutes')
 
     class Meta:
         unique_together = ('item', 'muter',)
@@ -193,7 +193,7 @@ class ItemMute(models.Model):
 
 class ItemCommentMute(models.Model):
     item_comment = models.ForeignKey(ItemComment, on_delete=models.CASCADE, related_name='mutes')
-    muter = models.ForeignKey(User, on_delete=models.CASCADE, related_name='post_comment_mutes')
+    muter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='post_comment_mutes')
 
     class Meta:
         unique_together = ('item_comment', 'muter',)
@@ -204,11 +204,10 @@ class ItemCommentMute(models.Model):
 
 
 class TopPost(models.Model):
-    post = models.OneToOneField(Post, on_delete=models.CASCADE, related_name='top_post')
+    item = models.OneToOneField(Item, on_delete=models.CASCADE, related_name='top_post')
     created = models.DateTimeField(editable=False, db_index=True)
 
     def save(self, *args, **kwargs):
-        ''' On save, update timestamps '''
         if not self.id:
             self.created = timezone.now()
         self.modified = timezone.now()
