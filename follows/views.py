@@ -27,7 +27,7 @@ class FollowCreate(View):
 
 	def get(self,request,*args,**kwargs):
 		self.followed_user = User.objects.get(pk=self.kwargs["pk"])
-		follow_user(self.followed_user.pk)
+		request.user.follow_user(self.followed_user.pk)
 		new_follow.notification_follow(request.user)
 		return HttpResponse("!")
 
@@ -36,5 +36,5 @@ class FollowDelete(View):
 
 	def get(self,request,*args,**kwargs):
 		self.followed_user = User.objects.get(pk=self.kwargs["pk"])
-		unfollow_user(self.followed_user.pk)
+		request.user.unfollow_user(self.followed_user.pk)
 		return HttpResponse("!")
