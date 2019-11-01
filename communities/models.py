@@ -589,3 +589,20 @@ class CommunityInvite(models.Model):
         unique_together = (('invited_user', 'community', 'creator'),)
         verbose_name = 'Приглашение в сообщество'
         verbose_name_plural = 'Приглашения в сообщества'
+
+
+class TopPostCommunityExclusion(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='top_posts_community_exclusions')
+    #community = models.ForeignKey('communities.Community', on_delete=models.CASCADE, related_name='top_posts_community_exclusions')
+    created = models.DateTimeField(editable=False, db_index=True)
+
+    class Meta:
+        unique_together = ('user', 'community',)
+
+    def save(self, *args, **kwargs):
+        ''' On save, update timestamps '''
+        if not self.id:
+            self.created = timezone.now()
+        self.modified = timezone.now()
+
+        return super(TopPostCommunityExclusion, self).save(*args, **kwargs)a

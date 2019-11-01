@@ -129,17 +129,6 @@ class PostImage(models.Model):
                                  upload_to=upload_to_post_image_directory)
 
 
-class PostMute(models.Model):
-    post = models.ForeignKey(Post, db_index=False, on_delete=models.CASCADE, related_name='mutes', verbose_name="Запись")
-    muter = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE, related_name='post_mutes', verbose_name="Кто заглушил")
-
-
-    @classmethod
-    def create_post_mute(cls, post_id, muter_id):
-        return cls.objects.create(post_id=post_id, muter_id=muter_id)
-
-
-
 class PostUserMention(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE, related_name='post_mentions', verbose_name="Упоминаемый")
     post = models.ForeignKey(Post, db_index=False, on_delete=models.CASCADE, related_name='user_mentions', verbose_name="Запись")

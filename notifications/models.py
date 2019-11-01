@@ -13,14 +13,11 @@ from django.contrib.postgres.indexes import BrinIndex
 
 
 class NotificationQuerySet(models.query.QuerySet):
-    """Personalized queryset created to improve model usability"""
 
     def unread(self):
-        """Return only unread items in the current queryset"""
         return self.filter(unread=True)
 
     def read(self):
-        """Return only read items in the current queryset"""
         return self.filter(unread=False)
 
     def mark_all_as_read(self, recipient=None):
@@ -31,9 +28,6 @@ class NotificationQuerySet(models.query.QuerySet):
         return qs.update(unread=False)
 
     def mark_all_as_unread(self, recipient=None):
-        """Mark as unread any read elements in the current queryset with
-        optional filter by recipient first.
-        """
         qs = self.read()
         if recipient:
             qs = qs.filter(recipient=recipient)

@@ -23,7 +23,6 @@ class User(AbstractUser):
     )
 
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, verbose_name="uuid")
-    invite_count = models.SmallIntegerField(default=0, verbose_name="Кол-во приглашений")
     last_activity= models.DateTimeField(
         default=timezone.now, blank=True, verbose_name='Активность')
 
@@ -45,11 +44,20 @@ class User(AbstractUser):
     def __str__(self):
         return self.get_full_name()
 
+    def get_favorite_communities(self):
+        return self.favorite_communities.all()
+
     def get_administrated_communities(self):
         return Community.objects.filter(memberships__user=self, memberships__is_administrator=True)
 
     def get_moderated_communities(self):
         return Community.objects.filter(memberships__user=self, memberships__is_moderator=True)
+
+    def _make_followers_query(self):
+        return Q(follows__followed_user_id=self.pk, is_deleted=False)
+
+    def _make_followings_query(self):
+        return Q(followers__user_id=self.pk, is_deleted=False)
 
 
 class UserBlock(models.Model):

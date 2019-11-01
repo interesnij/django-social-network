@@ -64,18 +64,3 @@ class Article(Item):
 
     def __str__(self):
         return self.creator.get_full_name()
-
-
-class ArticleMute(models.Model):
-    article = models.ForeignKey(Article, db_index=False, on_delete=models.CASCADE, related_name='mutes',verbose_name="Статья")
-    muter = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE, related_name='article_mutes',verbose_name="Кто заглушил")
-
-    @classmethod
-    def create_article_comment_mute(cls, article_comment_id, muter_id):
-        return cls.objects.create(article_comment_id=article_comment_id, muter_id=muter_id)
-
-
-
-class ArticleUserMention(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE, related_name='article_mentions',verbose_name="Упоминаемый")
-    article = models.ForeignKey(Article, db_index=False, on_delete=models.CASCADE, related_name='user_mentions',verbose_name="Статья")
