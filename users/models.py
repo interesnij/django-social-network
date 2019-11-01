@@ -12,7 +12,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from communities.models import Community
 from follows.models import Follow
-from follows.chekers import *
+from check import *
 from django.db.models import Q, F, Count
 
 
@@ -181,7 +181,7 @@ class User(AbstractUser):
 
     def count_connections(self):
         return self.connections.count()
-        
+
     def count_posts(self):
         return self.posts.count()
 
