@@ -220,7 +220,7 @@ class ProfileStatReload(TemplateView):
         self.user=User.objects.get(pk=self.kwargs["pk"])
         self.follows_count=self.user.count_following()
         self.goods_count=self.user.count_goods()
-        self.connect_count=self.user.count_connections() 
+        self.connect_count=self.user.count_connections()
         self.communities_count=self.user.count_community()
         return super(ProfileStatReload,self).get(request,*args,**kwargs)
 
@@ -228,7 +228,7 @@ class ProfileStatReload(TemplateView):
         context = super(ProfileStatReload, self).get_context_data(**kwargs)
         context['user'] = self.user
         context['follows_count'] = self.follows_count
-        context['goods_count'] = self.goods_count
+        context['frends_count'] = self.connect_count
         context['frends_count'] = self.frends_count
         context['communities_count'] = self.communities_count
         return context
