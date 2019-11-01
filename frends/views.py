@@ -30,7 +30,7 @@ class ConnectCreate(View):
 	def get(self,request,*args,**kwargs):
 		self.target_user = User.objects.get(pk=self.kwargs["pk"])
 
-		new_frend = request.user.frend_user(self.target_user__id)
+		new_frend = request.user.frend_user(self.target_user.pk)
 		new_frend.notification_connect(request.user)
 		return HttpResponse("!")
 
