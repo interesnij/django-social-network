@@ -12,7 +12,7 @@
 </div>
 </div>
 
-{% for object in pop_frends %}
+{% for object in user.get_pop_connection %}
 
 {% if object.target_user == user %}
 <div class="card mb-2">
