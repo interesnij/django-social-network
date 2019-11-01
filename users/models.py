@@ -12,6 +12,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from communities.models import Community
 from follows.models import Follow
+from frends.models import Connect
 from common.checkers import *
 from django.db.models import Q, F, Count
 
@@ -69,13 +70,34 @@ class User(AbstractUser):
         follow = Follow.create_follow(user_id=self.pk, followed_user_id=user_id)
         return follow
 
+    def frend_user(self, user):
+        return self.frend_user_with_id(user.pk)
+
+    def frend_user_with_id(self, user_id):
+        check_can_connect_with_user_with_id(user=self, user_id=user_id)
+        if self.pk == user_id:
+            raise ValidationError('Вы не можете добавить сами на себя',)
+        frend = Connect.create_connection(user=self, target_user_id=user_id)
+        follow = Follow.objects.get(user=user_id, followed_user_id=self.pk)
+        follow.delete()
+        return frend
+
     def unfollow_user(self, user):
         return self.unfollow_user_with_id(user.pk)
 
     def unfollow_user_with_id(self, user_id):
-        check_is_following_user_with_id(user=self, user_id=user_id)
-        follow = self.follows.get(followed_user_id=user_id)
+        check_can_follow_user_with_id(user=self, user_id=user_id)
+        follow = Follow.create_follow(user_id=user_id)
         follow.delete()
+
+    def unfrend_user(self, user):
+        return self.unfrend_user_with_id(user.pk)
+
+    def unfrend_user_with_id(self, user_id):
+        check_is_following_user_with_id(user=self, user_id=user_id)
+        follow = follow_user(self, user_id)
+        connection = self.connections.get(target_connection__user_id=user_id)
+        connection.delete()
 
     def get_followers(self, max_id=None):
         followers_query = self._make_followers_query()

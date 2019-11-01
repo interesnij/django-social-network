@@ -19,5 +19,4 @@ class Follow(models.Model):
     @classmethod
     def create_follow(cls, user_id, followed_user_id):
         follow = Follow.objects.create(user_id=user_id, followed_user_id=followed_user_id)
-
         return follow

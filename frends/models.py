@@ -26,3 +26,16 @@ class Connect(models.Model):
         unique_together = ('user', 'target_user')
         verbose_name = 'Друг'
         verbose_name_plural = 'Друзья'
+
+    @classmethod
+    def connection_exists(cls, user_a_id, user_b_id):
+        count = Connect.objects.select_related('target_connection__user_id').filter(user_id=user_a_id,                                                                           target_connection__user_id=user_b_id).count()
+        return count > 0
+
+    @classmethod
+    def connection_with_id_exists_for_user_with_id(cls, connection_id, user_id):
+        count = Connect.objects.filter(id=connection_id,
+                                          user_id=user_id).count()
+        if count > 0:
+            return True
+        return False
