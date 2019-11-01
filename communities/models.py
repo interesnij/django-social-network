@@ -592,7 +592,7 @@ class CommunityInvite(models.Model):
 
 
 class TopPostCommunityExclusion(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='top_posts_community_exclusions')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='top_posts_community_exclusions')
     #community = models.ForeignKey('communities.Community', on_delete=models.CASCADE, related_name='top_posts_community_exclusions')
     created = models.DateTimeField(editable=False, db_index=True)
 
