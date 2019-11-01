@@ -56,68 +56,11 @@ class User(AbstractUser):
     def get_moderated_communities(self):
         return Community.objects.filter(memberships__user=self, memberships__is_moderator=True)
 
-        def is_connected_with_user(self, user):
-            return self.is_connected_with_user_with_id(user.pk)
 
-        def is_connected_with_user_with_id(self, user_id):
-            return self.connections.filter(
-                target_connection__user_id=user_id).exists()
-
-        def is_connected_with_user_with_username(self, username):
-            return self.connections.filter(
-                target_connection__user__username=username).exists()
-
-        def is_pending_confirm_connection_for_user_with_id(self, user_id):
-            if not self.is_connected_with_user_with_id(user_id):
-                return False
-            connection = self.connections.filter(
-                target_connection__user_id=user_id).get()
-            return not connection.circles.exists()
-
-        def is_global_moderator(self):
-            moderators_community_name = settings.MODERATORS_COMMUNITY_NAME
-            return self.is_member_of_community_with_name(community_name=moderators_community_name)
-
-        def is_invited_to_community_with_name(self, community_name):
-            return Community.is_user_with_username_invited_to_community_with_name(username=self.username,
-                                                                                  community_name=community_name)
-
-        def is_administrator_of_community_with_name(self, community_name):
-            return self.communities_memberships.filter(community__name=community_name, is_administrator=True).exists()
-
-        def is_staff_of_community_with_name(self, community_name):
-            return self.is_administrator_of_community_with_name(
-                community_name=community_name) or self.is_moderator_of_community_with_name(community_name=community_name)
-
-        def is_member_of_communities(self):
-            return self.communities_memberships.all().exists()
-
-        def is_member_of_community_with_name(self, community_name):
-            return self.communities_memberships.filter(community__name=community_name).exists()
-
-        def is_banned_from_community_with_name(self, community_name):
-            return self.banned_of_communities.filter(name=community_name).exists()
-
-        def is_creator_of_community_with_name(self, community_name):
-            return self.created_communities.filter(name=community_name).exists()
-
-        def is_moderator_of_community_with_name(self, community_name):
-            return self.communities_memberships.filter(community__name=community_name, is_moderator=True).exists()
-
-        def is_following_user_with_id(self, user_id):
-            return self.follows.filter(followed_user__id=user_id).exists()
-
-        def is_following_user_with_username(self, user_username):
-            return self.follows.filter(followed_user__username=user_username).exists()
-
-
-        '''''проги для подписчиков  119-167'''''
+        '''''проги для подписчиков  60-109'''''
 
     def follow_user(self, user):
         return self.follow_user_with_id(user.pk)
-
-    def is_blocked_with_user_with_id(self, user_id):
-        return UserBlock.users_are_blocked(user_a_id=self.pk, user_b_id=user_id)
 
     def follow_user_with_id(self, user_id):
         check_can_follow_user_with_id(user=self, user_id=user_id)
@@ -165,6 +108,66 @@ class User(AbstractUser):
 
     def _make_followings_query(self):
         return Q(followers__user_id=self.pk, is_deleted=False)
+
+
+    '''''проверки is для подписчиков  113-169'''''
+
+    def is_connected_with_user(self, user):
+        return self.is_connected_with_user_with_id(user.pk)
+
+    def is_blocked_with_user_with_id(self, user_id):
+        return UserBlock.users_are_blocked(user_a_id=self.pk, user_b_id=user_id)
+
+    def is_connected_with_user_with_id(self, user_id):
+        return self.connections.filter(
+            target_connection__user_id=user_id).exists()
+
+    def is_connected_with_user_with_username(self, username):
+        return self.connections.filter(
+            target_connection__user__username=username).exists()
+
+    def is_pending_confirm_connection_for_user_with_id(self, user_id):
+        if not self.is_connected_with_user_with_id(user_id):
+            return False
+        connection = self.connections.filter(
+            target_connection__user_id=user_id).get()
+        return not connection.circles.exists()
+
+    def is_global_moderator(self):
+        moderators_community_name = settings.MODERATORS_COMMUNITY_NAME
+        return self.is_member_of_community_with_name(community_name=moderators_community_name)
+
+    def is_invited_to_community_with_name(self, community_name):
+        return Community.is_user_with_username_invited_to_community_with_name(username=self.username,
+                                                                              community_name=community_name)
+
+    def is_administrator_of_community_with_name(self, community_name):
+        return self.communities_memberships.filter(community__name=community_name, is_administrator=True).exists()
+
+    def is_staff_of_community_with_name(self, community_name):
+        return self.is_administrator_of_community_with_name(
+            community_name=community_name) or self.is_moderator_of_community_with_name(community_name=community_name)
+
+    def is_member_of_communities(self):
+        return self.communities_memberships.all().exists()
+
+    def is_member_of_community_with_name(self, community_name):
+        return self.communities_memberships.filter(community__name=community_name).exists()
+
+    def is_banned_from_community_with_name(self, community_name):
+        return self.banned_of_communities.filter(name=community_name).exists()
+
+    def is_creator_of_community_with_name(self, community_name):
+        return self.created_communities.filter(name=community_name).exists()
+
+    def is_moderator_of_community_with_name(self, community_name):
+        return self.communities_memberships.filter(community__name=community_name, is_moderator=True).exists()
+
+    def is_following_user_with_id(self, user_id):
+        return self.follows.filter(followed_user__id=user_id).exists()
+
+    def is_following_user_with_username(self, user_username):
+        return self.follows.filter(followed_user__username=user_username).exists()
 
 
 
