@@ -181,8 +181,8 @@ class User(AbstractUser):
 
     def count_connections(self):
         return self.connections.count()
-
-     def count_posts(self):
+        
+    def count_posts(self):
         return self.posts.count()
 
 
