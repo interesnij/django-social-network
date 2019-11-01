@@ -3,7 +3,6 @@ from users.models import User
 from notifications.models import Notification, notification_handler
 
 
-
 class Follow(models.Model):
     user = models.ForeignKey(User, db_index=False, on_delete=models.CASCADE, related_name='follows', verbose_name="Подписчик")
     followed_user = models.ForeignKey(User, db_index=False, on_delete=models.CASCADE, related_name='followers', null=False, verbose_name="На кого подписывается")
@@ -15,3 +14,10 @@ class Follow(models.Model):
         unique_together = ('user', 'followed_user')
         verbose_name = 'Подписчик'
         verbose_name_plural = 'Подписчики'
+
+
+    @classmethod
+    def create_follow(cls, user_id, followed_user_id):
+        follow = Follow.objects.create(user_id=user_id, followed_user_id=followed_user_id)
+
+        return follow
