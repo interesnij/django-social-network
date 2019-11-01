@@ -1,6 +1,6 @@
 from django.views.generic.base import ContextMixin
 from django.conf import settings
-from main.models import EmojiGroup, Emoji
+from common.models import EmojiGroup, Emoji
 
 
 
