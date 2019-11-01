@@ -7,7 +7,6 @@ from notifications.models import Notification, notification_handler
 from django.utils import timezone
 from django.conf import settings
 from django.contrib.postgres.indexes import BrinIndex
-from main.models import Item
 import uuid
 from django.contrib.contenttypes.fields import GenericRelation
 
