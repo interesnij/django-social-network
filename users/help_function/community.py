@@ -504,33 +504,6 @@ def has_excluded_community_with_name(self, community_name):
     return self.top_posts_community_exclusions.filter(community__name=community_name).exists()
 
 
-def is_invited_to_community_with_name(self, community_name):
-    return Community.is_user_with_username_invited_to_community_with_name(username=self.username,
-                                                                          community_name=community_name)
-
-
 def has_invited_user_with_username_to_community_with_name(self, username, community_name):
     return self.created_communities_invites.filter(invited_user__username=username,
                                                    community__name=community_name).exists()
-
-def is_administrator_of_community_with_name(self, community_name):
-    return self.communities_memberships.filter(community__name=community_name, is_administrator=True).exists()
-
-def is_staff_of_community_with_name(self, community_name):
-    return self.is_administrator_of_community_with_name(
-        community_name=community_name) or self.is_moderator_of_community_with_name(community_name=community_name)
-
-def is_member_of_communities(self):
-    return self.communities_memberships.all().exists()
-
-def is_member_of_community_with_name(self, community_name):
-    return self.communities_memberships.filter(community__name=community_name).exists()
-
-def is_banned_from_community_with_name(self, community_name):
-    return self.banned_of_communities.filter(name=community_name).exists()
-
-def is_creator_of_community_with_name(self, community_name):
-    return self.created_communities.filter(name=community_name).exists()
-
-def is_moderator_of_community_with_name(self, community_name):
-    return self.communities_memberships.filter(community__name=community_name, is_moderator=True).exists()

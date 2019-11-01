@@ -234,11 +234,6 @@ def search_top_posts_excluded_communities_with_query(self, query):
     return TopPostCommunityExclusion.objects.filter(excluded_communities_search_query)
 
 
-def is_global_moderator(self):
-    moderators_community_name = settings.MODERATORS_COMMUNITY_NAME
-    return self.is_member_of_community_with_name(community_name=moderators_community_name)
-
-
 def has_post(self, item):
     return item.creator_id == self.pk
 
@@ -250,32 +245,6 @@ def has_muted_post_comment_with_id(self, post_comment_id):
 
 def has_blocked_user_with_id(self, user_id):
     return self.user_blocks.filter(blocked_user_id=user_id).exists()
-
-def is_blocked_with_user_with_id(self, user_id):
-    return UserBlock.users_are_blocked(user_a_id=self.pk, user_b_id=user_id)
-
-
-def is_connected_with_user(self, user):
-    return self.is_connected_with_user_with_id(user.pk)
-
-def is_connected_with_user_with_id(self, user_id):
-    return self.connections.filter(
-        target_connection__user_id=user_id).exists()
-
-def is_connected_with_user_with_username(self, username):
-    return self.connections.filter(
-        target_connection__user__username=username).exists()
-
-
-
-def is_pending_confirm_connection_for_user_with_id(self, user_id):
-    if not self.is_connected_with_user_with_id(user_id):
-        return False
-
-    connection = self.connections.filter(
-        target_connection__user_id=user_id).get()
-
-    return not connection.circles.exists()
 
 
 def update_notifications_settings(self, post_comment_notifications=None, post_reaction_notifications=None,

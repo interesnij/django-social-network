@@ -24,27 +24,17 @@ class FollowsListView(ListView):
 
 
 class FollowCreate(View):
-	success_url = "/"
 
 	def get(self,request,*args,**kwargs):
 		self.followed_user = User.objects.get(pk=self.kwargs["pk"])
-		follow_user_with_id(self.followed_user.pk)
+		follow_user(self.followed_user.pk)
 		new_follow.notification_follow(request.user)
 		return HttpResponse("!")
 
 
 class FollowDelete(View):
-	success_url = "/"
 
 	def get(self,request,*args,**kwargs):
 		self.followed_user = User.objects.get(pk=self.kwargs["pk"])
-		try:
-			self.follows = Follow.objects.get(followed_user=self.followed_user,user=request.user)
-		except:
-			self.follows = None
-		if self.follows:
-			follow = Follow.objects.get(followed_user=self.followed_user, user=request.user)
-			follow.delete()
-		else:
-			return HttpResponse("Подписка не найдена!")
+		unfollow_user(self.followed_user.pk)
 		return HttpResponse("!")
