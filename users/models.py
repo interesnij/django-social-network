@@ -13,8 +13,7 @@ from django.dispatch import receiver
 from communities.models import Community
 from follows.models import Follow
 from follows.chekers import *
-
-
+from django.db.models import Q, F, Count
 
 
 class User(AbstractUser):
