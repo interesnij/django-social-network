@@ -68,10 +68,9 @@
                                 <div class="tab-pane fade" id="tabhome223" role="tabpanel" aria-labelledby="tabhome223-tab">
                                     <p class="content-color-secondary mb-0">
                                         <ul class="list-group border-top border-bottom list-group-flush">
-                                            {% for object in all_frends %}
-                                              {% if object.user.get_online %}{% if object.target_user.get_online %}
+                                            {% for object in user.get_pop_connection %}
+                                              {% if object.get_online %} 
                                             <li class="list-group-item">
-                                                {% if object.user == user %}
                                                 <div class="media">
                                                     <figure>
                                                         {% if object.target_user.profile.avatar %}
@@ -88,28 +87,10 @@
                                                     </div>
                                                 </div>
                                                 {% endif %}
-                                                {% if object.target_user == user %}
-                                                <div class="media">
-                                                    <figure>
-                                                        {% if object.user.profile.avatar %}
-                                                        <img src="{{ object.user.profile.avatar.url }}" style="border-radius:50px;width:50px;" alt="image">
-                                                        {% else %}
-                                                        <img style="width:50px;width:50px;width:50px;border:#6C757D solid 1px;border-radius:50px;padding:5px;" src="{% static 'images/icons/person-24px.svg' %}" />
-                                                        {% endif %}
-                                                    </figure>
-                                                    <div class="media-body">
-                                                        <a href="{% url 'user' pk=object.user.pk %}" class="ajax">
-                                                            <h6 class="my-0 mt-1">{{ object.user.get_full_name }}</h6>
-                                                        </a>
-                                                        <a href="" class="small">Написать сообщение</a>
-                                                    </div>
-                                                </div>
-                                                {% endif %}
+
                                             </li>
                                             {% else %}
                                             У Вас нет друзей онлайн
-                                            {% endif %}
-
                                             {% endif %}
 
                                             {% endfor %}
