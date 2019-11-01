@@ -11,7 +11,7 @@ from django.contrib.contenttypes.fields import GenericRelation
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from communities.models import Community
-from follow.models import Follow
+from follows.models import Follow
 from follows.chekers import *
 
 
