@@ -27,7 +27,7 @@ class FollowCreate(View):
 
 	def get(self,request,*args,**kwargs):
 		self.followed_user = User.objects.get(pk=self.kwargs["pk"])
-		request.user.follow_user(self.followed_user.pk)
+		request.user.follow_user(self.followed_user)
 		new_follow.notification_follow(request.user)
 		return HttpResponse("!")
 
