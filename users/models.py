@@ -193,7 +193,7 @@ class User(AbstractUser):
         return self.follows.filter(followed_user__username=user_username).exists()
 
 
-    ''''' количества всякие  173-186 '''''
+    ''''' количества всякие  196-216 '''''
 
 
     def count_followers(self):
@@ -214,6 +214,12 @@ class User(AbstractUser):
 
     def count_posts(self):
         return self.posts.count()
+
+
+    ''''' GET всякие  219-186 '''''
+    def get_connection(self):
+        connection = self.connections.get(target_connection__user_id=user_id)
+        return connection
 
 
 
