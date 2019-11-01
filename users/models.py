@@ -61,9 +61,6 @@ class User(AbstractUser):
 
         '''''проверки is для пользователей 62-112'''''
 
-        def is_blocked_with_user_with_id(self, user_id):
-            return UserBlock.users_are_blocked(user_a_id=self.pk, user_b_id=user_id)
-
         def is_connected_with_user(self, user):
             return self.is_connected_with_user_with_id(user.pk)
 
@@ -117,6 +114,9 @@ class User(AbstractUser):
 
         def is_following_user_with_username(self, user_username):
             return self.follows.filter(followed_user__username=user_username).exists()
+
+        def is_blocked_with_user_with_id(self, user_id):
+            return UserBlock.users_are_blocked(user_a_id=self.pk, user_b_id=user_id)
 
 
         '''''проги для подписчиков  119-167'''''
