@@ -71,7 +71,7 @@ class User(AbstractUser):
         return follow
 
     def frend_user(self, user):
-        return self.frend_user_with_id(user.pk)
+        return self.frend_user_with_id(user.id)
 
     def frend_user_with_id(self, user_id):
         check_can_connect_with_user_with_id(user=self, user_id=user_id)
