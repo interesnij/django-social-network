@@ -878,7 +878,7 @@ def check_is_global_moderator(user):
         raise PermissionDenied('Не глобальный модератор.')
 
 
-'''' users ''''
+""" users """
 
 def check_can_get_user_with_id(user, user_id):
     check_is_not_blocked_with_user_with_id(user=user, user_id=user_id)
