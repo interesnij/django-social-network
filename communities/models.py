@@ -540,7 +540,7 @@ class CommunityMembership(models.Model):
 class CommunityLog(models.Model):
     source_user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='+', null=False, blank=False, verbose_name="Кто модерирует")
     target_user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, related_name='+', null=True, blank=False, verbose_name="Кого модерируют")
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='+', null=True, blank=True, verbose_name="Пост")
+    item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name='+', null=True, blank=True, verbose_name="Пост")
     community = models.ForeignKey(Community, on_delete=models.CASCADE, related_name='logs', null=False, blank=False, verbose_name="Сообщество")
     created = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создан")
 
@@ -561,9 +561,9 @@ class CommunityLog(models.Model):
     action_type = models.CharField(editable=False, blank=False, null=False, choices=ACTION_TYPES, max_length=5)
 
     @classmethod
-    def create_community_log(cls, community, action_type, source_user, target_user, post=None):
+    def create_community_log(cls, community, action_type, source_user, target_user, item=None):
         return cls.objects.create(community=community, action_type=action_type, source_user=source_user,
-                                  target_user=target_user, post=post)
+                                  target_user=target_user, item=item)
 
     def save(self, *args, **kwargs):
         if not self.id:
