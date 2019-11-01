@@ -218,7 +218,7 @@ class User(AbstractUser):
 
     ''''' GET всякие  219-186 '''''
     def get_connection(self):
-        connection = self.connections.get(target_connection__user_id=user_id)
+        connection = self.connections.get(target_connection__user_id=self.id)
         return connection
 
 
