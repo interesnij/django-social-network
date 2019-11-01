@@ -209,7 +209,7 @@ class User(AbstractUser):
         return self.communities.count()
 
     def count_goods(self):
-        goods = Good.objects.filter(creator__id=self.user.id,is_deleted=False).count()
+        goods = Good.objects.filter(creator__id=self.pk,is_deleted=False).count()
         return goods
 
     def count_posts(self):
