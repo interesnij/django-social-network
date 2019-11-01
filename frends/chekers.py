@@ -1,5 +1,5 @@
 from django.conf import settings
-from rest_framework.exceptions import ValidationError, PermissionDenied, NotFound, AuthenticationFailed
+from rest_framework.exceptions import ValidationError
 
 
 def check_has_not_reached_max_connections(user):

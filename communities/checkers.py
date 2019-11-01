@@ -1,4 +1,5 @@
-from rest_framework.exceptions import ValidationError, PermissionDenied, NotFound, AuthenticationFailed
+from rest_framework.exceptions import ValidationError, PermissionDenied
+from communities.models import Community
 
 
 

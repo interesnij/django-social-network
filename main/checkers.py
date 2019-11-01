@@ -1,4 +1,4 @@
-from rest_framework.exceptions import ValidationError, PermissionDenied, NotFound, AuthenticationFailed
+from rest_framework.exceptions import ValidationError, PermissionDenied
 from main.models import Item, ItemComment
 from common.models import EmojiGroup
 

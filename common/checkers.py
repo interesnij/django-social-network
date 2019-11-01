@@ -1,4 +1,4 @@
-from common.models import ProxyBlacklistDomain
+from common.models import ProxyBlacklistedDomain
 from rest_framework.exceptions import PermissionDenied
 
 
