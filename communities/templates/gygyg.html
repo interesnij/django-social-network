@@ -1,4 +1,8 @@
-{% load staticfiles %}
+{% extends "base.html" %}
+{% load staticfiles humanize %}
+
+{% block title %}Общество создается{% endblock %}
+
 
 <div class="col-md-8 col-lg-6 col-xl-5 mx-auto" style="display: flex;
                                                        flex-flow: column nowrap;
@@ -17,9 +21,8 @@
 
 
 <script>
-$(document).ready(function aaa(){
+function Stells() {
   $('#ajax').html('').load("/communities/reload/" + {{ new_url }} + "/");
-  setTimeout( aaa , 1000)
-
-});
+};
+setTimeout(Stells, 3000);
 </script>

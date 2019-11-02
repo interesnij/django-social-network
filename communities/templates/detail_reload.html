@@ -1,4 +1,7 @@
+{% extends "base.html" %}
 {% load staticfiles humanize %}
+
+{% block title %}{{ object.name }}{% endblock %}
 
 <div class="container-fluid">
     <div class="row align-items-center has-background-img min-height-300">
