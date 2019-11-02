@@ -76,7 +76,7 @@ class CommunityCreate(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.form=CommunityForm()
-		self.new_community = Community.objects.get(creator=request.user).last()
+		self.new_community = Community.objects.filter(creator__id=request.user.pk).last()
 		return super(CommunityCreate,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
