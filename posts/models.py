@@ -37,7 +37,7 @@ class Post(Item):
             async_to_sync(channel_layer.group_send)('notifications', payload)
         else:
             post.save()
-        
+        return post
 
     def is_text_only_post(self):
         return self.has_text() and not self.has_image()
