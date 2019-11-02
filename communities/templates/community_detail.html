@@ -39,6 +39,32 @@
 
     </div>
 </div>
+<div class="container-fluid bg-white aboutus">
+            <div class="row">
+                <div class="container main-container py-4">
+                    <div class="row align-items-center">
+                        <div class="col-12 col-xs-12 col-md-7">
+                            <p class="mt-4 text-uppercase small text-primary font-weight-bold">{{ object.category }}</p>
+
+                            <h3 class="font-weight-light mb-2 text-dark">{{ object.name }}</h3>
+                            {% if object.description %}
+                              <p class="text-dark">{{ object.description }}</p>
+                            {% else %}
+                              <p class="text-dark">Добавьте описание сообщества</p>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="col-12 col-xs-12 col-md-5">
+                          {% if object.avatar %}
+                            <img src="{{ object.avatar.url }}" alt="" class="rounded box-shadow-large aboutus-img">
+                          {% else %}
+                            <img src="{% static 'images/icons/group-24px.svg' %}" alt="" class="rounded box-shadow-large aboutus-img">
+                          {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 <div class="container mt-4 main-container">
     <div class="row">
