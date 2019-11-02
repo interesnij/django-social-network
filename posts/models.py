@@ -15,7 +15,7 @@ class Post(Item):
     text = models.TextField(max_length=settings.POST_MAX_LENGTH, blank=False, null=True, verbose_name="Текст")
 
     @classmethod
-    def create_post(cls, creator, community_name=None, image=None, video=None,
+    def create_post(cls, creator, text=None, community_name=None, image=None, video=None,
                     is_draft=False, good=None, doc=None, question=None):
 
         if not text:
