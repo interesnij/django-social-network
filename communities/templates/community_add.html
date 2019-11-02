@@ -72,7 +72,7 @@
                 } else {
                     $('.community_fullscreen').hide();
                     $('#community_loader').empty();
-                    $('#ajax').html('').reload("/communities/" + {{ request.user.pk }} + "/");
+                    $('#ajax').html('').load("/communities/reload/" + {{ new_community.pk }} + "/");
 
                     $.toast({
                         heading: '{{ request.user.first_name }}',
