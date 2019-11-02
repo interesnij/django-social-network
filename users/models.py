@@ -14,6 +14,7 @@ from communities.models import Community
 from follows.models import Follow
 from goods.models import Good
 from frends.models import Connect
+from posts.models import Post
 from common.checkers import *
 from django.db.models import Q, F, Count
 
@@ -232,8 +233,7 @@ class User(AbstractUser):
     ''''' записи и статьи '''''
 
     def create_post(self, text=None, image=None, video=None, created=None, is_draft=False):
-        post = Item.create_post(text=text, creator=self, image=image, video=video,
-                                created=created, is_draft=is_draft)
+        post = Post.create_post(text=text, creator=self, image=image, created=created, is_draft=is_draft)
 
         return post
 
