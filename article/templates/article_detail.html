@@ -4,7 +4,7 @@
     <span class="article_fullscreen_hide">
       <img style="width:35px" src="{% static 'images/icons/close-24px.svg' %}" />
     </span>
-    {% include 'generic/card_header.html' %}
+    {% include 'generic/posts/card_header.html' %}
 
     <div class="card-body">
         <h2 class="">{{ object.article.title }}</h2>
@@ -23,7 +23,7 @@
         </div>
     </div>
 
-    {% include 'generic/article/info.html' %}
+    {% include 'generic/posts/info.html' %}
 </div>
 
 <script>
