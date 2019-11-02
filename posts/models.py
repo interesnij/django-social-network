@@ -45,14 +45,7 @@ class Post(Item):
         if not text and not image:
             raise ValidationError('Нужно ввести текст или прикрепить фото')
         else:
-            post = Post.objects.create(creator=creator)
-
-        if text:
-            post.text = text
-        if community_name:
-            post.community = Community.objects.get(name=community_name)
-
-        if not is_draft:
+            post = Post.objects.create(creator=creator, text=text, image=image)
             post.STATUS_PUBLISHED
             channel_layer = get_channel_layer()
             payload = {
@@ -61,8 +54,6 @@ class Post(Item):
                     "actor_name": post.creator.get_full_name()
                 }
             async_to_sync(channel_layer.group_send)('notifications', payload)
-        else:
-            post.save()
         return post
 
     def is_text_only_post(self):
