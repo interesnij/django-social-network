@@ -25,37 +25,20 @@ class Article(Item):
 
 
     @classmethod
-    def create_article(cls, creator, community_name=None, image=None, content_hard=None,
-                    created=None, is_draft=False, content_lite=None, content_medium=None ):
+    def create_article(cls, creator, community=None, image=None, content=None,
+                    created=None, is_draft=False ):
 
-        article = Article.objects.create(creator=creator, created=created)
-        if community_name:
-            article.community = Community.objects.get(name=community_name)
-        if image:
-            article.image=image
-        if content:
-            article.content_medium=content_medium
+        article = Article.objects.create(creator=creator, text=text, image=image, community=community)
 
-        if not is_draft:
-            article.publish()
-            channel_layer = get_channel_layer()
-            payload = {
-                    "type": "receive",
-                    "key": "additional_post",
-                    "actor_name": self.creator.get_full_name()
-                }
-            async_to_sync(channel_layer.group_send)('notifications', payload)
-        else:
-            article.save()
+        channel_layer = get_channel_layer()
+        payload = {
+                "type": "receive",
+                "key": "additional_post",
+                "actor_name": article.creator.get_full_name()
+            }
+        async_to_sync(channel_layer.group_send)('notifications', payload)
         return article
 
-    def _publish(self):
-        self.status = Article.STATUS_PUBLISHED
-        self.created = timezone.now()
-        self.save()
-
-    def is_draft(self):
-        return self.status == Article.STATUS_DRAFT
 
     class Meta:
         ordering=["-created"]

@@ -63,6 +63,12 @@ class ArticleUserCreate(TemplateView):
             new_article=self.form.save(commit=False)
             new_article.creator=self.request.user
             new_article=self.form.save()
+            new_article.create_article(
+                creator=new_article.creator,
+                content=new_article.content,
+                community=None,
+                image=new_article.image
+            )
 
             if request.is_ajax() :
                  html = render_to_string('article.html',{'object': new_article,'request': request})
