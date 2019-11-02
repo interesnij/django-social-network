@@ -1,6 +1,6 @@
 {% load staticfiles %}
 <style>
-    .id_image input {
+    .id_g_image input {
         display: none;
     }
 
@@ -39,7 +39,7 @@
     </div>
     <br>
     <div class="form-group">
-        <div class="id_image">{{ form.image }}</div>
+        <div class="id_g_image">{{ form.g_image }}</div>
         <div id="image-holder">
             <h4 style="font-weight:bold;font-size:70px;color:#CECECE">обложка</h4>
             <p>Нажмите, чтобы добавить</p>
@@ -107,13 +107,13 @@
     });
 </script>
 <script>
-    var imageLoader = document.getElementById("id_image");
+    var imageLoader = document.getElementById("id_g_image");
     var entrou = false;
     $("#image-holder").on("click", function() {
-        $("#id_image").click();
+        $("#id_g_image").click();
     });
 
-    $("#id_image").on("change", function() {
+    $("#id_g_image").on("change", function() {
         if (!entrou) {
             var imgPath = $(this)[0].value;
             var extn = imgPath.substring(imgPath.lastIndexOf(".") + 1).toLowerCase();

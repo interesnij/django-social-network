@@ -10,10 +10,10 @@
         <h2 class="">{{ object.article.title }}</h2>
         <br><br>
         <figure class="">
-            {% if object.article.image %}
-            <img class="lazyload" src="{{ object.article.image.url }}" alt="">
+            {% if object.article.g_image %}
+            <img src="{{ object.article.g_image.url }}" alt="">
             {% else %}
-            <img class="lazyload" src="{% static 'images/no-image.jpg' %}" />
+            <img src="{% static 'images/no-image.jpg' %}" />
             {% endif %}
         </figure>
         <div class="container">
@@ -23,7 +23,7 @@
         </div>
     </div>
 
-    {% include 'generic/posts/info.html' %}
+    {% include 'generic/article/info.html' %}
 </div>
 
 <script>

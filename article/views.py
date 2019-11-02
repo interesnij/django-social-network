@@ -67,11 +67,11 @@ class ArticleUserCreate(TemplateView):
                 creator=new_article.creator,
                 content=new_article.content,
                 community=None,
-                image=new_article.image
+                g_image=new_article.g_image
             )
 
             if request.is_ajax() :
-                 html = render_to_string('article.html',{'object': new_article,'request': request})
+                 html = render_to_string('generic/posts/article.html',{'object': new_article,'request': request})
                  return HttpResponse(html)
         else:
            return JsonResponse({'error': True, 'errors': self.form.errors})
