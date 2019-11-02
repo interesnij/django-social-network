@@ -50,7 +50,6 @@ class PostUserCreate(View):
             if request.is_ajax() :
                 html = render_to_string('generic/posts/test.html',{
                     'object': new_post,
-                    'object.creator':request.user,
                     'request': request
                     })
                 return HttpResponse(html)
