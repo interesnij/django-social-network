@@ -2,7 +2,7 @@
 {% load staticfiles humanize %}
 
 {% block title %}{{ object.name }}{% endblock %}
-
+{% block content %}
 <div class="container-fluid">
     <div class="row align-items-center has-background-img min-height-300">
         <figure class="background-img pink-gradient">
@@ -144,3 +144,4 @@
         //  	$('#stat_load').html('').load("/communities/profile_stat/" + {{ community.pk }});
     });
 </script>
+{% ensblock %}

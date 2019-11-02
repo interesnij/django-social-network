@@ -1,7 +1,7 @@
 {% extends "base_reload.html" %}
 {% load staticfiles humanize %}
 {% block title %}Общество создается{% endblock %}
-
+{% block content %}
 
 <div class="col-md-8 col-lg-6 col-xl-5 mx-auto" style="display: flex;
                                                        flex-flow: column nowrap;
@@ -25,3 +25,4 @@ function Stells() {
 }
 setTimeout(Stells, 3000);
 </script>
+{% ensblock %}
