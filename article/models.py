@@ -28,7 +28,7 @@ class Article(Item):
     def create_article(cls, creator, community=None, g_image=None, content=None,
                     created=None, is_draft=False ):
 
-        article = Article.objects.create(creator=creator, text=text, g_image=g_image, community=community)
+        article = Article.objects.create(creator=creator, content=content, g_image=g_image, community=community)
 
         channel_layer = get_channel_layer()
         payload = {
