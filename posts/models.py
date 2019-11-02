@@ -39,7 +39,7 @@ class Post(Item):
                                  upload_to=upload_to_post_image_directory)
 
     @classmethod
-    def create_post(cls, creator, text=None, community_name=None, image=None, video=None,
+    def create_post(cls, creator, text=None, community=None, image=None, video=None,
                     is_draft=False, good=None, doc=None, question=None):
 
         if not text and not image:
