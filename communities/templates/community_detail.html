@@ -100,7 +100,7 @@
                     </ul>
                 </div>
             </div>
-            {% if not object.is_private or user in membersheeps %}
+            {% if not object.is_private or request.user in membersheeps %}
               {% include 'lnk/new_post.html' %}
 
               <div id="lenta_load"></div>
