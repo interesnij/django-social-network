@@ -45,7 +45,7 @@ class Post(Item):
         if not text and not image:
             raise ValidationError('Нужно ввести текст или прикрепить фото')
         else:
-            post = Post.objects.create(creator=creator, created=timezone.now())
+            post = Post.objects.create(creator=creator)
 
         if text:
             post.text = text
