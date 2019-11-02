@@ -38,11 +38,11 @@
 
                         <div class="col-12 col-xs-12 col-md-3">
                           {% if object.avatar %}
-                            <img src="{{ object.avatar.url }}" alt="" style="width:100%" class="rounded box-shadow-large aboutus-img">
+                            <img src="{{ object.avatar.url }}" alt="" style="width:100%" class="rounded box-shadow-large">
                           {% else %}
-                            <img src="{% static 'images/icons/group-24px.svg' %}" style="width:100%" alt="" class="rounded box-shadow-large aboutus-img">
+                            <img src="{% static 'images/icons/group-24px.svg' %}" style="width:100%" alt="" class="rounded box-shadow-large">
                           {% endif %}
-
+                          <br><br>
                           <span style="display: flex;align-items: center;justify-content: center;">
                             {% if request.user.is_member_of_communities %}
                             <div class="btn-group">
