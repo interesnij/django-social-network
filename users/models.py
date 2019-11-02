@@ -234,7 +234,6 @@ class User(AbstractUser):
 
     def create_post(self, text=None, image=None, video=None, created=None, is_draft=False):
         post = Post.create_post(text=text, creator=self, image=image, created=created, is_draft=is_draft)
-
         return post
 
 
