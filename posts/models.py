@@ -18,7 +18,7 @@ class Post(Item):
                     is_draft=False, good=None, doc=None, question=None):
 
         if not text and not image:
-            raise ValidationError(_('Нужно ввести текст или прикрепить фото'))
+            raise ValidationError('Нужно ввести текст или прикрепить фото')
         else:
             post = Post.objects.create(creator=creator)
 
