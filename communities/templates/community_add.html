@@ -72,13 +72,6 @@
                     $('.community_fullscreen').hide();
                     $('#community_loader').empty();
                     $('#ajax').html('').load("/communities/gygyg/");
-
-                    $.toast({
-                        heading: '{{ request.user.first_name }}',
-                        text: 'Сообщество успешно создано!',
-                        showHideTransition: 'fade',
-                        icon: 'success',
-                    })
                 }
             },
 

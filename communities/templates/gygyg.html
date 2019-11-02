@@ -1,14 +1,19 @@
 {% load staticfiles %}
 
-<div class="col-md-8 col-lg-6 col-xl-5 mx-auto">
+<div class="col-md-8 col-lg-6 col-xl-5 mx-auto" style="display: flex;
+                                                       flex-flow: column nowrap;
+                                                       align-items: center;
+                                                       align-content: center;
+                                                       justify-content: center;
+                                                       margin-top: 70px;">
 
-  <img style="width:70px;margin-bottom:5px" src="{% static 'images/icons/group-24px.svg' %}" />
+  <img style="width:120px;margin-bottom:5px" src="{% static 'images/icons/group-24px.svg' %}" />
 
-  <br><br>
-  Группа успешно создана<br>
+  <br><br><br>
+  <h4>Группа успешно создана</h4>
+  <br>
+  {{ new_url }}
 </div>
-
-{{ new_url }}
 
 
 <script>
