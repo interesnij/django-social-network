@@ -23,18 +23,6 @@ class Post(Item):
         else:
             post = Post.objects.create(creator=creator, text=text)
 
-        if text:
-            post.text = text
-        if image:
-            post.image = image
-        if video:
-            post.video = video
-        if doc:
-            post.doc = doc
-        if good:
-            post.good = good
-        if question:
-            post.question = question
         if community_name:
             post.community = Community.objects.get(name=community_name)
 
@@ -49,7 +37,7 @@ class Post(Item):
             async_to_sync(channel_layer.group_send)('notifications', payload)
         else:
             post.save()
-        return post
+        
 
     def is_text_only_post(self):
         return self.has_text() and not self.has_image()
