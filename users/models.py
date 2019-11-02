@@ -230,13 +230,6 @@ class User(AbstractUser):
         online_connection = self.get_all_connection().get_online()
         return online_connection
 
-    ''''' записи и статьи '''''
-
-    def create_post(self, text=None, image=None, video=None, created=None, is_draft=False):
-        post = Post.create_post(text=text, creator=self, image=image, created=created, is_draft=is_draft)
-        return post
-
-
 
 
 class UserBlock(models.Model):
