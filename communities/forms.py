@@ -9,4 +9,5 @@ class CommunityForm(forms.ModelForm):
 		fields = [	'name',
 					'type',
 					'category',
+					'id',
 				]

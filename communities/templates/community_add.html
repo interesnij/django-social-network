@@ -49,11 +49,12 @@
 
                         </div>
                         <div class="card-footer">
-                            <button class="btn btn-secondary remove_form">Cancel</button>
+                            <button class="btn btn-secondary remove_form">Отмена</button>
                             <button class="btn btn-success float-right">Создать</button>
                         </div>
                     </div>
                   </form>
+                  <span>{{ form.id }}</span>
                 </div>
 
 <script>
@@ -107,5 +108,6 @@
     $('.community_fullscreen_hide').on('click', function() {
         $('.community_fullscreen').hide();
         $('#community_loader').empty();
+        $('#ajax').html('').load("/communities/cat/" + val + "/");
     });
 </script>

@@ -31,11 +31,28 @@ class CommunityDetailView(DetailView):
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.items = Item.objects.filter(community=self.community, is_deleted=False)
-		self.membersheeps=CommunityMembership.objects.filter(community__id=self.community.pk)
+		self.membersheeps=self.community.members_count()
 		return super(CommunityDetailView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		context=super(CommunityDetailView,self).get_context_data(**kwargs)
+		context["membersheeps"]=self.membersheeps
+		context["items"]=self.items
+		return context
+
+
+class CommunityDetailReload(DetailView):
+	template_name="detail_reload.html"
+	model=Community
+
+	def get(self,request,*args,**kwargs):
+		self.community = Community.objects.get(pk=self.kwargs["pk"])
+		self.items = Item.objects.filter(community=self.community, is_deleted=False)
+		self.membersheeps=self.community.members_count()
+		return super(CommunityDetailReload,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context=super(CommunityDetailReload,self).get_context_data(**kwargs)
 		context["membersheeps"]=self.membersheeps
 		context["items"]=self.items
 		return context
@@ -74,8 +91,8 @@ class CommunityCreate(TemplateView):
 										name=new_community.name,
 										category=new_community.category,
 										type=new_community.type,
-										creator=request.user)
-
+										creator=request.user
+										)
 			if request.is_ajax() :
 				return HttpResponse("!")
 		else:

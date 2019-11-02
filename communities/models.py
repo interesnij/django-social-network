@@ -76,9 +76,7 @@ class Community(models.Model):
     @classmethod
     def create_community(cls, name, category, creator, type, avatar=None, description=None,
                             rules=None, invites_enabled=None):
-        """"
-        Создаем сообщество и список пользователей, создателя делаем администратором
-        """
+
         if type is Community.COMMUNITY_TYPE_PRIVATE and invites_enabled is None:
             invites_enabled = False
         else:
@@ -199,12 +197,6 @@ class Community(models.Model):
             trending_communities_query.add(Q(categories__name=category_name), Q.AND)
         return trending_communities_query
 
-    @classmethod
-    def is_name_taken(cls, name):
-        """"
-        Есть ли название сообщества?
-        """
-        return cls.objects.filter(name__iexact=name).exists()
 
     EXCLUDE_COMMUNITY_ADMINISTRATORS_KEYWORD = 'administrators'
     EXCLUDE_COMMUNITY_MODERATORS_KEYWORD = 'moderators'
@@ -347,7 +339,6 @@ class Community(models.Model):
         """"
         Получаем весь персонал группы
         """
-        User = get_user_model()
         staff_members_query = Q(communities_memberships__community_id=self.pk)
         staff_members_query.add(
             Q(communities_memberships__is_administrator=True) | Q(communities_memberships__is_moderator=True), Q.AND)

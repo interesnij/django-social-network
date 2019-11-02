@@ -6,12 +6,14 @@ from communities.views import (
                                 CommunitiesCatsView,
                                 CommunityItemView,
                                 CommunityListView,
+                                CommunityDetailReload,
                             )
 from django.conf.urls import url
 
 urlpatterns = [
     url(r'^user/(?P<pk>\d+)/$', CommunitiesView.as_view(), name='communities'),
     url(r'^(?P<pk>\d+)/$', CommunityDetailView.as_view(), name='community_detail'),
+    url(r'^reload/(?P<pk>\d+)/$', CommunityDetailReload.as_view(), name='community_detail_reload'),
     url(r'^all-communities/$', AllCommunities.as_view(), name='all_communities'),
     url(r'^add/$', CommunityCreate.as_view(), name="add_community"),
     url(r'^cat/(?P<order>\d+)/$',CommunitiesCatsView.as_view(), name="communities_cats"),
