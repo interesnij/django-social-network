@@ -328,13 +328,6 @@ class Community(models.Model):
         community_banned_users_query.add(Q(profile__name__icontains=query), Q.OR)
         return community.banned_users.filter(community_banned_users_query)
 
-    @property
-    def members_count(self):
-        """"
-        кол-во участников группы
-        """
-        return self.memberships.all().count()
-
     def get_staff_members(self):
         """"
         Получаем весь персонал группы

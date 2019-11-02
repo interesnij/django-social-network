@@ -132,7 +132,7 @@ def _make_get_comments_for_post_query(self, item, post_comment_parent_id=None, m
 
     if post_community:
         if not self.is_staff_of_community_with_name(community_name=post_community.name):
-            # Не извлекайте сообщения заблокированных пользователей, за исключением сотрудников
+            # Не извлекайте записи заблокированных пользователей, за исключением сотрудников
             blocked_users_query = ~Q(Q(commenter__blocked_by_users__blocker_id=self.pk) | Q(
                 commenter__user_blocks__blocked_user_id=self.pk))
             blocked_users_query_staff_members = Q(
@@ -369,25 +369,6 @@ def close_post(self, post):
     return item
 
 
-def create_public_post(self, text=None, image=None, video=None, created=None, is_draft=False):
-    return self.create_post(text=text, image=image, video=video, circles_ids=[world_circle_id],
-                                      created=created, is_draft=is_draft)
-
-def create_post(self, text=None, image=None, video=None, created=None, is_draft=False):
-    check_can_post_to_circles_with_ids(user=self, circles_ids=circles_ids)
-    item = Item.create_post(text=text, creator=self, circles_ids=circles_ids, image=image, video=video,
-                            created=created, is_draft=is_draft)
-
-    return item
-
-def update_post_with_uuid(self, item_uuid, text=None):
-    item = Item.objects.get(uuid=item_uuid)
-    return self.update_post(item=item, text=text)
-
-def update_post(self, item, text=None):
-    check_can_update_post(user=self, item=item)
-    item.update(text=text)
-    return item
 
 def get_media_for_post_with_uuid(self, item_uuid):
     item = Item.objects.get(uuid=item_uuid)
@@ -410,11 +391,6 @@ def publish_post_with_uuid(self, item_uuid):
     item = Item.objects.get(uuid=item_uuid)
     return self.publish_post(item=item)
 
-def publish_post(self, item):
-    check_can_publish_post(user=self, item=item)
-    item.publish()
-    return item
-
 def delete_post_with_uuid(self, item_uuid):
     item = Item.objects.get(uuid=post_uuid)
     return self.delete_post(item=item)
@@ -424,32 +400,8 @@ def delete_post(self, item):
     # Этот метод переопределен
     item.delete()
 
-def get_user_with_username(self, username):
-    user_query = Q(username=username, is_deleted=False)
-    user = User.objects.get(user_query)
-    check_can_get_user_with_id(user=self, user_id=user.pk)
-    return user
-
-
 def get_trending_posts(self):
     return Item.get_trending_posts_for_user_with_id(user_id=self.pk)
-
-
-def enable_comments_for_post_with_id(self, item_id):
-    item = Item.objects.select_related('community').get(pk=post_id)
-    check_can_enable_disable_comments_for_post_in_community_with_name(user=self, community_name=item.community.name)
-    item.community.create_enable_post_comments_log(source_user=self, target_user=post.creator, item=item)
-    item.comments_enabled = True
-    item.save()
-    return post
-
-def disable_comments_for_post_with_id(self, item_id):
-    item = Item.objects.select_related('community').get(pk=post_id)
-    check_can_enable_disable_comments_for_post_in_community_with_name(user=self, community_name=item.community.name)
-    item.community.create_disable_post_comments_log(source_user=self, target_user=post.creator, item=item)
-    item.comments_enabled = False
-    item.save()
-    return item
 
 
 def react_to_post_with_id(self, item_id, emoji_id):
