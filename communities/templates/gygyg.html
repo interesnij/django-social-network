@@ -17,10 +17,9 @@
 
 
 <script>
-$(document).ready(function(){
+$(document).ready(function reload{
+  $('#ajax').html('').load("/communities/reload/" + {{ new_url }} + "/");
+  setTimeout( reload , 1000)
 
-  setTimout(function() {
-     $('#ajax').html('').load("/communities/reload/" + {{ new_url }} + "/");
-  }, 3000);
 });
 </script>
