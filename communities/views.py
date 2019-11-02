@@ -30,7 +30,6 @@ class CommunityDetailView(DetailView):
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		self.new_community = Community.objects.filter(creator=request.user).last()
 		self.items = Item.objects.filter(community=self.community, is_deleted=False)
 		self.membersheeps=CommunityMembership.objects.filter(community__id=self.community.pk)[0:5]
 		return super(CommunityDetailView,self).get(request,*args,**kwargs)
@@ -77,12 +76,14 @@ class CommunityCreate(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.form=CommunityForm()
+		self.new_community = Community.objects.filter(creator=request.user).last()
 		return super(CommunityCreate,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		context=super(CommunityCreate,self).get_context_data(**kwargs)
 		context["form"]=self.form
 		context["categories"]=self.categories
+		context["new_community"]=self.new_community
 		return context
 
 	def post(self,request,*args,**kwargs):
