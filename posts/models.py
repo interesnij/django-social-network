@@ -44,7 +44,7 @@ class Post(Item):
             payload = {
                     "type": "receive",
                     "key": "additional_post",
-                    "actor_name": self.creator.get_full_name()
+                    "actor_name": post.creator.get_full_name()
                 }
             async_to_sync(channel_layer.group_send)('notifications', payload)
         else:
