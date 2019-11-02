@@ -76,13 +76,14 @@ class CommunityCreate(TemplateView):
 	def get(self,request,*args,**kwargs):
 		self.form=CommunityForm()
 		self.new_community = Community.objects.filter(creator=request.user).last()
+		self.new_url = self.new_community.pk + 1
 		return super(CommunityCreate,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		context=super(CommunityCreate,self).get_context_data(**kwargs)
 		context["form"]=self.form
 		context["categories"]=self.categories
-		context["new_community"]=self.new_community
+		context["new_url"]=self.new_url
 		return context
 
 	def post(self,request,*args,**kwargs):
@@ -98,7 +99,7 @@ class CommunityCreate(TemplateView):
 			if request.is_ajax() :
 				return HttpResponse("!")
 		else:
-			return JsonResponse({'error': True, 'errors': self.form.errors})
+			return JsonResponse({'errors': self.form.errors})
 		return super(CommunityCreate,self).get(request,*args,**kwargs)
 
 

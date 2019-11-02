@@ -53,7 +53,6 @@
                             <button class="btn btn-success float-right">Создать</button>
                         </div>
                     </div>
-                    <span id="pk_uuid">{{ form.id }}</span>
                   </form>
 
                 </div>
@@ -72,7 +71,7 @@
                 } else {
                     $('.community_fullscreen').hide();
                     $('#community_loader').empty();
-                    $('#ajax').html('').load("/communities/reload/" + {{ new_community }} + "/");
+                    $('#ajax').html('').load("/communities/reload/" + {{ new_url }} + "/");
 
                     $.toast({
                         heading: '{{ request.user.first_name }}',
