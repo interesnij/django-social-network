@@ -45,7 +45,7 @@ class Post(Item):
         if not text and not image:
             raise ValidationError('Нужно ввести текст или прикрепить фото')
         else:
-            post = Post.objects.create(creator=creator, text=text, image=image)
+            post = Post.objects.create(creator=creator, text=text, image=image, community=community)
             post.STATUS_PUBLISHED
             channel_layer = get_channel_layer()
             payload = {
