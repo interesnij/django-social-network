@@ -32,7 +32,9 @@ class PostUserCreate(View):
     form_post=None
     success_url="/"
 
-    
+    def get(self,request,*args,**kwargs):
+        self.form_post=PostForm(initial={"creator":request.user})
+        return super(PostUserCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context=super(PostUserCreate,self).get_context_data(**kwargs)
