@@ -14,22 +14,6 @@
         </figure>
         <div class="container">
             <div class="row align-items-center ">
-                <div class="col-12 col-sm-auto text-center">
-                    <a>
-                        <figure>
-                            {% if object.avatar %}
-                            <img style="width:50px;border-radius:50px;" src="{{ object.avatar.url }}" alt="" class="">
-                            {% else %}
-                            <img style="width:50px;border-radius:50px;" src="{% static 'images/icons/group-24px.svg' %}" />
-                            {% endif %}
-                        </figure>
-                    </a>
-                </div>
-                <div class="col-12 col-sm text-center text-sm-left text-white">
-                    <h3 class="mb-0">{{ object.name }}</h3>
-                    <p class="">текст</p>
-                    <p class="small"> +0 0000 0000 0000 <span class="mx-2">|</span> info@maxartkiller.in</p>
-                </div>
                 <div class="text-center text-sm-right col-12 col-sm-auto mb-3">
                     <a class="btn btn-success success-gradient">Подписаться</a>
                     <a class="btn btn-primary primary-gradient ml-2">Подать заявку</a>
@@ -46,19 +30,19 @@
                         <div class="col-12 col-xs-12 col-md-7">
                             <p class="mt-4 text-uppercase small text-primary font-weight-bold">{{ object.category }}</p>
 
-                            <h3 class="font-weight-light mb-2 text-dark">{{ object.name }}</h3>
+                            <h3 class="mb-2 text-dark">{{ object.name }}</h3>
                             {% if object.description %}
                               <p class="text-dark">{{ object.description }}</p>
                             {% else %}
                               <p class="text-dark">Добавьте описание сообщества</p>
                             {% endif %}
                         </div>
-                        
+
                         <div class="col-12 col-xs-12 col-md-5">
                           {% if object.avatar %}
-                            <img src="{{ object.avatar.url }}" alt="" class="rounded box-shadow-large aboutus-img">
+                            <img src="{{ object.avatar.url }}" alt="" class="mw-100 rounded box-shadow-large">
                           {% else %}
-                            <img src="{% static 'images/icons/group-24px.svg' %}" alt="" class="rounded box-shadow-large aboutus-img">
+                            <img src="{% static 'images/icons/group-24px.svg' %}" alt="" class="mw-100 rounded box-shadow-large">
                           {% endif %}
                         </div>
                     </div>
