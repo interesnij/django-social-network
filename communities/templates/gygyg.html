@@ -19,5 +19,8 @@
 <script>
 $(document).ready(function(){
 
+  setTimout(function() {
+     $('#ajax').html('').load("/communities/reload/" + {{ new_url }} + "/");
+  }, 3000);
 });
 </script>
