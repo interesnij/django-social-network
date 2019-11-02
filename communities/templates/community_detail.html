@@ -31,11 +31,18 @@
                             <p class="mt-4 text-uppercase small text-primary font-weight-bold">{{ object.category }}</p>
 
                             <h3 class="mb-2 text-dark">{{ object.name }}</h3>
-                            {% if object.description %}
-                              <p class="text-dark">{{ object.description }}</p>
+                            {% if object.status %}
+                              <p class="text-dark">{{ object.status }}</p>
                             {% else %}
-                              <p class="text-dark">Добавьте описание сообщества</p>
+                              <p class="text-dark">Добавьте статус сообщества</p>
                             {% endif %}
+
+                            <div class="row align-items-center ">
+                                <div class="text-center text-sm-right col-12 col-sm-auto mb-3">
+                                    <a class="btn btn-success success-gradient">Подписаться</a>
+                                    <a class="btn btn-primary primary-gradient ml-2">Подать заявку</a>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="col-12 col-xs-12 col-md-3">
@@ -54,23 +61,6 @@
     <div class="row">
         <div class="col-12 col-md-12 col-lg-8">
             <div class="card mb-4">
-                <div class="card-header border-bottom">
-                    <div class="media">
-                        <div class="icon-circle icon-40 bg-light-primary mr-3">
-                            <img style="width:22px;" src="{% static 'images/icons/chat-24px.svg' %}" />
-                        </div>
-                        <div class="media-body">
-                            <h6 class="my-0 content-color-primary">Статус</h6>
-                            <p>
-                                {% if object.status %}
-                                {{ object.status }}
-                                {% else %}
-                                Добавьте статус сообщества
-                                {% endif %}
-                            </p>
-                        </div>
-                    </div>
-                </div>
                 <div class="card-body">
                     <ul class="list-group list-group-flush w-100">
                         <li class="list-group-item px-0">
