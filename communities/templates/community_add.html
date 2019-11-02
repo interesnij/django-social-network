@@ -71,6 +71,7 @@
                 } else {
                     $('.community_fullscreen').hide();
                     $('#community_loader').empty();
+                    $('#ajax').html('').load("/communities/reload/" + data.id + "/");
 
                     $.toast({
                         heading: '{{ request.user.first_name }}',
@@ -108,7 +109,5 @@
     $('.community_fullscreen_hide').on('click', function() {
         $('.community_fullscreen').hide();
         $('#community_loader').empty();
-        id = $('#pk_uuid').text();
-        $('#ajax').html('').load("/communities/reload/" + id + "/");
     });
 </script>
