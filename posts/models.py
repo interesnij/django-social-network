@@ -116,39 +116,9 @@ class Post(Item):
         return self.creator.get_full_name()
 
 
-class PostImage(models.Model):
-    post = models.OneToOneField(Post, on_delete=models.CASCADE, related_name='post_image', null=True)
-    image = ProcessedImageField(verbose_name='Главное изображение', blank=False, null=True, format='JPEG',
-                                 options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)],
-                                 upload_to=upload_to_post_image_directory)
-    image2 = ProcessedImageField(verbose_name='Изображение 2', blank=False, null=True, format='JPEG',
-                                 options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)],
-                                 upload_to=upload_to_post_image_directory)
-    image3 = ProcessedImageField(verbose_name='Изображение 3', blank=False, null=True, format='JPEG',
-                                 options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)],
-                                 upload_to=upload_to_post_image_directory)
-    image4 = ProcessedImageField(verbose_name='Изображение 4', blank=False, null=True, format='JPEG',
-                                 options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)],
-                                 upload_to=upload_to_post_image_directory)
-    image5 = ProcessedImageField(verbose_name='Изображение 5', blank=False, null=True, format='JPEG',
-                                 options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)],
-                                 upload_to=upload_to_post_image_directory)
-    image6 = ProcessedImageField(verbose_name='Изображение 6', blank=False, null=True, format='JPEG',
-                                 options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)],
-                                 upload_to=upload_to_post_image_directory)
-    image7 = ProcessedImageField(verbose_name='Изображение 7', blank=False, null=True, format='JPEG',
-                                 options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)],
-                                 upload_to=upload_to_post_image_directory)
-    image8 = ProcessedImageField(verbose_name='Изображение 8', blank=False, null=True, format='JPEG',
-                                 options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)],
-                                 upload_to=upload_to_post_image_directory)
-
-
 class PostUserMention(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE, related_name='post_mentions', verbose_name="Упоминаемый")
     post = models.ForeignKey(Post, db_index=False, on_delete=models.CASCADE, related_name='user_mentions', verbose_name="Запись")
-
-
 
 
 class PostDoc(models.Model):
