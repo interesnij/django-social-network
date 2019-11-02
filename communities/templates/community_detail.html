@@ -100,11 +100,14 @@
                     </ul>
                 </div>
             </div>
+            {% if not object.is_private or user in membersheeps %}
+              {% include 'lnk/new_post.html' %}
 
-            {% include 'lnk/new_post.html' %}
+              <div id="lenta_load"></div>
 
-            <div id="lenta_load"></div>
-
+            {% else %}
+              Только подписчики сообщества могут просмвтривать записи
+            {% endif %}
         </div>
         <div class="col-12 col-md-12 col-lg-4">
 

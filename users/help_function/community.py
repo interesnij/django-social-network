@@ -400,17 +400,6 @@ def uninvite_user_with_username_to_community_with_name(self, username, community
     return uninvited_user
 
 
-def create_community(self, name, type, categories_names, description=None, rules=None,
-                         avatar=None, cover=None, invites_enabled=None):
-    check_can_create_community_with_name(user=self, name=name)
-
-    community = Community.create_community(name=name, creator=self, description=description,
-                                           rules=rules, cover=cover, type=type, avatar=avatar,
-                                           categories_names=categories_names,
-                                           invites_enabled=invites_enabled)
-
-    return community
-
 def delete_community(self, community):
     return self.delete_community_with_name(community.name)
 
