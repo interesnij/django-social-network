@@ -8,6 +8,7 @@ from channels.layers import get_channel_layer
 from posts.helpers import upload_to_post_image_directory, upload_to_post_directory
 from django.contrib.postgres.indexes import BrinIndex
 from main.models import Item
+from rest_framework.exceptions import ValidationError
 
 
 class Post(Item):
