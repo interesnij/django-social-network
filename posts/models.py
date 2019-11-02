@@ -13,16 +13,42 @@ from rest_framework.exceptions import ValidationError
 
 class Post(Item):
     text = models.TextField(max_length=settings.POST_MAX_LENGTH, blank=False, null=True, verbose_name="Текст")
+    image = ProcessedImageField(verbose_name='Главное изображение', blank=False, null=True, format='JPEG',
+                                 options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)],
+                                 upload_to=upload_to_post_image_directory)
+    image2 = ProcessedImageField(verbose_name='Изображение 2', blank=False, null=True, format='JPEG',
+                                 options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)],
+                                 upload_to=upload_to_post_image_directory)
+    image3 = ProcessedImageField(verbose_name='Изображение 3', blank=False, null=True, format='JPEG',
+                                 options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)],
+                                 upload_to=upload_to_post_image_directory)
+    image4 = ProcessedImageField(verbose_name='Изображение 4', blank=False, null=True, format='JPEG',
+                                 options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)],
+                                 upload_to=upload_to_post_image_directory)
+    image5 = ProcessedImageField(verbose_name='Изображение 5', blank=False, null=True, format='JPEG',
+                                 options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)],
+                                 upload_to=upload_to_post_image_directory)
+    image6 = ProcessedImageField(verbose_name='Изображение 6', blank=False, null=True, format='JPEG',
+                                 options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)],
+                                 upload_to=upload_to_post_image_directory)
+    image7 = ProcessedImageField(verbose_name='Изображение 7', blank=False, null=True, format='JPEG',
+                                 options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)],
+                                 upload_to=upload_to_post_image_directory)
+    image8 = ProcessedImageField(verbose_name='Изображение 8', blank=False, null=True, format='JPEG',
+                                 options={'quality': 80}, processors=[ResizeToFill(1024, upscale=False)],
+                                 upload_to=upload_to_post_image_directory)
 
     @classmethod
     def create_post(cls, creator, text=None, community_name=None, image=None, video=None,
                     is_draft=False, good=None, doc=None, question=None):
 
-        if not text:
+        if not text and not image:
             raise ValidationError('Нужно ввести текст или прикрепить фото')
         else:
-            post = Post.objects.create(creator=creator, text=text)
+            post = Post.objects.create(creator=creator, created=created)
 
+        if text:
+            post.text = text
         if community_name:
             post.community = Community.objects.get(name=community_name)
 
