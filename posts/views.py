@@ -45,7 +45,8 @@ class PostUserCreate(View):
         self.form_post=PostForm(request.POST, request.FILES)
         if self.form_post.is_valid():
             new_post=self.form_post.save(commit=False)
-            new_post.create_post(creator=request.user, text=new_post.text)
+            new_post.creator=self.request.user
+            new_post.create_post(creator=new_post.creator, text=new_post.text)
 
             if request.is_ajax() :
                 html = render_to_string('generic/posts/test.html',{
