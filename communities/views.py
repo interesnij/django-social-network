@@ -37,7 +37,6 @@ class CommunityDetailView(DetailView):
 	def get_context_data(self,**kwargs):
 		context=super(CommunityDetailView,self).get_context_data(**kwargs)
 		context["membersheeps"]=self.membersheeps
-		context["new_community"]=self.new_community
 		context["items"]=self.items
 		return context
 
@@ -76,7 +75,7 @@ class CommunityCreate(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.form=CommunityForm()
-		self.new_community = Community.objects.filter(creator__id=request.user.pk).last()
+		self.new_community = Community.objects.filter(creator=request.user).last()
 		return super(CommunityCreate,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
