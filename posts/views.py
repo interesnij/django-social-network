@@ -50,7 +50,7 @@ class PostUserCreate(View):
             new_post.create_post(creator=new_post.creator, text=new_post.text, community=None)
 
             if request.is_ajax() :
-                html = render_to_string('generic/posts/post.html',{
+                html = render_to_string('new_post.html',{
                     'object': new_post,
                     'request': request
                     })
