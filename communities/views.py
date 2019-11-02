@@ -41,6 +41,20 @@ class CommunityDetailView(DetailView):
 		return context
 
 
+class GygView(TemplateView):
+	template_name="gygyg.html"
+
+	def get(self,request,*args,**kwargs):
+		self.new_community = Community.objects.filter(creator=request.user).last()
+		self.new_url = self.new_community.pk
+		return super(GygView,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context=super(GygView,self).get_context_data(**kwargs)
+		context["new_url"]=self.new_url
+		return context
+
+
 class CommunityDetailReload(DetailView):
 	template_name="detail_reload.html"
 	model=Community
