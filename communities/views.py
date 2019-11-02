@@ -31,7 +31,7 @@ class CommunityDetailView(DetailView):
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.items = Item.objects.filter(community=self.community, is_deleted=False)
-		self.membersheeps=members_count(self.community) 
+		self.membersheeps=self.community.members_count() 
 		return super(CommunityDetailView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
