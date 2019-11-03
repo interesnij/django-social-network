@@ -113,13 +113,3 @@ $(window).on('load', function () {
     $('.wrapper').css('padding-bottom', $('body > footer').outerHeight() );
     $('body > footer').css('margin-top', -( $('body > footer').outerHeight() ));
 });
-
-var infinite = new Waypoint.Infinite({
-    element: $('.infinite-container')[0],
-    onBeforePageLoad: function() {
-        $('.load').show();
-    },
-    onAfterPageLoad: function($items) {
-        $('.load').hide();
-    }
-});
