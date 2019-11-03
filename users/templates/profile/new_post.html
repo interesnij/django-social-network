@@ -58,28 +58,29 @@
                  </button>
              </div>
          </div>
-         <div id="for_images_upload" style="display:none;margin:10px">
-           <div class="card mb-4">
-              <input name="image" type="file" id="id_image" class="" rows="4">
-            </div>
-         </div>
-         <div id="for_gallery" style="display:none;margin:10px">gallery</div>
-         <div id="for_doc" style="display:none;margin:10px">doc</div>
-         <div id="for_good" style="display:none;margin:10px">good</div>
-         <div id="for_question" style="display:none;margin:10px">question</div>
-         <div id="for_settings" style="display:none;margin:10px">
+         <span class="add_board">
+           <div id="for_images_upload" style="display:none;margin:10px">
+             <div class="card mb-4">
+               <input name="image" type="file" id="id_image" class="" rows="4">
+             </div>
+           </div>
+           <div id="for_gallery" style="display:none;margin:10px">gallery</div>
+           <div id="for_doc" style="display:none;margin:10px">doc</div>
+           <div id="for_good" style="display:none;margin:10px">good</div>
+           <div id="for_question" style="display:none;margin:10px">question</div>
+           <div id="for_settings" style="display:none;margin:10px">
 
            <div class="custom-control custom-checkbox">
-               <input type="checkbox" checked name="comments_enabled" id="id_comments_enabled" class="custom-control-input">
-               <label class="custom-control-label" for="id_comments_enabled">
-                   Комментарии включены
+              <input type="checkbox" checked name="comments_enabled" id="id_comments_enabled" class="custom-control-input">
+              <label class="custom-control-label" for="id_comments_enabled">
+                 Комментарии включены
                </label>
            </div>
            <div class="custom-control custom-checkbox">
-               <input type="checkbox" id="item_mute" class="custom-control-input">
-               <label class="custom-control-label" for="item_mute">
-                   Не отправлять уведомления
-               </label>
+              <input type="checkbox" id="item_mute" class="custom-control-input">
+              <label class="custom-control-label" for="item_mute">
+                  Не отправлять уведомления
+              </label>
            </div>
            <div class="form-group ">
              <label>статус</label>
@@ -87,9 +88,9 @@
                <option value="P" checked>Опубликовано</option>
                <option value="D">Отложено</option>
              </select>
-           </div>
+            </div>
+          </span>
          </div>
-     </div>
    </form>
  </div>
 
@@ -136,6 +137,7 @@ $('#question').on('click', function () {
             success: function (data) {
               $(".stream").prepend(data);
               $(".id_text").val("");
+              $(".add_board #for_images_upload", ".add_board #for_gallery").hide();
               $.toast({
                   heading: '{{ request.user.first_name }}',
                   text: 'Запись успешно создана!',
