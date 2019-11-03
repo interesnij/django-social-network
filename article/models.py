@@ -26,9 +26,15 @@ class Article(Item):
 
     @classmethod
     def create_article(cls, creator, community=None, g_image=None, content=None,
-                    created=None, is_draft=False ):
+                    created=None, is_draft=False, status= None, comments_enabled=None ):
 
-        article = Article.objects.create(creator=creator, content=content, g_image=g_image, community=community)
+        article = Article.objects.create(
+                                            creator=creator,
+                                            content=content,
+                                            g_image=g_image,
+                                            community=community,
+                                            comments_enabled=comments_enabled,
+                                        )
 
         channel_layer = get_channel_layer()
         payload = {

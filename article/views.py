@@ -67,7 +67,9 @@ class ArticleUserCreate(TemplateView):
                 creator=new_article.creator,
                 content=new_article.content,
                 community=None,
-                g_image=new_article.g_image
+                g_image=new_article.g_image,
+                comments_enabled=new_post.comments_enabled,
+                status=new_post.status,
             )
 
             if request.is_ajax() :
