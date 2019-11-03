@@ -174,7 +174,18 @@
           </div>
 
           <span class="stream">
-            <div id="lenta_reload"></div>
+            {% for object in object_list %}
+
+              {% if object.article %}
+                  {% include 'generic/posts/article.html' with article=article  %}
+              {% endif %}
+
+              {% if object.post %}
+                  {% include 'generic/posts/post.html' with post=post  %}
+              {% endif %}
+
+            {% endfor %}
+            
           </span>
         </div>
     </div>
