@@ -9,7 +9,6 @@ from communities.helpers import upload_to_community_avatar_directory, upload_to_
 from imagekit.models import ProcessedImageField
 from moderation.models import ModeratedObject, ModerationCategory
 from main.models import Item
-from users.models import User
 
 
 class CommunityCategory(models.Model):
@@ -212,12 +211,7 @@ class Community(models.Model):
         if members_max_id:
             community_members_query.add(Q(id__lt=members_max_id), Q.AND)
 
-        if exclude_keywords:
-            community_members_query.add(
-                cls._get_exclude_members_query_for_keywords(exclude_keywords=exclude_keywords),
-                Q.AND)
-
-        return User.objects.filter(community_members_query)
+        return settings.AUTH_USER_MODEL.objects.filter(community_members_query)
 
     @classmethod
     def search_community_with_name_members(cls, community_name, query, exclude_keywords=None):
@@ -237,18 +231,6 @@ class Community(models.Model):
                 Q.AND)
 
         return User.objects.filter(db_query)
-
-    @classmethod
-    def _get_exclude_members_query_for_keywords(cls, exclude_keywords):
-        query = Q()
-
-        if cls.EXCLUDE_COMMUNITY_ADMINISTRATORS_KEYWORD in exclude_keywords:
-            query.add(Q(communities_memberships__is_administrator=False), Q.AND)
-
-        if cls.EXCLUDE_COMMUNITY_MODERATORS_KEYWORD in exclude_keywords:
-            query.add(Q(communities_memberships__is_moderator=False), Q.AND)
-
-        return query
 
     @classmethod
     def get_community_with_name_administrators(cls, community_name, administrators_max_id=None):
