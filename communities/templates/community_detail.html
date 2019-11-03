@@ -3,16 +3,16 @@
 {% block title %}{{ object.name }}{% endblock %}
 {% block content %}
 
-{% include 'lnk/community_navbar.html' %}
+{% include 'community/navbar.html' %}
 
 <div class="container mt-4 main-container">
     <div class="row">
         <div class="col-12 col-md-12 col-lg-8">
 
-          {% include 'lnk/info.html' %}
+          {% include 'community/info.html' %}
 
           {% if not object.is_private or request.user.is_member_of_communities %}
-            {% include 'lnk/new_post.html' %}
+            {% include 'community/new_post.html' %}
 
             <div id="lenta_load"></div>
 
@@ -23,11 +23,11 @@
         <div class="col-12 col-md-12 col-lg-4">
 
             {% if membersheeps %}
-            {% include 'lnk/membersheeps.html' %}
+            {% include 'community/membersheeps.html' %}
             {% endif %}
 
-            {% include 'lnk/forum.html' %}
-            
+            {% include 'community/forum.html' %}
+
         </div>
     </div>
 
