@@ -102,18 +102,6 @@ class User(AbstractUser):
         connection = self.connections.get(target_connection__user_id=user_id)
         connection.delete()
 
-    def get_followers(self, max_id=None):
-        followers_query = self._make_followers_query()
-        if max_id:
-            followers_query.add(Q(id__lt=max_id), Q.AND)
-        return User.objects.filter(followers_query).distinct()
-
-    def get_followings(self, max_id=None):
-        followings_query = self._make_followings_query()
-        if max_id:
-            followings_query.add(Q(id__lt=max_id), Q.AND)
-        return User.objects.filter(followings_query).distinct()
-
     def search_followers_with_query(self, query):
         followers_query = Q(follows__followed_user_id=self.pk, is_deleted=False)
         names_query = Q(username__icontains=query)
@@ -237,20 +225,25 @@ class User(AbstractUser):
         Получить все посты пользователя
         """
         posts_query = Q(creator_id=self.id, is_deleted=False, status=Item.STATUS_PUBLISHED)
-
         exclude_reported_and_approved_posts_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
-
         posts_query.add(exclude_reported_and_approved_posts_query, Q.AND)
-
-        if not self.has_profile_community_posts_visible():
-            posts_query.add(Q(community__isnull=True), Q.AND)
 
         if max_id:
             posts_query.add(Q(id__lt=max_id), Q.AND)
-
         items = Item.objects.filter(posts_query)
-
         return items
+
+    def get_followers(self, max_id=None):
+        followers_query = self._make_followers_query()
+        if max_id:
+            followers_query.add(Q(id__lt=max_id), Q.AND)
+        return User.objects.filter(followers_query).distinct()
+
+    def get_followings(self, max_id=None):
+        followings_query = self._make_followings_query()
+        if max_id:
+            followings_query.add(Q(id__lt=max_id), Q.AND)
+        return User.objects.filter(followings_query).distinct()
 
 
 
