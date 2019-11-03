@@ -59,7 +59,7 @@ class AllUsers(ListView):
     model=User
 
     def get_queryset(self):
-        users=User.objects.only(id)
+        users=User.objects.only('id')
         return users
 
 
