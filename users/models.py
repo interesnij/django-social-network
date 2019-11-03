@@ -231,6 +231,27 @@ class User(AbstractUser):
         return online_connection
 
 
+    def get_posts(self, max_id=None):
+        """
+        Получить все посты пользователя
+        """
+        posts_query = Q(creator_id=self.id, is_deleted=False, status=Item.STATUS_PUBLISHED)
+
+        exclude_reported_and_approved_posts_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
+
+        posts_query.add(exclude_reported_and_approved_posts_query, Q.AND)
+
+        if not self.has_profile_community_posts_visible():
+            posts_query.add(Q(community__isnull=True), Q.AND)
+
+        if max_id:
+            posts_query.add(Q(id__lt=max_id), Q.AND)
+
+        items = Item.objects.filter(posts_query)
+
+        return items
+
+
 
 class UserBlock(models.Model):
     blocked_user = models.ForeignKey(User, db_index=False, on_delete=models.CASCADE, related_name='blocked_by_users')

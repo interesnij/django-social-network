@@ -2,30 +2,31 @@
 {% load staticfiles humanize %}
 {% block title %}{{ object.name }}{% endblock %}
 {% block content %}
-
+{% if object.cover %}
 <div class="container-fluid">
     <div class="row align-items-center has-background-img min-height-300">
         <figure class="background-img pink-gradient">
             {% if object.cover %}
             <img src="{{ object.cover.url }}" alt="" class="">
-            {% else %}
-            <img src="{% static 'images/news_small1.jpg' %}" alt="" class="">
-            {% endif %}
         </figure>
     </div>
 </div>
+{% endif %}
 <div class="container-fluid bg-white aboutus">
             <div class="row">
                 <div class="container main-container py-4">
                     <div class="row align-items-center">
                         <div class="col-12 col-xs-12 col-md-9">
-                            <p class="mt-4 text-uppercase small text-primary font-weight-bold">{{ object.category }}</p>
 
                             <h3 class="mb-2 text-dark">{{ object.name }}</h3>
                             {% if object.status %}
                               <p class="text-dark">{{ object.status }}</p>
                             {% else %}
-                              <p class="text-dark">Добавьте статус сообщества</p>
+                              <p class="text-dark">
+                                {% if request.user.communities_memberships.is_administrator %}
+                                  Добавьте статус сообщества</p>
+                                {% endif %}
+
                             {% endif %}
 
                         </div>
@@ -79,9 +80,13 @@
                                     <h6 class="my-0 content-color-primary">Описание</h6>
                                     <p>
                                         {% if object.description %}
-                                        {{ object.description }}
+                                          {{ object.description }}
                                         {% else %}
-                                        Добавьте описание сообщества
+                                          {% if request.user.communities_memberships.is_administrator %}
+                                            Добавьте описание сообщества
+                                          {% else %}
+                                            Нет описания сообщества
+                                          {% endif %}
                                         {% endif %}
                                     </p>
                                 </div>
@@ -96,9 +101,13 @@
                                     <h6 class="my-0 content-color-primary">Правила</h6>
                                     <p>
                                         {% if object.rules %}
-                                        {{ object.rules }}
+                                          {{ object.rules }}
                                         {% else %}
-                                        Добавьте правила сообщетсва
+                                          {% if request.user.communities_memberships.is_administrator %}
+                                            Добавьте правила сообщетсва
+                                          {% else %}
+                                            Правил сообщества нет
+                                          {% endif %}
                                         {% endif %}
                                     </p>
                                 </div>
