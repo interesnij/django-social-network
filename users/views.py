@@ -66,7 +66,6 @@ class AllUsers(ListView):
 class ProfileUserView(TemplateView):
     template_name = 'user.html'
     model=Item
-    paginate_by=6
 
     def get(self,request,*args,**kwargs):
         self.user=User.objects.get(pk=self.kwargs["pk"])
