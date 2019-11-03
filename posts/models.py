@@ -50,9 +50,9 @@ class Post(Item):
                                         text=text,
                                         image=image,
                                         community=community,
-                                        comments_enabled=comments_enabled
+                                        comments_enabled=comments_enabled,
                                     )
-            post.STATUS_PUBLISHED
+            post.status.STATUS_PUBLISHED
             channel_layer = get_channel_layer()
             payload = {
                     "type": "receive",
