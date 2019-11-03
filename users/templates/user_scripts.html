@@ -1,5 +1,17 @@
 {% load staticfiles %}
 <script>
+
+	var infinite = new Waypoint.Infinite({
+	    element: $('.infinite-container')[0],
+	    onBeforePageLoad: function() {
+	        $('.load').show();
+	    },
+	    onAfterPageLoad: function($items) {
+	        $('.load').hide();
+	    }
+	});
+</script>
+<script>
   var textarea = document.querySelector('.id_text');
 textarea.addEventListener('keyup', function(){
   if(this.scrollTop > 0){
