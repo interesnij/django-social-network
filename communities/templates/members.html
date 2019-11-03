@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load staticfiles humanize %}
 
-{% block title %}Подписчики сообщества{% endblock %}
+{% block title %}Подписчики сообщества "{{ community.name }}"{% endblock %}
 
 {% block content %}
 <div class="row">
@@ -17,7 +17,11 @@
             <div class="card-header">
                 <div class="media">
                     <div class="media-body">
-                        <h5 class="mt-1">Подписчики сообщества</h5>
+                        <h5 class="mt-1">Подписчики сообщества
+                                         <a class="ajax" href="{% url 'community_detail' pk=community.pk %}">
+                                           {{ community.name }}
+                                         </a>
+                        </h5>
                     </div>
                 </div>
             </div>
@@ -49,6 +53,7 @@
     </div>
 
     <div class="col-12 col-md-4">
+      {% if request.user.communities_memberships.is_administrator %}
         <br><br><br>
         <div class="card mb-2">
             <div class="card-header">
@@ -99,6 +104,7 @@
             </div>
             <br><br>
         </div>
+      {% endif %}
     </div>
 </div>
 {% endblock %}

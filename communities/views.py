@@ -25,6 +25,16 @@ class CommunityMembersView(ListView):
 	model=Community
 	paginate_by=15
 
+	def get(self,request,*args,**kwargs):
+		self.community = Community.objects.get(pk=self.kwargs["pk"])
+		return super(CommunityDetailView,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context=super(CommunityDetailView,self).get_context_data(**kwargs)
+		context["community"]=self.community
+		context["items"]=self.items
+		return context
+
 	def get_queryset(self):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		membersheeps=CommunityMembership.objects.filter(community__id=self.community.pk)
