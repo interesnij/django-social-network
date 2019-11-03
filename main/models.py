@@ -24,7 +24,7 @@ class Item(models.Model):
     is_fixed = models.BooleanField(default=False, verbose_name="Закреплено")
     is_repost = models.BooleanField(verbose_name="Это репост", default=False)
     views=models.IntegerField(default=0, verbose_name="Просмотры")
-    #moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='items')
+    moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='items')
     parent = models.ForeignKey("self", blank=True,
         null=True, on_delete=models.CASCADE, related_name="thread")
     STATUS_DRAFT = 'D'
