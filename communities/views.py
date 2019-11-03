@@ -27,10 +27,15 @@ class CommunityMembersView(ListView):
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
+		if request.user.is_administrator_of_community_with_name(self.community.name):
+			self.administrator=True
+		else:
+			self.administrator=False
 		return super(CommunityMembersView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		context=super(CommunityMembersView,self).get_context_data(**kwargs)
+		context["administrator"]=self.administrator
 		context["community"]=self.community
 		return context
 
