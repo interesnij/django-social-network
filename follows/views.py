@@ -12,7 +12,7 @@ class FollowsListView(ListView):
 
 	def get_queryset(self):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
-		followeds_user=Follow.objects.filter(followed_user=self.user)
+		followeds_user=Follow.objects.filter(user=self.user)
 		return followeds_user
 
 
