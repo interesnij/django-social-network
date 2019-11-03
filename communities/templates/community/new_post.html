@@ -58,7 +58,7 @@
                  </button>
              </div>
          </div>
-
+        <span class="add_board">
          <div id="for_images_upload" style="display:none;margin:10px"></div>
          <div id="for_gallery" style="display:none">gallery</div>
          <div id="for_doc" style="display:none;margin:10px">doc</div>
@@ -85,6 +85,7 @@
              </select>
            </div>
          </div>
+        </span>
      </div>
    </form>
  </div>
@@ -131,6 +132,12 @@ $('#question').on('click', function () {
             success: function (data) {
               $(".stream").prepend(data);
               $(".id_text").val("");
+              $(".add_board #for_images_upload").hide();
+              $(".add_board #for_gallery").hide();
+              $(".add_board #for_doc").hide();
+              $(".add_board #for_good").hide();
+              $(".add_board #for_question").hide();
+              $(".add_board #for_settings").hide();
               $.toast({
                   heading: '{{ request.user.first_name }}',
                   text: 'Запись успешно создана!',

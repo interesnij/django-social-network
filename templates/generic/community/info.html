@@ -5,15 +5,17 @@
   <div class="row">
       <div class="col interaction" id="interaction">
 
-          &nbsp;&nbsp;
-          <span title="Комментарий" class="comment" style="cursor:pointer">
-            <img style="width:22px;" src="{% static 'images/icons/chat-24px.svg' %}" />
-            <span class="comment-count">
-              {% if object.count_comments %}
-                {{ object.count_comments }}
-              {% endif %}
-            </span>
+        {% if object.comments_enabled %}
+        &nbsp;&nbsp;
+        <span title="Комментарий" class="comment" style="cursor:pointer">
+          <img style="width:22px;" src="{% static 'images/icons/chat-24px.svg' %}" />
+          <span class="comment-count">
+            {% if object.count_comments %}
+              {{ object.count_comments }}
+            {% endif %}
           </span>
+        </span>
+        {% endif %}
 
           &nbsp;&nbsp;
           <span title="Поделиться" data-toggle="modal" data-target="#modal_community_repost" style="cursor:pointer">
