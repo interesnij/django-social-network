@@ -60,7 +60,7 @@ transition: 0.5s;
   </span>
 
   <div class="load col-12 col-md-12" >
-    {% if object_list.page_obj.has_next %}
+    {% if page_obj.has_next %}
       <a style="display:flex;justify-content:center;" class="infinite-more-link" href="?page={{ page_obj.next_page_number }}">
         <img src="{% static 'images/loading.gif' %}">
       </a>
