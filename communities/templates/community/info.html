@@ -14,7 +14,7 @@
                             {% if object.description %}
                               {{ object.description }}
                             {% else %}
-                              {% if request.user.communities_memberships.is_administrator %}
+                              {% if administrator %}
                                 Добавьте описание сообщества
                               {% else %}
                                 Нет описания сообщества
@@ -35,7 +35,7 @@
                             {% if object.rules %}
                               {{ object.rules }}
                             {% else %}
-                              {% if request.user.communities_memberships.is_administrator %}
+                              {% if administrator %}
                                 Добавьте правила сообщетсва
                               {% else %}
                                 Правил сообщества нет

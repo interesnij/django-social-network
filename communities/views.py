@@ -29,8 +29,6 @@ class CommunityMembersView(ListView):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		if request.user.is_administrator_of_community_with_name(self.community.name):
 			self.administrator=True
-		else:
-			self.administrator=False
 		return super(CommunityMembersView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -47,13 +45,14 @@ class CommunityMembersView(ListView):
 class CommunityDetailView(DetailView):
 	template_name="community_detail.html"
 	model=Community
-	
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.membersheeps=CommunityMembership.objects.filter(community__id=self.community.pk)[0:5]
 		if request.user.is_administrator_of_community_with_name(self.community.name):
 			self.administrator=True
+		if request.user.is_staff_of_community_with_name(self.community.name):
+			self.staff=True
 
 		return super(CommunityDetailView,self).get(request,*args,**kwargs)
 
@@ -61,6 +60,7 @@ class CommunityDetailView(DetailView):
 		context=super(CommunityDetailView,self).get_context_data(**kwargs)
 		context["membersheeps"]=self.membersheeps
 		context["administrator"]=self.administrator
+		context["staff"]=self.staff
 		return context
 
 
