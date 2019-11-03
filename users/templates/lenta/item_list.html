@@ -25,29 +25,6 @@ transition: 0.5s;
 }
 </style>
 
-{% if object_list %}
-
-
-    <div class="card mb-4 item_fullscreen" style="display:none">
-      <div id="item_loader" style="margin-top:30px;position: relative;"></div>
-    </div>
-    <div class="infinite-container">
-      <div class="stream-update">
-        <a href=""><span class="new-posts"></span> Загрузить новые записи</a>
-      </div>
-
-      <span class="stream">
-
-    {% if object.article %}
-        {% include 'generic/posts/article.html' with article=article %}
-    {% endif %}
-
-    {% if object.post %}
-      {% include 'generic/posts/post.html' with post=post  %}
-    {% endif %}
-
-    {% for object in object_list %}
-
       {% if object.article %}
           {% include 'generic/posts/article.html' with article=article  %}
       {% endif %}
@@ -55,15 +32,5 @@ transition: 0.5s;
       {% if object.post %}
           {% include 'generic/posts/post.html' with post=post  %}
       {% endif %}
-
-    {% endfor %}
-  </span>
-  </div>
-    
-
-
-{% else %}
-<h6>  Пока ничего нет...</h6>
-{% endif %}
 
 {% include 'lenta/lenta_script.html' %}
