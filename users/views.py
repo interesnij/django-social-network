@@ -63,7 +63,7 @@ class AllUsers(ListView):
         return users
 
 
-class ProfileUserView(TemplateView):
+class ProfileUserView(TemplateView,ItemListView):
     template_name = 'user.html'
 
     def get(self,request,*args,**kwargs):
