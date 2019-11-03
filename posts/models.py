@@ -52,7 +52,6 @@ class Post(Item):
                                         community=community,
                                         comments_enabled=comments_enabled,
                                     )
-            post.status.STATUS_PUBLISHED
             channel_layer = get_channel_layer()
             payload = {
                     "type": "receive",

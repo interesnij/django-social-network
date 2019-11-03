@@ -51,8 +51,9 @@ class PostUserCreate(View):
             new_post.create_post(
                                     creator=new_post.creator,
                                     text=new_post.text,
-                                    community=None, 
-                                    comments_enabled=new_post.comments_enabled
+                                    community=None,
+                                    comments_enabled=new_post.comments_enabled,
+                                    status=P,
                                 )
             if request.is_ajax() :
                 html = render_to_string('new_post.html',{
