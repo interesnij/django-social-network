@@ -62,14 +62,14 @@ class Good(models.Model):
 	image5 = ProcessedImageField(verbose_name='изображение 5', blank=True, format='JPEG',options={'quality': 80}, processors=[ResizeToFit(512, 512)],upload_to="goods/%Y/%m/%d")
 
 	STATUS_DRAFT = 'D'
-    STATUS_SOLD = 'S'
-    STATUS_PUBLISHED = 'P'
-    STATUSES = (
-        (STATUS_DRAFT, 'Отложен'),
-        (STATUS_PUBLISHED, 'Опубликован'),
-        (STATUS_SOLD, 'Продан'),
-    )
-    status = models.CharField(blank=False, null=False, choices=STATUSES, default=STATUS_PUBLISHED, max_length=2, verbose_name="Статус")
+	STATUS_SOLD = 'S'
+	STATUS_PUBLISHED = 'P'
+	STATUSES = (
+		(STATUS_DRAFT, 'Отложен'),
+		(STATUS_PUBLISHED, 'Опубликован'),
+		(STATUS_SOLD, 'Продан'),
+		)
+	status = models.CharField(blank=False, null=False, choices=STATUSES, default=STATUS_PUBLISHED, max_length=2, verbose_name="Статус")
 
 	def __str__(self):
 		return self.title
