@@ -47,7 +47,7 @@ class CommunityMembersView(ListView):
 class CommunityDetailView(DetailView):
 	template_name="community_detail.html"
 	model=Community
-	administrator = None
+	
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
