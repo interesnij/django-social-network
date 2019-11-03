@@ -1,16 +1,5 @@
 {% load staticfiles %}
-<style>
-  #article_add,
-  #images_upload,
-  #gallery,
-  #link,
-  #doc,
-  #good,
-  #question,
-  #settings{
-    cursor:pointer;
-  }
-</style>
+
 {% if user == request.user %}
  <div class="card mb-4" style="border:1px solid rgba(0, 0, 0, 0.125);">
    <form action="" id="FORM-POST" method="post" enctype="multipart/form-data">

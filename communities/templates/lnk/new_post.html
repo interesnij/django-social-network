@@ -13,8 +13,7 @@
              <div class="col" style="display: flex;">
                  <a title="Статья"
                        class="btn btn-link btn-sm text-secondary"
-                       id="community_article_add"
-                       style="cursor:pointer">
+                       id="community_article_add">
                        <img style="width:22px;" src="{% static 'images/icons/post_add-24px.svg' %}" />
                  </a>
                 <div class="dropdown">
@@ -27,9 +26,9 @@
                        <img style="width:22px;" src="{% static 'images/icons/camera_alt-24px.svg' %}" />
                   </a>
                   <div class="dropdown-menu dropdown-menu-top" aria-labelledby="dropdown_image">
-                    <a id="images_upload" style="cursor:pointer" class="dropdown-item">Загрузить изображение</a>
-                    <a id="gallery" style="cursor:pointer" class="dropdown-item">Мои изображения</a>
-                    <a id="" style="cursor:pointer" class="dropdown-item">Использовать ссылку</a>
+                    <a id="images_upload" class="dropdown-item">Загрузить изображение</a>
+                    <a id="gallery" class="dropdown-item">Мои изображения</a>
+                    <a id="" class="dropdown-item">Использовать ссылку</a>
                   </div>
                 </div>
                <div class="dropdown">
@@ -42,27 +41,15 @@
                          <img style="width:22px;" src="{% static 'images/icons/attach_file-24px.svg' %}" />
                  </a>
                  <div class="dropdown-menu dropdown-menu-top" aria-labelledby="dropdown_more">
-                   <a id="doc" style="cursor:pointer" class="dropdown-item">Документ</a>
-                   <a id="good" style="cursor:pointer" class="dropdown-item">Товар</a>
-                   <a id="question" style="cursor:pointer" class="dropdown-item">Опрос</a>
+                   <a id="doc" class="dropdown-item">Документ</a>
+                   <a id="good" class="dropdown-item">Товар</a>
+                   <a id="question" class="dropdown-item">Опрос</a>
                  </div>
                </div>
              </div>
 
              <div class="col-auto ">
-
-                 <a title="Еще"
-                         class="btn btn-link btn-sm text-secondary"
-                         id="dropdown_settings"
-                         data-toggle="dropdown"
-                         aria-haspopup="true"
-                         aria-expanded="false">
-                         <img style="width:22px" src="{% static 'images/icons/settings_applications-24px.svg' %}" />
-                 </a>
-                 <div class="dropdown-menu dropdown-menu-bottom" aria-labelledby="dropdown_settings">
-                   <a style="cursor:pointer" class="dropdown-item">Комментарии включены</a>
-                 </div>
-
+                <img style="width:22px" id="settings" src="{% static 'images/icons/settings_applications-24px.svg' %}" />
                  <button type="submit" class="btn btn-rounded btn-sm text-uppercase pl-3">
                    <span class="text-hide-xs">Опубликовать</span>
                    <a>
@@ -71,13 +58,33 @@
                  </button>
              </div>
          </div>
-         <div id="for_images_upload" style="display:none">
 
-         </div>
+         <div id="for_images_upload" style="display:none;margin:10px"></div>
          <div id="for_gallery" style="display:none">gallery</div>
-         <div id="for_doc" style="display:none">doc</div>
-         <div id="for_good" style="display:none">good</div>
-         <div id="for_question" style="display:none">question</div>
+         <div id="for_doc" style="display:none;margin:10px">doc</div>
+         <div id="for_good" style="display:none;margin:10px">good</div>
+         <div id="for_question" style="display:none;margin:10px">question</div>
+         <div id="for_settings" style="display:none;margin:10px">
+           <div class="custom-control custom-checkbox">
+               <input type="checkbox" checked name="comments_enabled" id="id_comments_enabled" class="custom-control-input">
+               <label class="custom-control-label" for="id_comments_enabled">
+                   Комментарии включены
+               </label>
+           </div>
+           <div class="custom-control custom-checkbox">
+               <input type="checkbox" id="item_mute" class="custom-control-input">
+               <label class="custom-control-label" for="item_mute">
+                   Не отправлять уведомления
+               </label>
+           </div>
+           <div class="form-group ">
+             <label>статус</label>
+             <select class="form-control" id="id_status" name="status" data-live-search="true" tabindex="-1" aria-hidden="true">
+               <option value="P" checked>Опубликовано</option>
+               <option value="D">Отложено</option>
+             </select>
+           </div>
+         </div>
      </div>
    </form>
  </div>

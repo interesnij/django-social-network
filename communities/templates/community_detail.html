@@ -2,152 +2,32 @@
 {% load staticfiles humanize %}
 {% block title %}{{ object.name }}{% endblock %}
 {% block content %}
-{% if object.cover %}
-<div class="container-fluid">
-    <div class="row align-items-center has-background-img min-height-300">
-        <figure class="background-img pink-gradient">
-            <img src="{{ object.cover.url }}" alt="" class="">
-        </figure>
-    </div>
-</div>
-{% endif %}
-<div class="container-fluid bg-white aboutus">
-            <div class="row">
-                <div class="container main-container py-4">
-                    <div class="row align-items-center">
-                        <div class="col-12 col-xs-12 col-md-9">
 
-                            <h3 class="mb-2 text-dark">{{ object.name }}</h3>
-                            {% if object.status %}
-                              <p class="text-dark">{{ object.status }}</p>
-                            {% else %}
-                                {% if request.user.communities_memberships.is_administrator %}
-                                  <p class="text-dark">Добавьте статус сообщества</p>
-                                {% endif %}
-
-                            {% endif %}
-
-                        </div>
-
-                        <div class="col-12 col-xs-12 col-md-3">
-                          {% if object.avatar %}
-                            <img src="{{ object.avatar.url }}" alt="" style="width:100%" class="rounded box-shadow-large">
-                          {% else %}
-                            <img src="{% static 'images/icons/group-24px.svg' %}" style="width:100%" alt="" class="rounded box-shadow-large">
-                          {% endif %}
-                          <br><br>
-                          <span style="display: flex;align-items: center;justify-content: center;">
-                            {% if request.user.is_member_of_communities %}
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-sm btn-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Вы подписаны
-                                </button>
-                                <div class="dropdown-menu" x-placement="bottom-start">
-                                    <a class="dropdown-item" href="">Отписаться</a>
-                                </div>
-                            </div>
-                            {% endif %}
-
-                            {% if not object.is_private and not request.user.is_member_of_communities %}
-                              <a class="btn btn-success success-gradient ml-2">Подписаться</a>
-                            {% endif %}
-
-                            {% if object.is_private and not request.user.is_member_of_communities %}
-                              <a class="btn btn-primary primary-gradient ml-2">Подать заявку</a>
-                            {% endif %}
-                        </span>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+{% include 'lnk/community_navbar.html' %}
 
 <div class="container mt-4 main-container">
     <div class="row">
         <div class="col-12 col-md-12 col-lg-8">
-            <div class="card mb-4">
-                <div class="card-body">
-                    <ul class="list-group list-group-flush w-100">
-                        <li class="list-group-item px-0">
-                            <div class="media experience">
-                                <div class="icon-circle icon-40 bg-light-secondary mr-3">
-                                    <img style="width:22px;" src="{% static 'images/icons/chat-24px.svg' %}" />
-                                </div>
-                                <div class="media-body">
-                                    <h6 class="my-0 content-color-primary">Описание</h6>
-                                    <p>
-                                        {% if object.description %}
-                                          {{ object.description }}
-                                        {% else %}
-                                          {% if request.user.communities_memberships.is_administrator %}
-                                            Добавьте описание сообщества
-                                          {% else %}
-                                            Нет описания сообщества
-                                          {% endif %}
-                                        {% endif %}
-                                    </p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="list-group-item px-0">
-                            <div class="media experience">
-                                <div class="icon-circle icon-40 bg-light-secondary mr-3">
-                                    <img style="width:22px;" src="{% static 'images/icons/chat-24px.svg' %}" />
-                                </div>
-                                <div class="media-body">
-                                    <h6 class="my-0 content-color-primary">Правила</h6>
-                                    <p>
-                                        {% if object.rules %}
-                                          {{ object.rules }}
-                                        {% else %}
-                                          {% if request.user.communities_memberships.is_administrator %}
-                                            Добавьте правила сообщетсва
-                                          {% else %}
-                                            Правил сообщества нет
-                                          {% endif %}
-                                        {% endif %}
-                                    </p>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            {% if not object.is_private or request.user.is_member_of_communities %}
-              {% include 'lnk/new_post.html' %}
 
-              <div id="lenta_load"></div>
+          {% include 'lnk/info.html' %}
 
-            {% else %}
-              Только подписчики сообщества могут просматривать записи
-            {% endif %}
+          {% if not object.is_private or request.user.is_member_of_communities %}
+            {% include 'lnk/new_post.html' %}
+
+            <div id="lenta_load"></div>
+
+          {% else %}
+            Только подписчики сообщества могут просматривать записи
+          {% endif %}
         </div>
         <div class="col-12 col-md-12 col-lg-4">
 
             {% if membersheeps %}
             {% include 'lnk/membersheeps.html' %}
             {% endif %}
-            <div class="media mt-4">
-                <div class="media-body">
-                    <h4 class="content-color-primary mb-0">Обсуждения </h4>
-                </div>
-                <a href="" class="">
-                    Все
-                </a>
-            </div>
-            <br>
-            <ul class="list-group border-bottom list-group-flush">
-                <li class="list-group-item link-media">
-                    <a href="" class="media">
-                        <div class="media-body">
-                            <h6 class="my-0 content-color-primary">20-11-2018</h6>
-                            <p class="small mb-2">New York, US</p>
-                            <p>Musical night festival seasons, Drama and comedy cultural family show.</p>
-                        </div>
-                    </a>
-                </li>
-            </ul>
+
+            {% include 'lnk/forum.html' %}
+            
         </div>
     </div>
 
