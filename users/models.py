@@ -15,7 +15,7 @@ from follows.models import Follow
 from goods.models import Good
 from frends.models import Connect
 from posts.models import Post
-from moderation.models import ModeratedObject
+from moderation.models import ModeratedObject, ModerationPenalty
 from common.checkers import *
 from django.db.models import Q, F, Count
 
@@ -181,6 +181,10 @@ class User(AbstractUser):
 
     def is_following_user_with_username(self, user_username):
         return self.follows.filter(followed_user__username=user_username).exists()
+
+    def is_suspended(self):
+        return self.moderation_penalties.filter(type=ModerationPenalty.TYPE_SUSPENSION,
+                                                expiration__gt=timezone.now()).exists()
 
 
     ''''' количества всякие  196-216 '''''
