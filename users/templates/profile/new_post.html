@@ -137,7 +137,12 @@ $('#question').on('click', function () {
             success: function (data) {
               $(".stream").prepend(data);
               $(".id_text").val("");
-              $(".add_board #for_images_upload", ".add_board #for_gallery").hide();
+              $(".add_board #for_images_upload").hide();
+              $(".add_board #for_gallery").hide();
+              $(".add_board #for_doc").hide();
+              $(".add_board #for_good").hide();
+              $(".add_board #for_question").hide();
+              $(".add_board #for_settings").hide();
               $.toast({
                   heading: '{{ request.user.first_name }}',
                   text: 'Запись успешно создана!',
