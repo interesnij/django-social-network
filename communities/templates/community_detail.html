@@ -6,7 +6,6 @@
 <div class="container-fluid">
     <div class="row align-items-center has-background-img min-height-300">
         <figure class="background-img pink-gradient">
-            {% if object.cover %}
             <img src="{{ object.cover.url }}" alt="" class="">
         </figure>
     </div>
@@ -22,9 +21,8 @@
                             {% if object.status %}
                               <p class="text-dark">{{ object.status }}</p>
                             {% else %}
-                              <p class="text-dark">
                                 {% if request.user.communities_memberships.is_administrator %}
-                                  Добавьте статус сообщества</p>
+                                  <p class="text-dark">Добавьте статус сообщества</p>
                                 {% endif %}
 
                             {% endif %}
