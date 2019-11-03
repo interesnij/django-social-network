@@ -139,7 +139,7 @@ class CommunitiesCatsView(TemplateView):
 
 class CommunityItemView(CategoryListMixin, TemplateView):
     model=Item
-    template_name="lnk/community_item.html"
+    template_name="community/item.html"
 
     def get(self,request,*args,**kwargs):
         self.item = Item.objects.get(pk=self.kwargs["pk"])
@@ -154,7 +154,7 @@ class CommunityItemView(CategoryListMixin, TemplateView):
 
 
 class CommunityListView(ListView):
-	template_name="lnk/community_list.html"
+	template_name="community/list.html"
 	model=Item
 	paginate_by=15
 
