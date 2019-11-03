@@ -63,9 +63,9 @@ class AllUsers(ListView):
         return users
 
 
-class ProfileUserView(TemplateView,ItemListView):
+class ProfileUserView(TemplateView):
     template_name = 'user.html'
-    object_list = None
+
     def get(self,request,*args,**kwargs):
         self.user=User.objects.get(pk=self.kwargs["pk"])
         self.communities=Community.objects.filter(memberships__user__id=self.user.pk)[0:5]
@@ -79,6 +79,11 @@ class ProfileUserView(TemplateView,ItemListView):
         context['form_comment'] = CommentForm()
         context['communities'] = self.communities
         return context
+
+    def get_queryset(self):
+        self.user=User.objects.get(pk=self.kwargs["pk"])
+        items = self.user.get_posts()
+        return items
 
 
 class UserGeneralChange(TemplateView):
