@@ -8,19 +8,12 @@ from django.http import HttpResponse
 class FollowsListView(ListView):
 	template_name="follows.html"
 	model=User
+	paginate_by=10
 
-	def get(self,request,*args,**kwargs):
-		self.user=User.objects.get(pk=self.kwargs["pk"])
-		self.follow_user=Follow.objects.filter(user=self.user)
-		self.followeds_user=Follow.objects.filter(followed_user=self.user)
-		return super(FollowsListView,self).get(request,*args,**kwargs)
-
-	def get_context_data(self,**kwargs):
-		context=super(FollowsListView,self).get_context_data(**kwargs)
-		context["follow_user"]=self.follow_user
-		context['followeds_user'] = self.followeds_user
-		context['user'] = self.user
-		return context
+	def get_queryset(self):
+		self.user = User.objects.get(pk=self.kwargs["pk"])
+		followeds_user=Follow.objects.filter(followed_user=self.user)
+		return followeds_user
 
 
 class FollowCreate(View):

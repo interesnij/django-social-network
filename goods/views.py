@@ -23,10 +23,6 @@ class GoodsListView(ListView):
 	model=Good
 	paginate_by=6
 
-	def get(self,request,*args,**kwargs):
-
-		return super(GoodsListView,self).get(request,*args,**kwargs)
-
 	def get_queryset(self):
 		self.user=User.objects.get(pk=self.kwargs["pk"])
 		goods=Good.objects.filter(creator=self.user,is_deleted=False)

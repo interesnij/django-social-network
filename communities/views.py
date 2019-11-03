@@ -12,7 +12,7 @@ from generic.mixins import CategoryListMixin
 class CommunitiesView(ListView):
 	template_name="communities.html"
 	model=Community
-	paginate_by=10
+	paginate_by=15
 
 	def get_queryset(self):
 		self.user=User.objects.get(pk=self.kwargs["pk"])
@@ -81,7 +81,7 @@ class CommunityDetailReload(DetailView):
 class AllCommunities(ListView):
 	template_name="all_communities.html"
 	model=Community
-	paginate_by=10
+	paginate_by=15
 
 	def get_queryset(self):
 		groups=Community.objects.all()
@@ -156,10 +156,9 @@ class CommunityItemView(CategoryListMixin, TemplateView):
 class CommunityListView(ListView):
 	template_name="lnk/community_list.html"
 	model=Item
-	paginate_by=6
+	paginate_by=15
 
 	def get(self,request,*args,**kwargs):
-		self.community=Community.objects.get(pk=self.kwargs["pk"])
 		try:
 			self.fixed = Item.objects.get(community=self.community, is_fixed=True)
 		except:

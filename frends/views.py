@@ -10,9 +10,10 @@ from django.db.models import Q
 class FrendsListView(ListView):
 	template_name="frends.html"
 	model=User
+	paginate_by=10
 
 	def get(self,request,*args,**kwargs):
-		self.featured_users = User.objects.all()
+		self.featured_users = User.objects.onli('id')[0:5]
 		return super(FrendsListView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):

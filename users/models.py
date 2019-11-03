@@ -233,6 +233,19 @@ class User(AbstractUser):
         items = Item.objects.filter(posts_query)
         return items
 
+    def get_goods(self, max_id=None):
+        """
+        Получить все посты пользователя
+        """
+        goods_query = Q(creator_id=self.id, is_deleted=False, status=Good.STATUS_PUBLISHED)
+        exclude_reported_and_approved_goods_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
+        goods_query.add(exclude_reported_and_approved_goods_query, Q.AND)
+
+        if max_id:
+            goods_query.add(Q(id__lt=max_id), Q.AND)
+        goods = Item.objects.filter(goods_query)
+        return goods
+
     def get_followers(self, max_id=None):
         followers_query = self._make_followers_query()
         if max_id:
