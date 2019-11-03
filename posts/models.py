@@ -39,13 +39,19 @@ class Post(Item):
                                  upload_to=upload_to_post_image_directory)
 
     @classmethod
-    def create_post(cls, creator, text=None, community=None, image=None, video=None,
+    def create_post(cls, creator, text=None, community=None, comments_enabled=None, image=None, video=None,
                     is_draft=False, good=None, doc=None, question=None):
 
         if not text and not image:
             raise ValidationError('Нужно ввести текст или прикрепить фото')
         else:
-            post = Post.objects.create(creator=creator, text=text, image=image, community=community)
+            post = Post.objects.create(
+                                        creator=creator,
+                                        text=text,
+                                        image=image,
+                                        community=community,
+                                        comments_enabled=comments_enabled
+                                    )
             post.STATUS_PUBLISHED
             channel_layer = get_channel_layer()
             payload = {
