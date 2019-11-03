@@ -1,6 +1,6 @@
 {% load staticfiles %}
 
-{% if user == request.user %}
+{% if staff %}
  <div class="card mb-4" style="border:1px solid rgba(0, 0, 0, 0.125);">
    <form action="" id="COMM-POST" method="post" enctype="multipart/form-data">
      {% csrf_token %}
