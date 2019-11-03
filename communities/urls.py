@@ -8,6 +8,7 @@ from communities.views import (
                                 CommunityListView,
                                 CommunityDetailReload,
                                 GygView,
+                                CommunityMembersView,
                             )
 from django.conf.urls import url
 
@@ -21,4 +22,5 @@ urlpatterns = [
     url(r'^item/(?P<pk>\d+)/$', CommunityItemView.as_view(), name='community_item'),
     url(r'^list/(?P<pk>\d+)/$', CommunityListView.as_view(), name="community_item_list"),
     url(r'^gygyg/$', GygView.as_view(), name="community_ggg"),
+    url(r'^(?P<pk>\d+)/$', CommunityMembersView.as_view(), name='community_members'),
 ]

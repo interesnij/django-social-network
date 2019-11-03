@@ -58,6 +58,10 @@ class AllUsers(ListView):
     template_name="all_users.html"
     model=User
 
+    def get_queryset(self):
+		users=User.objects.only(id)
+		return users
+
 
 class ProfileUserView(TemplateView):
     template_name = 'user.html'

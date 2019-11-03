@@ -19,10 +19,16 @@ class CommunitiesView(ListView):
 		groups=Community.objects.filter(memberships__user__id=self.user.pk)
 		return groups
 
-	def get_context_data(self,**kwargs):
-		context=super(CommunitiesView,self).get_context_data(**kwargs)
 
-		return context
+class CommunityMembersView(ListView):
+	template_name="members.html"
+	model=Community
+	paginate_by=15
+
+	def get_queryset(self):
+		self.community = Community.objects.get(pk=self.kwargs["pk"])
+		membersheeps=CommunityMembership.objects.filter(community__id=self.community.pk)
+		return membersheeps
 
 class CommunityDetailView(DetailView):
 	template_name="community_detail.html"
@@ -147,7 +153,7 @@ class CommunityItemView(CategoryListMixin, TemplateView):
         return context
 
 
-class CommunityListView(ListView, CategoryListMixin):
+class CommunityListView(ListView):
 	template_name="lnk/community_list.html"
 	model=Item
 	paginate_by=6

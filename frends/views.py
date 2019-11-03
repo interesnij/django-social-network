@@ -12,15 +12,18 @@ class FrendsListView(ListView):
 	model=User
 
 	def get(self,request,*args,**kwargs):
-		self.user = User.objects.get(pk=self.kwargs["pk"])
 		self.featured_users = User.objects.all()
 		return super(FrendsListView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		context=super(FrendsListView,self).get_context_data(**kwargs)
 		context['featured_users'] = self.featured_users
-		context['user'] = self.user
 		return context
+
+	def get_queryset(self):
+		self.user = User.objects.get(pk=self.kwargs["pk"])
+		frends=self.user.get_all_connection()
+		return frends
 
 
 class ConnectCreate(View):
