@@ -9,6 +9,7 @@ from communities.helpers import upload_to_community_avatar_directory, upload_to_
 from imagekit.models import ProcessedImageField
 from moderation.models import ModeratedObject, ModerationCategory
 from main.models import Item
+from users.models import User
 
 
 class CommunityCategory(models.Model):
