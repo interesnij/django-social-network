@@ -27,7 +27,7 @@ class CommunityMembersView(ListView):
 
 	def get_queryset(self):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		membersheeps=get_community_with_name_members(community_name=self.community.name)
+		membersheeps=self.community.get_community_with_name_members(community_name=self.community.name)
 		return membersheeps
 
 class CommunityDetailView(DetailView):
