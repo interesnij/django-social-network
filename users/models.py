@@ -243,7 +243,7 @@ class User(AbstractUser):
 
         if max_id:
             goods_query.add(Q(id__lt=max_id), Q.AND)
-        goods = Item.objects.filter(goods_query)
+        goods = Good.objects.filter(goods_query)
         return goods
 
     def get_followers(self, max_id=None):
