@@ -1,3 +1,4 @@
+
 <script>
 $('.stream').on('click', '.comment', function () {
 	var item = $(this).closest(".infinite-item").attr("item-id");
@@ -248,6 +249,7 @@ $('[data-action="item_unfixed"]').click(unfixed);
 	})
 </script>
 
+<script src="{% static 'scripts/jquery.js' %}" type="text/javascript"></script>
 <script src="/static/scripts/jquery.waypoints.min.js" type="text/javascript"></script>
 <script src="/static/scripts/infinite.min.js" type="text/javascript"></script>
 <script>
