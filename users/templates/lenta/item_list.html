@@ -31,6 +31,12 @@ transition: 0.5s;
     <div class="card mb-4 item_fullscreen" style="display:none">
       <div id="item_loader" style="margin-top:30px;position: relative;"></div>
     </div>
+    <div class="infinite-container">
+      <div class="stream-update">
+        <a href=""><span class="new-posts"></span> Загрузить новые записи</a>
+      </div>
+
+      <span class="stream">
 
     {% if object.article %}
         {% include 'generic/posts/article.html' with article=article %}
@@ -51,6 +57,7 @@ transition: 0.5s;
       {% endif %}
 
     {% endfor %}
+  </span>
     <div class="load col-12 col-md-12" >
       {% if page_obj.has_next %}
         <a style="display:flex;justify-content:center;" class="infinite-more-link" href="?page={{ page_obj.next_page_number }}">

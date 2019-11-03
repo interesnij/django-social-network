@@ -168,25 +168,10 @@
 
         {% include 'profile/new_post.html' %}
 
-        <div class="infinite-container">
-          <div class="stream-update">
-            <a href=""><span class="new-posts"></span> Загрузить новые записи</a>
-          </div>
 
-          <span class="stream">
-            {% for object in object_list %}
+            <div id="lenta_reload"></div>
 
-              {% if object.article %}
-                  {% include 'generic/posts/article.html' with article=article  %}
-              {% endif %}
-
-              {% if object.post %}
-                  {% include 'generic/posts/post.html' with post=post  %}
-              {% endif %}
-
-            {% endfor %}
-            
-          </span>
+          
         </div>
     </div>
 </div>
