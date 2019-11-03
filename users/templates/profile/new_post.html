@@ -79,6 +79,14 @@
          <div id="for_good" style="display:none;margin:10px">good</div>
          <div id="for_question" style="display:none;margin:10px">question</div>
          <div id="for_settings" style="display:none;margin:10px">
+           <div class="form-group ">
+             <label>статус</label>
+             <select class="form-control" id="id_status" name="status" data-live-search="true" tabindex="-1" aria-hidden="true">
+               <option value="P" checked>Опубликовано</option>
+               <option value="D">Отложено</option>
+             </select>
+           </div>
+           <br><br>
            <div class="custom-control custom-checkbox">
                <input type="checkbox" name="comments_enabled" id="id_comments_enabled" class="custom-control-input">
                <label class="custom-control-label" for="id_comments_enabled">

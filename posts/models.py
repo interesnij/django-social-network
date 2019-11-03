@@ -51,7 +51,7 @@ class Post(Item):
                                         image=image,
                                         community=community,
                                         comments_enabled=comments_enabled,
-                                        status = STATUS_PUBLISHED,
+                                        status = status,
                                     )
             channel_layer = get_channel_layer()
             payload = {
