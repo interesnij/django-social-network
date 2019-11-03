@@ -59,8 +59,8 @@ class AllUsers(ListView):
     model=User
 
     def get_queryset(self):
-		users=User.objects.only(id)
-		return users
+        users=User.objects.only(id)
+        return users
 
 
 class ProfileUserView(TemplateView):
