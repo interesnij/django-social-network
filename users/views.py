@@ -63,7 +63,7 @@ class AllUsers(ListView):
         return users
 
 
-class ProfileUserView(ListView):
+class ProfileUserView(TemplateView):
     template_name = 'user.html'
     model=Item
     paginate_by=6
@@ -81,11 +81,6 @@ class ProfileUserView(ListView):
         context['form_comment'] = CommentForm()
         context['communities'] = self.communities
         return context
-
-    def get_queryset(self):
-        self.user=User.objects.get(pk=self.kwargs["pk"])
-        items = self.user.get_posts()
-        return items
 
 
 class UserGeneralChange(TemplateView):
