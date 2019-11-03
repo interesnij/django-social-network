@@ -202,18 +202,6 @@ class Community(models.Model):
     EXCLUDE_COMMUNITY_MODERATORS_KEYWORD = 'moderators'
 
     @classmethod
-    def get_community_with_name_members(cls, community_name, members_max_id=None, exclude_keywords=None):
-        """"
-        Получаем всех участников сообщества
-        """
-        community_members_query = Q(communities_memberships__community__name=community_name)
-
-        if members_max_id:
-            community_members_query.add(Q(id__lt=members_max_id), Q.AND)
-
-        return settings.AUTH_USER_MODEL.objects.filter(community_members_query)
-
-    @classmethod
     def search_community_with_name_members(cls, community_name, query, exclude_keywords=None):
         """"
         Поиск по участникам группы
