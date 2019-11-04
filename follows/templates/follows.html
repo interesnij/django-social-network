@@ -40,11 +40,11 @@
                     <li class="list-group-item">
                         <div class="media">
                             <figure>
-                                {% if object.user.profile.avatar %}
+                              {% if object.user.profile.avatar %}
                                 <img src="{{ object.user.profile.avatar.url }}" style="border-radius:50px;width:50px;" alt="image">
-                                {% else %}
+                              {% else %}
                                 <img style="border:#6C757D solid 1px;border-radius:50px;padding:5px;width:50px;" src="{% static 'images/icons/person-24px.svg' %}" />
-                                {% endif %}
+                              {% endif %}
                             </figure>
                             <div class="media-body">
                                 <a href="{% url 'user' pk=object.user.pk %}" class="ajax">

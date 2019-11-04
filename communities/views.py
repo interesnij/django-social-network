@@ -4,9 +4,10 @@ from main.models import Item
 from communities.models import *
 from django.views.generic.detail import DetailView
 from django.views.generic.base import TemplateView
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from communities.forms import CommunityForm
 from generic.mixins import CategoryListMixin
+
 
 
 class CommunitiesView(ListView):
