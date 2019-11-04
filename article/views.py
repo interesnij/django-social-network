@@ -107,7 +107,7 @@ class ArticleCommunityCreate(TemplateView):
             new_article=self.form.save()
 
             if request.is_ajax() :
-                 html = render_to_string('article.html',{'object': new_article,'request': request})
+                 html = render_to_string('generic/posts/article.html',{'object': new_article,'request': request})
                  return HttpResponse(html)
         else:
            HttpResponseBadRequest()
