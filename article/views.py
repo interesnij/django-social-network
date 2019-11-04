@@ -87,12 +87,14 @@ class ArticleCommunityCreate(TemplateView):
     success_url="/"
 
     def get(self,request,*args,**kwargs):
-        self.form=ArticleForm(initial={"creator":request.user,"community":request.POST.get('community')})
+        self.form=ArticleForm()
+        self.community = Community.objects.get(pk=self.kwargs["pk"])
         return super(ArticleCommunityCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context=super(ArticleCommunityCreate,self).get_context_data(**kwargs)
         context["form"]=self.form
+        context["community"]=self.community
         return context
 
     def post(self,request,*args,**kwargs):
