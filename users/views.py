@@ -40,7 +40,7 @@ class AvatarReload(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(AvatarReload, self).get_context_data(**kwargs)
-        context['user'] = self.user
+        
         return context
 
 
