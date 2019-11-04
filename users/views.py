@@ -35,7 +35,7 @@ class AvatarReload(TemplateView):
     template_name="profile/avatar_reload.html"
 
     def get(self,request,*args,**kwargs):
-        self.user2=User.objects.get(pk=self.kwargs["pk"])
+        self.user=User.objects.get(uuid=self.kwargs["uuid"])
         return super(AvatarReload,self).get(request,*args,**kwargs)
 
     def get_context_data(self, **kwargs):
