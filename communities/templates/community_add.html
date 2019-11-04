@@ -66,17 +66,17 @@
             url: "{% url 'add_community' %}",
             data: frm_com.serialize(),
             success: function(data) {
-                if (data.error) {
-
-                } else {
                     $('.community_fullscreen').hide();
                     $('#community_loader').empty();
                     $('#ajax').html('').load("/communities/gygyg/");
-                }
             },
-
             error: function(data) {
-
+              $.toast({
+                  heading: '{{ request.user.first_name }}',
+                  text: 'Для создания сообщества нужно заполнить название, категорию и тип открытости будущего сообщества',
+                  showHideTransition: 'fade',
+                  icon: 'error'
+              })
             }
         });
         return false;
