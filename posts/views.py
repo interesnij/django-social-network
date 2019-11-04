@@ -2,6 +2,7 @@ from django.views.generic.base import TemplateView
 from users.models import User
 from django.template.loader import render_to_string
 from posts.models import Post
+from communities.models import Community
 from main.models import Item
 from posts.forms import PostForm, PostCommunityForm
 from django.http import HttpResponse, HttpResponseBadRequest
@@ -80,12 +81,12 @@ class PostCommunityCreate(View):
 
     def post(self,request,*args,**kwargs):
         self.form_post=PostCommunityForm(request.POST, request.FILES)
+        self.community = Community.objects.get(pk=self.kwargs["pk"])
         if self.form_post.is_valid():
             new_post=self.form_post.save(commit=False)
             new_post.creator=self.request.user
-            new_post.community=request.POST.get('community')
+            new_post.community=self.community
             new_post=self.form_post.save()
-
 
             if request.is_ajax() :
                 html = render_to_string('new_post.html',{'object': new_post,'request': request})
