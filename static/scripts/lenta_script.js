@@ -37,7 +37,7 @@ $.ajax({
 };
 $('[data-action="remove"]').click(remove);
 
-$('.stream').on('click', '.article_detail', function (e) {
+$('#ajax').on('click', '.article_detail', function (e) {
 	e.preventDefault();
 	 var item = $(this);
 	 var item_id = item.data("id");
@@ -46,7 +46,7 @@ $('.stream').on('click', '.article_detail', function (e) {
 });
 
 
-$('.stream').on('click', '.fullscreen', function () {
+$('#ajax').on('click', '.fullscreen', function () {
 	 var item = $(this);
 	 var item_id = item.data("id");
 	 $('#item_loader').html('').load("/users/item/" + item_id)
@@ -97,7 +97,7 @@ $('[data-action="item_fixed"]').click(fixed);
 $('[data-action="item_unfixed"]').click(unfixed);
 
 
-	$('.stream').on('click', '.emoji', function () {
+	$('#ajax').on('click', '.emoji', function () {
 			var react = $(this);
 			var item = react.parents('.infinite-item').attr("item-id");
 			var pk = react.data('id');
@@ -139,7 +139,7 @@ $('[data-action="item_unfixed"]').click(unfixed);
   	 $('#item_loader').empty();
   });
 
-  $('.stream').on('click', '.itemComment', function () {
+  $('#ajax').on('click', '.itemComment', function () {
   button1 = $(this);
   form1 = button1.parent().parent().parent();
         $.ajax({
@@ -163,7 +163,7 @@ $('[data-action="item_unfixed"]').click(unfixed);
         return false;
     });
 
-  $('.stream').on('click', '.replyComment', function () {
+  $('#ajax').on('click', '.replyComment', function () {
   button = $(this);
   form = button.parent().parent().parent().parent();
         $.ajax({
@@ -193,7 +193,7 @@ $('[data-action="item_unfixed"]').click(unfixed);
         return false;
     });
 
-  $('.stream').on('click', '.replyParentComment', function () {
+  $('#ajax').on('click', '.replyParentComment', function () {
   button = $(this);
   form = button.parent().parent().parent().parent();
         $.ajax({
@@ -223,7 +223,7 @@ $('[data-action="item_unfixed"]').click(unfixed);
         return false;
     });
 
-	$( ".stream" ).on('click', '.reply_comment', function () {
+	$( "#ajax" ).on('click', '.reply_comment', function () {
     var reply_comment_form = $(this);
     var objectUser = reply_comment_form.prev().text().trim();
     var form = reply_comment_form.next().find(".text-comment");
