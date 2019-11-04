@@ -77,12 +77,12 @@ class ArticleUserCreate(TemplateView):
                  html = render_to_string('generic/posts/article.html',{'object': new_article,'request': request})
                  return HttpResponse(html)
         else:
-           return JsonResponse({'error': True, 'errors': self.form.errors})
+           return HttpResponseBadRequest()
         return super(ArticleUserCreate,self).get(request,*args,**kwargs)
 
 
 class ArticleCommunityCreate(TemplateView):
-    template_name="article_add.html"
+    template_name="article_add_community.html"
     form=None
     success_url="/"
 
@@ -108,7 +108,7 @@ class ArticleCommunityCreate(TemplateView):
                  html = render_to_string('article.html',{'object': new_article,'request': request})
                  return HttpResponse(html)
         else:
-           return JsonResponse({'error': True, 'errors': self.form.errors})
+           HttpResponseBadRequest()
         return super(ArticleCommunityCreate,self).get(request,*args,**kwargs)
 
 
