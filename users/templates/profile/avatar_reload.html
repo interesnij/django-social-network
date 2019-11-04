@@ -1,8 +1,8 @@
 {% load staticfiles %}
 
 <figure class="mx-auto mb-3">
-  {% if user.profile.avatar %}
-    <img src="{{ user.profile.avatar.url }}" alt="">
+  {% if request.user.profile.avatar %}
+    <img src="{{ request.user.profile.avatar.url }}" alt="">
   {% else %}
     <img src="{% static 'images/icons/person-24px.svg' %}" />
   {% endif %}
