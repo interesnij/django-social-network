@@ -48,6 +48,7 @@ class CommunityDetailView(DetailView):
 	model = Community
 	administrator = False
 	staff = False
+	creator = False
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
@@ -56,6 +57,8 @@ class CommunityDetailView(DetailView):
 			self.administrator=True
 		if request.user.is_authenticated and request.user.is_staff_of_community_with_name(self.community.name):
 			self.staff=True
+		if request.user.is_authenticated and request.user.is_creator_of_community_with_name(self.community.name):
+			self.creator=True
 
 		return super(CommunityDetailView,self).get(request,*args,**kwargs)
 
@@ -63,6 +66,7 @@ class CommunityDetailView(DetailView):
 		context=super(CommunityDetailView,self).get_context_data(**kwargs)
 		context["membersheeps"]=self.membersheeps
 		context["administrator"]=self.administrator
+		context["creator"]=self.creator
 		context["staff"]=self.staff
 		return context
 
