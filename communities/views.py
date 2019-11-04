@@ -44,20 +44,18 @@ class CommunityMembersView(ListView):
 		return membersheeps
 
 class CommunityDetailView(DetailView):
-	template_name="community_detail.html"
-	model=Community
+	template_name = "community_detail.html"
+	model = Community
+	administrator = False
+	staff = False
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.membersheeps=CommunityMembership.objects.filter(community__id=self.community.pk)[0:5]
 		if request.user.is_authenticated and request.user.is_administrator_of_community_with_name(self.community.name):
 			self.administrator=True
-		else:
-			self.administrator=False
 		if request.user.is_authenticated and request.user.is_staff_of_community_with_name(self.community.name):
 			self.staff=True
-		else:
-			self.staff=False
 
 		return super(CommunityDetailView,self).get(request,*args,**kwargs)
 
