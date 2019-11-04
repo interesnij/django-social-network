@@ -61,7 +61,7 @@ frm10.submit(function () {
 				cache: false,
 				processData:false,
 				success: function (data) {
-					$('#avatar_reload').html('').load("/users/avatar-reload/" + {{ user.uuid }});
+					$('#avatar_reload').html('').load("/users/avatar-reload/");
 				},
 				error: function(data) {
 						console.log("Все не ОК")

@@ -33,5 +33,5 @@ urlpatterns = [
     url(r'^fixed/(?P<item_id>\d+)/$', fixed, name='fixed'),
     url(r'^unfixed/(?P<item_id>\d+)/$', unfixed, name='unfixed'),
     url(r'^delete/(?P<item_id>\d+)/$', item_delete, name='item_delete'),
-    url(r'^avatar-reload/(?P<uuid>[0-9a-f-]+)/$', AvatarReload, name='avatar_reload'),
+    url(r'^avatar-reload/$', AvatarReload, name='avatar_reload'),
 ]
