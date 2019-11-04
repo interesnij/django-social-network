@@ -78,7 +78,15 @@
         </li>
     </ul>
     {% else %}
-    Нужно войти или зарегистрироваться для полного доступа к функциям сайта
+    Нужно
+    <a href="{% url 'login' %}" style="text-decoration:underline;" class="ajax">
+      войти
+    </a>
+    или
+    <a href="{% url 'signup' %}" class="ajax">
+      зарегистрироваться
+    </a>
+    для полного доступа к функциям сайта
     {% endif %}
 </div>
 <div class="backdrop"></div>
