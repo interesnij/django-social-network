@@ -48,11 +48,7 @@
           Товары
         </a>
         {% else %}
-          Нужно
-          <a href="{% url 'login' %}" style="text-decoration:underline;" class="ajax">
-            войти
-          </a>
-          или
+          Нужно <a href="{% url 'login' %}" style="text-decoration:underline;" class="ajax"> войти </a> или
           <a href="{% url 'signup' %}" style="text-decoration:underline;" class="ajax">
             зарегистрироваться
           </a>
