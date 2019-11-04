@@ -6,6 +6,7 @@ from article.models import Article
 from django.urls import reverse_lazy
 from django.http import HttpResponse, HttpResponseBadRequest
 from generic.mixins import CategoryListMixin
+from communities.models import Community
 
 
 class ArticleView(TemplateView):
@@ -96,10 +97,11 @@ class ArticleCommunityCreate(TemplateView):
 
     def post(self,request,*args,**kwargs):
         self.form=ArticleForm(request.POST,request.FILES)
+        self.community = Community.objects.get(pk=self.kwargs["pk"])
         if self.form.is_valid():
             new_article=self.form.save(commit=False)
             new_article.creator=self.request.user
-            new_article.community=request.POST.get('community')
+            new_article.community=self.community
             new_article=self.form.save()
 
             if request.is_ajax() :
