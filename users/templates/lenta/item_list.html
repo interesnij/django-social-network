@@ -1,32 +1,6 @@
 {% load staticfiles humanize %}
-<style>
-.reaction_window {
-  opacity: 0;
-visibility: hidden;
-position: absolute;
-bottom: 25px;
-margin-bottom: 10px;
-display: flex;
-transition: 0.5s;
-}
-.reaction_window:hover {
-    z-index: 10;
-    opacity: 1;
-    visibility: visible;
-    background: #D6DAE1;
-    color: black;
-}
-.react_btn:hover~.reaction_window{
-    z-index: 10;
-    opacity: 1;
-    visibility: visible;
-    background: #D6DAE1;
-    color: black;
-}
-</style>
 
 {% if object_list %}
-
 
     <div class="card mb-4 item_fullscreen" style="display:none">
       <div id="item_loader" style="margin-top:30px;position: relative;"></div>
@@ -69,10 +43,6 @@ transition: 0.5s;
 
   </div>
 
-
-
 {% else %}
 <h6>  Пока ничего нет...</h6>
 {% endif %}
-
-{% include 'lenta/lenta_script.html' %}

@@ -1,5 +1,4 @@
 
-<script>
 $('.stream').on('click', '.comment', function () {
 	var item = $(this).closest(".infinite-item").attr("item-id");
 	var url = $(this).parents(".infinite-item");
@@ -16,9 +15,7 @@ $('.stream').on('click', '.comment', function () {
 	});
 	return false;
 });
-</script>
 
-<script>
 function remove() {
 var remove = $(this);
 var pk = remove.data('id');
@@ -39,9 +36,7 @@ $.ajax({
 });
 };
 $('[data-action="remove"]').click(remove);
-</script>
 
-<script>
 $('.stream').on('click', '.article_detail', function (e) {
 	e.preventDefault();
 	 var item = $(this);
@@ -49,18 +44,16 @@ $('.stream').on('click', '.article_detail', function (e) {
 	 $('#article_loader').html('').load("/article/detail/" + item_id)
 	 $('.article_fullscreen').show();
 });
-</script>
 
-<script>
+
 $('.stream').on('click', '.fullscreen', function () {
 	 var item = $(this);
 	 var item_id = item.data("id");
 	 $('#item_loader').html('').load("/users/item/" + item_id)
 	 $('.item_fullscreen').show();
 });
-</script>
 
-<script>
+
 function fixed() {
 var fixed = $(this);
 var pk = fixed.parent().data('id');
@@ -102,9 +95,7 @@ $.ajax({
 };
 $('[data-action="item_fixed"]').click(fixed);
 $('[data-action="item_unfixed"]').click(unfixed);
-</script>
 
-<script>
 
 	$('.stream').on('click', '.emoji', function () {
 			var react = $(this);
@@ -142,16 +133,12 @@ $('[data-action="item_unfixed"]').click(unfixed);
 			return false;
 	});
 
-</script>
 
-<script>
   $('.item_fullscreen_hide').on('click', function () {
   	 $('.item_fullscreen').hide();
   	 $('#item_loader').empty();
   });
-</script>
 
-<script>
   $('.stream').on('click', '.itemComment', function () {
   button1 = $(this);
   form1 = button1.parent().parent().parent();
@@ -175,8 +162,7 @@ $('[data-action="item_unfixed"]').click(unfixed);
         });
         return false;
     });
-</script>
-<script>
+
   $('.stream').on('click', '.replyComment', function () {
   button = $(this);
   form = button.parent().parent().parent().parent();
@@ -206,8 +192,7 @@ $('[data-action="item_unfixed"]').click(unfixed);
         });
         return false;
     });
-</script>
-<script>
+
   $('.stream').on('click', '.replyParentComment', function () {
   button = $(this);
   form = button.parent().parent().parent().parent();
@@ -237,8 +222,7 @@ $('[data-action="item_unfixed"]').click(unfixed);
         });
         return false;
     });
-</script>
-<script>
+
 	$( ".stream" ).on('click', '.reply_comment', function () {
     var reply_comment_form = $(this);
     var objectUser = reply_comment_form.prev().text().trim();
@@ -247,11 +231,8 @@ $('[data-action="item_unfixed"]').click(unfixed);
 		reply_comment_form.next().show();
     form.focus();
 	})
-</script>
 
-<script src="/static/scripts/jquery.waypoints.min.js" type="text/javascript"></script>
-<script src="/static/scripts/infinite.min.js" type="text/javascript"></script>
-<script>
+
 	var infinite = new Waypoint.Infinite({
 	    element: $('.infinite-container')[0],
 	    onBeforePageLoad: function() {
@@ -261,4 +242,3 @@ $('[data-action="item_unfixed"]').click(unfixed);
 	        $('.load').hide();
 	    }
 	});
-</script>
