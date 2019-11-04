@@ -9,8 +9,6 @@
     <div class="row">
         <div class="col-12 col-md-12 col-lg-8">
 
-          {% include 'community/info.html' %}
-
           {% if not object.is_private or request.user.is_member_of_communities %}
             {% include 'community/new_post.html' %}
 
