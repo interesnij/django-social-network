@@ -1,3 +1,9 @@
+$('#ajax .stream').on('click', '.article_detail', function () {
+	 var item = $(this);
+	 var item_id = item.data("id");
+	 $('#article_loader').html('').load("/article/detail/" + item_id)
+	 $('.article_fullscreen').show();
+});
 
 $('#ajax').on('click', '.comment', function () {
 	var item = $(this).closest(".infinite-item").attr("item-id");
@@ -36,13 +42,6 @@ $.ajax({
 });
 };
 $('[data-action="remove"]').click(remove);
-
-$('#ajax .stream').on('click', '.article_detail', function () {
-	 var item = $(this);
-	 var item_id = item.data("id");
-	 $('#article_loader').html('').load("/article/detail/" + item_id)
-	 $('.article_fullscreen').show();
-});
 
 
 $('#ajax').on('click', '.fullscreen', function () {
