@@ -55,6 +55,7 @@ class ItemListView(ListView, CategoryListMixin):
     def get_context_data(self, **kwargs):
         context = super(ItemListView, self).get_context_data(**kwargs)
         context['object'] = self.fixed
+        context['user'] = self.user
         return context
 
 
