@@ -1,12 +1,4 @@
 {% load staticfiles %}
-<script>
-  var textarea = document.querySelector('.id_text');
-textarea.addEventListener('keyup', function(){
-  if(this.scrollTop > 0){
-    this.style.height = this.scrollHeight + "px";
-  }
-});
-</script>
 
 <!-- ГРУЗИМ
 						СТЕНУ,
@@ -15,9 +7,9 @@ textarea.addEventListener('keyup', function(){
 																	ПРИ ЗАГРУЗКЕ СТРАНИЦЕ ПРОФИЛЯ-->
 <script>
 $(document).ready(function(){
-	$('#lenta_reload').html('').load("/users/list/" + {{ user.pk }});
-	$('#button_reload').html('').load("/users/profile_button/" + {{ user.pk }});
-	$('#stat_reload').html('').load("/users/profile_stat/" + {{ user.pk }});
+	$('#lenta_load').html('').load("/users/list/" + {{ user.pk }});
+	$('#button_load').html('').load("/users/profile_button/" + {{ user.pk }});
+	$('#stat_load').html('').load("/users/profile_stat/" + {{ user.pk }});
 });
 </script>
 
