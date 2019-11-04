@@ -70,7 +70,7 @@ class PostCommunityCreate(View):
     success_url="/"
 
     def get(self,request,*args,**kwargs):
-        self.form_post=PostCommunityForm(initial={"creator":request.user,'community':request.POST.get('community')})
+        self.form_post=PostCommunityForm()
         return super(PostCommunityCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
