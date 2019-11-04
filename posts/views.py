@@ -88,7 +88,7 @@ class PostCommunityCreate(View):
             new_post.create_post(
                                     creator=new_post.creator,
                                     text=new_post.text,
-                                    community=new_post.community,
+                                    community=None,
                                     comments_enabled=new_post.comments_enabled,
                                     status=new_post.status,
                                 )
@@ -97,7 +97,7 @@ class PostCommunityCreate(View):
                 html = render_to_string('new_post.html',{'object': new_post,'request': request})
                 return HttpResponse(html)
         else:
-            return HttpResponse("!")
+            return HttpResponseBadRequest()
 
 
 class RepostUserUser(View):
