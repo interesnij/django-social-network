@@ -83,9 +83,9 @@ class PostCommunityCreate(View):
         if self.form_post.is_valid():
             new_post=self.form_post.save(commit=False)
             new_post.creator=self.request.user
-            new_post.community=request.POST.get('community')
+            new_post.community__id=request.POST.get('community')
             new_post=self.form_post.save()
-            
+
 
             if request.is_ajax() :
                 html = render_to_string('new_post.html',{'object': new_post,'request': request})
