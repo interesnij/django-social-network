@@ -135,7 +135,7 @@ class CommunityCreate(TemplateView):
 			if request.is_ajax() :
 				return HttpResponse("!")
 		else:
-			return JsonResponse({'errors': self.form.errors})
+			return HttpResponseBadRequest()
 		return super(CommunityCreate,self).get(request,*args,**kwargs)
 
 
