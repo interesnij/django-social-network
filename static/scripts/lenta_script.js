@@ -37,8 +37,7 @@ $.ajax({
 };
 $('[data-action="remove"]').click(remove);
 
-$('#ajax').on('click', '.article_detail', function (e) {
-	e.preventDefault();
+$('#ajax').on('click', '.article_detail', function () {
 	 var item = $(this);
 	 var item_id = item.data("id");
 	 $('#article_loader').html('').load("/article/detail/" + item_id)
