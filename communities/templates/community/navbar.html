@@ -17,12 +17,12 @@
 
                             <div class="card mb-4">
                                 <div class="card-body">
-                                  <h3 class="mb-2 text-dark">{{ object.name }}</h3>
+                                  <h3 class="mb-2">{{ object.name }}</h3>
                                   {% if object.status %}
-                                    <p class="text-dark">{{ object.status }}</p>
+                                    <p class="">{{ object.status }}</p>
                                   {% else %}
                                       {% if request.user.communities_memberships.is_administrator %}
-                                        <p class="text-dark">Добавьте статус сообщества</p>
+                                        <p class="">Добавьте статус сообщества</p>
                                       {% endif %}
 
                                   {% endif %}
