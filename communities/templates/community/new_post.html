@@ -116,7 +116,7 @@ $('#question').on('click', function () {
 </script>
 <script>
 	$( "#community_article_add" ).click(function(){
-		$('#article_loader').html('').load("/article/add_community/");
+		$('#article_loader').html('').load("{% url 'article_add_community' object.pk %}"); 
 		$('.article_fullscreen').show();
 	})
 </script>
