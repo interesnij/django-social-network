@@ -7,8 +7,8 @@
          <div class="jumbotron mb-4 bg-dark text-center has-background-img position-relative box-shadow">
              <div class="row align-items-center no-gutters">
                     <figure class="background-img">
-                      {% if object.article.image %}
-                        <img class="lazyload" data-src="{{ object.article.image.url }}" alt="">
+                      {% if object.article.g_image %}
+                        <img class="lazyload" data-src="{{ object.article.g_image.url }}" alt="">
                       {% else %}
                         <img class="lazyload" data-src="{% static 'images/no-image.jpg' %}" />
                       {% endif %}
