@@ -1,5 +1,5 @@
 
-$('#ajax).on('click', '.comment', function () {
+$('#ajax').on('click', '.comment', function () {
 	var item = $(this).closest(".infinite-item").attr("item-id");
 	var url = $(this).parents(".infinite-item");
 	$.ajax({
