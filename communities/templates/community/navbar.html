@@ -27,7 +27,9 @@
 
                                   {% endif %}
                                   <br><br>
-                                  Вы создатель сообщества
+                                  {% if creator %}
+                                    Вы создатель сообщества
+                                  {% endif %}
                                     <ul class="list-group list-group-flush w-100">
                                         <li class="list-group-item px-0">
                                             <div class="media experience">
