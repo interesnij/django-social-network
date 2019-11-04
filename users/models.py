@@ -235,7 +235,7 @@ class User(AbstractUser):
         """
         Получить все посты пользователя
         """
-        posts_query = Q(creator_id=self.id, is_deleted=False, status=Item.STATUS_PUBLISHED)
+        posts_query = Q(creator_id=self.id, is_deleted=False, status=Item.STATUS_PUBLISHED, community=None)
         exclude_reported_and_approved_posts_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         posts_query.add(exclude_reported_and_approved_posts_query, Q.AND)
 
