@@ -1,0 +1,9 @@
+{% load staticfiles %}
+
+<figure class="mx-auto mb-3" id="avatar_reload">
+  {% if user.profile.avatar %}
+    <img src="{{ user.profile.avatar.url }}" alt="">
+  {% else %}
+    <img src="{% static 'images/icons/person-24px.svg' %}" />
+  {% endif %}
+</figure>

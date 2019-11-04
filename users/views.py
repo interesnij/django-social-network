@@ -31,6 +31,19 @@ class UserItemView(CategoryListMixin, TemplateView):
         return context
 
 
+class AvatarReload(TemplateView):
+    template_name="profile/avatar_reload.html"
+
+    def get(self,request,*args,**kwargs):
+        self.user=User.objects.get(pk=self.kwargs["pk"])
+        return super(AvatarReload,self).get(request,*args,**kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(AvatarReload, self).get_context_data(**kwargs)
+        context['user'] = self.user
+        return context
+
+
 class ItemListView(ListView, CategoryListMixin):
     template_name="lenta/item_list.html"
     model=Item

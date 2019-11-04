@@ -61,7 +61,7 @@ frm10.submit(function () {
 				cache: false,
 				processData:false,
 				success: function (data) {
-					console.log("Все ОК")
+					$('#avatar_reload').html('').load("/users/avatar-reload/" + {{ user.pk }});
 				},
 				error: function(data) {
 						console.log("Все не ОК")
