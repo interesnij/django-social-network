@@ -275,9 +275,9 @@ class User(AbstractUser):
         timeline_posts_query = Q()
 
         followed_users_query = self.followers.all()
-        followed_users = followed_users_query.values('user__id')
+        followed_users = followed_users_query.values('followed_user__id')
         for followed_user in followed_users:
-            followed_user_id = followed_user['user__id']
+            followed_user_id = followed_user['followed_user__id']
             followed_user_query = Q(creator_id=followed_user_id)
             timeline_posts_query.add(followed_user_query, Q.OR)
 
