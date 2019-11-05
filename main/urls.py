@@ -5,7 +5,7 @@ from main.views import (
 						ReactView,
 						CommentReactView,
 						CommentListView,
-						NewsListView
+						NewsListView,
 						post_comment,
 						post_comment_react,
 						comment_un_react,
