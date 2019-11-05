@@ -36,7 +36,7 @@ class NewsListView(ListView, CategoryListMixin):
 		return super(NewsListView,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
-		self.user=request.user
+		self.user=self.request.user
 		if self.user.is_authenticated:
 			items = self.user.get_timeline_posts()
 		else:
