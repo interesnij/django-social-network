@@ -275,21 +275,18 @@ class User(AbstractUser):
         timeline_posts_query = Q()
 
         followed_users_query = self.followers.all()
-
         followed_users = followed_users_query.values('followed_user__id')
-
         for followed_user in followed_users:
-
             followed_user_id = followed_user['followed_user__id']
-
-            followed_user_query = Q(creator_id=followed_user_id, community=None)
-
+            followed_user_query = Q(creator_id=followed_user_id)
             timeline_posts_query.add(followed_user_query, Q.OR)
 
-        if max_id:
-            timeline_posts_query.add(Q(id__lt=max_id), Q.AND)
-        elif min_id:
-            timeline_posts_query.add(Q(id__gt=min_id), Q.AND)
+        frends_users_query = self.connections.all()
+        frends = frends_users_query.values('user__id')
+        for frend in frends:
+            frend_user_id = frend['user__id']
+            frends_users_query = Q(creator_id=frend_user_id)
+            timeline_posts_query.add(frends_users_query, Q.OR)
 
         timeline_posts_query.add(Q(is_deleted=False, status=Item.STATUS_PUBLISHED), Q.AND)
 
