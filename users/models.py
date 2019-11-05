@@ -282,7 +282,7 @@ class User(AbstractUser):
 
             followed_user_id = followed_user['followed_user__id']
 
-            followed_user_query = Q(creator_id=followed_user_id)
+            followed_user_query = Q(creator_id=followed_user_id, community=None)
 
             timeline_posts_query.add(followed_user_query, Q.OR)
 
