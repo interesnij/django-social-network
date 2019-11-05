@@ -279,7 +279,7 @@ class User(AbstractUser):
 
         followed_users_query = self.follows.all()
 
-        followed_users = followed_users_query.values('followed_user__id').cache()
+        followed_users = followed_users_query.values('followed_user__id')
 
         for followed_user in followed_users:
 
