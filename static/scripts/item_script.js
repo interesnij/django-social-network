@@ -22,7 +22,7 @@ $('#ajax').on('click', '.comment', function () {
 	return false;
 });
 
-function remove() {
+$('#ajax').on('click', '.remove', function () {
 var remove = $(this);
 var pk = remove.data('id');
 $.ajax({
@@ -41,7 +41,6 @@ $.ajax({
 	}
 });
 };
-$('[data-action="remove"]').click(remove);
 
 
 $('#ajax').on('click', '.fullscreen', function () {

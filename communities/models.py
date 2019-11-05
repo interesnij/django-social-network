@@ -9,7 +9,7 @@ from communities.helpers import upload_to_community_avatar_directory, upload_to_
 from imagekit.models import ProcessedImageField
 from moderation.models import ModeratedObject, ModerationCategory
 from main.models import Item
-
+from goods.models import Good
 
 
 class CommunityCategory(models.Model):
@@ -190,6 +190,19 @@ class Community(models.Model):
             posts_query.add(Q(id__lt=max_id), Q.AND)
         items = Item.objects.filter(posts_query)
         return items
+
+    def get_goods(self, max_id=None):
+        """
+        Получить все посты пользователя
+        """
+        goods_query = Q(community_id=self.pk, is_deleted=False, status=Good.STATUS_PUBLISHED)
+        exclude_reported_and_approved_goods_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
+        goods_query.add(exclude_reported_and_approved_goods_query, Q.AND)
+
+        if max_id:
+            goods_query.add(Q(id__lt=max_id), Q.AND)
+        goods = Good.objects.filter(goods_query)
+        return goods
 
     @classmethod
     def get_trending_communities(cls, category_name=None):
