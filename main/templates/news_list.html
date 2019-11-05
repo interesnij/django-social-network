@@ -36,23 +36,26 @@ transition: 0.5s;
     <div class="card mb-4 item_fullscreen" style="display:none">
       <div id="item_loader" style="margin-top:30px;position: relative;"></div>
     </div>
-
-    {% if object.article %}
-        {% include 'generic/community/article.html' with article=article %}
-    {% endif %}
-
-    {% if object.post %}
-      {% include 'generic/community/post.html' with post=post  %}
-    {% endif %}
-
     {% for object in object_list %}
 
-      {% if object.article %}
-          {% include 'generic/community/article.html' with article=article  %}
-      {% endif %}
+      {% if object.community %}
 
-      {% if object.post %}
+        {% if object.article %}
+          {% include 'generic/community/article.html' with article=article  %}
+        {% endif %}
+
+        {% if object.post %}
           {% include 'generic/community/post.html' with post=post  %}
+        {% endif %}
+
+      {% else %}
+        {% if object.article %}
+          {% include 'generic/posts/article.html' with article=article  %}
+        {% endif %}
+
+        {% if object.post %}
+          {% include 'generic/posts/post.html' with post=post  %}
+        {% endif %}
       {% endif %}
 
     {% endfor %}
