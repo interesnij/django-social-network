@@ -9,7 +9,7 @@ from communities.helpers import upload_to_community_avatar_directory, upload_to_
 from imagekit.models import ProcessedImageField
 from moderation.models import ModeratedObject, ModerationCategory
 from main.models import Item
-from users.models import User
+from common.model_loaders import get_user_model
 
 
 class CommunityCategory(models.Model):
@@ -240,7 +240,7 @@ class Community(models.Model):
 
         if members_max_id:
             community_members_query.add(Q(id__lt=members_max_id), Q.AND)
-
+        User = get_user_model()
         return User.objects.filter(community_members_query)
 
     @classmethod
