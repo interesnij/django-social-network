@@ -286,7 +286,7 @@ class User(AbstractUser):
         for frend in frends:
             frend_id = frend['user__id']
             frends_users_query = Q(creator_id=frend_id)
-            timeline_posts_query.add(frends_users_query, Q.OR)
+            timeline_posts_query.add(frends_users_query, Q.AND)
 
         timeline_posts_query.add(Q(is_deleted=False, status=Item.STATUS_PUBLISHED), Q.AND)
 
