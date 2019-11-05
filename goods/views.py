@@ -3,7 +3,7 @@ from django.views.generic import TemplateView
 from goods.models import Good, GoodSubCategory, GoodCategory
 from django.views.generic import ListView
 from users.models import User
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from goods.forms import GoodForm
 from django.template.loader import render_to_string
 from django.views.generic.detail import DetailView
@@ -59,7 +59,7 @@ class GoodUserCreate(TemplateView):
 				html = render_to_string('good.html',{'object': new_good,'request': request})
 			return HttpResponse(html)
 		else:
-			return JsonResponse({'error': True, 'errors': self.form.errors})
+			return HttpResponseBadRequest()
 		return super(GoodUserCreate,self).get(request,*args,**kwargs)
 
 
