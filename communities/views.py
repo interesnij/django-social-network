@@ -28,7 +28,7 @@ class CommunityMembersView(ListView):
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		self.members = request.user.get_community_with_id_members(self.community.name)
+		self.members = request.user.get_community_with_name_members(self.community.name)
 		if request.user.is_administrator_of_community_with_name(self.community.name):
 			self.administrator=True
 		return super(CommunityMembersView,self).get(request,*args,**kwargs)
