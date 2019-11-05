@@ -34,13 +34,13 @@ $.ajax({
 				heading: '{{ request.user.first_name }}',
 				text: 'статья успешно удалена!',
 				showHideTransition: 'fade',
-				icon: 'error'
+				icon: 'info'
 		})
 	},
 	error: function(data) {
 	}
 });
-};
+});
 
 
 $('#ajax').on('click', '.fullscreen', function () {
