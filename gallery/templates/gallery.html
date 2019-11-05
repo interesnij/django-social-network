@@ -8,11 +8,25 @@
 {% endif %}
 {% endblock %}
 {% block content %}
+<link rel="stylesheet" href="{% static 'styles/filepond.css' %}" media="all" />
+
 
 {% for object in albums %}
 {{ object.title }} - {{ object.photo_set.count }}
 {% endfor %}
 
-
-
+<div class="col-12 mb-30">
+                    <div class="box">
+                        <div class="box-head">
+                            <h3 class="title">FilePond</h3>
+                        </div>
+                        <div class="box-body">
+                            <input class="file-pond" type="file" multiple>
+                        </div>
+                    </div>
+                </div>
+<script defer src="https://demo.hasthemes.com/adomx-preview/light/assets/js/plugins/filepond/filepond.min.js" type="text/javascript"></script>
+<script defer src="https://demo.hasthemes.com/adomx-preview/light/assets/js/plugins/filepond/filepond-plugin-image-exif-orientation.min.js" type="text/javascript"></script>
+<script defer src="https://demo.hasthemes.com/adomx-preview/light/assets/js/plugins/filepond/filepond-plugin-image-preview.min.js" type="text/javascript"></script>
+<script defer src="https://demo.hasthemes.com/adomx-preview/light/assets/js/plugins/filepond/filepond.active.js" type="text/javascript"></script>
 {% endblock %}
