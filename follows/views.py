@@ -17,7 +17,7 @@ class FollowsListView(ListView):
 
 
 class FollowCreate(View):
-
+	success_url = "/"
 	def get(self,request,*args,**kwargs):
 		self.followed_user = User.objects.get(pk=self.kwargs["pk"])
 		new_follow = request.user.follow_user(self.followed_user)
@@ -26,7 +26,7 @@ class FollowCreate(View):
 
 
 class FollowDelete(View):
-
+	success_url = "/"
 	def get(self,request,*args,**kwargs):
 		self.followed_user = User.objects.get(pk=self.kwargs["pk"])
 		request.user.unfollow_user(self.followed_user)

@@ -31,11 +31,12 @@ transition: 0.5s;
   <div class="stream-update">
     <a href=""><span class="new-posts"></span> Загрузить новые записи</a>
   </div>
-
+  <br>
   <span class="stream">
     <div class="card mb-4 item_fullscreen" style="display:none">
       <div id="item_loader" style="margin-top:30px;position: relative;"></div>
     </div>
+    <br>
     {% for object in object_list %}
 
       {% if object.community %}
