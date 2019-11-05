@@ -236,17 +236,6 @@ def unmute_post_comment_with_id(self, post_comment_id):
     self.post_comment_mutes.filter(post_comment_id=post_comment_id).delete()
     return post_comment
 
-
-def get_timeline_posts(self, lists_ids=None, circles_ids=None, max_id=None, min_id=None, count=None):
-        """
-        Get the timeline posts for self. The results will be dynamic based on follows and connections.
-        """
-
-        if not circles_ids and not lists_ids:
-            return self._get_timeline_posts_with_no_filters(max_id=max_id, min_id=min_id, count=count)
-
-        return self._get_timeline_posts_with_filters(max_id=max_id, circles_ids=circles_ids, lists_ids=lists_ids)
-
 def _get_timeline_posts_with_no_filters(self, max_id=None, min_id=None, count=10):
     """
     получаем таймлайн записей
@@ -304,41 +293,6 @@ def _get_timeline_posts_with_no_filters(self, max_id=None, min_id=None, count=10
     final_queryset = own_posts_queryset.union(community_posts_queryset, followed_users_queryset)
 
     return final_queryset
-
-    def _get_timeline_posts_with_filters(self, max_id=None, min_id=None):
-
-        timeline_posts_query = Q()
-
-        if lists_ids:
-            followed_users_query = self.follows.filter(lists__id__in=lists_ids)
-        else:
-            followed_users_query = self.follows.all()
-
-        followed_users = followed_users_query.values('followed_user__id').cache()
-
-        for followed_user in followed_users:
-
-            followed_user_id = followed_user['followed_user__id']
-
-            followed_user_query = Q(creator_id=followed_user_id)
-
-            if circles_ids:
-                followed_user_query.add(Q(creator__connections__target_connection__circles__in=circles_ids), Q.AND)
-
-            followed_user_query.add(followed_user_circles_query, Q.AND)
-
-            timeline_posts_query.add(followed_user_query, Q.OR)
-
-        if max_id:
-            timeline_posts_query.add(Q(id__lt=max_id), Q.AND)
-        elif min_id:
-            timeline_posts_query.add(Q(id__gt=min_id), Q.AND)
-
-        timeline_posts_query.add(Q(is_deleted=False, status=Post.STATUS_PUBLISHED), Q.AND)
-
-        timeline_posts_query.add(~Q(moderated_object__reports__reporter_id=self.pk), Q.AND)
-
-        return Item.objects.filter(timeline_posts_query).distinct()
 
 
 def get_post_with_id(self, item_id):

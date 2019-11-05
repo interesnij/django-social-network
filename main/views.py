@@ -27,6 +27,27 @@ class MainPageView(TemplateView):
 		return context
 
 
+class NewsListView(ListView, CategoryListMixin):
+    template_name="news_list.html"
+    model=Item
+    paginate_by=10
+
+    def get(self,request,*args,**kwargs):
+        return super(NewsListView,self).get(request,*args,**kwargs)
+
+    def get_queryset(self):
+		self.user=request.user
+		if self.user.is_authenticated:
+			items = self.user.get_timeline_posts()
+		else:
+			items=None
+        return items
+
+    def get_context_data(self, **kwargs):
+        context = super(NewsListView, self).get_context_data(**kwargs)
+        return context
+
+
 class ComingView(TemplateView):
 	template_name="main/coming.html"
 

@@ -269,6 +269,37 @@ class User(AbstractUser):
             followings_query.add(Q(id__lt=max_id), Q.AND)
         return User.objects.filter(followings_query).distinct()
 
+    def get_timeline_posts(self, max_id=None, min_id=None):
+
+        return self._get_timeline_posts_with_filters(max_id=max_id)
+
+    def _get_timeline_posts_with_filters(self, max_id=None, min_id=None):
+
+        timeline_posts_query = Q()
+
+        followed_users_query = self.follows.all()
+
+        followed_users = followed_users_query.values('followed_user__id').cache()
+
+        for followed_user in followed_users:
+
+            followed_user_id = followed_user['followed_user__id']
+
+            followed_user_query = Q(creator_id=followed_user_id)
+
+            timeline_posts_query.add(followed_user_query, Q.OR)
+
+        if max_id:
+            timeline_posts_query.add(Q(id__lt=max_id), Q.AND)
+        elif min_id:
+            timeline_posts_query.add(Q(id__gt=min_id), Q.AND)
+
+        timeline_posts_query.add(Q(is_deleted=False, status=Item.STATUS_PUBLISHED), Q.AND)
+
+        timeline_posts_query.add(~Q(moderated_object__reports__reporter_id=self.pk), Q.AND)
+
+        return Item.objects.filter(timeline_posts_query).distinct()
+
 
 class UserBlock(models.Model):
     blocked_user = models.ForeignKey(User, db_index=False, on_delete=models.CASCADE, related_name='blocked_by_users')

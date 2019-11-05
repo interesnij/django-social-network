@@ -5,6 +5,7 @@ from main.views import (
 						ReactView,
 						CommentReactView,
 						CommentListView,
+						NewsListView
 						post_comment,
 						post_comment_react,
 						comment_un_react,
@@ -26,4 +27,5 @@ urlpatterns = [
     url(r'^main/post-comment/$', post_comment, name='post_comment'),
     url(r'^main/reply-comment/$', reply_comment, name='reply_comment'),
 	url(r'^main/comment_react_window/(?P<pk>\d+)/$', CommentReactView.as_view(), name='comment_react_window'),
+	url(r'^main/news/$', NewsListView.as_view(), name="news_list"),
 ]

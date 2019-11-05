@@ -37,19 +37,10 @@ var mySwiper2 = new Swiper('.swiper-post', {
       },
 });
 
-$(document).ready(function(){
-    /* photos gallery */
-    $('.grid').masonry({
-         itemSelector: '.grid-item',
-         percentPosition: true
+</script>
+<script>
+    $(document).ready(function() {
+        $('#news_load').html('').load("/main/news/");
     });
-
-});
-$(window).on("load resize", function () {
-     $('.grid').masonry({
-         itemSelector: '.grid-item',
-         percentPosition: true
-     });
- });
 </script>
 {% endblock %}
