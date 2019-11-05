@@ -31,7 +31,7 @@ $.ajax({
 		$(remove).parents('.card').hide();
     $('.activefullscreen').hide();
 		$.toast({
-				heading: '',
+				heading: 'Информация',
 				text: 'Запись успешно удалена!',
 				showHideTransition: 'fade',
 				icon: 'info'
@@ -51,48 +51,39 @@ $('#ajax').on('click', '.fullscreen', function () {
 });
 
 
-function fixed() {
+$('#ajax').on('click', '.fixed', function () {
 var fixed = $(this);
 var pk = fixed.parent().data('id');
 $.ajax({
 	url: "/users/fixed/" + pk + "/",
 	success: function (data) {
-		fixed.parent().html("<span data-action='item_unfixed' style='cursor:pointer' class='dropdown-item'>Открепить</span>");
+		fixed.parent().html("<span style='cursor:pointer' class='dropdown-item unfixed'>Открепить</span>");
 		$.toast({
-				heading: '{{ request.user.first_name }}',
-				text: 'Вы успешно закрепили элемент!',
+				heading: 'Информация',
+				text: 'Запись закреплена!',
 				showHideTransition: 'fade',
 				icon: 'info'
 		})
-	},
-	error: function(data) {
-		console.log("Что то пошло не так");
 	}
 });
-};
+});
 
-function unfixed() {
+$('#ajax').on('click', '.unfixed', function () {
 var unfixed = $(this);
 var pk = unfixed.parent().data('id');
 $.ajax({
 	url: "/users/unfixed/" + pk + "/",
 	success: function (data) {
-		unfixed.parent().html("<span data-action='item_fixed' style='cursor:pointer' class='dropdown-item'>Закрепить</span>");
+		unfixed.parent().html("<span style='cursor:pointer' class='dropdown-item fixed'>Закрепить</span>");
 		$.toast({
-				heading: '{{ request.user.first_name }}',
-				text: 'Вы успешно открепили элемент!',
+				heading: 'Информация',
+				text: 'Запись откреплена!',
 				showHideTransition: 'fade',
 				icon: 'info'
 		})
-	},
-	error: function(data) {
-		console.log("Что то пошло не так");
 	}
 });
-};
-$('[data-action="item_fixed"]').click(fixed);
-$('[data-action="item_unfixed"]').click(unfixed);
-
+});
 
 	$('#ajax').on('click', '.emoji', function () {
 			var react = $(this);
