@@ -178,6 +178,19 @@ class Community(models.Model):
         trending_communities_query.add(~Q(banned_users__id=user_id), Q.AND)
         return cls._get_trending_communities_with_query(query=trending_communities_query)
 
+    def get_posts(self, max_id=None):
+        """
+        Получить все посты сообщества
+        """
+        posts_query = Q(community_id=self.pk, is_deleted=False, status=Item.STATUS_PUBLISHED)
+        exclude_reported_and_approved_posts_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
+        posts_query.add(exclude_reported_and_approved_posts_query, Q.AND)
+
+        if max_id:
+            posts_query.add(Q(id__lt=max_id), Q.AND)
+        items = Item.objects.filter(posts_query)
+        return items
+
     @classmethod
     def get_trending_communities(cls, category_name=None):
         """"

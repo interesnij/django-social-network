@@ -194,7 +194,7 @@ class CommunityListView(ListView):
 
 	def get_queryset(self):
 		self.community=Community.objects.get(pk=self.kwargs["pk"])
-		communities = Item.objects.filter(community=self.community,is_deleted=False)
+		communities = self.community.get_posts()
 		return communities
 
 	def get_context_data(self, **kwargs):
