@@ -90,7 +90,7 @@ class User(AbstractUser):
 
     def unfollow_user_with_id(self, user_id):
         check_not_can_follow_user_with_id(user=self, user_id=user_id)
-        follow = Follow.objects.get(user_id=self.pk)
+        follow = Follow.objects.get(user=self,followed_user=user_id)
         follow.delete()
 
     def unfrend_user(self, user):
@@ -245,9 +245,6 @@ class User(AbstractUser):
         return items
 
     def get_goods(self, max_id=None):
-        """
-        Получить все посты пользователя
-        """
         goods_query = Q(creator_id=self.id, is_deleted=False, status=Good.STATUS_PUBLISHED)
         exclude_reported_and_approved_goods_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         goods_query.add(exclude_reported_and_approved_goods_query, Q.AND)
