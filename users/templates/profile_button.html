@@ -54,7 +54,7 @@
   $.ajax({
       url: '{% url "create_follow" user.pk %}',
       success: function (data) {
-        $('#button_reload').html('').load("{% url 'profile_button_reload' user.pk %}");
+        $('#button_load').html('').load("{% url 'profile_button_reload' user.pk %}");
       }
   });
   });
@@ -64,7 +64,7 @@
   $.ajax({
       url: '{% url "delete_follow" user.pk %}',
       success: function (data) {
-        $('#button_reload').html('').load("{% url 'profile_button_reload' user.pk %}");
+        $('#button_load').html('').load("{% url 'profile_button_reload' user.pk %}");
       }
   });
   });
@@ -74,7 +74,7 @@
   $.ajax({
       url: '{% url "create_connect" user.pk %}',
       success: function (data) {
-        $('#button_reload').html('').load("{% url 'profile_button_reload' user.pk %}");
+        $('#button_load').html('').load("{% url 'profile_button_reload' user.pk %}");
       }
   });
   });
@@ -85,7 +85,7 @@
   $.ajax({
       url: '{% url "delete_connect" user.pk %}',
       success: function (data) {
-        $('#button_reload').html('').load("{% url 'profile_button_reload' user.pk %}");
+        $('#button_load').html('').load("{% url 'profile_button_reload' user.pk %}");
       }
   });
   });
