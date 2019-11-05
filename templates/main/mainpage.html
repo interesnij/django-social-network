@@ -3,7 +3,7 @@
 {% block title %}Новости{% endblock %}
 {% block meta %}
 <meta property="og:url" content="" />
-<link rel="stylesheet" href="https://bootstraptemplatedesign.com/demo-application/GoTRI-Mobile/vendor/swiper/css/swiper.min.css" />
+<link rel="stylesheet" href="{% static 'styles/swiper.min.css' %}" />
 <meta property="og:type" content="website" />
 <meta property="og:title" content="" />
 <meta property="og:image" content="http://xn--b1afgj5al1e.xn--p1acf/{% static 'images/I.jpg' %}" />
@@ -19,4 +19,36 @@
         <div id="news_load"></div>
     </div>
 </div>
+
+<script>
+var mySwiper = new Swiper('.swiper-story', {
+    slidesPerView: 'auto',
+    centeredSlides: false,
+    spaceBetween: 15
+});
+var mySwiper2 = new Swiper('.swiper-post', {
+    slidesPerView: 'auto',
+    centeredSlides: false,
+    spaceBetween: 1,
+    navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+});
+
+$(document).ready(function(){
+    /* photos gallery */
+    $('.grid').masonry({
+         itemSelector: '.grid-item',
+         percentPosition: true
+    });
+
+});
+$(window).on("load resize", function () {
+     $('.grid').masonry({
+         itemSelector: '.grid-item',
+         percentPosition: true
+     });
+ });
+</script>
 {% endblock %}
