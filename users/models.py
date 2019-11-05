@@ -269,6 +269,13 @@ class User(AbstractUser):
             followings_query.add(Q(id__lt=max_id), Q.AND)
         return User.objects.filter(followings_query).distinct()
 
+    def get_community_with_name_members(self, community_name, max_id=None):
+        check_can_get_community_with_name_members(
+            user=self,
+            community_name=community_name)
+
+        return Community.get_community_with_name_members(community_name=community_name, members_max_id=max_id)
+
 
 
 class UserBlock(models.Model):

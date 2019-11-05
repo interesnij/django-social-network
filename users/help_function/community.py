@@ -6,11 +6,9 @@ def get_top_posts(self, max_id=None, min_id=None, exclude_joined_communities=Fal
 
     posts_only = ('id',
                   'item__text', 'item__id', 'item__uuid', 'item__created', 'item__image',
-                  'item__creator__username', 'item__creator__id', 'item__creator__profile__name',
-                  'item__creator__profile__avatar',
+                  'item__creator__get_full_name', 'item__creator__id', 'item__creator__profile__avatar',
                   'item__creator__profile__id', 'item__community__id', 'item__community__name',
-                  'item__community__avatar',
-                  'item__community__title')
+                  'item__community__avatar')
 
     reported_posts_exclusion_query = ~Q(item__moderated_object__reports__reporter_id=self.pk)
     excluded_communities_query = ~Q(item__community__top_posts_community_exclusions__user=self.pk)
@@ -32,7 +30,7 @@ def get_top_posts(self, max_id=None, min_id=None, exclude_joined_communities=Fal
     top_community_posts_query.add(~Q(item__moderated_object__status=ModeratedObject.STATUS_APPROVED), Q.AND)
 
     if exclude_joined_communities:
-        # exclude communities the user is a member of
+        # исключить сообщества, членом которых является пользователь
         exclude_joined_communities_query = ~Q(item__community__memberships__user__id=self.pk)
         top_community_posts_query.add(exclude_joined_communities_query, Q.AND)
 
@@ -69,54 +67,6 @@ def remove_exclusion_for_community_with_name_from_top_posts(self, community_name
     self.remove_exclusion_for_community_from_top_posts(community)
 
 
-def get_top_posts(self, max_id=None, min_id=None, exclude_joined_communities=False):
-    """
-    Gets top posts (communities only) for authenticated user excluding reported, closed, blocked users posts
-    """
-
-    posts_select_related = ('item__creator', 'item__creator__profile', 'item__community', 'item__image')
-
-    posts_only = ('id',
-                  'item__text', 'item__id', 'item__uuid', 'item__image',
-                  'item__creator__username', 'item__creator__id', 'item__creator__profile__name',
-                  'item__creator__profile__avatar',
-                  'item__creator__profile__id', 'item__community__id', 'item__community__name',
-                  'item__community__avatar',
-                  'item__community__color', 'item__community__title')
-
-    reported_posts_exclusion_query = ~Q(item__moderated_object__reports__reporter_id=self.pk)
-    excluded_communities_query = ~Q(item__community__top_posts_community_exclusions__user=self.pk)
-
-    top_community_posts_query = Q(item__is_closed=False,
-                                  item__is_deleted=False,
-                                  item__status=Item.STATUS_PUBLISHED)
-
-    top_community_posts_query.add(~Q(Q(item__creator__blocked_by_users__blocker_id=self.pk) | Q(
-        item__creator__user_blocks__blocked_user_id=self.pk)), Q.AND)
-    top_community_posts_query.add(Q(item__community__type=Community.COMMUNITY_TYPE_PUBLIC), Q.AND)
-    top_community_posts_query.add(~Q(item__community__banned_users__id=self.pk), Q.AND)
-
-    if max_id:
-        top_community_posts_query.add(Q(id__lt=max_id), Q.AND)
-    elif min_id:
-        top_community_posts_query.add(Q(id__gt=min_id), Q.AND)
-
-    top_community_posts_query.add(~Q(item__moderated_object__status=ModeratedObject.STATUS_APPROVED), Q.AND)
-
-    if exclude_joined_communities:
-        # exclude communities the user is a member of
-        exclude_joined_communities_query = ~Q(item__community__memberships__user__id=self.pk)
-        top_community_posts_query.add(exclude_joined_communities_query, Q.AND)
-
-    top_community_posts_query.add(reported_posts_exclusion_query, Q.AND)
-    top_community_posts_query.add(excluded_communities_query, Q.AND)
-
-    top_community_posts_queryset = TopPost.objects.select_related(*posts_select_related).prefetch_related(
-        *posts_prefetch_related).only(*posts_only).filter(top_community_posts_query)
-
-    return top_community_posts_queryset
-
-
 def get_closed_posts_for_community_with_name(self, community_name, max_id=None):
     check_can_get_closed_posts_for_community_with_name(user=self, community_name=community_name)
     community = Community.objects.get(name=community_name)
@@ -145,15 +95,6 @@ def get_posts_for_community_with_name(self, community_name, max_id=None):
     profile_posts = Item.objects.filter(community_posts_query).distinct()
 
     return profile_posts
-
-
-def create_community_post(self, community_name, text=None, image=None, video=None, created=None, is_draft=False):
-    check_can_post_to_community_with_name(user=self, community_name=community_name)
-    item = Item.create_post(text=text, creator=self, community_name=community_name, image=image, video=video,
-                            created=created, is_draft=is_draft)
-
-    return item
-
 
 def get_trending_communities(self, category_name=None):
     return Community.get_trending_communities_for_user_with_id(user_id=self.pk, category_name=category_name)
@@ -330,14 +271,6 @@ def delete_community_with_name_cover(self, community_name):
     community_to_delete_cover_from.cover = None
     community_to_delete_cover_from.save()
     return community_to_delete_cover_from
-
-def get_community_with_name_members(self, community_name, max_id=None, exclude_keywords=None):
-    check_can_get_community_with_name_members(
-        user=self,
-        community_name=community_name)
-
-    return Community.get_community_with_name_members(community_name=community_name, members_max_id=max_id,
-                                                     exclude_keywords=exclude_keywords)
 
 def search_community_with_name_members(self, community_name, query, exclude_keywords=None):
     check_can_get_community_with_name_members(

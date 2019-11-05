@@ -4,6 +4,7 @@
 {% block title %}Подписчики сообщества "{{ community.name }}"{% endblock %}
 
 {% block content %}
+{% for object in members %}{{ object.get_full_name }}{% endfor %}
 <div class="row">
     <div class="col-12 col-md-8">
         <br><br><br>
