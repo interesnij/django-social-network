@@ -284,8 +284,8 @@ class User(AbstractUser):
         frends_users_query = self.connections.all()
         frends = frends_users_query.values('user__id')
         for frend in frends:
-            frend_user_id = frend['user__id']
-            frends_users_query = Q(creator_id=frend_user_id)
+            frend_id = frend['user__id']
+            frends_users_query = Q(creator_id=frend_id)
             timeline_posts_query.add(frends_users_query, Q.OR)
 
         timeline_posts_query.add(Q(is_deleted=False, status=Item.STATUS_PUBLISHED), Q.AND)
