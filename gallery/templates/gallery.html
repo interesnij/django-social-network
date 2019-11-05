@@ -9,7 +9,36 @@
 {% endblock %}
 {% block content %}
 <link rel="stylesheet" href="{% static 'styles/filepond.css' %}" media="all" />
-
+<style>
+  .filepond--root .filepond--drop-label {
+    max-width: 140px;
+    width: 100%;
+    height: 140px;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1 0 100%;
+    -ms-flex: 1 0 100%;
+    flex: 1 0 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    margin: 5px;
+    border: 1px solid #dddddd;
+    border-radius: 4px;
+    z-index: 99;
+}
+.filepond--list .filepond--item {
+    position: relative;
+    max-width: 140px;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1 0 100%;
+    -ms-flex: 1 0 100%;
+    flex: 1 0 100%;
+    -webkit-transform: none !important;
+    -ms-transform: none !important;
+    transform: none !important;
+    margin: 5px;
+}
+</style>
 
 {% for object in albums %}
 {{ object.title }} - {{ object.photo_set.count }}
