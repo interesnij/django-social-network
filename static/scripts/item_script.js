@@ -31,8 +31,8 @@ $.ajax({
 		$(remove).parents('.card').hide();
     $('.activefullscreen').hide();
 		$.toast({
-				heading: '{{ request.user.first_name }}',
-				text: 'статья успешно удалена!',
+				heading: '',
+				text: 'Запись успешно удалена!',
 				showHideTransition: 'fade',
 				icon: 'info'
 		})
