@@ -25,17 +25,22 @@ class CommunityMembersView(ListView):
 	template_name="members.html"
 	model=Community
 	paginate_by=15
+	administrator = False
+	creator = False
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		if request.user.is_administrator_of_community_with_name(self.community.name):
 			self.administrator=True
+		if request.user.is_authenticated and request.user.is_creator_of_community_with_name(self.community.name):
+			self.creator=True
 		return super(CommunityMembersView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		context=super(CommunityMembersView,self).get_context_data(**kwargs)
 		context["administrator"]=self.administrator
 		context["community"]=self.community
+		context["creator"]=self.creator
 		return context
 
 	def get_queryset(self):
