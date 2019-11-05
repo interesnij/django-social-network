@@ -9,7 +9,7 @@ from communities.helpers import upload_to_community_avatar_directory, upload_to_
 from imagekit.models import ProcessedImageField
 from moderation.models import ModeratedObject, ModerationCategory
 from main.models import Item
-from common.model_loaders import get_user_model
+
 
 
 class CommunityCategory(models.Model):
@@ -234,14 +234,6 @@ class Community(models.Model):
 
         return User.objects.filter(community_administrators_query)
 
-    @classmethod
-    def get_community_with_name_members(cls, community_name, members_max_id=None):
-        community_members_query = Q(communities_memberships__community__name=community_name)
-
-        if members_max_id:
-            community_members_query.add(Q(id__lt=members_max_id), Q.AND)
-        User = get_user_model()
-        return User.objects.filter(community_members_query)
 
     @classmethod
     def search_community_with_name_administrators(cls, community_name, query):
