@@ -204,7 +204,7 @@ class SettingsNotifyView(TemplateView):
         except:
             self.notify_settings = None
         if not self.notify_settings:
-            self.user.notify_settings = UserNotificationsSettings.objects.create(user=self.user)
+            self.notify_settings = UserNotificationsSettings.objects.create(user=self.user)
         self.form=SettingsNotifyForm(request.POST,instance=self.user.notify_settings)
         if self.form.is_valid():
             self.form.save()
