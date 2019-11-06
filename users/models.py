@@ -33,6 +33,8 @@ class User(AbstractUser):
     last_activity= models.DateTimeField(
         default=timezone.now, blank=True, verbose_name='Активность')
 
+
+
     class Meta:
         verbose_name = 'пользователь'
         verbose_name_plural = 'пользователи'

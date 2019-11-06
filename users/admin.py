@@ -1,25 +1,25 @@
 from django.contrib import admin
+from users.models import User, UserProfile, UserNotificationsSettings, UserPrivateSettings
 
-from users.models import User, UserProfile
+
+class UserProfileInline(admin.TabularInline):
+    model = UserProfile
+
+class UserNotificationsSettingsInline(admin.TabularInline):
+    model = UserNotificationsSettings
+
+class UserPrivateSettingsInline(admin.TabularInline):
+    model = UserPrivateSettings
 
 
 class UserAdmin(admin.ModelAdmin):
+    inlines = [
+        UserProfileInline,
+        UserNotificationsSettingsInline,
+        UserPrivateSettings,
+    ]
     search_fields = ('last_name',)
-    list_filter = ['uuid']
 
-    class Meta:
-            model = User
-
-
-class UserProfileAdmin(admin.ModelAdmin):
-
-    list_display = ['user'] #все поля field.name in Blog._meta.fields
-    #fields = []
-    #exclude = []
-    #list_filter = ['posted']
-    search_fields = ['user']
-    class Meta:
-            model = UserProfile
 
 
 admin.site.register(User, UserAdmin)
