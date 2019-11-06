@@ -15,7 +15,12 @@
                     <div class="card-body">
                         <p class="content-color-primary page-sub-title-small mt-2">
                             Заявки в друзья
-                            <input type="checkbox" id="id_connection_request_notifications" class="switch switch-sm">
+                            <input type="checkbox"
+                                   {% if form.connection_request_notifications %}
+                                   checked
+                                   {% endif %}
+                                   id="id_connection_request_notifications"
+                                   class="switch switch-sm">
                             <label style="margin-right:12px;bottom: 5px;" for="id_connection_request_notifications" class="bg-dark mb-2 border float-right"></label>
                         </p>
                         <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
