@@ -88,7 +88,9 @@
                         <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
                             Репосты записей
                             <input type="checkbox"
-                                   value="{{ notify_settings.repost_notifications }}"
+                                   {% if user.notify_settings.connection_request_notifications %}
+                                   checked
+                                   {% endif %}
                                    name="repost_notifications"
                                    id="id_repost_notifications"
                                    class="switch switch-sm">
