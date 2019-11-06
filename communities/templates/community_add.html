@@ -65,6 +65,7 @@
                     $('.community_fullscreen').hide();
                     $('#community_loader').empty();
                     $('#ajax').html('').load("/communities/gygyg/");
+                    $('title').text('Сообщество создается...');
             },
             error: function(data) {
               $.toast({
