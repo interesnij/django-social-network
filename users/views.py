@@ -182,35 +182,35 @@ class UserAboutChange(TemplateView):
 
 
 class SettingsNotifyView(TemplateView):
-	template_name = "settings/notifications_settings.html"
-	form=None
+    template_name = "settings/notifications_settings.html"
+    form=None
     notify_settings=None
 
-	def get(self,request,*args,**kwargs):
-		self.user=User.objects.get(pk=self.kwargs["pk"])
-		self.form=SettingsNotifyForm(instance=self.user)
-		return super(SettingsNotifyView,self).get(request,*args,**kwargs)
-
-	def get_context_data(self,**kwargs):
-		context=super(SettingsNotifyView,self).get_context_data(**kwargs)
-		context["form"]=self.form
-        context["notify_settings"]=self.notify_settings
-		return context
-
-	def post(self,request,*args,**kwargs):
+    def get(self,request,*args,**kwargs):
         self.user=User.objects.get(pk=self.kwargs["pk"])
-		try:
-			self.notify_settings=UserNotificationsSettings.objects.get(user=self.user)
-		except:
-			self.notify_settings = None
-		if not self.notify_settings:
-			self.user.notify_settings = UserNotificationsSettings.objects.create(user=self.user)
-		self.form=SettingsNotifyForm(request.POST,instance=self.user.notify_settings)
-		if self.form.is_valid():
-			self.form.save()
-			if request.is_ajax():
-				return HttpResponse ('!')
-		return super(SettingsNotifyView,self).post(request,*args,**kwargs)
+        self.form=SettingsNotifyForm(instance=self.user)
+        return super(SettingsNotifyView,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context=super(SettingsNotifyView,self).get_context_data(**kwargs)
+        context["form"]=self.form
+        context["notify_settings"]=self.notify_settings
+        return context
+
+    def post(self,request,*args,**kwargs):
+        self.user=User.objects.get(pk=self.kwargs["pk"])
+        try:
+            self.notify_settings=UserNotificationsSettings.objects.get(user=self.user)
+        except:
+            self.notify_settings = None
+        if not self.notify_settings:
+            self.user.notify_settings = UserNotificationsSettings.objects.create(user=self.user)
+        self.form=SettingsNotifyForm(request.POST,instance=self.user.notify_settings)
+        if self.form.is_valid():
+            self.form.save()
+            if request.is_ajax():
+                return HttpResponse ('!')
+        return super(SettingsNotifyView,self).post(request,*args,**kwargs)
 
 
 class SettingsPrivateView(TemplateView):
