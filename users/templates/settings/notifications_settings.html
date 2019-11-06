@@ -16,7 +16,6 @@
                         <p class="content-color-primary page-sub-title-small mt-2">
                             Заявки в друзья
                             <input type="checkbox"
-                                   
                                    {% if user.notifications_settings.connection_request_notifications %}
                                    checked
                                    {% endif %}
@@ -28,7 +27,9 @@
                         <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
                             Подтверждение заявки в друзья
                             <input type="checkbox"
-                            value="{{ form.connection_confirmed_notifications.value }}"
+                            {% if user.notifications_settings.connection_confirmed_notifications %}
+                            checked
+                            {% endif %}
                                    name="connection_confirmed_notifications"
                                    id="id_connection_confirmed_notifications"
                                    class="switch switch-sm">
@@ -37,7 +38,9 @@
                         <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
                             Приглашения в сообщества
                             <input type="checkbox"
-                            value="{{ form.community_invite_notifications.value }}"
+                            {% if user.notifications_settings.community_invite_notifications %}
+                            checked
+                            {% endif %}
                                    name="community_invite_notifications"
                                    id="id_community_invite_notifications"
                                    class="switch switch-sm">
@@ -46,7 +49,9 @@
                         <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
                             Комментарии к записям
                             <input type="checkbox"
-                            value="{{ form.comment_notifications.value }}"
+                            {% if user.notifications_settings.comment_notifications %}
+                            checked
+                            {% endif %}
                                    name="comment_notifications"
                                    id="id_comment_notifications"
                                    class="switch switch-sm">
@@ -55,7 +60,9 @@
                         <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
                             Реакции на записи
                             <input type="checkbox"
-                            value="{{ form.react_notifications.value }}"
+                            {% if user.notifications_settings.react_notifications %}
+                            checked
+                            {% endif %}
                                    name="react_notifications"
                                    id="id_react_notifications"
                                    class="switch switch-sm">
@@ -64,7 +71,9 @@
                         <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
                             Реакции на комментарии
                             <input type="checkbox"
-                            value="{{ form.comment_react_notifications.value }}"
+                            {% if user.notifications_settings.comment_react_notifications %}
+                            checked
+                            {% endif %}
                                    name="comment_react_notifications"
                                    id="id_comment_react_notifications"
                                    class="switch switch-sm">
@@ -73,7 +82,9 @@
                         <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
                             Ответы на комментарии
                             <input type="checkbox"
-                            value="{{ form.comment_reply_notifications.value }}"
+                            {% if user.notifications_settings.comment_reply_notifications %}
+                            checked
+                            {% endif %}
                                    name="comment_reply_notifications"
                                    id="id_comment_reply_notifications"
                                    class="switch switch-sm">
@@ -82,7 +93,9 @@
                         <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
                             Реакции на ответы
                             <input type="checkbox"
-                            value="{{ form.comment_reply_react_notifications.value }}"
+                            {% if user.notifications_settings.comment_reply_react_notifications %}
+                            checked
+                            {% endif %}
                                    name="comment_reply_react_notifications"
                                    id="id_comment_reply_react_notifications"
                                    class="switch switch-sm">
@@ -91,7 +104,9 @@
                         <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
                             Репосты записей
                             <input type="checkbox"
-                            value="{{ form.repost_notifications.value }}"
+                            {% if user.notifications_settings.repost_notifications %}
+                            checked
+                            {% endif %}
                                    name="repost_notifications"
                                    id="id_repost_notifications"
                                    class="switch switch-sm">
@@ -100,7 +115,9 @@
                         <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
                             Упоминания в записях
                             <input type="checkbox"
-                            value="{{ form.user_mention_notifications.value }}"
+                            {% if user.notifications_settings.user_mention_notifications %}
+                            checked
+                            {% endif %}
                                    name="user_mention_notifications"
                                    id="id_user_mention_notifications"
                                    class="switch switch-sm">
@@ -109,7 +126,9 @@
                         <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
                             Упоминания в комменариях
                             <input type="checkbox"
-                            value="{{ form.comment_user_mention_notifications.value }}"
+                            {% if user.notifications_settings.comment_user_mention_notifications %}
+                            checked
+                            {% endif %}
                                    name="comment_user_mention_notifications"
                                    id="id_comment_user_mention_notifications"
                                    class="switch switch-sm">
