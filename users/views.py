@@ -184,27 +184,19 @@ class UserAboutChange(TemplateView):
 class SettingsNotifyView(TemplateView):
 	template_name = "settings/notifications_settings.html"
 	form=None
-	notifications_settings=None
 
 	def get(self,request,*args,**kwargs):
-		self.user=request.user
+		self.user=User.objects.get(pk=self.kwargs["pk"])
 		self.form=SettingsNotifyForm(instance=self.user)
 		return super(SettingsNotifyView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		context=super(SettingsNotifyView,self).get_context_data(**kwargs)
-		context["notifications_settings"]=self.notifications_settings
 		context["form"]=self.form
 		return context
 
 	def post(self,request,*args,**kwargs):
-		self.user=request.user
-		try:
-			self.notifications_settings=UserNotificationsSettings.objects.get(user=request.user)
-		except:
-			self.notifications_settings = None
-		if not self.notifications_settings:
-			self.user.notifications_settings = UserNotificationsSettings.objects.create(user=request.user)
+		self.user=User.objects.get(pk=self.kwargs["pk"])
 		self.form=SettingsNotifyForm(request.POST,instance=self.user.notifications_settings)
 		if self.form.is_valid():
 			self.form.save()
