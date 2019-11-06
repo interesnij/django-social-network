@@ -13,7 +13,6 @@ class UserAdmin(admin.ModelAdmin):
     inlines = [
         UserProfileInline,
         UserNotificationsSettingsInline,
-        UserPrivateSettings,
     ]
     search_fields = ('last_name',)
 
