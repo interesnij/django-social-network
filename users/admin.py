@@ -1,5 +1,5 @@
 from django.contrib import admin
-from users.models import User, UserProfile, UserNotificationsSettings, UserPrivateSettings
+from users.models import User, UserProfile, UserNotificationsSettings
 
 
 class UserProfileInline(admin.TabularInline):
