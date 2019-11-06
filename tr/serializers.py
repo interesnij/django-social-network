@@ -4,7 +4,6 @@ from allauth.account.adapter import get_adapter
 from allauth.account.utils import setup_user_email
 from rest_framework import serializers
 from rest_framework.response import Response
-from users.models import UserNotificationsSettings, UserPrivateSettings
 
 
 class RegisterSerializer(serializers.Serializer):
