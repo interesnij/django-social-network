@@ -200,11 +200,11 @@ class SettingsNotifyView(TemplateView):
     def post(self,request,*args,**kwargs):
         self.user=User.objects.get(pk=self.kwargs["pk"])
         try:
-            self.notify_settings=UserNotificationsSettings.objects.get(user=self.user)
+            self.notify_settings=UserNotificationsSettings.objects.get(user=request.user)
         except:
             self.notify_settings = None
         if not self.notify_settings:
-            self.notify_settings = UserNotificationsSettings.objects.create(user=self.user)
+            self.user.notify_settings = UserNotificationsSettings.objects.create(user=request.user)
         self.form=SettingsNotifyForm(request.POST,instance=self.notify_settings)
         if self.form.is_valid():
             self.form.save()
