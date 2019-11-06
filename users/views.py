@@ -86,7 +86,7 @@ class ProfileUserView(TemplateView):
 
 
 class ProfileReload(TemplateView):
-    template_name = 'user.html'
+    template_name = 'user_reload.html' 
 
     def get(self,request,*args,**kwargs):
         self.user=User.objects.get(pk=self.kwargs["pk"])
