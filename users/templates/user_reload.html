@@ -1,14 +1,5 @@
-{% extends "base.html" %}
-{% load staticfiles humanize %}
 
-{% block title %}{{ user.get_full_name }}{% endblock %}
-{% block meta %}
-<meta property="og:url" content="dvizhenie.tv" />
-<meta property="og:type" content="website" />
-<meta property="og:title" content="" />
-<meta property="og:image" content="{% if user.profile.avatar %}http://xn--b1afgj5al1e.xn--p1acf/{{ user.profile.avatar }}{% else %}{% static 'images/user.png' %}{% endif %}"/>
-{% endblock %}
-{% block content %}
+{% load staticfiles humanize %}
 
 <div class="row">
     <div class="col-lg-4 col-md-5 col-sm-12 order-1">
@@ -43,5 +34,3 @@
     </div>
 
 {% include 'user_scripts.html' %}
-
-{% endblock %}

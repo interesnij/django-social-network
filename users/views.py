@@ -70,16 +70,31 @@ class AllUsers(ListView):
 
 class ProfileUserView(TemplateView):
     template_name = 'user.html'
-    model=Item
 
     def get(self,request,*args,**kwargs):
         self.user=User.objects.get(pk=self.kwargs["pk"])
         self.communities=Community.objects.filter(memberships__user__id=self.user.pk)[0:5]
-
         return super(ProfileUserView,self).get(request,*args,**kwargs)
 
     def get_context_data(self, **kwargs):
         context = super(ProfileUserView, self).get_context_data(**kwargs)
+        context['user'] = self.user
+        context['form_avatar'] = AvatarUserForm()
+        context['form_comment'] = CommentForm()
+        context['communities'] = self.communities
+        return context
+
+
+class ProfileReload(TemplateView):
+    template_name = 'user.html'
+
+    def get(self,request,*args,**kwargs):
+        self.user=User.objects.get(pk=self.kwargs["pk"])
+        self.communities=Community.objects.filter(memberships__user__id=self.user.pk)[0:5]
+        return super(ProfileReload,self).get(request,*args,**kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(ProfileReload, self).get_context_data(**kwargs)
         context['user'] = self.user
         context['form_avatar'] = AvatarUserForm()
         context['form_comment'] = CommentForm()

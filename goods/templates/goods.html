@@ -147,13 +147,23 @@
 </div>
 
 <div class="card mb-4 good_add_fullscreen" style="display:none">
-  <div id="good_add_loader" style="margin-top:30px"></div>
+  <div id="good_add_loader" style="margin-top:30px">
+    <span class="good_fullscreen_hide">
+      <img style="width:35px" src="{% static 'images/icons/close-24px.svg' %}" />
+    </span>
+  </div>
 </div>
 
 <div class="card mb-4 good_fullscreen" style="display:none">
   <div id="good_loader" style=""></div>
 </div>
 
+<script>
+    $('.good_fullscreen_hide').on('click', function() {
+        $('.good_add_fullscreen').hide();
+        $('#good_add_loader').empty();
+    });
+</script>
 <script>
 	$( "#good_add" ).click(function(){
 		$('#good_add_loader').html('').load("/goods/add/");

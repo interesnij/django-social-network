@@ -1,9 +1,5 @@
 {% load staticfiles %}
 
-<span class="community_fullscreen_hide">
-  <img style="width:35px" src="{% static 'images/icons/close-24px.svg' %}" />
-</span>
-
 <div class="col-md-8 col-lg-6 col-xl-5 mx-auto">
   <form action="" id="FORM-COMMUNITY" method="post">
                     <div class="card mb-4">
@@ -94,12 +90,6 @@
 </script>
 <script>
     $(".remove_form").click(function() {
-        $('.community_fullscreen').hide();
-        $('#community_loader').empty();
-    });
-</script>
-<script>
-    $('.community_fullscreen_hide').on('click', function() {
         $('.community_fullscreen').hide();
         $('#community_loader').empty();
     });

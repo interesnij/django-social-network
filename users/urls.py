@@ -7,6 +7,7 @@ from users.views import (
                             UserAboutChange,
                             UserDesign,
                             ItemListView,
+                            ProfileReload,
                             AvatarReload,
                             UserAvatarChange,
                             ProfileButtonReload,
@@ -34,4 +35,5 @@ urlpatterns = [
     url(r'^unfixed/(?P<item_id>\d+)/$', unfixed, name='unfixed'),
     url(r'^delete/(?P<item_id>\d+)/$', item_delete, name='item_delete'),
     url(r'^avatar-reload/$', AvatarReload.as_view(), name='avatar_reload'),
+    url(r'^(?P<pk>\d+)/profile_reload/$', ProfileReload.as_view(), name='profile_reload'),
 ]
