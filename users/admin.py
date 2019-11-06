@@ -8,9 +8,6 @@ class UserProfileInline(admin.TabularInline):
 class UserNotificationsSettingsInline(admin.TabularInline):
     model = UserNotificationsSettings
 
-class UserPrivateSettingsInline(admin.TabularInline):
-    model = UserPrivateSettings
-
 
 class UserAdmin(admin.ModelAdmin):
     inlines = [
