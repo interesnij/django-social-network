@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %}Изменение профиля - внешний вид{% endblock %}
+{% block content %}
+<div class="container mt-4 main-container">
+  <div class="row">
+        <div class="col-lg-7 col-md-8 col-sm-12 order-1">
+          <div class="card mb-4">
+                <div class="card-header border-bottom">
+                    <h5 class="content-color-primary mb-0">Внешний вид</h5>
+                </div>
+                <div class="card-body">
+                <p class="content-color-primary page-sub-title-small mt-2">
+                  <span class="icon-circle mr-2">
+                    <img style="width:25px;" src="{% static 'images/icons/wb_sunny-24px.svg' %}" />
+                  </span>
+                  Ночной режим
+
+                    <input type="checkbox" id="darktheme" class="switch switch-sm">
+                    <label style="margin-right:12px" for="darktheme" class="bg-dark mb-2 border float-right"></label>
+                </p>
+                <p class="content-color-primary page-sub-title-small mt-2">
+                  Отправлять уведомления о заявках в друзья
+                  <input type="checkbox" id="id_connection_request_notifications" class="switch switch-sm">
+                  <label style="margin-right:12px" for="id_connection_request_notifications" class="bg-dark mb-2 border float-right"></label>
+                </p>
+                <p class="content-color-primary page-sub-title-small mt-2">
+                  Отправлять уведомления о приеме заявки в друзья
+                  <input type="checkbox" id="id_connection_confirmed_notifications" class="switch switch-sm">
+                  <label style="margin-right:12px" for="id_connection_confirmed_notifications" class="bg-dark mb-2 border float-right"></label>
+                </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-5 col-md-4 col-sm-12 order-2">
+          <ul style="list-style-type:none">
+            <li style="margin-bottom:8px;"><a href="{% url 'user_settings_private' user.pk %}" class="ajax">Приватность</a></li>
+            <li style="margin-bottom:8px;"><a href="{% url 'user_settings_notify' user.pk %}" class="ajax">Уведомления</a></li>
+          </ul>
+        </div>
+
+      </div>
+  </div>
+
+{% endblock %}
