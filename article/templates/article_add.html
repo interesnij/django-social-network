@@ -23,10 +23,6 @@
     }
 </style>
 
-<span class="article_fullscreen_hide">
-  <img style="width:35px" src="{% static 'images/icons/close-24px.svg' %}" />
-</span>
-
 <br>
 <h5 class="m-0">Добавление статьи</h5>
 <br><br>
@@ -142,12 +138,6 @@
 </script>
 <script>
     $(".remove_form").click(function() {
-        $('.article_fullscreen').hide();
-        $('#article_loader').empty();
-    });
-</script>
-<script>
-    $('.article_fullscreen_hide').on('click', function() {
         $('.article_fullscreen').hide();
         $('#article_loader').empty();
     });

@@ -100,29 +100,40 @@
 
 {% endif %}
 <div class="card mb-4 article_fullscreen" style="display:none">
-  <div id="article_loader" style="margin-top:30px"></div>
+  <div id="article_loader" style="margin-top:30px">
+    <span class="article_fullscreen_hide">
+      <img style="width:35px" src="{% static 'images/icons/close-24px.svg' %}" />
+    </span>
+  </div>
 </div>
 
 <script>
-$('#images_upload').on('click', function () {
-	 $('#for_images_upload').show();
-});
-$('#settings').on('click', function () {
-	 $('#for_settings').show();
-});
+    $('.article_fullscreen_hide').on('click', function() {
+        $('.article_fullscreen').hide();
+        $('#article_loader').empty();
+    });
+</script>
 
-$('#gallery').on('click', function () {
-	 $('#for_gallery').show();
-});
-$('#doc').on('click', function () {
-	 $('#for_doc').show();
-});
-$('#good').on('click', function () {
-	 $('#for_good').show();
-});
-$('#question').on('click', function () {
-	 $('#for_question').show();
-});
+<script>
+   $('#images_upload').on('click', function () {
+	   $('#for_images_upload').show();
+   });
+   $('#settings').on('click', function () {
+	    $('#for_settings').show();
+   });
+
+    $('#gallery').on('click', function () {
+	     $('#for_gallery').show();
+    });
+    $('#doc').on('click', function () {
+	     $('#for_doc').show();
+    });
+    $('#good').on('click', function () {
+	     $('#for_good').show();
+    });
+    $('#question').on('click', function () {
+	     $('#for_question').show();
+    });
 </script>
 <script>
 	$( "#article_add" ).click(function(){

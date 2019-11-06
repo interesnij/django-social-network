@@ -4,7 +4,7 @@
   {% if request.user.is_authenticated %}
     <div class="container has-background-img">
         <figure class="background-img pink-gradient">
-          {% if user.profile.avatar %}
+          {% if request.user.profile.avatar %}
             <img src="{{ user.profile.avatar.url }}" alt="image">
             {% else %}
               <img src="{% static 'images/user1.png' %}" alt="image">
@@ -16,7 +16,7 @@
                     <input type="checkbox">
                     <i class="material-icons">check</i>
                 </label>
-                {% if user.profile.avatar %}
+                {% if request.user.profile.avatar %}
                   <img src="{{ user.profile.avatar.url }}" alt="image" style="border-radius:50px;width:100%;">
                 {% else %}
                   <img src="{% static 'images/user1.png' %}" alt="image" style="width:100%;width:100%;">
@@ -24,7 +24,7 @@
             </figure>
             <div class="media-body mx-70">
                 <h5 class="time-title mb-0 text-white">{{ user.get_full_name }}</h5>
-                {% if user.profile.status %}
+                {% if request.user.profile.status %}
                   <p class="mb-0 text-truncate text-white">{{ user.profile.status }}</p>
                 {% else %}
                   <p class="mb-0 text-truncate text-white">Статус не указан</p>
@@ -40,7 +40,7 @@
                 <span>Моя страница</span>
             </a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item"> 
             <a href="{% url 'main' %}" class="nav-link dropdwown-toggle ajax">
                 <img style="width:22px;margin-bottom:5px" src="{% static 'images/icons/public-24px.svg' %}" />
                 <span>Новости</span>
