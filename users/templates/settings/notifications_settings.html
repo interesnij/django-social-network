@@ -17,7 +17,7 @@
                             Заявки в друзья
                             <input type="checkbox"
                                    value="{{ form.connection_request_notifications.value }}"
-                                   {% if user.notify_settings.connection_request_notifications %}
+                                   {% if user.notifications_settings.connection_request_notifications %}
                                    checked
                                    {% endif %}
                                    name="connection_request_notifications"
