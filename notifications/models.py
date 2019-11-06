@@ -58,6 +58,7 @@ class Notification(models.Model):
 
     POST_COMMENT = 'PC'
     POST_COMMENT_REPLY = 'PCR'
+    REACT_REPLY_COMMENT = 'RRC'
     CONNECTION_REQUEST = 'CR'
     CONNECTION_CONFIRMED = 'CC'
     COMMUNITY_INVITE = 'CI'
@@ -65,7 +66,6 @@ class Notification(models.Model):
     POST_COMMENT_USER_MENTION = 'PCUM'
     REACT = 'RE'
     REACT_COMMENT =  'RC'
-    DISLIKED = 'DL'
     LOGGED_IN = 'I'
     LOGGED_OUT = 'O'
     SIGNUP = 'U'
@@ -81,6 +81,7 @@ class Notification(models.Model):
         (POST_COMMENT_USER_MENTION, 'упомянул Вас в комментарии к записи'),
         (REACT, 'отреагировал на Ваш пост'),
         (REACT_COMMENT, 'отреагировал на Ваш комментарий'),
+        (REACT_REPLY_COMMENT, 'отреагировал на Ваш Ответ к комментарию'),
         (SIGNUP, 'создал аккаунт'),
         (REPOST, 'поделился Вашей записью'),
     )

@@ -318,53 +318,35 @@ class UserBlock(models.Model):
 class UserNotificationsSettings(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,
                                 related_name='notifications_settings', verbose_name="Пользователь")
-    post_comment_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления о комментариях к постам")
-    post_comment_reply_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления об ответах на комментарии к постам")
-    follow_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления о подписках")
+    comment_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления о комментариях к записям")
+    react_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления о реакциях к записи")
+    comment_reply_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления об ответах на комментарии к записям")
+    comment_reply_react_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления реакциях на ответы к комментариям")
+    comment_react_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления о реакциях на комментарии к записям")
     connection_request_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления о заявках в друзья")
     connection_confirmed_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления о приеме заявки в друзья")
     community_invite_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления о приглашениях в сообщества")
-    post_comment_user_mention_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления об упоминаниях в комментариях к постам")
-    post_user_mention_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления об упоминаниях в постам")
+    comment_user_mention_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления об упоминаниях в комментариях к записям")
+    user_mention_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления об упоминаниях в записям")
+    repost_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления о репостах записей")
 
     @classmethod
     def create_notifications_settings(cls, user):
         return UserNotificationsSettings.objects.create(user=user)
 
-    def update(self, post_comment_notifications=None,
-               post_comment_reply_notifications=None,
-               follow_notifications=None,
-               connection_request_notifications=None,
-               connection_confirmed_notifications=None,
-               community_invite_notifications=None,
-               post_comment_user_mention_notifications=None,
-               post_user_mention_notifications=None, ):
 
-        if post_comment_notifications is not None:
-            self.post_comment_notifications = post_comment_notifications
+class UserPrivateSettings(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,
+                                related_name='private_settings', verbose_name="Пользователь")
+    is_private = models.BooleanField(blank=False, null=False, default=False, verbose_name="Закрытый профиль")
+    can_message = models.BooleanField(blank=False, null=False, default=True, verbose_name="Вам могут писать сообщения все пользователи")
+    photo_visible_all = models.BooleanField(blank=False, null=False, default=True, verbose_name="Ваши фото видны всем")
+    photo_visible_frends = models.BooleanField(blank=False, null=False, default=True, verbose_name="Ваши фото видны Вашим друзьям")
+    can_comments = models.BooleanField(blank=False, null=False, default=True, verbose_name="Могут оставлять комментарии все пользователи")
 
-        if post_comment_user_mention_notifications is not None:
-            self.post_comment_user_mention_notifications = post_comment_user_mention_notifications
-
-        if post_user_mention_notifications is not None:
-            self.post_user_mention_notifications = post_user_mention_notifications
-
-        if post_comment_reply_notifications is not None:
-            self.post_comment_reply_notifications = post_comment_reply_notifications
-
-        if follow_notifications is not None:
-            self.follow_notifications = follow_notifications
-
-        if connection_request_notifications is not None:
-            self.connection_request_notifications = connection_request_notifications
-
-        if connection_confirmed_notifications is not None:
-            self.connection_confirmed_notifications = connection_confirmed_notifications
-
-        if community_invite_notifications is not None:
-            self.community_invite_notifications = community_invite_notifications
-
-        self.save()
+    @classmethod
+    def create_private_settings(cls, user):
+        return UserPrivateSettings.objects.create(user=user)
 
 
 class UserProfile(models.Model):
@@ -384,7 +366,8 @@ class UserProfile(models.Model):
     instagram_url = models.URLField(blank=True, verbose_name="Ссылка на instagram")
     twitter_url = models.URLField(blank=True, verbose_name="Ссылка на twitter")
     phone = models.CharField(max_length=15,blank=True, verbose_name="Телефон")
-    is_private = models.BooleanField(blank=False, null=False, default=False, verbose_name="Закрытый профиль")
+    is_global_moderator = models.BooleanField(blank=False, null=False, default=False, verbose_name="Глобальный модератор")
+    is_superuser = models.BooleanField(blank=False, null=False, default=False, verbose_name="Суперпользователь")
 
     def __str__(self):
         return self.user.last_name
