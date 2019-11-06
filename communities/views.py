@@ -80,7 +80,7 @@ class GygView(TemplateView):
 	template_name="gygyg.html"
 
 	def get(self,request,*args,**kwargs):
-		self.new_community = Community.objects.filter(creator=request.user).last()
+		self.new_community = Community.objects.only(id).last()
 		self.new_url = self.new_community.pk
 		return super(GygView,self).get(request,*args,**kwargs)
 
