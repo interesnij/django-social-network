@@ -16,9 +16,7 @@
                         <p class="content-color-primary page-sub-title-small mt-2">
                             Заявки в друзья
                             <input type="checkbox"
-                                   {% if user.notify_settings.connection_request_notifications %}
-                                   checked
-                                   {% endif %}
+                                   value="{{ user.notify_settings.connection_request_notifications }}"
                                    id="id_connection_request_notifications"
                                    class="switch switch-sm">
                             <label style="margin-right:12px;bottom: 5px;" for="id_connection_request_notifications" class="bg-dark mb-2 border float-right"></label>
@@ -29,6 +27,7 @@
                                    {% if form.connection_confirmed_notifications %}
                                    checked
                                    {% endif %}
+                                   name="connection_confirmed_notifications"
                                    id="id_connection_confirmed_notifications"
                                    class="switch switch-sm">
                             <label style="margin-right:12px;bottom: 5px;" for="id_connection_confirmed_notifications" class="bg-dark mb-2 border float-right"></label>
