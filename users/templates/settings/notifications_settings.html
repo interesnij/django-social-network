@@ -16,7 +16,9 @@
                         <p class="content-color-primary page-sub-title-small mt-2">
                             Заявки в друзья
                             <input type="checkbox"
-                                   value="{{ notify_settings.connection_request_notifications }}"
+                            {% if user.notify_settings.connection_request_notifications %}
+                            checked
+                            {% endif %}
                                    name="connection_request_notifications"
                                    id="id_connection_request_notifications"
                                    class="switch switch-sm">
