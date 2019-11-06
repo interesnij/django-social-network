@@ -16,7 +16,7 @@
                         <p class="content-color-primary page-sub-title-small mt-2">
                             Заявки в друзья
                             <input type="checkbox"
-
+                                   value="{{ user.notify_settings.connection_request_notifications }}"
                                    name="connection_request_notifications"
                                    id="id_connection_request_notifications"
                                    class="switch switch-sm">
@@ -25,7 +25,7 @@
                         <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
                             Подтверждение заявки в друзья
                             <input type="checkbox"
-
+                                   value="{{ user.notify_settings.connection_confirmed_notifications }}"
                                    name="connection_confirmed_notifications"
                                    id="id_connection_confirmed_notifications"
                                    class="switch switch-sm">
@@ -34,6 +34,7 @@
                         <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
                             Приглашения в сообщества
                             <input type="checkbox"
+                                   value="{{ user.notify_settings.community_invite_notifications }}"
                                    name="community_invite_notifications"
                                    id="id_community_invite_notifications"
                                    class="switch switch-sm">
@@ -42,6 +43,7 @@
                         <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
                             Комментарии к записям
                             <input type="checkbox"
+                                   value="{{ user.notify_settings.comment_notifications }}"
                                    name="comment_notifications"
                                    id="id_comment_notifications"
                                    class="switch switch-sm">
@@ -50,6 +52,7 @@
                         <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
                             Реакции на записи
                             <input type="checkbox"
+                                   value="{{ user.notify_settings.react_notifications }}"
                                    name="react_notifications"
                                    id="id_react_notifications"
                                    class="switch switch-sm">
@@ -58,6 +61,7 @@
                         <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
                             Реакции на комментарии
                             <input type="checkbox"
+                                   value="{{ user.notify_settings.comment_react_notifications }}"
                                    name="comment_react_notifications"
                                    id="id_comment_react_notifications"
                                    class="switch switch-sm">
@@ -66,6 +70,7 @@
                         <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
                             Ответы на комментарии
                             <input type="checkbox"
+                                   value="{{ user.notify_settings.comment_reply_notifications }}"
                                    name="comment_reply_notifications"
                                    id="id_comment_reply_notifications"
                                    class="switch switch-sm">
@@ -74,6 +79,7 @@
                         <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
                             Реакции на ответы
                             <input type="checkbox"
+                                   value="{{ user.notify_settings.comment_reply_react_notifications }}"
                                    name="comment_reply_react_notifications"
                                    id="id_comment_reply_react_notifications"
                                    class="switch switch-sm">
@@ -82,6 +88,7 @@
                         <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
                             Репосты записей
                             <input type="checkbox"
+                                   value="{{ user.notify_settings.repost_notifications }}"
                                    name="repost_notifications"
                                    id="id_repost_notifications"
                                    class="switch switch-sm">
@@ -90,6 +97,7 @@
                         <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
                             Упоминания в записях
                             <input type="checkbox"
+                                   value="{{ user.notify_settings.user_mention_notifications }}"
                                    name="user_mention_notifications"
                                    id="id_user_mention_notifications"
                                    class="switch switch-sm">
@@ -98,6 +106,7 @@
                         <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
                             Упоминания в комменариях
                             <input type="checkbox"
+                                   value="{{ user.notify_settings.comment_user_mention_notifications }}"
                                    name="comment_user_mention_notifications"
                                    id="id_comment_user_mention_notifications"
                                    class="switch switch-sm">
