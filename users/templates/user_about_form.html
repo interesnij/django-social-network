@@ -55,7 +55,7 @@
               data: frm.serialize(),
               success: function (data) {
                 $('#ajax').html('').load("{% url 'profile_reload' request.user.pk %}");
-                $('title').text('Текст динамического тайтла');
+                $('title').text('{{ user.get_full_name }}');
               },
               error: function(data) {
                   console.log("Все не ОК")
