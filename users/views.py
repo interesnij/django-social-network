@@ -1,5 +1,10 @@
 from django.views.generic.base import TemplateView
-from users.models import User, UserProfile
+from users.models import (
+                            User,
+                            UserProfile,
+                            UserPrivateSettings,
+                            UserNotificationsSettings
+                        )
 from posts.models import Post
 from main.models import Item
 from frends.models import Connect
@@ -7,7 +12,13 @@ from follows.models import Follow
 from goods.models import Good
 from communities.models import Community
 from main.forms import CommentForm
-from users.forms import GeneralUserForm, AboutUserForm, AvatarUserForm
+from users.forms import (
+                            GeneralUserForm,
+                            AboutUserForm,
+                            AvatarUserForm,
+                            SettingsPrivateForm,
+                            SettingsNotifyForm
+                        )
 from django.views.generic import ListView
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.db.models import Q
@@ -86,7 +97,7 @@ class ProfileUserView(TemplateView):
 
 
 class ProfileReload(TemplateView):
-    template_name = 'user_reload.html' 
+    template_name = 'user_reload.html'
 
     def get(self,request,*args,**kwargs):
         self.user=User.objects.get(pk=self.kwargs["pk"])
@@ -103,7 +114,7 @@ class ProfileReload(TemplateView):
 
 
 class UserGeneralChange(TemplateView):
-	template_name = "user_general_form.html"
+	template_name = "settings/user_general_form.html"
 	form=None
 	profile=None
 
@@ -139,7 +150,7 @@ class UserGeneralChange(TemplateView):
 
 
 class UserAboutChange(TemplateView):
-	template_name = "user_about_form.html"
+	template_name = "settings/user_about_form.html"
 	form=None
 	profile=None
 
@@ -170,8 +181,72 @@ class UserAboutChange(TemplateView):
 		return super(UserAboutChange,self).post(request,*args,**kwargs)
 
 
+class SettingsNotifyView(TemplateView):
+	template_name = "settings/notifications_settings.html"
+	form=None
+	notifications_settings=None
+
+	def get(self,request,*args,**kwargs):
+		self.user=request.user
+		self.form=SettingsNotifyForm(instance=self.user)
+		return super(SettingsNotifyView,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context=super(SettingsNotifyView,self).get_context_data(**kwargs)
+		context["notifications_settings"]=self.notifications_settings
+		context["form"]=self.form
+		return context
+
+	def post(self,request,*args,**kwargs):
+		self.user=request.user
+		try:
+			self.notifications_settings=UserNotificationsSettings.objects.get(user=request.user)
+		except:
+			self.notifications_settings = None
+		if not self.notifications_settings:
+			self.user.notifications_settings = UserNotificationsSettings.objects.create(user=request.user)
+		self.form=SettingsNotifyForm(request.POST,instance=self.user.notifications_settings)
+		if self.form.is_valid():
+			self.form.save()
+			if request.is_ajax():
+				return HttpResponse ('!')
+		return super(SettingsNotifyView,self).post(request,*args,**kwargs)
+
+
+class SettingsPrivateView(TemplateView):
+	template_name = "settings/private_settings.html"
+	form=None
+	private_settings=None
+
+	def get(self,request,*args,**kwargs):
+		self.user=request.user
+		self.form=SettingsPrivateForm(instance=self.user)
+		return super(SettingsPrivateView,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context=super(SettingsPrivateView,self).get_context_data(**kwargs)
+		context["private_settings"]=self.private_settings
+		context["form"]=self.form
+		return context
+
+	def post(self,request,*args,**kwargs):
+		self.user=request.user
+		try:
+			self.private_settings=UserPrivateSettings.objects.get(user=request.user)
+		except:
+			self.private_settings = None
+		if not self.private_settings:
+			self.user.private_settings = UserPrivateSettings.objects.create(user=request.user)
+		self.form=SettingsPrivateForm(request.POST,instance=self.user.private_settings)
+		if self.form.is_valid():
+			self.form.save()
+			if request.is_ajax():
+				return HttpResponse ('!')
+		return super(SettingsPrivateView,self).post(request,*args,**kwargs)
+
+
 class UserAvatarChange(TemplateView):
-	template_name = "user_avatar_form.html"
+	template_name = "settings/user_avatar_form.html"
 	form=None
 	profile=None
 
@@ -203,7 +278,7 @@ class UserAvatarChange(TemplateView):
 
 
 class UserDesign(TemplateView):
-	template_name="user_design.html"
+	template_name="settings/user_design.html"
 
 
 class ProfileButtonReload(TemplateView):

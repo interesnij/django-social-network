@@ -18,7 +18,7 @@ class UserAdmin(admin.ModelAdmin):
         UserNotificationsSettingsInline,
         UserPrivateSettingsInline,
     ]
-    search_fields = ('last_name',)
+    search_fields = ('last_name','first_name')
 
 
 

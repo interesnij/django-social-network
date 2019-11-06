@@ -103,7 +103,7 @@ $.ajax({
 							react.parents('.infinite-item').find(".reactions_stream").prepend(data);
 							$(react).siblings('.reaction_window').html('').load("/main/react_window/" + item + "/");
 							$.toast({
-									heading: '{{ request.user.first_name }}',
+									heading: 'Информация',
 									text: 'Ваша реакция засчитана',
 									showHideTransition: 'fade',
 									icon: 'info'
@@ -111,7 +111,7 @@ $.ajax({
 					},
 					error: function(data) {
 						$.toast({
-								heading: '{{ request.user.first_name }}',
+								heading: 'Ошибка',
 								text: 'Вы уже отреагировали этим смайлом',
 								showHideTransition: 'fade',
 								icon: 'error'
@@ -141,7 +141,7 @@ $.ajax({
             },
             error: function(data) {
               $.toast({
-                  heading: '{{ request.user.first_name }}',
+                  heading: 'Ошибка',
                   text: 'Для публикации комментария нужно написать что-нибудь и/или вставить изображение(ия)',
                   showHideTransition: 'fade',
                   icon: 'error'
@@ -162,16 +162,10 @@ $.ajax({
             success: function(data) {
                 $(".form-control-rounded").val("");
                 $(".stream_reply_comments").append(data);
-                $.toast({
-                    heading: '{{ request.user.first_name }}',
-                    text: 'Ответ успешно создан!',
-                    showHideTransition: 'fade',
-                    icon: 'link'
-                })
             },
             error: function(data) {
               $.toast({
-                  heading: '{{ request.user.first_name }}',
+                  heading: 'Ошибка',
                   text: 'Для публикации ответа нужно написать что-нибудь и/или вставить изображение(ия)',
                   showHideTransition: 'fade',
                   icon: 'error'
@@ -192,16 +186,10 @@ $.ajax({
             success: function(data) {
                 $(".form-control-rounded").val("");
                 $(".stream_reply_comments").append(data);
-                $.toast({
-                    heading: '{{ request.user.first_name }}',
-                    text: 'Ответ успешно создан!',
-                    showHideTransition: 'fade',
-                    icon: 'link'
-                })
             },
             error: function(data) {
               $.toast({
-                  heading: '{{ request.user.first_name }}',
+                  heading: 'Ошибка',
                   text: 'Для публикации ответа нужно написать что-нибудь и/или вставить изображение(ия)',
                   showHideTransition: 'fade',
                   icon: 'error'
