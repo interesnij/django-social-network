@@ -7,7 +7,7 @@ from django.views.generic.base import TemplateView
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from communities.forms import CommunityForm
 from generic.mixins import CategoryListMixin
-
+from django.views import View
 
 
 class CommunitiesView(ListView):
