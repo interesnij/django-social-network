@@ -10,6 +10,7 @@ from channels.layers import get_channel_layer
 from slugify import slugify
 from django.core import serializers
 from django.contrib.postgres.indexes import BrinIndex
+from communities.models import Community
 
 
 class NotificationQuerySet(models.query.QuerySet):
@@ -249,15 +250,15 @@ def community_notification_handler(actor, recipient, verb, **kwargs):
         notification_broadcast(actor, key)
 
     elif isinstance(recipient, list):
-        for user in recipient:
+        for community in recipient:
             CommunityNotification.objects.create(
                 actor=actor,
-                recipient=User.objects.get(username=user.username),
+                recipient=Community.objects.get(name=community.name),
                 verb=verb,
                 action_object=kwargs.pop('action_object', None)
             )
 
-    elif isinstance(recipient, get_user_model()):
+    elif isinstance(recipient, Community):
         CommunityNotification.objects.create(
             actor=actor,
             recipient=recipient,
@@ -265,7 +266,7 @@ def community_notification_handler(actor, recipient, verb, **kwargs):
             action_object=kwargs.pop('action_object', None)
         )
         notification_broadcast(
-            actor, key, id_value=id_value, recipient=recipient.username)
+            actor, key, id_value=id_value, recipient=recipient.name)
 
     else:
         pass

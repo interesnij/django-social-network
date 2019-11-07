@@ -413,7 +413,7 @@ class Community(models.Model):
     def notification_new_member(self, user):
         community_notification_handler(
                                 user,
-                                self,
+                                self, 
                                 CommunityNotification.CONNECTION_REQUEST,
                                 action_object=self,
                                 id_value=str(user.uuid),
