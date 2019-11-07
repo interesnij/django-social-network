@@ -15,26 +15,27 @@
 
     {% for object in membersheeps %}
     <div class="card border-top border-bottom">
-        <div class="card-body">
-            <div class="media">
-                <figure style="width:50px;">
-                    {% if object.avatar %}
-                    <img src="{{ object.avatar.url }}" style="border-radius:50px;width:50px;" alt="image">
-                    {% else %}
-                    <img style="width:50px;border:#6C757D solid 1px;border-radius:50px;padding:5px;" src="{% static 'images/icons/group-24px.svg' %}" />
-                    {% endif %}
-                </figure>
-                <div class="media-body">
-                    <a href="{% url 'community_detail' pk=object.pk %}" class="ajax">
-                        <h6 class="my-0 mt-1">{{ object.name }}
-                        </h6>
-                    </a>
-                    {% if object.category %}
-                    <p class="small">{{ object.category }}</p>
-                    {% endif %}
-                </div>
-            </div>
+      <div class="card-body">
+      <div class="media">
+        <figure>
+          {% if object.user.profile.avatar %}
+            <img src="{{ object.user.profile.avatar.url }}" style="border-radius:50px;width:50px;" alt="image">
+          {% else %}
+            <img src="{% static 'images/user.png' %}" alt="image" style="border-radius:50px;width:50px;">
+          {% endif %}
+        </figure>
+        <div class="media-body">
+          <a href="{% url 'user' pk=object.user.pk %}" class="ajax">
+            <h6 class="my-0 mt-1">{{ object.user.get_full_name }}</h6>
+          </a>
+          {% if object.user.get_online %}
+            <p class="text-success">В сети</p>
+          {% else %}
+            <p class="small">Был(а) {{ object.user.last_activity|naturaltime }}</p>
+          {% endif %}
         </div>
+      </div>
+  </div>
     </div>
     {% endfor %}
 </div>
