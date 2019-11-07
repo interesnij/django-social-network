@@ -79,23 +79,6 @@ class CommunityDetailView(DetailView):
 		return context
 
 
-class CommunityButtonLoad(TemplateView):
-	template_name = "community_button_load.html"
-	member = False
-
-	def get(self,request,*args,**kwargs):
-		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		if request.user.is_authenticated and request.user.is_member_of_community_with_name(self.community.name):
-			self.member=True
-		return super(CommunityButtonLoad,self).get(request,*args,**kwargs)
-
-	def get_context_data(self,**kwargs):
-		context=super(CommunityButtonLoad,self).get_context_data(**kwargs)
-		context["member"]=self.member
-		context["object"]=self.community
-		return context
-
-
 class GygView(TemplateView):
 	template_name="gygyg.html"
 
