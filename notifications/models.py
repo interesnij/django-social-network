@@ -185,7 +185,7 @@ class CommunityNotification(models.Model):
     NOTIFICATION_TYPES = (
         (POST_COMMENT, 'оставил комментарий к записи сообщества'),
         (POST_COMMENT_REPLY, 'ответил на комментарий к записи сообщества'),
-        (CONNECTION_REQUEST, 'подал заявку в падписчики'),
+        (CONNECTION_REQUEST, 'подал заявку в сообщество'),
         (CONNECTION_CONFIRMED, 'заявка в сообщество одобрено'),
         (COMMUNITY_INVITE, 'пригласил сообщество в сообщество'),
         (POST_USER_MENTION, 'упомянул сообщество в записи'),

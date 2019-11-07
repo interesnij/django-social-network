@@ -8,6 +8,7 @@ from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from communities.forms import CommunityForm
 from generic.mixins import CategoryListMixin
 from django.views import View
+from notifications.models import CommunityNotification, community_notification_handler
 
 
 class CommunitiesView(ListView):
@@ -227,6 +228,7 @@ class CommunityMemberCreate(View):
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		new_member = request.user.join_community_with_name(self.community.name)
+		self.community.notification_new_member(request.user)
 		return HttpResponse("!")
 
 class CommunityMemberDelete(View):

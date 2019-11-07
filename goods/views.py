@@ -59,7 +59,7 @@ class GoodUserCreate(TemplateView):
 				html = render_to_string('good.html',{'object': new_good,'request': request})
 			return HttpResponse(html)
 		else:
-			return JsonResponse({'error': True, 'errors': self.form.errors})
+			return HttpResponseBadRequest()
 		return super(GoodUserCreate,self).get(request,*args,**kwargs)
 
 

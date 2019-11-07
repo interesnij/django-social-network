@@ -409,6 +409,16 @@ class Community(models.Model):
         user_membership = self.memberships.get(user=user)
         user_membership.delete()
 
+    def notification_new_member(self, user):
+        community_notification_handler(
+                                user,
+                                self,
+                                CommunityNotification.CONNECTION_REQUEST,
+                                action_object=self,
+                                id_value=str(user.uuid),
+                                key='notification'
+                            )
+
     def create_invite(self, creator, invited_user):
         """"
         Создание приглащения в группу
