@@ -7,7 +7,7 @@ from communities.views import (
                                 CommunityItemView,
                                 CommunityListView,
                                 CommunityDetailReload,
-                                ComunityButtonReload,
+                                CommunityButtonLoad,
                                 GygView,
                                 CommunityMembersView,
                             )
