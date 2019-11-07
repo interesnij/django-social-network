@@ -25,7 +25,7 @@
     console.log("clicked!");
   $.ajax({
       url: '{% url "add_community_member" object.pk %}',
-      success: function (data) {
+      success: function () {
         $('#ajax').html('').load("{% url 'community_detail_reload' object.pk %}");
         $('title').text('{{ object.name }}');
       }
@@ -37,7 +37,7 @@
     console.log("clicked!");
   $.ajax({
       url: '{% url "delete_community_member" object.pk %}',
-      success: function (data) {
+      success: function () {
         $('#ajax').html('').load("{% url 'community_detail_reload' object.pk %}");
         $('title').text('{{ object.name }}');
       }
