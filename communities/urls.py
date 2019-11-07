@@ -24,5 +24,5 @@ urlpatterns = [
     url(r'^list/(?P<pk>\d+)/$', CommunityListView.as_view(), name="community_item_list"),
     url(r'^gygyg/$', GygView.as_view(), name="community_ggg"),
     url(r'^(?P<pk>\d+)/members/$', CommunityMembersView.as_view(), name='community_members'),
-    url(r'^button_load/(?P<pk>\d+)/$', ComunityButtonLoad.as_view(), name='community_button_load'),
+    url(r'^button_load/(?P<pk>\d+)/$', CommunityButtonLoad.as_view(), name='community_button_load'),
 ]
