@@ -3,13 +3,15 @@
 
 {% block title %}{{ object.name }}{% endblock %}
 {% block content %}
+
+{% if not object.is_private or member %}
 {% include 'community/navbar.html' %}
 
 <div class="container mt-4 main-container">
     <div class="row">
         <div class="col-12 col-md-12 col-lg-8">
 
-          {% if not object.is_private or request.user.is_member_of_communities %}
+          {% if object.is_public or member %}
             {% include 'community/new_post.html' %}
 
             <div id="lenta_load"></div>
@@ -27,9 +29,16 @@
             {% include 'community/forum.html' %}
 
         </div>
-    </div>
 
+    </div>
 </div>
+{% else %}
+<div class="container mt-4 main-container">
+    <div class="row" style="margin-top: 100px;display: flex;align-items: center;justify-content: center;">
+      Это приватное сообщество. Доступ возможен только по приглашению администрации сообщества.
+    </div>
+</div>
+{% endif %}
 
 <script>
     $(document).ready(function() {
