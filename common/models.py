@@ -67,6 +67,11 @@ class Emoji(models.Model):
 
         return [{'emoji': emoji, 'count': emoji.post_reactions__count} for emoji in emojis]
 
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.created = timezone.now()
+        return super(Emoji, self).save(*args, **kwargs)
+
 
 class ProxyBlacklistedDomain(models.Model):
     domain = models.CharField(max_length=100, unique=True)
