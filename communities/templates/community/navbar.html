@@ -92,13 +92,13 @@
                             Вы подписаны
                         </button>
                         <div class="dropdown-menu" x-placement="bottom-start">
-                            <a href="#" class="dropdown-item member_delete" href="">Отписаться</a>
+                            <a href="#" data-id="{{ object.pk }}" class="dropdown-item member_delete" href="">Отписаться</a>
                         </div>
                     </div>
                     {% endif %}
 
                     {% if object.is_public and not member %}
-                    <a href="#" class="btn btn-success success-gradient ml-2 member_create">Подписаться</a>
+                    <a href="#" data-id="{{ object.pk }}" class="btn btn-success success-gradient ml-2 member_create">Подписаться</a>
                     {% endif %}
 
                     {% if object.is_closed and not member %}

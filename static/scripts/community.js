@@ -1,19 +1,23 @@
 
-  $('.member_create').on('click', function() {
+  $('#ajax').on('click', '.member_create', function() {
+    var member_create = $(this);
+    var pk = member_create.data('id');
   $.ajax({
-      url: '{% url "add_community_member" object.pk %}',
+      url: "/communities/add_community_member/" + pk + "/",
       success: function () {
-        $('#ajax').html('').load("{% url 'community_detail_reload' object.pk %}");
+        $('#ajax').html('').load("/communities/community_detail_reload/" + pk + "/");
         $('title').text('{{ object.name }}');
       }
   });
   });
 
-  $('.member_delete').on('click', function() {
+  $('#ajax').on('click', '.member_delete', function() {
+    var member_delete = $(this);
+    var pk = member_delete.data('id');
   $.ajax({
-      url: '{% url "delete_community_member" object.pk %}',
+      url: "/communities/delete_community_member/" + pk + "/",
       success: function () {
-        $('#ajax').html('').load("{% url 'community_detail_reload' object.pk %}");
+        $('#ajax').html('').load("/communities/community_detail_reload/" + pk + "/");
         $('title').text('{{ object.name }}');
       }
   });
