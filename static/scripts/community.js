@@ -5,7 +5,7 @@
   $.ajax({
       url: "/communities/add_community_member/" + pk + "/",
       success: function () {
-        $('#ajax').html('').load("/communities/community_detail_reload/" + pk + "/");
+        $('#ajax').html('').load("/communities/reload/" + pk + "/");
       }
   });
   });
@@ -16,7 +16,7 @@
   $.ajax({
       url: "/communities/delete_community_member/" + pk + "/",
       success: function () {
-        $('#ajax').html('').load("/communities/community_detail_reload/" + pk + "/");
+        $('#ajax').html('').load("/communities/reload/" + pk + "/");
       }
   });
   });
