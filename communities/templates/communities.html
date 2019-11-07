@@ -111,37 +111,11 @@
             <div class="card-header">
                 <div class="media">
                     <div class="media-body">
+                      <a href="{% url 'all_communities' %}" class="ajax">
                         <h5 class="mt-1">Все группы</h5>
+                      </a>
                     </div>
                 </div>
-            </div>
-            <div class="card-body px-0 py-0">
-                <ul class="list-group border-top border-bottom list-group-flush">
-                    {% for object in communities %}
-                    <li class="list-group-item">
-                        <div class="media">
-                            <a href="{% url 'community_detail' pk=object.pk %}" class="ajax">
-                                <figure>
-                                    {% if object.avatar %}
-                                    <img src="{{ object.avatar.url }}" style="border-radius:50px;width:50px;" alt="image">
-                                    {% else %}
-                                    <img style="width:50px;border:#6C757D solid 1px;border-radius:50px;padding:5px;" src="{% static 'images/icons/group-24px.svg' %}" />
-                                    {% endif %}
-                                </figure>
-                            </a>
-                            <div class="media-body">
-                                <a href="{% url 'community_detail' pk=object.pk %}" class="ajax">
-                                    <h6 class="my-0 mt-1">{{ object.name }}
-                                    </h6>
-                                </a>
-                                {% if object.status %}
-                                <p>Написать сообщение</p>
-                                {% endif %}
-                            </div>
-                        </div>
-                    </li>
-                    {% endfor %}
-                </ul>
             </div>
             <br><br>
         </div>
