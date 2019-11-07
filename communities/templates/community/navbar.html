@@ -87,6 +87,7 @@
                     <br><br>
 
                     {% if member %}
+                    <span style="display: flex;align-items: center;justify-content: center;"
                     <div class="btn-group">
                         <button type="button" class="btn btn-sm btn-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Вы подписаны
@@ -104,7 +105,7 @@
                     {% if object.is_closed and not member %}
                     <a class="btn btn-primary primary-gradient ml-2">Подать заявку</a>
                     {% endif %}
-
+                    </span>
                 </div>
             </div>
         </div>
