@@ -2,6 +2,7 @@ import uuid
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth import get_user_model
+from common.model_loaders import get_user_model, get_community_model
 from django.db import models
 from django.utils import timezone
 from django.conf import settings
@@ -10,7 +11,6 @@ from channels.layers import get_channel_layer
 from slugify import slugify
 from django.core import serializers
 from django.contrib.postgres.indexes import BrinIndex
-from communities.models import Community
 
 
 class NotificationQuerySet(models.query.QuerySet):
@@ -258,7 +258,7 @@ def community_notification_handler(actor, recipient, verb, **kwargs):
                 action_object=kwargs.pop('action_object', None)
             )
 
-    elif isinstance(recipient, Community):
+    elif isinstance(recipient, get_community_model()):
         CommunityNotification.objects.create(
             actor=actor,
             recipient=recipient,
