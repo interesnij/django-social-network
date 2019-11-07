@@ -22,6 +22,7 @@
 
 <script>
   $('.member_create').on('click', function() {
+    console.log("clicked!");
   $.ajax({
       url: '{% url "add_community_member" object.pk %}',
       success: function (data) {
@@ -33,6 +34,7 @@
 </script>
 <script>
   $('.member_delete').on('click', function() {
+    console.log("clicked!");
   $.ajax({
       url: '{% url "delete_community_member" object.pk %}',
       success: function (data) {
