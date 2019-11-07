@@ -113,11 +113,6 @@ class Notification(models.Model):
 
         return timesince(self.timestamp, now)
 
-    def mark_as_read(self):
-        if self.unread:
-            self.unread = False
-            self.save()
-
     def mark_as_unread(self):
         if not self.unread:
             self.unread = True
@@ -224,11 +219,6 @@ class CommunityNotification(models.Model):
         from django.utils.timesince import timesince
 
         return timesince(self.timestamp, now)
-
-    def mark_as_read(self):
-        if self.unread:
-            self.unread = False
-            self.save()
 
     def mark_as_unread(self):
         if not self.unread:

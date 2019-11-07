@@ -15,11 +15,13 @@
 
         {% include 'profile/card_profile.html' %}
 
-        {% include 'profile/frends.html' %}
+        {% if not user.private_settings.is_private %}
+          {% include 'profile/frends.html' %}
 
-        {% include 'profile/communities.html' %}
+          {% include 'profile/communities.html' %}
 
-        {% include 'profile/gallery.html' %}
+          {% include 'profile/gallery.html' %}
+        {% endif %}
 
     </div>
     <div class="col-lg-8 col-md-7 col-sm-12 order-2 ">
@@ -32,13 +34,15 @@
             {% endif %}
             <br><br>
         </div>
+        {% if not user.private_settings.is_private %}
+          <div id="stat_load"></div>
 
-        <div id="stat_load"></div>
+          {% include 'profile/new_post.html' %}
 
-        {% include 'profile/new_post.html' %}
-
-        <div id="lenta_load"></div>
-
+          <div id="lenta_load"></div>
+        {% else %}
+          <p>Это закрытый профиль. Только его друзья могут видеть его информацию.</p>
+        {% endif %}
         </div>
     </div>
 
