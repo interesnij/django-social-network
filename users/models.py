@@ -293,7 +293,7 @@ class User(AbstractUser):
 
         return Item.objects.filter(timeline_posts_query).distinct()
 
-    def join_community_with_id(self, community_name):
+    def join_community_with_name(self, community_name):
         check_can_join_community_with_name(
             user=self,
             community_name=community_name)
