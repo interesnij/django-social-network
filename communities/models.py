@@ -59,9 +59,11 @@ class Community(models.Model):
     status = models.CharField(max_length=100, blank=True, null=True, verbose_name="статус-слоган")
     COMMUNITY_TYPE_PRIVATE = 'T'
     COMMUNITY_TYPE_PUBLIC = 'P'
+    COMMUNITY_TYPE_CLOSED = 'C'
     COMMUNITY_TYPES = (
         (COMMUNITY_TYPE_PUBLIC, 'Публичное'),
         (COMMUNITY_TYPE_PRIVATE, 'Приватное'),
+        (COMMUNITY_TYPE_CLOSED, 'Закрытое'),
     )
     type = models.CharField(choices=COMMUNITY_TYPES, default='P', max_length=2)
     invites_enabled = models.BooleanField(default=True, verbose_name="Разрешить приглашения")
@@ -341,6 +343,18 @@ class Community(models.Model):
         Группа приватная?
         """
         return self.type is self.COMMUNITY_TYPE_PRIVATE
+
+    def is_closed(self):
+        """"
+        Группа закрытая?
+        """
+        return self.type is self.COMMUNITY_TYPE_CLOSED
+
+    def is_public(self):
+        """"
+        Группа открытая?
+        """
+        return self.type is self.COMMUNITY_TYPE_PUBLIC
 
     def update(self, title=None, name=None, description=None, color=None, type=None,
                user_adjective=None,

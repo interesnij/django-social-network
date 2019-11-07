@@ -97,11 +97,11 @@
                         </div>
                         {% endif %}
 
-                        {% if not object.is_private and not request.user.is_member_of_communities %}
+                        {% if object.is_public and not request.user.is_member_of_communities %}
                         <a class="btn btn-success success-gradient ml-2">Подписаться</a>
                         {% endif %}
 
-                        {% if object.is_private and not request.user.is_member_of_communities %}
+                        {% if object.is_closed and not request.user.is_member_of_communities %}
                         <a class="btn btn-primary primary-gradient ml-2">Подать заявку</a>
                         {% endif %}
                     </span>

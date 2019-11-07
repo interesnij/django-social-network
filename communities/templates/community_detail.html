@@ -7,9 +7,10 @@
 
 <div class="container mt-4 main-container">
     <div class="row">
+      {% if object.is_private or request.user.is_member_of_communities %}
         <div class="col-12 col-md-12 col-lg-8">
 
-          {% if not object.is_private or request.user.is_member_of_communities %}
+          {% if object.is_public or request.user.is_member_of_communities %}
             {% include 'community/new_post.html' %}
 
             <div id="lenta_load"></div>
@@ -27,6 +28,9 @@
             {% include 'community/forum.html' %}
 
         </div>
+        {% else %}
+          Это приватное сообщество. Доступ возможен только по приглашению администрации сообщества.
+        {% endif %}
     </div>
 </div>
 

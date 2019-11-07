@@ -1,3 +1,4 @@
+import uuid
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth import get_user_model
@@ -7,9 +8,9 @@ from django.conf import settings
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 from slugify import slugify
-import uuid
 from django.core import serializers
 from django.contrib.postgres.indexes import BrinIndex
+from communities.models import Community
 
 
 class NotificationQuerySet(models.query.QuerySet):
@@ -149,6 +150,116 @@ def notification_handler(actor, recipient, verb, **kwargs):
 
     elif isinstance(recipient, get_user_model()):
         Notification.objects.create(
+            actor=actor,
+            recipient=recipient,
+            verb=verb,
+            action_object=kwargs.pop('action_object', None)
+        )
+        notification_broadcast(
+            actor, key, id_value=id_value, recipient=recipient.username)
+
+    else:
+        pass
+
+
+class CommunityNotification(models.Model):
+    recipient = models.ForeignKey(Community, on_delete=models.CASCADE, related_name='community_notifications', verbose_name="Сообщество")
+    actor = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="notify_actor", verbose_name="Инициатор", on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(default=timezone.now, editable=False, db_index=True, verbose_name="Создано")
+    unread  = models.BooleanField(default=True, db_index=True)
+
+    POST_COMMENT = 'PC'
+    POST_COMMENT_REPLY = 'PCR'
+    REACT_REPLY_COMMENT = 'RRC'
+    CONNECTION_REQUEST = 'CR'
+    CONNECTION_CONFIRMED = 'CC'
+    COMMUNITY_INVITE = 'CI'
+    POST_USER_MENTION = 'PUM'
+    POST_COMMENT_USER_MENTION = 'PCUM'
+    REACT = 'RE'
+    REACT_COMMENT =  'RC'
+    LOGGED_IN = 'I'
+    LOGGED_OUT = 'O'
+    SIGNUP = 'U'
+    REPOST = 'R'
+
+    NOTIFICATION_TYPES = (
+        (POST_COMMENT, 'оставил комментарий к записи сообщества'),
+        (POST_COMMENT_REPLY, 'ответил на комментарий к записи сообщества'),
+        (CONNECTION_REQUEST, 'подал заявку в падписчики'),
+        (CONNECTION_CONFIRMED, 'заявка в сообщество одобрено'),
+        (COMMUNITY_INVITE, 'пригласил сообщество в сообщество'),
+        (POST_USER_MENTION, 'упомянул сообщество в записи'),
+        (POST_COMMENT_USER_MENTION, 'упомянул сообщество в комментарии к записи'),
+        (REACT, 'отреагировал на запись сообщества'),
+        (REACT_COMMENT, 'отреагировал на комментарий сообщества'),
+        (REACT_REPLY_COMMENT, 'отреагировал на ответ к комментарию сообщества'),
+        (REPOST, 'поделился записью сообщества'),
+    )
+
+    verb = models.CharField(max_length=5, choices=NOTIFICATION_TYPES, verbose_name="Тип уведомления")
+    slug = models.SlugField(max_length=210, null=True, blank=True)
+    action_object_content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    action_object_object_id = models.CharField(max_length=50, blank=True, null=True)
+    action_object = GenericForeignKey("action_object_content_type", "action_object_object_id")
+    uuid_id = models.UUIDField(
+        primary_key=True, default=uuid.uuid4, editable=False)
+    objects = NotificationQuerySet.as_manager()
+
+    class Meta:
+        verbose_name = "Уведомление сообщества"
+        verbose_name_plural = "Уведомления сообщества"
+        ordering = ["-timestamp"]
+        indexes = (
+            BrinIndex(fields=['timestamp']),
+        )
+
+    def __str__(self):
+        return '{} - {}'.format(self.actor, self.get_verb_display())
+
+
+    def time_since(self, now=None):
+        from django.utils.timesince import timesince
+
+        return timesince(self.timestamp, now)
+
+    def mark_as_read(self):
+        if self.unread:
+            self.unread = False
+            self.save()
+
+    def mark_as_unread(self):
+        if not self.unread:
+            self.unread = True
+            self.save()
+
+
+def community_notification_handler(actor, recipient, verb, **kwargs):
+
+    key = kwargs.pop('key', 'notification')
+    id_value = kwargs.pop('id_value', None)
+    if recipient == 'global':
+        users = User.objects.all().exclude(username=actor.username)
+        for user in users:
+            CommunityNotification.objects.create(
+                actor=actor,
+                recipient=user,
+                verb=verb,
+                action_object=kwargs.pop('action_object', None)
+            )
+        notification_broadcast(actor, key)
+
+    elif isinstance(recipient, list):
+        for user in recipient:
+            CommunityNotification.objects.create(
+                actor=actor,
+                recipient=User.objects.get(username=user.username),
+                verb=verb,
+                action_object=kwargs.pop('action_object', None)
+            )
+
+    elif isinstance(recipient, get_user_model()):
+        CommunityNotification.objects.create(
             actor=actor,
             recipient=recipient,
             verb=verb,
