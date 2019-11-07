@@ -16,7 +16,7 @@
         </div>
       </a>
     {% endfor %}
-  <a href="{% url 'unread' %}" class="media pink-gradient-active text-center ajax">все уведомления</a>
+  <a href="{% url 'user_notify_list' %}" class="media text-center ajax">все уведомления</a>
   {% else %}
       Нет новых уведомлений
   {% endif %}

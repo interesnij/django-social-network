@@ -4,9 +4,10 @@ from notifications import views
 
 
 urlpatterns = [
-    url(r'^$', views.NotificationUnreadListView.as_view(), name='unread'),
-    url(r'^mark-as-read/(?P<slug>[-\w]+)/$', views.mark_as_read, name='mark_as_read'),
-    url(r'^mark-all-as-read/$', views.mark_all_as_read, name='mark_all_read'),
+    url(r'^user/$', views.UserNotificationListView.as_view(), name='user_notify_list'),
+    url(r'^user/$', views.CommunityNotificationListView.as_view(), name='community_notify_list'),
+    url(r'^user_all_read/$', views.user_all_read, name='user_all_read'),
+    url(r'^community_all_read/$', views.community_all_read, name='community_all_read'),
     url(r'^latest-notifications/$', views.get_latest_notifications, name='latest_notifications'),
     url(r'^clean-notifications/$', views.NotificationCleanView.as_view(), name='clean_notifications'),
 ]
