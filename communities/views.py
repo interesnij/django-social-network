@@ -67,6 +67,7 @@ class CommunityDetailView(DetailView):
 			self.creator=True
 		if request.user.is_authenticated and request.user.is_member_of_community_with_name(self.community.name):
 			self.member=True
+		return super(CommunityDetailView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		context=super(CommunityDetailView,self).get_context_data(**kwargs)
@@ -78,9 +79,10 @@ class CommunityDetailView(DetailView):
 		return context
 
 
-class CommunityButtonLoad(TemplateView):
+class CommunityButtonLoad(DetailView):
 	template_name = "community_button_load.html"
 	member = False
+	model = Community
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
