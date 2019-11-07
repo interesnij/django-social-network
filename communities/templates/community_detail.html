@@ -7,10 +7,10 @@
 
 <div class="container mt-4 main-container">
     <div class="row">
-      {% if not object.is_private or request.user.is_member_of_communities %}
+      {% if not object.is_private or member %}
         <div class="col-12 col-md-12 col-lg-8">
 
-          {% if object.is_public or request.user.is_member_of_communities %}
+          {% if object.is_public or member %}
             {% include 'community/new_post.html' %}
 
             <div id="lenta_load"></div>

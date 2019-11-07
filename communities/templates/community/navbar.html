@@ -86,7 +86,7 @@
                     {% endif %}
                     <br><br>
                     <span style="display: flex;align-items: center;justify-content: center;">
-                        {% if request.user.is_member_of_communities %}
+                        {% if member %}
                         <div class="btn-group">
                             <button type="button" class="btn btn-sm btn-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Вы подписаны
@@ -97,11 +97,11 @@
                         </div>
                         {% endif %}
 
-                        {% if object.is_public and not request.user.is_member_of_communities %}
+                        {% if object.is_public and not member %}
                         <a class="btn btn-success success-gradient ml-2">Подписаться</a>
                         {% endif %}
 
-                        {% if object.is_closed and not request.user.is_member_of_communities %}
+                        {% if object.is_closed and not member %}
                         <a class="btn btn-primary primary-gradient ml-2">Подать заявку</a>
                         {% endif %}
                     </span>

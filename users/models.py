@@ -163,10 +163,7 @@ class User(AbstractUser):
         return self.is_administrator_of_community_with_name(
             community_name=community_name) or self.is_moderator_of_community_with_name(community_name=community_name)
 
-    def is_member_of_communities(self):
-        return self.communities_memberships.all().exists()
-
-    def is_member_of_community_with_name(self, community_name):
+    def is_member_of_community_with_name(self, community_name): 
         return self.communities_memberships.filter(community__name=community_name).exists()
 
     def is_banned_from_community_with_name(self, community_name):
