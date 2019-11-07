@@ -117,7 +117,7 @@
             </div>
             <div class="card-body px-0 py-0">
                 <ul class="list-group border-top border-bottom list-group-flush">
-                    {% for object in community_set.all %}
+                    {% for object in communities %}
                     <li class="list-group-item">
                         <div class="media">
                             <a href="{% url 'community_detail' pk=object.pk %}" class="ajax">

@@ -20,6 +20,11 @@ class CommunitiesView(ListView):
 		groups=Community.objects.filter(memberships__user__id=self.user.pk)
 		return groups
 
+	def get_context_data(self,**kwargs):
+		context=super(CommunityMembersView,self).get_context_data(**kwargs)
+		context["communities"]=Community.objects.only('pk')
+		return context
+
 
 class CommunityMembersView(ListView):
 	template_name="members.html"
