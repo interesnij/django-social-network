@@ -38,27 +38,6 @@
         //  $('#button_load').html('').load("/communities/button/" + {{ community.pk }});
         //  	$('#stat_load').html('').load("/communities/profile_stat/" + {{ community.pk }});
     });
-    $('.member_create').on('click', function() {
-      var member_create = $(this);
-      var pk = member_create.data('id');
-    $.ajax({
-        url: "/communities/add_community_member/" + pk + "/",
-        success: function () {
-          $('#ajax').html('').load("/communities/reload/" + pk + "/");
-        }
-    });
-    });
-
-    $('.member_delete').on('click', function() {
-      var member_delete = $(this);
-      var pk = member_delete.data('id');
-    $.ajax({
-        url: "/communities/delete_community_member/" + pk + "/",
-        success: function () {
-          $('#ajax').html('').load("/communities/reload/" + pk + "/");
-        }
-    });
-    });
 </script>
-
+<script defer src="{% static 'scripts/community.js' %}" type="text/javascript"></script>
 {% endblock %}
