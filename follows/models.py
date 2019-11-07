@@ -1,7 +1,6 @@
 from django.db import models
 from notifications.models import *
 from django.conf import settings
-from communities.models import Community
 
 
 class Follow(models.Model):
@@ -25,7 +24,7 @@ class Follow(models.Model):
 
 class CommunityFollow(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE, related_name='follows', verbose_name="Подписчик")
-    community = models.ForeignKey(Community, db_index=False, on_delete=models.CASCADE, related_name='community', null=False, verbose_name="На какое сообщество подписывается")
+    community = models.ForeignKey('communities.Community', db_index=False, on_delete=models.CASCADE, related_name='community', null=False, verbose_name="На какое сообщество подписывается")
 
     def notification_follow(self, user):
         community_notification_handler(user, self.community, CommunityNotification.CONNECTION_REQUEST, action_object=self, id_value=str(user.uuid), key='notification')
