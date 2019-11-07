@@ -10,7 +10,6 @@ from channels.layers import get_channel_layer
 from slugify import slugify
 from django.core import serializers
 from django.contrib.postgres.indexes import BrinIndex
-from communities.models import Community
 
 
 class NotificationQuerySet(models.query.QuerySet):
@@ -163,7 +162,7 @@ def notification_handler(actor, recipient, verb, **kwargs):
 
 
 class CommunityNotification(models.Model):
-    recipient = models.ForeignKey(Community, on_delete=models.CASCADE, related_name='community_notifications', verbose_name="Сообщество")
+    recipient = models.ForeignKey('communities.Community', on_delete=models.CASCADE, related_name='community_notifications', verbose_name="Сообщество")
     actor = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="notify_actor", verbose_name="Инициатор", on_delete=models.CASCADE)
     timestamp = models.DateTimeField(default=timezone.now, editable=False, db_index=True, verbose_name="Создано")
     unread  = models.BooleanField(default=True, db_index=True)
