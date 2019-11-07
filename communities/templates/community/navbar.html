@@ -10,104 +10,104 @@
 </div>
 {% endif %}
 <div class="container-fluid">
-            <div class="row">
-                <div class="container main-container py-4">
-                    <div class="row align-items-center">
-                        <div class="col-12 col-xs-12 col-md-9">
+    <div class="row">
+        <div class="container main-container py-4">
+            <div class="row align-items-center">
+                <div class="col-12 col-xs-12 col-md-9">
 
-                            <div class="card mb-4">
-                                <div class="card-body">
-                                  <h3 class="mb-2">{{ object.name }}</h3>
-                                  {% if object.status %}
-                                    <p class="">{{ object.status }}</p>
-                                  {% else %}
-                                      {% if request.user.communities_memberships.is_administrator %}
-                                        <p class="">Добавьте статус сообщества</p>
-                                      {% endif %}
-
-                                  {% endif %}
-                                  <br><br>
-                                  {% if creator %}
-                                    Вы создатель сообщества
-                                  {% endif %}
-                                    <ul class="list-group list-group-flush w-100">
-                                        <li class="list-group-item px-0">
-                                            <div class="media experience">
-                                                <div class="icon-circle icon-40 bg-light-secondary mr-3">
-                                                    <img style="width:22px;" src="{% static 'images/icons/chat-24px.svg' %}" />
-                                                </div>
-                                                <div class="media-body">
-                                                    <h6 class="my-0 content-color-primary">Описание</h6>
-                                                    <p>
-                                                        {% if object.description %}
-                                                          {{ object.description }}
-                                                        {% else %}
-                                                          {% if administrator %}
-                                                            Добавьте описание сообщества
-                                                          {% else %}
-                                                            Нет описания сообщества
-                                                          {% endif %}
-                                                        {% endif %}
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="list-group-item px-0">
-                                            <div class="media experience">
-                                                <div class="icon-circle icon-40 bg-light-secondary mr-3">
-                                                    <img style="width:22px;" src="{% static 'images/icons/chat-24px.svg' %}" />
-                                                </div>
-                                                <div class="media-body">
-                                                    <h6 class="my-0 content-color-primary">Правила</h6>
-                                                    <p>
-                                                        {% if object.rules %}
-                                                          {{ object.rules }}
-                                                        {% else %}
-                                                          {% if administrator %}
-                                                            Добавьте правила сообщетсва
-                                                          {% else %}
-                                                            Правил сообщества нет
-                                                          {% endif %}
-                                                        {% endif %}
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-xs-12 col-md-3">
-                          {% if object.avatar %}
-                            <img src="{{ object.avatar.url }}" alt="" style="width:100%" class="rounded box-shadow-large">
-                          {% else %}
-                            <img src="{% static 'images/icons/group-24px.svg' %}" style="width:100%" alt="" class="rounded box-shadow-large">
-                          {% endif %}
-                          <br><br>
-                          <span style="display: flex;align-items: center;justify-content: center;">
-                            {% if request.user.is_member_of_communities %}
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-sm btn-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Вы подписаны
-                                </button>
-                                <div class="dropdown-menu" x-placement="bottom-start">
-                                    <a class="dropdown-item" href="">Отписаться</a>
-                                </div>
-                            </div>
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h3 class="mb-2">{{ object.name }}</h3>
+                            {% if object.status %}
+                            <p class="">{{ object.status }}</p>
+                            {% else %}
+                            {% if request.user.communities_memberships.is_administrator %}
+                            <p class="">Добавьте статус сообщества</p>
                             {% endif %}
 
-                            {% if not object.is_private and not request.user.is_member_of_communities %}
-                              <a class="btn btn-success success-gradient ml-2">Подписаться</a>
                             {% endif %}
-
-                            {% if object.is_private and not request.user.is_member_of_communities %}
-                              <a class="btn btn-primary primary-gradient ml-2">Подать заявку</a>
+                            <br><br>
+                            {% if creator %}
+                            Вы создатель сообщества
                             {% endif %}
-                        </span>
-
+                            <ul class="list-group list-group-flush w-100">
+                                <li class="list-group-item px-0">
+                                    <div class="media experience">
+                                        <div class="icon-circle icon-40 bg-light-secondary mr-3">
+                                            <img style="width:22px;" src="{% static 'images/icons/chat-24px.svg' %}" />
+                                        </div>
+                                        <div class="media-body">
+                                            <h6 class="my-0 content-color-primary">Описание</h6>
+                                            <p>
+                                                {% if object.description %}
+                                                {{ object.description }}
+                                                {% else %}
+                                                {% if administrator %}
+                                                Добавьте описание сообщества
+                                                {% else %}
+                                                Нет описания сообщества
+                                                {% endif %}
+                                                {% endif %}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item px-0">
+                                    <div class="media experience">
+                                        <div class="icon-circle icon-40 bg-light-secondary mr-3">
+                                            <img style="width:22px;" src="{% static 'images/icons/chat-24px.svg' %}" />
+                                        </div>
+                                        <div class="media-body">
+                                            <h6 class="my-0 content-color-primary">Правила</h6>
+                                            <p>
+                                                {% if object.rules %}
+                                                {{ object.rules }}
+                                                {% else %}
+                                                {% if administrator %}
+                                                Добавьте правила сообщетсва
+                                                {% else %}
+                                                Правил сообщества нет
+                                                {% endif %}
+                                                {% endif %}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
+
+                <div class="col-12 col-xs-12 col-md-3">
+                    {% if object.avatar %}
+                    <img src="{{ object.avatar.url }}" alt="" style="width:100%" class="rounded box-shadow-large">
+                    {% else %}
+                    <img src="{% static 'images/icons/group-24px.svg' %}" style="width:100%" alt="" class="rounded box-shadow-large">
+                    {% endif %}
+                    <br><br>
+                    <span style="display: flex;align-items: center;justify-content: center;">
+                        {% if request.user.is_member_of_communities %}
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-sm btn-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Вы подписаны
+                            </button>
+                            <div class="dropdown-menu" x-placement="bottom-start">
+                                <a class="dropdown-item" href="">Отписаться</a>
+                            </div>
+                        </div>
+                        {% endif %}
+
+                        {% if not object.is_private and not request.user.is_member_of_communities %}
+                        <a class="btn btn-success success-gradient ml-2">Подписаться</a>
+                        {% endif %}
+
+                        {% if object.is_private and not request.user.is_member_of_communities %}
+                        <a class="btn btn-primary primary-gradient ml-2">Подать заявку</a>
+                        {% endif %}
+                    </span>
+
+                </div>
             </div>
         </div>
+    </div>
+</div>

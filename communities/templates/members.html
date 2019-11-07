@@ -19,9 +19,9 @@
                 <div class="media">
                     <div class="media-body">
                         <h5 class="mt-1">Подписчики сообщества
-                                         <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=community.pk %}">
-                                           {{ community.name }}
-                                         </a>
+                            <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=community.pk %}">
+                                {{ community.name }}
+                            </a>
                         </h5>
                     </div>
                 </div>
@@ -34,9 +34,9 @@
                         <div class="media">
                             <figure>
                                 {% if object.user.profile.avatar %}
-                                  <img src="{{ object.user.profile.avatar.url }}" style="border-radius:50px;width:50px;" alt="image">
+                                <img src="{{ object.user.profile.avatar.url }}" style="border-radius:50px;width:50px;" alt="image">
                                 {% else %}
-                                  <img style="border:#6C757D solid 1px;border-radius:50px;padding:5px;width:50px;" src="{% static 'images/icons/person-24px.svg' %}" />
+                                <img style="border:#6C757D solid 1px;border-radius:50px;padding:5px;width:50px;" src="{% static 'images/icons/person-24px.svg' %}" />
                                 {% endif %}
                             </figure>
                             <div class="media-body">
@@ -54,7 +54,7 @@
     </div>
 
     <div class="col-12 col-md-4">
-      {% if administrator %}
+        {% if administrator %}
         <br><br><br>
         <div class="card mb-2">
             <div class="card-header">
@@ -75,9 +75,9 @@
                         <div class="media">
                             <figure>
                                 {% if object.profile.avatar %}
-                                  <img src="{{ object.profile.avatar.url }}" style="border-radius:50px;width:50px;" alt="image">
+                                <img src="{{ object.profile.avatar.url }}" style="border-radius:50px;width:50px;" alt="image">
                                 {% else %}
-                                  <img style="border:#6C757D solid 1px;border-radius:50px;padding:5px;width:50px;" src="{% static 'images/icons/person-24px.svg' %}" />
+                                <img style="border:#6C757D solid 1px;border-radius:50px;padding:5px;width:50px;" src="{% static 'images/icons/person-24px.svg' %}" />
                                 {% endif %}
                             </figure>
                             <div class="media-body">
@@ -105,7 +105,7 @@
             </div>
             <br><br>
         </div>
-      {% endif %}
+        {% endif %}
     </div>
 </div>
 {% endblock %}

@@ -1,66 +1,68 @@
 {% load staticfiles %}
 <style>
-  .avatar_change {
-    background: rgba(100, 100, 100, 0.5);
-    position: fixed;
-    display: none;
-    z-index: 5000;
-    height: 100%;
-    width: 100%;
-    left: 0;
-    top: 0;
-  }
-  .avatar_change > div {
-    max-width: 1000px;
-    width: 70%;
-    position: fixed;
-    -webkit-transform: translate(-50%, -50%);
-            transform: translate(-50%, -50%);
-    left: 50%;
-    top: 45%;
-    background: #FFFFFF;
-    padding: 30px;
-    z-index: 5001;
-    text-align: center;
-    border: 2px solid #0AC4BC;
-    border-radius: 10px;
-    box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.4);
-  }
-  .hidden {
-    display: none;
-}
+    .avatar_change {
+        background: rgba(100, 100, 100, 0.5);
+        position: fixed;
+        display: none;
+        z-index: 5000;
+        height: 100%;
+        width: 100%;
+        left: 0;
+        top: 0;
+    }
+
+    .avatar_change>div {
+        max-width: 1000px;
+        width: 70%;
+        position: fixed;
+        -webkit-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        left: 50%;
+        top: 45%;
+        background: #FFFFFF;
+        padding: 30px;
+        z-index: 5001;
+        text-align: center;
+        border: 2px solid #0AC4BC;
+        border-radius: 10px;
+        box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.4);
+    }
+
+    .hidden {
+        display: none;
+    }
+
     .new_message {
-      background: rgba(100, 100, 100, 0.5);
-      position: fixed;
-      display: none;
-      z-index: 5000;
-      height: 100%;
-      width: 100%;
-      left: 0;
-      top: 0;
-    }
-    .new_message > div {
-      max-width: 500px;
-      width: 70%;
-      position: fixed;
-      -webkit-transform: translate(-50%, -50%);
-              transform: translate(-50%, -50%);
-      left: 50%;
-      top: 50%;
-      background: #FFFFFF;
-      padding: 30px;
-      z-index: 5001;
-      text-align: center;
-      border: 2px solid #0AC4BC;
-      border-radius: 10px;
-      box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.4);
+        background: rgba(100, 100, 100, 0.5);
+        position: fixed;
+        display: none;
+        z-index: 5000;
+        height: 100%;
+        width: 100%;
+        left: 0;
+        top: 0;
     }
 
-.img-export {
-    display: block;
-}
+    .new_message>div {
+        max-width: 500px;
+        width: 70%;
+        position: fixed;
+        -webkit-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        left: 50%;
+        top: 50%;
+        background: #FFFFFF;
+        padding: 30px;
+        z-index: 5001;
+        text-align: center;
+        border: 2px solid #0AC4BC;
+        border-radius: 10px;
+        box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.4);
+    }
 
-
+    .img-export {
+        display: block;
+    }
 </style>
 <div class="card mb-4" style="">
     <div class="card-body">
@@ -68,11 +70,11 @@
             <a class="col">
 
                 <figure class="mx-auto mb-3" id="avatar_reload">
-                  {% if user.profile.avatar %}
+                    {% if user.profile.avatar %}
                     <img src="{{ user.profile.avatar.url }}" alt="">
-                  {% else %}
+                    {% else %}
                     <img src="{% static 'images/icons/person-24px.svg' %}" />
-                  {% endif %}
+                    {% endif %}
                 </figure>
             </a>
         </div>
@@ -82,7 +84,7 @@
 
         {% if user == request.user and request.user.is_authenticated %}
 
-          <span style="display: flex;align-items: center;justify-content: center;">
+        <span style="display: flex;align-items: center;justify-content: center;">
             <div class="btn-group">
                 <button type="button" class="btn btn-sm btn-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Редактировать
@@ -94,16 +96,16 @@
                     <a class="dropdown-item ajax" href="{% url 'user_design' user.pk %}">Внешний вид</a>
                 </div>
             </div>
-            <div class="btn-group">
-                <button type="button" class="btn btn-sm btn-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Настройки
-                </button>
-                <div class="dropdown-menu" x-placement="bottom-start">
-                    <a class="dropdown-item ajax" href="{% url 'user_settings_private' user.pk %}">Приватность</a>
-                    <a class="dropdown-item ajax" href="{% url 'user_settings_notify' user.pk %}">Уведомления</a>
-                </div>
-            </div>
         </span>
+        <div class="btn-group">
+            <button type="button" class="btn btn-sm btn-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Настройки
+            </button>
+            <div class="dropdown-menu" x-placement="bottom-start">
+                <a class="dropdown-item ajax" href="{% url 'user_settings_private' user.pk %}">Приватность</a>
+                <a class="dropdown-item ajax" href="{% url 'user_settings_notify' user.pk %}">Уведомления</a>
+            </div>
+        </div>
 
         {% endif %}
 
@@ -111,43 +113,43 @@
 </div>
 {% if user == request.user %}
 <div class="avatar_change">
-  <div>
-	   <h2>
-       {% if request.user.avatar %}
-          Изменение аватара
-       {% else %}
-          Загрузите аватар
-       {% endif %}
-     </h2>
-     <br>
-    <form id="AVATAR-FORM" action="" method="post" enctype="multipart/form-data" class="contact-form">
-      {% csrf_token %}
-      <label class="img-upload-label">
-        Загрузите фото:
+    <div>
+        <h2>
+            {% if request.user.avatar %}
+            Изменение аватара
+            {% else %}
+            Загрузите аватар
+            {% endif %}
+        </h2>
+        <br>
+        <form id="AVATAR-FORM" action="" method="post" enctype="multipart/form-data" class="contact-form">
+            {% csrf_token %}
+            <label class="img-upload-label">
+                Загрузите фото:
 
-      </label>
-       <input type="file" name="avatar" id="id_avatar" class="js-fileinput img-upload" accept="image/jpeg,image/png,image/gif">
-      <div style="width: 100%;height: 30em;max-height: 100%;">
-          <canvas class="js-editorcanvas"></canvas>
-          <canvas class="js-previewcanvas"></canvas>
-          <button class="btn btn-sm btn-warning success-gradient ml-2 js-export img-export float-right" name="avatar_close">Выбрать</button>
-      </div>
-    </form>
-</div>
+            </label>
+            <input type="file" name="avatar" id="id_avatar" class="js-fileinput img-upload" accept="image/jpeg,image/png,image/gif">
+            <div style="width: 100%;height: 30em;max-height: 100%;">
+                <canvas class="js-editorcanvas"></canvas>
+                <canvas class="js-previewcanvas"></canvas>
+                <button class="btn btn-sm btn-warning success-gradient ml-2 js-export img-export float-right" name="avatar_close">Выбрать</button>
+            </div>
+        </form>
+    </div>
 </div>
 {% endif %}
 
 {% if user != request.user %}
 <div class="new_message">
-  <div>
-	   <h2>
-       Новое сообщение
-     </h2>
-     <br>
-    <form id="MESSAGE-FORM" action="" method="post" enctype="multipart/form-data" class="contact-form">
-      {% csrf_token %}
+    <div>
+        <h2>
+            Новое сообщение
+        </h2>
+        <br>
+        <form id="MESSAGE-FORM" action="" method="post" enctype="multipart/form-data" class="contact-form">
+            {% csrf_token %}
 
-    </form>
-</div>
+        </form>
+    </div>
 </div>
 {% endif %}

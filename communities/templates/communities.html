@@ -3,123 +3,125 @@
 
 {% block title %}
 {% if user == request.user %}
-  Мои сообщества
+Мои сообщества
 {% else %}
-  Сообщества пользователя "{{ user.first_name }} {{ user.last_name }}"
+Сообщества пользователя "{{ user.first_name }} {{ user.last_name }}"
 {% endif %}
 {% endblock %}
 
 {% block content %}
 <style>
-.community_fullscreen{
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 20;
-  padding: 5%;
-  display: block;
-  overflow: auto;
-}
-@media screen and (min-width: 621px){
-.community_fullscreen {
-  left: 20%;
-  width: 60%;
-  padding-left: 5%;
-  padding-right: 5%;
-}
-}
-.community_fullscreen_hide{
-  cursor:pointer;
-  float: right;
-  margin-top: 12px;
-}
+    .community_fullscreen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 20;
+        padding: 5%;
+        display: block;
+        overflow: auto;
+    }
+
+    @media screen and (min-width: 621px) {
+        .community_fullscreen {
+            left: 20%;
+            width: 60%;
+            padding-left: 5%;
+            padding-right: 5%;
+        }
+    }
+
+    .community_fullscreen_hide {
+        cursor: pointer;
+        float: right;
+        margin-top: 12px;
+    }
 </style>
 
 <div class="row">
-<div class="col-12 col-md-8">
-<br><br><br>
-<div class="input-group mb-3">
-  <input type="text" class="form-control" placeholder="Поиск сообществ" aria-label="Recipient's username">
-  <div class="input-group-append">
-    <button class="btn btn-outline-link" type="button">Искать</button>
-  </div>
-</div>
-
-  <div class="card mb-2">
-        <div class="card-header">
-            <div class="media">
-                <div class="media-body">
-                  {% if user == request.user %}
-                  <h5 class="mt-1">Мои группы</h5>
-                  {% else %}
-                    <h5 class="mt-1">Группы пользователя {{ user.get_full_name }}</h5>
-                  {% endif %}
-                </div>
+    <div class="col-12 col-md-8">
+        <br><br><br>
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Поиск сообществ" aria-label="Recipient's username">
+            <div class="input-group-append">
+                <button class="btn btn-outline-link" type="button">Искать</button>
             </div>
         </div>
-        <br><br>
-        <div class="card-body px-0 py-0">
-            <ul class="list-group border-top border-bottom list-group-flush">
-              {% for object in object_list %}
-                <li class="list-group-item">
-                    <div class="media">
-                      <a href="{% url 'community_detail' pk=object.pk %}" class="ajax">
-                        <figure>
-                          {% if object.avatar %}
-                            <img src="{{ object.avatar.url }}" style="border-radius:50px;width:50px;" alt="image">
-                          {% else %}
-                            <img style="width:50px;border:#6C757D solid 1px;border-radius:50px;padding:5px;" src="{% static 'images/icons/group-24px.svg' %}" />
-                          {% endif %}
-                        </figure>
-                      </a>
-                        <div class="media-body">
-                          <a href="{% url 'community_detail' pk=object.pk %}" class="ajax">
-                            <h6 class="my-0 mt-1">{{ object.name }}
-                            </h6>
-                          </a>
-                          {% if object.status %}
-                            <p>Написать сообщение</p>
-                          {% endif %}
-                        </div>
+
+        <div class="card mb-2">
+            <div class="card-header">
+                <div class="media">
+                    <div class="media-body">
+                        {% if user == request.user %}
+                        <h5 class="mt-1">Мои группы</h5>
+                        {% else %}
+                        <h5 class="mt-1">Группы пользователя {{ user.get_full_name }}</h5>
+                        {% endif %}
                     </div>
-                </li>
-              {% endfor %}
-            </ul>
+                </div>
+            </div>
+            <br><br>
+            <div class="card-body px-0 py-0">
+                <ul class="list-group border-top border-bottom list-group-flush">
+                    {% for object in object_list %}
+                    <li class="list-group-item">
+                        <div class="media">
+                            <a href="{% url 'community_detail' pk=object.pk %}" class="ajax">
+                                <figure>
+                                    {% if object.avatar %}
+                                    <img src="{{ object.avatar.url }}" style="border-radius:50px;width:50px;" alt="image">
+                                    {% else %}
+                                    <img style="width:50px;border:#6C757D solid 1px;border-radius:50px;padding:5px;" src="{% static 'images/icons/group-24px.svg' %}" />
+                                    {% endif %}
+                                </figure>
+                            </a>
+                            <div class="media-body">
+                                <a href="{% url 'community_detail' pk=object.pk %}" class="ajax">
+                                    <h6 class="my-0 mt-1">{{ object.name }}
+                                    </h6>
+                                </a>
+                                {% if object.status %}
+                                <p>Написать сообщение</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-4">
+        <br><br><br>
+        <button id="community_add" class="btn btn-outline-success" style="margin-bottom:15px;width:100%;" type="button">Создать сообщество</button>
+        <div class="card mb-2">
+            <div class="card-header">
+                <div class="media">
+                    <div class="media-body">
+                        <h5 class="mt-1">Популярные группы</h5>
+                    </div>
+                </div>
+            </div>
+            <br><br>
         </div>
     </div>
 </div>
 
-<div class="col-12 col-md-4">
-  <br><br><br>
-  <button id="community_add" class="btn btn-outline-success" style="margin-bottom:15px;width:100%;" type="button">Создать сообщество</button>
-  <div class="card mb-2">
-        <div class="card-header">
-            <div class="media">
-                <div class="media-body">
-                    <h5 class="mt-1">Популярные группы</h5>
-                </div>
-            </div>
-        </div>
-        <br><br>
-  </div>
-</div>
-</div>
-
 <div class="card mb-4 community_fullscreen" style="display:none">
-  <span class="community_fullscreen_hide">
-    <img style="width:35px" src="{% static 'images/icons/close-24px.svg' %}" />
-  </span>
-  <div id="community_loader" style="margin-top:30px">
+    <span class="community_fullscreen_hide">
+        <img style="width:35px" src="{% static 'images/icons/close-24px.svg' %}" />
+    </span>
+    <div id="community_loader" style="margin-top:30px">
 
-  </div>
+    </div>
 </div>
 <script>
-	$( "#community_add" ).click(function(){
-		$('#community_loader').html('').load("/communities/add/");
-		$('.community_fullscreen').show();
-	})
+    $("#community_add").click(function() {
+        $('#community_loader').html('').load("/communities/add/");
+        $('.community_fullscreen').show();
+    })
 </script>
 <script>
     $('.community_fullscreen_hide').on('click', function() {
