@@ -47,10 +47,9 @@ def community_all_read(request):
 @login_required
 def get_latest_notifications(request):
     notifications = request.user.notifications.get_most_recent()
-    community_notifications = request.user.community_notifications.get_most_recent()
     return render(request,
                   'most_recent.html',
-                  {'notifications': notifications, 'community_notifications': community_notifications})
+                  {'notifications': notifications,)
 
 class NotificationCleanView(TemplateView):
     template_name = 'notification_clean.html'
