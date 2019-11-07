@@ -96,6 +96,10 @@ class GygView(TemplateView):
 class CommunityDetailReload(DetailView):
 	template_name="detail_reload.html"
 	model=Community
+	administrator = False
+	staff = False
+	creator = False
+	member = False
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
