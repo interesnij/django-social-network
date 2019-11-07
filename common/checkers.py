@@ -85,7 +85,7 @@ def check_can_join_community_with_name(user, community_name):
     if user.is_banned_from_community_with_name(community_name):
         raise ValidationError('Вы не можете присоединиться к сообществу, в котором вы были заблокированы.')
 
-    if user.is_member_of_community_with_name(community_name):
+    if user.is_member_of_community_with_id(community_name):
         raise ValidationError(
             'Вы уже являетесь подписчиков сообщества',
         )

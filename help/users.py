@@ -566,12 +566,6 @@ class User(AbstractUser):
                                                moderated_object__object_type=ModeratedObject.OBJECT_TYPE_MODERATED_OBJECT
                                                ).exists()
 
-    def has_favorite_community_with_name(self, community_name):
-        return self.favorite_communities.filter(name=community_name).exists()
-
-    def has_excluded_community_with_name(self, community_name):
-        return self.top_posts_community_exclusions.filter(community__name=community_name).exists()
-
     def has_list_with_name(self, list_name):
         return self.lists.filter(name=list_name).exists()
 

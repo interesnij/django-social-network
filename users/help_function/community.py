@@ -262,16 +262,6 @@ def remove_moderator_with_username_from_community_with_name(self, username, comm
     return community_to_remove_moderator_from
 
 
-def delete_community_with_name_cover(self, community_name):
-    check_can_update_community_with_name(user=self, community_name=community_name)
-
-    community_to_delete_cover_from = Community.objects.get(name=community_name)
-
-    delete_file_field(community_to_delete_cover_from.cover)
-    community_to_delete_cover_from.cover = None
-    community_to_delete_cover_from.save()
-    return community_to_delete_cover_from
-
 def search_community_with_name_members(self, community_name, query, exclude_keywords=None):
     check_can_get_community_with_name_members(
         user=self,
@@ -315,9 +305,6 @@ def invite_user_with_username_to_community_with_name(self, username, community_n
     user_to_invite = User.objects.get(username=username)
 
     community_invite = community_to_invite_user_to.create_invite(creator=self, invited_user=user_to_invite)
-
-    self._create_community_invite_notification(community_invite)
-    self._send_community_invite_push_notification(community_invite)
 
     return community_invite
 

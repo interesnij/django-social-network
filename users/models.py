@@ -293,7 +293,7 @@ class User(AbstractUser):
 
         return Item.objects.filter(timeline_posts_query).distinct()
 
-    def join_community_with_name(self, community_name):
+    def join_community_with_id(self, community_name):
         check_can_join_community_with_name(
             user=self,
             community_name=community_name)
@@ -302,10 +302,30 @@ class User(AbstractUser):
         community_to_join.add_member(self)
 
         if community_to_join.is_private():
-            CommunityInvite.objects.filter(community__name=community_name, invited_user__username=self.username).delete()
+            CommunityInvite.objects.filter(community_name=community_name, invited_user__id=self.id).delete()
         if community_to_join.is_closed():
-            CommunityFollow.objects.filter(community__name=community_name, community_follows__id=self.id).delete()
+            CommunityFollow.objects.filter(community_name=community_name, community_follows__id=self.id).delete()
         return community_to_join
+
+    def leave_community_with_name(self, community_name):
+        check_can_leave_community_with_name(
+            user=self,
+            community_name=community_name)
+
+        community_to_leave = Community.objects.get(name=community_name)
+
+        if self.has_favorite_community_with_name(community_name):
+            self.unfavorite_community_with_name(community_name=community_name)
+
+        community_to_leave.remove_member(self)
+
+        return community_to_leave
+
+    def has_favorite_community_with_name(self, community_name):
+        return self.favorite_communities.filter(name=community_name).exists()
+
+    def has_excluded_community_with_name(self, community_name):
+        return self.top_posts_community_exclusions.filter(community__name=community_name).exists()
 
 
 class UserBlock(models.Model):

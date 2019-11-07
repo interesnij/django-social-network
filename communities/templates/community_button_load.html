@@ -6,7 +6,7 @@
         Вы подписаны
     </button>
     <div class="dropdown-menu" x-placement="bottom-start">
-        <a class="dropdown-item" href="">Отписаться</a>
+        <a href="" id="member_delete" class="dropdown-item" href="">Отписаться</a>
     </div>
 </div>
 {% endif %}
@@ -24,6 +24,17 @@
   $('#member_create').on('click', function() {
   $.ajax({
       url: '{% url "add_community_member" object.pk %}',
+      success: function (data) {
+        $('#ajax').html('').load("{% url 'community_detail_reload' object.pk %}");
+        $('title').text('{{ object.name }}');
+      }
+  });
+  });
+</script>
+<script>
+  $('#member_delete').on('click', function() {
+  $.ajax({
+      url: '{% url "delete_community_member" object.pk %}',
       success: function (data) {
         $('#ajax').html('').load("{% url 'community_detail_reload' object.pk %}");
         $('title').text('{{ object.name }}');
