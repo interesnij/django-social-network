@@ -80,7 +80,6 @@ class CommunityDetailView(DetailView):
 
 class CommunityButtonLoad(TemplateView):
 	template_name = "community_button_load.html"
-	model = Community
 	member = False
 
 	def get(self,request,*args,**kwargs):
