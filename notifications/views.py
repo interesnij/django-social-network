@@ -49,7 +49,7 @@ def get_latest_notifications(request):
     notifications = request.user.notifications.get_most_recent()
     return render(request,
                   'most_recent.html',
-                  {'notifications': notifications,)
+                  {'notifications': notifications})
 
 class NotificationCleanView(TemplateView):
     template_name = 'notification_clean.html'
