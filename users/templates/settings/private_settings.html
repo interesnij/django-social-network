@@ -8,12 +8,37 @@
         <div class="col-lg-7 col-md-8 col-sm-12 order-1">
             <form id="PRIVATE-FORM" action="" method="post" class="contact-form">
                 {% csrf_token %}
-                {{ form }}
                 <div class="card mb-4">
                     <div class="card-header border-bottom">
                         <h5 class="content-color-primary mb-0">Настройки приватности</h5>
                     </div>
-
+                    <div class="card-body">
+                        <p class="content-color-primary page-sub-title-small mt-2">
+                            Закрытый профиль
+                            <input type="checkbox" {% if user.private_settings.is_private %} checked {% endif %} name="is_private" id="id_is_private" class="switch switch-sm">
+                            <label style="margin-right:12px;bottom: 5px;" for="id_is_private" class="bg-dark mb-2 border float-right"></label>
+                        </p>
+                        <p class="content-color-primary page-sub-title-small mt-2">
+                            Вам могут писать сообщения
+                            <input type="checkbox" {% if user.private_settings.can_message %} checked {% endif %} name="can_message" id="id_can_message" class="switch switch-sm">
+                            <label style="margin-right:12px;bottom: 5px;" for="id_can_message" class="bg-dark mb-2 border float-right"></label>
+                        </p>
+                        <p class="content-color-primary page-sub-title-small mt-2">
+                            Фото открыты всем
+                            <input type="checkbox" {% if user.private_settings.photo_visible_all %} checked {% endif %} name="photo_visible_all" id="id_photo_visible_all" class="switch switch-sm">
+                            <label style="margin-right:12px;bottom: 5px;" for="id_photo_visible_all" class="bg-dark mb-2 border float-right"></label>
+                        </p>
+                        <p class="content-color-primary page-sub-title-small mt-2">
+                            Фото открыты друзьям
+                            <input type="checkbox" {% if user.private_settings.photo_visible_frends %} checked {% endif %} name="photo_visible_frends" id="id_photo_visible_frends" class="switch switch-sm">
+                            <label style="margin-right:12px;bottom: 5px;" for="id_photo_visible_frends" class="bg-dark mb-2 border float-right"></label>
+                        </p>
+                        <p class="content-color-primary page-sub-title-small mt-2">
+                            Люди могут писать комментарии
+                            <input type="checkbox" {% if user.private_settings.can_comments %} checked {% endif %} name="can_comments" id="id_can_comments" class="switch switch-sm">
+                            <label style="margin-right:12px;bottom: 5px;" for="id_can_comments" class="bg-dark mb-2 border float-right"></label>
+                        </p>
+                    </div>
                     <div class="card-footer">
                         <button type="submit" class="mb-2 btn btn-sm btn-success float-right">Сохранить</button>
                     </div>
