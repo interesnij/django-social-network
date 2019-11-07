@@ -15,7 +15,7 @@
 
         {% include 'profile/card_profile.html' %}
 
-        {% if not user.private_settings.is_private %}
+        {% if not user.private_settings.is_private and user != request.user %}
           {% include 'profile/frends.html' %}
 
           {% include 'profile/communities.html' %}
@@ -34,7 +34,7 @@
             {% endif %}
             <br><br>
         </div>
-        {% if not user.private_settings.is_private %}
+        {% if not user.private_settings.is_private and user != request.user %}
           <div id="stat_load"></div>
 
           {% include 'profile/new_post.html' %}
