@@ -97,6 +97,7 @@
                 </div>
             </div>
         </span>
+        <span style="display: flex;align-items: center;justify-content: center;">
         <div class="btn-group">
             <button type="button" class="btn btn-sm btn-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Настройки
@@ -106,7 +107,7 @@
                 <a class="dropdown-item ajax" href="{% url 'user_settings_notify' user.pk %}">Уведомления</a>
             </div>
         </div>
-
+        </span>
         {% endif %}
 
     </div>
