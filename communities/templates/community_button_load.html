@@ -6,13 +6,13 @@
         Вы подписаны
     </button>
     <div class="dropdown-menu" x-placement="bottom-start">
-        <a href="" id="member_delete" class="dropdown-item" href="">Отписаться</a>
+        <a href="#" id="member_delete" class="dropdown-item" href="">Отписаться</a>
     </div>
 </div>
 {% endif %}
 
 {% if object.is_public and not member %}
-<a href="" id="member_create" class="btn btn-success success-gradient ml-2">Подписаться</a>
+<a href="#" id="member_create" class="btn btn-success success-gradient ml-2">Подписаться</a>
 {% endif %}
 
 {% if object.is_closed and not member %}
