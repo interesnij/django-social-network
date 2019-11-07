@@ -1,0 +1,20 @@
+
+
+{% if member %}
+<div class="btn-group">
+    <button type="button" class="btn btn-sm btn-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Вы подписаны
+    </button>
+    <div class="dropdown-menu" x-placement="bottom-start">
+        <a class="dropdown-item" href="">Отписаться</a>
+    </div>
+</div>
+{% endif %}
+
+{% if object.is_public and not member %}
+<a class="btn btn-success success-gradient ml-2">Подписаться</a>
+{% endif %}
+
+{% if object.is_closed and not member %}
+<a class="btn btn-primary primary-gradient ml-2">Подать заявку</a>
+{% endif %}
