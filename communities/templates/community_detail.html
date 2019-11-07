@@ -3,11 +3,11 @@
 {% block title %}{{ object.name }}{% endblock %}
 {% block content %}
 
+{% if not object.is_private or member %}
 {% include 'community/navbar.html' %}
 
 <div class="container mt-4 main-container">
     <div class="row">
-      {% if not object.is_private or member %}
         <div class="col-12 col-md-12 col-lg-8">
 
           {% if object.is_public or member %}
@@ -28,11 +28,12 @@
             {% include 'community/forum.html' %}
 
         </div>
-        {% else %}
-          Это приватное сообщество. Доступ возможен только по приглашению администрации сообщества.
-        {% endif %}
+
     </div>
 </div>
+{% else %}
+  Это приватное сообщество. Доступ возможен только по приглашению администрации сообщества.
+{% endif %}
 
 <script>
     $(document).ready(function() {
