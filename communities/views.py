@@ -227,5 +227,5 @@ class CommunityMemberCreate(View):
 	success_url = "/"
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		new_member = request.user.join_community_with_name(self.community)
+		new_member = request.user.join_community_with_name(self.community.name)
 		return HttpResponse("!")
