@@ -79,10 +79,9 @@ class CommunityDetailView(DetailView):
 		return context
 
 
-class CommunityButtonLoad(DetailView):
+class CommunityButtonLoad(TemplateView):
 	template_name = "community_button_load.html"
 	member = False
-	model = Community
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
