@@ -6,7 +6,6 @@
       url: "/communities/add_community_member/" + pk + "/",
       success: function () {
         $('#ajax').html('').load("/communities/community_detail_reload/" + pk + "/");
-        $('title').text('{{ object.name }}');
       }
   });
   });
@@ -18,7 +17,6 @@
       url: "/communities/delete_community_member/" + pk + "/",
       success: function () {
         $('#ajax').html('').load("/communities/community_detail_reload/" + pk + "/");
-        $('title').text('{{ object.name }}');
       }
   });
   });
