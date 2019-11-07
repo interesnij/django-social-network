@@ -182,6 +182,7 @@ class CommunityNotification(models.Model):
     LOGGED_OUT = 'O'
     SIGNUP = 'U'
     REPOST = 'R'
+    JOIN = 'J'
 
     NOTIFICATION_TYPES = (
         (POST_COMMENT, 'оставил комментарий к записи сообщества'),
@@ -195,6 +196,7 @@ class CommunityNotification(models.Model):
         (REACT_COMMENT, 'отреагировал на комментарий сообщества'),
         (REACT_REPLY_COMMENT, 'отреагировал на ответ к комментарию сообщества'),
         (REPOST, 'поделился записью сообщества'),
+        (JOIN, 'вступил в сообщество'),
     )
 
     verb = models.CharField(max_length=5, choices=NOTIFICATION_TYPES, verbose_name="Тип уведомления")
