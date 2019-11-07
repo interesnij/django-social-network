@@ -38,7 +38,7 @@
         //  $('#button_load').html('').load("/communities/button/" + {{ community.pk }});
         //  	$('#stat_load').html('').load("/communities/profile_stat/" + {{ community.pk }});
     });
-    $('#ajax').on('click', '.member_create', function() {
+    $('.member_create').on('click', function() {
       var member_create = $(this);
       var pk = member_create.data('id');
     $.ajax({
@@ -49,7 +49,7 @@
     });
     });
 
-    $('#ajax').on('click', '.member_delete', function() {
+    $('.member_delete').on('click', function() {
       var member_delete = $(this);
       var pk = member_delete.data('id');
     $.ajax({
