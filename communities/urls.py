@@ -10,6 +10,7 @@ from communities.views import (
                                 CommunityButtonLoad,
                                 GygView,
                                 CommunityMembersView,
+                                CommunityMemberCreate,
                             )
 from django.conf.urls import url
 
@@ -19,6 +20,7 @@ urlpatterns = [
     url(r'^reload/(?P<pk>\d+)/$', CommunityDetailReload.as_view(), name='community_detail_reload'),
     url(r'^all-communities/$', AllCommunities.as_view(), name='all_communities'),
     url(r'^add/$', CommunityCreate.as_view(), name="add_community"),
+    url(r'^add_community_member/$', CommunityMemberCreate.as_view(), name="add_community_member"),
     url(r'^cat/(?P<order>\d+)/$',CommunitiesCatsView.as_view(), name="communities_cats"),
     url(r'^item/(?P<pk>\d+)/$', CommunityItemView.as_view(), name='community_item'),
     url(r'^list/(?P<pk>\d+)/$', CommunityListView.as_view(), name="community_item_list"),

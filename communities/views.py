@@ -92,6 +92,7 @@ class CommunityButtonLoad(TemplateView):
 	def get_context_data(self,**kwargs):
 		context=super(CommunityButtonLoad,self).get_context_data(**kwargs)
 		context["member"]=self.member
+		context["object"]=self.community
 		return context
 
 
@@ -220,3 +221,11 @@ class CommunityListView(ListView):
 		context = super(CommunityListView, self).get_context_data(**kwargs)
 		context['object'] = self.fixed
 		return context
+
+
+class CommunityMemberCreate(View):
+	success_url = "/"
+	def get(self,request,*args,**kwargs):
+		self.community = Community.objects.get(pk=self.kwargs["pk"])
+		new_member = request.user.join_community_with_name(self.community)
+		return HttpResponse("!")

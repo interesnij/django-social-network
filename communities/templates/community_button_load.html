@@ -12,9 +12,22 @@
 {% endif %}
 
 {% if object.is_public and not member %}
-<a class="btn btn-success success-gradient ml-2">Подписаться</a>
+<a href="" id="member_create" class="btn btn-success success-gradient ml-2">Подписаться</a>
 {% endif %}
 
 {% if object.is_closed and not member %}
 <a class="btn btn-primary primary-gradient ml-2">Подать заявку</a>
 {% endif %}
+
+
+<script>
+  $('.member_create').on('click', function() {
+  $.ajax({
+      url: '{% url "add_community_member" object.pk %}',
+      success: function (data) {
+        $('#ajax').html('').load("{% url 'community_detail_reload' object.pk %}");
+        $('title').text('{{ object.name }}');
+      }
+  });
+  });
+</script>

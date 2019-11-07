@@ -163,7 +163,7 @@ class User(AbstractUser):
         return self.is_administrator_of_community_with_name(
             community_name=community_name) or self.is_moderator_of_community_with_name(community_name=community_name)
 
-    def is_member_of_community_with_name(self, community_name): 
+    def is_member_of_community_with_name(self, community_name):
         return self.communities_memberships.filter(community__name=community_name).exists()
 
     def is_banned_from_community_with_name(self, community_name):
@@ -292,6 +292,20 @@ class User(AbstractUser):
         timeline_posts_query.add(~Q(moderated_object__reports__reporter_id=self.pk), Q.AND)
 
         return Item.objects.filter(timeline_posts_query).distinct()
+
+    def join_community_with_name(self, community_name):
+        check_can_join_community_with_name(
+            user=self,
+            community_name=community_name)
+
+        community_to_join = Community.objects.get(name=community_name)
+        community_to_join.add_member(self)
+
+        if community_to_join.is_private():
+            CommunityInvite.objects.filter(community__name=community_name, invited_user__username=self.username).delete()
+        if community_to_join.is_closed():
+            CommunityFollow.objects.filter(community__name=community_name, community_follows__id=self.id).delete()
+        return community_to_join
 
 
 class UserBlock(models.Model):
