@@ -85,8 +85,8 @@
             url: "{% url 'user_settings_notify' pk=request.user.pk %}",
             data: formss.serialize(),
             success: function(data) {
-              $('#ajax').html('').load("{% url 'profile_reload' request.user.pk %}");
-              $('title').text('{{ user.get_full_name }}');
+              $('#ajax').html('').load("/communities/reload/" + {{ community.pk }} + "/");
+              $('title').text('{{ community.name }}');
             },
             error: function(data) {
                 console.log("Все не ОК")
