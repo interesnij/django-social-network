@@ -1,5 +1,5 @@
 from django.views.generic import ListView
-from communities.models import Community
+from communities.models import Community, CommunityCategory
 from django.views.generic.base import TemplateView
 from django.http import HttpResponse
 from communities.forms import CommunityForm, GeneralCommunityForm
@@ -9,6 +9,7 @@ from django.views import View
 class CommunityGeneralChange(TemplateView):
 	template_name = "manage/general.html"
 	form=None
+	categories = GoodCategory.objects.only("id")
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
@@ -19,6 +20,7 @@ class CommunityGeneralChange(TemplateView):
 		context=super(CommunityGeneralChange,self).get_context_data(**kwargs)
 		context["form"]=self.form
 		context["community"]=self.community
+		context["categories"]=self.categories
 		return context
 
 	def post(self,request,*args,**kwargs):
