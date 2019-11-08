@@ -35,7 +35,7 @@ class CommunityMemdersMixin(ContextMixin):
 		try:
 			self.follow = CommunityFollow.objects.get(community=self.community,user=self.request.user)
 		except:
-			follow = None
+			self.follow = None
 		return super(CommunityMemdersMixin,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
