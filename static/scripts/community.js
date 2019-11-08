@@ -22,8 +22,8 @@
   });
 
   $('#ajax').on('click', '.member_follow_create', function() {
-    var member_create = $(this);
-    var pk = member_create.data('id');
+    var member_follow_create = $(this);
+    var pk = member_follow_create.data('id');
   $.ajax({
       url: "/follows/add_member/" + pk + "/",
       success: function () {
@@ -33,8 +33,8 @@
   });
 
   $('#ajax').on('click', '.member_follow_delete', function() {
-    var member_create = $(this);
-    var pk = member_create.data('id');
+    var member_follow_delete = $(this);
+    var pk = member_follow_delete.data('id');
   $.ajax({
       url: "/follows/delete_member/" + pk + "/",
       success: function () {
