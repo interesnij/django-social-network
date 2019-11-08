@@ -51,7 +51,7 @@ class CommunityDetailView(DetailView, CommunityMemdersMixin):
     model = Community
 
     def get(self,request,*args,**kwargs):
-        
+        self.community = Community.objects.get(pk=self.kwargs["pk"])
         self.membersheeps=CommunityMembership.objects.filter(community__id=self.community.pk)[0:5]
         try:
             self.follow = CommunityFollow.objects.get(community=self.community,user=self.request.user)

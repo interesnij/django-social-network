@@ -23,7 +23,7 @@ class CommunityMemdersMixin(ContextMixin):
 	member = False
 
 	def get(self,request,*args,**kwargs):
-		self.community = Community.objects.get(pk=self.kwargs["pk"])
+		
 		if request.user.is_authenticated and request.user.is_administrator_of_community_with_name(self.community.name):
 			self.administrator=True
 		if request.user.is_authenticated and request.user.is_creator_of_community_with_name(self.community.name):
@@ -41,5 +41,5 @@ class CommunityMemdersMixin(ContextMixin):
 		context["creator"]=self.creator
 		context["staff"]=self.staff
 		context["member"]=self.member
-		
+
 		return context
