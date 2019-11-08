@@ -302,8 +302,8 @@ class User(AbstractUser):
 
         own_posts_query.add(reported_posts_exclusion_query, Q.AND)
 
-        own_posts_queryset = self.items.select_related(*posts_select_related).prefetch_related(
-            *posts_prefetch_related).only(*posts_only).filter(own_posts_query)
+        own_posts_queryset = self.items.select_related(*posts_select_related).only(
+                        *posts_only).filter(own_posts_query)
 
         community_posts_query = Q(community__memberships__user__id=self.pk, is_closed=False, is_deleted=False,
                                   status=Item.STATUS_PUBLISHED)
