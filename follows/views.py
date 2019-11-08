@@ -38,7 +38,7 @@ class CommunityFollowCreate(View):
 	success_url = "/"
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		new_follow = request.user.community_follow_user(self.community.name)
+		new_follow = request.user.community_follow_user(self.community)
 		new_follow.notification_community_follow(request.user)
 		return HttpResponse("!")
 
