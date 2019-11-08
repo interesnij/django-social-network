@@ -631,4 +631,4 @@ class CommunityNotificationsSettings(models.Model):
 
     @classmethod
     def create_notifications_settings(cls, user):
-        return UserNotificationsSettings.objects.create(user=user)
+        return CommunityNotificationsSettings.objects.create(commynity=commynity)

@@ -116,6 +116,7 @@
                         </button>
                         <div class="dropdown-menu" x-placement="bottom-start">
                             <a href="{% url 'community_general_form' pk=object.pk %}" class="dropdown-item" href="">Изменение информации</a>
+                            <a href="{% url 'community_notify' pk=object.pk %}" class="dropdown-item" href="">Изменение информации</a>
                         </div>
                     </div>
                     {% endif %}

@@ -2,7 +2,7 @@ from django.conf.urls import url
 from communities.views.list import AllCommunities, CommunitiesView, CommunityMembersView
 from communities.views.details import CommunityItemView, CommunityListView, CommunityDetailView, CommunityDetailReload
 from communities.views.progs import CommunityCreate, CommunitiesCatsView, GygView, CommunityMemberCreate, CommunityMemberDelete
-from communities.views.manage import CommunityGeneralChange, CommunityCatChange, CommunityAvatarChange, CommunityCoverChange
+from communities.views.manage import CommunityGeneralChange, CommunityCatChange, CommunityAvatarChange, CommunityCoverChange, CommunityNotifyView
 
 
 
@@ -26,5 +26,6 @@ urlpatterns = [
     url(r'^cat/(?P<pk>[0-9]+)/$', CommunityCatChange.as_view(), name='community_cat'),
     url(r'^avatar/(?P<pk>[0-9]+)/$', CommunityAvatarChange.as_view(), name='community_avatar'),
     url(r'^cover/(?P<pk>[0-9]+)/$', CommunityCoverChange.as_view(), name='community_cover'),
+    url(r'^settings_notify/(?P<pk>[0-9]+)/$', CommunityNotifyView.as_view(), name='community_notify'),
 
 ]
