@@ -9,7 +9,7 @@ from django.template.loader import render_to_string
 from django.views import View
 from posts.models import Post
 from django.views.generic import ListView
-from generic.mixins import CategoryListMixin
+from generic.mixins import EmojiListMixin
 
 
 
@@ -27,7 +27,7 @@ class MainPageView(TemplateView):
 		return context
 
 
-class NewsListView(ListView, CategoryListMixin):
+class NewsListView(ListView, EmojiListMixin):
 	template_name="news_list.html"
 	model=Item
 	paginate_by=10
@@ -92,7 +92,7 @@ class CommentReactView(TemplateView):
         return context
 
 
-class CommentListView(View, CategoryListMixin):
+class CommentListView(View, EmojiListMixin):
 	model=ItemComment
 
 	def get(self,request,*args,**kwargs):

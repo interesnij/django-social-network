@@ -22,11 +22,11 @@ from users.forms import (
 from django.views.generic import ListView
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.db.models import Q
-from generic.mixins import CategoryListMixin
+from generic.mixins import EmojiListMixin
 
 
 
-class UserItemView(CategoryListMixin, TemplateView):
+class UserItemView(EmojiListMixin, TemplateView):
     model=Item
     template_name="lenta/user_item.html"
 
@@ -46,7 +46,7 @@ class AvatarReload(TemplateView):
     template_name="profile/avatar_reload.html"
 
 
-class ItemListView(ListView, CategoryListMixin):
+class ItemListView(ListView, EmojiListMixin):
     template_name="lenta/item_list.html"
     model=Item
     paginate_by=6

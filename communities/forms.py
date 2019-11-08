@@ -11,3 +11,17 @@ class CommunityForm(forms.ModelForm):
 					'category',
 					'id',
 				]
+
+class GeneralCommunityForm(forms.ModelForm):
+
+    class Meta:
+        model = UserProfile
+        fields = (
+            'category',
+            'name',
+            'description',
+            'rules',
+            'avatar',
+            'cover',
+            'status',
+        )

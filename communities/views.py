@@ -6,8 +6,8 @@ from communities.models import *
 from django.views.generic.detail import DetailView
 from django.views.generic.base import TemplateView
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
-from communities.forms import CommunityForm
-from generic.mixins import CategoryListMixin
+from communities.forms import CommunityForm, GeneralCommunityForm
+from generic.mixins import EmojiListMixin, CommunityMemdersMixin
 from django.views import View
 from notifications.models import CommunityNotification, community_notification_handler
 
@@ -50,39 +50,17 @@ class CommunityMembersView(ListView):
 		membersheeps=CommunityMembership.objects.filter(community__id=self.community.pk)
 		return membersheeps
 
-class CommunityDetailView(DetailView):
+class CommunityDetailView(DetailView, CommunityMemdersMixin):
 	template_name = "community_detail.html"
 	model = Community
-	administrator = False
-	staff = False
-	creator = False
-	member = False
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		self.membersheeps=CommunityMembership.objects.filter(community__id=self.community.pk)[0:5]
-		if request.user.is_authenticated and request.user.is_administrator_of_community_with_name(self.community.name):
-			self.administrator=True
-		if request.user.is_authenticated and request.user.is_staff_of_community_with_name(self.community.name):
-			self.staff=True
-		if request.user.is_authenticated and request.user.is_creator_of_community_with_name(self.community.name):
-			self.creator=True
-		if request.user.is_authenticated and request.user.is_member_of_community_with_name(self.community.name):
-			self.member=True
-		try:
-			self.follow = CommunityFollow.objects.get(community=self.community,user=self.request.user)
-		except:
-			self.follow = None
 		return super(CommunityDetailView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		context=super(CommunityDetailView,self).get_context_data(**kwargs)
 		context["membersheeps"]=self.membersheeps
-		context["administrator"]=self.administrator
-		context["creator"]=self.creator
-		context["staff"]=self.staff
-		context["member"]=self.member
-		context["follow"]=self.follow
 		return context
 
 
@@ -248,3 +226,28 @@ class CommunityMemberDelete(View):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		request.user.leave_community_with_name(self.community.name)
 		return HttpResponse("!")
+
+
+class CommunityGeneralChange(TemplateView):
+	template_name = "change/general.html"
+	form=None
+
+	def get(self,request,*args,**kwargs):
+		self.community = Community.objects.get(pk=self.kwargs["pk"])
+		self.form=GeneralCommunityForm()
+		return super(CommunityGeneralChange,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context=super(CommunityGeneralChange,self).get_context_data(**kwargs)
+		context["form"]=self.form
+		context["community"]=self.community
+		return context
+
+	def post(self,request,*args,**kwargs):
+		self.community = Community.objects.get(pk=self.kwargs["pk"])
+		self.form=GeneralCommunityForm(request.POST, request.FILES, instance=self.community)
+		if self.form.is_valid() and if request.user.is_authenticated and request.user.is_administrator_of_community_with_name(self.community.name):
+			self.form.save()
+			if request.is_ajax():
+				return HttpResponse ('!')
+		return super(CommunityGeneralChange,self).post(request,*args,**kwargs)
