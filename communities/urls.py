@@ -22,9 +22,9 @@ urlpatterns = [
     url(r'^add_community_member/(?P<pk>\d+)/$', CommunityMemberCreate.as_view(), name="add_community_member"),
     url(r'^delete_community_member/(?P<pk>\d+)/$', CommunityMemberDelete.as_view(), name="delete_community_member"),
 
-    url(r'^general/(?P<pk>[0-9]+)/$', CommunityGeneralChange.as_view(), name='commnity_general_form'),
-    url(r'^cat/(?P<pk>[0-9]+)/$', CommunityCatChange.as_view(), name='commnity_cat'),
-    url(r'^avatar/(?P<pk>[0-9]+)/$', CommunityAvatarChange.as_view(), name='commnity_avatar'),
-    url(r'^cover/(?P<pk>[0-9]+)/$', CommunityCoverChange.as_view(), name='commnity_cover'),
+    url(r'^general/(?P<pk>[0-9]+)/$', CommunityGeneralChange.as_view(), name='community_general_form'),
+    url(r'^cat/(?P<pk>[0-9]+)/$', CommunityCatChange.as_view(), name='community_cat'),
+    url(r'^avatar/(?P<pk>[0-9]+)/$', CommunityAvatarChange.as_view(), name='community_avatar'),
+    url(r'^cover/(?P<pk>[0-9]+)/$', CommunityCoverChange.as_view(), name='community_cover'),
 
 ]
