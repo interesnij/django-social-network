@@ -3,11 +3,10 @@ from communities.models import Community
 from django.views.generic.base import TemplateView
 from django.http import HttpResponse
 from communities.forms import CommunityForm, GeneralCommunityForm
-from generic.mixins import CommunityMemdersMixin
 from django.views import View
 
 
-class CommunityGeneralChange(TemplateView, CommunityMemdersMixin):
+class CommunityGeneralChange(TemplateView):
 	template_name = "manage/general.html"
 	form=None
 

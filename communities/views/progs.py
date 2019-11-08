@@ -3,6 +3,7 @@ from communities.models import CommunityCategory, Community, CommunitySubCategor
 from django.views import View
 from follows.models import CommunityFollow
 from notifications.models import CommunityNotification, community_notification_handler
+from django.http import HttpResponse, HttpResponseBadRequest
 
 
 class CommunityCreate(TemplateView):
