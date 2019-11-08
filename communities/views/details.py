@@ -4,7 +4,7 @@ from django.views.generic import ListView
 from main.models import Item
 from communities.models import Community, CommunityMembership
 from django.views.generic.detail import DetailView
-
+from follows.models import CommunityFollow
 
 
 class CommunityItemView(EmojiListMixin, TemplateView):
