@@ -13,9 +13,25 @@ class CommunityForm(forms.ModelForm):
 				]
 
 class GeneralCommunityForm(forms.ModelForm):
-	description = forms.CharField( label="",widget=forms.Textarea(
-            attrs={'class': 'form-control', 'rows': '5'}
-        ))
+
 	class Meta:
 		model = Community
-		fields = 'category', 'name', 'description', 'rules', 'avatar', 'cover', 'status'
+		fields = 'name', 'description', 'rules', 'status'
+
+
+class AvatarCommunityForm(forms.ModelForm):
+	class Meta:
+		model = Community
+		fields = 'avatar'
+
+
+class CoverCommunityForm(forms.ModelForm):
+	class Meta:
+		model = Community
+		fields = 'cover'
+
+
+class CatCommunityForm(forms.ModelForm):
+	class Meta:
+		model = Community
+		fields = 'category'
