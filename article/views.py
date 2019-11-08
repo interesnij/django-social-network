@@ -13,7 +13,7 @@ class ArticleView(TemplateView):
     template_name="articles.html"
 
 
-class ArticleNewView(CategoryListMixin, TemplateView):
+class ArticleNewView(EmojiListMixin, TemplateView):
     model=Article
     template_name="article.html"
 
@@ -28,7 +28,7 @@ class ArticleNewView(CategoryListMixin, TemplateView):
         context["object"]=self.article
         return context
 
-class ArticleDetailView(CategoryListMixin, TemplateView):
+class ArticleDetailView(EmojiListMixin, TemplateView):
     model=Article
     template_name="article_detail.html"
 
