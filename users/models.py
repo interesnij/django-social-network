@@ -76,7 +76,7 @@ class User(AbstractUser):
         return follow
 
     def community_follow_user(self, community_name):
-        return self.follow_community_with_name(user.pk)
+        return self.follow_community_with_name(community_name)
 
     def follow_community_with_name(self, community_name):
         check_can_join_community_with_name(
@@ -86,7 +86,7 @@ class User(AbstractUser):
         return follow
 
     def community_unfollow_user(self, community_name):
-        return self.unfollow_community_with_name(user.pk)
+        return self.unfollow_community_with_name(community_name)
 
     def unfollow_community_with_name(self, community_name):
         check_can_join_community_with_name(user=self, community_name=community_name)
