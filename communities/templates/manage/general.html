@@ -57,7 +57,7 @@
         </div>
         <div class="col-lg-5 col-md-4 col-sm-12 order-2">
             <ul style="list-style-type:none">
-                <li style="margin-bottom:8px;"><a href="{% url 'commnity_general_form' pk=community.pk %}" class="ajax">Управление сообществом</a></li>
+                <li style="margin-bottom:8px;"><a href="{% url 'community_general_form' pk=community.pk %}" class="ajax">Управление сообществом</a></li>
                 <li style="margin-bottom:8px;"><a href="" class="ajax">Уведомления</a></li>
                 <li style="margin-bottom:8px;"><a href="" class="ajax">Приватность</a></li>
                 {% if community.is_closed %}
