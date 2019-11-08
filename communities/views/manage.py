@@ -141,7 +141,7 @@ class CommunityNotifyView(TemplateView):
 		return super(CommunityNotifyView,self).post(request,*args,**kwargs)
 
 
-class CommunityNotifyView(TemplateView):
+class CommunityPrivateView(TemplateView):
 	template_name = "manage/private_settings.html"
 	form=None
 	private_settings=None
@@ -149,10 +149,10 @@ class CommunityNotifyView(TemplateView):
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.form=CommunityPrivateForm(instance=self.community)
-		return super(CommunityNotifyView,self).get(request,*args,**kwargs)
+		return super(CommunityPrivateView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context=super(CommunityNotifyView,self).get_context_data(**kwargs)
+		context=super(CommunityPrivateView,self).get_context_data(**kwargs)
 		context["form"]=self.form
 		context["community"]=self.community
 		return context
@@ -170,4 +170,4 @@ class CommunityNotifyView(TemplateView):
 			self.form.save()
 			if request.is_ajax():
 				return HttpResponse ('!')
-		return super(CommunityNotifyView,self).post(request,*args,**kwargs)
+		return super(CommunityPrivateView,self).post(request,*args,**kwargs)
