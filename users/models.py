@@ -315,8 +315,8 @@ class User(AbstractUser):
 
         community_posts_query.add(reported_posts_exclusion_query, Q.AND)
 
-        community_posts_queryset = Item.objects.select_related(*posts_select_related).prefetch_related(
-            *posts_prefetch_related).only(*posts_only).filter(community_posts_query)
+        community_posts_queryset = Item.objects.select_related(*posts_select_related).only(
+                        *posts_only).filter(community_posts_query)
 
         followed_users = self.follows.values('followed_user_id')
 
@@ -329,8 +329,8 @@ class User(AbstractUser):
         if max_id:
             followed_users_query.add(Q(id__lt=max_id), Q.AND)
 
-        followed_users_queryset = Item.objects.select_related(*posts_select_related).prefetch_related(
-            *posts_prefetch_related).only(*posts_only).filter(followed_users_query)
+        followed_users_queryset = Item.objects.select_related(*posts_select_related).only(
+                        *posts_only).filter(followed_users_query)
 
         final_queryset = own_posts_queryset.union(community_posts_queryset, followed_users_queryset)
 
