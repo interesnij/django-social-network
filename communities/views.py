@@ -173,7 +173,7 @@ class CommunitiesCatsView(TemplateView):
 		return context
 
 
-class CommunityItemView(CategoryListMixin, TemplateView):
+class CommunityItemView(EmojiListMixin, TemplateView):
     model=Item
     template_name="community/item.html"
 
