@@ -69,7 +69,7 @@
         CKEDITOR.instances.id_content.updateElement();
         $.ajax({
             type: frm_art.attr('method'),
-            url: "{% url 'article_add_user' pk=object.pk %}",
+            url: "{% url 'article_add_user' pk=user.pk %}",
             data: new FormData($(frm_art)[0]),
             contentType: false,
             cache: false,
