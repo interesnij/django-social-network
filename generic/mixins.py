@@ -14,14 +14,6 @@ class EmojiListMixin(ContextMixin):
 		context["emojies_2"]=self.emojies_2
 		return context
 
-class PageNumberMixin(CategoryListMixin):
-	def get_context_data(self,**kwargs):
-		context=super(PageNumberMixin,self).get_context_data(**kwargs)
-		try:
-			context["pn"]=self.request.GET["page"]
-		except KeyError:
-			context["pn"]="1"
-		return context
 
 class CommunityMemdersMixin(ContextMixin):
 	community = None
