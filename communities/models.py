@@ -632,3 +632,18 @@ class CommunityNotificationsSettings(models.Model):
     @classmethod
     def create_notifications_settings(cls, user):
         return CommunityNotificationsSettings.objects.create(commynity=commynity)
+
+
+class CommunityPrivateSettings(models.Model):
+    commynity = models.OneToOneField(Community, on_delete=models.CASCADE,
+                                related_name='community_private_settings', verbose_name="Сообщество")
+    photo_visible_all = models.BooleanField(default=True, verbose_name="Фото сообщества видны всем")
+    photo_visible_member = models.BooleanField(default=True, verbose_name="Фото сообщества видны подписчикам")
+    can_comments = models.BooleanField(default=True, verbose_name="Все могут оставлять комментарии все пользователи")
+    can_add_post = models.BooleanField(default=False, verbose_name="Все могут писать записи на стене")
+    can_add_article = models.BooleanField(default=False, verbose_name="Все могут писать статьи на стене")
+    can_add_good = models.BooleanField(default=False, verbose_name="Все могут добавлять товары")
+
+    @classmethod
+    def create_private_settings(cls, user):
+        return CommunityPrivateSettings.objects.create(commynity=commynity)

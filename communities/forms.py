@@ -1,4 +1,4 @@
-from communities.models import Community, CommunityNotificationsSettings
+from communities.models import *
 from django import forms
 
 
@@ -46,8 +46,22 @@ class CommunityNotifyForm(forms.ModelForm):
             'comment_reply_notifications',
             'comment_reply_react_notifications',
             'comment_react_notifications',
-            'connection_request_notifications', 
+            'connection_request_notifications',
             'comment_user_mention_notifications',
             'user_mention_notifications',
             'repost_notifications',
+        )
+
+
+class CommunityPrivateForm(forms.ModelForm):
+
+    class Meta:
+        model = CommunityCommunity
+        fields = (
+            'photo_visible_all',
+            'photo_visible_frends',
+            'can_comments',
+            'can_add_post',
+            'can_add_article',
+            'can_add_good',
         )

@@ -115,8 +115,9 @@
                             Управление
                         </button>
                         <div class="dropdown-menu" x-placement="bottom-start">
-                            <a href="{% url 'community_general_form' pk=object.pk %}" class="dropdown-item">Настройка информации</a>
-                            <a href="{% url 'community_notify' pk=object.pk %}" class="dropdown-item">Настройка уведомлений</a>
+                            <a href="{% url 'community_general_form' pk=object.pk %}" class="dropdown-item">Информация</a>
+                            <a href="{% url 'community_notify' pk=object.pk %}" class="dropdown-item">Уведомления</a>
+                            <a href="{% url 'community_notify' pk=object.pk %}" class="dropdown-item">Приватность</a>
                         </div>
                     </div>
                     {% endif %}
