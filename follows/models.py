@@ -37,5 +37,5 @@ class CommunityFollow(models.Model):
 
     @classmethod
     def create_follow(cls, user_id, community_name):
-        follow = CommunityFollow.objects.create(user_id=user_id, community_name=community_name)
+        follow = CommunityFollow.objects.create(user_id=user_id, community=community_name)
         return follow
