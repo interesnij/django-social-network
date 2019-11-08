@@ -63,7 +63,7 @@ class CommunityDetailView(DetailView, CommunityMemdersMixin):
         context=super(CommunityDetailView,self).get_context_data(**kwargs)
         context["membersheeps"]=self.membersheeps
         context["follow"]=self.follow
-		return context
+        return context
 
 
 class CommunityDetailReload(DetailView, CommunityMemdersMixin):
