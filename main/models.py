@@ -17,7 +17,7 @@ class Item(models.Model):
     comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
     community = models.ForeignKey('communities.Community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
-    creator = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE, verbose_name="Создатель")
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, related_name='items', on_delete=models.CASCADE, verbose_name="Создатель")
     is_edited = models.BooleanField(default=False, verbose_name="Изменено")
     is_closed = models.BooleanField(default=False, verbose_name="Закрыто")
     is_deleted = models.BooleanField(default=False, verbose_name="Удалено")

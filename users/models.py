@@ -287,29 +287,54 @@ class User(AbstractUser):
 
         return self._get_timeline_posts_with_filters(max_id=max_id)
 
-    def _get_timeline_posts_with_filters(self, max_id=None, min_id=None):
+    def _get_timeline_posts_with_no_filters(self):
 
-        timeline_posts_query = Q()
+        posts_select_related = ('creator', 'creator__profile', 'community', 'image')
 
-        followed_users_query = self.followers.all()
-        followed_users = followed_users_query.values('followed_user__id')
-        for followed_user in followed_users:
-            followed_user_id = followed_user['followed_user__id']
-            followed_user_query = Q(creator_id=followed_user_id)
-            timeline_posts_query.add(followed_user_query, Q.OR)
+        posts_only = ('text', 'id', 'uuid', 'created', 'image__image',
+                      'creator__username', 'creator__id', 'creator__profile__name', 'creator__profile__avatar',
+                      'creator__profile__id', 'community__id', 'community__name', 'community__avatar',
+                      'community__title')
 
-        frends_users_query = self.connections.all()
-        frends = frends_users_query.values('user__id')
-        for frend in frends:
-            frend_id = frend['user__id']
-            frends_users_query = Q(creator_id=frend_id)
-            timeline_posts_query.add(frends_users_query, Q.OR)
+        reported_posts_exclusion_query = ~Q(moderated_object__reports__reporter_id=self.pk)
 
-        timeline_posts_query.add(Q(is_deleted=False, status=Item.STATUS_PUBLISHED), Q.AND)
+        own_posts_query = Q(creator=self.pk, community__isnull=True, is_deleted=False, status=Item.STATUS_PUBLISHED)
 
-        timeline_posts_query.add(~Q(moderated_object__reports__reporter_id=self.pk), Q.AND)
+        own_posts_query.add(reported_posts_exclusion_query, Q.AND)
 
-        return Item.objects.filter(timeline_posts_query).distinct()
+        own_posts_queryset = self.items.select_related(*posts_select_related).prefetch_related(
+            *posts_prefetch_related).only(*posts_only).filter(own_posts_query)
+
+        community_posts_query = Q(community__memberships__user__id=self.pk, is_closed=False, is_deleted=False,
+                                  status=Item.STATUS_PUBLISHED)
+
+        community_posts_query.add(~Q(Q(creator__blocked_by_users__blocker_id=self.pk) | Q(
+            creator__user_blocks__blocked_user_id=self.pk)), Q.AND)
+
+        community_posts_query.add(~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED), Q.AND)
+
+        community_posts_query.add(reported_posts_exclusion_query, Q.AND)
+
+        community_posts_queryset = Item.objects.select_related(*posts_select_related).prefetch_related(
+            *posts_prefetch_related).only(*posts_only).filter(community_posts_query)
+
+        followed_users = self.follows.values('followed_user_id')
+
+        followed_users_ids = [followed_user['followed_user_id'] for followed_user in followed_users]
+
+        followed_users_query = Q(creator__in=followed_users_ids, is_deleted=False, status=Item.STATUS_PUBLISHED)
+
+        followed_users_query.add(reported_posts_exclusion_query, Q.AND)
+
+        if max_id:
+            followed_users_query.add(Q(id__lt=max_id), Q.AND)
+
+        followed_users_queryset = Item.objects.select_related(*posts_select_related).prefetch_related(
+            *posts_prefetch_related).only(*posts_only).filter(followed_users_query)
+
+        final_queryset = own_posts_queryset.union(community_posts_queryset, followed_users_queryset)
+
+        return final_queryset
 
     def join_community_with_name(self, community_name):
         check_can_join_community_with_name(
