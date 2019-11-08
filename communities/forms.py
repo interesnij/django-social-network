@@ -15,7 +15,7 @@ class CommunityForm(forms.ModelForm):
 class GeneralCommunityForm(forms.ModelForm):
 
     class Meta:
-        model = UserProfile
+        model = Community
         fields = (
             'category',
             'name',
