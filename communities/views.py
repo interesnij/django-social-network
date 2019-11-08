@@ -70,9 +70,9 @@ class CommunityDetailView(DetailView):
 		if request.user.is_authenticated and request.user.is_member_of_community_with_name(self.community.name):
 			self.member=True
 		try:
-            self.follow = CommunityFollow.objects.get(community=self.community,user=self.request.user)
-        except:
-            self.follow = None
+			self.follow = CommunityFollow.objects.get(community=self.community,user=self.request.user)
+		except:
+			self.follow = None
 		return super(CommunityDetailView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
