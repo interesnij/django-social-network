@@ -7,7 +7,7 @@ from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from goods.forms import GoodForm
 from django.template.loader import render_to_string
 from django.views.generic.detail import DetailView
-from generic.mixins import CategoryListMixin
+from generic.mixins import EmojiListMixin
 
 
 class GoodCategoriesView(TemplateView):
@@ -78,7 +78,7 @@ class GoodsCatsView(TemplateView):
 		return context
 
 
-class GoodDetailView(CategoryListMixin, TemplateView):
+class GoodDetailView(EmojiListMixin, TemplateView):
 	template_name="good_detail.html"
 
 	def get(self,request,*args,**kwargs):
