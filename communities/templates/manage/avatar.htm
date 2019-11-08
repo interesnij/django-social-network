@@ -49,7 +49,7 @@
       frm.submit(function() {
           $.ajax({
               type: frm.attr('method'),
-              url: "{% url 'commnity_avatar' pk=commnity.pk %}",
+              url: "{% url 'community_avatar' pk=commnity.pk %}",
               data: new FormData($(frm)[0]),
               contentType: false,
               cache: false,
