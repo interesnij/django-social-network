@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load staticfiles %}
 
-{% block title %}Управление сообществом - {{ community.name }}{% endblock %}
+{% block title %}Изменение информации сообщества {% endblock %}
 {% block content %}
 
 <div class="container mt-4 main-container">
@@ -11,7 +11,7 @@
                 {% csrf_token %}
                 <div class="card mb-4">
                     <div class="card-header border-bottom">
-                        <h5 class="content-color-primary mb-0">Управление сообществом
+                        <h5 class="content-color-primary mb-0">Изменение информации
                             <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=community.pk %}">
                               {{ community.name }}
                             </a>

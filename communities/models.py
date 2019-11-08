@@ -614,3 +614,21 @@ class TopPostCommunityExclusion(models.Model):
         self.modified = timezone.now()
 
         return super(TopPostCommunityExclusion, self).save(*args, **kwargs)
+
+
+class CommunityNotificationsSettings(models.Model):
+    commynity = models.OneToOneField(Community, on_delete=models.CASCADE,
+                                related_name='community_notifications_settings', verbose_name="Сообщество")
+    comment_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления о комментариях к записям")
+    react_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления о реакциях к записи")
+    comment_reply_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления об ответах на комментарии к записям")
+    comment_reply_react_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления реакциях на ответы к комментариям")
+    comment_react_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления о реакциях на комментарии к записям")
+    connection_request_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления о заявках в сообщество")
+    comment_user_mention_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления об упоминаниях в комментариях к записям")
+    user_mention_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления об упоминаниях в записям")
+    repost_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления о репостах записей")
+
+    @classmethod
+    def create_notifications_settings(cls, user):
+        return UserNotificationsSettings.objects.create(user=user)
