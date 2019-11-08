@@ -291,10 +291,9 @@ class User(AbstractUser):
 
         posts_select_related = ('creator', 'creator__profile', 'community', 'image')
 
-        posts_only = ('text', 'id', 'uuid', 'created', 'image__image',
-                      'creator__username', 'creator__id', 'creator__profile__name', 'creator__profile__avatar',
-                      'creator__profile__id', 'community__id', 'community__name', 'community__avatar',
-                      'community__title')
+        items_only = ('id', 'uuid', 'created', 'creator__username', 'creator__id',
+                        'creator__profile__name', 'creator__profile__avatar',
+                      'creator__profile__id', 'community__id', 'community__name', 'community__avatar')
 
         reported_posts_exclusion_query = ~Q(moderated_object__reports__reporter_id=self.pk)
 
@@ -303,7 +302,7 @@ class User(AbstractUser):
         own_posts_query.add(reported_posts_exclusion_query, Q.AND)
 
         own_posts_queryset = self.items.select_related(*posts_select_related).only(
-                        *posts_only).filter(own_posts_query)
+                        *items_only).filter(own_posts_query)
 
         community_posts_query = Q(community__memberships__user__id=self.pk, is_closed=False, is_deleted=False,
                                   status=Item.STATUS_PUBLISHED)
@@ -316,7 +315,7 @@ class User(AbstractUser):
         community_posts_query.add(reported_posts_exclusion_query, Q.AND)
 
         community_posts_queryset = Item.objects.select_related(*posts_select_related).only(
-                        *posts_only).filter(community_posts_query)
+                        *items_only).filter(community_posts_query)
 
         followed_users = self.follows.values('followed_user_id')
 
@@ -327,7 +326,7 @@ class User(AbstractUser):
         followed_users_query.add(reported_posts_exclusion_query, Q.AND)
 
         followed_users_queryset = Item.objects.select_related(*posts_select_related).only(
-                        *posts_only).filter(followed_users_query)
+                        *items_only).filter(followed_users_query)
 
         final_queryset = own_posts_queryset.union(community_posts_queryset, followed_users_queryset)
 
