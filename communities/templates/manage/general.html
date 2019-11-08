@@ -76,10 +76,10 @@
     frm.submit(function() {
         $.ajax({
             type: frm.attr('method'),
-            url: "{% url 'community_general_form' pk=commnity.pk %}",
+            url: "{% url 'community_general_form' pk=community.pk %}",
             data: frm.serialize(),
             success: function(data) {
-                $('#ajax').html('').load("/communities/reload/" + {{ commnity.pk }} + "/");
+                $('#ajax').html('').load("/communities/reload/" + {{ community.pk }} + "/");
                 $('title').text('{{ community.name }}');
             },
             error: function(data) {

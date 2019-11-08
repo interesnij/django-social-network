@@ -34,13 +34,13 @@
       frm.submit(function() {
           $.ajax({
               type: frm.attr('method'),
-              url: "{% url 'community_cat' pk=commnity.pk %}",
+              url: "{% url 'community_cat' pk=community.pk %}",
               data: new FormData($(frm)[0]),
               contentType: false,
               cache: false,
               processData: false,
               success: function(data) {
-                  $('#ajax').html('').load("/communities/reload/" + {{ commnity.pk }} + "/");
+                  $('#ajax').html('').load("/communities/reload/" + {{ community.pk }} + "/");
                   $('title').text('{{ community.name }}');
               },
               error: function(data) {
