@@ -56,6 +56,7 @@ class CommunityDetailView(DetailView, CommunityMemdersMixin):
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
+		self.membersheeps=CommunityMembership.objects.filter(community__id=self.community.pk)[0:5]
 		return super(CommunityDetailView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
