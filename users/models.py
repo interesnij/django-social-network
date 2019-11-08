@@ -11,7 +11,7 @@ from django.contrib.contenttypes.fields import GenericRelation
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from communities.models import Community
-from follows.models import Follow
+from follows.models import Follow, CommunityFollow
 from goods.models import Good
 from frends.models import Connect
 from posts.models import Post
@@ -74,6 +74,24 @@ class User(AbstractUser):
             raise ValidationError('Вы не можете подписаться сами на себя',)
         follow = Follow.create_follow(user_id=self.pk, followed_user_id=user_id)
         return follow
+
+    def community_follow_user(self, community_name):
+        return self.follow_community_with_name(user.pk)
+
+    def follow_community_with_name(self, community_name):
+        check_can_join_community_with_name(
+            user=self,
+            community_name=community_name)
+        follow = CommunityFollow.create_follow(user_id=self.pk, community_name=community_name)
+        return follow
+
+    def community_unfollow_user(self, community_name):
+        return self.unfollow_community_with_name(user.pk)
+
+    def unfollow_community_with_name(self, community_name):
+        check_can_join_community_with_name(user=self, community_name=community_name)
+        follow = CommunityFollow.objects.get(user=self,community_name=community_name)
+        follow.delete()
 
     def frend_user(self, user):
         return self.frend_user_with_id(user.pk)

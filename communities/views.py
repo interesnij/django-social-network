@@ -1,6 +1,7 @@
 from django.views.generic import ListView
 from users.models import User
 from main.models import Item
+from follows.models import CommunityFollow
 from communities.models import *
 from django.views.generic.detail import DetailView
 from django.views.generic.base import TemplateView
@@ -68,6 +69,10 @@ class CommunityDetailView(DetailView):
 			self.creator=True
 		if request.user.is_authenticated and request.user.is_member_of_community_with_name(self.community.name):
 			self.member=True
+		try:
+            self.follow = CommunityFollow.objects.get(community=self.community,user=self.request.user)
+        except:
+            self.follow = None
 		return super(CommunityDetailView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -77,6 +82,7 @@ class CommunityDetailView(DetailView):
 		context["creator"]=self.creator
 		context["staff"]=self.staff
 		context["member"]=self.member
+		context["follow"]=self.follow
 		return context
 
 

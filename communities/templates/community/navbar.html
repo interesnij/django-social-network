@@ -93,17 +93,20 @@
                             Вы подписаны
                         </button>
                         <div class="dropdown-menu" x-placement="bottom-start">
-                            <a href="#" data-id="{{ object.pk }}" class="dropdown-item member_delete" href="">Отписаться</a>
+                            <span style="cursor:pointer" data-id="{{ object.pk }}" class="dropdown-item member_delete" href="">Отписаться</span>
                         </div>
                     </div>
                     {% endif %}
 
                     {% if object.is_public and not member %}
-                    <a href="#" data-id="{{ object.pk }}" class="btn btn-success success-gradient ml-2 member_create">Подписаться</a>
+                    <span style="cursor:pointer" data-id="{{ object.pk }}" class="btn btn-sm btn-secondary member_create">Подписаться</span>
                     {% endif %}
 
                     {% if object.is_closed and not member %}
-                    <a class="btn btn-primary primary-gradient ml-2">Подать заявку</a>
+                    <span style="cursor:pointer" data-id="{{ object.pk }}" class="btn btn-sm btn-secondary ml-2 member_follow_create">Подать заявку</span>
+                    {% endif %}
+                    {% if object.is_closed and follow and not member %}
+                    <span style="cursor:pointer" data-id="{{ object.pk }}" class="btn btn-sm btn-secondary ml-2 member_follow_delete">Отозвать заявку</span>
                     {% endif %}
                     </span>
                 </div>
