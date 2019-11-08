@@ -54,13 +54,13 @@ class CommunityDetailView(DetailView, CommunityMemdersMixin):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         self.membersheeps=CommunityMembership.objects.filter(community__id=self.community.pk)[0:5]
         if request.user.is_authenticated and request.user.is_administrator_of_community_with_name(self.community.name):
-			self.administrator=True
-		if request.user.is_authenticated and request.user.is_creator_of_community_with_name(self.community.name):
-			self.creator=True
-		if request.user.is_authenticated and request.user.is_staff_of_community_with_name(self.community.name):
-			self.staff=True
-		if request.user.is_authenticated and request.user.is_member_of_community_with_name(self.community.name):
-			self.member=True
+            self.administrator=True
+        if request.user.is_authenticated and request.user.is_creator_of_community_with_name(self.community.name):
+            self.creator=True
+        if request.user.is_authenticated and request.user.is_staff_of_community_with_name(self.community.name):
+            self.staff=True
+        if request.user.is_authenticated and request.user.is_member_of_community_with_name(self.community.name):
+            self.member=True
         try:
             self.follow = CommunityFollow.objects.get(community=self.community,user=self.request.user)
         except:
