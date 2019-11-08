@@ -21,7 +21,6 @@ class CommunityMemdersMixin(ContextMixin):
 	staff = False
 	creator = False
 	member = False
-	follow = None
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
@@ -33,7 +32,10 @@ class CommunityMemdersMixin(ContextMixin):
 			self.staff=True
 		if request.user.is_authenticated and request.user.is_member_of_community_with_name(self.community.name):
 			self.member=True
-		self.follow = CommunityFollow.objects.get(community=self.community,user=self.request.user)
+		try:
+			self.follow = CommunityFollow.objects.get(community=self.community,user=self.request.user)
+		except:
+			follow = None
 		return super(CommunityMemdersMixin,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
