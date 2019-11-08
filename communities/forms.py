@@ -59,7 +59,7 @@ class CommunityPrivateForm(forms.ModelForm):
         model = CommunityPrivateSettings
         fields = (
             'photo_visible_all',
-            'photo_visible_frends',
+            'photo_visible_member',
             'can_comments',
             'can_add_post',
             'can_add_article',
