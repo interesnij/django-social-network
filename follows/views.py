@@ -47,5 +47,5 @@ class CommunityFollowDelete(View):
 	success_url = "/"
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		request.user.community_unfollow_user(self.followed_user)
+		request.user.community_unfollow_user(self.community)
 		return HttpResponse("!")

@@ -102,7 +102,7 @@
                     <span style="cursor:pointer" data-id="{{ object.pk }}" class="btn btn-sm btn-secondary member_create">Подписаться</span>
                     {% endif %}
 
-                    {% if object.is_closed and not member %}
+                    {% if object.is_closed and not member and not follow %}
                     <span style="cursor:pointer" data-id="{{ object.pk }}" class="btn btn-sm btn-secondary ml-2 member_follow_create">Подать заявку</span>
                     {% endif %}
                     {% if object.is_closed and follow and not member %}
