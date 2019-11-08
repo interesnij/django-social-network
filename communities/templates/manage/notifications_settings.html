@@ -82,7 +82,7 @@
         var formss = $('#NOTIFY-FORM');
         $.ajax({
             type: formss.attr('method'),
-            url: "{% url 'user_settings_notify' pk=request.user.pk %}",
+            url: "{% url 'user_settings_notify' pk=community.pk %}",
             data: formss.serialize(),
             success: function(data) {
               $('#ajax').html('').load("/communities/reload/" + {{ community.pk }} + "/");
