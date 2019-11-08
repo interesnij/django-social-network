@@ -2,8 +2,14 @@ from django.views.generic import ListView
 from communities.models import Community, CommunityCategory, CommunityNotificationsSettings
 from django.views.generic.base import TemplateView
 from django.http import HttpResponse
-from communities.forms import GeneralCommunityForm, CoverCommunityForm, AvatarCommunityForm, CatCommunityForm
 from django.views import View
+from communities.forms import (
+								GeneralCommunityForm,
+								CoverCommunityForm,
+								AvatarCommunityForm,
+								CatCommunityForm,
+								CommunityNotifyForm,
+							)
 
 
 class CommunityGeneralChange(TemplateView):
