@@ -5,7 +5,7 @@ from django.template.loader import render_to_string
 from article.models import Article
 from django.urls import reverse_lazy
 from django.http import HttpResponse, HttpResponseBadRequest
-from generic.mixins import CategoryListMixin
+from generic.mixins import EmojiListMixin
 from communities.models import Community
 
 
