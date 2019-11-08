@@ -9,7 +9,7 @@ from django.views import View
 class CommunityGeneralChange(TemplateView):
 	template_name = "manage/general.html"
 	form=None
-	categories = GoodCategory.objects.only("id")
+	categories = CommunityCategory.objects.only("id")
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
