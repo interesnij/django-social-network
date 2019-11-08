@@ -326,9 +326,6 @@ class User(AbstractUser):
 
         followed_users_query.add(reported_posts_exclusion_query, Q.AND)
 
-        if max_id:
-            followed_users_query.add(Q(id__lt=max_id), Q.AND)
-
         followed_users_queryset = Item.objects.select_related(*posts_select_related).only(
                         *posts_only).filter(followed_users_query)
 
