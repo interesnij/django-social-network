@@ -109,33 +109,33 @@ class CommunityCatChange(TemplateView):
 
 
 class CommunityNotifyView(TemplateView):
-    template_name = "manage/notifications_settings.html"
-    form=None
-    notify_settings=None
+	template_name = "manage/notifications_settings.html"
+	form=None
+	notify_settings=None
 
-    def get(self,request,*args,**kwargs):
-        self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.form=CommunityNotifyForm(instance=self.community)
-        return super(CommunityNotifyView,self).get(request,*args,**kwargs)
+	def get(self,request,*args,**kwargs):
+		self.community = Community.objects.get(pk=self.kwargs["pk"])
+		self.form=CommunityNotifyForm(instance=self.community)
+		return super(CommunityNotifyView,self).get(request,*args,**kwargs)
 
-    def get_context_data(self,**kwargs):
-        context=super(CommunityNotifyView,self).get_context_data(**kwargs)
-        context["form"]=self.form
-        context["notify_settings"]=self.notify_settings
+	def get_context_data(self,**kwargs):
+		context=super(CommunityNotifyView,self).get_context_data(**kwargs)
+		context["form"]=self.form
+		context["notify_settings"]=self.notify_settings
 		context["community"]=self.community
-        return context
+		return context
 
-    def post(self,request,*args,**kwargs):
-        self.user=User.objects.get(pk=self.kwargs["pk"])
-        try:
-            self.notify_settings=CommunityNotificationsSettings.objects.get(community=self.community)
-        except:
-            self.notify_settings = None
-        if not self.notify_settings:
-            self.user.notify_settings = CommunityNotificationsSettings.objects.create(community=self.community)
-        self.form=CommunityNotifyForm(request.POST,instance=self.notify_settings)
-        if self.form.is_valid() and request.user.is_authenticated and request.user.is_administrator_of_community_with_name(self.community.name):
-            self.form.save()
-            if request.is_ajax():
-                return HttpResponse ('!')
-        return super(CommunityNotifyView,self).post(request,*args,**kwargs)
+	def post(self,request,*args,**kwargs):
+		self.user=User.objects.get(pk=self.kwargs["pk"])
+		try:
+			self.notify_settings=CommunityNotificationsSettings.objects.get(community=self.community)
+		except:
+			self.notify_settings = None
+		if not self.notify_settings:
+			self.user.notify_settings = CommunityNotificationsSettings.objects.create(community=self.community)
+		self.form=CommunityNotifyForm(request.POST,instance=self.notify_settings)
+		if self.form.is_valid() and request.user.is_authenticated and request.user.is_administrator_of_community_with_name(self.community.name):
+			self.form.save()
+			if request.is_ajax():
+				return HttpResponse ('!')
+		return super(CommunityNotifyView,self).post(request,*args,**kwargs)
