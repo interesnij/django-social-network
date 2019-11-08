@@ -88,9 +88,9 @@ class User(AbstractUser):
     def community_unfollow_user(self, community_name):
         return self.unfollow_community_with_name(community_name)
 
-    def unfollow_community_with_name(self, community):
-        check_can_join_community_with_name(user=self, community=community)
-        follow = CommunityFollow.objects.get(user=self,community=community)
+    def unfollow_community_with_name(self, community_name):
+        check_can_join_community_with_name(user=self, community_name=community_name)
+        follow = CommunityFollow.objects.get(user=self,community=community_name)
         follow.delete()
 
     def frend_user(self, user):
