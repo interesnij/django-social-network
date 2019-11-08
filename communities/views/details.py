@@ -54,10 +54,10 @@ class CommunityDetailView(DetailView, CommunityMemdersMixin):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.membersheeps=CommunityMembership.objects.filter(community__id=self.community.pk)[0:5]
         try:
-			self.follow = CommunityFollow.objects.get(community=self.community,user=self.request.user)
-		except:
-			self.follow = None
-		return super(CommunityDetailView,self).get(request,*args,**kwargs)
+            self.follow = CommunityFollow.objects.get(community=self.community,user=self.request.user)
+        except:
+            self.follow = None
+        return super(CommunityDetailView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		context=super(CommunityDetailView,self).get_context_data(**kwargs)
