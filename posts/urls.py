@@ -15,7 +15,7 @@ from django.conf.urls import url
 
 urlpatterns = [
     url(r'^$', PostsView.as_view(), name='posts'),
-    url(r'^add_post/$', PostUserCreate.as_view(), name="post_add_user"),
+    url(r'^add_post/(?P<pk>\d+)/$', PostUserCreate.as_view(), name="post_add_user"),
     url(r'^add_post_community/(?P<pk>\d+)/$', PostCommunityCreate.as_view(), name="post_add_community"),
     url(r'^detail/(?P<uuid>[0-9a-f-]+)/$', PostDetailView.as_view(), name='post_detail'),
 

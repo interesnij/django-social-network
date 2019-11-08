@@ -36,6 +36,7 @@ class PostUserCreate(View):
 
     def get(self,request,*args,**kwargs):
         self.form_post=PostForm()
+        self.user=User.objects.get(pk=self.kwargs["pk"])
         return super(PostUserCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -45,9 +46,10 @@ class PostUserCreate(View):
 
     def post(self,request,*args,**kwargs):
         self.form_post=PostForm(request.POST, request.FILES)
+        self.user=User.objects.get(pk=self.kwargs["pk"])
         if self.form_post.is_valid():
             new_post=self.form_post.save(commit=False)
-            new_post.creator=self.request.user
+            new_post.creator=self.user
             new_post=self.form_post.save()
             new_post.create_post(
                                     creator=new_post.creator,

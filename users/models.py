@@ -389,11 +389,14 @@ class UserNotificationsSettings(models.Model):
 class UserPrivateSettings(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,
                                 related_name='private_settings', verbose_name="Пользователь")
-    is_private = models.BooleanField(blank=False, null=False, default=False, verbose_name="Закрытый профиль")
-    can_message = models.BooleanField(blank=False, null=False, default=True, verbose_name="Вам могут писать сообщения все пользователи")
-    photo_visible_all = models.BooleanField(blank=False, null=False, default=True, verbose_name="Ваши фото видны всем")
-    photo_visible_frends = models.BooleanField(blank=False, null=False, default=True, verbose_name="Ваши фото видны Вашим друзьям")
-    can_comments = models.BooleanField(blank=False, null=False, default=True, verbose_name="Могут оставлять комментарии все пользователи")
+    is_private = models.BooleanField(default=False, verbose_name="Закрытый профиль")
+    can_message = models.BooleanField(default=True, verbose_name="Вам могут писать сообщения все пользователи")
+    photo_visible_all = models.BooleanField(default=True, verbose_name="Ваши фото видны всем")
+    photo_visible_frends = models.BooleanField(default=True, verbose_name="Ваши фото видны Вашим друзьям")
+    can_comments = models.BooleanField(default=True, verbose_name="Могут оставлять комментарии все пользователи")
+    can_add_post = models.BooleanField(default=False, verbose_name="Вам могут писать записи на стене")
+    can_add_article = models.BooleanField(default=False, verbose_name="Вам могут писать статьи на стене")
+    can_add_good = models.BooleanField(default=False, verbose_name="Вам могут добавлять товары")
 
     @classmethod
     def create_private_settings(cls, user):

@@ -50,7 +50,8 @@ class ArticleUserCreate(TemplateView):
     success_url="/"
 
     def get(self,request,*args,**kwargs):
-        self.form=ArticleForm(initial={"creator":request.user})
+        self.user=User.objects.get(pk=self.kwargs["pk"])
+        self.form=ArticleForm(initial={"creator":self.user})
         return super(ArticleUserCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -60,9 +61,10 @@ class ArticleUserCreate(TemplateView):
 
     def post(self,request,*args,**kwargs):
         self.form=ArticleForm(request.POST,request.FILES)
+        self.user=User.objects.get(pk=self.kwargs["pk"])
         if self.form.is_valid():
             new_article=self.form.save(commit=False)
-            new_article.creator=self.request.user
+            new_article.creator=self.user
             new_article=self.form.save()
             new_article.create_article(
                 creator=new_article.creator,

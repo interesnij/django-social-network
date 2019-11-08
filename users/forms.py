@@ -50,6 +50,9 @@ class SettingsPrivateForm(forms.ModelForm):
             'photo_visible_all',
             'photo_visible_frends',
             'can_comments',
+            'can_add_post',
+            'can_add_article',
+            'can_add_good', 
         )
 
 class SettingsNotifyForm(forms.ModelForm):
