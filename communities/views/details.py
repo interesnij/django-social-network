@@ -1,4 +1,4 @@
-from generic.mixins import EmojiListMixin, CommunityMemdersMixin
+from generic.mixins import EmojiListMixin
 from django.views.generic.base import TemplateView
 from django.views.generic import ListView
 from main.models import Item

@@ -1,6 +1,5 @@
 from django.views.generic import ListView
 from communities.models import Community, CommunityMembership
-from generic.mixins import CommunityMemdersMixin
 
 
 
@@ -15,7 +14,7 @@ class CommunitiesView(ListView):
 		return groups
 
 
-class CommunityMembersView(ListView, CommunityMemdersMixin):
+class CommunityMembersView(ListView):
 	template_name="members.html"
 	model=Community
 	paginate_by=15
