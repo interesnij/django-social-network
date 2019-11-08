@@ -283,9 +283,9 @@ class User(AbstractUser):
             followings_query.add(Q(id__lt=max_id), Q.AND)
         return User.objects.filter(followings_query).distinct()
 
-    def get_timeline_posts(self, max_id=None, min_id=None):
+    def get_timeline_posts(self):
 
-        return self._get_timeline_posts_with_filters(max_id=max_id)
+        return self._get_timeline_posts_with_no_filters()
 
     def _get_timeline_posts_with_no_filters(self):
 
