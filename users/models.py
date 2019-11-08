@@ -289,7 +289,7 @@ class User(AbstractUser):
 
     def _get_timeline_posts_with_no_filters(self):
 
-        posts_select_related = ('creator', 'creator__profile', 'community', 'image')
+        posts_select_related = ('creator', 'creator__profile', 'community')
 
         items_only = ('id', 'uuid', 'created', 'creator__username', 'creator__id',
                         'creator__profile__avatar', 'creator__profile__id',
