@@ -56,7 +56,7 @@ class CommunityNotifyForm(forms.ModelForm):
 class CommunityPrivateForm(forms.ModelForm):
 
     class Meta:
-        model = CommunityCommunity
+        model = CommunityPrivateSettings
         fields = (
             'photo_visible_all',
             'photo_visible_frends',
