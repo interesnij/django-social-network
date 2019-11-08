@@ -108,6 +108,17 @@
                     {% if object.is_closed and follow and not member %}
                     <span style="cursor:pointer" data-id="{{ object.pk }}" class="btn btn-sm btn-secondary ml-2 member_follow_delete">Отозвать заявку</span>
                     {% endif %}
+
+                    {% if administrator or creator %}
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-sm btn-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Управление
+                        </button>
+                        <div class="dropdown-menu" x-placement="bottom-start">
+                            <a href="{% url 'commnity_general_form' pk=object.pk %}" class="dropdown-item" href="">Главные настройки</a>
+                        </div>
+                    </div>
+                    {% endif %}
                     </span>
                 </div>
             </div>
