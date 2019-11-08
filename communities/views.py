@@ -176,7 +176,7 @@ class CommunitiesCatsView(TemplateView):
 
 class CommunityItemView(EmojiListMixin, TemplateView):
     model=Item
-    template_name="community/item.html"
+    template_name="detail/item.html"
 
     def get(self,request,*args,**kwargs):
         self.item = Item.objects.get(pk=self.kwargs["pk"])
@@ -191,7 +191,7 @@ class CommunityItemView(EmojiListMixin, TemplateView):
 
 
 class CommunityListView(ListView):
-	template_name="community/list.html"
+	template_name="detail/list.html"
 	model=Item
 	paginate_by=15
 
