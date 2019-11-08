@@ -16,22 +16,22 @@ class GeneralCommunityForm(forms.ModelForm):
 
 	class Meta:
 		model = Community
-		fields = 'name', 'description', 'rules', 'status'
+		fields = ['name', 'description', 'rules', 'status',]
 
 
 class AvatarCommunityForm(forms.ModelForm):
 	class Meta:
 		model = Community
-		fields = 'avatar'
+		fields = ['avatar', ]
 
 
 class CoverCommunityForm(forms.ModelForm):
 	class Meta:
 		model = Community
-		fields = 'cover'
+		fields = ['cover', ]
 
 
 class CatCommunityForm(forms.ModelForm):
 	class Meta:
 		model = Community
-		fields = 'category'
+		fields = ['category', ]
