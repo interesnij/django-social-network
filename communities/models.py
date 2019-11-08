@@ -47,10 +47,10 @@ class Community(models.Model):
     name = models.CharField(max_length=settings.COMMUNITY_CATEGORY_TITLE_MAX_LENGTH, blank=False, null=False, verbose_name="Название" )
     description = models.CharField(max_length=300, null=True, verbose_name="Описание" )
     rules = models.TextField(max_length=100, null=True, verbose_name="Правила")
-    avatar = ProcessedImageField(blank=False, null=True, format='JPEG',
+    avatar = ProcessedImageField(null=True, format='JPEG',
                                  options={'quality': 90}, processors=[ResizeToFill(500, 500)],
                                  upload_to=upload_to_community_avatar_directory)
-    cover = ProcessedImageField(blank=False, null=True, format='JPEG',
+    cover = ProcessedImageField(null=True, format='JPEG',
                                 options={'quality': 90},
                                 upload_to=upload_to_community_avatar_directory,
                                 processors=[ResizeToFit(width=1024, upscale=False)])
