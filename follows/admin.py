@@ -1,5 +1,5 @@
 from django.contrib import admin
-from follows.models import Follow
+from follows.models import Follow, CommunityFollow
 
 
 class FollowAdmin(admin.ModelAdmin):
@@ -7,3 +7,4 @@ class FollowAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Follow, FollowAdmin)
+admin.site.register(CommunityFollow)
