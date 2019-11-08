@@ -126,7 +126,7 @@
 </script>
 <script>
     $("#article_add").click(function() {
-        $('#article_loader').html('').load("/article/add/");
+        $('#article_loader').html('').load("{% url 'article_add_user' pk=user.pk %}");
         $('.article_fullscreen').show();
     })
 </script>
