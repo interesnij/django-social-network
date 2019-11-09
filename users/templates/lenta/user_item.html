@@ -1,7 +1,7 @@
 {% load staticfiles humanize liked_user %}
 
 <span class="text-hide-xs">
-  {% if object.get_previous_by_created %}
+  {% if prev %}
     <span class="prev_item" style="">
       <img style="width: 50px;" src="{% static 'images/icons/right-24px.svg' %}" />
     </span>
@@ -28,7 +28,7 @@
 </div>
 {% endif %}
 
-  {% if object.get_previous_by_created %}
+  {% if prev %}
     <script>
     	$('.prev_item').on('click', function () {
     		 $('#item_loader').html('').load("{% url 'user_item' pk=object.get_previous_by_created.pk %}");
