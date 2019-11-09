@@ -9,7 +9,7 @@
     <div class="col-lg-7 col-md-8 col-sm-12 order-1">
         <br><br><br>
         <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Поиск администраторов" aria-label="Recipient's username">
+            <input type="text" class="form-control" placeholder="Поиск по администраторам" aria-label="Recipient's username">
             <div class="input-group-append">
                 <button class="btn btn-outline-link" type="button">Искать</button>
             </div>
@@ -63,7 +63,7 @@
           {% endif %}
           <li style="margin-bottom:8px;"><a href="{% url 'community_admins' pk=community.pk %}" class="ajax"></a>Администраторы</li>
           <li style="margin-bottom:8px;"><a href="{% url 'community_moders' pk=community.pk %}" class="ajax"></a>Модераторы</li>
-          <li style="margin-bottom:8px;"><a href="{% url 'community_black_list' pk=community.pk %}" class="ajax"></a>Черный список</li>
+          <li style="margin-bottom:8px;"><a href="{% url 'community_black_list' pk=community.pk %}" class="ajax">Черный список</a></li>
         </ul>
     </div>
 </div>
