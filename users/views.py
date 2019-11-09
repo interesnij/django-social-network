@@ -67,7 +67,7 @@ class ItemListView(ListView, EmojiListMixin):
 
     def get_queryset(self):
         self.user=User.objects.get(pk=self.kwargs["pk"])
-        items = self.user.get_posts()
+        items = self.user.get_posts().order_by('-created')
         return items
 
     def get_context_data(self, **kwargs):
