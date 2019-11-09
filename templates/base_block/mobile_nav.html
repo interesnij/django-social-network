@@ -5,17 +5,13 @@
     <div class="container has-background-img">
         <figure class="background-img pink-gradient">
           {% if request.user.profile.avatar %}
-            <img src="{{ user.profile.avatar.url }}" alt="image">
+            <img src="{{ request.user.profile.avatar.url }}" alt="image">
             {% else %}
               <img src="{% static 'images/user1.png' %}" alt="image">
             {% endif %}
         </figure>
         <div class="media w-100 my-3">
             <figure class="avatar-40 rounded-circle align-self-start " style="width: 100%;">
-                <label class="checkbox-user-check">
-                    <input type="checkbox">
-                    <i class="material-icons">check</i>
-                </label>
                 {% if request.user.profile.avatar %}
                   <img src="{{ user.profile.avatar.url }}" alt="image" style="border-radius:50px;width:100%;">
                 {% else %}
@@ -23,9 +19,9 @@
                 {% endif %}
             </figure>
             <div class="media-body mx-70">
-                <h5 class="time-title mb-0 text-white">{{ user.get_full_name }}</h5>
+                <h5 class="time-title mb-0 text-white">{{ request.user.get_full_name }}</h5>
                 {% if request.user.profile.status %}
-                  <p class="mb-0 text-truncate text-white">{{ user.profile.status }}</p>
+                  <p class="mb-0 text-truncate text-white">{{ request.user.profile.status }}</p>
                 {% else %}
                   <p class="mb-0 text-truncate text-white">Статус не указан</p>
                 {% endif %}
@@ -40,7 +36,7 @@
                 <span>Моя страница</span>
             </a>
         </li>
-        <li class="nav-item"> 
+        <li class="nav-item">
             <a href="{% url 'main' %}" class="nav-link dropdwown-toggle ajax">
                 <img style="width:22px;margin-bottom:5px" src="{% static 'images/icons/public-24px.svg' %}" />
                 <span>Новости</span>
