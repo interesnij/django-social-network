@@ -4,6 +4,7 @@ from django.views.generic.base import TemplateView
 from django.http import HttpResponse
 from django.views import View
 from communities.forms import *
+from users.models import User
 
 
 class CommunityGeneralChange(TemplateView):
