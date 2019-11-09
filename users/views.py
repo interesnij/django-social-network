@@ -43,6 +43,7 @@ class UserItemView(EmojiListMixin, TemplateView):
         context=super(UserItemView,self).get_context_data(**kwargs)
         context["object"]=self.item
         context["next"]=self.next
+        context["prev"]=self.prev
         return context
 
 
