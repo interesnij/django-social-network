@@ -357,27 +357,6 @@ class Community(models.Model):
         """
         return self.type is self.COMMUNITY_TYPE_PUBLIC
 
-    def update(self, title=None, name=None, description=None, color=None, type=None,
-               user_adjective=None,
-               users_adjective=None, rules=None, communitysubcategory_names=None, invites_enabled=None):
-        """"
-        Обновление группы
-        """
-
-        if name:
-            self.name = name.lower()
-        if title:
-            self.title = title
-        if type:
-            self.type = type
-        if description is not None:
-            self.description = description
-        if rules is not None:
-            self.rules = rules
-        if invites_enabled is not None:
-            self.invites_enabled = invites_enabled
-        self.save()
-
     def add_moderator(self, user):
         user_membership = self.memberships.get(user=user)
         user_membership.is_moderator = True
