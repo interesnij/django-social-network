@@ -291,7 +291,9 @@ class User(AbstractUser):
 
         posts_select_related = ('creator', 'creator__profile', 'community')
 
-        items_only = ('id', 'creator__id', 'created', 'creator__profile__id', 'community__id')
+        items_only = ('id', 'uuid', 'created', 'creator__username', 'creator__id',
+                        'creator__profile__avatar', 'creator__profile__id',
+                        'community__id', 'community__name', 'community__avatar')
 
         reported_posts_exclusion_query = ~Q(moderated_object__reports__reporter_id=self.pk)
 
