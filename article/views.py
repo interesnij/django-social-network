@@ -63,16 +63,16 @@ class ArticleUserCreate(TemplateView):
         self.form=ArticleForm(request.POST,request.FILES)
         self.user=User.objects.get(pk=self.kwargs["pk"])
         if self.form.is_valid():
-            new_article=self.form.save(commit=False)
-            new_article.creator=self.user
-            new_article=self.form.save()
-            new_article.create_article(
-                creator=new_article.creator,
-                content=new_article.content,
+            article=self.form.save(commit=False)
+            article.creator=self.user
+
+            new_article=article.create_article(
+                creator=article.creator,
+                content=article.content,
                 community=None,
-                g_image=new_article.g_image,
-                comments_enabled=new_article.comments_enabled,
-                status=new_article.status,
+                g_image=article.g_image,
+                comments_enabled=article.comments_enabled,
+                status=article.status,
             )
 
             if request.is_ajax() :
