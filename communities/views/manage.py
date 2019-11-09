@@ -29,7 +29,7 @@ class CommunityGeneralChange(TemplateView):
 			self.form.save()
 			if request.is_ajax():
 				return HttpResponse ('!')
-		return super(CommunityGeneralChange,self).post(request,*args,**kwargs)
+		return super(CommunityGeneralChange,self).get(request,*args,**kwargs)
 
 
 class CommunityAvatarChange(TemplateView):
