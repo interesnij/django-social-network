@@ -87,16 +87,15 @@
 
 <div class="container-fluid bg-light-opac">
     <div class="row">
-        <div class="container my-3 main-container">
-            <div class="row align-items-center">
-                <div class="col-auto">
-                    <button id="good_add" class="btn btn-rounded text-uppercase">
-                        <img style="width:22px" src="{% static 'images/icons/add-24px.svg' %}" />
-                        <span class="text-hide-xs">Создать товар</span>
-                    </button>
-                </div>
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Поиск по товарам" aria-label="Recipient's username">
+            <div class="input-group-append">
+                <button class="btn btn-outline-link" type="button">Искать</button>
             </div>
         </div>
+        <button id="good_add" class="btn btn-outline-success" style="margin-bottom:15px;width:100%;" type="button">
+            Создать товар
+        </button>
     </div>
 </div>
 
