@@ -46,6 +46,7 @@ class GoodUserCreate(TemplateView):
 		context["form"]=self.form
 		context["sub_categories"]=self.sub_categories
 		context["categories"]=self.categories
+		context["user"]=self.user
 		return context
 
 	def post(self,request,*args,**kwargs):
