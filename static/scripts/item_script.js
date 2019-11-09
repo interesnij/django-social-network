@@ -45,11 +45,11 @@ $.ajax({
 
 $('#ajax').on('click', '.fullscreen', function () {
 	 var item = $(this);
-	 var item_uuid = item.data("uuid");
-	 var user_pk = item.data("pk");
+	 var item_pk = item.data("pk");
+	 var user_uuid = item.data("uuid");
 	 console.log(item_uuid);
 	 console.log(user_pk);
-	 $('#item_loader').html('').load("/users/item/" + item_uuid + "/" + user_pk + "/")
+	 $('#item_loader').html('').load("/users/item/" + user_pk + "/" + item_uuid + "/")
 	 $('.item_fullscreen').show();
 });
 

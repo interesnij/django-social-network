@@ -31,13 +31,13 @@ class UserItemView(EmojiListMixin, TemplateView):
     template_name="lenta/user_item.html"
 
     def get(self,request,*args,**kwargs):
-        self.user=User.objects.get(pk=self.kwargs["pk"])
+        self.user=User.objects.get(uuid=self.kwargs["uuid"])
         self.items = self.user.get_posts()
-        self.item = Item.objects.get(uuid=self.kwargs["uuid"])
+        self.item = Item.objects.get(pk=self.kwargs["pk"])
         self.next = self.items.filter(pk__gt=self.item.pk).order_by('pk').first()
         self.prev = self.items.filter(pk__lt=self.item.pk).order_by('-pk').first()
         self.item.views += 1
-        self.item.save() 
+        self.item.save()
         return super(UserItemView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
