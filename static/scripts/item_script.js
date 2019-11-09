@@ -49,7 +49,7 @@ $('#ajax').on('click', '.fullscreen', function () {
 	 var user_uuid = item.data("uuid");
 	 console.log(item_pk);
 	 console.log(user_uuid);
-	 $('#item_loader').html('').load("/users/item/" + user_pk + "/" + item_uuid + "/")
+	 $('#item_loader').html('').load("/users/item/" + item_pk + "/" + user_uuid + "/")
 	 $('.item_fullscreen').show();
 });
 
