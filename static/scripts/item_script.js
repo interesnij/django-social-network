@@ -4,7 +4,10 @@ $('#ajax .stream').on('click', '.article_detail', function () {
 	 $('#article_loader').html('').load("/article/detail/" + item_id)
 	 $('.article_fullscreen').show();
 });
-
+  $('.item_fullscreen_hide').on('click', function () {
+  	 $('.item_fullscreen').hide();
+  	 $('#item_loader').empty();
+  });
 $('#ajax').on('click', '.comment', function () {
 	var item = $(this).closest(".infinite-item").attr("item-id");
 	var url = $(this).parents(".infinite-item");

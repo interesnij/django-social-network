@@ -12,9 +12,6 @@
     </span>
   {% endif %}
 </span>
-<span class="item_fullscreen_hide">
-  <img style="width:35px" src="{% static 'images/icons/close-24px.svg' %}" />
-</span>
 
 {% if object.post %}
 <div class="mb-4 infinite-item" item-id="{{ object.uuid }}">
@@ -44,10 +41,3 @@
     	});
     </script>
     {% endif %}
-
-<script>
-  $('.item_fullscreen_hide').on('click', function () {
-  	 $('.item_fullscreen').hide();
-  	 $('#item_loader').empty();
-  });
-</script>
