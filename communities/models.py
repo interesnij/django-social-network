@@ -10,7 +10,7 @@ from imagekit.models import ProcessedImageField
 from moderation.models import ModeratedObject, ModerationCategory
 from main.models import Item
 from goods.models import Good
-from users.models import User
+from common.model_loaders import get_user_model
 from notifications.models import CommunityNotification, community_notification_handler
 
 
@@ -248,7 +248,7 @@ class Community(models.Model):
     def get_community_with_name_administrators(cls, community_name):
         community_administrators_query = Q(communities_memberships__community__name=community_name,
                                            communities_memberships__is_administrator=True)
-
+        User = get_user_model()
         return User.objects.filter(community_administrators_query)
 
 
@@ -271,7 +271,7 @@ class Community(models.Model):
     def get_community_with_name_moderators(cls, community_name):
         community_moderators_query = Q(communities_memberships__community__name=community_name,
                                        communities_memberships__is_moderator=True)
-
+        User = get_user_model()
         return User.objects.filter(community_moderators_query)
 
     @classmethod
