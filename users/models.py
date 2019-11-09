@@ -316,7 +316,7 @@ class User(AbstractUser):
                         *items_only).filter(followed_users_query)
 
         frends = self.connections.values('user_id')
-        frends_ids = [frends['user_id'] for frend in frends]
+        frends_ids = [user['user_id'] for user in frends]
         frends_query = Q(creator__in=frends_ids, is_deleted=False, status=Item.STATUS_PUBLISHED)
         frends_query.add(reported_posts_exclusion_query, Q.AND)
         frends_queryset = Item.objects.select_related(*posts_select_related).only(
