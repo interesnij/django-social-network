@@ -9,7 +9,9 @@ from communities.views.manage import (
                                         CommunityCoverChange,
                                         CommunityNotifyView,
                                         CommunityPrivateView,
-                                    ) 
+                                        CommunityAdminView,
+                                        CommunityModersView,
+                                    )
 
 urlpatterns = [
     url(r'^all-communities/$', AllCommunities.as_view(), name='all_communities'),
@@ -33,5 +35,7 @@ urlpatterns = [
     url(r'^cover/(?P<pk>[0-9]+)/$', CommunityCoverChange.as_view(), name='community_cover'),
     url(r'^settings_notify/(?P<pk>[0-9]+)/$', CommunityNotifyView.as_view(), name='community_notify'),
     url(r'^settings_private/(?P<pk>[0-9]+)/$', CommunityPrivateView.as_view(), name='community_private'),
+    url(r'^admins/(?P<pk>[0-9]+)/$', CommunityAdminView.as_view(), name='community_admins'),
+    url(r'^moders/(?P<pk>[0-9]+)/$', CommunityModersView.as_view(), name='community_moders'),
 
 ]

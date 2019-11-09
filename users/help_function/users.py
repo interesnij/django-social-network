@@ -226,61 +226,13 @@ def has_blocked_user_with_id(self, user_id):
     return self.user_blocks.filter(blocked_user_id=user_id).exists()
 
 
-def update_notifications_settings(self, post_comment_notifications=None, post_reaction_notifications=None,
-                                  follow_notifications=None, connection_request_notifications=None,
-                                  connection_confirmed_notifications=None,
-                                  community_invite_notifications=None,
-                                  post_comment_reaction_notifications=None,
-                                  post_comment_reply_notifications=None,
-                                  post_comment_user_mention_notifications=None,
-                                  post_user_mention_notifications=None,
-                                  ):
-
-    notifications_settings = self.notifications_settings
-
-    notifications_settings.update(
-        post_comment_notifications=post_comment_notifications,
-        post_reaction_notifications=post_reaction_notifications,
-        follow_notifications=follow_notifications,
-        connection_request_notifications=connection_request_notifications,
-        connection_confirmed_notifications=connection_confirmed_notifications,
-        community_invite_notifications=community_invite_notifications,
-        post_comment_reaction_notifications=post_comment_reaction_notifications,
-        post_comment_reply_notifications=post_comment_reply_notifications,
-        post_comment_user_mention_notifications=post_comment_user_mention_notifications,
-        post_user_mention_notifications=post_user_mention_notifications,
-    )
-    return notifications_settings
-
-
-def soft_delete(self):
-    for item in self.item.all().iterator():
-        item.soft_delete()
-
-    for community in self.created_communities.all().iterator():
-        community.soft_delete()
-
-    self.is_deleted = True
-    self.save()
-
-def unsoft_delete(self):
-    for item in self.item.all.iterator():
-        item.unsoft_delete()
-
-    for community in self.created_communities.all().iterator():
-        community.unsoft_delete()
-
-    self.is_deleted = False
-    self.save()
-
-
 def count_public_posts(self):
     """
     Count how many public posts has the user created
     :return:
     """
 
-    return self.item.filter(circles__id=world_circle_id).count()
+    return self.item.count()
 
 def count_posts_for_user_with_id(self, id):
     """

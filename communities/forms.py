@@ -3,17 +3,12 @@ from django import forms
 
 
 class CommunityForm(forms.ModelForm):
-
 	class Meta:
 		model = Community
-		fields = [	'name',
-					'type',
-					'category',
-					'id',
-				]
+		fields = ['name','type','category','id', ]
+
 
 class GeneralCommunityForm(forms.ModelForm):
-
 	class Meta:
 		model = Community
 		fields = ['name', 'description', 'rules', 'status',]
@@ -37,7 +32,6 @@ class CatCommunityForm(forms.ModelForm):
 		fields = ['category', ]
 
 class CommunityNotifyForm(forms.ModelForm):
-
     class Meta:
         model = CommunityNotificationsSettings
         fields = (
@@ -54,7 +48,6 @@ class CommunityNotifyForm(forms.ModelForm):
 
 
 class CommunityPrivateForm(forms.ModelForm):
-
     class Meta:
         model = CommunityPrivateSettings
         fields = (

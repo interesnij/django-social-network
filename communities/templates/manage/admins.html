@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load staticfiles humanize %}
 
-{% block title %}Подписчики сообщества "{{ community.name }}"{% endblock %}
+{% block title %}Администраторы сообщества "{{ community.name }}"{% endblock %}
 
 {% block content %}
 
@@ -9,7 +9,7 @@
     <div class="col-12 col-md-8">
         <br><br><br>
         <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Поиск подписчиков" aria-label="Recipient's username">
+            <input type="text" class="form-control" placeholder="Поиск администраторов" aria-label="Recipient's username">
             <div class="input-group-append">
                 <button class="btn btn-outline-link" type="button">Искать</button>
             </div>
@@ -18,7 +18,7 @@
             <div class="card-header">
                 <div class="media">
                     <div class="media-body">
-                        <h5 class="mt-1">Подписчики сообщества
+                        <h5 class="mt-1">Администраторы сообщества
                             <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=community.pk %}">
                                 {{ community.name }}
                             </a>
@@ -54,7 +54,7 @@
     </div>
 
     <div class="col-12 col-md-4">
-        
+
     </div>
 </div>
 {% endblock %}

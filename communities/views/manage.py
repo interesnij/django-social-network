@@ -173,3 +173,25 @@ class CommunityPrivateView(TemplateView):
 			if request.is_ajax():
 				return HttpResponse ('!')
 		return super(CommunityPrivateView,self).post(request,*args,**kwargs)
+
+
+class CommunityAdminView(ListView):
+	template_name="manage/admins.html"
+	model=User
+	paginate_by=15
+
+	def get_queryset(self):
+		self.community = Community.objects.get(pk=self.kwargs["pk"])
+		admins=self.community.get_community_with_name_administrators(self.community.name)
+		return admins
+
+
+class CommunityModersView(ListView):
+	template_name="manage/moders.html"
+	model=User
+	paginate_by=15
+
+	def get_queryset(self):
+		self.community = Community.objects.get(pk=self.kwargs["pk"])
+		moders=self.community.get_community_with_name_moderators(self.community.name)
+		return moders

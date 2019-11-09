@@ -134,13 +134,6 @@ class Community(models.Model):
         return cls.objects.filter(name=community_name, invites_enabled=True).exists()
 
     @classmethod
-    def is_community_with_name_private(cls, community_name):
-        """"
-        Приватное ли сообщество?
-        """
-        return cls.objects.filter(name=community_name, type='T').exists()
-
-    @classmethod
     def community_with_name_exists(cls, community_name):
         """"
         Есть ли сообщество, не удаленное?
@@ -251,15 +244,9 @@ class Community(models.Model):
         return User.objects.filter(db_query)
 
     @classmethod
-    def get_community_with_name_administrators(cls, community_name, administrators_max_id=None):
-        """"
-        Получаем администраторов группы
-        """
+    def get_community_with_name_administrators(cls, community_name):
         community_administrators_query = Q(communities_memberships__community__name=community_name,
                                            communities_memberships__is_administrator=True)
-
-        if administrators_max_id:
-            community_administrators_query.add(Q(communities_memberships__user__id__lt=administrators_max_id), Q.AND)
 
         return User.objects.filter(community_administrators_query)
 
@@ -280,15 +267,9 @@ class Community(models.Model):
         return User.objects.filter(db_query)
 
     @classmethod
-    def get_community_with_name_moderators(cls, community_name, moderators_max_id=None):
-        """"
-        Получаем модераторов группы
-        """
+    def get_community_with_name_moderators(cls, community_name):
         community_moderators_query = Q(communities_memberships__community__name=community_name,
                                        communities_memberships__is_moderator=True)
-
-        if moderators_max_id:
-            community_moderators_query.add(Q(communities_memberships__user__id__lt=moderators_max_id), Q.AND)
 
         return User.objects.filter(community_moderators_query)
 
