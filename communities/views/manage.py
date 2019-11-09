@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from django.views import View
 from communities.forms import *
 from users.models import User
+from follows.models import CommunityFollow
 
 
 class CommunityGeneralChange(TemplateView):
@@ -233,3 +234,23 @@ class CommunityBlackListView(ListView):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		black_list=self.community.get_community_with_name_banned_users(self.community.name)
 		return black_list
+
+
+class CommunityFollowsView(ListView):
+	template_name="manage/follows.html"
+	model=CommunityFollow
+	paginate_by=15
+
+	def get(self,request,*args,**kwargs):
+		self.community = Community.objects.get(pk=self.kwargs["pk"])
+		return super(CommunityFollowsView,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context=super(CommunityFollowsView,self).get_context_data(**kwargs)
+		context["community"]=self.community
+		return context
+
+	def get_queryset(self):
+		self.community = Community.objects.get(pk=self.kwargs["pk"])
+		follows=CommunityFollow.get_community_with_name_follows(self.community.name)
+		return follows

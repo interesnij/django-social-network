@@ -12,6 +12,7 @@ from communities.views.manage import (
                                         CommunityAdminView,
                                         CommunityModersView,
                                         CommunityBlackListView,
+                                        CommunityFollowsView,
                                     )
 
 urlpatterns = [
@@ -39,5 +40,6 @@ urlpatterns = [
     url(r'^admins/(?P<pk>[0-9]+)/$', CommunityAdminView.as_view(), name='community_admins'),
     url(r'^moders/(?P<pk>[0-9]+)/$', CommunityModersView.as_view(), name='community_moders'),
     url(r'^black_list/(?P<pk>[0-9]+)/$', CommunityBlackListView.as_view(), name='community_black_list'),
+    url(r'^follows/(?P<pk>[0-9]+)/$', CommunityFollowsView.as_view(), name='community_follows'),
 
 ]

@@ -22,7 +22,7 @@ class Follow(models.Model):
         return follow
 
 
-class CommunityFollow(models.Model): 
+class CommunityFollow(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE, related_name='community_follows', verbose_name="Подписчик")
     community = models.ForeignKey('communities.Community', db_index=False, on_delete=models.CASCADE, related_name='community', null=False, verbose_name="На какое сообщество подписывается")
 
@@ -39,3 +39,8 @@ class CommunityFollow(models.Model):
     def create_follow(cls, user_id, community_name):
         follow = CommunityFollow.objects.create(user_id=user_id, community=community_name)
         return follow
+
+    @classmethod
+    def get_community_with_name_follows(cls, community_name):
+        follows_query = CommunityFollow.objects.filter(community__name=community_name)
+        return follows_query

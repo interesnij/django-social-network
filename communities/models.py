@@ -277,6 +277,13 @@ class Community(models.Model):
         return User.objects.filter(community_moderators_query)
 
     @classmethod
+    def get_community_with_name_follows(cls, community_name):
+        community_moderators_query = Q(communities_memberships__community__name=community_name,
+                                       communities_memberships__is_moderator=True)
+        User = get_user_model()
+        return User.objects.filter(community_moderators_query)
+
+    @classmethod
     def search_community_with_name_moderators(cls, community_name, query):
         """"
         Поиск по модераторам группы
