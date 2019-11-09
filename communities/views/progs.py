@@ -14,7 +14,10 @@ class CommunityCreate(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.form=CommunityForm()
-		self.new_community = Community.objects.only('id').last()
+		try:
+			self.new_community = Community.objects.only('id').last()
+		except:
+			self.new_community = 0
 		self.new_url = self.new_community.pk + 1
 		return super(CommunityCreate,self).get(request,*args,**kwargs)
 
