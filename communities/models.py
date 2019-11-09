@@ -10,6 +10,7 @@ from imagekit.models import ProcessedImageField
 from moderation.models import ModeratedObject, ModerationCategory
 from main.models import Item
 from goods.models import Good
+from users.models import User
 from notifications.models import CommunityNotification, community_notification_handler
 
 
