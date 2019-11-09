@@ -48,15 +48,14 @@ class PostUserCreate(View):
         self.form_post=PostForm(request.POST, request.FILES)
         self.user=User.objects.get(pk=self.kwargs["pk"])
         if self.form_post.is_valid():
-            new_post=self.form_post.save(commit=False)
-            new_post.creator=self.user
-            
-            new_post.create_post(
-                                    creator=new_post.creator,
-                                    text=new_post.text,
+            post=self.form_post.save(commit=False)
+            post.creator=self.user
+            new_post = post.create_post(
+                                    creator=post.creator,
+                                    text=post.text,
                                     community=None,
-                                    comments_enabled=new_post.comments_enabled,
-                                    status=new_post.status,
+                                    comments_enabled=post.comments_enabled,
+                                    status=post.status,
                                 )
             if request.is_ajax() :
                 html = render_to_string('new_post.html',{
