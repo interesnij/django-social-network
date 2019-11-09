@@ -56,8 +56,7 @@
 
 <script>
     var frm_com = $('#FORM-COMMUNITY');
-    $('#FORM-COMMUNITY').submit(function(e) {
-        e.preventDefault();
+    $('#FORM-COMMUNITY').submit(function() {
         $.ajax({
             type: frm_com.attr('method'),
             url: "{% url 'add_community' %}",

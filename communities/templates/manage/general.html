@@ -7,7 +7,7 @@
 <div class="container mt-4 main-container">
     <div class="row">
         <div class="col-lg-7 col-md-8 col-sm-12 order-1">
-            <form action="" id="GENERAL-FORM" method="post" class="contact-form">
+            <form action="" id="info_form" method="post" class="contact-form">
                 {% csrf_token %}
                 <div class="card mb-4">
                     <div class="card-header border-bottom">
@@ -50,7 +50,7 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                        <button type="submit" class="mb-2 btn btn-sm btn-success float-right">Сохранить</button>
+                        <button type="button" id="general_button" class="mb-2 btn btn-sm btn-success float-right">Сохранить</button>
                     </div>
                 </div>
             </form>
@@ -71,9 +71,9 @@
     </div>
 </div>
 
-<script type="text/javascript">
-    var frm = $('#GENERAL-FORM');
-    frm.submit(function() {
+<script>
+  $('#ajax').on('click', '#general_button', function() {
+    var frm = $('#info_form');
         $.ajax({
             type: frm.attr('method'),
             url: "{% url 'community_general_form' pk=community.pk %}",
@@ -88,6 +88,7 @@
         });
         return false;
     });
+  });
 </script>
 
 
