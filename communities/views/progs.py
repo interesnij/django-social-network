@@ -16,9 +16,9 @@ class CommunityCreate(TemplateView):
 		self.form=CommunityForm()
 		try:
 			self.new_community = Community.objects.only('id').last()
+			self.new_url = self.new_community.pk + 1
 		except:
-			self.new_community = 0
-		self.new_url = self.new_community.pk + 1
+			self.new_url = 1
 		return super(CommunityCreate,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
