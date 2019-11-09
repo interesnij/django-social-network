@@ -44,7 +44,7 @@ class Item(models.Model):
             BrinIndex(fields=['created']),
         )
 
-        ordering = ['-id']
+        ordering = ['-created']
         verbose_name="запись"
         verbose_name_plural="записи"
 
