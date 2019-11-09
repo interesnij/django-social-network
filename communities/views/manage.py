@@ -148,8 +148,8 @@ class CommunityPrivateView(TemplateView):
 	private_settings=None
 
 	def get(self,request,*args,**kwargs):
-		self.form=CommunityPrivateForm(instance=self.community)
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
+		self.form=CommunityPrivateForm(instance=self.community)
 		return super(CommunityPrivateView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
