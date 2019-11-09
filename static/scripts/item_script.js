@@ -131,7 +131,7 @@ $.ajax({
   button1 = $(this);
   form1 = button1.parent().parent().parent();
         $.ajax({
-            url: '{% url "post_comment" %}',
+            url: '/main/post-comment/',
             data: form1.serialize(),
             type: 'POST',
             cache: false,
@@ -155,7 +155,7 @@ $.ajax({
   button = $(this);
   form = button.parent().parent().parent().parent();
         $.ajax({
-            url: '{% url "reply_comment" %}',
+            url: '/main/reply-comment/',
             data: form.serialize(),
             type: 'POST',
             cache: false,
@@ -179,7 +179,7 @@ $.ajax({
   button = $(this);
   form = button.parent().parent().parent().parent();
         $.ajax({
-            url: '{% url "reply_comment" %}',
+            url: '/main/reply-comment/',
             data: form.serialize(),
             type: 'POST',
             cache: false,
