@@ -7,7 +7,7 @@
     {% include 'generic/community/repost.html' %}
     {% endif %}
 
-    <div class="card-body fullscreen" data-id="{{ object.pk }}" style="cursor:pointer">
+    <div class="card-body community_fullscreen" data-uuid="{{ object.community.uuid }}" data-pk="{{ object.pk }}" style="cursor:pointer">
       {% if object.post.text %}
         <p class="">{{ object.post.text|linebreaks }}</p>
       {% endif %}

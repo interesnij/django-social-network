@@ -12,7 +12,11 @@ class CommunityItemView(EmojiListMixin, TemplateView):
     template_name="detail/item.html"
 
     def get(self,request,*args,**kwargs):
+        self.community=Community.objects.get(uuid=self.kwargs["uuid"])
+        self.items = self.community.get_posts()
         self.item = Item.objects.get(pk=self.kwargs["pk"])
+        self.next = self.items.filter(pk__gt=self.item.pk).order_by('pk').first()
+        self.prev = self.items.filter(pk__lt=self.item.pk).order_by('-pk').first()
         self.item.views += 1
         self.item.save()
         return super(CommunityItemView,self).get(request,*args,**kwargs)
@@ -20,6 +24,9 @@ class CommunityItemView(EmojiListMixin, TemplateView):
     def get_context_data(self,**kwargs):
         context=super(CommunityItemView,self).get_context_data(**kwargs)
         context["object"]=self.item
+        context["community"]=self.community
+        context["next"]=self.next
+        context["prev"]=self.prev
         return context
 
 

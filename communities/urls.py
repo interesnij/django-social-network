@@ -21,7 +21,7 @@ urlpatterns = [
 
     url(r'^(?P<pk>\d+)/$', CommunityDetailView.as_view(), name='community_detail'),
     url(r'^reload/(?P<pk>\d+)/$', CommunityDetailReload.as_view(), name='community_detail_reload'),
-    url(r'^item/(?P<pk>\d+)/$', CommunityItemView.as_view(), name='community_item'),
+    url(r'^item/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityItemView.as_view(), name='community_item'),
     url(r'^list/(?P<pk>\d+)/$', CommunityListView.as_view(), name="community_item_list"),
 
     url(r'^add/$', CommunityCreate.as_view(), name="add_community"),
