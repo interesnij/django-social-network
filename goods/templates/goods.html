@@ -109,7 +109,7 @@
         {% for object in object_list %}
         <div class="col-12 col-md-4 infinite-item">
             <div class="card mb-4">
-                <div class="card-body pb-0">
+                <div class="card-body pb-0 good_detail">
                     <div class="row align-items-center no-gutters">
                         <div class="col">
                             <div>
@@ -125,7 +125,7 @@
                             </div>
                         </div>
                     </div>
-                    <h5 style="cursor:pointer" data-id="{{ object.id }}" class="card-title mb-1 good_detail header-color-primary text-center">{{ object.title }}</h5>
+                    <h5 style="cursor:pointer" data-id="{{ object.id }}" class="card-title mb-1 header-color-primary text-center">{{ object.title }}</h5>
                     <h6 class="card-subtitle mb-2 header-color-secondary text-center">{{ object.sub_category }}</h6>
                     <br>
                     <div class="row bg-light-secondary text-center">
