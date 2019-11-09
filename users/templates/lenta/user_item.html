@@ -6,7 +6,7 @@
       <img style="width: 50px;" src="{% static 'images/icons/right-24px.svg' %}" />
     </span>
   {% endif %}
-  {% if object.get_next_by_created %}
+  {% if next %}
     <span class="next_item" style="">
       <img style="width: 50px;" src="{% static 'images/icons/left-24px.svg' %}" />
     </span>
@@ -36,7 +36,7 @@
     </script>
 
    {% endif %}
-   {% if object.get_next_by_created %}
+   {% if next %}
 
     <script>
       $('.next_item').on('click', function () {
