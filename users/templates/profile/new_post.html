@@ -2,7 +2,7 @@
 
 {% if user == request.user %}
 <div class="card mb-4" style="border:1px solid rgba(0, 0, 0, 0.125);">
-    <form action="" id="FORM-POST" method="post" enctype="multipart/form-data">
+    <form action="" id="form_post" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="card-body p-0">
             <textarea name="text" id="id_text" class="id_text form-control bg-light-secondary border-0" rows="2" placeholder="Что у Вас нового?"></textarea>
@@ -73,11 +73,9 @@
                 <div class="col-auto ">
                     <img style="width:22px" id="settings" src="{% static 'images/icons/settings_applications-24px.svg' %}" />
 
-                    <button type="submit" class="btn btn-rounded btn-sm text-uppercase pl-3">
+                    <button type="button" id="form_post_btn" class="btn btn-rounded btn-sm text-uppercase pl-3">
                         <span class="text-hide-xs">Опубликовать</span>
-                        <a>
                             <img style="width:25px;color:white" src="{% static 'images/icons/send-24px.svg' %}" />
-                        </a>
                     </button>
                 </div>
             </div>
@@ -132,12 +130,12 @@
 </script>
 
 <script>
-    var frm_post = $('#FORM-POST');
-    frm_post.submit(function(e) {
+  $("#form_post_btn").click(function() {
+    var form_post = $('#form_post');
         $.ajax({
-            type: frm_post.attr('method'),
+            type: form_post.attr('method'),
             url: "{% url 'post_add_user' pk=user.pk %}",
-            data: frm_post.serialize(),
+            data: form_post.serialize(),
             success: function(data) {
                 $(".stream").prepend(data);
                 $(".id_text").val("");
