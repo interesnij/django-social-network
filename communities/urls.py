@@ -11,6 +11,7 @@ from communities.views.manage import (
                                         CommunityPrivateView,
                                         CommunityAdminView,
                                         CommunityModersView,
+                                        CommunityBlackListView,
                                     )
 
 urlpatterns = [
@@ -37,5 +38,6 @@ urlpatterns = [
     url(r'^settings_private/(?P<pk>[0-9]+)/$', CommunityPrivateView.as_view(), name='community_private'),
     url(r'^admins/(?P<pk>[0-9]+)/$', CommunityAdminView.as_view(), name='community_admins'),
     url(r'^moders/(?P<pk>[0-9]+)/$', CommunityModersView.as_view(), name='community_moders'),
+    url(r'^black_list/(?P<pk>[0-9]+)/$', CommunityBlackListView.as_view(), name='community_black_list'),
 
 ]

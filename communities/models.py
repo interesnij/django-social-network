@@ -286,15 +286,9 @@ class Community(models.Model):
         return User.objects.filter(db_query)
 
     @classmethod
-    def get_community_with_name_banned_users(cls, community_name, users_max_id):
-        """"
-        Получаем черный список группы
-        """
+    def get_community_with_name_banned_users(cls, community_name):
         community = Community.objects.get(name=community_name)
         community_members_query = Q()
-
-        if users_max_id:
-            community_members_query.add(Q(id__lt=users_max_id), Q.AND)
 
         return community.banned_users.filter(community_members_query)
 

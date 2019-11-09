@@ -61,6 +61,7 @@
               {% endif %}
               <li style="margin-bottom:8px;"><a href="{% url 'community_admins' pk=community.pk %}" class="ajax">Администраторы</a></li>
               <li style="margin-bottom:8px;"><a href="{% url 'community_moders' pk=community.pk %}" class="ajax">Модераторы</a></li>
+              <li style="margin-bottom:8px;"><a href="{% url 'community_black_list' pk=community.pk %}" class="ajax"></a>Черный список</li>
             </ul>
         </div>
 

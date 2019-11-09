@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load staticfiles humanize %}
 
-{% block title %}Администраторы сообщества "{{ community.name }}"{% endblock %}
+{% block title %}Черный список сообщества "{{ community.name }}"{% endblock %}
 
 {% block content %}
 
@@ -18,7 +18,7 @@
             <div class="card-header">
                 <div class="media">
                     <div class="media-body">
-                        <h5 class="mt-1">Администраторы сообщества
+                        <h5 class="mt-1">Черный список сообщества
                             <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=community.pk %}">
                                 {{ community.name }}
                             </a>
@@ -43,7 +43,7 @@
                                 <a href="{% url 'user' pk=object.pk %}" class="ajax">
                                     <h6 class="my-0 mt-1">{{ object.get_full_name }}</h6>
                                 </a>
-                                <a href="" class="small">Разжаловать</a>
+                                <a href="" class="small">Разбанить</a>
                             </div>
                         </div>
                     </li>

@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% load staticfiles humanize %}
+
+{% block title %}Модераторы сообщества "{{ community.name }}"{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-lg-7 col-md-8 col-sm-12 order-1">
+        <br><br><br>
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Поиск администраторов" aria-label="Recipient's username">
+            <div class="input-group-append">
+                <button class="btn btn-outline-link" type="button">Искать</button>
+            </div>
+        </div>
+        <div class="card mb-2">
+            <div class="card-header">
+                <div class="media">
+                    <div class="media-body">
+                        <h5 class="mt-1">Модераторы сообщества
+                            <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=community.pk %}">
+                                {{ community.name }}
+                            </a>
+                        </h5>
+                    </div>
+                </div>
+            </div>
+            <br><br>
+            <div class="card-body px-0 py-0">
+                <ul class="list-group border-top border-bottom list-group-flush">
+                    {% for object in object_list %}
+                    <li class="list-group-item">
+                        <div class="media">
+                            <figure>
+                                {% if object.profile.avatar %}
+                                <img src="{{ object.profile.avatar.url }}" style="border-radius:50px;width:50px;" alt="image">
+                                {% else %}
+                                <img style="border:#6C757D solid 1px;border-radius:50px;padding:5px;width:50px;" src="{% static 'images/icons/person-24px.svg' %}" />
+                                {% endif %}
+                            </figure>
+                            <div class="media-body">
+                                <a href="{% url 'user' pk=object.pk %}" class="ajax">
+                                    <h6 class="my-0 mt-1">{{ object.get_full_name }}</h6>
+                                </a>
+                                <a href="" class="small">Разжаловать</a>
+                            </div>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-5 col-md-4 col-sm-12 order-2">
+        <ul style="list-style-type:none">
+          <li style="margin-bottom:8px;"><a href="{% url 'community_general_form' pk=community.pk %}" class="ajax">Настройка информации</a></li>
+          <li style="margin-bottom:8px;"><a href="{% url 'community_notify' pk=community.pk %}" class="ajax">Настройка уведомлений</a></li>
+          <li style="margin-bottom:8px;"><a href="{% url 'community_private' pk=community.pk %}" class="ajax">Приватность</a></li>
+          {% if community.is_closed %}
+            <li style="margin-bottom:8px;"><a href="" class="ajax">Заявки на членство</a></li>
+          {% endif %}
+          <li style="margin-bottom:8px;"><a href="{% url 'community_admins' pk=community.pk %}" class="ajax"></a>Администраторы</li>
+          <li style="margin-bottom:8px;"><a href="{% url 'community_moders' pk=community.pk %}" class="ajax"></a>Модераторы</li>
+          <li style="margin-bottom:8px;"><a href="{% url 'community_black_list' pk=community.pk %}" class="ajax"></a>Черный список</li>
+        </ul>
+    </div>
+</div>
+{% endblock %}
