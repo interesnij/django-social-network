@@ -43,8 +43,6 @@ class Item(models.Model):
         indexes = (
             BrinIndex(fields=['created']),
         )
-
-        ordering = ['-created']
         verbose_name="запись"
         verbose_name_plural="записи"
 
