@@ -32,7 +32,7 @@ class UserItemView(EmojiListMixin, TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.items = request.user.get_posts()
-        self.prev = self.items.iterator().prev()
+        self.prev = self.items.prev()
         self.item = Item.objects.get(pk=self.kwargs["pk"])
         self.item.views += 1
         self.item.save()
