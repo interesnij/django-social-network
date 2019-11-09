@@ -63,8 +63,8 @@
                 {% if community.is_closed %}
                   <li style="margin-bottom:8px;"><a href="" class="ajax">Заявки на членство</a></li>
                 {% endif %}
-                <li style="margin-bottom:8px;"><a href="community_admins" class="ajax"></a>Администраторы</li>
-                <li style="margin-bottom:8px;"><a href="community_moders" class="ajax"></a>Модераторы</li>
+                <li style="margin-bottom:8px;"><a href="{% url 'community_admins' pk=community.pk %}" class="ajax">Администраторы</a></li>
+                <li style="margin-bottom:8px;"><a href="{% url 'community_moders' pk=community.pk %}" class="ajax">Модераторы</a></li>
             </ul>
         </div>
 
