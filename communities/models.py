@@ -12,6 +12,7 @@ from main.models import Item
 from goods.models import Good
 from common.model_loaders import get_user_model
 from notifications.models import CommunityNotification, community_notification_handler
+import uuid
 
 
 class CommunityCategory(models.Model):
@@ -73,6 +74,7 @@ class Community(models.Model):
         default=False,
         verbose_name="Удаленное"
     )
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, verbose_name="uuid")
 
     class Meta:
         verbose_name = 'сообщество'
