@@ -137,6 +137,10 @@ class Community(models.Model):
         return cls.objects.filter(name=community_name, invites_enabled=True).exists()
 
     @classmethod
+    def is_community_with_name_private(cls, community_name):
+        return cls.objects.filter(name=community_name, type='T').exists()
+
+    @classmethod
     def community_with_name_exists(cls, community_name):
         """"
         Есть ли сообщество, не удаленное?
