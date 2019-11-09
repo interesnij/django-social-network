@@ -180,6 +180,15 @@ class CommunityAdminView(ListView):
 	model=User
 	paginate_by=15
 
+	def get(self,request,*args,**kwargs):
+		self.community = Community.objects.get(pk=self.kwargs["pk"])
+		return super(CommunityAdminView,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context=super(CommunityAdminView,self).get_context_data(**kwargs)
+		context["community"]=self.community
+		return context
+
 	def get_queryset(self):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		admins=self.community.get_community_with_name_administrators(self.community.name)
@@ -190,6 +199,15 @@ class CommunityModersView(ListView):
 	template_name="manage/moders.html"
 	model=User
 	paginate_by=15
+
+	def get(self,request,*args,**kwargs):
+		self.community = Community.objects.get(pk=self.kwargs["pk"])
+		return super(CommunityModersView,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context=super(CommunityModersView,self).get_context_data(**kwargs)
+		context["community"]=self.community
+		return context
 
 	def get_queryset(self):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])

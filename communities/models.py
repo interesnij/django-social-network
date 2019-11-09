@@ -226,7 +226,7 @@ class Community(models.Model):
     EXCLUDE_COMMUNITY_MODERATORS_KEYWORD = 'moderators'
 
     @classmethod
-    def search_community_with_name_members(cls, community_name, query, exclude_keywords=None):
+    def search_community_with_name_members(cls, community_name, query):
         """"
         Поиск по участникам группы
         """
@@ -237,11 +237,7 @@ class Community(models.Model):
 
         db_query.add(community_members_query, Q.AND)
 
-        if exclude_keywords:
-            db_query.add(
-                cls._get_exclude_members_query_for_keywords(exclude_keywords=exclude_keywords),
-                Q.AND)
-
+        User = get_user_model()
         return User.objects.filter(db_query)
 
     @classmethod
@@ -264,7 +260,7 @@ class Community(models.Model):
         community_members_query.add(Q(communities_memberships__user__profile__name__icontains=query), Q.OR)
 
         db_query.add(community_members_query, Q.AND)
-
+        User = get_user_model()
         return User.objects.filter(db_query)
 
     @classmethod
@@ -286,7 +282,7 @@ class Community(models.Model):
         community_members_query.add(Q(communities_memberships__user__profile__name__icontains=query), Q.OR)
 
         db_query.add(community_members_query, Q.AND)
-
+        User = get_user_model()
         return User.objects.filter(db_query)
 
     @classmethod
@@ -319,6 +315,7 @@ class Community(models.Model):
         staff_members_query = Q(communities_memberships__community_id=self.pk)
         staff_members_query.add(
             Q(communities_memberships__is_administrator=True) | Q(communities_memberships__is_moderator=True), Q.AND)
+        User = get_user_model()
         return User.objects.filter(staff_members_query)
 
     def is_private(self):
