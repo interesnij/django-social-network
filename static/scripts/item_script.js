@@ -45,8 +45,9 @@ $.ajax({
 
 $('#ajax').on('click', '.fullscreen', function () {
 	 var item = $(this);
-	 var item_id = item.data("id");
-	 $('#item_loader').html('').load("/users/item/" + item_id)
+	 var item_uuid = item.data("uuid");
+	 var user_pk = item.data("pk");
+	 $('#item_loader').html('').load("/users/item/" + item_uuid + "/" + user_pk + "/")
 	 $('.item_fullscreen').show();
 });
 
