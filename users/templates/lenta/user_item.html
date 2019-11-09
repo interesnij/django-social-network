@@ -31,7 +31,7 @@
   {% if prev %}
     <script>
     	$('.prev_item').on('click', function () {
-    		 $('#item_loader').html('').load("{% url 'user_item' pk=object.get_previous_by_created.pk %}");
+    		 $('#item_loader').html('').load("{% url 'user_item' pk=prev.pk %}");
     	});
     </script>
 
@@ -40,7 +40,7 @@
 
     <script>
       $('.next_item').on('click', function () {
-    		 $('#item_loader').html('').load("{% url 'user_item' pk=object.get_next_by_created.pk %}");
+    		 $('#item_loader').html('').load("{% url 'user_item' pk=next.pk.pk %}");
     	});
     </script>
     {% endif %}
