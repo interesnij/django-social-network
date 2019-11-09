@@ -330,6 +330,8 @@ class User(AbstractUser):
 
         final_queryset = own_posts_queryset.union(community_posts_queryset, followed_users_queryset)
 
+        final_queryset.order_by("created")
+
         return final_queryset
 
     def join_community_with_name(self, community_name):
