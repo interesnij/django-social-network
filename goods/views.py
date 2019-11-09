@@ -25,7 +25,7 @@ class GoodsListView(ListView):
 
 	def get_queryset(self):
 		self.user=User.objects.get(pk=self.kwargs["pk"])
-		goods=self.user.get_goods()
+		goods=self.user.get_goods().order_by('-created')
 		return goods
 
 

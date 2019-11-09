@@ -82,6 +82,5 @@ class Good(models.Model):
 
 	class Meta:
 		indexes = (BrinIndex(fields=['created']),)
-		ordering = ['-created']
 		verbose_name="Товар"
 		verbose_name_plural="Товары"

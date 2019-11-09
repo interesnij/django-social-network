@@ -44,7 +44,7 @@ class CommunityListView(ListView):
 
 	def get_queryset(self):
 		self.community=Community.objects.get(pk=self.kwargs["pk"])
-		communities = self.community.get_posts()
+		communities = self.community.get_posts().order_by('-created')
 		return communities
 
 	def get_context_data(self, **kwargs):

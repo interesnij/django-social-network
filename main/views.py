@@ -38,7 +38,7 @@ class NewsListView(ListView, EmojiListMixin):
 	def get_queryset(self):
 		self.user=self.request.user
 		if self.user.is_authenticated:
-			items = self.user.get_timeline_posts()
+			items = self.user.get_timeline_posts().order_by('-created')
 		else:
 			items=None
 		return items
