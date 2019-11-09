@@ -179,7 +179,7 @@
 </script>
 <script>
     $("#good_add").click(function() {
-        $('#good_add_loader').html('').load("/goods/add/");
+        $('#good_add_loader').html('').load("{% url 'good_add_user' pk=request.user.pk %}");
         $('.good_add_fullscreen').show();
     })
 </script>

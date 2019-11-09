@@ -140,7 +140,7 @@
         e.preventDefault();
         $.ajax({
             type: frm.attr('method'),
-            url: "{% url 'good_add_user' pk=user.pk %}",
+            url: "{% url 'good_add_user' pk=request.user.pk %}",
             data: new FormData($(frm)[0]),
             contentType: false,
             cache: false,
