@@ -13,7 +13,7 @@
         <div class="media w-100 my-3">
             <figure class="avatar-40 rounded-circle align-self-start " style="width: 100%;">
                 {% if request.user.profile.avatar %}
-                  <img src="{{ user.profile.avatar.url }}" alt="image" style="border-radius:50px;width:100%;">
+                  <img src="{{ request.user.profile.avatar.url }}" alt="image" style="border-radius:50px;width:100%;">
                 {% else %}
                   <img src="{% static 'images/user1.png' %}" alt="image" style="width:100%;width:100%;">
                 {% endif %}
