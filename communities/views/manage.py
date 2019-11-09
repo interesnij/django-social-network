@@ -148,7 +148,6 @@ class CommunityPrivateView(TemplateView):
 	private_settings=None
 
 	def get(self,request,*args,**kwargs):
-		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.form=CommunityPrivateForm(instance=self.community)
 		return super(CommunityPrivateView,self).get(request,*args,**kwargs)
 
@@ -160,6 +159,7 @@ class CommunityPrivateView(TemplateView):
 
 	def post(self,request,*args,**kwargs):
 		self.user=User.objects.get(pk=self.kwargs["pk"])
+		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		try:
 			self.private_settings=CommunityPrivateSettings.objects.get(community=self.community)
 		except:
