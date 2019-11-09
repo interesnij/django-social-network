@@ -1,6 +1,6 @@
 from django.views.generic import ListView
 from communities.models import Community, CommunityMembership
-
+from users.models import User
 
 
 class CommunitiesView(ListView):
