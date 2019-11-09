@@ -617,7 +617,7 @@ class TopPostCommunityExclusion(models.Model):
 
 
 class CommunityNotificationsSettings(models.Model):
-    commynity = models.OneToOneField(Community, on_delete=models.CASCADE,
+    community = models.OneToOneField(Community, on_delete=models.CASCADE,
                                 related_name='community_notifications_settings', verbose_name="Сообщество")
     comment_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления о комментариях к записям")
     react_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления о реакциях к записи")
@@ -635,7 +635,7 @@ class CommunityNotificationsSettings(models.Model):
 
 
 class CommunityPrivateSettings(models.Model):
-    commynity = models.OneToOneField(Community, on_delete=models.CASCADE,
+    community = models.OneToOneField(Community, on_delete=models.CASCADE,
                                 related_name='community_private_settings', verbose_name="Сообщество")
     photo_visible_all = models.BooleanField(default=True, verbose_name="Фото сообщества видны всем")
     photo_visible_member = models.BooleanField(default=True, verbose_name="Фото сообщества видны подписчикам")
