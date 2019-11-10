@@ -17,12 +17,12 @@
       <div class="col-12 col-md-6">
         <div class="row">
         <div class="col-12 col-md-6">
-        <button id="albums_add" class="btn btn-outline-success" style="margin-bottom:15px" type="button">
+        <button id="albums_add" class="btn btn-outline-success" style="margin-bottom:15px;width:100%" type="button">
             Добавить альбом
         </button>
         </div>
         <div class="col-12 col-md-6">
-        <button id="photos_add" class="btn btn-outline-success" style="margin-bottom:15px" type="button">
+        <button id="photos_add" class="btn btn-outline-success" style="margin-bottom:15px;width:100%" type="button">
             Добавить фотографии
         </button>
         </div>
@@ -41,8 +41,8 @@
 
 <script>
     $(document).ready(function() {
-        $('#albums_load').html('').load("/gallery/albums/" + {{ user.uuid }});
-        $('#photos_load').html('').load("/gallery/photos/" + {{ user.uuid }});
+        $('#albums_load').html('').load("/gallery/albums/" + "{{ user.uuid }}");
+        $('#photos_load').html('').load("/gallery/photos/" + "{{ user.uuid }}");
     });
 </script>
 {% endblock %}
