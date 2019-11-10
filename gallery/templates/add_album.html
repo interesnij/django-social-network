@@ -62,10 +62,7 @@
             url: "{% url 'album_add_user' uuid=user.uuid %}",
             data: frm_album.serialize(),
             success: function(data) {
-              $('.add_fullscreen').hide();
-              $('#photo_add_loader').empty();
-              $('#ajax').html('').load("{% url 'album_ggg' uuid=user.uuid %}");
-              $('title').text('Сообщество создается...');
+              console.log(data)
             },
             error: function(data) {
                 $.toast({
