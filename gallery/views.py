@@ -75,7 +75,7 @@ class AlbomReloadView(TemplateView):
 
 class PhotoUserCreate(View,AjaxResponseMixin,JSONResponseMixin):
 
-	def post_ajax(self, request, *args, **kwargs):
+	def post(self, request, *args, **kwargs):
 		self.user = User.objects.get(uuid=self.kwargs["uuid"])
 		try:
 			self.album = Album.objects.get(pk=self.kwargs["pk"])
