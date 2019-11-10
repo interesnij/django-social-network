@@ -2,7 +2,6 @@ import uuid
 from django.db import models
 from django.contrib.postgres.indexes import BrinIndex
 from users.models import User
-from django.utils import timezone
 
 
 class Album(models.Model):
@@ -11,7 +10,7 @@ class Album(models.Model):
     description = models.TextField(blank=True, null=True, verbose_name="Описание")
     cover_photo = models.ForeignKey('Photo', on_delete=models.SET_NULL, related_name='+', blank=True, null=True, verbose_name="Обожка")
     is_public = models.BooleanField(default=True, verbose_name="Виден другим")
-    created = models.DateTimeField(default=timezone.now(), auto_now=False, verbose_name="Создан")
+    created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     order = models.PositiveIntegerField(default=0)
     creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_user', null=False, blank=False, verbose_name="Создатель")
 

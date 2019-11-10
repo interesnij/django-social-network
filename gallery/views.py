@@ -114,7 +114,7 @@ class AlbumUserCreate(TemplateView):
 			if request.is_ajax() :
 				return HttpResponse("!")
 		else:
-			return HttpResponseBadRequest()
+			return HttpResponse("!")
 		return super(AlbumUserCreate,self).get(request,*args,**kwargs)
 
 
