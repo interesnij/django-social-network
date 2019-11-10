@@ -58,7 +58,7 @@
     var frm_album = $('form_album_add');
 
         $.ajax({
-            type: frm_album.attr('method'),
+            type: "post",
             url: "{% url 'album_add_user' uuid=user.uuid %}",
             data: frm_album.serialize(),
             success: function(data) {
