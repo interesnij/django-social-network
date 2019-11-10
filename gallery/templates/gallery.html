@@ -72,6 +72,7 @@
         <div class="col-12 col-md-6">
           <form id="add-photos" method="post" action="{% url 'photo_add_user' user.uuid %}" class="dropzone">
             {% csrf_token %}
+            <input class="file-pond" name="file" type="file" multiple>
             <button  class="btn btn-outline-success" style="margin-bottom:15px;width:100%" type="button">
                 Добавить фотографии
             </button>
