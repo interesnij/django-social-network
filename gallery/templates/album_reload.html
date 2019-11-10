@@ -1,0 +1,7 @@
+
+{{ album.title }} - {{ album.photo_set.count }}
+<br><br>
+
+{% for object in photos %}
+<img class="lazyload" data-src="{{ object.file.url }}" alt="">
+{% endfor %}

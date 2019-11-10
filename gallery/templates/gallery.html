@@ -8,7 +8,55 @@
 {% endif %}
 {% endblock %}
 {% block content %}
+<style>
 
+    .photo_fullscreen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 20;
+        padding: 5%;
+        display: block;
+        overflow: auto;
+    }
+
+    .add_fullscreen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 20;
+        padding: 5%;
+        display: block;
+        overflow: auto;
+    }
+    @media screen and (min-width: 621px) {
+        .photo_fullscreen {
+            left: 20%;
+            width: 60%;
+            padding-left: 5%;
+            padding-right: 5%;
+        }
+
+        .add_fullscreen {
+            left: 20%;
+            width: 60%;
+            padding-left: 5%;
+            padding-right: 5%;
+        }
+    }
+
+    .photo_fullscreen_hide,
+    .add_fullscreen_hide {
+        cursor: pointer;
+        float: right;
+        margin-top: 12px;
+    }
+
+</style>
 <div class="container-fluid" style="margin-top:30px">
     <div class="row">
       <div class="col-12 col-md-6">
@@ -30,8 +78,10 @@
       </div>
     </div>
 </div>
+
+
 <div class="container mt-4 main-container">
-    <div class="row goods_stream infinite-container">
+    <div class="row photo_stream infinite-container">
       <div id="albums_load"></div>
       <br>
       <div id="photos_load"></div>
@@ -39,10 +89,50 @@
 </div>
 
 
+
+<div class="card mb-4 add_fullscreen" style="display:none">
+    <span class="add_fullscreen_hide">
+        <img style="width:35px" src="{% static 'images/icons/close-24px.svg' %}" />
+    </span>
+    <div id="photo_add_loader" style="margin-top:30px"></div>
+</div>
+
+<div class="card mb-4 photo_fullscreen" style="display:none">
+    <span class="photo_fullscreen_hide">
+        <img style="width:35px" src="{% static 'images/icons/close-24px.svg' %}" />
+    </span>
+    <div id="photo_loader" style="margin-top:30px"></div>
+</div>
+
+
 <script>
     $(document).ready(function() {
         $('#albums_load').html('').load("/gallery/albums/" + "{{ user.uuid }}");
         $('#photos_load').html('').load("/gallery/photos/" + "{{ user.uuid }}");
+    });
+</script>
+<script>
+    $("#photo_add").click(function() {
+        $('#photo_add_loader').html('').load("/gallery/add_photo/" + "{{ user.uuid }}");
+        $('.add_fullscreen').show();
+    })
+</script>
+<script>
+    $("#albom_add").click(function() {
+        $('#photo_add_loader').html('').load("/gallery/add_album/" + "{{ user.uuid }}");
+        $('.add_fullscreen').show();
+    })
+</script>
+<script>
+    $('.add_fullscreen_hide').on('click', function() {
+        $('.add_fullscreen').hide();
+        $('#photo_add_loader').empty();
+    });
+</script>
+<script>
+    $('.photo_fullscreen_hide').on('click', function() {
+        $('.photo_fullscreen').hide();
+        $('#photo_loader').empty();
     });
 </script>
 {% endblock %}

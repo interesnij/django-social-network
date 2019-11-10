@@ -22,6 +22,8 @@ class Album(models.Model):
         verbose_name = 'Фотоальбом'
         verbose_name_plural = 'Фотоальбомы'
 
+    
+
 
 
 class Photo(models.Model):

@@ -3,6 +3,7 @@ from users.models import User
 from gallery.models import Album, Photo
 from gallery.helpers import AjaxResponseMixin, JSONResponseMixin
 from django.views.generic import ListView
+from gallery.forms import AlbumForm
 
 
 class GalleryView(TemplateView):
@@ -40,11 +41,11 @@ class PhotosListView(ListView):
 		return photos
 
 
-class AlbomView(AjaxResponseMixin,JSONResponseMixin,TemplateView):
+class AlbomView(TemplateView):
 	template_name="album.html"
 
 	def get(self,request,*args,**kwargs):
-		self.album=Album.objects.get(pk=self.kwargs["pk"])
+		self.album=Album.objects.get(uuid=self.kwargs["uuid"])
 		self.photos = Photo.objects.filter(album=self.album)
 		return super(AlbomView,self).get(request,*args,**kwargs)
 
@@ -54,15 +55,78 @@ class AlbomView(AjaxResponseMixin,JSONResponseMixin,TemplateView):
 		context['photos'] = self.photos
 		return context
 
+
+class AlbomReloadView(TemplateView):
+	template_name="album_reload.html"
+
+	def get(self,request,*args,**kwargs):
+		self.album=Album.objects.get(uuid=self.kwargs["uuid"])
+		self.photos = Photo.objects.filter(album=self.album)
+		return super(AlbomReloadView,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context=super(AlbomReloadView,self).get_context_data(**kwargs)
+		context['album'] = self.album
+		context['photos'] = self.photos
+		return context
+
+
+class PhotoUserCreate(AjaxResponseMixin,JSONResponseMixin,TemplateView):
+	template_name="add_photos.html"
+
 	def post_ajax(self, request, *args, **kwargs):
+		self.user = User.objects.get(uuid=self.kwargs["uuid"])
 		try:
 			self.album = Album.objects.get(pk=self.kwargs["pk"])
-		except Album.DoesNotExist:
-			error_dict = {'message': 'Album not found.'}
-			return self.render_json_response(error_dict, status=404)
+		except:
+			self.album = None
 
 		uploaded_file = request.FILES['file']
-		Photo.objects.create(album=self.album, file=uploaded_file)
+		Photo.objects.create(album=self.album, file=uploaded_file, creator=self.user)
 
 		response_dict = {'message': 'File uploaded successfully!',}
 		return self.render_json_response(response_dict, status=200)
+
+
+class AlbumUserCreate(TemplateView):
+	template_name="add_album.html"
+	form=None
+
+	def get(self,request,*args,**kwargs):
+		self.form=AlbumForm()
+		self.user = User.objects.get(uuid=self.kwargs["uuid"])
+		return super(AlbumUserCreate,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context=super(AlbumUserCreate,self).get_context_data(**kwargs)
+		context["form"]=self.form
+		context["user"]=self.user
+		return context
+
+	def post(self,request,*args,**kwargs):
+		self.form = AlbumForm(request.POST)
+		self.user = User.objects.get(uuid=self.kwargs["uuid"])
+		if self.form.is_valid():
+			new_album = self.form.save(commit=False)
+			new_album.creator=self.user
+			new_album = self.form.save()
+			if request.is_ajax() :
+				return HttpResponse("!")
+		else:
+			return HttpResponseBadRequest()
+		return super(AlbumUserCreate,self).get(request,*args,**kwargs)
+
+
+class AlbomGygView(TemplateView):
+	template_name="gygyg.html"
+
+	def get(self,request,*args,**kwargs):
+		self.user = User.objects.get(uuid=self.kwargs["uuid"])
+		self.album = Album.objects.filter(creator=self.user)
+		self.new_url = self.album.last().uuid
+		return super(AlbomGygView,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context=super(AlbomGygView,self).get_context_data(**kwargs)
+		context["new_url"]=self.new_url
+		return context
