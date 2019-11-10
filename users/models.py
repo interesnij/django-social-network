@@ -226,6 +226,12 @@ class User(AbstractUser):
     def count_community(self):
         return self.communities_memberships.count()
 
+    def count_photos(self):
+        return self.photo_creator.count()
+
+    def count_albums(self):
+        return self.created_user.count()
+
     def count_goods(self):
         goods = Good.objects.filter(creator__id=self.pk,is_deleted=False).count()
         return goods
