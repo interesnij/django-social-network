@@ -4,5 +4,6 @@
 
 <form id="add-photos" method="post" action="{% url 'photo_add_user' user.uuid %}" class="dropzone">
   {% csrf_token %}
-
 </form>
+
+<script src="{% static 'scripts/dropzone.js' %}" type="text/javascript"></script>
