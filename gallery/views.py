@@ -119,7 +119,7 @@ class AlbumUserCreate(TemplateView):
 
 
 class AlbomGygView(TemplateView):
-	template_name="gygyg.html"
+	template_name="album_gygyg.html"
 
 	def get(self,request,*args,**kwargs):
 		self.user = User.objects.get(uuid=self.kwargs["uuid"])
