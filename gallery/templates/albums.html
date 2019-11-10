@@ -24,6 +24,11 @@
                 </div>
             </div>
             <div class="card-body ">
+              {% if object.cover_photo %}
+                <img style="width:100%" src="{{ object.cover_photo.url }}" />
+              {% else %}
+                <img style="width:100%" src="{% static 'images/icons/photo-24px.svg' %}" />
+              {% endif %}
                 <p class="mb-0 content-color-secondary f-sm">{{ object.description }}</p>
             </div>
         </div>
