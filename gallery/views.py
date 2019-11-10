@@ -5,6 +5,7 @@ from gallery.helpers import AjaxResponseMixin, JSONResponseMixin
 from django.views.generic import ListView
 from gallery.forms import AlbumForm
 from django.http import HttpResponse, HttpResponseBadRequest
+from django.views import View
 
 
 class GalleryView(TemplateView):
@@ -72,7 +73,7 @@ class AlbomReloadView(TemplateView):
 		return context
 
 
-class PhotoUserCreate(AjaxResponseMixin,JSONResponseMixin):
+class PhotoUserCreate(View,AjaxResponseMixin,JSONResponseMixin):
 
 	def post_ajax(self, request, *args, **kwargs):
 		self.user = User.objects.get(uuid=self.kwargs["uuid"])
