@@ -70,9 +70,13 @@
         </button>
         </div>
         <div class="col-12 col-md-6">
-        <button id="photos_add" class="btn btn-outline-success" style="margin-bottom:15px;width:100%" type="button">
-            Добавить фотографии
-        </button>
+          <form id="add-photos" method="post" action="{% url 'photo_add_user' user.uuid %}" class="dropzone">
+            {% csrf_token %}
+            <button  class="btn btn-outline-success" style="margin-bottom:15px;width:100%" type="button">
+                Добавить фотографии
+            </button>
+          </form>
+
         </div>
         </div>
       </div>
