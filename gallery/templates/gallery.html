@@ -82,6 +82,25 @@
 
 
 <div class="container mt-4 main-container">
+
+  <div id="photos_add_window" style="display:none">
+    <div class="container mt-4 main-container">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5>Drop your files</h5>
+                </div>
+                <div class="card-body">
+                    <div class="custom-dropzone text-center align-items-center dz-clickable" id="my-dropzone">
+                        <div class="dz-default dz-message" data-dz-message="">
+                            <h3 class="mb-0"><i class="material-icons">cloud_download</i></h3>
+                            <p>Drop here or click here to upload</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+  </div>
+
     <div class="row photo_stream infinite-container">
       <div id="albums_load" style="display: contents;"></div>
       <br>
@@ -114,8 +133,7 @@
 </script>
 <script>
     $("#photos_add").click(function() {
-        $('#photo_add_loader').html('').load("/gallery/add_photo/" + "{{ user.uuid }}");
-        $('.add_fullscreen').show();
+        $('#photo_add_window').show();
     })
 </script>
 <script>
@@ -136,4 +154,12 @@
         $('#photo_loader').empty();
     });
 </script>
+<script>
+        "use strict"
+        $("#my-dropzone").dropzone({
+            url: "{% url 'photo_add_user' user.uuid %}",
+            addRemoveLinks: "dictRemoveFile"
+        });
+
+    </script>
 {% endblock %}
