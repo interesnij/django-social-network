@@ -24,7 +24,7 @@ class AlbumsListView(ListView):
 
 	def get_queryset(self):
 		self.user = User.objects.get(uuid=self.kwargs["uuid"])
-		albums=Album.objects.filter(creator__id=self.user.id))
+		albums=Album.objects.filter(creator__id=self.user.id)
 		return albums
 
 
