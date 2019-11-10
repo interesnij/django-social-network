@@ -27,11 +27,11 @@
                     </div>
                 </div>
                 <div class="row ">
-                  <p class="content-color-primary page-sub-title-small mt-2">
+                  <div class="col-lg-12 col-md-12">
                       Альбом виден всем
                       <input type="checkbox" checked name="is_public" id="id_is_public" class="switch switch-sm">
                       <label style="margin-right:12px;bottom: 5px;" for="id_is_public" class="bg-dark mb-2 border float-right"></label>
-                  </p>
+                  </div>
                 </div>
                 <div class="row ">
                     <div class="col-lg-12 col-md-12">
@@ -62,7 +62,10 @@
             url: "{% url 'album_add_user' uuid=user.uuid %}",
             data: frm_album.serialize(),
             success: function(data) {
-              console.log(data)
+              $('.add_fullscreen').hide();
+              $('#photo_add_loader').empty();
+              $('#ajax').html('').load("{% url 'album_ggg' uuid=user.uuid %}");
+
             },
             error: function(data) {
                 $.toast({
