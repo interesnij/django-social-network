@@ -72,8 +72,7 @@ class AlbomReloadView(TemplateView):
 		return context
 
 
-class PhotoUserCreate(AjaxResponseMixin,JSONResponseMixin,TemplateView):
-	template_name="add_photos.html"
+class PhotoUserCreate(AjaxResponseMixin,JSONResponseMixin):
 
 	def post_ajax(self, request, *args, **kwargs):
 		self.user = User.objects.get(uuid=self.kwargs["uuid"])
