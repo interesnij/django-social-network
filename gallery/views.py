@@ -15,8 +15,28 @@ class GalleryView(TemplateView):
 	def get_context_data(self,**kwargs):
 		context=super(GalleryView,self).get_context_data(**kwargs)
 		context['user'] = self.user
-		context['albums'] = self.albums
 		return context
+
+class AlbumsListView(ListView):
+	template_name="albums.html"
+	model=Album
+	paginate_by=10
+
+	def get_queryset(self):
+		self.user = User.objects.get(uuid=self.kwargs["uuid"])
+		albums=Album.objects.filter(creator__id=self.user.id))
+		return albums
+
+
+class PhotosListView(ListView):
+	template_name="photos.html"
+	model=Photo
+	paginate_by=15
+
+	def get_queryset(self):
+		self.user = User.objects.get(uuid=self.kwargs["uuid"])
+		photos=Photo.objects.filter(creator__id=self.user.id)
+		return albums
 
 
 class AlbomView(AjaxResponseMixin,JSONResponseMixin,TemplateView):
