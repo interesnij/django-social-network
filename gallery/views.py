@@ -37,7 +37,7 @@ class PhotosListView(ListView):
 	def get_queryset(self):
 		self.user = User.objects.get(uuid=self.kwargs["uuid"])
 		photos=Photo.objects.filter(creator__id=self.user.id)
-		return albums
+		return photos
 
 
 class AlbomView(AjaxResponseMixin,JSONResponseMixin,TemplateView):
