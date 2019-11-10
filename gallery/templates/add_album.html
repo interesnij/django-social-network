@@ -58,7 +58,7 @@
 
         $.ajax({
             type: frm_album.attr('method'),
-            url: "{% url 'add_album' uuid=user.uuid %}",
+            url: "{% url 'album_add_user' uuid=user.uuid %}",
             data: frm_album.serialize(),
             success: function(data) {
                 $('.add_fullscreen').hide();
