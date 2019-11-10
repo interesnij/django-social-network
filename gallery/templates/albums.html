@@ -27,7 +27,7 @@
 {% if object_list %}
 
   {% for object in object_list %}
-    <div class="col-sm-12 col-md-6 col-lg-4">
+    <div class="col-sm-12 col-md-6 col-lg-4 cover_block">
         <div class="card rounded-0 border-0 mb-4">
             <div class="card-header">
                 <div class="media">
@@ -45,7 +45,7 @@
                     </div>
                 </div>
             </div>
-            <div class="card-body cover_block">
+            <div class="card-body">
               {% if object.cover_photo %}
                 <img style="width:100%" src="{{ object.cover_photo.url }}" />
               {% else %}
