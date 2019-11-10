@@ -1,0 +1,6 @@
+<link rel="stylesheet" href="{% static 'styles/dropzone.css' %}" />
+
+<form id="add-photos" method="post" action="{% url 'photo_add_user' user.uuid %}" class="dropzone">
+  {% csrf_token %}
+
+</form>
