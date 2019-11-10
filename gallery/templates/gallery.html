@@ -112,13 +112,13 @@
     });
 </script>
 <script>
-    $("#photo_add").click(function() {
+    $("#photos_add").click(function() {
         $('#photo_add_loader').html('').load("/gallery/add_photo/" + "{{ user.uuid }}");
         $('.add_fullscreen').show();
     })
 </script>
 <script>
-    $("#albom_add").click(function() {
+    $("#albums_add").click(function() {
         $('#photo_add_loader').html('').load("/gallery/add_album/" + "{{ user.uuid }}");
         $('.add_fullscreen').show();
     })
