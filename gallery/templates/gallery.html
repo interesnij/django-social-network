@@ -82,7 +82,7 @@
 
 <div class="container mt-4 main-container">
     <div class="row photo_stream infinite-container">
-      <div id="albums_load"></div>
+      <div id="albums_load" style="display: contents;"></div>
       <br>
       <div id="photos_load"></div>
     </div>
@@ -114,7 +114,7 @@
 <script>
     $("#photos_add").click(function() {
         $('#photo_add_loader').html('').load("/gallery/add_photo/" + "{{ user.uuid }}");
-        $('.add_fullscreen').show();  
+        $('.add_fullscreen').show();
     })
 </script>
 <script>
