@@ -4,6 +4,7 @@ from gallery.models import Album, Photo
 from gallery.helpers import AjaxResponseMixin, JSONResponseMixin
 from django.views.generic import ListView
 from gallery.forms import AlbumForm
+from django.http import HttpResponse, HttpResponseBadRequest
 
 
 class GalleryView(TemplateView):
