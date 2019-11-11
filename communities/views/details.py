@@ -51,6 +51,7 @@ class CommunityListView(ListView):
         context = super(CommunityListView, self).get_context_data(**kwargs)
         context['object'] = self.fixed
         context['communities'] = self.communities
+        context["community"]=self.community
         return context
 
 
