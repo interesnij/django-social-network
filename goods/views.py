@@ -96,24 +96,24 @@ class GoodDetailView(EmojiListMixin, TemplateView):
 	template_name="good_detail.html"
 
 	def get(self,request,*args,**kwargs):
-        self.user=User.objects.get(pk=self.kwargs["pk"])
-        request_user = request.user
-        if self.user != request_user:
-            check_is_not_blocked_with_user_with_id(user=request_user, user_id=self.user.id)
-            if self.user.is_closed_profile:
-                check_is_connected_with_user_with_id(user=request_user, user_id=self.user.id)
-        self.goods = self.user.get_goods()
-        self.good = Good.objects.get(pk=self.kwargs["pk"])
-        self.next = self.goods.filter(pk__gt=self.good.pk).order_by('pk').first()
-        self.prev = self.goods.filter(pk__lt=self.good.pk).order_by('-pk').first()
-        self.good.views += 1
-        self.good.save()
-        return super(GoodDetailView,self).get(request,*args,**kwargs)
+		self.user=User.objects.get(pk=self.kwargs["pk"])
+		request_user = request.user
+		if self.user != request_user:
+			check_is_not_blocked_with_user_with_id(user=request_user, user_id=self.user.id)
+			if self.user.is_closed_profile:
+				check_is_connected_with_user_with_id(user=request_user, user_id=self.user.id)
+		self.goods = self.user.get_goods()
+		self.good = Good.objects.get(pk=self.kwargs["pk"])
+		self.next = self.goods.filter(pk__gt=self.good.pk).order_by('pk').first()
+		self.prev = self.goods.filter(pk__lt=self.good.pk).order_by('-pk').first()
+		self.good.views += 1
+		self.good.save()
+		return super(GoodDetailView,self).get(request,*args,**kwargs)
 
-    def get_context_data(self,**kwargs):
-        context=super(GoodDetailView,self).get_context_data(**kwargs)
-        context["object"]=self.good
-        context["user"]=self.user
-        context["next"]=self.next
-        context["prev"]=self.prev
-        return context
+	def get_context_data(self,**kwargs):
+		context=super(GoodDetailView,self).get_context_data(**kwargs)
+		context["object"]=self.good
+		context["user"]=self.user
+		context["next"]=self.next
+		context["prev"]=self.prev
+		return context
