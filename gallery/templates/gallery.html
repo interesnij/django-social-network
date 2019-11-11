@@ -89,9 +89,6 @@
     <form id="add-photos" method="post" action="{% url 'photo_add_user' user.uuid %}" class="dropzone">
       {% csrf_token %}
     </form>
-    <button id="submit-all">
-            Submit all files
-        </button>
 
   <br><br>
   </div>
@@ -102,7 +99,6 @@
       <div id="photos_load"></div>
     </div>
 </div>
-
 
 
 <div class="card mb-4 add_fullscreen" style="display:none">
@@ -150,28 +146,5 @@
     });
 </script>
 <script src="{% static 'scripts/dropzone.js' %}" type="text/javascript"></script>
-<script>
-            Dropzone.options.myDropzone = {
 
-                // Предотвращает Дропзона от загрузки сразу за файлы
-                autoProcessQueue : false,
-
-                init : function() {
-                    var submitButton = document.querySelector("#submit-all")
-                    myDropzone = this;
-
-                    submitButton.addEventListener("click", function() {
-                        myDropzone.processQueue();
-                        // Попросите Dropzone обработать все файлы в очереди.
-                    });
-
-                    // Возможно, вы захотите показать кнопку отправки только тогда, когда
-                    // файлы сбрасываются здесь:
-                    this.on("addedfile", function() {
-                    //    Показать кнопку отправки здесь и / или сообщить пользователю, чтобы нажать на нее.
-                    });
-
-                }
-            };
-        </script>
 {% endblock %}
