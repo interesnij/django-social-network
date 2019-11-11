@@ -44,7 +44,7 @@ class PhotosListView(ListView):
 		request_user = request.user
 		if self.user != request_user:
 			check_is_not_blocked_with_user_with_id(user=request_user, user_id=self.user.id)
-			if self.user.userprivatesettings.is_private:
+			if self.user.user_private.is_private:
 				check_is_connected_with_user_with_id(user=request_user, user_id=self.user.id)
 		photo = self.user.get_photos()
 		return super(AlbomView,self).get(request,*args,**kwargs)
