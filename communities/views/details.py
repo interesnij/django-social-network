@@ -34,31 +34,25 @@ class CommunityItemView(EmojiListMixin, TemplateView):
 
 
 class CommunityListView(ListView):
-	template_name="detail/list.html"
-	model=Item
-	paginate_by=15
+    template_name="detail/list.html"
+    model=Item
+    paginate_by=15
 
-	def get(self,request,*args,**kwargs):
-		try:
-			self.fixed = Item.objects.get(community=self.community, is_fixed=True)
-		except:
-			self.fixed = None
-        request_user = request.user
+    def get(self,request,*args,**kwargs):
+        try:
+            self.fixed = Item.objects.get(community=self.community, is_fixed=True)
+        except:
+            self.fixed = None
         self.community=Community.objects.get(uuid=self.kwargs["uuid"])
-        check_can_get_posts_for_community_with_name(request_user,self.community.name)
+        check_can_get_posts_for_community_with_name(request.user,self.community.name)
         communities = self.community.get_posts().order_by('-created')
-		return super(CommunityListView,self).get(request,*args,**kwargs)
+        return super(CommunityListView,self).get(request,*args,**kwargs)
 
-	def get_queryset(self):
-		self.community=Community.objects.get(pk=self.kwargs["pk"])
-		communities = self.community.get_posts().order_by('-created')
-		return communities
-
-	def get_context_data(self, **kwargs):
-		context = super(CommunityListView, self).get_context_data(**kwargs)
-		context['object'] = self.fixed
+    def get_context_data(self, **kwargs):
+        context = super(CommunityListView, self).get_context_data(**kwargs)
+        context['object'] = self.fixed
         context['communities'] = self.communities
-		return context
+        return context
 
 
 class CommunityDetailView(DetailView):
