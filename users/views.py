@@ -72,10 +72,10 @@ class ItemListView(ListView, EmojiListMixin):
             if self.user.is_closed_profile:
                 check_is_connected_with_user_with_id(user=request_user, user_id=self.user.id)
         self.items = self.user.get_posts()
-        return super(UserItemView,self).get(request,*args,**kwargs)
+        return super(ItemListView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context=super(UserItemView,self).get_context_data(**kwargs)
+        context=super(ItemListView,self).get_context_data(**kwargs)
         context["user"]=self.user
         context["items"]=self.items
         return context
