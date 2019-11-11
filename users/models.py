@@ -15,6 +15,7 @@ from follows.models import Follow, CommunityFollow
 from goods.models import Good
 from frends.models import Connect
 from posts.models import Post
+from gallery.models import Photo, Album
 from moderation.models import ModeratedObject, ModerationPenalty
 from common.checkers import *
 from django.db.models import Q, F, Count
@@ -187,6 +188,9 @@ class User(AbstractUser):
     def is_banned_from_community_with_name(self, community_name):
         return self.banned_of_communities.filter(name=community_name).exists()
 
+    def is_closed_profile_of_user_with_id(self):
+        return self.private_settings.is_private.exists()
+
     def is_creator_of_community_with_name(self, community_name):
         return self.created_communities.filter(name=community_name).exists()
 
@@ -254,39 +258,34 @@ class User(AbstractUser):
         return online_connection
 
 
-    def get_posts(self, max_id=None):
-        """
-        Получить все посты пользователя
-        """
+    def get_posts(self):
         posts_query = Q(creator_id=self.id, is_deleted=False, status=Item.STATUS_PUBLISHED, community=None)
         exclude_reported_and_approved_posts_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         posts_query.add(exclude_reported_and_approved_posts_query, Q.AND)
-
-        if max_id:
-            posts_query.add(Q(id__lt=max_id), Q.AND)
         items = Item.objects.filter(posts_query)
         return items
 
-    def get_goods(self, max_id=None):
+    def get_photos(self):
+        check_is_not_blocked_with_user_with_id(user=self, user_id=user_id)
+        photos_query = Q(creator_id=self.id, is_deleted=False, status=Photo.STATUS_PUBLISHED, community=None)
+        exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
+        photos_query.add(exclude_reported_and_approved_photos_query, Q.AND)
+        photos = Photo.objects.filter(photos_query)
+        return photos
+
+    def get_goods(self):
         goods_query = Q(creator_id=self.id, is_deleted=False, status=Good.STATUS_PUBLISHED)
         exclude_reported_and_approved_goods_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         goods_query.add(exclude_reported_and_approved_goods_query, Q.AND)
-
-        if max_id:
-            goods_query.add(Q(id__lt=max_id), Q.AND)
         goods = Good.objects.filter(goods_query)
         return goods
 
-    def get_followers(self, max_id=None):
+    def get_followers(self):
         followers_query = self._make_followers_query()
-        if max_id:
-            followers_query.add(Q(id__lt=max_id), Q.AND)
         return User.objects.filter(followers_query).distinct()
 
-    def get_followings(self, max_id=None):
+    def get_followings(self):
         followings_query = self._make_followings_query()
-        if max_id:
-            followings_query.add(Q(id__lt=max_id), Q.AND)
         return User.objects.filter(followings_query).distinct()
 
     def get_timeline_posts(self):

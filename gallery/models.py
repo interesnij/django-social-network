@@ -10,6 +10,7 @@ from django.contrib.contenttypes.fields import GenericRelation
 
 class Album(models.Model):
     moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='albums')
+    community = models.ForeignKey('communities.Community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
     uuid = models.UUIDField(default=uuid.uuid4, db_index=True,verbose_name="uuid")
     title = models.CharField(max_length=250, verbose_name="Название")
     description = models.TextField(blank=True, null=True, verbose_name="Описание")
@@ -31,6 +32,7 @@ class Album(models.Model):
 
 class Photo(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, db_index=True,verbose_name="uuid")
+    community = models.ForeignKey('communities.Community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
     moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='photos')
     album = models.ForeignKey(Album, blank=True, null=True, on_delete=models.CASCADE)
     file = ProcessedImageField(format='JPEG', options={'quality': 90}, upload_to=upload_to_photo_directory, processors=[ResizeToFit(width=1024, upscale=False)])
