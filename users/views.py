@@ -65,7 +65,7 @@ class ItemListView(ListView, EmojiListMixin):
     paginate_by=6
 
     def get(self,request,*args,**kwargs):
-        self.user=User.objects.get(uuid=self.kwargs["uuid"])
+        self.user=User.objects.get(pk=self.kwargs["pk"])
         request_user = request.user
         if self.user != request_user:
             check_is_not_blocked_with_user_with_id(user=request_user, user_id=self.user.id)
