@@ -97,7 +97,7 @@
                 }
             }
           }
-
+  });
         .on('success.form.bv', function(e) {
             $('#contact_form').data('bootstrapValidator').resetForm();
             e.preventDefault();
@@ -109,8 +109,8 @@
             $.post($form.attr('action'), $form.serialize(), function(result) {
                 console.log(result);
             }, 'json');
-        });
   });
+
 </script>
 <script>
     $(".remove_form").click(function() {
