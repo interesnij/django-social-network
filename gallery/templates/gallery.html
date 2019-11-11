@@ -88,10 +88,11 @@
   <div id="photos_add_window" style="display:none">
     <form id="add-photos" method="post" action="{% url 'photo_add_user' user.uuid %}" class="dropzone">
       {% csrf_token %}
+      <button id="submit-all">
+              Submit all files
+          </button>
     </form>
-    <button id="submit-all">
-            Submit all files
-        </button>
+
   <br><br>
   </div>
 
