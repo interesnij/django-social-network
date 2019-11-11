@@ -38,9 +38,9 @@ class PhotosListView(ListView):
 	model=Photo
 	paginate_by=15
 
-	def get_queryset(self):
+	def get_queryset(self, request):
 		self.user = User.objects.get(uuid=self.kwargs["uuid"])
-		photos=self.user.get_photos()
+		photos=request.user.get_photos(self.user.id)
 		return photos
 
 
