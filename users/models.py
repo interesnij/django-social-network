@@ -265,10 +265,7 @@ class User(AbstractUser):
         items = Item.objects.filter(posts_query)
         return items
 
-    def get_photos(self, user_id):
-        check_is_not_blocked_with_user_with_id(user=self, user_id=user_id)
-        if self.is_closed_profile_of_user_with_id():
-            check_is_connected_with_user_with_id(user=self, user_id=user_id)
+    def get_photos(self):
         photos_query = Q(creator_id=self.id, is_deleted=False, is_public=True, status=Photo.STATUS_PUBLISHED, community=None)
         exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         photos_query.add(exclude_reported_and_approved_photos_query, Q.AND)
