@@ -135,7 +135,7 @@ class AlbomGygView(TemplateView):
 		return context
 
 
-class UserItemView(EmojiListMixin, TemplateView):
+class UserPhotoView(EmojiListMixin, TemplateView):
     template_name="user_photo.html"
 
     def get(self,request,*args,**kwargs):
