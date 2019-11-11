@@ -19,3 +19,11 @@
         $('.photo_fullscreen').hide();
         $('#photo_loader').empty();
     });
+
+    $('.infinite-container').on('click', '.photo_detail', function() {
+        var photo = $(this);
+        var photo_id = photo.data("id");
+        var user_uuid = photo.data("uuid");
+        $('#photo_loader').html('').load("/gallery/photo/" + good_id + "/" + user_uuid + "/")
+        $('.photo_fullscreen').show();
+    });
