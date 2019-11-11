@@ -1,11 +1,11 @@
 import uuid
 from django.db import models
 from django.contrib.postgres.indexes import BrinIndex
-from users.models import User
 from gallery.helpers import upload_to_photo_directory
 from pilkit.processors import ResizeToFill, ResizeToFit
 from imagekit.models import ProcessedImageField
 from django.contrib.contenttypes.fields import GenericRelation
+from django.conf import settings
 
 
 class Album(models.Model):
@@ -18,7 +18,7 @@ class Album(models.Model):
     is_public = models.BooleanField(default=True, verbose_name="Виден другим")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     order = models.PositiveIntegerField(default=0)
-    creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_user', null=False, blank=False, verbose_name="Создатель")
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='created_user', null=False, blank=False, verbose_name="Создатель")
     is_deleted = models.BooleanField(verbose_name="Удален",default=False )
 
     class Meta:
@@ -40,7 +40,7 @@ class Photo(models.Model):
     is_public = models.BooleanField(default=True, verbose_name="Виден другим")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создано")
     order = models.PositiveIntegerField(default=0)
-    creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='photo_creator', null=False, blank=False, verbose_name="Создатель")
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='photo_creator', null=False, blank=False, verbose_name="Создатель")
     is_deleted = models.BooleanField(verbose_name="Удален",default=False )
 
     class Meta:
