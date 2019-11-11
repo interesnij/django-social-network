@@ -165,8 +165,8 @@ class UserPhotoView(EmojiListMixin, TemplateView):
         self.user=User.objects.get(uuid=self.kwargs["uuid"])
         self.photos = self.user.get_photos()
         self.photo = Photo.objects.get(pk=self.kwargs["pk"])
-        self.next = self.photos.filter(pk__gt=self.item.pk).order_by('pk').first()
-        self.prev = self.photos.filter(pk__lt=self.item.pk).order_by('-pk').first()
+        self.next = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
+        self.prev = self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
         self.photo.views += 1
         self.photo.save()
         return super(UserPhotoView,self).get(request,*args,**kwargs)
