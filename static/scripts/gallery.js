@@ -4,7 +4,9 @@
     })
 
     $("#albums_add").click(function() {
-        $('#photo_add_loader').html('').load("/gallery/add_album/" + "{{ user.uuid }}");
+        var user = $(this);
+        var user_id = user.data("uuid");
+        $('#photo_add_loader').html('').load("/gallery/add_album/" + user_id + "/");
         $('.add_fullscreen').show();
     })
 
