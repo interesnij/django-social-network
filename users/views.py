@@ -91,6 +91,7 @@ class ProfileUserView(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.user=User.objects.get(pk=self.kwargs["pk"])
+        self.is_frend = request.user.is_connected_with_user(self.user)
         self.communities=Community.objects.filter(memberships__user__id=self.user.pk)[0:5]
         return super(ProfileUserView,self).get(request,*args,**kwargs)
 
@@ -100,6 +101,7 @@ class ProfileUserView(TemplateView):
         context['form_avatar'] = AvatarUserForm()
         context['form_comment'] = CommentForm()
         context['communities'] = self.communities
+        context['is_frend'] = self.is_frend
         return context
 
 
