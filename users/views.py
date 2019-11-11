@@ -78,7 +78,7 @@ class ItemListView(ListView, EmojiListMixin):
         context=super(ItemListView,self).get_context_data(**kwargs)
         context["user"]=self.user
         context["items"]=self.items
-        return context
+        return context 
 
 
 class AllUsers(ListView):

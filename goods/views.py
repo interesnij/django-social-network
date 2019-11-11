@@ -8,6 +8,7 @@ from goods.forms import GoodForm
 from django.template.loader import render_to_string
 from django.views.generic.detail import DetailView
 from generic.mixins import EmojiListMixin
+from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
 
 
 class GoodCategoriesView(TemplateView):
@@ -23,10 +24,21 @@ class GoodsListView(ListView):
 	model=Good
 	paginate_by=6
 
-	def get_queryset(self):
-		self.user=User.objects.get(pk=self.kwargs["pk"])
-		goods=self.user.get_goods().order_by('-created')
-		return goods
+	def get(self,request,*args,**kwargs):
+        self.user=User.objects.get(pk=self.kwargs["pk"])
+        request_user = request.user
+        if self.user != request_user:
+            check_is_not_blocked_with_user_with_id(user=request_user, user_id=self.user.id)
+            if self.user.is_closed_profile:
+                check_is_connected_with_user_with_id(user=request_user, user_id=self.user.id)
+        self.goods = self.user.get_goods()
+        return super(GoodsListView,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context=super(GoodsListView,self).get_context_data(**kwargs)
+        context["user"]=self.user
+        context["goods"]=self.goods
+        return context
 
 
 class GoodUserCreate(TemplateView):
@@ -84,12 +96,24 @@ class GoodDetailView(EmojiListMixin, TemplateView):
 	template_name="good_detail.html"
 
 	def get(self,request,*args,**kwargs):
-		self.good = Good.objects.get(pk=self.kwargs["pk"])
-		self.good.views += 1
-		self.good.save()
-		return super(GoodDetailView,self).get(request,*args,**kwargs)
+        self.user=User.objects.get(pk=self.kwargs["pk"])
+        request_user = request.user
+        if self.user != request_user:
+            check_is_not_blocked_with_user_with_id(user=request_user, user_id=self.user.id)
+            if self.user.is_closed_profile:
+                check_is_connected_with_user_with_id(user=request_user, user_id=self.user.id)
+        self.goods = self.user.get_goods()
+        self.good = Good.objects.get(pk=self.kwargs["pk"])
+        self.next = self.goods.filter(pk__gt=self.good.pk).order_by('pk').first()
+        self.prev = self.goods.filter(pk__lt=self.good.pk).order_by('-pk').first()
+        self.good.views += 1
+        self.good.save()
+        return super(GoodDetailView,self).get(request,*args,**kwargs)
 
-	def get_context_data(self, **kwargs):
-		context=super(GoodDetailView,self).get_context_data(**kwargs)
-		context["object"]=self.good
-		return context
+    def get_context_data(self,**kwargs):
+        context=super(GoodDetailView,self).get_context_data(**kwargs)
+        context["object"]=self.good
+        context["user"]=self.user
+        context["next"]=self.next
+        context["prev"]=self.prev
+        return context
