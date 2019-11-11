@@ -21,7 +21,7 @@
   {% if prev %}
     <script>
     	$('.prev_item').on('click', function () {
-    		 $('#item_loader').html('').load("{% url 'community_item' pk=prev.pk uuid=community.uuid %}");
+    		 $('#item_loader').html('').load("{% url 'community_item' pk=prev.pk uuid=user.uuid %}");
     	});
     </script>
 
@@ -30,7 +30,7 @@
 
     <script>
       $('.next_item').on('click', function () {
-    		 $('#item_loader').html('').load("{% url 'community_item' pk=next.pk uuid=community.uuid %}");
+    		 $('#item_loader').html('').load("{% url 'community_item' pk=next.pk uuid=user.uuid %}");
     	});
     </script>
     {% endif %}
