@@ -1,61 +1,61 @@
 {% load liked_user %}
 
 <div class="row" style="padding-bottom: 2rem!important;">
-  {% if self.user.count_connections %}
+  {% if user.count_connections %}
    <div class="col text-center">
      <div class="media">
        <div class="media-body">
          <a href="{% url 'frends' pk=user.pk %}" class="ajax">
-         <h4 class="content-color-primary mb-0">{{ self.user.count_connections }}</h4>
-         <p class="content-color-secondary mb-0">{{ self.user.count_connections|rupluralize:"друг,друга,друзей" }}</p>
+         <h4 class="content-color-primary mb-0">{{ user.count_connections }}</h4>
+         <p class="content-color-secondary mb-0">{{ user.count_connections|rupluralize:"друг,друга,друзей" }}</p>
          </a>
        </div>
      </div>
    </div>
    {% endif %}
-   {% if self.user.count_following %}
+   {% if user.count_following %}
    <div class="col text-center">
      <div class="media">
        <div class="media-body">
          <a href="{% url 'follows' pk=user.pk %}" class="ajax">
-         <h4 class="content-color-primary mb-0">{{ self.user.count_following }}</h4>
-         <p class="content-color-secondary mb-0">{{ self.user.count_following|rupluralize:"подписчик,подписчика,подписчиков" }}</p>
+         <h4 class="content-color-primary mb-0">{{ user.count_following }}</h4>
+         <p class="content-color-secondary mb-0">{{ user.count_following|rupluralize:"подписчик,подписчика,подписчиков" }}</p>
          </a>
        </div>
      </div>
    </div>
    {% endif %}
-   {% if self.user.count_community %}
+   {% if user.count_community %}
    <div class="col text-center">
      <div class="media">
        <div class="media-body">
          <a href="{% url 'communities' pk=user.pk %}" class="ajax">
-         <h4 class="content-color-primary mb-0">{{ self.user.count_community }}</h4>
-         <p class="content-color-secondary mb-0">{{ self.user.count_community|rupluralize:"сообщество,сообщества,сообществ" }}</p>
+         <h4 class="content-color-primary mb-0">{{ user.count_community }}</h4>
+         <p class="content-color-secondary mb-0">{{ user.count_community|rupluralize:"сообщество,сообщества,сообществ" }}</p>
          </a>
        </div>
      </div>
    </div>
   {% endif %}
-  {% if self.user.count_goods %}
+  {% if user.count_goods %}
    <div class="col text-center">
      <div class="media">
        <div class="media-body">
          <a href="{% url 'goods' pk=user.pk %}" class="ajax">
-         <h4 class="content-color-primary mb-0">{{ self.user.count_goods }}</h4>
-         <p class="content-color-secondary mb-0">{{ self.user.count_goods|rupluralize:"товар,товара,товаров" }}</p>
+         <h4 class="content-color-primary mb-0">{{ user.count_goods }}</h4>
+         <p class="content-color-secondary mb-0">{{ user.count_goods|rupluralize:"товар,товара,товаров" }}</p>
          </a>
        </div>
      </div>
    </div>
    {% endif %}
-   {% if self.user.count_photos %}
+   {% if user.count_photos %}
    <div class="col text-center">
      <div class="media">
        <div class="media-body">
          <a href="{% url 'gallery' pk=user.pk %}" class="ajax">
-         <h4 class="content-color-primary mb-0">{{ self.user.count_photos }}</h4>
-         <p class="content-color-secondary mb-0">{{ self.user.count_photos|rupluralize:"фотография,фотографии,фотографий" }}</p>
+         <h4 class="content-color-primary mb-0">{{ user.count_photos }}</h4>
+         <p class="content-color-secondary mb-0">{{ user.count_photos|rupluralize:"фотография,фотографии,фотографий" }}</p>
          </a>
        </div>
      </div>
