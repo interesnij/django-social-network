@@ -159,24 +159,24 @@ class AlbomGygView(TemplateView):
 
 
 class UserPhotoView(EmojiListMixin, TemplateView):
-    template_name="user_photo.html"
+	template_name="user_photo.html"
 
-    def get(self,request,*args,**kwargs):
-        self.user=User.objects.get(uuid=self.kwargs["uuid"])
+	def get(self,request,*args,**kwargs):
+		self.user=User.objects.get(uuid=self.kwargs["uuid"])
 		if self.user != request.user:
 			check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
 			if self.user.is_closed_profile:
 				check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
-        self.photos = self.user.get_photos()
-        self.photo = Photo.objects.get(pk=self.kwargs["pk"])
-        self.next = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
-        self.prev = self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
-        return super(UserPhotoView,self).get(request,*args,**kwargs)
+		self.photos = self.user.get_photos()
+		self.photo = Photo.objects.get(pk=self.kwargs["pk"])
+		self.next = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
+		self.prev = self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
+		return super(UserPhotoView,self).get(request,*args,**kwargs)
 
-    def get_context_data(self,**kwargs):
-        context=super(UserPhotoView,self).get_context_data(**kwargs)
+	def get_context_data(self,**kwargs):
+		context=super(UserPhotoView,self).get_context_data(**kwargs)
         context["object"]=self.photo
-        context["user"]=self.user
-        context["next"]=self.next
-        context["prev"]=self.prev
-        return context
+		context["user"]=self.user
+		context["next"]=self.next
+		context["prev"]=self.prev
+		return context
