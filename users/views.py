@@ -23,6 +23,7 @@ from django.views.generic import ListView
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.db.models import Q
 from generic.mixins import EmojiListMixin
+from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
 
 
 
@@ -32,7 +33,12 @@ class UserItemView(EmojiListMixin, TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.user=User.objects.get(uuid=self.kwargs["uuid"])
-        self.items = self.user.get_posts()
+        request_user = request.user
+		if self.user != request_user:
+			check_is_not_blocked_with_user_with_id(user=request_user, user_id=self.user.id)
+			if self.user.is_closed_profile:
+				check_is_connected_with_user_with_id(user=request_user, user_id=self.user.id)
+		self.items = self.user.get_posts()
         self.item = Item.objects.get(pk=self.kwargs["pk"])
         self.next = self.items.filter(pk__gt=self.item.pk).order_by('pk').first()
         self.prev = self.items.filter(pk__lt=self.item.pk).order_by('-pk').first()

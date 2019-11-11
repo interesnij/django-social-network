@@ -272,6 +272,13 @@ class User(AbstractUser):
         photos = Photo.objects.filter(photos_query)
         return photos
 
+    def get_albums(self):
+        albums_query = Q(creator_id=self.id, is_deleted=False, is_public=True, community=None)
+        exclude_reported_and_approved_albums_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
+        albums_query.add(exclude_reported_and_approved_albums_query, Q.AND)
+        albums = Album.objects.filter(photos_query)
+        return albums
+
     def get_goods(self):
         goods_query = Q(creator_id=self.id, is_deleted=False, status=Good.STATUS_PUBLISHED)
         exclude_reported_and_approved_goods_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)

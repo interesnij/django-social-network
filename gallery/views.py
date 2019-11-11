@@ -28,10 +28,21 @@ class AlbumsListView(ListView):
 	model=Album
 	paginate_by=10
 
-	def get_queryset(self):
+	def get(self,request,*args,**kwargs):
 		self.user = User.objects.get(uuid=self.kwargs["uuid"])
-		albums=Album.objects.filter(creator__id=self.user.id)
-		return albums
+		request_user = request.user
+		if self.user != request_user:
+			check_is_not_blocked_with_user_with_id(user=request_user, user_id=self.user.id)
+			if self.user.is_closed_profile:
+				check_is_connected_with_user_with_id(user=request_user, user_id=self.user.id)
+		self.albums = self.user.get_albums()
+		return super(PhotosListView,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context=super(PhotosListView,self).get_context_data(**kwargs)
+		context['albums'] = self.albums
+		context['user'] = self.user
+		return context
 
 
 class PhotosListView(ListView):
@@ -48,11 +59,6 @@ class PhotosListView(ListView):
 				check_is_connected_with_user_with_id(user=request_user, user_id=self.user.id)
 		self.photo = self.user.get_photos()
 		return super(PhotosListView,self).get(request,*args,**kwargs)
-
-	def get_queryset(self):
-		self.user = User.objects.get(uuid=self.kwargs["uuid"])
-		photos=self.user.get_photos()
-		return photos
 
 	def get_context_data(self,**kwargs):
 		context=super(PhotosListView,self).get_context_data(**kwargs)
