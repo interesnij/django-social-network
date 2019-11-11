@@ -403,8 +403,7 @@ class UserNotificationsSettings(models.Model):
 
 
 class UserPrivateSettings(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,
-                                related_name='user_private_settings', verbose_name="Пользователь")
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Пользователь")
     is_private = models.BooleanField(default=False, verbose_name="Закрытый профиль")
     can_message = models.BooleanField(default=True, verbose_name="Вам могут писать сообщения все пользователи")
     photo_visible_all = models.BooleanField(default=True, verbose_name="Ваши фото видны всем")
