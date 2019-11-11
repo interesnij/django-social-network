@@ -65,21 +65,19 @@ class ItemListView(ListView, EmojiListMixin):
     paginate_by=6
 
     def get(self,request,*args,**kwargs):
-        try:
-            self.fixed = Item.objects.get(creator=self.user, is_fixed=True)
-        except:
-            self.fixed = None
-        return super(ItemListView,self).get(request,*args,**kwargs)
+        self.user=User.objects.get(uuid=self.kwargs["uuid"])
+        request_user = request.user
+        if self.user != request_user:
+            check_is_not_blocked_with_user_with_id(user=request_user, user_id=self.user.id)
+            if self.user.is_closed_profile:
+                check_is_connected_with_user_with_id(user=request_user, user_id=self.user.id)
+        self.items = self.user.get_posts()
+        return super(UserItemView,self).get(request,*args,**kwargs)
 
-    def get_queryset(self):
-        self.user=User.objects.get(pk=self.kwargs["pk"])
-        items = self.user.get_posts().order_by('-created')
-        return items
-
-    def get_context_data(self, **kwargs):
-        context = super(ItemListView, self).get_context_data(**kwargs)
-        context['object'] = self.fixed
-        context['user'] = self.user
+    def get_context_data(self,**kwargs):
+        context=super(UserItemView,self).get_context_data(**kwargs)
+        context["user"]=self.user
+        context["items"]=self.items
         return context
 
 

@@ -1,6 +1,6 @@
 {% load staticfiles humanize %}
 
-{% if object_list %}
+{% if items %}
 
 <div class="card mb-4 item_fullscreen" style="display:none">
   <span class="item_fullscreen_hide">
@@ -23,7 +23,7 @@
         {% include 'generic/posts/post.html' with post=post  %}
         {% endif %}
 
-        {% for object in object_list %}
+        {% for object in items %}
 
         {% if object.article %}
         {% include 'generic/posts/article.html' with article=article  %}
