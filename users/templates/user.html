@@ -14,7 +14,6 @@
     <div class="col-lg-4 col-md-5 col-sm-12 order-1">
 
         {% include 'profile/card_profile.html' %}
-{{ is_frend }}
         {% if not user.private_settings.is_private or user == request.user or is_frend %}
           {% include 'profile/frends.html' %}
 
@@ -34,7 +33,7 @@
             {% endif %}
             <br><br>
         </div>
-        {% if not user.private_settings.is_private or user == request.user %}
+        {% if not user.private_settings.is_private or user == request.user or is_frend %}
           <div id="stat_load"></div>
 
           {% include 'profile/new_post.html' %}
