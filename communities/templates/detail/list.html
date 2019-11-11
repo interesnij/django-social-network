@@ -25,7 +25,7 @@ transition: 0.5s;
 }
 </style>
 
-{% if object_list %}
+{% if communities %}
 
 <div class="infinite-container">
   <div class="stream-update">
@@ -48,7 +48,7 @@ transition: 0.5s;
       {% include 'generic/community/post.html' with post=post  %}
     {% endif %}
 
-    {% for object in object_list %}
+    {% for object in communities %}
 
       {% if object.article %}
           {% include 'generic/community/article.html' with article=article  %}

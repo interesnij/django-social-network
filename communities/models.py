@@ -140,6 +140,10 @@ class Community(models.Model):
     def is_community_with_name_private(cls, community_name):
         return cls.objects.filter(name=community_name, type='T').exists()
 
+    @classmethod 
+    def is_community_with_name_closed(cls, community_name):
+        return cls.objects.filter(name=community_name, type='C').exists()
+
     @classmethod
     def community_with_name_exists(cls, community_name):
         """"

@@ -5,6 +5,7 @@ from main.models import Item
 from communities.models import Community, CommunityMembership
 from django.views.generic.detail import DetailView
 from follows.models import CommunityFollow
+from common.checkers import check_can_get_posts_for_community_with_name
 
 
 class CommunityItemView(EmojiListMixin, TemplateView):
@@ -13,6 +14,8 @@ class CommunityItemView(EmojiListMixin, TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.community=Community.objects.get(uuid=self.kwargs["uuid"])
+        request_user = request.user
+        check_can_get_posts_for_community_with_name(request_user,self.community.name)
         self.items = self.community.get_posts()
         self.item = Item.objects.get(pk=self.kwargs["pk"])
         self.next = self.items.filter(pk__gt=self.item.pk).order_by('pk').first()
@@ -40,6 +43,10 @@ class CommunityListView(ListView):
 			self.fixed = Item.objects.get(community=self.community, is_fixed=True)
 		except:
 			self.fixed = None
+        request_user = request.user
+        self.community=Community.objects.get(uuid=self.kwargs["uuid"])
+        check_can_get_posts_for_community_with_name(request_user,self.community.name)
+        communities = self.community.get_posts().order_by('-created')
 		return super(CommunityListView,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
@@ -50,6 +57,7 @@ class CommunityListView(ListView):
 	def get_context_data(self, **kwargs):
 		context = super(CommunityListView, self).get_context_data(**kwargs)
 		context['object'] = self.fixed
+        context['communities'] = self.communities
 		return context
 
 
