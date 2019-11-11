@@ -1,10 +1,5 @@
 
-    $(document).ready(function() {
-        $('#albums_load').html('').load("/gallery/albums/" + "{{ user.uuid }}");
-        $('#photos_load').html('').load("/gallery/photos/" + "{{ user.uuid }}");
-    });
-
-    $("#photos_add").click(function() { 
+    $("#photos_add").click(function() {
         $('#photos_add_window').show();
     })
 
