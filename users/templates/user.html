@@ -15,7 +15,7 @@
 
         {% include 'profile/card_profile.html' %}
 
-        {% if not user.private_settings.is_private or user == request.user or is_frend == 1 %}
+        {% if not user.private_settings.is_private or user == request.user or is_frend %}
           {% include 'profile/frends.html' %}
 
           {% include 'profile/communities.html' %}

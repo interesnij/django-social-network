@@ -88,7 +88,7 @@ class AllUsers(ListView):
 
 class ProfileUserView(TemplateView):
     template_name = 'user.html'
-    is_frend = None
+    is_frend = 1
 
     def get(self,request,*args,**kwargs):
         self.user=User.objects.get(pk=self.kwargs["pk"])
