@@ -15,7 +15,7 @@ class CommunityItemView(EmojiListMixin, TemplateView):
     def get(self,request,*args,**kwargs):
         self.community=Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_posts_for_community_with_name(request.user,self.community.name)
-        self.items = self.community.get_posts()
+        self.community = self.community.get_posts()
         self.item = Item.objects.get(pk=self.kwargs["pk"])
         self.next = self.items.filter(pk__gt=self.item.pk).order_by('pk').first()
         self.prev = self.items.filter(pk__lt=self.item.pk).order_by('-pk').first()
@@ -44,7 +44,7 @@ class CommunityListView(ListView):
             self.fixed = None
         self.community=Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_posts_for_community_with_name(request.user,self.community.name)
-        communities = self.community.get_posts().order_by('-created')
+        self.communities = self.community.get_posts().order_by('-created')
         return super(CommunityListView,self).get(request,*args,**kwargs)
 
     def get_context_data(self, **kwargs):
