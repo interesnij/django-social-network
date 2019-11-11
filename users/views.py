@@ -92,7 +92,7 @@ class ProfileUserView(TemplateView):
     def get(self,request,*args,**kwargs):
         self.user=User.objects.get(pk=self.kwargs["pk"])
         if request.user.is_connected_with_user(self.user):
-            is_frend=True
+            self.is_frend=True
         self.communities=Community.objects.filter(memberships__user__id=self.user.pk)[0:5]
         return super(ProfileUserView,self).get(request,*args,**kwargs)
 
