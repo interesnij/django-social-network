@@ -82,25 +82,11 @@
     });
 </script>
 
+<script src="{% static 'scripts/validator.min.js' %}" type="text/javascript"></script>
 <script>
-  $(document).ready(function() {
-    $('#form_album_add').bootstrapValidator({
-        fields: {
-            title: {
-                validators: {
-                        stringLength: {
-                        min: 2,
-                    },
-                        notEmpty: {
-                        message: 'Придумайте название альбома'
-                    }
-                }
-            }
-          }
+  $(function(){
+   $('#form_album_add').validator();
   });
-      
-  });
-
 </script>
 <script>
     $(".remove_form").click(function() {
