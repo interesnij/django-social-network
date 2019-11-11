@@ -38,10 +38,22 @@ class PhotosListView(ListView):
 	model=Photo
 	paginate_by=15
 
+	def get(self,request,*args,**kwargs):
+		self.user = User.objects.get(uuid=self.kwargs["uuid"])
+		request_user=request.user
+		photos = self.user.get_photos(request_user.pk)
+		return super(AlbomView,self).get(request,*args,**kwargs)
+
 	def get_queryset(self):
 		self.user = User.objects.get(uuid=self.kwargs["uuid"])
 		photos=self.user.get_photos()
 		return photos
+
+	def get_context_data(self,**kwargs):
+		context=super(AlbomView,self).get_context_data(**kwargs)
+		context['photos'] = self.photos
+		context['user'] = self.user
+		return context
 
 
 class AlbomView(TemplateView):
