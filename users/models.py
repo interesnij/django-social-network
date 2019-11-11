@@ -266,7 +266,7 @@ class User(AbstractUser):
         return items
 
     def get_photos(self):
-        photos_query = Q(creator_id=self.id, is_deleted=False, is_public=True, status=Photo.STATUS_PUBLISHED, community=None)
+        photos_query = Q(creator_id=self.id, is_deleted=False, is_public=True, community=None)
         exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         photos_query.add(exclude_reported_and_approved_photos_query, Q.AND)
         photos = Photo.objects.filter(photos_query)
