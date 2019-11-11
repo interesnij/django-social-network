@@ -75,7 +75,7 @@ class AjaxResponseMixin(object):
         return self.get(request, *args, **kwargs)
 
 def upload_to_photo_directory(user, filename):
-    return _upload_to_community_directory(user=user, filename=filename)
+    return _upload_to_photo_directory(user=user, filename=filename)
 
 def _upload_to_photo_directory(user, filename):
     extension = splitext(filename)[1].lower()
