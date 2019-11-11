@@ -47,7 +47,7 @@ class PhotosListView(ListView):
 			if self.user.is_closed_profile:
 				check_is_connected_with_user_with_id(user=request_user, user_id=self.user.id)
 		photo = self.user.get_photos()
-		return super(AlbomView,self).get(request,*args,**kwargs)
+		return super(PhotosListView,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
 		self.user = User.objects.get(uuid=self.kwargs["uuid"])
@@ -55,7 +55,7 @@ class PhotosListView(ListView):
 		return photos
 
 	def get_context_data(self,**kwargs):
-		context=super(AlbomView,self).get_context_data(**kwargs)
+		context=super(PhotosListView,self).get_context_data(**kwargs)
 		context['photo'] = self.photo
 		context['user'] = self.user
 		return context
