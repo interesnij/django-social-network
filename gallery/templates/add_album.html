@@ -81,6 +81,8 @@
         return false;
     });
 </script>
+
+<script src="{% static 'scripts/validator.min.js' %}" type="text/javascript"></script>
 <script>
   var formHandle = document.querySelector('form[name="demo-form"]'),
 	validator = new Validator(formHandle, function (err, res) {
