@@ -6,6 +6,7 @@ from django.views.generic import ListView
 from gallery.forms import AlbumForm
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.views import View
+from generic.mixins import EmojiListMixin
 
 
 class GalleryView(TemplateView):
@@ -132,3 +133,26 @@ class AlbomGygView(TemplateView):
 		context["new_url"]=self.new_url
 		context["album"]=self.album
 		return context
+
+
+class UserItemView(EmojiListMixin, TemplateView):
+    model=Item
+    template_name="user_photo.html"
+
+    def get(self,request,*args,**kwargs):
+        self.user=User.objects.get(uuid=self.kwargs["uuid"])
+        self.photos = 0
+        self.photo = Photo.objects.get(pk=self.kwargs["pk"])
+        self.next = self.photos.filter(pk__gt=self.item.pk).order_by('pk').first()
+        self.prev = self.photos.filter(pk__lt=self.item.pk).order_by('-pk').first()
+        self.photo.views += 1
+        self.photo.save()
+        return super(UserPhotoView,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context=super(UserPhotoView,self).get_context_data(**kwargs)
+        context["object"]=self.item
+        context["user"]=self.user
+        context["next"]=self.next
+        context["prev"]=self.prev
+        return context
