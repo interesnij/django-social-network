@@ -40,7 +40,7 @@ class PhotosListView(ListView):
 
 	def get_queryset(self):
 		self.user = User.objects.get(uuid=self.kwargs["uuid"])
-		photos=Photo.objects.filter(creator__id=self.user.id)
+		photos=self.user.get_photos()
 		return photos
 
 
@@ -140,7 +140,7 @@ class UserPhotoView(EmojiListMixin, TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.user=User.objects.get(uuid=self.kwargs["uuid"])
-        self.photos = 0
+        self.photos = self.user.get_photos()
         self.photo = Photo.objects.get(pk=self.kwargs["pk"])
         self.next = self.photos.filter(pk__gt=self.item.pk).order_by('pk').first()
         self.prev = self.photos.filter(pk__lt=self.item.pk).order_by('-pk').first()
@@ -150,7 +150,7 @@ class UserPhotoView(EmojiListMixin, TemplateView):
 
     def get_context_data(self,**kwargs):
         context=super(UserPhotoView,self).get_context_data(**kwargs)
-        context["object"]=self.item
+        context["object"]=self.photo
         context["user"]=self.user
         context["next"]=self.next
         context["prev"]=self.prev
