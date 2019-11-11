@@ -136,7 +136,6 @@ class AlbomGygView(TemplateView):
 
 
 class UserItemView(EmojiListMixin, TemplateView):
-    model=Item
     template_name="user_photo.html"
 
     def get(self,request,*args,**kwargs):
