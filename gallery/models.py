@@ -5,7 +5,7 @@ from users.models import User
 from gallery.helpers import upload_to_photo_directory
 from pilkit.processors import ResizeToFill, ResizeToFit
 from imagekit.models import ProcessedImageField
-
+from django.contrib.contenttypes.fields import GenericRelation
 
 
 class Album(models.Model):
