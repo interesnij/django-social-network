@@ -189,7 +189,7 @@ class User(AbstractUser):
         return self.banned_of_communities.filter(name=community_name).exists()
 
     def is_closed_profile_of_user_with_id(self):
-        return self.private_settings.is_private.exists()
+        return self.private_settings.is_private
 
     def is_creator_of_community_with_name(self, community_name):
         return self.created_communities.filter(name=community_name).exists()
