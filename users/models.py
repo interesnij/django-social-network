@@ -266,7 +266,7 @@ class User(AbstractUser):
         return items
 
     def get_photos(self):
-        check_is_not_blocked_with_user_with_id(user=self, user_id=user_id)
+        check_is_not_blocked_with_user_with_id(user=self, user_id=request.user.id)
         if self.is_closed_profile_of_user_with_id():
             check_is_connected_with_user_with_id(user=self, user_id=user_id)
         photos_query = Q(creator_id=self.id, is_deleted=False, is_public=True, status=Photo.STATUS_PUBLISHED, community=None)
