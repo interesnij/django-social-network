@@ -25,20 +25,20 @@ class GoodsListView(ListView):
 	paginate_by=6
 
 	def get(self,request,*args,**kwargs):
-        self.user=User.objects.get(pk=self.kwargs["pk"])
-        request_user = request.user
-        if self.user != request_user:
-            check_is_not_blocked_with_user_with_id(user=request_user, user_id=self.user.id)
-            if self.user.is_closed_profile:
-                check_is_connected_with_user_with_id(user=request_user, user_id=self.user.id)
-        self.goods = self.user.get_goods()
-        return super(GoodsListView,self).get(request,*args,**kwargs)
+		self.user=User.objects.get(pk=self.kwargs["pk"])
+		request_user = request.user
+		if self.user != request_user:
+			check_is_not_blocked_with_user_with_id(user=request_user, user_id=self.user.id)
+			if self.user.is_closed_profile:
+				check_is_connected_with_user_with_id(user=request_user, user_id=self.user.id)
+		self.goods = self.user.get_goods()
+		return super(GoodsListView,self).get(request,*args,**kwargs)
 
-    def get_context_data(self,**kwargs):
-        context=super(GoodsListView,self).get_context_data(**kwargs)
-        context["user"]=self.user
-        context["goods"]=self.goods
-        return context
+	def get_context_data(self,**kwargs):
+		context=super(GoodsListView,self).get_context_data(**kwargs)
+		context["user"]=self.user
+		context["goods"]=self.goods
+		return context
 
 
 class GoodUserCreate(TemplateView):
