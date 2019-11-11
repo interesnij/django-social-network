@@ -1,6 +1,8 @@
 {% load staticfiles %}
+
+{% if object_list %}
+
 <div class="infinite-container">
-  <div class="row">
 {% for object in object_list %}
 
 <div class="col-sm-12 col-md-6 col-lg-4 infinite-item">
@@ -18,7 +20,11 @@
   {% endif %}
 </div>
 </div>
-</div>
+
+{% else %}
+<h6>  Фотографий пока нет...</h6>
+{% endif %}
+
 <script>
 var infinite = new Waypoint.Infinite({
     element: $('.infinite-container')[0],

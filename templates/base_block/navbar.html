@@ -23,7 +23,7 @@
       background: #D6DAE1;
       color: black;
   }
-  
+
 .react_window {
     opacity: 0;
     visibility: hidden;
@@ -70,6 +70,51 @@
     padding: 5%;
     display: block;
     overflow: auto;
+}
+.photo_fullscreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 20;
+    padding: 5%;
+    display: block;
+    overflow: auto;
+}
+
+.add_fullscreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 20;
+    padding: 5%;
+    display: block;
+    overflow: auto;
+}
+@media screen and (min-width: 621px) {
+    .photo_fullscreen {
+        left: 20%;
+        width: 60%;
+        padding-left: 5%;
+        padding-right: 5%;
+    }
+
+    .add_fullscreen {
+        left: 20%;
+        width: 60%;
+        padding-left: 5%;
+        padding-right: 5%;
+    }
+}
+
+.photo_fullscreen_hide,
+.add_fullscreen_hide {
+    cursor: pointer;
+    float: right;
+    margin-top: 12px;
 }
 
 .card-body img {
