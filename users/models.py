@@ -189,7 +189,7 @@ class User(AbstractUser):
         return self.banned_of_communities.filter(name=community_name).exists()
 
     def is_closed_profile_of_user_with_id(self):
-        return self.private_settings.is_private
+        return self.user_private_settings.is_private
 
     def is_creator_of_community_with_name(self, community_name):
         return self.created_communities.filter(name=community_name).exists()
@@ -407,7 +407,7 @@ class UserNotificationsSettings(models.Model):
 
 class UserPrivateSettings(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,
-                                related_name='private_settings', verbose_name="Пользователь")
+                                related_name='user_private_settings', verbose_name="Пользователь")
     is_private = models.BooleanField(default=False, verbose_name="Закрытый профиль")
     can_message = models.BooleanField(default=True, verbose_name="Вам могут писать сообщения все пользователи")
     photo_visible_all = models.BooleanField(default=True, verbose_name="Ваши фото видны всем")
