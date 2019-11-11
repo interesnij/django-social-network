@@ -36,10 +36,10 @@ class AlbumsListView(ListView):
 			if self.user.is_closed_profile:
 				check_is_connected_with_user_with_id(user=request_user, user_id=self.user.id)
 		self.albums = self.user.get_albums()
-		return super(PhotosListView,self).get(request,*args,**kwargs)
+		return super(AlbumsListView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context=super(PhotosListView,self).get_context_data(**kwargs)
+		context=super(AlbumsListView,self).get_context_data(**kwargs)
 		context['albums'] = self.albums
 		context['user'] = self.user
 		return context
