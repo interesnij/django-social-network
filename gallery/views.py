@@ -46,7 +46,7 @@ class PhotosListView(ListView):
 			check_is_not_blocked_with_user_with_id(user=request_user, user_id=self.user.id)
 			if self.user.is_closed_profile:
 				check_is_connected_with_user_with_id(user=request_user, user_id=self.user.id)
-		photo = self.user.get_photos()
+		self.photo = self.user.get_photos()
 		return super(PhotosListView,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
