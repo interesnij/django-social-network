@@ -2,6 +2,10 @@ import uuid
 from django.db import models
 from django.contrib.postgres.indexes import BrinIndex
 from users.models import User
+from gallery.helpers import upload_to_photo_directory
+from pilkit.processors import ResizeToFill, ResizeToFit
+from imagekit.models import ProcessedImageField
+
 
 
 class Album(models.Model):
@@ -23,13 +27,10 @@ class Album(models.Model):
         verbose_name_plural = 'Фотоальбомы'
 
 
-
-
-
 class Photo(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, db_index=True,verbose_name="uuid")
     album = models.ForeignKey(Album, blank=True, null=True, on_delete=models.CASCADE)
-    file = models.ImageField(upload_to='gallery/%Y/%m/%d')
+    file = ProcessedImageField(format='JPEG', options={'quality': 90}, upload_to=upload_to_photo_directory, processors=[ResizeToFit(width=1024, upscale=False)])
     description = models.TextField(blank=True, null=True, verbose_name="Описание")
     is_public = models.BooleanField(default=True, verbose_name="Виден другим")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создано")

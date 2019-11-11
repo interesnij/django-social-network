@@ -8,13 +8,11 @@ from django.core.exceptions import ImproperlyConfigured
 from django.core.serializers.json import DjangoJSONEncoder
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.utils import six
+import uuid
+from os.path import splitext
 
 
 class JSONResponseMixin(object):
-    """
-    A mixin that allows you to easily serialize simple data such as a dict or
-    Django models.
-    """
     content_type = None
     json_dumps_kwargs = None
     json_encoder_class = DjangoJSONEncoder
@@ -36,10 +34,6 @@ class JSONResponseMixin(object):
         return self.json_dumps_kwargs
 
     def render_json_response(self, context_dict, status=200):
-        """
-        Limited serialization for shipping plain data. Do not use for models
-        or other complex or custom objects.
-        """
         json_context = json.dumps(
             context_dict,
             cls=self.json_encoder_class,
@@ -49,20 +43,11 @@ class JSONResponseMixin(object):
                             status=status)
 
     def render_json_object_response(self, objects, **kwargs):
-        """
-        Serializes objects using Django's builtin JSON serializer. Additional
-        kwargs can be used the same way for django.core.serializers.serialize.
-        """
         json_data = serializers.serialize("json", objects, **kwargs)
         return HttpResponse(json_data, content_type=self.get_content_type())
 
 
 class AjaxResponseMixin(object):
-    """
-    Mixin allows you to define alternative methods for ajax requests. Similar
-    to the normal get, post, and put methods, you can use get_ajax, post_ajax,
-    and put_ajax.
-    """
     def dispatch(self, request, *args, **kwargs):
         request_method = request.method.lower()
 
@@ -88,3 +73,16 @@ class AjaxResponseMixin(object):
 
     def delete_ajax(self, request, *args, **kwargs):
         return self.get(request, *args, **kwargs)
+
+def upload_to_photo_directory(user, filename):
+    return _upload_to_community_directory(user=user, filename=filename)
+
+def _upload_to_photo_directory(user, filename):
+    extension = splitext(filename)[1].lower()
+    new_filename = str(uuid.uuid4()) + extension
+
+    path = 'users/%(user_id)s/' % {
+        'user_id': str(user.id)}
+
+    return '%(path)s%(new_filename)s' % {'path': path,
+                                         'new_filename': new_filename, }
