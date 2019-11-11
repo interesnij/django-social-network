@@ -15,7 +15,7 @@ class CommunityItemView(EmojiListMixin, TemplateView):
     def get(self,request,*args,**kwargs):
         self.community=Community.objects.get(uuid=self.kwargs["uuid"])
         check_can_get_posts_for_community_with_name(request.user,self.community.name)
-        self.community = self.community.get_posts()
+        self.items = self.community.get_posts()
         self.item = Item.objects.get(pk=self.kwargs["pk"])
         self.next = self.items.filter(pk__gt=self.item.pk).order_by('pk').first()
         self.prev = self.items.filter(pk__lt=self.item.pk).order_by('-pk').first()
