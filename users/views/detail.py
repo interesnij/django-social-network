@@ -41,7 +41,7 @@ class UserItemView(EmojiListMixin, TemplateView):
 
 class ItemListView(View, EmojiListMixin):
 
-    def get(self, request):
+    def get(self, request, **kwargs):
         context = {}
         self.user=User.objects.get(pk=self.kwargs["pk"])
         if self.user != request.user:
