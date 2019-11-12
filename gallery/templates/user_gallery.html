@@ -73,8 +73,8 @@
 <script defer src="{% static 'scripts/dropzone.js' %}" type="text/javascript"></script>
 <script>
   $(document).ready(function() {
-      $('#albums_load').html('').load("/gallery/albums/" + "{{ user.uuid }}");
-      $('#photos_load').html('').load("/gallery/photos/" + "{{ user.uuid }}");
+      $('#albums_load').html('').load("/gallery/user_albums/" + "{{ user.uuid }}");
+      $('#photos_load').html('').load("/gallery/user_albums/" + "{{ user.uuid }}");
   });
 </script>
 {% endblock %}

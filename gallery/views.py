@@ -8,10 +8,12 @@ from django.http import HttpResponse, HttpResponseBadRequest
 from django.views import View
 from generic.mixins import EmojiListMixin
 from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.shortcuts import render_to_response
 
 
 class GalleryView(TemplateView):
-	template_name="gallery.html"
+	template_name="user_gallery.html"
 
 	def get(self,request,*args,**kwargs):
 		self.user=User.objects.get(pk=self.kwargs["pk"])
@@ -23,8 +25,8 @@ class GalleryView(TemplateView):
 		context['user'] = self.user
 		return context
 
-class AlbumsListView(ListView):
-	template_name="albums.html"
+class UserAlbumsList(ListView):
+	template_name="user_albums.html"
 	model=Album
 	paginate_by=10
 
@@ -36,7 +38,7 @@ class AlbumsListView(ListView):
 			if self.user.is_closed_profile:
 				check_is_connected_with_user_with_id(user=request_user, user_id=self.user.id)
 		self.albums = self.user.get_albums()
-		return super(AlbumsListView,self).get(request,*args,**kwargs)
+		return super(UserAlbumsList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		context=super(AlbumsListView,self).get_context_data(**kwargs)
@@ -45,53 +47,81 @@ class AlbumsListView(ListView):
 		return context
 
 
-class PhotosListView(ListView):
-	template_name="photos.html"
+class UserPhotosList(View):
+	template_name="user_photos.html"
 	model=Photo
 	paginate_by=15
 
 	def get(self,request,*args,**kwargs):
+		context = {}
 		self.user = User.objects.get(uuid=self.kwargs["uuid"])
-		request_user = request.user
-		if self.user != request_user:
-			check_is_not_blocked_with_user_with_id(user=request_user, user_id=self.user.id)
+		if self.user != request.user:
+			check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
 			if self.user.is_closed_profile:
-				check_is_connected_with_user_with_id(user=request_user, user_id=self.user.id)
-		self.photo = self.user.get_photos()
-		return super(PhotosListView,self).get(request,*args,**kwargs)
+				check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
+		photo_list = self.user.get_photos().order_by('-created')
+		current_page = Paginator(photo_list, 12)
+        page = request.GET.get('page')
+        context['user'] = self.user
+		try:
+            context['items_list'] = current_page.page(page)
+        except PageNotAnInteger:
+            context['items_list'] = current_page.page(1)
+        except EmptyPage:
+            context['items_list'] = current_page.page(current_page.num_pages)
+
+        return render_to_response('photos.html', context)
+
+
+class UserPhoto(EmojiListMixin, TemplateView):
+	template_name="user_photo.html"
+
+	def get(self,request,*args,**kwargs):
+		self.user=User.objects.get(uuid=self.kwargs["uuid"])
+		if self.user != request.user:
+			check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
+			if self.user.is_closed_profile:
+				check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
+		self.photos = self.user.get_photos()
+		self.photo = Photo.objects.get(pk=self.kwargs["pk"])
+		self.next = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
+		self.prev = self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
+		return super(UserPhoto,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context=super(PhotosListView,self).get_context_data(**kwargs)
-		context['photo'] = self.photo
-		context['user'] = self.user
+		context=super(UserPhoto,self).get_context_data(**kwargs)
+		context["object"]=self.photo
+		context["user"]=self.user
+		context["next"]=self.next
+		context["prev"]=self.prev
 		return context
 
 
-class AlbomView(TemplateView):
-	template_name="album.html"
+class UserAlbomView(TemplateView):
+	template_name="user_album.html"
 
 	def get(self,request,*args,**kwargs):
 		self.album=Album.objects.get(uuid=self.kwargs["uuid"])
 		self.photos = Photo.objects.filter(album=self.album)
-		return super(AlbomView,self).get(request,*args,**kwargs)
+		return super(UserAlbomView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context=super(AlbomView,self).get_context_data(**kwargs)
+		context=super(UserAlbomView,self).get_context_data(**kwargs)
 		context['album'] = self.album
 		context['photos'] = self.photos
 		return context
 
 
-class AlbomReloadView(TemplateView):
-	template_name="album_reload.html"
+class UserAlbomReload(TemplateView):
+	template_name="user_album_reload.html"
 
 	def get(self,request,*args,**kwargs):
 		self.album=Album.objects.get(uuid=self.kwargs["uuid"])
 		self.photos = Photo.objects.filter(album=self.album)
-		return super(AlbomReloadView,self).get(request,*args,**kwargs)
+		return super(UserAlbomReload,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context=super(AlbomReloadView,self).get_context_data(**kwargs)
+		context=super(UserAlbomReload,self).get_context_data(**kwargs)
 		context['album'] = self.album
 		context['photos'] = self.photos
 		return context
@@ -114,7 +144,7 @@ class PhotoUserCreate(View,AjaxResponseMixin,JSONResponseMixin):
 
 
 class AlbumUserCreate(TemplateView):
-	template_name="add_album.html"
+	template_name="add_user_album.html"
 	form=None
 
 	def get(self,request,*args,**kwargs):
@@ -143,7 +173,7 @@ class AlbumUserCreate(TemplateView):
 
 
 class AlbomGygView(TemplateView):
-	template_name="album_gygyg.html"
+	template_name="user_album_gygyg.html"
 
 	def get(self,request,*args,**kwargs):
 		self.user = User.objects.get(uuid=self.kwargs["uuid"])
@@ -155,28 +185,4 @@ class AlbomGygView(TemplateView):
 		context=super(AlbomGygView,self).get_context_data(**kwargs)
 		context["new_url"]=self.new_url
 		context["album"]=self.album
-		return context
-
-
-class UserPhotoView(EmojiListMixin, TemplateView):
-	template_name="user_photo.html"
-
-	def get(self,request,*args,**kwargs):
-		self.user=User.objects.get(uuid=self.kwargs["uuid"])
-		if self.user != request.user:
-			check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
-			if self.user.is_closed_profile:
-				check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
-		self.photos = self.user.get_photos()
-		self.photo = Photo.objects.get(pk=self.kwargs["pk"])
-		self.next = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
-		self.prev = self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
-		return super(UserPhotoView,self).get(request,*args,**kwargs)
-
-	def get_context_data(self,**kwargs):
-		context=super(UserPhotoView,self).get_context_data(**kwargs)
-		context["object"]=self.photo
-		context["user"]=self.user
-		context["next"]=self.next
-		context["prev"]=self.prev
 		return context
