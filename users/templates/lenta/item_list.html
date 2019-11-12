@@ -43,6 +43,9 @@
         <img src="{% static 'images/loading.gif' %}">
     </a>
     {% endif %}
+    {% if page_obj.has_next %}
+			<div id="next-page"><a href="?page={{ page_obj.next_page_number }}">&gt;</a></div>
+		{% endif %}
 
 </div>
 
