@@ -6,6 +6,7 @@ from django.views.generic import ListView
 from generic.mixins import EmojiListMixin
 from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
 from users.forms import AvatarUserForm
+from main.models import Item
 
 
 class UserItemView(EmojiListMixin, TemplateView):
