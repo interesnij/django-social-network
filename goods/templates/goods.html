@@ -8,65 +8,6 @@
 {% endif %}
 {% endblock %}
 {% block content %}
-<style>
-    .good_fullscreen {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 20;
-        padding: 5%;
-        display: block;
-        overflow: auto;
-    }
-
-    .good_add_fullscreen {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 20;
-        padding: 5%;
-        display: block;
-        overflow: auto;
-    }
-
-    #good_loader .card-body img {
-        width: 100% !important;
-        height: auto !important;
-    }
-
-    @media screen and (min-width: 621px) {
-        .good_fullscreen {
-            left: 20%;
-            width: 60%;
-            padding-left: 5%;
-            padding-right: 5%;
-        }
-
-        .good_add_fullscreen {
-            left: 20%;
-            width: 60%;
-            padding-left: 5%;
-            padding-right: 5%;
-        }
-    }
-
-    .good_fullscreen_hide {
-        cursor: pointer;
-        float: right;
-        margin-top: 12px;
-    }
-
-    .good_fullscreen_hide {
-        cursor: pointer;
-        float: right;
-        margin-top: 12px;
-    }
-
-</style>
 
 <div class="container-fluid" style="margin-top:30px">
     <div class="row">
@@ -104,40 +45,16 @@
 </div>
 
 <script>
-    $('.good_fullscreen_hide').on('click', function() {
-        $('.good_add_fullscreen').hide();
-        $('#good_add_loader').empty();
-    });
-</script>
-<script>
     $("#good_add").click(function() {
         $('#good_add_loader').html('').load("{% url 'good_add_user' pk=user.pk %}");
         $('.good_add_fullscreen').show();
     })
 </script>
-<script>
-    var infinite = new Waypoint.Infinite({
-        element: $('.infinite-container')[0],
-        onBeforePageLoad: function() {
-            $('.load').show();
-        },
-        onAfterPageLoad: function($items) {
-            $('.load').hide();
-        }
-    });
-</script>
 
-<script>
-    $('.infinite-container').on('click', '.good_detail', function() {
-        var good = $(this);
-        var good_id = good.data("id");
-        $('#good_loader').html('').load("/goods/detail/" + good_id)
-        $('.good_fullscreen').show();
-    });
-</script>
 <script>
     $(document).ready(function() {
         $('#goods_load').html('').load("/goods/list/" + {{ user.pk }});
     });
 </script>
+
 {% endblock %}

@@ -221,6 +221,62 @@
   #settings{
     cursor:pointer;
   }
+  .good_fullscreen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 20;
+      padding: 5%;
+      display: block;
+      overflow: auto;
+  }
+
+  .good_add_fullscreen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 20;
+      padding: 5%;
+      display: block;
+      overflow: auto;
+  }
+
+  #good_loader .card-body img {
+      width: 100% !important;
+      height: auto !important;
+  }
+
+  @media screen and (min-width: 621px) {
+      .good_fullscreen {
+          left: 20%;
+          width: 60%;
+          padding-left: 5%;
+          padding-right: 5%;
+      }
+
+      .good_add_fullscreen {
+          left: 20%;
+          width: 60%;
+          padding-left: 5%;
+          padding-right: 5%;
+      }
+  }
+
+  .good_fullscreen_hide {
+      cursor: pointer;
+      float: right;
+      margin-top: 12px;
+  }
+
+  .good_fullscreen_hide {
+      cursor: pointer;
+      float: right;
+      margin-top: 12px;
+  }
 </style>
 <header class="main-header">
     <div class="container-fluid">
