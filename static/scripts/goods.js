@@ -15,3 +15,8 @@ var infinite = new Waypoint.Infinite({
         $('.load').hide();
     }
 });
+
+$('#ajax').on('click', '.good_fullscreen_hide', function() {
+    $('.good_add_fullscreen').hide();
+    $('#good_add_loader').empty();
+});

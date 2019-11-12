@@ -50,12 +50,7 @@
         $('.good_add_fullscreen').show();
     })
 </script>
-<script>
-$('.infinite-container').on('click', '.good_fullscreen_hide', function() {
-    $('.good_add_fullscreen').hide();
-    $('#good_add_loader').empty();
-});
-</script>
+
 <script>
     $(document).ready(function() {
         $('#goods_load').html('').load("/goods/list/" + {{ user.pk }});
