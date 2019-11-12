@@ -51,6 +51,7 @@ class ItemListView(View, EmojiListMixin):
         item_list = self.user.get_posts()
         current_page = Paginator(item_list, 10)
         page = request.GET.get('page')
+        context['user'] = self.user
         try:
             context['items_list'] = current_page.page(page)
         except PageNotAnInteger:
