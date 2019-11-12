@@ -64,35 +64,35 @@ class RepostUser(View):
 			return HttpResponse("репост item")
 
 
-class ReactView(TemplateView):
+class ItemReactWindow(TemplateView):
 	template_name="react_window.html"
 
 	def get(self,request,*args,**kwargs):
 		item = Item.objects.get(uuid=self.kwargs["uuid"])
 		emoji = Emoji.objects.get(pk=self.kwargs["pk"])
 		react = ItemComment.objects.filter(item=item, emoji=emoji)
-		return super(ReactView,self).get(request,*args,**kwargs)
+		return super(ItemReactWindow,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context=super(ReactView,self).get_context_data(**kwargs)
+		context=super(ItemReactWindow,self).get_context_data(**kwargs)
 		context["react"]=self.react
 		return context
 
 
-class CommentReactView(TemplateView):
+class ItemCommentReactWindow(TemplateView):
     template_name="comment_react_window.html"
 
     def get(self,request,*args,**kwargs):
         self.react_like = ItemComment.objects.get(pk=self.kwargs["pk"])
-        return super(CommentReactView,self).get(request,*args,**kwargs)
+        return super(ItemCommentReactWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context=super(CommentReactView,self).get_context_data(**kwargs)
+        context=super(ItemCommentReactWindow,self).get_context_data(**kwargs)
         context["react_like"]=self.react_like
         return context
 
 
-class CommentListView(View, EmojiListMixin):
+class ItemCommentList(View, EmojiListMixin):
 	model=ItemComment
 
 	def get(self,request,*args,**kwargs):
@@ -105,7 +105,7 @@ class CommentListView(View, EmojiListMixin):
 	    })
 
 
-class ReactUserCreate(View):
+class ItemReactUserCreate(View):
 	model=ItemReaction
 
 	def post(self,request,*args,**kwargs):
@@ -117,7 +117,43 @@ class ReactUserCreate(View):
 		return JsonResponse(html, safe=False)
 
 
-def post_comment(request):
+class ItemReactUserDelete(View):
+	model=ItemReaction
+
+	def post(self,request,*args,**kwargs):
+		item = Item.objects.get(uuid=self.kwargs["uuid"])
+		emoji = Emoji.objects.get(pk=self.kwargs["pk"])
+		new_react = ItemReaction.objects.get(item=item, emoji=emoji, reactor=request.user)
+		new_react.delete()
+		html = render_to_string("generic/posts/emoji.html",{'react': new_react,'request': request})
+		return JsonResponse(html, safe=False)
+
+
+class ItemCommentReactUserCreate(View):
+	model=ItemReaction
+
+	def post(self,request,*args,**kwargs):
+		item_comment = ItemComment.objects.get(item__uuid=self.kwargs["uuid"])
+		emoji = Emoji.objects.get(pk=self.kwargs["pk"])
+		new_react = ItemCommentReaction.objects.create(item_comment=item_comment, created=timezone.now(), emoji=emoji, reactor=request.user)
+		new_react.notification_comment_react(request.user)
+		html = render_to_string("generic/posts/comment_emoji.html",{'react': new_react,'request': request})
+		return JsonResponse(html, safe=False)
+
+
+class ItemCommentReactUserDelete(View):
+	model=ItemReaction
+
+	def post(self,request,*args,**kwargs):
+		item_comment = ItemComment.objects.get(item__uuid=self.kwargs["uuid"])
+		emoji = Emoji.objects.get(pk=self.kwargs["pk"])
+		react = ItemCommentReaction.objects.get(item_comment=item_comment, emoji=emoji, reactor=request.user)
+		react.delete()
+		html = render_to_string("generic/posts/comment_emoji.html",{'react': new_react,'request': request})
+		return JsonResponse(html, safe=False)
+
+
+def item_post_comment(request):
 	user = request.user
 	text = request.POST['text']
 	img = "frtyh"
@@ -133,7 +169,7 @@ def post_comment(request):
 		return HttpResponseBadRequest()
 
 
-def reply_comment(request):
+def item_reply_comment(request):
 
     user = request.user
     text = request.POST['text']
@@ -151,45 +187,6 @@ def reply_comment(request):
 
     else:
         return HttpResponseBadRequest()
-
-
-def un_react(request):
-	un_react = request.POST['emoji']
-	par = request.POST['parent']
-	item = Item.objects.get(pk=par)
-	if item:
-		un_react = ItemReaction.objects.get(item=item, emoji=un_react, reactor=request.user)
-		un_react.delete()
-		html = render_to_string('generic/posts/emoji.html',{'react': un_react,'request': request})
-		return JsonResponse(html, safe=False)
-	else:
-		return HttpResponse("react не найден")
-
-
-
-def post_comment_react(request):
-	react = request.POST['emoji']
-	com = request.POST['comment']
-	comment = ItemComment.objects.get(pk=com)
-	if comment:
-		new_comment_react = ItemCommentReaction.objects.create(comment=comment, emoji=react, reactor=request.user)
-		html = render_to_string('generic/posts/comment_emoji.html',{'comment_react': new_comment_react,'request': request})
-		return JsonResponse(html, safe=False)
-	else:
-		return HttpResponse("react не найден")
-
-
-
-def comment_un_react(request):
-	un_react = request.POST['emoji']
-	com = request.POST['comment']
-	comment = ItemComment.objects.get(pk=com)
-	if comment:
-		un_react = ItemCommentReaction.objects.get(comment=comment, emoji=un_react, reactor=request.user)
-		html = render_to_string('generic/posts/comment_emoji.html',{'comment_react': un_react,'request': request})
-		return JsonResponse(html, safe=False)
-	else:
-		return HttpResponse("react не найден")
 
 
 def post_update_interactions(request):
