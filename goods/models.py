@@ -9,6 +9,7 @@ from django.conf import settings
 from django.contrib.postgres.indexes import BrinIndex
 import uuid
 from django.contrib.contenttypes.fields import GenericRelation
+from common.models import Emoji
 
 
 
