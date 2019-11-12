@@ -1,6 +1,6 @@
 from django.conf.urls import url
 from communities.views.list import AllCommunities, CommunitiesView, CommunityMembersView
-from communities.views.details import CommunityItemView, CommunityListView, CommunityDetailView, CommunityDetailReload
+from communities.views.details import ItemCommunity, ItemsCommunity, CommunityDetail, CommunityDetailReload
 from communities.views.progs import CommunityCreate, CommunitiesCatsView, GygView, CommunityMemberCreate, CommunityMemberDelete
 from communities.views.manage import (
                                         CommunityGeneralChange,
@@ -20,10 +20,10 @@ urlpatterns = [
     url(r'^user/(?P<pk>\d+)/$', CommunitiesView.as_view(), name='communities'),
     url(r'^(?P<pk>\d+)/members/$', CommunityMembersView.as_view(), name='community_members'),
 
-    url(r'^(?P<pk>\d+)/$', CommunityDetailView.as_view(), name='community_detail'),
+    url(r'^(?P<pk>\d+)/$', CommunityDetail.as_view(), name='community_detail'),
     url(r'^reload/(?P<pk>\d+)/$', CommunityDetailReload.as_view(), name='community_detail_reload'),
-    url(r'^item/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityItemView.as_view(), name='community_item'),
-    url(r'^list/(?P<pk>\d+)/$', CommunityListView.as_view(), name="community_item_list"),
+    url(r'^item/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', ItemCommunity.as_view(), name='community_item'),
+    url(r'^list/(?P<pk>\d+)/$', ItemsCommunity.as_view(), name="community_item_list"),
 
     url(r'^add/$', CommunityCreate.as_view(), name="add_community"),
     url(r'^cat/(?P<order>\d+)/$',CommunitiesCatsView.as_view(), name="communities_cats"),

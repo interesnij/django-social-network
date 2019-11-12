@@ -23,7 +23,7 @@ class GoodSubCategoriesView(TemplateView):
 
 
 class UserGoodsView(TemplateView):
-    template_name = "goods.html"
+    template_name = "user_goods.html"
 
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
@@ -37,7 +37,7 @@ class UserGoodsView(TemplateView):
         return context
 
 
-class GoodsListView(View):
+class GoodsUserList(View):
 	def get(self,request,**kwargs):
 		context = {}
 		self.user=User.objects.get(pk=self.kwargs["pk"])
@@ -59,7 +59,7 @@ class GoodsListView(View):
 
 
 class GoodUserCreate(TemplateView):
-	template_name="good_add.html"
+	template_name="good_user_add.html"
 	form=None
 	sub_categories = GoodSubCategory.objects.only("id")
 	categories = GoodCategory.objects.only("id")
@@ -109,7 +109,7 @@ class GoodsCatsView(TemplateView):
 		return context
 
 
-class GoodDetailView(EmojiListMixin, TemplateView):
+class UserGoodDetail(EmojiListMixin, TemplateView):
 	template_name="good_detail.html"
 
 	def get(self,request,*args,**kwargs):
@@ -124,10 +124,10 @@ class GoodDetailView(EmojiListMixin, TemplateView):
 		self.prev = self.goods.filter(pk__lt=self.good.pk).order_by('-pk').first()
 		self.good.views += 1
 		self.good.save()
-		return super(GoodDetailView,self).get(request,*args,**kwargs)
+		return super(UserGoodDetail,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context=super(GoodDetailView,self).get_context_data(**kwargs)
+		context=super(UserGoodDetail,self).get_context_data(**kwargs)
 		context["object"]=self.good
 		context["user"]=self.user
 		context["next"]=self.next

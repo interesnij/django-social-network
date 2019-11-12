@@ -140,7 +140,7 @@ class Community(models.Model):
     def is_community_with_name_private(cls, community_name):
         return cls.objects.filter(name=community_name, type='T').exists()
 
-    @classmethod 
+    @classmethod
     def is_community_with_name_closed(cls, community_name):
         return cls.objects.filter(name=community_name, type='C').exists()
 
@@ -198,16 +198,10 @@ class Community(models.Model):
         items = Item.objects.filter(posts_query)
         return items
 
-    def get_goods(self, max_id=None):
-        """
-        Получить все посты пользователя
-        """
+    def get_goods(self):
         goods_query = Q(community_id=self.pk, is_deleted=False, status=Good.STATUS_PUBLISHED)
         exclude_reported_and_approved_goods_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         goods_query.add(exclude_reported_and_approved_goods_query, Q.AND)
-
-        if max_id:
-            goods_query.add(Q(id__lt=max_id), Q.AND)
         goods = Good.objects.filter(goods_query)
         return goods
 

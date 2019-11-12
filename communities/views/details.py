@@ -10,32 +10,7 @@ from django.views import View
 from django.shortcuts import render_to_response
 
 
-
-class CommunityItemView(EmojiListMixin, TemplateView):
-    model=Item
-    template_name="detail/item.html"
-
-    def get(self,request,*args,**kwargs):
-        self.community=Community.objects.get(uuid=self.kwargs["uuid"])
-        check_can_get_posts_for_community_with_name(request.user,self.community.name)
-        self.items = self.community.get_posts()
-        self.item = Item.objects.get(pk=self.kwargs["pk"])
-        self.next = self.items.filter(pk__gt=self.item.pk).order_by('pk').first()
-        self.prev = self.items.filter(pk__lt=self.item.pk).order_by('-pk').first()
-        self.item.views += 1
-        self.item.save()
-        return super(CommunityItemView,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        context=super(CommunityItemView,self).get_context_data(**kwargs)
-        context["object"]=self.item
-        context["community"]=self.community
-        context["next"]=self.next
-        context["prev"]=self.prev
-        return context
-
-
-class CommunityListView(View, EmojiListMixin):
+class ItemsCommunity(View, EmojiListMixin):
 
     def get(self,request,*args,**kwargs):
         try:
@@ -59,15 +34,32 @@ class CommunityListView(View, EmojiListMixin):
 
         return render_to_response('detail/list.html', context)
 
-    def get_context_data(self, **kwargs):
-        context = super(CommunityListView, self).get_context_data(**kwargs)
-        context['object'] = self.fixed
-        context['communities'] = self.communities
+
+class ItemCommunity(EmojiListMixin, TemplateView):
+    model=Item
+    template_name="detail/item.html"
+
+    def get(self,request,*args,**kwargs):
+        self.community=Community.objects.get(uuid=self.kwargs["uuid"])
+        check_can_get_posts_for_community_with_name(request.user,self.community.name)
+        self.items = self.community.get_posts()
+        self.item = Item.objects.get(pk=self.kwargs["pk"])
+        self.next = self.items.filter(pk__gt=self.item.pk).order_by('pk').first()
+        self.prev = self.items.filter(pk__lt=self.item.pk).order_by('-pk').first()
+        self.item.views += 1
+        self.item.save()
+        return super(ItemCommunity,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context=super(ItemCommunity,self).get_context_data(**kwargs)
+        context["object"]=self.item
         context["community"]=self.community
+        context["next"]=self.next
+        context["prev"]=self.prev
         return context
 
 
-class CommunityDetailView(DetailView):
+class CommunityDetail(DetailView):
     template_name = "community_detail.html"
     model = Community
     administrator = False
@@ -90,10 +82,10 @@ class CommunityDetailView(DetailView):
             self.follow = CommunityFollow.objects.get(community=self.community,user=self.request.user)
         except:
             self.follow = None
-        return super(CommunityDetailView,self).get(request,*args,**kwargs)
+        return super(CommunityDetail,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context=super(CommunityDetailView,self).get_context_data(**kwargs)
+        context=super(CommunityDetail,self).get_context_data(**kwargs)
         context["membersheeps"]=self.membersheeps
         context["follow"]=self.follow
         context["administrator"]=self.administrator

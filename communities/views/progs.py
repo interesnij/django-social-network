@@ -1,8 +1,6 @@
 from django.views.generic.base import TemplateView
 from communities.models import CommunityCategory, Community, CommunitySubCategory
 from django.views import View
-from follows.models import CommunityFollow
-from notifications.models import CommunityNotification, community_notification_handler
 from django.http import HttpResponse, HttpResponseBadRequest
 from communities.forms import CommunityForm
 

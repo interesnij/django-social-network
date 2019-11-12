@@ -2,7 +2,7 @@
 $('.infinite-container').on('click', '.good_detail', function() {
     var good = $(this);
     var good_id = good.data("id");
-    $('#good_loader').html('').load("/goods/detail/" + good_id)
+    $('#good_loader').html('').load("/goods/user_good/" + good_id) 
     $('.good_fullscreen').show();
 });
 
