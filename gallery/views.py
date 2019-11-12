@@ -13,7 +13,7 @@ from django.shortcuts import render_to_response
 
 
 class GalleryView(TemplateView):
-	template_name="user_gallery.html"
+	template_name="good_user/gallery.html"
 
 	def get(self,request,*args,**kwargs):
 		self.user=User.objects.get(pk=self.kwargs["pk"])
@@ -26,7 +26,7 @@ class GalleryView(TemplateView):
 		return context
 
 class UserAlbumsList(ListView):
-	template_name="user_albums.html"
+	template_name="good_user/albums.html"
 	model=Album
 	paginate_by=10
 
@@ -65,11 +65,11 @@ class UserPhotosList(View):
 			context['items_list'] = current_page.page(1)
 		except EmptyPage:
 			context['items_list'] = current_page.page(current_page.num_pages)
-		return render_to_response('user_photos.html', context)
+		return render_to_response('good_user/photos.html', context)
 
 
 class UserPhoto(EmojiListMixin, TemplateView):
-	template_name="user_photo.html"
+	template_name="good_user/photo.html"
 
 	def get(self,request,*args,**kwargs):
 		self.user=User.objects.get(uuid=self.kwargs["uuid"])
@@ -93,7 +93,7 @@ class UserPhoto(EmojiListMixin, TemplateView):
 
 
 class UserAlbomView(TemplateView):
-	template_name="user_album.html"
+	template_name="good_user/album.html"
 
 	def get(self,request,*args,**kwargs):
 		self.album=Album.objects.get(uuid=self.kwargs["uuid"])
@@ -108,7 +108,7 @@ class UserAlbomView(TemplateView):
 
 
 class UserAlbomReload(TemplateView):
-	template_name="user_album_reload.html"
+	template_name="good_user/album_reload.html"
 
 	def get(self,request,*args,**kwargs):
 		self.album=Album.objects.get(uuid=self.kwargs["uuid"])
@@ -139,7 +139,7 @@ class PhotoUserCreate(View,AjaxResponseMixin,JSONResponseMixin):
 
 
 class AlbumUserCreate(TemplateView):
-	template_name="add_user_album.html"
+	template_name="good_user/add_album.html"
 	form=None
 
 	def get(self,request,*args,**kwargs):
@@ -168,7 +168,7 @@ class AlbumUserCreate(TemplateView):
 
 
 class AlbomGygView(TemplateView):
-	template_name="user_album_gygyg.html"
+	template_name="good_user/gygyg.html"
 
 	def get(self,request,*args,**kwargs):
 		self.user = User.objects.get(uuid=self.kwargs["uuid"])
