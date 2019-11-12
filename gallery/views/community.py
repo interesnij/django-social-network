@@ -33,10 +33,7 @@ class CommunityAlbumsList(ListView):
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(uuid=self.kwargs["uuid"])
-		if self.user != request.user:
-			check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
-			if self.user.is_closed_profile:
-				check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
+		check_can_get_posts_for_community_with_name(request.user,self.community.name)
 		self.albums = self.user.get_albums()
 		return super(CommunityAlbumsList,self).get(request,*args,**kwargs)
 
@@ -51,10 +48,7 @@ class CommunityPhotosList(View):
 	def get(self,request,**kwargs):
 		context = {}
 		self.community = Community.objects.get(uuid=self.kwargs["uuid"])
-		if self.user != request.user:
-			check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
-			if self.user.is_closed_profile:
-				check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
+		check_can_get_posts_for_community_with_name(request.user,self.community.name)
 		photo_list = self.community.get_photos().order_by('-created')
 		current_page = Paginator(photo_list, 12)
 		page = request.GET.get('page')
@@ -73,10 +67,7 @@ class CommunityPhoto(EmojiListMixin, TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.community=Community.objects.get(uuid=self.kwargs["uuid"])
-		if self.user != request.user:
-			check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
-			if self.user.is_closed_profile:
-				check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
+		check_can_get_posts_for_community_with_name(request.user,self.community.name)
 		self.photos = self.community.get_photos()
 		self.photo = Photo.objects.get(pk=self.kwargs["pk"])
 		self.next = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()

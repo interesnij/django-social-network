@@ -1,7 +1,5 @@
-from django.shortcuts import render
 from django.views.generic import TemplateView
 from goods.models import Good, GoodSubCategory, GoodCategory
-from django.views.generic import ListView
 from users.models import User
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from goods.forms import GoodForm
@@ -19,13 +17,11 @@ class UserGoods(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
-
         return super(UserGoods,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context=super(UserGoods,self).get_context_data(**kwargs)
         context["user"]=self.user
-
         return context
 
 
@@ -77,7 +73,6 @@ class GoodUserCreate(TemplateView):
 			new_good=self.form.save(commit=False)
 			new_good.creator=self.user
 			new_good=self.form.save()
-
 			if request.is_ajax() :
 				html = render_to_string('user/good.html',{'object': new_good,'request': request})
 			return HttpResponse(html)

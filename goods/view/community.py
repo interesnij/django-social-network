@@ -1,43 +1,37 @@
-from django.shortcuts import render
 from django.views.generic import TemplateView
 from goods.models import Good, GoodSubCategory, GoodCategory
-from django.views.generic import ListView
 from users.models import User
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from goods.forms import GoodForm
 from django.template.loader import render_to_string
 from django.views.generic.detail import DetailView
 from generic.mixins import EmojiListMixin
-from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
+from common.checkers import check_can_get_posts_for_community_with_name
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views import View
 from django.shortcuts import render_to_response
+from communities.models import Community
 
 
-class UserGoods(TemplateView):
-    template_name = "user/goods.html"
+class CommunityGoods(TemplateView):
+    template_name = "community/goods.html"
 
     def get(self,request,*args,**kwargs):
-        self.user = User.objects.get(pk=self.kwargs["pk"])
-
-        return super(UserGoods,self).get(request,*args,**kwargs)
+        self.community = Community.objects.get(pk=self.kwargs["pk"])
+        return super(CommunityGoods,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context=super(UserGoods,self).get_context_data(**kwargs)
-        context["user"]=self.user
-
+        context=super(CommunityGoods,self).get_context_data(**kwargs)
+        context["community"]=self.community
         return context
 
 
-class UserGoodsList(View):
+class CommunityGoodsList(View):
 	def get(self,request,**kwargs):
 		context = {}
-		self.user=User.objects.get(pk=self.kwargs["pk"])
-		if self.user != request.user:
-			check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
-			if self.user.is_closed_profile:
-				check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
-		goods = self.user.get_goods().order_by('-created')
+		self.community=Community.objects.get(pk=self.kwargs["pk"])
+		check_can_get_posts_for_community_with_name(request.user,self.community.name)
+		goods = self.community.get_goods().order_by('-created')
 		current_page = Paginator(goods, 6)
 		page = request.GET.get('page')
 		context['user'] = self.user
@@ -47,11 +41,11 @@ class UserGoodsList(View):
 			context['goods_list'] = current_page.page(1)
 		except EmptyPage:
 			context['goods_list'] = current_page.page(current_page.num_pages)
-		return render_to_response('user/goods_list.html', context)
+		return render_to_response('community/goods_list.html', context)
 
 
-class GoodUserCreate(TemplateView):
-	template_name="user/add.html"
+class GoodCommunityCreate(TemplateView):
+	template_name="community/add.html"
 	form=None
 	sub_categories = GoodSubCategory.objects.only("id")
 	categories = GoodCategory.objects.only("id")
@@ -60,10 +54,10 @@ class GoodUserCreate(TemplateView):
 	def get(self,request,*args,**kwargs):
 		self.user=User.objects.get(pk=self.kwargs["pk"])
 		self.form=GoodForm(initial={"creator":self.user})
-		return super(GoodUserCreate,self).get(request,*args,**kwargs)
+		return super(GoodCommunityCreate,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context=super(GoodUserCreate,self).get_context_data(**kwargs)
+		context=super(GoodCommunityCreate,self).get_context_data(**kwargs)
 		context["form"]=self.form
 		context["sub_categories"]=self.sub_categories
 		context["categories"]=self.categories
@@ -77,34 +71,30 @@ class GoodUserCreate(TemplateView):
 			new_good=self.form.save(commit=False)
 			new_good.creator=self.user
 			new_good=self.form.save()
-
 			if request.is_ajax() :
-				html = render_to_string('user/good.html',{'object': new_good,'request': request})
+				html = render_to_string('community/good.html',{'object': new_good,'request': request})
 			return HttpResponse(html)
 		else:
 			return HttpResponseBadRequest()
-		return super(GoodUserCreate,self).get(request,*args,**kwargs)
+		return super(GoodCommunityCreate,self).get(request,*args,**kwargs)
 
 
-class UserGood(EmojiListMixin, TemplateView):
-	template_name="user/good.html"
+class CommunityGood(EmojiListMixin, TemplateView):
+	template_name="community/good.html"
 
 	def get(self,request,*args,**kwargs):
-		self.user=User.objects.get(uuid=self.kwargs["uuid"])
-		if self.user != request.user:
-			check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
-			if self.user.is_closed_profile:
-				check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
-		self.goods = self.user.get_goods()
+		self.community=Community.objects.get(uuid=self.kwargs["uuid"])
+		check_can_get_posts_for_community_with_name(request.user,self.community.name)
+		self.goods = self.community.get_goods()
 		self.good = Good.objects.get(pk=self.kwargs["pk"])
 		self.next = self.goods.filter(pk__gt=self.good.pk).order_by('pk').first()
 		self.prev = self.goods.filter(pk__lt=self.good.pk).order_by('-pk').first()
 		self.good.views += 1
 		self.good.save()
-		return super(UserGood,self).get(request,*args,**kwargs)
+		return super(CommunityGood,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context=super(UserGood,self).get_context_data(**kwargs)
+		context=super(CommunityGood,self).get_context_data(**kwargs)
 		context["object"]=self.good
 		context["user"]=self.user
 		context["next"]=self.next
