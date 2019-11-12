@@ -1,18 +1,8 @@
 from django.conf.urls import url
-from users.views import (
-                            AllUsers,
-                            UserItemView,
-                            ProfileUserView,
-                            ItemListView,
-                            ProfileReload,
-                            AvatarReload,
-                            ProfileButtonReload,
-                            ProfileStatReload,
-                            fixed,
-                            unfixed,
-                            item_delete,
-                        )
 from users.views.settings import UserGeneralChange, UserAboutChange, SettingsNotifyView, SettingsPrivateView, UserAvatarChange, UserDesign
+from users.views.progs import fixed, unfixed, item_delete
+from users.views.load import ProfileStatReload, ProfileButtonReload, AvatarReload, ProfileReload
+from users.views.detail import AllUsers, ProfileUserView, ItemListView, UserItemView
 
 
 urlpatterns = [
