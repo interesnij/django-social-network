@@ -39,33 +39,27 @@ class UserItemView(EmojiListMixin, TemplateView):
         return context
 
 
-class ItemListView(TemplateView, EmojiListMixin):
-    template_name="lenta/item_list.html"
+class ItemListView(View, EmojiListMixin):
 
     def get(self, request, **kwargs):
+        context = {}
         self.user=User.objects.get(pk=self.kwargs["pk"])
-        self.request_user=request.user
-        if self.user != self.request_user:
-            check_is_not_blocked_with_user_with_id(user=self.request_user, user_id=self.user.id)
+        if self.user != request.user:
+            check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
             if self.user.is_closed_profile:
-                check_is_connected_with_user_with_id(user=self.request_user, user_id=self.user.id)
-        self.item_list = self.user.get_posts().order_by('-created')
-        self.current_page = Paginator(self.item_list, 10)
-        self.page = request.GET.get('page')
-
-
-        return super(ItemListView,self).get(request,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        context=super(ItemListView,self).get_context_data(**kwargs)
-        try:
-            context['items_list'] = self.current_page.page(self.page)
-        except PageNotAnInteger:
-            context['items_list'] = self.current_page.page(1)
-        except EmptyPage:
-            context['items_list'] = self.current_page.page(current_page.num_pages)
+                check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
+        item_list = self.user.get_posts().order_by('-created')
+        current_page = Paginator(item_list, 10)
+        page = request.GET.get('page')
         context['user'] = self.user
-        return context
+        try:
+            context['items_list'] = current_page.page(page)
+        except PageNotAnInteger:
+            context['items_list'] = current_page.page(1)
+        except EmptyPage:
+            context['items_list'] = current_page.page(current_page.num_pages)
+
+        return render_to_response('lenta/item_list.html', context)
 
 
 class AllUsers(ListView):
