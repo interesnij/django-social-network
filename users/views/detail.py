@@ -43,7 +43,7 @@ class ItemListView(View, EmojiListMixin):
 
     def get(self, request, *args, **kwargs):
         self.user=User.objects.get(pk=self.kwargs["pk"])
-        self.request_user = request.user
+        self.request_user = self.request.user
         if self.user != self.request_user:
             check_is_not_blocked_with_user_with_id(user=self.request_user, user_id=self.user.id)
             if self.user.is_closed_profile:
