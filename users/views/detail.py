@@ -42,18 +42,18 @@ class UserItemView(EmojiListMixin, TemplateView):
 class ItemListView(View, EmojiListMixin):
 
     def get(self, request, *args, **kwargs):
-        user=User.objects.get(pk=self.kwargs["pk"])
-        if user != request.user:
-            check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
-            if user.is_closed_profile:
-                check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
+        self.user=User.objects.get(pk=self.kwargs["pk"])
+        self.request_user = request.user
+        if self.user != self.request_user:
+            check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
+            if self.user.is_closed_profile:
+                check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
         item_list = user.get_posts().order_by('-created')
         current_page = Paginator(item_list, 10)
         page = request.GET.get('page')
 
         context = {}
-        context['user'] = user
-        context['r_user'] = request.user
+        context['user'] = self.user
         try:
             context['items_list'] = current_page.page(page)
         except PageNotAnInteger:
