@@ -61,7 +61,7 @@ class ItemListView(TemplateView, EmojiListMixin):
         except EmptyPage:
             context['items_list'] = current_page.page(current_page.num_pages)
 
-        return render_to_response('lenta/item_list.html', context)
+        return super(ItemListView,self).get(request,*args,**kwargs)
 
 
 class AllUsers(ListView):
