@@ -61,7 +61,7 @@ class ItemListView(TemplateView, EmojiListMixin):
         except EmptyPage:
             context['items_list'] = current_page.page(current_page.num_pages)
 
-        return super(ItemListView,self).get(request,*args,**kwargs)
+        return super(ItemListView,self).get(request,**kwargs)
 
 
 class AllUsers(ListView):
