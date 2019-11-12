@@ -1,11 +1,14 @@
 from generic.mixins import EmojiListMixin
 from django.views.generic.base import TemplateView
-from django.views.generic import ListView
 from main.models import Item
 from communities.models import Community, CommunityMembership
 from django.views.generic.detail import DetailView
 from follows.models import CommunityFollow
 from common.checkers import check_can_get_posts_for_community_with_name
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.views import View
+from django.shortcuts import render_to_response
+
 
 
 class CommunityItemView(EmojiListMixin, TemplateView):
@@ -32,20 +35,30 @@ class CommunityItemView(EmojiListMixin, TemplateView):
         return context
 
 
-class CommunityListView(ListView):
-    template_name="detail/list.html"
-    model=Item
-    paginate_by=15
+class CommunityListView(View, EmojiListMixin):
 
     def get(self,request,*args,**kwargs):
         try:
             self.fixed = Item.objects.get(community=self.community, is_fixed=True)
         except:
             self.fixed = None
+        context = {}
         self.community=Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_posts_for_community_with_name(request.user,self.community.name)
-        self.communities = self.community.get_posts().order_by('-created')
-        return super(CommunityListView,self).get(request,*args,**kwargs)
+        item_list = self.community.get_posts().order_by('-created')
+        current_page = Paginator(item_list, 10)
+        page = request.GET.get('page')
+        context['user'] = self.user
+        context['object'] = self.fixed
+        context["community"]=self.community
+        try:
+            context['items_list'] = current_page.page(page)
+        except PageNotAnInteger:
+            context['items_list'] = current_page.page(1)
+        except EmptyPage:
+            context['items_list'] = current_page.page(current_page.num_pages)
+
+        return render_to_response('detail/list.html', context)
 
     def get_context_data(self, **kwargs):
         context = super(CommunityListView, self).get_context_data(**kwargs)

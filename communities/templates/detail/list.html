@@ -25,7 +25,7 @@ transition: 0.5s;
 }
 </style>
 
-{% if communities %}
+{% if items_list %}
 
 <div class="infinite-container">
   <div class="stream-update">
@@ -48,7 +48,7 @@ transition: 0.5s;
       {% include 'generic/community/post.html' with post=post  %}
     {% endif %}
 
-    {% for object in communities %}
+    {% for object in items_list %}
 
       {% if object.article %}
           {% include 'generic/community/article.html' with article=article  %}
@@ -60,8 +60,8 @@ transition: 0.5s;
 
     {% endfor %}
     <div class="load col-12 col-md-12" >
-      {% if page_obj.has_next %}
-        <a style="display:flex;justify-content:center;" class="infinite-more-link" href="{% url 'community_item_list' community.pk %}?page={{ page_obj.next_page_number }}">
+      {% if items_list.has_next %}
+        <a style="display:flex;justify-content:center;" class="infinite-more-link" href="{% url 'community_item_list' community.pk %}?page={{ items_list.next_page_number }}">
           <img src="{% static 'images/loading.gif' %}">
         </a>
       {% endif %}
