@@ -48,7 +48,6 @@ class CommunityListView(View, EmojiListMixin):
         item_list = self.community.get_posts().order_by('-created')
         current_page = Paginator(item_list, 10)
         page = request.GET.get('page')
-        context['user'] = self.user
         context['object'] = self.fixed
         context["community"]=self.community
         try:
