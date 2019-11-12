@@ -1,4 +1,4 @@
-from goods.view.user import *
+from goods.view.community import *
 from django.conf.urls import url
 
 
