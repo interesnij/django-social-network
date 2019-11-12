@@ -8,7 +8,7 @@ from main.views import (
 						NewsListView,
 						item_post_comment,
 						ItemCommentReactUserCreate,
-						comment_un_react,
+						ItemCommentReactUserDelete,
 						ItemReactUserCreate,
 						ItemReactUserDelete,
 						item_reply_comment)
@@ -21,7 +21,7 @@ urlpatterns = [
 	url(r'^main/react_window/(?P<pk>\d+)/$', ItemReactWindow.as_view(), name='item_react_window'),
 	url(r'^main/comment/(?P<uuid>[0-9a-f-]+)/$', ItemCommentList.as_view(), name='item_get_comment'),
 	url(r'^main/comment_react/(?P<uuid>[0-9a-f-]+)/(?P<pk>\d+)/$', ItemCommentReactUserCreate.as_view(), name='item_user_comment_react'),
-	url(r'^main/comment_un_react/$', item_comment_un_react, name='item_user_comment_un_react'),
+	url(r'^main/comment_un_react/(?P<uuid>[0-9a-f-]+)/(?P<pk>\d+)/$', ItemCommentReactUserDelete.as_view(), name='item_user_comment_un_react'),
 	url(r'^main/react/(?P<uuid>[0-9a-f-]+)/(?P<pk>\d+)/$', ItemReactUserCreate.as_view(), name='item_user_react'),
 	url(r'^main/un_react/(?P<uuid>[0-9a-f-]+)/(?P<pk>\d+)/$', ItemReactUserDelete.as_view(), name='item_user_unreact'),
     url(r'^main/post-comment/$', item_post_comment, name='item_user_post_comment'),
