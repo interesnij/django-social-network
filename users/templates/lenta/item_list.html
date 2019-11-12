@@ -1,6 +1,8 @@
 {% load staticfiles humanize %}
 
 {% if items_list %}
+{{ user.is_closed_profile }}
+{{ request.user.is_closed_profile }}
 
 <div class="card mb-4 item_fullscreen" style="display:none">
   <span class="item_fullscreen_hide">
