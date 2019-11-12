@@ -8,6 +8,8 @@ from common.checkers import check_is_not_blocked_with_user_with_id, check_is_con
 from users.forms import AvatarUserForm
 from main.models import Item
 from django.core.paginator import Paginator
+from django.views import View
+from django.shortcuts import render_to_response
 
 
 class UserItemView(EmojiListMixin, TemplateView):
@@ -37,26 +39,26 @@ class UserItemView(EmojiListMixin, TemplateView):
         return context
 
 
-class ItemListView(ListView, EmojiListMixin):
-    template_name="lenta/item_list.html"
-    model=Item
+class ItemListView(View, EmojiListMixin):
 
-    def get(self,request,*args,**kwargs):
+    def get(self, request):
+        context = {}
         self.user=User.objects.get(pk=self.kwargs["pk"])
         if self.user != request.user:
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
             if self.user.is_closed_profile:
                 check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
-        self.item_list = self.user.get_posts()
-        paginator = Paginator(self.item_list, 10)
-        self.posts = paginator.page(page)
-        return super(ItemListView,self).get(request,*args,**kwargs)
+        item_list = self.user.get_posts()
+        current_page = Paginator(item_list, 10)
+        page = request.GET.get('page')
+        try:
+            context['item_list'] = current_page.page(page)
+        except PageNotAnInteger:
+            context['item_list'] = current_page.page(1)
+        except EmptyPage:
+            context['item_list'] = current_page.page(current_page.num_pages)
 
-    def get_context_data(self,**kwargs):
-        context=super(ItemListView,self).get_context_data(**kwargs)
-        context["user"]=self.user
-        context["item_list"]=self.posts
-        return context
+        return render_to_response('lenta/item_list.html', context)
 
 
 class AllUsers(ListView):
