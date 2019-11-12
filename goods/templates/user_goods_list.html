@@ -5,7 +5,7 @@
 {% for object in goods_list %}
 <div class="col-12 col-md-4 infinite-item">
     <div class="card mb-4">
-        <div class="card-body pb-0 good_detail" style="cursor:pointer" data-id="{{ object.id }}">
+        <div class="card-body pb-0 good_detail" style="cursor:pointer" data-uuid="{{object.creator.uuid }}" data-id="{{ object.id }}">
             <div class="row align-items-center no-gutters">
                 <div class="col">
                     <div>

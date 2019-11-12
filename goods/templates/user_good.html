@@ -111,7 +111,7 @@
     {% if prev %}
     <script>
         $('.prev_item').on('click', function() {
-            $('#good_loader').html('').load("{% url 'user_good_detail' pk=prev.pk %}");
+            $('#good_loader').html('').load("{% url 'user_good_detail' pk=prev.pk uuid=user.uuid %}");
         });
     </script>
 
@@ -119,7 +119,7 @@
     {% if next %}
     <script>
         $('.next_item').on('click', function() {
-            $('#good_loader').html('').load("{% url 'user_good_detail' pk=next.pk %}");
+            $('#good_loader').html('').load("{% url 'user_good_detail' pk=prev.pk uuid=user.uuid %}");
         });
     </script>
     {% endif %}

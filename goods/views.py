@@ -55,7 +55,7 @@ class GoodsUserList(View):
 			context['goods_list'] = current_page.page(1)
 		except EmptyPage:
 			context['goods_list'] = current_page.page(current_page.num_pages)
-		return render_to_response('goods_list.html', context)
+		return render_to_response('user_goods_list.html', context)
 
 
 class GoodUserCreate(TemplateView):
@@ -113,7 +113,7 @@ class UserGoodDetail(EmojiListMixin, TemplateView):
 	template_name="user_good.html"
 
 	def get(self,request,*args,**kwargs):
-		self.user=User.objects.get(pk=self.kwargs["pk"])
+		self.user=User.objects.get(uuid=self.kwargs["uuid"])
 		if self.user != request.user:
 			check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
 			if self.user.is_closed_profile:
