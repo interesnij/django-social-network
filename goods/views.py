@@ -24,6 +24,7 @@ class GoodSubCategoriesView(TemplateView):
 
 class GoodsListView(View):
 	def get(self,request,**kwargs):
+		context = {}
 		self.user=User.objects.get(pk=self.kwargs["pk"])
 		if self.user != request.user:
 			check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
