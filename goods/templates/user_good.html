@@ -4,12 +4,12 @@
 {% if object %}
 <div class="mb-4 infinite-item" style="position: relative;" item-id="{{ object.uuid }}">
     <span class="text-hide-xs">
-        {% if object.get_previous_by_created %}
+        {% if prev %}
         <span class="prev_item">
             <img style="width: 50px;" src="{% static 'images/icons/right-24px.svg' %}" />
         </span>
         {% endif %}
-        {% if object.get_next_by_created %}
+        {% if next %}
         <span class="next_item">
             <img style="width: 50px;" src="{% static 'images/icons/left-24px.svg' %}" />
         </span>
@@ -108,18 +108,18 @@
 {% endif %}
 
 <div class="">
-    {% if object.get_previous_by_created %}
+    {% if prev %}
     <script>
         $('.prev_item').on('click', function() {
-            $('#good_loader').html('').load("{% url 'good_detail' pk=object.get_previous_by_created.pk %}");
+            $('#good_loader').html('').load("{% url 'user_good_detail' pk=prev.pk %}");
         });
     </script>
 
     {% endif %}
-    {% if object.get_next_by_created %}
+    {% if next %}
     <script>
         $('.next_item').on('click', function() {
-            $('#good_loader').html('').load("{% url 'good_detail' pk=object.get_next_by_created.pk %}");
+            $('#good_loader').html('').load("{% url 'user_good_detail' pk=next.pk %}");
         });
     </script>
     {% endif %}

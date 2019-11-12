@@ -110,7 +110,7 @@ class GoodsCatsView(TemplateView):
 
 
 class UserGoodDetail(EmojiListMixin, TemplateView):
-	template_name="good_detail.html"
+	template_name="user_good.html"
 
 	def get(self,request,*args,**kwargs):
 		self.user=User.objects.get(pk=self.kwargs["pk"])
