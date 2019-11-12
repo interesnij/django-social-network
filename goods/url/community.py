@@ -1,14 +1,10 @@
-from gallery.views.community import *
+from goods.view.user import *
 from django.conf.urls import url
 
 
 urlpatterns=[
-	url(r'^(?P<pk>\d+)/$', CommunityGalleryView.as_view(), name="community_gallery"),
-	url(r'^album/(?P<uuid>[0-9a-f-]+)/$', CommunityAlbomView.as_view(), name="community_album"),
-	url(r'^album/reload/(?P<uuid>[0-9a-f-]+)/$', CommunityAlbomReload.as_view(), name="community_album"),
-	url(r'^albums/(?P<uuid>[0-9a-f-]+)/$', CommunityAlbumsList.as_view(), name="community_albums"),
-	url(r'^photos/(?P<uuid>[0-9a-f-]+)/$', CommunityPhotosList.as_view(), name="community_photos"),
-	url(r'^add_photo/(?P<uuid>[0-9a-f-]+)/$', CommunityUserCreate.as_view(), name="photo_add_community"),
-	url(r'^add_album/(?P<uuid>[0-9a-f-]+)/$', AlbumCommunityCreate.as_view(), name="album_add_community"),
-	url(r'^photo/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityPhoto.as_view(), name='community_photo'),
+	url(r'^goods/(?P<pk>\d+)/$', CommunityGoodsList.as_view(), name="community_goods_list"),
+	url(r'^(?P<pk>\d+)/$', CommunityGoods.as_view(), name="community_goods"),
+	url(r'^good/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityGood.as_view(), name='community_good'),
+	url(r'^add/(?P<pk>\d+)/$', CommunityUserCreate.as_view(), name="community_add_user"),
 ]
