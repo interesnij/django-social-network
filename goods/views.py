@@ -114,11 +114,10 @@ class GoodDetailView(EmojiListMixin, TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.user=User.objects.get(pk=self.kwargs["pk"])
-		request_user = request.user
-		if self.user != request_user:
-			check_is_not_blocked_with_user_with_id(user=request_user, user_id=self.user.id)
+		if self.user != request.user:
+			check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
 			if self.user.is_closed_profile:
-				check_is_connected_with_user_with_id(user=request_user, user_id=self.user.id)
+				check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
 		self.goods = self.user.get_goods()
 		self.good = Good.objects.get(pk=self.kwargs["pk"])
 		self.next = self.goods.filter(pk__gt=self.good.pk).order_by('pk').first()
