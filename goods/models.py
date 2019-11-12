@@ -84,3 +84,86 @@ class Good(models.Model):
 		indexes = (BrinIndex(fields=['created']),)
 		verbose_name="Товар"
 		verbose_name_plural="Товары"
+
+
+class GoodComment(models.Model):
+    parent_comment = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True,verbose_name="Родительский комментарий")
+    created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
+    modified = models.DateTimeField(auto_now_add=True, auto_now=False, db_index=False)
+    commenter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Комментатор")
+    text = models.TextField(blank=True,null=True)
+    is_edited = models.BooleanField(default=False, null=False, blank=False,verbose_name="Изменено")
+    is_deleted = models.BooleanField(default=False,verbose_name="Удаено")
+    good = models.ForeignKey(Good, on_delete=models.CASCADE, null=True)
+
+    class Meta:
+        indexes = (
+            BrinIndex(fields=['created']),
+        )
+        verbose_name="комментарий к записи"
+        verbose_name_plural="комментарии к записи"
+
+    def __str__(self):
+        return "{0}/{1}".format(self.commenter.get_full_name(), self.text[:10])
+
+    def notification_comment(self, user):
+        notification_handler(user, self.commenter,Notification.POST_COMMENT, action_object=self,id_value=str(self.uuid),key='social_update')
+
+    def notification_reply_comment(self, user):
+        notification_handler(user, self.commenter,Notification.POST_COMMENT_REPLY, action_object=self,id_value=str(self.uuid),key='social_update')
+
+    def notification_comment_react(self, user):
+        notification_handler(user, self.reactor,Notification.REACT_COMMENT, action_object=self,id_value=str(self.uuid),key='social_update')
+
+    def get_emoji_for_post_comment(self, emoji_id=None, reactor_id=None):
+        return Emoji.get_emoji_comment(post_comment_id=self, emoji_id=emoji_id,
+                                                               reactor_id=reactor_id)
+
+
+
+class GoodReaction(models.Model):
+    good = models.ForeignKey(Good, on_delete=models.CASCADE, related_name='good_reactions')
+    created = models.DateTimeField(editable=False)
+    reactor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='good_reactions')
+    emoji = models.ForeignKey(Emoji, on_delete=models.CASCADE, related_name='good_reactions')
+
+    class Meta:
+        unique_together = ('reactor', 'good', 'emoji')
+        verbose_name="реакция к записи"
+        verbose_name_plural="реакции к записям"
+
+    @classmethod
+    def count_reactions_for_post_with_id(cls, good, reactor_id=None):
+        count_query = Q(good=good, reactor__is_deleted=False)
+
+        if reactor_id:
+            count_query.add(Q(reactor_id=reactor_id), Q.AND)
+
+        return cls.objects.filter(count_query).count()
+
+    def __str__(self):
+        return "{0}/{1}".format(self.good.creator.get_full_name(), self.emoji.keyword)
+
+    def get_reactor(self):
+        reactors = User.objects.filter(pk=self.reactor.pk).all()
+        return reactors
+
+    def notification_react(self, user):
+        notification_handler(user, self.reactor,Notification.REACT, action_object=self,id_value=str(self.id),key='social_update')
+
+
+class GoodCommentReaction(models.Model):
+    good_comment = models.ForeignKey(GoodComment, on_delete=models.CASCADE, related_name='good_reactions')
+    created = models.DateTimeField(editable=False)
+    reactor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='good_comment_reactions')
+    emoji = models.ForeignKey(Emoji, on_delete=models.CASCADE, related_name='good_comment_reactions')
+
+    class Meta:
+        unique_together = ('reactor', 'good_comment','emoji')
+        verbose_name="реакция на комментарий"
+        verbose_name_plural="реакции на комментарии"
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.created = timezone.now()
+        return super(GoodCommentReaction, self).save(*args, **kwargs)
