@@ -12,16 +12,16 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render_to_response
 
 
-class GalleryView(TemplateView):
+class UserGalleryView(TemplateView):
 	template_name="good_user/gallery.html"
 
 	def get(self,request,*args,**kwargs):
 		self.user=User.objects.get(pk=self.kwargs["pk"])
 		self.albums=Album.objects.filter(creator=self.user)
-		return super(GalleryView,self).get(request,*args,**kwargs)
+		return super(UserGalleryView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context=super(GalleryView,self).get_context_data(**kwargs)
+		context=super(UserGalleryView,self).get_context_data(**kwargs)
 		context['user'] = self.user
 		return context
 
