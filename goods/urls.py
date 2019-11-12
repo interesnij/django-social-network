@@ -11,7 +11,7 @@ from django.conf.urls import url
 
 
 urlpatterns=[
-	url(r'^(?P<pk>\d+)/list/$', GoodsListView.as_view(), name="goods_list"),
+	url(r'^list/(?P<pk>\d+)/$', GoodsListView.as_view(), name="goods_list"),
 	url(r'^(?P<pk>\d+)/$', UserGoodsView.as_view(), name="goods"),
     url(r'sub/^$', GoodSubCategoriesView.as_view(), name="good_sub_categories"),
     url(r'cat/^$', GoodCategoriesView.as_view(), name="good_categories"),
