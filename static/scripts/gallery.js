@@ -27,13 +27,5 @@
         $('#photo_loader').html('').load("/gallery/user/photo/" + photo_id + "/" + user_uuid + "/")
         $('.photo_fullscreen').show();
     });
-    
-    var infinite = new Waypoint.Infinite({
-  	    element: $('.infinite-container')[0],
-  	    onBeforePageLoad: function() {
-  	        $('.load').show();
-  	    },
-  	    onAfterPageLoad: function($items) {
-  	        $('.load').hide();
-  	    }
-  	});
+
+  
