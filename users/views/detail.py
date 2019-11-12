@@ -48,18 +48,18 @@ class ItemListView(View, EmojiListMixin):
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
             if self.user.is_closed_profile:
                 check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
-        item_list = user.get_posts().order_by('-created')
-        current_page = Paginator(item_list, 10)
+        self.item_list = self.user.get_posts().order_by('-created')
+        self.current_page = Paginator(self.item_list, 10)
         page = request.GET.get('page')
 
         context = {}
         context['user'] = self.user
         try:
-            context['items_list'] = current_page.page(page)
+            context['items_list'] = self.current_page.page(page)
         except PageNotAnInteger:
-            context['items_list'] = current_page.page(1)
+            context['items_list'] = self.current_page.page(1)
         except EmptyPage:
-            context['items_list'] = current_page.page(current_page.num_pages)
+            context['items_list'] = self.current_page.page(current_page.num_pages)
         return render_to_response('lenta/item_list.html', context)
 
 
