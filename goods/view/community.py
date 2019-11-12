@@ -44,7 +44,7 @@ class CommunityGoodsList(View):
 		return render_to_response('community/goods_list.html', context)
 
 
-class GoodCommunityCreate(TemplateView):
+class CommunityUserCreate(TemplateView):
 	template_name="community/add.html"
 	form=None
 	sub_categories = GoodSubCategory.objects.only("id")
@@ -54,10 +54,10 @@ class GoodCommunityCreate(TemplateView):
 	def get(self,request,*args,**kwargs):
 		self.user=User.objects.get(pk=self.kwargs["pk"])
 		self.form=GoodForm(initial={"creator":self.user})
-		return super(GoodCommunityCreate,self).get(request,*args,**kwargs)
+		return super(CommunityUserCreate,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context=super(GoodCommunityCreate,self).get_context_data(**kwargs)
+		context=super(CommunityUserCreate,self).get_context_data(**kwargs)
 		context["form"]=self.form
 		context["sub_categories"]=self.sub_categories
 		context["categories"]=self.categories
@@ -76,7 +76,7 @@ class GoodCommunityCreate(TemplateView):
 			return HttpResponse(html)
 		else:
 			return HttpResponseBadRequest()
-		return super(GoodCommunityCreate,self).get(request,*args,**kwargs)
+		return super(CommunityUserCreate,self).get(request,*args,**kwargs)
 
 
 class CommunityGood(EmojiListMixin, TemplateView):
