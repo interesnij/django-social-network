@@ -41,7 +41,7 @@ class UserAlbumsList(ListView):
 		return super(UserAlbumsList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context=super(AlbumsListView,self).get_context_data(**kwargs)
+		context=super(UserAlbumsList,self).get_context_data(**kwargs)
 		context['albums'] = self.albums
 		context['user'] = self.user
 		return context
