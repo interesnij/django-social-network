@@ -14,30 +14,30 @@ from django.views import View
 from django.shortcuts import render_to_response
 
 
-class GoodCategoriesView(TemplateView):
-	template_name="good_categories.html"
+class GoodCategories(TemplateView):
+	template_name="categories.html"
 
 
-class GoodSubCategoriesView(TemplateView):
-	template_name="good_subcategories.html"
+class GoodSubCategories(TemplateView):
+	template_name="subcategories.html"
 
 
-class UserGoodsView(TemplateView):
-    template_name = "user_goods.html"
+class UserGoods(TemplateView):
+    template_name = "user/goods.html"
 
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
 
-        return super(UserGoodsView,self).get(request,*args,**kwargs)
+        return super(UserGoods,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context=super(UserGoodsView,self).get_context_data(**kwargs)
+        context=super(UserGoods,self).get_context_data(**kwargs)
         context["user"]=self.user
 
         return context
 
 
-class GoodsUserList(View):
+class UserGoodsList(View):
 	def get(self,request,**kwargs):
 		context = {}
 		self.user=User.objects.get(pk=self.kwargs["pk"])
@@ -55,11 +55,11 @@ class GoodsUserList(View):
 			context['goods_list'] = current_page.page(1)
 		except EmptyPage:
 			context['goods_list'] = current_page.page(current_page.num_pages)
-		return render_to_response('user_goods_list.html', context)
+		return render_to_response('user/goods_list.html', context)
 
 
 class GoodUserCreate(TemplateView):
-	template_name="good_user_add.html"
+	template_name="user/add.html"
 	form=None
 	sub_categories = GoodSubCategory.objects.only("id")
 	categories = GoodCategory.objects.only("id")
@@ -87,7 +87,7 @@ class GoodUserCreate(TemplateView):
 			new_good=self.form.save()
 
 			if request.is_ajax() :
-				html = render_to_string('good.html',{'object': new_good,'request': request})
+				html = render_to_string('user/good.html',{'object': new_good,'request': request})
 			return HttpResponse(html)
 		else:
 			return HttpResponseBadRequest()
@@ -95,7 +95,7 @@ class GoodUserCreate(TemplateView):
 
 
 class GoodsCatsView(TemplateView):
-	template_name="good_cats.html"
+	template_name="user/cats.html"
 	categ = None
 
 	def get(self,request,*args,**kwargs):
@@ -109,8 +109,8 @@ class GoodsCatsView(TemplateView):
 		return context
 
 
-class UserGoodDetail(EmojiListMixin, TemplateView):
-	template_name="user_good.html"
+class UserGood(EmojiListMixin, TemplateView):
+	template_name="user/good.html"
 
 	def get(self,request,*args,**kwargs):
 		self.user=User.objects.get(uuid=self.kwargs["uuid"])
@@ -124,10 +124,10 @@ class UserGoodDetail(EmojiListMixin, TemplateView):
 		self.prev = self.goods.filter(pk__lt=self.good.pk).order_by('-pk').first()
 		self.good.views += 1
 		self.good.save()
-		return super(UserGoodDetail,self).get(request,*args,**kwargs)
+		return super(UserGood,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context=super(UserGoodDetail,self).get_context_data(**kwargs)
+		context=super(UserGood,self).get_context_data(**kwargs)
 		context["object"]=self.good
 		context["user"]=self.user
 		context["next"]=self.next

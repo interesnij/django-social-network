@@ -1,21 +1,13 @@
-from .views import (
-					GoodCategoriesView,
-					GoodSubCategoriesView,
-					UserGoodsView,
-					GoodsUserList,
-					GoodUserCreate,
-					GoodsCatsView,
-					UserGoodDetail,
-					)
+from goods.views import *
 from django.conf.urls import url
 
 
 urlpatterns=[
-	url(r'^user_goods/(?P<pk>\d+)/$', GoodsUserList.as_view(), name="goods_user_list"),
-	url(r'^(?P<pk>\d+)/$', UserGoodsView.as_view(), name="goods"),
-    url(r'sub/^$', GoodSubCategoriesView.as_view(), name="good_sub_categories"),
-    url(r'cat/^$', GoodCategoriesView.as_view(), name="good_categories"),
+	url(r'^goods/(?P<pk>\d+)/$', UserGoodsList.as_view(), name="user_goods_list"),
+	url(r'^(?P<pk>\d+)/$', UserGoods.as_view(), name="user_goods"),
+	url(r'^good/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', UserGood.as_view(), name='user_good'),
+    url(r'sub/^$', GoodSubCategories.as_view(), name="good_sub_categories"),
+    url(r'cat/^$', GoodCategories.as_view(), name="good_categories"),
 	url(r'^add/(?P<pk>\d+)/$', GoodUserCreate.as_view(), name="good_add_user"),
-	url(r'^cat/(?P<order>\d+)/$',GoodsCatsView.as_view(), name="good_cats"),
-	url(r'^user_good/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', UserGoodDetail.as_view(), name='user_good_detail'),
+	url(r'^cat/(?P<order>\d+)/$',GoodsCats.as_view(), name="good_cats"),
 ]
