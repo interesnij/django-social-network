@@ -53,6 +53,7 @@ class ItemListView(View, EmojiListMixin):
 
         context = {}
         context['user'] = user
+        context['r_user'] = request.user
         try:
             context['items_list'] = current_page.page(page)
         except PageNotAnInteger:
