@@ -48,7 +48,8 @@ class ItemListView(ListView, EmojiListMixin):
             if self.user.is_closed_profile:
                 check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
         self.item_list = self.user.get_posts()
-        self.posts = Paginator(self.item_list, 10)
+        paginator = Paginator(self.item_list, 10)
+        self.posts = paginator.page(page)
         return super(ItemListView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
