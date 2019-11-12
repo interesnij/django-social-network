@@ -52,11 +52,11 @@ class ItemListView(View, EmojiListMixin):
         current_page = Paginator(item_list, 10)
         page = request.GET.get('page')
         try:
-            context['current_page'] = current_page
+            context['items_list'] = current_page.page(page)
         except PageNotAnInteger:
-            context['item_list'] = current_page.page(1)
+            context['items_list'] = current_page.page(1)
         except EmptyPage:
-            context['item_list'] = current_page.page(current_page.num_pages)
+            context['items_list'] = current_page.page(current_page.num_pages)
 
         return render_to_response('lenta/item_list.html', context)
 
