@@ -43,7 +43,6 @@ class ItemListView(TemplateView, EmojiListMixin):
     template_name="lenta/item_list.html"
 
     def get(self, request, **kwargs):
-        context = {}
         self.user=User.objects.get(pk=self.kwargs["pk"])
         request_user=request.user
         if self.user != request_user:
@@ -53,15 +52,20 @@ class ItemListView(TemplateView, EmojiListMixin):
         item_list = self.user.get_posts().order_by('-created')
         current_page = Paginator(item_list, 10)
         page = request.GET.get('page')
-        context['user'] = self.user
+
+
+        return super(ItemListView,self).get(request,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context=super(ItemListView,self).get_context_data(**kwargs)
         try:
             context['items_list'] = current_page.page(page)
         except PageNotAnInteger:
             context['items_list'] = current_page.page(1)
         except EmptyPage:
             context['items_list'] = current_page.page(current_page.num_pages)
-
-        return super(ItemListView,self).get(request,**kwargs)
+        context['user'] = self.user
+        return context
 
 
 class AllUsers(ListView):
