@@ -94,17 +94,17 @@ class GoodUserCreate(TemplateView):
 		return super(GoodUserCreate,self).get(request,*args,**kwargs)
 
 
-class GoodsCatsView(TemplateView):
+class GoodsCats(TemplateView):
 	template_name="user/cats.html"
 	categ = None
 
 	def get(self,request,*args,**kwargs):
 
 		self.categ = GoodSubCategory.objects.filter(category__order=self.kwargs["order"])
-		return super(GoodsCatsView,self).get(request,*args,**kwargs)
+		return super(GoodsCats,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context=super(GoodsCatsView,self).get_context_data(**kwargs)
+		context=super(GoodsCats,self).get_context_data(**kwargs)
 		context["categ"]=self.categ
 		return context
 
