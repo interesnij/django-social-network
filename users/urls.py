@@ -3,21 +3,17 @@ from users.views import (
                             AllUsers,
                             UserItemView,
                             ProfileUserView,
-                            UserGeneralChange,
-                            UserAboutChange,
-                            UserDesign,
                             ItemListView,
                             ProfileReload,
                             AvatarReload,
-                            UserAvatarChange,
                             ProfileButtonReload,
                             ProfileStatReload,
-                            SettingsNotifyView,
-                            SettingsPrivateView,
                             fixed,
                             unfixed,
                             item_delete,
                         )
+from users.views.settings import UserGeneralChange, UserAboutChange, SettingsNotifyView, SettingsPrivateView, UserAvatarChange, UserDesign
+
 
 urlpatterns = [
     url(r'^all-users/$', AllUsers.as_view(), name='all_users'),
