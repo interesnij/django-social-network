@@ -22,6 +22,21 @@ class GoodSubCategoriesView(TemplateView):
 	template_name="good_subcategories.html"
 
 
+class UserGoodsView(TemplateView):
+    template_name = "goods.html"
+
+    def get(self,request,*args,**kwargs):
+        self.user = User.objects.get(pk=self.kwargs["pk"])
+
+        return super(UserGoodsView,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context=super(UserGoodsView,self).get_context_data(**kwargs)
+        context["user"]=self.user
+
+        return context
+
+
 class GoodsListView(View):
 	def get(self,request,**kwargs):
 		context = {}
@@ -40,7 +55,7 @@ class GoodsListView(View):
 			context['goods_list'] = current_page.page(1)
 		except EmptyPage:
 			context['goods_list'] = current_page.page(current_page.num_pages)
-		return render_to_response('goods.html', context)
+		return render_to_response('goods_list.html', context)
 
 
 class GoodUserCreate(TemplateView):
