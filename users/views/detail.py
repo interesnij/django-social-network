@@ -45,9 +45,9 @@ class ItemListView(View, EmojiListMixin):
         self.user=User.objects.get(pk=self.kwargs["pk"])
         self.request_user = request.user
         if self.user != self.request_user:
-            check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
+            check_is_not_blocked_with_user_with_id(user=self.request_user, user_id=self.user.id)
             if self.user.is_closed_profile:
-                check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
+                check_is_connected_with_user_with_id(user=self.request_user, user_id=self.user.id)
         self.item_list = self.user.get_posts().order_by('-created')
         self.current_page = Paginator(self.item_list, 10)
         page = request.GET.get('page')
