@@ -1,0 +1,145 @@
+{% load staticfiles liked_user %}
+<link rel="stylesheet" href="{% static 'styles/swiper.min.css' %}" />
+
+{% if object %}
+<div class="mb-4 infinite-item" style="position: relative;" item-id="{{ object.uuid }}">
+    <span class="text-hide-xs">
+        {% if prev %}
+        <span class="prev_item">
+            <img style="width: 50px;" src="{% static 'images/icons/right-24px.svg' %}" />
+        </span>
+        {% endif %}
+        {% if next %}
+        <span class="next_item">
+            <img style="width: 50px;" src="{% static 'images/icons/left-24px.svg' %}" />
+        </span>
+        {% endif %}
+    </span>
+    <span class="good_fullscreen_hide">
+        <img style="width:35px" src="{% static 'images/icons/close-24px.svg' %}" />
+    </span>
+
+    <div class="card mb-4">
+        <div class="card-body py-0">
+            <div class="row">
+                <div class="col-12 col-md-6">
+                    <div class="carosel swiper-location-carousel my-4">
+                        <div data-pagination="{&quot;el&quot;: &quot;.swiper-pagination&quot;}" data-space-between="0" data-slides-per-view="1" class="swiper-container swiper-init swiper-product swiper-container-horizontal">
+                            <div class="swiper-pagination swiper-pagination-clickable swiper-pagination-bullets"><span class="swiper-pagination-bullet" tabindex="0" role="button" aria-label="Go to slide 1"></span><span class="swiper-pagination-bullet" tabindex="0" role="button" aria-label="Go to slide 2"></span><span class="swiper-pagination-bullet swiper-pagination-bullet-active" tabindex="0" role="button" aria-label="Go to slide 3"></span></div>
+                            <div class="swiper-wrapper" style="transform: translate3d(-560px, 0px, 0px); transition-duration: 0ms;">
+                                <div class="swiper-slide text-center swiper-slide-active" style="width: 280px;">
+                                    {% if object.image %}
+                                    <img src="{{ object.image.url }}" alt="">
+                                    {% else %}
+                                    <img src="{% static 'images/no-image.jpg' %}" />
+                                    {% endif %}
+                                </div>
+                                {% if object.image2 %}
+                                <div class="swiper-slide text-center swiper-slide-prev" style="width: 280px;">
+                                    <img src="{{ object.image2.url }}" alt="">
+                                </div>
+                                {% endif %}
+                                {% if object.image3 %}
+                                <div class="swiper-slide text-center swiper-slide-prev" style="width: 280px;">
+                                    <img src="{{ object.image3.url }}" alt="">
+                                </div>
+                                {% endif %}
+                                {% if object.image4 %}
+                                <div class="swiper-slide text-center swiper-slide-prev" style="width: 280px;">
+                                    <img src="{{ object.image4.url }}" alt="">
+                                </div>
+                                {% endif %}
+                                {% if object.image5 %}
+                                <div class="swiper-slide text-center swiper-slide-prev" style="width: 280px;">
+                                    <img src="{{ object.image5.url }}" alt="">
+                                </div>
+                                {% endif %}
+                            </div>
+                            <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
+                        </div>
+                    </div>
+                    <div class="row bg-light-secondary text-center">
+                        <div class="col py-3">
+                            <h5 class="content-color-primary mb-0">{{ object.price }}</h5>
+                            <p class="content-color-secondary small mb-0">Цена</p>
+                        </div>
+                        <div class="col py-3">
+                            <h5 class="content-color-primary mb-0">{{ object.views }}</h5>
+                            <p class="content-color-secondary small mb-0">{{ object.views|rupluralize:"просмотр,просмотра,просмотров" }}</p>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col">
+                            <a href="" class="btn btn-block btn-primary pink-gradient mb-3">Написать</a>
+                        </div>
+                        <div class="col">
+                            <button class="btn btn-block btn-outline-danger mb-3">В избранное</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 border-left pr-0">
+                    <div class="card no-shadow h-100">
+                        <div class="card-header">
+                            <div class="media">
+                                <div class="media-body">
+                                    <h5 class="content-color-primary my-2">тут что то</h5>
+                                    <h3 class="mb-2 header-color-primary">{{ object.title }}</h3>
+                                    <h6 class="card-subtitle header-color-secondary">{{ object.sub_category }}</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body py-0">
+                            <h1 class="text-success">{{ object.price }} руб.
+                                <small class="text-danger font-weight-light "><s>{{ object.price }} руб.</s></small>
+                            </h1>
+                            <br>
+                            <p class="">{{ object.description }}</p>
+                            <p class="content-color-secondary">Здесь может быть предупредительный текст</p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endif %}
+
+<div class="">
+    {% if prev %}
+    <script>
+        $('.prev_item').on('click', function() {
+            $('#good_loader').html('').load("{% url 'community_good' pk=prev.pk uuid=user.uuid %}");
+        });
+    </script>
+
+    {% endif %}
+    {% if next %}
+    <script>
+        $('.next_item').on('click', function() {
+            $('#good_loader').html('').load("{% url 'community_good' pk=next.pk uuid=user.uuid %}");
+        });
+    </script>
+    {% endif %}
+</div>
+<script>
+    $('.good_fullscreen_hide').on('click', function() {
+        $('.good_fullscreen').hide();
+        $('#good_loader').empty();
+    });
+</script>
+
+<script defer src="{% static 'scripts/swiper.min.js' %}" type="text/javascript"></script>
+<script>
+    'use strict';
+    var mySwiper = new Swiper('.swiper-product', {
+        slidesPerView: 1,
+        spaceBetween: 0,
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        }
+    });
+</script>

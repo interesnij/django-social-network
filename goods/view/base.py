@@ -3,15 +3,15 @@ from goods.models import GoodSubCategory
 
 
 class GoodCategories(TemplateView):
-	template_name="categories.html"
+	template_name="base/categories.html"
 
 
 class GoodSubCategories(TemplateView):
-	template_name="subcategories.html"
+	template_name="base/subcategories.html"
 
 
 class GoodsCats(TemplateView):
-	template_name="user/cats.html"
+	template_name="base/cats.html"
 	categ = None
 
 	def get(self,request,*args,**kwargs):
