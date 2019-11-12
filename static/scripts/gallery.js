@@ -6,7 +6,7 @@
     $("#albums_add").click(function() {
         var user = $(this);
         var user_id = user.data("uuid");
-        $('#photo_add_loader').html('').load("/gallery/user_add_album/" + user_id + "/");
+        $('#photo_add_loader').html('').load("/gallery/user_add_album/" + user_id + "/"); 
         $('.add_fullscreen').show();
     })
 
