@@ -1,6 +1,6 @@
 {% load staticfiles humanize %}
 
-{% if current_page %}
+{% if item_list %}
 
 <div class="card mb-4 item_fullscreen" style="display:none">
   <span class="item_fullscreen_hide">
@@ -23,7 +23,7 @@
         {% include 'generic/posts/post.html' with post=post  %}
         {% endif %}
 
-        {% for object in current_page %}
+        {% for object in item_list %}
 
         {% if object.article %}
         {% include 'generic/posts/article.html' with article=article  %}
@@ -38,7 +38,7 @@
 
 </div>
 <div class="load col-12 col-md-12">
-    {% if page_obj.has_next %}
+    {% if item_list.has_next %}
     <a style="display:flex;justify-content:center;" class="infinite-more-link" href="{% url 'user_item_list' user.pk %}?page={{ page_obj.next_page_number }}">
         <img src="{% static 'images/loading.gif' %}">
     </a>
