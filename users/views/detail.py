@@ -7,6 +7,7 @@ from generic.mixins import EmojiListMixin
 from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
 from users.forms import AvatarUserForm
 from main.models import Item
+from django.core.paginator import Paginator
 
 
 class UserItemView(EmojiListMixin, TemplateView):
@@ -15,11 +16,10 @@ class UserItemView(EmojiListMixin, TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.user=User.objects.get(uuid=self.kwargs["uuid"])
-        request_user = request.user
-        if self.user != request_user:
-            check_is_not_blocked_with_user_with_id(user=request_user, user_id=self.user.id)
+        if self.user != request.user:
+            check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
             if self.user.is_closed_profile:
-                check_is_connected_with_user_with_id(user=request_user, user_id=self.user.id)
+                check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
         self.items = self.user.get_posts()
         self.item = Item.objects.get(pk=self.kwargs["pk"])
         self.next = self.items.filter(pk__gt=self.item.pk).order_by('pk').first()
@@ -40,22 +40,21 @@ class UserItemView(EmojiListMixin, TemplateView):
 class ItemListView(ListView, EmojiListMixin):
     template_name="lenta/item_list.html"
     model=Item
-    paginate_by=6
 
     def get(self,request,*args,**kwargs):
         self.user=User.objects.get(pk=self.kwargs["pk"])
-        request_user = request.user
-        if self.user != request_user:
-            check_is_not_blocked_with_user_with_id(user=request_user, user_id=self.user.id)
+        if self.user != request.user:
+            check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
             if self.user.is_closed_profile:
-                check_is_connected_with_user_with_id(user=request_user, user_id=self.user.id)
+                check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
         self.item_list = self.user.get_posts()
+        self.posts = Paginator(self.item_list, 10)
         return super(ItemListView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context=super(ItemListView,self).get_context_data(**kwargs)
         context["user"]=self.user
-        context["item_list"]=self.item_list
+        context["item_list"]=self.posts
         return context
 
 
