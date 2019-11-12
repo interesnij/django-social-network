@@ -39,7 +39,8 @@ class UserItemView(EmojiListMixin, TemplateView):
         return context
 
 
-class ItemListView(View, EmojiListMixin):
+class ItemListView(TemplateView, EmojiListMixin):
+    template_name="lenta/item_list.html"
 
     def get(self, request, **kwargs):
         context = {}
