@@ -2,6 +2,6 @@ from django.conf.urls import url, include
 
 
 urlpatterns=[
-	url(r'^user/', include('gallery.urls.user')),
-	url(r'^community/', include('gallery.urls.community')),
+	url(r'^user/', include('gallery.url.user')),
+	url(r'^community/', include('gallery.url.community')),
 ]
