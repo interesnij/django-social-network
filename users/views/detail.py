@@ -52,7 +52,7 @@ class ItemListView(View, EmojiListMixin):
         current_page = Paginator(item_list, 10)
         page = request.GET.get('page')
         try:
-            context['item_list'] = current_page.page(page)
+            context['current_page'] = current_page
         except PageNotAnInteger:
             context['item_list'] = current_page.page(1)
         except EmptyPage:
