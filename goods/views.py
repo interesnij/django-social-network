@@ -23,9 +23,7 @@ class GoodSubCategoriesView(TemplateView):
 
 
 class GoodsListView(View):
-	template_name="goods.html"
-
-	def get(self,request,*args,**kwargs):
+	def get(self,request,**kwargs):
 		self.user=User.objects.get(pk=self.kwargs["pk"])
 		if self.user != request.user:
 			check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
@@ -34,15 +32,14 @@ class GoodsListView(View):
 		goods = self.user.get_goods().order_by('-created')
 		current_page = Paginator(goods, 6)
 		page = request.GET.get('page')
-        context['user'] = self.user
+		context['user'] = self.user
 		try:
-            context['goods_list'] = current_page.page(page)
-        except PageNotAnInteger:
-            context['goods_list'] = current_page.page(1)
-        except EmptyPage:
-            context['goods_list'] = current_page.page(current_page.num_pages)
-
-        return render_to_response('goods.html', context)
+			context['goods_list'] = current_page.page(page)
+		except PageNotAnInteger:
+			context['goods_list'] = current_page.page(1)
+		except EmptyPage:
+			context['goods_list'] = current_page.page(current_page.num_pages)
+		return render_to_response('goods.html', context)
 
 
 class GoodUserCreate(TemplateView):
