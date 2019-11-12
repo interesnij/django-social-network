@@ -9,6 +9,9 @@ from django.template.loader import render_to_string
 from django.views.generic.detail import DetailView
 from generic.mixins import EmojiListMixin
 from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.views import View
+from django.shortcuts import render_to_response
 
 
 class GoodCategoriesView(TemplateView):
@@ -19,26 +22,27 @@ class GoodSubCategoriesView(TemplateView):
 	template_name="good_subcategories.html"
 
 
-class GoodsListView(ListView):
+class GoodsListView(View):
 	template_name="goods.html"
-	model=Good
-	paginate_by=6
 
 	def get(self,request,*args,**kwargs):
 		self.user=User.objects.get(pk=self.kwargs["pk"])
-		request_user = request.user
-		if self.user != request_user:
-			check_is_not_blocked_with_user_with_id(user=request_user, user_id=self.user.id)
+		if self.user != request.user:
+			check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
 			if self.user.is_closed_profile:
-				check_is_connected_with_user_with_id(user=request_user, user_id=self.user.id)
-		self.goods = self.user.get_goods()
-		return super(GoodsListView,self).get(request,*args,**kwargs)
+				check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
+		goods = self.user.get_goods().order_by('-created')
+		current_page = Paginator(goods, 6)
+		page = request.GET.get('page')
+        context['user'] = self.user
+		try:
+            context['goods_list'] = current_page.page(page)
+        except PageNotAnInteger:
+            context['goods_list'] = current_page.page(1)
+        except EmptyPage:
+            context['goods_list'] = current_page.page(current_page.num_pages)
 
-	def get_context_data(self,**kwargs):
-		context=super(GoodsListView,self).get_context_data(**kwargs)
-		context["user"]=self.user
-		context["goods"]=self.goods
-		return context
+        return render_to_response('goods.html', context)
 
 
 class GoodUserCreate(TemplateView):
