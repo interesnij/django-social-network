@@ -1,5 +1,5 @@
 from django.conf.urls import url, include
-from main.views import MainPageView, ComingView, NewsListView,
+from main.views import MainPageView, ComingView, NewsListView
 
 
 urlpatterns = [
