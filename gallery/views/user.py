@@ -136,7 +136,7 @@ class UserAlbomView(View):
 			context['photos'] = current_page.page(1)
 		except EmptyPage:
 			context['photos'] = current_page.page(current_page.num_pages)
-		return render_to_response('good_user/photos.html', context)
+		return render_to_response('good_user/album.html', context)
 
 
 class UserAlbomReload(TemplateView):

@@ -1,8 +1,8 @@
 {% load staticfiles %}
 
-{% if items_list %}
+{% if photo_list %}
 
-{% for object in items_list %}
+{% for object in photo_list %}
 
 <div class="col-sm-12 col-md-6 col-lg-4 infinite-item photo_detail" style="cursor:pointer" data-uuid="{{ object.creator.uuid }}" data-id="{{ object.id }}">
   <div class="card rounded-0 border-0 mb-4">
@@ -12,8 +12,8 @@
 
 {% endfor %}
 <div class="load col-12 col-md-12">
-  {% if items_list.has_next %}
-    <a style="display:flex;justify-content:center;" class="infinite-more-link" href="{% url 'user_photos' user.uuid %}?page={{ items_list.next_page_number }}">
+  {% if photo_list.has_next %}
+    <a style="display:flex;justify-content:center;" class="infinite-more-link" href="{% url 'user_photos' user.uuid %}?page={{ photo_list.next_page_number }}">
       <img src="{% static 'images/loading.gif' %}">
     </a>
   {% endif %}
