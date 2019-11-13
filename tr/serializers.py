@@ -46,6 +46,4 @@ class RegisterSerializer(serializers.Serializer):
         adapter.save_user(request, user, self)
         setup_user_email(request, user, [])
         user.save()
-        UserPrivateSettings.create_private_settings(user)
-        UserNotificationsSettings.create_private_settings(user)
         return user
