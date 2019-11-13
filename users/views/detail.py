@@ -31,8 +31,13 @@ class UserItemView(EmojiListMixin, TemplateView):
             self.item.save()
         if request.user.is_anonymous and self.user.is_closed_profile():
             raise PermissionDenied(
-                'Незарегистрированные пользователи не могут просматривать записи закрытой страницы.',
+                'Это закрытый профиль. Только его друзья могут видеть его информацию.',
             )
+        else:
+            self.items = self.user.get_posts()
+            self.item = Item.objects.get(pk=self.kwargs["pk"])
+            self.next = self.items.filter(pk__gt=self.item.pk).order_by('pk').first()
+            self.prev = self.items.filter(pk__lt=self.item.pk).order_by('-pk').first()
 
         return super(UserItemView,self).get(request,*args,**kwargs)
 
@@ -65,30 +70,23 @@ class ItemListView(View, EmojiListMixin):
             self.item_list = self.user.get_posts().order_by('-created')
             self.current_page = Paginator(self.item_list, 10)
             page = request.GET.get('page')
-
-            context['user'] = self.user
-            try:
-                context['items_list'] = self.current_page.page(page)
-            except PageNotAnInteger:
-                context['items_list'] = self.current_page.page(1)
-            except EmptyPage:
-                context['items_list'] = self.current_page.page(current_page.num_pages)
         if request.user.is_anonymous and self.user.is_closed_profile():
             raise PermissionDenied(
-                'Незарегистрированные пользователи не могут просматривать записи закрытой страницы.',
+                'Это закрытый профиль. Только его друзья могут видеть его информацию.',
             )
         else:
             self.item_list = self.user.get_posts().order_by('-created')
             self.current_page = Paginator(self.item_list, 10)
             page = request.GET.get('page')
 
-            context['user'] = self.user
-            try:
-                context['items_list'] = self.current_page.page(page)
-            except PageNotAnInteger:
-                context['items_list'] = self.current_page.page(1)
-            except EmptyPage:
-                context['items_list'] = self.current_page.page(current_page.num_pages)
+        context['user'] = self.user
+        try:
+            context['items_list'] = self.current_page.page(page)
+        except PageNotAnInteger:
+            context['items_list'] = self.current_page.page(1)
+        except EmptyPage:
+            context['items_list'] = self.current_page.page(current_page.num_pages)
+
         return render_to_response('lenta/item_list.html', context)
 
 
