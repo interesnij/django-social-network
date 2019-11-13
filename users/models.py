@@ -189,10 +189,12 @@ class User(AbstractUser):
         return self.banned_of_communities.filter(name=community_name).exists()
 
     def is_closed_profile(self):
-        if UserPrivateSettings.objects.get(user=self).exists():
-            return self.user_private.is_private
-        else:
-            UserPrivateSettings.objects.create(user=self)
+        try:
+            user_private = UserPrivateSettings.objects.get(user=self)
+            return user_private.is_private
+        except:
+            user_private = UserPrivateSettings.objects.create(user=self)
+            return False
 
     def is_creator_of_community_with_name(self, community_name):
         return self.created_communities.filter(name=community_name).exists()
