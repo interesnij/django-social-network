@@ -41,7 +41,7 @@ class UserGoodsList(View):
         if request.user.is_anonymous and not self.user.is_closed_profile():
             goods_list = self.user.get_goods().order_by('-created')
             current_page = Paginator(goods_list, 6)
-            
+
         page = request.GET.get('page')
         context['user'] = self.user
         try:
@@ -59,22 +59,18 @@ class UserGood(EmojiListMixin, TemplateView):
     def get(self,request,*args,**kwargs):
         self.user=User.objects.get(uuid=self.kwargs["uuid"])
         if self.user != request.user and request.user.is_authenticated:
-            check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
-            if self.user.is_closed_profile:
-                check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
-            self.goods = self.user.get_goods()
-            self.good = Good.objects.get(pk=self.kwargs["pk"])
-            self.next = self.goods.filter(pk__gt=self.good.pk).order_by('pk').first()
-            self.prev = self.goods.filter(pk__lt=self.good.pk).order_by('-pk').first()
-            self.good.views += 1
-            self.good.save()
-        if request.user.is_anonymous and self.user.is_closed_profile():
-            raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
-        if request.user.is_anonymous and not self.user.is_closed_profile():
-            self.goods = self.user.get_goods()
-            self.good = Good.objects.get(pk=self.kwargs["pk"])
-            self.next = self.goods.filter(pk__gt=self.good.pk).order_by('pk').first()
-            self.prev = self.goods.filter(pk__lt=self.good.pk).order_by('-pk').first()
+			check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
+			if self.user.is_closed_profile:
+				check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
+			self.goods = self.user.get_goods()
+		elif self.user == request.user and request.user.is_authenticated:
+			self.goods = self.user.get_goods()
+		elif self.user.is_closed_profile() and request.user.is_anonymous:
+			raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
+		elif not self.user.is_closed_profile() and request.user.is_anonymous:
+			self.goods = self.user.get_goods()
+        self.next = self.goods.filter(pk__gt=self.good.pk).order_by('pk').first()
+        self.prev = self.goods.filter(pk__lt=self.good.pk).order_by('-pk').first()
         return super(UserGood,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
