@@ -377,8 +377,8 @@ class User(AbstractUser):
 
 
 class UserBlock(models.Model):
-    blocked_user = models.ForeignKey(User, db_index=False, on_delete=models.CASCADE, related_name='blocked_by_users')
-    blocker = models.ForeignKey(User, db_index=False, on_delete=models.CASCADE, related_name='user_blocks')
+    blocked_user = models.ForeignKey(User, db_index=False, on_delete=models.CASCADE, related_name='blocked_by_users', verbose_name="Кого блокирует")
+    blocker = models.ForeignKey(User, db_index=False, on_delete=models.CASCADE, related_name='user_blocks', verbose_name="Кто блокирует")
 
     @classmethod
     def create_user_block(cls, blocker_id, blocked_user_id):
