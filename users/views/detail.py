@@ -76,6 +76,18 @@ class ItemListView(View, EmojiListMixin):
             raise PermissionDenied(
                 'Незарегистрированные пользователи не могут просматривать записи закрытой страницы.',
             )
+        else:
+            self.item_list = self.user.get_posts().order_by('-created')
+            self.current_page = Paginator(self.item_list, 10)
+            page = request.GET.get('page')
+
+            context['user'] = self.user
+            try:
+                context['items_list'] = self.current_page.page(page)
+            except PageNotAnInteger:
+                context['items_list'] = self.current_page.page(1)
+            except EmptyPage:
+                context['items_list'] = self.current_page.page(current_page.num_pages)
         return render_to_response('lenta/item_list.html', context)
 
 
