@@ -94,9 +94,7 @@ class UserPhoto(EmojiListMixin, TemplateView):
 			self.next = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
 			self.prev = self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
 		if request.user.is_anonymous and self.user.is_closed_profile():
-            raise PermissionDenied(
-                'Это закрытый профиль. Только его друзья могут видеть его информацию.',
-            )
+			raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
 		else:
 			self.photos = self.user.get_photos()
 			self.photo = Photo.objects.get(pk=self.kwargs["pk"])
