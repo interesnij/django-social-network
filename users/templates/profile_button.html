@@ -10,6 +10,8 @@
       </button>
       <div class="dropdown-menu" x-placement="bottom-start">
           <a class="dropdown-item connect_delete" href="#">Убрать из друзей</a>
+          <a class="dropdown-item" href="#">Заблокировать</a>
+          <a class="dropdown-item" href="#">Пожаловаться</a>
       </div>
   </div>
   {% endif %}
@@ -22,6 +24,7 @@
       <div class="dropdown-menu" x-placement="bottom-start">
           <a class="dropdown-item follow_delete" href="#" >Отменить подписку</a>
           <a class="dropdown-item user_block" href="#">Заблокировать</a>
+          <a class="dropdown-item user_block" href="#">Пожаловаться</a>
       </div>
   </div>
   {% endif %}
@@ -33,6 +36,7 @@
       <div class="dropdown-menu" x-placement="bottom-start">
           <a class="dropdown-item connect_create" href="#">Добавить в друзья</a>
           <a class="dropdown-item user_block" href="#">Заблокировать</a>
+          <a class="dropdown-item user_block" href="#">Пожаловаться</a>
       </div>
   </div>
   {% endif %}
@@ -50,7 +54,7 @@
 
   </span>
 
-<span style="display: flex;align-items: center;justify-content: center;">
+<span style="">
   <a data-js="new_message" href="#" class="btn btn-sm btn-warning warning-gradient ml-2">Написать сообщение</a>
 </span>
 {% endif %}
