@@ -56,8 +56,8 @@ class ItemListView(View, EmojiListMixin):
             check_is_not_blocked_with_user_with_id(user=self.request.user, user_id=self.user.id)
             if self.user.is_closed_profile():
                 check_is_connected_with_user_with_id(user=self.request.user, user_id=self.user.id)
-            self.item_list = self.user.get_posts().order_by('-created')
-            self.current_page = Paginator(self.item_list, 10)
+            item_list = self.user.get_posts().order_by('-created')
+            self.current_page = Paginator(item_list, 10)
             page = request.GET.get('page')
         elif request.user.is_anonymous and self.user.is_closed_profile():
             raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
