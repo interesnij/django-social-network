@@ -10,6 +10,7 @@ from main.models import Item
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views import View
 from django.shortcuts import render_to_response
+from rest_framework.exceptions import PermissionDenied
 
 
 class UserItemView(EmojiListMixin, TemplateView):
