@@ -89,9 +89,7 @@ class CommunityPhoto(EmojiListMixin, TemplateView):
 			self.next = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
 			self.prev = self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
 		if request.user.is_anonymous and (self.community.is_closed or self.community.is_private):
-            raise PermissionDenied(
-                'У Вас недостаточно прав для просмотра информации группы',
-            )
+			raise PermissionDenied('У Вас недостаточно прав для просмотра информации группы')
 		if request.user.is_anonymous and self.community.is_public:
 			self.photos = self.user.get_photos()
 			self.photo = Photo.objects.get(pk=self.kwargs["pk"])
