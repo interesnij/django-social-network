@@ -1,0 +1,21 @@
+{% load staticfiles humanize liked_user %}
+
+
+<div class="card mb-4 infinite-item" post-id="{{ object.uuid }}" style="cursor:pointer">
+
+    {% include 'generic/posts/card_header.html' %} 
+
+    <div class="card-body">
+      {% if object.post.text %}
+        <p class="">{{ object.post.text|linebreaks }}</p>
+      {% endif %}
+      {% if object.post.image %}
+        <p class="">{{ object.post.image.url }}</p>
+      {% endif %}
+      {% if object.post.doc %}
+        <p class="">{{ object.post.doc }}</p>
+      {% endif %}
+    </div>
+
+    {% include 'generic/posts/info.html' %}
+</div>
