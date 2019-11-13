@@ -1,5 +1,5 @@
 from django.contrib import admin
-from users.models import User, UserProfile, UserNotificationsSettings, UserPrivateSettings
+from users.models import *
 
 
 class UserProfileInline(admin.TabularInline):
@@ -23,3 +23,5 @@ class UserAdmin(admin.ModelAdmin):
 
 
 admin.site.register(User, UserAdmin)
+
+admin.site.register(UserBlock)
