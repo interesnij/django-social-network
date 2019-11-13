@@ -28,9 +28,7 @@ class UserItemView(EmojiListMixin, TemplateView):
             self.item.views += 1
             self.item.save()
         elif request.user.is_anonymous and self.user.is_closed_profile():
-            raise PermissionDenied(
-                'Это закрытый профиль. Только его друзья могут видеть его информацию.',
-            )
+            raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
         elif self.user == request.user and request.user.is_authenticated:
 			self.photos = self.user.get_posts()
         elif not self.user.is_closed_profile() and request.user.is_anonymous:
@@ -62,9 +60,7 @@ class ItemListView(View, EmojiListMixin):
             self.current_page = Paginator(self.item_list, 10)
             page = request.GET.get('page')
         elif request.user.is_anonymous and self.user.is_closed_profile():
-            raise PermissionDenied(
-                'Это закрытый профиль. Только его друзья могут видеть его информацию.',
-            )
+            raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
         elif request.user.is_anonymous and not self.user.is_closed_profile():
 			item_list = self.user.get_posts().order_by('-created')
 			current_page = Paginator(item_list, 12)
