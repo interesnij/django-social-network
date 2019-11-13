@@ -53,36 +53,36 @@ class UserGoodsList(View):
 
 
 class UserGood(EmojiListMixin, TemplateView):
-	template_name="user/good.html"
+    template_name="user/good.html"
 
-	def get(self,request,*args,**kwargs):
-		self.user=User.objects.get(uuid=self.kwargs["uuid"])
-		if self.user != request.user and request.user.is_authenticated:
-			check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
-			if self.user.is_closed_profile:
-				check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
-		    self.goods = self.user.get_goods()
-		    self.good = Good.objects.get(pk=self.kwargs["pk"])
-		    self.next = self.goods.filter(pk__gt=self.good.pk).order_by('pk').first()
-		    self.prev = self.goods.filter(pk__lt=self.good.pk).order_by('-pk').first()
-		    self.good.views += 1
-		    self.good.save()
+    def get(self,request,*args,**kwargs):
+        self.user=User.objects.get(uuid=self.kwargs["uuid"])
+        if self.user != request.user and request.user.is_authenticated:
+            check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
+            if self.user.is_closed_profile:
+                check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
+            self.goods = self.user.get_goods()
+            self.good = Good.objects.get(pk=self.kwargs["pk"])
+            self.next = self.goods.filter(pk__gt=self.good.pk).order_by('pk').first()
+            self.prev = self.goods.filter(pk__lt=self.good.pk).order_by('-pk').first()
+            self.good.views += 1
+            self.good.save()
         if request.user.is_anonymous and self.user.is_closed_profile():
-			raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
+            raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
         if request.user.is_anonymous and not self.user.is_closed_profile():
             self.goods = self.user.get_goods()
-		    self.good = Good.objects.get(pk=self.kwargs["pk"])
-		    self.next = self.goods.filter(pk__gt=self.good.pk).order_by('pk').first()
-		    self.prev = self.goods.filter(pk__lt=self.good.pk).order_by('-pk').first()
-		return super(UserGood,self).get(request,*args,**kwargs)
+            self.good = Good.objects.get(pk=self.kwargs["pk"])
+            self.next = self.goods.filter(pk__gt=self.good.pk).order_by('pk').first()
+            self.prev = self.goods.filter(pk__lt=self.good.pk).order_by('-pk').first()
+        return super(UserGood,self).get(request,*args,**kwargs)
 
-	def get_context_data(self,**kwargs):
-		context=super(UserGood,self).get_context_data(**kwargs)
-		context["object"]=self.good
-		context["user"]=self.user
-		context["next"]=self.next
-		context["prev"]=self.prev
-		return context
+    def get_context_data(self,**kwargs):
+        context=super(UserGood,self).get_context_data(**kwargs)
+        context["object"]=self.good
+        context["user"]=self.user
+        context["next"]=self.next
+        context["prev"]=self.prev
+        return context
 
 
 class GoodUserCreate(TemplateView):
