@@ -12,7 +12,7 @@ $('#ajax').on('click', '.comment', function () {
 	var item = $(this).closest(".infinite-item").attr("item-id");
 	var url = $(this).parents(".infinite-item");
 	$.ajax({
-			url: "/user/comment/" + item + "/",
+			url: "/main/user/comment/" + item + "/",
 			data: {'item': item},
 			cache: false,
 			beforeSend: function () {
