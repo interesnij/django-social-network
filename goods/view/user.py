@@ -10,6 +10,7 @@ from common.checkers import check_is_not_blocked_with_user_with_id, check_is_con
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views import View
 from django.shortcuts import render_to_response
+from rest_framework.exceptions import PermissionDenied
 
 
 class UserGoods(TemplateView):
@@ -29,12 +30,17 @@ class UserGoodsList(View):
 	def get(self,request,**kwargs):
 		context = {}
 		self.user=User.objects.get(pk=self.kwargs["pk"])
-		if self.user != request.user:
+		if self.user != request.user and request.user.is_authenticated:
 			check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
 			if self.user.is_closed_profile:
 				check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
-		goods = self.user.get_goods().order_by('-created')
-		current_page = Paginator(goods, 6)
+		    goods = self.user.get_goods().order_by('-created')
+		    current_page = Paginator(goods, 6)
+        if request.user.is_anonymous and self.user.is_closed_profile():
+			raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
+        if request.user.is_anonymous and not self.user.is_closed_profile():
+			goods = self.user.get_goods().order_by('-created')
+		    current_page = Paginator(goods, 6)
 		page = request.GET.get('page')
 		context['user'] = self.user
 		try:
@@ -44,6 +50,39 @@ class UserGoodsList(View):
 		except EmptyPage:
 			context['goods_list'] = current_page.page(current_page.num_pages)
 		return render_to_response('user/goods_list.html', context)
+
+
+class UserGood(EmojiListMixin, TemplateView):
+	template_name="user/good.html"
+
+	def get(self,request,*args,**kwargs):
+		self.user=User.objects.get(uuid=self.kwargs["uuid"])
+		if self.user != request.user and request.user.is_authenticated:
+			check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
+			if self.user.is_closed_profile:
+				check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
+		    self.goods = self.user.get_goods()
+		    self.good = Good.objects.get(pk=self.kwargs["pk"])
+		    self.next = self.goods.filter(pk__gt=self.good.pk).order_by('pk').first()
+		    self.prev = self.goods.filter(pk__lt=self.good.pk).order_by('-pk').first()
+		    self.good.views += 1
+		    self.good.save()
+        if request.user.is_anonymous and self.user.is_closed_profile():
+			raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
+        if request.user.is_anonymous and not self.user.is_closed_profile():
+            self.goods = self.user.get_goods()
+		    self.good = Good.objects.get(pk=self.kwargs["pk"])
+		    self.next = self.goods.filter(pk__gt=self.good.pk).order_by('pk').first()
+		    self.prev = self.goods.filter(pk__lt=self.good.pk).order_by('-pk').first()
+		return super(UserGood,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context=super(UserGood,self).get_context_data(**kwargs)
+		context["object"]=self.good
+		context["user"]=self.user
+		context["next"]=self.next
+		context["prev"]=self.prev
+		return context
 
 
 class GoodUserCreate(TemplateView):
@@ -79,29 +118,3 @@ class GoodUserCreate(TemplateView):
 		else:
 			return HttpResponseBadRequest()
 		return super(GoodUserCreate,self).get(request,*args,**kwargs)
-
-
-class UserGood(EmojiListMixin, TemplateView):
-	template_name="user/good.html"
-
-	def get(self,request,*args,**kwargs):
-		self.user=User.objects.get(uuid=self.kwargs["uuid"])
-		if self.user != request.user:
-			check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
-			if self.user.is_closed_profile:
-				check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
-		self.goods = self.user.get_goods()
-		self.good = Good.objects.get(pk=self.kwargs["pk"])
-		self.next = self.goods.filter(pk__gt=self.good.pk).order_by('pk').first()
-		self.prev = self.goods.filter(pk__lt=self.good.pk).order_by('-pk').first()
-		self.good.views += 1
-		self.good.save()
-		return super(UserGood,self).get(request,*args,**kwargs)
-
-	def get_context_data(self,**kwargs):
-		context=super(UserGood,self).get_context_data(**kwargs)
-		context["object"]=self.good
-		context["user"]=self.user
-		context["next"]=self.next
-		context["prev"]=self.prev
-		return context
