@@ -57,7 +57,7 @@ class ItemListView(View, EmojiListMixin):
             if self.user.is_closed_profile():
                 check_is_connected_with_user_with_id(user=self.request.user, user_id=self.user.id)
             items_list = self.user.get_posts().order_by('-created')
-            self.current_page = Paginator(items_list, 10)
+            current_page = Paginator(items_list, 10)
             page = request.GET.get('page')
         elif request.user.is_anonymous and self.user.is_closed_profile():
             raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
@@ -70,11 +70,11 @@ class ItemListView(View, EmojiListMixin):
 
         context['user'] = self.user
         try:
-            context['items_list'] = self.current_page.page(page)
+            context['items_list'] = current_page.page(page)
         except PageNotAnInteger:
-            context['items_list'] = self.current_page.page(1)
+            context['items_list'] = current_page.page(1)
         except EmptyPage:
-            context['items_list'] = self.current_page.page(current_page.num_pages)
+            context['items_list'] = current_page.page(current_page.num_pages)
 
         return render_to_response('lenta/item_list.html', context)
 
