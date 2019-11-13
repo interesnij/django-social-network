@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from main.user.views import (
+from main.view.user import (
 						ItemReactWindow,
 						ItemCommentReactWindow,
 						ItemCommentList,
