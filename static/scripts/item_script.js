@@ -12,7 +12,7 @@ $('#ajax').on('click', '.comment', function () {
 	var item = $(this).closest(".infinite-item").attr("item-id");
 	var url = $(this).parents(".infinite-item");
 	$.ajax({
-			url: "/main/comment/" + item + "/",
+			url: "/user/comment/" + item + "/",
 			data: {'item': item},
 			cache: false,
 			beforeSend: function () {
@@ -29,7 +29,7 @@ $('#ajax').on('click', '.remove', function () {
 var remove = $(this);
 var pk = remove.data('id');
 $.ajax({
-	url: "/users/delete/" + pk + "/",
+	url: "/user/delete/" + pk + "/",
 	success: function (data) {
 		$(remove).parents('.card').hide();
     $('.activefullscreen').hide();
@@ -105,7 +105,7 @@ $.ajax({
 					'csrf_token': csrftoken
 				}
 			$.ajax({
-					url: "/main/react/" + item + "/" + pk + "/",
+					url: "/user/react/" + item + "/" + pk + "/",
 					type: 'POST',
 					cache: false,
 					data: payload,
@@ -142,7 +142,7 @@ $.ajax({
   button1 = $(this);
   form1 = button1.parent().parent().parent();
         $.ajax({
-            url: '/main/post-comment/',
+            url: '/user/post-comment/',
             data: form1.serialize(),
             type: 'POST',
             cache: false,
@@ -166,7 +166,7 @@ $.ajax({
   button = $(this);
   form = button.parent().parent().parent().parent();
         $.ajax({
-            url: '/main/reply-comment/',
+            url: '/user/reply-comment/',
             data: form.serialize(),
             type: 'POST',
             cache: false,
@@ -190,7 +190,7 @@ $.ajax({
   button = $(this);
   form = button.parent().parent().parent().parent();
         $.ajax({
-            url: '/main/reply-comment/',
+            url: '/user/reply-comment/',
             data: form.serialize(),
             type: 'POST',
             cache: false,
