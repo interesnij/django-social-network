@@ -72,11 +72,11 @@ class UserPhotosList(View):
 		page = request.GET.get('page')
 		context['user'] = self.user
 		try:
-			context['items_list'] = current_page.page(page)
+			context['photo_list'] = current_page.page(page)
 		except PageNotAnInteger:
-			context['items_list'] = current_page.page(1)
+			context['photo_list'] = current_page.page(1)
 		except EmptyPage:
-			context['items_list'] = current_page.page(current_page.num_pages)
+			context['photo_list'] = current_page.page(current_page.num_pages)
 		return render_to_response('good_user/photos.html', context)
 
 
