@@ -29,7 +29,7 @@ class ItemsCommunity(View, EmojiListMixin):
             item_list = self.community.get_posts().order_by('-created')
             current_page = Paginator(item_list, 10)
             page = request.GET.get('page')
-        if request.user.is_anonymous and not self.community.is_public:
+        if request.user.is_anonymous and (self.community.is_closed or self.community.is_private):
             raise PermissionDenied(
                 'У Вас недостаточно прав для просмотра информации группы',
             )
