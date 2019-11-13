@@ -10,6 +10,7 @@ from generic.mixins import EmojiListMixin
 from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render_to_response
+from rest_framework.exceptions import PermissionDenied
 
 
 class UserGalleryView(TemplateView):
@@ -25,38 +26,53 @@ class UserGalleryView(TemplateView):
 		context['user'] = self.user
 		return context
 
-class UserAlbumsList(ListView):
-	template_name="good_user/albums.html"
-	model=Album
-	paginate_by=10
-
-	def get(self,request,*args,**kwargs):
+class UserAlbumsList(View):
+	def get(self,request,**kwargs):
+		context = {}
 		self.user = User.objects.get(uuid=self.kwargs["uuid"])
-		request_user = request.user
-		if self.user != request_user:
-			check_is_not_blocked_with_user_with_id(user=request_user, user_id=self.user.id)
+		if self.user != request.user and request.user.is_authenticated:
+			check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
 			if self.user.is_closed_profile:
-				check_is_connected_with_user_with_id(user=request_user, user_id=self.user.id)
-		self.albums = self.user.get_albums()
-		return super(UserAlbumsList,self).get(request,*args,**kwargs)
+				check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
+			albums_list = self.user.get_albums().order_by('-created')
+			current_page = Paginator(albums_list, 12)
+		if request.user.is_anonymous and self.user.is_closed_profile():
+            raise PermissionDenied(
+                'Это закрытый профиль. Только его друзья могут видеть его информацию.',
+            )
+		else:
+			albums_list = self.user.get_albums().order_by('-created')
+			current_page = Paginator(albums_list, 12)
 
-	def get_context_data(self,**kwargs):
-		context=super(UserAlbumsList,self).get_context_data(**kwargs)
-		context['albums'] = self.albums
+		page = request.GET.get('page')
 		context['user'] = self.user
-		return context
+		try:
+			context['albums_list'] = current_page.page(page)
+		except PageNotAnInteger:
+			context['albums_list'] = current_page.page(1)
+		except EmptyPage:
+			context['albums_list'] = current_page.page(current_page.num_pages)
+		return render_to_response('good_user/albums.html', context)
 
 
 class UserPhotosList(View):
 	def get(self,request,**kwargs):
 		context = {}
 		self.user = User.objects.get(uuid=self.kwargs["uuid"])
-		if self.user != request.user:
+		if self.user != request.user and request.user.is_authenticated:
 			check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
 			if self.user.is_closed_profile:
 				check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
-		photo_list = self.user.get_photos().order_by('-created')
-		current_page = Paginator(photo_list, 12)
+			photo_list = self.user.get_photos().order_by('-created')
+			current_page = Paginator(photo_list, 12)
+		if request.user.is_anonymous and self.user.is_closed_profile():
+            raise PermissionDenied(
+                'Это закрытый профиль. Только его друзья могут видеть его информацию.',
+            )
+		else:
+			photo_list = self.user.get_photos().order_by('-created')
+			current_page = Paginator(photo_list, 12)
+
 		page = request.GET.get('page')
 		context['user'] = self.user
 		try:
@@ -73,14 +89,23 @@ class UserPhoto(EmojiListMixin, TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.user=User.objects.get(uuid=self.kwargs["uuid"])
-		if self.user != request.user:
+		if self.user != request.user and request.user.is_authenticated:
 			check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
 			if self.user.is_closed_profile:
 				check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
-		self.photos = self.user.get_photos()
-		self.photo = Photo.objects.get(pk=self.kwargs["pk"])
-		self.next = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
-		self.prev = self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
+			self.photos = self.user.get_photos()
+			self.photo = Photo.objects.get(pk=self.kwargs["pk"])
+			self.next = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
+			self.prev = self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
+		if request.user.is_anonymous and self.user.is_closed_profile():
+            raise PermissionDenied(
+                'Это закрытый профиль. Только его друзья могут видеть его информацию.',
+            )
+		else:
+			self.photos = self.user.get_photos()
+			self.photo = Photo.objects.get(pk=self.kwargs["pk"])
+			self.next = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
+			self.prev = self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
 		return super(UserPhoto,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -92,19 +117,34 @@ class UserPhoto(EmojiListMixin, TemplateView):
 		return context
 
 
-class UserAlbomView(TemplateView):
-	template_name="good_user/album.html"
-
-	def get(self,request,*args,**kwargs):
+class UserAlbomView(View):
+	def get(self,request,**kwargs):
+		context = {}
 		self.album=Album.objects.get(uuid=self.kwargs["uuid"])
-		self.photos = Photo.objects.filter(album=self.album)
-		return super(UserAlbomView,self).get(request,*args,**kwargs)
+		self.user=User.objects.get(pk=self.kwargs["pk"])
+		if self.user != request.user and request.user.is_authenticated:
+			check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
+			if self.user.is_closed_profile:
+				check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
+			photos = Photo.objects.filter(album=self.album).order_by('-created')
+			current_page = Paginator(photos, 12)
+		if request.user.is_anonymous and self.user.is_closed_profile():
+            raise PermissionDenied(
+                'Это закрытый профиль. Только его друзья могут видеть его информацию.',
+            )
+		else:
+			photos = Photo.objects.filter(album=self.album).order_by('-created')
+			current_page = Paginator(photos, 12)
 
-	def get_context_data(self,**kwargs):
-		context=super(UserAlbomView,self).get_context_data(**kwargs)
-		context['album'] = self.album
-		context['photos'] = self.photos
-		return context
+		page = request.GET.get('page')
+		context['user'] = self.user
+		try:
+			context['photos'] = current_page.page(page)
+		except PageNotAnInteger:
+			context['photos'] = current_page.page(1)
+		except EmptyPage:
+			context['photos'] = current_page.page(current_page.num_pages)
+		return render_to_response('good_user/photos.html', context)
 
 
 class UserAlbomReload(TemplateView):
