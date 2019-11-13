@@ -41,6 +41,9 @@ class UserAlbumsList(View):
 		if request.user.is_anonymous and not self.user.is_closed_profile():
 			albums_list = self.user.get_albums().order_by('-created')
 			current_page = Paginator(albums_list, 12)
+		if self.user == request.user:
+			albums_list = self.user.get_albums().order_by('-created')
+			current_page = Paginator(albums_list, 12)
 
 		page = request.GET.get('page')
 		context['user'] = self.user
@@ -66,6 +69,9 @@ class UserPhotosList(View):
 		if request.user.is_anonymous and self.user.is_closed_profile():
 			raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.',)
 		if request.user.is_anonymous and not self.user.is_closed_profile():
+			photo_list = self.user.get_photos().order_by('-created')
+			current_page = Paginator(photo_list, 12)
+		if self.user == request.user:
 			photo_list = self.user.get_photos().order_by('-created')
 			current_page = Paginator(photo_list, 12)
 

@@ -41,6 +41,7 @@ class UserGoodsList(View):
         if request.user.is_anonymous and not self.user.is_closed_profile():
             goods_list = self.user.get_goods().order_by('-created')
             current_page = Paginator(goods_list, 6)
+            
         page = request.GET.get('page')
         context['user'] = self.user
         try:
