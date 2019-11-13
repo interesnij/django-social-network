@@ -18,16 +18,21 @@ class UserItemView(EmojiListMixin, TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.user=User.objects.get(uuid=self.kwargs["uuid"])
-        if self.user != request.user:
+        if self.user != request.user and request.user.is_authenticated:
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
             if self.user.is_closed_profile():
                 check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
-        self.items = self.user.get_posts()
-        self.item = Item.objects.get(pk=self.kwargs["pk"])
-        self.next = self.items.filter(pk__gt=self.item.pk).order_by('pk').first()
-        self.prev = self.items.filter(pk__lt=self.item.pk).order_by('-pk').first()
-        self.item.views += 1
-        self.item.save()
+            self.items = self.user.get_posts()
+            self.item = Item.objects.get(pk=self.kwargs["pk"])
+            self.next = self.items.filter(pk__gt=self.item.pk).order_by('pk').first()
+            self.prev = self.items.filter(pk__lt=self.item.pk).order_by('-pk').first()
+            self.item.views += 1
+            self.item.save()
+        if request.user.is_anonymous and self.user.is_closed_profile():
+            raise PermissionDenied(
+                'Незарегистрированные пользователи не могут просматривать записи закрытой страницы.',
+            )
+
         return super(UserItemView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -51,23 +56,26 @@ class ItemListView(View, EmojiListMixin):
 
     def get(self, request, *args, **kwargs):
         self.user=User.objects.get(pk=self.kwargs["pk"])
-        self.request_user = self.request.user
-        if self.user != self.request_user:
-            check_is_not_blocked_with_user_with_id(user=self.request_user, user_id=self.user.id)
+        if self.user != self.request.user and self.request.user.is_authenticated:
+            check_is_not_blocked_with_user_with_id(user=self.request.user, user_id=self.user.id)
             if self.user.is_closed_profile():
-                check_is_connected_with_user_with_id(user=self.request_user, user_id=self.user.id)
-        self.item_list = self.user.get_posts().order_by('-created')
-        self.current_page = Paginator(self.item_list, 10)
-        page = request.GET.get('page')
+                check_is_connected_with_user_with_id(user=self.request.user, user_id=self.user.id)
+            self.item_list = self.user.get_posts().order_by('-created')
+            self.current_page = Paginator(self.item_list, 10)
+            page = request.GET.get('page')
 
-        context = {}
-        context['user'] = self.user
-        try:
-            context['items_list'] = self.current_page.page(page)
-        except PageNotAnInteger:
-            context['items_list'] = self.current_page.page(1)
-        except EmptyPage:
-            context['items_list'] = self.current_page.page(current_page.num_pages)
+            context = {}
+            context['user'] = self.user
+            try:
+                context['items_list'] = self.current_page.page(page)
+            except PageNotAnInteger:
+                context['items_list'] = self.current_page.page(1)
+            except EmptyPage:
+                context['items_list'] = self.current_page.page(current_page.num_pages)
+        if request.user.is_anonymous and self.user.is_closed_profile():
+            raise PermissionDenied(
+                'Незарегистрированные пользователи не могут просматривать записи закрытой страницы.',
+            )
         return render_to_response('lenta/item_list.html', context)
 
 
