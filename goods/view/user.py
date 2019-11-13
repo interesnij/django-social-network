@@ -27,13 +27,13 @@ class UserGoods(TemplateView):
 
 
 class UserGoodsList(View):
-	def get(self,request,**kwargs):
-		context = {}
-		self.user=User.objects.get(pk=self.kwargs["pk"])
-		if self.user != request.user and request.user.is_authenticated:
-			check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
-			if self.user.is_closed_profile:
-				check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
+    def get(self,request,**kwargs):
+        context = {}
+        self.user=User.objects.get(pk=self.kwargs["pk"])
+        if self.user != request.user and request.user.is_authenticated:
+            check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
+            if self.user.is_closed_profile:
+                check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
             goods_list = self.user.get_goods().order_by('-created')
             current_page = Paginator(goods_list, 6)
         if request.user.is_anonymous and self.user.is_closed_profile():
@@ -41,15 +41,15 @@ class UserGoodsList(View):
         if request.user.is_anonymous and not self.user.is_closed_profile():
             goods_list = self.user.get_goods().order_by('-created')
             current_page = Paginator(goods_list, 6)
-		page = request.GET.get('page')
-		context['user'] = self.user
-		try:
-			context['goods_list'] = current_page.page(page)
-		except PageNotAnInteger:
-			context['goods_list'] = current_page.page(1)
-		except EmptyPage:
-			context['goods_list'] = current_page.page(current_page.num_pages)
-		return render_to_response('user/goods_list.html', context)
+        page = request.GET.get('page')
+        context['user'] = self.user
+        try:
+            context['goods_list'] = current_page.page(page)
+        except PageNotAnInteger:
+            context['goods_list'] = current_page.page(1)
+        except EmptyPage:
+            context['goods_list'] = current_page.page(current_page.num_pages)
+        return render_to_response('user/goods_list.html', context)
 
 
 class UserGood(EmojiListMixin, TemplateView):
