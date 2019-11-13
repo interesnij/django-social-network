@@ -65,7 +65,7 @@ class ItemCommunity(EmojiListMixin, TemplateView):
             self.item = Item.objects.get(pk=self.kwargs["pk"])
             self.next = self.items.filter(pk__gt=self.item.pk).order_by('pk').first()
             self.prev = self.items.filter(pk__lt=self.item.pk).order_by('-pk').first()
-        if request.user.is_anonymous and not self.community.type.COMMUNITY_TYPE_PUBLIC:
+        if request.user.is_anonymous and (self.community.is_closed or self.community.is_private):
             raise PermissionDenied(
                 'У Вас недостаточно прав для просмотра информации группы',
             )
