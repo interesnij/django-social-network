@@ -55,6 +55,7 @@ class UserItemView(EmojiListMixin, TemplateView):
 class ItemListView(View, EmojiListMixin):
 
     def get(self, request, *args, **kwargs):
+        context = {}
         self.user=User.objects.get(pk=self.kwargs["pk"])
         if self.user != self.request.user and self.request.user.is_authenticated:
             check_is_not_blocked_with_user_with_id(user=self.request.user, user_id=self.user.id)
@@ -64,7 +65,6 @@ class ItemListView(View, EmojiListMixin):
             self.current_page = Paginator(self.item_list, 10)
             page = request.GET.get('page')
 
-            context = {}
             context['user'] = self.user
             try:
                 context['items_list'] = self.current_page.page(page)
