@@ -8,6 +8,7 @@ from common.checkers import check_can_get_posts_for_community_with_name
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views import View
 from django.shortcuts import render_to_response
+from rest_framework.exceptions import PermissionDenied
 
 
 class ItemsCommunity(View, EmojiListMixin):
@@ -19,10 +20,20 @@ class ItemsCommunity(View, EmojiListMixin):
             self.fixed = None
         context = {}
         self.community=Community.objects.get(pk=self.kwargs["pk"])
-        check_can_get_posts_for_community_with_name(request.user,self.community.name)
-        item_list = self.community.get_posts().order_by('-created')
-        current_page = Paginator(item_list, 10)
-        page = request.GET.get('page')
+        if request.user.is_authenticated and self.community.is_public:
+            check_can_get_posts_for_community_with_name(request.user,self.community.name)
+            item_list = self.community.get_posts().order_by('-created')
+            current_page = Paginator(item_list, 10)
+            page = request.GET.get('page')
+        if request.user.is_anonymous and self.community.is_public:
+            item_list = self.community.get_posts().order_by('-created')
+            current_page = Paginator(item_list, 10)
+            page = request.GET.get('page')
+        else:
+            raise PermissionDenied(
+                'У Вас недостаточно прав для просмотра информации группы',
+            )
+
         context['object'] = self.fixed
         context["community"]=self.community
         try:
@@ -41,13 +52,23 @@ class ItemCommunity(EmojiListMixin, TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.community=Community.objects.get(uuid=self.kwargs["uuid"])
-        check_can_get_posts_for_community_with_name(request.user,self.community.name)
-        self.items = self.community.get_posts()
-        self.item = Item.objects.get(pk=self.kwargs["pk"])
-        self.next = self.items.filter(pk__gt=self.item.pk).order_by('pk').first()
-        self.prev = self.items.filter(pk__lt=self.item.pk).order_by('-pk').first()
-        self.item.views += 1
-        self.item.save()
+        if request.user.is_authenticated and self.community.is_public:
+            check_can_get_posts_for_community_with_name(request.user,self.community.name)
+            self.items = self.community.get_posts()
+            self.item = Item.objects.get(pk=self.kwargs["pk"])
+            self.next = self.items.filter(pk__gt=self.item.pk).order_by('pk').first()
+            self.prev = self.items.filter(pk__lt=self.item.pk).order_by('-pk').first()
+            self.item.views += 1
+            self.item.save()
+        if request.user.is_anonymous and self.community.is_public:
+            self.items = self.community.get_posts()
+            self.item = Item.objects.get(pk=self.kwargs["pk"])
+            self.next = self.items.filter(pk__gt=self.item.pk).order_by('pk').first()
+            self.prev = self.items.filter(pk__lt=self.item.pk).order_by('-pk').first()
+        else:
+            raise PermissionDenied(
+                'У Вас недостаточно прав для просмотра информации группы',
+            )
         return super(ItemCommunity,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
