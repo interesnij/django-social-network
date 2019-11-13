@@ -32,7 +32,7 @@ class UserItemView(EmojiListMixin, TemplateView):
         elif self.user == request.user and request.user.is_authenticated:
             self.photos = self.user.get_posts()
         elif not self.user.is_closed_profile() and request.user.is_anonymous:
-			self.photos = self.user.get_posts()
+            self.photos = self.user.get_posts()
 
         self.next = self.items.filter(pk__gt=self.item.pk).order_by('pk').first()
         self.prev = self.items.filter(pk__lt=self.item.pk).order_by('-pk').first()
