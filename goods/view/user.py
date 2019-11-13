@@ -34,13 +34,13 @@ class UserGoodsList(View):
 			check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
 			if self.user.is_closed_profile:
 				check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
-		    goods = self.user.get_goods().order_by('-created')
-		    current_page = Paginator(goods, 6)
+            goods_list = self.user.get_goods().order_by('-created')
+            current_page = Paginator(goods_list, 6)
         if request.user.is_anonymous and self.user.is_closed_profile():
-			raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
+            raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
         if request.user.is_anonymous and not self.user.is_closed_profile():
-			goods = self.user.get_goods().order_by('-created')
-		    current_page = Paginator(goods, 6)
+            goods_list = self.user.get_goods().order_by('-created')
+            current_page = Paginator(goods_list, 6)
 		page = request.GET.get('page')
 		context['user'] = self.user
 		try:
