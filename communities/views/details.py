@@ -20,7 +20,7 @@ class ItemsCommunity(View, EmojiListMixin):
             self.fixed = None
         context = {}
         self.community=Community.objects.get(pk=self.kwargs["pk"])
-        if request.user.is_authenticated and self.community.is_public:
+        if request.user.is_authenticated:
             check_can_get_posts_for_community_with_name(request.user,self.community.name)
             item_list = self.community.get_posts().order_by('-created')
             current_page = Paginator(item_list, 10)
@@ -52,7 +52,7 @@ class ItemCommunity(EmojiListMixin, TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.community=Community.objects.get(uuid=self.kwargs["uuid"])
-        if request.user.is_authenticated and self.community.is_public:
+        if request.user.is_authenticated:
             check_can_get_posts_for_community_with_name(request.user,self.community.name)
             self.items = self.community.get_posts()
             self.item = Item.objects.get(pk=self.kwargs["pk"])
