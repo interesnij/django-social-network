@@ -30,7 +30,7 @@ class UserItemView(EmojiListMixin, TemplateView):
         elif request.user.is_anonymous and self.user.is_closed_profile():
             raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
         elif self.user == request.user and request.user.is_authenticated:
-			self.photos = self.user.get_posts()
+            self.photos = self.user.get_posts()
         elif not self.user.is_closed_profile() and request.user.is_anonymous:
 			self.photos = self.user.get_posts()
 
