@@ -29,7 +29,7 @@ class ItemsCommunity(View, EmojiListMixin):
             item_list = self.community.get_posts().order_by('-created')
             current_page = Paginator(item_list, 10)
             page = request.GET.get('page')
-        else:
+        if request.user.is_anonymous and not self.community.is_public:
             raise PermissionDenied(
                 'У Вас недостаточно прав для просмотра информации группы',
             )
@@ -65,7 +65,7 @@ class ItemCommunity(EmojiListMixin, TemplateView):
             self.item = Item.objects.get(pk=self.kwargs["pk"])
             self.next = self.items.filter(pk__gt=self.item.pk).order_by('pk').first()
             self.prev = self.items.filter(pk__lt=self.item.pk).order_by('-pk').first()
-        else:
+        if request.user.is_anonymous and not self.community.is_public:
             raise PermissionDenied(
                 'У Вас недостаточно прав для просмотра информации группы',
             )
