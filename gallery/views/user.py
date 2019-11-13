@@ -37,9 +37,7 @@ class UserAlbumsList(View):
 			albums_list = self.user.get_albums().order_by('-created')
 			current_page = Paginator(albums_list, 12)
 		if request.user.is_anonymous and self.user.is_closed_profile():
-            raise PermissionDenied(
-                'Это закрытый профиль. Только его друзья могут видеть его информацию.',
-            )
+			raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
 		else:
 			albums_list = self.user.get_albums().order_by('-created')
 			current_page = Paginator(albums_list, 12)
