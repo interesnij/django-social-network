@@ -339,7 +339,7 @@ def check_not_can_follow_user_with_id(user, user_id):
 
 def check_is_not_blocked_with_user_with_id(user, user_id):
     if user.is_blocked_with_user_with_id(user_id=user_id):
-        raise PermissionDenied('Эта учетная запись заблокирована')
+        raise PermissionDenied('Вы в черном списке у этого пользователя.')
 
 
 def check_is_not_following_user_with_id(user, user_id):

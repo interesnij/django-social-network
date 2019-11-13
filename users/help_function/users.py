@@ -39,37 +39,6 @@ def _can_see_community_post(self, community, item):
     return Item.objects.filter(community_posts_query).exists()
 
 
-def unblock_user_with_username(self, username):
-    user = User.objects.get(username=username)
-    return self.unblock_user_with_id(user_id=user.pk)
-def unblock_user_with_id(self, user_id):
-    check_can_unblock_user_with_id(user=self, user_id=user_id)
-    self.user_blocks.filter(blocked_user_id=user_id).delete()
-    return User.objects.get(pk=user_id)
-
-
-def block_user_with_username(self, username):
-    user = User.objects.get(username=username)
-    return self.block_user_with_id(user_id=user.pk)
-
-def block_user_with_id(self, user_id):
-    check_can_block_user_with_id(user=self, user_id=user_id)
-
-    if self.is_connected_with_user_with_id(user_id=user_id):
-        # This does unfollow too
-        self.disconnect_from_user_with_id(user_id=user_id)
-    elif self.is_following_user_with_id(user_id=user_id):
-        self.unfollow_user_with_id(user_id=user_id)
-
-    user_to_block = User.objects.get(pk=user_id)
-    if user_to_block.is_following_user_with_id(user_id=self.pk):
-        user_to_block.unfollow_user_with_id(self.pk)
-
-    UserBlock.create_user_block(blocker_id=self.pk, blocked_user_id=user_id)
-
-    return user_to_block
-
-
 def get_connection_for_user_with_id(self, user_id):
     return self.connections.get(target_connection__user_id=user_id)
 
