@@ -91,19 +91,18 @@ class UserPhoto(EmojiListMixin, TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.user=User.objects.get(uuid=self.kwargs["uuid"])
+		self.photo = Photo.objects.get(pk=self.kwargs["pk"])
 		if self.user != request.user and request.user.is_authenticated:
 			check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
 			if self.user.is_closed_profile:
 				check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
 			self.photos = self.user.get_photos()
-			self.photo = Photo.objects.get(pk=self.kwargs["pk"])
 			self.next = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
 			self.prev = self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
-		if request.user.is_anonymous and self.user.is_closed_profile():
+		elif request.user.is_anonymous and self.user.is_closed_profile():
 			raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
-		if request.user.is_anonymous and not self.user.is_closed_profile():
+		elif request.user.is_anonymous and not self.user.is_closed_profile():
 			self.photos = self.user.get_photos()
-			self.photo = Photo.objects.get(pk=self.kwargs["pk"])
 			self.next = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
 			self.prev = self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
 		return super(UserPhoto,self).get(request,*args,**kwargs)
