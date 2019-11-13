@@ -123,7 +123,7 @@ class SettingsPrivateView(TemplateView):
 	private_settings=None
 
 	def get(self,request,*args,**kwargs):
-		self.user=request.user
+		self.user=User.objects.get(pk=self.kwargs["pk"])
 		self.form=SettingsPrivateForm(instance=self.user)
 		return super(SettingsPrivateView,self).get(request,*args,**kwargs)
 
@@ -134,7 +134,7 @@ class SettingsPrivateView(TemplateView):
 		return context
 
 	def post(self,request,*args,**kwargs):
-		self.user=request.user
+		self.user=User.objects.get(pk=self.kwargs["pk"])
 		try:
 			self.private_settings=UserPrivateSettings.objects.get(user=request.user)
 		except:
