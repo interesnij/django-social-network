@@ -191,15 +191,8 @@ def has_muted_post_with_id(self, item_id):
 def has_muted_post_comment_with_id(self, post_comment_id):
     return self.post_comment_mutes.filter(post_comment_id=post_comment_id).exists()
 
-def has_blocked_user_with_id(self, user_id):
-    return self.user_blocks.filter(blocked_user_id=user_id).exists()
-
 
 def count_public_posts(self):
-    """
-    Count how many public posts has the user created
-    :return:
-    """
 
     return self.item.count()
 

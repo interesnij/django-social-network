@@ -82,6 +82,7 @@ class AllUsers(ListView):
 
 class ProfileUserView(TemplateView):
     template_name = 'user.html'
+    blocked = None
 
     def get(self,request,*args,**kwargs):
         self.user=User.objects.get(pk=self.kwargs["pk"])
@@ -89,6 +90,7 @@ class ProfileUserView(TemplateView):
             self.is_frend = request.user.is_connected_with_user(self.user)
         except:
             self.is_frend = None
+        self.is_blocked = request.user.has_blocked_user_with_id(self.user)
         self.communities=Community.objects.filter(memberships__user__id=self.user.pk)[0:5]
         return super(ProfileUserView,self).get(request,*args,**kwargs)
 
@@ -99,4 +101,5 @@ class ProfileUserView(TemplateView):
         context['form_comment'] = CommentForm()
         context['communities'] = self.communities
         context['is_frend'] = self.is_frend
+        context['is_blocked'] = self.is_blocked
         return context

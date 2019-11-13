@@ -49,6 +49,11 @@ class ProfileButtonReload(TemplateView):
         except:
             self.follow2 = None
 
+        try:
+            self.is_blocked = request.user.has_blocked_user_with_id(self.user)
+        except:
+            self.is_blocked = None
+
         return super(ProfileButtonReload,self).get(request,*args,**kwargs)
 
     def get_context_data(self, **kwargs):
@@ -57,6 +62,7 @@ class ProfileButtonReload(TemplateView):
         context['connect'] = self.connect
         context['follow'] = self.follow
         context['follow2'] = self.follow2
+        context['is_blocked'] = self.is_blocked
         return context
 
 

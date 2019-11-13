@@ -126,7 +126,7 @@ class User(AbstractUser):
     def unblock_user_with_username(self, username):
         user = User.objects.get(username=username)
         return self.unblock_user_with_id(user_id=user.pk)
-        
+
     def unblock_user_with_id(self, user_id):
         check_can_unblock_user_with_id(user=self, user_id=user_id)
         self.user_blocks.filter(blocked_user_id=user_id).delete()
@@ -403,6 +403,9 @@ class User(AbstractUser):
 
     def has_excluded_community_with_name(self, community_name):
         return self.top_posts_community_exclusions.filter(community__name=community_name).exists()
+
+    def has_blocked_user_with_id(self, user_id):
+        return self.user_blocks.filter(blocked_user_id=user_id).exists()
 
 
 class UserBlock(models.Model):

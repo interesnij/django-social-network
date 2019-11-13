@@ -10,6 +10,7 @@
 {% endblock %}
 {% block content %}
 
+{% if not is_blocked %}
 <div class="row">
     <div class="col-lg-4 col-md-5 col-sm-12 order-1">
 
@@ -46,5 +47,9 @@
     </div>
 
 {% include 'user_scripts.html' %}
+
+{% else %}
+Пользователь ограничил доступ к своей странице
+{% endif %}
 
 {% endblock %}

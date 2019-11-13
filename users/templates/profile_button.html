@@ -47,7 +47,11 @@
       <img src="{% static 'images/icons/more_vert-24px.svg' %}" />
     </button>
     <div class="dropdown-menu" x-placement="bottom-start">
+      {% if is_blocked %}
+        <a class="dropdown-item" href="#">Разлокировать</a>
+      {% else %}
         <a class="dropdown-item" href="#">Заблокировать</a>
+      {% endif %}
         <a class="dropdown-item" href="#">Пожаловаться</a>
     </div>
   {% endif %}
