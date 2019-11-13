@@ -19,35 +19,26 @@ class UserItemView(EmojiListMixin, TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.user=User.objects.get(uuid=self.kwargs["uuid"])
+        self.item = Item.objects.get(pk=self.kwargs["pk"])
         if self.user != request.user and request.user.is_authenticated:
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
             if self.user.is_closed_profile():
                 check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
             self.items = self.user.get_posts()
-            self.item = Item.objects.get(pk=self.kwargs["pk"])
-            self.next = self.items.filter(pk__gt=self.item.pk).order_by('pk').first()
-            self.prev = self.items.filter(pk__lt=self.item.pk).order_by('-pk').first()
             self.item.views += 1
             self.item.save()
-        if request.user.is_anonymous and self.user.is_closed_profile():
+        elif request.user.is_anonymous and self.user.is_closed_profile():
             raise PermissionDenied(
                 'Это закрытый профиль. Только его друзья могут видеть его информацию.',
             )
-        else:
-            self.items = self.user.get_posts()
-            self.item = Item.objects.get(pk=self.kwargs["pk"])
-            self.next = self.items.filter(pk__gt=self.item.pk).order_by('pk').first()
-            self.prev = self.items.filter(pk__lt=self.item.pk).order_by('-pk').first()
+        elif self.user == request.user and request.user.is_authenticated:
+			self.photos = self.user.get_posts()
+        elif not self.user.is_closed_profile() and request.user.is_anonymous:
+			self.photos = self.user.get_posts()
 
+        self.next = self.items.filter(pk__gt=self.item.pk).order_by('pk').first()
+        self.prev = self.items.filter(pk__lt=self.item.pk).order_by('-pk').first()
         return super(UserItemView,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        context=super(UserItemView,self).get_context_data(**kwargs)
-        context["object"]=self.item
-        context["user"]=self.user
-        context["next"]=self.next
-        context["prev"]=self.prev
-        return context
 
     def get_context_data(self,**kwargs):
         context=super(UserItemView,self).get_context_data(**kwargs)
@@ -70,14 +61,16 @@ class ItemListView(View, EmojiListMixin):
             self.item_list = self.user.get_posts().order_by('-created')
             self.current_page = Paginator(self.item_list, 10)
             page = request.GET.get('page')
-        if request.user.is_anonymous and self.user.is_closed_profile():
+        elif request.user.is_anonymous and self.user.is_closed_profile():
             raise PermissionDenied(
                 'Это закрытый профиль. Только его друзья могут видеть его информацию.',
             )
-        else:
-            self.item_list = self.user.get_posts().order_by('-created')
-            self.current_page = Paginator(self.item_list, 10)
-            page = request.GET.get('page')
+        elif request.user.is_anonymous and not self.user.is_closed_profile():
+			item_list = self.user.get_posts().order_by('-created')
+			current_page = Paginator(item_list, 12)
+		elif self.user == request.user:
+			item_list = self.user.get_posts().order_by('-created')
+			current_page = Paginator(item_list, 12)
 
         context['user'] = self.user
         try:
