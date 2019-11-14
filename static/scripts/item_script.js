@@ -12,7 +12,7 @@ $('#ajax').on('click', '.comment', function () {
 	var item = $(this).closest(".infinite-item").attr("item-id");
 	var url = $(this).parents(".infinite-item");
 	$.ajax({
-			url: "/user/comment/" + item + "/",
+			url: "/main/user/comment/" + item + "/",
 			data: {'item': item},
 			cache: false,
 			beforeSend: function () {
@@ -29,7 +29,7 @@ $('#ajax').on('click', '.remove', function () {
 var remove = $(this);
 var pk = remove.data('id');
 $.ajax({
-	url: "/user/delete/" + pk + "/",
+	url: "/main/user/delete/" + pk + "/",
 	success: function (data) {
 		$(remove).parents('.card').hide();
     $('.activefullscreen').hide();
@@ -66,7 +66,7 @@ $('#ajax').on('click', '.fixed', function () {
 var fixed = $(this);
 var pk = fixed.parent().data('id');
 $.ajax({
-	url: "/users/fixed/" + pk + "/",
+	url: "/main/users/fixed/" + pk + "/",
 	success: function (data) {
 		fixed.parent().html("<span style='cursor:pointer' class='dropdown-item unfixed'>Открепить</span>");
 		$.toast({
@@ -83,7 +83,7 @@ $('#ajax').on('click', '.unfixed', function () {
 var unfixed = $(this);
 var pk = unfixed.parent().data('id');
 $.ajax({
-	url: "/users/unfixed/" + pk + "/",
+	url: "/main/users/unfixed/" + pk + "/",
 	success: function (data) {
 		unfixed.parent().html("<span style='cursor:pointer' class='dropdown-item fixed'>Закрепить</span>");
 		$.toast({
@@ -105,7 +105,7 @@ $.ajax({
 					'csrf_token': csrftoken
 				}
 			$.ajax({
-					url: "/user/react/" + item + "/" + pk + "/",
+					url: "/main/user/react/" + item + "/" + pk + "/",
 					type: 'POST',
 					cache: false,
 					data: payload,
@@ -142,7 +142,7 @@ $.ajax({
   button1 = $(this);
   form1 = button1.parent().parent().parent();
         $.ajax({
-            url: '/user/post-comment/',
+            url: '/main/user/post-comment/',
             data: form1.serialize(),
             type: 'POST',
             cache: false,
@@ -166,7 +166,7 @@ $.ajax({
   button = $(this);
   form = button.parent().parent().parent().parent();
         $.ajax({
-            url: '/user/reply-comment/',
+            url: '/main/user/reply-comment/',
             data: form.serialize(),
             type: 'POST',
             cache: false,
@@ -190,7 +190,7 @@ $.ajax({
   button = $(this);
   form = button.parent().parent().parent().parent();
         $.ajax({
-            url: '/user/reply-comment/',
+            url: '/main/user/reply-comment/',
             data: form.serialize(),
             type: 'POST',
             cache: false,
