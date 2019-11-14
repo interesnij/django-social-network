@@ -52,6 +52,11 @@
                         <form action="" method="post" class="replyParentComment_button">
                             {% csrf_token %}
                             <div class="row no-gutters">
+                              <div class="input-group-prepend">
+                                  <button class="btn btn-link content-color-secondary" type="button">
+                                    <img style="" src="{% static 'images/icons/add_photo_alternate-24px.svg' %}" />
+                                  </button>
+                              </div>
                                 <input type="hidden" name="comment" value="{{ comment.id }}">
                                 <input type="hidden" name="parent" value="{{ parent.id }}">
                                 <div class="col" style="left: -30px;">
