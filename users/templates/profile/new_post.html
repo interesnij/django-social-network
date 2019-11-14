@@ -20,7 +20,7 @@
                 <div id="for_question" style="display:none;margin:10px">question</div>
                 <div id="for_settings" style="display:none;margin:10px">
                   <span class="add_board_hide">
-                      <img style="width:25px" src="{% static 'images/icons/close-24px.svg' %}" />
+                      <img style="width:25px;cursor:pointer" src="{% static 'images/icons/close-24px.svg' %}" />
                   </span>
                     <div class="custom-control custom-checkbox">
                         <input type="checkbox" checked name="comments_enabled" id="id_comments_enabled" class="custom-control-input">
@@ -111,7 +111,7 @@
     $('#images_upload').on('click', function() {
         $('#for_images_upload').show();
     });
-    $('#settings').on('click', function() {
+    $('#settings').toggle(function() {
         $('#for_settings').show();
     });
 
