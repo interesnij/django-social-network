@@ -58,10 +58,6 @@ class Item(models.Model):
         parent_comments = ItemComment.objects.filter(item=self).count()
         return parent_comments
 
-    def get_replies(self):
-        get_comments = ItemComment.objects.filter(parent_comment=self).all()
-        return get_comments
-
     def get_parent(self):
         if self.parent:
             return self.parent
@@ -101,8 +97,8 @@ class Item(models.Model):
         item = Item.objects.get(uuid=self.uuid)
         return item.get_comment_replies_for_comment_with_post(post_comment=post_comment)
 
-    def get_comment_replies_for_comment_with_post(item, post_comment):
-        comment_replies_query = self._make_get_comments_for_post_query(item, post_comment_parent_id=post_comment.pk)
+    def get_comment_replies_for_comment_with_post(self, post_comment):
+        comment_replies_query = self._make_get_comments_for_post_query(self, post_comment_parent_id=post_comment.pk)
         return ItemComment.objects.filter(comment_replies_query)
 
     def _make_get_comments_for_post_query(self, user, post_comment_parent_id=None):
@@ -153,6 +149,10 @@ class ItemComment(models.Model):
         )
         verbose_name="комментарий к записи"
         verbose_name_plural="комментарии к записи"
+
+    def get_replies(self):
+        get_comments = ItemComment.objects.filter(parent_comment=self).all()
+        return get_comments
 
     def __str__(self):
         return "{0}/{1}".format(self.commenter.get_full_name(), self.text[:10])
