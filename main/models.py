@@ -128,7 +128,7 @@ class Item(models.Model):
                 comments_query.add(~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED), Q.AND)
         else:
             blocked_users_query = ~Q(Q(commenter__blocked_by_users__blocker_id=user.pk) | Q(
-                commenter__user_blocks__blocked_user_id=user_id))
+                commenter__user_blocks__blocked_user_id=user.pk))
             comments_query.add(blocked_users_query, Q.AND)
 
         comments_query.add(~Q(moderated_object__reports__reporter_id=user.pk), Q.AND)
