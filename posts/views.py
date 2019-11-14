@@ -10,6 +10,7 @@ from django.views import View
 from django.utils import timezone
 from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
 from common.checkers import check_can_get_posts_for_community_with_name
+from generic.mixins import FormMixin
 
 
 class PostsView(TemplateView):
@@ -98,16 +99,9 @@ class PostCommunityCreate(View):
             return HttpResponseBadRequest()
 
 
-class RepostUserUser(View):
-
-    def get(self,request,**kwargs):
-        context = {}
-        form_post=PostForm()
-        context['form_post'] = form_post
-        return HttpResponse("!")
+class RepostUserUser(View, FormMixin):
 
     def post(self, request, *args, **kwargs):
-
         self.item = Item.objects.get(uuid=self.kwargs["uuid"])
         self.user = self.item.creator
         if self.user != request.user and request.user.is_authenticated:
