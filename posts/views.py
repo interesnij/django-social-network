@@ -99,8 +99,14 @@ class PostCommunityCreate(View):
 
 
 class RepostUserUser(View):
+    def get(self,request,**kwargs):
+        context = {}
+        form_post=PostForm()
+        context['form_post'] = form_post
+        return super(RepostUserUser,self).get(request,**kwargs)
 
     def post(self, request, *args, **kwargs):
+
         self.item = Item.objects.get(uuid=self.kwargs["uuid"])
         self.user = self.item.creator
         if self.user != request.user and request.user.is_authenticated:
