@@ -11,11 +11,9 @@
     <form action="" method="post" class="itemComment_form">
         {% csrf_token %}
         <div class="row no-gutters">
-          <div class="input-group-prepend">
               <button class="btn btn-link content-color-secondary" type="button">
                 <img style="margin-top: -10px;" src="{% static 'images/icons/add_photo_alternate-24px.svg' %}" />
               </button>
-          </div>
             <input type="hidden" name="parent" value="{{ parent.pk }}">
             <div class="col">
                 <div class="input-group input-group-sm">
