@@ -166,8 +166,9 @@ $('#ajax').on('click', '.unfixed', function () {
     });
 
   $('#ajax').on('click', '.replyComment', function () {
-  button = $(this);
-  form = button.parent().parent().parent().parent();
+  var button = $(this);
+  var form = button.parent().parent().parent().parent();
+	var block = form.parent();
         $.ajax({
             url: '/user/reply-comment/',
             data: form.serialize(),
@@ -176,6 +177,7 @@ $('#ajax').on('click', '.unfixed', function () {
             success: function(data) {
                 $(".form-control-rounded").val("");
                 $(".stream_reply_comments").append(data);
+								block.hide();
             },
             error: function(data) {
               $.toast({
@@ -192,7 +194,7 @@ $('#ajax').on('click', '.unfixed', function () {
   $('#ajax').on('click', '.replyParentComment', function () {
   	var button = $(this);
   	var form = button.parent().parent().parent().parent();
-		var block = form.parent()
+		var block = form.parent();
         $.ajax({
             url: '/user/reply-comment/',
             data: form.serialize(),
