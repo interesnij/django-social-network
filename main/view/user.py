@@ -166,7 +166,7 @@ def user_fixed(request, item_id):
 		return HttpResponse("Закрепляйте, пожалуйста, свои записи!")
 
 
-def user_unfixed(request, item_id):
+def user_unfixed(request, item_id, item_uuid):
 	item = Item.objects.get(pk=item_id)
 	current_user = User.objects.get(uuid=item_uuid)
 	if request.user == current_user:
