@@ -10,6 +10,7 @@ from django.views import View
 from posts.models import Post
 from generic.mixins import EmojiListMixin
 from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
+from rest_framework.exceptions import PermissionDenied
 
 
 class RepostUser(View):
@@ -56,6 +57,7 @@ class ItemCommentList(View, EmojiListMixin):
 
 	def get(self,request,*args,**kwargs):
 		item = Item.objects.get(uuid=self.kwargs["uuid"])
+		user = User.objects.get(pk=self.kwargs["pk"]) 
 		comments = item.get_comments_for_item_with_id(request.user)
 		comments_html = render_to_string("generic/posts/comments.html", {"comments": comments,"parent": item})
 

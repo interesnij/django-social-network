@@ -11,8 +11,9 @@ $('#ajax .stream').on('click', '.article_detail', function () {
 $('#ajax').on('click', '.comment', function () {
 	var item = $(this).closest(".infinite-item").attr("item-id");
 	var url = $(this).parents(".infinite-item");
+	var pk = $(this).data('pk');
 	$.ajax({
-			url: "/user/comment/" + item + "/",
+			url: "/user/comment/" + item + "/" + pk + "/",
 			data: {'item': item},
 			cache: false,
 			beforeSend: function () {

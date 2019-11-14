@@ -143,7 +143,7 @@ class ItemComment(models.Model):
     commenter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Комментатор")
     text = models.TextField(blank=True,null=True)
     is_edited = models.BooleanField(default=False, null=False, blank=False,verbose_name="Изменено")
-    is_deleted = models.BooleanField(default=False,verbose_name="Удаено")
+    is_deleted = models.BooleanField(default=False,verbose_name="Удалено")
     item = models.ForeignKey(Item, on_delete=models.CASCADE, null=True)
     moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='post_comments')
 

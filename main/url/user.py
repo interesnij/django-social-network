@@ -17,7 +17,7 @@ from main.view.user import (
 
 urlpatterns = [
 	url(r'^react_window/(?P<pk>\d+)/$', ItemReactWindow.as_view(), name='item_react_window'),
-	url(r'^comment/(?P<uuid>[0-9a-f-]+)/$', ItemCommentList.as_view(), name='item_get_comment'),
+	url(r'^comment/(?P<uuid>[0-9a-f-]+)/(?P<pk>\d+)/$', ItemCommentList.as_view(), name='item_get_comment'), 
 	url(r'^comment_react/(?P<uuid>[0-9a-f-]+)/(?P<pk>\d+)/$', ItemCommentReactUserCreate.as_view(), name='item_user_comment_react'),
 	url(r'^comment_un_react/(?P<uuid>[0-9a-f-]+)/(?P<pk>\d+)/$', ItemCommentReactUserDelete.as_view(), name='item_user_comment_un_react'),
 	url(r'^react/(?P<uuid>[0-9a-f-]+)/(?P<pk>\d+)/$', ItemReactUserCreate.as_view(), name='item_user_react'),
