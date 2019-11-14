@@ -48,13 +48,13 @@
                         ответить
                     </span>
 
-                    <div class="border-top reply_comment_form" style="margin-top:10px;display:none">
+                    <div class="border-top reply_comment_form" style="margin-top:10px;display:none;margin-left:-50px;">
                         <form action="" method="post" class="replyParentComment_button">
                             {% csrf_token %}
 
                             <div class="row no-gutters">
                               <button class="btn btn-link content-color-secondary" type="button">
-                                <img style="margin-top: -10px;" src="{% static 'images/icons/add_photo_alternate-24px.svg' %}" />
+                                <img style="margin-top: -10px;margin-right: 20px;" src="{% static 'images/icons/add_photo_alternate-24px.svg' %}" />
                               </button>
                                 <input type="hidden" name="comment" value="{{ comment.id }}">
                                 <input type="hidden" name="parent" value="{{ parent.id }}">
