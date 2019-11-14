@@ -91,9 +91,9 @@ class Item(models.Model):
             count_query.add(Q(reactor_id=reactor_id), Q.AND)
         return cls.objects.filter(count_query).count()
 
-    def get_comments_for_item_with_id(self, user_id):
+    def get_comments_for_item_with_id(self, user):
         item = Item.objects.get(pk=self.pk)
-        comments_query = self._make_get_comments_for_post_query(user_id=user_id)
+        comments_query = self._make_get_comments_for_post_query(user=user)
         return ItemComment.objects.filter(comments_query)
 
     def get_comment_replies_for_comment_with_id_with_post_with_uuid(self, post_comment_id):
@@ -105,8 +105,7 @@ class Item(models.Model):
         comment_replies_query = self._make_get_comments_for_post_query(item, post_comment_parent_id=post_comment.pk)
         return ItemComment.objects.filter(comment_replies_query)
 
-    def _make_get_comments_for_post_query(self, user_id, post_comment_parent_id=None):
-        """ получаем комментарии записи с пристрастием """
+    def _make_get_comments_for_post_query(self, user, post_comment_parent_id=None):
         comments_query = Q(item_id=self.pk)
 
         if post_comment_parent_id is None:
@@ -117,9 +116,9 @@ class Item(models.Model):
         post_community = self.community
 
         if post_community:
-            if not self.is_staff_of_community_with_name(community_name=post_community.name):
-                blocked_users_query = ~Q(Q(commenter__blocked_by_users__blocker_id=user_id) | Q(
-                    commenter__user_blocks__blocked_user_id=user_id))
+            if not user.is_staff_of_community_with_name(community_name=post_community.name):
+                blocked_users_query = ~Q(Q(commenter__blocked_by_users__blocker_id=user.pk) | Q(
+                    commenter__user_blocks__blocked_user_id=user.pk))
                 blocked_users_query_staff_members = Q(
                     commenter__communities_memberships__community_id=post_community.pk)
                 blocked_users_query_staff_members.add(Q(commenter__communities_memberships__is_administrator=True) | Q(
@@ -128,11 +127,11 @@ class Item(models.Model):
                 comments_query.add(blocked_users_query, Q.AND)
                 comments_query.add(~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED), Q.AND)
         else:
-            blocked_users_query = ~Q(Q(commenter__blocked_by_users__blocker_id=user_id) | Q(
+            blocked_users_query = ~Q(Q(commenter__blocked_by_users__blocker_id=user.pk) | Q(
                 commenter__user_blocks__blocked_user_id=user_id))
             comments_query.add(blocked_users_query, Q.AND)
 
-        comments_query.add(~Q(moderated_object__reports__reporter_id=user_id), Q.AND)
+        comments_query.add(~Q(moderated_object__reports__reporter_id=user.pk), Q.AND)
         comments_query.add(Q(is_deleted=False), Q.AND)
         return comments_query
 

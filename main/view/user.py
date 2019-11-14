@@ -56,7 +56,7 @@ class ItemCommentList(View, EmojiListMixin):
 
 	def get(self,request,*args,**kwargs):
 		item = Item.objects.get(uuid=self.kwargs["uuid"])
-		comments = item.get_comments_for_item_with_id(request.user.pk)
+		comments = item.get_comments_for_item_with_id(request.user)
 		comments_html = render_to_string("generic/posts/comments.html", {"comments": comments,"parent": item})
 
 		return JsonResponse({
