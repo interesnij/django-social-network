@@ -50,7 +50,7 @@ $('#ajax').on('click', '.fullscreen', function () {
 	 var item = $(this);
 	 var item_pk = item.data("pk");
 	 var user_uuid = item.data("uuid");
-	 $('#item_loader').html('').load("/user/detail/item/" + item_pk + "/" + user_uuid + "/")
+	 $('#item_loader').html('').load("/users/detail/item/" + item_pk + "/" + user_uuid + "/")
 	 $('.item_fullscreen').show();
 });
 $('#ajax').on('click', '.community_fullscreen', function () {
