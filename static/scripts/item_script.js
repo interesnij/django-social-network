@@ -225,3 +225,10 @@ $('#ajax').on('click', '.unfixed', function () {
 		reply_comment_form.next().show();
     form.focus();
 	})
+
+	$('.R_U').on('click', function () {
+  	 var item = $(this);
+  	 var item_id = item.data("uuid");
+  	 $('#user_item_pk').html(item_id);
+		 var pk = item.data("pk");
+  });

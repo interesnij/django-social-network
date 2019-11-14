@@ -98,21 +98,32 @@ class PostCommunityCreate(View):
 
 class RepostUserUser(View):
 
+    def get(self,request,*args,**kwargs):
+        self.form_post=PostForm()
+        return super(RepostUserUser,self).get(request,*args,**kwargs)
+
     def post(self, request, *args, **kwargs):
         self.item = Item.objects.get(uuid=self.kwargs["uuid"])
-        self.form_post=PostForm(request.POST, request.FILES)
-        if self.form_post.is_valid():
-            new_post=self.form_post.save(commit=False)
-            new_post.creator=self.request.user
-            new_post.parent=self.item.parent
-            new_post.is_repost=True
-            if self.item.community:
-                new_post.community=self.item.community
-            new_post=self.form_post.save()
-        if request.is_ajax() :
-            return HttpResponse("!")
-        else:
-            return HttpResponseBadRequest()
+        self.user = self.item.creator
+        if self.user != request.user and request.user.is_authenticated:
+            check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
+            if self.user.is_closed_profile:
+                check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
+
+            self.form_post=PostForm(request.POST, request.FILES)
+            if self.form_post.is_valid():
+                new_post=self.form_post.save(commit=False)
+                new_post.creator=self.request.user
+                if self.item.parent:
+                    new_post.parent=self.item.parent
+                else:
+                    new_post.parent=self.item
+                new_post.is_repost=True
+                new_post=self.form_post.save()
+                if request.is_ajax() :
+                    return HttpResponse("!")
+            else:
+                return HttpResponseBadRequest()
 
 
 class RepostCommunityUser(View):
