@@ -13,7 +13,7 @@ from common.checkers import check_is_not_blocked_with_user_with_id, check_is_con
 from rest_framework.exceptions import PermissionDenied
 
 
-class RepostUser→User(View):
+class RepostUserUser(View):
 	def post(self, request, *args, **kwargs):
 		self.item = Item.objects.get(uuid=self.kwargs["uuid"])
 		self.user = User.objects.get(pk=self.kwargs["pk"])
