@@ -29,7 +29,7 @@ $('#ajax').on('click', '.remove', function () {
 var remove = $(this);
 var pk = remove.data('id');
 $.ajax({
-	url: "/user/delete/" + pk + "/",
+	url: "/progs/delete/" + pk + "/",
 	success: function (data) {
 		$(remove).parents('.card').hide();
     $('.activefullscreen').hide();
@@ -66,7 +66,7 @@ $('#ajax').on('click', '.fixed', function () {
 var fixed = $(this);
 var pk = fixed.parent().data('id');
 $.ajax({
-	url: "/user/fixed/" + pk + "/",
+	url: "/progs/fixed/" + pk + "/",
 	success: function (data) {
 		fixed.parent().html("<span style='cursor:pointer' class='dropdown-item unfixed'>Открепить</span>");
 		$.toast({
@@ -83,7 +83,7 @@ $('#ajax').on('click', '.unfixed', function () {
 var unfixed = $(this);
 var pk = unfixed.parent().data('id');
 $.ajax({
-	url: "/user/unfixed/" + pk + "/",
+	url: "/progs/unfixed/" + pk + "/",
 	success: function (data) {
 		unfixed.parent().html("<span style='cursor:pointer' class='dropdown-item fixed'>Закрепить</span>");
 		$.toast({
