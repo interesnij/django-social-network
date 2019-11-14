@@ -153,3 +153,23 @@ def post_update_interactions(request):
     item = Item.objects.get(uuid=data_point)
     data = {'likes': item.count_likers(), 'dislikes': item.count_dislikers(), 'comments': item.count_thread()}
     return JsonResponse(data)
+
+
+def user_fixed(request, item_id):
+    item = Item.objects.get(pk=item_id)
+    item.is_fixed=True
+    item.save()
+    return HttpResponse("!")
+
+
+def user_unfixed(request, item_id):
+    item = Item.objects.get(pk=item_id)
+    item.is_fixed=False
+    item.save()
+    return HttpResponse("!")
+
+def user_item_delete(request, item_id):
+    item = Item.objects.get(pk=item_id)
+    item.is_deleted=True
+    item.save()
+    return HttpResponse("!")

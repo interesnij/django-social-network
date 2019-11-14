@@ -1,14 +1,18 @@
 from django.conf.urls import url
 from main.view.user import (
-						ItemReactWindow,
-						ItemCommentReactWindow,
-						ItemCommentList,
-						item_post_comment,
-						ItemCommentReactUserCreate,
-						ItemCommentReactUserDelete,
-						ItemReactUserCreate,
-						ItemReactUserDelete,
-						item_reply_comment)
+							ItemReactWindow,
+							ItemCommentReactWindow,
+							ItemCommentList,
+							item_post_comment,
+							ItemCommentReactUserCreate,
+							ItemCommentReactUserDelete,
+							ItemReactUserCreate,
+							ItemReactUserDelete,
+							item_reply_comment,
+							user_fixed,
+							user_unfixed,
+							user_item_delete
+							)
 
 
 urlpatterns = [
@@ -21,4 +25,8 @@ urlpatterns = [
     url(r'^post-comment/$', item_post_comment, name='item_user_post_comment'),
     url(r'reply-comment/$', item_reply_comment, name='item_user_reply_comment'),
 	url(r'^comment_react_window/(?P<pk>\d+)/$', ItemCommentReactWindow.as_view(), name='item_comment_react_window'),
+
+	url(r'^fixed/(?P<item_id>\d+)/$', user_fixed, name='user_fixed'),
+    url(r'^unfixed/(?P<item_id>\d+)/$', user_unfixed, name='user_unfixed'),
+    url(r'^delete/(?P<item_id>\d+)/$', user_item_delete, name='user_item_delete'),
 ]
