@@ -154,6 +154,9 @@ class ItemComment(models.Model):
         get_comments = ItemComment.objects.filter(parent_comment=self).all()
         return get_comments
 
+    def count_replies(self):
+        return self.replies.count()
+
     def __str__(self):
         return "{0}/{1}".format(self.commenter.get_full_name(), self.text[:10])
 
