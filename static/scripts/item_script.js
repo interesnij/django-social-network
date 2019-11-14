@@ -83,7 +83,7 @@ $('#ajax').on('click', '.fixed', function () {
 $('#ajax').on('click', '.unfixed', function () {
 	var unfixed = $(this);
 	var pk = unfixed.parent().data('id');
-	var uuid = fixed.parent().data('uuid');
+	var uuid = unfixed.parent().data('uuid');
 	$.ajax({
 		url: "/user/unfixed/" + pk + "/" + uuid + "/",
 		success: function (data) {
