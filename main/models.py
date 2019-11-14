@@ -102,7 +102,7 @@ class Item(models.Model):
         item = Item.objects.get(uuid=self.uuid)
         return item.get_comment_replies_for_comment_with_post(post_comment=post_comment)
 
-    def get_comment_replies_for_comment_with_post(item=item, post_comment):
+    def get_comment_replies_for_comment_with_post(item, post_comment):
         comment_replies_query = self._make_get_comments_for_post_query(item, post_comment_parent_id=post_comment.pk)
         return ItemComment.objects.filter(comment_replies_query)
 
