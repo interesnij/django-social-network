@@ -121,7 +121,7 @@ class RepostUserUser(View):
                 if request.is_ajax() :
                     return HttpResponse("!")
             else:
-                return HttpResponse("!")
+                return HttpResponseBadRequest()
 
 
 class RepostCommunityUser(View):
