@@ -170,7 +170,7 @@ def user_unfixed(request, item_id):
 
 def user_item_delete(request, item_id):
 	item = Item.objects.get(pk=item_id)
-	if requesr.user = item.creator:
+	if requesr.user == item.creator:
 		item.is_deleted=True
 		item.save()
 		return HttpResponse("!")
