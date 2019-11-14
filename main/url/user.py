@@ -8,6 +8,7 @@ from main.view.user import (
 							ItemCommentReactUserDelete,
 							ItemReactUserCreate,
 							ItemReactUserDelete,
+							RepostUser→User,
 							item_reply_comment,
 							user_fixed,
 							user_unfixed,
@@ -17,7 +18,7 @@ from main.view.user import (
 
 urlpatterns = [
 	url(r'^react_window/(?P<pk>\d+)/$', ItemReactWindow.as_view(), name='item_react_window'),
-	url(r'^comment/(?P<uuid>[0-9a-f-]+)/(?P<pk>\d+)/$', ItemCommentList.as_view(), name='item_get_comment'), 
+	url(r'^comment/(?P<uuid>[0-9a-f-]+)/(?P<pk>\d+)/$', ItemCommentList.as_view(), name='item_get_comment'),
 	url(r'^comment_react/(?P<uuid>[0-9a-f-]+)/(?P<pk>\d+)/$', ItemCommentReactUserCreate.as_view(), name='item_user_comment_react'),
 	url(r'^comment_un_react/(?P<uuid>[0-9a-f-]+)/(?P<pk>\d+)/$', ItemCommentReactUserDelete.as_view(), name='item_user_comment_un_react'),
 	url(r'^react/(?P<uuid>[0-9a-f-]+)/(?P<pk>\d+)/$', ItemReactUserCreate.as_view(), name='item_user_react'),
@@ -25,6 +26,7 @@ urlpatterns = [
     url(r'^post-comment/$', item_post_comment, name='item_user_post_comment'),
     url(r'reply-comment/$', item_reply_comment, name='item_user_reply_comment'),
 	url(r'^comment_react_window/(?P<pk>\d+)/$', ItemCommentReactWindow.as_view(), name='item_comment_react_window'),
+	url(r'^repost/(?P<uuid>[0-9a-f-]+)/(?P<pk>\d+)/$', RepostUser→User.as_view(), name='user→user_repost'),
 
 	url(r'^fixed/(?P<item_id>\d+)/(?P<user_uuid>[0-9a-f-]+)/$', user_fixed, name='user_fixed'),
     url(r'^unfixed/(?P<item_id>\d+)/(?P<user_uuid>[0-9a-f-]+)/$', user_unfixed, name='user_unfixed'),

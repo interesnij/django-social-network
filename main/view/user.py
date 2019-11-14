@@ -13,15 +13,20 @@ from common.checkers import check_is_not_blocked_with_user_with_id, check_is_con
 from rest_framework.exceptions import PermissionDenied
 
 
-class RepostUser(View):
+class RepostUser→User(View):
 	def post(self, request, *args, **kwargs):
-		self.item = Item.objects.get(pk=self.kwargs["pk"])
-		if self.item.parent:
-			new_repost = Post.objects.create(creator=request.user, parent=self.item.parent, is_repost=True)
-			return HttpResponse("репост репоста")
-		else:
-			new_repost = Post.objects.create(creator=request.user, parent=self.item, is_repost=True)
-			return HttpResponse("репост item")
+		self.item = Item.objects.get(uuid=self.kwargs["uuid"])
+		self.user = User.objects.get(pk=self.kwargs["pk"])
+		if self.user != request.user and request.user.is_authenticated:
+			check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
+			if self.user.is_closed_profile:
+				check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
+			if self.item.parent:
+				new_repost = Post.objects.create(creator=request.user, parent=self.item.parent, is_repost=True)
+				return HttpResponse("репост репоста")
+			else:
+				new_repost = Post.objects.create(creator=request.user, parent=self.item, is_repost=True)
+				return HttpResponse("репост item")
 
 
 class ItemReactWindow(TemplateView):
