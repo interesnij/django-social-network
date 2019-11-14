@@ -156,23 +156,23 @@ def post_update_interactions(request):
 
 
 def user_fixed(request, item_id):
-    item = Item.objects.get(pk=item_id)
+	item = Item.objects.get(pk=item_id)
 	current_user = User.objects.get(uuid=item_uuid)
 	if request.user == current_user:
-    	item.is_fixed=True
-    	item.save()
-    	return HttpResponse("!")
+		item.is_fixed=True
+		item.save()
+		return HttpResponse("!")
 	else:
 		return HttpResponse("Закрепляйте, пожалуйста, свои записи!")
 
 
 def user_unfixed(request, item_id):
-    item = Item.objects.get(pk=item_id)
+	item = Item.objects.get(pk=item_id)
 	current_user = User.objects.get(uuid=item_uuid)
 	if request.user == current_user:
-    	item.is_fixed=False
-    	item.save()
-    	return HttpResponse("!")
+		item.is_fixed=False
+		item.save()
+		return HttpResponse("!")
 	else:
 		return HttpResponse("Открепляйте, пожалуйста, свои записи!")
 
