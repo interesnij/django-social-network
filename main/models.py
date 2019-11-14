@@ -114,7 +114,7 @@ class Item(models.Model):
         else:
             comments_query.add(Q(parent_comment__id=post_comment_parent_id), Q.AND)
 
-        post_community = item.community
+        post_community = self.community
 
         if post_community:
             if not self.is_staff_of_community_with_name(community_name=post_community.name):
