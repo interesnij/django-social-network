@@ -145,7 +145,7 @@ class ItemComment(models.Model):
     is_edited = models.BooleanField(default=False, null=False, blank=False,verbose_name="Изменено")
     is_deleted = models.BooleanField(default=False,verbose_name="Удаено")
     item = models.ForeignKey(Item, on_delete=models.CASCADE, null=True)
-    moderated_object = GenericRelation(ModeratedObject, related_query_name='post_comments')
+    moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='post_comments')
 
     class Meta:
         indexes = (
