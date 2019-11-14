@@ -91,12 +91,12 @@ class Item(models.Model):
             count_query.add(Q(reactor_id=reactor_id), Q.AND)
         return cls.objects.filter(count_query).count()
 
-    def get_comments_for_item_with_id(self, user):
+    def get_comments(self, user):
         item = Item.objects.get(pk=self.pk)
         comments_query = self._make_get_comments_for_post_query(user=user)
         return ItemComment.objects.filter(comments_query)
 
-    def get_comment_replies_for_comment_with_id_with_post_with_uuid(self, post_comment_id):
+    def get_comment_replies(self, post_comment_id):
         post_comment = ItemComment.objects.get(pk=post_comment_id)
         item = Item.objects.get(uuid=self.uuid)
         return item.get_comment_replies_for_comment_with_post(post_comment=post_comment)

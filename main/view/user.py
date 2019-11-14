@@ -57,12 +57,23 @@ class ItemCommentList(View, EmojiListMixin):
 
 	def get(self,request,*args,**kwargs):
 		item = Item.objects.get(uuid=self.kwargs["uuid"])
-		user = User.objects.get(pk=self.kwargs["pk"]) 
-		comments = item.get_comments_for_item_with_id(request.user)
+		self.user = User.objects.get(pk=self.kwargs["pk"])
+		if self.user != request.user and request.user.is_authenticated:
+			check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
+			if self.user.is_closed_profile:
+				check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
+			comments = item.get_comments(request.user).order_by('-created')
+		elif self.user == request.user:
+			comments = item.get_comments(request.user).order_by('-created')
+		elif request.user.is_anonymous and self.user.is_closed_profile():
+			raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
+		elif request.user.is_anonymous and not self.user.is_closed_profile():
+			comments = item.get_comments(request.user).order_by('-created')
 		comments_html = render_to_string("generic/posts/comments.html", {"comments": comments,"parent": item})
 
 		return JsonResponse({
 	        "comments": comments_html,
+			"user":user,
 	    })
 
 
