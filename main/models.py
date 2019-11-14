@@ -105,9 +105,9 @@ class Item(models.Model):
         comment_replies_query = self._make_get_comments_for_post_query(item, post_comment_parent_id=post_comment.pk)
         return ItemComment.objects.filter(comment_replies_query)
 
-    def _make_get_comments_for_post_query(item, user_id, post_comment_parent_id=None):
+    def _make_get_comments_for_post_query(self, user_id, post_comment_parent_id=None):
         """ получаем комментарии записи с пристрастием """
-        comments_query = Q(item_id=item.pk)
+        comments_query = Q(item_id=self.pk)
 
         if post_comment_parent_id is None:
             comments_query.add(Q(parent_comment__isnull=True), Q.AND)
