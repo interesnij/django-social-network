@@ -50,7 +50,7 @@ $('#ajax').on('click', '.fullscreen', function () {
 	 var item = $(this);
 	 var item_pk = item.data("pk");
 	 var user_uuid = item.data("uuid");
-	 $('#item_loader').html('').load("/users/detail/item/" + item_pk + "/" + user_uuid + "/")
+	 $('#item_loader').html('').load("/user/detail/item/" + item_pk + "/" + user_uuid + "/")
 	 $('.item_fullscreen').show();
 });
 $('#ajax').on('click', '.community_fullscreen', function () {
@@ -66,7 +66,7 @@ $('#ajax').on('click', '.fixed', function () {
 var fixed = $(this);
 var pk = fixed.parent().data('id');
 $.ajax({
-	url: "/users/fixed/" + pk + "/",
+	url: "/user/fixed/" + pk + "/",
 	success: function (data) {
 		fixed.parent().html("<span style='cursor:pointer' class='dropdown-item unfixed'>Открепить</span>");
 		$.toast({
@@ -83,7 +83,7 @@ $('#ajax').on('click', '.unfixed', function () {
 var unfixed = $(this);
 var pk = unfixed.parent().data('id');
 $.ajax({
-	url: "/users/unfixed/" + pk + "/",
+	url: "/user/unfixed/" + pk + "/",
 	success: function (data) {
 		unfixed.parent().html("<span style='cursor:pointer' class='dropdown-item fixed'>Закрепить</span>");
 		$.toast({
