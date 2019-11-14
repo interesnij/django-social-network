@@ -190,8 +190,9 @@ $('#ajax').on('click', '.unfixed', function () {
     });
 
   $('#ajax').on('click', '.replyParentComment', function () {
-  button = $(this);
-  form = button.parent().parent().parent().parent();
+  	var button = $(this);
+  	var form = button.parent().parent().parent().parent();
+		var block = form.parent()
         $.ajax({
             url: '/user/reply-comment/',
             data: form.serialize(),
@@ -200,6 +201,7 @@ $('#ajax').on('click', '.unfixed', function () {
             success: function(data) {
                 $(".form-control-rounded").val("");
                 $(".stream_reply_comments").append(data);
+								block.hide();
             },
             error: function(data) {
               $.toast({
@@ -221,14 +223,3 @@ $('#ajax').on('click', '.unfixed', function () {
 		reply_comment_form.next().show();
     form.focus();
 	})
-
-
-	var infinite = new Waypoint.Infinite({
-	    element: $('.infinite-container')[0],
-	    onBeforePageLoad: function() {
-	        $('.load').show();
-	    },
-	    onAfterPageLoad: function($items) {
-	        $('.load').hide();
-	    }
-	});
