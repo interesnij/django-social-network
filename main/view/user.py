@@ -73,7 +73,6 @@ class ItemCommentList(View, EmojiListMixin):
 
 		return JsonResponse({
 	        "comments": comments_html,
-			"user":self.user,
 	    })
 
 
