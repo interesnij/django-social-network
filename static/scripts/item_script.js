@@ -63,38 +63,40 @@ $('#ajax').on('click', '.community_fullscreen', function () {
 
 
 $('#ajax').on('click', '.fixed', function () {
-var fixed = $(this);
-var pk = fixed.parent().data('id');
-$.ajax({
-	url: "/user/fixed/" + pk + "/",
-	success: function (data) {
-		fixed.parent().html("<span style='cursor:pointer' class='dropdown-item unfixed'>Открепить</span>");
-		$.toast({
-				heading: 'Информация',
-				text: 'Запись закреплена!',
-				showHideTransition: 'fade',
-				icon: 'info'
-		})
-	}
-});
-});
+	var fixed = $(this);
+	var pk = fixed.parent().data('id');
+	var uuid = fixed.parent().data('uuid');
+	$.ajax({
+		url: "/user/fixed/" + pk + "/" + uuid + "/",
+		success: function (data) {
+			fixed.parent().html("<span style='cursor:pointer' class='dropdown-item unfixed'>Открепить</span>");
+			$.toast({
+					heading: 'Информация',
+					text: 'Запись закреплена!',
+					showHideTransition: 'fade',
+					icon: 'info'
+				})
+			}
+		});
+	});
 
 $('#ajax').on('click', '.unfixed', function () {
-var unfixed = $(this);
-var pk = unfixed.parent().data('id');
-$.ajax({
-	url: "/user/unfixed/" + pk + "/",
-	success: function (data) {
-		unfixed.parent().html("<span style='cursor:pointer' class='dropdown-item fixed'>Закрепить</span>");
-		$.toast({
-				heading: 'Информация',
-				text: 'Запись откреплена!',
-				showHideTransition: 'fade',
-				icon: 'info'
-		})
-	}
-});
-});
+	var unfixed = $(this);
+	var pk = unfixed.parent().data('id');
+	var uuid = fixed.parent().data('uuid');
+	$.ajax({
+		url: "/user/unfixed/" + pk + "/" + uuid + "/",
+		success: function (data) {
+			unfixed.parent().html("<span style='cursor:pointer' class='dropdown-item fixed'>Закрепить</span>");
+			$.toast({
+					heading: 'Информация',
+					text: 'Запись откреплена!',
+					showHideTransition: 'fade',
+					icon: 'info'
+				})
+			}
+		});
+	});
 
 	$('#ajax').on('click', '.emoji', function () {
 			var react = $(this);

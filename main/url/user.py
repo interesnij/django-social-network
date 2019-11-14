@@ -26,7 +26,7 @@ urlpatterns = [
     url(r'reply-comment/$', item_reply_comment, name='item_user_reply_comment'),
 	url(r'^comment_react_window/(?P<pk>\d+)/$', ItemCommentReactWindow.as_view(), name='item_comment_react_window'),
 
-	url(r'^fixed/(?P<item_id>\d+)/$', user_fixed, name='user_fixed'),
-    url(r'^unfixed/(?P<item_id>\d+)/$', user_unfixed, name='user_unfixed'),
+	url(r'^fixed/(?P<item_id>\d+)/(?P<uuid>[0-9a-f-]+)/$', user_fixed, name='user_fixed'),
+    url(r'^unfixed/(?P<item_id>\d+)/(?P<uuid>[0-9a-f-]+)/$', user_unfixed, name='user_unfixed'),
     url(r'^delete/(?P<item_id>\d+)/$', user_item_delete, name='user_item_delete'),
 ]

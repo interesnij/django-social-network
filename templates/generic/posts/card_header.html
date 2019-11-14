@@ -63,7 +63,7 @@
               {% if user == object.creator %}
                 <span data-id="{{ object.pk }}" style="cursor:pointer" class="dropdown-item remove">Удалить запись</span>
                 <span style="cursor:pointer" class="dropdown-item">Редактировать</span>
-                <span data-id="{{ object.pk }}">
+                <span data-id="{{ object.pk }}" data-uuid="{{ user.uuid }}">
                   {% if object.is_fixed %}
                   <span style="cursor:pointer" class="dropdown-item unfixed">Открепить</span>
                   {% else %}
