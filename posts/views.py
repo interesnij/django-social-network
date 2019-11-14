@@ -99,11 +99,12 @@ class PostCommunityCreate(View):
 
 
 class RepostUserUser(View):
+
     def get(self,request,**kwargs):
         context = {}
         form_post=PostForm()
         context['form_post'] = form_post
-        return super(RepostUserUser,self).get(request,**kwargs)
+        return HttpResponse("!")
 
     def post(self, request, *args, **kwargs):
 
