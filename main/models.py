@@ -10,7 +10,6 @@ from django.contrib.contenttypes.fields import GenericRelation
 from django.db.models import Q
 from django.db.models import Count
 from common.models import Emoji
-from main.helpers import _make_get_comments_for_post_query
 
 
 class Item(models.Model):
@@ -105,6 +104,37 @@ class Item(models.Model):
     def get_comment_replies_for_comment_with_post(item, post_comment):
         comment_replies_query = self._make_get_comments_for_post_query(item, post_comment_parent_id=post_comment.pk)
         return ItemComment.objects.filter(comment_replies_query)
+
+    def _make_get_comments_for_post_query(item, user_id, post_comment_parent_id=None):
+        """ получаем комментарии записи с пристрастием """
+        comments_query = Q(item_id=item.pk)
+
+        if post_comment_parent_id is None:
+            comments_query.add(Q(parent_comment__isnull=True), Q.AND)
+        else:
+            comments_query.add(Q(parent_comment__id=post_comment_parent_id), Q.AND)
+
+        post_community = item.community
+
+        if post_community:
+            if not self.is_staff_of_community_with_name(community_name=post_community.name):
+                blocked_users_query = ~Q(Q(commenter__blocked_by_users__blocker_id=user_id) | Q(
+                    commenter__user_blocks__blocked_user_id=user_id))
+                blocked_users_query_staff_members = Q(
+                    commenter__communities_memberships__community_id=post_community.pk)
+                blocked_users_query_staff_members.add(Q(commenter__communities_memberships__is_administrator=True) | Q(
+                    commenter__communities_memberships__is_moderator=True), Q.AND)
+                blocked_users_query.add(~blocked_users_query_staff_members, Q.AND)
+                comments_query.add(blocked_users_query, Q.AND)
+                comments_query.add(~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED), Q.AND)
+        else:
+            blocked_users_query = ~Q(Q(commenter__blocked_by_users__blocker_id=user_id) | Q(
+                commenter__user_blocks__blocked_user_id=user_id))
+            comments_query.add(blocked_users_query, Q.AND)
+
+        comments_query.add(~Q(moderated_object__reports__reporter_id=user_id), Q.AND)
+        comments_query.add(Q(is_deleted=False), Q.AND)
+        return comments_query
 
 
 class ItemComment(models.Model):
