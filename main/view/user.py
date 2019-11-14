@@ -9,7 +9,7 @@ from django.template.loader import render_to_string
 from django.views import View
 from posts.models import Post
 from generic.mixins import EmojiListMixin
-
+from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id)
 
 
 class RepostUser(View):
@@ -56,7 +56,7 @@ class ItemCommentList(View, EmojiListMixin):
 
 	def get(self,request,*args,**kwargs):
 		item = Item.objects.get(uuid=self.kwargs["uuid"])
-		comments = ItemComment.objects.filter(item=item, parent_comment=None).order_by("created")
+		comments = item.get_comments_for_item_with_id(item,request.user.pk)
 		comments_html = render_to_string("generic/posts/comments.html", {"comments": comments,"parent": item})
 
 		return JsonResponse({

@@ -10,6 +10,7 @@ from django.contrib.contenttypes.fields import GenericRelation
 from django.db.models import Q
 from django.db.models import Count
 from common.models import Emoji
+from main.helpers import _make_get_comments_for_post_query
 
 
 class Item(models.Model):
@@ -87,11 +88,23 @@ class Item(models.Model):
     @classmethod
     def count_reactions_for_post_with_id(cls, post_id, reactor_id=None):
         count_query = Q(post_id=post_id, reactor__is_deleted=False)
-
         if reactor_id:
             count_query.add(Q(reactor_id=reactor_id), Q.AND)
-
         return cls.objects.filter(count_query).count()
+
+    def get_comments_for_item_with_id(self, user_id):
+        item = Item.objects.get(pk=self.pk)
+        comments_query = self._make_get_comments_for_post_query(item=item, user_id=user_id)
+        return ItemComment.objects.filter(comments_query)
+
+    def get_comment_replies_for_comment_with_id_with_post_with_uuid(self, post_comment_id):
+        post_comment = ItemComment.objects.get(pk=post_comment_id)
+        item = Item.objects.get(uuid=self.uuid)
+        return item.get_comment_replies_for_comment_with_post(post_comment=post_comment)
+
+    def get_comment_replies_for_comment_with_post(item=item, post_comment):
+        comment_replies_query = self._make_get_comments_for_post_query(item, post_comment_parent_id=post_comment.pk)
+        return ItemComment.objects.filter(comment_replies_query)
 
 
 class ItemComment(models.Model):

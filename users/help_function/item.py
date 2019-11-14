@@ -116,13 +116,10 @@ def _make_get_post_comment_with_id_query(self, post_comment_id, item, post_comme
     return post_comments_query
 
 
-def _make_get_comments_for_post_query(self, item, post_comment_parent_id=None, max_id=None, min_id=None):
+def _make_get_comments_for_post_query(self, user, post_comment_parent_id=None):
     """ получаем комментарии записи с пристрастием """
 
-    # список комментариев
-    comments_query = Q(item_id=item.pk)
-
-    # Если мы получаем ответы, добавьте parent_comment в запрос
+    comments_query = Q(item_id=self.pk)
     if post_comment_parent_id is None:
         comments_query.add(Q(parent_comment__isnull=True), Q.AND)
     else:
@@ -131,35 +128,22 @@ def _make_get_comments_for_post_query(self, item, post_comment_parent_id=None, m
     post_community = item.community
 
     if post_community:
-        if not self.is_staff_of_community_with_name(community_name=post_community.name):
-            # Не извлекайте записи заблокированных пользователей, за исключением сотрудников
-            blocked_users_query = ~Q(Q(commenter__blocked_by_users__blocker_id=self.pk) | Q(
-                commenter__user_blocks__blocked_user_id=self.pk))
+        if not user.is_staff_of_community_with_name(community_name=post_community.name):
+            blocked_users_query = ~Q(Q(commenter__blocked_by_users__blocker_id=user.pk) | Q(
+                commenter__user_blocks__blocked_user_id=user.pk))
             blocked_users_query_staff_members = Q(
                 commenter__communities_memberships__community_id=post_community.pk)
             blocked_users_query_staff_members.add(Q(commenter__communities_memberships__is_administrator=True) | Q(
                 commenter__communities_memberships__is_moderator=True), Q.AND)
-
             blocked_users_query.add(~blocked_users_query_staff_members, Q.AND)
             comments_query.add(blocked_users_query, Q.AND)
-
-            # Не извлекайте элементы, которые были зарегистрированы и утверждены
             comments_query.add(~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED), Q.AND)
     else:
-        #  Не извлекайте сообщения заблокированных пользователей
         blocked_users_query = ~Q(Q(commenter__blocked_by_users__blocker_id=self.pk) | Q(
             commenter__user_blocks__blocked_user_id=self.pk))
         comments_query.add(blocked_users_query, Q.AND)
 
-    # Запросы прокрутки на основе курсора
-    if max_id:
-        comments_query.add(Q(id__lt=max_id), Q.AND)
-    elif min_id:
-        comments_query.add(Q(id__gte=min_id), Q.AND)
-
-    # Не извлекайте предметы, о которых получены репорты
     comments_query.add(~Q(moderated_object__reports__reporter_id=self.pk), Q.AND)
-    # Не извлекайте мягко удаленные комментарии к сообщению
     comments_query.add(Q(is_deleted=False), Q.AND)
     return comments_query
 
@@ -424,31 +408,6 @@ def delete_post_comment_reaction(self, post_comment_reaction):
     self._delete_post_comment_reaction_notification(post_comment_reaction=post_comment_reaction)
     post_comment_reaction.delete()
 
-def get_comments_for_post_with_id(self, item_id, min_id=None, max_id=None):
-    item = Item.objects.get(pk=item_id)
-
-    check_can_get_comments_for_post(user=self, item=item)
-
-    comments_query = self._make_get_comments_for_post_query(item=item, max_id=max_id, min_id=min_id)
-    return PostComment.objects.filter(comments_query)
-
-def get_comment_replies_for_comment_with_id_with_post_with_uuid(self, post_comment_id, item_uuid, min_id=None,
-                                                                max_id=None):
-
-    post_comment = PostComment.objects.get(pk=post_comment_id)
-    item = Item.objects.get(uuid=item_uuid)
-    return self.get_comment_replies_for_comment_with_post(item=item, post_comment=post_comment, min_id=min_id,
-                                                              max_id=max_id)
-
-def get_comment_replies_for_comment_with_post(self, item, post_comment, min_id=None, max_id=None):
-    check_can_get_comment_replies_for_post_and_comment(user=self, item=item, post_comment=post_comment)
-
-    comment_replies_query = self._make_get_comments_for_post_query(item=item,
-                                                                   post_comment_parent_id=post_comment.pk,
-                                                                   max_id=max_id,
-                                                                   min_id=min_id)
-
-    return PostComment.objects.filter(comment_replies_query)
 
 def get_comments_count_for_post(self, item):
     return item.count_comments_with_user(user=self)
@@ -647,30 +606,26 @@ def delete_post_comment_reaction(self, post_comment_reaction):
     self._delete_post_comment_reaction_notification(post_comment_reaction=post_comment_reaction)
     post_comment_reaction.delete()
 
-def get_comments_for_post_with_id(self, item_id, min_id=None, max_id=None):
+def get_comments_for_post_with_id(self, item_id):
 
     item = Item.objects.get(pk=item_id)
 
     check_can_get_comments_for_post(user=self, item=item)
 
-    comments_query = self._make_get_comments_for_post_query(item=item, max_id=max_id, min_id=min_id)
+    comments_query = self._make_get_comments_for_post_query(item=item)
     return PostComment.objects.filter(comments_query)
 
-def get_comment_replies_for_comment_with_id_with_post_with_uuid(self, post_comment_id, item_uuid, min_id=None,
-                                                                max_id=None):
+def get_comment_replies_for_comment_with_id_with_post_with_uuid(self, post_comment_id, item_uuid):
 
     post_comment = PostComment.objects.get(pk=post_comment_id)
     item = Item.objects.get(uuid=item_uuid)
-    return self.get_comment_replies_for_comment_with_post(item=item, post_comment=post_comment, min_id=min_id,
-                                                          max_id=max_id)
+    return self.get_comment_replies_for_comment_with_post(item=item, post_comment=post_comment)
 
-def get_comment_replies_for_comment_with_post(self, item, post_comment, min_id=None, max_id=None):
+def get_comment_replies_for_comment_with_post(self, item, post_comment):
     check_can_get_comment_replies_for_post_and_comment(user=self, item=item, post_comment=post_comment)
 
     comment_replies_query = self._make_get_comments_for_post_query(item=item,
-                                                                   post_comment_parent_id=post_comment.pk,
-                                                                   max_id=max_id,
-                                                                   min_id=min_id)
+                                                                   post_comment_parent_id=post_comment.pk)
 
     return PostComment.objects.filter(comment_replies_query)
 
