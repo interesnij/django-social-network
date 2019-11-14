@@ -62,7 +62,7 @@
             <div class="dropdown-menu dropdown-menu-right">
               {% if user == object.creator %}
                 <span data-id="{{ object.pk }}" style="cursor:pointer" class="dropdown-item remove">Удалить запись</span>
-                <span data-action="item_update" style="cursor:pointer" class="dropdown-item">Редактировать</span>
+                <span style="cursor:pointer" class="dropdown-item">Редактировать</span>
                 <span data-id="{{ object.pk }}">
                   {% if object.is_fixed %}
                   <span style="cursor:pointer" class="dropdown-item unfixed">Открепить</span>
@@ -70,7 +70,7 @@
                   <span style="cursor:pointer" class="dropdown-item fixed">Закрепить</span>
                   {% endif %}
                 </span>
-                <span data-action="item_check_comment" style="cursor:pointer" class="dropdown-item">Выключить комментарии</span>
+                <span data-action="off_comment" style="cursor:pointer" class="dropdown-item">Выключить комментарии</span>
               {% else %}
                 <span data-actiond="item_bad" class="dropdown-item">Пожаловаться</span>
               {% endif %}
