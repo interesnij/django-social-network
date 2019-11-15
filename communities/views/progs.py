@@ -43,13 +43,13 @@ class CommunityCreate(TemplateView):
 	                                title="Сохраненные фото",
 	                                is_generic=True,
 	                            )
-	        Album.objects.create(
+			Album.objects.create(
 	                                creator=request.user,
 	                                community=new_community.category,
 	                                title="Фото со стены",
 	                                is_generic=True,
 	                            )
-	        Album.objects.create(
+			Album.objects.create(
 	                                creator=request.user,
 	                                community=new_community.category,
 	                                title="Фото со страницы",
