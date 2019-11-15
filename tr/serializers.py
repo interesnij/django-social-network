@@ -4,7 +4,7 @@ from allauth.account.adapter import get_adapter
 from allauth.account.utils import setup_user_email
 from rest_framework import serializers
 from rest_framework.response import Response
-from users.models import UserPrivateSettings, UserNotificationsSettings
+from gallery.models import Album
 
 
 class RegisterSerializer(serializers.Serializer):
@@ -46,4 +46,22 @@ class RegisterSerializer(serializers.Serializer):
         adapter.save_user(request, user, self)
         setup_user_email(request, user, [])
         user.save()
+        Album.objects.create(
+                                creator=user,
+                                community=None,
+                                title="Сохраненные фото",
+                                is_generic=True,
+                            )
+        Album.objects.create(
+                                creator=user,
+                                community=None,
+                                title="Фото со стены",
+                                is_generic=True,
+                            )
+        Album.objects.create(
+                                creator=user,
+                                community=None,
+                                title="Фото со страницы", 
+                                is_generic=True,
+                            )
         return user
