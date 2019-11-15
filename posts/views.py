@@ -109,20 +109,24 @@ class RepostUserUser(View, FormMixin):
             if self.user.is_closed_profile:
                 check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
 
-            self.form_post=PostForm(request.POST, request.FILES)
-            if self.form_post.is_valid():
-                new_post=self.form_post.save(commit=False)
-                new_post.creator=self.request.user
-                if self.item.parent:
-                    new_post.parent=self.item.parent
-                else:
-                    new_post.parent=self.item
-                new_post.is_repost=True
-                new_post=self.form_post.save()
-                if request.is_ajax() :
-                    return HttpResponse("!")
+            self.text=request.POST.get('text')
+            self.creator=self.request.user
+            self.comments_enabled=request.POST.get('comments_enabled')
+            self.status=request.POST.get('status')
+            if self.item.parent:
+                self.parent=self.item.parent
             else:
-                return HttpResponseBadRequest()
+                self.parent=self.item
+            self.is_repost=True
+            new_post=Post.objects.create(
+                                        creator=self.creator,
+                                        text=self.text,
+                                        comments_enabled=self.comments_enabled,
+                                        status = self.status,
+                                        parent = self.parent
+                                        )
+            if request.is_ajax() :
+                return HttpResponse("!")
 
 
 class RepostCommunityUser(View):
