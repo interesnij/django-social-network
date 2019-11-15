@@ -39,19 +39,19 @@ class CommunityCreate(TemplateView):
 										)
 			Album.objects.create(
 	                                creator=request.user,
-	                                community=new_community.category,
+	                                community=new_community,
 	                                title="Сохраненные фото",
 	                                is_generic=True,
 	                            )
 			Album.objects.create(
 	                                creator=request.user,
-	                                community=new_community.category,
+	                                community=new_community,
 	                                title="Фото со стены",
 	                                is_generic=True,
 	                            )
 			Album.objects.create(
 	                                creator=request.user,
-	                                community=new_community.category,
+	                                community=new_community,
 	                                title="Фото со страницы",
 	                                is_generic=True,
 	                            )
