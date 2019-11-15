@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load staticfiles %}
+{% load staticfiles  %}
 {% block title %}
 {% if user == request.user %}
 Мои фотографии
@@ -14,8 +14,14 @@
 <div class="container-fluid" style="margin-top:30px">
     <div class="row">
       <div class="col-12 col-md-6">
-      <h5 class="mt-1">  Мои фотографии </h5>
-      Альбомов: {{ user.count_albums }} Фото: {{ user.count_photos }}
+      <h5 class="mt-1">
+        {% if user == request.user %}
+          Мои фотографии
+        {% else %}
+          Фотографии пользователя "{{ user.get_full_name }}"
+        {% endif %}
+      </h5>
+      Фото: {{ user.count_photos }}
       </div>
       <div class="col-12 col-md-6">
         <div class="row">
@@ -46,7 +52,7 @@
   </div>
 
     <div class="row infinite-container photo_stream">
-      <div id="albums_load" style="display: contents;"></div>
+      <div id="albums_load" style="display:flex;flex-wrap: wrap;"></div>
       <br>
       <div id="photos_load" style="display:flex;flex-wrap: wrap;"></div>
     </div>
