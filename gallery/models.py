@@ -7,6 +7,7 @@ from imagekit.models import ProcessedImageField
 from django.contrib.contenttypes.fields import GenericRelation
 from django.conf import settings
 from common.models import Emoji
+from main.models import Item
 
 
 class Album(models.Model):
@@ -47,6 +48,7 @@ class Photo(models.Model):
     order = models.PositiveIntegerField(default=0)
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='photo_creator', null=False, blank=False, verbose_name="Создатель")
     is_deleted = models.BooleanField(verbose_name="Удален",default=False )
+    item = models.ForeignKey(Item, on_delete=models.CASCADE, null=True)
 
     class Meta:
         indexes = (

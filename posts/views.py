@@ -11,6 +11,7 @@ from django.utils import timezone
 from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
 from common.checkers import check_can_get_posts_for_community_with_name
 from generic.mixins import FormMixin
+from gallery.models import Photo
 
 
 class PostsView(TemplateView):
@@ -50,6 +51,7 @@ class PostUserCreate(View):
     def post(self,request,*args,**kwargs):
         self.form_post=PostForm(request.POST, request.FILES)
         self.user=User.objects.get(pk=self.kwargs["pk"])
+
         if self.form_post.is_valid():
             post=self.form_post.save(commit=False)
             post.creator=self.user
@@ -60,6 +62,12 @@ class PostUserCreate(View):
                                     comments_enabled=post.comments_enabled,
                                     status=post.status,
                                 )
+            try:
+                self.album = Album.objects.get(title="Фото со стены", creator=self.user, is_is_generic=True)
+            except:
+                self.album = None
+            self.uploaded_file = request.FILES['file']
+            Photo.objects.create(album=self.album, file=self.uploaded_file, creator=self.user, item=new_post)
             if request.is_ajax() :
                 html = render_to_string('new_post.html',{
                     'object': new_post,

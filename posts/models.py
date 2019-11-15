@@ -16,10 +16,10 @@ class Post(Item):
 
 
     @classmethod
-    def create_post(cls, creator, text=None, community=None, comments_enabled=None, video=None,
+    def create_post(cls, creator, text=None, photo=None, community=None, comments_enabled=None, video=None,
                     is_draft=False, good=None, status= None, doc=None, question=None):
 
-        if not text:
+        if not text or not photo:
             raise ValidationError('Нужно ввести текст или прикрепить фото')
         else:
             post = Post.objects.create(
@@ -28,6 +28,7 @@ class Post(Item):
                                         community=community,
                                         comments_enabled=comments_enabled,
                                         status = status,
+                                        photo = photo,
                                     )
             channel_layer = get_channel_layer()
             payload = {
@@ -38,23 +39,11 @@ class Post(Item):
             async_to_sync(channel_layer.group_send)('notifications', payload)
         return post
 
-    def is_text_only_post(self):
-        return self.has_text() and not self.has_image()
-
     def has_text(self):
         if hasattr(self, 'text'):
             if self.text:
                 return True
         return False
-
-    def has_image(self):
-        if hasattr(self, 'image'):
-            if self.image:
-                return True
-        return False
-
-    def get_first_image(self):
-        return self.image.first()
 
     def is_draft(self):
         return self.status == Post.STATUS_DRAFT
@@ -62,23 +51,9 @@ class Post(Item):
     def is_empty(self):
         return not self.text and not hasattr(self, 'image') and not hasattr(self, 'video') and not self.has_media()
 
-    def has_image(self):
-        return self.image.exists()
-
     def delete(self, *args, **kwargs):
         self.delete_image()
         super(Post, self).delete(*args, **kwargs)
-
-    def delete_image(self):
-        if self.has_image():
-            delete_file_field(self.image.image)
-
-    def soft_delete(self):
-        self.delete_notifications()
-        for comment in self.comments.all().iterator():
-            comment.soft_delete()
-        self.is_deleted = True
-        self.save()
 
     class Meta:
         ordering=["-created"]
