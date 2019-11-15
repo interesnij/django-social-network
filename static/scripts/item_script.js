@@ -29,8 +29,9 @@ $('#ajax').on('click', '.comment', function () {
 $('#ajax').on('click', '.remove', function () {
 var remove = $(this);
 var pk = remove.data('id');
+var uuid = remove.data('uuid');
 $.ajax({
-	url: "/user/delete/" + pk + "/",
+	url: "/user/delete/" + pk + "/" + uuid + "/",
 	success: function (data) {
 		$(remove).parents('.card').hide();
     $('.activefullscreen').hide();
