@@ -19,7 +19,7 @@ class Post(Item):
     def create_post(cls, creator, text=None, photo=None, community=None, comments_enabled=None, video=None,
                     is_draft=False, good=None, status= None, doc=None, question=None):
 
-        if not text or not photo:
+        if not text and not photo:
             raise ValidationError('Нужно ввести текст или прикрепить фото')
         else:
             post = Post.objects.create(
