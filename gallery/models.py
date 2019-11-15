@@ -31,6 +31,9 @@ class Album(models.Model):
         verbose_name = 'Фотоальбом'
         verbose_name_plural = 'Фотоальбомы'
 
+    def __str__(self):
+        return self.title
+
 
 class Photo(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, db_index=True,verbose_name="uuid")
