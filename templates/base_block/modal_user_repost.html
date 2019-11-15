@@ -44,7 +44,109 @@
                                       <textarea name="text" id="id_text" class="form-control bg-light-secondary border-0" rows="3" placeholder="Добавьте комментарий"></textarea>
                                     </div>
 
-                                    {% include 'generic/posts/form_footer.html' %}
+                                    <div class="card-footer border-top">
+                                        <span class="add_board">
+                                            <div id="for_images_upload" style="display:none;margin:10px">
+                                                <div class="card mb-4">
+                                                    <input name="image" type="file" id="" class="">
+                                                </div>
+                                            </div>
+                                            <div id="for_gallery" style="display:none;margin:10px">gallery</div>
+                                            <div id="for_doc" style="display:none;margin:10px">doc</div>
+                                            <div id="for_good" style="display:none;margin:10px">good</div>
+                                            <div id="for_question" style="display:none;margin:10px">question</div>
+                                            <div id="for_settings" style="display:none;margin:10px">
+                                              <span class="add_board_hide">
+                                                  <img style="width:25px;cursor:pointer" src="{% static 'images/icons/close-24px.svg' %}" />
+                                              </span>
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" checked name="comments_enabled" id="id_comments_enabled" class="custom-control-input">
+                                                    <label class="custom-control-label" for="id_comments_enabled">
+                                                        Комментарии включены
+                                                    </label>
+                                                </div>
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" id="item_mute" class="custom-control-input">
+                                                    <label class="custom-control-label" for="item_mute">
+                                                        Не отправлять уведомления
+                                                    </label>
+                                                </div>
+                                                <div class="form-group ">
+                                                    <label>статус</label>
+                                                    <select class="form-control" id="id_status" name="status" data-live-search="true" tabindex="-1" aria-hidden="true">
+                                                        <option value="P" checked>Опубликовано</option>
+                                                        <option value="D">Отложено</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </span>
+
+                                        <div class="row">
+                                            <div class="col" style="display: flex;">
+                                                <a title="Статья" class="btn btn-link btn-sm text-secondary" id="article_add">
+                                                    <img style="width:22px;" src="{% static 'images/icons/post_add-24px.svg' %}" />
+                                                </a>
+                                                <div class="dropdown">
+                                                    <a title="Изображение" id="dropdown_image" class="btn btn-link btn-sm text-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <img style="width:22px;" src="{% static 'images/icons/camera_alt-24px.svg' %}" />
+                                                    </a>
+                                                    <div class="dropdown-menu dropdown-menu-top" aria-labelledby="dropdown_image">
+                                                        <a id="images_upload" class="dropdown-item">Загрузить изображение</a>
+                                                        <a id="gallery" class="dropdown-item">Мои изображения</a>
+                                                        <a id="link" class="dropdown-item">Использовать ссылку</a>
+                                                    </div>
+                                                </div>
+                                                <div class="dropdown">
+                                                    <a title="Еще" class="btn btn-link btn-sm text-secondary" id="dropdown_more" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <img style="width:22px;" src="{% static 'images/icons/attach_file-24px.svg' %}" />
+                                                    </a>
+                                                    <div class="dropdown-menu dropdown-menu-top" aria-labelledby="dropdown_more">
+                                                        <a id="doc" class="dropdown-item">Документ</a>
+                                                        <a id="good" class="dropdown-item">Товар</a>
+                                                        <a id="question" class="dropdown-item">Опрос</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-auto ">
+                                                <img style="width:22px" id="settings" src="{% static 'images/icons/settings_applications-24px.svg' %}" />
+
+                                                <button type="button" id="form_repost_btn" class="btn btn-rounded btn-sm text-uppercase pl-3">
+                                                    <span class="text-hide-xs">Опубликовать</span>
+                                                        <img style="width:25px;color:white" src="{% static 'images/icons/send-24px.svg' %}" />
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <script>
+                                        $('.add_board_hide').on('click', function() {
+                                            $('#for_settings').hide();
+                                        });
+                                    </script>
+
+                                    <script>
+                                        $('#images_upload').on('click', function() {
+                                            $('#for_images_upload').show();
+                                        });
+                                        $('#settings').on('click', function() {
+                                            $('#for_settings').show();
+                                        });
+
+                                        $('#gallery').on('click', function() {
+                                            $('#for_gallery').show();
+                                        });
+                                        $('#doc').on('click', function() {
+                                            $('#for_doc').show();
+                                        });
+                                        $('#good').on('click', function() {
+                                            $('#for_good').show();
+                                        });
+                                        $('#question').on('click', function() {
+                                            $('#for_question').show();
+                                        });
+                                    </script>
 
                                 </form>
                             </div>
@@ -60,7 +162,7 @@
 </div>
 
 <script>
-    $('#form_post_btn').click(function() {
+    $('#form_repost_btn').click(function() {
         var frm_repost = $('#FORM-REPOST');
         var uuid = $('.form #user_item_pk').text();
         $.ajax({
