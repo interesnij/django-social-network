@@ -111,7 +111,9 @@ class RepostUserUser(View, FormMixin):
 
             self.text=request.POST.get('text')
             self.creator=self.request.user
-            self.comments_enabled=request.POST.get('comments_enabled')
+            self.comm_enabled=request.POST.get('comments_enabled')
+            if self.comm_enabled = 'on':
+                self.comments_enabled = True    
             self.status=request.POST.get('status')
             if self.item.parent:
                 self.parent=self.item.parent
