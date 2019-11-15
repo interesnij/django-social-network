@@ -3,6 +3,7 @@ from communities.models import CommunityCategory, Community, CommunitySubCategor
 from django.views import View
 from django.http import HttpResponse, HttpResponseBadRequest
 from communities.forms import CommunityForm
+from gallery.models import Album
 
 
 class CommunityCreate(TemplateView):
@@ -36,6 +37,24 @@ class CommunityCreate(TemplateView):
 										type=new_community.type,
 										creator=request.user
 										)
+			Album.objects.create(
+	                                creator=request.user,
+	                                community=new_community.category,
+	                                title="Сохраненные фото",
+	                                is_generic=True,
+	                            )
+	        Album.objects.create(
+	                                creator=request.user,
+	                                community=new_community.category,
+	                                title="Фото со стены",
+	                                is_generic=True,
+	                            )
+	        Album.objects.create(
+	                                creator=request.user,
+	                                community=new_community.category,
+	                                title="Фото со страницы",
+	                                is_generic=True,
+	                            )
 			if request.is_ajax() :
 				return HttpResponse("!")
 		else:
