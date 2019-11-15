@@ -176,7 +176,7 @@ def user_unfixed(request, item_id, user_uuid):
 	else:
 		return HttpResponse("Открепляйте, пожалуйста, свои записи!")
 
-def user_item_delete(request, user_uuid):
+def user_item_delete(request, item_id):
 	item = Item.objects.get(pk=item_id)
 	current_user = User.objects.get(uuid=user_uuid)
 	if request.user == current_user:
