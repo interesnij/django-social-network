@@ -17,6 +17,7 @@ class Album(models.Model):
     description = models.TextField(blank=True, null=True, verbose_name="Описание")
     cover_photo = models.ForeignKey('Photo', on_delete=models.SET_NULL, related_name='+', blank=True, null=True, verbose_name="Обожка")
     is_public = models.BooleanField(default=True, verbose_name="Виден другим")
+    is_generic = models.BooleanField(default=False, editable=False, verbose_name="Сгенерированный альбом")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     order = models.PositiveIntegerField(default=0)
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='created_user', null=False, blank=False, verbose_name="Создатель")
@@ -88,7 +89,7 @@ class PhotoComment(models.Model):
 
 
 
-class GoodReaction(models.Model):
+class PhotoReaction(models.Model):
     photo = models.ForeignKey(Photo, on_delete=models.CASCADE, related_name='photo_reactions')
     created = models.DateTimeField(editable=False)
     reactor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='photo_reactions')
