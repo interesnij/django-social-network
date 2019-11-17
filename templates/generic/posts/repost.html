@@ -8,7 +8,7 @@
           {% if object.community.avatar %}
             <img src="{{ object.community.avatar.url }}" style="border-radius: 50px;width:40px;" alt="image">
           {% else %}
-            <img style="width:50px;width:50px;width:50px;border:#6C757D solid 1px;border-radius:40px;padding:5px;" src="{% static 'images/icons/group-24px.svg' %}" />
+            <img style="width:50px;border:#6C757D solid 1px;border-radius:40px;padding:5px;" src="{% static 'images/icons/group-24px.svg' %}" />
           {% endif %}
         </figure>
       </a>
@@ -41,7 +41,7 @@
     </div>
   </div>
   {% if object.parent.post %}
-  <div class="card-body fullscreen" data-id="{{ object.pk }}" style="cursor:pointer" >
+  <div class="card-body fullscreen" data-uuid="{{ object.creator.uuid }}" data-pk="{{ object.pk }}" style="cursor:pointer" >
 
     {% if object.parent.post.text %}
       <p class="">{{ object.parent.post.text|linebreaks }}</p>
