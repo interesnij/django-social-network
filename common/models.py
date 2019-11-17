@@ -66,7 +66,7 @@ class Emoji(models.Model):
         emojis = Emoji.objects.filter(emoji_query).annotate(Count('post_reactions')).distinct().order_by(
             '-post_reactions__count').all()
 
-        return [{'emoji': emoji, 'count': emoji.post_reactions__count, 'reactors': emoji.get_reactor()} for emoji in emojis]
+        return [{'emoji': emoji, 'count': emoji.post_reactions__count,} for emoji in emojis]
 
     def save(self, *args, **kwargs):
         if not self.id:
