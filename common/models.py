@@ -56,7 +56,8 @@ class Emoji(models.Model):
     @classmethod
     def get_reactor(cls, reactor_id=None):
         User = get_user_model()
-        reactors = User.objects.filter(pk=post_reactions__reactor_id).all()
+        reactors = Q(post_reactions__reactor_id=reactor_id, )
+        return reactors
 
     @classmethod
     def get_emoji(cls, item_id, emoji_id=None, reactor_id=None):
