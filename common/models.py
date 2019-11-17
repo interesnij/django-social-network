@@ -2,6 +2,7 @@ from django.db import models
 import tldextract
 from django.db.models import Q, Count
 from django.utils import timezone
+from common.model_loaders import get_user_model
 
 
 class EmojiGroup(models.Model):
@@ -53,6 +54,7 @@ class Emoji(models.Model):
         return [{'emoji': emoji, 'count': emoji.post_comment_reactions__count} for emoji in emojis]
 
     def get_reactor(self):
+        User = get_user_model()
         reactors = User.objects.filter(pk=self.post_reactions__reactor_id).all()
 
     @classmethod
