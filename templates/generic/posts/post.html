@@ -3,11 +3,11 @@
 
     {% include 'generic/posts/card_header.html' %}
 
-    {% if object.is_repost %}
-    {% include 'generic/posts/repost.html' %}
-    {% endif %}
-
     <div class="card-body fullscreen" data-uuid="{{ object.creator.uuid }}" data-pk="{{ object.pk }}" style="cursor:pointer">
+      {% if object.is_repost %}
+      {% include 'generic/posts/repost.html' %}
+      {% endif %}
+      
       {% if object.post.text %}
         <p class="">{{ object.post.text|linebreaks }}</p>
       {% endif %}
