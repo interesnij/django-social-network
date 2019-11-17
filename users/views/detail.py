@@ -48,7 +48,7 @@ class UserItemView(EmojiListMixin, TemplateView):
         return context
 
 
-class ItemListView(EmojiListMixin, View):
+class ItemListView(View):
 
     def get(self, request, *args, **kwargs):
         context = {}
