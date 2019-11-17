@@ -330,8 +330,6 @@ def react_to_post(self, item, emoji_id):
         if post_reaction.item.creator_id != self.pk:
             if item.creator.has_reaction_notifications_enabled_for_post_with_id(item_id=item.pk) and \
                     not item.creator.has_blocked_user_with_id(self.pk):
-                self._create_post_reaction_notification(post_reaction=post_reaction)
-            self._send_post_reaction_push_notification(post_reaction=post_reaction)
 
     return post_reaction
 
