@@ -5,7 +5,7 @@ from posts.forms import PostForm
 
 
 class EmojiListMixin(ContextMixin):
-	emojies_1 = Emoji.objects.filter(group__pk=2)
+	emojies_1 = Emoji.objects.filter(group__order=1)
 	emojies_2 = Emoji.objects.filter(group__order=2)
 	def get_context_data(self,**kwargs):
 		context=super(EmojiListMixin,self).get_context_data(**kwargs)
