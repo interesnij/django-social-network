@@ -30,7 +30,7 @@
         <div class="react_pop" style="margin:15px">
           {% if emojies_1 %}
           <span style="display: flex;flex-wrap: wrap;width: 180px;">
-            {% for object in emojies_2 %}
+            {% for object in emojies_1 %}
             <span data-id="{{ object.id }}" class="emoji" style="padding:6px;cursor:pointer" title="{{ object.keyword }}">
               <figure style="margin: 0;">
                 {% if object.image %}
@@ -41,7 +41,7 @@
             {% endfor %}
             <br><br><br>
 
-            {% for object in emojies_1 %}
+            {% for object in emojies_2 %}
             <span data-id="{{ object.id }}" class="emoji" style="padding:6px;cursor:pointer" title="{{ object.keyword }}">
               <figure style="margin: 0;">
                 {% if object.image %}
