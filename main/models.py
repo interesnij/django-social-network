@@ -10,6 +10,7 @@ from django.contrib.contenttypes.fields import GenericRelation
 from django.db.models import Q
 from django.db.models import Count
 from common.models import Emoji
+from common.model_loaders import get_user_model
 
 
 class Item(models.Model):
@@ -199,6 +200,7 @@ class ItemReaction(models.Model):
         return "{0}/{1}".format(self.item.creator.get_full_name(), self.emoji.keyword)
 
     def get_reactor(self):
+        User = get_user_model()
         reactors = User.objects.filter(pk=self.reactor.pk).all()
         return reactors
 
