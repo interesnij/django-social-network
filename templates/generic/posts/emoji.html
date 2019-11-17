@@ -8,7 +8,7 @@
 <span class="reaction_window">
 <div style="margin:15px">
   <span>{{ react.count }} {{ react.count|rupluralize:"реакция,реакции,реакций" }}</span>
-  <br><br>{{ react.reactors }}
+  <br><br>{{ object.reactions.get_reactor }}
   <span style="display: flex;">
     {% for heart in react.get_reactor %}
     <a href="{% url 'user' pk=heart.pk %}" class="ajax" style="padding-right:10px">
