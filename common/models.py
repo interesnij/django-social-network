@@ -53,7 +53,7 @@ class Emoji(models.Model):
         return [{'emoji': emoji, 'count': emoji.post_comment_reactions__count} for emoji in emojis]
 
     def get_reactor(self):
-        reactors = User.objects.filter(pk=self.post_reactions.reactor.pk).all()
+        reactors = User.objects.filter(pk=self.post_reactions__reactor_id).all()
         return reactors
 
     @classmethod
