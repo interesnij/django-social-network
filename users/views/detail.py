@@ -11,6 +11,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views import View
 from django.shortcuts import render_to_response
 from rest_framework.exceptions import PermissionDenied
+from common.models import EmojiGroup, Emoji
 
 
 class UserItemView(EmojiListMixin, TemplateView):
@@ -51,6 +52,7 @@ class ItemListView(EmojiListMixin, View):
 
     def get(self, request, *args, **kwargs):
         context = {}
+        emojies_1 = Emoji.objects.filter(group__order=1)
         self.user=User.objects.get(pk=self.kwargs["pk"])
         if self.user != self.request.user and self.request.user.is_authenticated:
             check_is_not_blocked_with_user_with_id(user=self.request.user, user_id=self.user.id)
@@ -67,6 +69,7 @@ class ItemListView(EmojiListMixin, View):
             items_list = self.user.get_posts().order_by('-created')
             current_page = Paginator(items_list, 12)
 
+        context['emojies_1'] = emojies_1
         context['user'] = self.user
         page = request.GET.get('page')
         try:
