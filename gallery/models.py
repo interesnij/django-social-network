@@ -54,7 +54,6 @@ class Photo(models.Model):
         indexes = (
             BrinIndex(fields=['created']),
         )
-        ordering = ['order']
         verbose_name = 'Фото'
         verbose_name_plural = 'Фото'
 
