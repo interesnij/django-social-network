@@ -3,6 +3,7 @@ from django.http import Http404
 from django.contrib.auth.models import User
 from .models import UserProfile, UserPrivateSettings, UserNotificationsSettings
 from django import forms
+from photo.models import Photo
 
 
 class GeneralUserForm(forms.ModelForm):
@@ -35,9 +36,9 @@ class AboutUserForm(forms.ModelForm):
 class AvatarUserForm(forms.ModelForm):
 
     class Meta:
-        model = UserProfile
+        model = Photo
         fields = (
-            'avatar',
+            'file',
         )
 
 class SettingsPrivateForm(forms.ModelForm):
@@ -52,7 +53,7 @@ class SettingsPrivateForm(forms.ModelForm):
             'can_comments',
             'can_add_post',
             'can_add_article',
-            'can_add_good', 
+            'can_add_good',
         )
 
 class SettingsNotifyForm(forms.ModelForm):

@@ -5,6 +5,7 @@ from users.models import (
                             UserPrivateSettings,
                             UserNotificationsSettings
                         )
+from gallery.models import Album, Photo
 from users.forms import (
                             GeneralUserForm,
                             AboutUserForm,
@@ -14,6 +15,7 @@ from users.forms import (
                         )
 
 from django.http import HttpResponse, HttpResponseBadRequest
+from django.views import View
 
 
 
@@ -152,28 +154,19 @@ class SettingsPrivateView(TemplateView):
 class UserAvatarChange(TemplateView):
 	template_name = "settings/user_avatar_form.html"
 	form=None
-	profile=None
 
 	def get(self,request,*args,**kwargs):
-		self.user=request.user
-		self.form=AvatarUserForm(instance=self.user)
+		self.form=AvatarUserForm()
 		return super(UserAvatarChange,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		context=super(UserAvatarChange,self).get_context_data(**kwargs)
-		context["profile"]=self.profile
 		context["form"]=self.form
 		return context
 
 	def post(self,request,*args,**kwargs):
-		self.user=request.user
-		try:
-			self.profile=UserProfile.objects.get(user=request.user)
-		except:
-			self.profile = None
-		if not self.profile:
-			self.user.profile = UserProfile.objects.create(user=request.user)
-		self.form=AvatarUserForm(request.POST,request.FILES, instance=self.user.profile)
+        self.album=Album.objects.get(creator=request.user, title="Фото со страницы")
+		self.form=AvatarUserForm(request.POST,request.FILES, instance=self.album)
 		if self.form.is_valid():
 			self.form.save()
 			if request.is_ajax():
