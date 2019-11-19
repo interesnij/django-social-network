@@ -166,7 +166,7 @@ class UserAvatarChange(TemplateView):
 
     def post(self,request,*args,**kwargs):
         self.album=Album.objects.get(creator=request.user, title="Фото со страницы")
-        self.form=AvatarUserForm(request.POST,request.FILES, instance=self.album)
+        self.form=AvatarUserForm(request.POST,request.FILES)
         if self.form.is_valid():
             self.form.save()
             if request.is_ajax():
