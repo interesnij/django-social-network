@@ -152,26 +152,26 @@ class SettingsPrivateView(TemplateView):
 
 
 class UserAvatarChange(TemplateView):
-	template_name = "settings/user_avatar_form.html"
-	form=None
+    template_name = "settings/user_avatar_form.html"
+    form=None
 
-	def get(self,request,*args,**kwargs):
-		self.form=AvatarUserForm()
-		return super(UserAvatarChange,self).get(request,*args,**kwargs)
+    def get(self,request,*args,**kwargs):
+        self.form=AvatarUserForm()
+        return super(UserAvatarChange,self).get(request,*args,**kwargs)
 
-	def get_context_data(self,**kwargs):
-		context=super(UserAvatarChange,self).get_context_data(**kwargs)
-		context["form"]=self.form
-		return context
+    def get_context_data(self,**kwargs):
+        context=super(UserAvatarChange,self).get_context_data(**kwargs)
+        context["form"]=self.form
+        return context
 
-	def post(self,request,*args,**kwargs):
+    def post(self,request,*args,**kwargs):
         self.album=Album.objects.get(creator=request.user, title="Фото со страницы")
-		self.form=AvatarUserForm(request.POST,request.FILES, instance=self.album)
-		if self.form.is_valid():
-			self.form.save()
-			if request.is_ajax():
-				return HttpResponse ('!')
-		return super(UserAvatarChange,self).post(request,*args,**kwargs)
+        self.form=AvatarUserForm(request.POST,request.FILES, instance=self.album)
+        if self.form.is_valid():
+            self.form.save()
+            if request.is_ajax():
+                return HttpResponse ('!')
+        return super(UserAvatarChange,self).post(request,*args,**kwargs)
 
 
 class UserDesign(TemplateView):
