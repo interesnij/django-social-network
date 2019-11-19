@@ -179,7 +179,9 @@ class UserAvatarChange(TemplateView):
             )
             if request.is_ajax():
                 return HttpResponse ('!')
-        return super(UserAvatarChange,self).post(request,*args,**kwargs)
+        else:
+           return HttpResponseBadRequest()
+        return super(UserAvatarChange,self).get(request,*args,**kwargs)
 
 
 class UserDesign(TemplateView):
