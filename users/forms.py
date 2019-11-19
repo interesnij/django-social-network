@@ -3,7 +3,7 @@ from django.http import Http404
 from django.contrib.auth.models import User
 from .models import UserProfile, UserPrivateSettings, UserNotificationsSettings
 from django import forms
-from photo.models import Photo
+from gallery.models import Photo
 
 
 class GeneralUserForm(forms.ModelForm):
