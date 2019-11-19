@@ -46,10 +46,9 @@ class Photo(models.Model):
     description = models.TextField(blank=True, null=True, verbose_name="Описание")
     is_public = models.BooleanField(default=True, verbose_name="Виден другим")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создано")
-    order = models.PositiveIntegerField(default=0)
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='photo_creator', null=False, blank=False, verbose_name="Создатель")
     is_deleted = models.BooleanField(verbose_name="Удален",default=False )
-    item = models.ForeignKey(Item, on_delete=models.CASCADE, null=True)
+    item = models.ForeignKey(Item, blank=True, null=True, on_delete=models.CASCADE, null=True)
 
     class Meta:
         indexes = (
@@ -58,6 +57,20 @@ class Photo(models.Model):
         ordering = ['order']
         verbose_name = 'Фото'
         verbose_name_plural = 'Фото'
+
+    @classmethod
+    def create_photo(cls, creator, album_2=None, file=None, community=None,
+                    created=None, is_public=False, description=None, item=None ):
+        photo = Photo.objects.create(
+                                        creator=creator,
+                                        file=file,
+                                        community=community,
+                                        is_public=is_public,
+                                        album_2=album_2,
+                                        description=description,
+                                        item=item,
+                                        )
+        return photo
 
 
 class PhotoComment(models.Model):

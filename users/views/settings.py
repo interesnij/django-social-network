@@ -168,7 +168,15 @@ class UserAvatarChange(TemplateView):
         self.album=Album.objects.get(creator=request.user, title="Фото со страницы")
         self.form=AvatarUserForm(request.POST,request.FILES)
         if self.form.is_valid():
-            self.form.save()
+            avatar=self.form.save(commit=False)
+            avatar.creator=request.user
+            new_avatar=avatar.create_article(
+                creator=avatar.creator,
+                community=None,
+                file=avatar.file,
+                is_public=True,
+                album_2=self.album,
+            )
             if request.is_ajax():
                 return HttpResponse ('!')
         return super(UserAvatarChange,self).post(request,*args,**kwargs)
