@@ -13,6 +13,7 @@ from rest_framework.exceptions import PermissionDenied
 from common.models import EmojiGroup, Emoji
 
 
+
 class UserItemView(EmojiListMixin, TemplateView):
     model=Item
     template_name="lenta/user_item.html"
@@ -108,7 +109,6 @@ class ProfileUserView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(ProfileUserView, self).get_context_data(**kwargs)
         context['user'] = self.user
-        context['form_avatar'] = AvatarUserForm()
         context['form_comment'] = CommentForm()
         context['communities'] = self.communities
         context['is_frend'] = self.is_frend
