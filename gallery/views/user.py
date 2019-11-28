@@ -232,18 +232,18 @@ class UserAddAvatar(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.form=AvatarUserForm()
-		self.user = User.objects.get(pk=self.kwargs["pk"])
+        self.user = User.objects.get(pk=self.kwargs["pk"])
         return super(UserAddAvatar,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context=super(UserAddAvatar,self).get_context_data(**kwargs)
         context["form"]=self.form
-		context["user"]=self.user
+        context["user"]=self.user
         return context
 
     def post(self,request,*args,**kwargs):
         self.album=Album.objects.get(creator=request.user, title="Фото со страницы")
-		self.user = User.objects.get(pk=self.kwargs["pk"])
+        self.user = User.objects.get(pk=self.kwargs["pk"])
         self.form=AvatarUserForm(request.POST,request.FILES)
         if self.form.is_valid() and self.user == request.user:
             avatar=self.form.save(commit=False)
@@ -258,5 +258,5 @@ class UserAddAvatar(TemplateView):
             if request.is_ajax():
                 return HttpResponse ('!')
         else:
-           return HttpResponseBadRequest()
+            return HttpResponseBadRequest()
         return super(UserAddAvatar,self).get(request,*args,**kwargs)
