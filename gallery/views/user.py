@@ -45,36 +45,6 @@ class UserGalleryView(TemplateView):
 		return context
 
 
-class UserAlbumsList(View):
-	def get(self,request,**kwargs):
-		context = {}
-		self.user = User.objects.get(uuid=self.kwargs["uuid"])
-		if self.user != request.user and request.user.is_authenticated:
-			check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
-			if self.user.is_closed_profile:
-				check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
-			albums_list = self.user.get_albums().order_by('-created')
-			current_page = Paginator(albums_list, 12)
-		elif request.user.is_anonymous and self.user.is_closed_profile():
-			raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
-		elif request.user.is_anonymous and not self.user.is_closed_profile():
-			albums_list = self.user.get_albums().order_by('-created')
-			current_page = Paginator(albums_list, 12)
-		elif self.user == request.user:
-			albums_list = self.user.get_albums().order_by('-created')
-			current_page = Paginator(albums_list, 12)
-
-		page = request.GET.get('page')
-		context['user'] = self.user
-		try:
-			context['albums_list'] = current_page.page(page)
-		except PageNotAnInteger:
-			context['albums_list'] = current_page.page(1)
-		except EmptyPage:
-			context['albums_list'] = current_page.page(current_page.num_pages)
-		return render_to_response('gallery_user/albums.html', context)
-
-
 class UserPhotosList(View):
 	def get(self,request,**kwargs):
 		context = {}
@@ -105,44 +75,34 @@ class UserPhotosList(View):
 		return render_to_response('gallery_user/photos.html', context)
 
 
-class UserPhoto(EmojiListMixin, TemplateView):
-    template_name="gallery_user/photo.html"
+class UserAlbumsList(View):
+	def get(self,request,**kwargs):
+		context = {}
+		self.user = User.objects.get(uuid=self.kwargs["uuid"])
+		if self.user != request.user and request.user.is_authenticated:
+			check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
+			if self.user.is_closed_profile:
+				check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
+			albums_list = self.user.get_albums().order_by('-created')
+			current_page = Paginator(albums_list, 12)
+		elif request.user.is_anonymous and self.user.is_closed_profile():
+			raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
+		elif request.user.is_anonymous and not self.user.is_closed_profile():
+			albums_list = self.user.get_albums().order_by('-created')
+			current_page = Paginator(albums_list, 12)
+		elif self.user == request.user:
+			albums_list = self.user.get_albums().order_by('-created')
+			current_page = Paginator(albums_list, 12)
 
-    def get(self,request,*args,**kwargs):
-        self.user=User.objects.get(uuid=self.kwargs["uuid"])
-        self.photo = Photo.objects.get(pk=self.kwargs["pk"])
-        self.avatar_album = Album.objects.get(creator=self.user, title="Фото со страницы", is_generic=True)
-        try:
-            self._avatar = Photo.objects.filter(album_2=self.avatar_album).order_by('-id')[0]
-            if self._avatar.id == self.photo.id:
-                self.avatar = True
-            else:
-                self.avatar = None
-        except:
-            self.avatar = None
-        if self.user != request.user and request.user.is_authenticated:
-            check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
-            if self.user.is_closed_profile:
-                check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
-            self.photos = self.user.get_photos()
-        elif self.user == request.user and request.user.is_authenticated:
-            self.photos = self.user.get_photos()
-        elif self.user.is_closed_profile() and request.user.is_anonymous:
-            raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
-        elif not self.user.is_closed_profile() and request.user.is_anonymous:
-            self.photos = self.user.get_photos()
-        self.next = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
-        self.prev = self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
-        return super(UserPhoto,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        context=super(UserPhoto,self).get_context_data(**kwargs)
-        context["object"]=self.photo
-        context["user"]=self.user
-        context["next"]=self.next
-        context["prev"]=self.prev
-        context["avatar"]=self.avatar
-        return context
+		page = request.GET.get('page')
+		context['user'] = self.user
+		try:
+			context['albums_list'] = current_page.page(page)
+		except PageNotAnInteger:
+			context['albums_list'] = current_page.page(1)
+		except EmptyPage:
+			context['albums_list'] = current_page.page(current_page.num_pages)
+		return render_to_response('gallery_user/albums.html', context)
 
 
 class UserAlbomView(View):
