@@ -54,7 +54,7 @@
         <div id="albums_load"></div>
     </div>
     <div class="infinite-container photo_stream">
-        <div id="photos_load"></div>
+        <div id="photos_load2"></div>
     </div>
   </div>
 
@@ -79,7 +79,7 @@
 <script>
     $(document).ready(function() {
         $('#albums_load').html('').load("/gallery/user/albums/" + "{{ user.uuid }}");
-        $('#photos_load').html('').load("/gallery/user/photos/" + "{{ user.uuid }}");
+        $('#photos_load2').html('').load("/gallery/user/photos/" + "{{ user.uuid }}");
     });
 </script>
 {% endblock %}
