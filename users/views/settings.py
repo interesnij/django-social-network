@@ -5,11 +5,9 @@ from users.models import (
                             UserPrivateSettings,
                             UserNotificationsSettings
                         )
-from gallery.models import Album, Photo
 from users.forms import (
                             GeneralUserForm,
                             AboutUserForm,
-                            AvatarUserForm,
                             SettingsPrivateForm,
                             SettingsNotifyForm
                         )
@@ -149,39 +147,6 @@ class SettingsPrivateView(TemplateView):
 			if request.is_ajax():
 				return HttpResponse ('!')
 		return super(SettingsPrivateView,self).post(request,*args,**kwargs)
-
-
-class UserAvatarChange(TemplateView):
-    template_name = "settings/user_avatar_form.html"
-    form=None
-
-    def get(self,request,*args,**kwargs):
-        self.form=AvatarUserForm()
-        return super(UserAvatarChange,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        context=super(UserAvatarChange,self).get_context_data(**kwargs)
-        context["form"]=self.form
-        return context
-
-    def post(self,request,*args,**kwargs):
-        self.album=Album.objects.get(creator=request.user, title="Фото со страницы")
-        self.form=AvatarUserForm(request.POST,request.FILES)
-        if self.form.is_valid():
-            avatar=self.form.save(commit=False)
-            avatar.creator=request.user
-            new_avatar=avatar.create_article(
-                creator=avatar.creator,
-                community=None,
-                file=avatar.file,
-                is_public=True,
-                album_2=self.album,
-            )
-            if request.is_ajax():
-                return HttpResponse ('!')
-        else:
-           return HttpResponseBadRequest()
-        return super(UserAvatarChange,self).get(request,*args,**kwargs)
 
 
 class UserDesign(TemplateView):

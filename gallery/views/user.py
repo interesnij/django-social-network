@@ -3,7 +3,7 @@ from users.models import User
 from gallery.models import Album, Photo
 from gallery.helpers import AjaxResponseMixin, JSONResponseMixin
 from django.views.generic import ListView
-from gallery.forms import AlbumForm
+from gallery.forms import AlbumForm, AvatarUserForm
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.views import View
 from generic.mixins import EmojiListMixin
@@ -13,8 +13,12 @@ from django.shortcuts import render_to_response
 from rest_framework.exceptions import PermissionDenied
 
 
+class AvatarReload(TemplateView):
+    template_name="user/avatar_reload.html"
+
+
 class UserGalleryView(TemplateView):
-	template_name="good_user/gallery.html"
+	template_name="user/gallery.html"
 
 	def get(self,request,*args,**kwargs):
 		self.user=User.objects.get(pk=self.kwargs["pk"])
@@ -53,7 +57,7 @@ class UserAlbumsList(View):
 			context['albums_list'] = current_page.page(1)
 		except EmptyPage:
 			context['albums_list'] = current_page.page(current_page.num_pages)
-		return render_to_response('good_user/albums.html', context)
+		return render_to_response('user/albums.html', context)
 
 
 class UserPhotosList(View):
@@ -83,11 +87,11 @@ class UserPhotosList(View):
 			context['photo_list'] = current_page.page(1)
 		except EmptyPage:
 			context['photo_list'] = current_page.page(current_page.num_pages)
-		return render_to_response('good_user/photos.html', context)
+		return render_to_response('user/photos.html', context)
 
 
 class UserPhoto(EmojiListMixin, TemplateView):
-	template_name="good_user/photo.html"
+	template_name="user/photo.html"
 
 	def get(self,request,*args,**kwargs):
 		self.user=User.objects.get(uuid=self.kwargs["uuid"])
@@ -144,11 +148,11 @@ class UserAlbomView(View):
 			context['photos'] = current_page.page(1)
 		except EmptyPage:
 			context['photos'] = current_page.page(current_page.num_pages)
-		return render_to_response('good_user/album.html', context)
+		return render_to_response('user/album.html', context)
 
 
 class UserAlbomReload(TemplateView):
-	template_name="good_user/album_reload.html"
+	template_name="user/album_reload.html"
 
 	def get(self,request,*args,**kwargs):
 		self.album=Album.objects.get(uuid=self.kwargs["uuid"])
@@ -179,7 +183,7 @@ class PhotoUserCreate(View,AjaxResponseMixin,JSONResponseMixin):
 
 
 class AlbumUserCreate(TemplateView):
-	template_name="good_user/add_album.html"
+	template_name="user/add_album.html"
 	form=None
 
 	def get(self,request,*args,**kwargs):
@@ -208,7 +212,7 @@ class AlbumUserCreate(TemplateView):
 
 
 class AlbomGygView(TemplateView):
-	template_name="good_user/gygyg.html"
+	template_name="user/gygyg.html"
 
 	def get(self,request,*args,**kwargs):
 		self.user = User.objects.get(uuid=self.kwargs["uuid"])
@@ -221,3 +225,38 @@ class AlbomGygView(TemplateView):
 		context["new_url"]=self.new_url
 		context["album"]=self.album
 		return context
+
+
+class UserAddAvatar(TemplateView):
+    template_name = "user/user_add_avatar.html"
+
+    def get(self,request,*args,**kwargs):
+        self.form=AvatarUserForm()
+		self.user = User.objects.get(pk=self.kwargs["pk"])
+        return super(UserAddAvatar,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context=super(UserAddAvatar,self).get_context_data(**kwargs)
+        context["form"]=self.form
+		context["user"]=self.user
+        return context
+
+    def post(self,request,*args,**kwargs):
+        self.album=Album.objects.get(creator=request.user, title="Фото со страницы")
+		self.user = User.objects.get(pk=self.kwargs["pk"])
+        self.form=AvatarUserForm(request.POST,request.FILES)
+        if self.form.is_valid() and self.user == request.user:
+            avatar=self.form.save(commit=False)
+            avatar.creator=request.user
+            new_avatar=avatar.create_article(
+                creator=avatar.creator,
+                community=None,
+                file=avatar.file,
+                is_public=True,
+                album_2=self.album,
+            )
+            if request.is_ajax():
+                return HttpResponse ('!')
+        else:
+           return HttpResponseBadRequest()
+        return super(UserAddAvatar,self).get(request,*args,**kwargs)

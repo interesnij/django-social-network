@@ -33,13 +33,6 @@ class AboutUserForm(forms.ModelForm):
             'bio',
         )
 
-class AvatarUserForm(forms.ModelForm):
-
-    class Meta:
-        model = Photo
-        fields = (
-            'file',
-        )
 
 class SettingsPrivateForm(forms.ModelForm):
 

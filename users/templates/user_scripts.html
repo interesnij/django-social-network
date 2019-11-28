@@ -47,13 +47,13 @@ var frm10 = $('#AVATAR-FORM');
 frm10.submit(function () {
 		$.ajax({
 				type: frm10.attr('method'),
-				url: "{% url 'user_avatar_form' pk=request.user.pk %}",
+				url: "{% url 'user_add_avatar' pk=request.user.pk %}",
 				data: new FormData($('form')[0]),
 				contentType: false,
 				cache: false,
 				processData:false,
 				success: function (data) {
-					$('#avatar_reload').html('').load("/users/avatar-reload/");
+					$('#avatar_reload').html('').load("/gallery/avatar-reload/");
 				},
 				error: function(data) {
 						console.log("Все не ОК")
