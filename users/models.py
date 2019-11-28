@@ -306,8 +306,7 @@ class User(AbstractUser):
         return photos
 
     def get_avatar_photos(self):
-        avatar_album = Album.objects.get(creator_id=self.id, title="Фото со страницы", is_generic=True)
-        photos_query = Q(creator_id=self.id, is_deleted=False, community=None, album_2=avatar_album)
+        photos_query = Q(creator_id=self.id, is_deleted=False, community=None, album_2__title="Фото со страницы", album_2__is_generic=True)
         exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         photos_query.add(exclude_reported_and_approved_photos_query, Q.AND)
         avatar_photos = Photo.objects.filter(photos_query)
