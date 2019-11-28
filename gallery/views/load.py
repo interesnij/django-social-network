@@ -66,6 +66,11 @@ class UserDetailAvatar(EmojiListMixin, TemplateView):
             self.photos = self.user.get_avatar_photos()
         elif self.user == request.user and request.user.is_authenticated:
             self.photos = self.user.get_avatar_photos()
+            self.avatar_album = Album.objects.get(creator_id=self.id, title="Фото со страницы", is_generic=True)
+            self.photos_query = Q(creator_id=self.id, is_deleted=False, community=None, album_2=avatar_album)
+            self.exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
+            self.photos_query.add(exclude_reported_and_approved_photos_query, Q.AND)
+            self.photos = Photo.objects.filter(photos_query)
         elif self.user.is_closed_profile() and request.user.is_anonymous:
             raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
         elif not self.user.is_closed_profile() and request.user.is_anonymous:
