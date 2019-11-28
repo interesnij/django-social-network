@@ -242,7 +242,7 @@ class UserAddAvatar(TemplateView):
         return context
 
     def post(self,request,*args,**kwargs):
-        self.album=Album.objects.get(creator=request.user, title="Фото со страницы")
+        self.album=Album.objects.get(creator=request.user, title="Фото со страницы", is_generic=True)
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.form=AvatarUserForm(request.POST,request.FILES)
         if self.form.is_valid() and self.user == request.user:
