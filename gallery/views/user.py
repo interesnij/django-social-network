@@ -238,7 +238,7 @@ class UserAddAvatar(TemplateView):
 
     def get_context_data(self,**kwargs):
         context=super(UserAddAvatar,self).get_context_data(**kwargs)
-        context["form"]=self.form
+        context["form_avatar"]=self.form
         context["user"]=self.user
         context["album"]=self.album
         return context
