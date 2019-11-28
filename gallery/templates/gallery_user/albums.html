@@ -28,7 +28,7 @@
 {% if albums_list %}
 
   {% for object in albums_list %}
-  {% if object.photo %}
+
     <div class="col-sm-12 col-md-6 col-lg-4 cover_block">
         <div class="card rounded-0 border-0 mb-4">
             <div class="card-header">
@@ -57,7 +57,7 @@
             </div>
         </div>
     </div>
-    {% endif %}
+  
   {% endfor %}
 
 {% else %}
