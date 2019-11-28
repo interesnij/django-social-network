@@ -97,12 +97,9 @@ class ProfileUserView(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.user=User.objects.get(pk=self.kwargs["pk"])
-        try:
-            self.avatar_album = Album.objects.get(creator=self.user, title="Фото со страницы", is_generic=True)
-            self.avatar = Photo.objects.filter(album_2=self.avatar_album).order_by('-id')[0]
-        except:
-            self.avatar_album = Album.objects.create(creator=self.user, title="Фото со страницы", is_generic=True)
-            self.avatar = Photo.objects.filter(album_2=self.avatar_album).order_by('-id')[0]
+        self.avatar_album = Album.objects.get(creator=self.user, title="Фото со страницы", is_generic=True)
+        self.avatar = Photo.objects.filter(album_2=self.avatar_album).order_by('-id')[0]
+
         try:
             self.is_frend = request.user.is_connected_with_user(self.user)
         except:
