@@ -11,13 +11,7 @@ class CommunityForm(forms.ModelForm):
 class GeneralCommunityForm(forms.ModelForm):
 	class Meta:
 		model = Community
-		fields = ['name', 'description', 'rules', 'status',]
-
-
-class AvatarCommunityForm(forms.ModelForm):
-	class Meta:
-		model = Community
-		fields = ['avatar', ]
+		fields = ['name', 'description', 'rules', 'status',] 
 
 
 class CoverCommunityForm(forms.ModelForm):

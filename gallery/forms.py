@@ -15,3 +15,9 @@ class AvatarUserForm(forms.ModelForm):
         fields = (
             'file',
         )
+
+
+class AvatarCommunityForm(forms.ModelForm):
+	class Meta:
+		model = Photo
+		fields = ['avatar', ]
