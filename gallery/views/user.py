@@ -44,6 +44,7 @@ class UserGalleryView(TemplateView):
 		context['user'] = self.user
 		return context
 
+
 class UserAlbumsList(View):
 	def get(self,request,**kwargs):
 		context = {}
@@ -64,7 +65,7 @@ class UserAlbumsList(View):
 			current_page = Paginator(albums_list, 12)
 
 		page = request.GET.get('page')
-		context['user'] = self.user
+		context['user'] = self.user 
 		try:
 			context['albums_list'] = current_page.page(page)
 		except PageNotAnInteger:
