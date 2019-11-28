@@ -24,7 +24,7 @@
         var photo = $(this);
         var photo_id = photo.data("id");
         var user_uuid = photo.data("uuid");
-        $('#photo_loader').html('').load("/gallery/user/photo/" + photo_id + "/" + user_uuid + "/")
+        $('#photo_loader').html('').load("/gallery/load/photo/" + photo_id + "/" + user_uuid + "/")
         $('.photo_fullscreen').show();
     });
 
