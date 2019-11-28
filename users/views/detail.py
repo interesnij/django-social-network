@@ -98,7 +98,7 @@ class ProfileUserView(TemplateView):
     def get(self,request,*args,**kwargs):
         self.user=User.objects.get(pk=self.kwargs["pk"])
         self.avatar_album = Album.objects.get(creator=self.user, title="Фото со страницы", is_generic=True)
-        self.avatar = avatar_album.last()
+        self.avatar = self.avatar_album.last()
         try:
             self.is_frend = request.user.is_connected_with_user(self.user)
         except:
