@@ -11,7 +11,7 @@ from django.views import View
 from django.shortcuts import render_to_response
 from rest_framework.exceptions import PermissionDenied
 from common.models import EmojiGroup, Emoji
-
+from gallery.models import Album
 
 
 class UserItemView(EmojiListMixin, TemplateView):
