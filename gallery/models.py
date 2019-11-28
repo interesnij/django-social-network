@@ -68,7 +68,7 @@ class Photo(models.Model):
                                         album_2=album_2,
                                         description=description,
                                         item=item,
-                                        )
+                                    )
         return photo
 
 

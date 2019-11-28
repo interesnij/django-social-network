@@ -233,12 +233,14 @@ class UserAddAvatar(TemplateView):
     def get(self,request,*args,**kwargs):
         self.form=AvatarUserForm()
         self.user = User.objects.get(pk=self.kwargs["pk"])
+        self.album=Album.objects.get(creator=request.user, title="Фото со страницы", is_generic=True)
         return super(UserAddAvatar,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context=super(UserAddAvatar,self).get_context_data(**kwargs)
         context["form"]=self.form
         context["user"]=self.user
+        context["album"]=self.album
         return context
 
     def post(self,request,*args,**kwargs):
@@ -247,9 +249,8 @@ class UserAddAvatar(TemplateView):
         self.form=AvatarUserForm(request.POST,request.FILES)
         if self.form.is_valid() and self.user == request.user:
             avatar=self.form.save(commit=False)
-            avatar.creator=request.user
             new_avatar=avatar.create_photo(
-                creator=avatar.creator,
+                creator=request.user,
                 community=None,
                 file=avatar.file,
                 is_public=True,
