@@ -42,7 +42,7 @@
 
 
 <div class="container mt-4 main-container">
-  <div class="">
+  <div class="row">
 
   <div id="photos_add_window" style="display:none">
     <form id="add-photos" method="post" action="{% url 'photo_add_user' user.uuid %}" class="dropzone">
@@ -53,11 +53,11 @@
 
 
 
-    <div class="row infinite-container photo_stream">
+    <div class="infinite-container photo_stream">
       <div id="photos_load" style="display:flex;flex-wrap: wrap;"></div>
     </div>
-    
-    <div class="row infinite-container photo_stream">
+
+    <div class="infinite-container photo_stream">
       <div id="albums_load" style="display:flex;flex-wrap: wrap;"></div>
     </div>
   </div>
