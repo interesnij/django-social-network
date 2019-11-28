@@ -1,33 +1,36 @@
 {% load staticfiles %}
 <style>
-  .albom_description {
-    opacity: 0;
-  visibility: hidden;
-  position: absolute;
-  bottom: 25px;
-  margin-bottom: 10px;
-  display: flex;
-  transition: 0.5s;
-  }
-  .albom_description:hover {
-      z-index: 10;
-      opacity: 1;
-      visibility: visible;
-      background: #D6DAE1;
-      color: black;
-  }
-  .cover_block:hover .albom_description{
-      z-index: 10;
-      opacity: 1;
-      visibility: visible;
-      background: #D6DAE1;
-      color: black;
-  }
+    .albom_description {
+        opacity: 0;
+        visibility: hidden;
+        position: absolute;
+        bottom: 25px;
+        margin-bottom: 10px;
+        display: flex;
+        transition: 0.5s;
+    }
+
+    .albom_description:hover {
+        z-index: 10;
+        opacity: 1;
+        visibility: visible;
+        background: #D6DAE1;
+        color: black;
+    }
+
+    .cover_block:hover .albom_description {
+        z-index: 10;
+        opacity: 1;
+        visibility: visible;
+        background: #D6DAE1;
+        color: black;
+    }
 </style>
 
 {% if albums_list %}
 <div class="row">
-  {% for object in albums_list %}
+  
+    {% for object in albums_list %}
 
     <div class="col-sm-12 col-md-6 col-lg-4 cover_block">
         <div class="card rounded-0 border-0 mb-4">
@@ -37,9 +40,9 @@
                         <h4 class="mb-0">{{ object.title }}</h4>
                     </div>
                     <div class="dropdown d-inline-block">
-                      <a style="cursor:pointer" class="icon-circle icon-30 dropdown-toggle caret-none" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <img style="width:22px" src="{% static 'images/icons/more_vert-24px.svg' %}" />
-                      </a>
+                        <a style="cursor:pointer" class="icon-circle icon-30 dropdown-toggle caret-none" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img style="width:22px" src="{% static 'images/icons/more_vert-24px.svg' %}" />
+                        </a>
                         <div class="dropdown-menu dropdown-menu-right">
                             <a href="" class="dropdown-item">Изменить</a>
                             <a href="" class="dropdown-item">Удалить</a>
@@ -48,17 +51,17 @@
                 </div>
             </div>
             <div class="card-body">
-              {% if object.cover_photo %}
+                {% if object.cover_photo %}
                 <img style="width:100%" src="{{ object.cover_photo.url }}" />
-              {% else %}
+                {% else %}
                 <img style="width:100%" src="{% static 'images/icons/photo-24px.svg' %}" />
-              {% endif %}
+                {% endif %}
                 <p class="mb-0 content-color-secondary f-sm albom_description">{{ object.description }}</p>
             </div>
         </div>
     </div>
 
-  {% endfor %}
+    {% endfor %}
 </div>
 {% else %}
 
