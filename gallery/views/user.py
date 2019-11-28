@@ -23,10 +23,10 @@ class AvatarReload(TemplateView):
             self.avatar = Photo.objects.filter(album_2=self.avatar_album).order_by('-id')[0]
         except:
             self.avatar = None
-        return super(UserGalleryView,self).get(request,*args,**kwargs)
+        return super(AvatarReload,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context=super(UserGalleryView,self).get_context_data(**kwargs)
+        context=super(AvatarReload,self).get_context_data(**kwargs)
         context['avatar'] = self.avatar
         return context
 
