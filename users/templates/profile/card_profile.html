@@ -73,8 +73,8 @@
                     <img src="{{ avatar.file.url }}"
                          class="avatar_detail"
                          style="cursor:pointer"
-                         data-uuid="{{ object.creator.uuid }}"
-                         data-id="{{ object.id }}">
+                         data-uuid="{{ user.uuid }}"
+                         data-id="{{ avatar.id }}">
                     {% else %}
                     <img src="{% static 'images/icons/person-24px.svg' %}" />
                     {% endif %}
