@@ -254,7 +254,7 @@ class UserAddAvatar(TemplateView):
                 community=None,
                 file=avatar.file,
                 is_public=True,
-                album_2=self.album,
+                
             )
             if request.is_ajax():
                 return HttpResponse ('!')
