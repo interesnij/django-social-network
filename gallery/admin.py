@@ -4,7 +4,7 @@ from gallery.models import Album, Photo
 
 class AlbumAdmin(admin.ModelAdmin):
     search_fields = ('creator',)
-    list_display = ['creator','created', 'is_deleted']
+    list_display = ['title','creator','created', 'is_deleted']
     list_filter = ['creator', ]
 
     class Meta:
