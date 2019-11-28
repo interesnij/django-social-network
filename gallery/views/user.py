@@ -258,5 +258,5 @@ class UserAddAvatar(TemplateView):
             if request.is_ajax():
                 return HttpResponse ('!')
         else:
-            return HttpResponseBadRequest()
+            return HttpResponse ('!')
         return super(UserAddAvatar,self).get(request,*args,**kwargs)
