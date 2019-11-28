@@ -18,7 +18,7 @@ class AvatarReload(TemplateView):
 
 
 class UserGalleryView(TemplateView):
-	template_name="user/gallery.html"
+	template_name="gallery_user/gallery.html"
 
 	def get(self,request,*args,**kwargs):
 		self.user=User.objects.get(pk=self.kwargs["pk"])
