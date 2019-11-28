@@ -12,7 +12,15 @@ $(document).ready(function(){
 	$('#stat_load').html('').load("/users/load/profile_stat/" + {{ user.pk }});
 });
 </script>
-
+<script>
+$('.infinite-container').on('click', '.avatar_detail', function() {
+		var photo = $(this);
+		var photo_id = photo.data("id");
+		var user_uuid = photo.data("uuid");
+		$('#photo_loader').html('').load("/gallery/load/avatar_detail/" + photo_id + "/" + user_uuid + "/")
+		$('.photo_fullscreen').show();
+});
+</script>
 {% if request.user == user and  request.user.is_authenticated %}
 
 <script>

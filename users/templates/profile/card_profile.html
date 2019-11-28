@@ -70,7 +70,11 @@
             <a class="col">
                 <figure class="mx-auto mb-3" id="avatar_reload">
                     {% if avatar %}
-                    <img src="{{ avatar.file.url }}" alt="">
+                    <img src="{{ avatar.file.url }}"
+                         class="avatar_detail"
+                         style="cursor:pointer"
+                         data-uuid="{{ object.creator.uuid }}"
+                         data-id="{{ object.id }}">
                     {% else %}
                     <img src="{% static 'images/icons/person-24px.svg' %}" />
                     {% endif %}
