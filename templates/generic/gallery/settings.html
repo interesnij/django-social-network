@@ -1,8 +1,8 @@
 {% load staticfiles %}
 
 <div class="dropdown d-inline-block">
-    <a style="cursor:pointer" class="icon-circle icon-30 dropdown-toggle caret-none" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <img style="width:22px" src="{% static 'images/icons/more_vert-24px.svg' %}" />
+    <a style="cursor:pointer" class="dropdown-toggle caret-none" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        настройки
     </a>
     <div class="dropdown-menu dropdown-menu-right">
       {% if user == object.creator %}
