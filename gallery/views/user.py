@@ -248,7 +248,7 @@ class UserAddAvatar(TemplateView):
         if self.form.is_valid() and self.user == request.user:
             avatar=self.form.save(commit=False)
             avatar.creator=request.user
-            new_avatar=avatar.create_article(
+            new_avatar=avatar.create_photo(
                 creator=avatar.creator,
                 community=None,
                 file=avatar.file,
