@@ -310,8 +310,8 @@ class User(AbstractUser):
         photos_query = Q(creator_id=self.id, is_deleted=False, community=None, album_2=avatar_album)
         exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         photos_query.add(exclude_reported_and_approved_photos_query, Q.AND)
-        photos = Photo.objects.filter(photos_query)
-        return photos
+        avatar_photos = Photo.objects.filter(photos_query)
+        return avatar_photos
 
     def get_albums(self):
         albums_query = Q(creator_id=self.id, is_deleted=False, is_public=True, community=None)

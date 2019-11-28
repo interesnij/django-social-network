@@ -59,15 +59,15 @@ class UserDetailAvatar(EmojiListMixin, TemplateView):
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
             if self.user.is_closed_profile:
                 check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
-            self.photos = self.user.get_avatar_photos()
+            self.avatar_photos = self.user.get_avatar_photos()
         elif self.user == request.user and request.user.is_authenticated:
-            self.photos = self.user.get_avatar_photos()
+            self.avatar_photos = self.user.get_avatar_photos()
         elif self.user.is_closed_profile() and request.user.is_anonymous:
             raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
         elif not self.user.is_closed_profile() and request.user.is_anonymous:
-            self.photos = self.user.get_avatar_photos()
-        self.next = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
-        self.prev = self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
+            self.avatar_photos = self.user.get_avatar_photos()
+        self.next = self.avatar_photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
+        self.prev = self.avatar_photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
         return super(UserDetailAvatar,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
