@@ -14,7 +14,7 @@ from rest_framework.exceptions import PermissionDenied
 
 
 class AvatarReload(TemplateView):
-    template_name="user/avatar_reload.html"
+    template_name="gallery_user/avatar_reload.html"
 
 
 class UserGalleryView(TemplateView):
@@ -57,7 +57,7 @@ class UserAlbumsList(View):
 			context['albums_list'] = current_page.page(1)
 		except EmptyPage:
 			context['albums_list'] = current_page.page(current_page.num_pages)
-		return render_to_response('user/albums.html', context)
+		return render_to_response('gallery_user/albums.html', context)
 
 
 class UserPhotosList(View):
@@ -91,7 +91,7 @@ class UserPhotosList(View):
 
 
 class UserPhoto(EmojiListMixin, TemplateView):
-	template_name="user/photo.html"
+	template_name="gallery_user/photo.html"
 
 	def get(self,request,*args,**kwargs):
 		self.user=User.objects.get(uuid=self.kwargs["uuid"])
@@ -148,11 +148,11 @@ class UserAlbomView(View):
 			context['photos'] = current_page.page(1)
 		except EmptyPage:
 			context['photos'] = current_page.page(current_page.num_pages)
-		return render_to_response('user/album.html', context)
+		return render_to_response('gallery_user/album.html', context)
 
 
 class UserAlbomReload(TemplateView):
-	template_name="user/album_reload.html"
+	template_name="gallery_user/album_reload.html"
 
 	def get(self,request,*args,**kwargs):
 		self.album=Album.objects.get(uuid=self.kwargs["uuid"])
@@ -183,7 +183,7 @@ class PhotoUserCreate(View,AjaxResponseMixin,JSONResponseMixin):
 
 
 class AlbumUserCreate(TemplateView):
-	template_name="user/add_album.html"
+	template_name="gallery_user/add_album.html"
 	form=None
 
 	def get(self,request,*args,**kwargs):
@@ -212,7 +212,7 @@ class AlbumUserCreate(TemplateView):
 
 
 class AlbomGygView(TemplateView):
-	template_name="user/gygyg.html"
+	template_name="gallery_user/gygyg.html"
 
 	def get(self,request,*args,**kwargs):
 		self.user = User.objects.get(uuid=self.kwargs["uuid"])
@@ -228,7 +228,7 @@ class AlbomGygView(TemplateView):
 
 
 class UserAddAvatar(TemplateView):
-    template_name = "user/user_add_avatar.html"
+    template_name = "gallery_user/user_add_avatar.html"
 
     def get(self,request,*args,**kwargs):
         self.form=AvatarUserForm()
@@ -254,7 +254,7 @@ class UserAddAvatar(TemplateView):
                 community=None,
                 file=avatar.file,
                 is_public=True,
-                
+                album_2=self.album
             )
             if request.is_ajax():
                 return HttpResponse ('!')
