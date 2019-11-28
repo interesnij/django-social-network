@@ -42,7 +42,7 @@
 
 
 <div class="container mt-4 main-container">
-
+  <div class="row">
     <div id="photos_add_window" style="display:none">
         <form id="add-photos" method="post" action="{% url 'photo_add_user' user.uuid %}" class="dropzone">
             {% csrf_token %}
@@ -51,12 +51,12 @@
     </div>
 
     <div class="infinite-container photo_stream">
-        <div id="albums_load1" style=""></div>
+        <div id="albums_load"></div>
     </div>
     <div class="infinite-container photo_stream">
-        <div id="photos_load" style=""></div>
+        <div id="photos_load"></div>
     </div>
-
+  </div>
 </div>
 
 <div class="card mb-4 add_fullscreen" style="display:none">
