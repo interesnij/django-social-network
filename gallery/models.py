@@ -28,7 +28,6 @@ class Album(models.Model):
         indexes = (
             BrinIndex(fields=['created']),
         )
-        ordering = ['order']
         verbose_name = 'Фотоальбом'
         verbose_name_plural = 'Фотоальбомы'
 
