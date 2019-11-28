@@ -65,7 +65,7 @@ class UserDetailAvatar(EmojiListMixin, TemplateView):
                 check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
             self.photos = self.user.get_avatar_photos()
         elif self.user == request.user and request.user.is_authenticated:
-            self.photos = self.user.get_avatar_photos().filter(album_2=True)
+            self.photos = self.user.get_avatar_photos()
         elif self.user.is_closed_profile() and request.user.is_anonymous:
             raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
         elif not self.user.is_closed_profile() and request.user.is_anonymous:
