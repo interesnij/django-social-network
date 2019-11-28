@@ -68,10 +68,9 @@
     <div class="card-body">
         <div class="row align-items-center no-gutters">
             <a class="col">
-              1_{{ avatar.file.url }}
                 <figure class="mx-auto mb-3" id="avatar_reload">
-                    {% if user.profile.avatar %}
-                    <img src="{{ user.profile.avatar.url }}" alt="">
+                    {% if avatar %}
+                    <img src="{{ avatar.file.url }}" alt="">
                     {% else %}
                     <img src="{% static 'images/icons/person-24px.svg' %}" />
                     {% endif %}
