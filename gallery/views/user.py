@@ -116,6 +116,8 @@ class UserPhoto(EmojiListMixin, TemplateView):
             self._avatar = Photo.objects.filter(album_2=self.avatar_album).order_by('-id')[0]
             if self._avatar.id == self.photo.id:
                 self.avatar = True
+            else:
+                self.avatar = None
         except:
             self.avatar = None
         if self.user != request.user and request.user.is_authenticated:
