@@ -65,7 +65,7 @@ class UserAlbumsList(View):
 			current_page = Paginator(albums_list, 12)
 
 		page = request.GET.get('page')
-		context['user'] = self.user 
+		context['user'] = self.user
 		try:
 			context['albums_list'] = current_page.page(page)
 		except PageNotAnInteger:
@@ -111,6 +111,13 @@ class UserPhoto(EmojiListMixin, TemplateView):
 	def get(self,request,*args,**kwargs):
 		self.user=User.objects.get(uuid=self.kwargs["uuid"])
 		self.photo = Photo.objects.get(pk=self.kwargs["pk"])
+        self.avatar_album = Album.objects.get(creator=self.user, title="Фото со страницы", is_generic=True)
+        try:
+            self._avatar = Photo.objects.filter(album_2=self.avatar_album).order_by('-id')[0]
+            if self._avatar.id == self.photo.id:
+                self.avatar = True
+        except:
+            self.avatar = None
 		if self.user != request.user and request.user.is_authenticated:
 			check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
 			if self.user.is_closed_profile:
@@ -132,6 +139,7 @@ class UserPhoto(EmojiListMixin, TemplateView):
 		context["user"]=self.user
 		context["next"]=self.next
 		context["prev"]=self.prev
+        context["avatar"]=self.avatar
 		return context
 
 
