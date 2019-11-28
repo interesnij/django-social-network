@@ -18,5 +18,5 @@ class PhotoAdmin(admin.ModelAdmin):
     class Meta:
             model = Photo
 
-admin.site.register(Album)
-admin.site.register(Photo)
+admin.site.register(Album, AlbumAdmin)
+admin.site.register(Photo, PhotoAdmin)
