@@ -6,7 +6,6 @@ from frends.models import Connect
 from follows.models import Follow
 from goods.models import Good
 from communities.models import Community
-from users.forms import AvatarUserForm
 from main.forms import CommentForm
 
 
