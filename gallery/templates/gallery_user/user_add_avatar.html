@@ -3,7 +3,7 @@
   {% csrf_token %}
   <label class="img-upload-label">Загрузите фото:
   </label>
-  {{ form_avatar.file }}
+  <input type="file" name="file" id="id_file">
   <button class="btn btn-sm btn-warning success-gradient ml-2 float-right" name="avatar_close">Выбрать</button>
  </form>
 
