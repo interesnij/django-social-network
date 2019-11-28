@@ -14,5 +14,5 @@ urlpatterns=[
 	url(r'^photo/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', UserPhoto.as_view(), name='user_photo'),
 
 	url(r'^add_avatar/(?P<pk>\d+)/$', UserAddAvatar.as_view(), name='user_add_avatar'),
-	url(r'^avatar-reload/$', AvatarReload.as_view(), name='avatar_reload'),
+	url(r'^avatar-reload/(?P<pk>\d+)/$', AvatarReload.as_view(), name='avatar_reload'),
 ]

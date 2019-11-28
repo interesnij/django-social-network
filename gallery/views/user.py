@@ -16,6 +16,20 @@ from rest_framework.exceptions import PermissionDenied
 class AvatarReload(TemplateView):
     template_name="gallery_user/avatar_reload.html"
 
+    def get(self,request,*args,**kwargs):
+		self.user=User.objects.get(pk=self.kwargs["pk"])
+        self.avatar_album = Album.objects.get(creator=self.user, title="Фото со страницы", is_generic=True)
+        try:
+            self.avatar = Photo.objects.filter(album_2=self.avatar_album).order_by('-id')[0]
+        except:
+            self.avatar = None
+		return super(UserGalleryView,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context=super(UserGalleryView,self).get_context_data(**kwargs)
+		context['avatar'] = self.avatar
+		return context
+
 
 class UserGalleryView(TemplateView):
 	template_name="gallery_user/gallery.html"
