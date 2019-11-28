@@ -42,7 +42,7 @@
 
 
 <div class="container mt-4 main-container">
-  <div class="row">
+
     <div id="photos_add_window" style="display:none">
         <form id="add-photos" method="post" action="{% url 'photo_add_user' user.uuid %}" class="dropzone">
             {% csrf_token %}
@@ -57,7 +57,7 @@
         <div id="photos_load"></div>
     </div>
   </div>
-</div>
+
 
 <div class="card mb-4 add_fullscreen" style="display:none">
     <span class="add_fullscreen_hide">
