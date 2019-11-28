@@ -87,7 +87,7 @@ class UserPhotosList(View):
 			context['photo_list'] = current_page.page(1)
 		except EmptyPage:
 			context['photo_list'] = current_page.page(current_page.num_pages)
-		return render_to_response('user/photos.html', context)
+		return render_to_response('gallery_user/photos.html', context)
 
 
 class UserPhoto(EmojiListMixin, TemplateView):
