@@ -9,6 +9,65 @@
   display: flex;
   transition: 0.5s;
   }
+  .like_window,
+  .dislike_window {
+      opacity: 0;
+      visibility: hidden;
+      position: absolute;
+      bottom: 25px;
+      margin-bottom: 10px;
+      display: flex;
+      transition: 0.5s;
+  }
+  .comment_like_window,
+  .comment_dislike_window {
+      opacity: 0;
+      visibility: hidden;
+      position: absolute;
+      margin-bottom: 10px;
+      display: flex;
+      transition: 0.5s;
+  }
+  .like_window:hover,
+  .dislike_window:hover {
+      z-index: 10;
+      opacity: 1;
+      visibility: visible;
+      background: #D6DAE1;
+      color: black;
+  }
+  .comment_like_window:hover,
+  .comment_dislike_window:hover {
+      z-index: 10;
+      opacity: 1;
+      visibility: visible;
+      background: #D6DAE1;
+      color: black;
+  }
+  .like:hover~.like_window,
+  .dislike:hover~.dislike_window{
+      z-index: 10;
+      opacity: 1;
+      visibility: visible;
+      background: #D6DAE1;
+      color: black;
+  }
+  .like2:hover~.comment_like_window,
+  .dislike2:hover~.comment_dislike_window{
+      z-index: 10;
+      opacity: 1;
+      visibility: visible;
+      background: #D6DAE1;
+      color: black;
+  }
+.like,.dislike,.post_comment,.repost,.art_comment{
+  font-size:15px;
+  cursor:pointer;
+  color: rgba(0, 0, 0, 0.4);
+}
+.like:hover,.dislike:hover,.post_comment:hover,.repost:hover,.art_comment:hover{
+  color: #545b62;
+}
   .reaction_window:hover {
       z-index: 10;
       opacity: 1;
