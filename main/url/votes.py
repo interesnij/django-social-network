@@ -14,5 +14,5 @@ urlpatterns = [
 	url(r'^like_window/(?P<pk>\d+)/$', LikeWindow.as_view(), name='like_window'),
 	url(r'^dislike_window/(?P<pk>\d+)/$', DislikeWindow.as_view(), name='dislike_window'),
     url(r'^comment_like_window/(?P<pk>\d+)/$', CommentLikeWindow.as_view(), name='comment_like_window'),
-	url(r'^comment_dislike_window/(?P<pk>\d+)/$', CommentDislikeWindow.as_view(), name='comment_dislike_window'),
+	url(r'^comment_dislike_window/(?P<pk>\d+)/$', CommentDislikeWindow.as_view(), name='comment_dislike_window')
 ]
