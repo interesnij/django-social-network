@@ -7,5 +7,12 @@ class ProxyBlacklistDomainAdmin(admin.ModelAdmin):
         'domain',
     )
 
+class LikeDislikeAdmin(admin.ModelAdmin):
+    list_display = (
+        'vote',
+        'user',
+        'item',
+    )
+
 
 admin.site.register(ProxyBlacklistedDomain, ProxyBlacklistDomainAdmin)

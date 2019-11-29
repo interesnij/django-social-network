@@ -11,7 +11,6 @@ class ItemAdmin(admin.ModelAdmin):
         'created',
         'post',
         'article',
-        'votes',
     )
 
 class ItemCommentAdmin(admin.ModelAdmin):
