@@ -93,35 +93,35 @@ class ItemLikeCreate(View):
 	model = Item
 	vote_type = LikeDislike.LIKE
 
-	def post(self, request, pk, uuid):
-		obj = self.model.objects.get(pk=pk)
-		user=User.objects.get(uuid=uuid)
+	def post(self, request, **kwargs):
+		item = Item.objects.get(pk=self.kwargs["pk"])
+		user = User.objects.get(uuid=self.kwargs["uuid"])
 		if user != request.user:
 			check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
 			if user.is_closed_profile:
 				check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
 		try:
-			likedislike = LikeDislike.objects.get(parent=obj, user=request.user)
+			likedislike = LikeDislike.objects.get(parent=item, user=request.user)
 			if likedislike.vote is not self.vote_type:
 				likedislike.vote = self.vote_type
 				likedislike.save(update_fields=['vote'])
 				result = True
-				obj.notification_like(request.user)
+				item.notification_like(request.user)
 
 			else:
 				likedislike.delete()
 				result = False
 
 		except LikeDislike.DoesNotExist:
-			LikeDislike.objects.create(parent=obj, user=request.user, vote=self.vote_type)
+			LikeDislike.objects.create(parent=item, user=request.user, vote=self.vote_type)
 			result = True
 
 		return HttpResponse(
             json.dumps({
                 "result": result,
-                "like_count": obj.votes.likes().count(),
-                "dislike_count": obj.votes.dislikes().count(),
-                "sum_rating": obj.votes.sum_rating()
+                "like_count": item.votes.likes().count(),
+                "dislike_count": item.votes.dislikes().count(),
+                "sum_rating": item.votes.sum_rating()
             }),
             content_type="application/json"
         )
