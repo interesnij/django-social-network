@@ -6,7 +6,6 @@ from django.views.generic import ListView
 from gallery.forms import AlbumForm, AvatarUserForm
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.views import View
-from generic.mixins import EmojiListMixin
 from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render_to_response

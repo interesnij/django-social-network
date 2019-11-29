@@ -3,7 +3,6 @@ from rest_framework.exceptions import ValidationError, PermissionDenied, NotFoun
 from communities.models import Community
 from invitations.models import UserInvite
 from main.models import Item, ItemComment
-from common.models import EmojiGroup
 import jwt
 from django.conf import settings
 
@@ -626,60 +625,10 @@ def check_can_reply_to_post_comment_for_post(user, post_comment, item):
     check_can_comment_in_post(user=user, item=item)
 
 
-def check_can_delete_reaction_with_id_for_post(user, post_reaction_id, item):
-    check_can_see_post(user=user, item=item)
-    if user.has_post(item=item):
-        if not ItemReaction.objects.filter(id=post_reaction_id, item_id=item.pk).exists():
-            raise ValidationError(
-                'Эта реакция не относится к указанной записи'
-            )
-        return
-
-    if not user.post_reactions.filter(id=post_reaction_id).exists():
-        raise ValidationError(
-            'Нельзя удалить реакцию, которая не принадлежит Вам.',
-        )
-
-
-def check_can_get_reactions_for_post(user, item):
-    check_can_see_post(user=user, item=item)
-
-
-def check_can_get_reactions_for_post_comment(user, post_comment):
-    return check_can_get_reactions_for_post(user=user, item=post_comment.item)
-
-
-def check_can_react_with_emoji_id(user, emoji_id):
-
-    if not EmojiGroup.objects.filter(emojis__id=emoji_id, is_reaction_group=True).exists():
-        raise ValidationError(
-            'Этот смайл не действителен',
-        )
-
-
 def check_can_see_post(user, item):
     if not user.can_see_post(item):
         raise ValidationError(
             'Эта запись является частной.',
-        )
-
-
-def check_can_react_to_post_comment(user, post_comment, emoji_id):
-    check_can_react_with_emoji_id(user=user, emoji_id=emoji_id)
-    check_can_see_post_comment(user=user, post_comment=post_comment)
-
-    if post_comment.item.is_closed:
-        raise ValidationError(
-            'Нельзя реагировать на комментарии к закрытой записи.',
-        )
-
-
-def check_can_delete_post_comment_reaction(user, post_comment_reaction):
-    check_can_see_post_comment(user=user, post_comment=post_comment_reaction.post_comment)
-
-    if post_comment_reaction.reactor_id != user.pk:
-        raise ValidationError(
-            'Нельзя удалить реакцию на комментарий, который Вам не пренадлежит.',
         )
 
 
@@ -696,24 +645,12 @@ def check_can_get_comment_for_post(user, post_comment, item, ):
     check_can_see_post_comment(user=user, post_comment=post_comment)
 
 
-def check_can_react_to_post(user, item):
-    check_can_see_post(user=user, item=item)
-
-
-def check_can_add_media_to_post(user, item):
-    check_has_post(user=user, item=item)
-
-
 def check_can_publish_post(user, item):
     check_has_post(user=user, item=item)
 
 
 def check_can_get_status_for_post(user, item):
     check_has_post(user=user, item=item)
-
-
-def check_can_get_media_for_post(user, item):
-    check_can_see_post(user=user, item=item)
 
 
 def check_can_get_preview_link_data_for_post(user, item):

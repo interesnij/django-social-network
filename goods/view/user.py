@@ -5,7 +5,6 @@ from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from goods.forms import GoodForm
 from django.template.loader import render_to_string
 from django.views.generic.detail import DetailView
-from generic.mixins import EmojiListMixin
 from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views import View
@@ -56,7 +55,7 @@ class UserGoodsList(View):
         return render_to_response('user/goods_list.html', context)
 
 
-class UserGood(EmojiListMixin, TemplateView):
+class UserGood(TemplateView):
     template_name="user/good.html"
 
     def get(self,request,*args,**kwargs):

@@ -1,4 +1,4 @@
-from generic.mixins import EmojiListMixin
+
 from django.views.generic.base import TemplateView
 from main.models import Item
 from communities.models import Community, CommunityMembership
@@ -11,7 +11,7 @@ from django.shortcuts import render_to_response
 from rest_framework.exceptions import PermissionDenied
 
 
-class ItemsCommunity(View, EmojiListMixin):
+class ItemsCommunity(View):
 
     def get(self,request,*args,**kwargs):
         try:
@@ -46,7 +46,7 @@ class ItemsCommunity(View, EmojiListMixin):
         return render_to_response('detail/list.html', context)
 
 
-class ItemCommunity(EmojiListMixin, TemplateView):
+class ItemCommunity(TemplateView):
     model=Item
     template_name="detail/item.html"
 

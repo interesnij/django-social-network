@@ -5,7 +5,6 @@ from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from goods.forms import GoodForm
 from django.template.loader import render_to_string
 from django.views.generic.detail import DetailView
-from generic.mixins import EmojiListMixin
 from common.checkers import check_can_get_posts_for_community_with_name
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views import View
@@ -79,7 +78,7 @@ class CommunityUserCreate(TemplateView):
 		return super(CommunityUserCreate,self).get(request,*args,**kwargs)
 
 
-class CommunityGood(EmojiListMixin, TemplateView):
+class CommunityGood(TemplateView):
 	template_name="community/good.html"
 
 	def get(self,request,*args,**kwargs):

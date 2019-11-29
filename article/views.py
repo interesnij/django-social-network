@@ -5,7 +5,6 @@ from django.template.loader import render_to_string
 from article.models import Article
 from django.urls import reverse_lazy
 from django.http import HttpResponse, HttpResponseBadRequest
-from generic.mixins import EmojiListMixin
 from communities.models import Community
 
 
@@ -13,7 +12,7 @@ class ArticleView(TemplateView):
     template_name="articles.html"
 
 
-class ArticleNewView(EmojiListMixin, TemplateView):
+class ArticleNewView(TemplateView):
     model=Article
     template_name="article.html"
 
@@ -28,7 +27,7 @@ class ArticleNewView(EmojiListMixin, TemplateView):
         context["object"]=self.article
         return context
 
-class ArticleDetailView(EmojiListMixin, TemplateView):
+class ArticleDetailView(TemplateView):
     model=Article
     template_name="article_detail.html"
 

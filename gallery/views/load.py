@@ -2,14 +2,13 @@ from django.views.generic.base import TemplateView
 from users.models import User
 from gallery.models import Album, Photo
 from django.http import HttpResponse, HttpResponseBadRequest
-from generic.mixins import EmojiListMixin
 from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render_to_response
 from rest_framework.exceptions import PermissionDenied
 
 
-class UserPhoto(EmojiListMixin, TemplateView):
+class UserPhoto(TemplateView):
     template_name="gallery_user/photo.html"
 
     def get(self,request,*args,**kwargs):
@@ -49,7 +48,7 @@ class UserPhoto(EmojiListMixin, TemplateView):
         return context
 
 
-class UserDetailAvatar(EmojiListMixin, TemplateView):
+class UserDetailAvatar(TemplateView):
     template_name="gallery_user/photo.html"
 
     def get(self,request,*args,**kwargs):

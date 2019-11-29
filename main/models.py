@@ -9,8 +9,6 @@ from notifications.models import Notification, notification_handler
 from django.contrib.contenttypes.fields import GenericRelation
 from django.db.models import Q
 from django.db.models import Count
-from common.models import Emoji
-from common.model_loaders import get_user_model
 
 
 class Item(models.Model):
@@ -78,15 +76,6 @@ class Item(models.Model):
     def notification_repost(self, user):
         notification_handler(user, self.creator,Notification.REPOST, action_object=self,id_value=str(self.uuid),key='social_update')
 
-    def get_emoji_for_post(self, emoji_id=None, reactor_id=None):
-        return Emoji.get_emoji(item_id=self, emoji_id=emoji_id, reactor_id=reactor_id)
-
-    @classmethod
-    def count_reactions_for_post_with_id(cls, post_id, reactor_id=None):
-        count_query = Q(post_id=post_id, reactor__is_deleted=False)
-        if reactor_id:
-            count_query.add(Q(reactor_id=reactor_id), Q.AND)
-        return cls.objects.filter(count_query).count()
 
     def get_comments(self, user):
         item = Item.objects.get(pk=self.pk)
@@ -166,63 +155,6 @@ class ItemComment(models.Model):
 
     def notification_reply_comment(self, user):
         notification_handler(user, self.commenter,Notification.POST_COMMENT_REPLY, action_object=self,id_value=str(self.uuid),key='social_update')
-
-    def notification_comment_react(self, user):
-        notification_handler(user, self.reactor,Notification.REACT_COMMENT, action_object=self,id_value=str(self.uuid),key='social_update')
-
-    def get_emoji_for_post_comment(self, emoji_id=None, reactor_id=None):
-        return Emoji.get_emoji_comment(post_comment_id=self, emoji_id=emoji_id,
-                                                               reactor_id=reactor_id)
-
-
-
-class ItemReaction(models.Model):
-    item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name='reactions')
-    created = models.DateTimeField(editable=False)
-    reactor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='post_reactions')
-    emoji = models.ForeignKey(Emoji, on_delete=models.CASCADE, related_name='post_reactions')
-
-    class Meta:
-        unique_together = ('reactor', 'item', 'emoji')
-        verbose_name="реакция к записи"
-        verbose_name_plural="реакции к записям"
-
-    @classmethod
-    def count_reactions_for_post_with_id(cls, item, reactor_id=None):
-        count_query = Q(item=item, reactor__is_deleted=False)
-
-        if reactor_id:
-            count_query.add(Q(reactor_id=reactor_id), Q.AND)
-
-        return cls.objects.filter(count_query).count()
-
-    def __str__(self):
-        return "{0}/{1}".format(self.item.creator.get_full_name(), self.emoji.keyword)
-
-    def get_reactor(self):
-        User = get_user_model()
-        reactors = User.objects.filter(pk=self.reactor.pk).all()
-        return reactors
-
-    def notification_react(self, user):
-        notification_handler(user, self.reactor,Notification.REACT, action_object=self,id_value=str(self.id),key='social_update')
-
-
-class ItemCommentReaction(models.Model):
-    item_comment = models.ForeignKey(ItemComment, on_delete=models.CASCADE, related_name='reactions')
-    created = models.DateTimeField(editable=False)
-    reactor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='post_comment_reactions')
-    emoji = models.ForeignKey(Emoji, on_delete=models.CASCADE, related_name='post_comment_reactions')
-
-    class Meta:
-        unique_together = ('reactor', 'item_comment','emoji')
-        verbose_name="реакция на комментарий"
-        verbose_name_plural="реакции на комментарии"
-
-    def save(self, *args, **kwargs):
-        if not self.id:
-            self.created = timezone.now()
-        return super(ItemCommentReaction, self).save(*args, **kwargs)
 
 
 class ItemMute(models.Model):

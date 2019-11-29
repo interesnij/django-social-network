@@ -2,49 +2,37 @@
 
 <div class="card-footer border-top py-2">
 
-  <div class="row">
-      <div class="col interaction" id="interaction">
-          {% if object.comments_enabled %}
-          &nbsp;&nbsp;
-          <span title="Комментарий" class="comment" style="cursor:pointer" data-pk="{{ user.pk }}">
-            <img style="width:22px;" src="{% static 'images/icons/chat-24px.svg' %}" />
-            <span class="comment-count">
-              {% if object.count_comments %}
-                {{ object.count_comments }}
-              {% endif %}
+    <div class="row">
+        <div class="col interaction" id="interaction">
+
+            {% if object.comments_enabled %}
+            &nbsp;&nbsp;
+            <span title="Комментарий" class="comment" style="cursor:pointer" data-pk="{{ user.pk }}">
+                <img style="width:22px;" src="{% static 'images/icons/chat-24px.svg' %}" />
+                <span class="comment-count">
+                    {% if object.count_comments %}
+                    {{ object.count_comments }}
+                    {% endif %}
+                </span>
             </span>
-          </span>
-          {% endif %}
+            {% endif %}
 
-          &nbsp;&nbsp;
-          <span class="R_U" data-uuid="{{ object.uuid }}" data-pk="{{ user.pk }}" data-toggle="modal" data-target="#user_repost" title="Поделиться" style="cursor:pointer">
-            <img style="width:20px" src="{% static 'images/icons/share-24px.svg' %}" />
-            <span class="repost-count">
-              {% if object.count_thread %}
-                {{ object.count_thread }}
-              {% endif %}
+            &nbsp;&nbsp;
+            <span title="Поделиться" data-toggle="modal" data-target="#modal_community_repost" style="cursor:pointer">
+                <img style="width:20px" src="{% static 'images/icons/share-24px.svg' %}" />
+                <span class="repost-count">
+                    {% if object.count_thread %}
+                    {{ object.count_thread }}
+                    {% endif %}
+                </span>
             </span>
-          </span>
-          &nbsp;&nbsp;
-          <span class="reactions_stream">
-            {% for react in object.get_emoji_for_post %}
-              {% include 'generic/posts/emoji.html' %}
-            {% endfor %}
 
-          <span>
-
-      </div>
-      <span class="col-auto" title="Просмотры" style="font-size:12px">
-        <img style="width:17px" src="{% static 'images/icons/remove_red_eye-24px.svg' %}" />
-        {{ object.views }}
-      </span>
-  </div>
-
-  <div class="load_comments" style="margin-top:25px"></div>
+        </div>
+        <span class="col-auto" title="Просмотры" style="font-size:12px">
+            <img style="width:17px" src="{% static 'images/icons/remove_red_eye-24px.svg' %}" />
+            {{ object.views }}
+        </span>
+    </div>
+    
+    <div class="load_comments" style="margin-top:25px"></div>
 </div>
-
-<script>
-
-
-
-</script>

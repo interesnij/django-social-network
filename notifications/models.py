@@ -59,18 +59,22 @@ class Notification(models.Model):
 
     POST_COMMENT = 'PC'
     POST_COMMENT_REPLY = 'PCR'
-    REACT_REPLY_COMMENT = 'RRC'
     CONNECTION_REQUEST = 'CR'
     CONNECTION_CONFIRMED = 'CC'
     COMMUNITY_INVITE = 'CI'
     POST_USER_MENTION = 'PUM'
     POST_COMMENT_USER_MENTION = 'PCUM'
-    REACT = 'RE'
-    REACT_COMMENT =  'RC'
     LOGGED_IN = 'I'
     LOGGED_OUT = 'O'
     SIGNUP = 'U'
     REPOST = 'R'
+
+    LIKE = 'L'
+    DISLIKE = 'D'
+    REPLY_COMMENT_LIKE = 'RCL'
+    REPLY_COMMENT_DISLIKE = 'RCD'
+    LIKE_COMMENT =  'LC'
+    DISLIKE_COMMENT =  'DC'
 
     NOTIFICATION_TYPES = (
         (POST_COMMENT, 'оставил комментарий'),
@@ -80,9 +84,12 @@ class Notification(models.Model):
         (COMMUNITY_INVITE, 'пригласил Вас в сообщество'),
         (POST_USER_MENTION, 'упомянул Вас в записи'),
         (POST_COMMENT_USER_MENTION, 'упомянул Вас в комментарии к записи'),
-        (REACT, 'отреагировал на Ваш пост'),
-        (REACT_COMMENT, 'отреагировал на Ваш комментарий'),
-        (REACT_REPLY_COMMENT, 'отреагировал на Ваш Ответ к комментарию'),
+        (LIKE, 'понравился Ваш пост'),
+        (DISLIKE, 'не понравился Ваш пост'),
+        (LIKE_COMMENT, 'понравился Ваш комментарий'),
+        (DISLIKE_COMMENT, 'не понравился Ваш комментарий'),
+        (LIKE_REPLY_COMMENT, 'понравился Ваш ответ к комментарию'),
+        (DISLIKE_REPLY_COMMENT, 'не понравился Ваш ответ к комментарию'),
         (SIGNUP, 'создал аккаунт'),
         (REPOST, 'поделился Вашей записью'),
     )
@@ -165,19 +172,25 @@ class CommunityNotification(models.Model):
 
     POST_COMMENT = 'PC'
     POST_COMMENT_REPLY = 'PCR'
-    REACT_REPLY_COMMENT = 'RRC'
     CONNECTION_REQUEST = 'CR'
     CONNECTION_CONFIRMED = 'CC'
     COMMUNITY_INVITE = 'CI'
     POST_USER_MENTION = 'PUM'
     POST_COMMENT_USER_MENTION = 'PCUM'
-    REACT = 'RE'
-    REACT_COMMENT =  'RC'
     LOGGED_IN = 'I'
     LOGGED_OUT = 'O'
     SIGNUP = 'U'
     REPOST = 'R'
     JOIN = 'J'
+
+    (LIKE, 'понравился Ваш пост'),
+    (DISLIKE, 'не понравился Ваш пост'),
+    (LIKE_COMMENT, 'понравился Ваш комментарий'),
+    (DISLIKE_COMMENT, 'не понравился Ваш комментарий'),
+    (LIKE_REPLY_COMMENT, 'понравился Ваш ответ к комментарию'),
+    (DISLIKE_REPLY_COMMENT, 'не понравился Ваш ответ к комментарию'),
+    (SIGNUP, 'создал аккаунт'),
+    (REPOST, 'поделился Вашей записью'),
 
     NOTIFICATION_TYPES = (
         (POST_COMMENT, 'оставил комментарий к записи сообщества'),
@@ -187,9 +200,12 @@ class CommunityNotification(models.Model):
         (COMMUNITY_INVITE, 'пригласил сообщество в сообщество'),
         (POST_USER_MENTION, 'упомянул сообщество в записи'),
         (POST_COMMENT_USER_MENTION, 'упомянул сообщество в комментарии к записи'),
-        (REACT, 'отреагировал на запись сообщества'),
-        (REACT_COMMENT, 'отреагировал на комментарий сообщества'),
-        (REACT_REPLY_COMMENT, 'отреагировал на ответ к комментарию сообщества'),
+        (LIKE, 'понравилась запись сообщества'),
+        (DISLIKE, 'не понравилась запись сообщества'),
+        (LIKE_COMMENT, 'понравился комментарий сообщества'),
+        (DISLIKE_COMMENT, 'не понравился комментарий сообщества'),
+        (LIKE_REPLY_COMMENT, 'понравился ответ к комментарию сообщества'),
+        (DISLIKE_REPLY_COMMENT, 'не понравился ответ к комментарию сообщества'),
         (REPOST, 'поделился записью сообщества'),
         (JOIN, 'вступил в сообщество'),
     )

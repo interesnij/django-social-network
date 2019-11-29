@@ -3,18 +3,16 @@ from users.models import User
 from communities.models import Community
 from main.forms import CommentForm
 from django.views.generic import ListView
-from generic.mixins import EmojiListMixin
 from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
 from main.models import Item
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views import View
 from django.shortcuts import render_to_response
 from rest_framework.exceptions import PermissionDenied
-from common.models import EmojiGroup, Emoji
 from gallery.models import Photo, Album
 
 
-class UserItemView(EmojiListMixin, TemplateView):
+class UserItemView(TemplateView):
     model=Item
     template_name="lenta/user_item.html"
 

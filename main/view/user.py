@@ -1,46 +1,18 @@
 from django.views.generic.base import TemplateView
 from users.models import User
-from main.models import Item, ItemComment, ItemReaction, ItemCommentReaction
-from common.models import Emoji
+from main.models import Item, ItemComment
 from django.utils import timezone
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from main.forms import CommentForm
 from django.template.loader import render_to_string
 from django.views import View
-from generic.mixins import EmojiListMixin
 from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
 from rest_framework.exceptions import PermissionDenied
 
 
-class ItemReactWindow(TemplateView):
-	template_name="react_window.html"
-
-	def get(self,request,*args,**kwargs):
-		item = Item.objects.get(uuid=self.kwargs["uuid"])
-		emoji = Emoji.objects.get(pk=self.kwargs["pk"])
-		react = ItemComment.objects.filter(item=item, emoji=emoji)
-		return super(ItemReactWindow,self).get(request,*args,**kwargs)
-
-	def get_context_data(self,**kwargs):
-		context=super(ItemReactWindow,self).get_context_data(**kwargs)
-		context["react"]=self.react
-		return context
 
 
-class ItemCommentReactWindow(TemplateView):
-    template_name="comment_react_window.html"
-
-    def get(self,request,*args,**kwargs):
-        self.react_like = ItemComment.objects.get(pk=self.kwargs["pk"])
-        return super(ItemCommentReactWindow,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        context=super(ItemCommentReactWindow,self).get_context_data(**kwargs)
-        context["react_like"]=self.react_like
-        return context
-
-
-class ItemCommentList(View, EmojiListMixin):
+class ItemCommentList(View):
 	model=ItemComment
 
 	def get(self,request,*args,**kwargs):
@@ -62,54 +34,6 @@ class ItemCommentList(View, EmojiListMixin):
 		return JsonResponse({
 	        "comments": comments_html,
 	    })
-
-
-class ItemReactUserCreate(View):
-	model=ItemReaction
-
-	def post(self,request,*args,**kwargs):
-		item = Item.objects.get(uuid=self.kwargs["uuid"])
-		emoji = Emoji.objects.get(pk=self.kwargs["pk"])
-		new_react = ItemReaction.objects.create(item=item, created=timezone.now(), emoji=emoji, reactor=request.user)
-		new_react.notification_react(request.user)
-		html = render_to_string("generic/posts/emoji.html",{'react': new_react,'request': request})
-		return JsonResponse(html, safe=False)
-
-
-class ItemReactUserDelete(View):
-	model=ItemReaction
-
-	def post(self,request,*args,**kwargs):
-		item = Item.objects.get(uuid=self.kwargs["uuid"])
-		emoji = Emoji.objects.get(pk=self.kwargs["pk"])
-		new_react = ItemReaction.objects.get(item=item, emoji=emoji, reactor=request.user)
-		new_react.delete()
-		html = render_to_string("generic/posts/emoji.html",{'react': new_react,'request': request})
-		return JsonResponse(html, safe=False)
-
-
-class ItemCommentReactUserCreate(View):
-	model=ItemReaction
-
-	def post(self,request,*args,**kwargs):
-		item_comment = ItemComment.objects.get(item__uuid=self.kwargs["uuid"])
-		emoji = Emoji.objects.get(pk=self.kwargs["pk"])
-		new_react = ItemCommentReaction.objects.create(item_comment=item_comment, created=timezone.now(), emoji=emoji, reactor=request.user)
-		new_react.notification_comment_react(request.user)
-		html = render_to_string("generic/posts/comment_emoji.html",{'react': new_react,'request': request})
-		return JsonResponse(html, safe=False)
-
-
-class ItemCommentReactUserDelete(View):
-	model=ItemReaction
-
-	def post(self,request,*args,**kwargs):
-		item_comment = ItemComment.objects.get(item__uuid=self.kwargs["uuid"])
-		emoji = Emoji.objects.get(pk=self.kwargs["pk"])
-		react = ItemCommentReaction.objects.get(item_comment=item_comment, emoji=emoji, reactor=request.user)
-		react.delete()
-		html = render_to_string("generic/posts/comment_emoji.html",{'react': new_react,'request': request})
-		return JsonResponse(html, safe=False)
 
 
 def item_post_comment(request):

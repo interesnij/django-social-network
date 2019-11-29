@@ -7,7 +7,6 @@ from django.views.generic import ListView
 from gallery.forms import AlbumForm
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.views import View
-from generic.mixins import EmojiListMixin
 from common.checkers import check_can_get_posts_for_community_with_name
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render_to_response
@@ -77,7 +76,7 @@ class CommunityPhotosList(View):
 		return render_to_response('good_community/photos.html', context)
 
 
-class CommunityPhoto(EmojiListMixin, TemplateView):
+class CommunityPhoto(TemplateView):
 	template_name="good_community/photo.html"
 
 	def get(self,request,*args,**kwargs):
