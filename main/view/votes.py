@@ -116,8 +116,12 @@ class ItemLikeCreate(View):
 			LikeDislike.objects.create(parent=obj, user=request.user, vote=self.vote_type)
 			result = True
 
-		return JsonResponse(json.dumps({
-			"result": result,
-			"like_count": obj.likes_count(),
-			"dislike_count": obj.dislike_count(),
-			}),content_type="application/json")
+		return HttpResponse(
+            json.dumps({
+                "result": result,
+                "like_count": obj.votes.likes().count(),
+                "dislike_count": obj.votes.dislikes().count(),
+                "sum_rating": obj.votes.sum_rating()
+            }),
+            content_type="application/json"
+        )
