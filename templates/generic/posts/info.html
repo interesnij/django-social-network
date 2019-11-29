@@ -5,7 +5,7 @@
     <div class="row">
 
         <div class="col interaction" id="interaction">
-          <span class="like {% if object.votes.likes.all|user_in:request.user %}text-success {% endif %}"
+          <span class="like {% if object.likes.all|user_in:request.user %}text-success {% endif %}"
                 data-id="{{ object.id }}"
                 data-uuid="{{ object.creator.uuid }}"
                 data-type="article"
@@ -39,7 +39,7 @@
         </span>
 
         &nbsp;&nbsp;
-        <span class="dislike {% if object.votes.dislikes.all|user_in:request.user %} text-danger {% endif %}"
+        <span class="dislike {% if object.dislikes.all|user_in:request.user %} text-danger {% endif %}"
               data-id="{{ object.id }}"
               style="cursor:pointer"
               data-type="article"
