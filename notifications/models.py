@@ -71,8 +71,8 @@ class Notification(models.Model):
 
     LIKE = 'L'
     DISLIKE = 'D'
-    REPLY_COMMENT_LIKE = 'RCL'
-    REPLY_COMMENT_DISLIKE = 'RCD'
+    LIKE_REPLY_COMMENT = 'LRC'
+    DISLIKE_REPLY_COMMENT = 'DRC'
     LIKE_COMMENT =  'LC'
     DISLIKE_COMMENT =  'DC'
 
