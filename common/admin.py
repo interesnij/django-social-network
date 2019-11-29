@@ -16,3 +16,4 @@ class LikeDislikeAdmin(admin.ModelAdmin):
 
 
 admin.site.register(ProxyBlacklistedDomain, ProxyBlacklistDomainAdmin)
+admin.site.register(LikeDislike, LikeDislikeAdmin)
