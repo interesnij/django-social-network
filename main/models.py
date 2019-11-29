@@ -60,10 +60,10 @@ class Item(models.Model):
         return parent_comments
 
     def likes(self):
-        return self.get_queryset().filter(vote__gt=0)
+        return self.votes.get_queryset().filter(vote__gt=0)
 
     def dislikes(self):
-        return self.get_queryset().filter(vote__lt=0)
+        return self.votes.get_queryset().filter(vote__lt=0)
 
     def likes_count(self):
         return likes().count()
