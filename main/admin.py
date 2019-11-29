@@ -21,14 +21,5 @@ class ItemCommentAdmin(admin.ModelAdmin):
         'parent_comment',
     )
 
-class ItemReactionAdmin(admin.ModelAdmin):
-    list_display = (
-        'item',
-        'reactor',
-        'emoji',
-        'created',
-    )
-
 admin.site.register(Item,ItemAdmin)
 admin.site.register(ItemComment,ItemCommentAdmin)
-admin.site.register(ItemReaction,ItemReactionAdmin)
