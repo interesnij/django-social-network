@@ -90,8 +90,6 @@ class CommentDislikeWindow(TemplateView):
 
 
 class ItemLikeCreate(View):
-	model = Item
-	vote_type = LikeDislike.LIKE
 
 	def post(self, request, **kwargs):
 		item = Item.objects.get(pk=self.kwargs["pk"])
@@ -102,8 +100,8 @@ class ItemLikeCreate(View):
 				check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
 		try:
 			likedislike = LikeDislike.objects.get(parent=item, user=request.user)
-			if likedislike.vote is not self.vote_type:
-				likedislike.vote = self.vote_type
+			if likedislike.vote is not LikeDislike.LIKE:
+				likedislike.vote = LikeDislike.LIKE
 				likedislike.save(update_fields=['vote'])
 				result = True
 				item.notification_like(request.user)
@@ -112,7 +110,7 @@ class ItemLikeCreate(View):
 				result = False
 
 		except LikeDislike.DoesNotExist:
-			LikeDislike.objects.create(parent=item, user=request.user, vote=self.vote_type)
+			LikeDislike.objects.create(parent=item, user=request.user, vote=LIKE)
 			result = True
 		likes = LikeDislike.objects.filter(parent=item, vote__gt=0)
 		dislikes = LikeDislike.objects.filter(parent=item, vote__lt=0)
