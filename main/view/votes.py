@@ -107,7 +107,6 @@ class ItemLikeCreate(View):
 				likedislike.save(update_fields=['vote'])
 				result = True
 				item.notification_like(request.user)
-
 			else:
 				likedislike.delete()
 				result = False
@@ -119,7 +118,7 @@ class ItemLikeCreate(View):
 		return HttpResponse(
             json.dumps({
                 "result": result,
-                "like_count": item__items_vote.likes().count(),
+                
                 "dislike_count": item.votes.dislikes().count(),
                 "sum_rating": item.votes.sum_rating()
             }),
