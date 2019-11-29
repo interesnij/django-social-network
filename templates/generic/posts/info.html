@@ -7,6 +7,7 @@
         <div class="col interaction" id="interaction">
           <span class="like {% if object.votes.likes.all|user_in:request.user %}text-success {% endif %}"
                 data-id="{{ object.id }}"
+                data-uuid="{{ object.creator.uuid }}"
                 data-type="article"
                 style="cursor:pointer"
                 title="Нравится">

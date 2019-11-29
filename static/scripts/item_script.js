@@ -206,9 +206,10 @@ $("#ajax").on('click', '.like', function() {
     var like = $(this);
     var type = like.data('type');
     var pk = like.data('id');
+		var uuid = like.data('uuid');
     var dislike = like.next();
     $.ajax({
-        url: "/votes/like/" + item + "/" + pk + "/",
+        url: "/votes/like/" + uuid + "/" + pk + "/",
         type: 'POST',
         data: {
             'obj': pk
