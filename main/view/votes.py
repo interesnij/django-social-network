@@ -101,7 +101,7 @@ class ItemLikeCreate(View):
 			if user.is_closed_profile:
 				check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
 		try:
-			likedislike = LikeDislike.objects.get(content_type=ContentType.objects.get_for_model(obj), object_id=obj.id, user=request.user)
+			likedislike = LikeDislike.objects.get(content_type=ContentType.objects.get_for_model(obj), user=request.user)
 			if likedislike.vote is not self.vote_type:
 				likedislike.vote = self.vote_type
 				likedislike.save(update_fields=['vote'])
