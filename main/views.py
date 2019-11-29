@@ -1,7 +1,6 @@
 from django.views.generic.base import TemplateView
 from main.models import Item
 from django.views.generic import ListView
-from generic.mixins import EmojiListMixin
 
 
 
@@ -19,7 +18,7 @@ class MainPageView(TemplateView):
 		return context
 
 
-class NewsListView(ListView, EmojiListMixin):
+class NewsListView(ListView):
 	template_name="news_list.html"
 	model=Item
 	paginate_by=10
