@@ -7,6 +7,7 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.fields import GenericRelation
 from django.db.models import Sum
 from django.conf import settings
+from main.models import Item
 
 
 class ProxyBlacklistedDomain(models.Model):
