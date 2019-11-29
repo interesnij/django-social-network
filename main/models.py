@@ -66,10 +66,10 @@ class Item(models.Model):
         return self.votes.get_queryset().filter(vote__lt=0)
 
     def likes_count(self):
-        return likes().count()
+        return self.likes().count()
 
     def dislikes_count(self):
-        return dislikes().count()
+        return self.dislikes().count()
 
     def get_parent(self):
         if self.parent:
