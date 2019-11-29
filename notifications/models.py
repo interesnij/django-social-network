@@ -183,14 +183,12 @@ class CommunityNotification(models.Model):
     REPOST = 'R'
     JOIN = 'J'
 
-    (LIKE, 'понравился Ваш пост'),
-    (DISLIKE, 'не понравился Ваш пост'),
-    (LIKE_COMMENT, 'понравился Ваш комментарий'),
-    (DISLIKE_COMMENT, 'не понравился Ваш комментарий'),
-    (LIKE_REPLY_COMMENT, 'понравился Ваш ответ к комментарию'),
-    (DISLIKE_REPLY_COMMENT, 'не понравился Ваш ответ к комментарию'),
-    (SIGNUP, 'создал аккаунт'),
-    (REPOST, 'поделился Вашей записью'),
+    LIKE = 'L'
+    DISLIKE = 'D'
+    LIKE_REPLY_COMMENT = 'LRC'
+    DISLIKE_REPLY_COMMENT = 'DRC'
+    LIKE_COMMENT =  'LC'
+    DISLIKE_COMMENT =  'DC'
 
     NOTIFICATION_TYPES = (
         (POST_COMMENT, 'оставил комментарий к записи сообщества'),
