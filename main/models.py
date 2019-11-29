@@ -9,6 +9,7 @@ from notifications.models import Notification, notification_handler
 from django.contrib.contenttypes.fields import GenericRelation
 from django.db.models import Q
 from django.db.models import Count
+from common.models import LikeDislike
 
 
 class Item(models.Model):
@@ -37,6 +38,7 @@ class Item(models.Model):
         (STATUS_ARHIVED, 'Архивирована'),
     )
     status = models.CharField(blank=False, null=False, choices=STATUSES, default=STATUS_PUBLISHED, max_length=2, verbose_name="Статус статьи")
+    votes = OneToOneField(LikeDislike, null=True, related_query_name='items')
 
     class Meta:
         indexes = (
