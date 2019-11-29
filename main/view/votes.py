@@ -118,7 +118,6 @@ class ItemLikeCreate(View):
 
 		return JsonResponse(json.dumps({
 			"result": result,
-			"like_count": obj.votes.likes().count(),
-			"dislike_count": obj.votes.dislikes().count(),
-			"sum_rating": obj.votes.sum_rating()
+			"like_count": obj.likes_count(),
+			"dislike_count": obj.dislike_count(),
 			}),content_type="application/json")
