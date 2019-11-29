@@ -119,7 +119,7 @@ class ItemLikeCreate(View):
 		return HttpResponse(
             json.dumps({
                 "result": result,
-                "like_count": item.votes.likes().count(),
+                "like_count": item__items_vote.likes().count(),
                 "dislike_count": item.votes.dislikes().count(),
                 "sum_rating": item.votes.sum_rating()
             }),
