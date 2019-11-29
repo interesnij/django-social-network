@@ -12,7 +12,7 @@
                 style="cursor:pointer"
                 title="Нравится">
             <img style="width:22px" src="{% static 'images/icons/thumb_up-24px.svg' %}" />
-            <span class="like-count" data-count="like">{{ object.votes.likes.count }}</span>
+            <span class="like-count" data-count="like">{{ object.likes.count }}</span>
           </span>
 
           <span class="like_window">
@@ -45,7 +45,7 @@
               data-type="article"
               title="Не нравится">
           <img style="width:22px;" src="{% static 'images/icons/thumb_down-24px.svg' %}" />
-          <span class="dislike-count" data-count="dislike">{% if object.votes.dislikes.count %}{{ object.votes.dislikes.count }}{% endif %}</span>
+          <span class="dislike-count" data-count="dislike">{{ object.dislikes.count }}</span>
         </span>
 
         <span class="dislike_window">
