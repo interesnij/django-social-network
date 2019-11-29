@@ -206,10 +206,9 @@ $("#ajax").on('click', '.like', function() {
     var like = $(this);
     var type = like.data('type');
     var pk = like.data('id');
-    var action = like.data('action');
     var dislike = like.next();
     $.ajax({
-        url: "{% url 'article_like' pk=object.pk %}",
+        url: "/votes/like/" + item + "/" + pk + "/",
         type: 'POST',
         data: {
             'obj': pk
@@ -222,7 +221,7 @@ $("#ajax").on('click', '.like', function() {
         }
     });
     return false;
-};
+});
 
 $("#ajax").on('click', '.dislike', function() {
         var dislike = $(this);
@@ -231,7 +230,7 @@ $("#ajax").on('click', '.dislike', function() {
         var action = dislike.data('action');
         var like = dislike.prev();
         $.ajax({
-            url: "{% url 'article_dislike' pk=object.pk %}",
+            url: "/user/comment/" + item + "/" + pk + "/",
             type: 'POST',
             data: {
                 'obj': pk
@@ -244,7 +243,7 @@ $("#ajax").on('click', '.dislike', function() {
             }
         });
         return false;
-};
+});
 
 $("#ajax").on('click', '.like2', function() {
           var like = $(this);
@@ -253,7 +252,7 @@ $("#ajax").on('click', '.like2', function() {
           var action = like.data('action');
           var dislike = like.next();
           $.ajax({
-              url: "/movies/comment/" + pk + "/like/",
+              url: "/user/comment/" + item + "/" + pk + "/",
               type: 'POST',
               data: {
                   'obj': pk
@@ -266,8 +265,8 @@ $("#ajax").on('click', '.like2', function() {
               }
           });
           return false;
-      };
-			
+      });
+
 $("#ajax").on('click', '.dislike2', function() {
         var dislike = $(this);
         var type = dislike.data('type');
@@ -275,7 +274,7 @@ $("#ajax").on('click', '.dislike2', function() {
         var action = dislike.data('action');
         var like = dislike.prev();
         $.ajax({
-            url: "/movies/comment/" + pk + "/dislike/",
+            url: "/user/comment/" + item + "/" + pk + "/",
             type: 'POST',
             data: {
                 'obj': pk
@@ -288,4 +287,4 @@ $("#ajax").on('click', '.dislike2', function() {
             }
         });
         return false;
-};
+});
