@@ -40,7 +40,7 @@ class VotesView(View):
 
 
 class LikeWindow(TemplateView):
-    template_name="like_window.html"
+    template_name="votes/like_window.html"
 
     def get(self,request,*args,**kwargs):
         self.like = Item.objects.get(pk=self.kwargs["pk"])
@@ -54,7 +54,7 @@ class LikeWindow(TemplateView):
 
 
 class CommentLikeWindow(TemplateView):
-    template_name="comment_like_window.html"
+    template_name="votes/comment_like_window.html"
 
     def get(self,request,*args,**kwargs):
         self.comment_like = ItemComment.objects.get(pk=self.kwargs["pk"])
@@ -68,7 +68,7 @@ class CommentLikeWindow(TemplateView):
 
 
 class DislikeWindow(TemplateView):
-    template_name="dislike_window.html"
+    template_name="votes/dislike_window.html"
 
     def get(self,request,*args,**kwargs):
         self.dislike = Item.objects.get(pk=self.kwargs["pk"])
@@ -82,7 +82,7 @@ class DislikeWindow(TemplateView):
 
 
 class CommentDislikeWindow(TemplateView):
-    template_name="comment_dislike_window.html"
+    template_name="votes/comment_dislike_window.html"
 
     def get(self,request,*args,**kwargs):
         self.comment_dislike = ItemComment.objects.get(pk=self.kwargs["pk"])
