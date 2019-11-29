@@ -1,6 +1,6 @@
 from django.views.generic.base import TemplateView
 from users.models import User
-from main.models import Item, Comment
+from main.models import Item, ItemComment
 from django.http import JsonResponse
 from django.views import View
 import json
@@ -57,7 +57,7 @@ class CommentLikeWindow(TemplateView):
     template_name="comment_like_window.html"
 
     def get(self,request,*args,**kwargs):
-        self.comment_like = Comment.objects.get(pk=self.kwargs["pk"])
+        self.comment_like = ItemComment.objects.get(pk=self.kwargs["pk"])
         self.comment_like.notification_comment_like(request.user)
         return super(CommentLikeWindow,self).get(request,*args,**kwargs)
 
@@ -85,7 +85,7 @@ class CommentDislikeWindow(TemplateView):
     template_name="comment_dislike_window.html"
 
     def get(self,request,*args,**kwargs):
-        self.comment_dislike = Comment.objects.get(pk=self.kwargs["pk"])
+        self.comment_dislike = ItemComment.objects.get(pk=self.kwargs["pk"])
         self.comment_dislike.notification_comment_dislike(request.user)
         return super(CommentDislikeWindow,self).get(request,*args,**kwargs)
 
