@@ -3,12 +3,12 @@
 <div class="card-footer border-top py-2">
 
     <div class="row">
-      
+
         <div class="col interaction" id="interaction">
           <span class="like {% if object.votes.likes.all|user_in:request.user %}text-success {% endif %}"
                 data-id="{{ object.id }}"
-                data-action="like"
                 data-type="article"
+                style="cursor:pointer"
                 title="Нравится">
             <img style="width:22px" src="{% static 'images/icons/thumb_up-24px.svg' %}" />
             <span class="like-count" data-count="like">{% if object.votes.likes.count != 0 %}{{ object.votes.likes.count }}{% endif %}</span>
@@ -40,7 +40,7 @@
         &nbsp;&nbsp;
         <span class="dislike {% if object.votes.dislikes.all|user_in:request.user %} text-danger {% endif %}"
               data-id="{{ object.id }}"
-              data-action="dislike"
+              style="cursor:pointer"
               data-type="article"
               title="Не нравится">
           <img style="width:22px;" src="{% static 'images/icons/thumb_down-24px.svg' %}" />
@@ -84,7 +84,7 @@
             {% endif %}
 
             &nbsp;&nbsp;
-            <span title="Поделиться" data-toggle="modal" data-target="#modal_community_repost" style="cursor:pointer">
+            <span title="Поделиться" data-toggle="modal" data-target="#modal_user_repost" style="cursor:pointer">
                 <img style="width:20px" src="{% static 'images/icons/share-24px.svg' %}" />
                 <span class="repost-count">
                     {% if object.count_thread %}

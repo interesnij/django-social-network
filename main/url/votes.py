@@ -1,12 +1,12 @@
 from django.conf.urls import url
-from main.view.votes import VotesView, LikeWindow, DislikeWindow, CommentLikeWindow, CommentDislikeWindow
+from main.view.votes import VotesView, LikeWindow, DislikeWindow, CommentLikeWindow, CommentDislikeWindow, ItemLikeCreate
 from main.models import Item, ItemComment
 from common.models import LikeDislike
 from django.contrib.auth.decorators import login_required
 
 
 urlpatterns = [
-	url(r'^like/(?P<pk>\d+)/$',login_required(VotesView.as_view(model=Item, vote_type=LikeDislike.LIKE)),name='item_like'),
+	url(r'^like/(?P<uuid>[0-9a-f-]+)/(?P<pk>\d+)/$',login_required(ItemLikeCreate.as_view(),name='item_like'),
     url(r'^dislike/(?P<pk>\d+)/$',login_required(VotesView.as_view(model=Item, vote_type=LikeDislike.DISLIKE)),name='item_dislike'),
     url(r'^comment/(?P<pk>\d+)/like/$',login_required(VotesView.as_view(model=ItemComment, vote_type=LikeDislike.LIKE)),name='item_comment_like'),
     url(r'^comment/(?P<pk>\d+)/dislike/$',login_required(VotesView.as_view(model=ItemComment, vote_type=LikeDislike.DISLIKE)),name='item_comment_dislike'),
