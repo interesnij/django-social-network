@@ -59,6 +59,14 @@ class Item(models.Model):
         parent_comments = ItemComment.objects.filter(item=self).count()
         return parent_comments
 
+    def likes(self):
+        likes = LikeDislike.objects.filter(parent=self, vote__gt=0)
+        return likes
+
+    def dislikes(self):
+        dislikes = LikeDislike.objects.filter(parent=self, vote__lt=0)
+        return dislikes
+
     def get_parent(self):
         if self.parent:
             return self.parent

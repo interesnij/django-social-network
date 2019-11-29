@@ -26,12 +26,6 @@ class ProxyBlacklistedDomain(models.Model):
 class LikeDislikeManager(models.Manager):
     use_for_related_fields = True
 
-    def likes(self):
-        return self.get_queryset().filter(vote__gt=0)
-
-    def dislikes(self):
-        return self.get_queryset().filter(vote__lt=0)
-
     def posts(self):
         return self.get_queryset().filter(content_type__model='items').order_by('-item__created')
     def comments(self):
