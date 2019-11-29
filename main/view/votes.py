@@ -101,7 +101,7 @@ class ItemLikeCreate(View):
 			if user.is_closed_profile:
 				check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
 		try:
-			likedislike = LikeDislike.objects.get(content_type=ContentType.objects.get_for_model(obj), user=request.user)
+			likedislike = LikeDislike.objects.get(item=obj, user=request.user)
 			if likedislike.vote is not self.vote_type:
 				likedislike.vote = self.vote_type
 				likedislike.save(update_fields=['vote'])
@@ -113,7 +113,7 @@ class ItemLikeCreate(View):
 				result = False
 
 		except LikeDislike.DoesNotExist:
-			obj.votes.create(content_type=ContentType.objects.get_for_model(obj),user=request.user, vote=self.vote_type)
+			LikeDislike.objects.create(item=obj, user=request.user, vote=self.vote_type)
 			result = True
 
 		return HttpResponse(json.dumps({"result": result,"like_count": obj.votes.likes().count(),"dislike_count": obj.votes.dislikes().count(),"sum_rating": obj.votes.sum_rating()}),content_type="application/json")
