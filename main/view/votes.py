@@ -114,10 +114,12 @@ class ItemLikeCreate(View):
 		except LikeDislike.DoesNotExist:
 			LikeDislike.objects.create(parent=item, user=request.user, vote=self.vote_type)
 			result = True
+		likes = LikeDislike.objects.filter(parent=item, vote__gt=0)
 
 		return HttpResponse(
             json.dumps({
                 "result": result,
+				"like_count": likes.count(),
             }),
             content_type="application/json"
         )
