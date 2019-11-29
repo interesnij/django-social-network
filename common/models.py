@@ -7,7 +7,6 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.fields import GenericRelation
 from django.db.models import Sum
 from django.conf import settings
-from main.models import Item
 
 
 class ProxyBlacklistedDomain(models.Model):
@@ -53,5 +52,5 @@ class LikeDislike(models.Model):
 
     vote = models.PositiveIntegerField(verbose_name="Голос", choices=VOTES)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Пользователь")
-    item = models.ForeignKey(Item, on_delete=models.CASCADE)
+    item = models.ForeignKey('main.Item', on_delete=models.CASCADE)
     objects = LikeDislikeManager()
