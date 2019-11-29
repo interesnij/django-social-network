@@ -38,7 +38,7 @@ class Item(models.Model):
         (STATUS_ARHIVED, 'Архивирована'),
     )
     status = models.CharField(blank=False, null=False, choices=STATUSES, default=STATUS_PUBLISHED, max_length=2, verbose_name="Статус статьи")
-    votes = models.OneToOneField(LikeDislike, on_delete=models.CASCADE, null=True, related_query_name='items_vote')
+    votes = models.ForeignKey(LikeDislike, on_delete=models.CASCADE, null=True, related_query_name='items_vote')
 
     class Meta:
         indexes = (
@@ -58,6 +58,9 @@ class Item(models.Model):
     def count_comments(self):
         parent_comments = ItemComment.objects.filter(item=self).count()
         return parent_comments
+
+    def likes_count(self):
+        return self.votes.all().count()
 
     def get_parent(self):
         if self.parent:
