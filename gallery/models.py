@@ -6,7 +6,6 @@ from pilkit.processors import ResizeToFill, ResizeToFit
 from imagekit.models import ProcessedImageField
 from django.contrib.contenttypes.fields import GenericRelation
 from django.conf import settings
-from common.models import Emoji
 from main.models import Item
 
 
@@ -99,56 +98,3 @@ class PhotoComment(models.Model):
 
     def notification_comment_react(self, user):
         notification_handler(user, self.reactor,Notification.REACT_COMMENT, action_object=self,id_value=str(self.uuid),key='social_update')
-
-    def get_emoji_for_post_comment(self, emoji_id=None, reactor_id=None):
-        return Emoji.get_emoji_comment(post_comment_id=self, emoji_id=emoji_id,
-                                                               reactor_id=reactor_id)
-
-
-
-class PhotoReaction(models.Model):
-    photo = models.ForeignKey(Photo, on_delete=models.CASCADE, related_name='photo_reactions')
-    created = models.DateTimeField(editable=False)
-    reactor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='photo_reactions')
-    emoji = models.ForeignKey(Emoji, on_delete=models.CASCADE, related_name='photo_reactions')
-
-    class Meta:
-        unique_together = ('reactor', 'photo', 'emoji')
-        verbose_name="реакция к записи"
-        verbose_name_plural="реакции к записям"
-
-    @classmethod
-    def count_reactions_for_post_with_id(cls, photo, reactor_id=None):
-        count_query = Q(photo=photo, reactor__is_deleted=False)
-
-        if reactor_id:
-            count_query.add(Q(reactor_id=reactor_id), Q.AND)
-
-        return cls.objects.filter(count_query).count()
-
-    def __str__(self):
-        return "{0}/{1}".format(self.photo.creator.get_full_name(), self.emoji.keyword)
-
-    def get_reactor(self):
-        reactors = User.objects.filter(pk=self.reactor.pk).all()
-        return reactors
-
-    def notification_react(self, user):
-        notification_handler(user, self.reactor,Notification.REACT, action_object=self,id_value=str(self.id),key='social_update')
-
-
-class PhotoCommentReaction(models.Model):
-    photo_comment = models.ForeignKey(PhotoComment, on_delete=models.CASCADE, related_name='photo_reactions')
-    created = models.DateTimeField(editable=False)
-    reactor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='photo_comment_reactions')
-    emoji = models.ForeignKey(Emoji, on_delete=models.CASCADE, related_name='photo_comment_reactions')
-
-    class Meta:
-        unique_together = ('reactor', 'photo_comment','emoji')
-        verbose_name="реакция на комментарий"
-        verbose_name_plural="реакции на комментарии"
-
-    def save(self, *args, **kwargs):
-        if not self.id:
-            self.created = timezone.now()
-        return super(PhotoCommentReaction, self).save(*args, **kwargs)
