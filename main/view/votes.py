@@ -6,6 +6,7 @@ from django.views import View
 import json
 from common.models import LikeDislike
 from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
+from django.contrib.contenttypes.models import ContentType
 
 
 class VotesView(View):
