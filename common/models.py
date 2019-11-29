@@ -52,5 +52,5 @@ class LikeDislike(models.Model):
 
     vote = models.PositiveIntegerField(verbose_name="Голос", choices=VOTES)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Пользователь")
-    item = models.ForeignKey('main.Item', on_delete=models.CASCADE)
+    parent = models.ForeignKey('main.Item', on_delete=models.CASCADE)
     objects = LikeDislikeManager()
