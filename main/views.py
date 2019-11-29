@@ -3,7 +3,6 @@ from main.models import Item
 from django.views.generic import ListView
 
 
-
 class MainPageView(TemplateView):
 	template_name=None
 	def get(self,request,*args,**kwargs):

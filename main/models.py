@@ -78,6 +78,12 @@ class Item(models.Model):
     def notification_repost(self, user):
         notification_handler(user, self.creator,Notification.REPOST, action_object=self,id_value=str(self.uuid),key='social_update')
 
+    def notification_like(self, user):
+        notification_handler(user, self.creator,Notification.LIKED, action_object=self,id_value=str(self.uuid),key='social_update')
+
+    def notification_dislike(self, user):
+        notification_handler(user, self.creator,Notification.DISLIKED, action_object=self,id_value=str(self.uuid),key='social_update')
+
 
     def get_comments(self, user):
         item = Item.objects.get(pk=self.pk)
@@ -134,6 +140,7 @@ class ItemComment(models.Model):
     is_deleted = models.BooleanField(default=False,verbose_name="Удалено")
     item = models.ForeignKey(Item, on_delete=models.CASCADE, null=True)
     moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='post_comments')
+    votes = models.OneToOneField(LikeDislike, on_delete=models.CASCADE, null=True, related_query_name='comments')
 
     class Meta:
         indexes = (
@@ -157,6 +164,12 @@ class ItemComment(models.Model):
 
     def notification_reply_comment(self, user):
         notification_handler(user, self.commenter,Notification.POST_COMMENT_REPLY, action_object=self,id_value=str(self.uuid),key='social_update')
+
+    def notification_comment_like(self, user):
+        notification_handler(user, self.creator,Notification.LIKE_COMMENT, action_object=self,id_value=str(self.uuid),key='social_update')
+
+    def notification_comment_dislike(self, user):
+        notification_handler(user, self.creator,Notification.DISLIKE_COMMENT, action_object=self,id_value=str(self.uuid),key='social_update')
 
 
 class ItemMute(models.Model):

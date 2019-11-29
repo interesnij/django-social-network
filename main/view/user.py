@@ -11,7 +11,6 @@ from rest_framework.exceptions import PermissionDenied
 
 
 
-
 class ItemCommentList(View):
 	model=ItemComment
 
