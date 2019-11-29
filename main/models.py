@@ -38,7 +38,7 @@ class Item(models.Model):
         (STATUS_ARHIVED, 'Архивирована'),
     )
     status = models.CharField(blank=False, null=False, choices=STATUSES, default=STATUS_PUBLISHED, max_length=2, verbose_name="Статус статьи")
-    votes = models.OneToOneField(LikeDislike, on_delete=models.CASCADE, null=True, related_query_name='items')
+    votes = models.OneToOneField(LikeDislike, on_delete=models.CASCADE, null=True, related_query_name='items_vote')
 
     class Meta:
         indexes = (
