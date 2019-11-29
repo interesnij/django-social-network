@@ -12,7 +12,7 @@
                 style="cursor:pointer"
                 title="Нравится">
             <img style="width:22px" src="{% static 'images/icons/thumb_up-24px.svg' %}" />
-            <span class="like-count" data-count="like">{% if object.votes.likes.count != 0 %}{{ object.votes.likes.count }}{% endif %}</span>
+            <span class="like-count" data-count="like">{{ object.votes.likes.count }}</span>
           </span>
 
           <span class="like_window">
