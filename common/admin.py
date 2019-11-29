@@ -11,7 +11,7 @@ class LikeDislikeAdmin(admin.ModelAdmin):
     list_display = (
         'vote',
         'user',
-        'item',
+        'parent',
     )
 
 
