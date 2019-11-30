@@ -248,10 +248,9 @@ $("#ajax").on('click', '.dislike', function() {
 
 $("#ajax").on('click', '.like2', function() {
           var like = $(this);
-          var type = like.data('type');
           var pk = like.data('id');
           var uuid = like.data('uuid');
-          var dislike = like.next();
+          var dislike = like.next().next();
           $.ajax({
               url: "/votes/comment/" + uuid + "/" + pk + "/",
               type: 'POST',
@@ -270,10 +269,9 @@ $("#ajax").on('click', '.like2', function() {
 
 $("#ajax").on('click', '.dislike2', function() {
         var dislike = $(this);
-        var type = dislike.data('type');
         var pk = dislike.data('id');
         var uuid = dislike.data('uuid');
-        var like = dislike.prev();
+        var like = dislike.prev().prev();
         $.ajax({
             url: "/votes/comment/" + uuid + "/" + pk + "/",
             type: 'POST',

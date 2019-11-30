@@ -164,6 +164,14 @@ class ItemComment(models.Model):
     def count_replies(self):
         return self.replies.count()
 
+    def likes(self):
+        likes = ItemCommentVotes.objects.filter(parent=self, vote__gt=0)
+        return likes
+
+    def dislikes(self):
+        dislikes = ItemCommentVotes.objects.filter(parent=self, vote__lt=0)
+        return dislikes
+
     def __str__(self):
         return "{0}/{1}".format(self.commenter.get_full_name(), self.text[:10])
 
