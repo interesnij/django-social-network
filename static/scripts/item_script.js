@@ -206,7 +206,7 @@ $("#ajax").on('click', '.like', function() {
     var like = $(this);
     var pk = like.data('id');
 		var uuid = like.data('uuid');
-    var dislike = like.next();
+    var dislike = like.next().next();
     console.log("like!");
     $.ajax({
         url: "/votes/like/" + uuid + "/" + pk + "/",
@@ -228,7 +228,7 @@ $("#ajax").on('click', '.dislike', function() {
         var dislike = $(this);
         var pk = dislike.data('id');
         var uuid = dislike.data('uuid');
-        var like = dislike.prev();
+        var like = dislike.prev().prev();
         console.log("dislike!");
         $.ajax({
             url: "/votes/dislike/" + uuid + "/" + pk + "/",
