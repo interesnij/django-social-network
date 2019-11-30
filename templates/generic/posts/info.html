@@ -41,6 +41,7 @@
         &nbsp;&nbsp;
         <span class="dislike {% if object.dislikes.all|user_in:request.user %} text-danger {% endif %}"
               data-id="{{ object.id }}"
+              data-uuid="{{ object.creator.uuid }}"
               style="cursor:pointer"
               data-type="article"
               title="Не нравится">

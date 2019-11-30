@@ -4,33 +4,9 @@ from main.models import Item, ItemComment
 from django.http import JsonResponse, HttpResponse
 from django.views import View
 import json
-from common.models import ItemVotes
+from common.models import ItemVotes, ItemCommentVotes
 from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
 from django.contrib.contenttypes.models import ContentType
-
-
-class VotesView(View):
-	model = None
-	vote_type = None
-
-	def post(self, request, pk):
-		obj = self.model.objects.get(pk=pk)
-
-		try:
-			likedislike = ItemVotes.objects.get(content_type=ContentType.objects.get_for_model(obj), object_id=obj.id, user=request.user)
-			if likedislike.vote is not self.vote_type:
-				likedislike.vote = self.vote_type
-				likedislike.save(update_fields=['vote'])
-				result = True
-			else:
-				likedislike.delete()
-				result = False
-
-		except ItemVotes.DoesNotExist:
-			obj.votes.create(user=request.user, vote=self.vote_type)
-			result = True
-
-		return JsonResponse(json.dumps({"result": result,"like_count": obj.votes.likes().count(),"dislike_count": obj.votes.dislikes().count(),"sum_rating": obj.votes.sum_rating()}),content_type="application/json")
 
 
 class LikeWindow(TemplateView):
@@ -136,8 +112,62 @@ class ItemUserDislikeCreate(View):
 				likedislike.delete()
 				result = False
 		except ItemVotes.DoesNotExist:
-			ItemVotes.objects.create(parent=item, user=request.user, vote=LikeDislike.DISLIKE)
+			ItemVotes.objects.create(parent=item, user=request.user, vote=ItemVotes.DISLIKE)
 			result = True
 		likes = ItemVotes.objects.filter(parent=item, vote__gt=0)
 		dislikes = ItemVotes.objects.filter(parent=item, vote__lt=0)
+		return HttpResponse(json.dumps({"result": result,"like_count": likes.count(),"dislike_count": dislikes.count()}),content_type="application/json")
+
+
+class ItemCommentUserLikeCreate(View):
+
+	def post(self, request, **kwargs):
+		comment = ItemComment.objects.get(pk=self.kwargs["pk"])
+		user = User.objects.get(uuid=self.kwargs["uuid"])
+		if user != request.user:
+			check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
+			if user.is_closed_profile:
+				check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
+		try:
+			likedislike = ItemCommentVotes.objects.get(parent=comment, user=request.user)
+			if likedislike.vote is not ItemCommentVotes.LIKE:
+				likedislike.vote = ItemCommentVotes.LIKE
+				likedislike.save(update_fields=['vote'])
+				result = True
+				comment.notification_comment_like(request.user)
+			else:
+				likedislike.delete()
+				result = False
+		except ItemCommentVotes.DoesNotExist:
+			ItemCommentVotes.objects.create(parent=item, user=request.user, vote=ItemCommentVotes.LIKE)
+			result = True
+		likes = ItemCommentVotes.objects.filter(parent=item, vote__gt=0)
+		dislikes = ItemCommentVotes.objects.filter(parent=item, vote__lt=0)
+		return HttpResponse(json.dumps({"result": result,"like_count": likes.count(),"dislike_count": dislikes.count()}),content_type="application/json")
+
+
+class ItemCommentUserDislikeCreate(View):
+
+	def post(self, request, **kwargs):
+		comment = ItemComment.objects.get(pk=self.kwargs["pk"])
+		user = User.objects.get(uuid=self.kwargs["uuid"])
+		if user != request.user:
+			check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
+			if user.is_closed_profile:
+				check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
+		try:
+			likedislike = ItemCommentVotes.objects.get(parent=comment, user=request.user)
+			if likedislike.vote is not ItemCommentVotes.DISLIKE:
+				likedislike.vote = ItemCommentVotes.DISLIKE
+				likedislike.save(update_fields=['vote'])
+				result = True
+				comment.notification_comment_like(request.user)
+			else:
+				likedislike.delete()
+				result = False
+		except ItemCommentVotes.DoesNotExist:
+			ItemCommentVotes.objects.create(parent=item, user=request.user, vote=ItemCommentVotes.DISLIKE)
+			result = True
+		likes = ItemCommentVotes.objects.filter(parent=item, vote__gt=0)
+		dislikes = ItemCommentVotes.objects.filter(parent=item, vote__lt=0)
 		return HttpResponse(json.dumps({"result": result,"like_count": likes.count(),"dislike_count": dislikes.count()}),content_type="application/json")

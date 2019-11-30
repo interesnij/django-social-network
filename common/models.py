@@ -23,26 +23,10 @@ class ProxyBlacklistedDomain(models.Model):
         return cls.objects.filter(Q(domain=url_root_domain) | Q(domain=url_full_domain)).exists()
 
 
-class LikeDislikeManager(models.Manager):
-    use_for_related_fields = True
-
-    def posts(self):
-        return self.get_queryset().filter(content_type__model='items').order_by('-item__created')
-    def comments(self):
-        return self.get_queryset().filter(content_type__model='comments').order_by('-comment__created')
-
-    def sum_rating(self):
-        return self.get_queryset().aggregate(Sum('vote')).get('vote__sum') or 0
-
-
 class ItemVotes(models.Model):
     LIKE = 1
     DISLIKE = -1
-
-    VOTES = (
-        (DISLIKE, 'Не нравится'),
-        (LIKE, 'Нравится')
-    )
+    VOTES = ((DISLIKE, 'Не нравится'),(LIKE, 'Нравится'))
 
     vote = models.PositiveIntegerField(verbose_name="Голос", choices=VOTES)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Пользователь")
@@ -52,11 +36,7 @@ class ItemVotes(models.Model):
 class ItemCommentVotes(models.Model):
     LIKE = 1
     DISLIKE = -1
-
-    VOTES = (
-        (DISLIKE, 'Не нравится'),
-        (LIKE, 'Нравится')
-    )
+    VOTES = ((DISLIKE, 'Не нравится'),(LIKE, 'Нравится'))
 
     vote = models.PositiveIntegerField(verbose_name="Голос", choices=VOTES)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Пользователь")
