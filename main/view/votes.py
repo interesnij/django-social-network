@@ -101,8 +101,8 @@ class ItemUserDislikeCreate(View):
                 check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
         try:
             likedislike = ItemVotes.objects.get(parent=item, user=request.user)
-            if likedislike.vote is not "-1":
-                likedislike.vote = "-1"
+            if likedislike.vote is ItemVotes.DISLIKE:
+                likedislike.vote = ItemVotes.DISLIKE
                 likedislike.save(update_fields=['vote'])
                 result = True
                 item.notification_like(request.user)
@@ -110,7 +110,7 @@ class ItemUserDislikeCreate(View):
                 likedislike.delete()
                 result = False
         except ItemVotes.DoesNotExist:
-            ItemVotes.objects.create(parent=item, user=request.user, vote="-1")
+            ItemVotes.objects.create(parent=item, user=request.user, vote=ItemVotes.DISLIKE)
             result = True
         likes = ItemVotes.objects.filter(parent=item, vote__gt=0)
         dislikes = ItemVotes.objects.filter(parent=item, vote__lt=0)
