@@ -24,8 +24,8 @@ class ProxyBlacklistedDomain(models.Model):
 
 
 class ItemVotes(models.Model):
-    LIKE = L
-    DISLIKE = D
+    LIKE = "L"
+    DISLIKE = "D"
     VOTES = ((DISLIKE, 'Не нравится'),(LIKE, 'Нравится'))
 
     vote = models.IntegerField(default=0, verbose_name="Голос", choices=VOTES)
