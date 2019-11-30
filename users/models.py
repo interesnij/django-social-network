@@ -22,7 +22,7 @@ from django.db.models import Q, F, Count
 
 
 class User(AbstractUser):
-    #moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='users')
+    moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='users')
     is_email_verified = models.BooleanField(default=False)
     are_guidelines_accepted = models.BooleanField(default=False)
     is_deleted = models.BooleanField(

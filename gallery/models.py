@@ -37,7 +37,7 @@ class Album(models.Model):
 class Photo(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, db_index=True,verbose_name="uuid")
     community = models.ForeignKey('communities.Community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
-    #moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='photos')
+    moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='photos')
     album = models.ForeignKey(Album, related_name="album_1", blank=True, null=True, on_delete=models.CASCADE)
     album_2 = models.ForeignKey(Album, related_name="album_2", blank=True, null=True, on_delete=models.CASCADE)
     file = ProcessedImageField(format='JPEG', options={'quality': 90}, upload_to=upload_to_photo_directory, processors=[ResizeToFit(width=1024, upscale=False)])
@@ -79,6 +79,7 @@ class PhotoComment(models.Model):
     is_edited = models.BooleanField(default=False, null=False, blank=False,verbose_name="Изменено")
     is_deleted = models.BooleanField(default=False,verbose_name="Удаено")
     photo = models.ForeignKey(Photo, on_delete=models.CASCADE, null=True)
+    moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='photo_comment')
 
     class Meta:
         indexes = (
