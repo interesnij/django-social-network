@@ -207,7 +207,6 @@ $("#ajax").on('click', '.like', function() {
     var pk = like.data('id');
 		var uuid = like.data('uuid');
     var dislike = like.next().next();
-    console.log("like!");
     $.ajax({
         url: "/votes/like/" + uuid + "/" + pk + "/",
         type: 'POST',
@@ -229,7 +228,6 @@ $("#ajax").on('click', '.dislike', function() {
         var pk = dislike.data('id');
         var uuid = dislike.data('uuid');
         var like = dislike.prev().prev();
-        console.log("dislike!");
         $.ajax({
             url: "/votes/dislike/" + uuid + "/" + pk + "/",
             type: 'POST',
@@ -252,7 +250,7 @@ $("#ajax").on('click', '.like2', function() {
           var uuid = like.data('uuid');
           var dislike = like.next().next();
           $.ajax({
-              url: "/votes/comment/" + uuid + "/" + pk + "/",
+              url: "/votes/comment/" + uuid + "/" + pk + "/like/",
               type: 'POST',
               data: {
                   'obj': pk
@@ -273,7 +271,7 @@ $("#ajax").on('click', '.dislike2', function() {
         var uuid = dislike.data('uuid');
         var like = dislike.prev().prev();
         $.ajax({
-            url: "/votes/comment/" + uuid + "/" + pk + "/",
+            url: "/votes/comment/" + uuid + "/" + pk + "/like/",
             type: 'POST',
             data: {
                 'obj': pk
