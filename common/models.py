@@ -28,7 +28,7 @@ class ItemVotes(models.Model):
     DISLIKE = -1
     VOTES = ((DISLIKE, 'Не нравится'),(LIKE, 'Нравится'))
 
-    vote = models.PositiveIntegerField(verbose_name="Голос", choices=VOTES)
+    vote = models.IntegerField(default=0, verbose_name="Голос", choices=VOTES)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Пользователь")
     parent = models.ForeignKey('main.Item', on_delete=models.CASCADE)
 
