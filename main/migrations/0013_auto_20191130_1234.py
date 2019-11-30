@@ -9,16 +9,3 @@ class Migration(migrations.Migration):
     dependencies = [
         ('main', '0012_auto_20191129_1618'),
     ]
-
-    operations = [
-        migrations.AlterField(
-            model_name='item',
-            name='votes',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, related_query_name='items_vote', to='common.ItemVotes'),
-        ),
-        migrations.AlterField(
-            model_name='itemcomment',
-            name='votes',
-            field=models.OneToOneField(null=True, on_delete=django.db.models.deletion.CASCADE, related_query_name='comments', to='common.ItemCommentVotes'),
-        ),
-    ]

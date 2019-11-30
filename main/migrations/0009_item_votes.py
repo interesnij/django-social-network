@@ -9,11 +9,3 @@ class Migration(migrations.Migration):
     dependencies = [
         ('main', '0008_auto_20191129_1148'),
     ]
-
-    operations = [
-        migrations.AddField(
-            model_name='item',
-            name='votes',
-            field=models.OneToOneField(null=True, on_delete=django.db.models.deletion.CASCADE, related_query_name='items', to='common.ItemVotes'),
-        ),
-    ]
