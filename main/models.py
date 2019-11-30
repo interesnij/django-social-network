@@ -176,16 +176,16 @@ class ItemComment(models.Model):
         return "{0}/{1}".format(self.commenter.get_full_name(), self.text[:10])
 
     def notification_comment(self, user):
-        notification_handler(user, self.commenter,Notification.POST_COMMENT, action_object=self,id_value=str(self.uuid),key='social_update')
+        notification_handler(user, self.commenter,Notification.POST_COMMENT, action_object=self,id_value=str(self.pk),key='social_update')
 
     def notification_reply_comment(self, user):
-        notification_handler(user, self.commenter,Notification.POST_COMMENT_REPLY, action_object=self,id_value=str(self.uuid),key='social_update')
+        notification_handler(user, self.commenter,Notification.POST_COMMENT_REPLY, action_object=self,id_value=str(self.pk),key='social_update')
 
     def notification_comment_like(self, user):
-        notification_handler(user, self.commenter,Notification.LIKE_COMMENT, action_object=self,id_value=str(self.uuid),key='social_update')
+        notification_handler(user, self.commenter,Notification.LIKE_COMMENT, action_object=self,id_value=str(self.pk),key='social_update')
 
     def notification_comment_dislike(self, user):
-        notification_handler(user, self.commenter,Notification.DISLIKE_COMMENT, action_object=self,id_value=str(self.uuid),key='social_update')
+        notification_handler(user, self.commenter,Notification.DISLIKE_COMMENT, action_object=self,id_value=str(self.pk),key='social_update')
 
 
 class ItemMute(models.Model):
