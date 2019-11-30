@@ -86,7 +86,7 @@ class ItemUserLikeCreate(View):
         except ItemVotes.DoesNotExist:
             ItemVotes.objects.create(parent=item, user=request.user, vote=ItemVotes.LIKE)
             result = True
-        return HttpResponse(json.dumps({"result": result,"like_count": item.likes.count(),"dislike_count": item.dislikes.count()}),content_type="application/json")
+        return HttpResponse(json.dumps({"result": result,"like_count": item.likes().count(),"dislike_count": item.dislikes().count()}),content_type="application/json")
 
 
 class ItemUserDislikeCreate(View):
@@ -110,7 +110,7 @@ class ItemUserDislikeCreate(View):
         except ItemVotes.DoesNotExist:
             ItemVotes.objects.create(parent=item, user=request.user, vote=ItemVotes.DISLIKE)
             result = True
-        return HttpResponse(json.dumps({"result": result,"like_count": item.likes.count(),"dislike_count": item.dislikes.count()}),content_type="application/json")
+        return HttpResponse(json.dumps({"result": result,"like_count": item.likes().count(),"dislike_count": item.dislikes().count()}),content_type="application/json")
 
 class ItemCommentUserLikeCreate(View):
 
