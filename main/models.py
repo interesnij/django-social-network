@@ -182,10 +182,10 @@ class ItemComment(models.Model):
         notification_handler(user, self.commenter,Notification.POST_COMMENT_REPLY, action_object=self,id_value=str(self.uuid),key='social_update')
 
     def notification_comment_like(self, user):
-        notification_handler(user, self.creator,Notification.LIKE_COMMENT, action_object=self,id_value=str(self.uuid),key='social_update')
+        notification_handler(user, self.commenter,Notification.LIKE_COMMENT, action_object=self,id_value=str(self.uuid),key='social_update')
 
     def notification_comment_dislike(self, user):
-        notification_handler(user, self.creator,Notification.DISLIKE_COMMENT, action_object=self,id_value=str(self.uuid),key='social_update')
+        notification_handler(user, self.commenter,Notification.DISLIKE_COMMENT, action_object=self,id_value=str(self.uuid),key='social_update')
 
 
 class ItemMute(models.Model):
