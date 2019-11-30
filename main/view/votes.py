@@ -66,31 +66,30 @@ class CommentDislikeWindow(TemplateView):
 
 
 class ItemUserLikeCreate(View):
-
-	def post(self, request, **kwargs):
-		item = Item.objects.get(pk=self.kwargs["pk"])
-		user = User.objects.get(uuid=self.kwargs["uuid"])
-		if user != request.user:
-			check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
-			if user.is_closed_profile:
-				check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
-		try:
-            vote_type=LikeDislike.DISLIKE
-			likedislike = ItemVotes.objects.get(parent=item, user=request.user)
-			if likedislike.vote is not vote_type:
-				likedislike.vote = vote_type
-				likedislike.save(update_fields=['vote'])
-				result = True
-				item.notification_like(request.user)
-			else:
-				likedislike.delete()
-				result = False
-		except ItemVotes.DoesNotExist:
-			ItemVotes.objects.create(parent=item, user=request.user, vote=vote_type)
-			result = True
-		likes = ItemVotes.objects.filter(parent=item, vote__gt=0)
-		dislikes = ItemVotes.objects.filter(parent=item, vote__lt=0)
-		return HttpResponse(json.dumps({"result": result,"like_count": likes.count(),"dislike_count": dislikes.count()}),content_type="application/json")
+    def post(self, request, **kwargs):
+        item = Item.objects.get(pk=self.kwargs["pk"])
+        user = User.objects.get(uuid=self.kwargs["uuid"])
+        if user != request.user:
+            check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
+            if user.is_closed_profile:
+                check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
+        try:
+            vote_type=ItemVotes.DISLIKE
+            likedislike = ItemVotes.objects.get(parent=item, user=request.user)
+            if likedislike.vote is not vote_type:
+                likedislike.vote = vote_type
+                likedislike.save(update_fields=['vote'])
+                result = True
+                item.notification_like(request.user)
+            else:
+                likedislike.delete()
+                result = False
+        except ItemVotes.DoesNotExist:
+            ItemVotes.objects.create(parent=item, user=request.user, vote=vote_type)
+            result = True
+        likes = ItemVotes.objects.filter(parent=item, vote__gt=0)
+        dislikes = ItemVotes.objects.filter(parent=item, vote__lt=0)
+        return HttpResponse(json.dumps({"result": result,"like_count": likes.count(),"dislike_count": dislikes.count()}),content_type="application/json")
 
 
 class ItemUserDislikeCreate(View):
