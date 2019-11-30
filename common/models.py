@@ -46,7 +46,7 @@ class ItemVotes(models.Model):
 
     vote = models.PositiveIntegerField(verbose_name="Голос", choices=VOTES)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Пользователь")
-    #parent = models.ForeignKey('main.Item', on_delete=models.CASCADE)
+    parent = models.ForeignKey('main.Item', on_delete=models.CASCADE)
 
 
 class ItemCommentVotes(models.Model):
@@ -60,4 +60,4 @@ class ItemCommentVotes(models.Model):
 
     vote = models.PositiveIntegerField(verbose_name="Голос", choices=VOTES)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Пользователь")
-    #parent = models.ForeignKey('main.ItemComment', on_delete=models.CASCADE)
+    parent = models.ForeignKey('main.ItemComment', on_delete=models.CASCADE)
