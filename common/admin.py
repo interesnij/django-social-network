@@ -11,7 +11,7 @@ class ItemVotesAdmin(admin.ModelAdmin):
     list_display = (
         'vote',
         'user',
-        'parent',
+        #'parent',
     )
 
 
