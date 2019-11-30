@@ -9,7 +9,7 @@ from notifications.models import Notification, notification_handler
 from django.contrib.contenttypes.fields import GenericRelation
 from django.db.models import Q
 from django.db.models import Count
-from common.models import LikeDislike
+from common.models import ItemVotes
 
 
 class Item(models.Model):
@@ -38,7 +38,7 @@ class Item(models.Model):
         (STATUS_ARHIVED, 'Архивирована'),
     )
     status = models.CharField(blank=False, null=False, choices=STATUSES, default=STATUS_PUBLISHED, max_length=2, verbose_name="Статус статьи")
-    votes = models.ForeignKey(LikeDislike, on_delete=models.CASCADE, null=True, related_query_name='items_vote')
+    votes = models.ForeignKey(ItemVotes, on_delete=models.CASCADE, null=True, related_query_name='items_vote')
 
     class Meta:
         indexes = (
@@ -60,11 +60,11 @@ class Item(models.Model):
         return parent_comments
 
     def likes(self):
-        likes = LikeDislike.objects.filter(parent=self, vote__gt=0)
+        likes = ItemVotes.objects.filter(parent=self, vote__gt=0)
         return likes
 
     def dislikes(self):
-        dislikes = LikeDislike.objects.filter(parent=self, vote__lt=0)
+        dislikes = ItemVotes.objects.filter(parent=self, vote__lt=0)
         return dislikes
 
     def get_parent(self):
