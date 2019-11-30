@@ -14,6 +14,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='item',
             name='votes',
-            field=models.OneToOneField(null=True, on_delete=django.db.models.deletion.CASCADE, related_query_name='items', to='common.LikeDislike'),
+            field=models.OneToOneField(null=True, on_delete=django.db.models.deletion.CASCADE, related_query_name='items', to='common.ItemVotes'),
         ),
     ]
