@@ -7,7 +7,6 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('common', '0003_likedislike'),
         ('main', '0009_item_votes'),
     ]
 
