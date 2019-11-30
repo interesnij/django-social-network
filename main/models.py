@@ -9,7 +9,7 @@ from notifications.models import Notification, notification_handler
 from django.contrib.contenttypes.fields import GenericRelation
 from django.db.models import Q
 from django.db.models import Count
-from common.models import ItemVotes
+from common.models import ItemVotes, ItemCommentVotes
 
 
 class Item(models.Model):
@@ -148,7 +148,7 @@ class ItemComment(models.Model):
     is_deleted = models.BooleanField(default=False,verbose_name="Удалено")
     item = models.ForeignKey(Item, on_delete=models.CASCADE, null=True)
     moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='post_comments')
-    votes = models.OneToOneField(LikeDislike, on_delete=models.CASCADE, null=True, related_query_name='comments')
+    votes = models.OneToOneField(ItemCommentVotes, on_delete=models.CASCADE, null=True, related_query_name='comments')
 
     class Meta:
         indexes = (
