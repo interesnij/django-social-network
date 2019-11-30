@@ -74,10 +74,9 @@ class ItemUserLikeCreate(View):
             if user.is_closed_profile:
                 check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
         try:
-            vote_type=ItemVotes.LIKE
             likedislike = ItemVotes.objects.get(parent=item, user=request.user)
-            if likedislike.vote is not vote_type:
-                likedislike.vote = vote_type
+            if likedislike.vote is not 2:
+                likedislike.vote = 2
                 likedislike.save(update_fields=['vote'])
                 result = True
                 item.notification_like(request.user)
@@ -85,7 +84,7 @@ class ItemUserLikeCreate(View):
                 likedislike.delete()
                 result = False
         except ItemVotes.DoesNotExist:
-            ItemVotes.objects.create(parent=item, user=request.user, vote=vote_type)
+            ItemVotes.objects.create(parent=item, user=request.user, vote=2)
             result = True
         likes = ItemVotes.objects.filter(parent=item, vote__gt=0)
         dislikes = ItemVotes.objects.filter(parent=item, vote__lt=0)
