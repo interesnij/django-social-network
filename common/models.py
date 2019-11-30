@@ -35,7 +35,7 @@ class LikeDislikeManager(models.Manager):
         return self.get_queryset().aggregate(Sum('vote')).get('vote__sum') or 0
 
 
-class LikeDislike(models.Model):
+class ItemVotes(models.Model):
     LIKE = 1
     DISLIKE = -1
 
@@ -47,4 +47,3 @@ class LikeDislike(models.Model):
     vote = models.PositiveIntegerField(verbose_name="Голос", choices=VOTES)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Пользователь")
     parent = models.ForeignKey('main.Item', on_delete=models.CASCADE)
-    objects = LikeDislikeManager()
