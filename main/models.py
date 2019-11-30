@@ -87,10 +87,10 @@ class Item(models.Model):
         notification_handler(user, self.creator,Notification.REPOST, action_object=self,id_value=str(self.uuid),key='social_update')
 
     def notification_like(self, user):
-        notification_handler(user, self.creator,Notification.LIKED, action_object=self,id_value=str(self.uuid),key='social_update')
+        notification_handler(user, self.creator,Notification.LIKE, action_object=self,id_value=str(self.uuid),key='social_update')
 
     def notification_dislike(self, user):
-        notification_handler(user, self.creator,Notification.DISLIKED, action_object=self,id_value=str(self.uuid),key='social_update')
+        notification_handler(user, self.creator,Notification.DISLIKE, action_object=self,id_value=str(self.uuid),key='social_update')
 
 
     def get_comments(self, user):
