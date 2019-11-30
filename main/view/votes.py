@@ -85,7 +85,7 @@ class ItemUserLikeCreate(View):
 				likedislike.delete()
 				result = False
 		except ItemVotes.DoesNotExist:
-			ItemVotes.objects.create(parent=item, user=request.user, vote=LikeDislike.LIKE)
+			ItemVotes.objects.create(parent=item, user=request.user, vote=ItemVotes.LIKE)
 			result = True
 		likes = ItemVotes.objects.filter(parent=item, vote__gt=0)
 		dislikes = ItemVotes.objects.filter(parent=item, vote__lt=0)
