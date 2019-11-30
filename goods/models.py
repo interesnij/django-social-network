@@ -94,7 +94,7 @@ class GoodComment(models.Model):
     is_edited = models.BooleanField(default=False, null=False, blank=False,verbose_name="Изменено")
     is_deleted = models.BooleanField(default=False,verbose_name="Удаено")
     good = models.ForeignKey(Good, on_delete=models.CASCADE, null=True)
-	moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='good_comment')
+    moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='good_comment')
 
     class Meta:
         indexes = (
