@@ -204,7 +204,6 @@ $('.R_U').on('click', function() {
 
 $("#ajax").on('click', '.like', function() {
     var like = $(this);
-    var type = like.data('type');
     var pk = like.data('id');
 		var uuid = like.data('uuid');
     var dislike = like.next();
@@ -226,7 +225,6 @@ $("#ajax").on('click', '.like', function() {
 
 $("#ajax").on('click', '.dislike', function() {
         var dislike = $(this);
-        var type = dislike.data('type');
         var pk = dislike.data('id');
         var uuid = dislike.data('uuid');
         var like = dislike.prev();
