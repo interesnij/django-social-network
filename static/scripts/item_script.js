@@ -207,6 +207,7 @@ $("#ajax").on('click', '.like', function() {
     var pk = like.data('id');
 		var uuid = like.data('uuid');
     var dislike = like.next();
+    console.log("like!");
     $.ajax({
         url: "/votes/like/" + uuid + "/" + pk + "/",
         type: 'POST',
@@ -228,6 +229,7 @@ $("#ajax").on('click', '.dislike', function() {
         var pk = dislike.data('id');
         var uuid = dislike.data('uuid');
         var like = dislike.prev();
+        console.log("dislike!");
         $.ajax({
             url: "/votes/dislike/" + uuid + "/" + pk + "/",
             type: 'POST',
