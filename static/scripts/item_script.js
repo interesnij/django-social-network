@@ -271,7 +271,7 @@ $("#ajax").on('click', '.dislike2', function() {
         var uuid = dislike.data('uuid');
         var like = dislike.prev().prev();
         $.ajax({
-            url: "/votes/comment/" + uuid + "/" + pk + "/like/",
+            url: "/votes/comment/" + uuid + "/" + pk + "/dislike/",
             type: 'POST',
             data: {
                 'obj': pk

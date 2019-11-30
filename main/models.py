@@ -165,11 +165,11 @@ class ItemComment(models.Model):
         return self.replies.count()
 
     def likes(self):
-        likes = ItemCommentVotes.objects.filter(parent=self, vote__gt=0)
+        likes = ItemCommentVotes.objects.filter(item=self, vote__gt=0)
         return likes
 
     def dislikes(self):
-        dislikes = ItemCommentVotes.objects.filter(parent=self, vote__lt=0)
+        dislikes = ItemCommentVotes.objects.filter(item=self, vote__lt=0)
         return dislikes
 
     def __str__(self):

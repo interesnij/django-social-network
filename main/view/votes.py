@@ -122,7 +122,7 @@ class ItemCommentUserLikeCreate(View):
 			if user.is_closed_profile:
 				check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
 		try:
-			likedislike = ItemCommentVotes.objects.get(parent=comment, user=request.user)
+			likedislike = ItemCommentVotes.objects.get(item=comment, user=request.user)
 			if likedislike.vote is not ItemCommentVotes.LIKE:
 				likedislike.vote = ItemCommentVotes.LIKE
 				likedislike.save(update_fields=['vote'])
@@ -132,7 +132,7 @@ class ItemCommentUserLikeCreate(View):
 				likedislike.delete()
 				result = False
 		except ItemCommentVotes.DoesNotExist:
-			ItemCommentVotes.objects.create(parent=comment, user=request.user, vote=ItemCommentVotes.LIKE)
+			ItemCommentVotes.objects.create(item=comment, user=request.user, vote=ItemCommentVotes.LIKE)
 			result = True
 		return HttpResponse(json.dumps({"result": result,"like_count": comment.likes().count(),"dislike_count": comment.dislikes().count()}),content_type="application/json")
 
@@ -147,7 +147,7 @@ class ItemCommentUserDislikeCreate(View):
 			if user.is_closed_profile:
 				check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
 		try:
-			likedislike = ItemCommentVotes.objects.get(parent=comment, user=request.user)
+			likedislike = ItemCommentVotes.objects.get(item=comment, user=request.user)
 			if likedislike.vote is not ItemCommentVotes.DISLIKE:
 				likedislike.vote = ItemCommentVotes.DISLIKE
 				likedislike.save(update_fields=['vote'])
@@ -157,6 +157,6 @@ class ItemCommentUserDislikeCreate(View):
 				likedislike.delete()
 				result = False
 		except ItemCommentVotes.DoesNotExist:
-			ItemCommentVotes.objects.create(parent=comment, user=request.user, vote=ItemCommentVotes.DISLIKE)
+			ItemCommentVotes.objects.create(item=comment, user=request.user, vote=ItemCommentVotes.DISLIKE)
 			result = True
 		return HttpResponse(json.dumps({"result": result,"like_count": comment.likes().count(),"dislike_count": comment.dislikes().count()}),content_type="application/json")

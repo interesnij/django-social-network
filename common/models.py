@@ -40,4 +40,4 @@ class ItemCommentVotes(models.Model):
 
     vote = models.IntegerField(verbose_name="Голос", choices=VOTES)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Пользователь")
-    parent = models.ForeignKey('main.ItemComment', on_delete=models.CASCADE)
+    item = models.ForeignKey('main.ItemComment', on_delete=models.CASCADE)

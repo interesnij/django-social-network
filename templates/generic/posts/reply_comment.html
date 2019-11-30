@@ -53,18 +53,18 @@
                           data-id="{{ comment.id }}"
                           data-uuid="{{ comment.commenter.uuid }}"
                           style="cursor:pointer"
-                          title="Нравится">
+                          title="Не нравится">
                       <img style="width:22px" src="{% static 'images/icons/thumb_down-24px.svg' %}" />
-                      <span class="" data-count="like">{{ comment.dislike.count }}</span>
+                      <span class="" data-count="like">{{ comment.dislikes.count }}</span>
                     </span>
 
                       <span class="comment_dislike_window">
-                          {% if comment.dislike.all %}
+                          {% if comment.dislikes.all %}
                           <div class="comment_dislike_pop" style="margin:15px">
-                              <span>Не оценили: {{ comment.dislike.count }} {{ comment.dislike.count|rupluralize:"человек,человека,людей" }}</span>
+                              <span>Не оценили: {{ comment.dislikes.count }} {{ comment.dislikes.count|rupluralize:"человек,человека,людей" }}</span>
                               <br><br>
                               <span style="display: flex;">
-                                  {% for sheet in comment.dislike.all %}
+                                  {% for sheet in comment.dislikes.all %}
                                   <a href="{% url 'user' pk=sheet.user.pk %}" class="ajax" style="padding-right:10px">
                                       <figure style="margin: 0;">
                                           {% if sheet.user.profile.avatar %}
