@@ -22,7 +22,7 @@ from django.db.models import Q, F, Count
 
 
 class User(AbstractUser):
-    moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='users')
+    #moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='users')
     is_email_verified = models.BooleanField(default=False)
     are_guidelines_accepted = models.BooleanField(default=False)
     is_deleted = models.BooleanField(
@@ -435,8 +435,7 @@ class UserBlock(models.Model):
 
 
 class UserNotificationsSettings(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,
-                                related_name='notifications_settings', verbose_name="Пользователь")
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='notifications_settings', verbose_name="Пользователь")
     comment_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления о комментариях к записям")
     react_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления о реакциях к записи")
     comment_reply_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления об ответах на комментарии к записям")

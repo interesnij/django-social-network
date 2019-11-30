@@ -555,7 +555,7 @@ class CommunityInvite(models.Model):
 
 class TopPostCommunityExclusion(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='top_posts_community_exclusions')
-    community = models.ForeignKey('communities.Community', on_delete=models.CASCADE, related_name='top_posts_community_exclusions')
+    #community = models.ForeignKey('communities.Community', on_delete=models.CASCADE, related_name='top_posts_community_exclusions')
     created = models.DateTimeField(editable=False, db_index=True)
 
     class Meta:
@@ -571,8 +571,7 @@ class TopPostCommunityExclusion(models.Model):
 
 
 class CommunityNotificationsSettings(models.Model):
-    community = models.OneToOneField(Community, on_delete=models.CASCADE,
-                                related_name='community_notifications_settings', verbose_name="Сообщество")
+    #community = models.OneToOneField(Community, on_delete=models.CASCADE, related_name='community_notifications_settings', verbose_name="Сообщество")
     comment_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления о комментариях к записям")
     react_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления о реакциях к записи")
     comment_reply_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления об ответах на комментарии к записям")
@@ -589,8 +588,7 @@ class CommunityNotificationsSettings(models.Model):
 
 
 class CommunityPrivateSettings(models.Model):
-    community = models.OneToOneField(Community, on_delete=models.CASCADE,
-                                related_name='community_private_settings', verbose_name="Сообщество")
+    #community = models.OneToOneField(Community, on_delete=models.CASCADE, related_name='community_private_settings', verbose_name="Сообщество")
     photo_visible_all = models.BooleanField(default=True, verbose_name="Фото сообщества видны всем")
     photo_visible_member = models.BooleanField(default=True, verbose_name="Фото сообщества видны подписчикам")
     can_comments = models.BooleanField(default=True, verbose_name="Все могут оставлять комментарии все пользователи")
