@@ -43,7 +43,7 @@ class CommentUserCreate(View):
 
 		if self.form_post.is_valid():
 			comment=self.form_post.save(commit=False)
-			if len(text) > 0:
+			if len(comment.text) > 0:
 				if request.user != self.user:
 					check_is_not_blocked_with_user_with_id(user=request.user, user_id = self.user.id)
 					if user.is_closed_profile:
@@ -53,25 +53,6 @@ class CommentUserCreate(View):
 				return JsonResponse(html, safe=False)
 		else:
 			return HttpResponseBadRequest()
-
-def item_post_comment(request):
-	user_pk = request.POST['user']
-	user = User.objects.get(pk=user_pk)
-	text = request.POST['text']
-	par = request.POST['parent']
-	item = Item.objects.get(pk=par)
-	text = text.strip()
-
-	if len(text) > 0:
-		if request.user != user:
-			check_is_not_blocked_with_user_with_id(user=request.user, user_id=user_pk)
-			if user.is_closed_profile:
-				check_is_connected_with_user_with_id(user=request.user, user_id=user_pk)
-		new_comment = ItemComment.objects.create(item=item, text=text, commenter=request.user)
-		html = render_to_string('generic/posts/parent_comment.html',{'comment': new_comment,'request': request})
-		return JsonResponse(html, safe=False)
-	else:
-		return HttpResponseBadRequest()
 
 
 def item_reply_comment(request):
