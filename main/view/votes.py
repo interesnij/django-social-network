@@ -1,7 +1,7 @@
 from django.views.generic.base import TemplateView
 from users.models import User
 from main.models import Item, ItemComment
-from community.models import Community
+from communities.models import Community
 from django.http import JsonResponse, HttpResponse
 from django.views import View
 import json
