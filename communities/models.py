@@ -78,7 +78,7 @@ class Community(models.Model):
         verbose_name_plural = 'сообщества'
 
     @classmethod
-    def create_community(cls, name, category, creator, type, avatar=None, description=None,
+    def create_community(cls, name, category, creator, type, description=None,
                             rules=None, invites_enabled=None):
 
         if type is Community.COMMUNITY_TYPE_PRIVATE and invites_enabled is None:
@@ -86,8 +86,7 @@ class Community(models.Model):
         else:
             invites_enabled = True
 
-        community = cls.objects.create(name=name, creator=creator, avatar=avatar,
-                                       description=description, type=type, rules=rules,
+        community = cls.objects.create(name=name, creator=creator, description=description, type=type, rules=rules,
                                        invites_enabled=invites_enabled, category=category)
 
         CommunityMembership.create_membership(user=creator, is_administrator=True, is_moderator=False,

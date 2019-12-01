@@ -31,30 +31,10 @@ class CommunityCreate(TemplateView):
 		self.form=CommunityForm(request.POST)
 		if self.form.is_valid():
 			new_community=self.form.save(commit=False)
-			community = Community.create_community(
-										name=new_community.name,
-										category=new_community.category,
-										type=new_community.type,
-										creator=request.user
-										)
-			Album.objects.create(
-	                                creator=request.user,
-	                                community=community,
-	                                title="Сохраненные фото",
-	                                is_generic=True,
-	                            )
-			Album.objects.create(
-	                                creator=request.user,
-	                                community=community,
-	                                title="Фото со стены",
-	                                is_generic=True,
-	                            )
-			Album.objects.create(
-	                                creator=request.user,
-	                                community=community,
-	                                title="Фото со страницы",
-	                                is_generic=True,
-	                            )
+			community = Community.create_community(name=new_community.name,category=new_community.category,type=new_community.type,creator=request.user)
+			Album.objects.create(creator=request.user,community=community,title="Сохраненные фото",is_generic=True,)
+			Album.objects.create(creator=request.user,community=community,title="Фото со стены",is_generic=True,)
+			Album.objects.create(creator=request.user,community=community,title="Фото со страницы",is_generic=True,)
 			if request.is_ajax() :
 				return HttpResponse("!")
 		else:
