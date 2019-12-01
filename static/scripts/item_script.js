@@ -133,7 +133,7 @@ $('.item_fullscreen_hide').on('click', function() {
 
 $('#ajax').on('click', '.itemComment', function() {
     button1 = $(this);
-    var pk = button1.data('id');
+    var pk = button1.data('pk');
     var uuid = button1.data('uuid');
     form1 = button1.parent().parent().parent();
     $.ajax({
