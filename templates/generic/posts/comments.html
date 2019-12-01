@@ -28,17 +28,6 @@
     <form action="" method="post" class="itemComment_form" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="row no-gutters">
-          <div class="dropdown">
-              <a title="Вставить" id="dropdown_image" class="btn btn-link content-color-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <img style="margin-top: -10px;" src="{% static 'images/icons/attach_file-24px.svg' %}" />
-              </a>
-              <div class="dropdown-menu dropdown-menu-top" aria-labelledby="dropdown_image">
-                  <a id="comment_photo" class="dropdown-item">Добавить изображение</a>
-                  <a id="comment_good" class="dropdown-item">Добавить товар</a>
-                  <a id="comment_article" class="dropdown-item">Добавить статью</a>
-              </div>
-          </div
-
           
             <div class="col">
                 <div class="input-group input-group-sm">
