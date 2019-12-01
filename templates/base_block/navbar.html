@@ -1,14 +1,5 @@
 {% load staticfiles humanize %}
 <style>
-  .reaction_window {
-    opacity: 0;
-  visibility: hidden;
-  position: absolute;
-  bottom: 25px;
-  margin-bottom: 10px;
-  display: flex;
-  transition: 0.5s;
-  }
   .like_window,
   .dislike_window {
       opacity: 0;
@@ -44,66 +35,32 @@
       background: #D6DAE1;
       color: black;
   }
-  .like:hover~.like_window,
-  .dislike:hover~.dislike_window{
+  .c_like:hover~.like_window,
+  .c_dislike:hover~.dislike_window,
+  .u_like:hover~.like_window,
+  .u_dislike:hover~.dislike_window{
       z-index: 10;
       opacity: 1;
       visibility: visible;
       background: #D6DAE1;
       color: black;
   }
-  .like2:hover~.comment_like_window,
-  .dislike2:hover~.comment_dislike_window{
+  .c_like2:hover~.comment_like_window,
+  .c_dislike2:hover~.comment_dislike_window,
+  .u_like2:hover~.comment_like_window,
+  .u_dislike2:hover~.comment_dislike_window{
       z-index: 10;
       opacity: 1;
       visibility: visible;
       background: #D6DAE1;
       color: black;
   }
-.like,.dislike,.post_comment,.repost,.art_comment{
+.c_like, .c_dislike, .u_like, .u_dislike, .post_comment, .repost, .art_comment{
   font-size:15px;
   cursor:pointer;
 }
-.like:hover,.dislike:hover,.post_comment:hover,.repost:hover,.art_comment:hover{
+.c_like:hover, .c_dislike:hover, .u_like:hover, .u_dislike:hover, .post_comment:hover, .repost:hover, .art_comment:hover{
   color: #545b62;
-}
-  .reaction_window:hover {
-      z-index: 10;
-      opacity: 1;
-      visibility: visible;
-      background: #D6DAE1;
-      color: black;
-  }
-  .react_btn:hover~.reaction_window{
-      z-index: 10;
-      opacity: 1;
-      visibility: visible;
-      background: #D6DAE1;
-      color: black;
-  }
-
-.react_window {
-    opacity: 0;
-    visibility: hidden;
-    position: absolute;
-    transition: 0.2s;
-    right: 16%;
-}
-
-.react_window:hover {
-    z-index: 10;
-    opacity: 1;
-    visibility: visible;
-    background: #D6DAE1;
-    color: black;
-}
-
-.react:hover~.react_window {
-    z-index: 10;
-    opacity: 1;
-    visibility: visible;
-    background: #D6DAE1;
-    color: black;
 }
 
 .article_fullscreen {

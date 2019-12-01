@@ -202,13 +202,13 @@ $('.R_U').on('click', function() {
 });
 
 
-$("#ajax").on('click', '.like', function() {
+$("#ajax").on('click', '.u_like', function() {
     var like = $(this);
     var pk = like.data('id');
 		var uuid = like.data('uuid');
     var dislike = like.next().next();
     $.ajax({
-        url: "/votes/like/" + uuid + "/" + pk + "/",
+        url: "/votes/user_like/" + uuid + "/" + pk + "/",
         type: 'POST',
         data: {
             'obj': pk
@@ -223,13 +223,13 @@ $("#ajax").on('click', '.like', function() {
     return false;
 });
 
-$("#ajax").on('click', '.dislike', function() {
+$("#ajax").on('click', '.u_dislike', function() {
         var dislike = $(this);
         var pk = dislike.data('id');
         var uuid = dislike.data('uuid');
         var like = dislike.prev().prev();
         $.ajax({
-            url: "/votes/dislike/" + uuid + "/" + pk + "/",
+            url: "/votes/user_dislike/" + uuid + "/" + pk + "/",
             type: 'POST',
             data: {
                 'obj': pk
@@ -244,13 +244,13 @@ $("#ajax").on('click', '.dislike', function() {
         return false;
 });
 
-$("#ajax").on('click', '.like2', function() {
+$("#ajax").on('click', '.u_like2', function() {
           var like = $(this);
           var pk = like.data('id');
           var uuid = like.data('uuid');
           var dislike = like.next().next();
           $.ajax({
-              url: "/votes/comment/" + uuid + "/" + pk + "/like/",
+              url: "/votes/user_comment/" + uuid + "/" + pk + "/like/",
               type: 'POST',
               data: {
                   'obj': pk
@@ -265,13 +265,97 @@ $("#ajax").on('click', '.like2', function() {
           return false;
       });
 
-$("#ajax").on('click', '.dislike2', function() {
+$("#ajax").on('click', '.u_dislike2', function() {
         var dislike = $(this);
         var pk = dislike.data('id');
         var uuid = dislike.data('uuid');
         var like = dislike.prev().prev();
         $.ajax({
-            url: "/votes/comment/" + uuid + "/" + pk + "/dislike/",
+            url: "/votes/user_comment/" + uuid + "/" + pk + "/dislike/",
+            type: 'POST',
+            data: {
+                'obj': pk
+            },
+            success: function(json) {
+                dislike.find("[data-count='dislike']").text(json.dislike_count);
+                like.find("[data-count='like']").text(json.like_count);
+                dislike.addClass("text-danger");
+                like.removeClass("text-success");
+            }
+        });
+        return false;
+});
+
+$("#ajax").on('click', '.с_like', function() {
+    var like = $(this);
+    var pk = like.data('id');
+		var uuid = like.data('uuid');
+    var dislike = like.next().next();
+    $.ajax({
+        url: "/votes/community_like/" + uuid + "/" + pk + "/",
+        type: 'POST',
+        data: {
+            'obj': pk
+        },
+        success: function(json) {
+            like.find("[data-count='like']").text(json.like_count);
+            dislike.find("[data-count='dislike']").text(json.dislike_count);
+            $(".like").addClass("text-success");
+            $(".dislike").removeClass("text-danger");
+        }
+    });
+    return false;
+});
+
+$("#ajax").on('click', '.c_dislike', function() {
+        var dislike = $(this);
+        var pk = dislike.data('id');
+        var uuid = dislike.data('uuid');
+        var like = dislike.prev().prev();
+        $.ajax({
+            url: "/votes/community_dislike/" + uuid + "/" + pk + "/",
+            type: 'POST',
+            data: {
+                'obj': pk
+            },
+            success: function(json) {
+                dislike.find("[data-count='dislike']").text(json.dislike_count);
+                like.find("[data-count='like']").text(json.like_count);
+                $(".dislike").addClass("text-danger");
+                $(".like").removeClass("text-success");
+            }
+        });
+        return false;
+});
+
+$("#ajax").on('click', '.c_like2', function() {
+          var like = $(this);
+          var pk = like.data('id');
+          var uuid = like.data('uuid');
+          var dislike = like.next().next();
+          $.ajax({
+              url: "/votes/community_comment/" + uuid + "/" + pk + "/like/",
+              type: 'POST',
+              data: {
+                  'obj': pk
+              },
+              success: function(json) {
+                  like.find("[data-count='like']").text(json.like_count);
+                  dislike.find("[data-count='dislike']").text(json.dislike_count);
+                  like.addClass("text-success");
+                  dislike.removeClass("text-danger");
+              }
+          });
+          return false;
+      });
+
+$("#ajax").on('click', '.c_dislike2', function() {
+        var dislike = $(this);
+        var pk = dislike.data('id');
+        var uuid = dislike.data('uuid');
+        var like = dislike.prev().prev();
+        $.ajax({
+            url: "/votes/community_comment/" + uuid + "/" + pk + "/dislike/",
             type: 'POST',
             data: {
                 'obj': pk

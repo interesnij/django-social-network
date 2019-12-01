@@ -5,7 +5,7 @@
     <div class="row">
 
         <div class="col interaction" id="interaction">
-          <span class="like {% if object.likes.all|user_in:request.user %}text-success {% endif %}"
+          <span class="u_like {% if object.likes.all|user_in:request.user %}text-success {% endif %}"
                 data-id="{{ object.id }}"
                 data-uuid="{{ object.creator.uuid }}"
                 style="cursor:pointer"
@@ -38,7 +38,7 @@
         </span>
 
         &nbsp;&nbsp;
-        <span class="dislike {% if object.dislikes.all|user_in:request.user %} text-danger {% endif %}"
+        <span class="u_dislike {% if object.dislikes.all|user_in:request.user %} text-danger {% endif %}"
               data-id="{{ object.id }}"
               data-uuid="{{ object.creator.uuid }}"
               style="cursor:pointer"
@@ -84,7 +84,7 @@
             {% endif %}
 
             &nbsp;&nbsp;
-            <span title="Поделиться" data-toggle="modal" data-target="#modal_user_repost" style="cursor:pointer">
+            <span title="Поделиться" data-toggle="modal" data-target="#user_repost" style="cursor:pointer">
                 <img style="width:20px" src="{% static 'images/icons/share-24px.svg' %}" />
                 <span class="repost-count">
                     {% if object.count_thread %}

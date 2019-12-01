@@ -17,7 +17,7 @@
         <div class="border-top py-2">
             <div class="row">
                 <div class="col">
-                  <span class="like2 {% if comment.likes.all|user_in:request.user %}text-success {% endif %}"
+                  <span class="u_like2 {% if comment.likes.all|user_in:request.user %}text-success {% endif %}"
                         data-id="{{ comment.id }}"
                         data-uuid="{{ comment.commenter.uuid }}"
                         style="cursor:pointer"
@@ -49,7 +49,7 @@
                         {% endif %}
                     </span>
                     &nbsp;
-                    <span class="dislike2 {% if comment.dislike.all|user_in:request.user %}text-success {% endif %}"
+                    <span class="u_dislike2 {% if comment.dislike.all|user_in:request.user %}text-success {% endif %}"
                           data-id="{{ comment.id }}"
                           data-uuid="{{ comment.commenter.uuid }}"
                           style="cursor:pointer"
