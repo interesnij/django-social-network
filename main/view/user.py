@@ -28,11 +28,10 @@ class ItemUserCommentList(View):
 			raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
 		elif request.user.is_anonymous and not self.user.is_closed_profile():
 			comments = item.get_comments(request.user).order_by('-created')
-		comments_html = render_to_string("generic/posts/comments.html", {"comments": comments,"parent": item})
+		comments_html = render_to_string("generic/posts/comments.html", {"comments": comments,"parent": item, "user": self.user})
 
 		return JsonResponse({
 	        "comments": comments_html,
-			"user": self.user,
 	    })
 
 
