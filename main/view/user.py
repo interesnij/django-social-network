@@ -32,11 +32,12 @@ class ItemUserCommentList(View):
 
 		return JsonResponse({
 	        "comments": comments_html,
+			"user": self.user,
 	    })
 
 
 def item_post_comment(request):
-	user_pk = request.POST['commenter']
+	user_pk = request.POST['user']
 	user = User.objects.get(pk=user_pk)
 	text = request.POST['text']
 	par = request.POST['parent']
@@ -44,7 +45,7 @@ def item_post_comment(request):
 	text = text.strip()
 
 	if len(text) > 0:
-		if request.user != commenter:
+		if request.user != user:
 			check_is_not_blocked_with_user_with_id(user=request.user, user_id=user_pk)
 			if user.is_closed_profile:
 				check_is_connected_with_user_with_id(user=request.user, user_id=user_pk)
