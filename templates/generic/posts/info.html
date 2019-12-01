@@ -73,7 +73,7 @@
       </span>
             {% if object.comments_enabled %}
             &nbsp;&nbsp;
-            <span title="Комментарий" class="comment" style="cursor:pointer" data-pk="{{ user.pk }}">
+            <span title="Комментарий" class="u_comment" style="cursor:pointer" data-pk="{{ user.pk }}">
                 <img style="width:22px;" src="{% static 'images/icons/chat-24px.svg' %}" />
                 <span class="comment-count">
                     {% if object.count_comments %}

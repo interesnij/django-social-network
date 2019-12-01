@@ -8,12 +8,31 @@ $('.item_fullscreen_hide').on('click', function() {
     $('.item_fullscreen').hide();
     $('#item_loader').empty();
 });
-$('#ajax').on('click', '.comment', function() {
+$('#ajax').on('click', '.u_comment', function() {
     var item = $(this).closest(".infinite-item").attr("item-id");
     var url = $(this).parents(".infinite-item");
     var pk = $(this).data('pk');
     $.ajax({
         url: "/user/comment/" + item + "/" + pk + "/",
+        data: {
+            'item': item
+        },
+        cache: false,
+        beforeSend: function() {
+            url.find(".load_comments").html("<span style='display:flex;justify-content: center;'><img src='/static/images/loading.gif'></span>");
+        },
+        success: function(data) {
+            url.find(".load_comments").html(data.comments);
+        }
+    });
+    return false;
+});
+$('#ajax').on('click', '.c_comment', function() {
+    var item = $(this).closest(".infinite-item").attr("item-id");
+    var url = $(this).parents(".infinite-item");
+    var pk = $(this).data('pk');
+    $.ajax({
+        url: "/community/comment/" + item + "/" + pk + "/",
         data: {
             'item': item
         },
