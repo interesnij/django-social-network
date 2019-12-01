@@ -11,6 +11,8 @@ from django.db.models import Q
 from django.db.models import Count
 from common.models import ItemVotes, ItemCommentVotes
 from imagekit.models import ProcessedImageField
+from pilkit.processors import ResizeToFit, ResizeToFill
+from ckeditor_uploader.fields import RichTextUploadingField
 
 
 class Item(models.Model):
