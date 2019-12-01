@@ -34,6 +34,40 @@ class ItemUserCommentList(View):
 	        "comments": comments_html,
 	    })
 
+class CommentUserCreate(View):
+    form_post=None
+    success_url="/"
+
+    def get(self,request,*args,**kwargs):
+        self.form_post=CommentForm()
+		self.user=User.objects.get(pk=self.kwargs["pk"])
+		self.item = Item.objects.get(uuid=self.kwargs["uuid"])
+        return super(CommentUserCreate,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context=super(CommentUserCreate,self).get_context_data(**kwargs)
+        context["form_post"]=self.form_post
+		context["user"]=self.user
+		context["item"]=self.item
+        return context
+
+    def post(self,request,*args,**kwargs):
+        self.form_post=CommentForm(request.POST, request.FILES)
+        self.user=User.objects.get(pk=self.kwargs["pk"])
+		self.item = Item.objects.get(uuid=self.kwargs["uuid"])
+
+        if self.form_post.is_valid():
+            comment=self.form_post.save(commit=False)
+			if len(text) > 0:
+				if request.user != self.user:
+					check_is_not_blocked_with_user_with_id(user=request.user, self.user.id=user_pk)
+					if user.is_closed_profile:
+						check_is_connected_with_user_with_id(user=request.user, self.user.id=user_pk)
+				new_comment = ItemComment.objects.create(item=self.item, text=comment.text, commenter=request.user)
+				html = render_to_string('generic/posts/parent_comment.html',{'comment': new_comment,'request': request})
+				return JsonResponse(html, safe=False)
+		else:
+			return HttpResponseBadRequest()
 
 def item_post_comment(request):
 	user_pk = request.POST['user']

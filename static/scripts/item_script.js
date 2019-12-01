@@ -8,6 +8,8 @@ $('.item_fullscreen_hide').on('click', function() {
     $('.item_fullscreen').hide();
     $('#item_loader').empty();
 });
+
+
 $('#ajax').on('click', '.u_comment', function() {
     var item = $(this).closest(".infinite-item").attr("item-id");
     var url = $(this).parents(".infinite-item");
@@ -27,6 +29,7 @@ $('#ajax').on('click', '.u_comment', function() {
     });
     return false;
 });
+
 $('#ajax').on('click', '.c_comment', function() {
     var item = $(this).closest(".infinite-item").attr("item-id");
     var url = $(this).parents(".infinite-item");
@@ -46,6 +49,7 @@ $('#ajax').on('click', '.c_comment', function() {
     });
     return false;
 });
+
 
 $('#ajax').on('click', '.remove', function() {
     var remove = $(this);
@@ -122,7 +126,6 @@ $('#ajax').on('click', '.unfixed', function() {
 
 
 
-
 $('.item_fullscreen_hide').on('click', function() {
     $('.item_fullscreen').hide();
     $('#item_loader').empty();
@@ -130,9 +133,11 @@ $('.item_fullscreen_hide').on('click', function() {
 
 $('#ajax').on('click', '.itemComment', function() {
     button1 = $(this);
+    var pk = button1.data('id');
+    var uuid = button1.data('uuid');
     form1 = button1.parent().parent().parent();
     $.ajax({
-        url: '/user/post-comment/',
+        url: '/user/post-comment/' + uuid + "/" + pk + "/",
         data: form1.serialize(),
         type: 'POST',
         cache: false,

@@ -14,15 +14,13 @@
               <button class="btn btn-link content-color-secondary" type="button">
                 <img style="margin-top: -10px;" src="{% static 'images/icons/attach_file-24px.svg' %}" />
               </button>
-            <input type="hidden" name="parent" value="{{ parent.pk }}">
-            <input type="hidden" name="user" value="{{ user.pk }}">
             <div class="col">
                 <div class="input-group input-group-sm">
                     <textarea name="text" class="form-control text-comment form-control-rounded"></textarea>
                 </div>
             </div>
             <div class="col-auto">
-                <button class="btn btn-outline-primary btn-rounded btn-sm ml-2 itemComment" type="button">
+                <button class="btn btn-outline-primary btn-rounded btn-sm ml-2 itemComment" data-pk="{{ user.pk }}" data-uuid="{{ item.pk }}" type="button">
                     <img style="width:22px" src="{% static 'images/icons/send-24px.svg' %}" />
                 </button>
             </div>
