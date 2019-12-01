@@ -49,17 +49,17 @@
                         {% endif %}
                     </span>
                     &nbsp;
-                    <span class="u_dislike2 {% if comment.dislike.all|user_in:request.user %}text-success {% endif %}"
+                    <span class="u_dislike2 {% if comment.dislikes.all|user_in:request.user %}text-success {% endif %}"
                           data-id="{{ comment.id }}"
                           data-uuid="{{ comment.commenter.uuid }}"
                           style="cursor:pointer"
                           title="Не нравится">
                       <img style="width:22px" src="{% static 'images/icons/thumb_down-24px.svg' %}" />
-                      <span class="" data-count="like">{{ comment.dislikes.count }}</span>
+                      <span class="" data-count="dislike">{{ comment.dislikes.count }}</span>
                     </span>
 
                       <span class="comment_dislike_window">
-                          {% if comment.dislikes.all %}
+                          {% if comment.dislike.all %}
                           <div class="comment_dislike_pop" style="margin:15px">
                               <span>Не оценили: {{ comment.dislikes.count }} {{ comment.dislikes.count|rupluralize:"человек,человека,людей" }}</span>
                               <br><br>
