@@ -45,9 +45,9 @@ class CommentUserCreate(View):
 			comment=self.form_post.save(commit=False)
 			if len(text) > 0:
 				if request.user != self.user:
-					check_is_not_blocked_with_user_with_id(user=request.user, self.user.id=user_pk)
+					check_is_not_blocked_with_user_with_id(user=request.user, user_id = self.user.id)
 					if user.is_closed_profile:
-						check_is_connected_with_user_with_id(user=request.user, self.user.id=user_pk)
+						check_is_connected_with_user_with_id(user=request.user, user_id = self.user.id)
 				new_comment = ItemComment.objects.create(item=self.item, text=comment.text, commenter=request.user)
 				html = render_to_string('generic/posts/parent_comment.html',{'comment': new_comment,'item': self.item,'user': self.user,'request': request})
 				return JsonResponse(html, safe=False)
