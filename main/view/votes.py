@@ -105,7 +105,7 @@ class ItemUserDislikeCreate(View):
                 likedislike.vote = ItemVotes.DISLIKE
                 likedislike.save(update_fields=['vote'])
                 result = True
-                item.notification_like(request.user)
+                item.notification_dislike(request.user)
             else:
                 likedislike.delete()
                 result = False
@@ -154,7 +154,7 @@ class ItemCommentUserDislikeCreate(View):
 				likedislike.vote = ItemCommentVotes.DISLIKE
 				likedislike.save(update_fields=['vote'])
 				result = True
-				comment.notification_comment_like(request.user)
+				comment.notification_comment_dislike(request.user)
 			else:
 				likedislike.delete()
 				result = False

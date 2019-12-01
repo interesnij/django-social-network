@@ -10,6 +10,7 @@ from django.contrib.contenttypes.fields import GenericRelation
 from django.db.models import Q
 from django.db.models import Count
 from common.models import ItemVotes, ItemCommentVotes
+from users.helpers import upload_to_item_image_directory
 
 
 class Item(models.Model):
@@ -188,6 +189,11 @@ class ItemComment(models.Model):
         notification_handler(user, self.commenter,Notification.DISLIKE_COMMENT, action_object=self,id_value=str(self.pk),key='social_update')
 
 
+class ItemCommentPhoto(models.Model):
+    item_comment_photo = ProcessedImageField(format='JPEG', options={'quality': 90}, upload_to='comment_photos/%Y/%m/%d', processors=[ResizeToFit(width=1024, upscale=False)])
+    parent = models.ForeignKey(ItemComment, limit_choices_to=2, blank=True, null=True, on_delete=models.CASCADE)
+
+
 class ItemMute(models.Model):
     item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name='mutes')
     muter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='post_mutes')
@@ -210,15 +216,3 @@ class ItemCommentMute(models.Model):
     @classmethod
     def create_post_comment_mute(cls, post_comment_id, muter_id):
         return cls.objects.create(post_comment_id=post_comment_id, muter_id=muter_id)
-
-
-class TopPost(models.Model):
-    item = models.OneToOneField(Item, on_delete=models.CASCADE, related_name='top_post')
-    created = models.DateTimeField(editable=False, db_index=True)
-
-    def save(self, *args, **kwargs):
-        if not self.id:
-            self.created = timezone.now()
-        self.modified = timezone.now()
-
-        return super(TopPost, self).save(*args, **kwargs)
