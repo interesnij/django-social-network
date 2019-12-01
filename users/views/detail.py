@@ -110,7 +110,7 @@ class ProfileUserView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(ProfileUserView, self).get_context_data(**kwargs)
         context['user'] = self.user
-        context['form_comment'] = CommentForm()
+        
         context['communities'] = self.communities
         context['is_frend'] = self.is_frend
         context['is_blocked'] = self.is_blocked
