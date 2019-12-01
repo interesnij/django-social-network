@@ -286,7 +286,7 @@ $("#ajax").on('click', '.u_dislike2', function() {
         return false;
 });
 
-$("#ajax").on('click', '.с_like', function() {
+$("#ajax").on('click', '.c_like', function() {
     var like = $(this);
     var pk = like.data('id');
 		var uuid = like.data('uuid');
