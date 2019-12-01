@@ -19,7 +19,7 @@
                 <div class="col">
                   <span class="c_like2 {% if object.likes.all|user_in:request.user %}text-success {% endif %}"
                         data-id="{{ object.id }}"
-                        data-uuid="{{ object.uuid }}"
+                        data-uuid="{{ community.uuid }}"
                         style="cursor:pointer"
                         title="Нравится">
                     <img style="width:22px" src="{% static 'images/icons/thumb_up-24px.svg' %}" />
@@ -52,7 +52,7 @@
                 &nbsp;&nbsp;
                 <span class="c_dislike2 {% if object.dislikes.all|user_in:request.user %} text-danger {% endif %}"
                       data-id="{{ object.id }}"
-                      data-uuid="{{ object.uuid }}"
+                      data-uuid="{{ community.uuid }}"
                       style="cursor:pointer"
                       title="Не нравится">
                   <img style="width:22px;" src="{% static 'images/icons/thumb_down-24px.svg' %}" />
