@@ -15,6 +15,7 @@
                 <img style="margin-top: -10px;" src="{% static 'images/icons/attach_file-24px.svg' %}" />
               </button>
             <input type="hidden" name="parent" value="{{ parent.pk }}">
+            <input type="hidden" name="commenter" value="{{ user.pk }}">
             <div class="col">
                 <div class="input-group input-group-sm">
                     <textarea name="text" class="form-control text-comment form-control-rounded"></textarea>

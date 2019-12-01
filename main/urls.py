@@ -8,5 +8,6 @@ urlpatterns = [
 	url(r'^main/news/$', NewsListView.as_view(), name="news_list"),
 
 	url(r'^user/', include('main.url.user')),
+	url(r'^community/', include('main.url.community')),
 	url(r'^votes/', include('main.url.votes')),
 ]
