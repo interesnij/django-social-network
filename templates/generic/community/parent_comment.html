@@ -19,7 +19,7 @@
                 <div class="col">
                   <span class="c_like2 {% if object.likes.all|user_in:request.user %}text-success {% endif %}"
                         data-id="{{ object.id }}"
-                        data-uuid="{{ object.creator.uuid }}"
+                        data-uuid="{{ object.uuid }}"
                         style="cursor:pointer"
                         title="Нравится">
                     <img style="width:22px" src="{% static 'images/icons/thumb_up-24px.svg' %}" />
@@ -29,10 +29,10 @@
                   <span class="like_window">
                     {% if object.votes.likes.all %}
                   <div class="like_pop" style="margin:15px">
-                    <span>Оценили: {{ object.votes.likes.count }} {{ object.votes.likes.count|rupluralize:"человек,человека,людей" }}</span>
+                    <span>Оценили: {{ object.likes.count }} {{ object.likes.count|rupluralize:"человек,человека,людей" }}</span>
                     <br><br>
                     <span style="display: flex;">
-                      {% for heart in object.votes.likes.all %}
+                      {% for heart in object.likes.all %}
                       <a href="{% url 'user' pk=heart.user.pk %}" class="ajax" style="padding-right:10px">
                         <figure style="margin: 0;">
                           {% if heart.user.profile.avatar %}
@@ -52,7 +52,7 @@
                 &nbsp;&nbsp;
                 <span class="c_dislike2 {% if object.dislikes.all|user_in:request.user %} text-danger {% endif %}"
                       data-id="{{ object.id }}"
-                      data-uuid="{{ object.creator.uuid }}"
+                      data-uuid="{{ object.uuid }}"
                       style="cursor:pointer"
                       title="Не нравится">
                   <img style="width:22px;" src="{% static 'images/icons/thumb_down-24px.svg' %}" />
@@ -65,7 +65,7 @@
                   <span>Не оценили: {{ object.votes.dislikes.count }} {{ object.votes.dislikes.count|rupluralize:"человек,человека,людей" }}</span>
                   <br><br>
                   <span style="display: flex;">
-                    {% for sheet in object.votes.dislikes.all %}
+                    {% for sheet in object.dislikes.all %}
                     <a href="{% url 'user' pk=sheet.user.pk %}" class="ajax" style="padding-right:10px">
                       <figure style="margin: 0;">
                         {% if sheet.user.profile.avatar %}
@@ -80,12 +80,12 @@
                       {% endfor %}
                   </span>
                     <span class="comment_react_window">
-                        {% if comment.votes.dislikes.all %}
+                        {% if comment.dislikes.all %}
                         <div class="comment_dislike_pop" style="margin:15px">
-                            <span>Не оценили: {{ comment.votes.dislikes.count }} {{ comment.votes.dislikes.count|rupluralize:"человек,человека,людей" }}</span>
+                            <span>Не оценили: {{ comment.dislikes.count }} {{ comment.dislikes.count|rupluralize:"человек,человека,людей" }}</span>
                             <br><br>
                             <span style="display: flex;">
-                                {% for sheet in comment.votes.dislikes.all %}
+                                {% for sheet in comment.dislikes.all %}
                                 <a href="{% url 'user' pk=sheet.user.pk %}" class="ajax" style="padding-right:10px">
                                     <figure style="margin: 0;">
                                         {% if sheet.user.profile.avatar %}

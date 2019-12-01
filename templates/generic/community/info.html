@@ -4,22 +4,22 @@
 
     <div class="row">
         <div class="col interaction" id="interaction">
-          <span class="c_like {% if object.votes.likes.all|user_in:request.user %}text-success {% endif %}"
+          <span class="c_like {% if object.likes.all|user_in:request.user %}text-success {% endif %}"
                 data-id="{{ object.id }}"
+                data-uuid="{{ object.uuid }}"
                 data-action="like"
-                data-type="article"
                 title="Нравится">
             <img style="width:22px" src="{% static 'images/icons/thumb_up-24px.svg' %}" />
-            <span class="like-count" data-count="like">{% if object.votes.likes.count != 0 %}{{ object.votes.likes.count }}{% endif %}</span>
+            <span class="like-count" data-count="like">{% if object.likes.count != 0 %}{{ object.likes.count }}{% endif %}</span>
           </span>
 
           <span class="like_window">
-            {% if object.votes.likes.all %}
+            {% if object.likes.all %}
           <div class="like_pop" style="margin:15px">
-            <span>Оценили: {{ object.votes.likes.count }} {{ object.votes.likes.count|rupluralize:"человек,человека,людей" }}</span>
+            <span>Оценили: {{ object.likes.count }} {{ object.likes.count|rupluralize:"человек,человека,людей" }}</span>
             <br><br>
             <span style="display: flex;">
-              {% for heart in object.votes.likes.all %}
+              {% for heart in object.likes.all %}
               <a href="{% url 'user' pk=heart.user.pk %}" class="ajax" style="padding-right:10px">
                 <figure style="margin: 0;">
                   {% if heart.user.profile.avatar %}
@@ -37,22 +37,22 @@
           </span>
 
           &nbsp;&nbsp;
-          <span class="c_dislike {% if object.votes.dislikes.all|user_in:request.user %} text-danger {% endif %}"
+          <span class="c_dislike {% if object.dislikes.all|user_in:request.user %} text-danger {% endif %}"
               data-id="{{ object.id }}"
               data-action="dislike"
-              data-type="article"
+              data-uuid="{{ object.uuid }}"
               title="Не нравится">
           <img style="width:22px;" src="{% static 'images/icons/thumb_down-24px.svg' %}" />
-          <span class="dislike-count" data-count="dislike">{% if object.votes.dislikes.count %}{{ object.votes.dislikes.count }}{% endif %}</span>
+          <span class="dislike-count" data-count="dislike">{% if object.dislikes.count %}{{ object.votes.dislikes.count }}{% endif %}</span>
           </span>
 
           <span class="dislike_window">
-          {% if object.votes.dislikes.all %}
+          {% if object.dislikes.all %}
           <div class="dislike_pop" style="margin:15px">
-          <span>Не оценили: {{ object.votes.dislikes.count }} {{ object.votes.dislikes.count|rupluralize:"человек,человека,людей" }}</span>
+          <span>Не оценили: {{ object.dislikes.count }} {{ object.dislikes.count|rupluralize:"человек,человека,людей" }}</span>
           <br><br>
           <span style="display: flex;">
-            {% for sheet in object.votes.dislikes.all %}
+            {% for sheet in object.dislikes.all %}
             <a href="{% url 'user' pk=sheet.user.pk %}" class="ajax" style="padding-right:10px">
               <figure style="margin: 0;">
                 {% if sheet.user.profile.avatar %}
