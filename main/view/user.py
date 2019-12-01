@@ -49,7 +49,7 @@ class CommentUserCreate(View):
 					if user.is_closed_profile:
 						check_is_connected_with_user_with_id(user=request.user, user_id = self.user.id)
 				new_comment = ItemComment.objects.create(item=self.item, text=comment.text, commenter=request.user)
-				html = render_to_string('generic/posts/parent_comment.html',{'comment': new_comment,'item': self.item,'user': self.user,'request': request})
+				html = render_to_string('generic/posts/parent_comment.html',{'comment': new_comment, 'request': request})
 				return JsonResponse(html, safe=False)
 		else:
 			return HttpResponseBadRequest()
