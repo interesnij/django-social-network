@@ -114,24 +114,7 @@
                     <div class="border-top reply_comment_form" style="margin-top:10px;display:none;margin-left:-50px;">
                         <form action="" method="post" class="replyParentComment_button">
                             {% csrf_token %}
-                            <div id="for_comment_photo" style="display:none;margin:10px">
-                              <div class="row">
-                                <div class="col-lg-6 col-md-6">
-                                  <br>
-                                  <div class="hide_image">{{ form_comment.item_comment_photo }}</div>
-                                  <div id="image-holder">
-                                    <h4 style="font-weight:bold;font-size:65px;color:#CECECE">фото</h4>
-                                  </div>
-                                </div>
-                                <div class="col-lg-6 col-md-6">
-                                  <br>
-                                  <div class="hide_image">{{ form_comment.item_comment_photo }}</div>
-                                  <div id="image-holder">
-                                    <h4 style="font-weight:bold;font-size:65px;color:#CECECE">фото</h4>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
+                            
                             <div class="row no-gutters">
                               <button class="btn btn-link content-color-secondary comment_photo" type="button">
                                 <img style="margin-top: -10px;" src="{% static 'images/icons/attach_file-24px.svg' %}" />
