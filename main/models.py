@@ -193,7 +193,7 @@ class ItemComment(models.Model):
 class ItemCommentPhoto(models.Model):
     item_comment_photo = ProcessedImageField(format='JPEG', options={'quality': 90}, upload_to='comment_photos/%Y/%m/%d', processors=[ResizeToFit(width=1024, upscale=False)])
     item_comment_photo2 = ProcessedImageField(format='JPEG', options={'quality': 90}, upload_to='comment_photos/%Y/%m/%d', processors=[ResizeToFit(width=1024, upscale=False)])
-    parent = models.OneToOneField(ItemComment, limit_choices_to=2, blank=True, null=True, on_delete=models.CASCADE)
+    parent = models.OneToOneField(ItemComment, blank=True, null=True, on_delete=models.CASCADE)
 
 
 class ItemMute(models.Model):

@@ -42,7 +42,7 @@ class ItemCommentUserCreate(View):
 
 		if self.form_post.is_valid():
 			comment=self.form_post.save(commit=False)
-			self.text = self.form_post.cleaned_data['text']
+			self.text = comment.text
 			if len(self.text) > 0 or comment.item_comment_photo or comment.item_comment_photo2:
 				if request.user != self.user:
 					check_is_not_blocked_with_user_with_id(user=request.user, user_id = self.user.id)
@@ -53,7 +53,7 @@ class ItemCommentUserCreate(View):
 				html = render_to_string('generic/posts/parent_comment.html',{'comment': new_comment, 'request': request})
 				return JsonResponse(html, safe=False)
 		else:
-			return HttpResponse("!")
+			return HttpResponseBadRequest()
 
 
 def item_reply_comment(request):
