@@ -107,7 +107,7 @@
 <script>
     var imageLoader = document.getElementById("item_comment_photo");
     var entrou = false;
-    $("#comment_photo1").on("click", function() {
+    $(".comment_photo1").on("click", function() {
         $("#item_comment_photo").click();
     });
 
@@ -118,7 +118,7 @@
 
             if (extn == "gif" || extn == "png" || extn == "jpg" || extn == "jpeg") {
                 if (typeof FileReader != "undefined") {
-                    var image_holder = $("#comment_photo1");
+                    var image_holder = $(".comment_photo1");
                     image_holder.empty();
 
                     var reader = new FileReader();
@@ -146,7 +146,7 @@
 <script>
     var imageLoader = document.getElementById("item_comment_photo2");
     var entrou = false;
-    $("#comment_photo2").on("click", function() {
+    $(".comment_photo2").on("click", function() {
         $("#item_comment_photo2").click();
     });
 
@@ -157,7 +157,7 @@
 
             if (extn == "gif" || extn == "png" || extn == "jpg" || extn == "jpeg") {
                 if (typeof FileReader != "undefined") {
-                    var image_holder = $("comment_photo2");
+                    var image_holder = $(".comment_photo2");
                     image_holder.empty();
 
                     var reader = new FileReader();
