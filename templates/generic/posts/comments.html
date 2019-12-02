@@ -108,9 +108,9 @@
     $(".comment_photo1").on("click", function() {
       photo = $(this);
       imageLoader = photo.prev()
-      imageLoader.click();
+      photo.prev().click();
       var entrou = false;
-    });
+
 
     imageLoader.on("change", function() {
         if (!entrou) {
@@ -142,6 +142,7 @@
         setTimeout(function() {
             entrou = false;
         }, 1000);
+    });
     });
 </script>
 <script>
