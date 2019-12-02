@@ -46,7 +46,7 @@
           </div>
         </div>
         <div class="row no-gutters">
-          <button id="comment_photo" class="btn btn-link content-color-secondary" type="button">
+          <button class="btn btn-link content-color-secondary comment_photo" type="button">
             <img style="margin-top: -10px;" src="{% static 'images/icons/attach_file-24px.svg' %}" />
           </button>
             <div class="col">
@@ -63,13 +63,13 @@
     </form>
 </div>
 <script>
-    $('#comment_photo').on('click', function() {
+    $('.comment_photo').on('click', function() {
         $('#for_comment_photo').show();
     });
-    $('#comment_good').on('click', function() {
+    $('.comment_good').on('click', function() {
         $('#for_comment_good').show();
     });
-    $('#comment_article').on('click', function() {
+    $('.comment_article').on('click', function() {
         $('#for_comment_article').show();
     });
 
