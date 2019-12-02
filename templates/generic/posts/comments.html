@@ -27,26 +27,26 @@
 <div class="border-top" style="margin-top:10px">
     <form action="" method="post" class="itemComment_form" enctype="multipart/form-data">
         {% csrf_token %}
-
-        <div class="row no-gutters">
-          <div id="for_comment_photo" style="display:none;margin:10px">
-            <div class="row">
-              <div class="col-lg-6 col-md-6">
-                <br>
-                <div class="hide_image">{{ form_comment.item_comment_photo }}</div>
-                <div class="comment_photo1">
-                  <h4 style="font-weight:bold;font-size:65px;color:#CECECE">фото</h4>
-                </div>
+        <div id="for_comment_photo" style="display:none;margin:10px">
+          <div class="row">
+            <div class="col-lg-6 col-md-6">
+              <br>
+              <div class="hide_image">{{ form_comment.item_comment_photo }}</div>
+              <div class="comment_photo1">
+                <h4 style="font-weight:bold;font-size:65px;color:#CECECE">фото</h4>
               </div>
-              <div class="col-lg-6 col-md-6">
-                <br>
-                <div class="hide_image">{{ form_comment.item_comment_photo2 }}</div>
-                <div class="comment_photo2">
-                  <h4 style="font-weight:bold;font-size:65px;color:#CECECE">фото</h4>
-                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+              <br>
+              <div class="hide_image">{{ form_comment.item_comment_photo2 }}</div>
+              <div class="comment_photo2">
+                <h4 style="font-weight:bold;font-size:65px;color:#CECECE">фото</h4>
               </div>
             </div>
           </div>
+        </div>
+        <div class="row no-gutters">
+
           <button class="btn btn-link content-color-secondary comment_photo" type="button">
             <img style="margin-top: -10px;" src="{% static 'images/icons/attach_file-24px.svg' %}" />
           </button>
@@ -66,7 +66,7 @@
 <script>
     $('.comment_photo').on('click', function() {
       btn = $(this);
-      btn.prev().show();
+      btn.parent().prev().show();
     });
     $('.comment_good').on('click', function() {
         $('#for_comment_good').show();
