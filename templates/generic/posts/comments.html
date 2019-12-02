@@ -108,7 +108,7 @@
     $(".comment_photo1").on("click", function() {
       photo = $(this);
       imageLoader = photo.prev()
-      photo.prev().click();
+      photo.prev().find("#item_comment_photo2").click();
       var entrou = false;
 
 
