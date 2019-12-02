@@ -1,6 +1,6 @@
 {% load humanize staticfiles liked_user %}
 <style>
-  #item_comment_photo{
+  #comment_photo{
       border: 2px dashed #FF0000;
       color: rgba(0, 0, 0, 0.8);
       padding: 10px;
@@ -10,7 +10,7 @@
       width: 85%;
       min-width: 85%;
 }
-  #item_comment_photo img{
+  #comment_photo2 img{
     width: 85%;
     height: auto;
   }
@@ -32,14 +32,14 @@
             <div class="col-lg-6 col-md-6">
               <br>
               <div class="hide_image">{{ form_comment.item_comment_photo }}</div>
-              <div id="image-holder">
+              <div id="comment_photo">
                 <h4 style="font-weight:bold;font-size:65px;color:#CECECE">фото</h4>
               </div>
             </div>
             <div class="col-lg-6 col-md-6">
               <br>
-              <div class="hide_image">{{ form_comment.item_comment_photo }}</div>
-              <div id="image-holder2">
+              <div class="hide_image">{{ form_comment.item_comment_photo2 }}</div>
+              <div id="comment_photo2">
                 <h4 style="font-weight:bold;font-size:65px;color:#CECECE">фото</h4>
               </div>
             </div>

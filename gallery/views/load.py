@@ -14,7 +14,7 @@ class UserPhoto(TemplateView):
     def get(self,request,*args,**kwargs):
         self.user=User.objects.get(uuid=self.kwargs["uuid"])
         self.photo = Photo.objects.get(pk=self.kwargs["pk"])
-        self.avatar_album = Album.objects.get(creator=self.user, title="Фото со страницы", is_generic=True)
+        self.avatar_album = Album.objects.get(creator=self.user, title="Фото со страницы", is_generic=True, community=None)
         try:
             self._avatar = Photo.objects.filter(album_2=self.avatar_album).order_by('-id')[0]
             if self._avatar.id == self.photo.id:
