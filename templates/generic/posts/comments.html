@@ -1,6 +1,6 @@
 {% load humanize staticfiles liked_user %}
 <style>
-  .comment_photo1{
+  .comment_photo1,.comment_photo2{
       border: 2px dashed #FF0000;
       color: rgba(0, 0, 0, 0.8);
       padding: 10px;
@@ -10,7 +10,7 @@
       width: 85%;
       min-width: 85%;
 }
-  .comment_photo2 img{
+  .comment_photo1 img, .comment_photo2 img{
     width: 85%;
     height: auto;
   }
@@ -65,7 +65,8 @@
 </div>
 <script>
     $('.comment_photo').on('click', function() {
-        $('#for_comment_photo').show();
+      btn = $(this);
+      btn.prev().show();
     });
     $('.comment_good').on('click', function() {
         $('#for_comment_good').show();
