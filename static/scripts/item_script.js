@@ -138,9 +138,11 @@ $('#ajax').on('click', '.itemComment', function() {
     form1 = button1.parent().parent().parent();
     $.ajax({
         url: '/user/post-comment/' + uuid + "/" + pk + "/",
-        data: form1.serialize(),
-        type: 'POST',
+        data: new FormData($(form1)[0]),
+        contentType: false,
         cache: false,
+        processData: false,
+        type: 'POST',
         success: function(data) {
             $(".form-control-rounded").val("");
             $(".stream_comments").append(data);
