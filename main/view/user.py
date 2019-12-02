@@ -53,7 +53,7 @@ class ItemCommentUserCreate(View):
 				html = render_to_string('generic/posts/parent_comment.html',{'comment': new_comment, 'request': request})
 				return JsonResponse(html, safe=False)
 		else:
-			return HttpResponseBadRequest()
+			return HttpResponse("!")
 
 
 def item_reply_comment(request):
