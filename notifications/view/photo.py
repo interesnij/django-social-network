@@ -9,7 +9,7 @@ from django.views.generic.base import TemplateView
 
 
 class PhotoNotificationListView(LoginRequiredMixin, ListView):
-    model = ItemNotification
+    model = PhotoNotification
     context_object_name = 'notification_list'
     template_name = 'not_photo/user_notify_list.html'
 

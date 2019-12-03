@@ -8,8 +8,8 @@ from notifications.model.good import GoodNotification, GoodCommunityNotification
 from django.views.generic.base import TemplateView
 
 
-class GoodrNotificationListView(LoginRequiredMixin, ListView):
-    model = ItemNotification
+class GoodNotificationListView(LoginRequiredMixin, ListView):
+    model = GoodNotification
     context_object_name = 'notification_list'
     template_name = 'not_good/user_notify_list.html'
 
