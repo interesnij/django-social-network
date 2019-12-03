@@ -46,6 +46,6 @@ def good_community_all_read(request):
 
 
 @login_required
-def item_get_latest_notifications(request):
+def good_get_latest_notifications(request):
     notifications = request.user.good_notifications.get_most_recent()
     return render(request, 'not_good/most_recent.html', {'notifications': notifications})
