@@ -8,7 +8,7 @@ from notifications.model.item import ItemNotification, ItemCommunityNotification
 from django.views.generic.base import TemplateView
 
 
-class UserNotificationListView(LoginRequiredMixin, ListView):
+class ItemNotificationListView(LoginRequiredMixin, ListView):
     model = ItemNotification
     context_object_name = 'notification_list'
     template_name = 'not_item/user_notify_list.html'
