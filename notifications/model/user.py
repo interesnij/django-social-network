@@ -66,8 +66,8 @@ class UserNotification(models.Model):
     objects = UserNotificationQS.as_manager()
 
     class Meta:
-        verbose_name = "Уведомление"
-        verbose_name_plural = "Уведомления"
+        verbose_name = "Уведомление пользователя"
+        verbose_name_plural = "Уведомления пользователя"
         ordering = ["-timestamp"]
         indexes = (BrinIndex(fields=['timestamp']),)
 

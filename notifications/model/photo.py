@@ -77,8 +77,8 @@ class PhotoNotification(models.Model):
     objects =  PhotoNotificationQS.as_manager()
 
     class Meta:
-        verbose_name = "Уведомление"
-        verbose_name_plural = "Уведомления"
+        verbose_name = "Уведомление - фотографии пользователя"
+        verbose_name_plural = "Уведомления - фотографии пользователя"
         ordering = ["-timestamp"]
         indexes = (BrinIndex(fields=['timestamp']),)
 
@@ -129,8 +129,8 @@ class PhotoCommunityNotification(models.Model):
     objects = PhotoNotificationQS.as_manager()
 
     class Meta:
-        verbose_name = "Уведомление сообщества"
-        verbose_name_plural = "Уведомления сообщества"
+        verbose_name = "Уведомление - фотографии сообщества"
+        verbose_name_plural = "Уведомления - фотографии сообщества"
         ordering = ["-timestamp"]
         indexes = (BrinIndex(fields=['timestamp']),)
 

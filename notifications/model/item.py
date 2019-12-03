@@ -79,8 +79,8 @@ class ItemNotification(models.Model):
     objects =  ItemNotificationQS.as_manager()
 
     class Meta:
-        verbose_name = "Уведомление"
-        verbose_name_plural = "Уведомления"
+        verbose_name = "Уведомление - записи пользователя"
+        verbose_name_plural = "Уведомления - записи пользователя"
         ordering = ["-timestamp"]
         indexes = (BrinIndex(fields=['timestamp']),)
 
@@ -133,8 +133,8 @@ class ItemCommunityNotification(models.Model):
     objects = ItemNotificationQS.as_manager()
 
     class Meta:
-        verbose_name = "Уведомление сообщества"
-        verbose_name_plural = "Уведомления сообщества"
+        verbose_name = "Уведомление - записи сообщества"
+        verbose_name_plural = "Уведомления - записи сообщества"
         ordering = ["-timestamp"]
         indexes = (BrinIndex(fields=['timestamp']),)
 

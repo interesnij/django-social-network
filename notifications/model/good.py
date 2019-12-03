@@ -77,8 +77,8 @@ class GoodNotification(models.Model):
     objects =  GoodNotificationQS.as_manager()
 
     class Meta:
-        verbose_name = "Уведомление"
-        verbose_name_plural = "Уведомления"
+        verbose_name = "Уведомление - товары пользователя"
+        verbose_name_plural = "Уведомления - товары пользователя"
         ordering = ["-timestamp"]
         indexes = (BrinIndex(fields=['timestamp']),)
 
@@ -129,8 +129,8 @@ class GoodCommunityNotification(models.Model):
     objects = GoodNotificationQS.as_manager()
 
     class Meta:
-        verbose_name = "Уведомление сообщества"
-        verbose_name_plural = "Уведомления сообщества"
+        verbose_name = "Уведомление - товары сообщества"
+        verbose_name_plural = "Уведомления - товары сообщества"
         ordering = ["-timestamp"]
         indexes = (BrinIndex(fields=['timestamp']),)
 
