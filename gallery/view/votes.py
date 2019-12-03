@@ -1,7 +1,7 @@
 import json
 from django.views.generic.base import TemplateView
 from users.models import User
-from main.models import Photo, PhotoComment
+from gallery.models import Photo, PhotoComment
 from communities.models import Community
 from django.http import JsonResponse, HttpResponse
 from django.views import View

@@ -1,4 +1,4 @@
-from gallery.views.user import *
+from gallery.view.user import *
 from django.conf.urls import url
 
 

@@ -13,7 +13,7 @@ from communities.models import Community
 
 
 class CommunityGoods(TemplateView):
-    template_name = "community/goods.html"
+    template_name = "good_community/goods.html"
 
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
@@ -40,11 +40,11 @@ class CommunityGoodsList(View):
 			context['goods_list'] = current_page.page(1)
 		except EmptyPage:
 			context['goods_list'] = current_page.page(current_page.num_pages)
-		return render_to_response('community/goods_list.html', context)
+		return render_to_response('good_community/goods_list.html', context)
 
 
 class CommunityUserCreate(TemplateView):
-	template_name="community/add.html"
+	template_name="good_community/add.html"
 	form=None
 	sub_categories = GoodSubCategory.objects.only("id")
 	categories = GoodCategory.objects.only("id")
@@ -71,7 +71,7 @@ class CommunityUserCreate(TemplateView):
 			new_good.creator=self.user
 			new_good=self.form.save()
 			if request.is_ajax() :
-				html = render_to_string('community/good.html',{'object': new_good,'request': request})
+				html = render_to_string('good_community/good.html',{'object': new_good,'request': request})
 			return HttpResponse(html)
 		else:
 			return HttpResponseBadRequest()
@@ -79,7 +79,7 @@ class CommunityUserCreate(TemplateView):
 
 
 class CommunityGood(TemplateView):
-	template_name="community/good.html"
+	template_name="good_community/good.html"
 
 	def get(self,request,*args,**kwargs):
 		self.community=Community.objects.get(uuid=self.kwargs["uuid"])

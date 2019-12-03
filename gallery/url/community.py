@@ -1,4 +1,4 @@
-﻿from gallery.views.community import *
+﻿from gallery.view.community import *
 from django.conf.urls import url
 
 

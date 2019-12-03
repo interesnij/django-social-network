@@ -13,7 +13,7 @@ from rest_framework.exceptions import PermissionDenied
 
 
 class AvatarReload(TemplateView):
-    template_name="gallery_user/avatar_reload.html"
+    template_name="photo_user/avatar_reload.html"
 
     def get(self,request,*args,**kwargs):
         self.user=User.objects.get(pk=self.kwargs["pk"])
@@ -31,7 +31,7 @@ class AvatarReload(TemplateView):
 
 
 class UserGalleryView(TemplateView):
-	template_name="gallery_user/gallery.html"
+	template_name="photo_user/gallery.html"
 
 	def get(self,request,*args,**kwargs):
 		self.user=User.objects.get(pk=self.kwargs["pk"])
@@ -71,7 +71,7 @@ class UserPhotosList(View):
 			context['photo_list'] = current_page.page(1)
 		except EmptyPage:
 			context['photo_list'] = current_page.page(current_page.num_pages)
-		return render_to_response('gallery_user/photos.html', context)
+		return render_to_response('photo_user/photos.html', context)
 
 
 class UserAlbumsList(View):
@@ -101,7 +101,7 @@ class UserAlbumsList(View):
 			context['albums_list'] = current_page.page(1)
 		except EmptyPage:
 			context['albums_list'] = current_page.page(current_page.num_pages)
-		return render_to_response('gallery_user/albums.html', context)
+		return render_to_response('photo_user/albums.html', context)
 
 
 class UserAlbomView(View):
@@ -132,11 +132,11 @@ class UserAlbomView(View):
 			context['photos'] = current_page.page(1)
 		except EmptyPage:
 			context['photos'] = current_page.page(current_page.num_pages)
-		return render_to_response('gallery_user/album.html', context)
+		return render_to_response('photo_user/album.html', context)
 
 
 class UserAlbomReload(TemplateView):
-	template_name="gallery_user/album_reload.html"
+	template_name="photo_user/album_reload.html"
 
 	def get(self,request,*args,**kwargs):
 		self.album=Album.objects.get(uuid=self.kwargs["uuid"])
@@ -167,7 +167,7 @@ class PhotoUserCreate(View,AjaxResponseMixin,JSONResponseMixin):
 
 
 class AlbumUserCreate(TemplateView):
-	template_name="gallery_user/add_album.html"
+	template_name="photo_user/add_album.html"
 	form=None
 
 	def get(self,request,*args,**kwargs):
@@ -196,7 +196,7 @@ class AlbumUserCreate(TemplateView):
 
 
 class AlbomGygView(TemplateView):
-	template_name="gallery_user/gygyg.html"
+	template_name="photo_user/gygyg.html"
 
 	def get(self,request,*args,**kwargs):
 		self.user = User.objects.get(uuid=self.kwargs["uuid"])
@@ -212,7 +212,7 @@ class AlbomGygView(TemplateView):
 
 
 class UserAddAvatar(TemplateView):
-    template_name = "gallery_user/user_add_avatar.html"
+    template_name = "photo_user/user_add_avatar.html"
 
     def get(self,request,*args,**kwargs):
         self.form=AvatarUserForm()

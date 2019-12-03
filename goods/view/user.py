@@ -13,7 +13,7 @@ from rest_framework.exceptions import PermissionDenied
 
 
 class UserGoods(TemplateView):
-    template_name = "user/goods.html"
+    template_name = "good_user/goods.html"
 
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
@@ -52,11 +52,11 @@ class UserGoodsList(View):
             context['goods_list'] = current_page.page(1)
         except EmptyPage:
             context['goods_list'] = current_page.page(current_page.num_pages)
-        return render_to_response('user/goods_list.html', context)
+        return render_to_response('good_user/goods_list.html', context)
 
 
 class UserGood(TemplateView):
-    template_name="user/good.html"
+    template_name="good_user/good.html"
 
     def get(self,request,*args,**kwargs):
         self.user=User.objects.get(uuid=self.kwargs["uuid"])
@@ -86,7 +86,7 @@ class UserGood(TemplateView):
 
 
 class GoodUserCreate(TemplateView):
-	template_name="user/add.html"
+	template_name="good_user/add.html"
 	form=None
 	sub_categories = GoodSubCategory.objects.only("id")
 	categories = GoodCategory.objects.only("id")
@@ -113,7 +113,7 @@ class GoodUserCreate(TemplateView):
 			new_good.creator=self.user
 			new_good=self.form.save()
 			if request.is_ajax() :
-				html = render_to_string('user/good.html',{'object': new_good,'request': request})
+				html = render_to_string('good_user/good.html',{'object': new_good,'request': request})
 			return HttpResponse(html)
 		else:
 			return HttpResponseBadRequest()

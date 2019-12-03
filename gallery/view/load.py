@@ -9,7 +9,7 @@ from rest_framework.exceptions import PermissionDenied
 
 
 class UserPhoto(TemplateView):
-    template_name="gallery_user/photo.html"
+    template_name="photo_user/photo.html"
 
     def get(self,request,*args,**kwargs):
         self.user=User.objects.get(uuid=self.kwargs["uuid"])
@@ -49,7 +49,7 @@ class UserPhoto(TemplateView):
 
 
 class UserDetailAvatar(TemplateView):
-    template_name="gallery_user/photo.html"
+    template_name="photo_user/photo.html"
 
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(uuid=self.kwargs["uuid"])

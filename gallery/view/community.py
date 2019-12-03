@@ -14,7 +14,7 @@ from rest_framework.exceptions import PermissionDenied
 
 
 class CommunityGalleryView(TemplateView):
-	template_name="good_community/gallery.html"
+	template_name="photo_community/gallery.html"
 
 	def get(self,request,*args,**kwargs):
 		self.community=Community.objects.get(pk=self.kwargs["pk"])
@@ -48,7 +48,7 @@ class CommunityAlbumsList(View):
 			context['albums_list'] = current_page.page(1)
 		except EmptyPage:
 			context['albums_list'] = current_page.page(current_page.num_pages)
-		return render_to_response('good_community/albums.html', context)
+		return render_to_response('photo_community/albums.html', context)
 
 
 class CommunityPhotosList(View):
@@ -73,11 +73,11 @@ class CommunityPhotosList(View):
 			context['photo_list'] = current_page.page(1)
 		except EmptyPage:
 			context['photo_list'] = current_page.page(current_page.num_pages)
-		return render_to_response('good_community/photos.html', context)
+		return render_to_response('photo_community/photos.html', context)
 
 
 class CommunityPhoto(TemplateView):
-	template_name="good_community/photo.html"
+	template_name="photo_community/photo.html"
 
 	def get(self,request,*args,**kwargs):
 		self.community=Community.objects.get(uuid=self.kwargs["uuid"])
@@ -127,11 +127,11 @@ class CommunityAlbomView(View):
 			context['photos'] = current_page.page(1)
 		except EmptyPage:
 			context['photos'] = current_page.page(current_page.num_pages)
-		return render_to_response('good_user/album.html', context)
+		return render_to_response('photo_user/album.html', context)
 
 
 class CommunityAlbomReload(TemplateView):
-	template_name="good_community/album_reload.html"
+	template_name="photo_community/album_reload.html"
 
 	def get(self,request,*args,**kwargs):
 		self.album=Album.objects.get(uuid=self.kwargs["uuid"])
@@ -162,7 +162,7 @@ class PhotoCommunityCreate(View,AjaxResponseMixin,JSONResponseMixin):
 
 
 class AlbumCommunityCreate(TemplateView):
-	template_name="good_community/add_album.html"
+	template_name="photo_community/add_album.html"
 	form=None
 
 	def get(self,request,*args,**kwargs):
@@ -191,7 +191,7 @@ class AlbumCommunityCreate(TemplateView):
 
 
 class CommunityAlbomGygView(TemplateView):
-	template_name="good_community/gygyg.html"
+	template_name="photo_community/gygyg.html"
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(uuid=self.kwargs["uuid"])
