@@ -8,4 +8,4 @@ class CommentForm(forms.ModelForm):
 
 	class Meta:
 		model = ItemComment
-		fields = ['item_comment_photo', 'item_comment_photo2', 'text']
+		fields = ['text']
