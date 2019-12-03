@@ -23,7 +23,7 @@ class UserNotificationQS(models.query.QuerySet):
         if recipient:
             qs = qs.filter(recipient=recipient)
         return qs.update(unread=False)
-        
+
     def mark_all_as_unread(self, recipient=None):
         qs = self.read()
         if recipient:
@@ -69,7 +69,7 @@ class UserNotification(models.Model):
         verbose_name = "Уведомление"
         verbose_name_plural = "Уведомления"
         ordering = ["-timestamp"]
-        indexes = BrinIndex(fields=['timestamp'])
+        indexes = (BrinIndex(fields=['created']),)
 
     def __str__(self):
         return '{} - {}'.format(self.actor, self.get_verb_display())
@@ -107,7 +107,7 @@ class UserCommunityNotification(models.Model):
         verbose_name = "Уведомление сообщества"
         verbose_name_plural = "Уведомления сообщества"
         ordering = ["-timestamp"]
-        indexes = BrinIndex(fields=['timestamp']),
+        indexes = (BrinIndex(fields=['created']),)
 
     def __str__(self):
         return '{} - {}'.format(self.actor, self.get_verb_display())

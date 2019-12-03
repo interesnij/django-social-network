@@ -80,7 +80,7 @@ class GoodNotification(models.Model):
         verbose_name = "Уведомление"
         verbose_name_plural = "Уведомления"
         ordering = ["-timestamp"]
-        indexes = BrinIndex(fields=['timestamp']),
+        indexes = (BrinIndex(fields=['created']),)
 
     def __str__(self):
         return '{} - {}'.format(self.actor, self.get_verb_display())
@@ -132,7 +132,7 @@ class GoodCommunityNotification(models.Model):
         verbose_name = "Уведомление сообщества"
         verbose_name_plural = "Уведомления сообщества"
         ordering = ["-timestamp"]
-        indexes = BrinIndex(fields=['timestamp']),
+        indexes = (BrinIndex(fields=['created']),)
 
     def __str__(self):
         return '{} - {}'.format(self.actor, self.get_verb_display())
