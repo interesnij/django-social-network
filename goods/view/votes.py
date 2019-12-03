@@ -134,8 +134,8 @@ class GoodCommentUserLikeCreate(View):
 				result = False
 		except GoodCommentVotes.DoesNotExist:
             GoodCommentVotes.objects.create(item=comment, user=request.user, vote=GoodCommentVotes.LIKE)
-			result = True
-		return HttpResponse(json.dumps({"result": result,"like_count": comment.likes().count(),"dislike_count": comment.dislikes().count()}),content_type="application/json")
+            result = True
+        return HttpResponse(json.dumps({"result": result,"like_count": comment.likes().count(),"dislike_count": comment.dislikes().count()}),content_type="application/json")
 
 
 class PhotoCommentUserDislikeCreate(View):
