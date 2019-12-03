@@ -87,19 +87,19 @@ class Good(models.Model):
 	def notification_user_repost(self, user):
 		good_notification_handler(user, self.creator, GoodNotification.REPOST, key='social_update')
 
-    def notification_user_like(self, user):
+	def notification_user_like(self, user):
 		good_notification_handler(user, self.creator, GoodNotification.LIKE, key='social_update')
 
-    def notification_user_dislike(self, user):
+	def notification_user_dislike(self, user):
 		good_notification_handler(user, self.creator, GoodNotification.DISLIKE, key='social_update')
 
-    def notification_community_repost(self, user):
+	def notification_community_repost(self, user):
 		good_community_notification_handler(user, self.creator, GoodCommunityNotification.REPOST, key='social_update')
 
-    def notification_community_like(self, user):
+	def notification_community_like(self, user):
 		good_community_notification_handler(user, self.creator, GoodCommunityNotification.LIKE, key='social_update')
 
-    def notification_community_dislike(self, user):
+	def notification_community_dislike(self, user):
 		good_community_notification_handler(user, self.creator, GoodCommunityNotification.DISLIKE, key='social_update')
 
 
