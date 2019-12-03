@@ -153,7 +153,7 @@ def item_notification_handler(actor, recipient, verb, **kwargs):
     if recipient == 'global':
         users = User.objects.all().exclude(username=actor.username)
         for user in users:
-            UserNotification.objects.create(
+            ItemNotification.objects.create(
                 actor=actor,
                 recipient=user,
                 verb=verb,
@@ -162,14 +162,14 @@ def item_notification_handler(actor, recipient, verb, **kwargs):
 
     elif isinstance(recipient, list):
         for user in recipient:
-            UserNotification.objects.create(
+            ItemNotification.objects.create(
                 actor=actor,
                 recipient=User.objects.get(username=user.username),
                 verb=verb,
             )
 
     elif isinstance(recipient, get_user_model()):
-        UserNotification.objects.create(
+        ItemNotification.objects.create(
             actor=actor,
             recipient=recipient,
             verb=verb,
