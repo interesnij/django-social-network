@@ -28,7 +28,7 @@ class ItemUserCommentList(View):
 			raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
 		elif request.user.is_anonymous and not self.user.is_closed_profile():
 			comments = item.get_comments(request.user).order_by('-created')
-		comments_html = render_to_string("generic/posts/comments.html", {"comments": comments,"parent": item, "form_comment": CommentForm(), "user": self.user})
+		comments_html = render_to_string("item_user/comments.html", {"comments": comments,"parent": item, "form_comment": CommentForm(), "user": self.user})
 
 		return JsonResponse({
 	        "comments": comments_html,
@@ -52,7 +52,7 @@ class ItemCommentUserCreate(View):
 				new_comment = ItemComment.objects.create(item=self.item, text=self.text, commenter=request.user)
 				new_comment.notification_user_comment(request.user)
 				new_comment_images = ItemCommentPhoto.objects.create(item=self.item, item_comment_photo=comment.item_comment_photo, item_comment_photo2=comment.item_comment_photo2)
-				html = render_to_string('generic/posts/parent_comment.html',{'comment': new_comment, 'request': request})
+				html = render_to_string('item_user/parent_comment.html',{'comment': new_comment, 'request': request})
 				return JsonResponse(html, safe=False)
 		else:
 			return HttpResponseBadRequest()
@@ -67,7 +67,7 @@ def item_reply_comment(request):
     text = text.strip()
     if len(text) > 0:
         new_comment = ItemComment.objects.create(text=text, commenter=request.user,parent_comment=comment)
-        html = render_to_string('generic/posts/reply_comment.html',{'reply': new_comment,'request': request})
+        html = render_to_string('item_user/reply_comment.html',{'reply': new_comment,'request': request})
         return JsonResponse(html, safe=False)
 
         notification_handler(
