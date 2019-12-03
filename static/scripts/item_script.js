@@ -138,10 +138,7 @@ $('#ajax').on('click', '.itemComment', function() {
     form1 = button1.parent().parent().parent();
     $.ajax({
         url: '/user/post-comment/' + uuid + "/" + pk + "/",
-        data: new FormData($(form1)[0]),
-        contentType: false,
-        cache: false,
-        processData: false,
+        data: form1.serialize(),
         type: 'POST',
         success: function(data) {
             $(".form-control-rounded").val("");
