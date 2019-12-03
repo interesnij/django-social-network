@@ -76,7 +76,7 @@ class ItemNotification(models.Model):
     verb = models.CharField(max_length=5, choices=NOTIFICATION_TYPES, verbose_name="Тип уведомления")
     slug = models.SlugField(max_length=210, null=True, blank=True)
     uuid_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    objects =  UserNotificationQS.as_manager()
+    objects =  ItemNotificationQS.as_manager()
 
     class Meta:
         verbose_name = "Уведомление"
@@ -130,7 +130,7 @@ class ItemCommunityNotification(models.Model):
     verb = models.CharField(max_length=5, choices=NOTIFICATION_TYPES, verbose_name="Тип уведомления")
     slug = models.SlugField(max_length=210, null=True, blank=True)
     uuid_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    objects = UserNotificationQS.as_manager()
+    objects = ItemNotificationQS.as_manager()
 
     class Meta:
         verbose_name = "Уведомление сообщества"
