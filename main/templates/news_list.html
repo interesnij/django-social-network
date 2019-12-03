@@ -42,20 +42,20 @@ transition: 0.5s;
       {% if object.community %}
 
         {% if object.article %}
-          {% include 'generic/community/article.html' with article=article  %}
+          {% include 'item_community/article.html' with article=article  %}
         {% endif %}
 
         {% if object.post %}
-          {% include 'generic/community/post.html' with post=post  %}
+          {% include 'item_community/post.html' with post=post  %}
         {% endif %}
 
       {% else %}
         {% if object.article %}
-          {% include 'generic/posts/article.html' with article=article  %}
+          {% include 'item_user/article.html' with article=article  %}
         {% endif %}
 
         {% if object.post %}
-          {% include 'generic/posts/post.html' with post=post  %}
+          {% include 'item_user/post.html' with post=post  %}
         {% endif %}
       {% endif %}
 

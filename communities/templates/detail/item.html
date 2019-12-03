@@ -15,13 +15,13 @@
 
 {% if object.post %}
 <div class="mb-4 infinite-item" item-id="{{ object.uuid }}">
-  {% include 'generic/community/post_detail.html' %}
+  {% include 'item_community/post_detail.html' %}
 </div>
 {% endif %}
 
 {% if object.article %}
 <div class="mb-4 infinite-item" item-id="{{ object.uuid }}">
-    {% include 'generic/community/article.html' with article=article  %}
+    {% include 'item_community/article.html' with article=article  %}
 </div>
 {% endif %}
 

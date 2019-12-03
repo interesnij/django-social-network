@@ -41,21 +41,21 @@ transition: 0.5s;
     </div>
 
     {% if object.article %}
-        {% include 'generic/community/article.html' with article=article %}
+        {% include 'item_community/article.html' with article=article %}
     {% endif %}
 
     {% if object.post %}
-      {% include 'generic/community/post.html' with post=post  %}
+      {% include 'item_community/post.html' with post=post  %}
     {% endif %}
 
     {% for object in items_list %}
 
       {% if object.article %}
-          {% include 'generic/community/article.html' with article=article  %}
+          {% include 'item_community/article.html' with article=article  %}
       {% endif %}
 
       {% if object.post %}
-          {% include 'generic/community/post.html' with post=post  %}
+          {% include 'item_community/post.html' with post=post  %}
       {% endif %}
 
     {% endfor %}

@@ -113,7 +113,7 @@
                     <br><br> {{ comment.count_replies }} {{ comment.count_replies|rupluralize:"ответ,ответа,ответов" }}
                     <span class="stream_reply_comments">
                       {% for reply in comment.get_replies %}
-                        {% include 'generic/posts/reply_comment.html' with reply=reply  %}
+                        {% include 'item_user/reply_comment.html' with reply=reply  %}
                       {% endfor %}
                     </span>
 

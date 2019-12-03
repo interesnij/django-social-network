@@ -16,7 +16,6 @@ class ItemLikeWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.like = Item.objects.get(pk=self.kwargs["pk"])
-        self.like.notification_like(request.user)
         return super(ItemLikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -30,7 +29,6 @@ class ItemCommentLikeWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.comment_like = ItemComment.objects.get(pk=self.kwargs["pk"])
-        self.comment_like.notification_comment_like(request.user)
         return super(ItemCommentLikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -44,7 +42,6 @@ class ItemDislikeWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.dislike = Item.objects.get(pk=self.kwargs["pk"])
-        self.dislike.notification_dislike(request.user)
         return super(ItemDislikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -58,7 +55,6 @@ class ItemCommentDislikeWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.comment_dislike = ItemComment.objects.get(pk=self.kwargs["pk"])
-        self.comment_dislike.notification_comment_dislike(request.user)
         return super(ItemCommentDislikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

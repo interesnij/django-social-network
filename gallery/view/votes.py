@@ -15,7 +15,6 @@ class PhotoLikeWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.like = Photo.objects.get(pk=self.kwargs["pk"])
-        self.like.notification_like(request.user)
         return super(PhotoLikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -29,7 +28,6 @@ class PhotoCommentLikeWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.comment_like = PhotoComment.objects.get(pk=self.kwargs["pk"])
-        self.comment_like.notification_comment_like(request.user)
         return super(PhotoCommentLikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -43,7 +41,6 @@ class PhotoDislikeWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.dislike = Photo.objects.get(pk=self.kwargs["pk"])
-        self.dislike.notification_dislike(request.user)
         return super(PhotoDislikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -57,7 +54,6 @@ class PhotoCommentDislikeWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.comment_dislike = PhotoComment.objects.get(pk=self.kwargs["pk"])
-        self.comment_dislike.notification_comment_dislike(request.user)
         return super(PhotoCommentDislikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -80,7 +76,7 @@ class PhotoUserLikeCreate(View):
                 likedislike.vote = PhotoVotes.LIKE
                 likedislike.save(update_fields=['vote'])
                 result = True
-                item.notification_like(request.user)
+                item.notification_user_like(request.user)
             else:
                 likedislike.delete()
                 result = False
@@ -104,7 +100,7 @@ class PhotoUserDislikeCreate(View):
                 likedislike.vote = PhotoVotes.DISLIKE
                 likedislike.save(update_fields=['vote'])
                 result = True
-                item.notification_dislike(request.user)
+                item.notification_user_dislike(request.user)
             else:
                 likedislike.delete()
                 result = False
@@ -128,7 +124,7 @@ class PhotoCommentUserLikeCreate(View):
 				likedislike.vote = PhotoCommentVotes.LIKE
 				likedislike.save(update_fields=['vote'])
 				result = True
-				comment.notification_comment_like(request.user)
+				comment.notification_user_comment_like(request.user)
 			else:
 				likedislike.delete()
 				result = False
@@ -153,7 +149,7 @@ class PhotoCommentUserDislikeCreate(View):
 				likedislike.vote = PhotoCommentVotes.DISLIKE
 				likedislike.save(update_fields=['vote'])
 				result = True
-				comment.notification_comment_dislike(request.user)
+				comment.notification_user_comment_like(request.user)
 			else:
 				likedislike.delete()
 				result = False
@@ -174,7 +170,7 @@ class PhotoCommunityLikeCreate(View):
                 likedislike.vote = PhotoVotes.LIKE
                 likedislike.save(update_fields=['vote'])
                 result = True
-                item.notification_like(request.user)
+                item.notification_community_like(request.user)
             else:
                 likedislike.delete()
                 result = False
@@ -195,7 +191,7 @@ class PhotoCommunityDislikeCreate(View):
                 likedislike.vote = PhotoVotes.DISLIKE
                 likedislike.save(update_fields=['vote'])
                 result = True
-                item.notification_like(request.user)
+                item.notification_community_dislike(request.user)
             else:
                 likedislike.delete()
                 result = False
@@ -216,7 +212,7 @@ class PhotoCommentCommunityLikeCreate(View):
 				likedislike.vote = PhotoCommentVotes.LIKE
 				likedislike.save(update_fields=['vote'])
 				result = True
-				comment.notification_comment_like(request.user)
+				comment.notification_community_comment_like(request.user)
 			else:
 				likedislike.delete()
 				result = False
@@ -238,7 +234,7 @@ class PhotoCommentCommunityDislikeCreate(View):
 				likedislike.vote = PhotoCommentVotes.DISLIKE
 				likedislike.save(update_fields=['vote'])
 				result = True
-				comment.notification_comment_like(request.user)
+				comment.notification_community_comment_like(request.user)
 			else:
 				likedislike.delete()
 				result = False

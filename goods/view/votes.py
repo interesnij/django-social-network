@@ -29,7 +29,6 @@ class GoodCommentLikeWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.comment_like = GoodComment.objects.get(pk=self.kwargs["pk"])
-        self.comment_like.notification_comment_like(request.user)
         return super(GoodCommentLikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -43,7 +42,6 @@ class GoodDislikeWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.dislike = Good.objects.get(pk=self.kwargs["pk"])
-        self.dislike.notification_dislike(request.user)
         return super(GoodDislikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -57,7 +55,6 @@ class GoodCommentDislikeWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.comment_dislike = GoodComment.objects.get(pk=self.kwargs["pk"])
-        self.comment_dislike.notification_comment_dislike(request.user)
         return super(GoodCommentDislikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -80,7 +77,7 @@ class GoodUserLikeCreate(View):
                 likedislike.vote = GoodVotes.LIKE
                 likedislike.save(update_fields=['vote'])
                 result = True
-                item.notification_like(request.user)
+                item.notification_user_like(request.user)
             else:
                 likedislike.delete()
                 result = False
@@ -104,7 +101,7 @@ class GoodUserDislikeCreate(View):
                 likedislike.vote = GoodVotes.DISLIKE
                 likedislike.save(update_fields=['vote'])
                 result = True
-                item.notification_dislike(request.user)
+                item.notification_user_dislike(request.user)
             else:
                 likedislike.delete()
                 result = False
@@ -128,7 +125,7 @@ class GoodCommentUserLikeCreate(View):
                 likedislike.vote = GoodCommentVotes.LIKE
                 likedislike.save(update_fields=['vote'])
                 result = True
-                comment.notification_comment_like(request.user)
+                comment.notification_user_comment_like(request.user)
             else:
                 likedislike.delete()
                 result = False
@@ -153,7 +150,7 @@ class GoodCommentUserDislikeCreate(View):
 				likedislike.vote = GoodCommentVotes.DISLIKE
 				likedislike.save(update_fields=['vote'])
 				result = True
-				comment.notification_comment_dislike(request.user)
+				comment.notification_user_comment_dislike(request.user)
 			else:
 				likedislike.delete()
 				result = False
@@ -174,7 +171,7 @@ class GoodCommunityLikeCreate(View):
                 likedislike.vote = GoodVotes.LIKE
                 likedislike.save(update_fields=['vote'])
                 result = True
-                item.notification_like(request.user)
+                item.notification_community_like(request.user)
             else:
                 likedislike.delete()
                 result = False
@@ -195,7 +192,7 @@ class GoodCommunityDislikeCreate(View):
                 likedislike.vote = GoodVotes.DISLIKE
                 likedislike.save(update_fields=['vote'])
                 result = True
-                item.notification_like(request.user)
+                item.notification_community_dislike(request.user)
             else:
                 likedislike.delete()
                 result = False
@@ -216,7 +213,7 @@ class GoodCommentCommunityLikeCreate(View):
 				likedislike.vote = GoodCommentVotes.LIKE
 				likedislike.save(update_fields=['vote'])
 				result = True
-				comment.notification_comment_like(request.user)
+				comment.notification_community_comment_like(request.user)
 			else:
 				likedislike.delete()
 				result = False
@@ -238,7 +235,7 @@ class GoodCommentCommunityDislikeCreate(View):
 				likedislike.vote = GoodCommentVotes.DISLIKE
 				likedislike.save(update_fields=['vote'])
 				result = True
-				comment.notification_comment_like(request.user)
+				comment.notification_community_comment_dislike(request.user)
 			else:
 				likedislike.delete()
 				result = False

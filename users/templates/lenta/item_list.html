@@ -16,21 +16,21 @@
     <span class="stream">
 
         {% if object.article %}
-        {% include 'generic/posts/article.html' with article=article %}
+        {% include 'item_user/article.html' with article=article %}
         {% endif %}
 
         {% if object.post %}
-        {% include 'generic/posts/post.html' with post=post  %}
+        {% include 'item_user/post.html' with post=post  %}
         {% endif %}
 
         {% for object in items_list %}
 
         {% if object.article %}
-        {% include 'generic/posts/article.html' with article=article  %}
+        {% include 'item_user/article.html' with article=article  %}
         {% endif %}
 
         {% if object.post %}
-        {% include 'generic/posts/post.html' with post=post  %}
+        {% include 'item_user/post.html' with post=post  %}
         {% endif %}
 
         {% endfor %}
