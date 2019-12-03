@@ -113,26 +113,26 @@ class GoodUserDislikeCreate(View):
             result = True
         return HttpResponse(json.dumps({"result": result,"like_count": item.likes().count(),"dislike_count": item.dislikes().count()}),content_type="application/json")
 
-class GoodCommentUserLikeCreate(View):
 
-	def post(self, request, **kwargs):
-		comment = GoodComment.objects.get(pk=self.kwargs["pk"])
-		user = User.objects.get(uuid=self.kwargs["uuid"])
-		if user != request.user:
-			check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
-			if user.is_closed_profile:
-				check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
-		try:
-			likedislike = GoodCommentVotes.objects.get(item=comment, user=request.user)
-			if likedislike.vote is not GoodCommentVotes.LIKE:
-				likedislike.vote = GoodCommentVotes.LIKE
-				likedislike.save(update_fields=['vote'])
-				result = True
-				comment.notification_comment_like(request.user)
-			else:
-				likedislike.delete()
-				result = False
-		except GoodCommentVotes.DoesNotExist:
+class GoodCommentUserLikeCreate(View):
+    def post(self, request, **kwargs):
+        comment = GoodComment.objects.get(pk=self.kwargs["pk"])
+        user = User.objects.get(uuid=self.kwargs["uuid"])
+        if user != request.user:
+            check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
+            if user.is_closed_profile:
+                check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
+        try:
+            likedislike = GoodCommentVotes.objects.get(item=comment, user=request.user)
+            if likedislike.vote is not GoodCommentVotes.LIKE:
+                likedislike.vote = GoodCommentVotes.LIKE
+                likedislike.save(update_fields=['vote'])
+                result = True
+                comment.notification_comment_like(request.user)
+            else:
+                likedislike.delete()
+                result = False
+        except GoodCommentVotes.DoesNotExist:
             GoodCommentVotes.objects.create(item=comment, user=request.user, vote=GoodCommentVotes.LIKE)
             result = True
         return HttpResponse(json.dumps({"result": result,"like_count": comment.likes().count(),"dislike_count": comment.dislikes().count()}),content_type="application/json")
