@@ -1,12 +1,12 @@
 from django.contrib import admin
-from notifications.model.user import Notification, CommunityNotification
+from notifications.model.user import UserNotification, UserCommunityNotification
 from notifications.model.item import ItemNotification, ItemCommunityNotification
 from notifications.model.photo import PhotoNotification, PhotoCommunityNotification
 from notifications.model.good import GoodNotification, GoodCommunityNotification
 
 
-admin.site.register(Notification)
-admin.site.register(CommunityNotification)
+admin.site.register(UserNotification)
+admin.site.register(UserCommunityNotification)
 admin.site.register(ItemNotification)
 admin.site.register(ItemCommunityNotification)
 admin.site.register(PhotoNotification)
