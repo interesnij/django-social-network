@@ -1,6 +1,6 @@
 from django.db import models
 from django.conf import settings
-from notifications.models import Notification, notification_handler
+from notifications.model.user import *
 
 
 class Connect(models.Model):
@@ -9,7 +9,7 @@ class Connect(models.Model):
     target_connection = models.OneToOneField('self', on_delete=models.CASCADE, null=True)
 
     def notification_connect(self, user):
-        notification_handler(user, self.target_user, Notification.CONNECTION_CONFIRMED, action_object=self, id_value=str(user.uuid), key='notification')
+        notification_handler(user, self.target_user, UserNotification.CONNECTION_CONFIRMED, key='notification')
 
     @classmethod
     def create_connection(cls, user_id, target_user_id):

@@ -1,5 +1,5 @@
 from django.db import models
-from notifications.models import *
+from notifications.model.user import *
 from django.conf import settings
 
 
@@ -8,7 +8,7 @@ class Follow(models.Model):
     followed_user = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE, related_name='followers', null=False, verbose_name="На кого подписывается")
 
     def notification_follow(self, user):
-        notification_handler(user, self.followed_user, Notification.CONNECTION_REQUEST, action_object=self, id_value=str(user.uuid), key='notification')
+        notification_handler(user, self.followed_user, UserNotification.CONNECTION_REQUEST, key='notification')
 
     class Meta:
         unique_together = ('user', 'followed_user')
@@ -27,7 +27,7 @@ class CommunityFollow(models.Model):
     community = models.ForeignKey('communities.Community', db_index=False, on_delete=models.CASCADE, related_name='community', null=False, verbose_name="На какое сообщество подписывается")
 
     def notification_community_follow(self, user):
-        community_notification_handler(user, self.community, CommunityNotification.CONNECTION_REQUEST, action_object=self, id_value=str(user.uuid), key='notification')
+        community_notification_handler(user, self.community, UserCommunityNotification.CONNECTION_REQUEST, key='notification')
 
     class Meta:
         unique_together = ('user', 'community')

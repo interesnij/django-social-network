@@ -1,0 +1,22 @@
+{% load staticfiles humanize %}<!DOCTYPE html>
+  {% if notifications %}
+  <span class="clean_notify" style="cursor:pointer">Очистить</span>
+    {% for notification in notifications %}
+      <a class="media pink-gradient-active" href="{% url 'user' pk=notification.actor.pk %}" class="ajax">
+        <figure>
+          {% if notification.actor.profile.avatar %}
+            <img src="{{ notification.actor.profile.avatar.url }}" alt="image" style="border-radius:40px;width:40px;">
+          {% else %}
+            <img style="border:#6C757D solid 1px;border-radius:40px;padding:5px;width:40px;" src="{% static 'images/icons/person-24px.svg' %}" />
+          {% endif %}
+        </figure>
+        <div class="media-body">
+            <h5 class="mt-0">{{ notification|safe }}</h5>
+            <p>{{ notification.timestamp|naturaltime }}</p>
+        </div>
+      </a>
+    {% endfor %}
+  <a href="{% url 'user_notify_list' %}" class="media text-center ajax">все уведомления</a>
+  {% else %}
+      Нет новых уведомлений
+  {% endif %}

@@ -11,7 +11,7 @@ from moderation.models import ModeratedObject, ModerationCategory
 from main.models import Item
 from goods.models import Good
 from common.model_loaders import get_user_model
-from notifications.models import CommunityNotification, community_notification_handler
+from notifications.model.user import *
 import uuid
 
 
@@ -367,9 +367,7 @@ class Community(models.Model):
         community_notification_handler(
                                 user,
                                 self,
-                                CommunityNotification.JOIN,
-                                action_object=self,
-                                id_value=str(user.uuid),
+                                UserCommunityNotification.JOIN,
                                 key='notification'
                             )
 

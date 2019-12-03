@@ -1,13 +1,9 @@
-from django.conf.urls import url
-
-from notifications import views
+from django.conf.urls import url, include
 
 
-urlpatterns = [
-    url(r'^user/$', views.UserNotificationListView.as_view(), name='user_notify_list'),
-    url(r'^user/$', views.CommunityNotificationListView.as_view(), name='community_notify_list'),
-    url(r'^user_all_read/$', views.user_all_read, name='user_all_read'),
-    url(r'^community_all_read/$', views.community_all_read, name='community_all_read'),
-    url(r'^latest-notifications/$', views.get_latest_notifications, name='latest_notifications'),
-    url(r'^clean-notifications/$', views.NotificationCleanView.as_view(), name='clean_notifications'),
+urlpatterns=[
+	url(r'^user/', include('notifications.url.user')),
+	url(r'^item/', include('notifications.url.item')),
+	url(r'^good/', include('notifications.url.good')),
+	url(r'^photo/', include('notifications.url.photo')),
 ]

@@ -3,7 +3,7 @@ from pilkit.processors import ResizeToFill, ResizeToFit
 from imagekit.models import ProcessedImageField
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
-from notifications.models import Notification, notification_handler
+from notifications.model.good import *
 from django.utils import timezone
 from django.conf import settings
 from django.contrib.postgres.indexes import BrinIndex
@@ -84,6 +84,24 @@ class Good(models.Model):
 		verbose_name="Товар"
 		verbose_name_plural="Товары"
 
+	def notification_user_repost(self, user):
+        good_notification_handler(user, self.creator, GoodNotification.REPOST, key='social_update')
+
+    def notification_user_like(self, user):
+        good_notification_handler(user, self.creator, GoodNotification.LIKE, key='social_update')
+
+    def notification_user_dislike(self, user):
+        good_notification_handler(user, self.creator, GoodNotification.DISLIKE, key='social_update')
+
+    def notification_community_repost(self, user):
+        good_community_notification_handler(user, self.creator, GoodCommunityNotification.REPOST, key='social_update')
+
+    def notification_community_like(self, user):
+        good_community_notification_handler(user, self.creator, GoodCommunityNotification.LIKE, key='social_update')
+
+    def notification_community_dislike(self, user):
+        good_community_notification_handler(user, self.creator, GoodCommunityNotification.DISLIKE, key='social_update')
+
 
 class GoodComment(models.Model):
     parent_comment = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True,verbose_name="Родительский комментарий")
@@ -106,8 +124,26 @@ class GoodComment(models.Model):
     def __str__(self):
         return "{0}/{1}".format(self.commenter.get_full_name(), self.text[:10])
 
-    def notification_comment(self, user):
-        notification_handler(user, self.commenter,Notification.POST_COMMENT, action_object=self,id_value=str(self.uuid),key='social_update')
+    def notification_user_comment(self, user):
+        good_notification_handler(user, self.commenter, GoodNotification.POST_COMMENT, key='social_update')
 
-    def notification_reply_comment(self, user):
-        notification_handler(user, self.commenter,Notification.POST_COMMENT_REPLY, action_object=self,id_value=str(self.uuid),key='social_update')
+    def notification_user_reply_comment(self, user):
+        good_notification_handler(user, self.commenter, GoodNotification.POST_COMMENT_REPLY, key='social_update')
+
+    def notification_user_comment_like(self, user):
+        good_notification_handler(user, self.commenter, GoodNotification.LIKE_COMMENT, key='social_update')
+
+    def notification_user_comment_dislike(self, user):
+        good_notification_handler(user, self.commenter, GoodNotification.DISLIKE_COMMENT, key='social_update')
+
+    def notification_community_comment(self, user):
+        good_community_notification_handler(user, self.commenter, GoodCommunityNotification.POST_COMMENT, key='social_update')
+
+    def notification_community_reply_comment(self, user):
+        good_community_notification_handler(user, self.commenter, GoodCommunityNotification.POST_COMMENT_REPLY, key='social_update')
+
+    def notification_community_comment_like(self, user):
+        good_community_notification_handler(user, self.commenter, GoodCommunityNotification.LIKE_COMMENT, key='social_update')
+
+    def notification_community_comment_dislike(self, user):
+        good_community_notification_handler(user, self.commenter, GoodCommunityNotification.DISLIKE_COMMENT, key='social_update')

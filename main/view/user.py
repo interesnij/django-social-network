@@ -34,6 +34,7 @@ class ItemUserCommentList(View):
 	        "comments": comments_html,
 	    })
 
+
 class ItemCommentUserCreate(View):
 	def post(self,request,*args,**kwargs):
 		self.form_post=CommentForm(request.POST, request.FILES)
@@ -49,6 +50,7 @@ class ItemCommentUserCreate(View):
 					if user.is_closed_profile:
 						check_is_connected_with_user_with_id(user=request.user, user_id = self.user.id)
 				new_comment = ItemComment.objects.create(item=self.item, text=self.text, commenter=request.user)
+				new_comment.notification_user_comment(request.user)
 				new_comment_images = ItemCommentPhoto.objects.create(item=self.item, item_comment_photo=comment.item_comment_photo, item_comment_photo2=comment.item_comment_photo2)
 				html = render_to_string('generic/posts/parent_comment.html',{'comment': new_comment, 'request': request})
 				return JsonResponse(html, safe=False)

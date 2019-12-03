@@ -10,7 +10,7 @@ from django.core import serializers
 from django.contrib.postgres.indexes import BrinIndex
 
 
-class NotificationQuerySet(models.query.QuerySet):
+class ItemNotificationQS(models.query.QuerySet):
     def unread(self):
         return self.filter(unread=True)
     def read(self):
@@ -41,9 +41,9 @@ class NotificationQuerySet(models.query.QuerySet):
         return qs
 
 
-class Notification(models.Model):
-    recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='notifications', verbose_name="Получатель")
-    actor = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="notify_actor", verbose_name="Инициатор", on_delete=models.CASCADE)
+class ItemNotification(models.Model):
+    recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='item_notifications', verbose_name="Получатель")
+    actor = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="Инициатор", on_delete=models.CASCADE)
     timestamp = models.DateTimeField(default=timezone.now, editable=False, db_index=True, verbose_name="Создано")
     unread  = models.BooleanField(default=True, db_index=True)
 
@@ -60,26 +60,23 @@ class Notification(models.Model):
     DISLIKE_COMMENT =  'DC'
 
     NOTIFICATION_TYPES = (
-        (POST_COMMENT, 'оставил комментарий'),
+        (POST_COMMENT, 'оставил комментарий к записи'),
         (POST_COMMENT_REPLY, 'ответил на Ваш комментарий к записи'),
-        (CONNECTION_REQUEST, 'подал заявку в друзья'),
-        (CONNECTION_CONFIRMED, 'подтвердил, что он Ваш друг'),
-        (COMMUNITY_INVITE, 'пригласил Вас в сообщество'),
         (POST_USER_MENTION, 'упомянул Вас в записи'),
         (POST_COMMENT_USER_MENTION, 'упомянул Вас в комментарии к записи'),
-        (LIKE, 'понравился Ваш пост'),
-        (DISLIKE, 'не понравился Ваш пост'),
-        (LIKE_COMMENT, 'понравился Ваш комментарий'),
-        (DISLIKE_COMMENT, 'не понравился Ваш комментарий'),
-        (LIKE_REPLY_COMMENT, 'понравился Ваш ответ к комментарию'),
-        (DISLIKE_REPLY_COMMENT, 'не понравился Ваш ответ к комментарию'),
+        (LIKE, 'понравилась Ваша запись'),
+        (DISLIKE, 'не понравилась Ваша запись'),
+        (LIKE_COMMENT, 'понравился Ваш комментарий к записи'),
+        (DISLIKE_COMMENT, 'не понравился Ваш комментарий к записи'),
+        (LIKE_REPLY_COMMENT, 'понравился Ваш ответ на комментарий  к записи'),
+        (DISLIKE_REPLY_COMMENT, 'не понравился Ваш ответ к комментарий к записи'),
         (REPOST, 'поделился Вашей записью'),
     )
 
     verb = models.CharField(max_length=5, choices=NOTIFICATION_TYPES, verbose_name="Тип уведомления")
     slug = models.SlugField(max_length=210, null=True, blank=True)
     uuid_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    objects = NotificationQuerySet.as_manager()
+    objects =  UserNotificationQS.as_manager()
 
     class Meta:
         verbose_name = "Уведомление"
@@ -96,44 +93,9 @@ class Notification(models.Model):
             self.save()
 
 
-def notification_handler(actor, recipient, verb, **kwargs):
-
-    key = kwargs.pop('key', 'notification')
-
-    if recipient == 'global':
-        users = User.objects.all().exclude(username=actor.username)
-        for user in users:
-            Notification.objects.create(
-                actor=actor,
-                recipient=user,
-                verb=verb,
-            )
-        notification_broadcast(actor, key)
-
-    elif isinstance(recipient, list):
-        for user in recipient:
-            Notification.objects.create(
-                actor=actor,
-                recipient=User.objects.get(username=user.username),
-                verb=verb,
-            )
-
-    elif isinstance(recipient, get_user_model()):
-        Notification.objects.create(
-            actor=actor,
-            recipient=recipient,
-            verb=verb,
-        )
-        notification_broadcast(
-            actor, key, recipient=recipient.username)
-
-    else:
-        pass
-
-
-class CommunityNotification(models.Model):
-    recipient = models.ForeignKey('communities.Community', on_delete=models.CASCADE, related_name='community_notifications', verbose_name="Сообщество")
-    actor = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="notification_actor", verbose_name="Инициатор", on_delete=models.CASCADE)
+class ItemCommunityNotification(models.Model):
+    recipient = models.ForeignKey('communities.Community', on_delete=models.CASCADE, related_name='item_community_notifications', verbose_name="Сообщество")
+    actor = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="Инициатор", on_delete=models.CASCADE)
     timestamp = models.DateTimeField(default=timezone.now, editable=False, db_index=True, verbose_name="Создано")
     unread  = models.BooleanField(default=True, db_index=True)
 
@@ -158,17 +120,17 @@ class CommunityNotification(models.Model):
         (POST_COMMENT_USER_MENTION, 'упомянул сообщество в комментарии к записи'),
         (LIKE, 'понравилась запись сообщества'),
         (DISLIKE, 'не понравилась запись сообщества'),
-        (LIKE_COMMENT, 'понравился комментарий сообщества'),
-        (DISLIKE_COMMENT, 'не понравился комментарий сообщества'),
-        (LIKE_REPLY_COMMENT, 'понравился ответ к комментарию сообщества'),
-        (DISLIKE_REPLY_COMMENT, 'не понравился ответ к комментарию сообщества'),
+        (LIKE_COMMENT, 'понравился комментарий в сообществе'),
+        (DISLIKE_COMMENT, 'не понравился комментарий в сообществе'),
+        (LIKE_REPLY_COMMENT, 'понравился ответ на комментарий в сообществе'),
+        (DISLIKE_REPLY_COMMENT, 'не понравился ответ к комментарий в сообществе'),
         (REPOST, 'поделился записью сообщества'),
     )
 
     verb = models.CharField(max_length=5, choices=NOTIFICATION_TYPES, verbose_name="Тип уведомления")
     slug = models.SlugField(max_length=210, null=True, blank=True)
     uuid_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    objects = NotificationQuerySet.as_manager()
+    objects = UserNotificationQS.as_manager()
 
     class Meta:
         verbose_name = "Уведомление сообщества"
@@ -185,41 +147,75 @@ class CommunityNotification(models.Model):
             self.save()
 
 
-def community_notification_handler(actor, recipient, verb, **kwargs):
+def item_notification_handler(actor, recipient, verb, **kwargs):
     key = kwargs.pop('key', 'notification')
 
     if recipient == 'global':
         users = User.objects.all().exclude(username=actor.username)
         for user in users:
-            CommunityNotification.objects.create(
+            UserNotification.objects.create(
                 actor=actor,
                 recipient=user,
                 verb=verb,
             )
-        notification_broadcast(actor, key)
+        item_notification_broadcast(actor, key)
+
+    elif isinstance(recipient, list):
+        for user in recipient:
+            UserNotification.objects.create(
+                actor=actor,
+                recipient=User.objects.get(username=user.username),
+                verb=verb,
+            )
+
+    elif isinstance(recipient, get_user_model()):
+        UserNotification.objects.create(
+            actor=actor,
+            recipient=recipient,
+            verb=verb,
+        )
+        item_notification_broadcast(
+            actor, key, recipient=recipient.username)
+
+    else:
+        pass
+
+
+def item_community_notification_handler(actor, recipient, verb, **kwargs):
+    key = kwargs.pop('key', 'notification')
+
+    if recipient == 'global':
+        users = User.objects.all().exclude(username=actor.username)
+        for user in users:
+            UserCommunityNotification.objects.create(
+                actor=actor,
+                recipient=user,
+                verb=verb,
+            )
+        item_notification_broadcast(actor, key)
 
     elif isinstance(recipient, list):
         for community in recipient:
-            CommunityNotification.objects.create(
+            UserCommunityNotification.objects.create(
                 actor=actor,
                 recipient=Community.objects.get(name=community.name),
                 verb=verb,
             )
 
     elif isinstance(recipient, get_community_model()):
-        CommunityNotification.objects.create(
+        UserCommunityNotification.objects.create(
             actor=actor,
             recipient=recipient,
             verb=verb,
         )
-        notification_broadcast(
+        item_notification_broadcast(
             actor, key, recipient=recipient.name)
 
     else:
         pass
 
 
-def notification_broadcast(actor, key, **kwargs):
+def item_notification_broadcast(actor, key, **kwargs):
     channel_layer = get_channel_layer()
     recipient = kwargs.pop('recipient', None)
     payload = {

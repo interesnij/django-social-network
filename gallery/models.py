@@ -7,6 +7,7 @@ from imagekit.models import ProcessedImageField
 from django.contrib.contenttypes.fields import GenericRelation
 from django.conf import settings
 from main.models import Item
+from notifications.model.photo import *
 
 
 class Album(models.Model):
@@ -69,6 +70,24 @@ class Photo(models.Model):
                                     )
         return photo
 
+    def notification_user_repost(self, user):
+        photo_notification_handler(user, self.creator, PhotoNotification.REPOST, key='social_update')
+
+    def notification_user_like(self, user):
+        photo_notification_handler(user, self.creator, PhotoNotification.LIKE, key='social_update')
+
+    def notification_user_dislike(self, user):
+        photo_notification_handler(user, self.creator, PhotoNotification.DISLIKE, key='social_update')
+
+    def notification_community_repost(self, user):
+        photo_community_notification_handler(user, self.creator, PhotoCommunityNotification.REPOST, key='social_update')
+
+    def notification_community_like(self, user):
+        photo_community_notification_handler(user, self.creator, PhotoCommunityNotification.LIKE, key='social_update')
+
+    def notification_community_dislike(self, user):
+        photo_community_notification_handler(user, self.creator, PhotoCommunityNotification.DISLIKE, key='social_update')
+
 
 class PhotoComment(models.Model):
     parent_comment = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True,verbose_name="Родительский комментарий")
@@ -91,11 +110,26 @@ class PhotoComment(models.Model):
     def __str__(self):
         return "{0}/{1}".format(self.commenter.get_full_name(), self.text[:10])
 
-    def notification_comment(self, user):
-        notification_handler(user, self.commenter,Notification.POST_COMMENT, action_object=self,id_value=str(self.uuid),key='social_update')
+    def notification_user_comment(self, user):
+        photo_notification_handler(user, self.commenter, PhotoNotification.POST_COMMENT, key='social_update')
 
-    def notification_reply_comment(self, user):
-        notification_handler(user, self.commenter,Notification.POST_COMMENT_REPLY, action_object=self,id_value=str(self.uuid),key='social_update')
+    def notification_user_reply_comment(self, user):
+        photo_notification_handler(user, self.commenter, PhotoNotification.POST_COMMENT_REPLY, key='social_update')
 
-    def notification_comment_react(self, user):
-        notification_handler(user, self.reactor,Notification.REACT_COMMENT, action_object=self,id_value=str(self.uuid),key='social_update')
+    def notification_user_comment_like(self, user):
+        photo_notification_handler(user, self.commenter, PhotoNotification.LIKE_COMMENT, key='social_update')
+
+    def notification_user_comment_dislike(self, user):
+        photo_notification_handler(user, self.commenter, PhotoNotification.DISLIKE_COMMENT, key='social_update')
+
+    def notification_community_comment(self, user):
+        photo_community_notification_handler(user, self.commenter, PhotoCommunityNotification.POST_COMMENT, key='social_update')
+
+    def notification_community_reply_comment(self, user):
+        photo_community_notification_handler(user, self.commenter, PhotoCommunityNotification.POST_COMMENT_REPLY, key='social_update')
+
+    def notification_community_comment_like(self, user):
+        photo_community_notification_handler(user, self.commenter, PhotoCommunityNotification.LIKE_COMMENT, key='social_update')
+
+    def notification_community_comment_dislike(self, user):
+        photo_community_notification_handler(user, self.commenter, PhotoCommunityNotification.DISLIKE_COMMENT, key='social_update')
