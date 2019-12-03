@@ -13,6 +13,7 @@ from common.models import ItemVotes, ItemCommentVotes
 from imagekit.models import ProcessedImageField
 from pilkit.processors import ResizeToFit, ResizeToFill
 from ckeditor_uploader.fields import RichTextUploadingField
+from rest_framework.exceptions import ValidationError
 
 
 class Item(models.Model):
@@ -161,9 +162,7 @@ class ItemComment(models.Model):
     votes = models.OneToOneField(ItemCommentVotes, on_delete=models.CASCADE, null=True, related_query_name='comments')
 
     class Meta:
-        indexes = (
-            BrinIndex(fields=['created']),
-        )
+        indexes = (BrinIndex(fields=['created']),)
         verbose_name="комментарий к записи"
         verbose_name_plural="комментарии к записи"
 
@@ -208,6 +207,25 @@ class ItemComment(models.Model):
 
     def notification_community_comment_dislike(self, user):
         item_community_notification_handler(user, self.commenter, ItemCommunityNotification.DISLIKE_COMMENT, key='social_update')
+
+    @classmethod
+    def create_user_comment(cls, commenter, item=None, community=None, text=None, item_comment_photo=None, item_comment_photo2=None, created=None ):
+
+        if not text and not item_comment_photo and not item_comment_photo2:
+            raise ValidationError('Для добавления комментария необходимо написать что-то или прикрепить изображение')
+
+        comment = ItemComment.objects.create(commenter=commenter, text=text, item=item)
+        if item_comment_photo or item_comment_photo2:
+            ItemCommentPhoto.objects.create(parent=comment, item_comment_photo=item_comment_photo, item_comment_photo2=item_comment_photo2)
+
+        channel_layer = get_channel_layer()
+        payload = {
+                "type": "receive",
+                "key": "comment_item",
+                "actor_name": comment.commenter.get_full_name()
+            }
+        async_to_sync(channel_layer.group_send)('notifications', payload)
+        return comment
 
 
 class ItemCommentPhoto(models.Model):
