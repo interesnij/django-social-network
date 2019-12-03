@@ -44,21 +44,20 @@ class ItemCommentUserCreate(View):
 		if self.form_post.is_valid():
 			comment=self.form_post.save(commit=False)
 			self.text = comment.text
-			if len(self.text) > 0 or comment.item_comment_photo or comment.item_comment_photo2:
-				if request.user != self.user:
-					check_is_not_blocked_with_user_with_id(user=request.user, user_id = self.user.id)
-					if user.is_closed_profile:
-						check_is_connected_with_user_with_id(user=request.user, user_id = self.user.id)
-				new_comment = comment.create_user_comment(
-															commenter=request.user,
-															item=self.item,
-															text=self.text,
-															item_comment_photo=comment.item_comment_photo,
-															item_comment_photo2=comment.item_comment_photo2
-														)
-				new_comment.notification_user_comment(request.user)
-				html = render_to_string('item_user/parent_comment.html',{'comment': new_comment, 'request': request})
-				return JsonResponse(html, safe=False)
+			if request.user != self.user:
+				check_is_not_blocked_with_user_with_id(user=request.user, user_id = self.user.id)
+				if user.is_closed_profile:
+					check_is_connected_with_user_with_id(user=request.user, user_id = self.user.id)
+			new_comment = comment.create_user_comment(
+														commenter=request.user,
+														item=self.item,
+														text=self.text,
+														item_comment_photo=comment.item_comment_photo,
+														item_comment_photo2=comment.item_comment_photo2
+													)
+			new_comment.notification_user_comment(request.user)
+			html = render_to_string('item_user/parent_comment.html',{'comment': new_comment, 'request': request})
+			return JsonResponse(html, safe=False)
 		else:
 			return HttpResponseBadRequest()
 
