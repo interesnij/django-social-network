@@ -69,7 +69,7 @@ class UserNotification(models.Model):
         verbose_name = "Уведомление"
         verbose_name_plural = "Уведомления"
         ordering = ["-timestamp"]
-        indexes = (BrinIndex(fields=['created']),)
+        indexes = (BrinIndex(fields=['timestamp']),)
 
     def __str__(self):
         return '{} - {}'.format(self.actor, self.get_verb_display())
@@ -107,7 +107,7 @@ class UserCommunityNotification(models.Model):
         verbose_name = "Уведомление сообщества"
         verbose_name_plural = "Уведомления сообщества"
         ordering = ["-timestamp"]
-        indexes = (BrinIndex(fields=['created']),)
+        indexes = (BrinIndex(fields=['timestamp']),)
 
     def __str__(self):
         return '{} - {}'.format(self.actor, self.get_verb_display())
