@@ -138,7 +138,7 @@ class GoodCommentUserLikeCreate(View):
         return HttpResponse(json.dumps({"result": result,"like_count": comment.likes().count(),"dislike_count": comment.dislikes().count()}),content_type="application/json")
 
 
-class PhotoCommentUserDislikeCreate(View):
+class GoodCommentUserDislikeCreate(View):
 
 	def post(self, request, **kwargs):
 		comment = GoodComment.objects.get(pk=self.kwargs["pk"])
