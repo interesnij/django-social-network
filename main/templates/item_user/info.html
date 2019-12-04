@@ -8,16 +8,17 @@
                 data-id="{{ object.id }}"
                 data-uuid="{{ object.creator.uuid }}"
                 title="Нравится">
-            {% if object.likes|user_in:request_user %}
-              <img style="width:22px" src="{% static 'images/icons/thumb_up_success.svg' %}" />
-              <img style="width:22px;display:none" src="{% static 'images/icons/thumb_up.svg' %}" />
-              <span style="color:#41cd52" data-count="like">{{ object.likes.count }}</span>
-            {% else %}
-              <img style="width:22px" src="{% static 'images/icons/thumb_up.svg' %}" />
-              <img style="width:22px;display:none" src="{% static 'images/icons/thumb_up_success.svg' %}" />
-              <span data-count="like">{{ object.likes.count }}</span>
-            {% endif %}
+
           </span>
+          {% if object.likes|user_in:request_user %}
+            <img style="width:22px" src="{% static 'images/icons/thumb_up_success.svg' %}" />
+            <img style="width:22px;display:none" src="{% static 'images/icons/thumb_up.svg' %}" />
+            <span style="color:#41cd52" data-count="like">{{ object.likes.count }}</span>
+          {% else %}
+            <img style="width:22px" src="{% static 'images/icons/thumb_up.svg' %}" />
+            <img style="width:22px;display:none" src="{% static 'images/icons/thumb_up_success.svg' %}" />
+            <span data-count="like">{{ object.likes.count }}</span>
+          {% endif %}
 
           <span class="like_window">
             {% if object.likes.all %}
