@@ -43,6 +43,8 @@ class ItemCommentUserCreate(View):
 
 		if self.form_post.is_valid():
 			comment=self.form_post.save(commit=False)
+			comment.item_comment_photo = form_post.cleaned_data['item_comment_photo']
+			comment.item_comment_photo2 = form_post.cleaned_data['item_comment_photo2']
 
 			if request.user != self.user:
 				check_is_not_blocked_with_user_with_id(user=request.user, user_id = self.user.id)
