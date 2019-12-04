@@ -7,8 +7,7 @@ from main.forms import CommentForm
 from django.template.loader import render_to_string
 from django.views import View
 from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
-from rest_framework.exceptions import PermissionDenied
-
+from rest_framework.exceptions import PermissionDenied, ValidationError
 
 
 class ItemUserCommentList(View):
