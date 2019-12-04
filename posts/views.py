@@ -62,12 +62,7 @@ class PostUserCreate(View):
                                     comments_enabled=post.comments_enabled,
                                     status=post.status,
                                 )
-            try:
-                self.album = Album.objects.get(title="Фото со стены", creator=self.user, is_is_generic=True)
-            except:
-                self.album = None
-            self.uploaded_file = request.FILES['file']
-            Photo.objects.create(album=self.album, file=self.uploaded_file, creator=self.user, item=new_post)
+
             if request.is_ajax() :
                 html = render_to_string('new_post.html',{
                     'object': new_post,
