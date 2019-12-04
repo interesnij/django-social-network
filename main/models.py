@@ -95,13 +95,13 @@ class Item(models.Model):
         item_notification_handler(user, self.creator, ItemNotification.DISLIKE, key='social_update', item=self)
 
     def notification_community_repost(self, user):
-        community_notification_handler(user, self.creator, ItemCommunityNotification.REPOST, key='social_update')
+        community_notification_handler(user, self.creator, ItemCommunityNotification.REPOST, key='social_update', item=self)
 
     def notification_community_like(self, user):
-        community_notification_handler(user, self.creator, ItemCommunityNotification.LIKE, key='social_update')
+        community_notification_handler(user, self.creator, ItemCommunityNotification.LIKE, key='social_update', item=self)
 
     def notification_community_dislike(self, user):
-        community_notification_handler(user, self.creator, ItemCommunityNotification.DISLIKE, key='social_update')
+        community_notification_handler(user, self.creator, ItemCommunityNotification.DISLIKE, key='social_update', item=self)
 
     def get_comments(self, user):
         item = Item.objects.get(pk=self.pk)
@@ -183,28 +183,28 @@ class ItemComment(models.Model):
         return "{0}/{1}".format(self.commenter.get_full_name(), self.text[:10])
 
     def notification_user_comment(self, user):
-        item_notification_handler(user, self.commenter, ItemNotification.POST_COMMENT, key='social_update')
+        item_notification_handler(user, self.commenter, ItemNotification.POST_COMMENT, item=self, key='social_update')
 
     def notification_user_reply_comment(self, user):
-        item_notification_handler(user, self.commenter, ItemNotification.POST_COMMENT_REPLY, key='social_update')
+        item_notification_handler(user, self.commenter, ItemNotification.POST_COMMENT_REPLY, item=self, key='social_update')
 
     def notification_user_comment_like(self, user):
-        item_notification_handler(user, self.commenter, ItemNotification.LIKE_COMMENT, key='social_update')
+        item_notification_handler(user, self.commenter, ItemNotification.LIKE_COMMENT, item=self, key='social_update')
 
     def notification_user_comment_dislike(self, user):
-        item_notification_handler(user, self.commenter, ItemNotification.DISLIKE_COMMENT, key='social_update')
+        item_notification_handler(user, self.commenter, ItemNotification.DISLIKE_COMMENT, item=self, key='social_update')
 
     def notification_community_comment(self, user):
-        item_community_notification_handler(user, self.commenter, ItemCommunityNotification.POST_COMMENT, key='social_update')
+        item_community_notification_handler(user, self.commenter, ItemCommunityNotification.POST_COMMENT, item=self, key='social_update')
 
     def notification_community_reply_comment(self, user):
-        item_community_notification_handler(user, self.commenter, ItemCommunityNotification.POST_COMMENT_REPLY, key='social_update')
+        item_community_notification_handler(user, self.commenter, ItemCommunityNotification.POST_COMMENT_REPLY, item=self, key='social_update')
 
     def notification_community_comment_like(self, user):
-        item_community_notification_handler(user, self.commenter, ItemCommunityNotification.LIKE_COMMENT, key='social_update')
+        item_community_notification_handler(user, self.commenter, ItemCommunityNotification.LIKE_COMMENT, item=self, key='social_update')
 
     def notification_community_comment_dislike(self, user):
-        item_community_notification_handler(user, self.commenter, ItemCommunityNotification.DISLIKE_COMMENT, key='social_update')
+        item_community_notification_handler(user, self.commenter, ItemCommunityNotification.DISLIKE_COMMENT, item=self, key='social_update')
 
     @classmethod
     def create_user_comment(cls, commenter, item=None, community=None, text=None, item_comment_photo=None, item_comment_photo2=None, created=None ):

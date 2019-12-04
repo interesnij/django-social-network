@@ -85,22 +85,22 @@ class Good(models.Model):
 		verbose_name_plural="Товары"
 
 	def notification_user_repost(self, user):
-		good_notification_handler(user, self.creator, GoodNotification.REPOST, key='social_update')
+		good_notification_handler(user, self.creator, GoodNotification.REPOST, good=self, key='social_update')
 
 	def notification_user_like(self, user):
-		good_notification_handler(user, self.creator, GoodNotification.LIKE, key='social_update')
+		good_notification_handler(user, self.creator, GoodNotification.LIKE, good=self, key='social_update')
 
 	def notification_user_dislike(self, user):
-		good_notification_handler(user, self.creator, GoodNotification.DISLIKE, key='social_update')
+		good_notification_handler(user, self.creator, GoodNotification.DISLIKE, good=self, key='social_update')
 
 	def notification_community_repost(self, user):
-		good_community_notification_handler(user, self.creator, GoodCommunityNotification.REPOST, key='social_update')
+		good_community_notification_handler(user, self.creator, GoodCommunityNotification.REPOST, good=self, key='social_update')
 
 	def notification_community_like(self, user):
-		good_community_notification_handler(user, self.creator, GoodCommunityNotification.LIKE, key='social_update')
+		good_community_notification_handler(user, self.creator, GoodCommunityNotification.LIKE, good=self, key='social_update')
 
 	def notification_community_dislike(self, user):
-		good_community_notification_handler(user, self.creator, GoodCommunityNotification.DISLIKE, key='social_update')
+		good_community_notification_handler(user, self.creator, GoodCommunityNotification.DISLIKE, good=self, key='social_update')
 
 
 class GoodComment(models.Model):
@@ -125,25 +125,25 @@ class GoodComment(models.Model):
         return "{0}/{1}".format(self.commenter.get_full_name(), self.text[:10])
 
     def notification_user_comment(self, user):
-        good_notification_handler(user, self.commenter, GoodNotification.POST_COMMENT, key='social_update')
+        good_notification_handler(user, self.commenter, GoodNotification.POST_COMMENT, key='social_update', good=self)
 
     def notification_user_reply_comment(self, user):
-        good_notification_handler(user, self.commenter, GoodNotification.POST_COMMENT_REPLY, key='social_update')
+        good_notification_handler(user, self.commenter, GoodNotification.POST_COMMENT_REPLY, key='social_update', good=self)
 
     def notification_user_comment_like(self, user):
-        good_notification_handler(user, self.commenter, GoodNotification.LIKE_COMMENT, key='social_update')
+        good_notification_handler(user, self.commenter, GoodNotification.LIKE_COMMENT, key='social_update', good=self)
 
     def notification_user_comment_dislike(self, user):
-        good_notification_handler(user, self.commenter, GoodNotification.DISLIKE_COMMENT, key='social_update')
+        good_notification_handler(user, self.commenter, GoodNotification.DISLIKE_COMMENT, key='social_update', good=self)
 
     def notification_community_comment(self, user):
-        good_community_notification_handler(user, self.commenter, GoodCommunityNotification.POST_COMMENT, key='social_update')
+        good_community_notification_handler(user, self.commenter, GoodCommunityNotification.POST_COMMENT, key='social_update', good=self)
 
     def notification_community_reply_comment(self, user):
-        good_community_notification_handler(user, self.commenter, GoodCommunityNotification.POST_COMMENT_REPLY, key='social_update')
+        good_community_notification_handler(user, self.commenter, GoodCommunityNotification.POST_COMMENT_REPLY, key='social_update', good=self)
 
     def notification_community_comment_like(self, user):
-        good_community_notification_handler(user, self.commenter, GoodCommunityNotification.LIKE_COMMENT, key='social_update')
+        good_community_notification_handler(user, self.commenter, GoodCommunityNotification.LIKE_COMMENT, key='social_update', good=self)
 
     def notification_community_comment_dislike(self, user):
-        good_community_notification_handler(user, self.commenter, GoodCommunityNotification.DISLIKE_COMMENT, key='social_update')
+        good_community_notification_handler(user, self.commenter, GoodCommunityNotification.DISLIKE_COMMENT, key='social_update', good=self)
