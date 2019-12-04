@@ -10,12 +10,12 @@
                 title="Нравится">
 
                 {% if object.likes|user_in:request_user %}
-                  <img class="like" style="width:22px" src="{% static 'images/icons/thumb_up_success.svg' %}" />
-                  <img class="like_act" style="width:22px;display:none" src="{% static 'images/icons/thumb_up.svg' %}" />
+                  <img class="like_act" style="width:22px" src="{% static 'images/icons/thumb_up_success.svg' %}" />
+                  <img class="like" style="width:22px;display:none" src="{% static 'images/icons/thumb_up.svg' %}" />
                   <span style="color:#41cd52" data-count="like">{{ object.likes.count }}</span>
                 {% else %}
-                  <img style="width:22px" src="{% static 'images/icons/thumb_up.svg' %}" />
-                  <img style="width:22px;display:none" src="{% static 'images/icons/thumb_up_success.svg' %}" />
+                  <img class="like" style="width:22px" src="{% static 'images/icons/thumb_up.svg' %}" />
+                  <img class="like_act" style="width:22px;display:none" src="{% static 'images/icons/thumb_up_success.svg' %}" />
                   <span data-count="like">{{ object.likes.count }}</span>
                 {% endif %}
           </span>
@@ -50,10 +50,12 @@
               data-uuid="{{ object.creator.uuid }}"
               title="Не нравится">
               {% if object.dislikes|user_in:request_user %}
-              <img class="like" style="width:22px" src="{% static 'images/icons/thumb_down_danger.svg' %}" />
+              <img class="dislike_act" style="width:22px" src="{% static 'images/icons/thumb_down_danger.svg' %}" />
+              <img class="dislike" style="width:22px;display:none" src="{% static 'images/icons/thumb_down_danger.svg' %}" />
               <span style="color:#FF0000" data-count="dislike">{{ object.dislikes.count }}</span>
               {% else %}
-              <img style="width:22px" src="{% static 'images/icons/thumb_down.svg' %}" />
+              <img class="dislike_act" style="width:22px;display:none" src="{% static 'images/icons/thumb_down.svg' %}" />
+              <img class="dislike" style="width:22px" src="{% static 'images/icons/thumb_down_danger.svg' %}" />
               <span data-count="dislike">{{ object.dislikes.count }}</span>
               {% endif %}
 
