@@ -251,7 +251,7 @@ $("#ajax").on('click', '.u_like', function() {
     });
     return false;
 });
-$("#ajax").on('click', '.u_like .active', function() {
+$("#ajax").on('click', '.u_like active', function() {
     var like = $(this);
     var pk = like.data('id');
 		var uuid = like.data('uuid');
