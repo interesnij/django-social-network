@@ -92,12 +92,12 @@ class ProfileUserView(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.user=User.objects.get(pk=self.kwargs["pk"])
+        self.request_user = request.user
         self.avatar_album = Album.objects.get(creator=self.user, title="Фото со страницы", community=None, is_generic=True)
         try:
             self.avatar = Photo.objects.filter(album_2=self.avatar_album).order_by('-id')[0]
         except:
             self.avatar = None
-
         try:
             self.is_frend = request.user.is_connected_with_user(self.user)
         except:
@@ -110,7 +110,7 @@ class ProfileUserView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(ProfileUserView, self).get_context_data(**kwargs)
         context['user'] = self.user
-        
+        context['request_user'] = self.request_user
         context['communities'] = self.communities
         context['is_frend'] = self.is_frend
         context['is_blocked'] = self.is_blocked
