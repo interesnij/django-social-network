@@ -8,7 +8,7 @@
                 data-id="{{ object.id }}"
                 data-uuid="{{ object.creator.uuid }}"
                 title="Нравится">
-
+{{ request.user }}
             {% if object.likes|user_in:user %}
             <img style="width:22px" src="{% static 'images/icons/thumb_up_success.svg' %}" />
             <span style="color:#41cd52" data-count="like">{{ object.likes.count }}</span>
