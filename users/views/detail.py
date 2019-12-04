@@ -66,6 +66,7 @@ class ItemListView(View):
             items_list = self.user.get_posts().order_by('-created')
             current_page = Paginator(items_list, 12)
         context['user'] = self.user
+        context['request_user'] = request.user
         page = request.GET.get('page')
         try:
             context['items_list'] = current_page.page(page)
@@ -92,7 +93,6 @@ class ProfileUserView(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.user=User.objects.get(pk=self.kwargs["pk"])
-        self.request_user = request.user
         self.avatar_album = Album.objects.get(creator=self.user, title="Фото со страницы", community=None, is_generic=True)
         try:
             self.avatar = Photo.objects.filter(album_2=self.avatar_album).order_by('-id')[0]
@@ -110,7 +110,6 @@ class ProfileUserView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(ProfileUserView, self).get_context_data(**kwargs)
         context['user'] = self.user
-        context['request_user'] = self.request_user
         context['communities'] = self.communities
         context['is_frend'] = self.is_frend
         context['is_blocked'] = self.is_blocked
