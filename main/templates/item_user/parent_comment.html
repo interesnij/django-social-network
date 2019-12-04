@@ -37,8 +37,13 @@
                         data-id="{{ comment.id }}"
                         data-uuid="{{ comment.commenter.uuid }}"
                         title="Нравится">
-                    <img style="width:22px" src="{% static 'images/icons/thumb_up-24px.svg' %}" />
-                    <span class="" data-count="like">{{ comment.likes.count }}</span>
+                    {% if comment.likes|user_in:request_user %}
+                    <img style="width:22px" src="{% static 'images/icons/thumb_up_success.svg' %}" />
+                    <span style="color:#41cd52" data-count="like">{{ comment.likes.count }}</span>
+                    {% else %}
+                    <img style="width:22px" src="{% static 'images/icons/thumb_up.svg' %}" />
+                    <span data-count="like">{{ comment.likes.count }}</span>
+                    {% endif %}
                   </span>
                     <span class="comment_like_window">
                         {% if comment.likes.all %}
@@ -64,10 +69,18 @@
                         {% endif %}
                     </span>
                     &nbsp;
-                    <span class="u_dislike2 {% if comment.dislikes.all|user_in:request_user %}text-success {% endif %}"
+                    <span class="u_dislike2 {% if comment.dislikes|user_in:request_user %}text-success {% endif %}"
                           data-id="{{ comment.id }}"
                           data-uuid="{{ comment.commenter.uuid }}"
                           title="Не нравится">
+                        {% if comment.dislikes|user_in:request_user %}
+                          <img style="width:22px" src="{% static 'images/icons/thumb_down_danger.svg' %}" />
+                          <span style="color:#41cd52" data-count="like">{{ comment.likes.count }}</span>
+                        {% else %}
+                          <img style="width:22px" src="{% static 'images/icons/thumb_down.svg' %}" />
+                          <span data-count="like">{{ comment.likes.count }}</span>
+                        {% endif %}
+
                       <img style="width:22px" src="{% static 'images/icons/thumb_down-24px.svg' %}" />
                       <span class="" data-count="dislike">{{ comment.dislikes.count }}</span>
                     </span>

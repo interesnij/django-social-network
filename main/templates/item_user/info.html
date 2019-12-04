@@ -13,6 +13,7 @@
             <span style="color:#41cd52" data-count="like">{{ object.likes.count }}</span>
             {% else %}
             <img style="width:22px" src="{% static 'images/icons/thumb_up.svg' %}" />
+            <span data-count="like">{{ object.likes.count }}</span>
             {% endif %}
           </span>
 
@@ -49,7 +50,7 @@
               <span style="color:#FF0000" data-count="dislike">{{ object.dislikes.count }}</span>
               {% else %}
               <img style="width:22px" src="{% static 'images/icons/thumb_down.svg' %}" />
-              <span class="dislike-count" data-count="dislike">{{ object.dislikes.count }}</span>
+              <span data-count="dislike">{{ object.dislikes.count }}</span>
               {% endif %}
 
         </span>

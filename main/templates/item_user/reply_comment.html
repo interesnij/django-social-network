@@ -17,12 +17,18 @@
         <div class="border-top py-2">
             <div class="row">
                 <div class="col">
-                  <span class="u_like2 {% if reply.likes|user_in:request_user %}text-success {% endif %}"
+                  <span class="u_like2"
                         data-id="{{ reply.id }}"
                         data-uuid="{{ reply.commenter.uuid }}"
                         title="Нравится">
-                    <img style="width:22px" src="{% static 'images/icons/thumb_up-24px.svg' %}" />
-                    <span class="" data-count="like">{{ reply.likes.count }}</span>
+
+                  {% if comment.likes|user_in:request_user %}
+                    <img style="width:22px" src="{% static 'images/icons/thumb_up_success.svg' %}" />
+                    <span style="color:#41cd52" data-count="like">{{ comment.likes.count }}</span>
+                  {% else %}
+                    <img style="width:22px" src="{% static 'images/icons/thumb_up.svg' %}" />
+                    <span data-count="like">{{ comment.likes.count }}</span>
+                  {% endif %}
                   </span>
                     <span class="comment_like_window">
                         {% if reply.likes %}
@@ -52,8 +58,14 @@
                           data-id="{{ reply.id }}"
                           data-uuid="{{ reply.commenter.uuid }}"
                           title="Не нравится">
-                      <img style="width:22px" src="{% static 'images/icons/thumb_down-24px.svg' %}" />
-                      <span class="" data-count="dislike">{{ reply.dislikes.count }}</span>
+                          
+                          {% if comment.dislikes|user_in:request_user %}
+                            <img style="width:22px" src="{% static 'images/icons/thumb_down_danger.svg' %}" />
+                            <span style="color:#41cd52" data-count="like">{{ comment.likes.count }}</span>
+                          {% else %}
+                            <img style="width:22px" src="{% static 'images/icons/thumb_down.svg' %}" />
+                            <span data-count="like">{{ comment.likes.count }}</span>
+                          {% endif %}
                     </span>
 
                       <span class="comment_dislike_window">
