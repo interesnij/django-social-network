@@ -3,7 +3,7 @@
 <div class="card-footer border-top py-2">
 
     <div class="row">
-
+{{ request_user }}
         <div class="col interaction" id="interaction">
           <span class="u_like {% if object.likes|user_in:request_user %}uu{% endif %}"
                 data-id="{{ object.id }}"
