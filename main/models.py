@@ -211,6 +211,12 @@ class ItemComment(models.Model):
     @classmethod
     def create_user_comment(cls, commenter, item=None, community=None, text=None, item_comment_photo=None, item_comment_photo2=None, created=None ):
         comment = ItemComment.objects.create(commenter=commenter, item=item)
+        if text:
+            comment.text = text
+        if item_comment_photo:
+            comment.item_comment_photo = item_comment_photo
+        if item_comment_photo2:
+            comment.item_comment_photo2 = item_comment_photo2
         channel_layer = get_channel_layer()
         payload = {
                 "type": "receive",
