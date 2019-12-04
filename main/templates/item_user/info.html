@@ -11,10 +11,10 @@
 
             {% if object.likes|user_in:user %}
             <img style="width:22px" src="{% static 'images/icons/thumb_up_success.svg' %}" />
+            <span style="color:#41cd52" data-count="like">{{ object.likes.count }}</span>
             {% else %}
             <img style="width:22px" src="{% static 'images/icons/thumb_up.svg' %}" />
             {% endif %}
-            <span class="" data-count="like">{{ object.likes.count }}</span>
           </span>
 
           <span class="like_window">
@@ -47,10 +47,12 @@
               title="Не нравится">
               {% if object.dislikes|user_in:request.user %}
               <img style="width:22px" src="{% static 'images/icons/thumb_up_danger.svg' %}" />
+              <span style="color:#FF0000" data-count="dislike">{{ object.dislikes.count }}</span>
               {% else %}
               <img style="width:22px" src="{% static 'images/icons/thumb_up.svg' %}" />
+              <span class="dislike-count" data-count="dislike">{{ object.dislikes.count }}</span>
               {% endif %}
-          <span class="dislike-count" data-count="dislike">{{ object.dislikes.count }}</span>
+
         </span>
 
         <span class="dislike_window">
