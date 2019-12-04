@@ -12,11 +12,11 @@
                 {% if object.likes|user_in:request_user %}
                   <img class="like_act" style="width:22px" src="{% static 'images/icons/thumb_up_success.svg' %}" />
                   <img class="like" style="width:22px;display:none" src="{% static 'images/icons/thumb_up.svg' %}" />
-                  <span style="color:#41cd52" data-count="like">{{ object.likes.count }}</span>
+                  <span style="color:#41cd52" data-count="like">{% if object.likes %}{{ object.likes.count }}{% endif %}</span>
                 {% else %}
                   <img class="like" style="width:22px" src="{% static 'images/icons/thumb_up.svg' %}" />
                   <img class="like_act" style="width:22px;display:none" src="{% static 'images/icons/thumb_up_success.svg' %}" />
-                  <span data-count="like">{{ object.likes.count }}</span>
+                  <span data-count="like">{% if object.likes %}{{ object.likes.count }}{% endif %}</span>
                 {% endif %}
           </span>
 
@@ -52,22 +52,22 @@
               {% if object.dislikes|user_in:request_user %}
               <img class="dislike_act" style="width:22px" src="{% static 'images/icons/thumb_down_danger.svg' %}" />
               <img class="dislike" style="width:22px;display:none" src="{% static 'images/icons/thumb_down_danger.svg' %}" />
-              <span style="color:#FF0000" data-count="dislike">{{ object.dislikes.count }}</span>
+              <span style="color:#FF0000" data-count="dislike">{% if object.dislikes %}{{ object.dislikes.count }}{% endif %}</span>
               {% else %}
               <img class="dislike_act" style="width:22px;display:none" src="{% static 'images/icons/thumb_down_danger.svg' %}" />
               <img class="dislike" style="width:22px" src="{% static 'images/icons/thumb_down.svg' %}" />
-              <span data-count="dislike">{{ object.dislikes.count }}</span>
+              <span data-count="dislike">{% if object.dislikes %}{{ object.dislikes.count }}{% endif %}</span>
               {% endif %}
 
         </span>
 
         <span class="dislike_window">
-          {% if object.dislikes.all %}
+          {% if object.dislikes %}
         <div class="dislike_pop" style="margin:15px">
           <span>Не оценили: {{ object.dislikes.count }} {{ object.dislikes.count|rupluralize:"человек,человека,людей" }}</span>
           <br><br>
           <span style="display: flex;">
-            {% for sheet in object.dislikes.all %}
+            {% for sheet in object.dislikes %}
             <a href="{% url 'user' pk=sheet.user.pk %}" class="ajax" style="padding-right:10px">
               <figure style="margin: 0;">
                 {% if sheet.user.profile.avatar %}
@@ -96,7 +96,7 @@
                 </span>
             </span>
             {% endif %}
-
+            {% if request.user.is_authenticated %}
             &nbsp;&nbsp;
             <span title="Поделиться" data-toggle="modal" data-target="#user_repost" style="cursor:pointer">
                 <img style="width:20px" src="{% static 'images/icons/share-24px.svg' %}" />
@@ -106,6 +106,7 @@
                     {% endif %}
                 </span>
             </span>
+            {% endif %}
 
         </div>
         <span class="col-auto" title="Просмотры" style="font-size:12px">
