@@ -45,10 +45,10 @@
               data-uuid="{{ object.creator.uuid }}"
               title="Не нравится">
               {% if object.dislikes|user_in:request_user %}
-              <img style="width:22px" src="{% static 'images/icons/thumb_up_danger.svg' %}" />
+              <img style="width:22px" src="{% static 'images/icons/thumb_down_danger.svg' %}" />
               <span style="color:#FF0000" data-count="dislike">{{ object.dislikes.count }}</span>
               {% else %}
-              <img style="width:22px" src="{% static 'images/icons/thumb_up.svg' %}" />
+              <img style="width:22px" src="{% static 'images/icons/thumb_down.svg' %}" />
               <span class="dislike-count" data-count="dislike">{{ object.dislikes.count }}</span>
               {% endif %}
 

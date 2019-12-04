@@ -17,21 +17,20 @@
         <div class="border-top py-2">
             <div class="row">
                 <div class="col">
-                  <span class="u_like2 {% if reply.likes.all|user_in:request.user %}text-success {% endif %}"
+                  <span class="u_like2 {% if reply.likes|user_in:request_user %}text-success {% endif %}"
                         data-id="{{ reply.id }}"
                         data-uuid="{{ reply.commenter.uuid }}"
-                        style="cursor:pointer"
                         title="Нравится">
                     <img style="width:22px" src="{% static 'images/icons/thumb_up-24px.svg' %}" />
                     <span class="" data-count="like">{{ reply.likes.count }}</span>
                   </span>
                     <span class="comment_like_window">
-                        {% if reply.likes.all %}
+                        {% if reply.likes %}
                         <div class="comment_like_pop" style="margin:15px">
                             <span>Оценили: {{ reply.likes.count }} {{ reply.likes.count|rupluralize:"человек,человека,людей" }}</span>
                             <br><br>
                             <span style="display: flex;">
-                                {% for heart in reply.likes.all %}
+                                {% for heart in reply.likes %}
                                 <a href="{% url 'user' pk=heart.user.pk %}" class="ajax" style="padding-right:10px">
                                     <figure style="margin: 0;">
                                         {% if heart.user.profile.avatar %}
@@ -49,22 +48,21 @@
                         {% endif %}
                     </span>
                     &nbsp;
-                    <span class="u_dislike2 {% if reply.dislikes.all|user_in:request.user %}text-success {% endif %}"
+                    <span class="u_dislike2 {% if reply.dislikes|user_in:request_user %}text-success {% endif %}"
                           data-id="{{ reply.id }}"
                           data-uuid="{{ reply.commenter.uuid }}"
-                          style="cursor:pointer"
                           title="Не нравится">
                       <img style="width:22px" src="{% static 'images/icons/thumb_down-24px.svg' %}" />
                       <span class="" data-count="dislike">{{ reply.dislikes.count }}</span>
                     </span>
 
                       <span class="comment_dislike_window">
-                          {% if reply.dislike.all %}
+                          {% if reply.dislike %}
                           <div class="comment_dislike_pop" style="margin:15px">
                               <span>Не оценили: {{ reply.dislikes.count }} {{ reply.dislikes.count|rupluralize:"человек,человека,людей" }}</span>
                               <br><br>
                               <span style="display: flex;">
-                                  {% for sheet in reply.dislikes.all %}
+                                  {% for sheet in reply.dislikes %}
                                   <a href="{% url 'user' pk=sheet.user.pk %}" class="ajax" style="padding-right:10px">
                                       <figure style="margin: 0;">
                                           {% if sheet.user.profile.avatar %}
