@@ -27,6 +27,7 @@
 <div class="border-top" style="margin-top:10px">
     <form action="" method="post" class="itemComment_form" enctype="multipart/form-data">
         {% csrf_token %}
+        <!--
         <div id="for_comment_photo" style="display:none;margin:10px">
           <div class="row">
             <div class="col-lg-6 col-md-6">
@@ -45,7 +46,7 @@
             </div>
           </div>
         </div>
-
+        -->
         <div class="row no-gutters">
 
           <button class="btn btn-link content-color-secondary comment_photo" type="button">
@@ -56,6 +57,8 @@
                     <textarea name="text" class="form-control text-comment form-control-rounded"></textarea>
                 </div>
             </div>
+            {{ form_comment.item_comment_photo }}
+            {{ form_comment.item_comment_photo2 }}
             <div class="col-auto">
                 <button class="btn btn-outline-primary btn-rounded btn-sm ml-2 itemComment" data-pk="{{ user.pk }}" data-uuid="{{ parent.uuid }}" type="button">
                     <img style="width:22px" src="{% static 'images/icons/send-24px.svg' %}" />
