@@ -47,8 +47,7 @@ class ItemCommentUserCreate(View):
 				check_is_not_blocked_with_user_with_id(user=request.user, user_id = self.user.id)
 				if user.is_closed_profile:
 					check_is_connected_with_user_with_id(user=request.user, user_id = self.user.id)
-			if not comment.text and not comment.item_comment_photo:
-				raise ValidationError('Для добавления комментария необходимо написать что-то или прикрепить изображение')
+			
 			new_comment = comment.create_user_comment(
 														commenter=request.user,
 														item=self.item,
