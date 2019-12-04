@@ -58,13 +58,13 @@
                           data-id="{{ reply.id }}"
                           data-uuid="{{ reply.commenter.uuid }}"
                           title="Не нравится">
-                          
+
                           {% if comment.dislikes|user_in:request_user %}
                             <img style="width:22px" src="{% static 'images/icons/thumb_down_danger.svg' %}" />
-                            <span style="color:#41cd52" data-count="like">{{ comment.likes.count }}</span>
+                            <span style="color:#41cd52" data-count="like">{{ comment.dislikes.count }}</span>
                           {% else %}
                             <img style="width:22px" src="{% static 'images/icons/thumb_down.svg' %}" />
-                            <span data-count="like">{{ comment.likes.count }}</span>
+                            <span data-count="like">{{ comment.dislikes.count }}</span>
                           {% endif %}
                     </span>
 
