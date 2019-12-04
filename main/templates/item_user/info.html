@@ -4,7 +4,7 @@
 
     <div class="row">
         <div class="col interaction" id="interaction">
-          <span class="u_like"
+          <span class="u_like {% if object.likes|user_in:request_user %}active{% endif %}"
                 data-id="{{ object.id }}"
                 data-uuid="{{ object.creator.uuid }}"
                 title="Нравится">
@@ -45,7 +45,7 @@
         </span>
 
         &nbsp;&nbsp;
-        <span class="u_dislike"
+        <span class="u_dislike {% if object.dislikes|user_in:request_user %}active{% endif %}"
               data-id="{{ object.id }}"
               data-uuid="{{ object.creator.uuid }}"
               title="Не нравится">
