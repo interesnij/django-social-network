@@ -24,6 +24,7 @@
     {% endfor %}
 </span>
 
+{% if request.user.is_authenticated %}
 <div class="border-top" style="margin-top:10px">
     <form action="" method="post" class="itemComment_form" enctype="multipart/form-data">
         {% csrf_token %}
@@ -65,6 +66,7 @@
         </div>
     </form>
 </div>
+{% endif %}
 <script>
     $('.comment_photo').on('click', function() {
       btn = $(this);

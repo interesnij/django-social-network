@@ -112,6 +112,7 @@
                         ответить
                     </span>
 
+                    {% if request.user.is_authenticated %}
                     <div class="border-top reply_comment_form" style="margin-top:10px;display:none;margin-left: -10px;">
                         <form action="" method="post" class="replyComment_form">
                             {% csrf_token %}
@@ -131,8 +132,8 @@
                                 </div>
                             </div>
                         </form>
-
                     </div>
+                    {% endif %}
 
                     <br><br> {{ comment.count_replies }} {{ comment.count_replies|rupluralize:"ответ,ответа,ответов" }}
                     <span class="stream_reply_comments">
