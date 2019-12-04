@@ -14,6 +14,13 @@ django.setup()
 
 from django.conf import settings
 from notifications.model.good import GoodNotification, GoodCommunityNotification
+from notifications.model.user import UserNotification, UserCommunityNotification
+from notifications.model.photo import PhotoNotification, PhotoCommunityNotification
+from notifications.model.item import ItemNotification, ItemCommunityNotification
 
-GoodNotification.objects.all().delete()
-GoodCommunityNotification.objects.all().delete()
+UserNotification.objects.all().delete()
+UserCommunityNotification.objects.all().delete()
+PhotoNotification.objects.all().delete()
+PhotoCommunityNotification.objects.all().delete()
+ItemNotification.objects.all().delete()
+ItemCommunityNotification.objects.all().delete()
