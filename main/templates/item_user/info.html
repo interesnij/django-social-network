@@ -5,12 +5,17 @@
     <div class="row">
 
         <div class="col interaction" id="interaction">
-          <span class="u_like {% if object.likes.all|user_in:request.user %}text-success {% endif %}"
+          <span class="u_like {% if object.likes.all|user_in:request.user %}{% endif %}"
                 data-id="{{ object.id }}"
                 data-uuid="{{ object.creator.uuid }}"
                 style="cursor:pointer"
                 title="Нравится">
-            <img style="width:22px" src="{% static 'images/icons/thumb_up-24px.svg' %}" />
+
+            {% if object.likes.all|user_in:request.user %}
+            <img style="width:22px" src="{% static 'images/icons/thumb_up_success.svg' %}" />
+            {% else %}
+            <img style="width:22px" src="{% static 'images/icons/thumb_up_success.svg' %}" />
+            {% endif %}
             <span class="" data-count="like">{{ object.likes.count }}</span>
           </span>
 
@@ -38,12 +43,16 @@
         </span>
 
         &nbsp;&nbsp;
-        <span class="u_dislike {% if object.dislikes.all|user_in:request.user %} text-danger {% endif %}"
+        <span class="u_dislike"
               data-id="{{ object.id }}"
               data-uuid="{{ object.creator.uuid }}"
               style="cursor:pointer"
               title="Не нравится">
-          <img style="width:22px;" src="{% static 'images/icons/thumb_down-24px.svg' %}" />
+              {% if object.dislikes.all|user_in:request.user %}
+              <img style="width:22px" src="{% static 'images/icons/thumb_up_success.svg' %}" />
+              {% else %}
+              <img style="width:22px" src="{% static 'images/icons/thumb_up_danger.svg' %}" />
+              {% endif %}
           <span class="dislike-count" data-count="dislike">{{ object.dislikes.count }}</span>
         </span>
 
