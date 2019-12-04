@@ -245,29 +245,8 @@ $("#ajax").on('click', '.u_like', function() {
             like.find("[data-count='like']").text(json.like_count);
             dislike.find("[data-count='dislike']").text(json.dislike_count);
             like.find(".like").hide();
-            like.find(".like_act").show();
-            like.addClass("active");
-        }
-    });
-    return false;
-});
-$("#ajax").on('click', '.u_like active', function() {
-    var like = $(this);
-    var pk = like.data('id');
-		var uuid = like.data('uuid');
-    var dislike = like.next().next();
-    $.ajax({
-        url: "/votes/user_like/" + uuid + "/" + pk + "/",
-        type: 'POST',
-        data: {
-            'obj': pk
-        },
-        success: function(json) {
-            like.find("[data-count='like']").text(json.like_count);
-            dislike.find("[data-count='dislike']").text(json.dislike_count);
-            like.find(".like").show();
-            like.find(".like_act").hide();
-            like.removeClass("active");
+            dislike.find(".like").show();
+            dislike.find(".like_act").hide();
         }
     });
     return false;
@@ -289,6 +268,8 @@ $("#ajax").on('click', '.u_dislike', function() {
                 like.find("[data-count='like']").text(json.like_count);
                 dislike.find(".dislike").hide();
                 dislike.find(".dislike_act").show();
+                like.find(".like_act").hide();
+                like.find(".like").show();
             }
         });
         return false;
