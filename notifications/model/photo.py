@@ -75,6 +75,7 @@ class PhotoNotification(models.Model):
     slug = models.SlugField(max_length=210, null=True, blank=True)
     uuid_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     objects =  PhotoNotificationQS.as_manager()
+    photo = models.ForeignKey('photo.Photo', on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = "Уведомление - фотографии пользователя"
@@ -127,6 +128,7 @@ class PhotoCommunityNotification(models.Model):
     slug = models.SlugField(max_length=210, null=True, blank=True)
     uuid_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     objects = PhotoNotificationQS.as_manager()
+    photo = models.ForeignKey('photo.Photo', on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = "Уведомление - фотографии сообщества"
@@ -143,7 +145,7 @@ class PhotoCommunityNotification(models.Model):
             self.save()
 
 
-def photo_notification_handler(actor, recipient, verb, **kwargs):
+def photo_notification_handler(actor, recipient, verb, photo,**kwargs):
     key = kwargs.pop('key', 'notification')
 
     if recipient == 'global':
@@ -153,6 +155,7 @@ def photo_notification_handler(actor, recipient, verb, **kwargs):
                 actor=actor,
                 recipient=user,
                 verb=verb,
+                photo=photo,
             )
         photo_notification_broadcast(actor, key)
 
@@ -162,6 +165,7 @@ def photo_notification_handler(actor, recipient, verb, **kwargs):
                 actor=actor,
                 recipient=User.objects.get(username=user.username),
                 verb=verb,
+                photo=photo,
             )
 
     elif isinstance(recipient, get_user_model()):
@@ -169,6 +173,7 @@ def photo_notification_handler(actor, recipient, verb, **kwargs):
             actor=actor,
             recipient=recipient,
             verb=verb,
+            photo=photo,
         )
         photo_notification_broadcast(
             actor, key, recipient=recipient.username)
@@ -177,7 +182,7 @@ def photo_notification_handler(actor, recipient, verb, **kwargs):
         pass
 
 
-def photo_community_notification_handler(actor, recipient, verb, **kwargs):
+def photo_community_notification_handler(actor, recipient, verb, photo, **kwargs):
     key = kwargs.pop('key', 'notification')
 
     if recipient == 'global':
@@ -187,6 +192,7 @@ def photo_community_notification_handler(actor, recipient, verb, **kwargs):
                 actor=actor,
                 recipient=user,
                 verb=verb,
+                photo=photo,
             )
         photo_notification_broadcast(actor, key)
 
@@ -196,6 +202,7 @@ def photo_community_notification_handler(actor, recipient, verb, **kwargs):
                 actor=actor,
                 recipient=Community.objects.get(name=community.name),
                 verb=verb,
+                photo=photo,
             )
 
     elif isinstance(recipient, get_community_model()):
@@ -203,6 +210,7 @@ def photo_community_notification_handler(actor, recipient, verb, **kwargs):
             actor=actor,
             recipient=recipient,
             verb=verb,
+            photo=photo,
         )
         photo_notification_broadcast(
             actor, key, recipient=recipient.name)

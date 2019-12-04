@@ -41,7 +41,6 @@ class Item(models.Model):
         (STATUS_ARHIVED, 'Архивирована'),
     )
     status = models.CharField(blank=False, null=False, choices=STATUSES, default=STATUS_PUBLISHED, max_length=2, verbose_name="Статус статьи")
-    votes = models.ForeignKey(ItemVotes, on_delete=models.CASCADE, null=True, related_query_name='items_vote')
 
     class Meta:
         indexes = (
@@ -159,7 +158,6 @@ class ItemComment(models.Model):
     is_deleted = models.BooleanField(default=False,verbose_name="Удалено")
     item = models.ForeignKey(Item, on_delete=models.CASCADE, null=True)
     moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='post_comments')
-    votes = models.OneToOneField(ItemCommentVotes, on_delete=models.CASCADE, null=True, related_query_name='comments')
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)

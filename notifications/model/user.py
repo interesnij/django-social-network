@@ -72,7 +72,7 @@ class UserNotification(models.Model):
         indexes = (BrinIndex(fields=['timestamp']),)
 
     def __str__(self):
-        return '{} - {}'.format(self.actor, self.get_verb_display())
+        return '{} {}'.format(self.actor, self.get_verb_display())
 
     def mark_as_unread(self):
         if not self.unread:
@@ -93,8 +93,7 @@ class UserCommunityNotification(models.Model):
 
     NOTIFICATION_TYPES = (
         (CONNECTION_REQUEST, 'подал заявку в сообщество'),
-        (CONNECTION_CONFIRMED, 'заявка в сообщество одобрено'),
-        (COMMUNITY_INVITE, 'пригласил сообщество в сообщество'),
+        (CONNECTION_CONFIRMED, 'принят в сообщество'),
         (JOIN, 'вступил в сообщество'),
     )
 
@@ -110,7 +109,7 @@ class UserCommunityNotification(models.Model):
         indexes = (BrinIndex(fields=['timestamp']),)
 
     def __str__(self):
-        return '{} - {}'.format(self.actor, self.get_verb_display())
+        return '{} {}'.format(self.actor, self.get_verb_display())
 
     def mark_as_unread(self):
         if not self.unread:

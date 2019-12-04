@@ -77,6 +77,7 @@ class ItemNotification(models.Model):
     slug = models.SlugField(max_length=210, null=True, blank=True)
     uuid_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     objects =  ItemNotificationQS.as_manager()
+    item = models.ForeignKey('main.Item', on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = "Уведомление - записи пользователя"
@@ -85,7 +86,7 @@ class ItemNotification(models.Model):
         indexes = (BrinIndex(fields=['timestamp']),)
 
     def __str__(self):
-        return '{} - {}'.format(self.actor, self.get_verb_display())
+        return '{} {}'.format(self.actor, self.get_verb_display())
 
     def mark_as_unread(self):
         if not self.unread:
@@ -131,6 +132,7 @@ class ItemCommunityNotification(models.Model):
     slug = models.SlugField(max_length=210, null=True, blank=True)
     uuid_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     objects = ItemNotificationQS.as_manager()
+    item = models.ForeignKey('main.Item', on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = "Уведомление - записи сообщества"
@@ -139,7 +141,7 @@ class ItemCommunityNotification(models.Model):
         indexes = (BrinIndex(fields=['timestamp']),)
 
     def __str__(self):
-        return '{} - {}'.format(self.actor, self.get_verb_display())
+        return '{} {}'.format(self.actor, self.get_verb_display())
 
     def mark_as_unread(self):
         if not self.unread:
@@ -147,7 +149,7 @@ class ItemCommunityNotification(models.Model):
             self.save()
 
 
-def item_notification_handler(actor, recipient, verb, **kwargs):
+def item_notification_handler(actor, recipient, verb, item, **kwargs):
     key = kwargs.pop('key', 'notification')
 
     if recipient == 'global':
@@ -157,6 +159,7 @@ def item_notification_handler(actor, recipient, verb, **kwargs):
                 actor=actor,
                 recipient=user,
                 verb=verb,
+                item=item,
             )
         item_notification_broadcast(actor, key)
 
@@ -173,6 +176,7 @@ def item_notification_handler(actor, recipient, verb, **kwargs):
             actor=actor,
             recipient=recipient,
             verb=verb,
+            item=item,
         )
         item_notification_broadcast(
             actor, key, recipient=recipient.username)
@@ -181,7 +185,7 @@ def item_notification_handler(actor, recipient, verb, **kwargs):
         pass
 
 
-def item_community_notification_handler(actor, recipient, verb, **kwargs):
+def item_community_notification_handler(actor, recipient, verb, item, **kwargs):
     key = kwargs.pop('key', 'notification')
 
     if recipient == 'global':
@@ -191,6 +195,7 @@ def item_community_notification_handler(actor, recipient, verb, **kwargs):
                 actor=actor,
                 recipient=user,
                 verb=verb,
+                item=item,
             )
         item_notification_broadcast(actor, key)
 
@@ -200,6 +205,7 @@ def item_community_notification_handler(actor, recipient, verb, **kwargs):
                 actor=actor,
                 recipient=Community.objects.get(name=community.name),
                 verb=verb,
+                item=item,
             )
 
     elif isinstance(recipient, get_community_model()):
@@ -207,6 +213,7 @@ def item_community_notification_handler(actor, recipient, verb, **kwargs):
             actor=actor,
             recipient=recipient,
             verb=verb,
+            item=item,
         )
         item_notification_broadcast(
             actor, key, recipient=recipient.name)

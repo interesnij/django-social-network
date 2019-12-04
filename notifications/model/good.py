@@ -75,6 +75,7 @@ class GoodNotification(models.Model):
     slug = models.SlugField(max_length=210, null=True, blank=True)
     uuid_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     objects =  GoodNotificationQS.as_manager()
+    good = models.ForeignKey('goods.Good', on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = "Уведомление - товары пользователя"
@@ -83,7 +84,7 @@ class GoodNotification(models.Model):
         indexes = (BrinIndex(fields=['timestamp']),)
 
     def __str__(self):
-        return '{} - {}'.format(self.actor, self.get_verb_display())
+        return '{} {}'.format(self.actor, self.get_verb_display())
 
     def mark_as_unread(self):
         if not self.unread:
@@ -127,6 +128,7 @@ class GoodCommunityNotification(models.Model):
     slug = models.SlugField(max_length=210, null=True, blank=True)
     uuid_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     objects = GoodNotificationQS.as_manager()
+    good = models.ForeignKey('goods.Good', on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = "Уведомление - товары сообщества"
@@ -143,7 +145,7 @@ class GoodCommunityNotification(models.Model):
             self.save()
 
 
-def good_notification_handler(actor, recipient, verb, **kwargs):
+def good_notification_handler(actor, recipient, verb, good, **kwargs):
     key = kwargs.pop('key', 'notification')
 
     if recipient == 'global':
@@ -153,6 +155,7 @@ def good_notification_handler(actor, recipient, verb, **kwargs):
                 actor=actor,
                 recipient=user,
                 verb=verb,
+                good=good,
             )
         good_notification_broadcast(actor, key)
 
@@ -162,6 +165,7 @@ def good_notification_handler(actor, recipient, verb, **kwargs):
                 actor=actor,
                 recipient=User.objects.get(username=user.username),
                 verb=verb,
+                good=good,
             )
 
     elif isinstance(recipient, get_user_model()):
@@ -169,6 +173,7 @@ def good_notification_handler(actor, recipient, verb, **kwargs):
             actor=actor,
             recipient=recipient,
             verb=verb,
+            good=good,
         )
         good_notification_broadcast(
             actor, key, recipient=recipient.username)
@@ -177,7 +182,7 @@ def good_notification_handler(actor, recipient, verb, **kwargs):
         pass
 
 
-def good_community_notification_handler(actor, recipient, verb, **kwargs):
+def good_community_notification_handler(actor, recipient, verb, good, **kwargs):
     key = kwargs.pop('key', 'notification')
 
     if recipient == 'global':
@@ -187,6 +192,7 @@ def good_community_notification_handler(actor, recipient, verb, **kwargs):
                 actor=actor,
                 recipient=user,
                 verb=verb,
+                good=good,
             )
         good_notification_broadcast(actor, key)
 
@@ -196,6 +202,7 @@ def good_community_notification_handler(actor, recipient, verb, **kwargs):
                 actor=actor,
                 recipient=Community.objects.get(name=community.name),
                 verb=verb,
+                good=good,
             )
 
     elif isinstance(recipient, get_community_model()):
@@ -203,6 +210,7 @@ def good_community_notification_handler(actor, recipient, verb, **kwargs):
             actor=actor,
             recipient=recipient,
             verb=verb,
+            good=good,
         )
         good_notification_broadcast(
             actor, key, recipient=recipient.name)
