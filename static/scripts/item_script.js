@@ -245,6 +245,7 @@ $("#ajax").on('click', '.u_like', function() {
             like.find("[data-count='like']").text(json.like_count);
             dislike.find("[data-count='dislike']").text(json.dislike_count);
             like.find(".like").hide();
+            like.find(".like_act").show();
             dislike.find(".dislike").show();
             dislike.find(".dislike_act").hide();
         }
