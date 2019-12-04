@@ -5,7 +5,7 @@
     <div class="row">
 
         <div class="col interaction" id="interaction">
-          <span class="u_like {% if object.likes.all|user_in:request.user %}{% endif %}"
+          <span class="u_like {% if object.likes.all|user_in:request.user %}uu{% endif %}"
                 data-id="{{ object.id }}"
                 data-uuid="{{ object.creator.uuid }}"
                 style="cursor:pointer"
