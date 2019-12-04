@@ -54,8 +54,8 @@
               <img class="dislike" style="width:22px;display:none" src="{% static 'images/icons/thumb_down_danger.svg' %}" />
               <span style="color:#FF0000" data-count="dislike">{{ object.dislikes.count }}</span>
               {% else %}
-              <img class="dislike_act" style="width:22px;display:none" src="{% static 'images/icons/thumb_down.svg' %}" />
-              <img class="dislike" style="width:22px" src="{% static 'images/icons/thumb_down_danger.svg' %}" />
+              <img class="dislike_act" style="width:22px;display:none" src="{% static 'images/icons/thumb_down_danger.svg' %}" />
+              <img class="dislike" style="width:22px" src="{% static 'images/icons/thumb_down.svg' %}" />
               <span data-count="dislike">{{ object.dislikes.count }}</span>
               {% endif %}
 
