@@ -158,6 +158,8 @@ class ItemComment(models.Model):
     is_deleted = models.BooleanField(default=False,verbose_name="Удалено")
     item = models.ForeignKey(Item, on_delete=models.CASCADE, null=True)
     moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='post_comments')
+    item_comment_photo = ProcessedImageField(format='JPEG', options={'quality': 90}, upload_to='comment_photos/%Y/%m/%d', processors=[ResizeToFit(width=1024, upscale=False)])
+    item_comment_photo2 = ProcessedImageField(format='JPEG', options={'quality': 90}, upload_to='comment_photos/%Y/%m/%d', processors=[ResizeToFit(width=1024, upscale=False)])
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
@@ -214,8 +216,9 @@ class ItemComment(models.Model):
 
         comment = ItemComment.objects.create(commenter=commenter, text=text, item=item)
         if item_comment_photo or item_comment_photo2:
-            ItemCommentPhoto.objects.create(parent=comment, item_comment_photo=item_comment_photo, item_comment_photo2=item_comment_photo2)
-
+            comment = ItemComment.objects.create(commenter=commenter, text=text, item=item, item_comment_photo=item_comment_photo, item_comment_photo2=item_comment_photo2)
+        else:
+            comment = ItemComment.objects.create(commenter=commenter, text=text, item=item)
         channel_layer = get_channel_layer()
         payload = {
                 "type": "receive",
@@ -224,12 +227,6 @@ class ItemComment(models.Model):
             }
         async_to_sync(channel_layer.group_send)('notifications', payload)
         return comment
-
-
-class ItemCommentPhoto(models.Model):
-    item_comment_photo = ProcessedImageField(format='JPEG', options={'quality': 90}, upload_to='comment_photos/%Y/%m/%d', processors=[ResizeToFit(width=1024, upscale=False)])
-    item_comment_photo2 = ProcessedImageField(format='JPEG', options={'quality': 90}, upload_to='comment_photos/%Y/%m/%d', processors=[ResizeToFit(width=1024, upscale=False)])
-    parent = models.OneToOneField(ItemComment, blank=True, null=True, on_delete=models.CASCADE)
 
 
 class ItemMute(models.Model):
