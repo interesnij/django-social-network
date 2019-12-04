@@ -265,8 +265,8 @@ $("#ajax").on('click', '.u_dislike', function() {
             success: function(json) {
                 dislike.find("[data-count='dislike']").text(json.dislike_count);
                 like.find("[data-count='like']").text(json.like_count);
-                dislike.next().hide();
-                dislike.next().next().hide();
+                dislike.find(".like").hide();
+                dislike.find(".like_act").show();
             }
         });
         return false;
@@ -286,8 +286,8 @@ $("#ajax").on('click', '.u_like2', function() {
               success: function(json) {
                   like.find("[data-count='like']").text(json.like_count);
                   dislike.find("[data-count='dislike']").text(json.dislike_count);
-                  like.addClass("text-success");
-                  dislike.removeClass("text-danger");
+                  dislike.find(".dislike").hide();
+                  dislike.find(".dislike_act").show();
               }
           });
           return false;
