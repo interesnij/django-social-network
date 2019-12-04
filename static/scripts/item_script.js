@@ -162,9 +162,11 @@ $('#ajax').on('click', '.replyComment', function() {
     var block = form.parent();
     $.ajax({
         url: '/user/reply-comment/',
-        data: form.serialize(),
-        type: 'POST',
+        data: new FormData($(form)[0]),
+        contentType: false,
         cache: false,
+        processData: false,
+        type: 'POST',
         success: function(data) {
             $(".form-control-rounded").val("");
             $(".stream_reply_comments").append(data);

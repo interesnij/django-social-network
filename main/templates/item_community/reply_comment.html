@@ -15,108 +15,91 @@
         <p>{{ reply.text|safe }}</p>
 
         <div class="border-top py-2">
-            <div class="row" style="color: rgba(255, 255, 255, 0.65);">
+            <div class="row">
                 <div class="col">
-                  <span class="c_like2 {% if object.likes.all|user_in:request.user %}text-success {% endif %}"
-                        data-id="{{ object.id }}"
-                        data-uuid="{{ community.uuid }}"
+                  <span class="c_like2 {% if reply.likes.all|user_in:request.user %}text-success {% endif %}"
+                        data-id="{{ reply.id }}"
+                        data-uuid="{{ reply.commenter.uuid }}"
                         style="cursor:pointer"
                         title="Нравится">
                     <img style="width:22px" src="{% static 'images/icons/thumb_up-24px.svg' %}" />
-                    <span class="" data-count="like">{{ object.likes.count }}</span>
+                    <span class="" data-count="like">{{ reply.likes.count }}</span>
                   </span>
-
-                  <span class="like_window">
-                    {% if object.votes.likes.all %}
-                  <div class="like_pop" style="margin:15px">
-                    <span>Оценили: {{ object.likes.count }} {{ object.likes.count|rupluralize:"человек,человека,людей" }}</span>
-                    <br><br>
-                    <span style="display: flex;">
-                      {% for heart in object.likes.all %}
-                      <a href="{% url 'user' pk=heart.user.pk %}" class="ajax" style="padding-right:10px">
-                        <figure style="margin: 0;">
-                          {% if heart.user.profile.avatar %}
-                            <img src="{{ heart.user.profile.avatar.url }}" style="border-radius: 50px;width:50px;" alt="image">
-                            {% else %}
-                            <img src="{% static 'images/user.png' %}" alt="image" style="border-radius: 50px;width:50px;">
-                            {% endif %}
-                        </figure>
-                        {{ heart.user.first_name }}
-                      </a>
-                      {% endfor %}
-                    </span>
-                  </div>
-                  {% endif %}
-                </span>
-
-                &nbsp;&nbsp;
-                <span class="c_dislike2 {% if object.dislikes.all|user_in:request.user %} text-danger {% endif %}"
-                      data-id="{{ object.id }}"
-                      data-uuid="{{ community.uuid }}"
-                      style="cursor:pointer"
-                      title="Не нравится">
-                  <img style="width:22px;" src="{% static 'images/icons/thumb_down-24px.svg' %}" />
-                  <span class="dislike-count" data-count="dislike">{{ object.dislikes.count }}</span>
-                </span>
-
-                <span class="dislike_window">
-                  {% if object.dislikes.all %}
-                <div class="dislike_pop" style="margin:15px">
-                  <span>Не оценили: {{ object.dislikes.count }} {{ object.dislikes.count|rupluralize:"человек,человека,людей" }}</span>
-                  <br><br>
-                  <span style="display: flex;">
-                    {% for sheet in object.dislikes.all %}
-                    <a href="{% url 'user' pk=sheet.user.pk %}" class="ajax" style="padding-right:10px">
-                      <figure style="margin: 0;">
-                        {% if sheet.user.profile.avatar %}
-                          <img src="{{ sheet.user.profile.avatar.url }}" style="border-radius: 50px;width:50px;" alt="image">
-                          {% else %}
-                          <img src="{% static 'images/user.png' %}" alt="image" style="border-radius: 50px;width:50px;">
-                          {% endif %}
-
-                        </figure>
-                        {{ sheet.user.first_name }}
-                      </a>
-                      {% endfor %}
-                  </span>
-                    <span class="comment_react_window">
-                        {% if reply.dislikes.all %}
-                        <div class="comment_dislike_pop" style="margin:15px">
-                            <span>Не оценили: {{ reply.dislikes.count }} {{ reply.dislikes.count|rupluralize:"человек,человека,людей" }}</span>
+                    <span class="comment_like_window">
+                        {% if reply.likes.all %}
+                        <div class="comment_like_pop" style="margin:15px">
+                            <span>Оценили: {{ reply.likes.count }} {{ reply.likes.count|rupluralize:"человек,человека,людей" }}</span>
                             <br><br>
                             <span style="display: flex;">
-                                {% for sheet in reply.dislikes.all %}
-                                <a href="{% url 'user' pk=sheet.user.pk %}" class="ajax" style="padding-right:10px">
+                                {% for heart in reply.likes.all %}
+                                <a href="{% url 'user' pk=heart.user.pk %}" class="ajax" style="padding-right:10px">
                                     <figure style="margin: 0;">
-                                        {% if sheet.user.profile.avatar %}
-                                        <img src="{{ sheet.user.profile.avatar.url }}" style="border-radius: 50px;width:50px;" alt="image">
+                                        {% if heart.user.profile.avatar %}
+                                        <img src="{{ heart.user.profile.avatar.url }}" style="border-radius: 50px;width:50px;" alt="image">
                                         {% else %}
                                         <img src="{% static 'images/user.png' %}" alt="image" style="border-radius: 50px;width:50px;">
                                         {% endif %}
 
                                     </figure>
-                                    {{ sheet.user.first_name }}
+                                    {{ heart.user.first_name }}
                                 </a>
                                 {% endfor %}
                             </span>
                         </div>
                         {% endif %}
                     </span>
+                    &nbsp;
+                    <span class="c_dislike2 {% if reply.dislikes.all|user_in:request.user %}text-success {% endif %}"
+                          data-id="{{ reply.id }}"
+                          data-uuid="{{ reply.commenter.uuid }}"
+                          style="cursor:pointer"
+                          title="Не нравится">
+                      <img style="width:22px" src="{% static 'images/icons/thumb_down-24px.svg' %}" />
+                      <span class="" data-count="dislike">{{ reply.dislikes.count }}</span>
+                    </span>
+
+                      <span class="comment_dislike_window">
+                          {% if reply.dislike.all %}
+                          <div class="comment_dislike_pop" style="margin:15px">
+                              <span>Не оценили: {{ reply.dislikes.count }} {{ reply.dislikes.count|rupluralize:"человек,человека,людей" }}</span>
+                              <br><br>
+                              <span style="display: flex;">
+                                  {% for sheet in reply.dislikes.all %}
+                                  <a href="{% url 'user' pk=sheet.user.pk %}" class="ajax" style="padding-right:10px">
+                                      <figure style="margin: 0;">
+                                          {% if sheet.user.profile.avatar %}
+                                          <img src="{{ sheet.user.profile.avatar.url }}" style="border-radius: 50px;width:50px;" alt="image">
+                                          {% else %}
+                                          <img src="{% static 'images/user.png' %}" alt="image" style="border-radius: 50px;width:50px;">
+                                          {% endif %}
+
+                                      </figure>
+                                      {{ sheet.user.first_name }}
+                                  </a>
+                                  {% endfor %}
+                              </span>
+                          </div>
+                          {% endif %}
+                      </span>
 
                     &nbsp;&nbsp;
-                    <span class="commenter_first_name" style="display:none">{{ comment.commenter.first_name }}</span>
+                    <span class="commenter_first_name" style="display:none">{{ reply.commenter.first_name }}</span>
                     <span class="content-color-secondary reply_comment" data-id="{{ reply.id }}" style="font-size:15px;cursor:pointer">
                         ответить
                     </span>
 
-                    <div class="border-top reply_comment_form" style="margin-top:10px;display:none">
+                    <div class="border-top reply_comment_form" style="margin-top:10px;display:none;margin-left:-50px;">
                         <form action="" method="post" class="replyParentComment_button">
                             {% csrf_token %}
+
                             <div class="row no-gutters">
+                              <button class="btn btn-link content-color-secondary comment_photo" type="button">
+                                <img style="margin-top: -10px;" src="{% static 'images/icons/attach_file-24px.svg' %}" />
+                              </button>
                                 <input type="hidden" name="comment" value="{{ comment.id }}">
                                 <input type="hidden" name="parent" value="{{ parent.id }}">
                                 <div class="col" style="left: -30px;">
-                                    <div class="input-group input-group-sm" style="width: 114%;">
+                                    <div class="input-group input-group-sm" style="width: 105%;">
                                         <textarea id="id_text" name="text" class="form-control text-comment form-control-rounded"></textarea>
                                         <button class="btn btn-outline-primary btn-rounded btn-sm ml-2 replyParentComment" type="button">
                                           <img style="width:22px" src="{% static 'images/icons/send-24px.svg' %}" />
