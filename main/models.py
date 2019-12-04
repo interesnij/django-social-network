@@ -158,8 +158,8 @@ class ItemComment(models.Model):
     is_deleted = models.BooleanField(default=False,verbose_name="Удалено")
     item = models.ForeignKey(Item, on_delete=models.CASCADE, null=True)
     moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='post_comments')
-    item_comment_photo = ProcessedImageField(format='JPEG', null=True, options={'quality': 90}, upload_to='comment_photos/%Y/%m/%d', processors=[ResizeToFit(width=1024, upscale=False)])
-    item_comment_photo2 = ProcessedImageField(format='JPEG', null=True, options={'quality': 90}, upload_to='comment_photos/%Y/%m/%d', processors=[ResizeToFit(width=1024, upscale=False)])
+    item_comment_photo = ProcessedImageField(format='JPEG', blank=True, options={'quality': 90}, upload_to='comment_photos/%Y/%m/%d', processors=[ResizeToFit(width=1024, upscale=False)])
+    item_comment_photo2 = ProcessedImageField(format='JPEG', blank=True, options={'quality': 90}, upload_to='comment_photos/%Y/%m/%d', processors=[ResizeToFit(width=1024, upscale=False)])
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
