@@ -71,7 +71,7 @@ class Photo(models.Model):
         return photo
 
     def notification_user_repost(self, user):
-        photo_notification_handler(user, self.creator, PhotoNotification.REPOST, key='social_update')
+        photo_notification_handler(user, self.creator, PhotoNotification.REPOST, key='social_update', photo=self)
 
     def notification_user_like(self, user):
         photo_notification_handler(user, self.creator, PhotoNotification.LIKE, key='social_update')

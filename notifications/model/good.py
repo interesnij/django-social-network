@@ -84,7 +84,7 @@ class GoodNotification(models.Model):
         indexes = (BrinIndex(fields=['timestamp']),)
 
     def __str__(self):
-        return '{} {}'.format(self.actor, self.get_verb_display())
+        return '{} {} {}'.format(self.actor, self.get_verb_display(), self.good)
 
     def mark_as_unread(self):
         if not self.unread:
