@@ -27,7 +27,7 @@ class ItemUserCommentList(View):
 			raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
 		elif request.user.is_anonymous and not self.user.is_closed_profile():
 			comments = item.get_comments(request.user).order_by('-created')
-		comments_html = render_to_string("item_user/comments.html", {"comments": comments,"parent": item, "form_comment": CommentForm(), "user": self.user})
+		comments_html = render_to_string("item_user/comments.html", {"comments": comments, "request_user": request.user, "parent": item, "form_comment": CommentForm(), "user": self.user})
 
 		return JsonResponse({
 	        "comments": comments_html,
@@ -47,7 +47,7 @@ class ItemCommentUserCreate(View):
 				check_is_not_blocked_with_user_with_id(user=request.user, user_id = self.user.id)
 				if user.is_closed_profile:
 					check_is_connected_with_user_with_id(user=request.user, user_id = self.user.id)
-			
+
 			new_comment = comment.create_user_comment(
 														commenter=request.user,
 														item=self.item,
