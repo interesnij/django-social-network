@@ -4,13 +4,12 @@
 
     <div class="row">
         <div class="col interaction" id="interaction">
-          <span class="u_like {% if object.likes|user_in:request_user %}uu{% endif %}"
+          <span class="u_like"
                 data-id="{{ object.id }}"
                 data-uuid="{{ object.creator.uuid }}"
-                style="cursor:pointer"
                 title="Нравится">
 
-            {% if object.likes|user_in:request.user %}
+            {% if object.likes|user_in:user %}
             <img style="width:22px" src="{% static 'images/icons/thumb_up_success.svg' %}" />
             {% else %}
             <img style="width:22px" src="{% static 'images/icons/thumb_up.svg' %}" />
@@ -45,7 +44,6 @@
         <span class="u_dislike"
               data-id="{{ object.id }}"
               data-uuid="{{ object.creator.uuid }}"
-              style="cursor:pointer"
               title="Не нравится">
               {% if object.dislikes|user_in:request.user %}
               <img style="width:22px" src="{% static 'images/icons/thumb_up_danger.svg' %}" />
