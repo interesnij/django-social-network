@@ -213,10 +213,14 @@ class ItemComment(models.Model):
 
         if not text and not item_comment_photo and not item_comment_photo2:
             raise ValidationError('Для добавления комментария необходимо написать что-то или прикрепить изображение')
-        if item_comment_photo or item_comment_photo2:
-            comment = ItemComment.objects.create(commenter=commenter, text=text, item=item, item_comment_photo=item_comment_photo, item_comment_photo2=item_comment_photo2)
-        else:
-            comment = ItemComment.objects.create(commenter=commenter, text=text, item=item)
+
+        comment = ItemComment.objects.create(commenter=commenter, item=item)
+        if text:
+            comment.text = text
+        if item_comment_photo:
+            comment.item_comment_photo = item_comment_photo
+        if item_comment_photo2:
+            comment.item_comment_photo2 = item_comment_photo2
         channel_layer = get_channel_layer()
         payload = {
                 "type": "receive",
