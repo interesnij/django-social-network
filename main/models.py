@@ -228,6 +228,7 @@ class ItemComment(models.Model):
                 "actor_name": comment.commenter.get_full_name()
             }
         async_to_sync(channel_layer.group_send)('notifications', payload)
+        comment.save()
         return comment
 
 
