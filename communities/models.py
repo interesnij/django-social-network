@@ -212,8 +212,7 @@ class Community(models.Model):
 
     def get_avatar(self):
         try:
-            avatar_album = Album.objects.get(title="Фото со страницы", community=self, is_generic=True)
-            avatar = Photo.objects.filter(album_2=avatar_album).order_by('-id')[0]
+            avatar = self.get_avatar_photos().order_by('-id')[0]
         except:
             avatar = None
         return avatar
