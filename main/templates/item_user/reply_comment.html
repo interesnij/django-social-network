@@ -22,37 +22,36 @@
                         data-uuid="{{ reply.commenter.uuid }}"
                         title="Нравится">
 
-                  {% if comment.likes|user_in:request_user %}
+                  {% if reply.likes|user_in:request_user %}
                     <img style="width:22px" src="{% static 'images/icons/thumb_up_success.svg' %}" />
-                    <span style="color:#41cd52" data-count="like">{{ comment.likes.count }}</span>
+                    <span style="color:#41cd52" data-count="like">{{ reply.likes.count }}</span>
                   {% else %}
                     <img style="width:22px" src="{% static 'images/icons/thumb_up.svg' %}" />
-                    <span data-count="like">{{ comment.likes.count }}</span>
+                    <span data-count="like">{{ reply.likes.count }}</span>
                   {% endif %}
                   </span>
-                    <span class="comment_like_window">
-                        {% if reply.likes %}
-                        <div class="comment_like_pop" style="margin:15px">
-                            <span>Оценили: {{ reply.likes.count }} {{ reply.likes.count|rupluralize:"человек,человека,людей" }}</span>
-                            <br><br>
-                            <span style="display: flex;">
-                                {% for heart in reply.likes %}
-                                <a href="{% url 'user' pk=heart.user.pk %}" class="ajax" style="padding-right:10px">
-                                    <figure style="margin: 0;">
-                                        {% if heart.user.profile.avatar %}
-                                        <img src="{{ heart.user.profile.avatar.url }}" style="border-radius: 50px;width:50px;" alt="image">
-                                        {% else %}
-                                        <img src="{% static 'images/user.png' %}" alt="image" style="border-radius: 50px;width:50px;">
-                                        {% endif %}
-
-                                    </figure>
-                                    {{ heart.user.first_name }}
-                                </a>
-                                {% endfor %}
-                            </span>
-                        </div>
-                        {% endif %}
-                    </span>
+                  <span class="comment_like_window">
+                      {% if reply.likes.all %}
+                      <div class="comment_like_pop" style="margin:15px">
+                          <span>Оценили: {{ reply.likes.count }} {{ reply.likes.count|rupluralize:"человек,человека,людей" }}</span>
+                          <br><br>
+                          <span style="display: flex;">
+                              {% for heart in comment.likes %}
+                              <a href="{% url 'user' pk=heart.user.pk %}" class="ajax" style="padding-right:10px">
+                                  <figure style="margin: 0;">
+                                    {% if heart.user.get_avatar %}
+                                      <img src="{{ heart.user.get_avatar.file.url }}" style="border-radius: 50px;width:50px;" alt="image">
+                                    {% else %}
+                                      <img style="width:50px;border:#6C757D solid 1px;border-radius:50px;padding:5px;" src="{% static 'images/icons/person-24px.svg' %}" />
+                                    {% endif %}
+                                  </figure>
+                                  {{ heart.user.first_name }}
+                              </a>
+                              {% endfor %}
+                          </span>
+                      </div>
+                      {% endif %}
+                  </span>
                     &nbsp;
                     <span class="u_dislike2 {% if reply.dislikes|user_in:request_user %}text-success {% endif %}"
                           data-id="{{ reply.id }}"
@@ -77,12 +76,11 @@
                                   {% for sheet in reply.dislikes %}
                                   <a href="{% url 'user' pk=sheet.user.pk %}" class="ajax" style="padding-right:10px">
                                       <figure style="margin: 0;">
-                                          {% if sheet.user.profile.avatar %}
-                                          <img src="{{ sheet.user.profile.avatar.url }}" style="border-radius: 50px;width:50px;" alt="image">
-                                          {% else %}
-                                          <img src="{% static 'images/user.png' %}" alt="image" style="border-radius: 50px;width:50px;">
-                                          {% endif %}
-
+                                        {% if sheet.user.get_avatar %}
+                                          <img src="{{ sheet.user.get_avatar.file.url }}" style="border-radius: 50px;width:50px;" alt="image">
+                                        {% else %}
+                                          <img style="width:50px;border:#6C757D solid 1px;border-radius:50px;padding:5px;" src="{% static 'images/icons/person-24px.svg' %}" />
+                                        {% endif %}
                                       </figure>
                                       {{ sheet.user.first_name }}
                                   </a>
