@@ -18,12 +18,16 @@ class ItemLikeWindow(TemplateView):
         self.item = Item.objects.get(pk=self.kwargs["pk"])
         self.user = User.objects.get(uuid=self.kwargs["uuid"])
         if self.user != request.user and request.user.is_authenticated:
-            check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
+            check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
             if user.is_closed_profile:
-                check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
+                check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
             self.likes = self.user.get_likes_for_item(self.item)
         elif self.user == request.user:
             self.likes = self.user.get_likes_for_item(self.item)
+        elif request.user.is_anonymous and self.user.is_closed_profile():
+			raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
+		elif request.user.is_anonymous and not self.user.is_closed_profile():
+			self.likes = self.user.get_likes_for_item(self.item)
 
         return super(ItemLikeWindow,self).get(request,*args,**kwargs)
 
