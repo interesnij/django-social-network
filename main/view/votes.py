@@ -22,13 +22,13 @@ class ItemLikeWindow(TemplateView):
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
             if self.user.is_closed_profile:
                 check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
-            self.likes = self.user.get_likes_for_item(self.item)
+            self.likes = self.item.get_likes_for_item(request.user)
         elif self.user == request.user:
-            self.likes = self.user.get_likes_for_item(self.item)
+            self.likes = self.item.get_likes_for_item(request.user)
         elif request.user.is_anonymous and self.user.is_closed_profile():
             raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
         elif request.user.is_anonymous and not self.user.is_closed_profile():
-            self.likes = self.user.get_likes_for_item(self.item)
+            self.likes = self.item.get_likes_for_item(request.user)
 
         return super(ItemLikeWindow,self).get(request,*args,**kwargs)
 

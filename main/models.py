@@ -147,6 +147,10 @@ class Item(models.Model):
         dislikes = ItemVotes.objects.filter(parent=self, vote__lt=0)
         return dislikes
 
+    def get_likes_for_item(self, user):
+        reactions_query = user._make_get_votes_for_item_query(item=self)
+        return ItemVotes.objects.filter(parent=self, vote__gt=0).filter(reactions_query)
+
 
 class ItemComment(models.Model):
     parent_comment = models.ForeignKey('self', on_delete=models.CASCADE, related_name='replies', null=True, blank=True,verbose_name="Родительский комментарий")
