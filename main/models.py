@@ -143,11 +143,11 @@ class Item(models.Model):
         likes = ItemVotes.objects.filter(parent=self, vote__gt=0)
         return likes
 
-    def likes_query(user):
+    def likes_query(self, user):
         likes = self.likes()
         get_votes_query = self.get_votes_query(user)
         likes_query = likes.filter(get_votes_query)
-        return likes_query 
+        return likes_query
 
     def dislikes(self):
         dislikes = ItemVotes.objects.filter(parent=self, vote__lt=0)
