@@ -81,7 +81,7 @@ class UserNotification(models.Model):
 
 
 class UserCommunityNotification(models.Model):
-    recipient = models.ForeignKey('communities.Community', related_name='community_notifications', on_delete=models.CASCADE, verbose_name="Сообщество")
+    recipient = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='community_notifications', on_delete=models.CASCADE, verbose_name="Сообщество")
     actor = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="Инициатор", on_delete=models.CASCADE)
     timestamp = models.DateTimeField(default=timezone.now, editable=False, db_index=True, verbose_name="Создано")
     unread  = models.BooleanField(default=True, db_index=True)
