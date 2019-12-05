@@ -8,6 +8,7 @@ from django.contrib.contenttypes.fields import GenericRelation
 from django.conf import settings
 from main.models import Item
 from notifications.model.photo import *
+from gallery.helpers import upload_to_photo_directory
 
 
 class Album(models.Model):
@@ -55,16 +56,6 @@ class Photo(models.Model):
         )
         verbose_name = 'Фото'
         verbose_name_plural = 'Фото'
-
-    def upload_to_photo_directory(self, filename):
-        extension = splitext(filename)[1].lower()
-        new_filename = str(uuid.uuid4()) + extension
-
-        path = 'photos/%(creator_id)s/' % {
-            'user_id': str(self.creator.id)}
-
-        return '%(path)s%(new_filename)s' % {'path': path,
-                                             'new_filename': new_filename, }
 
     @classmethod
     def create_photo(cls, creator, album_2=None, file=None, community=None,
