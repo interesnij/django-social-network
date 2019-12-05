@@ -41,7 +41,7 @@ class Photo(models.Model):
     moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='photos')
     album = models.ForeignKey(Album, related_name="album_1", blank=True, null=True, on_delete=models.CASCADE)
     album_2 = models.ForeignKey(Album, related_name="album_2", blank=True, null=True, on_delete=models.CASCADE)
-    file = ProcessedImageField(format='JPEG', options={'quality': 90}, upload_to=upload_to_photo_directory(), processors=[ResizeToFit(width=1024, upscale=False)])
+    file = ProcessedImageField(format='JPEG', options={'quality': 90}, upload_to=upload_to_photo_directory, processors=[ResizeToFit(width=1024, upscale=False)])
     description = models.TextField(blank=True, null=True, verbose_name="Описание")
     is_public = models.BooleanField(default=True, verbose_name="Виден другим")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создано")
