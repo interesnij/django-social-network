@@ -9,7 +9,6 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views import View
 from django.shortcuts import render_to_response
 from rest_framework.exceptions import PermissionDenied
-from gallery.models import Photo, Album
 
 
 class UserItemView(TemplateView):
@@ -93,11 +92,6 @@ class ProfileUserView(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.user=User.objects.get(pk=self.kwargs["pk"])
-        try:
-            self.avatar_album = Album.objects.get(creator=self.user, title="Фото со страницы", community=None, is_generic=True)
-            self.avatar = Photo.objects.filter(album_2=self.avatar_album).order_by('-id')[0]
-        except:
-            self.avatar = None
         try:
             self.is_frend = request.user.is_connected_with_user(self.user)
         except:

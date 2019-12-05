@@ -4,16 +4,16 @@
   {% if request.user.is_authenticated %}
     <div class="container has-background-img">
         <figure class="background-img pink-gradient">
-          {% if avatar %}
-            <img src="{{ avatar.url }}" alt="image">
+          {% if request.user.get_avatar %}
+            <img src="{{ request.user.get_avatar.file.url }}" alt="image">
             {% else %}
               <img src="{% static 'images/user1.png' %}" alt="image">
             {% endif %}
         </figure>
         <div class="media w-100 my-3">
             <figure class="avatar-40 rounded-circle align-self-start " style="width: 100%;">
-                {% if avatar %}
-                  <img src="{{ avatar.url }}" alt="image" style="border-radius:50px;width:100%;">
+                {% if request.user.get_avatar %}
+                  <img src="{{ request.user.get_avatar.file.url }}" alt="image" style="border-radius:50px;width:100%;">
                 {% else %}
                   <img src="{% static 'images/user1.png' %}" alt="image" style="width:100%;width:100%;">
                 {% endif %}

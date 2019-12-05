@@ -327,8 +327,7 @@ class User(AbstractUser):
 
     def get_avatar(self):
         try:
-            avatar_album = Album.objects.get(creator=self, title="Фото со страницы", community=None, is_generic=True)
-            avatar = Photo.objects.filter(album_2=avatar_album).order_by('-id')[0]
+            avatar = self.get_avatar_photos().order_by('-id')[0]
         except:
             avatar = None
         return avatar

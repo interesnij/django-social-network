@@ -18,8 +18,8 @@
         <div class="card-body">
             <div class="media">
                 <figure style="width:50px;">
-                    {% if avatar %}
-                    <img src="{{ avatar.url }}" style="border-radius:50px;" alt="image">
+                    {% if object.get_avatar %}
+                    <img src="{{ object.get_avatar.file.url }}" style="border-radius:50px;" alt="image">
                     {% else %}
                     <img style="width:50px;border:#6C757D solid 1px;border-radius:50px;padding:5px;" src="{% static 'images/icons/person-24px.svg' %}" />
                     {% endif %}

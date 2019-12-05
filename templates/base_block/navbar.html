@@ -288,8 +288,8 @@
                        aria-haspopup="true"
                        aria-expanded="false">
                        <figure class="userpic">
-                         {% if request.user.profile.avatar %}
-                         <img src="{{ request.user.profile.avatar.url }}" alt="">
+                         {% if request.user.get_avatar %}
+                         <img src="{{ request.user.get_avatar.file.url }}" alt="">
                          {% else %}
                          <img style="width:50px;width:50px;width:50px;border:#6C757D solid 1px;border-radius:50px;padding:5px;" src="{% static 'images/icons/person-24px.svg' %}" />
                          {% endif %}
