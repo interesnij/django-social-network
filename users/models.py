@@ -395,7 +395,7 @@ class User(AbstractUser):
         return ItemVotes.objects.filter(parent=item, vote__gt=0).filter(reactions_query)
 
     def _make_get_votes_for_item_query(self, item):
-        reactions_query = Q(item_id=item.pk)
+        reactions_query = Q(parent_id=item.pk)
         post_community = item.community
 
         if post_community:
