@@ -128,7 +128,7 @@ class CommunityNotifyView(TemplateView):
 		return context
 
 	def post(self,request,*args,**kwargs):
-		self.user=User.objects.get(pk=self.kwargs["pk"])
+		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		try:
 			self.notify_settings=CommunityNotificationsSettings.objects.get(community=self.community)
 		except:
@@ -136,7 +136,7 @@ class CommunityNotifyView(TemplateView):
 		if not self.notify_settings:
 			self.user.notify_settings = CommunityNotificationsSettings.objects.create(community=self.community)
 		self.form=CommunityNotifyForm(request.POST,instance=self.notify_settings)
-		if self.form.is_valid() and request.user.is_authenticated and request.user.is_administrator_of_community_with_name(self.community.name):
+		if self.form.is_valid() and request.user.is_administrator_of_community_with_name(self.community.name):
 			self.form.save()
 			if request.is_ajax():
 				return HttpResponse ('!')
@@ -160,7 +160,6 @@ class CommunityPrivateView(TemplateView):
 		return context
 
 	def post(self,request,*args,**kwargs):
-		self.user=User.objects.get(pk=self.kwargs["pk"])
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		try:
 			self.private_settings=CommunityPrivateSettings.objects.get(community=self.community)
@@ -169,7 +168,7 @@ class CommunityPrivateView(TemplateView):
 		if not self.private_settings:
 			self.user.private_settings = CommunityPrivateSettings.objects.create(community=self.community)
 		self.form=CommunityPrivateForm(request.POST,instance=self.private_settings)
-		if self.form.is_valid() and request.user.is_authenticated and request.user.is_administrator_of_community_with_name(self.community.name):
+		if self.form.is_valid() and request.user.is_administrator_of_community_with_name(self.community.name):
 			self.form.save()
 			if request.is_ajax():
 				return HttpResponse ('!')

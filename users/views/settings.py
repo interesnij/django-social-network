@@ -110,7 +110,7 @@ class SettingsNotifyView(TemplateView):
         if not self.notify_settings:
             self.user.notify_settings = UserNotificationsSettings.objects.create(user=request.user)
         self.form=SettingsNotifyForm(request.POST,instance=self.notify_settings)
-        if self.form.is_valid():
+        if self.form.is_valid() and self.user == request.user:
             self.form.save()
             if request.is_ajax():
                 return HttpResponse ('!')
