@@ -21,9 +21,10 @@ class ItemLikeWindow(TemplateView):
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
             if user.is_closed_profile:
                 check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
-            self.likes = self.item.likes_query()
+            self.likes_query = self.item.likes()
+            self.likes = self.user.get_votes_for_item(self.item)
         elif self.user == request.user:
-            self.likes = self.item.likes_query()
+            self.likes = self.user.get_votes_for_item(self.item)
 
         return super(ItemLikeWindow,self).get(request,*args,**kwargs)
 

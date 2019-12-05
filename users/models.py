@@ -15,6 +15,7 @@ from follows.models import Follow, CommunityFollow
 from goods.models import Good
 from frends.models import Connect
 from posts.models import Post
+from common.models import ItemVotes
 from gallery.models import Photo, Album
 from moderation.models import ModeratedObject, ModerationPenalty
 from common.checkers import *
@@ -335,35 +336,29 @@ class User(AbstractUser):
         return User.objects.filter(followings_query).distinct()
 
     def get_timeline_posts(self):
-
         return self._get_timeline_posts_with_no_filters()
 
     def _get_timeline_posts_with_no_filters(self):
-
         posts_select_related = ('creator', 'creator__profile', 'community')
         items_only = ('id', 'uuid', 'created', 'creator__username', 'creator__id',
                         'creator__profile__id', 'community__id', 'community__name')
         reported_posts_exclusion_query = ~Q(moderated_object__reports__reporter_id=self.pk)
         own_posts_query = Q(creator=self.pk, community__isnull=True, is_deleted=False, status=Item.STATUS_PUBLISHED)
         own_posts_query.add(reported_posts_exclusion_query, Q.AND)
-        own_posts_queryset = self.items.select_related(*posts_select_related).only(
-                        *items_only).filter(own_posts_query)
+        own_posts_queryset = self.items.select_related(*posts_select_related).only(*items_only).filter(own_posts_query)
 
-        community_posts_query = Q(community__memberships__user__id=self.pk, is_closed=False, is_deleted=False,
-                                  status=Item.STATUS_PUBLISHED)
+        community_posts_query = Q(community__memberships__user__id=self.pk, is_closed=False, is_deleted=False, status=Item.STATUS_PUBLISHED)
         community_posts_query.add(~Q(Q(creator__blocked_by_users__blocker_id=self.pk) | Q(
             creator__user_blocks__blocked_user_id=self.pk)), Q.AND)
         community_posts_query.add(~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED), Q.AND)
         community_posts_query.add(reported_posts_exclusion_query, Q.AND)
-        community_posts_queryset = Item.objects.select_related(*posts_select_related).only(
-                        *items_only).filter(community_posts_query)
+        community_posts_queryset = Item.objects.select_related(*posts_select_related).only(*items_only).filter(community_posts_query)
 
         followed_users = self.follows.values('followed_user_id')
         followed_users_ids = [followed_user['followed_user_id'] for followed_user in followed_users]
         followed_users_query = Q(creator__in=followed_users_ids, is_deleted=False, status=Item.STATUS_PUBLISHED)
         followed_users_query.add(reported_posts_exclusion_query, Q.AND)
-        followed_users_queryset = Item.objects.select_related(*posts_select_related).only(
-                        *items_only).filter(followed_users_query)
+        followed_users_queryset = Item.objects.select_related(*posts_select_related).only(*items_only).filter(followed_users_query)
 
         frends = self.connections.values('target_user_id')
         frends_ids = [target_user['target_user_id'] for target_user in frends]
@@ -371,19 +366,14 @@ class User(AbstractUser):
         frends_query.add(reported_posts_exclusion_query, Q.AND)
         frends_queryset = Item.objects.select_related(*posts_select_related).only(
                         *items_only).filter(frends_query)
-
         final_queryset = own_posts_queryset.union(community_posts_queryset, followed_users_queryset, frends_queryset)
 
         return final_queryset
 
     def join_community_with_name(self, community_name):
-        check_can_join_community_with_name(
-            user=self,
-            community_name=community_name)
-
+        check_can_join_community_with_name(user=self, community_name=community_name)
         community_to_join = Community.objects.get(name=community_name)
         community_to_join.add_member(self)
-
         if community_to_join.is_private():
             CommunityInvite.objects.filter(community_name=community_name, invited_user__id=self.id).delete()
         if community_to_join.is_closed():
@@ -394,15 +384,40 @@ class User(AbstractUser):
         check_can_leave_community_with_name(
             user=self,
             community_name=community_name)
-
         community_to_leave = Community.objects.get(name=community_name)
-
         if self.has_favorite_community_with_name(community_name):
             self.unfavorite_community_with_name(community_name=community_name)
-
         community_to_leave.remove_member(self)
-
         return community_to_leave
+
+    def get_reactions_for_post_with_id(self, post_id):
+        post = Post.objects.get(pk=post_id)
+        return self.get_reactions_for_post(post=post)
+
+    def get_votes_for_item(self, item):
+        reactions_query = self._make_get_votes_for_item_query(item=item)
+        return ItemVotes.objects.filter(parent=self, vote__gt=0).filter(reactions_query)
+
+    def _make_get_votes_for_item_query(self, item):
+        reactions_query = Q(item_id=item.pk)
+        post_community = item.community
+
+        if post_community:
+            if not self.is_staff_of_community_with_name(community_name=post_community.name):
+                blocked_users_query = ~Q(Q(user__blocked_by_users__blocker_id=self.pk) | Q(
+                    user__user_blocks__blocked_user_id=self.pk))
+                blocked_users_query_staff_members = Q(
+                    user__communities_memberships__community_id=post_community.pk)
+                blocked_users_query_staff_members.add(Q(user__communities_memberships__is_administrator=True) | Q(
+                    user__communities_memberships__is_moderator=True), Q.AND)
+
+                blocked_users_query.add(~blocked_users_query_staff_members, Q.AND)
+                reactions_query.add(blocked_users_query, Q.AND)
+        else:
+            blocked_users_query = ~Q(Q(user__blocked_by_users__blocker_id=self.pk) | Q(
+                user__user_blocks__blocked_user_id=self.pk))
+            reactions_query.add(blocked_users_query, Q.AND)
+        return reactions_query
 
     def has_favorite_community_with_name(self, community_name):
         return self.favorite_communities.filter(name=community_name).exists()
