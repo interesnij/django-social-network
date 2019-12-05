@@ -2,11 +2,11 @@
 
 <div class="media " reply-id="{{ reply.id }}">
     <figure>
-        {% if reply.commenter.profile.avatar %}
-          <img src="{{ reply.commenter.profile.avatar.url }}" class="pull-left" style="border-radius:50%;width:30px;" alt="User Image" class="user-image">
-        {% else %}
-          <img src="{% static 'images/user.png' %}" class="pull-left" style="border-radius:50%;width:30px;" alt="No Profile Picture" />
-        {% endif %}
+      {% if reply.commenter.get_avatar %}
+        <img src="{{ reply.commenter.get_avatar.file.url }}" class="pull-left" style="border-radius:50%;width:30px;" alt="User Image" class="user-image">
+      {% else %}
+        <img class="pull-left" style="width:50px;border:#6C757D solid 1px;border-radius:50px;padding:5px;" src="{% static 'images/icons/person-24px.svg' %}" />
+      {% endif %}
     </figure>
     <div class="media-body">
         <h5 class="mt-0"><span class="commenter_first_name">{{ reply.commenter.first_name }}</span> {{ reply.commenter.last_name }}
@@ -36,14 +36,15 @@
                           <span>Оценили: {{ reply.likes.count }} {{ reply.likes.count|rupluralize:"человек,человека,людей" }}</span>
                           <br><br>
                           <span style="display: flex;">
-                              {% for heart in comment.likes %}
+                              {% for heart in reply.likes.all %}
                               <a href="{% url 'user' pk=heart.user.pk %}" class="ajax" style="padding-right:10px">
                                   <figure style="margin: 0;">
-                                    {% if heart.user.get_avatar %}
+                                      {% if heart.user.get_avatar %}
                                       <img src="{{ heart.user.get_avatar.file.url }}" style="border-radius: 50px;width:50px;" alt="image">
-                                    {% else %}
+                                      {% else %}
                                       <img style="width:50px;border:#6C757D solid 1px;border-radius:50px;padding:5px;" src="{% static 'images/icons/person-24px.svg' %}" />
-                                    {% endif %}
+                                      {% endif %}
+
                                   </figure>
                                   {{ heart.user.first_name }}
                               </a>
@@ -67,28 +68,29 @@
                           {% endif %}
                     </span>
 
-                      <span class="comment_dislike_window">
-                          {% if reply.dislike %}
-                          <div class="comment_dislike_pop" style="margin:15px">
-                              <span>Не оценили: {{ reply.dislikes.count }} {{ reply.dislikes.count|rupluralize:"человек,человека,людей" }}</span>
-                              <br><br>
-                              <span style="display: flex;">
-                                  {% for sheet in reply.dislikes %}
-                                  <a href="{% url 'user' pk=sheet.user.pk %}" class="ajax" style="padding-right:10px">
-                                      <figure style="margin: 0;">
-                                        {% if sheet.user.get_avatar %}
-                                          <img src="{{ sheet.user.get_avatar.file.url }}" style="border-radius: 50px;width:50px;" alt="image">
-                                        {% else %}
-                                          <img style="width:50px;border:#6C757D solid 1px;border-radius:50px;padding:5px;" src="{% static 'images/icons/person-24px.svg' %}" />
-                                        {% endif %}
-                                      </figure>
-                                      {{ sheet.user.first_name }}
-                                  </a>
-                                  {% endfor %}
-                              </span>
-                          </div>
-                          {% endif %}
-                      </span>
+                    <span class="comment_dislike_window">
+                        {% if reply.dislike.all %}
+                        <div class="comment_dislike_pop" style="margin:15px">
+                            <span>Не оценили: {{ reply.dislikes.count }} {{ reply.dislikes.count|rupluralize:"человек,человека,людей" }}</span>
+                            <br><br>
+                            <span style="display: flex;">
+                                {% for sheet in reply.dislikes.all %}
+                                <a href="{% url 'user' pk=sheet.user.pk %}" class="ajax" style="padding-right:10px">
+                                    <figure style="margin: 0;">
+                                      {% if sheet.user.get_avatar %}
+                                        <img src="{{ sheet.user.get_avatar.file.url }}" style="border-radius: 50px;width:50px;" alt="image">
+                                      {% else %}
+                                        <img style="width:50px;border:#6C757D solid 1px;border-radius:50px;padding:5px;" src="{% static 'images/icons/person-24px.svg' %}" />
+                                      {% endif %}
+
+                                    </figure>
+                                    {{ sheet.user.first_name }}
+                                </a>
+                                {% endfor %}
+                            </span>
+                        </div>
+                        {% endif %}
+                    </span>
 
                     &nbsp;&nbsp;
                     <span class="commenter_first_name" style="display:none">{{ reply.commenter.first_name }}</span>

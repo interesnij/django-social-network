@@ -46,7 +46,7 @@
                     {% endif %}
                   </span>
                     <span class="comment_like_window">
-                        {% if comment.likes.all %}
+                        {% if comment.likes %}
                         <div class="comment_like_pop" style="margin:15px">
                             <span>Оценили: {{ comment.likes.count }} {{ comment.likes.count|rupluralize:"человек,человека,людей" }}</span>
                             <br><br>

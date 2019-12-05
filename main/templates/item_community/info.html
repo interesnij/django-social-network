@@ -21,10 +21,10 @@
               {% for heart in object.likes.all %}
               <a href="{% url 'user' pk=heart.user.pk %}" class="ajax" style="padding-right:10px">
                 <figure style="margin: 0;">
-                  {% if heart.user.profile.avatar %}
-                    <img src="{{ heart.user.profile.avatar.url }}" style="border-radius: 50px;width:50px;" alt="image">
+                  {% if heart.user.get_avatar %}
+                    <img src="{{ heart.user.get_avatar.file.url }}" style="border-radius: 50px;width:50px;" alt="image">
                     {% else %}
-                    <img src="{% static 'images/user.png' %}" alt="image" style="border-radius: 50px;width:50px;">
+                    <img style="width:50px;border:#6C757D solid 1px;border-radius:50px;padding:5px;" src="{% static 'images/icons/person-24px.svg' %}" />
                     {% endif %}
                 </figure>
                 {{ heart.user.first_name }}
@@ -33,7 +33,7 @@
             </span>
           </div>
           {% endif %}
-          </span>
+        </span>
 
           &nbsp;&nbsp;
           <span class="c_dislike {% if object.dislikes.all|user_in:request.user %} text-danger {% endif %}"
@@ -45,29 +45,28 @@
           </span>
 
           <span class="dislike_window">
-          {% if object.dislikes.all %}
+            {% if object.dislikes %}
           <div class="dislike_pop" style="margin:15px">
-          <span>Не оценили: {{ object.dislikes.count }} {{ object.dislikes.count|rupluralize:"человек,человека,людей" }}</span>
-          <br><br>
-          <span style="display: flex;">
-            {% for sheet in object.dislikes.all %}
-            <a href="{% url 'user' pk=sheet.user.pk %}" class="ajax" style="padding-right:10px">
-              <figure style="margin: 0;">
-                {% if sheet.user.profile.avatar %}
-                  <img src="{{ sheet.user.profile.avatar.url }}" style="border-radius: 50px;width:50px;" alt="image">
+            <span>Не оценили: {{ object.dislikes.count }} {{ object.dislikes.count|rupluralize:"человек,человека,людей" }}</span>
+            <br><br>
+            <span style="display: flex;">
+              {% for sheet in object.dislikes %}
+              <a href="{% url 'user' pk=sheet.user.pk %}" class="ajax" style="padding-right:10px">
+                <figure style="margin: 0;">
+                  {% if sheet.user.get_avatar %}
+                    <img src="{{ sheet.user.get_avatar.file.url }}" style="border-radius: 50px;width:50px;" alt="image">
                   {% else %}
-                  <img src="{% static 'images/user.png' %}" alt="image" style="border-radius: 50px;width:50px;">
+                    <img style="width:50px;border:#6C757D solid 1px;border-radius:50px;padding:5px;" src="{% static 'images/icons/person-24px.svg' %}" />
                   {% endif %}
-
-                </figure>
-                {{ sheet.user.first_name }}
-              </a>
-              {% endfor %}
-          </span>
+                  </figure>
+                  {{ sheet.user.first_name }}
+                </a>
+                {% endfor %}
+            </span>
           </div>
           {% endif %}
 
-          </span>
+        </span>
 
             {% if object.comments_enabled %}
             &nbsp;&nbsp;
