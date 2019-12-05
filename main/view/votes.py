@@ -12,7 +12,7 @@ from django.contrib.contenttypes.models import ContentType
 
 
 class ItemLikeWindow(TemplateView):
-    template_name="votes/like_window.html"
+    template_name="item_votes/like_window.html"
 
     def get(self,request,*args,**kwargs):
         self.item = Item.objects.get(pk=self.kwargs["pk"])
@@ -22,9 +22,9 @@ class ItemLikeWindow(TemplateView):
             if user.is_closed_profile:
                 check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
             self.likes_query = self.item.likes()
-            self.likes = self.user.get_votes_for_item(self.item)
+            self.likes = self.user.get_likes_for_item(self.item)
         elif self.user == request.user:
-            self.likes = self.user.get_votes_for_item(self.item)
+            self.likes = self.user.get_likes_for_item(self.item)
 
         return super(ItemLikeWindow,self).get(request,*args,**kwargs)
 
@@ -35,7 +35,7 @@ class ItemLikeWindow(TemplateView):
 
 
 class ItemCommentLikeWindow(TemplateView):
-    template_name="votes/comment_like_window.html"
+    template_name="item_votes/comment_like_window.html"
 
     def get(self,request,*args,**kwargs):
         self.comment_like = ItemComment.objects.get(pk=self.kwargs["pk"])
@@ -48,7 +48,7 @@ class ItemCommentLikeWindow(TemplateView):
 
 
 class ItemDislikeWindow(TemplateView):
-    template_name="votes/dislike_window.html"
+    template_name="item_votes/dislike_window.html"
 
     def get(self,request,*args,**kwargs):
         self.dislike = Item.objects.get(pk=self.kwargs["pk"])
@@ -61,7 +61,7 @@ class ItemDislikeWindow(TemplateView):
 
 
 class ItemCommentDislikeWindow(TemplateView):
-    template_name="votes/comment_dislike_window.html"
+    template_name="item_votes/comment_dislike_window.html"
 
     def get(self,request,*args,**kwargs):
         self.comment_dislike = ItemComment.objects.get(pk=self.kwargs["pk"])
