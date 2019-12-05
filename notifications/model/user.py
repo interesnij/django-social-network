@@ -8,6 +8,7 @@ from channels.layers import get_channel_layer
 from slugify import slugify
 from django.core import serializers
 from django.contrib.postgres.indexes import BrinIndex
+from communities.models import Community
 
 
 
