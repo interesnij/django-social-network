@@ -248,8 +248,8 @@ $("#ajax").on('click', '.u_like', function() {
             like.find(".like_act").show();
             dislike.find(".dislike").show();
             dislike.find(".dislike_act").hide();
-            like.siblings('.like_window').html('').load("/votes/user_like/" + uuid + "/" + pk + "/");
-            dislike.siblings('.dislike_window').html('').load("/votes/user_dislike/" + uuid + "/" + pk + "/")
+            like.siblings('.like_window').html('').load("/votes/like_window/" + uuid + "/" + pk + "/");
+            dislike.siblings('.dislike_window').html('').load("/votes/dislike_window/" + uuid + "/" + pk + "/")
 
         }
     });
@@ -274,8 +274,8 @@ $("#ajax").on('click', '.u_dislike', function() {
                 dislike.find(".dislike_act").show();
                 like.find(".like_act").hide();
                 like.find(".like").show();
-                like.siblings('.like_window').html('').load("/votes/user_like/" + uuid + "/" + pk + "/");
-                dislike.siblings('.dislike_window').html('').load("/votes/user_dislike/" + uuid + "/" + pk + "/")
+                like.siblings('.like_window').html('').load("/votes/like_window/" + uuid + "/" + pk + "/");
+                dislike.siblings('.dislike_window').html('').load("/votes/dislike_window/" + uuid + "/" + pk + "/")
             }
         });
         return false;
