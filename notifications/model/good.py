@@ -182,41 +182,12 @@ def good_notification_handler(actor, recipient, verb, good, **kwargs):
         pass
 
 
-def good_community_notification_handler(actor, recipient, verb, good, **kwargs):
+def good_community_notification_handler(actor, community, verb, **kwargs):
     key = kwargs.pop('key', 'notification')
-
-    if recipient == 'global':
-        users = User.objects.all().exclude(username=actor.username)
-        for user in users:
-            UserCommunityNotification.objects.create(
-                actor=actor,
-                recipient=user,
-                verb=verb,
-                good=good,
-            )
-        good_notification_broadcast(actor, key)
-
-    elif isinstance(recipient, list):
-        for community in recipient:
-            GoodCommunityNotification.objects.create(
-                actor=actor,
-                recipient=Community.objects.get(name=community.name),
-                verb=verb,
-                good=good,
-            )
-
-    elif isinstance(recipient, get_community_model()):
-        GoodCommunityNotification.objects.create(
-            actor=actor,
-            recipient=recipient,
-            verb=verb,
-            good=good,
-        )
-        good_notification_broadcast(
-            actor, key, recipient=recipient.name)
-
-    else:
-        pass
+    persons = community.get_staff_members()
+    for user in persons:
+        GoodCommunityNotification.objects.create(actor=actor, community=community, recipient=user,verb=verb)
+    user_notification_broadcast(actor, key)
 
 
 def good_notification_broadcast(actor, key, **kwargs):

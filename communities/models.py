@@ -364,17 +364,10 @@ class Community(models.Model):
         user_membership.delete()
 
     def notification_new_member(self, user):
-        community_notification_handler(
-                                user,
-                                self,
-                                UserCommunityNotification.JOIN,
-                                key='notification'
-                            )
+        community_notification_handler(user, self, UserCommunityNotification.JOIN, key='notification')
 
     def create_invite(self, creator, invited_user):
-        """"
-        Создание приглащения в группу
-        """
+
         CommunityInvite = get_community_invite_model()
         return CommunityInvite.create_community_invite(creator=creator, invited_user=invited_user, community=self)
 

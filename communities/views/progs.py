@@ -62,7 +62,7 @@ class CommunityMemberCreate(View):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		new_member = request.user.join_community_with_name(self.community.name)
 		self.community.notification_new_member(request.user)
-		return HttpResponse("!")
+		return HttpResponse("!") 
 
 class CommunityMemberDelete(View):
 	success_url = "/"

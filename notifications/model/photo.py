@@ -182,41 +182,12 @@ def photo_notification_handler(actor, recipient, verb, photo,**kwargs):
         pass
 
 
-def photo_community_notification_handler(actor, recipient, verb, photo, **kwargs):
+def photo_community_notification_handler(actor, community, verb, **kwargs):
     key = kwargs.pop('key', 'notification')
-
-    if recipient == 'global':
-        users = User.objects.all().exclude(username=actor.username)
-        for user in users:
-            PhotoCommunityNotification.objects.create(
-                actor=actor,
-                recipient=user,
-                verb=verb,
-                photo=photo,
-            )
-        photo_notification_broadcast(actor, key)
-
-    elif isinstance(recipient, list):
-        for community in recipient:
-            PhotoCommunityNotification.objects.create(
-                actor=actor,
-                recipient=Community.objects.get(name=community.name),
-                verb=verb,
-                photo=photo,
-            )
-
-    elif isinstance(recipient, get_community_model()):
-        PhotoCommunityNotification.objects.create(
-            actor=actor,
-            recipient=recipient,
-            verb=verb,
-            photo=photo,
-        )
-        photo_notification_broadcast(
-            actor, key, recipient=recipient.name)
-
-    else:
-        pass
+    persons = community.get_staff_members()
+    for user in persons:
+        PhotoCommunityNotification.objects.create(actor=actor, community=community, recipient=user,verb=verb)
+    user_notification_broadcast(actor, key)
 
 
 def photo_notification_broadcast(actor, key, **kwargs):
