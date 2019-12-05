@@ -5,8 +5,6 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.conf import settings
 from users.helpers import upload_to_user_cover_directory, upload_to_user_avatar_directory
-from pilkit.processors import ResizeToFill, ResizeToFit
-from imagekit.models import ProcessedImageField
 from django.contrib.contenttypes.fields import GenericRelation
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -326,6 +324,14 @@ class User(AbstractUser):
         goods_query.add(exclude_reported_and_approved_goods_query, Q.AND)
         goods = Good.objects.filter(goods_query)
         return goods
+
+    def get_avatar(self):
+        try:
+            avatar_album = Album.objects.get(creator=self, title="Фото со страницы", community=None, is_generic=True)
+            avatar = Photo.objects.filter(album_2=avatar_album).order_by('-id')[0]
+        except:
+            avatar = None
+        return avatar
 
     def get_followers(self):
         followers_query = self._make_followers_query()

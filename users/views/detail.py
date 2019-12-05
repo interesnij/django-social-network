@@ -93,8 +93,8 @@ class ProfileUserView(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.user=User.objects.get(pk=self.kwargs["pk"])
-        self.avatar_album = Album.objects.get(creator=self.user, title="Фото со страницы", community=None, is_generic=True)
         try:
+            self.avatar_album = Album.objects.get(creator=self.user, title="Фото со страницы", community=None, is_generic=True)
             self.avatar = Photo.objects.filter(album_2=self.avatar_album).order_by('-id')[0]
         except:
             self.avatar = None

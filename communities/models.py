@@ -1,3 +1,4 @@
+import uuid
 from django.conf import settings
 from django.contrib.contenttypes.fields import GenericRelation
 from django.db import models
@@ -12,7 +13,7 @@ from main.models import Item
 from goods.models import Good
 from common.model_loaders import get_user_model
 from notifications.model.user import *
-import uuid
+from gallery.models import Album, Photo
 
 
 class CommunityCategory(models.Model):
@@ -194,6 +195,14 @@ class Community(models.Model):
         goods_query.add(exclude_reported_and_approved_goods_query, Q.AND)
         goods = Good.objects.filter(goods_query)
         return goods
+
+    def get_avatar(self):
+        try:
+            avatar_album = Album.objects.get(title="Фото со страницы", community=self, is_generic=True)
+            avatar = Photo.objects.filter(album_2=avatar_album).order_by('-id')[0]
+        except:
+            avatar = None
+        return avatar
 
     @classmethod
     def get_trending_communities(cls, category_name=None):

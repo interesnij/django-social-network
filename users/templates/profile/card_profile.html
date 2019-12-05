@@ -69,12 +69,12 @@
         <div class="row align-items-center no-gutters">
             <a class="col">
                 <figure class="mx-auto mb-3" id="avatar_reload">
-                    {% if avatar %}
-                    <img src="{{ avatar.file.url }}"
+                    {% if user.get_avatar %}
+                    <img src="{{ user.get_avatar.file.url }}"
                          class="avatar_detail"
                          style="cursor:pointer"
                          data-uuid="{{ user.uuid }}"
-                         data-id="{{ avatar.id }}">
+                         data-id="{{ user.get_avatar.id }}">
                     {% else %}
                     <img src="{% static 'images/icons/person-24px.svg' %}" />
                     {% endif %}
