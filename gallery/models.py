@@ -1,7 +1,7 @@
 import uuid
 from django.db import models
 from django.contrib.postgres.indexes import BrinIndex
-from gallery.helpers import upload_to_photo_directory
+from os.path import splitext
 from pilkit.processors import ResizeToFill, ResizeToFit
 from imagekit.models import ProcessedImageField
 from django.contrib.contenttypes.fields import GenericRelation
@@ -55,6 +55,16 @@ class Photo(models.Model):
         )
         verbose_name = 'Фото'
         verbose_name_plural = 'Фото'
+
+    def upload_to_photo_directory(self, filename):
+        extension = splitext(filename)[1].lower()
+        new_filename = str(uuid.uuid4()) + extension
+
+        path = 'photos/%(creator_id)s/' % {
+            'user_id': str(self.creator.id)}
+
+        return '%(path)s%(new_filename)s' % {'path': path,
+                                             'new_filename': new_filename, }
 
     @classmethod
     def create_photo(cls, creator, album_2=None, file=None, community=None,
