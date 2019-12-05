@@ -80,10 +80,11 @@
 
     <div class="col-12 col-md-4">
         <br><br><br>
+        {% if request.user.is_authenticated %}
         <button id="community_add" class="btn btn-outline-success" style="margin-bottom:15px;width:100%;" type="button">
             Создать сообщество
         </button>
-
+        {% endif %}
         <div class="card mb-2">
             <div class="card-header">
                 <div class="media">
