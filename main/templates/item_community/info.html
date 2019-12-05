@@ -8,7 +8,7 @@
                 data-id="{{ object.id }}"
                 data-uuid="{{ community.uuid }}"
                 title="Нравится">
-            <img style="width:22px" src="{% static 'images/icons/thumb_up-24px.svg' %}" />
+            <img style="width:22px" src="{% static 'images/icons/thumb_up.svg' %}" />
             <span class="like-count" data-count="like">{% if object.likes.count != 0 %}{{ object.likes.count }}{% endif %}</span>
           </span>
 
@@ -40,7 +40,7 @@
               data-id="{{ object.id }}"
               data-uuid="{{ community.uuid }}"
               title="Не нравится">
-          <img style="width:22px;" src="{% static 'images/icons/thumb_down-24px.svg' %}" />
+          <img style="width:22px;" src="{% static 'images/icons/thumb_down.svg' %}" />
           <span class="dislike-count" data-count="dislike">{% if object.dislikes.count %}{{ object.votes.dislikes.count }}{% endif %}</span>
           </span>
 
