@@ -55,22 +55,22 @@ class ItemDislikeWindow(TemplateView):
     template_name="item_votes/dislike_window.html"
 
     def get(self,request,*args,**kwargs):
-        def get(self,request,*args,**kwargs):
-            self.item = Item.objects.get(pk=self.kwargs["pk"])
-            self.user = User.objects.get(uuid=self.kwargs["uuid"])
-            if self.user != request.user and request.user.is_authenticated:
-                check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
-                if self.user.is_closed_profile:
-                    check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
-                self.dislikes = self.item.get_dislikes_for_item(request.user)
-            elif self.user == request.user:
-                self.dislikes = self.item.get_dislikes_for_item(request.user)
-            elif request.user.is_anonymous and self.user.is_closed_profile():
-                raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
-            elif request.user.is_anonymous and not self.user.is_closed_profile():
-                self.dislikes = self.item.get_dislikes_for_item(request.user)
+        self.item = Item.objects.get(pk=self.kwargs["pk"])
+        self.user = User.objects.get(uuid=self.kwargs["uuid"])
+        if self.user != request.user and request.user.is_authenticated:
+            check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
+            if self.user.is_closed_profile:
+                check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
+            self.dislikes = self.item.get_dislikes_for_item(request.user)
+        elif self.user == request.user:
+            self.dislikes = self.item.get_dislikes_for_item(request.user)
+        elif request.user.is_anonymous and self.user.is_closed_profile():
+            raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
+        elif request.user.is_anonymous and not self.user.is_closed_profile():
+            self.dislikes = self.item.get_dislikes_for_item(request.user)
 
-            return super(ItemDislikeWindow,self).get(request,*args,**kwargs)
+        return super(ItemDislikeWindow,self).get(request,*args,**kwargs)
+
 
     def get_context_data(self,**kwargs):
         context=super(ItemDislikeWindow,self).get_context_data(**kwargs)
