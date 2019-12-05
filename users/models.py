@@ -4,7 +4,6 @@ from django.utils import six, timezone
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.conf import settings
-from users.helpers import upload_to_user_cover_directory, upload_to_user_avatar_directory
 from django.contrib.contenttypes.fields import GenericRelation
 from django.db.models.signals import post_save
 from django.dispatch import receiver
