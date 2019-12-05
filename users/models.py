@@ -390,13 +390,9 @@ class User(AbstractUser):
         community_to_leave.remove_member(self)
         return community_to_leave
 
-    def get_reactions_for_post_with_id(self, post_id):
-        post = Post.objects.get(pk=post_id)
-        return self.get_reactions_for_post(post=post)
-
     def get_votes_for_item(self, item):
         reactions_query = self._make_get_votes_for_item_query(item=item)
-        return ItemVotes.objects.filter(parent=self, vote__gt=0).filter(reactions_query)
+        return ItemVotes.objects.filter(parent=item, vote__gt=0).filter(reactions_query)
 
     def _make_get_votes_for_item_query(self, item):
         reactions_query = Q(item_id=item.pk)
