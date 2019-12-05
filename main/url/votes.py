@@ -16,8 +16,8 @@ urlpatterns = [
     url(r'^community_comment/(?P<uuid>[0-9a-f-]+)/(?P<pk>\d+)/like/$',login_required(ItemCommentCommunityLikeCreate.as_view())),
     url(r'^community_comment/(?P<uuid>[0-9a-f-]+)/(?P<pk>\d+)/dislike/$',login_required(ItemCommentCommunityDislikeCreate.as_view())),
 
-	url(r'^like_window/(?P<pk>\d+)/$', ItemLikeWindow.as_view()),
-	url(r'^dislike_window/(?P<pk>\d+)/$', ItemDislikeWindow.as_view()),
-    url(r'^comment_like_window/(?P<pk>\d+)/$', ItemCommentLikeWindow.as_view()),
-	url(r'^comment_dislike_window/(?P<pk>\d+)/$', ItemCommentDislikeWindow.as_view())
+	url(r'^like_window/(?P<uuid>[0-9a-f-]+)/(?P<pk>\d+)/$', ItemLikeWindow.as_view()),
+	url(r'^dislike_window/(?P<uuid>[0-9a-f-]+)/(?P<pk>\d+)/$', ItemDislikeWindow.as_view()),
+    url(r'^comment_like_window/(?P<uuid>[0-9a-f-]+)/(?P<pk>\d+)/$', ItemCommentLikeWindow.as_view()),
+	url(r'^comment_dislike_window/(?P<uuid>[0-9a-f-]+)/(?P<pk>\d+)/$', ItemCommentDislikeWindow.as_view())
 ]
