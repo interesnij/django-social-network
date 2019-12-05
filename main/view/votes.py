@@ -1,14 +1,15 @@
+import json
 from django.views.generic.base import TemplateView
 from users.models import User
 from main.models import Item, ItemComment
 from communities.models import Community
 from django.http import JsonResponse, HttpResponse
 from django.views import View
-import json
 from common.models import ItemVotes, ItemCommentVotes
 from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
 from common.checkers import check_can_get_posts_for_community_with_name
 from django.contrib.contenttypes.models import ContentType
+from rest_framework.exceptions import PermissionDenied
 
 
 class ItemLikeWindow(TemplateView):
@@ -25,9 +26,9 @@ class ItemLikeWindow(TemplateView):
         elif self.user == request.user:
             self.likes = self.user.get_likes_for_item(self.item)
         elif request.user.is_anonymous and self.user.is_closed_profile():
-			raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
-		elif request.user.is_anonymous and not self.user.is_closed_profile():
-			self.likes = self.user.get_likes_for_item(self.item)
+            raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
+        elif request.user.is_anonymous and not self.user.is_closed_profile():
+            self.likes = self.user.get_likes_for_item(self.item)
 
         return super(ItemLikeWindow,self).get(request,*args,**kwargs)
 
