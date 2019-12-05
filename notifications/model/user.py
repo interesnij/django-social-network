@@ -141,7 +141,7 @@ def community_notification_handler(actor, community, verb, **kwargs):
     key = kwargs.pop('key', 'notification')
     persons = community.get_staff_members()
     for user in persons:
-        UserCommunityNotification.objects.create(actor=actor,recipient=user,verb=verb)
+        UserCommunityNotification.objects.create(actor=actor, community=community, recipient=user,verb=verb)
     user_notification_broadcast(actor, key)
 
 
