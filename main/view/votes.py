@@ -20,7 +20,7 @@ class ItemLikeWindow(TemplateView):
         self.user = User.objects.get(uuid=self.kwargs["uuid"])
         if self.user != request.user and request.user.is_authenticated:
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
-            if user.is_closed_profile:
+            if self.user.is_closed_profile:
                 check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
             self.likes = self.user.get_likes_for_item(self.item)
         elif self.user == request.user:
