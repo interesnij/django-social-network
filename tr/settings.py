@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     'imagekit',
     'rest_framework.authtoken',
     'channels',
+    'easy_thumbnails',
     'allauth',
     'allauth.account',
     'rest_auth.registration',
@@ -236,3 +237,25 @@ CKEDITOR_IMAGE_BACKEND = 'pillow'
 CKEDITOR_UPLOAD_SLUGIFY_FILENAME = False
 CKEDITOR_RESTRICT_BY_USER = True
 CKEDITOR_BROWSE_SHOW_DIRS = True
+
+
+THUMBNAIL_DEFAULT_OPTIONS = {"crop":"smart","detail":True}
+
+THUMBNAIL_ALIASES = {
+    "":{
+        "avatar": {"size":(50,50)},
+        "small_avatar": {"size":(40,40)},
+    },
+    "boom_shop":{
+        "boom": {"size":(300,300)},
+    },
+    "floret_store":{
+        "floret": {"size":(200,200)},
+    },
+    "faberlic":{
+        "faberlic": {"size":(200,200)},
+    },
+    "goods2":{
+        "goo": {"size":(350,450)},
+    },
+}
