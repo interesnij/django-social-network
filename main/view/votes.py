@@ -22,6 +22,8 @@ class ItemLikeWindow(TemplateView):
             if user.is_closed_profile:
                 check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
             self.likes = self.likes_query()
+        elif self.user == request.user:
+            self.likes = self.likes_query()
 
         return super(ItemLikeWindow,self).get(request,*args,**kwargs)
 
