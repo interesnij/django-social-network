@@ -16,7 +16,7 @@ class ItemLikeWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.item = Item.objects.get(pk=self.kwargs["pk"])
-        user = User.objects.get(uuid=self.kwargs["uuid"])
+        self.user = User.objects.get(uuid=self.kwargs["uuid"])
         if self.user != request.user and request.user.is_authenticated:
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
             if user.is_closed_profile:
