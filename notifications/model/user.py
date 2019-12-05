@@ -81,7 +81,8 @@ class UserNotification(models.Model):
 
 
 class UserCommunityNotification(models.Model):
-    recipient = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='community_notifications', on_delete=models.CASCADE, verbose_name="Сообщество")
+    community = models.ForeignKey(Community, related_name='community_notifications', on_delete=models.CASCADE, verbose_name="Сообщество")
+    recipient = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_notifications', on_delete=models.CASCADE, verbose_name="Получатель")
     actor = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="Инициатор", on_delete=models.CASCADE)
     timestamp = models.DateTimeField(default=timezone.now, editable=False, db_index=True, verbose_name="Создано")
     unread  = models.BooleanField(default=True, db_index=True)
@@ -136,11 +137,11 @@ def notification_handler(actor, recipient, verb, **kwargs):
         pass
 
 
-def community_notification_handler(actor, recipient, verb, **kwargs):
+def community_notification_handler(actor, community, verb, **kwargs):
     key = kwargs.pop('key', 'notification')
-    persons = recipient.get_staff_members()
+    persons = community.get_staff_members()
     for user in persons:
-        UserCommunityNotification.objects.create(actor=actor,recipient=persons,verb=verb)
+        UserCommunityNotification.objects.create(actor=actor,recipient=user,verb=verb)
     user_notification_broadcast(actor, key)
 
 
