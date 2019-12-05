@@ -74,15 +74,15 @@ class AjaxResponseMixin(object):
     def delete_ajax(self, request, *args, **kwargs):
         return self.get(request, *args, **kwargs)
 
-def upload_to_photo_directory(user, filename):
-    return _upload_to_photo_directory(user=user, filename=filename)
+def upload_to_photo_directory(creator, filename):
+    return _upload_to_photo_directory(creator=creator, filename=filename)
 
-def _upload_to_photo_directory(user, filename):
+def _upload_to_photo_directory(creator, filename):
     extension = splitext(filename)[1].lower()
     new_filename = str(uuid.uuid4()) + extension
 
-    path = 'users/%(user_id)s/' % {
-        'user_id': str(user.id)}
+    path = 'photos/%(creator_id)s/' % {
+        'user_id': str(creator.id)}
 
     return '%(path)s%(new_filename)s' % {'path': path,
                                          'new_filename': new_filename, }
