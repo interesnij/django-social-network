@@ -141,7 +141,7 @@ class SettingsPrivateView(TemplateView):
 			self.private_settings = None
 		if not self.private_settings:
 			self.user.private_settings = UserPrivateSettings.objects.create(user=request.user)
-		self.form=SettingsPrivateForm(request.POST)
+		self.form=SettingsPrivateForm(request.POST, instance=self.private_settings)
 		if self.form.is_valid():
 			self.form.save()
 			if request.is_ajax():
