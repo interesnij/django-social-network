@@ -61,14 +61,6 @@ class Item(models.Model):
         parent_comments = ItemComment.objects.filter(item=self).count()
         return parent_comments
 
-    def likes(self):
-        likes = ItemVotes.objects.filter(parent=self, vote__gt=0)
-        return likes
-
-    def dislikes(self):
-        dislikes = ItemVotes.objects.filter(parent=self, vote__lt=0)
-        return dislikes
-
     def get_parent(self):
         if self.parent:
             return self.parent
@@ -146,6 +138,41 @@ class Item(models.Model):
         comments_query.add(~Q(moderated_object__reports__reporter_id=user.pk), Q.AND)
         comments_query.add(Q(is_deleted=False), Q.AND)
         return comments_query
+
+    def likes(self):
+        likes = ItemVotes.objects.filter(parent=self, vote__gt=0)
+        return likes
+
+    def likes_query(user):
+        likes = self.likes()
+        get_votes_query = self.get_votes_query(user)
+        likes_query = likes.filter(get_votes_query)
+        return likes_query 
+
+    def dislikes(self):
+        dislikes = ItemVotes.objects.filter(parent=self, vote__lt=0)
+        return dislikes
+
+    def get_votes_query(self, user):
+        reactions_query = Q(item_id=self.pk)
+        post_community = self.community
+
+        if post_community:
+            if not user.is_staff_of_community_with_name(community_name=post_community.name):
+                blocked_users_query = ~Q(Q(user__blocked_by_users__blocker_id=user.pk) | Q(
+                    user__user_blocks__blocked_user_id=user.pk))
+                blocked_users_query_staff_members = Q(
+                    user__communities_memberships__community_id=post_community.pk)
+                blocked_users_query_staff_members.add(Q(user__communities_memberships__is_administrator=True) | Q(
+                    user__communities_memberships__is_moderator=True), Q.AND)
+
+                blocked_users_query.add(~blocked_users_query_staff_members, Q.AND)
+                reactions_query.add(blocked_users_query, Q.AND)
+        else:
+            blocked_users_query = ~Q(Q(user__blocked_by_users__blocker_id=self.pk) | Q(
+                user__user_blocks__blocked_user_id=self.pk))
+            reactions_query.add(blocked_users_query, Q.AND)
+        return reactions_query
 
 
 class ItemComment(models.Model):
