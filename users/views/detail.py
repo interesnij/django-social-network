@@ -107,5 +107,4 @@ class ProfileUserView(TemplateView):
         context['communities'] = self.communities
         context['is_frend'] = self.is_frend
         context['is_blocked'] = self.is_blocked
-        context['avatar'] = self.avatar
         return context
