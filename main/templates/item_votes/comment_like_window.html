@@ -1,18 +1,18 @@
 {% load liked_user staticfiles %}
 
-{% if comment_like.likes.all %}
+{% if comment_like.likes %}
 <div class="comment_like_pop" style="margin:15px">
     <span>Оценили: {{ comment_like.likes.count }} {{ comment_like.likes.count|rupluralize:"человек,человека,людей" }}</span>
     <br><br>
     <span style="display: flex;">
-        {% for heart in comment_like.likes.all %}
+        {% for heart in comment_like.likes %}
         <a href="{% url 'user' pk=heart.user.pk %}" class="ajax" style="padding-right:10px">
             <figure style="margin: 0;">
-                {% if heart.user.profile.avatar %}
-                <img src="{{ heart.user.profile.avatar.url }}" style="border-radius: 50px;width:50px;" alt="image">
-                {% else %}
-                <img src="{% static 'images/user.png' %}" alt="image" style="border-radius: 50px;width:50px;">
-                {% endif %}
+              {% if heart.user.get_avatar %}
+                <img src="{{ heart.user.profile.get_avatar.file.url }}" style="border-radius: 50px;width:50px;" alt="image">
+              {% else %}
+                <img style="width:50px;border:#6C757D solid 1px;border-radius:50px;padding:5px;" src="{% static 'images/icons/person-24px.svg' %}" />
+              {% endif %}
             </figure>
             {{ heart.user.first_name }}
         </a>

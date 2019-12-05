@@ -8,10 +8,10 @@
     {% for sheet in dislikes %}
     <a href="{% url 'user' pk=sheet.user.pk %}" class="ajax" style="padding-right:10px">
       <figure style="margin: 0;">
-        {% if sheet.user.profile.avatar %}
-          <img src="{{ sheet.user.profile.avatar.url }}" style="border-radius: 50px;width:50px;" alt="image">
+        {% if sheet.user.get_avatar %}
+          <img src="{{ sheet.user.get_avatar.file.url }}" style="border-radius: 50px;width:50px;" alt="image">
           {% else %}
-          <img src="{% static 'images/user.png' %}" alt="image" style="border-radius: 50px;width:50px;">
+          <img style="width:50px;border:#6C757D solid 1px;border-radius:50px;padding:5px;" src="{% static 'images/icons/person-24px.svg' %}" />
           {% endif %}
 
         </figure>
