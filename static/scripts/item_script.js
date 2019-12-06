@@ -8,7 +8,20 @@ $('.item_fullscreen_hide').on('click', function() {
     $('.item_fullscreen').hide();
     $('#item_loader').empty();
 });
-
+$('#ajax').on('click', '.fullscreen', function() {
+    var item = $(this);
+    var item_pk = item.data("pk");
+    var user_uuid = item.data("uuid");
+    $('#item_loader').html('').load("/users/detail/item/" + item_pk + "/" + user_uuid + "/")
+    $('.item_fullscreen').show();
+});
+$('#ajax').on('click', '.c_fullscreen', function() {
+    var item = $(this);
+    var item_pk = item.data("pk");
+    var community_uuid = item.data("uuid");
+    $('#item_loader').html('').load("/communities/item/" + item_pk + "/" + community_uuid + "/")
+    $('.item_fullscreen').show();
+});
 
 $('#ajax').on('click', '.u_comment', function() {
     var item = $(this).closest(".infinite-item").attr("item-id");
@@ -69,22 +82,6 @@ $('#ajax').on('click', '.remove', function() {
         },
         error: function(data) {}
     });
-});
-
-
-$('#ajax').on('click', '.fullscreen', function() {
-    var item = $(this);
-    var item_pk = item.data("pk");
-    var user_uuid = item.data("uuid");
-    $('#item_loader').html('').load("/users/detail/item/" + item_pk + "/" + user_uuid + "/")
-    $('.item_fullscreen').show();
-});
-$('#ajax').on('click', '.community_fullscreen', function() {
-    var item = $(this);
-    var item_pk = item.data("pk");
-    var community_uuid = item.data("uuid");
-    $('#item_loader').html('').load("/communities/item/" + item_pk + "/" + community_uuid + "/")
-    $('.item_fullscreen').show();
 });
 
 
