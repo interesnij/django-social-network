@@ -401,7 +401,7 @@ class User(AbstractUser):
         return reactions_query
 
     def _make_get_votes_community(self, item):
-        reactions_query = Q(item_id=item.pk)
+        reactions_query = Q(parent_id=item.pk)
         post_community = item.community
 
         if post_community:
