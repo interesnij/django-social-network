@@ -1,4 +1,4 @@
-{% load liked_user staticfiles %}
+{% load liked_user staticfiles thumbnail %}
 
 <div class="card-footer border-top py-2">
 
@@ -21,10 +21,10 @@
               {% for heart in object.likes.all %}
               <a href="{% url 'user' pk=heart.user.pk %}" class="ajax" style="padding-right:10px">
                 <figure style="margin: 0;">
-                  {% if heart.user.get_avatar %}
-                    <img src="{{ heart.user.get_avatar.file.url }}" style="border-radius: 50px;width:50px;" alt="image">
+                    {% if heart.user.get_avatar %}
+                      <img src="{{ heart.user.get_avatar.file|thumbnail_url:'avatar' }}" style="border-radius: 50px;width:50px;" alt="image">
                     {% else %}
-                    <img style="width:50px;border:#6C757D solid 1px;border-radius:50px;padding:5px;" src="{% static 'images/icons/person-24px.svg' %}" />
+                      <img class="thumb" src="{% static 'images/icons/person-24px.svg' %}" />
                     {% endif %}
                 </figure>
                 {{ heart.user.first_name }}
@@ -54,11 +54,11 @@
               <a href="{% url 'user' pk=sheet.user.pk %}" class="ajax" style="padding-right:10px">
                 <figure style="margin: 0;">
                   {% if sheet.user.get_avatar %}
-                    <img src="{{ sheet.user.get_avatar.file.url }}" style="border-radius: 50px;width:50px;" alt="image">
-                  {% else %}
-                    <img style="width:50px;border:#6C757D solid 1px;border-radius:50px;padding:5px;" src="{% static 'images/icons/person-24px.svg' %}" />
+                    <img src="{{ sheet.user.get_avatar.file|thumbnail_url:'avatar' }}" style="border-radius: 50px;width:50px;" alt="image">
+                {% else %}
+                    <img class="thumb" src="{% static 'images/icons/person-24px.svg' %}" />
                   {% endif %}
-                  </figure>
+                </figure>
                   {{ sheet.user.first_name }}
                 </a>
                 {% endfor %}

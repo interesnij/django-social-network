@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load staticfiles humanize %}
+{% load staticfiles humanize thumbnail %}
 
 {% block title %}
 {% if user == request.user %}
@@ -49,9 +49,9 @@
                                                 <div class="media">
                                                     <figure>
                                                         {% if object.user.get_avatar %}
-                                                        <img src="{{ object.user.get_avatar.file.url }}" style="border-radius:50px;width:50px;" alt="image">
+                                                        <img src="{{ object.user.get_avatar.file|thumbnail_url:'avatar' }}" style="border-radius:50px;width:50px;" alt="image">
                                                         {% else %}
-                                                        <img style="width:50px;border:#6C757D solid 1px;border-radius:50px;padding:5px;" src="{% static 'images/icons/person-24px.svg' %}" />
+                                                        <img class="thumb" src="{% static 'images/icons/person-24px.svg' %}" />
                                                         {% endif %}
                                                     </figure>
                                                     <div class="media-body">
@@ -75,9 +75,9 @@
                                                 <div class="media">
                                                     <figure>
                                                         {% if object.target_user.get_avatar %}
-                                                        <img src="{{ object.target_user.get_avatar.file.url }}" style="border-radius:50px;width:50px;" alt="image">
+                                                        <img src="{{ object.target_user.get_avatar.file|thumbnail_url:'avatar' }}" style="border-radius:50px;width:50px;" alt="image">
                                                         {% else %}
-                                                        <img style="width:50px;border:#6C757D solid 1px;border-radius:50px;padding:5px;" src="{% static 'images/icons/person-24px.svg' %}" />
+                                                        <img class="thumb" src="{% static 'images/icons/person-24px.svg' %}" />
                                                         {% endif %}
                                                     </figure>
                                                     <div class="media-body">
@@ -125,9 +125,9 @@
                         <div class="media">
                             <figure>
                                 {% if object.get_avatar %}
-                                <img src="{{ object.get_avatar.file.url }}" style="border-radius:50px;width:50px;" alt="image">
+                                <img src="{{ object.get_avatar.file|thumbnail_url:'avatar' }}" style="border-radius:50px;width:50px;" alt="image">
                                 {% else %}
-                                <img style="width:50px;width:50px;width:50px;border:#6C757D solid 1px;border-radius:50px;padding:5px;" src="{% static 'images/icons/person-24px.svg' %}" />
+                                <img class="thumb" src="{% static 'images/icons/person-24px.svg' %}" />
                                 {% endif %}
                             </figure>
                             <div class="media-body">

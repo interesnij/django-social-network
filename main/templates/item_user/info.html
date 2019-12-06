@@ -22,12 +22,12 @@
 
 
           <span class="like_window">
-            {% if object.likes.all %}
+            {% if object.likes %}
           <div class="like_pop" style="margin:15px">
             <span>Оценили: {{ object.likes.count }} {{ object.likes.count|rupluralize:"человек,человека,людей" }}</span>
             <br><br>
             <span style="display: flex;">
-              {% for heart in object.likes.all %}
+              {% for heart in object.likes %}
               <a href="{% url 'user' pk=heart.user.pk %}" class="ajax" style="padding-right:10px">
                 <figure style="margin: 0;">
                   {% if heart.user.get_avatar %}
