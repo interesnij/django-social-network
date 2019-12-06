@@ -227,7 +227,7 @@ class ItemComment(models.Model):
     @classmethod
     def create_user_comment(cls, commenter, item, community=None, text=None, item_comment_photo=None, item_comment_photo2=None, created=None ):
         comment = ItemComment.objects.create(commenter=commenter, item=item)
-        if not comment.text and (not comment.item_comment_photo or comment.item_comment_photo2):
+        if not comment.text and not comment.item_comment_photo and not comment.item_comment_photo2 :
             raise ValidationError('Для добавления комментария необходимо написать что-то или прикрепить изображение')
         if text:
             comment.text = text
