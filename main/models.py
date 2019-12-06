@@ -148,11 +148,11 @@ class Item(models.Model):
         return dislikes
 
     def get_likes_for_item(self, user):
-        reactions_query = user._make_get_votes_user(item=self)
+        reactions_query = user._make_get_votes_query(item=self)
         return ItemVotes.objects.filter(parent=self, vote__gt=0).filter(reactions_query)
 
     def get_dislikes_for_item(self, user):
-        reactions_query = user._make_get_votes_user(item=self)
+        reactions_query = user._make_get_votes_query(item=self)
         return ItemVotes.objects.filter(parent=self, vote__lt=0).filter(reactions_query)
 
 
@@ -190,11 +190,11 @@ class ItemComment(models.Model):
         return dislikes
 
     def get_likes_for_comment_item(self, user):
-        reactions_query = user._make_get_votes_user_comment(item=self)
+        reactions_query = user._make_get_votes_query_comment(item=self)
         return ItemCommentVotes.objects.filter(item=self, vote__gt=0).filter(reactions_query)
 
     def get_dislikes_for_comment_item(self, user):
-        reactions_query = user._make_get_votes_user_comment(item=self)
+        reactions_query = user._make_get_votes_query_comment(item=self)
         return ItemCommentVotes.objects.filter(item=self, vote__lt=0).filter(reactions_query)
 
     def __str__(self):
