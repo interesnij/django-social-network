@@ -9,7 +9,7 @@
         <a href="{% url 'user' pk=heart.user.pk %}" class="ajax" style="padding-right:10px">
             <figure style="margin: 0;">
               {% if heart.user.get_avatar %}
-                <img src="{{ heart.user.profile.get_avatar.file.url }}" style="border-radius: 50px;width:50px;" alt="image">
+                <img src="{{ heart.user.get_avatar.file.url }}" style="border-radius: 50px;width:50px;" alt="image">
               {% else %}
                 <img style="width:50px;border:#6C757D solid 1px;border-radius:50px;padding:5px;" src="{% static 'images/icons/person-24px.svg' %}" />
               {% endif %}

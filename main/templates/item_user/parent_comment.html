@@ -2,10 +2,10 @@
 
 <div class="media" comment-id="{{ comment.id }}">
     <figure>
-        {% if comment.commenter.profile.avatar %}
-          <img src="{{ comment.commenter.profile.avatar.url }}" class="pull-left" style="border-radius:50%;width:30px;" alt="User Image" class="user-image">
+        {% if comment.commenter.get_avatar %}
+          <img src="{{ comment.commenter.get_avatar.file.url }}" class="pull-left" style="border-radius:50%;width:30px;" alt="User Image" class="user-image">
         {% else %}
-          <img src="{% static 'images/user.png' %}" class="pull-left" style="border-radius:50%;width:30px;" alt="No Profile Picture" />
+          <img class="pull-left" style="width:30px;border:#6C757D solid 1px;border-radius:50px;padding:5px;" src="{% static 'images/icons/person-24px.svg' %}" />
         {% endif %}
     </figure>
     <div class="media-body">

@@ -3,7 +3,7 @@
 <div class="media " reply-id="{{ reply.id }}">
     <figure>
       {% if reply.commenter.get_avatar %}
-        <img src="{{ reply.commenter.get_avatar.file.url }}" class="pull-left" style="border-radius:50%;width:30px;" alt="User Image" class="user-image">
+        <img src="{{ reply.commenter.get_avatar.file.url }}" class="pull-left" style="border-radius:50px;width:30px;" alt="User Image" class="user-image">
       {% else %}
         <img class="pull-left" style="width:50px;border:#6C757D solid 1px;border-radius:50px;padding:5px;" src="{% static 'images/icons/person-24px.svg' %}" />
       {% endif %}
