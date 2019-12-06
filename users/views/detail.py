@@ -98,7 +98,7 @@ class ProfileUserView(TemplateView):
         except:
             self.is_frend = None
         self.options = {'size': (100, 100), 'crop': True}
-        self.photo = self.user.get_avatar.file
+        self.photo = self.user.get_avatar().file
         self.thumb_url = get_thumbnailer(self.photo).get_thumbnail(options).url
         if request.user.is_authenticated:
             self.is_blocked = request.user.has_blocked_user_with_id(self.user)
