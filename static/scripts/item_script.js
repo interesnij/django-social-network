@@ -299,8 +299,8 @@ $("#ajax").on('click', '.u_like2', function() {
                   like.find(".like_act").show();
                   dislike.find(".dislike").show();
                   dislike.find(".dislike_act").hide();
-                  like.siblings('.comment_like_window').html('').load("/votes/user_comment/" + uuid + "/" + pk + "/like/");
-                  dislike.siblings('.comment_dislike_window').html('').load("/votes/user_comment/" + uuid + "/" + pk + "/dislike/")
+                  like.siblings('.comment_like_window').html('').load("/votes/comment_like_window/" + uuid + "/" + pk + "/");
+                  dislike.siblings('.comment_dislike_window').html('').load("/votes/comment_dislike_window/" + uuid + "/" + pk + "/")
               }
           });
           return false;
@@ -324,8 +324,8 @@ $("#ajax").on('click', '.u_dislike2', function() {
                 dislike.find(".dislike_act").show();
                 like.find(".like_act").hide();
                 like.find(".like").show();
-                like.siblings('.comment_like_window').html('').load("/votes/user_comment/" + uuid + "/" + pk + "/like/");
-                dislike.siblings('.comment_dislike_window').html('').load("/votes/user_comment/" + uuid + "/" + pk + "/dislike/")
+                like.siblings('.comment_like_window').html('').load("/votes/comment_like_window/" + uuid + "/" + pk + "/");
+                dislike.siblings('.comment_dislike_window').html('').load("/votes/comment_dislike_window/" + uuid + "/" + pk + "/")
             }
         });
         return false;
