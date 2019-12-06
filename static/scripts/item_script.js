@@ -29,9 +29,7 @@ $('#ajax').on('click', '.u_comment', function() {
     var pk = $(this).data('pk');
     $.ajax({
         url: "/user/comment/" + item + "/" + pk + "/",
-        data: {
-            'item': item
-        },
+        data: {'item': item},
         cache: false,
         beforeSend: function() {
             url.find(".load_comments").html("<span style='display:flex;justify-content: center;'><img src='/static/images/loading.gif'></span>");
@@ -49,9 +47,7 @@ $('#ajax').on('click', '.c_comment', function() {
     var pk = $(this).data('pk');
     $.ajax({
         url: "/community/comment/" + item + "/" + pk + "/",
-        data: {
-            'item': item
-        },
+        data: {'item': item},
         cache: false,
         beforeSend: function() {
             url.find(".load_comments").html("<span style='display:flex;justify-content: center;'><img src='/static/images/loading.gif'></span>");
