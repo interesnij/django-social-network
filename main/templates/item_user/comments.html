@@ -19,6 +19,11 @@
 
 <span class="stream_comments bg-light-secondary">
   <div></div>
+  {% if object.creator.get_avatar %}
+  <figure style="display:none">
+      <img src="{{ object.creator.get_avatar.file|thumbnail_url:'small_avatar' }}" style="border-radius:50px;width:50px;" alt="image">
+  </figure>
+  {% endif %}
     {% for comment in comments %}
     {% include 'item_user/parent_comment.html' with comment=comment  %}
     {% endfor %}
