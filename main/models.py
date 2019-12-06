@@ -225,7 +225,7 @@ class ItemComment(models.Model):
         item_community_notification_handler(user, self.commenter, ItemCommunityNotification.DISLIKE_COMMENT, item=self.item, key='social_update')
 
     @classmethod
-    def create_user_comment(cls, commenter, item, community=None, text=None, item_comment_photo=None, item_comment_photo2=None, created=None ):
+    def create_user_comment(cls, commenter, item, parent=None, community=None, text=None, item_comment_photo=None, item_comment_photo2=None, created=None ):
         comment = ItemComment.objects.create(commenter=commenter, item=item)
         if not comment.text and not comment.item_comment_photo and not comment.item_comment_photo2 :
             raise ValidationError('Для добавления комментария необходимо написать что-то или прикрепить изображение')
