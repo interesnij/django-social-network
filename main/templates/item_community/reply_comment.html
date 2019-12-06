@@ -96,12 +96,10 @@
                               <button class="btn btn-link content-color-secondary comment_photo" type="button">
                                 <img style="margin-top: -10px;" src="{% static 'images/icons/attach_file-24px.svg' %}" />
                               </button>
-                                <input type="hidden" name="comment" value="{{ comment.id }}">
-                                <input type="hidden" name="parent" value="{{ parent.id }}">
                                 <div class="col" style="left: -30px;">
                                     <div class="input-group input-group-sm" style="width: 105%;">
                                         <textarea id="id_text" name="text" class="form-control text-comment form-control-rounded"></textarea>
-                                        <button class="btn btn-outline-primary btn-rounded btn-sm ml-2 replyParentComment" type="button">
+                                        <button data-pk="{{ user.uuid }}" data-uuid="{{ comment.pk }}" class="btn btn-outline-primary btn-rounded btn-sm ml-2 replyParentComment" type="button">
                                           <img style="width:22px" src="{% static 'images/icons/send-24px.svg' %}" />
                                         </button>
                                     </div>

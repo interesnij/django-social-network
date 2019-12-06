@@ -131,7 +131,7 @@ $('.item_fullscreen_hide').on('click', function() {
     $('#item_loader').empty();
 });
 
-$('#ajax').on('click', '.itemComment', function() {
+$('#ajax').on('click', '.u_itemComment', function() {
     button1 = $(this);
     var pk = button1.data('pk');
     var uuid = button1.data('uuid');
@@ -159,12 +159,14 @@ $('#ajax').on('click', '.itemComment', function() {
     return false;
 });
 
-$('#ajax').on('click', '.replyComment', function() {
+$('#ajax').on('click', '.u_replyComment', function() {
     var button = $(this);
     var form = button.parent().parent().parent().parent();
     var block = form.parent();
+    var pk = button.data('pk');
+    var uuid = button.data('uuid');
     $.ajax({
-        url: '/user/reply-comment/',
+        url: '/user/reply-comment/' + uuid + "/" + pk + "/",
         data: new FormData($(form)[0]),
         contentType: false,
         cache: false,
@@ -187,15 +189,19 @@ $('#ajax').on('click', '.replyComment', function() {
     return false;
 });
 
-$('#ajax').on('click', '.replyParentComment', function() {
+$('#ajax').on('click', '.u_replyParentComment', function() {
     var button = $(this);
     var form = button.parent().parent().parent().parent();
     var block = form.parent();
+    var pk = button.data('pk');
+    var uuid = button.data('uuid');
     $.ajax({
-        url: '/user/reply-comment/',
-        data: form.serialize(),
-        type: 'POST',
+        url: '/user/reply-comment/' + uuid + "/" + pk + "/",
+        data: new FormData($(form)[0]),
+        contentType: false,
         cache: false,
+        processData: false,
+        type: 'POST',
         success: function(data) {
             $(".form-control-rounded").val("");
             $(".stream_reply_comments").append(data);
