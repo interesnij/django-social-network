@@ -3,7 +3,7 @@
 <div class="card-header">
     <div class="media">
       <a href="{% url 'user' pk=object.creator.pk %}" class="ajax">
-        <figure>
+        <figure>{{ thumb_url }}
           {% if object.creator.get_avatar %}
             <img src="{% thumbnail object.creator.get_avatar.file 50x50 crop %}" style="border-radius:50px;width:50px;" alt="image">
           {% else %}
