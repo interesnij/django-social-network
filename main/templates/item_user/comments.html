@@ -19,10 +19,8 @@
 
 <span class="stream_comments bg-light-secondary">
   <div></div>
-  {% if object.creator.get_avatar %}
-  <figure style="display:none">
-      <img src="{{ object.creator.get_avatar.file|thumbnail_url:'small_avatar' }}" alt="image">
-  </figure>
+  {% if comment.commenter.get_avatar %}
+    <img src="{{ comment.commenter.get_avatar.file|thumbnail_url:'small_avatar' }}" class="pull-left">
   {% endif %}
     {% for comment in comments %}
     {% include 'item_user/parent_comment.html' with comment=comment  %}
