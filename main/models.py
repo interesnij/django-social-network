@@ -195,7 +195,7 @@ class ItemComment(models.Model):
 
     def get_dislikes_for_comment_item(self, user):
         reactions_query = user._make_get_votes_user_comment(item=self)
-        return ItemCommentVotes.objects.filter(parent=self, vote__lt=0).filter(reactions_query)
+        return ItemCommentVotes.objects.filter(item=self, vote__lt=0).filter(reactions_query)
 
     def __str__(self):
         return str(self.item)
