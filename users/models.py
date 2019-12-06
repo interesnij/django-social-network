@@ -400,6 +400,12 @@ class User(AbstractUser):
         reactions_query.add(blocked_users_query, Q.AND)
         return reactions_query
 
+    def _make_get_votes_user_comment(self, item):
+        reactions_query = Q(item_id=item.pk)
+        blocked_users_query = ~Q(Q(user__blocked_by_users__blocker_id=self.pk) | Q(user__user_blocks__blocked_user_id=self.pk))
+        reactions_query.add(blocked_users_query, Q.AND)
+        return reactions_query
+
     def _make_get_votes_community(self, item):
         reactions_query = Q(parent_id=item.pk)
         post_community = item.community
