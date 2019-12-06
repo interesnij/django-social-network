@@ -17,9 +17,8 @@ $('#ajax').on('click', '.fullscreen', function() {
 });
 $('#ajax').on('click', '.c_fullscreen', function() {
     var item = $(this);
-    var item_pk = item.data("pk");
-    var community_uuid = item.data("uuid");
-    $('#item_loader').html('').load("/communities/item/" + item_pk + "/" + community_uuid + "/")
+    var pk = item.data("pk");
+    $('#item_loader').html('').load("/communities/item/" + pk + "/")
     $('.item_fullscreen').show();
 });
 

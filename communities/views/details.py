@@ -14,12 +14,12 @@ from rest_framework.exceptions import PermissionDenied
 class ItemsCommunity(View):
 
     def get(self,request,*args,**kwargs):
+        context = {}
+        self.community=Community.objects.get(pk=self.kwargs["pk"])
         try:
             self.fixed = Item.objects.get(community=self.community, is_fixed=True)
         except:
             self.fixed = None
-        context = {}
-        self.community=Community.objects.get(pk=self.kwargs["pk"])
         if request.user.is_authenticated:
             check_can_get_posts_for_community_with_name(request.user,self.community.name)
             item_list = self.community.get_posts().order_by('-created')
