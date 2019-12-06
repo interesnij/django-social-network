@@ -16,7 +16,7 @@
     <span class="stream">
       {% if object.creator.get_avatar %}
       <figure style="display:none">
-          <img src="{{ object.creator.get_avatar.file|thumbnail_url:'small_avatar' }}" style="border-radius:50px;width:50px;" alt="image">
+          <img src="{{ object.creator.get_avatar.file|thumbnail_url:'avatar' }}" alt="image">
       </figure>
       {% endif %}
 
