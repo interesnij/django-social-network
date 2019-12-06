@@ -24,7 +24,7 @@
     {% endfor %}
 </span>
 
-{% if request.user.is_authenticated %}
+{% if request_user.is_authenticated %}
 <div class="border-top" style="margin-top:10px">
     <form action="" method="post" class="itemComment_form" enctype="multipart/form-data">
         {% csrf_token %}
