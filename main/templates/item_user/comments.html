@@ -1,4 +1,4 @@
-{% load humanize staticfiles liked_user %}
+{% load humanize staticfiles liked_user thumbnail %}
 <style>
   .comment_photo1,.comment_photo2{
       border: 2px dashed #FF0000;
@@ -21,7 +21,7 @@
   <div></div>
   {% if object.creator.get_avatar %}
   <figure style="display:none">
-      <img src="{{ object.creator.get_avatar.file|thumbnail_url:'small_avatar' }}" style="border-radius:50px;width:50px;" alt="image">
+      <img src="{{ object.creator.get_avatar.file|thumbnail_url:'small_avatar' }}" alt="image">
   </figure>
   {% endif %}
     {% for comment in comments %}
