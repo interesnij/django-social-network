@@ -1,4 +1,4 @@
-{% load liked_user staticfiles %}
+{% load liked_user staticfiles thumbnail %}
 
 {% if dislikes %}
 <div class="comment_dislike_pop" style="margin:15px">
@@ -9,9 +9,9 @@
         <a href="{% url 'user' pk=sheet.user.pk %}" class="ajax" style="padding-right:10px">
             <figure style="margin: 0;">
                 {% if sheet.user.get_avatar %}
-                <img src="{{ sheet.user.get_avatar.file.url }}" style="border-radius: 50px;width:50px;" alt="image">
+                <img src="{{ sheet.user.get_avatar.file|thumbnail_url:'small_avatar' }}" style="border-radius: 50px;width:50px;" alt="image">
                 {% else %}
-                <img style="width:50px;border:#6C757D solid 1px;border-radius:50px;padding:5px;" src="{% static 'images/icons/person-24px.svg' %}" />
+                <img class="thumb_small" src="{% static 'images/icons/person-24px.svg' %}" />
                 {% endif %}
             </figure>
             {{ sheet.user.first_name }}

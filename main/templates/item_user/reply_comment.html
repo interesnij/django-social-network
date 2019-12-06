@@ -1,11 +1,11 @@
-{% load staticfiles humanize liked_user %}
+{% load staticfiles humanize liked_user thumbnail %}
 
 <div class="media " reply-id="{{ reply.id }}">
     <figure>
       {% if reply.commenter.get_avatar %}
-        <img src="{{ reply.commenter.get_avatar.file.url }}" class="pull-left" style="border-radius:50px;width:30px;" alt="User Image" class="user-image">
+        <img src="{{ reply.commenter.get_avatar.file|thumbnail_url:'small_avatar' }}" class="pull-left" style="border-radius:50px;width:30px;" alt="User Image" class="user-image">
       {% else %}
-        <img class="pull-left" style="width:50px;border:#6C757D solid 1px;border-radius:50px;padding:5px;" src="{% static 'images/icons/person-24px.svg' %}" />
+        <img class="pull-left thumb_small" src="{% static 'images/icons/person-24px.svg' %}" />
       {% endif %}
     </figure>
     <div class="media-body">
@@ -40,9 +40,9 @@
                               <a href="{% url 'user' pk=heart.user.pk %}" class="ajax" style="padding-right:10px">
                                   <figure style="margin: 0;">
                                       {% if heart.user.get_avatar %}
-                                      <img src="{{ heart.user.get_avatar.file.url }}" style="border-radius: 50px;width:50px;" alt="image">
+                                      <img src="{{ heart.user.get_avatar.file|thumbnail_url:'small_avatar' }}" style="border-radius: 50px;width:50px;" alt="image">
                                       {% else %}
-                                      <img style="width:50px;border:#6C757D solid 1px;border-radius:50px;padding:5px;" src="{% static 'images/icons/person-24px.svg' %}" />
+                                      <img class="thumb_small" src="{% static 'images/icons/person-24px.svg' %}" />
                                       {% endif %}
 
                                   </figure>
@@ -78,9 +78,9 @@
                                 <a href="{% url 'user' pk=sheet.user.pk %}" class="ajax" style="padding-right:10px">
                                     <figure style="margin: 0;">
                                       {% if sheet.user.get_avatar %}
-                                        <img src="{{ sheet.user.get_avatar.file.url }}" style="border-radius: 50px;width:50px;" alt="image">
+                                        <img src="{{ sheet.user.get_avatar.file|thumbnail_url:'small_avatar' }}" style="border-radius: 50px;width:50px;" alt="image">
                                       {% else %}
-                                        <img style="width:50px;border:#6C757D solid 1px;border-radius:50px;padding:5px;" src="{% static 'images/icons/person-24px.svg' %}" />
+                                        <img class="thumb_small" src="{% static 'images/icons/person-24px.svg' %}" />
                                       {% endif %}
 
                                     </figure>
