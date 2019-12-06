@@ -48,8 +48,8 @@
                                           <li class="list-group-item">
                                                 <div class="media">
                                                     <figure>
-                                                        {% if object.user.profile.avatar %}
-                                                        <img src="{{ object.user.profile.avatar.url }}" style="border-radius:50px;width:50px;" alt="image">
+                                                        {% if object.user.get_avatar %}
+                                                        <img src="{{ object.user.get_avatar.file.url }}" style="border-radius:50px;width:50px;" alt="image">
                                                         {% else %}
                                                         <img style="width:50px;border:#6C757D solid 1px;border-radius:50px;padding:5px;" src="{% static 'images/icons/person-24px.svg' %}" />
                                                         {% endif %}
@@ -74,10 +74,10 @@
                                             <li class="list-group-item">
                                                 <div class="media">
                                                     <figure>
-                                                        {% if object.target_user.profile.avatar %}
-                                                        <img src="{{ object.target_user.profile.avatar.url }}" style="border-radius:50px;width:50px;" alt="image">
+                                                        {% if object.target_user.get_avatar %}
+                                                        <img src="{{ object.target_user.get_avatar.file.url }}" style="border-radius:50px;width:50px;" alt="image">
                                                         {% else %}
-                                                        <img style="width:50px;width:50px;width:50px;border:#6C757D solid 1px;border-radius:50px;padding:5px;" src="{% static 'images/icons/person-24px.svg' %}" />
+                                                        <img style="width:50px;border:#6C757D solid 1px;border-radius:50px;padding:5px;" src="{% static 'images/icons/person-24px.svg' %}" />
                                                         {% endif %}
                                                     </figure>
                                                     <div class="media-body">
@@ -124,8 +124,8 @@
                     <li class="list-group-item">
                         <div class="media">
                             <figure>
-                                {% if object.profile.avatar %}
-                                <img src="{{ object.profile.avatar.url }}" style="border-radius:50px;width:50px;" alt="image">
+                                {% if object.get_avatar %}
+                                <img src="{{ object.get_avatar.file.url }}" style="border-radius:50px;width:50px;" alt="image">
                                 {% else %}
                                 <img style="width:50px;width:50px;width:50px;border:#6C757D solid 1px;border-radius:50px;padding:5px;" src="{% static 'images/icons/person-24px.svg' %}" />
                                 {% endif %}
