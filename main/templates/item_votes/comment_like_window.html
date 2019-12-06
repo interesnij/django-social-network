@@ -1,11 +1,11 @@
 {% load liked_user staticfiles %}
 
-{% if comment_like.likes %}
+{% if likes %}
 <div class="comment_like_pop" style="margin:15px">
-    <span>Оценили: {{ comment_like.likes.count }} {{ comment_like.likes.count|rupluralize:"человек,человека,людей" }}</span>
+    <span>Оценили: {{ likes.count }} {{ likes.count|rupluralize:"человек,человека,людей" }}</span>
     <br><br>
     <span style="display: flex;">
-        {% for heart in comment_like.likes %}
+        {% for heart in likes %}
         <a href="{% url 'user' pk=heart.user.pk %}" class="ajax" style="padding-right:10px">
             <figure style="margin: 0;">
               {% if heart.user.get_avatar %}

@@ -42,12 +42,24 @@ class ItemCommentLikeWindow(TemplateView):
     template_name="item_votes/comment_like_window.html"
 
     def get(self,request,*args,**kwargs):
-        self.comment_like = ItemComment.objects.get(pk=self.kwargs["pk"])
+        self.comment = ItemComment.objects.get(pk=self.kwargs["pk"])
+        self.user = User.objects.get(uuid=self.kwargs["uuid"])
+        if self.user != request.user and request.user.is_authenticated:
+            check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
+            if self.user.is_closed_profile:
+                check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
+            self.likes = self.comment.get_likes_for_comment(request.user)
+        elif self.user == request.user:
+            self.likes = self.comment.get_likes_for_comment(request.user)
+        elif request.user.is_anonymous and self.user.is_closed_profile():
+            raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
+        elif request.user.is_anonymous and not self.user.is_closed_profile():
+            self.likes = self.comment.get_likes_for_comment(request.user)
         return super(ItemCommentLikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context=super(ItemCommentLikeWindow,self).get_context_data(**kwargs)
-        context["comment_like"]=self.comment_like
+        context["likes"]=self.likes
         return context
 
 
@@ -82,12 +94,24 @@ class ItemCommentDislikeWindow(TemplateView):
     template_name="item_votes/comment_dislike_window.html"
 
     def get(self,request,*args,**kwargs):
-        self.comment_dislike = ItemComment.objects.get(pk=self.kwargs["pk"])
+        self.comment = ItemComment.objects.get(pk=self.kwargs["pk"])
+        self.user = User.objects.get(uuid=self.kwargs["uuid"])
+        if self.user != request.user and request.user.is_authenticated:
+            check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
+            if self.user.is_closed_profile:
+                check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
+            self.dislikes = self.comment.get_dislikes_for_comment(request.user)
+        elif self.user == request.user:
+            self.dislikes = self.comment.get_dislikes_for_comment(request.user)
+        elif request.user.is_anonymous and self.user.is_closed_profile():
+            raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
+        elif request.user.is_anonymous and not self.user.is_closed_profile():
+            self.dislikes = self.comment.get_dislikes_for_comment(request.user)
         return super(ItemCommentDislikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context=super(ItemCommentDislikeWindow,self).get_context_data(**kwargs)
-        context["comment_dislike"]=self.comment_dislike
+        context["dislikes"]=self.dislikes
         return context
 
 
