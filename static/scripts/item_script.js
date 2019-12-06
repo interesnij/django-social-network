@@ -295,8 +295,12 @@ $("#ajax").on('click', '.u_like2', function() {
               success: function(json) {
                   like.find("[data-count='like']").text(json.like_count);
                   dislike.find("[data-count='dislike']").text(json.dislike_count);
-                  dislike.find(".dislike").hide();
-                  dislike.find(".dislike_act").show();
+                  like.find(".like").hide();
+                  like.find(".like_act").show();
+                  dislike.find(".dislike").show();
+                  dislike.find(".dislike_act").hide();
+                  like.siblings('.comment_like_window').html('').load("/votes/user_comment/" + uuid + "/" + pk + "/like/");
+                  dislike.siblings('.comment_dislike_window').html('').load("/votes/user_comment/" + uuid + "/" + pk + "/dislike/")
               }
           });
           return false;
@@ -316,8 +320,12 @@ $("#ajax").on('click', '.u_dislike2', function() {
             success: function(json) {
                 dislike.find("[data-count='dislike']").text(json.dislike_count);
                 like.find("[data-count='like']").text(json.like_count);
-                dislike.addClass("text-danger");
-                like.removeClass("text-success");
+                dislike.find(".dislike").hide();
+                dislike.find(".dislike_act").show();
+                like.find(".like_act").hide();
+                like.find(".like").show();
+                like.siblings('.comment_like_window').html('').load("/votes/user_comment/" + uuid + "/" + pk + "/like/");
+                dislike.siblings('.comment_dislike_window').html('').load("/votes/user_comment/" + uuid + "/" + pk + "/dislike/")
             }
         });
         return false;
