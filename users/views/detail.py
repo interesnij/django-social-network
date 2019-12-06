@@ -9,7 +9,6 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views import View
 from django.shortcuts import render_to_response
 from rest_framework.exceptions import PermissionDenied
-from easy_thumbnails.files import get_thumbnailer
 
 
 class UserItemView(TemplateView):
@@ -97,9 +96,6 @@ class ProfileUserView(TemplateView):
             self.is_frend = request.user.is_connected_with_user(self.user)
         except:
             self.is_frend = None
-        self.options = {'size': (100, 100), 'crop': True}
-        self.photo = self.user.get_avatar().file
-        self.thumb_url = get_thumbnailer(self.photo).get_thumbnail(self.options).url
         if request.user.is_authenticated:
             self.is_blocked = request.user.has_blocked_user_with_id(self.user)
         self.communities=Community.objects.filter(memberships__user__id=self.user.pk)[0:5]
@@ -111,5 +107,4 @@ class ProfileUserView(TemplateView):
         context['communities'] = self.communities
         context['is_frend'] = self.is_frend
         context['is_blocked'] = self.is_blocked
-        context['thumb_url'] = self.thumb_url
         return context

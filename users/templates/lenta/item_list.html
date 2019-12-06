@@ -14,11 +14,6 @@
     </div>
 
     <span class="stream">
-      {% if object.creator.get_avatar %}
-      <figure style="display:none">
-          <img src="{{ object.creator.get_avatar.file|thumbnail_url:'avatar' }}" alt="image">
-      </figure>
-      {% endif %}
 
         {% if object.article %}
         {% include 'item_user/article.html' with article=article %}
