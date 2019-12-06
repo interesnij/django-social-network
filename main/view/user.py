@@ -117,7 +117,7 @@ def post_update_interactions(request):
 
 def user_fixed(request, pk, item_uuid):
 	item = Item.objects.get(pk=pk)
-	current_user = User.objects.get(uuid=item_uuid)
+	current_user = User.objects.get(uuid=user_uuid)
 	if request.user == current_user:
 		item.is_fixed=True
 		item.save()
