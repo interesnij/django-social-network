@@ -18,7 +18,8 @@ $('#ajax').on('click', '.fullscreen', function() {
 $('#ajax').on('click', '.c_fullscreen', function() {
     var item = $(this);
     var pk = item.data("pk");
-    $('#item_loader').html('').load("/communities/item/" + pk + "/")
+    var uuid = item.data("uuid");
+    $('#item_loader').html('').load("/communities/item/" + pk + "/" + uuid + "/")
     $('.item_fullscreen').show();
 });
 
