@@ -225,8 +225,8 @@ class ItemComment(models.Model):
         item_community_notification_handler(user, self.commenter, ItemCommunityNotification.DISLIKE_COMMENT, item=self.item, key='social_update')
 
     @classmethod
-    def create_user_comment(cls, commenter, item=None, parent=None, community=None, text=None, item_comment_photo=None, item_comment_photo2=None, created=None ):
-        comment = ItemComment.objects.create(commenter=commenter, parent=parent, item=item, text=text, item_comment_photo=item_comment_photo,item_comment_photo2=item_comment_photo2)
+    def create_user_comment(cls, commenter, item=None, parent_comment=None, community=None, text=None, item_comment_photo=None, item_comment_photo2=None, created=None ):
+        comment = ItemComment.objects.create(commenter=commenter, parent_comment=parent_comment, item=item, text=text, item_comment_photo=item_comment_photo,item_comment_photo2=item_comment_photo2)
         channel_layer = get_channel_layer()
         payload = {
                 "type": "receive",
