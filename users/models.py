@@ -415,9 +415,9 @@ class User(AbstractUser):
             reactions_query.add(blocked_users_query, Q.AND)
         return reactions_query
 
-    def _make_get_votes_query_comment(self, id):
-        reactions_query = Q(comment_id=id)
-        post_community = id.item.community
+    def _make_get_votes_query_comment(self, comment):
+        reactions_query = Q(comment_id=comment)
+        post_community = comment.item.community
 
         if post_community:
             if not self.is_staff_of_community_with_name(community_name=post_community.name):
