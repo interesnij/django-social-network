@@ -145,7 +145,8 @@ $('#ajax').on('click', '.u_itemComment', function() {
                 text: 'Для публикации комментария нужно написать что-нибудь и/или вставить изображение(ия)',
                 showHideTransition: 'fade',
                 icon: 'error'
-            })
+            });
+            console.log(data);
         },
     });
     return false;
