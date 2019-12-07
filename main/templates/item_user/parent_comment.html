@@ -172,6 +172,7 @@
                     {% endif %}
 
                     <br><br>
+                    {% if comment.count_replies %}
                     <span style="cursor:pointer" class="show_replies">
                       {{ comment.count_replies }} {{ comment.count_replies|rupluralize:"ответ,ответа,ответов" }}
                     </span>
@@ -180,6 +181,7 @@
                         {% include 'item_user/reply_comment.html' with reply=reply  %}
                       {% endfor %}
                     </span>
+                    {% endif %}
 
                 </div>
             </div>
