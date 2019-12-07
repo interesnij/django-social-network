@@ -127,7 +127,7 @@
 
                     {% if request_user.is_authenticated %}
                     <div class="border-top reply_comment_form" style="margin-top:10px;display:none;margin-left: -10px;">
-                        <form action="" method="post" class="replyComment_form" enctype="multipart/form-data">
+                        <form action="" method="post" enctype="multipart/form-data">
                             {% csrf_token %}
                             <div style="display:none;margin:10px">
                               <div class="row">
@@ -154,7 +154,7 @@
                                               <img style="margin-top: -10px;" src="{% static 'images/icons/attach_file-24px.svg' %}" />
                                             </button>
                                         <textarea id="id_text" name="text" class="form-control text-comment form-control-rounded"></textarea>
-                                        <button data-pk="{{ user.uuid }}" data-uuid="{{ comment.pk }}" class="btn btn-outline-primary btn-rounded btn-sm ml-2 u_replyComment" type="button">
+                                        <button data-uuid="{{ user.uuid }}" data-pk="{{ comment.pk }}" class="btn btn-outline-primary btn-rounded btn-sm ml-2 u_replyComment" type="button">
                                           <img style="width:25px" src="{% static 'images/icons/send-24px.svg' %}" />
                                         </button>
                                     </div>

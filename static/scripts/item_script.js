@@ -4,10 +4,6 @@ $('#ajax .stream').on('click', '.article_detail', function() {
     $('#article_loader').html('').load("/article/detail/" + item_id)
     $('.article_fullscreen').show();
 });
-$('.item_fullscreen_hide').on('click', function() {
-    $('.item_fullscreen').hide();
-    $('#item_loader').empty();
-});
 $('#ajax').on('click', '.fullscreen', function() {
     var item = $(this);
     var item_pk = item.data("pk");
@@ -22,6 +18,11 @@ $('#ajax').on('click', '.c_fullscreen', function() {
     $('#item_loader').html('').load("/communities/item/" + pk + "/" + uuid + "/")
     $('.item_fullscreen').show();
 });
+$('.item_fullscreen_hide').on('click', function() {
+    $('.item_fullscreen').hide();
+    $('#item_loader').empty();
+});
+
 
 $('#ajax').on('click', '.u_comment', function() {
     var item = $(this).closest(".infinite-item");
@@ -68,12 +69,7 @@ $('#ajax').on('click', '.remove', function() {
         success: function(data) {
             $(remove).parents('.card').hide();
             $('.activefullscreen').hide();
-            $.toast({
-                heading: 'Информация',
-                text: 'Запись успешно удалена!',
-                showHideTransition: 'fade',
-                icon: 'info'
-            })
+            $.toast({heading: 'Информация',text: 'Запись успешно удалена!',showHideTransition: 'fade',icon: 'info'})
         },
         error: function(data) {}
     });
@@ -88,12 +84,7 @@ $('#ajax').on('click', '.fixed', function() {
         url: "/user/fixed/" + pk + "/" + uuid + "/",
         success: function(data) {
             fixed.parent().html("<span style='cursor:pointer' class='dropdown-item unfixed'>Открепить</span>");
-            $.toast({
-                heading: 'Информация',
-                text: 'Запись закреплена!',
-                showHideTransition: 'fade',
-                icon: 'info'
-            })
+            $.toast({heading: 'Информация',text: 'Запись закреплена!',showHideTransition: 'fade',icon: 'info'})
         }
     });
 });
@@ -106,21 +97,9 @@ $('#ajax').on('click', '.unfixed', function() {
         url: "/user/unfixed/" + pk + "/" + uuid + "/",
         success: function(data) {
             unfixed.parent().html("<span style='cursor:pointer' class='dropdown-item fixed'>Закрепить</span>");
-            $.toast({
-                heading: 'Информация',
-                text: 'Запись откреплена!',
-                showHideTransition: 'fade',
-                icon: 'info'
-            })
+            $.toast({heading: 'Информация',text: 'Запись откреплена!',showHideTransition: 'fade',icon: 'info'})
         }
     });
-});
-
-
-
-$('.item_fullscreen_hide').on('click', function() {
-    $('.item_fullscreen').hide();
-    $('#item_loader').empty();
 });
 
 $('#ajax').on('click', '.u_itemComment', function() {
@@ -140,13 +119,7 @@ $('#ajax').on('click', '.u_itemComment', function() {
             $(".stream_comments").append(data);
         },
         error: function(data) {
-            $.toast({
-                heading: 'Ошибка',
-                text: 'Для публикации комментария нужно написать что-нибудь и/или вставить изображение(ия)',
-                showHideTransition: 'fade',
-                icon: 'error'
-            });
-            console.log(data);
+            $.toast({heading: 'Ошибка',text: 'Для публикации комментария нужно написать что-нибудь и/или вставить изображение(ия)',showHideTransition: 'fade',icon: 'error'});
         },
     });
     return false;
@@ -171,12 +144,7 @@ $('#ajax').on('click', '.u_replyComment', function() {
             block.hide();
         },
         error: function(data) {
-            $.toast({
-                heading: 'Ошибка',
-                text: 'Для публикации ответа нужно написать что-нибудь и/или вставить изображение(ия)',
-                showHideTransition: 'fade',
-                icon: 'error'
-            })
+            $.toast({heading: 'Ошибка',text: 'Для публикации ответа нужно написать что-нибудь и/или вставить изображение(ия)',showHideTransition: 'fade',icon: 'error'})
         },
     });
     return false;
@@ -201,12 +169,7 @@ $('#ajax').on('click', '.u_replyParentComment', function() {
             block.hide();
         },
         error: function(data) {
-            $.toast({
-                heading: 'Ошибка',
-                text: 'Для публикации ответа нужно написать что-нибудь и/или вставить изображение(ия)',
-                showHideTransition: 'fade',
-                icon: 'error'
-            })
+            $.toast({heading: 'Ошибка',text: 'Для публикации ответа нужно написать что-нибудь и/или вставить изображение(ия)',showHideTransition: 'fade',icon: 'error'})
         },
     });
     return false;
