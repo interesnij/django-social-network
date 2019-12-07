@@ -211,12 +211,12 @@ $("#ajax").on('click', '.u_like', function() {
             like.find("[data-count='like']").text(json.like_count);
             like.find(".svg_default").toggleClass('svg_success');
             like.find(".likes_count").toggleClass('svg_success');
-            like.siblings('.like_window').html('').load("/votes/like_window/" + uuid + "/" + pk + "/");
+            like.siblings('.like_window').html('').load("/votes/u_like_window/" + uuid + "/" + pk + "/");
 
             dislike.find("[data-count='dislike']").text(json.dislike_count);
             dislike.find(".svg_default").removeClass('svg_danger');
             dislike.find(".dislikes_count").removeClass('svg_danger');
-            dislike.siblings('.dislike_window').html('').load("/votes/dislike_window/" + uuid + "/" + pk + "/")
+            dislike.siblings('.dislike_window').html('').load("/votes/u_dislike_window/" + uuid + "/" + pk + "/")
 
         }
     });
@@ -238,12 +238,12 @@ $("#ajax").on('click', '.u_dislike', function() {
               like.find("[data-count='like']").text(json.like_count);
               like.find(".svg_default").removeClass('svg_success');
               like.find(".likes_count").removeClass('svg_success');
-              like.siblings('.like_window').html('').load("/votes/like_window/" + uuid + "/" + pk + "/");
+              like.siblings('.like_window').html('').load("/votes/u_like_window/" + uuid + "/" + pk + "/");
 
               dislike.find("[data-count='dislike']").text(json.dislike_count);
               dislike.find(".svg_default").toggleClass('svg_danger');
               dislike.find(".dislikes_count").toggleClass('svg_danger');
-              dislike.siblings('.dislike_window').html('').load("/votes/dislike_window/" + uuid + "/" + pk + "/")
+              dislike.siblings('.dislike_window').html('').load("/votes/u_dislike_window/" + uuid + "/" + pk + "/")
             }
         });
         return false;
@@ -267,8 +267,8 @@ $("#ajax").on('click', '.u_like2', function() {
                   like.find(".like_act").show();
                   dislike.find(".dislike").show();
                   dislike.find(".dislike_act").hide();
-                  like.siblings('.comment_like_window').html('').load("/votes/comment_like_window/" + uuid + "/" + pk + "/");
-                  dislike.siblings('.comment_dislike_window').html('').load("/votes/comment_dislike_window/" + uuid + "/" + pk + "/")
+                  like.siblings('.comment_like_window').html('').load("/votes/u_comment_like_window/" + uuid + "/" + pk + "/");
+                  dislike.siblings('.comment_dislike_window').html('').load("/votes/u_comment_dislike_window/" + uuid + "/" + pk + "/")
               }
           });
           return false;
@@ -292,8 +292,8 @@ $("#ajax").on('click', '.u_dislike2', function() {
                 dislike.find(".dislike_act").show();
                 like.find(".like_act").hide();
                 like.find(".like").show();
-                like.siblings('.comment_like_window').html('').load("/votes/comment_like_window/" + uuid + "/" + pk + "/");
-                dislike.siblings('.comment_dislike_window').html('').load("/votes/comment_dislike_window/" + uuid + "/" + pk + "/")
+                like.siblings('.comment_like_window').html('').load("/votes/u_comment_like_window/" + uuid + "/" + pk + "/");
+                dislike.siblings('.comment_dislike_window').html('').load("/votes/u_comment_dislike_window/" + uuid + "/" + pk + "/")
             }
         });
         return false;
@@ -314,12 +314,12 @@ $("#ajax").on('click', '.c_like', function() {
           like.find("[data-count='like']").text(json.like_count);
           like.find(".svg_default").toggleClass('svg_success');
           like.find(".likes_count").toggleClass('svg_success');
-          like.siblings('.like_window').html('').load("/votes/like_window/" + uuid + "/" + pk + "/");
+          like.siblings('.like_window').html('').load("/votes/c_like_window/" + uuid + "/" + pk + "/");
 
           dislike.find("[data-count='dislike']").text(json.dislike_count);
           dislike.find(".svg_default").removeClass('svg_danger');
           dislike.find(".dislikes_count").removeClass('svg_danger');
-          dislike.siblings('.dislike_window').html('').load("/votes/dislike_window/" + uuid + "/" + pk + "/")
+          dislike.siblings('.dislike_window').html('').load("/votes/c_dislike_window/" + uuid + "/" + pk + "/")
         }
     });
     return false;
@@ -340,12 +340,12 @@ $("#ajax").on('click', '.c_dislike', function() {
               like.find("[data-count='like']").text(json.like_count);
               like.find(".svg_default").removeClass('svg_success');
               like.find(".likes_count").removeClass('svg_success');
-              like.siblings('.like_window').html('').load("/votes/like_window/" + uuid + "/" + pk + "/");
+              like.siblings('.like_window').html('').load("/votes/c_like_window/" + uuid + "/" + pk + "/");
 
               dislike.find("[data-count='dislike']").text(json.dislike_count);
               dislike.find(".svg_default").toggleClass('svg_danger');
               dislike.find(".dislikes_count").toggleClass('svg_danger');
-              dislike.siblings('.dislike_window').html('').load("/votes/dislike_window/" + uuid + "/" + pk + "/")
+              dislike.siblings('.dislike_window').html('').load("/votes/c_dislike_window/" + uuid + "/" + pk + "/")
             }
         });
         return false;

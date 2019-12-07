@@ -12,7 +12,7 @@ from django.contrib.contenttypes.models import ContentType
 from rest_framework.exceptions import PermissionDenied
 
 
-class ItemLikeWindow(TemplateView):
+class ItemUserLikeWindow(TemplateView):
     template_name="item_votes/like_window.html"
 
     def get(self,request,*args,**kwargs):
@@ -30,15 +30,15 @@ class ItemLikeWindow(TemplateView):
         elif request.user.is_anonymous and not self.user.is_closed_profile():
             self.likes = self.item.get_likes_for_item(request.user)
 
-        return super(ItemLikeWindow,self).get(request,*args,**kwargs)
+        return super(ItemUserLikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context=super(ItemLikeWindow,self).get_context_data(**kwargs)
+        context=super(ItemUserLikeWindow,self).get_context_data(**kwargs)
         context["likes"]=self.likes
         return context
 
 
-class ItemCommentLikeWindow(TemplateView):
+class ItemUserCommentLikeWindow(TemplateView):
     template_name="item_votes/comment_like_window.html"
 
     def get(self,request,*args,**kwargs):
@@ -55,15 +55,15 @@ class ItemCommentLikeWindow(TemplateView):
             raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
         elif request.user.is_anonymous and not self.user.is_closed_profile():
             self.likes = self.comment.get_likes_for_comment_item(request.user)
-        return super(ItemCommentLikeWindow,self).get(request,*args,**kwargs)
+        return super(ItemUserCommentLikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context=super(ItemCommentLikeWindow,self).get_context_data(**kwargs)
+        context=super(ItemUserCommentLikeWindow,self).get_context_data(**kwargs)
         context["likes"]=self.likes
         return context
 
 
-class ItemDislikeWindow(TemplateView):
+class ItemUserDislikeWindow(TemplateView):
     template_name="item_votes/dislike_window.html"
 
     def get(self,request,*args,**kwargs):
@@ -81,16 +81,16 @@ class ItemDislikeWindow(TemplateView):
         elif request.user.is_anonymous and not self.user.is_closed_profile():
             self.dislikes = self.item.get_dislikes_for_item(request.user)
 
-        return super(ItemDislikeWindow,self).get(request,*args,**kwargs)
+        return super(ItemUserDislikeWindow,self).get(request,*args,**kwargs)
 
 
     def get_context_data(self,**kwargs):
-        context=super(ItemDislikeWindow,self).get_context_data(**kwargs)
+        context=super(ItemUserDislikeWindow,self).get_context_data(**kwargs)
         context["dislikes"]=self.dislikes
         return context
 
 
-class ItemCommentDislikeWindow(TemplateView):
+class ItemUserCommentDislikeWindow(TemplateView):
     template_name="item_votes/comment_dislike_window.html"
 
     def get(self,request,*args,**kwargs):
@@ -107,10 +107,10 @@ class ItemCommentDislikeWindow(TemplateView):
             raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
         elif request.user.is_anonymous and not self.user.is_closed_profile():
             self.dislikes = self.comment.get_dislikes_for_comment_item(request.user)
-        return super(ItemCommentDislikeWindow,self).get(request,*args,**kwargs)
+        return super(ItemUserCommentDislikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context=super(ItemCommentDislikeWindow,self).get_context_data(**kwargs)
+        context=super(ItemUserCommentDislikeWindow,self).get_context_data(**kwargs)
         context["dislikes"]=self.dislikes
         return context
 
