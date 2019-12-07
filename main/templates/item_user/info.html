@@ -4,7 +4,6 @@
 
     <div class="row">
         <div class="col interaction" id="interaction">
-        <span>
 
           <span class="u_like" data-id="{{ object.id }}" data-uuid="{{ object.creator.uuid }}" title="Нравится">
             <svg class="svg_default {% if object.likes|user_in:request_user %}svg_success{% endif %}" fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
@@ -14,7 +13,6 @@
               {% if object.likes.count %}{{ object.likes.count }}{% endif %}
             </span>
           </span>
-        </span>
 
           <span class="like_window">
             {% if object.likes %}
