@@ -5,25 +5,17 @@
     <div class="row">
         <div class="col interaction" id="interaction">
         <span>
-          {% if object.likes|user_in:request_user %}
-          <span class="u_like_active" data-id="{{ object.id }}" data-uuid="{{ object.creator.uuid }}" title="Нравится">
-            <img style="width:22px" src="{% static 'images/icons/thumb_up_success.svg' %}" />
-            <span style="color:#41cd52" data-count="like">{{ object.likes.count }}</span>
-          </span>
-          <span class="u_like" style="display:none" data-id="{{ object.id }}" data-uuid="{{ object.creator.uuid }}" title="Нравится">
-            <img style="width:22px" src="{% static 'images/icons/thumb_up_success.svg' %}" />
-            <span style="color:#41cd52" data-count="like">{{ object.likes.count }}</span>
-          </span>
-          {% else %}
+
           <span class="u_like" data-id="{{ object.id }}" data-uuid="{{ object.creator.uuid }}" title="Нравится">
-            <img style="width:22px" src="{% static 'images/icons/thumb_up.svg' %}" />
-            <span style="color:#41cd52" data-count="like">{{ object.likes.count }}</span>
-          </span>
-          <span class="u_like_active" style="display:none" data-id="{{ object.id }}" data-uuid="{{ object.creator.uuid }}" title="Нравится">
+            {% if object.likes|user_in:request_user %}
             <img style="width:22px" src="{% static 'images/icons/thumb_up_success.svg' %}" />
-            <span style="color:#41cd52" data-count="like">{{ object.likes.count }}</span>
+            {% else %}
+            <img style="width:22px" src="{% static 'images/icons/thumb_up.svg' %}" />
+            {% endif %}
+            <span {% if object.likes|user_in:request_user %}style="color:#41cd52"{% endif %} data-count="like">
+              {{ object.likes.count }}
+            </span>
           </span>
-          {% endif %}
         </span>
 
           <span class="like_window">
