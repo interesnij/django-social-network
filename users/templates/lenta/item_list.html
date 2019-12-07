@@ -24,11 +24,10 @@
         {% endif %}
 
         {% for object in items_list %}
-        {% include 'item_user/post.html' with post=post  %}
 
         {% if object.article %}
         {% include 'item_user/article.html' with article=article  %}
-        {% endif %}
+        {% endi %}
 
         {% if object.post %}
         {% include 'item_user/post.html' with post=post  %}
