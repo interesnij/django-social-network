@@ -80,7 +80,6 @@ class ItemReplyUserCreate(View):
 
 			new_comment = comment.create_user_comment(
 														commenter=request.user,
-														parent=self.parent,
 														item_comment_photo=comment.item_comment_photo,
 														item_comment_photo2=comment.item_comment_photo2,
 														text=comment.text,
