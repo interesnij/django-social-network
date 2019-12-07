@@ -210,8 +210,8 @@ $("#ajax").on('click', '.u_like', function() {
         success: function(json) {
             like.find("[data-count='like']").text(json.like_count);
             dislike.find("[data-count='dislike']").text(json.dislike_count);
-            like.hide();
-            like.parent().find(".u_like_active").show();
+            like.find(".svg_default").toggleClass('svg_success');
+            like.find(".likes_count").toggleClass('svg_success');
             like.siblings('.like_window').html('').load("/votes/like_window/" + uuid + "/" + pk + "/");
             dislike.siblings('.dislike_window').html('').load("/votes/dislike_window/" + uuid + "/" + pk + "/")
 
