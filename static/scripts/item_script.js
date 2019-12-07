@@ -25,7 +25,6 @@ $('#ajax').on('click', '.c_fullscreen', function() {
 
 $('#ajax').on('click', '.u_comment', function() {
     var item = $(this).closest(".infinite-item").attr("item-id");
-    var url = $(this).parents(".infinite-item");
     var pk = $(this).data('pk');
     $.ajax({
         url: "/user/comment/" + item + "/" + pk + "/",
@@ -43,7 +42,6 @@ $('#ajax').on('click', '.u_comment', function() {
 
 $('#ajax').on('click', '.c_comment', function() {
     var item = $(this).closest(".infinite-item").attr("item-id");
-    var url = $(this).parents(".infinite-item");
     var pk = $(this).data('pk');
     $.ajax({
         url: "/community/comment/" + item + "/" + pk + "/",
