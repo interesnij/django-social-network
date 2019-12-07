@@ -417,9 +417,9 @@ class User(AbstractUser):
 
     def _make_get_votes_query_comment(self, comment):
         reactions_query = Q(id=comment.pk)
-        if comment.item.community:
+        try:
             post_community = comment.item.community
-        elif comment.parent_comment.item.community:
+        except:
             post_community = comment.parent_comment.item.community
 
         if post_community:
