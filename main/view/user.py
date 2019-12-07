@@ -42,10 +42,7 @@ class ItemCommentUserCreate(View):
 
 		if self.form_post.is_valid():
 			comment=self.form_post.save(commit=False)
-			self.text = comment.text
-			self.image1 = comment.item_comment_photo
-			self.image2 = comment.item_comment_photo2
-			if not self.text and not self.image1 and not self.image2 :
+			if not comment.text and not comment.item_comment_photo and not comment.item_comment_photo2:
 				raise ValidationError('Для добавления комментария необходимо написать что-то или прикрепить изображение')
 			if request.user != self.user:
 				check_is_not_blocked_with_user_with_id(user=request.user, user_id = self.user.id)
@@ -55,7 +52,7 @@ class ItemCommentUserCreate(View):
 			new_comment = comment.create_user_comment(
 														commenter=request.user,
 														item=self.item,
-														text=self.text,
+														text=comment.text,
 														item_comment_photo=comment.item_comment_photo,
 														item_comment_photo2=comment.item_comment_photo2,)
 			new_comment.notification_user_comment(request.user)
