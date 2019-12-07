@@ -204,7 +204,7 @@ class ItemComment(models.Model):
         item_notification_handler(user, self.commenter, ItemNotification.POST_COMMENT, item=self.item, key='social_update')
 
     def notification_user_reply_comment(self, user):
-        item_notification_handler(user, self.commenter, ItemNotification.POST_COMMENT_REPLY, item=self.parent_comment, key='social_update')
+        item_notification_handler(user, self.commenter, ItemNotification.POST_COMMENT_REPLY, item=self.parent_comment.item, key='social_update')
 
     def notification_user_comment_like(self, user):
         item_notification_handler(user, self.commenter, ItemNotification.LIKE_COMMENT, item=self.item, key='social_update')
