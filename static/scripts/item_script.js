@@ -34,7 +34,7 @@ $('#ajax').on('click', '.u_comment', function() {
             url.find(".load_comments").html("<span style='display:flex;justify-content: center;'><img src='/static/images/loading.gif'></span>");
         },
         success: function(data) {
-            url.find(".load_comments").html(data.comments);
+            item.find(".load_comments").html(data.comments);
         }
     });
     return false;
