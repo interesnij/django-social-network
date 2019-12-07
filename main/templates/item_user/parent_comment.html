@@ -14,6 +14,13 @@
     width: 85%;
     height: auto;
   }
+  .stream_reply_comments{
+    display:none;
+    
+  }
+  .stream_reply_comments.replies_open{
+    display:block;
+  }
 </style>
 <div class="media" comment-id="{{ comment.id }}">
     <figure>
@@ -164,8 +171,11 @@
                     </div>
                     {% endif %}
 
-                    <br><br> {{ comment.count_replies }} {{ comment.count_replies|rupluralize:"ответ,ответа,ответов" }}
-                    <span class="stream_reply_comments">
+                    <br><br>
+                    <span style="cursor:pointer" slass="show_replies">
+                      {{ comment.count_replies }} {{ comment.count_replies|rupluralize:"ответ,ответа,ответов" }}
+                    </span>
+                    <span class="stream_reply_comments"  style="display:none">
                       {% for reply in comment.get_replies %}
                         {% include 'item_user/reply_comment.html' with reply=reply  %}
                       {% endfor %}

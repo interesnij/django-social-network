@@ -22,6 +22,10 @@ $('.item_fullscreen_hide').on('click', function() {
     $('.item_fullscreen').hide();
     $('#item_loader').empty();
 });
+$('.show_replies').on('toggle', function() {
+    var element = $(this);
+    element.next().toggleClass('replies_open');
+});
 
 
 $('#ajax').on('click', '.u_comment', function() {
