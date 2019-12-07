@@ -22,9 +22,9 @@ $('.item_fullscreen_hide').on('click', function() {
     $('.item_fullscreen').hide();
     $('#item_loader').empty();
 });
-$('.show_replies').on('click', function() {
+$('#ajax').on('click', '.show_replies', function() {
     var element = $(this);
-    $(this).toggleClass('replies_open');
+    element.toggleClass('replies_open');
 });
 
 
