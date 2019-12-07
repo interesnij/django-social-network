@@ -19,6 +19,9 @@
 
 <span class="stream_comments bg-light-secondary">
   <div></div>
+  {% for comment in comments %}
+  {% include 'item_community/parent_comment.html' with comment=comment  %}
+  {% endfor %}
 </span>
 
 {% if request_user.is_authenticated %}
