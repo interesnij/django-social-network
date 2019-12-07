@@ -417,7 +417,7 @@ class User(AbstractUser):
 
     def _make_get_votes_query_comment(self, id):
         reactions_query = Q(comment_id=id)
-        post_community = comment.item.community
+        post_community = id.item.community
 
         if post_community:
             if not self.is_staff_of_community_with_name(community_name=post_community.name):
