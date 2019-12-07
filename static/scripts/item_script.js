@@ -31,7 +31,7 @@ $('#ajax').on('click', '.u_comment', function() {
         data: {'item': item},
         cache: false,
         beforeSend: function() {
-            url.find(".load_comments").html("<span style='display:flex;justify-content: center;'><img src='/static/images/loading.gif'></span>");
+            item.find(".load_comments").html("<span style='display:flex;justify-content: center;'><img src='/static/images/loading.gif'></span>");
         },
         success: function(data) {
             item.find(".load_comments").html(data.comments);
