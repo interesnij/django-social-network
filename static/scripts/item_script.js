@@ -24,7 +24,7 @@ $('.item_fullscreen_hide').on('click', function() {
 });
 $('#ajax').on('click', '.show_replies', function() {
     var element = $(this);
-    element.toggleClass('replies_open');
+    element.next().toggleClass('replies_open');
 });
 
 
