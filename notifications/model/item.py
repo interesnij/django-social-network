@@ -143,7 +143,10 @@ class ItemCommunityNotification(models.Model):
         indexes = (BrinIndex(fields=['timestamp']),)
 
     def __str__(self):
-        return '{} {}'.format(self.actor, self.get_verb_display())
+        if self.item and not self.comment:
+            return '{} {}'.format(self.actor, self.get_verb_display(), self.item)
+        else:
+            return '{} {} {}'.format(self.actor, self.get_verb_display(), self.comment, self.item)
 
     def mark_as_unread(self):
         if not self.unread:
