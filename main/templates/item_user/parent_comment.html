@@ -164,8 +164,9 @@
                     {% if comment.count_replies %}
                     <span style="cursor:pointer" class="show_replies content-color-primary mb-0">
                       {{ comment.count_replies }} {{ comment.count_replies|rupluralize:"ответ,ответа,ответов" }}
+                      <br><br>
                     </span>
-                    <br><br>
+
                     <span class="stream_reply_comments">
                       {% for reply in comment.get_replies %}
                         {% include 'item_user/reply_comment.html' with reply=reply  %}
