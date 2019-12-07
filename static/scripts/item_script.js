@@ -153,13 +153,13 @@ $('#ajax').on('click', '.u_itemComment', function() {
 
 $('#ajax').on('click', '.u_replyComment', function() {
     var button = $(this);
-    var form = button.parent().parent().parent().parent();
-    var block = form.parent();
+    var form2 = button.parent().parent().parent().parent();
+    var block = form2.parent();
     var pk = button.data('pk');
     var uuid = button.data('uuid');
     $.ajax({
         url: '/user/reply-comment/' + uuid + "/" + pk + "/",
-        data: new FormData($(form)[0]),
+        data: new FormData($(form2)[0]),
         contentType: false,
         cache: false,
         processData: false,
@@ -183,13 +183,13 @@ $('#ajax').on('click', '.u_replyComment', function() {
 
 $('#ajax').on('click', '.u_replyParentComment', function() {
     var button = $(this);
-    var form = button.parent().parent().parent().parent();
-    var block = form.parent();
+    var form3 = button.parent().parent().parent().parent();
+    var block = form3.parent();
     var pk = button.data('pk');
     var uuid = button.data('uuid');
     $.ajax({
         url: '/user/reply-comment/' + uuid + "/" + pk + "/",
-        data: new FormData($(form)[0]),
+        data: new FormData($(form3)[0]),
         contentType: false,
         cache: false,
         processData: false,
