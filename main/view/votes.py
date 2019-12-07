@@ -38,6 +38,22 @@ class ItemUserLikeWindow(TemplateView):
         return context
 
 
+class ItemCommunityLikeWindow(TemplateView):
+    template_name="item_votes/like_window.html"
+
+    def get(self,request,*args,**kwargs):
+        self.item = Item.objects.get(pk=self.kwargs["pk"])
+        community = Community.objects.get(uuid=self.kwargs["uuid"])
+        check_can_get_posts_for_community_with_name(request.user,community.name)
+        self.likes = self.item.get_likes_for_item(request.user)
+        return super(ItemCommunityLikeWindow,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context=super(ItemCommunityLikeWindow,self).get_context_data(**kwargs)
+        context["likes"]=self.likes
+        return context
+
+
 class ItemUserCommentLikeWindow(TemplateView):
     template_name="item_votes/comment_like_window.html"
 
@@ -59,6 +75,22 @@ class ItemUserCommentLikeWindow(TemplateView):
 
     def get_context_data(self,**kwargs):
         context=super(ItemUserCommentLikeWindow,self).get_context_data(**kwargs)
+        context["likes"]=self.likes
+        return context
+
+
+class ItemCommunityCommentLikeWindow(TemplateView):
+    template_name="item_votes/comment_like_window.html"
+
+    def get(self,request,*args,**kwargs):
+        self.comment = ItemComment.objects.get(pk=self.kwargs["pk"])
+        community = Community.objects.get(uuid=self.kwargs["uuid"])
+        check_can_get_posts_for_community_with_name(request.user,community.name)
+        self.likes = self.comment.get_likes_for_comment_item(request.user)
+        return super(ItemCommunityCommentLikeWindow,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context=super(ItemCommunityCommentLikeWindow,self).get_context_data(**kwargs)
         context["likes"]=self.likes
         return context
 
@@ -90,6 +122,22 @@ class ItemUserDislikeWindow(TemplateView):
         return context
 
 
+class ItemCommunityDislikeWindow(TemplateView):
+    template_name="item_votes/dislike_window.html"
+
+    def get(self,request,*args,**kwargs):
+        self.item = Item.objects.get(pk=self.kwargs["pk"])
+        community = Community.objects.get(uuid=self.kwargs["uuid"])
+        check_can_get_posts_for_community_with_name(request.user,community.name)
+        self.likes = self.item.get_dislikes_for_item(request.user)
+        return super(ItemCommunityDislikeWindow,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context=super(ItemCommunityDislikeWindow,self).get_context_data(**kwargs)
+        context["dislikes"]=self.dislikes
+        return context
+
+
 class ItemUserCommentDislikeWindow(TemplateView):
     template_name="item_votes/comment_dislike_window.html"
 
@@ -111,6 +159,22 @@ class ItemUserCommentDislikeWindow(TemplateView):
 
     def get_context_data(self,**kwargs):
         context=super(ItemUserCommentDislikeWindow,self).get_context_data(**kwargs)
+        context["dislikes"]=self.dislikes
+        return context
+
+
+class ItemCommunityCommentDislikeWindow(TemplateView):
+    template_name="item_votes/comment_dislike_window.html"
+
+    def get(self,request,*args,**kwargs):
+        self.comment = ItemComment.objects.get(pk=self.kwargs["pk"])
+        community = Community.objects.get(uuid=self.kwargs["uuid"])
+        check_can_get_posts_for_community_with_name(request.user,community.name)
+        self.likes = self.comment.get_dislikes_for_comment_item(request.user)
+        return super(ItemCommunityCommentDislikeWindow,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context=super(ItemCommunityCommentDislikeWindow,self).get_context_data(**kwargs)
         context["dislikes"]=self.dislikes
         return context
 
