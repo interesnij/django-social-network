@@ -311,10 +311,15 @@ $("#ajax").on('click', '.c_like', function() {
             'obj': pk
         },
         success: function(json) {
-            like.find("[data-count='like']").text(json.like_count);
-            dislike.find("[data-count='dislike']").text(json.dislike_count);
-            $(".like").addClass("text-success");
-            $(".dislike").removeClass("text-danger");
+          like.find("[data-count='like']").text(json.like_count);
+          like.find(".svg_default").toggleClass('svg_success');
+          like.find(".likes_count").toggleClass('svg_success');
+          like.siblings('.like_window').html('').load("/votes/like_window/" + uuid + "/" + pk + "/");
+
+          dislike.find("[data-count='dislike']").text(json.dislike_count);
+          dislike.find(".svg_default").removeClass('svg_danger');
+          dislike.find(".dislikes_count").removeClass('svg_danger');
+          dislike.siblings('.dislike_window').html('').load("/votes/dislike_window/" + uuid + "/" + pk + "/")
         }
     });
     return false;
@@ -332,10 +337,15 @@ $("#ajax").on('click', '.c_dislike', function() {
                 'obj': pk
             },
             success: function(json) {
-                dislike.find("[data-count='dislike']").text(json.dislike_count);
-                like.find("[data-count='like']").text(json.like_count);
-                $(".dislike").addClass("text-danger");
-                $(".like").removeClass("text-success");
+              like.find("[data-count='like']").text(json.like_count);
+              like.find(".svg_default").removeClass('svg_success');
+              like.find(".likes_count").removeClass('svg_success');
+              like.siblings('.like_window').html('').load("/votes/like_window/" + uuid + "/" + pk + "/");
+
+              dislike.find("[data-count='dislike']").text(json.dislike_count);
+              dislike.find(".svg_default").toggleClass('svg_danger');
+              dislike.find(".dislikes_count").toggleClass('svg_danger');
+              dislike.siblings('.dislike_window').html('').load("/votes/dislike_window/" + uuid + "/" + pk + "/")
             }
         });
         return false;
