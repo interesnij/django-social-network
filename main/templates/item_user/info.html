@@ -4,22 +4,27 @@
 
     <div class="row">
         <div class="col interaction" id="interaction">
-          <span class="u_like"
-                data-id="{{ object.id }}"
-                data-uuid="{{ object.creator.uuid }}"
-                title="Нравится">
-
-                {% if object.likes|user_in:request_user %}
-                  <img class="like_act" style="width:22px" src="{% static 'images/icons/thumb_up_success.svg' %}" />
-                  <img class="like" style="width:22px;display:none" src="{% static 'images/icons/thumb_up.svg' %}" />
-                  <span style="color:#41cd52" data-count="like">{% if object.likes %}{{ object.likes.count }}{% endif %}</span>
-                {% else %}
-                  <img class="like" style="width:22px" src="{% static 'images/icons/thumb_up.svg' %}" />
-                  <img class="like_act" style="width:22px;display:none" src="{% static 'images/icons/thumb_up_success.svg' %}" />
-                  <span data-count="like">{% if object.likes %}{{ object.likes.count }}{% endif %}</span>
-                {% endif %}
+        <span>
+          {% if comment.likes|user_in:request_user %}
+          <span class="u_like_active" data-id="{{ object.id }}" data-uuid="{{ object.creator.uuid }}" title="Нравится">
+            <img style="width:22px" src="{% static 'images/icons/thumb_up_success.svg' %}" />
+            <span style="color:#41cd52" data-count="like">{{ comment.likes.count }}</span>
           </span>
-
+          <span class="u_like" style="display:none" data-id="{{ object.id }}" data-uuid="{{ object.creator.uuid }}" title="Нравится">
+            <img style="width:22px" src="{% static 'images/icons/thumb_up_success.svg' %}" />
+            <span style="color:#41cd52" data-count="like">{{ comment.likes.count }}</span>
+          </span>
+          {% else %}
+          <span class="u_like" data-id="{{ object.id }}" data-uuid="{{ object.creator.uuid }}" title="Нравится">
+            <img style="width:22px" src="{% static 'images/icons/thumb_up.svg' %}" />
+            <span style="color:#41cd52" data-count="like">{{ comment.likes.count }}</span>
+          </span>
+          <span class="u_like_active" style="display:none" data-id="{{ object.id }}" data-uuid="{{ object.creator.uuid }}" title="Нравится">
+            <img style="width:22px" src="{% static 'images/icons/thumb_up_success.svg' %}" />
+            <span style="color:#41cd52" data-count="like">{{ comment.likes.count }}</span>
+          </span>
+          {% endif %}
+        </span>
 
           <span class="like_window">
             {% if object.likes %}

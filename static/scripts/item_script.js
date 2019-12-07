@@ -210,10 +210,31 @@ $("#ajax").on('click', '.u_like', function() {
         success: function(json) {
             like.find("[data-count='like']").text(json.like_count);
             dislike.find("[data-count='dislike']").text(json.dislike_count);
-            like.find(".like").hide();
-            like.find(".like_act").show();
-            dislike.find(".dislike").show();
-            dislike.find(".dislike_act").hide();
+            like.hide();
+            like.parent().find(".u_like_active").show();
+            like.siblings('.like_window').html('').load("/votes/like_window/" + uuid + "/" + pk + "/");
+            dislike.siblings('.dislike_window').html('').load("/votes/dislike_window/" + uuid + "/" + pk + "/")
+
+        }
+    });
+    return false;
+});
+$("#ajax").on('click', '.u_like_active', function() {
+    var like = $(this);
+    var pk = like.data('id');
+		var uuid = like.data('uuid');
+    var dislike = like.next().next();
+    $.ajax({
+        url: "/votes/user_like/" + uuid + "/" + pk + "/",
+        type: 'POST',
+        data: {
+            'obj': pk
+        },
+        success: function(json) {
+            like.find("[data-count='like']").text(json.like_count);
+            dislike.find("[data-count='dislike']").text(json.dislike_count);
+            like.hide();
+            like.parent().find(".like_active").show();
             like.siblings('.like_window').html('').load("/votes/like_window/" + uuid + "/" + pk + "/");
             dislike.siblings('.dislike_window').html('').load("/votes/dislike_window/" + uuid + "/" + pk + "/")
 

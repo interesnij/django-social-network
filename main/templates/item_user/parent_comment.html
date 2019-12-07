@@ -55,18 +55,25 @@
         <div class="border-top py-2">
             <div class="row">
                 <div class="col">
-                  <span class="u_like2 {% if comment.likes|user_in:request_user %}text-success {% endif %}"
-                        data-id="{{ comment.id }}"
-                        data-uuid="{{ comment.commenter.uuid }}"
-                        title="Нравится">
-                    {% if comment.likes|user_in:request_user %}
+                  {% if comment.likes|user_in:request_user %}
+                  <span class="u_like2_active" data-id="{{ comment.id }}" data-uuid="{{ comment.commenter.uuid }}" title="Нравится">
                     <img style="width:22px" src="{% static 'images/icons/thumb_up_success.svg' %}" />
                     <span style="color:#41cd52" data-count="like">{{ comment.likes.count }}</span>
-                    {% else %}
-                    <img style="width:22px" src="{% static 'images/icons/thumb_up.svg' %}" />
-                    <span data-count="like">{{ comment.likes.count }}</span>
-                    {% endif %}
                   </span>
+                  <span class="u_like2" style="display:none" data-id="{{ comment.id }}" data-uuid="{{ comment.commenter.uuid }}" title="Нравится">
+                    <img style="width:22px" src="{% static 'images/icons/thumb_up_success.svg' %}" />
+                    <span style="color:#41cd52" data-count="like">{{ comment.likes.count }}</span>
+                  </span>
+                  {% else %}
+                  <span class="u_like2" data-id="{{ comment.id }}" data-uuid="{{ comment.commenter.uuid }}" title="Нравится">
+                    <img style="width:22px" src="{% static 'images/icons/thumb_up.svg' %}" />
+                    <span style="color:#41cd52" data-count="like">{{ comment.likes.count }}</span>
+                  </span>
+                  <span class="u_like2_active" style="display:none" data-id="{{ comment.id }}" data-uuid="{{ comment.commenter.uuid }}" title="Нравится">
+                    <img style="width:22px" src="{% static 'images/icons/thumb_up_success.svg' %}" />
+                    <span style="color:#41cd52" data-count="like">{{ comment.likes.count }}</span>
+                  </span>
+                  {% endif %}
                     <span class="comment_like_window">
                         {% if comment.likes %}
                         <div class="comment_like_pop" style="margin:15px">
@@ -90,7 +97,7 @@
                         {% endif %}
                     </span>
                     &nbsp;
-                    <span class="u_dislike2 {% if comment.dislikes|user_in:request_user %}text-success {% endif %}"
+                    <span class="u_dislike2"
                           data-id="{{ comment.id }}"
                           data-uuid="{{ comment.commenter.uuid }}"
                           title="Не нравится">
@@ -173,9 +180,10 @@
 
                     <br><br>
                     {% if comment.count_replies %}
-                    <span style="cursor:pointer" class="show_replies">
+                    <span style="cursor:pointer" class="show_replies content-color-primary mb-0">
                       {{ comment.count_replies }} {{ comment.count_replies|rupluralize:"ответ,ответа,ответов" }}
                     </span>
+                    <br><br>
                     <span class="stream_reply_comments">
                       {% for reply in comment.get_replies %}
                         {% include 'item_user/reply_comment.html' with reply=reply  %}
