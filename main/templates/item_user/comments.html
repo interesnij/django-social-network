@@ -26,7 +26,7 @@
 
 {% if request_user.is_authenticated %}
 <div class="border-top" style="margin-top:10px">
-    <form action="" method="post" class="itemComment_form" enctype="multipart/form-data">
+    <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
 
         <div style="display:none;margin:10px">
@@ -58,7 +58,7 @@
                     <textarea name="text" id="id_text" class="form-control text-comment form-control-rounded"></textarea>
                 </div>
             </div>
-            <div class="col-auto"> 
+            <div class="col-auto">
                 <button class="btn btn-outline-primary btn-rounded btn-sm ml-2 u_itemComment" data-pk="{{ user.pk }}" data-uuid="{{ parent.uuid }}" type="button">
                     <img style="width:22px" src="{% static 'images/icons/send-24px.svg' %}" />
                 </button>
