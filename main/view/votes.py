@@ -129,7 +129,7 @@ class ItemCommunityDislikeWindow(TemplateView):
         self.item = Item.objects.get(pk=self.kwargs["pk"])
         community = Community.objects.get(uuid=self.kwargs["uuid"])
         check_can_get_posts_for_community_with_name(request.user,community.name)
-        self.likes = self.item.get_dislikes_for_item(request.user)
+        self.dislikes = self.item.get_dislikes_for_item(request.user)
         return super(ItemCommunityDislikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
