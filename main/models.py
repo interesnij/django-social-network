@@ -78,13 +78,13 @@ class Item(models.Model):
         return "{0}/{1}".format(self.creator.get_full_name(), self.views)
 
     def notification_user_repost(self, user):
-        item_notification_handler(user, self.creator, ItemNotification.REPOST, key='social_update')
+        item_notification_handler(user, self.creator, ItemNotification.REPOST, key='social_update', item=self, comment=None)
 
     def notification_user_like(self, user):
         item_notification_handler(user, self.creator, ItemNotification.LIKE, key='social_update', item=self, comment=None)
 
     def notification_user_dislike(self, user):
-        item_notification_handler(user, self.creator, ItemNotification.DISLIKE, key='social_update', item=self)
+        item_notification_handler(user, self.creator, ItemNotification.DISLIKE, key='social_update', item=self, comment=None)
 
     def notification_community_repost(self, user):
         item_community_notification_handler(user, self.creator, ItemCommunityNotification.REPOST, key='social_update', item=self, comment=None)
