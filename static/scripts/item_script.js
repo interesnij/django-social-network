@@ -24,11 +24,12 @@ $('#ajax').on('click', '.c_fullscreen', function() {
 });
 
 $('#ajax').on('click', '.u_comment', function() {
-    var item = $(this).closest(".infinite-item").attr("item-id");
+    var item = $(this).closest(".infinite-item");
+    var uuid = item.attr("item-id");
     var pk = $(this).data('pk');
     $.ajax({
-        url: "/user/comment/" + item + "/" + pk + "/",
-        data: {'item': item},
+        url: "/user/comment/" + uuid + "/" + pk + "/",
+        data: {'uuid': uuid},
         cache: false,
         beforeSend: function() {
             item.find(".load_comments").html("<span style='display:flex;justify-content: center;'><img src='/static/images/loading.gif'></span>");
