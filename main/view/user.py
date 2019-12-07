@@ -54,7 +54,8 @@ class ItemCommentUserCreate(View):
 														item=self.item,
 														text=comment.text,
 														item_comment_photo=comment.item_comment_photo,
-														item_comment_photo2=comment.item_comment_photo2,)
+														item_comment_photo2=comment.item_comment_photo2,
+														parent=None)
 			new_comment.notification_user_comment(request.user)
 			html = render_to_string('item_user/parent_comment.html',{'comment': new_comment, 'request': request})
 			return JsonResponse(html, safe=False)
@@ -70,7 +71,8 @@ class ItemReplyUserCreate(View):
 
 		if self.form_post.is_valid():
 			comment=self.form_post.save(commit=False)
-			self.text = comment.text
+			if not comment.text and not comment.item_comment_photo and not comment.item_comment_photo2:
+				raise ValidationError('Для добавления комментария необходимо написать что-то или прикрепить изображение')
 			if request.user != self.user:
 				check_is_not_blocked_with_user_with_id(user=request.user, user_id = self.user.id)
 				if user.is_closed_profile:
@@ -81,7 +83,7 @@ class ItemReplyUserCreate(View):
 														parent=self.parent,
 														item_comment_photo=comment.item_comment_photo,
 														item_comment_photo2=comment.item_comment_photo2,
-														text=self.text)
+														text=comment.text)
 			new_comment.notification_user_reply_comment(request.user)
 			html = render_to_string('item_user/reply_comment.html',{'reply': new_comment, 'request': request})
 			return JsonResponse(html, safe=False)
