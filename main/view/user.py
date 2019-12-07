@@ -84,7 +84,7 @@ class ItemReplyUserCreate(View):
 														item_comment_photo=comment.item_comment_photo,
 														item_comment_photo2=comment.item_comment_photo2,
 														text=comment.text,
-														parent_comment=parent)
+														parent_comment=self.parent)
 			new_comment.notification_user_reply_comment(request.user)
 			html = render_to_string('item_user/reply_comment.html',{'reply': new_comment, 'request': request})
 			return JsonResponse(html, safe=False)
