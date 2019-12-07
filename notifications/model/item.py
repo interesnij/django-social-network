@@ -77,7 +77,8 @@ class ItemNotification(models.Model):
     slug = models.SlugField(max_length=210, null=True, blank=True)
     uuid_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     objects =  ItemNotificationQS.as_manager()
-    item = models.ForeignKey('main.Item', on_delete=models.CASCADE)
+    item = models.ForeignKey('main.Item', null=True, blank=True, on_delete=models.CASCADE)
+    comment = models.ForeignKey('main.ItemComment', null=True, blank=True, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = "Уведомление - записи пользователя"
@@ -132,7 +133,8 @@ class ItemCommunityNotification(models.Model):
     slug = models.SlugField(max_length=210, null=True, blank=True)
     uuid_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     objects = ItemNotificationQS.as_manager()
-    item = models.ForeignKey('main.Item', on_delete=models.CASCADE)
+    item = models.ForeignKey('main.Item', null=True, blank=True, on_delete=models.CASCADE)
+    comment = models.ForeignKey('main.ItemComment', null=True, blank=True, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = "Уведомление - записи сообщества"
@@ -149,56 +151,32 @@ class ItemCommunityNotification(models.Model):
             self.save()
 
 
-def item_notification_handler(actor, recipient, verb, item, **kwargs):
+def item_notification_handler(actor, recipient, verb, item, comment, **kwargs):
     key = kwargs.pop('key', 'notification')
-
     if recipient == 'global':
         users = User.objects.all().exclude(username=actor.username)
         for user in users:
-            ItemNotification.objects.create(
-                actor=actor,
-                recipient=user,
-                verb=verb,
-                item=item,
-            )
+            ItemNotification.objects.create(actor=actor, recipient=user, verb=verb, item=item, comment=comment)
         item_notification_broadcast(actor, key)
-
     elif isinstance(recipient, list):
         for user in recipient:
-            ItemNotification.objects.create(
-                actor=actor,
-                recipient=User.objects.get(username=user.username),
-                verb=verb,
-            )
-
+            ItemNotification.objects.create(actor=actor, recipient=User.objects.get(username=user.username), verb=verb, comment=comment)
     elif isinstance(recipient, get_user_model()):
-        ItemNotification.objects.create(
-            actor=actor,
-            recipient=recipient,
-            verb=verb,
-            item=item,
-        )
-        item_notification_broadcast(
-            actor, key, recipient=recipient.username)
-
+        ItemNotification.objects.create(actor=actor, recipient=recipient, verb=verb, item=item, comment=comment)
+        item_notification_broadcast(actor, key, recipient=recipient.username)
     else:
         pass
 
-def item_community_notification_handler(actor, community, verb, **kwargs):
+def item_community_notification_handler(actor, community, item, verb, comment, **kwargs):
     key = kwargs.pop('key', 'notification')
     persons = community.get_staff_members()
     for user in persons:
-        ItemCommunityNotification.objects.create(actor=actor, community=community, recipient=user,verb=verb)
+        ItemCommunityNotification.objects.create(actor=actor, community=community, item=item, comment=comment, recipient=user, verb=verb)
     user_notification_broadcast(actor, key)
 
 
 def item_notification_broadcast(actor, key, **kwargs):
     channel_layer = get_channel_layer()
     recipient = kwargs.pop('recipient', None)
-    payload = {
-            'type': 'receive',
-            'key': key,
-            'actor_name': actor.get_full_name(),
-            'recipient': recipient
-        }
+    payload = {'type': 'receive','key': key,'actor_name': actor.get_full_name(),'recipient': recipient}
     async_to_sync(channel_layer.group_send)('notifications', payload)
