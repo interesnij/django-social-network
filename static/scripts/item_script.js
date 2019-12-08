@@ -262,12 +262,13 @@ $("#ajax").on('click', '.u_like2', function() {
               },
               success: function(json) {
                   like.find("[data-count='like']").text(json.like_count);
-                  dislike.find("[data-count='dislike']").text(json.dislike_count);
-                  like.find(".like").hide();
-                  like.find(".like_act").show();
-                  dislike.find(".dislike").show();
-                  dislike.find(".dislike_act").hide();
+                  like.find(".svg_default").toggleClass('svg_success');
+                  like.find(".likes_count").toggleClass('svg_success');
                   like.siblings('.comment_like_window').html('').load("/votes/u_comment_like_window/" + uuid + "/" + pk + "/");
+
+                  dislike.find("[data-count='dislike']").text(json.dislike_count);
+                  dislike.find(".svg_default").removeClass('svg_danger');
+                  dislike.find(".dislikes_count").removeClass('svg_danger');
                   dislike.siblings('.comment_dislike_window').html('').load("/votes/u_comment_dislike_window/" + uuid + "/" + pk + "/")
               }
           });
@@ -286,13 +287,14 @@ $("#ajax").on('click', '.u_dislike2', function() {
                 'obj': pk
             },
             success: function(json) {
-                dislike.find("[data-count='dislike']").text(json.dislike_count);
                 like.find("[data-count='like']").text(json.like_count);
-                dislike.find(".dislike").hide();
-                dislike.find(".dislike_act").show();
-                like.find(".like_act").hide();
-                like.find(".like").show();
+                like.find(".svg_default").removeClass('svg_success');
+                like.find(".likes_count").removeClass('svg_success');
                 like.siblings('.comment_like_window').html('').load("/votes/u_comment_like_window/" + uuid + "/" + pk + "/");
+
+                dislike.find("[data-count='dislike']").text(json.dislike_count);
+                dislike.find(".svg_default").toggleClass('svg_danger');
+                dislike.find(".dislikes_count").toggleClass('svg_danger');
                 dislike.siblings('.comment_dislike_window').html('').load("/votes/u_comment_dislike_window/" + uuid + "/" + pk + "/")
             }
         });
