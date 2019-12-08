@@ -205,7 +205,7 @@ class ItemUserLikeCreate(View):
         if likes.count() != 0:
             like_count = likes.count()
         else:
-            like_count = None
+            like_count = ""
         dislikes = item.get_dislikes_for_item(request.user)
         if dislikes.count() != 0:
             dislike_count = dislikes.count()
