@@ -400,23 +400,18 @@ class User(AbstractUser):
 
         if post_community:
             if not self.is_staff_of_community_with_name(community_name=post_community.name):
-                blocked_users_query = ~Q(Q(user__blocked_by_users__blocker_id=self.pk) | Q(
-                    user__user_blocks__blocked_user_id=self.pk))
-                blocked_users_query_staff_members = Q(
-                    user__communities_memberships__community_id=post_community.pk)
-                blocked_users_query_staff_members.add(Q(user__communities_memberships__is_administrator=True) | Q(
-                    user__communities_memberships__is_moderator=True), Q.AND)
-
+                blocked_users_query = ~Q(Q(user__blocked_by_users__blocker_id=self.pk) | Q(user__user_blocks__blocked_user_id=self.pk))
+                blocked_users_query_staff_members = Q(user__communities_memberships__community_id=post_community.pk)
+                blocked_users_query_staff_members.add(Q(user__communities_memberships__is_administrator=True) | Q(user__communities_memberships__is_moderator=True), Q.AND)
                 blocked_users_query.add(~blocked_users_query_staff_members, Q.AND)
                 reactions_query.add(blocked_users_query, Q.AND)
         else:
-            blocked_users_query = ~Q(Q(user__blocked_by_users__blocker_id=self.pk) | Q(
-                user__user_blocks__blocked_user_id=self.pk))
+            blocked_users_query = ~Q(Q(user__blocked_by_users__blocker_id=self.pk) | Q(user__user_blocks__blocked_user_id=self.pk))
             reactions_query.add(blocked_users_query, Q.AND)
         return reactions_query
 
     def _make_get_votes_query_comment(self, comment):
-        reactions_query = Q(id=comment.pk)
+        reactions_query = Q(item_id=comment.pk)
         try:
             post_community = comment.item.community
         except:
@@ -424,18 +419,13 @@ class User(AbstractUser):
 
         if post_community:
             if not self.is_staff_of_community_with_name(community_name=post_community.name):
-                blocked_users_query = ~Q(Q(user__blocked_by_users__blocker_id=self.pk) | Q(
-                    user__user_blocks__blocked_user_id=self.pk))
-                blocked_users_query_staff_members = Q(
-                    user__communities_memberships__community_id=post_community.pk)
-                blocked_users_query_staff_members.add(Q(user__communities_memberships__is_administrator=True) | Q(
-                    user__communities_memberships__is_moderator=True), Q.AND)
-
+                blocked_users_query = ~Q(Q(user__blocked_by_users__blocker_id=self.pk) | Q(user__user_blocks__blocked_user_id=self.pk))
+                blocked_users_query_staff_members = Q(user__communities_memberships__community_id=post_community.pk)
+                blocked_users_query_staff_members.add(Q(user__communities_memberships__is_administrator=True) | Q(user__communities_memberships__is_moderator=True), Q.AND)
                 blocked_users_query.add(~blocked_users_query_staff_members, Q.AND)
                 reactions_query.add(blocked_users_query, Q.AND)
         else:
-            blocked_users_query = ~Q(Q(user__blocked_by_users__blocker_id=self.pk) | Q(
-                user__user_blocks__blocked_user_id=self.pk))
+            blocked_users_query = ~Q(Q(user__blocked_by_users__blocker_id=self.pk) | Q(user__user_blocks__blocked_user_id=self.pk))
             reactions_query.add(blocked_users_query, Q.AND)
         return reactions_query
 
