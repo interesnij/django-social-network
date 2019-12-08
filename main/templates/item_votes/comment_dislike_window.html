@@ -7,14 +7,13 @@
     <span style="display: flex;">
         {% for sheet in dislikes %}
         <a href="{% url 'user' pk=sheet.user.pk %}" class="ajax" style="padding-right:10px">
-            <figure style="margin: 0;">
+            <figure style="margin: 0;" title="{{ sheet.user.get_full_name }}">
                 {% if sheet.user.get_avatar %}
                 <img src="{{ sheet.user.get_avatar.file|thumbnail_url:'small_avatar' }}" style="border-radius: 50px;width:50px;" alt="image">
                 {% else %}
                 <img class="thumb_small" src="{% static 'images/icons/person-24px.svg' %}" />
                 {% endif %}
             </figure>
-            {{ sheet.user.first_name }}
         </a>
         {% endfor %}
     </span>

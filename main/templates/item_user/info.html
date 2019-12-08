@@ -21,14 +21,13 @@
             <span style="display: flex;">
               {% for heart in object.likes %}
               <a href="{% url 'user' pk=heart.user.pk %}" class="ajax" style="padding-right:10px">
-                <figure style="margin: 0;">
+                <figure style="margin: 0;" title="{{ heart.user.get_full_name }}">
                   {% if heart.user.get_avatar %}
                     <img src="{{ heart.user.get_avatar.file|thumbnail_url:'avatar' }}" style="border-radius: 50px;width:50px;" alt="image">
                     {% else %}
                     <img class="thumb" src="{% static 'images/icons/person-24px.svg' %}" />
                     {% endif %}
                 </figure>
-                {{ heart.user.first_name }}
               </a>
               {% endfor %}
             </span>
@@ -54,14 +53,13 @@
           <span style="display: flex;">
             {% for sheet in object.dislikes %}
             <a href="{% url 'user' pk=sheet.user.pk %}" class="ajax" style="padding-right:10px">
-              <figure style="margin: 0;">
+              <figure style="margin: 0;" title="{{ sheet.user.get_full_name }}">
                 {% if sheet.user.get_avatar %}
                   <img src="{{ sheet.user.get_avatar.file|thumbnail_url:'avatar' }}" style="border-radius: 50px;width:50px;" alt="image">
                 {% else %}
                   <img class="thumb" src="{% static 'images/icons/person-24px.svg' %}" />
                 {% endif %}
                 </figure>
-                {{ sheet.user.first_name }}
               </a>
               {% endfor %}
           </span>
