@@ -35,14 +35,18 @@
               <br>
               <div class="hide_image">{{ form_comment.item_comment_photo }}</div>
               <div class="comment_photo1">
-                <h4 style="font-weight:bold;font-size:30px;color:#CECECE">1</h4>
+                <h4 style="font-size:30px" class="svg_default">
+                  <svg fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                </h4>
               </div>
             </div>
             <div class="col-lg-6 col-md-6">
               <br>
               <div class="hide_image">{{ form_comment.item_comment_photo2 }}</div>
               <div class="comment_photo2">
-                <h4 style="font-weight:bold;font-size:30px;color:#CECECE">2</h4>
+                <h4 style="font-size:30px" class="svg_default">
+                  <svg fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                </h4>
               </div>
             </div>
           </div>
@@ -59,7 +63,9 @@
             </div>
             <div class="col-auto">
                 <button class="btn btn-outline-primary btn-rounded btn-sm ml-2 u_itemComment" data-pk="{{ user.pk }}" data-uuid="{{ parent.uuid }}" type="button">
-                    <img style="width:22px" src="{% static 'images/icons/send-24px.svg' %}" />
+                    <span style="width:22px" >
+                      <svg fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+                    </span>
                 </button>
             </div>
         </div>
