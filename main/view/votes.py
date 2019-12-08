@@ -211,17 +211,7 @@ class ItemUserLikeCreate(View):
             dislike_count = dislikes.count()
         else:
             dislike_count = ""
-        last_likes_ = likes[0:6]
-        last_likes = serializers.serialize('json', last_likes_)
-        last_dislikes = serializers.serialize('json', dislikes[0:6])
-        return HttpResponse(json.dumps({
-                                        "result": result,
-                                        "last_likes": last_likes,
-                                        "last_dislikes": last_dislikes,
-                                        "like_count": str(like_count),
-                                        "dislike_count": str(dislike_count)}),
-                                        content_type="application/json"
-                                        )
+        return HttpResponse(json.dumps({"result": result,"like_count": str(like_count),"dislike_count": str(dislike_count)}),content_type="application/json")
 
 
 class ItemUserDislikeCreate(View):
@@ -245,7 +235,18 @@ class ItemUserDislikeCreate(View):
         except ItemVotes.DoesNotExist:
             ItemVotes.objects.create(parent=item, user=request.user, vote=ItemVotes.DISLIKE)
             result = True
-        return HttpResponse(json.dumps({"result": result,"like_count": item.likes().count(),"dislike_count": item.dislikes().count()}),content_type="application/json")
+        likes = item.get_likes_for_item(request.user)
+        if likes.count() != 0:
+            like_count = likes.count()
+        else:
+            like_count = ""
+        dislikes = item.get_dislikes_for_item(request.user)
+        if dislikes.count() != 0:
+            dislike_count = dislikes.count()
+        else:
+            dislike_count = ""
+        return HttpResponse(json.dumps({"result": result,"like_count": str(like_count),"dislike_count": str(dislike_count)}),content_type="application/json")
+
 
 class ItemCommentUserLikeCreate(View):
 
