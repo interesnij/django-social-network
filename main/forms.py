@@ -15,6 +15,10 @@ class CommentForm(forms.ModelForm):
 
 class CommentReplyForm(forms.ModelForm):
 
+	text=forms.CharField(widget=forms.TextInput(
+            attrs={'class': 'form-control text-comment form-control-rounded'}
+        ))
+
 	class Meta:
 		model = ItemComment
 		fields = ['text', 'item_comment_photo', 'item_comment_photo2']
