@@ -271,8 +271,6 @@ class ItemCommentUserLikeCreate(View):
             result = True
         likes = comment.get_likes_for_comment_item(request.user)
         like_count = likes.count()
-        else:
-            like_count = ""
         dislikes = comment.get_likes_for_comment_item(request.user)
         if dislikes.count() != 0:
             dislike_count = dislikes.count()
