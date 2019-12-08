@@ -249,28 +249,27 @@ class ItemUserDislikeCreate(View):
 
 
 class ItemCommentUserLikeCreate(View):
-
-	def post(self, request, **kwargs):
-		comment = ItemComment.objects.get(pk=self.kwargs["pk"])
-		user = User.objects.get(uuid=self.kwargs["uuid"])
-		if user != request.user:
-			check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
-			if user.is_closed_profile:
-				check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
-		try:
-			likedislike = ItemCommentVotes.objects.get(item=comment, user=request.user)
-			if likedislike.vote is not ItemCommentVotes.LIKE:
-				likedislike.vote = ItemCommentVotes.LIKE
-				likedislike.save(update_fields=['vote'])
-				result = True
-				comment.notification_user_comment_like(request.user)
-			else:
-				likedislike.delete()
-				result = False
-		except ItemCommentVotes.DoesNotExist:
-			ItemCommentVotes.objects.create(item=comment, user=request.user, vote=ItemCommentVotes.LIKE)
-			result = True
-        likes = item.get_likes_for_comment_item(request.user)
+    def post(self, request, **kwargs):
+        comment = ItemComment.objects.get(pk=self.kwargs["pk"])
+        user = User.objects.get(uuid=self.kwargs["uuid"])
+        if user != request.user:
+            check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
+            if user.is_closed_profile:
+                check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
+        try:
+            likedislike = ItemCommentVotes.objects.get(item=comment, user=request.user)
+            if likedislike.vote is not ItemCommentVotes.LIKE:
+                likedislike.vote = ItemCommentVotes.LIKE
+                likedislike.save(update_fields=['vote'])
+                result = True
+                comment.notification_user_comment_like(request.user)
+            else:
+                likedislike.delete()
+                result = False
+        except ItemCommentVotes.DoesNotExist:
+            ItemCommentVotes.objects.create(item=comment, user=request.user, vote=ItemCommentVotes.LIKE)
+            result = True
+            likes = item.get_likes_for_comment_item(request.user)
         if likes.count() != 0:
             like_count = likes.count()
         else:
@@ -281,6 +280,7 @@ class ItemCommentUserLikeCreate(View):
         else:
             dislike_count = ""
         return HttpResponse(json.dumps({"result": result,"like_count": str(like_count),"dislike_count": str(dislike_count)}),content_type="application/json")
+
 
 class ItemCommentUserDislikeCreate(View):
 
