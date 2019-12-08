@@ -210,7 +210,7 @@ class ItemUserLikeCreate(View):
         if dislikes.count() != 0:
             dislike_count = dislikes.count()
         else:
-            dislike_count = False
+            dislike_count = None
         last_likes = serializers.serialize('json', likes[0:6])
         last_dislikes = serializers.serialize('json', dislikes[0:6])
         return HttpResponse(json.dumps({
