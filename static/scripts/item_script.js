@@ -260,7 +260,7 @@ $("#ajax").on('click', '.u_like2', function() {
               data: {
                   'obj': pk
               },
-              success: function(json) {
+              success: function(json) { 
                   like.find("[data-count='like']").text(json.like_count);
                   like.find(".svg_default").toggleClass('svg_success');
                   like.find(".likes_count").toggleClass('svg_success');
