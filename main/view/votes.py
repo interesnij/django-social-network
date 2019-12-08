@@ -269,12 +269,12 @@ class ItemCommentUserLikeCreate(View):
         except ItemCommentVotes.DoesNotExist:
             ItemCommentVotes.objects.create(item=comment, user=request.user, vote=ItemCommentVotes.LIKE)
             result = True
-        likes = item.get_likes_for_comment_item(request.user)
+        likes = comment.get_likes_for_comment_item(request.user)
         if likes.count() != 0:
             like_count = likes.count()
         else:
             like_count = ""
-        dislikes = item.get_likes_for_comment_item(request.user)
+        dislikes = comment.get_likes_for_comment_item(request.user)
         if dislikes.count() != 0:
             dislike_count = dislikes.count()
         else:
@@ -303,12 +303,12 @@ class ItemCommentUserDislikeCreate(View):
         except ItemCommentVotes.DoesNotExist:
             ItemCommentVotes.objects.create(item=comment, user=request.user, vote=ItemCommentVotes.DISLIKE)
             result = True
-        likes = item.get_likes_for_comment_item(request.user)
+        likes = comment.get_likes_for_comment_item(request.user)
         if likes.count() != 0:
             like_count = likes.count()
         else:
             like_count = ""
-        dislikes = item.get_likes_for_comment_item(request.user)
+        dislikes = comment.get_likes_for_comment_item(request.user)
         if dislikes.count() != 0:
             dislike_count = dislikes.count()
         else:
@@ -395,12 +395,12 @@ class ItemCommentCommunityLikeCreate(View):
         except ItemCommentVotes.DoesNotExist:
             ItemCommentVotes.objects.create(item=comment, user=request.user, vote=ItemCommentVotes.LIKE)
             result = True
-        likes = item.get_likes_for_comment_item(request.user)
+        likes = comment.get_likes_for_comment_item(request.user)
         if likes.count() != 0:
             like_count = likes.count()
         else:
             like_count = ""
-        dislikes = item.get_likes_for_comment_item(request.user)
+        dislikes = comment.get_likes_for_comment_item(request.user)
         if dislikes.count() != 0:
             dislike_count = dislikes.count()
         else:
@@ -426,12 +426,12 @@ class ItemCommentCommunityDislikeCreate(View):
         except ItemCommentVotes.DoesNotExist:
             ItemCommentVotes.objects.create(item=comment, user=request.user, vote=ItemCommentVotes.DISLIKE)
             result = True
-        likes = item.get_likes_for_comment_item(request.user)
+        likes = comment.get_likes_for_comment_item(request.user)
         if likes.count() != 0:
             like_count = likes.count()
         else:
             like_count = ""
-        dislikes = item.get_likes_for_comment_item(request.user)
+        dislikes = comment.get_likes_for_comment_item(request.user)
         if dislikes.count() != 0:
             dislike_count = dislikes.count()
         else:
