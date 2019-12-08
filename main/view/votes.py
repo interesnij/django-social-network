@@ -217,7 +217,7 @@ class ItemUserLikeCreate(View):
                                         "result": result,
                                         "last_likes": last_likes,
                                         "last_dislikes": last_dislikes,
-                                        "like_count": like_count,
+                                        "like_count": int(like_count),
                                         "dislike_count": dislike_count}),
                                         content_type="application/json"
                                         )
