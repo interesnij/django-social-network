@@ -151,7 +151,7 @@ $('#ajax').on('click', '.u_replyParentComment', function() {
     return false;
 });
 
-$(".stream_comments").on('click', '.reply_comment', function() {
+$("#ajax").on('click', '.reply_comment', function() {
   console.log("click");
     var reply_comment_form = $(this); var objectUser = reply_comment_form.prev().text().trim(); var form = reply_comment_form.next().find(".text-comment"); form.val(objectUser + ', '); reply_comment_form.next().show(); form.focus();
 })
