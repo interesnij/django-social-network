@@ -270,8 +270,17 @@ class ItemCommentUserLikeCreate(View):
 		except ItemCommentVotes.DoesNotExist:
 			ItemCommentVotes.objects.create(item=comment, user=request.user, vote=ItemCommentVotes.LIKE)
 			result = True
-		return HttpResponse(json.dumps({"result": result,"like_count": comment.likes().count(),"dislike_count": comment.dislikes().count()}),content_type="application/json")
-
+		likes = item.get_likes_for_comment_item(request.user)
+        if likes.count() != 0:
+            like_count = likes.count()
+        else:
+            like_count = ""
+        dislikes = item.get_likes_for_comment_item(request.user)
+        if dislikes.count() != 0:
+            dislike_count = dislikes.count()
+        else:
+            dislike_count = ""
+        return HttpResponse(json.dumps({"result": result,"like_count": str(like_count),"dislike_count": str(dislike_count)}),content_type="application/json")
 
 class ItemCommentUserDislikeCreate(View):
 
@@ -295,7 +304,17 @@ class ItemCommentUserDislikeCreate(View):
 		except ItemCommentVotes.DoesNotExist:
 			ItemCommentVotes.objects.create(item=comment, user=request.user, vote=ItemCommentVotes.DISLIKE)
 			result = True
-		return HttpResponse(json.dumps({"result": result,"like_count": comment.likes().count(),"dislike_count": comment.dislikes().count()}),content_type="application/json")
+		likes = item.get_likes_for_comment_item(request.user)
+        if likes.count() != 0:
+            like_count = likes.count()
+        else:
+            like_count = ""
+        dislikes = item.get_likes_for_comment_item(request.user)
+        if dislikes.count() != 0:
+            dislike_count = dislikes.count()
+        else:
+            dislike_count = ""
+        return HttpResponse(json.dumps({"result": result,"like_count": str(like_count),"dislike_count": str(dislike_count)}),content_type="application/json")
 
 
 class ItemCommunityLikeCreate(View):
@@ -316,7 +335,17 @@ class ItemCommunityLikeCreate(View):
         except ItemVotes.DoesNotExist:
             ItemVotes.objects.create(parent=item, user=request.user, vote=ItemVotes.LIKE)
             result = True
-        return HttpResponse(json.dumps({"result": result,"like_count": item.likes().count(),"dislike_count": item.dislikes().count()}),content_type="application/json")
+        likes = item.get_likes_for_item(request.user)
+        if likes.count() != 0:
+            like_count = likes.count()
+        else:
+            like_count = ""
+        dislikes = item.get_likes_for_item(request.user)
+        if dislikes.count() != 0:
+            dislike_count = dislikes.count()
+        else:
+            dislike_count = ""
+        return HttpResponse(json.dumps({"result": result,"like_count": str(like_count),"dislike_count": str(dislike_count)}),content_type="application/json")
 
 
 class ItemCommunityDislikeCreate(View):
@@ -337,7 +366,17 @@ class ItemCommunityDislikeCreate(View):
         except ItemVotes.DoesNotExist:
             ItemVotes.objects.create(parent=item, user=request.user, vote=ItemVotes.DISLIKE)
             result = True
-        return HttpResponse(json.dumps({"result": result,"like_count": item.likes().count(),"dislike_count": item.dislikes().count()}),content_type="application/json")
+        likes = item.get_likes_for_item(request.user)
+        if likes.count() != 0:
+            like_count = likes.count()
+        else:
+            like_count = ""
+        dislikes = item.get_likes_for_item(request.user)
+        if dislikes.count() != 0:
+            dislike_count = dislikes.count()
+        else:
+            dislike_count = ""
+        return HttpResponse(json.dumps({"result": result,"like_count": str(like_count),"dislike_count": str(dislike_count)}),content_type="application/json")
 
 class ItemCommentCommunityLikeCreate(View):
 
@@ -358,7 +397,17 @@ class ItemCommentCommunityLikeCreate(View):
 		except ItemCommentVotes.DoesNotExist:
 			ItemCommentVotes.objects.create(item=comment, user=request.user, vote=ItemCommentVotes.LIKE)
 			result = True
-		return HttpResponse(json.dumps({"result": result,"like_count": comment.likes().count(),"dislike_count": comment.dislikes().count()}),content_type="application/json")
+		likes = item.get_likes_for_comment_item(request.user)
+        if likes.count() != 0:
+            like_count = likes.count()
+        else:
+            like_count = ""
+        dislikes = item.get_likes_for_comment_item(request.user)
+        if dislikes.count() != 0:
+            dislike_count = dislikes.count()
+        else:
+            dislike_count = ""
+        return HttpResponse(json.dumps({"result": result,"like_count": str(like_count),"dislike_count": str(dislike_count)}),content_type="application/json")
 
 
 class ItemCommentCommunityDislikeCreate(View):
@@ -380,4 +429,14 @@ class ItemCommentCommunityDislikeCreate(View):
 		except ItemCommentVotes.DoesNotExist:
 			ItemCommentVotes.objects.create(item=comment, user=request.user, vote=ItemCommentVotes.DISLIKE)
 			result = True
-		return HttpResponse(json.dumps({"result": result,"like_count": comment.likes().count(),"dislike_count": comment.dislikes().count()}),content_type="application/json")
+		likes = item.get_likes_for_comment_item(request.user)
+        if likes.count() != 0:
+            like_count = likes.count()
+        else:
+            like_count = ""
+        dislikes = item.get_likes_for_comment_item(request.user)
+        if dislikes.count() != 0:
+            dislike_count = dislikes.count()
+        else:
+            dislike_count = ""
+        return HttpResponse(json.dumps({"result": result,"like_count": str(like_count),"dislike_count": str(dislike_count)}),content_type="application/json")
