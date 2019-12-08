@@ -204,12 +204,12 @@ class ItemUserLikeCreate(View):
         if likes.count() != 0:
             like_count = likes.count()
         else:
-            like_count = ""
+            like_count = "100"
         dislikes = item.get_dislikes_for_item(request.user)
         if dislikes.count() != 0:
             dislike_count = dislikes.count()
         else:
-            dislike_count = ""
+            dislike_count = "100"
         last_likes = likes[0:6]
         last_dislikes = dislikes[0:6]
         return HttpResponse(json.dumps({
