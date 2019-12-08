@@ -3,7 +3,7 @@ from users.models import User
 from main.models import Item, ItemComment
 from django.utils import timezone
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
-from main.forms import CommentForm
+from main.forms import CommentForm, CommentReplyForm
 from django.template.loader import render_to_string
 from django.views import View
 from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
@@ -27,7 +27,7 @@ class ItemUserCommentList(View):
 			raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
 		elif request.user.is_anonymous and not self.user.is_closed_profile():
 			comments = item.get_comments(request.user).order_by('-created')
-		comments_html = render_to_string("item_user/comments.html", {"comments": comments, "request_user": request.user, "parent": item, "form_comment": CommentForm(), "user": self.user})
+		comments_html = render_to_string("item_user/comments.html", {"comments": comments, "request_user": request.user, "parent": item, "form_comment": CommentForm(), "form_reply": CommentReplyForm(), "user": self.user})
 
 		return JsonResponse({
 	        "comments": comments_html,
@@ -59,7 +59,7 @@ class ItemCommentUserCreate(View):
 
 class ItemReplyUserCreate(View):
 	def post(self,request,*args,**kwargs):
-		self.form_post=CommentForm(request.POST, request.FILES)
+		self.form_post=CommentReplyForm(request.POST, request.FILES)
 		self.user=User.objects.get(uuid=self.kwargs["uuid"])
 		self.parent = ItemComment.objects.get(pk=self.kwargs["pk"])
 
@@ -83,26 +83,6 @@ class ItemReplyUserCreate(View):
 			return JsonResponse(html, safe=False)
 		else:
 			return HttpResponseBadRequest()
-
-
-def item_reply_comment(request):
-
-    user = request.user
-    text = request.POST['text']
-    com = request.POST['comment']
-    comment = ItemComment.objects.get(pk=com)
-    text = text.strip()
-    if len(text) > 0:
-        new_comment = ItemComment.objects.create(text=text, commenter=request.user,parent_comment=comment)
-        html = render_to_string('item_user/reply_comment.html',{'reply': new_comment,'request': request})
-        return JsonResponse(html, safe=False)
-
-        notification_handler(
-            user, parent.creator, Notification.ARTICLE_REPLY_COMMENT, action_object=reply_article,
-            id_value=str(com.id), key='social_update')
-
-    else:
-        return HttpResponseBadRequest()
 
 
 def post_update_interactions(request):

@@ -123,14 +123,33 @@
                     <div class="border-top reply_comment_form" style="margin-top:10px;display:none;margin-left: -10px;">
                         <form action="" method="post" enctype="multipart/form-data">
                             {% csrf_token %}
-
+                            <div class="row img_block" style="display:none;margin:10px">
+                              <div class="col-lg-6 col-md-6">
+                                <br>
+                                <div class="hide_image">{{ form_reply.item_comment_photo }}</div>
+                                <div class="comment_photo1">
+                                  <h4 style="font-size:30px" class="svg_default">
+                                    <svg fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                                  </h4>
+                                </div>
+                              </div>
+                              <div class="col-lg-6 col-md-6">
+                                <br>
+                                <div class="hide_image">{{ form_reply.item_comment_photo2 }}</div>
+                                <div class="comment_photo2">
+                                  <h4 style="font-size:30px" class="svg_default">
+                                    <svg width="35" height="35" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                                  </h4>
+                                </div>
+                              </div>
+                            </div>
                             <div class="row no-gutters">
                                 <div class="col">
                                     <div class="input-group input-group-sm">
                                             <button class="btn btn-link content-color-secondary" type="button">
                                               <img style="margin-top: -10px;" src="{% static 'images/icons/attach_file-24px.svg' %}" />
                                             </button>
-                                        <textarea id="id_text" name="text" class="form-control text-comment form-control-rounded"></textarea>
+                                        <textarea name="text" class="form-control text-comment form-control-rounded"></textarea>
                                         <button data-uuid="{{ user.uuid }}" data-pk="{{ object.pk }}" class="btn btn-outline-primary btn-rounded btn-sm ml-2 u_replyComment" type="button">
                                           <span style="width:22px" >
                                             <svg fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
