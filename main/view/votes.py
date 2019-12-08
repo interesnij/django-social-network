@@ -378,25 +378,24 @@ class ItemCommunityDislikeCreate(View):
         return HttpResponse(json.dumps({"result": result,"like_count": str(like_count),"dislike_count": str(dislike_count)}),content_type="application/json")
 
 class ItemCommentCommunityLikeCreate(View):
-
-	def post(self, request, **kwargs):
-		comment = ItemComment.objects.get(pk=self.kwargs["pk"])
-		community = Community.objects.get(uuid=self.kwargs["uuid"])
-		check_can_get_posts_for_community_with_name(request.user,community.name)
-		try:
-			likedislike = ItemCommentVotes.objects.get(item=comment, user=request.user)
-			if likedislike.vote is not ItemCommentVotes.LIKE:
-				likedislike.vote = ItemCommentVotes.LIKE
-				likedislike.save(update_fields=['vote'])
-				result = True
-				comment.notification_community_comment_like(request.user)
-			else:
-				likedislike.delete()
-				result = False
-		except ItemCommentVotes.DoesNotExist:
-			ItemCommentVotes.objects.create(item=comment, user=request.user, vote=ItemCommentVotes.LIKE)
-			result = True
-		likes = item.get_likes_for_comment_item(request.user)
+    def post(self, request, **kwargs):
+        comment = ItemComment.objects.get(pk=self.kwargs["pk"])
+        community = Community.objects.get(uuid=self.kwargs["uuid"])
+        check_can_get_posts_for_community_with_name(request.user,community.name)
+        try:
+            likedislike = ItemCommentVotes.objects.get(item=comment, user=request.user)
+            if likedislike.vote is not ItemCommentVotes.LIKE:
+                likedislike.vote = ItemCommentVotes.LIKE
+                likedislike.save(update_fields=['vote'])
+                result = True
+                comment.notification_community_comment_like(request.user)
+            else:
+                likedislike.delete()
+                result = False
+        except ItemCommentVotes.DoesNotExist:
+            ItemCommentVotes.objects.create(item=comment, user=request.user, vote=ItemCommentVotes.LIKE)
+            result = True
+        likes = item.get_likes_for_comment_item(request.user)
         if likes.count() != 0:
             like_count = likes.count()
         else:
