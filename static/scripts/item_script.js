@@ -211,11 +211,13 @@ $("#ajax").on('click', '.u_like', function() {
             like.find("[data-count='like']").text(json.like_count);
             like.find(".svg_default").toggleClass('svg_success');
             like.find(".likes_count").toggleClass('svg_success');
+            like.next().append(json.last_likes)
             like.siblings('.like_window').html('').load("/votes/u_like_window/" + uuid + "/" + pk + "/");
 
             dislike.find("[data-count='dislike']").text(json.dislike_count);
             dislike.find(".svg_default").removeClass('svg_danger');
             dislike.find(".dislikes_count").removeClass('svg_danger');
+            like.next().append(json.last_dislikes)
             dislike.siblings('.dislike_window').html('').load("/votes/u_dislike_window/" + uuid + "/" + pk + "/")
 
         }
