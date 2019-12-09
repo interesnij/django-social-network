@@ -4,7 +4,7 @@ from main.models import ItemComment
 
 class CommentForm(forms.ModelForm):
 
-	text=forms.CharField(widget=forms.TextInput(
+	text=forms.CharField(required=False, widget=forms.TextInput(
             attrs={'class': 'form-control text-comment form-control-rounded'}
         ))
 
