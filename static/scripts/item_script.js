@@ -42,9 +42,10 @@ $('#ajax').on('click', '.u_comment', function() {
 });
 $('#ajax').on('click', '.comments_open', function() {
   var btn = $(this);
+  var item = btn.closest(".infinite-item");
   var container = item.find(".load_comments");
-  btn.clean();
-  container.removeClass('comments_open')''
+  container.clean();
+  btn.removeClass('comments_open')''
 });
 
 $('#ajax').on('click', '.c_comment', function() {
