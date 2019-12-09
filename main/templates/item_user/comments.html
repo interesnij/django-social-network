@@ -30,13 +30,11 @@
     <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
 
-          <div class="row img_block" style="margin:10px">
-
-          </div>
+        <div class="row img_block" style="margin:10px"></div>
 
         <div class="row no-gutters">
 
-          <button class="btn btn-link content-color-secondary comment_photo" type="button">
+          <button class="btn btn-link content-color-secondary upload_photo" type="button">
             <img style="margin-top: -10px;" src="{% static 'images/icons/attach_file-24px.svg' %}" />
           </button>
             <div class="col">
@@ -56,7 +54,7 @@
 </div>
 {% endif %}
 <script>
-    $('.comment_photo').on('click', function() {
+    $('.upload_photo').on('click', function() {
       btn = $(this);
       img_block = btn.parent().prev()
       if (img_block.empty()){
