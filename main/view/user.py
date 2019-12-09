@@ -37,20 +37,20 @@ class ItemUserCommentList(View):
 class ItemCommentUserCreate(View):
 	form_post = None
 	def post(self,request,*args,**kwargs):
-		self.form_post=CommentForm(request.POST, request.FILES)
-		self.user=User.objects.get(pk=self.kwargs["pk"])
-		self.item = Item.objects.get(uuid=self.kwargs["uuid"])
+		form_post=CommentForm(request.POST, request.FILES)
+		user=User.objects.get(pk=self.kwargs["pk"])
+		item = Item.objects.get(uuid=self.kwargs["uuid"])
 
-		if self.form_post.is_valid():
-			comment=self.form_post.save(commit=False)
+		if form_post.is_valid():
+			comment=form_post.save(commit=False)
 			if not comment.text and not comment.item_comment_photo and not comment.item_comment_photo2:
 				raise ValidationError('Для добавления комментария необходимо написать что-то или прикрепить изображение')
-			if request.user != self.user:
-				check_is_not_blocked_with_user_with_id(user=request.user, user_id = self.user.id)
+			if request.user != user:
+				check_is_not_blocked_with_user_with_id(user=request.user, user_id = user.id)
 				if user.is_closed_profile:
-					check_is_connected_with_user_with_id(user=request.user, user_id = self.user.id)
+					check_is_connected_with_user_with_id(user=request.user, user_id = user.id)
 
-			new_comment = comment.create_user_comment(commenter=request.user, parent_comment=None, item=self.item, text=comment.text, item_comment_photo=comment.item_comment_photo, item_comment_photo2=comment.item_comment_photo2)
+			new_comment = comment.create_user_comment(commenter=request.user, parent_comment=None, item=item, text=comment.text, item_comment_photo=comment.item_comment_photo, item_comment_photo2=comment.item_comment_photo2)
 			new_comment.notification_user_comment(request.user)
 			html = render_to_string('item_user/parent_comment.html',{'comment': new_comment, 'request': request})
 			return JsonResponse(html, safe=False)
