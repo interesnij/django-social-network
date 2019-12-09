@@ -38,7 +38,7 @@ class ItemCommentUserCreate(View):
 	form_post = None
 	def post(self,request,*args,**kwargs):
 		form_post = CommentForm(request.POST, request.FILES)
-		user = request.POST.get('user')
+		user = int(request.POST.get('user'))
 		item = request.POST.get('item')
 
 		if form_post.is_valid():
