@@ -3,7 +3,7 @@
 
 <div class="card mb-4 infinite-item" post-id="{{ object.uuid }}" style="cursor:pointer">
 
-    {% include 'generic/posts/card_header.html' %} 
+    {% include 'item_user/card_header.html' %}
 
     <div class="card-body">
       {% if object.post.text %}
@@ -17,5 +17,5 @@
       {% endif %}
     </div>
 
-    {% include 'generic/posts/info.html' %}
+    {% include 'item_user/info.html' %}
 </div>
