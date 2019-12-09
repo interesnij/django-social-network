@@ -56,7 +56,7 @@
 <script>
     $('.comment_photo').on('click', function() {
       btn = $(this);
-      html = {% include 'item_comment_photo.html' %}
+      html = {% include 'item_user/item_comment_photo.html' %}
       btn.parent().prev().append(html);
     });
     $('.comment_good').on('click', function() {
