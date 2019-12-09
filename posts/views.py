@@ -38,36 +38,26 @@ class PostUserCreate(View):
     form_post=None
     success_url="/"
 
-    def get(self,request,*args,**kwargs):
-        self.form_post=PostForm()
-        self.user=User.objects.get(pk=self.kwargs["pk"])
-        return super(PostUserCreate,self).get(request,*args,**kwargs)
-
     def get_context_data(self,**kwargs):
         context=super(PostUserCreate,self).get_context_data(**kwargs)
-        context["form_post"]=self.form_post
+        context["form_post"]=PostForm()
         return context
 
     def post(self,request,*args,**kwargs):
         self.form_post=PostForm(request.POST, request.FILES)
         self.user=User.objects.get(pk=self.kwargs["pk"])
+        if self.user != request.user and request.user.is_authenticated:
+            check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
+            if self.user.is_closed_profile:
+                check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
 
         if self.form_post.is_valid():
             post=self.form_post.save(commit=False)
             post.creator=self.user
-            new_post = post.create_post(
-                                    creator=post.creator,
-                                    text=post.text,
-                                    community=None,
-                                    comments_enabled=post.comments_enabled,
-                                    status=post.status,
-                                )
+            new_post = post.create_post(creator=post.creator, text=post.text, community=None, comments_enabled=post.comments_enabled, status=post.status,)
 
             if request.is_ajax() :
-                html = render_to_string('new_post.html',{
-                    'object': new_post,
-                    'request': request
-                    })
+                html = render_to_string('new_post.html', {'object': new_post,'request': request})
                 return HttpResponse(html)
         else:
             return HttpResponseBadRequest()
@@ -77,18 +67,15 @@ class PostCommunityCreate(View):
     form_post=None
     success_url="/"
 
-    def get(self,request,*args,**kwargs):
-        self.form_post=PostCommunityForm()
-        return super(PostCommunityCreate,self).get(request,*args,**kwargs)
-
     def get_context_data(self,**kwargs):
         context=super(PostCommunityCreate,self).get_context_data(**kwargs)
-        context["form_post"]=self.form_post
+        context["form_post"]=PostCommunityForm()
         return context
 
     def post(self,request,*args,**kwargs):
         self.form_post=PostCommunityForm(request.POST, request.FILES)
         self.community = Community.objects.get(pk=self.kwargs["pk"])
+        check_can_get_posts_for_community_with_name(request.user,community.name)
         if self.form_post.is_valid():
             new_post=self.form_post.save(commit=False)
             new_post.creator=self.request.user
