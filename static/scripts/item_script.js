@@ -290,3 +290,48 @@ $("#ajax").on('click', '.c_dislike2', function() {
         });
         return false;
 });
+
+  $('#ajax').on('click', '.comment_photo1', function() {
+    var img = $(this); var entrou = false; var imageLoader = img.prev();
+    imageLoader.click();
+    $(imageLoader).on("change", function() {
+        if (!entrou) { var imgPath = $(this)[0].value; var extn = imgPath.substring(imgPath.lastIndexOf(".") + 1).toLowerCase();
+            if (extn == "gif" || extn == "png" || extn == "jpg" || extn == "jpeg") {
+                if (typeof FileReader != "undefined") {
+                    var image_holder = $(img); image_holder.empty(); var reader = new FileReader();
+                    reader.onload = function(e) { $img = $("<img />", { id: "targetImageCrop", src: e.target.result, class: "thumb-image" }).appendTo(image_holder); }; image_holder.show(); reader.readAsDataURL($(this)[0].files[0]);
+                } } else { this.value = null; } } entrou = true; setTimeout(function() { entrou = false; }, 1000); });
+  });
+
+  $('#ajax').on('click', '.comment_photo1', function() {
+    var img = $(this); var entrou = false; var imageLoader = img.prev();
+    imageLoader.click();
+    $("imageLoader").on("change", function() {
+        if (!entrou) {
+            var imgPath = $(this)[0].value;
+            var extn = imgPath.substring(imgPath.lastIndexOf(".") + 1).toLowerCase();
+            if (extn == "gif" || extn == "png" || extn == "jpg" || extn == "jpeg") {
+                if (typeof FileReader != "undefined") {
+                    var image_holder = $(".comment_photo2");
+                    image_holder.empty();
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        $img = $("<img />", {
+                            id: "targetImageCrop",
+                            src: e.target.result,
+                            class: "thumb-image"
+                        }).appendTo(image_holder);
+                    };
+                    image_holder.show();
+                    reader.readAsDataURL($(this)[0].files[0]);
+                }
+            } else {
+                this.value = null;
+            }
+        }
+        entrou = true;
+        setTimeout(function() {
+            entrou = false;
+        }, 1000);
+    });
+  });
