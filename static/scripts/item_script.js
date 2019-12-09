@@ -116,6 +116,7 @@ $('#ajax').on('click', '.u_replyComment', function() {
     var button = $(this);
     var form2 = button.parent().parent().parent().parent();
     var block = form2.parent();
+    var reply_stream = block.next().next()
     var pk = button.data('pk');
     var uuid = button.data('uuid');
     $.ajax({
@@ -125,7 +126,7 @@ $('#ajax').on('click', '.u_replyComment', function() {
         cache: false,
         processData: false,
         type: 'POST',
-        success: function(data) { $(".form-control-rounded").val(""); block.next().next().append(data); block.hide(); },
+        success: function(data) { $(".form-control-rounded").val(""); reply_stream.append(data); reply_stream.addClass("replies_open"); block.hide(); },
         error: function(data) { $.toast({heading: 'Ошибка',text: 'Для публикации ответа нужно написать что-нибудь и/или вставить изображение(ия)',showHideTransition: 'fade',icon: 'error'}) },
     });
     return false;

@@ -154,11 +154,12 @@
                     </div>
                     {% endif %}
 
-                    {% if comment.count_replies %}
                     <span style="cursor:pointer;display: flex; margin-top: 15px;" class="show_replies content-color-primary mb-0">
+                      {% if comment.count_replies %}
                     ----  {{ comment.count_replies }} {{ comment.count_replies|rupluralize:"ответ,ответа,ответов" }} ----
+                      {% endif %}
                     </span>
-                    {% endif %}
+
                     <span class="stream_reply_comments" style="margin-top: 20px;">
                       {% for reply in comment.get_replies %}
                         {% include 'item_user/reply_comment.html' with reply=reply  %}
