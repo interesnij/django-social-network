@@ -33,7 +33,7 @@
           <div class="row img_block" style="display:none;margin:10px">
             <div class="col-lg-6 col-md-6">
               <br>
-              <div class="hide_image">{{ form_comment.item_comment_photo }}</div>
+              <div class="hide_image"><input class="file1" type="file" name="item_comment_photo" accept="image/*" id="id_item_comment_photo"></div>
               <div class="comment_photo1">
                 <h4 class="svg_default">
                   <svg width="35" height="35" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
@@ -42,7 +42,7 @@
             </div>
             <div class="col-lg-6 col-md-6">
               <br>
-              <div class="hide_image">{{ form_comment.item_comment_photo2 }}</div>
+              <div class="hide_image"><input class="file2" type="file" name="item_comment_photo2" accept="image/*" id="id_item_comment_photo2"></div>
               <div class="comment_photo2">
                 <h4 class="svg_default">
                   <svg width="35" height="35" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
@@ -112,13 +112,13 @@
     });
 </script>
 <script>
-    var imageLoader = document.getElementById("id_item_comment_photo");
+    var imageLoader = $(".file1");
     var entrou = false;
     $(".comment_photo1").on("click", function() {
-        $("#id_item_comment_photo").click();
+        $(".file1").click();
     });
 
-    $("#id_item_comment_photo").on("change", function() {
+    $(".file1").on("change", function() {
         if (!entrou) {
             var imgPath = $(this)[0].value;
             var extn = imgPath.substring(imgPath.lastIndexOf(".") + 1).toLowerCase();
@@ -152,13 +152,13 @@
 </script>
 
 <script>
-    var imageLoader = document.getElementById("id_item_comment_photo2");
+    var imageLoader = $(".file2");
     var entrou = false;
     $(".comment_photo2").on("click", function() {
-        $("#id_item_comment_photo2").click();
+        $(".file2").click();
     });
 
-    $("#id_item_comment_photo2").on("change", function() {
+    $(".file2").on("change", function() {
         if (!entrou) {
             var imgPath = $(this)[0].value;
             var extn = imgPath.substring(imgPath.lastIndexOf(".") + 1).toLowerCase();
