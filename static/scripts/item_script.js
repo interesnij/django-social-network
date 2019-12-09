@@ -125,7 +125,7 @@ $('#ajax').on('click', '.u_replyComment', function() {
         cache: false,
         processData: false,
         type: 'POST',
-        success: function(data) { $(".form-control-rounded").val(""); $(".stream_reply_comments").append(data); block.hide(); },
+        success: function(data) { $(".form-control-rounded").val(""); block.next().next().append(data); block.hide(); },
         error: function(data) { $.toast({heading: 'Ошибка',text: 'Для публикации ответа нужно написать что-нибудь и/или вставить изображение(ия)',showHideTransition: 'fade',icon: 'error'}) },
     });
     return false;
@@ -144,7 +144,7 @@ $('#ajax').on('click', '.u_replyParentComment', function() {
         cache: false,
         processData: false,
         type: 'POST',
-        success: function(data) { $(".form-control-rounded").val(""); $(".stream_reply_comments").append(data); block.hide(); },
+        success: function(data) { $(".form-control-rounded").val(""); form3.parent().prev().append(data); block.hide(); },
         error: function(data) { $.toast({heading: 'Ошибка',text: 'Для публикации ответа нужно написать что-нибудь и/или вставить изображение(ия)',showHideTransition: 'fade',icon: 'error'}) },
     });
     return false;
