@@ -99,6 +99,7 @@
     var entrou = false;
     var imageLoader = img.prev();
     imageLoader.click();
+    console.log("click");
     $(imageLoader).on("change", function() {
         if (!entrou) {
               var imgPath = $(this)[0].value;
