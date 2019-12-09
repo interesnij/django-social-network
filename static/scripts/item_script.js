@@ -96,12 +96,10 @@ $('#ajax').on('click', '.unfixed', function() {
 
 $('#ajax').on('click', '.u_itemComment', function() {
     button1 = $(this);
-    var pk = button1.data('pk');
-    var uuid = button1.data('uuid');
     var form1 = button1.parent().parent().parent();
     var img_block = button1.parent().prev()
     $.ajax({
-        url: '/user/post-comment/' + uuid + "/" + pk + "/",
+        url: '/user/post-comment/',
         data: new FormData($(form1)[0]),
         contentType: false,
         cache: false,
