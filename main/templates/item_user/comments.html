@@ -118,8 +118,7 @@
     var imageLoader = img.prev();
     imageLoader.click();
 
-    $(img).on("change", function() {
-        img = $(this);
+    $(imageLoader).on("change", function() {
         if (!entrou) {
               var imgPath = $(this)[0].value;
             var extn = imgPath.substring(imgPath.lastIndexOf(".") + 1).toLowerCase();
