@@ -40,9 +40,10 @@ $('#ajax').on('click', '.u_comment', function() {
     });
     return false;
 });
-$('#ajax').on('click', '.u_comment.comments_open', function() {
+$('#ajax').on('click', '.comments_open', function() {
   var container = item.find(".load_comments");
   container.clean();
+  container.removeClass('comments_open')
 });
 
 $('#ajax').on('click', '.c_comment', function() {
