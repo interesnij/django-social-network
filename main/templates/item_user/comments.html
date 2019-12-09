@@ -40,8 +40,8 @@
             <img style="margin-top: -10px;" src="{% static 'images/icons/attach_file-24px.svg' %}" />
           </button>
             <div class="col">
-              <input type="hidden" name="item" value="{{ object.uuid }}">
-              <input type="hidden" name="user" value="{{ object.creator.pk }}">
+              <input type="hidden" name="item" value="{{ parent.uuid }}">
+              <input type="hidden" name="user" value="{{ parent.creator.pk }}">
                 <div class="input-group input-group-sm">
                   {{ form_comment.text }}
                 </div>
