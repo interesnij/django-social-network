@@ -32,12 +32,17 @@ $('#ajax').on('click', '.u_comment', function() {
     var item = $(this).closest(".infinite-item");
     var uuid = item.attr("item-id");
     var pk = $(this).data('pk');
+    var container = item.find(".load_comments")
     $.ajax({
         url: "/user/comment/" + uuid + "/" + pk + "/", data: {'uuid': uuid}, cache: false,
         beforeSend: function() { item.find(".load_comments").html("<span style='display:flex;justify-content: center;'><img src='/static/images/loading.gif'></span>"); },
-        success: function(data) { item.find(".load_comments").html(data.comments); }
+        success: function(data) { container.html(data.comments); container.addClass("comments_open")}
     });
     return false;
+});
+$('#ajax').on('click', '.u_comment.comments_open', function() {
+  var container = item.find(".load_comments");
+  container.clean();
 });
 
 $('#ajax').on('click', '.c_comment', function() {
