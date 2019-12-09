@@ -57,7 +57,7 @@
     $('.comment_photo').on('click', function() {
       btn = $(this);
       newDiv = document.createElement("span");
-      newDiv.innerHTML = '{% include "item_user/item_comment_photo.html" %}';
+      newDiv.innerHTML = '<div class="col-lg-6 col-md-6">" + "<br>';
       btn.parent().prev().append(newDiv);
     });
     $('.comment_good').on('click', function() {
