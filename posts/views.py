@@ -57,7 +57,7 @@ class PostUserCreate(View):
             new_post = post.create_post(creator=post.creator, text=post.text, community=None, comments_enabled=post.comments_enabled, status=post.status,)
 
             if request.is_ajax() :
-                html = render_to_string('new_post.html', {'object': new_post,'request': request})
+                html = render_to_string('item_user/post.html', {'object': new_post,'request': request})
                 return HttpResponse(html)
         else:
             return HttpResponseBadRequest()
@@ -83,7 +83,7 @@ class PostCommunityCreate(View):
             new_post=self.form_post.save()
 
             if request.is_ajax() :
-                html = render_to_string('new_post.html',{'object': new_post,'request': request})
+                html = render_to_string('item_user/post.html',{'object': new_post,'request': request})
                 return HttpResponse(html)
         else:
             return HttpResponseBadRequest()
