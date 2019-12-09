@@ -42,7 +42,7 @@ $('#ajax').on('click', '.u_comment', function() {
 });
 $('#ajax').on('click', '.comments_open', function() {
   var btn = $(this);
-  var container = item.find(".load_comments")
+  var container = item.find(".load_comments");
   btn.clean();
   container.removeClass('comments_open')''
 });
