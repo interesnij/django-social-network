@@ -123,29 +123,18 @@
                     <div class="border-top reply_comment_form" style="margin-top:10px;display:none;margin-left: -10px;">
                         <form action="" method="post" enctype="multipart/form-data">
                             {% csrf_token %}
-                            <div class="row img_block" style="display:none;margin:10px">
-                              <div class="col-lg-6 col-md-6">
-                                <br>
-                                <div class="">{{ form_reply.reply_image }}</div>
 
-                              </div>
-                              <div class="col-lg-6 col-md-6">
-                                <br>
-                                <div class="">{{ form_reply.reply_image2 }}</div>
+                            <div class="row img_block" style="margin:10px"></div>
 
-                              </div>
-                            </div>
                             <div class="row no-gutters">
                                 <div class="col">
                                     <div class="input-group input-group-sm">
-                                            <button class="btn btn-link content-color-secondary" type="button">
+                                            <button class="btn btn-link content-color-secondary upload_photo" type="button">
                                               <img style="margin-top: -10px;" src="{% static 'images/icons/attach_file-24px.svg' %}" />
                                             </button>
                                         {{ form_reply.text }}
                                         <button data-uuid="{{ comment.commenter.uuid }}" data-pk="{{ comment.pk }}" class="btn btn-outline-primary btn-rounded btn-sm ml-2 u_replyComment" type="button">
-                                          <span style="width:20px" >
-                                            <svg fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
-                                          </span>
+                                            <svg style="width:20px" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
                                         </button>
                                     </div>
                                 </div>
