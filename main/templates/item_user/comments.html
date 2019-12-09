@@ -125,7 +125,7 @@
 
             if (extn == "gif" || extn == "png" || extn == "jpg" || extn == "jpeg") {
                 if (typeof FileReader != "undefined") {
-                    var image_holder = $(".comment_photo1");
+                    var image_holder = $(img);
                     image_holder.empty();
 
                     var reader = new FileReader();
