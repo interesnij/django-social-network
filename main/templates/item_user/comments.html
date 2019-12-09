@@ -112,14 +112,13 @@
     });
 </script>
 <script>
-    var imageLoader = $(".file1");
+  $(".comment_photo1").on("click", function() {
+    var img = $(this);
     var entrou = false;
-    $(".comment_photo1").on("click", function() {
-        img = $(this);
-        img.prev().click();
-    });
+    var imageLoader = img.prev();
+    imageLoader.click();
 
-    $(".file1").on("change", function() {
+    $(img").on("change", function() {
         img = $(this);
         if (!entrou) {
             var imgPath = img[0].value;
@@ -151,6 +150,7 @@
             entrou = false;
         }, 1000);
     });
+  });
 </script>
 
 <script>
