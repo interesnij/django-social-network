@@ -83,7 +83,7 @@ class ItemReplyUserCreate(View):
 			html = render_to_string('item_user/reply_comment.html',{'reply': new_comment, 'request': request})
 			return JsonResponse(html, safe=False)
 		else:
-			return HttpResponseBadRequest()
+			return HttpResponse(self.form_post)
 
 
 def post_update_interactions(request):
