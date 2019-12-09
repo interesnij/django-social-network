@@ -38,17 +38,17 @@ class ItemCommentUserCreate(View):
 	form_post = None
 	def post(self,request,*args,**kwargs):
 		form_post = CommentForm(request.POST, request.FILES)
-		user = int(request.POST.get('user'))
+		user_id = int(request.POST.get('id'))
 		item = request.POST.get('item')
 
 		if form_post.is_valid():
 			comment=form_post.save(commit=False)
 			if not comment.text and not comment.item_comment_photo and not comment.item_comment_photo2:
 				raise ValidationError('Для добавления комментария необходимо написать что-то или прикрепить изображение')
-			if request.user.pk != user.pk:
-				check_is_not_blocked_with_user_with_id(user__id=request.user.pk, user_id = user)
+			if request.user.pk != user_id:
+				check_is_not_blocked_with_user_with_id(user__id=request.user, user_id = user_id)
 				if user.is_closed_profile:
-					check_is_connected_with_user_with_id(user__id=request.user.pk, user_id = user)
+					check_is_connected_with_user_with_id(user__id=request.user, user_id = user_id)
 
 			new_comment = comment.create_user_comment(commenter=request.user, parent_comment=None, item=item, text=comment.text, item_comment_photo=comment.item_comment_photo, item_comment_photo2=comment.item_comment_photo2)
 			new_comment.notification_user_comment(request.user)
