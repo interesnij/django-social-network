@@ -303,7 +303,7 @@ $("#ajax").on('click', '.c_dislike2', function() {
                 } } else { this.value = null; } } entrou = true; setTimeout(function() { entrou = false; }, 1000); });
   });
 
-  $('#ajax').on('click', '.comment_photo1', function() {
+  $('#ajax').on('click', '.comment_photo2', function() {
     var img = $(this); var entrou = false; var imageLoader = img.prev();
     imageLoader.click();
     $("imageLoader").on("change", function() {
