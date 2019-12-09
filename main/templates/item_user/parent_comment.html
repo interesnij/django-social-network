@@ -155,8 +155,8 @@
                     {% endif %}
 
                     {% if comment.count_replies %}
-                    <span style="cursor:pointer;display: flex; margin-top: 20px;" class="show_replies content-color-primary mb-0">
-                      {{ comment.count_replies }} {{ comment.count_replies|rupluralize:"ответ,ответа,ответов" }}
+                    <span style="cursor:pointer;display: flex; margin-top: 15px;" class="show_replies content-color-primary mb-0">
+                    ----  {{ comment.count_replies }} {{ comment.count_replies|rupluralize:"ответ,ответа,ответов" }} ----
                     </span>
                     {% endif %}
                     <span class="stream_reply_comments" style="margin-top: 20px;">
