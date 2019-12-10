@@ -8,6 +8,7 @@ from django.template.loader import render_to_string
 from django.views import View
 from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
 from rest_framework.exceptions import PermissionDenied, ValidationError
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 class ItemUserCommentList(View):
@@ -27,7 +28,15 @@ class ItemUserCommentList(View):
 			raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
 		elif request.user.is_anonymous and not self.user.is_closed_profile():
 			comments = item.get_comments(request.user).order_by('-created')
-		comments_html = render_to_string("item_user/comments.html", {"comments": comments, "request_user": request.user, "parent": item, "form_comment": CommentForm(), "form_reply": CommentReplyForm(), "user": self.user})
+		page = request.GET.get('page')
+		current_page = Paginator(comments, 6)
+		try:
+			comment_list = current_page.page(page)
+		except PageNotAnInteger:
+			comment_list = current_page.page(1)
+		except EmptyPage:
+			comment_list = current_page.page(current_page.num_pages)
+		comments_html = render_to_string("item_user/comments.html", {"comments": comment_list, "request_user": request.user, "parent": item, "form_comment": CommentForm(), "form_reply": CommentReplyForm(), "user": self.user})
 
 		return JsonResponse({
 	        "comments": comments_html,
