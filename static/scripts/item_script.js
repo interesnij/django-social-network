@@ -194,3 +194,13 @@ $("#ajax").on('click', '.u_dislike2', function() {
                     reader.onload = function(e) { $img = $("<img />", { id: "targetImageCrop", src: e.target.result, class: "thumb-image" }).appendTo(image_holder); }; image_holder.show(); reader.readAsDataURL($(this)[0].files[0]);
                 } } else { this.value = null; } } entrou = true; setTimeout(function() { entrou = false; }, 1000); });
   });
+
+  var infinite_item_comments = new Waypoint.Infinite({
+      element: $('.stream_comments')[0],
+      onBeforePageLoad: function() {
+          $('.load').show();
+      },
+      onAfterPageLoad: function($items) {
+          $('.load').hide();
+      }
+  });
