@@ -13,7 +13,7 @@
       </a>
         <div class="media-body">
             <h6 class="mb-0">
-              <a href="{% url 'user' pk=object.creator.pk %}" class="ajax">
+              <a href="{% url 'user' pk=comment.creator.pk %}" class="ajax">
                 {{ comment.commenter.get_full_name }} &nbsp;
               </a>
             </h6>

@@ -5,12 +5,26 @@
     <div class="card rounded-0 border-0 mb-4">
       <img style="width: 100%;" src="{{ object.file.url }}" alt="">
     </div>
-    {% include 'generic/gallery/settings.html' %}
+
+    <div class="dropdown d-inline-block">
+        <a style="cursor:pointer" class="dropdown-toggle caret-none" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            настройки
+        </a>
+        <div class="dropdown-menu dropdown-menu-right">
+          {% if request.user == comment.commenter %}
+            <span data-id="{{ comment.pk }}" data-uuid="{{ comment.commenter.uuid }}" style="cursor:pointer" class="dropdown-item remove">Удалить</span>
+            <span style="cursor:pointer" class="dropdown-item">Редактировать</span>
+            <span style="cursor:pointer" class="dropdown-item off_comment">Выключить комментарии</span>
+          {% else %}
+            <span class="dropdown-item photo_bad">Пожаловаться</span>
+          {% endif %}
+        </div>
+    </div>
   </div>
+
   <div class="col-lg-4 col-md-5 col-sm-12 order-2 ">
 
     {% include 'generic/gallery/comment_header.html' %}
 
-    
   </div>
 </div>
