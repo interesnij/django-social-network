@@ -38,7 +38,7 @@ class ItemUserCommentList(View):
 			comment_list = current_page.page(current_page.num_pages)
 		comments_html = render_to_string("item_user/comments.html", {"comment_list": comment_list, "request_user": request.user, "parent": item, "form_comment": CommentForm(), "form_reply": CommentReplyForm(), "user": self.user})
 
-		return JsonResponse({ "comment_list": comments_html, })
+		return JsonResponse({ "comments": comments_html, })
 
 
 class ItemCommentUserCreate(View):
