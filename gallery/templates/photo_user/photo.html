@@ -14,23 +14,26 @@
 </span>
 
 
-<div class="mb-4" item-id="{{ object.uuid }}">
+<div class="mb-4">
     {% include 'generic/gallery/photo.html' %}
 </div>
 
   {% if prev %}
     <script>
+      uuid = {{ user.uuid }};
+      pk = {{ prev.pk }};
     	$('.prev_item').on('click', function () {
-    		 $('#photo_loader').html('').load("{% url 'user_photo' pk=prev.pk uuid=user.uuid %}");
+    		 $('#photo_loader').html('').load("gallery/load/photo/" + pk + uuid + "/");
     	});
     </script>
-
    {% endif %}
-   {% if next %}
 
+   {% if next %}
     <script>
+      uuid = {{ user.uuid }};
+      pk = {{ next.pk }};
       $('.next_item').on('click', function () {
-    		 $('#photo_loader').html('').load("{% url 'user_photo' pk=next.pk uuid=user.uuid %}");
+    		 $('#photo_loader').html('').load("gallery/load/photo/" + pk + uuid + "/");
     	});
     </script>
     {% endif %}
