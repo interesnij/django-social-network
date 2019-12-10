@@ -17,7 +17,7 @@
 </style>
 
 
-<span class="stream_comments infinite-container bg-light-secondary">
+<span class="stream_comments bg-light-secondary">
   <div></div>
   {% for comment in comment_list %}
   {% include 'item_user/parent_comment.html' with comment=comment  %}
@@ -91,7 +91,7 @@
     });
 
     var infinite = new Waypoint.Infinite({
-        element: $('.infinite-container')[0],
+        element: $('.stream_comments')[0],
         onBeforePageLoad: function() {
             $('.load').show();
         },
