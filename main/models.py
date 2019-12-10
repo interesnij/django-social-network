@@ -58,8 +58,13 @@ class Item(models.Model):
             return super(Item, self).save(*args, **kwargs)
 
     def count_comments(self):
-        parent_comments = ItemComment.objects.filter(item=self).count()
-        return parent_comments
+        parent_comments = ItemComment.objects.filter(item=self)
+        parents_count = parent_comments.count()
+        i = 0
+        for comment in parent_comments:
+            i = i + comment.count_replies()
+        i = i + parents_count
+        return i
 
     def get_parent(self):
         if self.parent:
