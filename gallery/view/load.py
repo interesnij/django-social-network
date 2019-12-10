@@ -1,5 +1,6 @@
 from django.views.generic.base import TemplateView
 from users.models import User
+from main.models import ItemComment
 from gallery.models import Album, Photo
 from django.http import HttpResponse, HttpResponseBadRequest
 from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
@@ -45,6 +46,45 @@ class UserPhoto(TemplateView):
         context["next"]=self.next
         context["prev"]=self.prev
         context["avatar"]=self.avatar
+        return context
+
+
+class UserCommentPhoto(TemplateView):
+    template_name="photo_user/comment_image.html"
+
+    def get(self,request,*args,**kwargs):
+        self.user=User.objects.get(uuid=self.kwargs["uuid"])
+        self.comment = ItemComment.objects.get(pk=self.kwargs["pk"])
+        try:
+            self.image1 = comment.item_comment_photo
+        except:
+            self.image1 = None
+        try:
+            self.image2 = comment.item_comment_photo2
+        except:
+            self.image2 = None
+
+        if self.user != request.user and request.user.is_authenticated:
+            check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
+            if self.user.is_closed_profile:
+                check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
+            self.photo_1 = self.image1
+            self.photo_2 = self.image2
+        elif self.user == request.user and request.user.is_authenticated:
+            self.photo_1 = self.image1
+            self.photo_2 = self.image2
+        elif self.user.is_closed_profile() and request.user.is_anonymous:
+            raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
+        elif not self.user.is_closed_profile() and request.user.is_anonymous:
+            self.photo_1 = self.image1
+            self.photo_2 = self.image2
+        return super(UserPhoto,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context=super(UserPhoto,self).get_context_data(**kwargs)
+        context["photo_1"]=self.photo_1
+        context["photo_2"]=self.photo_2
+        context["comment"]=self.comment
         return context
 
 

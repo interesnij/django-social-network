@@ -29,6 +29,30 @@
         </h5>
         <p>{{ reply.text|safe }}</p>
 
+        {% if reply.item_comment_photo or reply.item_comment_photo2 %}
+        <br><br>
+        <div class="row">
+          <div class="col-lg-6 col-md-6">
+            {% if reply.item_comment_photo %}
+            <img data-uuid="{{ reply.commenter.uuid }}"
+                 data-id="{{ reply.pk }}"
+                 class="comment_image"
+                 style="width:100%;object-fit:cover;height:200px;"
+                 src="{{ reply.item_comment_photo.url }}" alt="">
+            {% endif %}
+          </div>
+          <div class="col-lg-6 col-md-6">
+            {% if reply.item_comment_photo2 %}
+            <img data-uuid="{{ reply.commenter.uuid }}"
+                 data-id="{{ reply.pk }}"
+                 class="comment_image"
+                 style="width:100%;object-fit:cover;height:200px;"
+                 src="{{ reply.item_comment_photo2.url }}" alt="">
+            {% endif %}
+          </div>
+        </div>
+        {% endif %}
+
         <div class="border-top py-2">
             <div class="row">
                 <div class="col">

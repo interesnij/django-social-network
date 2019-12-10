@@ -22,11 +22,32 @@ $('.item_fullscreen_hide').on('click', function() {
     $('.item_fullscreen').hide();
     $('#item_loader').empty();
 });
+$('.user_page').on('click', '.avatar_detail', function() {
+		var photo = $(this);
+		var photo_id = photo.data("id");
+		var user_uuid = photo.data("uuid");
+		$('#photo_loader').html('').load("/gallery/load/avatar_detail/" + photo_id + "/" + user_uuid + "/")
+		$('.photo_fullscreen').show();
+});
+
+$('#ajax').on('click', '.comment_image', function() {
+		var photo = $(this);
+		var photo_id = photo.data("id");
+		var user_uuid = photo.data("uuid");
+		$('#photo_loader').html('').load("/gallery/load/comment/" + photo_id + "/" + user_uuid + "/")
+		$('.photo_fullscreen').show();
+});
+
+$('.photo_fullscreen_hide').on('click', function() {
+		$('.photo_fullscreen').hide();
+		$('#photo_loader').empty();
+});
+
+
 $('#ajax').on('click', '.show_replies', function() {
     var element = $(this);
     element.next().toggleClass('replies_open');
 });
-
 
 $('#ajax').on('click', '.u_comment.comments_close', function() {
     var btn = $(this);
