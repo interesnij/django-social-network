@@ -46,7 +46,7 @@ $('#ajax').on('click', '.comments_open', function() {
   var item = btn.closest(".infinite-item");
   var container = item.find(".load_comments");
   container.clean();
-  btn.removeClass('comments_open');
+  container.removeClass('comments_open');
 });
 
 $('#ajax').on('click', '.c_comment', function() {
