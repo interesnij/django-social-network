@@ -23,7 +23,7 @@
     	$('.prev_item').on('click', function () {
         uuid = {{ user.uuid }};
         pk = {{ prev.pk }};
-    		$('#photo_loader').html('').load("gallery/load/photo/" + pk + uuid + "/");
+    		$('#photo_loader').html('').load("gallery/load/photo/" + pk + "/" + uuid + "/");
     	});
     </script>
    {% endif %}
@@ -33,7 +33,7 @@
       $('.next_item').on('click', function () {
         uuid = {{ user.uuid }};
         pk = {{ next.pk }};
-    		$('#photo_loader').html('').load("gallery/load/photo/" + pk + uuid + "/");
+    		$('#photo_loader').html('').load("gallery/load/photo/" + pk + "/" + uuid + "/");
     	});
     </script>
     {% endif %}
