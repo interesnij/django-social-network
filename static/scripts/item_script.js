@@ -29,14 +29,15 @@ $('#ajax').on('click', '.show_replies', function() {
 
 
 $('#ajax').on('click', '.u_comment', function() {
-    var item = $(this).closest(".infinite-item");
+    var btn = $(this);
+    var item = btn.closest(".infinite-item");
     var uuid = item.attr("item-id");
-    var pk = $(this).data('pk');
+    var pk = btn.data('pk');
     var container = item.find(".load_comments")
     $.ajax({
         url: "/user/comment/" + uuid + "/" + pk + "/", data: {'uuid': uuid}, cache: false,
         beforeSend: function() { item.find(".load_comments").html("<span style='display:flex;justify-content: center;'><img src='/static/images/loading.gif'></span>"); },
-        success: function(data) { container.html(data.comments); $(this).addClass("comments_open")}
+        success: function(data) { container.html(data.comments); btn.addClass("comments_open")}
     });
     return false;
 });
