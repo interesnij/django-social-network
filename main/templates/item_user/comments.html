@@ -25,8 +25,8 @@
   {% endfor %}
 
   <div class="load col-12 col-md-12">
-      {% if photo_list.has_next %}
-      <a style="display:flex;justify-content:center;" class="infinite-more-link" href="{% url 'user_photos' user.uuid %}?page={{ photo_list.next_page_number }}">
+      {% if comments.has_next %}
+      <a style="display:flex;justify-content:center;" class="infinite-more-link" href="{% url 'item_comments_list' user.pk parent.uuid %}?page={{ comments.next_page_number }}">
           <img src="{% static 'images/loading.gif' %}">
       </a>
       {% endif %}
