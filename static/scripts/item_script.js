@@ -36,7 +36,7 @@ $('#ajax').on('click', '.u_comment', function() {
     $.ajax({
         url: "/user/comment/" + uuid + "/" + pk + "/", data: {'uuid': uuid}, cache: false,
         beforeSend: function() { item.find(".load_comments").html("<span style='display:flex;justify-content: center;'><img src='/static/images/loading.gif'></span>"); },
-        success: function(data) { container.html(data.comments); container.addClass("comments_open")}
+        success: function(data) { container.html(data.comments); $(this).addClass("comments_open")}
     });
     return false;
 });
@@ -46,7 +46,7 @@ $('#ajax').on('click', '.comments_open', function() {
   var item = btn.closest(".infinite-item");
   var container = item.find(".load_comments");
   container.clean();
-  container.removeClass('comments_open');
+  btn.removeClass('comments_open');
 });
 
 $('#ajax').on('click', '.c_comment', function() {
