@@ -1,6 +1,26 @@
 {% load staticfiles humanize %}
 <style>
+  .comment_photo1,.comment_photo2{
+      border: 2px dashed #FF0000;
+      color: rgba(0, 0, 0, 0.8);
+      padding: 10px;
+      text-align: center;
+      margin: 20px;
+      cursor:pointer;
+      width: 85%;
+      min-width: 85%;
+}
+  .comment_photo1 img, .comment_photo2 img{
+    width: 85%;
+    height: auto;
+  }
+  .stream_reply_comments{
+    display:none;
 
+  }
+  .stream_reply_comments.replies_open{
+    display:block;
+  }
   .photo_fullscreen {
       position: fixed;
       top: 0;
@@ -56,7 +76,7 @@
       top: 160px;
       cursor: pointer;
   }
-  
+
   .community_fullscreen {
       position: fixed;
       top: 0;
