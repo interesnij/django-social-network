@@ -24,8 +24,6 @@ class ProfileReload(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(ProfileReload, self).get_context_data(**kwargs)
         context['user'] = self.user
-        context['form_avatar'] = AvatarUserForm()
-        context['form_comment'] = CommentForm()
         context['communities'] = self.communities
         return context
 
