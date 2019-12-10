@@ -28,7 +28,7 @@ $('#ajax').on('click', '.show_replies', function() {
 });
 
 
-$('#ajax').on('click', '.u_comment', function() {
+$('#ajax').on('click', '.u_comment.comments_close', function() {
     var btn = $(this);
     var item = btn.closest(".infinite-item");
     var uuid = item.attr("item-id");
@@ -37,7 +37,7 @@ $('#ajax').on('click', '.u_comment', function() {
     $.ajax({
         url: "/user/comment/" + uuid + "/" + pk + "/", data: {'uuid': uuid}, cache: false,
         beforeSend: function() { item.find(".load_comments").html("<span style='display:flex;justify-content: center;'><img src='/static/images/loading.gif'></span>"); },
-        success: function(data) { container.html(data.comments); btn.addClass("comments_open")}
+        success: function(data) { container.html(data.comments); btn.addClass("comments_open").removeClass("comments_close")}
     });
     return false;
 });
@@ -46,8 +46,8 @@ $('#ajax').on('click', '.comments_open', function() {
   var btn = $(this);
   var item = btn.closest(".infinite-item");
   var container = item.find(".load_comments");
-  container.empty(); 
-  btn.removeClass('comments_open');
+  container.empty();
+  btn.removeClass('comments_open').addClass("comments_close");
 });
 
 $('#ajax').on('click', '.c_comment', function() {
