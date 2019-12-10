@@ -1,5 +1,5 @@
 from django.views.generic.base import TemplateView
-from communities.models import CommunityCategory, Community, CommunitySubCategory
+from communities.models import *
 from django.views import View
 from django.http import HttpResponse, HttpResponseBadRequest
 from communities.forms import CommunityForm
@@ -32,9 +32,6 @@ class CommunityCreate(TemplateView):
 		if self.form.is_valid():
 			new_community=self.form.save(commit=False)
 			community = Community.create_community(name=new_community.name,category=new_community.category,type=new_community.type,creator=request.user)
-			Album.objects.create(creator=request.user,community=community,title="Сохраненные фото",is_generic=True,)
-			Album.objects.create(creator=request.user,community=community,title="Фото со стены",is_generic=True,)
-			Album.objects.create(creator=request.user,community=community,title="Фото со страницы",is_generic=True,)
 			if request.is_ajax() :
 				return HttpResponse("!")
 		else:
@@ -62,7 +59,7 @@ class CommunityMemberCreate(View):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		new_member = request.user.join_community_with_name(self.community.name)
 		self.community.notification_new_member(request.user)
-		return HttpResponse("!") 
+		return HttpResponse("!")
 
 class CommunityMemberDelete(View):
 	success_url = "/"

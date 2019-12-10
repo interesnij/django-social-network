@@ -79,21 +79,19 @@ class Community(models.Model):
         verbose_name_plural = 'сообщества'
 
     @classmethod
-    def create_community(cls, name, category, creator, type, description=None,
-                            rules=None, invites_enabled=None):
-
+    def create_community(cls, name, category, creator, type, description=None, rules=None, invites_enabled=None):
         if type is Community.COMMUNITY_TYPE_PRIVATE and invites_enabled is None:
             invites_enabled = False
         else:
             invites_enabled = True
-
-        community = cls.objects.create(name=name, creator=creator, description=description, type=type, rules=rules,
-                                       invites_enabled=invites_enabled, category=category)
-
-        CommunityMembership.create_membership(user=creator, is_administrator=True, is_moderator=False,
-                                              community=community)
-
+        community = cls.objects.create(name=name, creator=creator, description=description, type=type, rules=rules,invites_enabled=invites_enabled, category=category)
+        CommunityMembership.create_membership(user=creator, is_administrator=True, is_moderator=False,community=community)
         community.save()
+        Album.objects.create(creator=creator, community=community, title="Сохраненные фото", is_generic=True,)
+        Album.objects.create(creator=creator, community=community, title="Фото со стены", is_generic=True,)
+        Album.objects.create(creator=creator, community=community, title="Фото со страницы", is_generic=True,)
+        CommunityNotificationsSettings.objects.create(community=community)
+        CommunityPrivateSettings.objects.create(community=community)
         return community
 
     @classmethod
