@@ -1,16 +1,16 @@
 {% load staticfiles humanize %}
-{{ image1 }} | {{ image2 }}
+
 <div class="row">
   <div class="col-lg-8 col-md-7 col-sm-12 order-1">
     {% if image1 %}
     <div class="card rounded-0 border-0 mb-4">
-      <img style="width: 100%;" src="{{ image1.url }}" alt="">
+      <img style="width: 100%;" src="{{ photo_1.url }}" alt="">
     </div>
     {% endif %}
     {% if image2 %}
     <br><br>
     <div class="card rounded-0 border-0 mb-4">
-      <img style="width: 100%;" src="{{ image2.url }}" alt="">
+      <img style="width: 100%;" src="{{ photo_2.url }}" alt="">
     </div>
     {% endif %}
     <div class="dropdown d-inline-block">
