@@ -21,8 +21,8 @@
   {% if prev %}
     <script>
     	$('.prev_item').on('click', function () {
-        uuid = {{ user.uuid }};
-        pk = {{ prev.pk }};
+        uuid = "{{ user.uuid }}";
+        pk = "{{ prev.pk }}";
     		$('#photo_loader').html('').load("gallery/load/photo/" + pk + "/" + uuid + "/");
     	});
     </script>
@@ -31,8 +31,8 @@
    {% if next %}
     <script>
       $('.next_item').on('click', function () {
-        uuid = {{ user.uuid }};
-        pk = {{ next.pk }};
+        uuid = "{{ user.uuid }}";
+        pk = "{{ next.pk }}";
     		$('#photo_loader').html('').load("gallery/load/photo/" + pk + "/" + uuid + "/");
     	});
     </script>
