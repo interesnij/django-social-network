@@ -115,7 +115,7 @@ $('#ajax').on('click', '.u_replyParentComment', function() {
 });
 
 $("#ajax").on('click', '.reply_comment', function() {
-    var reply_comment_form = $(this); var objectUser = reply_comment_form.prev().text().trim(); var form = reply_comment_form.next().find(".text-comment"); form.val(objectUser + ', '); reply_comment_form.next().show(); form.focus();
+    console.log('click');var reply_comment_form = $(this); var objectUser = reply_comment_form.prev().text().trim(); var form = reply_comment_form.next().find(".text-comment"); form.val(objectUser + ', '); reply_comment_form.next().show(); form.focus();
 })
 
 $('.R_U').on('click', function() {
