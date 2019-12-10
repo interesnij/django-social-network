@@ -56,11 +56,11 @@ class UserCommentPhoto(TemplateView):
         self.user=User.objects.get(uuid=self.kwargs["uuid"])
         self.comment = ItemComment.objects.get(pk=self.kwargs["pk"])
         try:
-            self.image1 = comment.item_comment_photo
+            self.image1 = self.comment.item_comment_photo
         except:
             self.image1 = None
         try:
-            self.image2 = comment.item_comment_photo2
+            self.image2 = self.comment.item_comment_photo2
         except:
             self.image2 = None
 
