@@ -1,20 +1,8 @@
 from django.views.generic.base import TemplateView
-from users.models import (
-                            User,
-                            UserProfile,
-                            UserPrivateSettings,
-                            UserNotificationsSettings
-                        )
-from users.forms import (
-                            GeneralUserForm,
-                            AboutUserForm,
-                            SettingsPrivateForm,
-                            SettingsNotifyForm
-                        )
-
+from users.models import *
+from users.forms import *
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.views import View
-
 
 
 class UserGeneralChange(TemplateView):
@@ -35,13 +23,8 @@ class UserGeneralChange(TemplateView):
 
 	def post(self,request,*args,**kwargs):
 		self.user=request.user
-		try:
-			self.profile=UserProfile.objects.get(user=request.user)
-		except:
-			self.profile = None
-		if not self.profile:
-			self.user.profile = UserProfile.objects.create(user=request.user)
-		self.form=GeneralUserForm(request.POST,instance=self.user.profile)
+		self.profile=UserProfile.objects.get(user=request.user)
+		self.form=GeneralUserForm(request.POST,instance=self.profile)
 		if self.form.is_valid():
 			user = self.request.user
 			user.first_name = self.form.cleaned_data['first_name']
@@ -70,14 +53,8 @@ class UserAboutChange(TemplateView):
 		return context
 
 	def post(self,request,*args,**kwargs):
-		self.user=request.user
-		try:
-			self.profile=UserProfile.objects.get(user=request.user)
-		except:
-			self.profile = None
-		if not self.profile:
-			self.user.profile = UserProfile.objects.create(user=request.user)
-		self.form=AboutUserForm(request.POST,instance=self.user.profile)
+		self.profile=UserProfile.objects.get(user=request.user)
+		self.form=AboutUserForm(request.POST,instance=self.profile)
 		if self.form.is_valid():
 			self.form.save()
 			if request.is_ajax():
@@ -103,12 +80,7 @@ class SettingsNotifyView(TemplateView):
 
     def post(self,request,*args,**kwargs):
         self.user=User.objects.get(pk=self.kwargs["pk"])
-        try:
-            self.notify_settings=UserNotificationsSettings.objects.get(user=request.user)
-        except:
-            self.notify_settings = None
-        if not self.notify_settings:
-            self.user.notify_settings = UserNotificationsSettings.objects.create(user=request.user)
+        self.notify_settings=UserNotificationsSettings.objects.get(user=request.user)
         self.form=SettingsNotifyForm(request.POST,instance=self.notify_settings)
         if self.form.is_valid() and self.user == request.user:
             self.form.save()
@@ -135,12 +107,7 @@ class SettingsPrivateView(TemplateView):
 
 	def post(self,request,*args,**kwargs):
 		self.user=User.objects.get(pk=self.kwargs["pk"])
-		try:
-			self.private_settings=UserPrivateSettings.objects.get(user=request.user)
-		except:
-			self.private_settings = None
-		if not self.private_settings:
-			self.user.private_settings = UserPrivateSettings.objects.create(user=request.user)
+		self.private_settings=UserPrivateSettings.objects.get(user=request.user)
 		self.form=SettingsPrivateForm(request.POST, instance=self.private_settings)
 		if self.form.is_valid():
 			self.form.save()

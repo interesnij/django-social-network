@@ -50,7 +50,5 @@ class RegisterSerializer(serializers.Serializer):
         Album.objects.create(creator=user, community=None, title="Сохраненные фото", is_generic=True,)
         Album.objects.create(creator=user, community=None, title="Фото со стены", is_generic=True,)
         Album.objects.create(creator=user, community=None, title="Фото со страницы",  is_generic=True,)
-        UserProfile.objects.create(user=user)
-        UserPrivateSettings.objects.create(user=user)
-        UserNotificationsSettings.objects.create(user=user)
+
         return user

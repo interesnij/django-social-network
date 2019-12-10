@@ -496,7 +496,7 @@ class UserPrivateSettings(models.Model):
 
 class UserProfile(models.Model):
     id = models.AutoField(primary_key=True, db_index=False)
-    user = models.OneToOneField(User, db_index=False, null=True, related_name="profile", verbose_name="Пользователь", on_delete=models.CASCADE)
+    user = models.OneToOneField(User, db_index=False, related_name="profile", verbose_name="Пользователь", on_delete=models.CASCADE)
     cover = models.ImageField(blank=True, null=True, upload_to="users", verbose_name="Фон")
     bio = models.TextField(max_length=settings.PROFILE_BIO_MAX_LENGTH, blank=True, verbose_name="Биография")
     followers_count_visible = models.BooleanField(blank=False, null=False, default=False, verbose_name="Число подписчиков видно")
