@@ -20,20 +20,20 @@
 
   {% if prev %}
     <script>
-      uuid = {{ user.uuid }};
-      pk = {{ prev.pk }};
     	$('.prev_item').on('click', function () {
-    		 $('#photo_loader').html('').load("gallery/load/photo/" + pk + uuid + "/");
+        uuid = {{ user.uuid }};
+        pk = {{ prev.pk }};
+    		$('#photo_loader').html('').load("gallery/load/photo/" + pk + uuid + "/");
     	});
     </script>
    {% endif %}
 
    {% if next %}
     <script>
-      uuid = {{ user.uuid }};
-      pk = {{ next.pk }};
       $('.next_item').on('click', function () {
-    		 $('#photo_loader').html('').load("gallery/load/photo/" + pk + uuid + "/");
+        uuid = {{ user.uuid }};
+        pk = {{ next.pk }};
+    		$('#photo_loader').html('').load("gallery/load/photo/" + pk + uuid + "/");
     	});
     </script>
     {% endif %}
