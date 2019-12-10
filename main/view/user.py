@@ -53,7 +53,7 @@ class ItemCommentUserCreate(View):
 
 			new_comment = comment.create_user_comment(commenter=request.user, parent_comment=None, item=item, text=comment.text, item_comment_photo=comment.item_comment_photo, item_comment_photo2=comment.item_comment_photo2)
 			new_comment.notification_user_comment(request.user)
-			html = render_to_string('item_user/parent_comment.html',{'comment': new_comment, 'request_user': request.user, "form_comment": CommentForm(), "form_reply": CommentReplyForm(), 'request': request})
+			html = render_to_string('item_user/parent_comment.html',{'comment': new_comment, 'request_user': request.user, "form_reply": CommentReplyForm(), 'request': request})
 			return JsonResponse(html, safe=False)
 		else:
 			return HttpResponseBadRequest()
@@ -81,7 +81,7 @@ class ItemReplyUserCreate(View):
 														text=comment.text,
 														parent_comment=self.parent)
 			new_comment.notification_user_reply_comment(request.user)
-			html = render_to_string('item_user/reply_comment.html',{'reply': new_comment, 'request': request})
+			html = render_to_string('item_user/reply_comment.html',{'reply': new_comment, 'request_user': request.user, "form_reply": CommentReplyForm(), 'request': request})
 			return JsonResponse(html, safe=False)
 		else:
 			return HttpResponse(self.form_post)

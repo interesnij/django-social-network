@@ -120,7 +120,6 @@
                         ответить
                     </span>
 
-                    {% if request_user.is_authenticated %}
                     <div class="border-top reply_comment_form" style="margin-top:10px;display:none;margin-left:-50px;">
                         <form action="" method="post" class="replyParentComment_button" enctype="multipart/form-data">
                             {% csrf_token %}
@@ -142,7 +141,7 @@
                             </div>
                         </form>
                     </div>
-                    {% endif %}
+
                 </div>
             </div>
         </div>
