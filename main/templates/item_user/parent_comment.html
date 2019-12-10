@@ -1,6 +1,6 @@
 {% load staticfiles humanize liked_user thumbnail %}
 
-<div class="media" comment-id="{{ comment.id }}">
+<div class="media infinite-item" comment-id="{{ comment.id }}">
     <figure>
         {% if comment.commenter.get_avatar %}
           <img src="{{ comment.commenter.get_avatar.file|thumbnail_url:'small_avatar' }}" class="pull-left" style="border-radius:50%;width:30px;" alt="User Image" class="user-image">
