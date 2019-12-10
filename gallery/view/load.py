@@ -78,10 +78,10 @@ class UserCommentPhoto(TemplateView):
         elif not self.user.is_closed_profile() and request.user.is_anonymous:
             self.photo_1 = self.image1
             self.photo_2 = self.image2
-        return super(UserPhoto,self).get(request,*args,**kwargs)
+        return super(UserCommentPhoto,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context=super(UserPhoto,self).get_context_data(**kwargs)
+        context=super(UserCommentPhoto,self).get_context_data(**kwargs)
         context["photo_1"]=self.photo_1
         context["photo_2"]=self.photo_2
         context["comment"]=self.comment

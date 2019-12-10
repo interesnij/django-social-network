@@ -37,7 +37,7 @@
             <img data-uuid="{{ reply.commenter.uuid }}"
                  data-id="{{ reply.pk }}"
                  class="comment_image"
-                 style="width:100%;object-fit:cover;height:200px;"
+                 style="width:100%;object-fit:cover;height:200px;cursor:pointer"
                  src="{{ reply.item_comment_photo.url }}" alt="">
             {% endif %}
           </div>
@@ -46,7 +46,7 @@
             <img data-uuid="{{ reply.commenter.uuid }}"
                  data-id="{{ reply.pk }}"
                  class="comment_image"
-                 style="width:100%;object-fit:cover;height:200px;"
+                 style="width:100%;object-fit:cover;height:200px;cursor:pointer"
                  src="{{ reply.item_comment_photo2.url }}" alt="">
             {% endif %}
           </div>

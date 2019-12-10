@@ -44,7 +44,7 @@
               <img data-uuid="{{ comment.commenter.uuid }}"
                    data-id="{{ comment.pk }}"
                    class="comment_image"
-                   style="width:100%;object-fit:cover;height:200px;"
+                   style="width:100%;object-fit:cover;height:200px;cursor:pointer"
                    src="{{ comment.item_comment_photo.url }}" alt="">
             {% endif %}
           </div>
@@ -52,8 +52,8 @@
             {% if comment.item_comment_photo2 %}
             <img data-uuid="{{ comment.commenter.uuid }}"
                  data-id="{{ comment.pk }}"
-                 class="comment_image" 
-                 style="width:100%;object-fit:cover;height:200px;"
+                 class="comment_image"
+                 style="width:100%;object-fit:cover;height:200px;;cursor:pointer"
                  src="{{ comment.item_comment_photo2.url }}" alt="">
             {% endif %}
           </div>
