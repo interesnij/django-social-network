@@ -76,7 +76,7 @@ $('#ajax').on('click', '.unfixed', function() {
 });
 
 $('#ajax').on('click', '.upload_photo', function() {
-  btn = $(this); img_block = btn.parent().prev()
+  console.log('click'); btn = $(this); img_block = btn.parent().prev()
   if (!img_block.empty()){img_block.empty()}; img_block.show();
   img_block.append('<div class="col-lg-6 col-md-6"><br><input class="file1 hide_image" type="file" name="item_comment_photo" accept="image/*" id="id_item_comment_photo"><div class="comment_photo1"><h4 class="svg_default"><svg width="35" height="35" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/>+<path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg></h4></div></div><div class="col-lg-6 col-md-6"><br><input class="file2 hide_image" type="file" name="item_comment_photo2" accept="image/*" id="id_item_comment_photo2"><div class="comment_photo2"><h4 class="svg_default"><svg width="35" height="35" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">+<path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg></h4></div></div>');
 });
@@ -115,7 +115,7 @@ $('#ajax').on('click', '.u_replyParentComment', function() {
 });
 
 $("#ajax").on('click', '.reply_comment', function() {
-    console.log('click');var reply_comment_form = $(this); var objectUser = reply_comment_form.prev().text().trim(); var form = reply_comment_form.next().find(".text-comment"); form.val(objectUser + ', '); reply_comment_form.next().show(); form.focus();
+    var reply_comment_form = $(this); var objectUser = reply_comment_form.prev().text().trim(); var form = reply_comment_form.next().find(".text-comment"); form.val(objectUser + ', '); reply_comment_form.next().show(); form.focus();
 })
 
 $('.R_U').on('click', function() {
