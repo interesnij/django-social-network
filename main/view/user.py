@@ -52,8 +52,7 @@ class ItemCommentUserCreate(View):
 		if form_post.is_valid():
 
 			text = form_post.cleaned_data['text']
-			item_comment_photo = form_post.cleaned_data['item_comment_photo']
-			item_comment_photo2 = form_post.cleaned_data['item_comment_photo2']
+			
 			if not text and not item_comment_photo and not item_comment_photo2:
 				raise ValidationError('Для добавления комментария необходимо написать что-то или прикрепить изображение')
 			if request.user.pk != user.pk:
