@@ -20,14 +20,6 @@
         $('#photo_loader').empty();
     });
 
-    $('.infinite-container').on('click', '.photo_detail', function() {
-        var photo = $(this);
-        var photo_id = photo.data("id");
-        var user_uuid = photo.data("uuid");
-        $('#photo_loader').html('').load("/gallery/load/photo/" + photo_id + "/" + user_uuid + "/")
-        $('.photo_fullscreen').show();
-    });
-
     var infinite = new Waypoint.Infinite({
         element: $('.infinite-container')[0],
         onBeforePageLoad: function() {
