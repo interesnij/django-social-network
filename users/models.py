@@ -297,9 +297,10 @@ class User(AbstractUser):
         query = []
         for frend in my_connections:
             user = User.objects.get(pk=frend.user.pk)
-            frends_of_user = user.get_all_connection()
-            frends_of_user.exclude(target_user_id=self.pk,user_id=self.pk, user.pk=self.pk)
-            query = query + list(frends_of_user)
+            if user.pk != self.pk:
+                frends_of_user = user.get_all_connection()
+                frends_of_user.exclude(target_user_id=self.pk,user_id=self.pk)
+                query = query + list(frends_of_user)
         return query
 
 
