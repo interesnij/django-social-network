@@ -280,6 +280,7 @@ class User(AbstractUser):
         connection_query = Q(target_connection__user_id=self.id)
         exclude_reported_and_approved_posts_query = ~Q(target_connection__user__moderated_object__status=ModeratedObject.STATUS_APPROVED)
         connection_query.add(exclude_reported_and_approved_posts_query, Q.AND)
+        connection_query.add(~Q(Q(target_connection__user__blocked_by_users__blocker_id=self.pk) | Q(target_connection__user__user_blocks__blocked_user_id=self.pk)), Q.AND)
         connection = Connect.objects.filter(connection_query)
         return connection[0:5]
 
@@ -287,6 +288,7 @@ class User(AbstractUser):
         connection_query = Q(target_connection__user_id=self.id)
         exclude_reported_and_approved_posts_query = ~Q(target_connection__user__moderated_object__status=ModeratedObject.STATUS_APPROVED)
         connection_query.add(exclude_reported_and_approved_posts_query, Q.AND)
+        connection_query.add(~Q(Q(target_connection__user__blocked_by_users__blocker_id=self.pk) | Q(target_connection__user__user_blocks__blocked_user_id=self.pk)), Q.AND)
         connection = Connect.objects.filter(connection_query)
         return connection
 
