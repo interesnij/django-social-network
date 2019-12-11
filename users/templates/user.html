@@ -14,6 +14,7 @@
 <div class="row user_page">
     <div class="col-lg-4 col-md-5 col-sm-12 order-1">
 {% for object in user.get_common_friend %}
+{% if object.user != request.user %}
 {{ object.user.get_full_name }}
 {% endfor %}
         {% include 'profile/card_profile.html' %}
