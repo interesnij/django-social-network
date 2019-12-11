@@ -6,7 +6,7 @@ from pilkit.processors import ResizeToFill, ResizeToFit
 from imagekit.models import ProcessedImageField
 from django.contrib.contenttypes.fields import GenericRelation
 from django.conf import settings
-from main.models import Item
+from main.models import Item, ItemComment
 from notifications.model.photo import *
 from gallery.helpers import upload_to_photo_directory
 
@@ -49,6 +49,7 @@ class Photo(models.Model):
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='photo_creator', null=False, blank=False, verbose_name="Создатель")
     is_deleted = models.BooleanField(verbose_name="Удален",default=False )
     item = models.ForeignKey(Item, blank=True, null=True, on_delete=models.CASCADE)
+    item_comment = models.ForeignKey(ItemComment, blank=True, null=True, on_delete=models.CASCADE)
 
     class Meta:
         indexes = (
