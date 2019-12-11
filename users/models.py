@@ -292,7 +292,7 @@ class User(AbstractUser):
 
     def get_common_friend(self):
         my_connections = self.get_all_connection()
-        query = ()
+        query = []
         for frend in my_connections:
             query = query + frend.user.get_all_connection()
             query.add(~Q(Q(target_user_id=self.pk)), Q.AND)
