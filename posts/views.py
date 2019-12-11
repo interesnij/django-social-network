@@ -64,8 +64,6 @@ class PostUserCreate(View):
 
 
 class PostCommunityCreate(View):
-    form_post=None
-    success_url="/"
 
     def get_context_data(self,**kwargs):
         context=super(PostCommunityCreate,self).get_context_data(**kwargs)
@@ -73,14 +71,14 @@ class PostCommunityCreate(View):
         return context
 
     def post(self,request,*args,**kwargs):
-        self.form_post=PostCommunityForm(request.POST, request.FILES)
-        self.community = Community.objects.get(pk=self.kwargs["pk"])
+        form_post=PostCommunityForm(request.POST, request.FILES)
+        community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_posts_for_community_with_name(request.user,community.name)
-        if self.form_post.is_valid():
-            new_post=self.form_post.save(commit=False)
-            new_post.creator=self.request.user
-            new_post.community=self.community
-            new_post=self.form_post.save()
+        if form_post.is_valid():
+            new_post=form_post.save(commit=False)
+            new_post.creator=request.user
+            new_post.community=community
+            new_post=form_post.save()
 
             if request.is_ajax() :
                 html = render_to_string('item_user/post.html',{'object': new_post,'request': request})
