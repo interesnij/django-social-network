@@ -17,8 +17,8 @@ $('.user_page').on('click', '.avatar_detail', function() {
 });
 
 $('#ajax').on('click', '.comment_image', function() {
-		var photo = $(this); var pk = photo.data("id"); var user_uuid = photo.data("uuid");var photo_uuid = photo.data("uuid_photo");
-		$('#photo_loader').html('').load("/gallery/load/comment/" + pk + "/" + user_uuid + "/" + photo_uuid + "/"); $('.photo_fullscreen').show();
+		var photo = $(this); var pk = photo.data("id"); var user_uuid = photo.data("uuid");
+		$('#photo_loader').html('').load("/gallery/load/comment/" + pk + "/" + user_uuid + "/"); $('.photo_fullscreen').show();
 });
 
 $('.photo_fullscreen_hide').on('click', function() { $('.photo_fullscreen').hide(); $('#photo_loader').empty(); });
