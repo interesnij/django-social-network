@@ -85,7 +85,7 @@ $('#ajax').on('click', '.u_itemComment', function() {
     button1 = $(this); var form1 = button1.parent().parent().parent(); var img_block = button1.parent().prev()
     $.ajax({
         url: '/user/post-comment/', data: new FormData($(form1)[0]), contentType: false, cache: false, processData: false, type: 'POST',
-        success: function(data) { $(".form-control-rounded").val(""); form1.parent().prev().append(data); form1.find('.img_block').hide()},
+        success: function(data) { $(".form-control-rounded").val(""); form1.parent().prev().prev().append(data); form1.find('.img_block').hide()},
         error: function(data) { $.toast({heading: 'Ошибка',text: 'Для публикации комментария нужно написать что-нибудь и/или вставить изображение(ия)',showHideTransition: 'fade',icon: 'error'}); },
     });
     return false;
