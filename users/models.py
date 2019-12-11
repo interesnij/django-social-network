@@ -296,9 +296,9 @@ class User(AbstractUser):
         my_connections = self.get_all_connection()
         query = ""
         for frend in my_connections:
-            user_id = frend.user.pk
-            if user_id != self.pk:
-                list = frend.user.get_all_connection()
+            user = frend.user
+            if user.pk != self.pk:
+                list = user.get_all_connection()
                 query = query + str(list)
         return query
 
