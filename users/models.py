@@ -298,8 +298,8 @@ class User(AbstractUser):
         for frend in my_connections:
             user = frend.user
             if user.pk != self.pk:
-                list = user.get_all_connection()
-                query = query + list
+                list2 = user.get_all_connection()
+                query = query + list(list2)
         return query
 
 
