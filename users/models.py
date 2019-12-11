@@ -294,7 +294,7 @@ class User(AbstractUser):
         my_connections = self.get_all_connection()
         query = []
         for frend in my_connections:
-            user = frend.target_connection
+            user = User.objects.get(pk=frend.user.pk)
             frends_of_user = user.get_all_connection()
             query = query + frends_of_user
             query.add(~Q(Q(target_user_id=self.pk)), Q.AND)
