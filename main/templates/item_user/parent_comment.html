@@ -19,7 +19,7 @@
         <div class="row">
           {% for object in comment.photo_set.all %}
           <div class="col-lg-6 col-md-6">
-              <img data-uuid="{{ comment.commenter.uuid }}"
+              <img data-uuid="{{ object.uuid }}"
                    data-id="{{ comment.pk }}"
                    class="comment_image"
                    style="width:100%;object-fit:cover;height:200px;cursor:pointer"
