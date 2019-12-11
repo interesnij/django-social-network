@@ -51,8 +51,10 @@ class ItemCommentUserCreate(View):
 		item = Item.objects.get(uuid=item_uuid)
 		if form_post.is_valid():
 			comment=form_post.save(commit=False)
+			item_comment_photo=form_post.cleaned_data['item_comment_photo']
+			item_comment_photo2=form_post.cleaned_data['item_comment_photo2']
 
-			if not comment.text:
+			if not comment.text and not item_comment_photo and not item_comment_photo2:
 				raise ValidationError('Для добавления комментария необходимо написать что-то или прикрепить изображение')
 			if request.user.pk != user.pk:
 				check_is_not_blocked_with_user_with_id(user=request.user, user_id = user.pk)
