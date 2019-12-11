@@ -245,7 +245,7 @@ class ItemCommentUserLikeCreate(View):
             dislike_count = dislikes.count()
         else:
             dislike_count = ""
-        return HttpResponse(json.dumps({"result": result,"comment_like_count": str(like_count),"comment_dislike_count": str(dislike_count)}),content_type="application/json")
+        return HttpResponse(json.dumps({"result": result,"like_count": str(like_count),"dislike_count": str(dislike_count)}),content_type="application/json")
 
 
 class ItemUserDislikeCreate(View):
