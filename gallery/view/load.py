@@ -50,7 +50,7 @@ class UserPhoto(TemplateView):
 
 
 class UserCommentPhoto(TemplateView):
-    template_name="photo_user/comment_image.html"
+    template_name="photo_user/photo.html"
 
     def get(self,request,*args,**kwargs):
         self.user=User.objects.get(pk=self.kwargs["pk"])
