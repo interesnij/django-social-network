@@ -277,11 +277,17 @@ class User(AbstractUser):
 
     ''''' GET всякие  219-186 '''''
     def get_pop_connection(self):
-        connection = Connect.objects.filter(target_connection__user_id=self.id)
+        connection_query = Q(target_connection__user_id=self.id)
+        exclude_reported_and_approved_posts_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
+        connection_query.add(exclude_reported_and_approved_posts_query, Q.AND)
+        connection = Connect.objects.filter(connection_query)
         return connection[0:5]
 
     def get_all_connection(self):
-        connection = Connect.objects.filter(target_connection__user_id=self.id)
+        connection_query = Q(target_connection__user_id=self.id)
+        exclude_reported_and_approved_posts_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
+        connection_query.add(exclude_reported_and_approved_posts_query, Q.AND)
+        connection = Connect.objects.filter(connection_query)
         return connection
 
     def get_online_connection(self):
