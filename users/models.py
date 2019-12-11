@@ -296,9 +296,8 @@ class User(AbstractUser):
         for frend in my_connections:
             user = User.objects.get(pk=frend.user.pk)
             frends_of_user = user.get_all_connection()
+            frends_of_user.exclude(target_user_id=self.pk)
             query = query + list(frends_of_user)
-            query.exclude(target_user_id=self.pk)
-        query.exclude(Q(creator__blocked_by_users__blocker_id=self.pk) | Q(creator__user_blocks__blocked_user_id=self.pk))
         return query
 
 
