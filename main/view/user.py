@@ -66,7 +66,7 @@ class ItemCommentUserCreate(View):
 			html = render_to_string('item_user/parent_comment.html',{'comment': new_comment, 'request_user': request.user, "form_reply": CommentReplyForm(), 'request': request})
 			return JsonResponse(html, safe=False)
 		else:
-			return HttpResponse("!")
+			return HttpResponse(text, item_comment_photo,item_comment_photo2)
 
 
 class ItemReplyUserCreate(View):
