@@ -294,7 +294,7 @@ class User(AbstractUser):
 
     def get_common_friend(self):
         my_connections = self.get_all_connection()
-        query = []
+        query = Q()
         for frend in my_connections:
             user = User.objects.get(pk=frend.user.pk)
             if user.pk != self.pk:
