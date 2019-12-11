@@ -13,29 +13,19 @@
             <small class="text-muted float-right">{{ comment.created|naturaltime }}</small>
         </h5>
         <p>{{ comment.text|safe }}</p>
-        {% if comment.photo_set.all %}1111111111111111111111111{% endif %}
 
-        {% if comment.item_comment_photo or comment.item_comment_photo2 %}
+        {% if comment.photo_set.all %}
         <br><br>
         <div class="row">
+          {% for object in comment.photo_set.all %}
           <div class="col-lg-6 col-md-6">
-            {% if comment.item_comment_photo %}
               <img data-uuid="{{ comment.commenter.uuid }}"
                    data-id="{{ comment.pk }}"
                    class="comment_image"
                    style="width:100%;object-fit:cover;height:200px;cursor:pointer"
-                   src="{{ comment.item_comment_photo.url }}" alt="">
-            {% endif %}
+                   src="{{ object.file.url }}" alt="">
           </div>
-          <div class="col-lg-6 col-md-6">
-            {% if comment.item_comment_photo2 %}
-            <img data-uuid="{{ comment.commenter.uuid }}"
-                 data-id="{{ comment.pk }}"
-                 class="comment_image"
-                 style="width:100%;object-fit:cover;height:200px;;cursor:pointer"
-                 src="{{ comment.item_comment_photo2.url }}" alt="">
-            {% endif %}
-          </div>
+          {% endfor %}
         </div>
         {% endif %}
 
