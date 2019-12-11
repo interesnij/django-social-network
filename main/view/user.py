@@ -64,7 +64,7 @@ class ItemCommentUserCreate(View):
 			html = render_to_string('item_user/parent_comment.html',{'comment': new_comment, 'request_user': request.user, "form_reply": CommentReplyForm(), 'request': request})
 			return JsonResponse(html, safe=False)
 		else:
-			return HttpResponseBadRequest()
+			return HttpResponse("!")
 
 
 class ItemReplyUserCreate(View):
@@ -92,7 +92,7 @@ class ItemReplyUserCreate(View):
 			html = render_to_string('item_user/reply_comment.html',{'reply': new_comment, 'request_user': request.user, "form_reply": CommentReplyForm(), 'request': request})
 			return JsonResponse(html, safe=False)
 		else:
-			return HttpResponse(self.form_post)
+			return HttpResponse("!")
 
 
 def post_update_interactions(request):
