@@ -49,14 +49,12 @@ class ItemCommentUserCreate(View):
 		user = User.objects.get(pk=request.POST.get('id'))
 		item_uuid = request.POST.get('item')
 		item = Item.objects.get(uuid=item_uuid)
-		text = form_post.cleaned_data['text']
 		if form_post.is_valid():
 
 			text = form_post.cleaned_data['text']
 			item_comment_photo = form_post.cleaned_data['item_comment_photo']
 			item_comment_photo2 = form_post.cleaned_data['item_comment_photo2']
-			if not text and not item_comment_photo and not item_comment_photo2:
-				raise ValidationError('Для добавления комментария необходимо написать что-то или прикрепить изображение')
+			
 			if request.user.pk != user.pk:
 				check_is_not_blocked_with_user_with_id(user=request.user, user_id = user.pk)
 				if user.is_closed_profile:
@@ -66,7 +64,7 @@ class ItemCommentUserCreate(View):
 			html = render_to_string('item_user/parent_comment.html',{'comment': new_comment, 'request_user': request.user, "form_reply": CommentReplyForm(), 'request': request})
 			return JsonResponse(html, safe=False)
 		else:
-			return HttpResponse(text, item_comment_photo,item_comment_photo2)
+			return HttpResponse("@")
 
 
 class ItemReplyUserCreate(View):
