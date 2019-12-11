@@ -37,7 +37,7 @@ class ItemUserCommentList(View):
 			comment_list = current_page.page(1)
 		except EmptyPage:
 			comment_list = current_page.page(current_page.num_pages)
-		comments_html = render_to_string("item_user/comments.html", {"comment_list": comment_list, "request_user": request.user, "parent": item, "form_comment": CommentReplyForm(), "form_reply": CommentReplyForm(), "user": self.user})
+		comments_html = render_to_string("item_user/comments.html", {"comment_list": comment_list, "request_user": request.user, "parent": item, "form_comment": CommentForm(), "form_reply": CommentForm(), "user": self.user})
 
 		return JsonResponse({ "comments": comments_html, })
 
