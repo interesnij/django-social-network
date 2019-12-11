@@ -294,12 +294,12 @@ class User(AbstractUser):
 
     def get_common_friend(self):
         my_connections = self.get_all_connection()
-        query = Q()
+        query = ""
         for frend in my_connections:
             user_id = frend.user.pk
             if user_id != self.pk:
                 list = frend.user.get_all_connection()
-                query.add(list)
+                query = query + list
         queryset = Connect.objects.filter(query)
         return queryset
 
