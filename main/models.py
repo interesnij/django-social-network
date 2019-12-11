@@ -194,7 +194,7 @@ class ItemComment(models.Model):
 
     def get_likes_for_comment_item(self, request):
         user = request.user
-        reactions_query = user._make_get_votes_query_comment(comment=self)
+        reactions_query = request._make_get_votes_query_comment(comment=self)
         return ItemCommentVotes.objects.filter(id=self.pk, vote__gt=0).filter(reactions_query)
 
     def get_dislikes_for_comment_item(self, user):
