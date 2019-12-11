@@ -49,7 +49,7 @@ class ItemCommentUserCreate(View):
 		user = User.objects.get(pk=request.POST.get('id'))
 		item_uuid = request.POST.get('item')
 		item = Item.objects.get(uuid=item_uuid)
-
+		text = form_post.cleaned_data['text']
 		if form_post.is_valid():
 
 			text = form_post.cleaned_data['text']
