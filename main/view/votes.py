@@ -235,7 +235,7 @@ class ItemCommentUserLikeCreate(View):
         except ItemCommentVotes.DoesNotExist:
             ItemCommentVotes.objects.create(item=comment, user=request.user, vote=ItemCommentVotes.LIKE)
             result = True
-        likes = comment.get_likes_for_comment_item(request.user)
+        likes = comment.get_likes_for_comment_item()
         if likes.count() != 0:
             like_count = likes.count()
         else:
