@@ -29,27 +29,18 @@
         </h5>
         <p>{{ reply.text|safe }}</p>
 
-        {% if reply.item_comment_photo or reply.item_comment_photo2 %}
+        {% if reply.photo_set.all %}
         <br><br>
         <div class="row">
+          {% for object in reply.photo_set.all %}
           <div class="col-lg-6 col-md-6">
-            {% if reply.item_comment_photo %}
-            <img data-uuid="{{ reply.commenter.uuid }}"
-                 data-id="{{ reply.pk }}"
-                 class="comment_image"
-                 style="width:100%;object-fit:cover;height:200px;cursor:pointer"
-                 src="{{ reply.item_comment_photo.url }}" alt="">
-            {% endif %}
+              <img data-uuid="{{ object.uuid }}"
+                   data-id="{{ reply.commenter.pk }}"
+                   class="comment_image"
+                   style="width:100%;object-fit:cover;height:200px;cursor:pointer"
+                   src="{{ object.file.url }}" alt="">
           </div>
-          <div class="col-lg-6 col-md-6">
-            {% if reply.item_comment_photo2 %}
-            <img data-uuid="{{ reply.commenter.uuid }}"
-                 data-id="{{ reply.pk }}"
-                 class="comment_image"
-                 style="width:100%;object-fit:cover;height:200px;cursor:pointer"
-                 src="{{ reply.item_comment_photo2.url }}" alt="">
-            {% endif %}
-          </div>
+          {% endfor %}
         </div>
         {% endif %}
 
