@@ -294,7 +294,7 @@ class User(AbstractUser):
         my_connections = self.get_all_connection()
         query = ()
         for frend in my_connections:
-            query = query + frend.get_all_connection()
+            query = query + frend.user.get_all_connection()
             query.add(~Q(Q(target_user_id=self.pk)), Q.AND)
         query.add(~Q(Q(creator__blocked_by_users__blocker_id=self.pk) | Q(creator__user_blocks__blocked_user_id=self.pk)), Q.AND)
         return query
