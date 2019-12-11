@@ -3,7 +3,7 @@ from users.models import User
 from main.models import Item, ItemComment
 from django.utils import timezone
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
-from main.forms import CommentForm, CommentReplyForm
+from main.forms import CommentForm
 from django.template.loader import render_to_string
 from django.views import View
 from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
@@ -22,13 +22,13 @@ class ItemUserCommentList(View):
 			check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
 			if self.user.is_closed_profile:
 				check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
-			comments = item.get_comments(request.user).order_by('-created')
+			comments = item.get_comments(request.user)
 		elif self.user == request.user:
-			comments = item.get_comments(request.user).order_by('-created')
+			comments = item.get_comments(request.user)
 		elif request.user.is_anonymous and self.user.is_closed_profile():
 			raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
 		elif request.user.is_anonymous and not self.user.is_closed_profile():
-			comments = item.get_comments(request.user).order_by('-created')
+			comments = item.get_comments(request.user)
 		page = request.GET.get('page')
 		current_page = Paginator(comments, 6)
 		try:
@@ -37,7 +37,7 @@ class ItemUserCommentList(View):
 			comment_list = current_page.page(1)
 		except EmptyPage:
 			comment_list = current_page.page(current_page.num_pages)
-		comments_html = render_to_string("item_user/comments.html", {"comment_list": comment_list, "request_user": request.user, "parent": item, "form_comment": CommentForm(), "form_reply": CommentReplyForm(), "user": self.user})
+		comments_html = render_to_string("item_user/comments.html", {"comment_list": comment_list, "request_user": request.user, "parent": item, "form_comment": CommentReplyForm(), "form_reply": CommentReplyForm(), "user": self.user})
 
 		return JsonResponse({ "comments": comments_html, })
 
@@ -68,38 +68,41 @@ class ItemCommentUserCreate(View):
 				album=Album.objects.get(creator=request.user, title="Сохраненные фото", is_generic=True, community=None)
 				Photo.objects.create(creator=request.user, file=item_comment_photo2,community=None,is_public=True, album=album, item_comment=new_comment)
 			new_comment.notification_user_comment(request.user)
-			html = render_to_string('item_user/parent_comment.html',{'comment': new_comment, 'request_user': request.user, "form_reply": CommentReplyForm(), 'request': request})
+			html = render_to_string('item_user/parent_comment.html',{'comment': new_comment, 'request_user': request.user, "form_reply": CommentForm(), 'request': request})
 			return JsonResponse(html, safe=False)
 		else:
-			return HttpResponse("@")
+			return HttpResponseBadRequest()
 
 
 class ItemReplyUserCreate(View):
 	def post(self,request,*args,**kwargs):
-		form_post=CommentReplyForm(request.POST, request.FILES)
+		form_post=CommentForm(request.POST, request.FILES)
 		user=User.objects.get(uuid=self.kwargs["uuid"])
 		parent = ItemComment.objects.get(pk=self.kwargs["pk"])
 
 		if form_post.is_valid():
 			comment=form_post.save(commit=False)
-			if not comment.text and not comment.item_comment_photo and not comment.item_comment_photo2:
+			item_comment_photo=form_post.cleaned_data['item_comment_photo']
+			item_comment_photo2=form_post.cleaned_data['item_comment_photo2']
+			if not comment.text and not item_comment_photo and not item_comment_photo2:
 				raise ValidationError('Для добавления комментария необходимо написать что-то или прикрепить изображение')
 			if request.user != user:
 				check_is_not_blocked_with_user_with_id(user=request.user, user_id = user.id)
 				if user.is_closed_profile:
 					check_is_connected_with_user_with_id(user=request.user, user_id = user.id)
 
-			new_comment = comment.create_user_comment(
-														commenter=request.user,
-														item_comment_photo=comment.item_comment_photo,
-														item_comment_photo2=comment.item_comment_photo2,
-														text=comment.text,
-														parent_comment=parent)
+			new_comment = comment.create_user_comment(commenter=request.user, text=comment.text, parent_comment=parent)
+			if item_comment_photo:
+				album=Album.objects.get(creator=request.user, title="Сохраненные фото", is_generic=True, community=None)
+				Photo.objects.create(creator=request.user, file=item_comment_photo,community=None,is_public=True, album=album, item_comment=new_comment)
+			if item_comment_photo2:
+				album=Album.objects.get(creator=request.user, title="Сохраненные фото", is_generic=True, community=None)
+				Photo.objects.create(creator=request.user, file=item_comment_photo2,community=None,is_public=True, album=album, item_comment=new_comment)
 			new_comment.notification_user_reply_comment(request.user)
-			html = render_to_string('item_user/reply_comment.html',{'reply': new_comment, 'request_user': request.user, "form_reply": CommentReplyForm(), 'request': request})
+			html = render_to_string('item_user/reply_comment.html',{'reply': new_comment, 'request_user': request.user, "form_reply": CommentForm(), 'request': request})
 			return JsonResponse(html, safe=False)
 		else:
-			return HttpResponse("!")
+			return HttpResponseBadRequest()
 
 
 def post_update_interactions(request):
