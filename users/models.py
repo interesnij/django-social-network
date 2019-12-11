@@ -296,7 +296,7 @@ class User(AbstractUser):
         my_connections = self.get_all_connection()
         query = []
         for frend in my_connections:
-            user = frend.user
+            user = User.objects.get(pk=frend.user.pk)
             list2 = user.get_all_connection()
             list2.exclude(target_connection__user=self,target_connection__target_user=self)
             query = query + list(list2)
