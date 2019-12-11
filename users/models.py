@@ -294,8 +294,11 @@ class User(AbstractUser):
         my_connections = self.get_all_connection()
         query = []
         for frend in my_connections:
-            user = frend.target_connection.all()
-            query = query + user
+            connection_query = Q(target_connection__user_id=frend.user.id)
+            exclude_reported_and_approved_posts_query = ~Q(target_connection__user__moderated_object__status=ModeratedObject.STATUS_APPROVED)
+            connection_query.add(exclude_reported_and_approved_posts_query, Q.AND)
+            connection = Connect.objects.filter(connection_query)
+            query = query + connection
             query.add(~Q(Q(target_user_id=self.pk)), Q.AND)
         query.add(~Q(Q(creator__blocked_by_users__blocker_id=self.pk) | Q(creator__user_blocks__blocked_user_id=self.pk)), Q.AND)
         return query
