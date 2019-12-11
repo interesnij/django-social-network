@@ -16,6 +16,8 @@ class CommentForm(forms.ModelForm):
 
 class CommentReplyForm(forms.ModelForm):
 
+	item_comment_photo = forms.FileField()
+	item_comment_photo2 = forms.FileField()
 	text=forms.CharField(required=False, widget=forms.TextInput(
             attrs={'class': 'form-control text-comment form-control-rounded'}
         ))
