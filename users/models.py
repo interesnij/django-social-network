@@ -298,10 +298,14 @@ class User(AbstractUser):
         for frend in my_connections:
             user = User.objects.get(pk=frend.user.pk)
             if user.pk != self.pk:
-                frends_of_user = user.get_all_connection()
-                frends_of_user.exclude(target_user_id=self.pk,user_id=self.pk)
-                query = query + list(frends_of_user)
-        return query
+                connection_query = Q(target_connection__user_id=user.id)
+                connection_query = ~Q(target_user_id=self.pk,user_id=self.pk)
+                exclude_reported_and_approved_posts_query = ~Q(target_connection__user__moderated_object__status=ModeratedObject.STATUS_APPROVED)
+                connection_query.add(exclude_reported_and_approved_posts_query, Q.AND)
+                connection_query.add(~Q(Q(target_connection__user__blocked_by_users__blocker_id=self.pk) | Q(target_connection__user__user_blocks__blocked_user_id=self.pk)), Q.AND)
+                query.add(connection_query, Q.AND)
+        queryset = Connect.objects.filter(query)
+        return queryset
 
 
     def get_online_connection(self):
