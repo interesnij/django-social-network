@@ -51,7 +51,7 @@ class ItemCommentUserCreate(View):
 		item = Item.objects.get(uuid=item_uuid)
 		if form_post.is_valid():
 			comment=request.POST
-			text= comment['name_eng']
+			text= comment['text']
 
 			if not text:
 				raise ValidationError('Для добавления комментария необходимо написать что-то или прикрепить изображение')
