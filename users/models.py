@@ -300,8 +300,7 @@ class User(AbstractUser):
             if user_id != self.pk:
                 list = frend.user.get_all_connection()
                 query = query + str(list)
-        queryset = Connect.objects.filter(query)
-        return queryset
+        return query
 
 
     def get_online_connection(self):
