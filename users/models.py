@@ -290,6 +290,16 @@ class User(AbstractUser):
         connection = Connect.objects.filter(connection_query)
         return connection
 
+    def get_common_friend(self):
+        my_connections = self.get_all_connection()
+        query = ()
+        for frend in my_connections:
+            query = query + frend.get_all_connection()
+            query.add(~Q(Q(target_user_id=self.pk)), Q.AND)
+        query.add(~Q(Q(creator__blocked_by_users__blocker_id=self.pk) | Q(creator__user_blocks__blocked_user_id=self.pk)), Q.AND)
+        return query
+
+
     def get_online_connection(self):
         online_connection = self.get_all_connection().get_online()
         return online_connection
