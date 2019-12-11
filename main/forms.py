@@ -3,8 +3,7 @@ from main.models import ItemComment
 
 
 class CommentForm(forms.ModelForm):
-	item_comment_photo = forms.FileField()
-	item_comment_photo2 = forms.FileField()
+	
 	text=forms.CharField(required=False, widget=forms.TextInput(
             attrs={'class': 'form-control text-comment form-control-rounded'}
         ))
