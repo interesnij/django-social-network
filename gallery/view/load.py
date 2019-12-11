@@ -54,36 +54,23 @@ class UserCommentPhoto(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.user=User.objects.get(uuid=self.kwargs["uuid"])
-        self.comment = ItemComment.objects.get(pk=self.kwargs["pk"])
-        try:
-            self.image1 = self.comment.item_comment_photo
-        except:
-            self.image1 = None
-        try:
-            self.image2 = self.comment.item_comment_photo2
-        except:
-            self.image2 = None
-
+        self.comment=ItemComment.objects.get(uuid=self.kwargs["pk"])
         if self.user != request.user and request.user.is_authenticated:
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
             if self.user.is_closed_profile:
                 check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
-            self.photo_1 = self.image1
-            self.photo_2 = self.image2
+            self.photo = Photo.objects.get(photo_uuid=self.kwargs["photo_uuid"])
         elif self.user == request.user and request.user.is_authenticated:
-            self.photo_1 = self.image1
-            self.photo_2 = self.image2
+            self.photo = Photo.objects.get(photo_uuid=self.kwargs["photo_uuid"])
         elif self.user.is_closed_profile() and request.user.is_anonymous:
             raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
         elif not self.user.is_closed_profile() and request.user.is_anonymous:
-            self.photo_1 = self.image1
-            self.photo_2 = self.image2
+            self.photo = Photo.objects.get(photo_uuid=self.kwargs["photo_uuid"])
         return super(UserCommentPhoto,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context=super(UserCommentPhoto,self).get_context_data(**kwargs)
-        context["photo_1"]=self.photo_1
-        context["photo_2"]=self.photo_2
+        context["object"]=self.photo
         context["comment"]=self.comment
         return context
 
