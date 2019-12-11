@@ -58,7 +58,7 @@ class ItemCommentUserCreate(View):
 				check_is_not_blocked_with_user_with_id(user=request.user, user_id = user.pk)
 				if user.is_closed_profile:
 					check_is_connected_with_user_with_id(user=request.user, user_id = user.pk)
-			new_comment = create_user_comment(commenter=request.user, parent_comment=None, item=item, text=text)
+			new_comment = comment.create_user_comment(commenter=request.user, parent_comment=None, item=item, text=comment.text)
 			new_comment.notification_user_comment(request.user)
 			html = render_to_string('item_user/parent_comment.html',{'comment': new_comment, 'request_user': request.user, "form_reply": CommentReplyForm(), 'request': request})
 			return JsonResponse(html, safe=False)
