@@ -50,7 +50,7 @@ class ItemCommentUserCreate(View):
 		item_uuid = request.POST.get('item')
 		item = Item.objects.get(uuid=item_uuid)
 		if form_post.is_valid():
-			comment=request.POST
+			comment=form_post.save(commit=False)
 			text= comment['text']
 
 			if not text:
