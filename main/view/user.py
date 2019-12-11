@@ -52,7 +52,7 @@ class ItemCommentUserCreate(View):
 		if form_post.is_valid():
 			comment=form_post.save(commit=False)
 
-			if not comment.text and not item_comment_photo and not item_comment_photo2:
+			if not comment.text:
 				raise ValidationError('Для добавления комментария необходимо написать что-то или прикрепить изображение')
 			if request.user.pk != user.pk:
 				check_is_not_blocked_with_user_with_id(user=request.user, user_id = user.pk)
