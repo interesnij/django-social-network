@@ -44,7 +44,7 @@
   });
 
   $('#ajax').on('click', '.c_comment.comments_close', function() {
-    var btn = $(this); var item = btn.closest(".infinite-item"); var uuid = item.attr("item-id"); var pk = btn.data('pk'); var container = item.find(".load_comments")
+    var btn = $(this); var item = btn.closest(".infinite-item"); var uuid = item.attr("item-id"); var pk = btn.data('pk'); var container = item.find(".load_comments");
       $.ajax({
           url: "/community/comment/" + item + "/" + pk + "/", data: {'item': item}, cache: false,
           beforeSend: function() { url.find(".load_comments").html("<span style='display:flex;justify-content: center;'><img src='/static/images/loading.gif'></span>"); },
