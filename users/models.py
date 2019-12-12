@@ -296,10 +296,10 @@ class User(AbstractUser):
         user = User.objects.get(pk=user_id)
         my_frends = self.get_all_connection()
         user_frends = user.get_all_connection()
-        query = my_frends
-        #for frend in my_frends:
-        #    if frend in user_frends:
-        #        query + frend
+        query = []
+        for frend in my_frends:
+            if frend in user_frends:
+                query + str(frend)
 
         return query
 
