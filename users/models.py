@@ -407,7 +407,7 @@ class User(AbstractUser):
         query_user = Q(target_connection__target_user_id__in=user_frends_ids)
         if not connections and user_connections:
             return "not connections"
-        query_user = ~Q(query)
+        query = ~Q(query_user)
 
         connection = Connect.objects.filter(query_user)
         return connection
