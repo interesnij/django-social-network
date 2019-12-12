@@ -409,13 +409,16 @@ class User(AbstractUser):
         frends_ids = [target_user['target_user_id'] for target_user in frends]
         query = []
         for frend in frends_ids:
-            frends_frends = frend.user.connections.values('target_user_id')
+            query_ = []
+            user = User.objects.get(pk=frend)
+            frends_frends = user.connections.values('target_user_id')
             frend_frend_ids = [target_user['target_user_id'] for target_user in frends_frends]
-            query = Q(creator__in=frends_ids, is_deleted=False, status=Item.STATUS_PUBLISHED)
-            connection_frend.add(~Q(Q(target_connection__user__blocked_by_users__blocker_id=frend.user.id) | Q(target_connection__user__user_blocks__blocked_user_id=frend.user.id)), Q.AND)
-            connection_frend.add(~Q(Q(target_connection__user_id=self.id) | Q(target_connection__target_user_id=self.id)), Q.AND)
-            connection_query.add(connection_frend, Q.AND)
-        connection = Connect.objects.filter(connection_query).distinct()
+            blocked = ~Q(Q(target_connection__user__blocked_by_users__blocker_id=frend_frend_ids) | Q(target_connection__user__user_blocks__blocked_user_id=frend_frend_ids))
+            connections.add(~Q(Q(target_connection__user_id=frends_frends) | Q(target_connection__target_user_id=frends_frends)), Q.AND)
+            query_.add(~Q(blocked), Q.AND)
+            query_.add(~Q(connections), Q.AND)
+            query = query + query_
+        connection = Connect.objects.filter(query).distinct()
         return connection
 
     def join_community_with_name(self, community_name):
