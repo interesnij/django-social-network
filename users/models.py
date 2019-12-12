@@ -399,15 +399,15 @@ class User(AbstractUser):
         return connection
 
     def get_common_friends(self,user_id):
-        connections = self.connections.values('target_connection_id')
-        frends_ids = [target_connection['target_connection_id'] for target_connection in connections]
-        query = Q(target_connection__id__in=frends_ids)
+        connections = self.connections.values('target_user_id')
+        frends_ids = [target_user['target_user_id'] for target_connection in connections]
+        query = Q(target_connection__user_id__in=frends_ids)
         user = User.objects.get(pk=user_id)
-        user_connections = user.connections.values('target_connection_id')
-        user_frends_ids = [target_connection['target_connection_id'] for target_user in user_connections]
+        user_connections = user.connections.values('target_user_id')
+        user_frends_ids = [target_user['target_user_id'] for target_user in user_connections]
         if not connections and user_connections:
             return "not connections"
-        _query = Q(target_connection__id__in=user_frends_ids)
+        _query = Q(target_connection__user_id__in=user_frends_ids)
         _query.filter(query)
         connection = Connect.objects.filter(_query).distinct()
 
