@@ -415,9 +415,6 @@ class User(AbstractUser):
             query_ = Q()
             frends_frends = user.connections.values('target_user_id')
             _query = Q(target_connection__user_id=frend)
-            frend_frend_ids = [target_user['target_user_id'] for target_user in frends_frends]
-            blocked = ~Q(Q(target_connection__user__blocked_by_users__blocker_id=frend_frend_ids) | Q(target_connection__user__user_blocks__blocked_user_id=frend_frend_ids))
-            connections = ~Q(Q(target_connection__user_id=frend_frend_ids) | Q(target_connection__target_user_id=frend_frend_ids))
             
             query.add(_query, Q.AND)
         return query
