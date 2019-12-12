@@ -400,11 +400,11 @@ class User(AbstractUser):
 
     def get_common_friends(self,user_id):
         connections = self.connections.values('target_connection_id')
-        frends_ids = [target_connection['target_connection_id'] for target_user in connections]
+        frends_ids = [id['target_connection_id'] for target_user in connections]
         query = Q(target_connection__user_id__in=frends_ids)
         user = User.objects.get(pk=user_id)
         user_connections = user.connections.values('target_user_id')
-        user_frends_ids = [target_connection['target_connection_id'] for target_user in user_connections]
+        user_frends_ids = [id['target_connection_id'] for target_user in user_connections]
         if not connections and user_connections:
             return "not connections"
         query_ = Q(target_connection__user_id__in=user_frends_ids)
