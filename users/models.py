@@ -409,7 +409,7 @@ class User(AbstractUser):
         if not frends:
             return "not frends"
         frends_ids = [target_user['target_user_id'] for target_user in frends]
-        query = Q()
+        query = Q(target_connection__user_id=frends_ids)
         for frend in frends_ids:
             user = User.objects.get(pk=frend)
             _query = Q(target_connection__user_id=frend)
@@ -419,7 +419,7 @@ class User(AbstractUser):
             connections = ~Q(Q(target_connection__user_id=frend_frend_ids) | Q(target_connection__target_user_id=frend_frend_ids))
             _query.add(~Q(blocked), Q.AND)
             _query.add(~Q(connections), Q.AND)
-            
+            query.add(_query, Q.AND)
         return query
 
     def join_community_with_name(self, community_name):
