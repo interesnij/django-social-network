@@ -406,8 +406,9 @@ class User(AbstractUser):
         my_query = ~Q(target_connection__target_user_id__in=my_frends_ids)
         user_query = Q(target_connection__user_id__in=user_frend_ids)
         my_query.add(user_query, Q.AND)
+        connection = Connect.objects.filter(my_query).distinct()
 
-        return my_query
+        return connection
 
     def join_community_with_name(self, community_name):
         check_can_join_community_with_name(user=self, community_name=community_name)
