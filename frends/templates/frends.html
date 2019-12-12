@@ -121,7 +121,7 @@
             </div>
             <div class="card-body px-0 py-0">
                 <ul class="list-group border-top border-bottom list-group-flush">
-                    {% for object in user.get_common_friend2 %}
+                    {% for object in request.user.get_common_friend2 %}
                     <li class="list-group-item">
                         <div class="media">
                             <figure>
