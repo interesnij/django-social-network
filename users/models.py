@@ -409,15 +409,15 @@ class User(AbstractUser):
         if not frends:
             return "not frends"
         frends_ids = [target_user['target_user_id'] for target_user in frends]
-        query = Q()
+        query = Q(target_connection__user_id=self.id)
         for frend in frends_ids:
             user = User.objects.get(pk=frend)
-            _query = Q()
+            _query = Q(target_connection__user_id=frend)
             frends_frends = user.connections.values('target_user_id')
             frend_frend_ids = [target_user['target_user_id'] for target_user in frends_frends]
-            blocked = ~Q(Q(blocked_by_users__blocker_id__in=frend_frend_ids) | Q(user_blocks__blocked_user_id__in=frend_frend_ids))
+            blocked = ~Q(Q(target_connection__user__blocked_by_users__blocker_id__in=frend_frend_ids) | Q(target_connection__user__user_blocks__blocked_user_id__in=frend_frend_ids))
             #connections = ~Q(Q(id__in=frend) | Q(target_user_id__in=frend))
-            _query.add(blocked, Q.AND) 
+            _query.add(blocked, Q.AND)
             #_query.add(~Q(connections), Q.AND)
             query.add(_query, Q.AND)
         return query
