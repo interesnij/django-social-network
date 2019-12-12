@@ -406,7 +406,7 @@ class User(AbstractUser):
         user_frend_ids = [target_user['target_connection_id'] for target_user in user_frends]
         for frend in my_frends_ids:
             if frend in user_frend_ids:
-                _query = Q(Q(target_connection_id=frend) | Q(target_connection_id=frend))
+                _query = Q(target_connection_id=frend)
                 query.add(_query, Q.AND)
         connection = Connect.objects.filter(query).distinct()
 
