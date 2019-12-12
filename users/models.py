@@ -409,7 +409,7 @@ class User(AbstractUser):
         if not frends:
             return "not frends"
         frends_ids = [target_user['target_user_id'] for target_user in frends]
-        query = Q(target_connection__user_id=self.id)
+        query = Q()
         for frend in frends_ids:
             user = User.objects.get(pk=frend)
             _query = Q(target_connection__user_id=frend)
