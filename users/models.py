@@ -420,7 +420,6 @@ class User(AbstractUser):
             _query.add(~Q(blocked), Q.AND)
             _query.add(~Q(connections), Q.AND)
             query.add(_query, Q.AND)
-        #connection = Connect.objects.filter(target_connection__user_id=query).distinct()
         return query
 
     def join_community_with_name(self, community_name):
