@@ -408,8 +408,7 @@ class User(AbstractUser):
         if not connections and user_connections:
             return "not connections"
 
-
-        connection = Connect.objects.filter(query_user).distinct()
+        connection = Connect.objects.filter(query).distinct()
 
 
     def join_community_with_name(self, community_name):
