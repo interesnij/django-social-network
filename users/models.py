@@ -418,7 +418,7 @@ class User(AbstractUser):
             connections = ~Q(Q(target_connection__user_id=frends_frends) | Q(target_connection__target_user_id=frends_frends))
             query_.add(~Q(blocked), Q.AND)
             query_.add(~Q(connections), Q.AND)
-            query = query + query_
+            query.add(query_, Q.AND)
         connection = Connect.objects.filter(query).distinct()
         return connection
 
