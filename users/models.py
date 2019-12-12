@@ -293,17 +293,6 @@ class User(AbstractUser):
         connection = Connect.objects.filter(connection_query)
         return connection
 
-    def get_common_friend(self):
-        my_connections = self.get_all_connection()
-        query = []
-        for frend in my_connections:
-            user = User.objects.get(pk=frend.user.pk)
-            target_user = User.objects.get(pk=frend.target_user.pk)
-            if user.pk != self.pk and target_user.pk != self.pk:
-                list2 = user.get_all_connection()
-                query = query + list(list2)
-        return query
-
     def get_online_connection(self):
         online_connection = self.get_all_connection().get_online()
         return online_connection
@@ -390,7 +379,7 @@ class User(AbstractUser):
         final_queryset = own_posts_queryset.union(community_posts_queryset, followed_users_queryset, frends_queryset)
         return final_queryset
 
-    def get_common_friend2(self):
+    def get_possible_friends(self):
         frends = self.connections.values('target_user_id')
         if not frends:
             return "not frends"
@@ -408,6 +397,20 @@ class User(AbstractUser):
             query.add(_query, Q.AND)
         connection = Connect.objects.filter(query).distinct()
         return connection
+
+    def get_common_friends(self,user_id):
+        connections = self.connections.values('target_connection_id')
+        frends_ids = [target_connection['target_connection_id'] for target_connection in connections]
+        query = Q(target_connection__id__in=frends_ids)
+        user = User.objects.get(pk=user_id)
+        user_connections = user.connections.values('target_connection_id')
+        user_frends_ids = [target_connection['target_connection_id'] for target_user in user_connections]
+        if not connections and user_connections:
+            return "not connections"
+        _query = Q(target_connection__id__in=user_frends_ids)
+        _query.filter(query)
+        connection = Connect.objects.filter(_query).distinct()
+
 
     def join_community_with_name(self, community_name):
         check_can_join_community_with_name(user=self, community_name=community_name)
