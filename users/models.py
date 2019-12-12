@@ -408,7 +408,7 @@ class User(AbstractUser):
         query = Q(target_connection__in=result)
         connection = Connect.objects.filter(query)
 
-        return result
+        return query
 
     def join_community_with_name(self, community_name):
         check_can_join_community_with_name(user=self, community_name=community_name)
