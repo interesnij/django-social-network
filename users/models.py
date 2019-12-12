@@ -409,6 +409,7 @@ class User(AbstractUser):
             return "not connections"
 
         connection = Connect.objects.filter(query).distinct()
+        return connection
 
 
     def join_community_with_name(self, community_name):
