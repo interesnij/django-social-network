@@ -405,10 +405,10 @@ class User(AbstractUser):
         my_frends_ids = [target_user['target_user_id'] for target_user in my_frends]
         user_frend_ids = [target_user['target_user_id'] for target_user in user_frends]
         result=list(set(my_frends_ids) & set(user_frend_ids))
-        query.add(Q(Q(target_connection__user_id__in=result) | Q(target_connection__target_user_id__in=result)), Q.OR)
-        connection = Connect.objects.filter(query)
+        query.add(Q(user_id__in=result))
+        connection = User.objects.filter(query)
 
-        return result
+        return query
 
     def join_community_with_name(self, community_name):
         check_can_join_community_with_name(user=self, community_name=community_name)
