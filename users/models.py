@@ -299,7 +299,7 @@ class User(AbstractUser):
         query = ()
         for frend in my_frends:
             if frend in user_frends:
-                query + frend
+                query + list(frend)
 
         return query
 
