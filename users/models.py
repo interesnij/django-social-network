@@ -412,7 +412,7 @@ class User(AbstractUser):
                     _query = Q(target_connection_id=frend)
                     query_user.add(_query, Q.AND)
                 else:
-                    pass
+                    q=1
 
         connection = Connect.objects.filter(query_user)
         return connection
