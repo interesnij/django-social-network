@@ -292,6 +292,19 @@ class User(AbstractUser):
         connection = Connect.objects.filter(connection_query)
         return connection
 
+    def get_common_friends(self,user_id):
+        user = User.objects.get(pk=user_id)
+        my_frends = self.get_all_connection()
+        user_frends = user.get_all_connection()
+        query = Q()
+        for frend in my_frends:
+            if frend in user_frends:
+                _query = Q(target_connection__user_id=frend.user.pk)
+                query.add(_query, Q.AND)
+
+        connection = Connect.objects.filter(query)
+        return connection
+
     def get_online_connection(self):
         online_connection = self.get_all_connection().get_online()
         return online_connection
@@ -396,22 +409,6 @@ class User(AbstractUser):
             query.add(_query, Q.AND)
         connection = Connect.objects.filter(query).distinct()
         return connection
-
-    def get_common_friends(self,user_id):
-        user = User.objects.get(pk=user_id)
-        my_frends = self.connections.values('user_id')
-        user_frends = user.connections.values('user_id')
-        my_frends_ids = [target_user['user_id'] for target_user in my_frends]
-        user_frends_ids = [target_user['user_id'] for target_user in user_frends]
-        query = Q()
-        for frend in my_frends_ids:
-            if frend in user_frends_ids:
-                _query = Q(target_connection__user_id=frend)
-                query.add(_query, Q.AND)
-
-        connection = Connect.objects.filter(query)
-        return connection
-
 
     def join_community_with_name(self, community_name):
         check_can_join_community_with_name(user=self, community_name=community_name)
