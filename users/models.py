@@ -397,8 +397,8 @@ class User(AbstractUser):
         connection = Connect.objects.filter(query).distinct()
         return connection
 
-    def get_common_friends(self,user_id):
-        user = User.objects.get(pk=user_id)
+    def get_common_friends(self,user):
+        user = User.objects.get(pk=user.pk)
         my_frends = self.connections.values('user_id')
         user_frends = user.connections.values('user_id')
         my_frends_ids = [target_user['user_id'] for target_user in my_frends]
