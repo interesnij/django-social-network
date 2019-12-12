@@ -409,7 +409,7 @@ class User(AbstractUser):
         for frend in frends_ids:
             if frend in user_frends_ids:
                 #any(op in frend for op in user_frends_ids)
-                _query = Q(target_connection__user_id__in=frend)
+                _query = Q(target_connection__target_user_id__in=frend)
                 query_user.add(_query, Q.AND)
             else:
                 any = False
