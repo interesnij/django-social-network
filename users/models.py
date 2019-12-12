@@ -404,8 +404,8 @@ class User(AbstractUser):
         if not connections and user_connections:
             return "not connections"
         query_user = Q()
-        frends_ids = [target_connection['target_user_id'] for target_connection in connections]
-        user_frends_ids = [target_connection['target_user_id'] for target_connection in user_connections]
+        frends_ids = [target_user['target_user_id'] for target_user in connections]
+        user_frends_ids = [target_user['target_user_id'] for target_user in user_connections]
         for frend in frends_ids:
             if frend in user_frends_ids:
                 #any(op in frend for op in user_frends_ids)
