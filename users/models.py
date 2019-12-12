@@ -393,7 +393,7 @@ class User(AbstractUser):
     def get_common_friend2(self):
         frends = self.connections.values('target_user_id')
         if not frends:
-            retutn "not frends"
+            return "not frends"
         frends_ids = [target_user['target_user_id'] for target_user in frends]
         query = Q()
         for frend in frends_ids:
