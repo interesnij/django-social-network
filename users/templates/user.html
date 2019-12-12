@@ -10,7 +10,7 @@
 {% endblock %}
 {% block content %}
 {% for object in common_frends %}
-{{ object.user.get_full_name }}
+{{ object.target_user.get_full_name }}
 {% endfor %}
 {% if not is_blocked %}
 <div class="row user_page">
