@@ -408,7 +408,7 @@ class User(AbstractUser):
         if not connections and user_connections:
             return "not connections"
 
-        connection = Connect.objects.filter(query).distinct()
+        connection = Connect.objects.filter(query_user)
         return connection
 
 
