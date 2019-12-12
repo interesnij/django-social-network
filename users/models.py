@@ -409,7 +409,7 @@ class User(AbstractUser):
             return "not connections"
         query = ~Q(query_user)
 
-        connection = Connect.objects.filter(query_user)
+        connection = Connect.objects.filter(query)
         return connection
 
 
