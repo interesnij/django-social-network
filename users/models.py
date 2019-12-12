@@ -406,14 +406,13 @@ class User(AbstractUser):
         query_user = Q()
         frends_ids = [target_connection['target_connection_id'] for target_connection in connections]
         user_frends_ids = [target_connection['target_connection_id'] for target_connection in user_connections]
-        for frend in frends_ids:
-            def any(user_frends_ids):
-                for frend in user_frends_ids:
-                    if frend:
-                        _query = Q(target_connection_id=frend)
-                        query_user.add(_query, Q.AND)
-                    else:
-                        pass
+        def any(user_frends_ids):
+            for frend in user_frends_ids:
+                if frend:
+                    _query = Q(target_connection_id=frend)
+                    query_user.add(_query, Q.AND)
+                else:
+                    pass
 
         connection = Connect.objects.filter(query_user)
         return connection
