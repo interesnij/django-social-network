@@ -405,7 +405,7 @@ class User(AbstractUser):
         user_frend_ids = [target_user['user_id'] for target_user in user_frends]
         my_query = Q(target_connection__user_id__in=my_frends_ids)
         user_query = ~Q(target_connection__user_id__in=user_frend_ids)
-        my_query.add(user_query, Q.AND)
+        
         connection = Connect.objects.filter(my_query).distinct()
 
         return connection
