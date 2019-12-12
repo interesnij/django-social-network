@@ -98,6 +98,7 @@ class ProfileUserView(TemplateView):
             self.is_frend = None
         if request.user.is_authenticated:
             self.is_blocked = request.user.has_blocked_user_with_id(self.user)
+        self.common_frends = request.user.get_common_friends(self.user.pk)
         self.communities=Community.objects.filter(memberships__user__id=self.user.pk)[0:5]
         return super(ProfileUserView,self).get(request,*args,**kwargs)
 
@@ -106,5 +107,5 @@ class ProfileUserView(TemplateView):
         context['user'] = self.user
         context['communities'] = self.communities
         context['is_frend'] = self.is_frend
-        context['is_blocked'] = self.is_blocked
+        context['common_frends'] = self.common_frends
         return context
