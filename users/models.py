@@ -17,6 +17,7 @@ from gallery.models import Photo, Album
 from moderation.models import ModeratedObject, ModerationPenalty
 from common.checkers import *
 from django.db.models import Q, F, Count
+from itertools import chain
 
 
 class User(AbstractUser):
@@ -305,6 +306,7 @@ class User(AbstractUser):
 
     def get_common_friend2(self):
         connection_query = self.get_all_connection()
+        query = []
         for frend in connection_query:
             connection_frend = Q(target_connection__user_id=frend.user.id)
             connection_frend.add(~Q(Q(target_connection__user__blocked_by_users__blocker_id=frend.user.id) | Q(target_connection__user__user_blocks__blocked_user_id=frend.user.id)), Q.AND)
@@ -400,8 +402,21 @@ class User(AbstractUser):
         frends_query.add(reported_posts_exclusion_query, Q.AND)
         frends_queryset = Item.objects.select_related(*posts_select_related).only(*items_only).filter(frends_query)
         final_queryset = own_posts_queryset.union(community_posts_queryset, followed_users_queryset, frends_queryset)
-
         return final_queryset
+
+    def get_common_friend2(self):
+        frends = self.connections.values('target_user_id')
+        frends_ids = [target_user['target_user_id'] for target_user in frends]
+        query = []
+        for frend in frends_ids:
+            frends_frends = frend.user.connections.values('target_user_id')
+            frend_frend_ids = [target_user['target_user_id'] for target_user in frends_frends]
+            query = Q(creator__in=frends_ids, is_deleted=False, status=Item.STATUS_PUBLISHED)
+            connection_frend.add(~Q(Q(target_connection__user__blocked_by_users__blocker_id=frend.user.id) | Q(target_connection__user__user_blocks__blocked_user_id=frend.user.id)), Q.AND)
+            connection_frend.add(~Q(Q(target_connection__user_id=self.id) | Q(target_connection__target_user_id=self.id)), Q.AND)
+            connection_query.add(connection_frend, Q.AND)
+        connection = Connect.objects.filter(connection_query).distinct()
+        return connection
 
     def join_community_with_name(self, community_name):
         check_can_join_community_with_name(user=self, community_name=community_name)
