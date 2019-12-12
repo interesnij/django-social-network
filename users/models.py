@@ -288,7 +288,7 @@ class User(AbstractUser):
         connection_query = Q(target_connection__user_id=self.id)
         exclude_reported_and_approved_posts_query = ~Q(target_connection__user__moderated_object__status=ModeratedObject.STATUS_APPROVED)
         connection_query.add(exclude_reported_and_approved_posts_query, Q.AND)
-        connection_query.add(~Q(Q(target_connection__user__blocked_by_users__blocker_id=self.pk) | Q(target_connection__user__user_blocks__blocked_user_id=self.pk)), Q.AND)
+        connection_query.add(~Q(Q(target_connection__user__blocked_by_users__blocker_id=self.id) | Q(target_connection__user__user_blocks__blocked_user_id=self.id)), Q.AND)
         connection = Connect.objects.filter(connection_query)
         return connection
 
@@ -300,9 +300,20 @@ class User(AbstractUser):
             target_user = User.objects.get(pk=frend.target_user.pk)
             if user.pk != self.pk and target_user.pk != self.pk:
                 list2 = user.get_all_connection()
-                list2.exclude(target_connection__user=self,target_connection__target_user=self)
                 query = query + list(list2)
         return query
+
+    def get_common_friend2(self):
+        connection_query = Q(target_connection__user_id=self.id)
+        exclude_reported_and_approved_posts_query = ~Q(target_connection__user__moderated_object__status=ModeratedObject.STATUS_APPROVED)
+        connection_query.add(exclude_reported_and_approved_posts_query, Q.AND)
+        for frend in connection_query:
+            connection_query.add(target_connection__user_id=frend.user.id, Q.AND)
+            connection_query.add(~Q(Q(target_connection__user__blocked_by_users__blocker_id=frend.user.id) | Q(target_connection__user__user_blocks__blocked_user_id=frend.user.id)), Q.AND)
+            connection_query.add(~Q(Q(target_connection__user_id=self.id) | Q(target_connection__target_user_id=self.id)), Q.AND)
+        connection = Connect.objects.filter(connection_query).distinct()
+        return connection
+
 
 
     def get_online_connection(self):
