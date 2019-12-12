@@ -404,7 +404,7 @@ class User(AbstractUser):
         my_frends_ids = [target_user['target_user_id'] for target_user in my_frends]
         user_frends_ids = [target_user['target_user_id'] for target_user in user_frends]
         query = Q()
-        for frend in frends_ids:
+        for frend in my_frends_ids:
             if frend in user_frends_ids:
                 _query = Q(target_connection__user_id=frend)
                 query.add(_query, Q.AND)
