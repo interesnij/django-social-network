@@ -304,23 +304,9 @@ class User(AbstractUser):
                 query = query + list(list2)
         return query
 
-    def get_common_friend2(self):
-        connection_query = self.get_all_connection()
-        query = []
-        for frend in connection_query:
-            connection_frend = Q(target_connection__user_id=frend.user.id)
-            connection_frend.add(~Q(Q(target_connection__user__blocked_by_users__blocker_id=frend.user.id) | Q(target_connection__user__user_blocks__blocked_user_id=frend.user.id)), Q.AND)
-            connection_frend.add(~Q(Q(target_connection__user_id=self.id) | Q(target_connection__target_user_id=self.id)), Q.AND)
-            connection_query.add(connection_frend, Q.AND)
-        connection = Connect.objects.filter(connection_query).distinct()
-        return connection
-
-
-
     def get_online_connection(self):
         online_connection = self.get_all_connection().get_online()
         return online_connection
-
 
     def get_posts(self):
         posts_query = Q(creator_id=self.id, is_deleted=False, status=Item.STATUS_PUBLISHED, community=None)
