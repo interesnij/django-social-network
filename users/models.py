@@ -407,7 +407,8 @@ class User(AbstractUser):
         user_frends_ids = [target_user['target_user_id'] for target_user in frends_ids]
         if not connections and user_connections:
             return "not connections"
-        query_ = Q(target_connection__user_id__in=user_frends_ids)
+        query_ = Q(target_connection__user_id__in=frends_ids)
+        query_ = ~Q(target_connection__user_id__in=user_frends_ids)
 
         connection = Connect.objects.filter(query_).distinct()
 
