@@ -404,12 +404,12 @@ class User(AbstractUser):
         user = User.objects.get(pk=user_id)
         user_connections = user.connections.values('user_id')
         user_frends_ids = [target_user['user_id'] for target_user in user_connections]
+        query_user = Q(target_connection__user_id__in=user_frends_ids)
         if not connections and user_connections:
             return "not connections"
-        query_ = Q(target_connection__user_id__in=user_frends_ids)
-        
 
-        connection = Connect.objects.filter(query_).distinct()
+
+        connection = Connect.objects.filter(query_user).distinct()
 
 
     def join_community_with_name(self, community_name):
