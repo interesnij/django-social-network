@@ -403,8 +403,8 @@ class User(AbstractUser):
         user_frends = user.connections.values('user_id')
         my_frends_ids = [target_user['target_user_id'] for target_user in my_frends]
         user_frend_ids = [target_user['user_id'] for target_user in user_frends]
-        my_query = Q(target_connection__target_user_id__in=my_frends_ids)
-        user_query = ~Q(target_connection__user_id__in=user_frend_ids)
+        my_query = ~Q(target_connection__target_user_id__in=my_frends_ids)
+        user_query = Q(target_connection__user_id__in=user_frend_ids)
         my_query.add(user_query, Q.AND)
 
         return my_query
