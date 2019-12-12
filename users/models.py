@@ -408,7 +408,7 @@ class User(AbstractUser):
         user_frends_ids = [target_connection['target_connection_id'] for target_connection in user_connections]
         for frend in frends_ids:
             try:
-                any = any(op in frend for op in user_frends_ids)
+                any(op in frend for op in user_frends_ids)
                 _query = Q(target_connection_id=frend)
                 query_user.add(_query, Q.AND)
             except:
