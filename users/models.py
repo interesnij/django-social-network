@@ -412,10 +412,10 @@ class User(AbstractUser):
         query = Q()
         for frend in frends_ids:
             user = User.objects.get(pk=frend)
-            _query = Q(target_connection__user_id=frend)
             frends_frends = user.connections.values('target_user_id')
             frend_frend_ids = [target_user['target_user_id'] for target_user in frends_frends]
-            blocked = ~Q(Q(target_connection__user__blocked_by_users__blocker_id__in=frend_frend_ids) | Q(target_connection__user__user_blocks__blocked_user_id__in=frend_frend_ids))
+            _query = Q(target_connection__user_id__in=frend_frend_ids)
+            blocked = ~Q(Q(target_connection__user__blocked_by_users__blocker_id__in=self.pk) | Q(target_connection__user__user_blocks__blocked_user_id__in=self.pk))
             connections = ~Q(Q(target_connection__user_id=self.pk) | Q(target_connection__target_user_id=self.pk))
             _query.add(blocked, Q.AND)
             _query.add(connections, Q.AND)
