@@ -412,11 +412,15 @@ class User(AbstractUser):
         query = Q()
         for frend in frends_ids:
             user = User.objects.get(pk=frend)
-
+            query_ = Q()
             frends_frends = user.connections.values('target_user_id')
             _query = Q(target_connection__user_id=frend)
-            
-            query.add(_query, Q.AND)
+            frend_frend_ids = [target_user['target_user_id'] for target_user in frends_frends]
+            blocked = ~Q(Q(target_connection__user__blocked_by_users__blocker_id=frend_frend_ids) | Q(target_connection__user__user_blocks__blocked_user_id=frend_frend_ids))
+            connections = ~Q(Q(target_connection__user_id=frend_frend_ids) | Q(target_connection__target_user_id=frend_frend_ids))
+            _query.add(~Q(blocked), Q.AND)
+            _query.add(~Q(connections), Q.AND)
+            query.add(query_, Q.AND)
         return query
 
     def join_community_with_name(self, community_name):
