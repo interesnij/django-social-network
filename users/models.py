@@ -399,8 +399,8 @@ class User(AbstractUser):
 
     def get_common_friends(self,user_id):
         user = User.objects.get(pk=user_id)
-        connections = self.connections.values('target_user_id')
-        user_connections = user.connections.values('target_user_id')
+        connections = self.connections.values('target_connection_id')
+        user_connections = user.connections.values('target_connection_id')
         if not connections and user_connections:
             return "not connections"
         query_user = Q()
