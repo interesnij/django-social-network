@@ -403,7 +403,7 @@ class User(AbstractUser):
         query = Q(target_connection__user_id__in=frends_ids)
         user = User.objects.get(pk=user_id)
         user_connections = user.connections.values('user_id')
-        user_frends_ids = [target_user['user_id'] for target_user in user_connections]
+        user_frends_ids = [target_user['target_user_id'] for target_user in user_connections]
         query_user = Q(target_connection__user_id__in=user_frends_ids)
         if not connections and user_connections:
             return "not connections"
