@@ -296,14 +296,12 @@ class User(AbstractUser):
         user = User.objects.get(pk=user_id)
         my_frends = self.get_all_connection()
         user_frends = user.get_all_connection()
-        query = Q()
+        query = ()
         for frend in my_frends:
             if frend in user_frends:
-                _query = Q(target_connection__user_id=frend.user.pk)
-                query.add(_query, Q.AND)
+                query + frend
 
-        connection = Connect.objects.filter(query)
-        return connection
+        return query
 
     def get_online_connection(self):
         online_connection = self.get_all_connection().get_online()
