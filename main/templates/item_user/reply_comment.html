@@ -16,6 +16,7 @@
   }
 </style>
 <div class="media " reply-id="{{ reply.id }}">
+  <a href="{% url 'user' pk=reply.commenter.pk %}" class="ajax">
     <figure>
       {% if reply.commenter.get_avatar %}
         <img src="{{ reply.commenter.get_avatar.file|thumbnail_url:'small_avatar' }}" class="pull-left" style="border-radius:50px;width:30px;" alt="User Image" class="user-image">
@@ -23,8 +24,12 @@
         <img class="pull-left thumb_small" src="{% static 'images/icons/person-24px.svg' %}" />
       {% endif %}
     </figure>
+  </a>
     <div class="media-body">
-        <h5 class="mt-0"><span class="commenter_first_name">{{ reply.commenter.first_name }}</span> {{ reply.commenter.last_name }}
+        <h5 class="mt-0">
+          <a href="{% url 'user' pk=reply.commenter.pk %}" class="ajax">
+            <span class="commenter_first_name">{{ reply.commenter.first_name }}</span> {{ reply.commenter.last_name }}
+          </a>
             <small class="text-muted float-right">{{ reply.created|naturaltime }}</small>
         </h5>
         <p>{{ reply.text|safe }}</p>

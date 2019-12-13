@@ -1,6 +1,7 @@
 {% load staticfiles humanize liked_user thumbnail %}
 
 <div class="media infinite-item" comment-id="{{ comment.id }}">
+  <a href="{% url 'user' pk=comment.commenter.pk %}" class="ajax">
     <figure>
         {% if comment.commenter.get_avatar %}
           <img src="{{ comment.commenter.get_avatar.file|thumbnail_url:'small_avatar' }}" class="pull-left" style="border-radius:50%;width:30px;" alt="User Image" class="user-image">
@@ -8,8 +9,12 @@
           <img class="pull-left thumb_small" src="{% static 'images/icons/person-24px.svg' %}" />
         {% endif %}
     </figure>
+  </a>
     <div class="media-body">
-        <h5 class="mt-0"><span class="commenter_first_name">{{ comment.commenter.first_name }}</span> {{ comment.commenter.last_name }}
+        <h5 class="mt-0">
+          <a href="{% url 'user' pk=comment.commenter.pk %}" class="ajax">
+            <span class="commenter_first_name">{{ comment.commenter.first_name }}</span> {{ comment.commenter.last_name }}
+          </a>
             <small class="text-muted float-right">{{ comment.created|naturaltime }}</small>
         </h5>
         <p>{{ comment.text|safe }}</p>
