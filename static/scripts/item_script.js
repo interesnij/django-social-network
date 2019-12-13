@@ -182,6 +182,11 @@ $('#ajax').on('click', '.upload_photo', function() {
                 } } else { this.value = null; } } entrou = true; setTimeout(function() { entrou = false; }, 1000); img.prev().prev().show();});
 
   });
+  $('#ajax').on('click', '.delete_thumb', function() {
+    var img = $(this);
+    img.empty();
+    img.hide();
+  });
 
   $('#ajax').on('click', '.comment_photo2', function() {
     var img = $(this); var entrou = false; var imageLoader = img.prev();
