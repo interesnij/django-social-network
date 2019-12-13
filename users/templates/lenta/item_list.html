@@ -13,7 +13,7 @@
         <a href=""><span class="new-posts"></span> Загрузить новые записи</a>
     </div>
 
-    <span class="stream"> 
+    <span class="stream">
 
         {% if object.article %}
         {% include 'item_user/article.html' with article=article %}
@@ -48,7 +48,9 @@
 
 {% else %}
 <div class="card mb-4">
-  <img src="{% static 'images/no_posts.png' %}">
+  <div class="card-body">
+    <img src="{% static 'images/no_posts.png' %}">
+  </div>
   <h6> Пока ничего нет...</h6>
 </div>
 {% endif %}
