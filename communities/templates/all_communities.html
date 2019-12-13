@@ -41,7 +41,9 @@
                                     <h6 class="my-0 mt-1">{{ object.name }}
                                     </h6>
                                 </a>
-                                <p>Вступить в сообщество</p>
+                                {% if object.category %}
+                                <p class="small">{{ object.category }}</p>
+                                {% endif %}
                             </div>
                         </div>
                     </li>
