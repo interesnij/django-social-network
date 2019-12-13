@@ -308,8 +308,6 @@ class User(AbstractUser):
         frends = self.get_all_connection()
         query = []
         for frend in frends:
-            if query[5]:
-                break
             if frend.get_online():
                 query += [frend,]
         return query[0:5]
