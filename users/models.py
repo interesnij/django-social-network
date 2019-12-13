@@ -397,7 +397,7 @@ class User(AbstractUser):
         connection = Connect.objects.filter(query).distinct()
         return connection
 
-    def get_common_friends(self,user):
+    def get_common_friends_of_user(self,user):
         user = User.objects.get(pk=user.pk)
         if self.pk == user.pk:
             return ""
@@ -408,7 +408,17 @@ class User(AbstractUser):
         result=list(set(my_frends_ids) & set(user_frend_ids))
         query = Q(id__in=result)
         connection = User.objects.filter(query)
+        return connection
 
+    def get_common_friends_of_user(self, community):
+        community = Community.objects.get(pk=community.pk)
+        my_frends = self.connections.values('target_user_id')
+        community_frends = community.memberships.values('user_id')
+        my_frends_ids = [target_user['target_user_id'] for target_user in my_frends]
+        community_frends_ids = [user_id['user_id'] for user_id in community_frends]
+        result=list(set(my_frends_ids) & set(community_frends_ids))
+        query = Q(id__in=result)
+        connection = User.objects.filter(query)
         return connection
 
     def join_community_with_name(self, community_name):
