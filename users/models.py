@@ -300,10 +300,6 @@ class User(AbstractUser):
                 query = query + [frend,]
         return query
 
-    def get_online_connection(self):
-        online_connection = self.get_all_connection().get_online()
-        return online_connection
-
     def get_posts(self):
         posts_query = Q(creator_id=self.id, is_deleted=False, status=Item.STATUS_PUBLISHED, community=None)
         exclude_reported_and_approved_posts_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
