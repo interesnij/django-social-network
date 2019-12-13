@@ -300,7 +300,7 @@ class User(AbstractUser):
         connection_query.add(exclude_reported_and_approved_posts_query, Q.AND)
         connection_query.add(~Q(Q(blocked_by_users__blocker_id=self.id) | Q(user_blocks__blocked_user_id=self.id)), Q.AND)
         frends = User.objects.filter(connection_query)
-        return connection
+        return frends
 
     def get_posts(self):
         posts_query = Q(creator_id=self.id, is_deleted=False, status=Item.STATUS_PUBLISHED, community=None)
