@@ -47,7 +47,10 @@
 </div>
 
 {% else %}
-<h6> Пока ничего нет...</h6>
+<span>
+  <img src="{% static 'images/no_posts.png' %}">
+  <h6> Пока ничего нет...</h6>
+</span>
 {% endif %}
 
 <script defer src="{% static 'scripts/item_script.js' %}" type="text/javascript"></script>
