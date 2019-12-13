@@ -107,7 +107,7 @@ class CommunityDetail(DetailView):
             self.follow = CommunityFollow.objects.get(community=self.community,user=self.request.user)
         except:
             self.follow = None
-        self.common_friends = request.user.get_common_friends_of_community(community)
+        self.common_friends = request.user.get_common_friends_of_community(self.community)
         return super(CommunityDetail,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
