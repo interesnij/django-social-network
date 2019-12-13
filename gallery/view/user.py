@@ -44,7 +44,7 @@ class UserPhotosList(View):
 		self.user = User.objects.get(uuid=self.kwargs["uuid"])
 		if self.user != request.user and request.user.is_authenticated:
 			check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
-			if self.user.is_closed_profile:
+			if self.user.is_closed_profile():
 				check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
 			photo_list = self.user.get_photos().order_by('-created')
 			current_page = Paginator(photo_list, 12)
@@ -74,7 +74,7 @@ class UserAlbumsList(View):
 		self.user = User.objects.get(uuid=self.kwargs["uuid"])
 		if self.user != request.user and request.user.is_authenticated:
 			check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
-			if self.user.is_closed_profile:
+			if self.user.is_closed_profile():
 				check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
 			albums_list = self.user.get_albums().order_by('-created')
 			current_page = Paginator(albums_list, 12)
@@ -105,7 +105,7 @@ class UserAlbomView(View):
 		self.user=User.objects.get(pk=self.kwargs["pk"])
 		if self.user != request.user and request.user.is_authenticated:
 			check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
-			if self.user.is_closed_profile:
+			if self.user.is_closed_profile():
 				check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
 			photos = Photo.objects.filter(album=self.album).order_by('-created')
 			current_page = Paginator(photos, 12)
