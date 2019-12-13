@@ -284,7 +284,7 @@ class User(AbstractUser):
         connection = Connect.objects.filter(connection_query)
         return connection[0:5]
 
-    def get_all_connection(self):
+    def get_all_connection2(self):
         connection_query = Q(target_connection__user_id=self.id)
         exclude_reported_and_approved_posts_query = ~Q(target_connection__user__moderated_object__status=ModeratedObject.STATUS_APPROVED)
         connection_query.add(exclude_reported_and_approved_posts_query, Q.AND)
@@ -292,13 +292,15 @@ class User(AbstractUser):
         connection = Connect.objects.filter(connection_query)
         return connection
 
-    def get_online_connection(self):
-        all = self.get_all_connection()
-        query = []
-        for frend in all:
-            if frend.user.get_online():
-                query = query + [frend,]
-        return query
+    def get_all_connection(self):
+        my_frends = self.connections.values('target_user_id')
+        my_frends_ids = [target_user['target_user_id'] for target_user in my_frends]
+        connection_query = Q(user_id__in=my_frends_ids)
+        exclude_reported_and_approved_posts_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
+        connection_query.add(exclude_reported_and_approved_posts_query, Q.AND)
+        connection_query.add(~Q(Q(blocked_by_users__blocker_id=self.id) | Q(user_blocks__blocked_user_id=self.id)), Q.AND)
+        frends = User.objects.filter(connection_query)
+        return connection
 
     def get_posts(self):
         posts_query = Q(creator_id=self.id, is_deleted=False, status=Item.STATUS_PUBLISHED, community=None)
