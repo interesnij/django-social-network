@@ -1,18 +1,18 @@
 {% load staticfiles humanize thumbnail %}
-{% if common_frends %}
+{% if online_frends %}
 <div class="card mb-4" style="">
     <div class="card-header">
         <div class="media">
             <div class="media-body">
-                <h4 class="content-color-primary mb-0">Общие друзья </h4>
+                <h4 class="content-color-primary mb-0">Друзья в сети </h4>
             </div>
-            <a href="{% url 'frends' pk=user.pk %}#tabhome323" class="ajax">
+            <a href="{% url 'frends' pk=user.pk %}#tabhome223" class="ajax">
                 все
             </a>
         </div>
     </div>
 
-    {% for object in common_frends %}
+    {% for object in online_frends %}
 
     <div class="card">
         <div class="card-body">
@@ -29,6 +29,7 @@
                         <h6 class="my-0 mt-1">{{ object.get_full_name }}</h6>
                     </a>
                     <p class="text-link">Написать сообщение</p>
+                    {% endif %}
                 </div>
             </div>
         </div>

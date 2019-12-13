@@ -28,11 +28,7 @@
                     <a href="{% url 'user' pk=object.pk %}" class="ajax">
                         <h6 class="my-0 mt-1">{{ object.get_full_name }}</h6>
                     </a>
-                    {% if object.get_online %}
-                    <p class="text-success">В сети</p>
-                    {% else %}
-                    <p class="small">Был(а) {{ object.last_activity|naturaltime }}</p>
-                    {% endif %}
+                    <p class="text-link">Написать сообщение</p>}
                 </div>
             </div>
         </div>

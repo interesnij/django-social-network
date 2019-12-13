@@ -89,16 +89,16 @@ class AllUsers(ListView):
 class ProfileUserView(TemplateView):
     template_name = 'user.html'
     is_blocked = None
+    is_frend = None
+    common_frends = None
 
     def get(self,request,*args,**kwargs):
         self.user=User.objects.get(pk=self.kwargs["pk"])
-        try:
-            self.is_frend = request.user.is_connected_with_user(self.user)
-        except:
-            self.is_frend = None
-        if request.user.is_authenticated:
-            self.is_blocked = request.user.has_blocked_user_with_id(self.user)
-        self.common_frends = request.user.get_common_friends_of_user(self.user)[0:5]
+        if request.user.is_authenticated():
+            self.is_frend = self.user.get_pop_online_connection(request.user)
+            self.is_blocked = self.user.has_blocked_user_with_id(request.user)
+            self.common_frends = self.user.get_common_friends_of_user(request.user)[0:5]
+        self.online_frends = self.user.get_pop_online_connection()
         self.communities=Community.objects.filter(memberships__user__id=self.user.pk)[0:5]
         return super(ProfileUserView,self).get(request,*args,**kwargs)
 
@@ -107,5 +107,7 @@ class ProfileUserView(TemplateView):
         context['user'] = self.user
         context['communities'] = self.communities
         context['is_frend'] = self.is_frend
+        context['is_blocked'] = self.is_blocked
         context['common_frends'] = self.common_frends
+        context['online_frends'] = self.online_frends
         return context

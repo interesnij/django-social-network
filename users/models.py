@@ -304,6 +304,16 @@ class User(AbstractUser):
                 query += [frend,]
         return query
 
+    def get_pop_online_connection(self):
+        frends = self.get_all_connection()
+        query = []
+        for frend in frends:
+            if query[5]:
+                break
+            if frend.get_online():
+                query += [frend,]
+        return query[0:5]
+
     def get_posts(self):
         posts_query = Q(creator_id=self.id, is_deleted=False, status=Item.STATUS_PUBLISHED, community=None)
         exclude_reported_and_approved_posts_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
@@ -405,7 +415,7 @@ class User(AbstractUser):
         connection = Connect.objects.filter(query).distinct()
         return connection
 
-    def get_common_friends_of_user(self,user):
+    def get_common_friends_of_user(self, user):
         user = User.objects.get(pk=user.pk)
         if self.pk == user.pk:
             return ""
