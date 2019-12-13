@@ -372,7 +372,7 @@ class User(AbstractUser):
         return self._get_timeline_posts_with_no_filters()
 
     def _get_timeline_posts_with_no_filters(self):
-        posts_select_related = ('creator', 'creator__profile', 'community')
+        posts_select_related = ('creator', 'community')
         items_only = ('id', 'uuid', 'created', 'creator__username', 'creator__id',
                         'creator__profile__id', 'community__id', 'community__name')
         reported_posts_exclusion_query = ~Q(moderated_object__reports__reporter_id=self.pk)
