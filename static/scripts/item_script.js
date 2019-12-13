@@ -179,8 +179,8 @@ $('#ajax').on('click', '.upload_photo', function() {
                 if (typeof FileReader != "undefined") {
                     var image_holder = $(img); image_holder.empty(); var reader = new FileReader();
                     reader.onload = function(e) { $img = $("<img />", { id: "targetImageCrop", src: e.target.result, class: "thumb-image" }).appendTo(image_holder); }; image_holder.show(); reader.readAsDataURL($(this)[0].files[0]);
-                } } else { this.value = null; } } entrou = true; setTimeout(function() { entrou = false; }, 1000); });
-      img.prev().prev().show();
+                } } else { this.value = null; } } entrou = true; setTimeout(function() { entrou = false; }, 1000); img.prev().prev().show();});
+
   });
 
   $('#ajax').on('click', '.comment_photo2', function() {
