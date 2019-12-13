@@ -400,7 +400,7 @@ class User(AbstractUser):
     def get_common_friends(self,user):
         user = User.objects.get(pk=user.pk)
         if self.pk == user.pk:
-            pass
+            return ""
         my_frends = self.connections.values('target_user_id')
         user_frends = user.connections.values('target_user_id')
         my_frends_ids = [target_user['target_user_id'] for target_user in my_frends]
