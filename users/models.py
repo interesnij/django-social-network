@@ -293,6 +293,14 @@ class User(AbstractUser):
         return connection
 
     def get_online_connection(self):
+        all = self.get_all_connection()
+        query = []
+        for frend in all:
+            if frend.user.get_online():
+                query = query + [frend,]
+        return query
+
+    def get_online_connection(self):
         online_connection = self.get_all_connection().get_online()
         return online_connection
 

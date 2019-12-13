@@ -14,7 +14,7 @@ class FrendsListView(ListView):
 
 	def get(self,request,*args,**kwargs):
 		self.user=User.objects.get(pk=self.kwargs["pk"])
-		self.featured_users = request.user.get_possible_friends
+		self.featured_users = request.user.get_possible_friends()[0:10]
 		self.common_frends = request.user.get_common_friends_of_user(self.user)
 		return super(FrendsListView,self).get(request,*args,**kwargs)
 
