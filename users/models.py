@@ -277,20 +277,14 @@ class User(AbstractUser):
 
     ''''' GET всякие  219-186 '''''
     def get_pop_connection(self):
-        connection_query = Q(target_connection__user_id=self.id)
-        exclude_reported_and_approved_posts_query = ~Q(target_connection__user__moderated_object__status=ModeratedObject.STATUS_APPROVED)
+        my_frends = self.connections.values('target_user_id')
+        my_frends_ids = [target_user['target_user_id'] for target_user in my_frends]
+        connection_query = Q(id__in=my_frends_ids)
+        exclude_reported_and_approved_posts_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         connection_query.add(exclude_reported_and_approved_posts_query, Q.AND)
-        connection_query.add(~Q(Q(target_connection__user__blocked_by_users__blocker_id=self.pk) | Q(target_connection__user__user_blocks__blocked_user_id=self.pk)), Q.AND)
-        connection = Connect.objects.filter(connection_query)
-        return connection[0:5]
-
-    def get_all_connection2(self):
-        connection_query = Q(target_connection__user_id=self.id)
-        exclude_reported_and_approved_posts_query = ~Q(target_connection__user__moderated_object__status=ModeratedObject.STATUS_APPROVED)
-        connection_query.add(exclude_reported_and_approved_posts_query, Q.AND)
-        connection_query.add(~Q(Q(target_connection__user__blocked_by_users__blocker_id=self.id) | Q(target_connection__user__user_blocks__blocked_user_id=self.id)), Q.AND)
-        connection = Connect.objects.filter(connection_query)
-        return connection
+        connection_query.add(~Q(Q(blocked_by_users__blocker_id=self.id) | Q(user_blocks__blocked_user_id=self.id)), Q.AND)
+        frends = User.objects.filter(connection_query)
+        return frends[0:5]
 
     def get_all_connection(self):
         my_frends = self.connections.values('target_user_id')
@@ -301,6 +295,13 @@ class User(AbstractUser):
         connection_query.add(~Q(Q(blocked_by_users__blocker_id=self.id) | Q(user_blocks__blocked_user_id=self.id)), Q.AND)
         frends = User.objects.filter(connection_query)
         return frends
+
+    def get_online_connection(self):
+        frends = self.get_all_connection()
+        query = []
+        for frend in frends:
+            if frend.get_online():
+                query += [frend,]
 
     def get_posts(self):
         posts_query = Q(creator_id=self.id, is_deleted=False, status=Item.STATUS_PUBLISHED, community=None)

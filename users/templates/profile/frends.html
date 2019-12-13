@@ -18,20 +18,20 @@
         <div class="card-body">
             <div class="media">
                 <figure style="width:50px;">
-                    {% if object.user.get_avatar %}
-                    <img src="{{ object.user.get_avatar.file|thumbnail_url:'avatar' }}" style="border-radius:50px;" alt="image">
+                    {% if object.get_avatar %}
+                    <img src="{{ object.get_avatar.file|thumbnail_url:'avatar' }}" style="border-radius:50px;" alt="image">
                     {% else %}
                     <img class="thumb" src="{% static 'images/icons/person-24px.svg' %}" />
                     {% endif %}
                 </figure>
                 <div class="media-body">
-                    <a href="{% url 'user' pk=object.user.pk %}" class="ajax">
-                        <h6 class="my-0 mt-1">{{ object.user.get_full_name }}</h6>
+                    <a href="{% url 'user' pk=object.pk %}" class="ajax">
+                        <h6 class="my-0 mt-1">{{ object.get_full_name }}</h6>
                     </a>
-                    {% if object.user.get_online %}
+                    {% if object.get_online %}
                     <p class="text-success">В сети</p>
                     {% else %}
-                    <p class="small">Был(а) {{ object.user.last_activity|naturaltime }}</p>
+                    <p class="small">Был(а) {{ object.last_activity|naturaltime }}</p>
                     {% endif %}
                 </div>
             </div>

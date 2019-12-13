@@ -76,29 +76,24 @@
                                 </div>
                                 <div class="tab-pane fade" id="tabhome223" role="tabpanel" aria-labelledby="tabhome223-tab">
                                         <ul class="list-group border-top border-bottom list-group-flush">
-                                            {% for object in object_list %}
-                                              {% if object.get_online %}
+                                            {% for object in user.get_online_connection %}
                                             <li class="list-group-item">
                                                 <div class="media">
                                                     <figure>
-                                                        {% if object.target_user.get_avatar %}
-                                                        <img src="{{ object.target_user.get_avatar.file|thumbnail_url:'avatar' }}" style="border-radius:50px;width:50px;" alt="image">
+                                                        {% if object.get_avatar %}
+                                                        <img src="{{ object.get_avatar.file|thumbnail_url:'avatar' }}" style="border-radius:50px;width:50px;" alt="image">
                                                         {% else %}
                                                         <img class="thumb" src="{% static 'images/icons/person-24px.svg' %}" />
                                                         {% endif %}
                                                     </figure>
                                                     <div class="media-body">
-                                                        <a href="{% url 'user' pk=object.target_user.pk %}" class="ajax">
-                                                            <h6 class="my-0 mt-1">{{ object.target_user.get_full_name }}</h6>
+                                                        <a href="{% url 'user' pk=object.pk %}" class="ajax">
+                                                            <h6 class="my-0 mt-1">{{ object.get_full_name }}</h6>
                                                         </a>
                                                         <a href="" class="small">Написать сообщение</a>
                                                     </div>
                                                 </div>
-
                                             </li>
-                                            {% else %}
-                                            У Вас нет друзей онлайн
-                                            {% endif %}
 
                                             {% endfor %}
                                         </ul>
