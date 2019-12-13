@@ -87,7 +87,10 @@ class ItemCommunity(TemplateView):
 class CommunityDetail(DetailView):
     template_name = "community_detail.html"
     model = Community
-    administrator, staff creator, member = False
+    administrator = False
+    staff = False
+    creator = False
+    member = False
 
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])

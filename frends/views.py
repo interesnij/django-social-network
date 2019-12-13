@@ -13,12 +13,16 @@ class FrendsListView(ListView):
 	paginate_by=10
 
 	def get(self,request,*args,**kwargs):
-		self.featured_users = User.objects.only('id')[0:5]
+		self.user=User.objects.get(pk=self.kwargs["pk"])
+		self.featured_users = request.user.get_possible_friends
+		self.common_frends = request.user.get_common_friends_of_user(self.user)
 		return super(FrendsListView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		context=super(FrendsListView,self).get_context_data(**kwargs)
 		context['featured_users'] = self.featured_users
+		context['common_frends'] = self.common_frends
+		context['user'] = self.user
 		return context
 
 	def get_queryset(self):
@@ -29,7 +33,7 @@ class FrendsListView(ListView):
 
 class ConnectCreate(View):
 	success_url = "/"
-	
+
 	def get(self,request,*args,**kwargs):
 		self.target_user = User.objects.get(pk=self.kwargs["pk"])
 		new_frend = request.user.frend_user(self.target_user)

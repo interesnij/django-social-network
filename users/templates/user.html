@@ -18,6 +18,8 @@
 
         {% include 'profile/card_profile.html' %}
         {% if not user.user_private.is_private or user == request.user or is_frend %}
+          {% include 'profile/common_frends.html' %}
+
           {% include 'profile/frends.html' %}
 
           {% include 'profile/communities.html' %}

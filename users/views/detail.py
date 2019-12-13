@@ -98,7 +98,7 @@ class ProfileUserView(TemplateView):
             self.is_frend = None
         if request.user.is_authenticated:
             self.is_blocked = request.user.has_blocked_user_with_id(self.user)
-        self.common_frends = request.user.get_common_friends_of_user(self.user)
+        self.common_frends = request.user.get_common_friends_of_user(self.user)[0:5]
         self.communities=Community.objects.filter(memberships__user__id=self.user.pk)[0:5]
         return super(ProfileUserView,self).get(request,*args,**kwargs)
 
