@@ -234,8 +234,11 @@ class User(AbstractUser):
     def is_following_user_with_username(self, user_username):
         return self.follows.filter(followed_user__username=user_username).exists()
 
-    def is_album_exists(self): 
+    def is_album_exists(self):
         return self.created_user.filter(creator__id=self.pk, is_generic=False).exists()
+
+    def is_photo_exists(self):
+        return self.photo_creator.filter(creator__id=self.pk).exists()
 
     def is_suspended(self):
         return self.moderation_penalties.filter(type=ModerationPenalty.TYPE_SUSPENSION,
