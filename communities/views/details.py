@@ -87,14 +87,12 @@ class ItemCommunity(TemplateView):
 class CommunityDetail(DetailView):
     template_name = "community_detail.html"
     model = Community
-    administrator = False
-    staff = False
-    creator = False
-    member = False
+    administrator, staff creator, member = False
 
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         self.membersheeps=CommunityMembership.objects.filter(community__id=self.community.pk)[0:5]
+        self.common_friends = request.user.get_common_friends_of_community(self.community)[0:5]
         if request.user.is_authenticated and request.user.is_administrator_of_community_with_name(self.community.name):
             self.administrator=True
         if request.user.is_authenticated and request.user.is_creator_of_community_with_name(self.community.name):
@@ -107,7 +105,6 @@ class CommunityDetail(DetailView):
             self.follow = CommunityFollow.objects.get(community=self.community,user=self.request.user)
         except:
             self.follow = None
-        self.common_friends = request.user.get_common_friends_of_community(self.community)
         return super(CommunityDetail,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
