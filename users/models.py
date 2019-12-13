@@ -302,6 +302,7 @@ class User(AbstractUser):
         for frend in frends:
             if frend.get_online():
                 query += [frend,]
+        return query
 
     def get_posts(self):
         posts_query = Q(creator_id=self.id, is_deleted=False, status=Item.STATUS_PUBLISHED, community=None)
