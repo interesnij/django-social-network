@@ -184,7 +184,7 @@ $('#ajax').on('click', '.upload_photo', function() {
   });
   $('#ajax').on('click', '.delete_thumb', function() {
     var img = $(this);
-    img.empty();
+    img.next().next().empty();
     img.hide();
   });
 
