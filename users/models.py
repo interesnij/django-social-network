@@ -410,7 +410,7 @@ class User(AbstractUser):
         connection = User.objects.filter(query)
         return connection
 
-    def get_common_friends_of_user(self, community):
+    def get_common_friends_of_community(self, community):
         community = Community.objects.get(pk=community.pk)
         my_frends = self.connections.values('target_user_id')
         community_frends = community.memberships.values('user_id')
