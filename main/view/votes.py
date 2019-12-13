@@ -21,7 +21,7 @@ class ItemUserLikeWindow(TemplateView):
         self.user = User.objects.get(uuid=self.kwargs["uuid"])
         if self.user != request.user and request.user.is_authenticated:
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
-            if self.user.is_closed_profile:
+            if self.user.is_closed_profile():
                 check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
             self.likes = self.item.get_likes_for_item(request.user)
         elif self.user == request.user:
@@ -63,7 +63,7 @@ class ItemUserCommentLikeWindow(TemplateView):
         self.user = User.objects.get(uuid=self.kwargs["uuid"])
         if self.user != request.user and request.user.is_authenticated:
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
-            if self.user.is_closed_profile:
+            if self.user.is_closed_profile():
                 check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
             self.likes = self.comment.get_likes_for_comment_item(request.user)
         elif self.user == request.user:
@@ -104,7 +104,7 @@ class ItemUserDislikeWindow(TemplateView):
         self.user = User.objects.get(uuid=self.kwargs["uuid"])
         if self.user != request.user and request.user.is_authenticated:
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
-            if self.user.is_closed_profile:
+            if self.user.is_closed_profile():
                 check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
             self.dislikes = self.item.get_dislikes_for_item(request.user)
         elif self.user == request.user:
@@ -147,7 +147,7 @@ class ItemUserCommentDislikeWindow(TemplateView):
         self.user = User.objects.get(uuid=self.kwargs["uuid"])
         if self.user != request.user and request.user.is_authenticated:
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
-            if self.user.is_closed_profile:
+            if self.user.is_closed_profile():
                 check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
             self.dislikes = self.comment.get_dislikes_for_comment_item(request.user)
         elif self.user == request.user:
@@ -186,7 +186,7 @@ class ItemUserLikeCreate(View):
         user = User.objects.get(uuid=self.kwargs["uuid"])
         if user != request.user:
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
-            if user.is_closed_profile:
+            if user.is_closed_profile():
                 check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
         try:
             likedislike = ItemVotes.objects.get(parent=item, user=request.user)
@@ -220,7 +220,7 @@ class ItemCommentUserLikeCreate(View):
         user = User.objects.get(uuid=self.kwargs["uuid"])
         if user != request.user:
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
-            if user.is_closed_profile:
+            if user.is_closed_profile():
                 check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
         try:
             likedislike = ItemCommentVotes.objects.get(item=comment, user=request.user)
@@ -254,7 +254,7 @@ class ItemUserDislikeCreate(View):
         user = User.objects.get(uuid=self.kwargs["uuid"])
         if user != request.user:
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
-            if user.is_closed_profile:
+            if user.is_closed_profile():
                 check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
         try:
             likedislike = ItemVotes.objects.get(parent=item, user=request.user)
@@ -288,7 +288,7 @@ class ItemCommentUserDislikeCreate(View):
         user = User.objects.get(uuid=self.kwargs["uuid"])
         if user != request.user:
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
-            if user.is_closed_profile:
+            if user.is_closed_profile():
                 check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
         try:
             likedislike = ItemCommentVotes.objects.get(item=comment, user=request.user)

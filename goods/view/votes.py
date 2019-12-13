@@ -69,7 +69,7 @@ class GoodUserLikeCreate(View):
         user = User.objects.get(uuid=self.kwargs["uuid"])
         if user != request.user:
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
-            if user.is_closed_profile:
+            if user.is_closed_profile():
                 check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
         try:
             likedislike = GoodVotes.objects.get(parent=item, user=request.user)
@@ -93,7 +93,7 @@ class GoodUserDislikeCreate(View):
         user = User.objects.get(uuid=self.kwargs["uuid"])
         if user != request.user:
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
-            if user.is_closed_profile:
+            if user.is_closed_profile():
                 check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
         try:
             likedislike = GoodVotes.objects.get(parent=item, user=request.user)
@@ -117,7 +117,7 @@ class GoodCommentUserLikeCreate(View):
         user = User.objects.get(uuid=self.kwargs["uuid"])
         if user != request.user:
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
-            if user.is_closed_profile:
+            if user.is_closed_profile():
                 check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
         try:
             likedislike = GoodCommentVotes.objects.get(item=comment, user=request.user)
@@ -142,7 +142,7 @@ class GoodCommentUserDislikeCreate(View):
 		user = User.objects.get(uuid=self.kwargs["uuid"])
 		if user != request.user:
 			check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
-			if user.is_closed_profile:
+			if user.is_closed_profile():
 				check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
 		try:
 			likedislike = GoodCommentVotes.objects.get(item=comment, user=request.user)

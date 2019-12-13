@@ -26,7 +26,7 @@ class UserPhoto(TemplateView):
             self.avatar = None
         if self.user != request.user and request.user.is_authenticated:
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
-            if self.user.is_closed_profile:
+            if self.user.is_closed_profile():
                 check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
             self.photos = self.user.get_photos()
         elif self.user == request.user and request.user.is_authenticated:
@@ -56,7 +56,7 @@ class UserCommentPhoto(TemplateView):
         self.user=User.objects.get(pk=self.kwargs["pk"])
         if self.user != request.user and request.user.is_authenticated:
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
-            if self.user.is_closed_profile:
+            if self.user.is_closed_profile():
                 check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
             self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         elif self.user == request.user and request.user.is_authenticated:
@@ -81,7 +81,7 @@ class UserDetailAvatar(TemplateView):
         self.photo = Photo.objects.get(pk=self.kwargs["pk"])
         if self.user != request.user and request.user.is_authenticated:
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
-            if self.user.is_closed_profile:
+            if self.user.is_closed_profile():
                 check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
             self.avatar_photos = self.user.get_avatar_photos()
         elif self.user == request.user and request.user.is_authenticated:

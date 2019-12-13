@@ -20,7 +20,7 @@ class ItemUserCommentList(View):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
 		if self.user != request.user and request.user.is_authenticated:
 			check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
-			if self.user.is_closed_profile:
+			if self.user.is_closed_profile():
 				check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
 			comments = item.get_comments(request.user)
 		elif self.user == request.user:
@@ -58,7 +58,7 @@ class ItemCommentUserCreate(View):
 				raise ValidationError('Для добавления комментария необходимо написать что-то или прикрепить изображение')
 			if request.user.pk != user.pk:
 				check_is_not_blocked_with_user_with_id(user=request.user, user_id = user.pk)
-				if user.is_closed_profile:
+				if user.is_closed_profile():
 					check_is_connected_with_user_with_id(user=request.user, user_id = user.pk)
 			new_comment = comment.create_user_comment(commenter=request.user, parent_comment=None, item=item, text=comment.text)
 			if item_comment_photo:
@@ -88,7 +88,7 @@ class ItemReplyUserCreate(View):
 				raise ValidationError('Для добавления комментария необходимо написать что-то или прикрепить изображение')
 			if request.user != user:
 				check_is_not_blocked_with_user_with_id(user=request.user, user_id = user.id)
-				if user.is_closed_profile:
+				if user.is_closed_profile():
 					check_is_connected_with_user_with_id(user=request.user, user_id = user.id)
 
 			new_comment = comment.create_user_comment(commenter=request.user, text=comment.text, parent_comment=parent)

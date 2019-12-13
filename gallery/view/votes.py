@@ -68,7 +68,7 @@ class PhotoUserLikeCreate(View):
         user = User.objects.get(uuid=self.kwargs["uuid"])
         if user != request.user:
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
-            if user.is_closed_profile:
+            if user.is_closed_profile():
                 check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
         try:
             likedislike = PhotoVotes.objects.get(parent=item, user=request.user)
@@ -92,7 +92,7 @@ class PhotoUserDislikeCreate(View):
         user = User.objects.get(uuid=self.kwargs["uuid"])
         if user != request.user:
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
-            if user.is_closed_profile:
+            if user.is_closed_profile():
                 check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
         try:
             likedislike = PhotoVotes.objects.get(parent=item, user=request.user)
@@ -116,7 +116,7 @@ class PhotoCommentUserLikeCreate(View):
 		user = User.objects.get(uuid=self.kwargs["uuid"])
 		if user != request.user:
 			check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
-			if user.is_closed_profile:
+			if user.is_closed_profile():
 				check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
 		try:
 			likedislike = PhotoCommentVotes.objects.get(item=comment, user=request.user)
@@ -141,7 +141,7 @@ class PhotoCommentUserDislikeCreate(View):
 		user = User.objects.get(uuid=self.kwargs["uuid"])
 		if user != request.user:
 			check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
-			if user.is_closed_profile:
+			if user.is_closed_profile():
 				check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
 		try:
 			likedislike = PhotoCommentVotes.objects.get(item=comment, user=request.user)
