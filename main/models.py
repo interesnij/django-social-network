@@ -126,18 +126,14 @@ class Item(models.Model):
 
         if post_community:
             if not user.is_staff_of_community_with_name(community_name=post_community.name):
-                blocked_users_query = ~Q(Q(commenter__blocked_by_users__blocker_id=user.pk) | Q(
-                    commenter__user_blocks__blocked_user_id=user.pk))
-                blocked_users_query_staff_members = Q(
-                    commenter__communities_memberships__community_id=post_community.pk)
-                blocked_users_query_staff_members.add(Q(commenter__communities_memberships__is_administrator=True) | Q(
-                    commenter__communities_memberships__is_moderator=True), Q.AND)
+                blocked_users_query = ~Q(Q(commenter__blocked_by_users__blocker_id=user.pk) | Q(commenter__user_blocks__blocked_user_id=user.pk))
+                blocked_users_query_staff_members = Q(commenter__communities_memberships__community_id=post_community.pk)
+                blocked_users_query_staff_members.add(Q(commenter__communities_memberships__is_administrator=True) | Q(commenter__communities_memberships__is_moderator=True), Q.AND)
                 blocked_users_query.add(~blocked_users_query_staff_members, Q.AND)
                 comments_query.add(blocked_users_query, Q.AND)
                 comments_query.add(~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED), Q.AND)
         else:
-            blocked_users_query = ~Q(Q(commenter__blocked_by_users__blocker_id=user.pk) | Q(
-                commenter__user_blocks__blocked_user_id=user.pk))
+            blocked_users_query = ~Q(Q(commenter__blocked_by_users__blocker_id=user.pk) | Q(commenter__user_blocks__blocked_user_id=user.pk))
             comments_query.add(blocked_users_query, Q.AND)
 
         comments_query.add(~Q(moderated_object__reports__reporter_id=user.pk), Q.AND)
@@ -194,11 +190,11 @@ class ItemComment(models.Model):
 
     def get_likes_for_comment_item(self, user):
         reactions_query = user._make_get_votes_query_comment(comment=self)
-        return ItemCommentVotes.objects.filter(id=self.pk, vote__gt=0).filter(reactions_query)
+        return ItemCommentVotes.objects.filter(item=self, vote__gt=0).filter(reactions_query)
 
     def get_dislikes_for_comment_item(self, user):
         reactions_query = user._make_get_votes_query_comment(comment=self)
-        return ItemCommentVotes.objects.filter(id=self.pk, vote__lt=0).filter(reactions_query)
+        return ItemCommentVotes.objects.filter(item=self, vote__lt=0).filter(reactions_query)
 
     def __str__(self):
         return str(self.item)
