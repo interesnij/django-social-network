@@ -87,7 +87,7 @@ class AllUsers(ListView):
         return users
 
 
-class AllUsers(ListView):
+class AllCommonUsers(ListView):
     template_name="all_common_users.html"
     model=User
     paginate_by=1
