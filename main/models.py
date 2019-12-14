@@ -101,7 +101,7 @@ class Item(models.Model):
         item_community_notification_handler(user, self.creator, ItemCommunityNotification.DISLIKE, key='social_update', item=self, comment=None)
 
     def get_comments(self, user):
-        item = Item.objects.get(pk=self.pk)
+        
         comments_query = self._make_get_comments_for_post_query(user=user)
         return ItemComment.objects.filter(comments_query)
 
