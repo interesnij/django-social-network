@@ -5,7 +5,7 @@
 {% if user == request.user %}
 Мои друзья
 {% else %}
-Друзья {{ user.get_full_name|gent:"user.first_name" }}
+Друзья {{ user.get_full_name|gent }}
 {% endif %}
 {% endblock %}
 
