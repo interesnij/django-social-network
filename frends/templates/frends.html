@@ -13,22 +13,23 @@
 
 <div class="row">
     <div class="col-12 col-md-8">
+      <br><br><br>
       <div class="card-header p-0">
           <ul class="nav nav-tabs justify-content-center" role="tablist">
               <li class="nav-item">
                   <a class="nav-link active show" id="tabhome123-tab" data-toggle="tab" href="#tabhome123" role="tab" aria-controls="tabhome123" aria-selected="true">
-                      Все друзья
+                      Все
                   </a>
               </li>
               <li class="nav-item">
                   <a class="nav-link" id="tabhome223-tab" data-toggle="tab" href="#tabhome223" role="tab" aria-controls="tabhome223" aria-selected="false">
-                      Друзья онлайн
+                      Онлайн
                   </a>
               </li>
               {% if common_frends %}
               <li class="nav-item">
                   <a class="nav-link" id="tabhome323-tab" data-toggle="tab" href="#tabhome323" role="tab" aria-controls="tabhome323" aria-selected="false">
-                      Общие друзья
+                      Общие
                   </a>
               </li>
               {% endif %}
@@ -51,13 +52,14 @@
                                           {% endif %}
                                       </h5>
                                   </div>
-                                  <br><br>
+                                  <br>
                                   <div class="input-group mb-3">
                                       <input type="text" class="form-control" placeholder="Поиск по друзьям" aria-label="Recipient's username">
                                       <div class="input-group-append">
                                           <button class="btn btn-outline-link" type="button">Искать</button>
                                       </div>
                                   </div>
+                                  <br>
                                     <p class="content-color-secondary mb-0">
                                         <ul class="list-group border-top border-bottom list-group-flush">
                                           {% for object in object_list %}
@@ -92,13 +94,14 @@
                                           {% endif %}
                                       </h5>
                                   </div>
-                                  <br><br>
+                                  <br>
                                   <div class="input-group mb-3">
                                       <input type="text" class="form-control" placeholder="Поиск по друзьям онлайн" aria-label="Recipient's username">
                                       <div class="input-group-append">
                                           <button class="btn btn-outline-link" type="button">Искать</button>
                                       </div>
                                   </div>
+                                  <br>
                                         <ul class="list-group border-top border-bottom list-group-flush">
                                             {% for object in user.get_online_connection %}
                                             <li class="list-group-item">
@@ -127,13 +130,14 @@
                                   <div class="media-body">
                                       <h5 class="mt-1">Общие друзья</h5>
                                   </div>
-                                  <br><br>
+                                  <br>
                                   <div class="input-group mb-3">
                                       <input type="text" class="form-control" placeholder="Поиск по общим друзьям" aria-label="Recipient's username">
                                       <div class="input-group-append">
                                           <button class="btn btn-outline-link" type="button">Искать</button>
                                       </div>
                                   </div>
+                                  <br>
                                       <ul class="list-group border-top border-bottom list-group-flush">
                                           {% for object in common_frends %}
                                             <li class="list-group-item">
