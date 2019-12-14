@@ -23,7 +23,7 @@
             <br><br>
             <div class="card-body px-0 py-0">
                 <ul class="list-group common-users-container ">
-                    {% for object in common_list %}
+                    {% for object in object_list %}
                     <li class="list-group-item infinite-item">
                         <div class="media">
                             <figure>
@@ -43,8 +43,8 @@
                     </li>
                     {% endfor %}
                     <div class="load col-12 col-md-12">
-                        {% if common_list.has_next %}
-                        <a style="display:flex;justify-content:center;" class="infinite-more-link" href="/users/common-users/{{ request.user.pk }}/?page={{ common_list.next_page_number }}">
+                        {% if object_list.has_next %}
+                        <a style="display:flex;justify-content:center;" class="infinite-more-link" href="/users/common-users/{{ request.user.pk }}/?page={{ object_list.next_page_number }}">
                             <img style="width: 30px;" src="{% static 'images/loading.gif' %}">
                         </a>
                         {% endif %}
