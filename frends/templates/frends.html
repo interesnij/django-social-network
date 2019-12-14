@@ -155,14 +155,16 @@ $(document).ready(function(){
 	$('#common_frends').html('').load("/frends/common/" + {{ user.pk }});
 });
 
-var infinite = new Waypoint.Infinite({
-    element: $('.frends-container')[0],
-    onBeforePageLoad: function() {
-        $('.load').show();
-    },
-    onAfterPageLoad: function($items) {
-        $('.load').hide();
-    }
-});
+</script>
+<script>
+  var infinite = new Waypoint.Infinite({
+      element: $('#ajax.frends-container')[0],
+      onBeforePageLoad: function() {
+          $('.frends-container.load').show();
+      },
+      onAfterPageLoad: function($items) {
+          $('.frends-container.load').hide();
+      }
+  });
 </script>
 {% endblock %}
