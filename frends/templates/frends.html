@@ -154,5 +154,15 @@ $(document).ready(function(){
 	$('#online_frends').html('').load("/frends/online/" + {{ user.pk }});
 	$('#common_frends').html('').load("/frends/common/" + {{ user.pk }});
 });
+
+var infinite = new Waypoint.Infinite({
+    element: $('.infinite-container')[0],
+    onBeforePageLoad: function() {
+        $('.load').show();
+    },
+    onAfterPageLoad: function($items) {
+        $('.load').hide();
+    }
+});
 </script>
 {% endblock %}
