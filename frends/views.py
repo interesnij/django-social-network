@@ -10,10 +10,12 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 class FrendsListView(TemplateView):
 	template_name="frends.html"
+	featured_users = None
 
 	def get(self,request,*args,**kwargs):
 		self.user=User.objects.get(pk=self.kwargs["pk"])
-		self.featured_users = request.user.get_possible_friends()[0:10]
+		if self.user == request.user and request.user.is_authenticated():
+			self.featured_users = request.user.get_possible_friends()[0:10]
 		return super(FrendsListView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
