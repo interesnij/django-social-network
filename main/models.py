@@ -101,14 +101,12 @@ class Item(models.Model):
         item_community_notification_handler(user, self.creator, ItemCommunityNotification.DISLIKE, key='social_update', item=self, comment=None)
 
     def get_comments(self, user):
-        
         comments_query = self._make_get_comments_for_post_query(user=user)
         return ItemComment.objects.filter(comments_query)
 
     def get_comment_replies(self, post_comment_id):
         post_comment = ItemComment.objects.get(pk=post_comment_id)
-        item = Item.objects.get(uuid=self.uuid)
-        return item.get_comment_replies_for_comment_with_post(post_comment=post_comment)
+        return self.get_comment_replies_for_comment_with_post(post_comment=post_comment)
 
     def get_comment_replies_for_comment_with_post(self, post_comment):
         comment_replies_query = self._make_get_comments_for_post_query(self, post_comment_parent_id=post_comment.pk)
