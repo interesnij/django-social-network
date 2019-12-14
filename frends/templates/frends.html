@@ -39,14 +39,6 @@
           <div class="card-header">
               <div class="media">
 
-                  <div class="media-body">
-                      <h5 class="mt-1">{% if request.user %}
-                          Мои друзья
-                          {% else %}
-                          Друзья {{ user.first_name|gent }} {{ user.last_name|gent }}
-                          {% endif %}
-                      </h5>
-                  </div>
               </div>
           </div>
           <br><br>
@@ -58,6 +50,14 @@
                         <div class="card-body">
                             <div class="tab-content">
                                 <div class="tab-pane fade active show" id="tabhome123" role="tabpanel" aria-labelledby="tabhome123-tab">
+                                  <div class="media-body">
+                                      <h5 class="mt-1">{% if user == request.user %}
+                                          Мои друзья
+                                          {% else %}
+                                          Друзья {{ user.first_name|gent }} {{ user.last_name|gent }}
+                                          {% endif %}
+                                      </h5>
+                                  </div>
                                   <br><br><br>
                                   <div class="input-group mb-3">
                                       <input type="text" class="form-control" placeholder="Поиск друзей" aria-label="Recipient's username">
@@ -91,6 +91,14 @@
                                     </p>
                                 </div>
                                 <div class="tab-pane fade" id="tabhome223" role="tabpanel" aria-labelledby="tabhome223-tab">
+                                  <div class="media-body">
+                                      <h5 class="mt-1">{% if user == request.user %}
+                                          Мои друзья онлайн
+                                          {% else %}
+                                          Друзья онлайн{{ user.first_name|gent }} {{ user.last_name|gent }}
+                                          {% endif %}
+                                      </h5>
+                                  </div>
                                   <br><br><br>
                                   <div class="input-group mb-3">
                                       <input type="text" class="form-control" placeholder="Поиск друзей" aria-label="Recipient's username">
@@ -123,6 +131,9 @@
                                 </div>
 
                                 <div class="tab-pane fade" id="tabhome323" role="tabpanel" aria-labelledby="tabhome323-tab">
+                                  <div class="media-body">
+                                      <h5 class="mt-1">Общие друзья</h5>
+                                  </div>
                                   <br><br><br>
                                   <div class="input-group mb-3">
                                       <input type="text" class="form-control" placeholder="Поиск друзей" aria-label="Recipient's username">
