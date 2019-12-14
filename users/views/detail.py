@@ -92,7 +92,7 @@ class AllCommonUsers(View):
     def get(self, request, *args, **kwargs):
         context = {}
         if request.user.is_authenticated:
-            common_list = user.get_possible_friends()
+            common_list = request.user.get_possible_friends()
             current_page = Paginator(common_list, 20)
         context['request_user'] = request.user
         page = request.GET.get('page')
