@@ -94,7 +94,7 @@ class AllCommonUsers(ListView):
 
     def get_queryset(self):
         user=User.objects.get(pk=self.kwargs["pk"])
-        if user == request.user and request.user.is_authenticated:
+        if user.is_authenticated:
             common_list = request.user.get_possible_friends()
         return common_list
 
