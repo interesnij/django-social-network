@@ -104,7 +104,7 @@ class AllCommonUsers(View):
         except EmptyPage:
             context['common_list'] = current_page.page(current_page.num_pages)
 
-        return render_to_response('lenta/all_common_users.html', context)
+        return render_to_response('all_common_users.html', context)
 
 class ProfileUserView(TemplateView):
     template_name = 'user.html'
