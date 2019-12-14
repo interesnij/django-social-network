@@ -1,5 +1,6 @@
 from django import template
 import pymorphy2
+from string import ascii_letters
 register=template.Library()
 
 
@@ -28,6 +29,8 @@ def rupluralize(value, arg="дурак,дурака,дураков"):
 def gent(value):
     morph = pymorphy2.MorphAnalyzer()
     word = morph.parse(value)[0]
+    if all(map(lambda c: c in ascii_letters, word)):
+        return value
     v1 = word.inflect({'gent'})
     result = v1.word.title()
     return result
