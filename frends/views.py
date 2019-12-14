@@ -34,15 +34,15 @@ class AllFrendsListView(View):
             if self.user.is_closed_profile():
                 check_is_connected_with_user_with_id(user=self.request.user, user_id=self.user.id)
             frends_list=self.user.get_all_connection()
-            current_page = Paginator(frends_list, 10)
+            current_page = Paginator(frends_list, 1)
         elif request.user.is_anonymous and self.user.is_closed_profile():
             raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
         elif request.user.is_anonymous and not self.user.is_closed_profile():
             frends_list=self.user.get_all_connection()
-            current_page = Paginator(frends_list, 12)
+            current_page = Paginator(frends_list, 1)
         elif self.user == request.user:
             frends_list=self.user.get_all_connection()
-            current_page = Paginator(frends_list, 12)
+            current_page = Paginator(frends_list, 1)
         context['user'] = self.user
         context['request_user'] = request.user
         page = request.GET.get('page')
