@@ -80,6 +80,7 @@ class ItemListView(View):
 class AllUsers(ListView):
     template_name="all_users.html"
     model=User
+    paginate_by=1
 
     def get_queryset(self):
         users=User.objects.only('id')
@@ -94,7 +95,7 @@ class ProfileUserView(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.user=User.objects.get(pk=self.kwargs["pk"])
-        if request.user.is_authenticated: 
+        if request.user.is_authenticated:
             self.is_frend = self.user.is_connected_with_user(request.user)
             self.is_blocked = self.user.has_blocked_user_with_id(request.user)
             self.common_frends = self.user.get_common_friends_of_user(request.user)[0:5]
