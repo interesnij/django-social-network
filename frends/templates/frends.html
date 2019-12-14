@@ -10,7 +10,7 @@
 {% endblock %}
 
 {% block content %}
-{{ user.get_full_name|gent }}
+{{ user.first_name|gent }} {{ user.last_name|gent }}
 <div class="row">
     <div class="col-12 col-md-8">
         <br><br><br>
