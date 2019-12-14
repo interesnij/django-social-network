@@ -30,5 +30,5 @@ def gent(value):
     word = morph.parse(value)[0]
     word2 = morph.parse(value)[0]
     v1 = word.inflect({'gent'})
-    result = v1.word
-    return result.title()
+    result = v1.word.title()
+    return result
