@@ -1,0 +1,27 @@
+<br>
+{% if online_list %}
+      <ul class="list-group border-top border-bottom list-group-flush">
+          {% for object online_list %}
+          <li class="list-group-item">
+              <div class="media">
+                  <figure>
+                      {% if object.get_avatar %}
+                      <img src="{{ object.file|thumbnail_url:'avatar' }}" style="border-radius:50px;width:50px;" alt="image">
+                      {% else %}
+                      <img class="thumb" src="{% static 'images/icons/person-24px.svg' %}" />
+                      {% endif %}
+                  </figure>
+                  <div class="media-body">
+                      <a href="{% url 'user' pk=object.pk %}" class="ajax">
+                          <h6 class="my-0 mt-1">{{ object.get_full_name }}</h6>
+                      </a>
+                      <a href="" class="small">Написать сообщение</a>
+                  </div>
+              </div>
+          </li>
+
+          {% endfor %}
+      </ul>
+
+{% else %}
+{% endif %}
