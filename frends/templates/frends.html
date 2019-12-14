@@ -34,13 +34,7 @@
               {% endif %}
           </ul>
       </div>
-        <br><br><br>
-        <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Поиск друзей" aria-label="Recipient's username">
-            <div class="input-group-append">
-                <button class="btn btn-outline-link" type="button">Искать</button>
-            </div>
-        </div>
+
         <div class="card mb-2">
           <div class="card-header">
               <div class="media">
@@ -64,6 +58,13 @@
                         <div class="card-body">
                             <div class="tab-content">
                                 <div class="tab-pane fade active show" id="tabhome123" role="tabpanel" aria-labelledby="tabhome123-tab">
+                                  <br><br><br>
+                                  <div class="input-group mb-3">
+                                      <input type="text" class="form-control" placeholder="Поиск друзей" aria-label="Recipient's username">
+                                      <div class="input-group-append">
+                                          <button class="btn btn-outline-link" type="button">Искать</button>
+                                      </div>
+                                  </div>
                                     <p class="content-color-secondary mb-0">
                                         <ul class="list-group border-top border-bottom list-group-flush">
                                           {% for object in object_list %}
@@ -90,6 +91,13 @@
                                     </p>
                                 </div>
                                 <div class="tab-pane fade" id="tabhome223" role="tabpanel" aria-labelledby="tabhome223-tab">
+                                  <br><br><br>
+                                  <div class="input-group mb-3">
+                                      <input type="text" class="form-control" placeholder="Поиск друзей" aria-label="Recipient's username">
+                                      <div class="input-group-append">
+                                          <button class="btn btn-outline-link" type="button">Искать</button>
+                                      </div>
+                                  </div>
                                         <ul class="list-group border-top border-bottom list-group-flush">
                                             {% for object in user.get_online_connection %}
                                             <li class="list-group-item">
@@ -115,6 +123,13 @@
                                 </div>
 
                                 <div class="tab-pane fade" id="tabhome323" role="tabpanel" aria-labelledby="tabhome323-tab">
+                                  <br><br><br>
+                                  <div class="input-group mb-3">
+                                      <input type="text" class="form-control" placeholder="Поиск друзей" aria-label="Recipient's username">
+                                      <div class="input-group-append">
+                                          <button class="btn btn-outline-link" type="button">Искать</button>
+                                      </div>
+                                  </div>
                                       <ul class="list-group border-top border-bottom list-group-flush">
                                           {% for object in common_frends %}
                                             <li class="list-group-item">
