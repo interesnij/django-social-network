@@ -87,6 +87,25 @@ class AllUsers(ListView):
         return users
 
 
+class AllCommonUsers(View):
+
+    def get(self, request, *args, **kwargs):
+        context = {}
+        user=request.user
+        if request.user.is_authenticated:
+            common_list = user.get_possible_friends()
+            current_page = Paginator(common_list, 20)
+        context['user'] = user
+        page = request.GET.get('page')
+        try:
+            context['common_list'] = current_page.page(page)
+        except PageNotAnInteger:
+            context['common_list'] = current_page.page(1)
+        except EmptyPage:
+            context['common_list'] = current_page.page(current_page.num_pages)
+
+        return render_to_response('lenta/all_common_users.html', context)
+
 class ProfileUserView(TemplateView):
     template_name = 'user.html'
     is_blocked = None
