@@ -13,11 +13,13 @@ class FrendsListView(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.user=User.objects.get(pk=self.kwargs["pk"])
+		self.featured_users = request.user.get_possible_friends()[0:10]
 		return super(FrendsListView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		context=super(FrendsListView,self).get_context_data(**kwargs)
 		context['user'] = self.user
+		context['featured_users'] = self.featured_users
 		return context
 
 
