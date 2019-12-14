@@ -87,23 +87,16 @@ class AllUsers(ListView):
         return users
 
 
-class AllCommonUsers(View):
+class AllUsers(ListView):
+    template_name="all_common_users.html"
+    model=User
+    paginate_by=1
 
-    def get(self, request, *args, **kwargs):
-        context = {}
-        if request.user.is_authenticated:
+    def get_queryset(self):
+        user=User.objects.get(pk=self.kwargs["pk"])
+        if user == request.user and request.user.is_authenticated:
             common_list = request.user.get_possible_friends()
-            current_page = Paginator(common_list, 20)
-        context['user'] = request.user
-        page = request.GET.get('page')
-        try:
-            context['common_list'] = current_page.page(page)
-        except PageNotAnInteger:
-            context['common_list'] = current_page.page(1)
-        except EmptyPage:
-            context['common_list'] = current_page.page(current_page.num_pages)
-
-        return render_to_response('all_common_users.html', context)
+        return common_list
 
 class ProfileUserView(TemplateView):
     template_name = 'user.html'
