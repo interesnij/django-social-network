@@ -20,12 +20,14 @@
         $('#photo_loader').empty();
     });
 
-    var infinite = new Waypoint.Infinite({
-        element: $('.infinite-container')[0],
-        onBeforePageLoad: function() {
-            $('.load').show();
-        },
-        onAfterPageLoad: function($items) {
-            $('.load').hide();
-        }
+    var photos_infinite = new Waypoint.Infinite({
+        element: $('.photos-container')[0],
+        onBeforePageLoad: function() { $('.load').show(); },
+        onAfterPageLoad: function($items) { $('.load').hide(); }
+    });
+
+    var albums_infinite = new Waypoint.Infinite({
+        element: $('.albums-container')[0],
+        onBeforePageLoad: function() { $('.load').show(); },
+        onAfterPageLoad: function($items) { $('.load').hide(); }
     });
