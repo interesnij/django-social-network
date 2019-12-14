@@ -5,12 +5,12 @@
 {% if user == request.user %}
 Мои друзья
 {% else %}
-Друзья {{ user.first_name|gent }}
+Друзья {{ user.get_full_name|gent }}
 {% endif %}
 {% endblock %}
 
 {% block content %}
-{{ user.first_name|gent }}
+{{ user.get_full_name|gent }}
 <div class="row">
     <div class="col-12 col-md-8">
         <br><br><br>
