@@ -31,5 +31,5 @@ def gent(value):
     word2 = morph.parse(value)[0]
     v1 = word1.inflect({'gent'})
     v2 = word2.inflect({'gent'})
-    result = v1.word1 +v2.word2
+    result = v1.word + v2.word
     return result
