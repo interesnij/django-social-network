@@ -28,5 +28,5 @@ def rupluralize(value, arg="дурак,дурака,дураков"):
 def gent(value):
     morph = pymorphy2.MorphAnalyzer()
     word = morph.parse(value)[0]
-    word.inflect({'gent'})
-    return num2text(num=numeral, main_units=((word.inflect({'gent'})), 'm'))
+    result = word.inflect({'gent'})
+    return result
