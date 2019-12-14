@@ -14,7 +14,7 @@ class FrendsListView(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.user=User.objects.get(pk=self.kwargs["pk"])
-		if self.user == request.user and request.user.is_authenticated():
+		if self.user == request.user and request.user.is_authenticated:
 			self.featured_users = request.user.get_possible_friends()[0:10]
 		return super(FrendsListView,self).get(request,*args,**kwargs)
 
