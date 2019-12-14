@@ -36,13 +36,13 @@
 {% endif %}
 <script>
   var infinite = new Waypoint.Infinite({
-      this_element = $('#ajax .frends-container')[0],
+      this_element = $('.frends-container')[0],
       element: this_element,
       onBeforePageLoad: function() {
-          $('.frends-container.load').show();
+          $('.load').show();
       },
       onAfterPageLoad: function($items) {
-          $('.frends-container.load').hide();
+          $('.load').hide();
       }
   });
 </script>
