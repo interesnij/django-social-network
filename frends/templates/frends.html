@@ -158,8 +158,8 @@ $(document).ready(function(){
 </script>
 <script>
   var infinite = new Waypoint.Infinite({
-      element = $('#ajax.frends-container')[0];
-      element: element,
+      this_element = $('#ajax.frends-container')[0],
+      element: this_element,
       onBeforePageLoad: function() {
           $('.frends-container.load').show();
       },
