@@ -34,3 +34,14 @@
 
 {% else %}
 {% endif %}
+<script>
+  var infinite = new Waypoint.Infinite({
+      element: $('.frends-container')[0],
+      onBeforePageLoad: function() {
+          $('.load').show();
+      },
+      onAfterPageLoad: function($items) {
+          $('.load').hide();
+      }
+  });
+</script>
