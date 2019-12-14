@@ -27,8 +27,8 @@ def rupluralize(value, arg="дурак,дурака,дураков"):
 @register.filter
 def gent(value):
     morph = pymorphy2.MorphAnalyzer()
-    word1 = morph.parse(value)[0:1]
-    word2 = morph.parse(value)[1]
+    word1 = morph.parse(value)[0]
+    word2 = morph.parse(value)[0]
     v1 = word1.inflect({'gent'})
     v2 = word2.inflect({'gent'})
     result = v1.word1 +v2.word2
