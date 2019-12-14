@@ -94,7 +94,7 @@ class AllCommonUsers(View):
         if request.user.is_authenticated:
             common_list = request.user.get_possible_friends()
             current_page = Paginator(common_list, 20)
-        context['request_user'] = request.user
+        context['user'] = request.user
         page = request.GET.get('page')
         try:
             context['common_list'] = current_page.page(page)
