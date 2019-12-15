@@ -19,8 +19,8 @@
         </h5>
         <p>{{ comment.text|safe }}</p>
 
-        {% if comment.photo_set.all %}
-        <br><br>
+        {% if comment.comment_photo %}
+        <br><br>fgh
         <div class="row">
           {% for object in comment.photo_set.all %}
           <div class="col-lg-6 col-md-6">
