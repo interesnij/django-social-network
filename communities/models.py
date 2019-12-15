@@ -102,11 +102,11 @@ class Community(models.Model):
         return cls.objects.filter(name=community_name, memberships__user__username=username).exists()
 
     @classmethod
-    def is_user_with_username_administrator_of_community_with_name(cls, username, community_name):
+    def is_user_with_username_administrator_of_community_with_name(cls, user_id, community_name):
         """"
         Администратор ли пользователь в сообществе?
         """
-        return cls.objects.filter(name=community_name, memberships__user__username=username,
+        return cls.objects.filter(name=community_name, memberships__user__id=user_id,
                                   memberships__is_administrator=True).exists()
 
     @classmethod

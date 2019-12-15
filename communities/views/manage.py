@@ -6,6 +6,7 @@ from django.views import View
 from communities.forms import *
 from users.models import User
 from follows.models import CommunityFollow
+from common.checkers import check_can_get_posts_for_community_with_name
 
 
 class CommunityGeneralChange(TemplateView):
@@ -191,7 +192,11 @@ class CommunityAdminView(ListView):
 
 	def get_queryset(self):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		admins=self.community.get_community_with_name_administrators(self.community.name)
+		if request.user.is_authenticated:
+			check_can_get_posts_for_community_with_name(request.user,self.community.name)
+			admins=self.community.get_community_with_name_administrators(self.community.name)
+		else:
+			admins=""
 		return admins
 
 
@@ -211,7 +216,11 @@ class CommunityModersView(ListView):
 
 	def get_queryset(self):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		moders=self.community.get_community_with_name_moderators(self.community.name)
+		if request.user.is_authenticated:
+			check_can_get_posts_for_community_with_name(request.user,self.community.name)
+			moders=self.community.get_community_with_name_moderators(self.community.name)
+		else:
+			moders = ""
 		return moders
 
 
@@ -231,7 +240,11 @@ class CommunityBlackListView(ListView):
 
 	def get_queryset(self):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		black_list=self.community.get_community_with_name_banned_users(self.community.name)
+		if request.user.is_authenticated:
+			check_can_get_posts_for_community_with_name(request.user,self.community.name)
+			black_list=self.community.get_community_with_name_banned_users(self.community.name)
+		else:
+			black_list = ""
 		return black_list
 
 
@@ -251,5 +264,8 @@ class CommunityFollowsView(ListView):
 
 	def get_queryset(self):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		follows=CommunityFollow.get_community_with_name_follows(self.community.name)
+		if request.user.is_authenticated and self.community.is_user_with_username_administrator_of_community_with_name(request.user.pk, self.community.name):
+			follows=CommunityFollow.get_community_with_name_follows(self.community.name)
+		else:
+			follows = ""
 		return follows

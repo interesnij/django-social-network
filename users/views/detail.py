@@ -60,10 +60,10 @@ class ItemListView(View):
             raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
         elif request.user.is_anonymous and not self.user.is_closed_profile():
             items_list = self.user.get_posts().order_by('-created')
-            current_page = Paginator(items_list, 12)
+            current_page = Paginator(items_list, 10)
         elif self.user == request.user:
             items_list = self.user.get_posts().order_by('-created')
-            current_page = Paginator(items_list, 12)
+            current_page = Paginator(items_list, 10)
         context['user'] = self.user
         context['request_user'] = request.user
         page = request.GET.get('page')
