@@ -17,7 +17,7 @@ $('.user_page').on('click', '.avatar_detail', function() {
 });
 
 $('#ajax').on('click', '.select_photo', function() {
-		$('#photo_loader').html('{% include "generic/select_image.html" %}'); $('.photo_fullscreen').show();
+		$('#photo_loader').html({% include "generic/select_image.html" %}); $('.photo_fullscreen').show();
 });
 
 $('#ajax').on('click', '.comment_image', function() {
