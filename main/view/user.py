@@ -51,19 +51,22 @@ class ItemCommentUserCreate(View):
 		item = Item.objects.get(uuid=item_uuid)
 		if form_post.is_valid():
 			comment=form_post.save(commit=False)
-			item_comment_photo=request.FILES['comment_file']
-			#item_comment_photo2=form_post.cleaned_data['item_comment_photo2']
+			photo=form_post.cleaned_data['comment_file']
+			photo2=form_post.cleaned_data['comment_file2']
 
-			if not comment.text and not item_comment_photo:
+			if not comment.text and not photo and not photo2:
 				raise ValidationError('Для добавления комментария необходимо написать что-то или прикрепить изображение')
 			if request.user.pk != user.pk:
 				check_is_not_blocked_with_user_with_id(user=request.user, user_id = user.pk)
 				if user.is_closed_profile():
 					check_is_connected_with_user_with_id(user=request.user, user_id = user.pk)
 			new_comment = comment.create_user_comment(commenter=request.user, parent_comment=None, item=item, text=comment.text)
-			if item_comment_photo:
+			if photo:
 				album=Album.objects.get(creator=request.user, title="Сохраненные фото", is_generic=True, community=None)
-				Photo.objects.create(creator=request.user, file=item_comment_photo,community=None,is_public=True, album=album, item_comment=new_comment)
+				Photo.objects.create(creator=request.user, file=photo,community=None,is_public=True, album=album, item_comment=new_comment)
+			if photo2:
+				album=Album.objects.get(creator=request.user, title="Сохраненные фото", is_generic=True, community=None)
+				Photo.objects.create(creator=request.user, file=photo2,community=None,is_public=True, album=album, item_comment=new_comment)
 			new_comment.notification_user_comment(request.user)
 			html = render_to_string('item_user/parent_comment.html',{'comment': new_comment, 'request_user': request.user, "form_reply": CommentForm(), 'request': request})
 			return JsonResponse(html, safe=False)
