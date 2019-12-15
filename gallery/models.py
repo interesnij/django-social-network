@@ -48,28 +48,17 @@ class Photo(models.Model):
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создано")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='photo_creator', null=False, blank=False, verbose_name="Создатель")
     is_deleted = models.BooleanField(verbose_name="Удален",default=False )
-    item = models.ForeignKey(Item, blank=True, null=True, on_delete=models.CASCADE)
-    item_comment = models.ForeignKey(ItemComment, blank=True, null=True, on_delete=models.CASCADE)
+    item = models.ManyToManyField(Item, related_name='item_photo')
+    item_comment = models.ManyToManyField(ItemComment, related_name='comment_photo')
 
     class Meta:
-        indexes = (
-            BrinIndex(fields=['created']),
-        )
+        indexes = (BrinIndex(fields=['created']),)
         verbose_name = 'Фото'
         verbose_name_plural = 'Фото'
 
     @classmethod
-    def create_photo(cls, creator, album_2=None, file=None, community=None,
-                    created=None, is_public=False, description=None, item=None ):
-        photo = Photo.objects.create(
-                                        creator=creator,
-                                        file=file,
-                                        community=community,
-                                        is_public=is_public,
-                                        album_2=album_2,
-                                        description=description,
-                                        item=item,
-                                    )
+    def create_photo(cls, creator, album_2=None, file=None, community=None, created=None, is_public=False, description=None, item=None ):
+        photo = Photo.objects.create(creator=creator, file=file, community=community, is_public=is_public, album_2=album_2, description=description, item=item, )
         return photo
 
     def notification_user_repost(self, user):
@@ -103,9 +92,7 @@ class PhotoComment(models.Model):
     moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='photo_comment')
 
     class Meta:
-        indexes = (
-            BrinIndex(fields=['created']),
-        )
+        indexes = (BrinIndex(fields=['created']), )
         verbose_name="комментарий к записи"
         verbose_name_plural="комментарии к записи"
 
