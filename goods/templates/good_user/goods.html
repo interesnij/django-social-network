@@ -4,7 +4,7 @@
 {% if user == request.user %}
 Мои товары
 {% else %}
-Товары пользователя "{{ user.get_full_name }}"
+Товары {{ user.first_name|gent }} {{ user.last_name|gent }}
 {% endif %}
 {% endblock %}
 {% block content %}

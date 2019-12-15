@@ -400,6 +400,15 @@ class User(AbstractUser):
         final_queryset = own_posts_queryset.union(community_posts_queryset, followed_users_queryset, frends_queryset)
         return final_queryset
 
+    def get_follows(self):
+        reported_posts_exclusion_query = ~Q(moderated_object__reports__reporter_id=self.pk)
+        followed_users = self.follows.values('followed_user_id')
+        followed_users_ids = [followed_user['followed_user_id'] for followed_user in followed_users]
+        followed_users_query = Q(id__in=followed_users_ids)
+        followed_users_query.add(reported_posts_exclusion_query, Q.AND)
+        query = User.objects.filter(followed_users_query)
+        return query
+
     def get_possible_friends(self):
         frends = self.connections.values('target_user_id')
         if not frends:

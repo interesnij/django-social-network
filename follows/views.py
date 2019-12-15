@@ -1,20 +1,43 @@
 from django.views import View
 from follows.models import Follow
-from django.views.generic import ListView
 from users.models import User
 from django.http import HttpResponse
 from communities.models import Community
+from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
+from django.shortcuts import render_to_response
+from rest_framework.exceptions import PermissionDenied
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
-class FollowsListView(ListView):
-	template_name="follows.html"
-	model=User
-	paginate_by=10
+class FollowsListView(View):
+    def get(self, request, *args, **kwargs):
+        context = {}
+        self.user=User.objects.get(pk=self.kwargs["pk"])
+        if self.user != self.request.user and self.request.user.is_authenticated:
+            check_is_not_blocked_with_user_with_id(user=self.request.user, user_id=self.user.id)
+            if self.user.is_closed_profile():
+                check_is_connected_with_user_with_id(user=self.request.user, user_id=self.user.id)
+            follows_list=self.user.get_follows()
+            current_page = Paginator(follows_list, 1)
+        elif request.user.is_anonymous and self.user.is_closed_profile():
+            raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
+        elif request.user.is_anonymous and not self.user.is_closed_profile():
+            frends_list=self.user.get_follows()
+            current_page = Paginator(follows_list, 1)
+        elif self.user == request.user:
+            frends_list=self.user.get_follows()
+            current_page = Paginator(follows_list, 1)
+        context['user'] = self.user
+        context['request.user'] = request.user
+        page = request.GET.get('page')
+        try:
+            context['follows_list'] = current_page.page(page)
+        except PageNotAnInteger:
+            context['follows_list'] = current_page.page(1)
+        except EmptyPage:
+            context['follows_list'] = current_page.page(current_page.num_pages)
+        return render_to_response('follows.html', context)
 
-	def get_queryset(self):
-		self.user = User.objects.get(pk=self.kwargs["pk"])
-		followeds_user=Follow.objects.filter(followed_user=self.user)
-		return followeds_user
 
 
 class FollowCreate(View):

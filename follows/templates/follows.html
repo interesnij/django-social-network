@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load staticfiles humanize thumbnail %}
+{% load staticfiles humanize thumbnail liked_user%}
 
 {% block title %}
 {% if request.user %}
@@ -24,11 +24,12 @@
                 <div class="media">
 
                     <div class="media-body">
-                        <h5 class="mt-1">{% if request.user %}
+                        <h5 class="mt-1">
+                          {% if request.user %}
                             Мои подписчики
-                            {% else %}
-                            Подписчики{{ user.first_name|gent }} {{ user.last_name|gent }}
-                            {% endif %}
+                          {% else %}
+                            Подписчики {{ user.first_name|gent }} {{ user.last_name|gent }}
+                          {% endif %}
                         </h5>
                     </div>
                 </div>
