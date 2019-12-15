@@ -20,9 +20,9 @@
         <p>{{ comment.text|safe }}</p>
 
         {% if comment.comment_photo %}
-        <br><br>fgh
+        <br><br>
         <div class="row">
-          {% for object in comment.photo_set.all %}
+          {% for object in comment.comment_photo_set.all %}
           <div class="col-lg-6 col-md-6">
               <img data-uuid="{{ object.uuid }}"
                    data-id="{{ comment.commenter.pk }}"
