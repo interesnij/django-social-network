@@ -12,6 +12,9 @@ from main.forms import CommentForm
 class AvatarReload(TemplateView):
     template_name="profile/avatar_reload.html"
 
+class ImagesLoad(TemplateView):
+    template_name="generic/select_image.html"
+
 
 class ProfileReload(TemplateView):
     template_name = 'user_reload.html'
