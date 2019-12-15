@@ -773,20 +773,6 @@ body.dragging * {
   background-color: #111111 !important;
 }
 
-/* pink gradient */
-.pink-gradient, .dropdown-menu .dropdown-item:active, .dropdown-menu .dropdown-item.active,
-.pink-gradient-active.active,
-.pink-gradient-active.router-link-active,
-.pink-gradient-active.active:hover,
-.pink-gradient-active:active {
-  color: #ffffff !important;
-  background-image: -moz-linear-gradient(45deg, #8226f5 0%, #e625ea 100%) !important;
-  background-image: -webkit-linear-gradient(45deg, #8226f5 0%, #e625ea 100%) !important;
-  background-image: -ms-linear-gradient(45deg, #8226f5 0%, #e625ea 100%) !important;
-  border-color: transparent;
-  background-color: #8226f5 !important;
-  background-size: cover;
-  background-repeat: repeat;
 }
 
 .pink-gradient h5, .dropdown-menu .dropdown-item:active h5, .dropdown-menu .dropdown-item.active h5,
