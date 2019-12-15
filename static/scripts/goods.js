@@ -11,3 +11,6 @@ $('#ajax').on('click', '.good_fullscreen_hide', function() {
     $('.good_add_fullscreen').hide();
     $('#good_add_loader').empty();
 });
+var goods_infinite = new Waypoint.Infinite({
+    element: $('.goods-container')[0], onBeforePageLoad: function() { $('.load').show(); }, onAfterPageLoad: function($items) { $('.load').hide(); }
+});

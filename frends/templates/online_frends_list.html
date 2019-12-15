@@ -39,3 +39,9 @@
   <h6 style="margin-bottom: 20px;"> Друзей онлайн нет...</h6>
 </div>
 {% endif %}
+
+<script>
+  var online_infinite = new Waypoint.Infinite({
+      element: $('.online-container')[0], onBeforePageLoad: function() { $('.load').show(); }, onAfterPageLoad: function($items) { $('.load').hide(); }
+  });
+</script>

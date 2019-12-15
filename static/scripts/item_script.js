@@ -208,3 +208,8 @@ $('#ajax').on('click', '.upload_photo', function() {
                 } } else { this.value = null; } } entrou = true; setTimeout(function() { entrou = false; }, 1000); img.prev().prev().show();});
 
   });
+
+
+  var infinite_item_comments = new Waypoint.Infinite({
+      element: $('.comments-container')[0], onBeforePageLoad: function() { $('.load').show(); }, onAfterPageLoad: function($items) { $('.load').hide(); }
+  });
