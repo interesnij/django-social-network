@@ -63,8 +63,7 @@ class ItemCommentUserCreate(View):
 			new_comment = comment.create_user_comment(commenter=request.user, parent_comment=None, item=item, text=comment.text)
 			if item_comment_photo:
 				album=Album.objects.get(creator=request.user, title="Сохраненные фото", is_generic=True, community=None)
-				for image in item_comment_photo:
-					Photo.objects.create(creator=request.user, file=image,community=None,is_public=True, album=album, item_comment=new_comment)
+				Photo.objects.create(creator=request.user, file=item_comment_photo,community=None,is_public=True, album=album, item_comment=new_comment)
 			new_comment.notification_user_comment(request.user)
 			html = render_to_string('item_user/parent_comment.html',{'comment': new_comment, 'request_user': request.user, "form_reply": CommentForm(), 'request': request})
 			return JsonResponse(html, safe=False)
