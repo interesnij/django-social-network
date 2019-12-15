@@ -24,7 +24,7 @@ $('#ajax').on('click', '.comment_image', function() {
 
 $('#ajax').on('click', '.select_photo', function() {
   uuid = $(this).data("uuid");
-  $('#photo_loader').html("").load("/gallery/user/albums/" + uuid + "/"); $('.photo_fullscreen').show();
+  $('#photo_loader').html("").load("/gallery/user/photos/" + uuid + "/"); $('.photo_fullscreen').show();
 });
 
 $('.photo_fullscreen_hide').on('click', function() { $('.photo_fullscreen').hide(); $('#photo_loader').empty(); });
