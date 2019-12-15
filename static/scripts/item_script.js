@@ -16,11 +16,6 @@ $('.user_page').on('click', '.avatar_detail', function() {
 		$('#photo_loader').html('').load("/gallery/load/avatar_detail/" + photo_id + "/" + user_uuid + "/"); $('.photo_fullscreen').show();
 });
 
-$('#ajax').on('click', '.select_photo', function() {
-  var element = document.createElement('span');
-  element.innerHTML = '{% include "generic/select_image.html" %}';
-		$('#photo_loader').html(element); $('.photo_fullscreen').show();
-});
 
 $('#ajax').on('click', '.comment_image', function() {
 		var photo = $(this); var pk = photo.data("id"); var uuid = photo.data("uuid");
