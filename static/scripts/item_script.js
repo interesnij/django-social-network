@@ -208,13 +208,3 @@ $('#ajax').on('click', '.upload_photo', function() {
                 } } else { this.value = null; } } entrou = true; setTimeout(function() { entrou = false; }, 1000); img.prev().prev().show();});
 
   });
-
-  var infinite_item_comments = new Waypoint.Infinite({
-      element: $('.stream_comments')[0], onBeforePageLoad: function() { $('.load').show(); },
-      onAfterPageLoad: function($items) { $('.load').hide(); }
-  });
-  var all_users_infinite = new Waypoint.Infinite({
-      element: $('.all-users-container')[0],
-      onBeforePageLoad: function() { $('.load').show(); },
-      onAfterPageLoad: function($items) { $('.load').hide(); }
-  });

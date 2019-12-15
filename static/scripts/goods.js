@@ -7,16 +7,6 @@ $('.infinite-container').on('click', '.good_detail', function() {
     $('.good_fullscreen').show();
 });
 
-var infinite = new Waypoint.Infinite({
-    element: $('.infinite-container')[0],
-    onBeforePageLoad: function() {
-        $('.load').show();
-    },
-    onAfterPageLoad: function($items) {
-        $('.load').hide();
-    }
-});
-
 $('#ajax').on('click', '.good_fullscreen_hide', function() {
     $('.good_add_fullscreen').hide();
     $('#good_add_loader').empty();

@@ -40,15 +40,3 @@
   <h6 style="margin-bottom: 20px;"> Общих друзей нет...</h6>
 </div>
 {% endif %}
-
-<script>
-  var infinite = new Waypoint.Infinite({
-      element: $('.common-container')[0],
-      onBeforePageLoad: function() {
-          $('.load').show();
-      },
-      onAfterPageLoad: function($items) {
-          $('.load').hide();
-      }
-  });
-</script>
