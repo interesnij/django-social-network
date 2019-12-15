@@ -51,8 +51,8 @@ class ItemCommentUserCreate(View):
 		item = Item.objects.get(uuid=item_uuid)
 		if form_post.is_valid():
 			comment=form_post.save(commit=False)
-			photo=form_post.cleaned_data['comment_file']
-			photo2=form_post.cleaned_data['comment_file2']
+			photo=form_post.cleaned_data['photo']
+			photo2=form_post.cleaned_data['photo2']
 
 			if not comment.text and not photo and not photo2:
 				raise ValidationError('Для добавления комментария необходимо написать что-то или прикрепить изображение')
