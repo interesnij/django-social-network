@@ -51,7 +51,7 @@
             <img style="margin-top: -10px;" src="{% static 'images/icons/attach_file-24px.svg' %}" />
           </a>
           <div class="dropdown-menu dropdown-menu-top" aria-labelledby="dropdown_select_upload_comment">
-              <a id="" style="cursor:pointer" class="dropdown-item upload_photo">Загрузить изображение</a>
+              <a id="" style="cursor:pointer"  data-uuid="{{ user.uuid }}" class="dropdown-item upload_photo">Загрузить изображение</a>
               <a id="" style="cursor:pointer" class="dropdown-item select_photo">Выбрать изображение</a>
               <a id="" style="cursor:pointer" class="dropdown-item">Выбрать запись</a>
               <a id="" style="cursor:pointer" class="dropdown-item">Выбрать статью</a>
@@ -111,5 +111,5 @@
             $('.load').hide();
         }
     });
-    
+
 </script>

@@ -23,7 +23,8 @@ $('#ajax').on('click', '.comment_image', function() {
 });
 
 $('#ajax').on('click', '.select_photo', function() {
-  $('#photo_loader').html("").load("/users/load/img_load/"); $('.photo_fullscreen').show();
+  uuid = $(this).data("uuid");
+  $('#photo_loader').html("").load("/gallery/user/albums/" + uuid + "/"); $('.photo_fullscreen').show();
 });
 
 $('.photo_fullscreen_hide').on('click', function() { $('.photo_fullscreen').hide(); $('#photo_loader').empty(); });

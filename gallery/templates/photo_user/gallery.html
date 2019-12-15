@@ -53,7 +53,7 @@
       <div id="albums_load"></div>
     </div>
 
-    <div class="photos-container row">
+    <div class="photo-container row">
         <div id="photos_load" style="width: 100%;"></div>
     </div>
   </div>
@@ -71,7 +71,7 @@
 <script>
     $(document).ready(function() {
         $('#albums_load').html('').load("/gallery/user/albums/" + "{{ user.uuid }}");
-        $('#photos_load').html('').load("/gallery/user/photos/" + "{{ user.uuid }}");
+        $('#photo_load').html('').load("/gallery/user/photos/" + "{{ user.uuid }}");
     });
 </script>
 {% endblock %}
