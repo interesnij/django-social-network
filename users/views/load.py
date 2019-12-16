@@ -3,6 +3,9 @@ from users.models import User
 from frends.models import Connect
 from follows.models import Follow
 from communities.models import Community
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.views import View
+from django.shortcuts import render_to_response
 
 
 class AvatarReload(TemplateView):
