@@ -46,10 +46,10 @@ $('#ajax').on('click', '.u_comment.comments_open', function() {
 });
 
 
-$('#ajax').on('click', '.remove', function() {
-    var remove = $(this); var pk = remove.data('id'); var uuid = remove.data('uuid');
+$('#ajax').on('click', '.item_user_remove', function() {
+    var remove = $(this); var pk = remove.data('id');
     $.ajax({
-        url: "/user/delete/" + pk + "/" + uuid + "/",
+        url: "/user/delete/" + pk + "/",
         success: function(data) {
             $(remove).parents('.card').hide();
             $('.activefullscreen').hide();
@@ -59,10 +59,10 @@ $('#ajax').on('click', '.remove', function() {
 });
 
 
-$('#ajax').on('click', '.fixed', function() {
-    var fixed = $(this); var pk = fixed.parent().data('id'); var uuid = fixed.parent().data('uuid');
+$('#ajax').on('click', '.item_user_fixed', function() {
+    var fixed = $(this); var pk = fixed.parent().data('id');
     $.ajax({
-        url: "/user/fixed/" + pk + "/" + uuid + "/",
+        url: "/user/fixed/" + pk + "/",
         success: function(data) {
             fixed.parent().html("<span style='cursor:pointer' class='dropdown-item unfixed'>Открепить</span>");
             $.toast({heading: 'Информация',text: 'Запись закреплена!',showHideTransition: 'fade',icon: 'info'})
@@ -70,10 +70,10 @@ $('#ajax').on('click', '.fixed', function() {
     });
 });
 
-$('#ajax').on('click', '.unfixed', function() {
-    var unfixed = $(this); var pk = unfixed.parent().data('id'); var uuid = unfixed.parent().data('uuid');
+$('#ajax').on('click', '.item_user_unfixed', function() {
+    var unfixed = $(this); var pk = unfixed.parent().data('id');
     $.ajax({
-        url: "/user/unfixed/" + pk + "/" + uuid + "/",
+        url: "/user/unfixed/" + pk + "/",
         success: function(data) {
             unfixed.parent().html("<span style='cursor:pointer' class='dropdown-item fixed'>Закрепить</span>");
             $.toast({heading: 'Информация',text: 'Запись откреплена!',showHideTransition: 'fade',icon: 'info'})

@@ -114,10 +114,9 @@ def post_update_interactions(request):
     return JsonResponse(data)
 
 
-def user_fixed(request, pk, item_uuid):
+def user_fixed(request, pk):
 	item = Item.objects.get(pk=pk)
-	current_user = User.objects.get(uuid=user_uuid)
-	if request.user == current_user:
+	if request.user == item.creator:
 		item.is_fixed=True
 		item.save()
 		return HttpResponse("!")
@@ -125,20 +124,18 @@ def user_fixed(request, pk, item_uuid):
 		return HttpResponse("Закрепляйте, пожалуйста, свои записи!")
 
 
-def user_unfixed(request, pk, user_uuid):
+def user_unfixed(request, pk):
 	item = Item.objects.get(pk=pk)
-	current_user = User.objects.get(uuid=user_uuid)
-	if request.user == current_user:
+	if request.user == item.creator:
 		item.is_fixed=False
 		item.save()
 		return HttpResponse("!")
 	else:
 		return HttpResponse("Открепляйте, пожалуйста, свои записи!")
 
-def user_item_delete(request, pk, user_uuid):
+def user_item_delete(request, pk):
 	item = Item.objects.get(pk=pk)
-	current_user = User.objects.get(uuid=user_uuid)
-	if request.user == current_user:
+	if request.user == item.creator:
 		item.is_deleted=True
 		item.save()
 		return HttpResponse("!")
