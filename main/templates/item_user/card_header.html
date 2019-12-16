@@ -37,11 +37,11 @@
                   {% endif %}
                 </span>
                 <span class="dropdown-item js-textareacopybtn">Скопировать ссылку</span>
-                <textarea style="display:none" class="js-copytextarea">http://трезвый.рус{% url 'item_detail' uuid=object.creator.uuid %}</textarea>
+                <textarea style="display:none" class="js-copytextarea">http://трезвый.рус{% url 'item_detail' uuid=object.uuid %}</textarea>
                 <span style="cursor:pointer" class="dropdown-item">Выключить комментарии</span>
               {% else %}
                 <span class="dropdown-item js-textareacopybtn">Скопировать ссылку</span>
-                <textarea style="display:none" class="js-copytextarea">http://трезвый.рус{% url 'item_detail' uuid=object.creator.uuid %}</textarea>
+                <textarea style="display:none" class="js-copytextarea">http://трезвый.рус{% url 'item_detail' uuid=object.uuid %}</textarea>
                 <span class="dropdown-item">Пожаловаться</span>
               {% endif %}
             </div>
