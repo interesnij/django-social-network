@@ -1,4 +1,4 @@
-
+from django.views.generic.detail import DetailView
 from django.views.generic.base import TemplateView
 from main.models import Item
 from communities.models import Community, CommunityMembership
