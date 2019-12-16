@@ -39,7 +39,8 @@
                 <span class="dropdown-item dropdown_link"><input type="hidden" class="copy_link" value="{% url 'item_detail' uuid=object.creator.uuid %}" />Скопировать ссылку</span>
                 <span data-action="off_comment" style="cursor:pointer" class="dropdown-item">Выключить комментарии</span>
               {% else %}
-                <span class="dropdown-item dropdown_link"><input type="hidden" class="copy_link" value="{% url 'item_detail' uuid=object.creator.uuid %}" />Скопировать ссылку</span>
+                <span class="dropdown-item dropdown_link">Скопировать ссылку</span>
+                <input type="hidden" class="copy_link" value="{% url 'item_detail' uuid=object.creator.uuid %}" />
                 <span class="dropdown-item">Пожаловаться</span>
               {% endif %}
             </div>
@@ -47,5 +48,5 @@
     </div>
 </div>
 <script>
-  
+
 </script>
