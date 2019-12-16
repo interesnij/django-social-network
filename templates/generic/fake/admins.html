@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load staticfiles humanize thumbnail %}
+{% load staticfiles thumbnail %}
 
 {% block title %}Администраторы сообщества "Самые умные"{% endblock %}
 
@@ -21,7 +21,7 @@
                 <ul class="list-group border-top border-bottom list-group-flush">
                   <li class="list-group-item">
                       <div class="media">
-                          <figure><img class="thumb" src="{% static 'images/zukerberg.jpg" /></figure>
+                          <figure><img class="thumb" src="{% static 'images/zukerberg.jpg' %}" /></figure>
                           <div class="media-body">
                               <a href="" class="ajax"><h6 class="my-0 mt-1">Марк Цукерберг</h6></a>
                           </div>
@@ -29,7 +29,7 @@
                   </li>
                   <li class="list-group-item">
                       <div class="media">
-                          <figure><img class="thumb" src="{% static 'images/steve_jobs.jpg" /></figure>
+                          <figure><img class="thumb" src="{% static 'images/steve_jobs.jpg' %}" /></figure>
                           <div class="media-body">
                               <a href="" class="ajax"><h6 class="my-0 mt-1">Стив Джобс</h6></a>
                           </div>
@@ -39,14 +39,14 @@
                         <div class="media">
                             <figure>
                                 {% if request.user.get_avatar %}
-                                <img src="{{ request.user.file|thumbnail_url:'avatar' }}" style="border-radius:50px;width:50px;" alt="image">
+                                <img src="{{ request.user.get_avatar.file|thumbnail_url:'avatar' }}" style="border-radius:50px;width:50px;" alt="image">
                                 {% else %}
                                 <img class="thumb" src="{% static 'images/fuck_you.jpg' %}" />
                                 {% endif %}
                             </figure>
                             <div class="media-body">
                                 <a href="" class="ajax">
-                                    <h6 class="my-0 mt-1">{% if request.user.get_full_name %}{{ object.get_full_name }}{% else %} Вы{% endif %}</h6>
+                                    <h6 class="my-0 mt-1">{% if request.user.get_full_name %}{{ request.user.get_full_name }}{% else %} Вы{% endif %}</h6>
                                 </a>
                             </div>
                         </div>
