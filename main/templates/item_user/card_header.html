@@ -36,7 +36,7 @@
                   <span style="cursor:pointer" class="dropdown-item fixed">Закрепить</span>
                   {% endif %}
                 </span>
-                <span class="dropdown-item dropdown_link js-textareacopybtn">Скопировать ссылку</span>
+                <span class="dropdown-item js-textareacopybtn">Скопировать ссылку</span>
                 <textarea class="js-copytextarea">{% url 'item_detail' uuid=object.creator.uuid %}" /></textarea>
                 <span data-action="off_comment" style="cursor:pointer" class="dropdown-item">Выключить комментарии</span>
               {% else %}
