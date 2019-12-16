@@ -1,7 +1,7 @@
 {% load staticfiles %}
 
 {% if photo_list %}
-<div class="photos-container row">
+<div class="photos-load row">
 {% for object in photo_list %}
   <div class="col-sm-12 col-md-6 col-lg-4 infinite-item photo_detail" style="cursor:pointer" data-uuid="{{ object.creator.uuid }}" data-id="{{ object.id }}">
       <div class="card rounded-0 border-0 mb-4">
@@ -29,12 +29,11 @@
 {% endif %}
 
 <script>
-$('.photos-container').on('click', '.photo_detail', function() {
+$('.photos-load').on('click', '.photo_detail', function() {
     var photo = $(this);
-    var photo_id = photo.data("id");
-    var user_uuid = photo.data("uuid");
+
 });
 var photos_infinite = new Waypoint.Infinite({
-        element: $('.photos-container')[0], onBeforePageLoad: function() { $('.load').show(); }, onAfterPageLoad: function($items) { $('.load').hide(); }
+        element: $('.photos-load')[0], onBeforePageLoad: function() { $('.load').show(); }, onAfterPageLoad: function($items) { $('.load').hide(); }
     });
 </script>
