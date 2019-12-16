@@ -213,3 +213,9 @@ $('#ajax').on('click', '.upload_photo', function() {
   var infinite_item_comments = new Waypoint.Infinite({
       element: $('.comments-container')[0], onBeforePageLoad: function() { $('.load').show(); }, onAfterPageLoad: function($items) { $('.load').hide(); }
   });
+
+  $('#ajax').on('click', '.dropdown_link', function() {
+    link = $(this).next();
+    link.focus(); link.select(); link.execCommand("copy");
+    $.toast({heading: 'Информация',text: 'Ссылка скопирована',showHideTransition: 'fade',icon: 'success'})
+  });
