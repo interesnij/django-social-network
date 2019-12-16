@@ -213,6 +213,3 @@ $('#ajax').on('click', '.upload_photo', function() {
   var infinite_item_comments = new Waypoint.Infinite({
       element: $('.comments-container')[0], onBeforePageLoad: function() { $('.load').show(); }, onAfterPageLoad: function($items) { $('.load').hide(); }
   });
-  var all_users_infinite = new Waypoint.Infinite({
-        element: $('.all-users-container')[0], onBeforePageLoad: function() { $('.load').show(); }, onAfterPageLoad: function($items) { $('.load').hide(); }
-    });
