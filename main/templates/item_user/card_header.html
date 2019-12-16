@@ -38,12 +38,12 @@
                 </span>
                 <span style="cursor:pointer" class="dropdown-item">Выключить комментарии</span>
                 <span style="cursor: pointer;" class="dropdown-item js-textareacopybtn">Скопировать ссылку
-                  <textarea style="display: contents;" class="js-copytextarea">http://трезвый.рус{% url 'item_detail' uuid=object.uuid %}</textarea>
+                  <textarea style="opacity: 0;height:1px" class="js-copytextarea">http://трезвый.рус{% url 'item_detail' uuid=object.uuid %}</textarea>
                 </span>
 
               {% else %}
                 <span style="cursor: pointer;" class="dropdown-item js-textareacopybtn">Скопировать ссылку</span>
-                <textarea style="display: contents;" class="js-copytextarea">http://трезвый.рус{% url 'item_detail' uuid=object.uuid %}</textarea>
+                <textarea style="opacity: 0;height:1px" class="js-copytextarea">http://трезвый.рус{% url 'item_detail' uuid=object.uuid %}</textarea>
                 <span class="dropdown-item">Пожаловаться</span>
               {% endif %}
             </div>
