@@ -36,7 +36,7 @@
                   <span style="cursor:pointer" class="dropdown-item fixed">Закрепить</span>
                   {% endif %}
                 </span>
-                <span class="dropdown-item dropdown_link"><input type="text" class="copy_link" value="{% url 'item_detail' uuid=object.creator.uuid %}" />Скопировать ссылку</span>
+                <span class="dropdown-item dropdown_link"><input type="hidden" class="copy_link" value="{% url 'item_detail' uuid=object.creator.uuid %}" />Скопировать ссылку</span>
                 <span data-action="off_comment" style="cursor:pointer" class="dropdown-item">Выключить комментарии</span>
               {% else %}
                 <span class="dropdown-item dropdown_link"><input type="hidden" class="copy_link" value="{% url 'item_detail' uuid=object.creator.uuid %}" />Скопировать ссылку</span>
@@ -46,3 +46,10 @@
         </div>
     </div>
 </div>
+<script>
+  $('#ajax').on('click', '.dropdown_link', function() {
+    link = $(this).next();
+    link.focus(); link.select(); document.execCommand("copy");
+    $.toast({heading: 'Информация',text: 'Ссылка скопирована',showHideTransition: 'fade',icon: 'success'})
+  });
+</script>
