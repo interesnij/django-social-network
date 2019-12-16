@@ -3,7 +3,7 @@
 {% if photo_list %}
 <div class="photos-load row">
 {% for object in photo_list %}
-  <div class="col-sm-12 col-md-6 col-lg-4 infinite-item photo_detail" style="cursor:pointer" data-uuid="{{ object.creator.uuid }}" data-id="{{ object.id }}">
+  <div class="col-sm-12 col-md-6 col-lg-4 infinite-item photo_load_detail" style="cursor:pointer" data-uuid="{{ object.creator.uuid }}" data-id="{{ object.id }}">
       <div class="card rounded-0 border-0 mb-4">
         <img style="width: 100%;object-fit: cover;height: 200px;" class="lazyload" data-src="{{ object.file.url }}" alt="">
       </div>
@@ -29,8 +29,8 @@
 {% endif %}
 
 <script>
-$('.photos-load').on('click', '.photo_detail', function() {
-    var photo = $(this);
+$('.photos-load').on('click', '.photo_load_detail', function() {
+    console.log("click")
 
 });
 var photos_infinite = new Waypoint.Infinite({
