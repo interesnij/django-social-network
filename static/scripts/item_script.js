@@ -214,11 +214,11 @@ $('#ajax').on('click', '.upload_photo', function() {
       element: $('.comments-container')[0], onBeforePageLoad: function() { $('.load').show(); }, onAfterPageLoad: function($items) { $('.load').hide(); }
   });
 
-  copyTextareaBtn = document.querySelector('.js-textareacopybtn');
-  copyTextareaBtn.addEventListener('click', function(event) {
-  copyTextarea = document.querySelector('.js-copytextarea');
-  copyTextarea.focus();
-  copyTextarea.select();
+  $('#ajax').on('click', '.js-textareacopybtn', function() {
+    btn = $(this);
+    link = btn.find('.js-copytextarea');
+    link.focus();
+    link.select();
   try {
     var successful = document.execCommand('copy');
     var msg = successful ? 'successful' : 'unsuccessful';
