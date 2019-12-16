@@ -149,9 +149,9 @@ class ItemUserDetail(TemplateView):
 	def get(self,request,*args,**kwargs):
 		self.item = Item.objects.get(uuid=self.kwargs["uuid"])
 		if self.item.creator != request.user and request.user.is_authenticated:
-			check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
+			check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.item.creator_id)
 			if self.user.is_closed_profile():
-				check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
+				check_is_connected_with_user_with_id(user=request.user, user_id=self.item.creator_id)
 			self.object = self.item
 		elif self.item.creator == request.user:
 			self.object = self.item
