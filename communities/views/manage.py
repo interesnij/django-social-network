@@ -216,8 +216,7 @@ class CommunityModersView(ListView):
 
 	def get_queryset(self):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		if request.user.is_authenticated:
-			check_can_get_posts_for_community_with_name(request.user,self.community.name)
+		if self.request.user.is_authenticated and self.community.is_user_with_username_administrator_of_community_with_name(self.request.user.pk, self.community.name):
 			moders=self.community.get_community_with_name_moderators(self.community.name)
 		else:
 			moders = ""
