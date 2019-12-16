@@ -192,8 +192,7 @@ class CommunityAdminView(ListView):
 
 	def get_queryset(self):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		if self.request.user.is_authenticated:
-			check_can_get_posts_for_community_with_name(self.request.user,self.community.name)
+		if self.request.user.is_authenticated and self.community.is_user_with_username_administrator_of_community_with_name(self.request.user.pk, self.community.name):
 			admins=self.community.get_community_with_name_administrators(self.community.name)
 		else:
 			admins=""
@@ -239,8 +238,7 @@ class CommunityBlackListView(ListView):
 
 	def get_queryset(self):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		if request.user.is_authenticated:
-			check_can_get_posts_for_community_with_name(request.user,self.community.name)
+		if self.request.user.is_authenticated and self.community.is_user_with_username_administrator_of_community_with_name(self.request.user.pk, self.community.name):
 			black_list=self.community.get_community_with_name_banned_users(self.community.name)
 		else:
 			black_list = ""
