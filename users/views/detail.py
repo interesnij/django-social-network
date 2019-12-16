@@ -1,7 +1,6 @@
 from django.views.generic.base import TemplateView
 from users.models import User
 from communities.models import Community
-from main.forms import CommentForm
 from django.views.generic import ListView
 from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
 from main.models import Item
