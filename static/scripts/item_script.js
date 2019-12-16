@@ -214,10 +214,8 @@ $('#ajax').on('click', '.upload_photo', function() {
       element: $('.comments-container')[0], onBeforePageLoad: function() { $('.load').show(); }, onAfterPageLoad: function($items) { $('.load').hide(); }
   });
 
-$("document").ready(function() {
   $('#ajax').on('click', '.dropdown_link', function() {
     link = $(this).next();
     link.focus(); link.select(); document.execCommand("copy");
     $.toast({heading: 'Информация',text: 'Ссылка скопирована',showHideTransition: 'fade',icon: 'success'})
   });
-});
