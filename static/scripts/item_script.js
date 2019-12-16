@@ -217,7 +217,7 @@ $('#ajax').on('click', '.upload_photo', function() {
   $('#ajax').on('click', '.js-textareacopybtn', function() {
     btn = $(this);
     link = btn.find('.js-copytextarea');
-    link.focus();
+    
     link.select();
   try {
     var successful = document.execCommand('copy');
