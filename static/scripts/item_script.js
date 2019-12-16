@@ -219,5 +219,5 @@ $('#ajax').on('click', '.upload_photo', function() {
   copyTextarea = document.querySelector('.js-copytextarea');
   copyTextarea.focus();
   copyTextarea.select();
-  successful = document.execCommand('copy');
+  document.execCommand('copy');
 });
