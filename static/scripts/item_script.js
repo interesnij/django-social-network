@@ -217,6 +217,6 @@ $('#ajax').on('click', '.upload_photo', function() {
   $('#ajax').on('click', '.dropdown_link', function() {
     link = $(this);
     link2 = link.next().val();
-    link2.select(); document.execCommand("copy");
+    document.execCommand("copy");
     $.toast({heading: 'Информация',text: 'Ссылка скопирована',showHideTransition: 'fade',icon: 'success'})
   });
