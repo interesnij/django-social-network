@@ -1,17 +1,58 @@
 {% load staticfiles %}
 <style>
-  :checked:before {
-  content: "✓";
-  transform: scale(1.1);
-}
+  input[type="checkbox"][id^="cb"] {
+    display: none;
+  }
+
+  label {
+    border: 1px solid #fff;
+    padding: 10px;
+    border-radius: 50%;
+    display: block;
+    position: relative;
+    margin: 10px;
+    cursor: pointer;
+  }
+
+  label:before {
+    background-color: rgba(16, 65, 99, 0.32 );
+    text-align:center;
+    color: white;
+    content: " ";
+    display: block;
+    border-radius: 50%;
+  /*   border: 1px solid grey; */
+    position: absolute;
+    top:10px;
+    left: 10px;
+    z-index:1;
+    width: 100px;
+    height: 100px;
+    text-align: center;
+    line-height: 100px;
+    transition-duration: 0.4s;
+    transform: scale(0);
+  }
+
+
+  :checked + label {
+    border-color: #eee;
+  }
+
+  :checked + label:before {
+    content: "✓";
+    transform: scale(1.1);
+  }
 </style>
 {% if photo_list %}
 <div class="photos-load row">
 {% for object in photo_list %}
-<input type="checkbox" id="cb2" />
   <div class="col-sm-12 col-md-6 col-lg-4 infinite-item photo_load_detail" style="cursor:pointer" data-uuid="{{ object.creator.uuid }}" data-id="{{ object.id }}">
       <div class="card rounded-0 border-0 mb-4">
-        <img style="width: 100%;object-fit: cover;height: 200px;" class="lazyload" data-src="{{ object.file.url }}" alt="">
+        <input type="checkbox" id="cb" />
+        <label for="cb">
+          <img style="width: 100%;object-fit: cover;height: 200px;" class="lazyload" data-src="{{ object.file.url }}" alt="">
+        </label>
       </div>
   </div>
   {% endfor %}
