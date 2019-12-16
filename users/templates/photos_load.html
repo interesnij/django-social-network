@@ -1,8 +1,14 @@
 {% load staticfiles %}
-
+<style>
+  :checked:before {
+  content: "✓";
+  transform: scale(1.1);
+}
+</style>
 {% if photo_list %}
 <div class="photos-load row">
 {% for object in photo_list %}
+<input type="checkbox" id="cb2" />
   <div class="col-sm-12 col-md-6 col-lg-4 infinite-item photo_load_detail" style="cursor:pointer" data-uuid="{{ object.creator.uuid }}" data-id="{{ object.id }}">
       <div class="card rounded-0 border-0 mb-4">
         <img style="width: 100%;object-fit: cover;height: 200px;" class="lazyload" data-src="{{ object.file.url }}" alt="">
