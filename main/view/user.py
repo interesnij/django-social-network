@@ -10,6 +10,7 @@ from common.checkers import check_is_not_blocked_with_user_with_id, check_is_con
 from rest_framework.exceptions import PermissionDenied, ValidationError
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from gallery.models import Album, Photo
+from django.views.generic.detail import DetailView
 
 
 class ItemUserCommentList(View):
@@ -144,3 +145,29 @@ def user_item_delete(request, pk, user_uuid):
 		return HttpResponse("!")
 	else:
 		return HttpResponse("Удаляйте, пожалуйста, свои записи!")
+
+
+class ItemUserDetail(DetailView):
+    template_name = "item_user/detail.html"
+    model = Item
+
+    def get(self,request,*args,**kwargs):
+        self.item = Item.objects.get(pk=self.kwargs["pk"])
+		if self.item.creator != request.user and request.user.is_authenticated:
+			check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
+			if self.user.is_closed_profile():
+				check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
+			self.object = self.item
+		elif self.item.creator == request.user:
+			self.object = self.item
+		elif request.user.is_anonymous and self.item.creator.is_closed_profile():
+			raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
+		elif request.user.is_anonymous and not self.item.creator.is_closed_profile():
+			self.object = self.item
+
+        return super(ItemUserDetail,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context=super(ItemUserDetail,self).get_context_data(**kwargs)
+        context["object"]=self.object
+        return context

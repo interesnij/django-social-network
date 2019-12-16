@@ -2,7 +2,6 @@
 from django.views.generic.base import TemplateView
 from main.models import Item
 from communities.models import Community, CommunityMembership
-from django.views.generic.detail import DetailView
 from follows.models import CommunityFollow
 from common.checkers import check_can_get_posts_for_community_with_name
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
