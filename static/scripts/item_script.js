@@ -215,7 +215,8 @@ $('#ajax').on('click', '.upload_photo', function() {
   });
 
   $('#ajax').on('click', '.dropdown_link', function() {
-    link = $(this).next();
-    link.val($('.copy_link').text()).select(); document.execCommand("copy");
+    link = $(this);
+    link.next().focus();link.next().select(); document.execCommand("copy");
+    console.log(link.next())
     $.toast({heading: 'Информация',text: 'Ссылка скопирована',showHideTransition: 'fade',icon: 'success'})
   });
