@@ -45,7 +45,7 @@
                                 {% endif %}
                             </figure>
                             <div class="media-body">
-                                <a href="{% url 'user' pk=object.pk %}" class="ajax">
+                                <a href="" class="ajax">
                                     <h6 class="my-0 mt-1">{% if request.user.get_full_name %}{{ object.get_full_name }}{% else %} Вы{% endif %}</h6>
                                 </a>
                             </div>
