@@ -214,10 +214,9 @@ $('#ajax').on('click', '.upload_photo', function() {
       element: $('.comments-container')[0], onBeforePageLoad: function() { $('.load').show(); }, onAfterPageLoad: function($items) { $('.load').hide(); }
   });
 
-  $('#ajax').on('click', '.dropdown_link', function() {
-    link = $(this).next();
-    link.focus();
-    link.select();
-    document.execCommand("copy");
-    $.toast({heading: 'Информация',text: 'Ссылка скопирована',showHideTransition: 'fade',icon: 'success'})
-  });
+  var copyTextareaBtn = document.querySelector('.js-textareacopybtn');
+  copyTextareaBtn.addEventListener('click', function(event) {
+  var copyTextarea = document.querySelector('.js-copytextarea');
+  copyTextarea.focus();
+  copyTextarea.select();
+});
