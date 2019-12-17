@@ -50,7 +50,7 @@ class ItemListView(View):
         context = {}
         self.user=User.objects.get(pk=self.kwargs["pk"])
         if self.user != self.request.user and self.request.user.is_authenticated:
-            check_is_not_blocked_with_user_with_id(user=self.request.user, user_id=self.user.id)
+            check_is_not_blocked_with_user_with_id(user=self.user, user_id=self.request.user.id)
             if self.user.is_closed_profile():
                 check_is_connected_with_user_with_id(user=self.request.user, user_id=self.user.id)
             items_list = self.user.get_posts().order_by('-created')
