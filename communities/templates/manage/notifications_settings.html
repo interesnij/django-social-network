@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load staticfiles %}
 
-{% block title %}Настройки - настройки уведомлений{% endblock %}
+{% block title %}Настройки уведомлений - {{ community.name }}{% endblock %}
 {% block content %}
 <div class="container mt-4 main-container">
     <div class="row">
@@ -10,7 +10,11 @@
                 {% csrf_token %}
                 <div class="card mb-4">
                     <div class="card-header border-bottom">
-                        <h5 class="content-color-primary mb-0">Настройки уведомлений</h5>
+                        <h5 class="content-color-primary mb-0">Настройки уведомлений -
+                            <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=community.pk %}">
+                              {{ community.name }}
+                            </a>
+                        </h5>
                     </div>
                     <div class="card-body">
                       {% if community.is_closed %}
@@ -68,19 +72,7 @@
                 </div>
             </form>
         </div>
-        <div class="col-lg-5 col-md-4 col-sm-12 order-2" style="margin-top: 65px;">
-            <ul style="list-style-type:none">
-              <li style="margin-bottom:8px;"><a href="{% url 'community_general_form' pk=community.pk %}" class="ajax">Настройка информации</a></li>
-              <li style="margin-bottom:8px;"><a href="{% url 'community_notify' pk=community.pk %}" class="ajax">Настройка уведомлений</a></li>
-              <li style="margin-bottom:8px;"><a href="{% url 'community_private' pk=community.pk %}" class="ajax">Приватность</a></li>
-              {% if community.is_closed %}
-                <li style="margin-bottom:8px;"><a href="{% url 'community_follows' pk=community.pk %}" class="ajax">Заявки на членство</a></li>
-              {% endif %}
-              <li style="margin-bottom:8px;"><a href="{% url 'community_admins' pk=community.pk %}" class="ajax">Администраторы</a></li>
-              <li style="margin-bottom:8px;"><a href="{% url 'community_moders' pk=community.pk %}" class="ajax">Модераторы</a></li>
-              <li style="margin-bottom:8px;"><a href="{% url 'community_black_list' pk=community.pk %}" class="ajax"></a>Черный список</li>
-            </ul>
-        </div>
+        {% include 'manage_menu.html' %}
 
     </div>
 </div>

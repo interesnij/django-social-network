@@ -111,18 +111,11 @@
 
                     </span>
                     <span style="display: flex;align-items: center;justify-content: center;">
+
                       {% if administrator or creator %}
-                      <div class="btn-group">
-                          <button type="button" class="btn btn-sm btn-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              Управление
-                          </button>
-                          <div class="dropdown-menu" x-placement="bottom-start">
-                              <a href="{% url 'community_general_form' pk=object.pk %}" class="dropdown-item">Информация</a>
-                              <a href="{% url 'community_notify' pk=object.pk %}" class="dropdown-item">Уведомления</a>
-                              <a href="{% url 'community_private' pk=object.pk %}" class="dropdown-item">Приватность</a>
-                          </div>
-                      </div>
+                      <a class="btn btn-sm btn-secondary" href="{% url 'community_general_form' pk=object.pk %}" class="dropdown-item">Информация</a>
                       {% endif %}
+                      
                     </span>
                 </div>
             </div>
