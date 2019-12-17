@@ -24,9 +24,6 @@ class NewsListView(ListView):
 	model=Item
 	paginate_by=10
 
-	def get(self,request,*args,**kwargs):
-		return super(NewsListView,self).get(request,*args,**kwargs)
-
 	def get_queryset(self):
 		self.user=self.request.user
 		if self.user.is_authenticated:
@@ -34,10 +31,6 @@ class NewsListView(ListView):
 		else:
 			items=None
 		return items
-
-	def get_context_data(self, **kwargs):
-		context = super(NewsListView, self).get_context_data(**kwargs)
-		return context
 
 
 class ComingView(TemplateView):

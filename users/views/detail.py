@@ -81,10 +81,10 @@ class AllUsers(TemplateView):
 class AllUsersList(ListView):
     template_name="all_users_list.html"
     model=User
-    paginate_by=1
+    paginate_by=2
 
     def get_queryset(self):
-        users=User.objects.all()
+        users=User.objects.only('pk')
         return users
 
 
