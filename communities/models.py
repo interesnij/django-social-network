@@ -476,6 +476,9 @@ class Community(models.Model):
     def __str__(self):
         return self.name
 
+    def count_members(self):
+        return self.memberships.count()
+
 
 class CommunityMembership(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE, related_name='communities_memberships', null=False, blank=False, verbose_name="Члены сообщества")

@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load staticfiles humanize thumbnail %}
+{% load staticfiles humanize thumbnail liked_user %}
 
 {% block title %}
 {% if user == request.user %}
@@ -53,9 +53,7 @@
                                     <h6 class="my-0 mt-1">{{ object.name }}
                                     </h6>
                                 </a>
-                                {% if object.category %}
-                                <p class="small">{{ object.category }}</p>
-                                {% endif %}
+                                <p class="small"> {{ object.count_members|rupluralize:"подписчик,подписчика,подписчиков" }}</p>
                             </div>
                         </div>
                     </li>
