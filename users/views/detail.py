@@ -75,9 +75,11 @@ class ItemListView(View):
 
         return render_to_response('lenta/item_list.html', context)
 
-
-class AllUsers(ListView):
+class AllUsersList(TemplateView):
     template_name="all_users.html"
+
+class AllUsersList(ListView):
+    template_name="all_users_list.html"
     model=User
     paginate_by=1
 
