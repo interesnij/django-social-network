@@ -209,11 +209,6 @@ $('#ajax').on('click', '.upload_photo', function() {
 
   });
 
-
-  var infinite_item_comments = new Waypoint.Infinite({
-      element: $('.comments-container')[0], onBeforePageLoad: function() { $('.load').show(); }, onAfterPageLoad: function($items) { $('.load').hide(); }
-  });
-
   $('#ajax').on('click', '.js-textareacopybtn', function() {
     btn = $(this);
     link = btn.find('.js-copytextarea');
