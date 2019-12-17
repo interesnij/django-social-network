@@ -37,8 +37,6 @@
 $(document).ready(function(){
   $('#all_users_load').html('').load("/users/detail/all_users_list/");
 });
-var infinite = new Waypoint.Infinite({
-  element: $('.users-container')[0], onBeforePageLoad: function() { $('.load').show(); }, onAfterPageLoad: function($items) { $('.load').hide(); }
-});
+
 </script>
 {% endblock %}

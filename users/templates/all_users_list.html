@@ -1,6 +1,6 @@
 {% load staticfiles thumbnail %}
 
-<ul class="users-container list-group">
+<ul class="all-users-container list-group">
     {% for object in object_list %}
     <li class="list-group-item infinite-item">
         <div class="media">
@@ -30,5 +30,7 @@
 </ul>
 
 <script>
-  
+  var all_users_infinite = new Waypoint.Infinite({
+    element: $('.all-users-container')[0], onBeforePageLoad: function() { $('.load').show(); }, onAfterPageLoad: function($items) { $('.load').hide(); }
+  });
 </script>
