@@ -176,7 +176,7 @@ class User(AbstractUser):
         return self.is_connected_with_user_with_id(user.pk)
 
     def is_blocked_with_user_with_id(self, user_id):
-        return UserBlock.users_are_blocked(user_a_id=user_id, user_b_id=self.pk)
+        return UserBlock.users_are_blocked(user_a_id=self.pk, user_b_id=user_id)
 
     def is_connected_with_user_with_id(self, user_id):
         return self.connections.filter(
@@ -546,8 +546,8 @@ class UserBlock(models.Model):
 
     @classmethod
     def users_are_blocked(cls, user_a_id, user_b_id):
-        return cls.objects.filter(Q(blocked_user_id=user_a_id, blocker_id=user_b_id) | Q(blocked_user_id=user_b_id,
-                                                                                         blocker_id=user_a_id)).exists()
+        return cls.objects.filter(Q(blocked_user_id=user_b_id, blocker_id=user_a_id) | Q(blocked_user_id=user_a_id,
+                                                                                         blocker_id=user_b_id)).exists()
 
     class Meta:
         unique_together = ('blocked_user', 'blocker',)
