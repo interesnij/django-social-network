@@ -35,7 +35,7 @@
       {% endif %}
 
     {% endfor %}
-    <div class="load col-12 col-md-12" >
+    <div class="news_load col-12 col-md-12" >
       {% if page_obj.has_next %}
         <a style="display:flex;justify-content:center;" class="infinite-more-link" href="{% url 'news_list' %}?page={{ page_obj.next_page_number }}">
           <img src="{% static 'images/loading.gif' %}">
@@ -51,7 +51,7 @@
 {% endif %}
 <script>
   var timeline = new Waypoint.Infinite({
-      element: $('.timeline-container')[0], onBeforePageLoad: function() { $('.load').show(); }, onAfterPageLoad: function($items) { $('.load').hide(); }
+      element: $('.timeline-container')[0], onBeforePageLoad: function() { $('.news_load').show(); }, onAfterPageLoad: function($items) { $('.news_load').hide(); }
   });
 </script>
 
