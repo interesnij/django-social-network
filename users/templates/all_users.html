@@ -22,7 +22,7 @@
             </div>
             <br><br>
             <div class="card-body px-0 py-0">
-                <ul class="list-group all-users-container ">
+                <ul class="list-group users-container ">
                     {% for object in object_list %}
                     <li class="list-group-item infinite-item">
                         <div class="media">
@@ -62,10 +62,9 @@
 </div>
 <script>
   $(document).ready(function(){
-  var all_users_infinite = new Waypoint.Infinite({
-  element: $('.all-users-container')[0], onBeforePageLoad: function() { $('.load').show(); }, onAfterPageLoad: function($items) { $('.load').hide(); }
+  var infinite = new Waypoint.Infinite({
+  element: $('.users-container')[0], onBeforePageLoad: function() { $('.load').show(); }, onAfterPageLoad: function($items) { $('.load').hide(); }
   });
   });
-
   </script>
 {% endblock %}
