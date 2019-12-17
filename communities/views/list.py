@@ -10,7 +10,7 @@ class CommunitiesView(ListView):
 
 	def get_queryset(self):
 		self.user=User.objects.get(pk=self.kwargs["pk"])
-		groups=Community.objects.filter(memberships__user__id=self.user.pk)
+		groups=Community.objects.filter(memberships__user__id=self.user.pk).order_by('memberships')
 		return groups
 
 
