@@ -129,7 +129,7 @@ def community_unfixed(request, pk, uuid):
 	else:
 		return HttpResponse("Открепляйте, пожалуйста, свои записи!")
 
-def user_item_delete(request, pk, uuid):
+def community_item_delete(request, pk, uuid):
 	item = Item.objects.get(pk=pk)
 	community = Community.objects.get(uuid=uuid)
 	if request.user.is_staff_of_community_with_name(community.name):
