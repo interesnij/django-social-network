@@ -1,33 +1,8 @@
-{% load staticfiles humanize %}
-<style>
-.reaction_window {
-  opacity: 0;
-visibility: hidden;
-position: absolute;
-bottom: 25px;
-margin-bottom: 10px;
-display: flex;
-transition: 0.5s;
-}
-.reaction_window:hover {
-    z-index: 10;
-    opacity: 1;
-    visibility: visible;
-    background: #D6DAE1;
-    color: black;
-}
-.react_btn:hover~.reaction_window{
-    z-index: 10;
-    opacity: 1;
-    visibility: visible;
-    background: #D6DAE1;
-    color: black;
-}
-</style>
+{% load staticfiles thumbnail %}
 
 {% if object_list %}
 
-<div class="infinite-container">
+<div class="timeline-container">
   <div class="stream-update">
     <a href=""><span class="new-posts"></span> Загрузить новые записи</a>
   </div>
