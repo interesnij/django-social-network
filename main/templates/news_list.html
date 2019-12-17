@@ -50,7 +50,9 @@
 <h6>  Пока ничего нет...</h6>
 {% endif %}
 <script>
-
+  var timeline = new Waypoint.Infinite({
+      element: $('.timeline-container')[0], onBeforePageLoad: function() { $('.load').show(); }, onAfterPageLoad: function($items) { $('.load').hide(); }
+  });
 </script>
 
 <script defer src="{% static 'scripts/item_script.js' %}" type="text/javascript"></script>

@@ -98,3 +98,8 @@ $(document).ready(function () {
 	});
 });
 </script>
+<script>
+	var lenta = new Waypoint.Infinite({
+	    element: $('.lenta-container')[0], onBeforePageLoad: function() { $('.load').show(); }, onAfterPageLoad: function($items) { $('.load').hide(); }
+	});
+</script>
