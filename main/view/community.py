@@ -111,7 +111,7 @@ def post_update_interactions(request):
 def community_fixed(request, pk, uuid):
 	item = Item.objects.get(pk=pk)
 	community = Community.objects.get(uuid=uuid)
-	if request.user.is_staff_of_community_with_name(community.name)
+	if request.user.is_staff_of_community_with_name(community.name):
 		item.is_fixed=True
 		item.save()
 		return HttpResponse("!")
@@ -122,7 +122,7 @@ def community_fixed(request, pk, uuid):
 def community_unfixed(request, pk, uuid):
 	item = Item.objects.get(pk=pk)
 	community = Community.objects.get(uuid=uuid)
-	if request.user.is_staff_of_community_with_name(community.name)
+	if request.user.is_staff_of_community_with_name(community.name):
 		item.is_fixed=False
 		item.save()
 		return HttpResponse("!")
@@ -132,7 +132,7 @@ def community_unfixed(request, pk, uuid):
 def user_item_delete(request, pk, uuid):
 	item = Item.objects.get(pk=pk)
 	community = Community.objects.get(uuid=uuid)
-	if request.user.is_staff_of_community_with_name(community.name)
+	if request.user.is_staff_of_community_with_name(community.name):
 		item.is_deleted=True
 		item.save()
 		return HttpResponse("!")
