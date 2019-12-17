@@ -30,7 +30,7 @@ class ItemUserCommentList(View):
 		elif request.user.is_anonymous and not self.user.is_closed_profile():
 			comments = item.get_comments(request.user)
 		page = request.GET.get('page')
-		current_page = Paginator(comments, 6)
+		current_page = Paginator(comments, 1)
 		try:
 			comment_list = current_page.page(page)
 		except PageNotAnInteger:
