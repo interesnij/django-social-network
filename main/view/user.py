@@ -34,7 +34,7 @@ class ItemUserCommentList(View):
 		try:
 			comment_list = current_page.page(page)
 		except PageNotAnInteger:
-			comment_list = current_page.page(10)
+			comment_list = current_page.page(1)
 		except EmptyPage:
 			comment_list = current_page.page(current_page.num_pages)
 		comments_html = render_to_string("item_user/comments.html", {"comment_list": comment_list, "request_user": request.user, "parent": item, "form_comment": CommentForm(), "form_reply": CommentForm(), "user": self.user})
