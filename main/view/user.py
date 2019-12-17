@@ -30,11 +30,11 @@ class ItemUserCommentList(View):
 		elif request.user.is_anonymous and not self.user.is_closed_profile():
 			comments = item.get_comments(request.user)
 		page = request.GET.get('page')
-		current_page = Paginator(comments, 1)
+		current_page = Paginator(comments, 10)
 		try:
 			comment_list = current_page.page(page)
 		except PageNotAnInteger:
-			comment_list = current_page.page(1)
+			comment_list = current_page.page(10)
 		except EmptyPage:
 			comment_list = current_page.page(current_page.num_pages)
 		comments_html = render_to_string("item_user/comments.html", {"comment_list": comment_list, "request_user": request.user, "parent": item, "form_comment": CommentForm(), "form_reply": CommentForm(), "user": self.user})
