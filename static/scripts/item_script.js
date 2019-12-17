@@ -213,9 +213,6 @@ $('#ajax').on('click', '.upload_photo', function() {
   var infinite_item_comments = new Waypoint.Infinite({
       element: $('.comments-container')[0], onBeforePageLoad: function() { $('.load').show(); }, onAfterPageLoad: function($items) { $('.load').hide(); }
   });
-  var lenta = new Waypoint.Infinite({
-      element: $('.lenta-container')[0], onBeforePageLoad: function() { $('.load').show(); }, onAfterPageLoad: function($items) { $('.load').hide(); }
-  });
 
   $('#ajax').on('click', '.js-textareacopybtn', function() {
     btn = $(this);
@@ -230,4 +227,11 @@ $('#ajax').on('click', '.upload_photo', function() {
   } catch (err) {
     console.log('Oops, unable to copy');
   }
+});
+
+var lenta = new Waypoint.Infinite({
+    element: $('.lenta-container')[0], onBeforePageLoad: function() { $('.load').show(); }, onAfterPageLoad: function($items) { $('.load').hide(); }
+});
+var timeline = new Waypoint.Infinite({
+    element: $('.timeline-container')[0], onBeforePageLoad: function() { $('.load').show(); }, onAfterPageLoad: function($items) { $('.load').hide(); }
 });
