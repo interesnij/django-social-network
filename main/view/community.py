@@ -1,6 +1,6 @@
 from django.views.generic.base import TemplateView
 from users.models import User
-from community.models import Community
+from communities.models import Community
 from main.models import Item, ItemComment
 from django.utils import timezone
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
