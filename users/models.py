@@ -121,7 +121,7 @@ class User(AbstractUser):
         connection = self.connections.get(target_connection__user_id=user_id)
         connection.delete()
 
-    def unblock_user_with_username(self, username):
+    def unblock_user_with_pk(self, pk):
         user = User.objects.get(username=username)
         return self.unblock_user_with_id(user_id=user.pk)
 
@@ -130,8 +130,8 @@ class User(AbstractUser):
         self.user_blocks.filter(blocked_user_id=user_id).delete()
         return User.objects.get(pk=user_id)
 
-    def block_user_with_username(self, username):
-        user = User.objects.get(username=username)
+    def block_user_with_pk(self, pk):
+        user = User.objects.get(pk=pk)
         return self.block_user_with_id(user_id=user.pk)
 
     def block_user_with_id(self, user_id):

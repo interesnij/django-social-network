@@ -13,7 +13,6 @@ from gallery.models import Album, Photo
 
 
 class ItemUserCommentList(View):
-	model=ItemComment
 
 	def get(self,request,*args,**kwargs):
 		item = Item.objects.get(uuid=self.kwargs["uuid"])

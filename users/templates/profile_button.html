@@ -10,7 +10,7 @@
       </button>
       <div class="dropdown-menu btn-secondary" x-placement="bottom-start">
           <a class="dropdown-item connect_delete" href="#">Убрать из друзей</a>
-          <a class="dropdown-item" href="#">Заблокировать</a>
+          <a class="dropdown-item user_block" href="#">Заблокировать</a>
           <a class="dropdown-item" href="#">Пожаловаться</a>
       </div>
   </div>
@@ -24,7 +24,7 @@
       <div class="dropdown-menu" x-placement="bottom-start">
           <a class="dropdown-item follow_delete" href="#" >Отменить подписку</a>
           <a class="dropdown-item user_block" href="#">Заблокировать</a>
-          <a class="dropdown-item user_block" href="#">Пожаловаться</a>
+          <a class="dropdown-item" href="#">Пожаловаться</a>
       </div>
   </div>
   {% endif %}
@@ -36,7 +36,7 @@
       <div class="dropdown-menu" x-placement="bottom-start">
           <a class="dropdown-item connect_create" href="#">Добавить в друзья</a>
           <a class="dropdown-item user_block" href="#">Заблокировать</a>
-          <a class="dropdown-item user_block" href="#">Пожаловаться</a>
+          <a class="dropdown-item" href="#">Пожаловаться</a>
       </div>
   </div>
   {% endif %}
@@ -48,9 +48,9 @@
     </button>
     <div class="dropdown-menu" x-placement="bottom-start">
       {% if is_blocked %}
-        <a class="dropdown-item" href="#">Разлокировать</a>
+        <a class="dropdown-item user_unblock" href="#">Разлокировать</a>
       {% else %}
-        <a class="dropdown-item" href="#">Заблокировать</a>
+        <a class="dropdown-item user_block" href="#">Заблокировать</a>
       {% endif %}
         <a class="dropdown-item" href="#">Пожаловаться</a>
     </div>
@@ -63,7 +63,25 @@
 
 {% endif %}
 
+<script>
+  $('.user_block').on('click', function() {
+  $.ajax({
+      url: '{% url "user_block" user.pk %}',
+      success: function (data) {
+        $('#button_load').html('').load("{% url 'profile_button_reload' user.pk %}");
+      }
+  });
+  });
 
+  $('.user_unblock').on('click', function() {
+  $.ajax({
+      url: '{% url "user_unblock" user.pk %}',
+      success: function (data) {
+        $('#button_load').html('').load("{% url 'profile_button_reload' user.pk %}");
+      }
+  });
+  });
+</script>
 <script>
   $('.follow_create').on('click', function() {
   $.ajax({
