@@ -84,7 +84,7 @@ class AllUsersList(ListView):
     paginate_by=1
 
     def get_queryset(self):
-        users=User.objects.only('id')
+        users=User.objects.all()
         return users
 
 
