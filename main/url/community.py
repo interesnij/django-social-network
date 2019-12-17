@@ -1,13 +1,14 @@
 from django.conf.urls import url
 from main.view.user import *
+from django.contrib.auth.decorators import login_required
 
 
 urlpatterns = [
-	#url(r'^comment/(?P<uuid>[0-9a-f-]+)/(?P<pk>\d+)/$', ItemCommunityCommentList.as_view()),
-    #url(r'^post-comment/$', item_community_post_comment),
-    #url(r'^reply-comment/$', item_community_reply_comment),
-
-	#url(r'^fixed/(?P<pk>\d+)/(?P<user_uuid>[0-9a-f-]+)/$', item_community_fixed),
-    #url(r'^unfixed/(?P<pk>\d+)/(?P<user_uuid>[0-9a-f-]+)/$', item_community_unfixed),
-    #url(r'^delete/(?P<pk>\d+)/(?P<user_uuid>[0-9a-f-]+)/$', item_community_delete),
+	url(r'^comment/(?P<uuid>[0-9a-f-]+)/(?P<pk>\d+)/$', ItemCommunityCommentList.as_view()),
+    url(r'^post-comment/$', login_required(ItemCommentCommunityCreate.as_view())),
+    url(r'^reply-comment/(?P<uuid>[0-9a-f-]+)/(?P<pk>\d+)/$', login_required(ItemReplyCommunityCreate.as_view())),
+	url(r'^fixed/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', login_required(community_fixed)),
+    url(r'^unfixed/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', login_required(community_unfixed)),
+    url(r'^delete/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', login_required(community_item_delete)),
+	url(r'^detail/(?P<uuid>[0-9a-f-]+)/$', ItemCommunityDetail.as_view(), name="item_detail"),
 ]
