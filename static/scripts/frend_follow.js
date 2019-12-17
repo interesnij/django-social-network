@@ -1,6 +1,7 @@
 $('.user_block').on('click', function() {
+  pk = $(this).parent().data("pk");
   $.ajax({
-      url: '{% url "user_block" user.pk %}',
+      url: "/users/progs/block/" + pk + "/",
       success: function (data) {
         $('#button_load').html('').load("{% url 'profile_button_reload' user.pk %}");
       }
@@ -8,35 +9,40 @@ $('.user_block').on('click', function() {
 });
 
 $('.user_unblock').on('click', function() {
+  pk = $(this).parent().data("pk");
   $.ajax({
-      url: '{% url "user_unblock" user.pk %}',
+      url: "/users/progs/unblock/" + pk + "/",
       success: function (data) {$('#button_load').html('').load("{% url 'profile_button_reload' user.pk %}");}
   });
 });
 $('.follow_create').on('click', function() {
+  pk = $(this).parent().data("pk");
   $.ajax({
-      url: '{% url "create_follow" user.pk %}',
+      url: "/follows/add/" + pk + "/",
       success: function (data) {$('#button_load').html('').load("{% url 'profile_button_reload' user.pk %}");}
   });
   });
 
 $('.follow_delete').on('click', function() {
+  pk = $(this).parent().data("pk");
     $.ajax({
-      url: '{% url "delete_follow" user.pk %}',
+      url: "/follows/delete/" + pk + "/",
       success: function (data) {$('#button_load').html('').load("{% url 'profile_button_reload' user.pk %}");}
     });
 });
 
 $('.connect_create').on('click', function() {
+  pk = $(this).data("pk");
   $.ajax({
-      url: '{% url "create_connect" user.pk %}',
+      url: "/frends/add/" + pk + "/",
       success: function (data) {$('#button_load').html('').load("{% url 'profile_button_reload' user.pk %}");}
   });
 });
 
 $('.connect_delete').on('click', function() {
+  pk = $(this).parent().data("pk");
   $.ajax({
-      url: '{% url "delete_connect" user.pk %}',
+      url: "/frends/delete/" + pk + "/",
       success: function (data) {$('#button_load').html('').load("{% url 'profile_button_reload' user.pk %}");}
   });
 });
