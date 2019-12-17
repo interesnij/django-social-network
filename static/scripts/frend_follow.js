@@ -16,7 +16,7 @@ $('.user_unblock').on('click', function() {
   });
 });
 $('.follow_create').on('click', function() {
-  pk = $(this).parent().data("pk");
+  pk = $(this).data("pk");
   $.ajax({
       url: "/follows/add/" + pk + "/",
       success: function (data) {$('#button_load').html('').load("/users/load/profile_button/" + pk + "/");}
@@ -32,7 +32,7 @@ $('.follow_delete').on('click', function() {
 });
 
 $('.connect_create').on('click', function() {
-  pk = $(this).data("pk");
+  pk = $(this).parent().data("pk");
   $.ajax({
       url: "/frends/add/" + pk + "/",
       success: function (data) {$('#button_load').html('').load("/users/load/profile_button/" + pk + "/");}
