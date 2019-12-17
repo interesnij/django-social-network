@@ -859,11 +859,6 @@ def check_can_unblock_user_with_id(user, user_id):
         raise ValidationError('Вы не можете разблокировать учетную запись, которую вы не заблокировали')
 
 
-def check_is_not_blocked_with_user_with_id(user, user_id):
-    if user.is_blocked_with_user_with_id(user_id=user_id):
-        raise PermissionDenied('Эта учетная запись заблокирована')
-
-
 def check_password_reset_verification_token_is_valid(user, password_verification_token):
     try:
         token_contents = jwt.decode(password_verification_token, settings.SECRET_KEY,
