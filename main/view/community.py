@@ -41,7 +41,7 @@ class ItemCommunityCommentList(View):
 		return JsonResponse({ "comments": comments_html, })
 
 
-class ItemCommentUserCreate(View):
+class ItemCommunityCommentCreate(View):
 	form_post = None
 	def post(self,request,*args,**kwargs):
 		form_post = CommentForm(request.POST, request.FILES)
@@ -74,7 +74,7 @@ class ItemCommentUserCreate(View):
 			return HttpResponseBadRequest()
 
 
-class ItemReplyUserCreate(View):
+class ItemCommunityReplyCreate(View):
 	def post(self,request,*args,**kwargs):
 		form_post=CommentForm(request.POST, request.FILES)
 		community=Community.objects.get(uuid=self.kwargs["uuid"])
