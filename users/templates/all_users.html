@@ -61,6 +61,9 @@
     </div>
 </div>
 <script>
-  
+  var all_users_infinite = new Waypoint.Infinite({
+  element: $('.all-users-container')[0], onBeforePageLoad: function() { $('.load').show(); }, onAfterPageLoad: function($items) { $('.load').hide(); }
+  });
+
   </script>
 {% endblock %}
