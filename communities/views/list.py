@@ -40,5 +40,5 @@ class AllCommunities(ListView):
 	paginate_by=15
 
 	def get_queryset(self):
-		groups=Community.objects.all().order_by('-memberships__count')
+		groups=Community.objects.all().order_by('memberships__count')
 		return groups
