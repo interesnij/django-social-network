@@ -53,7 +53,7 @@
   </div>
   {% endif %}
 
-  {% if not connect and not follow and not follow2 %}
+  {% if not connect and not follow and not follow2 and not is_blocked %}
     <a href="#" class="btn btn-sm btn-success success-gradient follow_create">Добавить в друзья</a>
     <button style="margin-left:5px;" type="button" class="btn btn-sm btn-success success-gradient" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       <svg style="width: 17px;height: 17px; "fill="#FFFFF8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
