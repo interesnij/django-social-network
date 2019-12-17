@@ -57,8 +57,13 @@ class Photo(models.Model):
         verbose_name_plural = 'Фото'
 
     @classmethod
-    def create_photo(cls, creator, album_2=None, file=None, community=None, created=None, is_public=False, description=None, item=None ):
+    def create_photo(cls, creator, album_2=None, file=None, community=None, created=None, is_public=None, description=None, item=None ):
         photo = Photo.objects.create(creator=creator, file=file, community=community, is_public=is_public, album_2=album_2, description=description, item=item, )
+        return photo
+
+    @classmethod
+    def create_avatar(cls, creator, album_2=None, file=None, community=None, created=None, is_public=None, description=None):
+        photo = Photo.objects.create(creator=creator, file=file, community=community, is_public=is_public, album_2=album_2, description=description,)
         return photo
 
     def notification_user_repost(self, user):
