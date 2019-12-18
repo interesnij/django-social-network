@@ -20,7 +20,7 @@
             </h6>
             <p class="mb-0">{{ object.created|naturaltime }}</p>
         </div>
-
+        {% if request.user.is_authenticated %}
         <div class="dropdown d-inline-block">
             <a style="cursor:pointer" class="icon-circle icon-30 dropdown-toggle caret-none" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <img style="width:22px" src="{% static 'images/icons/more_vert-24px.svg' %}" />
@@ -42,5 +42,6 @@
               {% endif %}
             </div>
         </div>
+        {% endif %}
     </div>
 </div>
