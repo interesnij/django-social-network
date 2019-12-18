@@ -16,7 +16,7 @@ class Post(Item):
 
 
     @classmethod
-    def create_post(cls, creator, text=None, photo=None, community=None, comments_enabled=None, video=None,
+    def create_post(cls, creator, text=None, community=None, comments_enabled=None, video=None,
                     is_draft=False, good=None, status= None, doc=None, question=None):
 
         if not text and not photo:
@@ -28,7 +28,6 @@ class Post(Item):
                                         community=community,
                                         comments_enabled=comments_enabled,
                                         status = status,
-                                        photo = photo,
                                     )
             channel_layer = get_channel_layer()
             payload = {

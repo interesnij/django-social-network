@@ -2,9 +2,7 @@ $('.user_block').on('click', function() {
   pk = $(this).parent().data("pk");
   $.ajax({
       url: "/users/progs/block/" + pk + "/",
-      success: function (data) {
-        $('#button_load').html('').load("/users/load/profile_button/" + pk + "/");
-      }
+      success: function (data) {$('#button_load').html('').load("/users/load/profile_button/" + pk + "/");}
   });
 });
 
