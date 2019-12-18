@@ -18,11 +18,11 @@
               <div class="row align-items-center no-gutters">
                   <a class="col">
                       <figure class="mx-auto">
-                          {% if user.get_avatar %}
+                        {% if user.get_avatar %}
                           <img src="{{ user.get_avatar.file.url }}">
-                          {% else %}
+                        {% else %}
                           <img src="{% static 'images/icons/person-24px.svg' %}" />
-                          {% endif %}
+                        {% endif %}
                       </figure>
                   </a>
               </div>
