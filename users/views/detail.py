@@ -100,17 +100,36 @@ class AllCommonUsers(ListView):
         return common_list
 
 class ProfileUserView(TemplateView):
-    template_name = 'user.html'
+    template_name = None
     is_blocked = None
     is_frend = None
     common_frends = None
 
     def get(self,request,*args,**kwargs):
         self.user=User.objects.get(pk=self.kwargs["pk"])
-        if request.user.is_authenticated:
-            self.is_frend = self.user.is_connected_with_user(request.user)
-            self.is_blocked = self.user.has_blocked_user_with_id(request.user)
+        if self.user == request.user and (self.user.is_authenticated or self.user.is_anonymous):
+            self.template_name = "account/user.html"
+            self.online_frends = self.user.get_pop_online_connection()
+            self.communities=Community.objects.filter(memberships__user__id=self.user.pk)[0:5]
+
+        elif self.user != self.request.user and self.request.user.is_authenticated:
             self.common_frends = self.user.get_common_friends_of_user(request.user)[0:5]
+            if self.request.user.is_blocked_with_user_with_id(user_id=self.user.id):
+                self.template_name = "account/request_user_block.html"
+            elif self.user.is_closed_profile():
+                if not self.request.user.is_connected_with_user_with_id(user_id=self.user.id):
+                    self.template_name = "account/close_user.html"
+                else:
+                    self.template_name = "account/frend.html"
+            else:
+                self.template_name = "account/user.html"
+
+        elif self.request.user.is_anonymous and self.user.is_closed_profile():
+            self.template_name = "account/close_user.html"
+
+        elif self.request.user.is_anonymous and not self.user.is_closed_profile():
+            self.template_name = "account/anon_open_user.html"
+
         self.online_frends = self.user.get_pop_online_connection()
         self.communities=Community.objects.filter(memberships__user__id=self.user.pk)[0:5]
         return super(ProfileUserView,self).get(request,*args,**kwargs)
@@ -119,8 +138,6 @@ class ProfileUserView(TemplateView):
         context = super(ProfileUserView, self).get_context_data(**kwargs)
         context['user'] = self.user
         context['communities'] = self.communities
-        context['is_frend'] = self.is_frend
-        context['is_blocked'] = self.is_blocked
         context['common_frends'] = self.common_frends
         context['online_frends'] = self.online_frends
         return context

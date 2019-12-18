@@ -46,8 +46,6 @@
         </div>
     </div>
 
-
-{% include 'user_scripts.html' %}
 <script>
 $(document).ready(function(){
 	$('#lenta_load').html('').load("/users/detail/list/" + {{ user.pk }});
@@ -61,4 +59,5 @@ $(document).ready(function(){
     </span>
     <div id="article_loader" style="margin-top:30px"></div>
 </div>
+
 {% endblock %}
