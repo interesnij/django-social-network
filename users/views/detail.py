@@ -19,6 +19,7 @@ class UserItemView(TemplateView):
         self.item = Item.objects.get(pk=self.kwargs["pk"])
         self.item.views += 1
         self.item.save()
+        template_name = "lenta/user_item.html"
 
         if self.user != request.user and request.user.is_authenticated:
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
