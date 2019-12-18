@@ -67,5 +67,10 @@
   <h6 style="margin-bottom: 20px;"> Пользователь ограничил доступ к своей странице</h6>
 </div>
 {% endif %}
-
+<div class="card mb-4 article_fullscreen" style="display:none">
+    <span class="article_fullscreen_hide">
+        <img style="width:35px" src="{% static 'images/icons/close-24px.svg' %}" />
+    </span>
+    <div id="article_loader" style="margin-top:30px"></div>
+</div>
 {% endblock %}
