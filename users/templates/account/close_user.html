@@ -13,16 +13,13 @@
 <div class="row user_page">
     <div class="col-lg-4 col-md-5 col-sm-12 order-1">
 
-      <div class="card mb-4" style="">
+      <div class="card mb-4">
           <div class="card-body">
               <div class="row align-items-center no-gutters">
                   <a class="col">
-                      <figure class="mx-auto mb-3" id="avatar_reload">
+                      <figure class="mx-auto mb-3">
                           {% if user.get_avatar %}
-                          <img src="{{ user.get_avatar.file.url }}"
-                               style="cursor:pointer"
-                               data-uuid="{{ user.uuid }}"
-                               data-id="{{ user.get_avatar.id }}">
+                          <img src="{{ user.get_avatar.file.url }}">
                           {% else %}
                           <img src="{% static 'images/icons/person-24px.svg' %}" />
                           {% endif %}
@@ -54,5 +51,9 @@
 
     </div>
 </div>
-
+<script>
+$(document).ready(function(){
+	$('#button_load').html('').load("/users/load/profile_button/" + {{ user.pk }});
+});
+</script>
 {% endblock %}
