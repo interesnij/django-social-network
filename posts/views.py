@@ -81,7 +81,7 @@ class PostCommunityCreate(View):
             new_post=form_post.save()
 
             if request.is_ajax() :
-                html = render_to_string('item_user/post.html',{'object': new_post,'request': request})
+                html = render_to_string('item_community/post.html',{'object': new_post,'request': request})
                 return HttpResponse(html)
         else:
             return HttpResponseBadRequest()
