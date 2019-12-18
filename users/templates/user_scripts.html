@@ -102,9 +102,6 @@ $(document).ready(function () {
   $("#article_add").click(function() {
       $('#article_loader').html('').load("{% url 'article_add_user' pk=user.pk %}"); $('.article_fullscreen').show();
   })
-  $('.article_fullscreen_hide').on('click', function() {
-      $('.article_fullscreen').hide(); $('#article_loader').empty();
-  });
 
   $("#form_post_btn").click(function() {
     var form_post = $('#form_post'); var stream = form_post.parent().next().next();

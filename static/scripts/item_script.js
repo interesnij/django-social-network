@@ -6,7 +6,7 @@ $('#ajax').on('click', '.fullscreen', function() {
     var item = $(this); var item_pk = item.data("pk"); var user_uuid = item.data("uuid");
     $('#item_loader').html('').load("/users/detail/item/" + item_pk + "/" + user_uuid + "/"); $('.item_fullscreen').show();
 });
-$('#ajax').on('click', '.c_fullscreen', function() { 
+$('#ajax').on('click', '.c_fullscreen', function() {
     var item = $(this); var pk = item.data("pk"); var uuid = item.data("uuid");
     $('#item_loader').html('').load("/communities/item/" + pk + "/" + uuid + "/"); $('.item_fullscreen').show();
 });
@@ -29,6 +29,7 @@ $('#ajax').on('click', '.select_photo', function() {
 
 $('.photo_fullscreen_hide').on('click', function() { $('.photo_fullscreen').hide(); $('#photo_loader').empty(); });
 $('.item_fullscreen_hide').on('click', function() { $('.item_fullscreen').hide(); $('#item_loader').empty(); });
+$('.article_fullscreen_hide').on('click', function() {$('.article_fullscreen').hide(); $('#article_loader').empty();});
 
 $('#ajax').on('click', '.show_replies', function() { var element = $(this); element.next().toggleClass('replies_open'); });
 
