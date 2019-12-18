@@ -74,11 +74,10 @@ class ProfileButtonReload(TemplateView):
             self.template_name = "button/follow2_button.html"
         except:
             self.follow2 = None
-        try:
-            request.user.has_blocked_user_with_id(self.user)
+        if request.user.has_blocked_user_with_id(self.user):
             self.is_blocked = True
             self.template_name = "button/block_button.html"
-        except:
+        else:
             self.is_blocked = None
 
         return super(ProfileButtonReload,self).get(request,*args,**kwargs)
