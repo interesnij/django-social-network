@@ -1,0 +1,11 @@
+<span style="display: flex;align-items: center;justify-content: center;margin-bottom: 10px;">
+  <div class="btn-group">
+      <button type="button" class="btn btn-sm btn-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Заблокирован
+      </button>
+      <div class="dropdown-menu" data-pk="{{ user.pk }}" x-placement="bottom-start">
+          <a class="dropdown-item user_unblock" href="#">Разлокировать</a>
+          <a class="dropdown-item" href="#">Пожаловаться</a>
+      </div>
+  </div>
+</span>

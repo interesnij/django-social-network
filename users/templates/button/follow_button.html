@@ -1,0 +1,13 @@
+<span style="display: flex;align-items: center;justify-content: center;margin-bottom: 10px;">
+
+  <div class="btn-group">
+      <button type="button" class="btn btn-sm btn-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Вы подписаны
+      </button>
+      <div class="dropdown-menu" x-placement="bottom-start" data-pk="{{ user.pk }}">
+          <a class="dropdown-item follow_delete" href="#" >Отменить подписку</a>
+          <a class="dropdown-item user_block" href="#">Заблокировать</a>
+          <a class="dropdown-item" href="#">Пожаловаться</a>
+      </div>
+  </div>
+</span>

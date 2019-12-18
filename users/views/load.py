@@ -53,25 +53,33 @@ class ProfileReload(TemplateView):
 
 
 class ProfileButtonReload(TemplateView):
-    template_name="profile_button.html"
+    template_name = None
     is_blocked = None
 
     def get(self,request,*args,**kwargs):
         self.user=User.objects.get(pk=self.kwargs["pk"])
+        template_name = "button/default_button.html"
         try:
             self.connect = Connect.objects.get(user=self.request.user,target_user=self.user)
+            template_name = "button/connect_button.html"
         except:
             self.connect = None
         try:
             self.follow = Follow.objects.get(followed_user=self.user,user=self.request.user)
+            template_name = "button/follow_button.html"
         except:
             self.follow = None
         try:
             self.follow2 = Follow.objects.get(followed_user=self.request.user,user=self.user)
+            template_name = "button/follow2_button.html"
         except:
             self.follow2 = None
-        if request.user.is_authenticated:
-            self.is_blocked = request.user.has_blocked_user_with_id(self.user)
+        try:
+            request.user.has_blocked_user_with_id(self.user):
+            self.is_blocked = True
+            template_name = "button/block_button.html"
+        except:
+            self.is_blocked = None
 
         return super(ProfileButtonReload,self).get(request,*args,**kwargs)
 

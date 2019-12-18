@@ -91,7 +91,7 @@ class AllUsersList(ListView):
 class AllCommonUsers(ListView):
     template_name="all_possible_users.html"
     model=User
-    paginate_by=1
+    paginate_by=12
 
     def get_queryset(self):
         user=User.objects.get(pk=self.kwargs["pk"])
@@ -101,9 +101,6 @@ class AllCommonUsers(ListView):
 
 class ProfileUserView(TemplateView):
     template_name = None
-    is_blocked = None
-    is_frend = None
-    common_frends = None
 
     def get(self,request,*args,**kwargs):
         self.user=User.objects.get(pk=self.kwargs["pk"])
