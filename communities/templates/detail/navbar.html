@@ -86,8 +86,9 @@
                     {% endif %}
                     <br><br>
                     <span style="display: flex;align-items: center;justify-content: center;margin-bottom: 10px;">
-                    {% if member %}
 
+                    {% if request.user.is_authenticated %}
+                    {% if member %}
                     <div class="btn-group">
                         <button type="button" class="btn btn-sm btn-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Вы подписаны
@@ -111,12 +112,12 @@
 
                     </span>
                     <span style="display: flex;align-items: center;justify-content: center;">
-
                       {% if administrator or creator %}
                       <a class="btn btn-sm btn-secondary" href="{% url 'community_general_form' pk=object.pk %}" class="dropdown-item">Управление</a>
                       {% endif %}
-
                     </span>
+                    {% endif %}
+                    
                 </div>
             </div>
         </div>
