@@ -111,7 +111,7 @@ $(document).ready(function () {
         $.ajax({
             type: form_post.attr('method'), url: "{% url 'post_add_user' pk=user.pk %}", data: form_post.serialize(),
             success: function(data) {
-                $(".stream").prepend(data); $(".id_text").val(""); $(".add_board #for_images_upload").hide(); $(".add_board #for_gallery").hide(); $(".add_board #for_doc").hide(); $(".add_board #for_good").hide(); $(".add_board #for_question").hide(); $(".add_board #for_settings").hide();
+                form_post.parent().next().next().prepend(data); $(".id_text").val(""); $(".add_board #for_images_upload").hide(); $(".add_board #for_gallery").hide(); $(".add_board #for_doc").hide(); $(".add_board #for_good").hide(); $(".add_board #for_question").hide(); $(".add_board #for_settings").hide();
                 $.toast({ heading: '{{ request.user.first_name }}', text: 'Запись успешно создана!', showHideTransition: 'fade', icon: 'success' })},
             error: function(data) {$.toast({heading: '{{ request.user.first_name }}',text: 'Для публикации записи нужно написать что-нибудь и/или вставить изображение(ия)',showHideTransition: 'fade',icon: 'error'})}
         });
