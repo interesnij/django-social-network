@@ -81,7 +81,7 @@
                 <img style="width:22px;" src="{% static 'images/icons/chat-24px.svg' %}" />
                 <span class="comment-count"></span>
             </span>
-            {% endif %}
+            {% endif %}{% endif %}
             {% if request.user.is_authenticated %}
             &nbsp;&nbsp;
             <span title="Поделиться" data-toggle="modal" data-target="#user_repost" style="cursor:pointer">
