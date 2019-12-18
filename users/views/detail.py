@@ -101,6 +101,7 @@ class AllCommonUsers(ListView):
 
 class ProfileUserView(TemplateView):
     template_name = None
+    common_frends = None
 
     def get(self,request,*args,**kwargs):
         self.user=User.objects.get(pk=self.kwargs["pk"])
