@@ -1,10 +1,5 @@
 {% load staticfiles %}
 
-<!-- ГРУЗИМ
-						СТЕНУ,
-						КНОПКИ ДОБАВИТЬ,
-						СЧЕТЧИКИ СТАТИСТИКИ
-																	ПРИ ЗАГРУЗКЕ СТРАНИЦЕ ПРОФИЛЯ-->
 <script>
 $(document).ready(function(){
 	$('#lenta_load').html('').load("/users/detail/list/" + {{ user.pk }});
@@ -102,4 +97,24 @@ $(document).ready(function () {
 	var lenta = new Waypoint.Infinite({
 	    element: $('.lenta-container')[0], onBeforePageLoad: function() { $('.items-load').show(); }, onAfterPageLoad: function($items) { $('.items-load').hide(); }
 	});
+</script>
+<script>
+  $("#article_add").click(function() {
+      $('#article_loader').html('').load("{% url 'article_add_user' pk=user.pk %}"); $('.article_fullscreen').show();
+  })
+  $('.article_fullscreen_hide').on('click', function() {
+      $('.article_fullscreen').hide(); $('#article_loader').empty();
+  });
+
+  $("#form_post_btn").click(function() {
+    var form_post = $('#form_post');
+        $.ajax({
+            type: form_post.attr('method'), url: "{% url 'post_add_user' pk=user.pk %}", data: form_post.serialize(),
+            success: function(data) {
+                $(".stream").prepend(data); $(".id_text").val(""); $(".add_board #for_images_upload").hide(); $(".add_board #for_gallery").hide(); $(".add_board #for_doc").hide(); $(".add_board #for_good").hide(); $(".add_board #for_question").hide(); $(".add_board #for_settings").hide();
+                $.toast({ heading: '{{ request.user.first_name }}', text: 'Запись успешно создана!', showHideTransition: 'fade', icon: 'success' })},
+            error: function(data) {$.toast({heading: '{{ request.user.first_name }}',text: 'Для публикации записи нужно написать что-нибудь и/или вставить изображение(ия)',showHideTransition: 'fade',icon: 'error'})}
+        });
+        return false;
+    });
 </script>
