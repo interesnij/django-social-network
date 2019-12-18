@@ -95,7 +95,7 @@ class CommunityDetail(DetailView):
     follow = None
 
     def get(self,request,*args,**kwargs):
-        self.community = Community.objects.get(pk=self.kwargs["pk
+        self.community = Community.objects.get(pk=self.kwargs["pk])
         if request.user.is_authenticated:
             check_can_get_posts_for_community_with_name(request.user,self.community.name)
             self.membersheeps=CommunityMembership.objects.filter(community__id=self.community.pk)[0:5]
