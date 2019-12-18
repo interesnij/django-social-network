@@ -50,7 +50,7 @@
     });
 </script>
 <script>
-    var frm_post = $('#COMM-POST'); var stream = form_post.parent().next().next();
+    var frm_post = $('#COMM-POST'); var stream = frm_post.parent().next().next();
     frm_post.submit(function() {
         $.ajax({
             type: frm_post.attr('method'), url: "{% url 'post_add_community' object.pk %}", data: frm_post.serialize(),
