@@ -26,7 +26,9 @@
                       </figure>
                   </a>
               </div>
-              <span id="button_load"></span>
+              {% if user != request.user and request.user.is_authenticated %}
+                <span id="button_load"></span>
+              {% endif %}
           </div>
       </div>
 
