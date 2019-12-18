@@ -13,7 +13,25 @@
 <div class="row user_page">
     <div class="col-lg-4 col-md-5 col-sm-12 order-1">
 
-        {% include 'profile/card_profile.html' %}
+      <div class="card mb-4" style="">
+          <div class="card-body">
+              <div class="row align-items-center no-gutters">
+                  <a class="col">
+                      <figure class="mx-auto mb-3" id="avatar_reload">
+                          {% if user.get_avatar %}
+                          <img src="{{ user.get_avatar.file.url }}"
+                               style="cursor:pointer"
+                               data-uuid="{{ user.uuid }}"
+                               data-id="{{ user.get_avatar.id }}">
+                          {% else %}
+                          <img src="{% static 'images/icons/person-24px.svg' %}" />
+                          {% endif %}
+                      </figure>
+                  </a>
+              </div>
+              <span id="button_load"></span>
+          </div>
+      </div>
 
     </div>
     <div class="col-lg-8 col-md-7 col-sm-12 order-2 ">
