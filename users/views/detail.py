@@ -11,11 +11,11 @@ from rest_framework.exceptions import PermissionDenied
 
 
 class UserItemView(TemplateView):
-    model=Item
-    template_name="lenta/user_item.html"
+    model = Item
+    template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.user=User.objects.get(uuid=self.kwargs["uuid"])
+        self.user = User.objects.get(uuid=self.kwargs["uuid"])
         self.item = Item.objects.get(pk=self.kwargs["pk"])
         self.item.views += 1
         self.item.save()
@@ -24,10 +24,12 @@ class UserItemView(TemplateView):
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
             if self.user.is_closed_profile():
                 check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
+            template_name = "lenta/user_item.html"
             self.items = self.user.get_posts()
         elif request.user.is_anonymous and self.user.is_closed_profile():
             raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
         elif self.user == request.user and request.user.is_authenticated:
+            template_name = "lenta/my_item.html"
             self.items = self.user.get_posts()
         elif not self.user.is_closed_profile() and request.user.is_anonymous:
             self.items = self.user.get_posts()
@@ -38,10 +40,10 @@ class UserItemView(TemplateView):
 
     def get_context_data(self,**kwargs):
         context=super(UserItemView,self).get_context_data(**kwargs)
-        context["object"]=self.item
-        context["user"]=self.user
-        context["next"]=self.next
-        context["prev"]=self.prev
+        context["object"] = self.item
+        context["user"] = self.user
+        context["next"] = self.next
+        context["prev"] = self.prev
         return context
 
 
