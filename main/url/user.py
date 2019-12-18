@@ -10,5 +10,5 @@ urlpatterns = [
 	url(r'^fixed/(?P<pk>\d+)/$', login_required(user_fixed)),
     url(r'^unfixed/(?P<pk>\d+)/$', login_required(user_unfixed)),
     url(r'^delete/(?P<pk>\d+)/$', login_required(user_item_delete)),
-	url(r'^detail/(?P<uuid>[0-9a-f-]+)/$', ItemUserDetail.as_view(), name="item_detail"),
+	url(r'^detail/(?P<uuid>[0-9a-f-]+)/$', ItemUserDetail.as_view(), name="user_item_detail"),
 ]
