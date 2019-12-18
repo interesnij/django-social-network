@@ -19,21 +19,19 @@ class UserItemView(TemplateView):
         self.item = Item.objects.get(pk=self.kwargs["pk"])
         self.item.views += 1
         self.item.save()
-        template_name = "lenta/user_item.html"
+        self.template_name = "lenta/user_item.html"
 
         if self.user != request.user and request.user.is_authenticated:
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
             if self.user.is_closed_profile():
                 check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
-            template_name = "lenta/user_item.html"
             self.items = self.user.get_posts()
         elif request.user.is_anonymous and self.user.is_closed_profile():
             raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
         elif self.user == request.user and request.user.is_authenticated:
-            template_name = "lenta/my_item.html"
+            self.template_name = "lenta/my_item.html"
             self.items = self.user.get_posts()
         elif not self.user.is_closed_profile() and request.user.is_anonymous:
-            template_name = "lenta/user_item.html"
             self.items = self.user.get_posts()
 
         self.next = self.items.filter(pk__gt=self.item.pk).order_by('pk').first()
