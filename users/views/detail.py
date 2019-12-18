@@ -32,6 +32,7 @@ class UserItemView(TemplateView):
             template_name = "lenta/my_item.html"
             self.items = self.user.get_posts()
         elif not self.user.is_closed_profile() and request.user.is_anonymous:
+            template_name = "lenta/user_item.html"
             self.items = self.user.get_posts()
 
         self.next = self.items.filter(pk__gt=self.item.pk).order_by('pk').first()
