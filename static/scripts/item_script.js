@@ -6,7 +6,7 @@ $('#ajax').on('click', '.fullscreen', function() {
     var item = $(this); var item_pk = item.data("pk"); var user_uuid = item.data("uuid");
     $('#item_loader').html('').load("/users/detail/item/" + item_pk + "/" + user_uuid + "/"); $('.item_fullscreen').show();
 });
-$('#ajax').on('click', '.c_fullscreen', function() {
+$('#ajax').on('click', '.c_fullscreen', function() { 
     var item = $(this); var pk = item.data("pk"); var uuid = item.data("uuid");
     $('#item_loader').html('').load("/communities/item/" + pk + "/" + uuid + "/"); $('.item_fullscreen').show();
 });

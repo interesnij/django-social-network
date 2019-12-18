@@ -9,7 +9,7 @@
 
     <div class="card-body c_fullscreen" data-pk="{{ object.pk }}" data-uuid="{{ community.uuid }}" style="cursor:pointer">
       {% if object.post.text %}
-        <p class="">{{ object.post.text|linebreaks }}</p>
+        <p class="">{{ object.post.text|linebreaks }}</p> 
       {% endif %}
       {% if object.post.image %}
         <p class="">{{ object.post.image.url }}</p>
