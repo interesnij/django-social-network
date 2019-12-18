@@ -26,31 +26,11 @@
                 <img style="width:22px" src="{% static 'images/icons/more_vert-24px.svg' %}" />
             </a>
             <div class="dropdown-menu dropdown-menu-right">
-              {% if user == object.creator %}
-                <span data-id="{{ object.pk }}" style="cursor:pointer" class="dropdown-item item_user_remove">Удалить запись</span>
-                <span style="cursor:pointer" class="dropdown-item">Редактировать</span>
-                <span data-id="{{ object.pk }}">
-                  {% if object.is_fixed %}
-                  <span style="cursor:pointer" class="dropdown-item item_user_unfixed">Открепить</span>
-                  {% else %}
-                  <span style="cursor:pointer" class="dropdown-item item_user_fixed">Закрепить</span>
-                  {% endif %}
-                </span>
-                <span style="cursor:pointer" class="dropdown-item">Выключить комментарии</span>
-                <span style="cursor: pointer;" class="dropdown-item js-textareacopybtn">Скопировать ссылку
-                  <textarea style="opacity: 0;height:1px;width:1px" class="js-copytextarea">http://трезвый.рус{% url 'item_detail' uuid=object.uuid %}</textarea>
-                </span>
-
-              {% else %}
                 <span style="cursor: pointer;" class="dropdown-item js-textareacopybtn">Скопировать ссылку
                   <textarea style="opacity: 0;height:1px;width:1px" class="js-copytextarea">http://трезвый.рус{% url 'item_detail' uuid=object.uuid %}</textarea>
                 </span>
                 <span class="dropdown-item">Пожаловаться</span>
-              {% endif %}
             </div>
         </div>
     </div>
 </div>
-<script>
-
-</script>

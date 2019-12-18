@@ -1,0 +1,71 @@
+{% load staticfiles humanize liked_user %}
+
+<div class="card mb-4 infinite-item" item-id="{{ object.uuid }}">
+  <div class="card-header">
+      <div class="media">
+        <a href="{% url 'user' pk=object.creator.pk %}" class="ajax">
+          <figure>
+            {% if object.creator.get_avatar %}
+              <img src="{{ object.creator.get_avatar.file|thumbnail_url:'avatar' }}" style="border-radius:50px;width:50px;" alt="image">
+            {% else %}
+              <img class="thumb" src="{% static 'images/icons/person-24px.svg' %}" />
+            {% endif %}
+          </figure>
+        </a>
+          <div class="media-body">
+              <h6 class="mb-0">
+                <a href="{% url 'user' pk=object.creator.pk %}" class="ajax">
+                  {{ object.creator.get_full_name }} &nbsp;
+                </a>
+                <span class="is_fixed" style="color: #888888;font-size: 13px;{% if not object.is_fixed %}display:none;{% endif %}">закреплено</span>
+              </h6>
+              <p class="mb-0">{{ object.created|naturaltime }}</p>
+          </div>
+
+          <div class="dropdown d-inline-block">
+              <a style="cursor:pointer" class="icon-circle icon-30 dropdown-toggle caret-none" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <img style="width:22px" src="{% static 'images/icons/more_vert-24px.svg' %}" />
+              </a>
+              <div class="dropdown-menu dropdown-menu-right">
+                  <span data-id="{{ object.pk }}" style="cursor:pointer" class="dropdown-item item_user_remove">Удалить запись</span>
+                  <span style="cursor:pointer" class="dropdown-item">Редактировать</span>
+                  <span data-id="{{ object.pk }}">
+                    {% if object.is_fixed %}
+                    <span style="cursor:pointer" class="dropdown-item item_user_unfixed">Открепить</span>
+                    {% else %}
+                    <span style="cursor:pointer" class="dropdown-item item_user_fixed">Закрепить</span>
+                    {% endif %}
+                  </span>
+                  <span style="cursor:pointer" class="dropdown-item">Выключить комментарии</span>
+                  <span style="cursor: pointer;" class="dropdown-item js-textareacopybtn">Скопировать ссылку
+                    <textarea style="opacity: 0;height:1px;width:1px" class="js-copytextarea">http://трезвый.рус{% url 'item_detail' uuid=object.uuid %}</textarea>
+                  </span>
+              </div>
+          </div>
+      </div>
+  </div>
+
+    <div class="card-body article_detail" data-id="{{ object.uuid }}" style="cursor:pointer">
+         <div class="jumbotron mb-4 bg-dark text-center has-background-img position-relative box-shadow">
+             <div class="row align-items-center no-gutters">
+                    <figure class="background-img">
+                      {% if object.article.g_image %}
+                        <img class="lazyload" data-src="{{ object.article.g_image.url }}" alt="">
+                      {% else %}
+                        <img class="lazyload" data-src="{% static 'images/no-image.jpg' %}" />
+                      {% endif %}
+                    </figure>
+                    <div class="container">
+                      <i class="figure avatar120 mr-0 fa fa-gift rounded-circle bg-none text-white border-white "></i>
+                      <br>
+                      <h2 class="text-white">{{ object.article.title}}</h2>
+                      <p class="lead text-white">Автор {{ object.creator.get_full_name }}</p>
+                      <hr class="my-3">
+                      <a class="btn btn-primary" role="button">Читать</a>
+                    </div>
+            </div>
+        </div>
+    </div>
+
+    {% include 'item_user/info.html' %}
+ </div>

@@ -17,13 +17,14 @@ class UserItemView(TemplateView):
     def get(self,request,*args,**kwargs):
         self.user=User.objects.get(uuid=self.kwargs["uuid"])
         self.item = Item.objects.get(pk=self.kwargs["pk"])
+        self.item.views += 1
+        self.item.save()
+
         if self.user != request.user and request.user.is_authenticated:
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
             if self.user.is_closed_profile():
                 check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
             self.items = self.user.get_posts()
-            self.item.views += 1
-            self.item.save()
         elif request.user.is_anonymous and self.user.is_closed_profile():
             raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
         elif self.user == request.user and request.user.is_authenticated:
@@ -65,7 +66,7 @@ class ItemListView(View):
             current_page = Paginator(items_list, 10)
         elif self.user == request.user:
             items_list = self.user.get_posts().order_by('-created')
-            template = 'lenta/item_list.html'
+            template = 'lenta/my_item_list.html'
             current_page = Paginator(items_list, 10)
         context['user'] = self.user
         context['request_user'] = request.user
