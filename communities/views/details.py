@@ -90,11 +90,17 @@ class CommunityDetail(DetailView):
     staff = False
     creator = False
     member = False
+    membersheeps = None
+    common_friends = None
+    follow = None
 
     def get(self,request,*args,**kwargs):
-        self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.membersheeps=CommunityMembership.objects.filter(community__id=self.community.pk)[0:5]
-        self.common_friends = request.user.get_common_friends_of_community(self.community)[0:5]
+        self.community = Community.objects.get(pk=self.kwargs["pk
+        if request.user.is_authenticated:
+            check_can_get_posts_for_community_with_name(request.user,self.community.name)
+            self.membersheeps=CommunityMembership.objects.filter(community__id=self.community.pk)[0:5]
+            self.common_friends = request.user.get_common_friends_of_community(self.community)[0:5]
+            self.follow = CommunityFollow.objects.get(community=self.community,user=self.request.user)
         if request.user.is_authenticated and request.user.is_administrator_of_community_with_name(self.community.name):
             self.administrator=True
         if request.user.is_authenticated and request.user.is_creator_of_community_with_name(self.community.name):
@@ -103,10 +109,6 @@ class CommunityDetail(DetailView):
             self.staff=True
         if request.user.is_authenticated and request.user.is_member_of_community_with_name(self.community.name):
             self.member=True
-        try:
-            self.follow = CommunityFollow.objects.get(community=self.community,user=self.request.user)
-        except:
-            self.follow = None
         return super(CommunityDetail,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
