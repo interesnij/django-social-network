@@ -127,7 +127,7 @@
 
 <script>
 $(document).ready(function(){
-	$('#all_frends').html('').load("/frends/all/" + {{ user.pk }});
+	$('#all_frends').html('').load("/frends/all-list/" + {{ user.pk }});
 	$('#online_frends').html('').load("/frends/online/" + {{ user.pk }});
 });
 </script>
