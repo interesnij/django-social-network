@@ -69,11 +69,10 @@
       </span>
             {% if object.comments_enabled %}
             &nbsp;&nbsp;
-            {% if object.count_comments %}
             <span title="Комментарий" class="u_comment comments_close" style="cursor:pointer" data-uuid="{{ object.uuid }}" data-pk="{{ object.creator.pk }}">
                 <img style="width:22px;" src="{% static 'images/icons/chat-24px.svg' %}" />
                 <span class="comment-count">
-                    {{ object.count_comments }}
+                    {% if object.comments_enabled %}{{ object.count_comments }}{% endif %}
                 </span>
             </span>
             {% else %}
@@ -81,7 +80,7 @@
                 <img style="width:22px;" src="{% static 'images/icons/chat-24px.svg' %}" />
                 <span class="comment-count"></span>
             </span>
-            {% endif %}{% endif %}
+            {% endif %}
             {% if request.user.is_authenticated %}
             &nbsp;&nbsp;
             <span title="Поделиться" data-toggle="modal" data-target="#user_repost" style="cursor:pointer">
