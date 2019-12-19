@@ -60,18 +60,18 @@ class ItemListView(View):
             items_list = self.user.get_posts().order_by('-created')
             template = 'lenta/item_list.html'
             current_page = Paginator(items_list, 10)
-        elif request.user.is_anonymous and self.user.is_closed_profile():
+        elif self.request.user.is_anonymous and self.user.is_closed_profile():
             raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
-        elif request.user.is_anonymous and not self.user.is_closed_profile():
+        elif self.request.user.is_anonymous and not self.user.is_closed_profile():
             items_list = self.user.get_posts().order_by('-created')
             template = 'lenta/item_list_anon.html'
             current_page = Paginator(items_list, 10)
-        elif self.user == request.user:
+        elif self.user == self.request.user:
             items_list = self.user.get_posts().order_by('-created')
             template = 'lenta/my_item_list.html'
             current_page = Paginator(items_list, 10)
         context['user'] = self.user
-        context['request_user'] = request.user
+        context['request_user'] = self.request.user
         page = request.GET.get('page')
         try:
             context['items_list'] = current_page.page(page)
