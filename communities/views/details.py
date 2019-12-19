@@ -55,17 +55,16 @@ class ItemCommunity(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.community=Community.objects.get(uuid=self.kwargs["uuid"])
-        self.community.views += 1
-        self.community.save()
+        self.item = Item.objects.get(pk=self.kwargs["pk"])
+        self.item.views += 1
+        self.item.save()
         if request.user.is_authenticated:
             check_can_get_posts_for_community_with_name(request.user,self.community.name)
             self.items = self.community.get_posts()
-            self.item = Item.objects.get(pk=self.kwargs["pk"])
             self.next = self.items.filter(pk__gt=self.item.pk).order_by('pk').first()
             self.prev = self.items.filter(pk__lt=self.item.pk).order_by('-pk').first()
         if request.user.is_anonymous and self.community.is_public:
             self.items = self.community.get_posts()
-            self.item = Item.objects.get(pk=self.kwargs["pk"])
             self.next = self.items.filter(pk__gt=self.item.pk).order_by('pk').first()
             self.prev = self.items.filter(pk__lt=self.item.pk).order_by('-pk').first()
         if request.user.is_anonymous and (self.community.is_closed or self.community.is_private):
