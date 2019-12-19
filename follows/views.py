@@ -28,7 +28,7 @@ class FollowsListView(View):
             follows_list=self.user.get_follows()
             current_page = Paginator(follows_list, 1)
         context['user'] = self.user
-        context['request.user'] = request.user
+        context['request_user'] = request.user
         page = request.GET.get('page')
         try:
             context['follows_list'] = current_page.page(page)
