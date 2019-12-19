@@ -17,7 +17,7 @@ class FrendsListView(TemplateView):
 		self.featured_users = request.user.get_possible_friends()[0:10]
 
 		if self.user == request.user:
-			template_name="frends/my_frends.html"
+			self.template_name="frends/my_frends.html"
 		elif request.user != self.user and request.user.is_authenticated:
 			if request.user.is_blocked_with_user_with_id(user_id=self.user.id):
 				self.template_name = "frends/frends_block.html"
