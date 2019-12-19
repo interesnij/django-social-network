@@ -17,7 +17,7 @@ from communities.views.manage import (
 
 urlpatterns = [
     url(r'^all-communities/$', AllCommunities.as_view(), name='all_communities'),
-    url(r'^user/(?P<pk>\d+)/$', CommunitiesView.as_view(), name='communities'),
+    url(r'^categories/(?P<pk>\d+)/$', CommunitiesView.as_view(), name='communities'),
     url(r'^(?P<pk>\d+)/members/$', CommunityMembersView.as_view(), name='community_members'),
 
     url(r'^(?P<pk>\d+)/$', CommunityDetail.as_view(), name='community_detail'),
