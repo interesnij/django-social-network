@@ -5,7 +5,7 @@
    <div class="col text-center">
      <div class="media">
        <div class="media-body">
-         <a href="{% url 'frends' pk=user.pk %}" class="ajax">
+         <a href="{% url 'frends' uuid=user.uuid %}" class="ajax">
          <h4 class="content-color-primary mb-0">{{ user.count_connections }}</h4>
          <p class="content-color-secondary mb-0">{{ user.count_connections|rupluralize:"друг,друга,друзей" }}</p>
          </a>
