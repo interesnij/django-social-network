@@ -55,14 +55,14 @@ class ItemCommunity(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.community=Community.objects.get(uuid=self.kwargs["uuid"])
+        self.community.views += 1
+        self.community.save()
         if request.user.is_authenticated:
             check_can_get_posts_for_community_with_name(request.user,self.community.name)
             self.items = self.community.get_posts()
             self.item = Item.objects.get(pk=self.kwargs["pk"])
             self.next = self.items.filter(pk__gt=self.item.pk).order_by('pk').first()
             self.prev = self.items.filter(pk__lt=self.item.pk).order_by('-pk').first()
-            self.item.views += 1
-            self.item.save()
         if request.user.is_anonymous and self.community.is_public:
             self.items = self.community.get_posts()
             self.item = Item.objects.get(pk=self.kwargs["pk"])
@@ -100,7 +100,7 @@ class CommunityDetail(DetailView):
             check_can_get_posts_for_community_with_name(request.user,self.community.name)
             self.membersheeps=CommunityMembership.objects.filter(community__id=self.community.pk)[0:5]
             self.common_friends = request.user.get_common_friends_of_community(self.community)[0:5]
-            self.follow = CommunityFollow.objects.get(community=self.community,user=self.request.user)
+            self.follow = CommunityFollow.objects.get(community=self.community, user=request.user)
         if request.user.is_authenticated and request.user.is_administrator_of_community_with_name(self.community.name):
             self.administrator=True
         if request.user.is_authenticated and request.user.is_creator_of_community_with_name(self.community.name):
