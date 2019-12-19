@@ -93,7 +93,7 @@ class ProfileButtonReload(TemplateView):
 
 
 class ProfileStatReload(TemplateView):
-    template_name="profile_stat.html"
+    template_name="profile/profile_stat.html"
 
     def get(self,request,*args,**kwargs):
         self.user=User.objects.get(pk=self.kwargs["pk"])
