@@ -39,54 +39,19 @@
 
           <div id="stat_load"></div>
 
-          <div id="lenta_load"></div>
+          {% include 'profile/new_post.html' %}
 
         </div>
     </div>
 
+
+{% include 'user_scripts.html' %}
+
 <script>
 $(document).ready(function(){
 	$('#lenta_load').html('').load("/users/detail/list/" + {{ user.pk }});
-	$('#button_load').html('').load("/users/load/profile_button/" + {{ user.pk }});
 	$('#stat_load').html('').load("/users/load/profile_stat/" + {{ user.pk }});
 });
-</script>
-<script>
-$('.user_page').on('click', '.avatar_detail', function() {
-		var photo = $(this);
-		var photo_id = photo.data("id");
-		var user_uuid = photo.data("uuid");
-		$('#photo_loader').html('').load("/gallery/load/avatar_detail/" + photo_id + "/" + user_uuid + "/")
-		$('.photo_fullscreen').show();
-});
-function new_message_popap(new_message) {
-	if ($(".wrapper").length == 0){
-		$(new_message).wrapInner("<div class='wrapper'></div>");
-	}
-	$(new_message).show();
-	$(new_message).click(function(e) {
-		if ( e.target == this ) {
-			if ($(new_message).is(':visible')) {
-				$(new_message).hide();
-			}
-		}
-	});
-	$(new_message).find("button[name=message_close]").on("click", function() {
-		if ($(".formElementError").is(':visible')) {
-			$(".formElementError").remove();
-		}
-		$(new_message).hide();
-	});
-}
-$(document).ready(function () {
-	$("[data-js=new_message]").on("click", function() {
-		new_message_popap($(".new_message"));
-	});
-});
-
-	var lenta = new Waypoint.Infinite({
-	    element: $('.lenta-container')[0], onBeforePageLoad: function() { $('.items-load').show(); }, onAfterPageLoad: function($items) { $('.items-load').hide(); }
-	});
 </script>
 <div class="card mb-4 article_fullscreen" style="display:none">
     <span class="article_fullscreen_hide">

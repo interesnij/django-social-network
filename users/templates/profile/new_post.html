@@ -1,6 +1,5 @@
 {% load staticfiles %}
 
-{% if user == request.user %}
 <div class="card mb-4" style="border:1px solid rgba(0, 0, 0, 0.125);">
     <form action="" id="form_post" method="post" enctype="multipart/form-data">
         {% csrf_token %}
@@ -12,5 +11,3 @@
 
     </form>
 </div>
-
-{% endif %}
