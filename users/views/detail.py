@@ -112,7 +112,7 @@ class ProfileUserView(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.user=User.objects.get(pk=self.kwargs["pk"])
-        if self.user == request.user and (self.user.is_authenticated or self.user.is_anonymous):
+        if self.user == request.user:
             self.template_name = "account/my_user.html"
             self.online_frends = self.user.get_pop_online_connection()
             self.communities=Community.objects.filter(memberships__user__id=self.user.pk)[0:5]

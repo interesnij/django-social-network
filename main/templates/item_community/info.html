@@ -75,9 +75,7 @@
             <span title="Комментарий" class="c_comment comments_close" style="cursor:pointer"  data-uuid="{{ object.uuid }}" data-pk="{{ object.creator.pk }}">
                 <img style="width:22px;" src="{% static 'images/icons/chat-24px.svg' %}" />
                 <span class="comment-count">
-                    {% if object.count_comments %}
-                    {{ object.count_comments }}
-                    {% endif %}
+                    {% if object.count_comments %} {{ object.count_comments }} {% endif %}
                 </span>
             </span>
             {% endif %}
