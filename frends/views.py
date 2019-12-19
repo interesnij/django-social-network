@@ -9,13 +9,30 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 class FrendsListView(TemplateView):
-	template_name="frends.html"
+	template_name = None
 	featured_users = None
 
 	def get(self,request,*args,**kwargs):
 		self.user=User.objects.get(pk=self.kwargs["pk"])
-		if request.user.is_authenticated:
-			self.featured_users = request.user.get_possible_friends()[0:10]
+		self.featured_users = request.user.get_possible_friends()[0:10]
+
+		if self.user == request.user:
+			template_name="frends/my_frends.html"
+		elif request.user != self.user and request.user.is_authenticated:
+			if request.user.is_blocked_with_user_with_id(user_id=self.user.id):
+				self.template_name = "frends/frends_block.html"
+			elif self.user.is_closed_profile():
+				if not request.user.is_connected_with_user_with_id(user_id=self.user.id):
+					self.template_name = "frends/close_frends.html"
+				else:
+					self.template_name = "frends/frends.html"
+					self.common_frends = self.user.get_common_friends_of_user(request.user)[0:5]
+			else:
+				self.template_name = "frends/frends.html"
+		elif request.user.is_anonymous and self.user.is_closed_profile():
+			self.template_name = "frends/close_frends.html"
+		elif request.user.is_anonymous and not self.user.is_closed_profile():
+			self.template_name = "frends/anon_frends.html"
 		return super(FrendsListView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):

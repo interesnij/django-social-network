@@ -115,28 +115,29 @@ class ProfileUserView(TemplateView):
         if self.user == request.user:
             self.template_name = "account/my_user.html"
             self.online_frends = self.user.get_pop_online_connection()
-            self.communities=Community.objects.filter(memberships__user__id=self.user.pk)[0:5]
 
-        elif self.user != self.request.user and self.request.user.is_authenticated:
-            self.common_frends = self.user.get_common_friends_of_user(request.user)[0:5]
-            if self.request.user.is_blocked_with_user_with_id(user_id=self.user.id):
+        elif request.user != self.user and request.user.is_authenticated:
+            if request.user.is_blocked_with_user_with_id(user_id=self.user.id):
                 self.template_name = "account/request_user_block.html"
             elif self.user.is_closed_profile():
-                if not self.request.user.is_connected_with_user_with_id(user_id=self.user.id):
+                if not request.user.is_connected_with_user_with_id(user_id=self.user.id):
                     self.template_name = "account/close_user.html"
                 else:
                     self.template_name = "account/frend.html"
+                    self.common_frends = self.user.get_common_friends_of_user(request.user)[0:5]
             else:
                 self.template_name = "account/user.html"
+                self.common_frends = self.user.get_common_friends_of_user(request.user)[0:5]
 
-        elif self.request.user.is_anonymous and self.user.is_closed_profile():
+        elif request.user.is_anonymous and self.user.is_closed_profile():
             self.template_name = "account/close_user.html"
 
-        elif self.request.user.is_anonymous and not self.user.is_closed_profile():
+        elif request.user.is_anonymous and not self.user.is_closed_profile():
             self.template_name = "account/anon_open_user.html"
 
         self.online_frends = self.user.get_pop_online_connection()
         self.communities=Community.objects.filter(memberships__user__id=self.user.pk)[0:5]
+
         return super(ProfileUserView,self).get(request,*args,**kwargs)
 
     def get_context_data(self, **kwargs):

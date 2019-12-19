@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+{% load staticfiles thumbnail liked_user %}
+{% block title %}Друзья {{ user.first_name|gent }} {{ user.last_name|gent }}{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-12 col-md-8">
+      <br><br><br>
+      <div class="card-header p-0">
+          <ul class="nav nav-tabs justify-content-center" role="tablist">
+              <li class="nav-item">
+                  <a class="nav-link active show" id="tabhome123-tab" data-toggle="tab" href="#tabhome123" role="tab" aria-controls="tabhome123" aria-selected="true">
+                      Все <span class="text-hide-xs"> друзья</span>
+                  </a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" id="tabhome223-tab" data-toggle="tab" href="#tabhome223" role="tab" aria-controls="tabhome223" aria-selected="false">
+                      Онлайн <span class="text-hide-xs"> друзья</span>
+                  </a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" id="tabhome323-tab" data-toggle="tab" href="#tabhome323" role="tab" aria-controls="tabhome323" aria-selected="false">
+                      Общие <span class="text-hide-xs"> друзья</span>
+                  </a>
+              </li>
+          </ul>
+      </div>
+      <div class="card mb-2">
+            <div class="col-12 col-md-12">
+                <div class="col-12 col-md-12">
+                    <div class="card mb-4 fullscreen">
+                        <div class="card-body">
+                            <div class="tab-content">
+                                <div class="tab-pane fade active show" id="tabhome123" role="tabpanel" aria-labelledby="tabhome123-tab">
+                                  <div class="media-body">
+                                      <h5 class="mt-1">Друзья {{ user.first_name|gent }} {{ user.last_name|gent }}</h5>
+                                  </div>
+                                  <br>
+                                  <div class="input-group mb-3">
+                                      <input type="text" class="form-control" placeholder="Поиск по друзьям" aria-label="Recipient's username">
+                                      <div class="input-group-append">
+                                          <button class="btn btn-outline-link" type="button">Искать</button>
+                                      </div>
+                                  </div>
+
+                                  <span id="all_frends"></span>
+
+                                </div>
+                                <div class="tab-pane fade" id="tabhome223" role="tabpanel" aria-labelledby="tabhome223-tab">
+                                  <div class="media-body">
+                                      <h5 class="mt-1">Друзья онлайн {{ user.first_name|gent }} {{ user.last_name|gent }}</h5>
+                                  </div>
+                                  <br>
+                                  <div class="input-group mb-3">
+                                      <input type="text" class="form-control" placeholder="Поиск по друзьям онлайн" aria-label="Recipient's username">
+                                      <div class="input-group-append">
+                                          <button class="btn btn-outline-link" type="button">Искать</button>
+                                      </div>
+                                  </div>
+
+                                  <span id="online_frends"></span>
+
+                                </div>
+
+                                <div class="tab-pane fade" id="tabhome323" role="tabpanel" aria-labelledby="tabhome323-tab">
+                                  <div class="media-body">
+                                      <h5 class="mt-1">Общие друзья</h5>
+                                  </div>
+                                  <br>
+                                  <div class="input-group mb-3">
+                                      <input type="text" class="form-control" placeholder="Поиск по общим друзьям" aria-label="Recipient's username">
+                                      <div class="input-group-append">
+                                          <button class="btn btn-outline-link" type="button">Искать</button>
+                                      </div>
+                                  </div>
+
+                                  <span id="common_frends"></span>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-4">
+        <br><br><br>
+        {% if user.get_possible_friends %}
+        <div class="card mb-2">
+            <div class="card-header">
+                <div class="media">
+                    <div class="media-body">
+                        <h5 class="mt-1">Возможные друзья</h5>
+                    </div>
+                    <a class="ajax" href="{% url 'all_common_users' pk=user.pk %}" class="">
+                        все
+                    </a>
+                </div>
+            </div>
+            <div class="card-body px-0 py-0">
+                <ul class="list-group border-top border-bottom list-group-flush">
+                    {% for object in user.get_possible_friends %}
+                    <li class="list-group-item">
+                        <div class="media">
+                            <figure>
+                                {% if object.get_avatar %}
+                                <img src="{{ object.get_avatar.file|thumbnail_url:'avatar' }}" style="border-radius:50px;width:50px;" alt="image">
+                                {% else %}
+                                <img class="thumb" src="{% static 'images/icons/person-24px.svg' %}" />
+                                {% endif %}
+                            </figure>
+                            <div class="media-body">
+                                <a href="{% url 'user' pk=object.pk %}" class="ajax">
+                                    <h6 class="my-0 mt-1">{{ object.get_full_name }}</h6>
+                                </a>
+                                <a href="" class="small">Написать сообщение</a>
+                            </div>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <br><br>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+$(document).ready(function(){
+	$('#all_frends').html('').load("/frends/all/" + {{ user.pk }});
+	$('#online_frends').html('').load("/frends/online/" + {{ user.pk }});
+	$('#common_frends').html('').load("/frends/common/" + {{ user.pk }});
+});
+</script>
+
+{% endblock %}
