@@ -63,9 +63,7 @@ class ItemCommunity(TemplateView):
             self.items = self.community.get_posts()
             self.next = self.items.filter(pk__gt=self.item.pk).order_by('pk').first()
             self.prev = self.items.filter(pk__lt=self.item.pk).order_by('-pk').first()
-        elif request.user.is_anonymous and self.community.is_closed:
-            raise PermissionDenied('У Вас недостаточно прав для просмотра информации группы',)
-        elif request.user.is_anonymous and self.community.is_private:
+        elif request.user.is_anonymous and (self.community.is_closed or self.community.is_private):       
             raise PermissionDenied('У Вас недостаточно прав для просмотра информации группы',)
         return super(ItemCommunity,self).get(request,*args,**kwargs)
 
