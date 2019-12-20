@@ -35,7 +35,7 @@
                                 <div class="tab-pane fade active show" id="tabhome123" role="tabpanel" aria-labelledby="tabhome123-tab">
                                   <div class="media-body">
                                     <h5 class="mt-1">Друзья
-                                      <a style="text-decoration:underline;" class="ajax" href="{% url 'users' pk=user.pk %}">
+                                      <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=user.pk %}">
                                         {{ user.first_name|gent }} {{ user.last_name|gent }}
                                       </a>
                                     </h5>
@@ -53,7 +53,11 @@
                                 </div>
                                 <div class="tab-pane fade" id="tabhome223" role="tabpanel" aria-labelledby="tabhome223-tab">
                                   <div class="media-body">
-                                      <h5 class="mt-1">Друзья онлайн {{ user.first_name|gent }} {{ user.last_name|gent }}</h5>
+                                      <h5 class="mt-1">
+                                        <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=user.pk %}">
+                                          {{ user.first_name|gent }} {{ user.last_name|gent }}
+                                        </a>
+                                      </h5>
                                   </div>
                                   <br>
                                   <div class="input-group mb-3">
