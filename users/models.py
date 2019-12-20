@@ -402,10 +402,10 @@ class User(AbstractUser):
 
     def get_follows(self):
         reported_posts_exclusion_query = ~Q(moderated_object__reports__reporter_id=self.pk)
-        followed_users = self.follows.values('user_id')
+        followed_users = self.followers.values('user_id')
         followed_users_ids = [followed_user['user_id'] for followed_user in followed_users]
         followed_users_query = Q(id__in=followed_users_ids)
-        
+        followed_users_query.add(reported_posts_exclusion_query, Q.AND)
         query = User.objects.filter(followed_users_query)
         return query
 
