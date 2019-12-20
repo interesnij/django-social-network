@@ -430,18 +430,26 @@ class User(AbstractUser):
 
     def get_possible_friends(self):
         frends = self.connections.values('target_user_id')
-        if not frends:
+        target_frends = self.connections.values('user_id')
+        if not frends or not target_frends:
             return "not frends"
-        frends_ids = [target_user['target_user_id'] for target_user in frends]
-
+        query = Q()
         blocked = ~Q(Q(blocked_by_users__blocker_id=self.pk) | Q(user_blocks__blocked_user_id=self.pk))
         connections = ~Q(Q(connections__user_id=self.pk) | Q(targeted_connections__target_user_id=self.pk))
-        query = Q()
+        frends_ids = [target_user['target_user_id'] for target_user in frends]
         for frend in frends_ids:
             _user = User.objects.get(pk=frend)
-            frends_frends = _user.connections.values('user_id')
-            frend_frend_ids = [target_user['user_id'] for target_user in frends_frends]
+            frends_frends = _user.connections.values('target_user_id')
+            frend_frend_ids = [target_user['target_user_id'] for target_user in frends_frends]
             _query = Q(id__in=frend_frend_ids)
+            query.add(_query, Q.AND)
+
+        target_frends_ids = [target_user['user_id'] for target_user in target_frends]
+        for frend in target_frends_ids:
+            _user = User.objects.get(pk=frend)
+            frends_frends = _user.connections.values('user_id')
+            t_frend_ids = [target_user['user_id'] for target_user in frends_frends]
+            _query = Q(id__in=t_frend_ids)
             query.add(_query, Q.AND)
         query.add(blocked, Q.AND)
         query.add(connections, Q.AND)
