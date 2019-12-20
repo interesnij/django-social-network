@@ -432,7 +432,7 @@ class User(AbstractUser):
         target_frends = self.connections.values('target_user_id')
         target_frends_ids = [target_user['target_user_id'] for target_user in target_frends]
         in_frends = self.connections.values('user_id')
-        in_frends_ids = [target_user['target_user_id'] for target_user in in_frends]
+        in_frends_ids = [target_user['user_id'] for target_user in in_frends]
         frends = target_frends_ids + in_frends_ids
         if not frends:
             return "not frends"
