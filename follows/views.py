@@ -28,10 +28,10 @@ class FollowsView(TemplateView):
 					self.template_name = "follows/close_follows.html"
 				else:
 					self.template_name = "follows/follows.html"
-					self.featured_users = request.user.get_possible_friends()
+					self.featured_users = request.user.get_possible_friends2()
 			else:
 				self.template_name = "follows/follows.html"
-				self.featured_users = request.user.get_possible_friends()
+				self.featured_users = request.user.get_possible_friends2()
 		elif request.user.is_anonymous and self.user.is_closed_profile():
 			self.template_name = "follows/close_follows.html"
 		elif request.user.is_anonymous and not self.user.is_closed_profile():
