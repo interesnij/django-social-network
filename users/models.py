@@ -444,11 +444,11 @@ class User(AbstractUser):
             query.add(_query, Q.AND)
 
         query.add(exclusion_blocked, Q.AND)
-
+        query.add(exclusion_connections, Q.AND)
         query.add(reported_posts_exclusion_query, Q.AND)
         connection = User.objects.filter(query)
         return connection
-        
+
     def get_common_friends_of_user(self, user):
         user = User.objects.get(pk=user.pk)
         if self.pk == user.pk:
