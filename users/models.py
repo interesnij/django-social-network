@@ -442,7 +442,10 @@ class User(AbstractUser):
             t_frend_ids = [t_user['target_user_id'] for t_user in frends_frends]
             _query = Q(id__in=t_frend_ids)
             query.add(_query, Q.AND)
+
+        query.add(exclusion_blocked, Q.AND)
         
+        query.add(reported_posts_exclusion_query, Q.AND)
         connection = User.objects.filter(query)
         return connection
 
