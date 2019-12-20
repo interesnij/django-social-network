@@ -439,9 +439,9 @@ class User(AbstractUser):
             exclusion_blocked = ~Q(Q(blocked_by_users__blocker_id=self.pk) | Q(user_blocks__blocked_user_id=self.pk))
             exclusion_connections = ~Q(Q(connections__user_id=self.pk) | Q(targeted_connections__target_user_id=self.pk))
             reported_posts_exclusion_query = ~Q(moderated_object__reports__reporter_id=self.pk)
-            frends_frends.add(exclusion_blocked, Q.AND)
-            frends_frends.add(exclusion_connections, Q.AND)
-            frends_frends.add(reported_posts_exclusion_query, Q.AND)
+            frends_frends.exclude(exclusion_blocked)
+            frends_frends.exclude(exclusion_connections)
+            frends_frends.exclude(reported_posts_exclusion_query)
 
             query.add(frends_frends, Q.AND)
 
