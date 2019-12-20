@@ -42,7 +42,7 @@
                                   <span id="all_frends"></span>
 
                                 </div>
-                                <div class="tab-pane fade" id="tabhome223" role="tabpanel" aria-labelledby="tabhome223-tab">
+                                <div class="tab-pane fade online" id="tabhome223" role="tabpanel" aria-labelledby="tabhome223-tab">
                                   <div class="media-body">
                                       <h5 class="mt-1">Мои друзья онлайн</h5>
                                   </div>
@@ -128,7 +128,7 @@ $(document).ready(function(){
 	$('#all_frends').html('').load("/frends/all-list/" + {{ user.pk }});
 });
 
-$('#ajax').on('click', '#tabhome223', function() {
+$('#ajax').on('click', '.online', function() {
 		$('#online_frends').html('').load("/frends/online/" + {{ user.pk }});
 });
 </script>
