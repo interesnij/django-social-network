@@ -434,7 +434,7 @@ class User(AbstractUser):
         frend_ids = [target_user['target_user_id'] for target_user in frends]
 
         for frend in frends:
-            _user = User.objects.get(id=frend.pk)
+            _user = User.objects.get(id=frend.user.pk)
             frends_frends = _user.targeted_connections.values('user_id')
             t_frend_ids = [t_user['user_id'] for t_user in frends_frends]
             _query = Q(id__in=t_frend_ids)
