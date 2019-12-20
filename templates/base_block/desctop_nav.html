@@ -23,7 +23,7 @@
           Сообщения
         </a>
 
-        <a class="nav-link ajax" href="{% url 'frends' uuid=request.user.uuid %}">
+        <a class="nav-link ajax" href="{% url 'frends' pk=request.user.pk %}">
         <div class="icon-30">
           <img style="width:22px;margin-bottom:5px" src="{% static 'images/icons/person-24px.svg' %}" />
         </div>

@@ -12,7 +12,7 @@ class FrendsListView(TemplateView):
 	template_name = None
 
 	def get(self,request,*args,**kwargs):
-		self.user=User.objects.get(uuid=self.kwargs["uuid"])
+		self.user=User.objects.get(pk=self.kwargs["pk"])
 
 		if self.user == request.user:
 			self.template_name="frends/my_frends.html"
