@@ -433,19 +433,17 @@ class User(AbstractUser):
         query = Q()
         frend_ids = [target_user['target_user_id'] for target_user in frends]
 
-        for frend in frends:
-            _user = User.objects.get(id=frend.user.pk)
-            frends_frends = _user.targeted_connections.values('user_id')
-            t_frend_ids = [t_user['user_id'] for t_user in frends_frends]
-            _query = Q(id__in=t_frend_ids)
+        for frend in frend_ids:
+            _user = User.objects.get(id=frend)
+            frends_frends = _user.get_all_connection()
             exclusion_blocked = ~Q(Q(blocked_by_users__blocker_id=self.pk) | Q(user_blocks__blocked_user_id=self.pk))
             exclusion_connections = ~Q(Q(connections__user_id=self.pk) | Q(targeted_connections__target_user_id=self.pk))
             reported_posts_exclusion_query = ~Q(moderated_object__reports__reporter_id=self.pk)
-            _query.add(exclusion_blocked, Q.AND)
-            _query.add(exclusion_connections, Q.AND)
-            _query.add(reported_posts_exclusion_query, Q.AND)
+            frends_frends.add(exclusion_blocked, Q.AND)
+            frends_frends.add(exclusion_connections, Q.AND)
+            frends_frends.add(reported_posts_exclusion_query, Q.AND)
 
-            query.add(_query, Q.AND)
+            query.add(frends_frends, Q.AND)
 
         connection = User.objects.filter(query)
         return connection
