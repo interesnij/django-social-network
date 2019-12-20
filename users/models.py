@@ -441,8 +441,7 @@ class User(AbstractUser):
             _query = Q(id__in=frend_frend_ids)
             blocked = ~Q(Q(blocked_by_users__blocker_id=self.pk) | Q(user_blocks__blocked_user_id=self.pk))
             connections = ~Q(Q(connections__user_id=self.pk) | Q(targeted_connections__target_user_id=self.pk))
-            _query.add(blocked, Q.AND)
-            _query.add(connections, Q.AND)
+            
             query.add(_query, Q.AND)
         connection = User.objects.filter(query)
         return connection
