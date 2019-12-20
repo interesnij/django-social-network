@@ -441,10 +441,10 @@ class User(AbstractUser):
             _query = Q(id__in=frend_frend_ids)
             blocked = ~Q(Q(blocked_by_users__blocker_id=self.pk) | Q(user_blocks__blocked_user_id=self.pk))
             connections = ~Q(Q(connections__user_id=self.pk) | Q(targeted_connections__target_user_id=self.pk))
-            
+
             query.add(_query, Q.AND)
         connection = User.objects.filter(query)
-        return query
+        return connection
 
     def get_common_friends_of_user(self, user):
         user = User.objects.get(pk=user.pk)
