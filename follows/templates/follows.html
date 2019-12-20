@@ -1,8 +1,9 @@
 
 {% load staticfiles thumbnail %}
 
+{% if follows_list %}
 <ul class="list-group border-top border-bottom list-group-flush">
-    {% for object in object_list %}
+    {% for object in follows_list %}
     <li class="list-group-item">
         <div class="media">
             <figure>
@@ -22,3 +23,4 @@
     </li>
     {% endfor %}
 </ul>
+{% endif %}
