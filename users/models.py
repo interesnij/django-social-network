@@ -430,7 +430,7 @@ class User(AbstractUser):
 
     def get_possible_friends(self):
         frends = self.connections.values('target_user_id')
-        if not frends or not target_frends:
+        if not frends:
             return "not frends"
         query = Q()
         blocked = ~Q(Q(blocked_by_users__blocker_id=self.pk) | Q(user_blocks__blocked_user_id=self.pk))
