@@ -430,7 +430,7 @@ class User(AbstractUser):
 
     def get_possible_friends(self):
         frends = self.connections.values('target_user_id')
-        
+        query = Q(id=self.pk)
         exclusion_blocked = ~Q(Q(blocked_by_users__blocker_id=self.pk) | Q(user_blocks__blocked_user_id=self.pk))
         exclusion_connections = ~Q(Q(connections__user_id=self.pk) | Q(targeted_connections__target_user_id=self.pk))
         reported_posts_exclusion_query = ~Q(moderated_object__reports__reporter_id=self.pk)
