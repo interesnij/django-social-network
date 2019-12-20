@@ -18,7 +18,10 @@
                 {% if user == request.user %}
                 Мои фотографии
                 {% else %}
-                Друзья {{ user.first_name|gent }} {{ user.last_name|gent }}
+                Друзья
+                <a style="text-decoration:underline;" class="ajax" href="{% url 'users' pk=user.pk %}">
+                  {{ user.first_name|gent }} {{ user.last_name|gent }}
+                </a>
                 {% endif %}
             </h5>
             Фото: {{ user.count_photos }}

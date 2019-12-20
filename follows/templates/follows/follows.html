@@ -16,7 +16,11 @@
             <div class="card-header">
                 <div class="media">
                     <div class="media-body">
-                        <h5 class="mt-1">Подписчики {{ user.first_name|gent }} {{ user.last_name|gent }}</h5>
+                        <h5 class="mt-1">Подписчики
+                          <a style="text-decoration:underline;" class="ajax" href="{% url 'users' pk=user.pk %}">
+                            {{ user.first_name|gent }} {{ user.last_name|gent }}
+                          </a>
+                        </h5>
                     </div>
                 </div>
             </div>
