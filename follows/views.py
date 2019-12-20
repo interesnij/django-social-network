@@ -1,4 +1,5 @@
 from django.views import View
+from django.views.generic.base import TemplateView
 from follows.models import Follow
 from users.models import User
 from django.http import HttpResponse
