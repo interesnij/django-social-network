@@ -68,7 +68,7 @@
 </div>
 <script>
 $(document).ready(function(){
-	$('#follows_list').html('').load("/follows/list/" + "{{ user.uuid }}");
+	$('#follows_list').html('').load("/follows/list/" + "{{ user.uuid }}" + "/");
 });
 </script>
 {% endblock %}
