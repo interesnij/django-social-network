@@ -1,9 +1,8 @@
 
 {% load staticfiles thumbnail %}
 
-{{ user.get_follows }}
 <ul class="list-group">
-    {% for object in follows_list %}f
+    {% for object in follows_list %}
     <li class="list-group-item">
         <div class="media">
             <figure>
