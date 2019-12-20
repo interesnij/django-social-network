@@ -14,7 +14,6 @@ class FrendsListView(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.user=User.objects.get(uuid=self.kwargs["uuid"])
-		self.featured_users = request.user.get_possible_friends()[0:10]
 
 		if self.user == request.user:
 			self.template_name="frends/my_frends.html"
@@ -27,8 +26,10 @@ class FrendsListView(TemplateView):
 				else:
 					self.template_name = "frends/frends.html"
 					self.common_frends = self.user.get_common_friends_of_user(request.user)[0:5]
+					self.featured_users = request.user.get_possible_friends2()[0:10]
 			else:
 				self.template_name = "frends/frends.html"
+				self.featured_users = request.user.get_possible_friends2()[0:10]
 		elif request.user.is_anonymous and self.user.is_closed_profile():
 			self.template_name = "frends/close_frends.html"
 		elif request.user.is_anonymous and not self.user.is_closed_profile():

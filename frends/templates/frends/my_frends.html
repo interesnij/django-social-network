@@ -84,7 +84,7 @@
 
     <div class="col-12 col-md-4">
         <br><br><br>
-        {% if user.get_possible_friends %}
+        {% if featured_users %}
         <div class="card mb-2">
             <div class="card-header">
                 <div class="media">
@@ -98,19 +98,19 @@
             </div>
             <div class="card-body px-0 py-0">
                 <ul class="list-group border-top border-bottom list-group-flush">
-                    {% for object in user.get_possible_friends %}
+                    {% for object in featured_users %}
                     <li class="list-group-item">
                         <div class="media">
                             <figure>
-                                {% if object.get_avatar %}
-                                <img src="{{ object.get_avatar.file|thumbnail_url:'avatar' }}" style="border-radius:50px;width:50px;" alt="image">
+                                {% if object.user.get_avatar %}
+                                <img src="{{ object.user.get_avatar.file|thumbnail_url:'avatar' }}" style="border-radius:50px;width:50px;" alt="image">
                                 {% else %}
                                 <img class="thumb" src="{% static 'images/icons/person-24px.svg' %}" />
                                 {% endif %}
                             </figure>
                             <div class="media-body">
-                                <a href="{% url 'user' pk=object.pk %}" class="ajax">
-                                    <h6 class="my-0 mt-1">{{ object.get_full_name }}</h6>
+                                <a href="{% url 'user' pk=object.user.pk %}" class="ajax">
+                                    <h6 class="my-0 mt-1">{{ object.user.get_full_name }}</h6>
                                 </a>
                                 <a href="" class="small">Написать сообщение</a>
                             </div>
