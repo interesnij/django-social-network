@@ -12,7 +12,6 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 class FollowsView(TemplateView):
 	template_name = None
-	featured_users = None
 
 	def get(self,request,*args,**kwargs):
 		self.user=User.objects.get(uuid=self.kwargs["uuid"])
