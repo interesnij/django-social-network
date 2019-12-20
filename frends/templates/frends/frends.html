@@ -15,12 +15,12 @@
                   </a>
               </li>
               <li class="nav-item">
-                  <a class="nav-link" id="tabhome223-tab" data-toggle="tab" href="#tabhome223" role="tab" aria-controls="tabhome223" aria-selected="false">
+                  <a class="nav-link online" id="tabhome223-tab" data-toggle="tab" href="#tabhome223" role="tab" aria-controls="tabhome223" aria-selected="false">
                       Онлайн <span class="text-hide-xs"> друзья</span>
                   </a>
               </li>
               <li class="nav-item">
-                  <a class="nav-link" id="tabhome323-tab" data-toggle="tab" href="#tabhome323" role="tab" aria-controls="tabhome323" aria-selected="false">
+                  <a class="nav-link common" id="tabhome323-tab" data-toggle="tab" href="#tabhome323" role="tab" aria-controls="tabhome323" aria-selected="false">
                       Общие <span class="text-hide-xs"> друзья</span>
                   </a>
               </li>
@@ -140,9 +140,13 @@
 <script>
 $(document).ready(function(){
 	$('#all_frends').html('').load("/frends/all-list/" + {{ user.pk }});
-	$('#online_frends').html('').load("/frends/online/" + {{ user.pk }});
-	$('#common_frends').html('').load("/frends/common/" + {{ user.pk }});
+});
+
+$('#ajax').on('click', '.online', function() {
+		$('#online_frends').html('').load("/frends/online/" + {{ user.pk }});
+});
+$('#ajax').on('click', '.common', function() {
+		$('#common_frends').html('').load("/frends/common/" + {{ user.pk }});
 });
 </script>
-
 {% endblock %}
