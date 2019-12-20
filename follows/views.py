@@ -12,6 +12,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 class FollowsView(TemplateView):
 	template_name = None
+	featured_users = None
 
 	def get(self,request,*args,**kwargs):
 		self.user=User.objects.get(uuid=self.kwargs["uuid"])
@@ -26,10 +27,10 @@ class FollowsView(TemplateView):
 					self.template_name = "follows/close_follows.html"
 				else:
 					self.template_name = "follows/follows.html"
-					self.featured_users = request.user.get_possible_friends()
+					self.featured_users = self.request.user.get_possible_friends()[0:10]
 			else:
 				self.template_name = "follows/follows.html"
-				self.featured_users = request.user.get_possible_friends()
+				self.featured_users = self.request.user.get_possible_friends()[0:10]
 		elif request.user.is_anonymous and self.user.is_closed_profile():
 			self.template_name = "follows/close_follows.html"
 		elif request.user.is_anonymous and not self.user.is_closed_profile():
