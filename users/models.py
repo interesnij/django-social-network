@@ -428,8 +428,8 @@ class User(AbstractUser):
         connection = Connect.objects.filter(query)
         return connection
 
-    def get_possible_friends(self):
-        frends = self.connections.values('target_user_id')
+    def get_possible_friends(user):
+        frends = user.connections.values('target_user_id')
         if not frends:
             return "not frends"
         frends_ids = [target_user['target_user_id'] for target_user in frends]

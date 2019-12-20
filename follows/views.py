@@ -28,7 +28,7 @@ class FollowsView(TemplateView):
 					self.template_name = "follows/close_follows.html"
 				else:
 					self.template_name = "follows/follows.html"
-					self.featured_users = self.request_user.get_possible_friends()[0:10]
+					self.featured_users = get_possible_friends(request.user)[0:10]
 			else:
 				self.template_name = "follows/follows.html"
 				self.featured_users = self.request_user.get_possible_friends()[0:10]
