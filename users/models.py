@@ -430,8 +430,10 @@ class User(AbstractUser):
 
     def get_possible_friends(self):
         target_frends = self.connections.values('target_user_id')
+        target_frends_ids = [target_user['target_user_id'] for target_user in target_frends]
         in_frends = self.connections.values('user_id')
-        frends = target_frends + in_frends
+        in_frends_ids = [target_user['target_user_id'] for target_user in in_frends]
+        frends = target_frends_ids + in_frends_ids
         if not frends:
             return "not frends"
         frends_ids = [target_user['target_user_id'] for target_user in frends]
