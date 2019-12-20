@@ -37,7 +37,7 @@
                     <div class="media-body"><h5 class="mt-1">Возможные друзья</h5></div>
                     <a class="ajax" href="{% url 'all_common_users' pk=user.pk %}" class="">все</a>
                 </div>
-            </div>
+            </div>{{ request.user }}
             <div class="card-body px-0 py-0">
                 <ul class="list-group border-top border-bottom list-group-flush">
                     {% for object in request.user.get_possible_friends %}
