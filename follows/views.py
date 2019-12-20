@@ -20,6 +20,7 @@ class FollowsView(TemplateView):
 
 		if self.user == request.user:
 			self.template_name="follows/my_follows.html"
+			self.featured_users = request.user.get_possible_friends2()[0:10]
 		elif request.user != self.user and request.user.is_authenticated:
 			if request.user.is_blocked_with_user_with_id(user_id=self.user.id):
 				self.template_name = "follows/follows_block.html"
