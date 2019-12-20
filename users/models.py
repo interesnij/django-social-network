@@ -429,7 +429,7 @@ class User(AbstractUser):
         return connection
 
     def get_possible_friends(self):
-        frends = self.connections.values('user_id')
+        frends = self.targeted_connections.values('user_id')
         if not frends:
             return "not frends"
         frends_ids = [target_user['user_id'] for target_user in frends]
