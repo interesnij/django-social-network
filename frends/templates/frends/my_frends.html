@@ -126,7 +126,10 @@
 <script>
 $(document).ready(function(){
 	$('#all_frends').html('').load("/frends/all-list/" + {{ user.pk }});
-	$('#online_frends').html('').load("/frends/online/" + {{ user.pk }});
+});
+
+$('#ajax').on('click', '#tabhome223', function() {
+		$('#online_frends').html('').load("/frends/online/" + {{ user.pk }});
 });
 </script>
 {% endblock %}
