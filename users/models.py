@@ -451,8 +451,7 @@ class User(AbstractUser):
             t_frend_ids = [target_user['user_id'] for target_user in frends_frends]
             _query = Q(id__in=t_frend_ids)
             query.add(_query, Q.AND)
-        query.add(blocked, Q.AND)
-        query.add(connections, Q.AND)
+        
         connection = User.objects.filter(query)
         return connection
 
