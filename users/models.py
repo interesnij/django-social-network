@@ -431,9 +431,6 @@ class User(AbstractUser):
     def get_possible_friends(self):
         frends = self.connections.values('target_user_id')
         query = Q()
-        exclusion_blocked = ~Q(Q(blocked_by_users__blocker_id=self.pk) | Q(user_blocks__blocked_user_id=self.pk))
-        exclusion_connections = ~Q(Q(connections__user_id=self.pk) | Q(targeted_connections__target_user_id=self.pk))
-        reported_posts_exclusion_query = ~Q(moderated_object__reports__reporter_id=self.pk)
         frend_ids = [target_user['target_user_id'] for target_user in frends]
 
         for frend in frend_ids:
@@ -441,11 +438,15 @@ class User(AbstractUser):
             frends_frends = _user.connections.values('target_user_id')
             t_frend_ids = [t_user['target_user_id'] for t_user in frends_frends]
             _query = Q(id__in=t_frend_ids)
+            exclusion_blocked = ~Q(Q(blocked_by_users__blocker_id=self.pk) | Q(user_blocks__blocked_user_id=self.pk))
+            exclusion_connections = ~Q(Q(connections__user_id=self.pk) | Q(targeted_connections__target_user_id=self.pk))
+            reported_posts_exclusion_query = ~Q(moderated_object__reports__reporter_id=self.pk)
+            _query.add(exclusion_blocked, Q.AND)
+            _query.add(exclusion_connections, Q.AND)
+            _query.add(reported_posts_exclusion_query, Q.AND)
+
             query.add(_query, Q.AND)
 
-        query.add(exclusion_blocked, Q.AND)
-        query.add(exclusion_connections, Q.AND)
-        query.add(reported_posts_exclusion_query, Q.AND)
         connection = User.objects.filter(query)
         return connection
 
