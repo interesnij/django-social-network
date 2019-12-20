@@ -9,7 +9,7 @@
 <meta property="og:image" content="{% if user.profile.avatar %}http://xn--b1afgj5al1e.xn--p1acf/{{ user.profile.avatar }}{% else %}{% static 'images/user.png' %}{% endif %}"/>
 {% endblock %}
 {% block content %}
-{{ user.get_possible_friends }} | {{ user.get_possible_friends2 }}
+
 <div class="row user_page">
     <div class="col-lg-4 col-md-5 col-sm-12 order-1">
 
