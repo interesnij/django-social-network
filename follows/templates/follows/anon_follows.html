@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% load staticfiles humanize thumbnail liked_user %}
+{% block title %}Подписчики {{ user.first_name|gent }} {{ user.last_name|gent }}{% endblock %}
+{% block content %}
+
+<div class="row">
+    <div class="col-12 col-md-8">
+        <br><br><br>
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Поиск подписчиков" aria-label="Recipient's username">
+            <div class="input-group-append">
+                <button class="btn btn-outline-link" type="button">Искать</button>
+            </div>
+        </div>
+        <div class="card mb-2">
+            <div class="card-header">
+                <div class="media">
+                    <div class="media-body">
+                        <h5 class="mt-1">Подписчики {{ user.first_name|gent }} {{ user.last_name|gent }}</h5>
+                    </div>
+                </div>
+            </div>
+            <br><br>
+            <div class="card-body px-0 py-0">
+
+                <span id="follows_list"></span>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-4">
+        <br><br><br>
+        {% if user.get_possible_friends %}
+        <div class="card mb-2">
+            <div class="card-header">
+                <div class="media">
+                    <div class="media-body"><h5 class="mt-1">Возможные друзья</h5></div>
+                    <a class="ajax" href="{% url 'all_common_users' pk=user.pk %}" class="">все</a>
+                </div>
+            </div>
+            <div class="card-body px-0 py-0">
+                <ul class="list-group border-top border-bottom list-group-flush">
+                    {% for object in user.get_possible_friends %}
+                    <li class="list-group-item">
+                        <div class="media">
+                            <figure>
+                                {% if object.get_avatar %}
+                                <img src="{{ object.get_avatar.file|thumbnail_url:'avatar' }}" style="border-radius:50px;width:50px;" alt="image">
+                                {% else %}
+                                <img class="thumb" src="{% static 'images/icons/person-24px.svg' %}" />
+                                {% endif %}
+                            </figure>
+                            <div class="media-body">
+                                <a href="{% url 'user' pk=object.pk %}" class="ajax">
+                                    <h6 class="my-0 mt-1">{{ object.get_full_name }}</h6>
+                                </a>
+                                <a href="" class="small">Написать сообщение</a>
+                            </div>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <br><br>
+        </div>
+        {% endif %}
+    </div>
+</div>
+<script>
+$(document).ready(function(){
+	$('#follows_list').html('').load("/follows/list/" + {{ user.pk }});
+});
+</script>
+{% endblock %}

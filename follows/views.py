@@ -9,14 +9,48 @@ from rest_framework.exceptions import PermissionDenied
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
+class FollowsView(TemplateView):
+	template_name = None
+	featured_users = None
+
+	def get(self,request,*args,**kwargs):
+		self.user=User.objects.get(uuid=self.kwargs["uuid"])
+		self.featured_users = request.user.get_possible_friends()[0:10]
+
+		if self.user == request.user:
+			self.template_name="follows/my_follows.html"
+		elif request.user != self.user and request.user.is_authenticated:
+			if request.user.is_blocked_with_user_with_id(user_id=self.user.id):
+				self.template_name = "follows/follows_block.html"
+			elif self.user.is_closed_profile():
+				if not request.user.is_connected_with_user_with_id(user_id=self.user.id):
+					self.template_name = "follows/close_follows.html"
+				else:
+					self.template_name = "follows/follows.html"
+					self.common_frends = self.user.get_common_friends_of_user(request.user)[0:5]
+			else:
+				self.template_name = "follows/follows.html"
+		elif request.user.is_anonymous and self.user.is_closed_profile():
+			self.template_name = "follows/close_follows.html"
+		elif request.user.is_anonymous and not self.user.is_closed_profile():
+			self.template_name = "follows/anon_follows.html"
+		return super(FollowsView,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context=super(FollowsView,self).get_context_data(**kwargs)
+		context['user'] = self.user
+		context['featured_users'] = self.featured_users
+		return context
+
+
 class FollowsListView(View):
     def get(self, request, *args, **kwargs):
         context = {}
         self.user=User.objects.get(pk=self.kwargs["pk"])
-        if self.user != self.request.user and self.request.user.is_authenticated:
-            check_is_not_blocked_with_user_with_id(user=self.request.user, user_id=self.user.id)
+        if self.user != request.user and request.user.is_authenticated:
+            check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
             if self.user.is_closed_profile():
-                check_is_connected_with_user_with_id(user=self.request.user, user_id=self.user.id)
+                check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
             follows_list=self.user.get_follows()
             current_page = Paginator(follows_list, 1)
         elif request.user.is_anonymous and self.user.is_closed_profile():
@@ -28,7 +62,6 @@ class FollowsListView(View):
             follows_list=self.user.get_follows()
             current_page = Paginator(follows_list, 1)
         context['user'] = self.user
-        context['request_user'] = request.user
         page = request.GET.get('page')
         try:
             context['follows_list'] = current_page.page(page)

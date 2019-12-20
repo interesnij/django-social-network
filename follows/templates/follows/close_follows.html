@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% load staticfiles humanize thumbnail liked_user %}
+{% block title %}Подписчики {{ user.first_name|gent }} {{ user.last_name|gent }}{% endblock %}
+{% block content %}
+
+<div class="row">
+    <div class="col-12 col-md-8">
+        <br><br><br>
+
+        <div class="card mb-4" style="align-items: center;justify-content:center;">
+          <div class="card-body">
+          <svg class="thumb_big svg_default" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+          </div>
+          <h6 style="margin-bottom: 20px;margin: 20px;">Это закрытый профиль. Только его друзья могут видеть его информацию.</h6>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-4">
+        <br><br><br>
+        {% if user.get_possible_friends %}
+        <div class="card mb-2">
+            <div class="card-header">
+                <div class="media">
+                    <div class="media-body"><h5 class="mt-1">Возможные друзья</h5></div>
+                    <a class="ajax" href="{% url 'all_common_users' pk=user.pk %}" class="">все</a>
+                </div>
+            </div>
+            <div class="card-body px-0 py-0">
+                <ul class="list-group border-top border-bottom list-group-flush">
+                    {% for object in user.get_possible_friends %}
+                    <li class="list-group-item">
+                        <div class="media">
+                            <figure>
+                                {% if object.get_avatar %}
+                                <img src="{{ object.get_avatar.file|thumbnail_url:'avatar' }}" style="border-radius:50px;width:50px;" alt="image">
+                                {% else %}
+                                <img class="thumb" src="{% static 'images/icons/person-24px.svg' %}" />
+                                {% endif %}
+                            </figure>
+                            <div class="media-body">
+                                <a href="{% url 'user' pk=object.pk %}" class="ajax">
+                                    <h6 class="my-0 mt-1">{{ object.get_full_name }}</h6>
+                                </a>
+                                <a href="" class="small">Написать сообщение</a>
+                            </div>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <br><br>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}
