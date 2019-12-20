@@ -57,22 +57,6 @@
                                   <span id="online_frends"></span>
 
                                 </div>
-
-                                <div class="tab-pane fade" id="tabhome323" role="tabpanel" aria-labelledby="tabhome323-tab">
-                                  <div class="media-body">
-                                      <h5 class="mt-1">Общие друзья</h5>
-                                  </div>
-                                  <br>
-                                  <div class="input-group mb-3">
-                                      <input type="text" class="form-control" placeholder="Поиск по общим друзьям" aria-label="Recipient's username">
-                                      <div class="input-group-append">
-                                          <button class="btn btn-outline-link" type="button">Искать</button>
-                                      </div>
-                                  </div>
-
-                                  <span id="common_frends"></span>
-
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -129,7 +113,7 @@ $(document).ready(function(){
 });
 
 $('#ajax').on('click', '.online', function() {
-		$('.online').html('').load("/frends/online/" + {{ user.pk }});
+		$('.online_frends').html('').load("/frends/online/" + {{ user.pk }});
 });
 </script>
 {% endblock %}
