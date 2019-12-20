@@ -24,11 +24,10 @@
             <div class="card-body px-0 py-0">
 
                 <span id="follows_list"></span>
-
+                {{ user.get_follows }}
             </div>
         </div>
     </div>
-{{ user.get_follows }}
     <div class="col-12 col-md-4">
         <br><br><br>
         {% if user.get_possible_friends %}
