@@ -113,7 +113,7 @@ $(document).ready(function(){
 });
 
 $('#ajax').on('click', '.online', function() {
-		$('.online_frends').html('').load("/frends/online/" + {{ user.pk }});
+		$('#online_frends').html('').load("/frends/online/" + {{ user.pk }});
 });
 </script>
 {% endblock %}
