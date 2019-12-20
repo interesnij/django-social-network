@@ -69,7 +69,7 @@
 </div>
 <script>
 $(document).ready(function(){
-	$('#follows_list').html('').load("/follows/list/" + {{ user.pk }});
+	$('#follows_list').html('').load("/follows/list/" + {{ user.uuid }});
 });
 </script>
 {% endblock %}
