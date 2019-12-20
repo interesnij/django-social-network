@@ -24,18 +24,18 @@
             <div class="card-body px-0 py-0">
                 <ul class="list-group common-users-container ">
                     {% for object in object_list %}
-                    <li class="list-group-item infinite-item">
+                    <li class="list-group-item">
                         <div class="media">
                             <figure>
-                              {% if object.get_avatar %}
-                                <img src="{{ object.get_avatar.file|thumbnail_url:'avatar' }}" style="border-radius:50px;width:50px;" alt="image">
-                              {% else %}
+                                {% if object.user.get_avatar %}
+                                <img src="{{ object.user.get_avatar.file|thumbnail_url:'avatar' }}" style="border-radius:50px;width:50px;" alt="image">
+                                {% else %}
                                 <img class="thumb" src="{% static 'images/icons/person-24px.svg' %}" />
-                              {% endif %}
+                                {% endif %}
                             </figure>
                             <div class="media-body">
-                                <a href="{% url 'user' pk=object.pk %}" class="ajax">
-                                    <h6 class="my-0 mt-1">{{ object.get_full_name }}</h6>
+                                <a href="{% url 'user' pk=object.user.pk %}" class="ajax">
+                                    <h6 class="my-0 mt-1">{{ object.user.get_full_name }}</h6>
                                 </a>
                                 <a href="" class="small">Написать сообщение</a>
                             </div>
