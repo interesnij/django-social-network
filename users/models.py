@@ -445,7 +445,7 @@ class User(AbstractUser):
             _query.add(connections, Q.AND)
             query.add(_query, Q.AND)
         connection = User.objects.filter(query)
-        return connection
+        return query
 
     def get_common_friends_of_user(self, user):
         user = User.objects.get(pk=user.pk)
