@@ -1,7 +1,7 @@
 
 {% load staticfiles thumbnail %}
 
-
+{{ user.get_follows }}
 <ul class="list-group">
     {% for object in follows_list %}f
     <li class="list-group-item">
