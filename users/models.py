@@ -410,10 +410,10 @@ class User(AbstractUser):
         return query
 
     def get_possible_friends2(self):
-        frends = self.connections.values('user_id')
+        frends = self.connections.values('target_user_id')
         if not frends:
             return "not frends"
-        frends_ids = [target_user['user_id'] for target_user in frends]
+        frends_ids = [target_user['target_user_id'] for target_user in frends]
         query = Q()
         for frend in frends_ids:
             user = User.objects.get(pk=frend)
