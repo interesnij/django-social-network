@@ -40,12 +40,12 @@ class ItemsCommunity(View):
         except EmptyPage:
             context['items_list'] = current_page.page(current_page.num_pages)
 
-        return render_to_response('detail/list.html', context)
+        return render_to_response('detail_sections/list.html', context)
 
 
 class ItemCommunity(TemplateView):
     model=Item
-    template_name="detail/item.html"
+    template_name="detail_sections/item.html"
 
     def get(self,request,*args,**kwargs):
         self.community=Community.objects.get(uuid=self.kwargs["uuid"])
