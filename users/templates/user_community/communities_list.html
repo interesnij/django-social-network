@@ -34,6 +34,12 @@
     </div>
 </ul>
 
+<script>
+  var follows_infinite = new Waypoint.Infinite({
+      element: $('.follows-container')[0], onBeforePageLoad: function() { $('.follows_load').show(); }, onAfterPageLoad: function($items) { $('.follows_load').hide(); }
+  });
+</script>
+
 {% else %}
 <div class="card mb-4 post_empty" style="align-items: center;justify-content:center;">
   <div class="card-body">
