@@ -42,21 +42,11 @@ class UserCommunitiesList(View):
 		return render_to_response(template, context)
 
 
-class AllUsersList(ListView):
-    template_name = "all_users_list.html"
-    model = User
-    paginate_by = 2
-
-    def get_queryset(self):
-        users = User.objects.only('pk')
-        return users
-
-
 class AllUsersList(View):
 	def get(self, request, *args, **kwargs):
 		context = {}
 		users_list = User.objects.only('pk')
-		current_page = Paginator(users_list, 12)
+		current_page = Paginator(users_list, 1)
 		page = request.GET.get('page')
 
 		try:
