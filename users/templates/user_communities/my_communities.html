@@ -70,7 +70,7 @@
     })
 
     $(document).ready(function(){
-    	$('#load_cat_list').html('').load("/users/detail/communities" + "{{ user.uuid }}" + "/");
+    	$('#load_cat_list').html('').load("/users/detail/communities/" + "{{ user.uuid }}" + "/");
     });
 </script>
 {% endblock %}
