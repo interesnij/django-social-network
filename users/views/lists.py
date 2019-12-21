@@ -32,6 +32,7 @@ class UserCommunitiesList(View):
 			template = 'user_community/communities_list.html'
 			current_page = Paginator(communities_list, 1)
 		page = request.GET.get('page')
+		context['user'] = self.user
 		try:
 			context['communities_list'] = current_page.page(page)
 		except PageNotAnInteger:
