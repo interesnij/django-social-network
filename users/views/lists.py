@@ -9,11 +9,11 @@ from django.shortcuts import render_to_response
 from rest_framework.exceptions import PermissionDenied
 
 
-class UserCommunities(View):
+class UserCommunitiesList(View):
 	def get(self, request, *args, **kwargs):
 		context = {}
 		template = None
-		self.user=User.objects.get(pk=self.kwargs["pk"])
+		self.user=User.objects.get(uuid=self.kwargs["uuid"])
 		if self.user != request.user and request.user.is_authenticated:
 			check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
 			if self.user.is_closed_profile():
