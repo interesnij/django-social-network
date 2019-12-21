@@ -4,6 +4,7 @@ from common.checkers import check_is_not_blocked_with_user_with_id, check_is_con
 from main.models import Item
 from django.shortcuts import render_to_response
 from rest_framework.exceptions import PermissionDenied
+from communities.models import Community
 
 
 class UserItemView(TemplateView):
