@@ -4,7 +4,7 @@
 
 <ul class="list-group communities_container">
     {% for object in communities_list %}
-    <li class="list-group-item">
+    <li class="list-group-item infinite-item">
         <div class="media">
             <a href="{% url 'community_detail' pk=object.pk %}" class="ajax">
                 <figure>
@@ -35,7 +35,7 @@
 </ul>
 
 <script>
-  var communities_infinite = new Waypoint.Infinite({
+  var infinite = new Waypoint.Infinite({
       element: $('.communities_container')[0], onBeforePageLoad: function() { $('.communities_load').show(); }, onAfterPageLoad: function($items) { $('.communities_load').hide(); }
   });
 </script>
