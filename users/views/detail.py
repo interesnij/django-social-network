@@ -54,24 +54,24 @@ class UserCommunities(TemplateView):
     def get(self,request,*args,**kwargs):
         self.user=User.objects.get(pk=self.kwargs["pk"])
         if self.user == request.user:
-            self.template_name = "user_communities/my_communities.html"
+            self.template_name = "user_community/my_communities.html"
 
         elif request.user != self.user and request.user.is_authenticated:
             if request.user.is_blocked_with_user_with_id(user_id=self.user.id):
-                self.template_name = "user_communities/block_communities.html"
+                self.template_name = "user_community/block_communities.html"
             elif self.user.is_closed_profile():
                 if not request.user.is_connected_with_user_with_id(user_id=self.user.id):
-                    self.template_name = "user_communities/close_communities.html"
+                    self.template_name = "user_community/close_communities.html"
                 else:
-                    self.template_name = "user_communities/communities.html"
+                    self.template_name = "user_community/communities.html"
             else:
-                self.template_name = "user_communities/communities.html"
+                self.template_name = "user_community/communities.html"
 
         elif request.user.is_anonymous and self.user.is_closed_profile():
-            self.template_name = "user_communities/close_communities.html"
+            self.template_name = "user_community/close_communities.html"
 
         elif request.user.is_anonymous and not self.user.is_closed_profile():
-            self.template_name = "user_communities/anon_communities.html"
+            self.template_name = "user_community/anon_communities.html"
         return super(UserCommunities,self).get(request,*args,**kwargs)
 
     def get_context_data(self, **kwargs):
