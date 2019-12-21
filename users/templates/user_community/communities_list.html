@@ -2,7 +2,7 @@
 
 {% if communities_list %}
 
-<ul class="list-group">
+<ul class="list-group communities_container">
     {% for object in communities_list %}
     <li class="list-group-item">
         <div class="media">
@@ -35,8 +35,8 @@
 </ul>
 
 <script>
-  var follows_infinite = new Waypoint.Infinite({
-      element: $('.follows-container')[0], onBeforePageLoad: function() { $('.follows_load').show(); }, onAfterPageLoad: function($items) { $('.follows_load').hide(); }
+  var communities_infinite = new Waypoint.Infinite({
+      element: $('.communities_container')[0], onBeforePageLoad: function() { $('.follows_load').show(); }, onAfterPageLoad: function($items) { $('.follows_load').hide(); }
   });
 </script>
 
