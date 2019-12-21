@@ -67,6 +67,7 @@ class AllPossibleUsersList(View):
 			page = request.GET.get('page')
 		else:
 			possible_list = None
+		context['request_user'] = request.user
 
 		try:
 			context['possible_list'] = current_page.page(page)
