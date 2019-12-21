@@ -1,8 +1,8 @@
 {% load staticfiles thumbnail %}
 
-<ul class="list-group possible-users-container ">
+<ul class="list-group possible-container ">
     {% for object in possible_list %}
-    <li class="list-group-item">
+    <li class="list-group-item infinite-item">
         <div class="media">
             <figure>
                 {% if object.get_avatar %}
@@ -31,6 +31,6 @@
 
 <script>
   var infinite = new Waypoint.Infinite({
-    element: $('.possible-users-container')[0], onBeforePageLoad: function() { $('.possible_load').show(); }, onAfterPageLoad: function($items) { $('.possible_load').hide(); }
+    element: $('.possible-container')[0], onBeforePageLoad: function() { $('.possible_load').show(); }, onAfterPageLoad: function($items) { $('.possible_load').hide(); }
   });
 </script>
