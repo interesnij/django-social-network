@@ -12,5 +12,5 @@ urlpatterns = [
     url(r'^(?P<pk>\d+)/$', ProfileUserView.as_view(), name='user'),
     url(r'^(?P<pk>\d+)/communities/$', UserCommunities.as_view(), name='communities'),
     url(r'^all-users/$', AllUsers.as_view(), name='all_users'),
-    url(r'^(?P<pk>\d+)/possible-users/$', AllPossibleUsers.as_view(), name='all_possible_users'),
+    url(r'^(?P<pk>\d+)/possible-users/$', AllPossibleUsers.as_view(), name='all_common_users'),
 ]
