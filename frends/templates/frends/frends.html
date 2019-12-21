@@ -143,10 +143,12 @@ $(document).ready(function(){
 });
 
 $('#ajax').on('click', '.online', function() {
-		$('#online_frends').html('').load("/frends/online/" + {{ user.pk }});
+  $('#tabhome223-tab').removeClass('online');
+	$('#online_frends').html('').load("/frends/online/" + {{ user.pk }});
 });
 $('#ajax').on('click', '.common', function() {
-		$('#common_frends').html('').load("/frends/common/" + {{ user.pk }});
+  $('#tabhome323-tab').removeClass('common');
+	$('#common_frends').html('').load("/frends/common/" + {{ user.pk }});
 });
 </script>
 {% endblock %}
