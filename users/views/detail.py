@@ -49,10 +49,14 @@ class AllUsers(TemplateView):
 
 
 class AllPossibleUsers(TemplateView):
-    template_name = "main/auth.html"
+    template_name = None
 
-    if request.user.is_authenticated:
-        self.template_name = "all_possible_users.html"
+    def get(self,request,*args,**kwargs):
+        if request.user.is_authenticated:
+            self.template_name = "all_possible_users.html"
+        else:
+            self.template_name = "main/auth.html"
+        return super(AllPossibleUsers,self).get(request,*args,**kwargs)
 
 
 class UserCommunities(TemplateView):
