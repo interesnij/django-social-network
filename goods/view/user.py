@@ -16,8 +16,26 @@ class UserGoods(TemplateView):
     template_name = "good_user/goods.html"
 
     def get(self,request,*args,**kwargs):
-        self.user = User.objects.get(pk=self.kwargs["pk"])
-        return super(UserGoods,self).get(request,*args,**kwargs)
+		self.user=User.objects.get(pk=self.kwargs["pk"])
+
+		if self.user == request.user:
+			self.template_name="good_user/good/my_goods.html"
+		elif request.user != self.user and request.user.is_authenticated:
+			if request.user.is_blocked_with_user_with_id(user_id=self.user.id):
+				self.template_name = "good_user/good/block_goods.html"
+			elif self.user.is_closed_profile():
+				if not request.user.is_connected_with_user_with_id(user_id=self.user.id):
+					self.template_name = "good_user/good/close_goods.html"
+				else:
+					self.template_name = "good_user/good/goods.html"
+			else:
+				self.template_name = "good_user/good/goods.html"
+				self.featured_users = request.user.get_possible_friends()[0:10]
+		elif request.user.is_anonymous and self.user.is_closed_profile():
+			self.template_name = "good_user/good/close_goods.html"
+		elif request.user.is_anonymous and not self.user.is_closed_profile():
+			self.template_name = "good_user/good/anon_goods.html"
+		return super(UserGoods,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context=super(UserGoods,self).get_context_data(**kwargs)

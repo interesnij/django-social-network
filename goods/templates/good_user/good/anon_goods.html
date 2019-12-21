@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load staticfiles liked_user %}
+{% block title %}Товары {{ user.first_name|gent }} {{ user.last_name|gent }}{% endblock %}
+{% block content %}
+
+<div class="container-fluid" style="margin-top:30px">
+    <div class="row">
+      <div class="col-12 col-md-8">
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Поиск по товарам" aria-label="Recipient's username">
+            <div class="input-group-append">
+                <button class="btn btn-outline-link" type="button">Искать</button>
+            </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+<div class="container mt-4 main-container">
+    <div id="goods_load"></div>
+</div>
+
+<div class="card mb-4 good_fullscreen" style="display:none">
+    <div id="good_loader" style=""></div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $('#goods_load').html('').load("/goods/user/goods/" + {{ user.pk }});
+    });
+</script>
+
+{% endblock %}
