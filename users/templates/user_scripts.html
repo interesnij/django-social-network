@@ -8,7 +8,7 @@ $('.user_page').on('click', '.avatar_detail', function() {
 		$('#photo_loader').html('').load("/gallery/load/avatar_detail/" + photo_id + "/" + user_uuid + "/")
 		$('.photo_fullscreen').show();
 });
-$('#ajax').on('click', '.photo_fullscreen_hide', function() { $('.photo_fullscreen').hide(); $('#photo_loader').empty(); });
+$('.photo_fullscreen_hide').on('click', function() { $('.photo_fullscreen').hide(); $('#photo_loader').empty(); });
 </script>
 
 {% if request.user == user and  request.user.is_authenticated %}
