@@ -63,7 +63,7 @@ class AllPossibleUsersList(View):
 		context = {}
 		if request.user.is_authenticated:
 			possible_list = request.user.get_possible_friends()
-			current_page = Paginator(possible_list, 1)
+			current_page = Paginator(possible_list, 12)
 			page = request.GET.get('page')
 		else:
 			possible_list = None

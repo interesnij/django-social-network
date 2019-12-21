@@ -1,7 +1,5 @@
 {% load staticfiles thumbnail %}
 
-<br>
-
 {% if frends_list %}
     <ul class="frends-container list-group">
       {% for object in frends_list %}
@@ -40,6 +38,7 @@
   <h6 style="margin-bottom: 20px;"> Друзей нет...</h6>
 </div>
 {% endif %}
+
 <script>
   var frends_infinite = new Waypoint.Infinite({
       element: $('.frends-container')[0], onBeforePageLoad: function() { $('.load').show(); }, onAfterPageLoad: function($items) { $('.load').hide(); }
