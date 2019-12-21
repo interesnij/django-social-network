@@ -114,7 +114,7 @@ $(document).ready(function(){
 
 $('#ajax').on('click', '.online', function() {
   var online = $('#tabhome223-tab');
-  online.removeClass('online');
+  $('#tabhome223-tab').removeClass('online');
 	$('#online_frends').html('').load("/frends/online/" + {{ user.pk }})
 });
 </script>
