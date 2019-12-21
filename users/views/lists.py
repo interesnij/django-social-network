@@ -46,7 +46,7 @@ class AllUsersList(View):
 	def get(self, request, *args, **kwargs):
 		context = {}
 		users_list = User.objects.only('pk')
-		current_page = Paginator(users_list, 1)
+		current_page = Paginator(users_list, 12)
 		page = request.GET.get('page')
 
 		try:
@@ -63,7 +63,7 @@ class AllPossibleUsersList(View):
 		context = {}
 		if request.user.is_authenticated:
 			possible_list = request.user.get_possible_friends()
-			current_page = Paginator(possible_list, 12)
+			current_page = Paginator(possible_list, 1)
 			page = request.GET.get('page')
 		else:
 			possible_list = None
