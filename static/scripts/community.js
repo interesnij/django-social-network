@@ -1,3 +1,4 @@
+$('.article_fullscreen_hide').on('click', function() {$('.article_fullscreen').hide(); $('#article_loader').empty();});
 
   $('#ajax').on('click', '.member_create', function() {
     var member_create = $(this);
