@@ -140,9 +140,11 @@
 <script>
 $(document).ready(function(){
 	$('#all_frends').html('').load("/frends/all-list/" + {{ user.pk }});
+});
+$('#ajax').on('click', '.online', function() {
+  $('#tabhome223-tab').removeClass('online');
 	$('#online_frends').html('').load("/frends/online/" + {{ user.pk }});
 });
-
 </script>
 
 {% endblock %}
