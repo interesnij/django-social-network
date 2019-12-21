@@ -11,11 +11,11 @@
                     <div>
                         <div class="swiper-wrapper">
                             <div class="swiper-slide text-center">
-                                {% if object.image %}
+                              {% if object.image %}
                                 <img style="width:100%" src="{{ object.image.url }}" alt="">
-                                {% else %}
+                              {% else %}
                                 <img style="width:100%" src="{% static 'images/no-image.jpg' %}" />
-                                {% endif %}
+                              {% endif %}
                             </div>
                         </div>
                     </div>

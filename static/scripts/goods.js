@@ -1,5 +1,5 @@
 
-$('.infinite-container').on('click', '.good_detail', function() {
+$('.goods-container').on('click', '.good_detail', function() {
     var good = $(this);
     var good_id = good.data("id");
     var user_uuid = good.data("uuid");
