@@ -48,6 +48,38 @@ class AllUsers(TemplateView):
     template_name = "all_users.html"
 
 
+class UserCommunities(TemplateView):
+    template_name = None
+
+    def get(self,request,*args,**kwargs):
+        self.user=User.objects.get(pk=self.kwargs["pk"])
+        if self.user == request.user:
+            self.template_name = "user_communities/my_communities.html"
+
+        elif request.user != self.user and request.user.is_authenticated:
+            if request.user.is_blocked_with_user_with_id(user_id=self.user.id):
+                self.template_name = "user_communities/block_communities.html"
+            elif self.user.is_closed_profile():
+                if not request.user.is_connected_with_user_with_id(user_id=self.user.id):
+                    self.template_name = "user_communities/close_communities.html"
+                else:
+                    self.template_name = "user_communities/communities.html"
+            else:
+                self.template_name = "user_communities/communities.html"
+
+        elif request.user.is_anonymous and self.user.is_closed_profile():
+            self.template_name = "user_communities/close_communities.html"
+
+        elif request.user.is_anonymous and not self.user.is_closed_profile():
+            self.template_name = "user_communities/anon_communities.html"
+        return super(UserCommunities,self).get(request,*args,**kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(UserCommunities, self).get_context_data(**kwargs)
+        context['user'] = self.user
+        return context
+
+
 class ProfileUserView(TemplateView):
     template_name = None
     common_frends = None

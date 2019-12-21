@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load staticfiles thumbnail liked_user %}
+{% block title %}Сообщества {{ user.first_name|gent }} {{ user.last_name|gent }}{% endblock %}
+{% block content %}
+
+<div class="row">
+    <div class="col-12 col-md-8">
+        <br><br><br>
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Поиск сообществ" aria-label="Recipient's username">
+            <div class="input-group-append">
+                <button class="btn btn-outline-link" type="button">Искать</button>
+            </div>
+        </div>
+
+        <div class="card mb-2">
+            <div class="card-header">
+                <div class="media">
+                    <div class="media-body"><h5 class="mt-1">Сообщества {{ user.first_name|gent }} {{ user.last_name|gent }}</h5></div>
+                </div>
+            </div>
+            <br><br>
+            <div class="card-body px-0 py-0">
+
+                <span id="load_cat_list"></span>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-4">
+        <br><br><br>
+        <div class="card mb-2">
+                    <div class="media-body">
+                      <a href="{% url 'all_communities' %}" class="ajax">
+                        <h5 class="mt-1">Все группы</h5>
+                      </a>
+            </div>
+            <br><br>
+        </div>
+    </div>
+</div>
+{% endblock %}

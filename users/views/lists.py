@@ -9,15 +9,38 @@ from django.shortcuts import render_to_response
 from rest_framework.exceptions import PermissionDenied
 
 
-class CommunitiesView(ListView):
-	template_name = "communities.html"
-	model = Community
-	paginate_by = 15
+class UserCommunities(View):
+	def get(self, request, *args, **kwargs):
+        context = {}
+        template = None
+        self.user=User.objects.get(pk=self.kwargs["pk"])
+        if self.user != request.user and request.user.is_authenticated:
+            check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
+            if self.user.is_closed_profile():
+                check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
+            communities_list = Community.objects.filter(memberships__user__id=self.user.pk).order_by('-created')
+            template = 'user_communities/communities_list.html'
+            current_page = Paginator(communities_list, 10)
+        elif request.user.is_anonymous and self.user.is_closed_profile():
+            raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
+        elif request.user.is_anonymous and not self.user.is_closed_profile():
+            communities_list = Community.objects.filter(memberships__user__id=self.user.pk).order_by('-created')
+            template = 'user_communities/communities_list.html'
+            current_page = Paginator(communities_list, 10)
+        elif self.user == request.user:
+            communities_list = Community.objects.filter(memberships__user__id=self.user.pk).order_by('-created')
+            template = 'user_communities/communities_list.html'
+            current_page = Paginator(communities_list, 10)
+        context['user'] = self.user
+        page = request.GET.get('page')
+        try:
+            context['communities_list'] = current_page.page(page)
+        except PageNotAnInteger:
+            context['communities_list'] = current_page.page(1)
+        except EmptyPage:
+            context['communities_list'] = current_page.page(current_page.num_pages)
 
-	def get_queryset(self):
-		self.user = User.objects.get(pk=self.kwargs["pk"])
-		groups = Community.objects.filter(memberships__user__id=self.user.pk).order_by('-created')
-		return groups
+        return render_to_response(template, context)
 
 
 class AllUsersList(ListView):

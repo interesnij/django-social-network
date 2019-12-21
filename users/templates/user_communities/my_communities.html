@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% load staticfiles thumbnail %}
+{% block title %}Мои сообщества{% endblock %}
+{% block content %}
+
+<div class="row">
+    <div class="col-12 col-md-8">
+        <br><br><br>
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Поиск сообществ" aria-label="Recipient's username">
+            <div class="input-group-append">
+                <button class="btn btn-outline-link" type="button">Искать</button>
+            </div>
+        </div>
+
+        <div class="card mb-2">
+            <div class="card-header">
+                <div class="media"><div class="media-body"><h5 class="mt-1">Мои группы</h5></div></div>
+            </div>
+            <br><br>
+            <div class="card-body px-0 py-0">
+
+                <span id="load_cat_list"></span>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-4">
+        <br><br><br>
+          <button id="community_add" class="btn btn-outline-success" style="margin-bottom:15px;width:100%;" type="button">Создать сообщество</button>
+        <div class="card mb-2">
+            <div class="card-header">
+                <div class="media">
+                    <div class="media-body"><h5 class="mt-1">Популярные группы</h5></div>
+                </div>
+            </div>
+
+        </div>
+        <br><br><br>
+        <div class="card mb-2">
+            <div class="media-body">
+                <a href="{% url 'all_communities' %}" class="ajax"><h5 class="mt-1">Все группы</h5></a>
+            </div>
+            <br><br>
+        </div>
+    </div>
+</div>
+
+<div class="card mb-4 community_fullscreen" style="display:none">
+    <span class="community_fullscreen_hide">
+        <img style="width:35px" src="{% static 'images/icons/close-24px.svg' %}" />
+    </span>
+    <div id="community_loader" style="margin-top:30px">
+
+    </div>
+</div>
+<script>
+
+</script>
+<script>
+    $('.community_fullscreen_hide').on('click', function() {
+        $('.community_fullscreen').hide();
+        $('#community_loader').empty();
+    });
+
+    $("#community_add").click(function() {
+        $('#community_loader').html('').load("/communities/add/");
+        $('.community_fullscreen').show();
+    })
+
+    $(document).ready(function(){
+    	$('#load_cat_list').html('').load("/users/detail/communities" + "{{ user.uuid }}" + "/");
+    });
+</script>
+{% endblock %}
