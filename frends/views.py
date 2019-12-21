@@ -46,7 +46,7 @@ class FrendsListView(TemplateView):
 class AllFrendsListView(View):
     def get(self, request, *args, **kwargs):
         context = {}
-        self.user=User.objects.get(pk=self.kwargs["pk"])
+        self.user=User.objects.get(uuid=self.kwargs["uuid"])
         if self.user != request.user and request.user.is_authenticated:
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
             if self.user.is_closed_profile():
@@ -76,7 +76,7 @@ class AllFrendsListView(View):
 class OnlineFrendsListView(View):
     def get(self, request, *args, **kwargs):
         context = {}
-        self.user=User.objects.get(pk=self.kwargs["pk"])
+        self.user=User.objects.get(uuid=self.kwargs["uuid"])
         if self.user != request.user and request.user.is_authenticated:
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
             if self.user.is_closed_profile():
@@ -106,7 +106,7 @@ class OnlineFrendsListView(View):
 class CommonFrendsListView(View):
     def get(self, request, *args, **kwargs):
         context = {}
-        self.user=User.objects.get(pk=self.kwargs["pk"])
+        self.user=User.objects.get(uuid=self.kwargs["uuid"])
         if self.user != request.user and request.user.is_authenticated:
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
             if self.user.is_closed_profile():

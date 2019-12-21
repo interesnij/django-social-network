@@ -28,7 +28,7 @@ class UserGalleryView(TemplateView):
 	template_name = None
 
 	def get(self,request,*args,**kwargs):
-		self.user = User.objects.get(uuid=self.kwargs["uuid"])
+		self.user = User.objects.get(pk=self.kwargs["pk"])
 
 		if self.user == request.user:
 			self.template_name="photo_user/gallery/my_gallery.html"

@@ -139,16 +139,16 @@
 
 <script>
 $(document).ready(function(){
-	$('#all_frends').html('').load("/frends/all-list/" + {{ user.pk }});
+	$('#all_frends').html('').load("/frends/all-list/" + "{{ user.uuid }}");
 });
 
 $('#ajax').on('click', '.online', function() {
   $('#tabhome223-tab').removeClass('online');
-	$('#online_frends').html('').load("/frends/online/" + {{ user.pk }});
+	$('#online_frends').html('').load("/frends/online/" + "{{ user.uuid }}");
 });
 $('#ajax').on('click', '.common', function() {
   $('#tabhome323-tab').removeClass('common');
-	$('#common_frends').html('').load("/frends/common/" + {{ user.pk }});
+	$('#common_frends').html('').load("/frends/common/" + "{{ user.uuid }}");
 });
 </script>
 {% endblock %}

@@ -14,7 +14,7 @@ class FollowsView(TemplateView):
 	template_name = None
 
 	def get(self,request,*args,**kwargs):
-		self.user=User.objects.get(uuid=self.kwargs["uuid"])
+		self.user=User.objects.get(pk=self.kwargs["pk"])
 		self.featured_users = None
 
 		if self.user == request.user:
