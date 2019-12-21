@@ -55,7 +55,7 @@ class AllUsersList(ListView):
 class AllCommonUsers(ListView):
     template_name = "all_possible_users.html"
     model = User
-    paginate_by = 12
+    paginate_by = 1
 
     def get_queryset(self):
         user = User.objects.get(pk=self.kwargs["pk"])
