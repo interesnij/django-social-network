@@ -113,10 +113,9 @@ $(document).ready(function(){
 });
 
 $('#ajax').on('click', '.online', function() {
-  var online = $('#online_frends');
-  if (online){
-		$('#online_frends').html('').load("/frends/online/" + {{ user.pk }})
-  };
+  var online = $('#tabhome223-tab');
+  online.removeClass('online');
+	$('#online_frends').html('').load("/frends/online/" + {{ user.pk }})
 });
 </script>
 {% endblock %}
