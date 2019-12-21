@@ -12,11 +12,10 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 class FollowsView(TemplateView):
 	template_name = None
-	featured_users = None
 
 	def get(self,request,*args,**kwargs):
 		self.user=User.objects.get(uuid=self.kwargs["uuid"])
-		self.request_user = request.user
+		self.featured_users = None
 
 		if self.user == request.user:
 			self.template_name="follows/my_follows.html"

@@ -113,7 +113,9 @@ $(document).ready(function(){
 });
 
 $('#ajax').on('click', '.online', function() {
+  if $('#online_frends').empty(){
 		$('#online_frends').html('').load("/frends/online/" + {{ user.pk }});
+  }
 });
 </script>
 {% endblock %}
