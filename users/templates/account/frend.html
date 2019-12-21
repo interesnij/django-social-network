@@ -57,12 +57,7 @@ $(document).ready(function(){
     </span>
     <div id="article_loader" style="margin-top:30px"></div>
 </div>
-<div class="card mb-4 photo_fullscreen" style="display:none">
-    <span class="photo_fullscreen_hide">
-        <img style="width:35px" src="{% static 'images/icons/close-24px.svg' %}" />
-    </span>
-    <div id="photo_loader" style="margin-top:30px;position:relative;"></div>
-</div>
+
 <script>
 $('.user_page').on('click', '.avatar_detail', function() {
     var photo = $(this); var photo_id = photo.data("id"); var user_uuid = photo.data("uuid");
