@@ -48,6 +48,13 @@ class AllUsers(TemplateView):
     template_name = "all_users.html"
 
 
+class AllPossibleUsers(TemplateView):
+    template_name = "main/auth.html"
+
+    if request.user.is_authenticated:
+        self.template_name = "all_possible_users.html"
+
+
 class UserCommunities(TemplateView):
     template_name = None
 

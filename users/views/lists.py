@@ -55,9 +55,8 @@ class AllUsersList(ListView):
 class AllUsersList(View):
 	def get(self, request, *args, **kwargs):
 		context = {}
-		users = User.objects.only('pk')
 		users_list = User.objects.only('pk')
-		current_page = Paginator(users_list, 1)
+		current_page = Paginator(users_list, 12)
 		page = request.GET.get('page')
 
 		try:
@@ -69,16 +68,23 @@ class AllUsersList(View):
 		return render_to_response('all_users_list.html', context)
 
 
-class AllCommonUsers(ListView):
-    template_name = "all_possible_users.html"
-    model = User
-    paginate_by = 1
+class AllPossibleUsersList(View):
+	def get(self, request, *args, **kwargs):
+		context = {}
+		if request.user.is_authenticated:
+			possible_list = request.user.get_possible_friends()
+			current_page = Paginator(possible_list, 12)
+			page = request.GET.get('page')
+		else:
+			possible_list = None
 
-    def get_queryset(self):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if user.is_authenticated:
-            common_list = user.get_possible_friends()
-        return common_list
+		try:
+			context['possible_list'] = current_page.page(page)
+		except PageNotAnInteger:
+			context['possible_list'] = current_page.page(1)
+		except EmptyPage:
+			context['possible_list'] = current_page.page(current_page.num_pages)
+		return render_to_response('possible_list.html', context)
 
 
 class ItemListView(View):
