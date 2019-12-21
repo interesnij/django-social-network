@@ -114,7 +114,7 @@ $(document).ready(function(){
 
 $('#ajax').on('click', '.online', function() {
   var online = $('#online_frends');
-  if (online.empty()){
+  if (online){
 		$('#online_frends').html('').load("/frends/online/" + {{ user.pk }})
   };
 });
