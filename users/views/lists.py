@@ -52,6 +52,23 @@ class AllUsersList(ListView):
         return users
 
 
+class AllUsersList(View):
+	def get(self, request, *args, **kwargs):
+		context = {}
+		users = User.objects.only('pk')
+		users_list = User.objects.only('pk')
+		current_page = Paginator(users_list, 1)
+		page = request.GET.get('page')
+
+		try:
+			context['users_list'] = current_page.page(page)
+		except PageNotAnInteger:
+			context['users_list'] = current_page.page(1)
+		except EmptyPage:
+			context['users_list'] = current_page.page(current_page.num_pages)
+		return render_to_response('all_users_list.html', context)
+
+
 class AllCommonUsers(ListView):
     template_name = "all_possible_users.html"
     model = User
