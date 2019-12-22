@@ -83,7 +83,7 @@
 
 
 <script>
-  $('#ajax').on('click', '.community_article_add', function() {
+  $('#ajax').on('click', '#community_article_add', function() {
     var btn = $(this); var pk = btn.data('pk');
     $('#article_loader').html('').load("/article/add_community/" + pk + "/");
     $('.article_fullscreen').show();
