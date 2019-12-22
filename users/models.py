@@ -217,8 +217,8 @@ class User(AbstractUser):
     def is_star_from_community_with_name(self, community_name):
         return self.favorite_communities.filter(name=community_name).exists()
 
-    def is_follow_from_community_with_name(self, community_name):
-        return CommunityFollow.objects.get(community_name=community_name, user=self).exists()
+    def is_follow_from_community_with_name(self, community):
+        return CommunityFollow.objects.get(community=community, user=self).exists()
 
     def is_closed_profile(self):
         try:

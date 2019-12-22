@@ -98,7 +98,7 @@ class CommunityDetail(TemplateView):
         elif request.user.is_follow_from_community_with_name(self.community.name):
             self.common_friends = request.user.get_common_friends_of_community(self.community)[0:5]
             self.template_name = "c_detail/follow_community.html"
-        elif request.user.is_banned_from_community_with_name(self.community.name):
+        elif request.user.is_banned_from_community_with_name(self.community):
             self.template_name = "c_detail/block_community.html"
         elif request.user.is_anonymous and self.community.is_public:
             self.template_name = "c_detail/anon_community.html"
