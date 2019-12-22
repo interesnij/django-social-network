@@ -106,6 +106,8 @@ class CommunityDetail(TemplateView):
             self.template_name = "c_detail/close_community.html"
         elif request.user.is_anonymous and self.community.is_private:
             self.template_name = "c_detail/private_community.html"
+        else:
+            self.template_name = "c_detail/open_community.html"
 
         return super(CommunityDetail,self).get(request,*args,**kwargs)
 

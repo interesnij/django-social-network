@@ -3,11 +3,11 @@
 {% block title %}{{ community.name }} - Вы создатель{% endblock %}
 {% block content %}
 
-{% if object.cover %}
+{% if community.cover %}
 <div class="container-fluid">
     <div class="row align-items-center has-background-img" style="min-height: 150px">
         <figure class="background-img">
-            <img src="{{ object.cover.url }}" alt="" class="" style="min-height:inherit;opacity: 1">
+            <img src="{{ community.cover.url }}" alt="" class="" style="min-height:inherit;opacity: 1">
         </figure>
     </div>
 </div>
@@ -53,7 +53,7 @@
 
                 <div class="col-12 col-xs-12 col-md-3">
                     {% if community.get_avatar %}
-                      <img src="{{ object.get_avatar.file.url }}" alt="" style="width:100%" class="rounded box-shadow-large">
+                      <img src="{{ community.get_avatar.file.url }}" alt="" style="width:100%" class="rounded box-shadow-large">
                     {% else %}
                       <img src="{% static 'images/icons/group-24px.svg' %}" style="width:100%" alt="" class="rounded box-shadow-large">
                     {% endif %}
@@ -91,7 +91,6 @@
 <script>
     $(document).ready(function() {
         $('#lenta_load').html('').load("/communities/list/" + {{ community.pk }});
-        //  	$('#stat_load').html('').load("/communities/profile_stat/" + {{ community.pk }});
     });
 </script>
 
