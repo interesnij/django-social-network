@@ -109,7 +109,7 @@ $('.article_fullscreen_hide').on('click', function() {$('.article_fullscreen').h
 
 
   $('#ajax').on('click', '.c_add_post', function() {
-    var btn = $(this); var pk = btn.data('id'); var frm_post = $('#COMM-POST'); var stream = frm_post.parent().next().next();
+    var btn = $(this); var pk = btn.data('pk'); var frm_post = $('#COMM-POST'); var stream = frm_post.parent().next().next();
         $.ajax({
             type: frm_post.attr('method'), url: "/posts/add_post_community/" + pk + "/", data: frm_post.serialize(),
             success: function(data) {
@@ -122,8 +122,8 @@ $('.article_fullscreen_hide').on('click', function() {$('.article_fullscreen').h
         }); return false;
     });
     $('#ajax').on('click', '.community_article_add', function() {
-      var btn = $(this); var pk = btn.data('id');
-      $('#article_loader').html('').load("/article/add_community/" + pk + "/"); 
+      var btn = $(this); var pk = btn.data('pk');
+      $('#article_loader').html('').load("/article/add_community/" + pk + "/");
       $('.article_fullscreen').show();
     })
     $('.article_fullscreen_hide').on('click', function() {$('.article_fullscreen').hide(); $('#article_loader').empty();});
