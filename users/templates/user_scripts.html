@@ -98,8 +98,7 @@ $(document).ready(function () {
   $("#article_add").click(function() {
       $('#article_loader').html('').load("{% url 'article_add_user' pk=user.pk %}"); $('.article_fullscreen').show();
   })
-
-  $("#form_post_btn").click(function() {
+$('.user_page').on('click', '#form_post_btn', function() {
     var form_post = $('#form_post'); var stream = form_post.parent().next().next();
         $.ajax({
             type: form_post.attr('method'), url: "{% url 'post_add_user' pk=user.pk %}", data: form_post.serialize(),
