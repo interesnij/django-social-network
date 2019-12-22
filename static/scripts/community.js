@@ -108,7 +108,7 @@ $('.article_fullscreen_hide').on('click', function() {$('.article_fullscreen').h
   });
 
 
-  function() {
+  (function() {
     var frm_post = $('#COMM-POST'); var stream = frm_post.parent().next().next();
     frm_post.submit(function() {
         $.ajax({
@@ -131,4 +131,4 @@ $('.article_fullscreen_hide').on('click', function() {$('.article_fullscreen').h
     $('#doc').on('click', function() {$('#for_doc').show();});
     $('#good').on('click', function() {$('#for_good').show();});
     $('#question').on('click', function() {$('#for_question').show();});
-  }
+  });
