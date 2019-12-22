@@ -1,10 +1,10 @@
 {% load staticfiles %}
 
-{% if object.cover %}
+{% if community.cover %}
 <div class="container-fluid">
     <div class="row align-items-center has-background-img" style="min-height: 150px">
         <figure class="background-img">
-            <img src="{{ object.cover.url }}" alt="" class="" style="min-height:inherit;opacity: 1">
+            <img src="{{ community.cover.url }}" alt="" class="" style="min-height:inherit;opacity: 1">
         </figure>
     </div>
 </div>
@@ -17,8 +17,8 @@
 
                     <div class="card mb-4">
                         <div class="card-body">
-                            <h3 class="mb-2">{{ object.name }}</h3>
-                            {% if object.status %}
+                            <h3 class="mb-2">{{ community.name }}</h3>
+                            {% if community.status %}
                             <p class="">{{ object.status }}</p>
                             {% else %}
                             {% if request.user.communities_memberships.is_administrator %}
@@ -117,7 +117,7 @@
                       {% endif %}
                     </span>
                     {% endif %}
-                    
+
                 </div>
             </div>
         </div>

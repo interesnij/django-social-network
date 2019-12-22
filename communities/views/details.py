@@ -86,26 +86,26 @@ class CommunityDetail(TemplateView):
         if request.user.is_member_of_community_with_name(self.community.name):
             self.common_friends = request.user.get_common_friends_of_community(self.community)[0:5]
             if request.user.is_creator_of_community_with_name(self.community.name):
-                template_name = "detail/creator_community.html"
+                template_name = "c_detail/creator_community.html"
             elif request.user.is_moderator_of_community_with_name(self.community.name):
-                template_name = "detail/moderator_community.html"
+                template_name = "c_detail/moderator_community.html"
             elif request.user.is_administrator_of_community_with_name(self.community.name):
-                template_name = "detail/admin_community.html"
+                template_name = "c_detail/admin_community.html"
             elif request.user.is_star_from_community_with_name(self.community.name):
-                template_name = "detail/star_community.html"
+                template_name = "c_detail/star_community.html"
             else:
                 template_name = "detail/member_community.html"
         elif request.user.is_follow_from_community_with_name(self.community.name):
             self.common_friends = request.user.get_common_friends_of_community(self.community)[0:5]
-            template_name = "detail/follow_community.html"
+            template_name = "c_detail/follow_community.html"
         elif request.user.is_banned_from_community_with_name(self.community.name):
-            template_name = "detail/block_community.html"
+            template_name = "c_detail/block_community.html"
         elif request.user.is_anonymous and self.community.is_public:
-            template_name = "detail/anon_community.html"
+            template_name = "c_detail/anon_community.html"
         elif request.user.is_anonymous and self.community.is_closed:
-            template_name = "detail/close_community.html"
+            template_name = "c_detail/close_community.html"
         elif request.user.is_anonymous and self.community.is_private:
-            template_name = "detail/private_community.html"
+            template_name = "c_detail/private_community.html"
 
         return super(CommunityDetail,self).get(request,*args,**kwargs)
 

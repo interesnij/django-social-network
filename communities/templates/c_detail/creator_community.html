@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load staticfiles humanize %}
-{% block title %}{{ object.name }} - Вы создатель{% endblock %}
+{% block title %}{{ community.name }} - Вы создатель{% endblock %}
 {% block content %}
 
 {% if object.cover %}
@@ -19,8 +19,8 @@
                 <div class="col-12 col-xs-12 col-md-9">
                     <div class="card mb-4">
                         <div class="card-body">
-                            <h3 class="mb-2">{{ object.name }}</h3>
-                            {% if object.status %}<p class="">{{ object.status }}</p>{% else %}<p class="">Добавьте статус сообщества</p>{% endif %}
+                            <h3 class="mb-2">{{ community.name }}</h3>
+                            {% if community.status %}<p class="">{{ community.status }}</p>{% else %}<p class="">Добавьте статус сообщества</p>{% endif %}
                             <br><br>
                             Вы создатель сообщества
                             <ul class="list-group list-group-flush w-100">
@@ -31,7 +31,7 @@
                                         </div>
                                         <div class="media-body">
                                             <h6 class="my-0 content-color-primary">Описание</h6>
-                                            <p>{% if object.description %}{{ object.description }}{% else %}Добавьте описание сообщества{% endif %}</p>
+                                            <p>{% if community.description %}{{ community.description }}{% else %}Добавьте описание сообщества{% endif %}</p>
                                         </div>
                                     </div>
                                 </li>
@@ -42,7 +42,7 @@
                                         </div>
                                         <div class="media-body">
                                             <h6 class="my-0 content-color-primary">Правила</h6>
-                                            <p>{% if object.rules %}{{ object.rules }}{% else %}Добавьте правила сообщетсва{% endif %}</p>
+                                            <p>{% if community.rules %}{{ community.rules }}{% else %}Добавьте правила сообщетсва{% endif %}</p>
                                         </div>
                                     </div>
                                 </li>
@@ -52,7 +52,7 @@
                 </div>
 
                 <div class="col-12 col-xs-12 col-md-3">
-                    {% if object.get_avatar %}
+                    {% if community.get_avatar %}
                       <img src="{{ object.get_avatar.file.url }}" alt="" style="width:100%" class="rounded box-shadow-large">
                     {% else %}
                       <img src="{% static 'images/icons/group-24px.svg' %}" style="width:100%" alt="" class="rounded box-shadow-large">
