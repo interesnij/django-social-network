@@ -102,9 +102,7 @@ class CommunityDetail(TemplateView):
         elif request.user.is_authenticated and request.user.is_banned_from_community_with_name(self.community):
             self.template_name = "c_detail/block_community.html"
 
-        elif request.user.is_authenticated and self.community.is_public:
-            self.common_friends = request.user.get_common_friends_of_community(self.community)[0:5]
-            self.template_name = "c_detail/public_community.html"
+        
         elif request.user.is_authenticated and self.community.is_closed:
             self.common_friends = request.user.get_common_friends_of_community(self.community)[0:5]
             self.template_name = "c_detail/close_community.html"
