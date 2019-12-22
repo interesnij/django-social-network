@@ -74,44 +74,45 @@ class ItemCommunity(TemplateView):
         return context
 
 
-class CommunityDetail(DetailView):
+class CommunityDetail(TemplateView):
     template_name = "community_detail.html"
-    model = Community
-    administrator = False
-    staff = False
-    creator = False
-    member = False
     membersheeps = None
     common_friends = None
 
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        try:
-            self.follow = CommunityFollow.objects.get(community=self.community, user=request.user)
-        except:
-            self.follow = None
-        if request.user.is_authenticated:
-            check_can_get_posts_for_community_with_name(request.user,self.community.name)
-            self.membersheeps=CommunityMembership.objects.filter(community__id=self.community.pk)[0:5]
+        self.membersheeps=CommunityMembership.objects.filter(community__id=self.community.pk)[0:5]
+
+        if request.user.is_member_of_community_with_name(self.community.name):
             self.common_friends = request.user.get_common_friends_of_community(self.community)[0:5]
-        if request.user.is_authenticated and request.user.is_administrator_of_community_with_name(self.community.name):
-            self.administrator=True
-        if request.user.is_authenticated and request.user.is_creator_of_community_with_name(self.community.name):
-            self.creator=True
-        if request.user.is_authenticated and request.user.is_staff_of_community_with_name(self.community.name):
-            self.staff=True
-        if request.user.is_authenticated and request.user.is_member_of_community_with_name(self.community.name):
-            self.member=True
+            if request.user.is_creator_of_community_with_name(self.community.name):
+                template_name = "detail/creator_community.html"
+            elif request.user.is_moderator_of_community_with_name(self.community.name):
+                template_name = "detail/moderator_community.html"
+            elif request.user.is_administrator_of_community_with_name(self.community.name):
+                template_name = "detail/admin_community.html"
+            elif request.user.is_star_from_community_with_name(self.community.name):
+                template_name = "detail/star_community.html"
+            else:
+                template_name = "detail/member_community.html"
+        elif request.user.is_follow_from_community_with_name(self.community.name):
+            self.common_friends = request.user.get_common_friends_of_community(self.community)[0:5]
+            template_name = "detail/follow_community.html"
+        elif request.user.is_banned_from_community_with_name(self.community.name):
+            template_name = "detail/block_community.html"
+        elif request.user.is_anonymous and self.community.is_public:
+            template_name = "detail/anon_community.html"
+        elif request.user.is_anonymous and self.community.is_closed:
+            template_name = "detail/close_community.html"
+        elif request.user.is_anonymous and self.community.is_private:
+            template_name = "detail/private_community.html"
+
         return super(CommunityDetail,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context=super(CommunityDetail,self).get_context_data(**kwargs)
         context["membersheeps"]=self.membersheeps
-        context["follow"]=self.follow
-        context["administrator"]=self.administrator
-        context["creator"]=self.creator
-        context["staff"]=self.staff
-        context["member"]=self.member
+        context["object"]=self.community
         context["common_friends"]=self.common_friends
         return context
 
