@@ -12,7 +12,7 @@
     </div>
 </div>
 {% endif %}
- закрытое сообщество
+
 <div class="container-fluid">
     <div class="row">
         <div class="container main-container py-4">
@@ -87,5 +87,10 @@
 
     </div>
 </div>
-
+<script>
+$('#ajax').on('click', '.member_follow_create', function() {
+  var member_follow_create = $(this); var pk = member_follow_create.data('id');
+  $.ajax({url: "/follows/add_member/" + pk + "/", success: function () {$('#ajax').html('').load("/communities/reload/" + pk + "/");}}); 
+});
+</script>
 {% endblock %}

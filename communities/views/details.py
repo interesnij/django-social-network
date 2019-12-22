@@ -11,7 +11,6 @@ from rest_framework.exceptions import PermissionDenied
 
 
 class ItemsCommunity(View):
-
     def get(self,request,*args,**kwargs):
         context = {}
         self.community=Community.objects.get(pk=self.kwargs["pk"])

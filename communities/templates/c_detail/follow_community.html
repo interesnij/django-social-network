@@ -87,5 +87,9 @@
 
     </div>
 </div>
-
+<script>
+$('#ajax').on('click', '.member_follow_delete', function() {
+  var member_follow_delete = $(this); var pk = member_follow_delete.data('id');
+  $.ajax({url: "/follows/delete_member/" + pk + "/", success: function () {$('#ajax').html('').load("/communities/reload/" + pk + "/");}});});
+</script>
 {% endblock %}
