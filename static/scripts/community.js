@@ -108,11 +108,10 @@ $('.article_fullscreen_hide').on('click', function() {$('.article_fullscreen').h
   });
 
 
-  (function() {
-    var frm_post = $('#COMM-POST'); var stream = frm_post.parent().next().next();
-    frm_post.submit(function() {
+  $('#ajax').on('click', '.c_add_post', function() {
+    var btn = $(this); var pk = btn.data('id'); var frm_post = $('#COMM-POST'); var stream = frm_post.parent().next().next();
         $.ajax({
-            type: frm_post.attr('method'), url: "{% url 'post_add_community' object.pk %}", data: frm_post.serialize(),
+            type: frm_post.attr('method'), url: "/posts/add_post_community/" + pk + "/", data: frm_post.serialize(),
             success: function(data) {
                 stream.prepend(data); stream.find(".post_empty").hide(); $(".id_text").val(""); $(".add_board #for_images_upload").hide(); $(".add_board #for_gallery").hide(); $(".add_board #for_doc").hide(); $(".add_board #for_good").hide(); $(".add_board #for_question").hide(); $(".add_board #for_settings").hide();
                 $.toast({heading: '{{ request.user.first_name }}',text: 'Запись успешно создана!',showHideTransition: 'fade',icon: 'success'})},
@@ -131,4 +130,3 @@ $('.article_fullscreen_hide').on('click', function() {$('.article_fullscreen').h
     $('#doc').on('click', function() {$('#for_doc').show();});
     $('#good').on('click', function() {$('#for_good').show();});
     $('#question').on('click', function() {$('#for_question').show();});
-  });
