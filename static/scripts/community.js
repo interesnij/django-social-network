@@ -121,8 +121,11 @@ $('.article_fullscreen_hide').on('click', function() {$('.article_fullscreen').h
 
         }); return false;
     });
-
-    $("#community_article_add").click(function() {$('#article_loader').html('').load("{% url 'article_add_community' object.pk %}"); $('.article_fullscreen').show();})
+    $('#ajax').on('click', '.community_article_add', function() {
+      var btn = $(this); var pk = btn.data('id');
+      $('#article_loader').html('').load("/article/add_community/" + pk + "/"); 
+      $('.article_fullscreen').show();
+    })
     $('.article_fullscreen_hide').on('click', function() {$('.article_fullscreen').hide(); $('#article_loader').empty();});
     $('#images_upload').on('click', function() {$('#for_images_upload').show();});
     $('#settings').on('click', function() {$('#for_settings').show();});
