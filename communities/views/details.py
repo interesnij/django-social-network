@@ -102,18 +102,20 @@ class CommunityDetail(TemplateView):
         elif request.user.is_authenticated and request.user.is_banned_from_community_with_name(self.community):
             self.template_name = "c_detail/block_community.html"
 
-        
-        elif request.user.is_authenticated and self.community.is_closed:
+        elif request.user.is_authenticated and self.community.is_public():
+            self.common_friends = request.user.get_common_friends_of_community(self.community)[0:5]
+            self.template_name = "c_detail/public_community.html"
+        elif request.user.is_authenticated and self.community.is_closed():
             self.common_friends = request.user.get_common_friends_of_community(self.community)[0:5]
             self.template_name = "c_detail/close_community.html"
-        elif request.user.is_authenticated and self.community.is_private:
+        elif request.user.is_authenticated and self.community.is_private():
             self.template_name = "c_detail/private_community.html"
 
-        elif request.user.is_anonymous and self.community.is_public:
+        elif request.user.is_anonymous and self.community.is_public():
             self.template_name = "c_detail/anon_public_community.html"
-        elif self.community.is_closed and request.user.is_anonymous:
+        elif self.community.is_closed and request.user.is_anonymous():
             self.template_name = "c_detail/anon_close_community.html"
-        elif request.user.is_anonymous and self.community.is_private:
+        elif request.user.is_anonymous and self.community.is_private():
             self.template_name = "c_detail/private_community.html"
         return super(CommunityDetail,self).get(request,*args,**kwargs)
 
