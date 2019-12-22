@@ -1,0 +1,52 @@
+{% load staticfiles liked_user %}
+{% if communities %}
+<div class="card mb-4" style="">
+    <div class="card-header">
+        <div class="media">
+            <div class="media-body">
+                <h4 class="content-color-primary mb-0">Группы </h4>
+            </div>
+            <a href="{% url 'communities' pk=user.pk %}" class="ajax">
+                все
+            </a>
+        </div>
+    </div>
+
+    {% for object in communities %}
+    <div class="card border-top border-bottom">
+        <div class="card-body">
+            <div class="media">
+                <figure style="width:50px;">
+                    {% if object.get_avatar %}
+                    <img src="{{ object.get_avatar.file.url }}" style="border-radius:50px;width:50px;" alt="image">
+                    {% else %}
+                    <img style="width:50px;border:#6C757D solid 1px;border-radius:50px;padding:5px;" src="{% static 'images/icons/group-24px.svg' %}" />
+                    {% endif %}
+                </figure>
+                <div class="media-body">
+                    <a href="{% url 'community_detail' pk=object.pk %}" class="ajax">
+                        <h6 class="my-0 mt-1">{{ object.name }}
+                        </h6>
+                    </a>
+                    <p class="small">{{ object.count_members }} {{ object.count_members|rupluralize:"подписчик,подписчика,подписчиков" }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+{% if user == request.user %}
+<div class="card mb-4" style="">
+    <div class="card-header">
+        <div class="media" style="display: flex;align-items: center;justify-content: center;">
+            <a href="{% url 'all_communities' %}" class="ajax">
+                <div class="media-body">
+                    <h4 class="content-color-primary mb-0">Вступайте в группы</h4>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endif %}
