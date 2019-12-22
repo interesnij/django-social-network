@@ -49,30 +49,7 @@
         //  	$('#stat_load').html('').load("/communities/profile_stat/" + {{ community.pk }});
     });
 </script>
-<script>
-    var frm_post = $('#COMM-POST'); var stream = frm_post.parent().next().next();
-    frm_post.submit(function() {
-        $.ajax({
-            type: frm_post.attr('method'), url: "{% url 'post_add_community' object.pk %}", data: frm_post.serialize(),
-            success: function(data) {
-                stream.prepend(data); stream.find(".post_empty").hide(); $(".id_text").val(""); $(".add_board #for_images_upload").hide(); $(".add_board #for_gallery").hide(); $(".add_board #for_doc").hide(); $(".add_board #for_good").hide(); $(".add_board #for_question").hide(); $(".add_board #for_settings").hide();
-                $.toast({heading: '{{ request.user.first_name }}',text: 'Запись успешно создана!',showHideTransition: 'fade',icon: 'success'})},
-            error: function(data) {
-                $.toast({heading: '{{ request.user.first_name }}',text: 'Для публикации записи нужно написать что-нибудь и/или вставить изображение(ия)',showHideTransition: 'fade',icon: 'error'})
-            }
 
-        }); return false;
-    });
-
-    $("#community_article_add").click(function() {$('#article_loader').html('').load("{% url 'article_add_community' object.pk %}"); $('.article_fullscreen').show();})
-    $('.article_fullscreen_hide').on('click', function() {$('.article_fullscreen').hide(); $('#article_loader').empty();});
-    $('#images_upload').on('click', function() {$('#for_images_upload').show();});
-    $('#settings').on('click', function() {$('#for_settings').show();});
-    $('#gallery').on('click', function() {$('#for_gallery').show();});
-    $('#doc').on('click', function() {$('#for_doc').show();});
-    $('#good').on('click', function() {$('#for_good').show();});
-    $('#question').on('click', function() {$('#for_question').show();});
-</script>
 <script defer src="{% static 'scripts/community.js' %}" type="text/javascript"></script>
 
 {% endblock %}
