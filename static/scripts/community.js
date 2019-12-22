@@ -121,15 +121,3 @@ $('.article_fullscreen_hide').on('click', function() {$('.article_fullscreen').h
 
         }); return false;
     });
-    $('#ajax').on('click', '.community_article_add', function() {
-      var btn = $(this); var pk = btn.data('pk');
-      $('#article_loader').html('').load("/article/add_community/" + pk + "/");
-      $('.article_fullscreen').show();
-    })
-    $('.article_fullscreen_hide').on('click', function() {$('.article_fullscreen').hide(); $('#article_loader').empty();});
-    $('#images_upload').on('click', function() {$('#for_images_upload').show();});
-    $('#settings').on('click', function() {$('#for_settings').show();});
-    $('#gallery').on('click', function() {$('#for_gallery').show();});
-    $('#doc').on('click', function() {$('#for_doc').show();});
-    $('#good').on('click', function() {$('#for_good').show();});
-    $('#question').on('click', function() {$('#for_question').show();});
