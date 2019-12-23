@@ -8,6 +8,7 @@ class CommunityNotificationsSettingsInline(admin.TabularInline):
 class CommunityPrivateSettingsInline(admin.TabularInline):
     model = CommunityPrivateSettings
 
+
 class CommunityCategoryAdmin(admin.ModelAdmin):
     search_fields = ('name',)
 
@@ -16,8 +17,8 @@ class CommunitySubCategoryAdmin(admin.ModelAdmin):
 
 class CommunityAdmin(admin.ModelAdmin):
     inlines = [
-        CommunityNotificationsSettings,
-        CommunityPrivateSettings,
+        CommunityNotificationsSettingsInline,
+        CommunityPrivateSettingsInline,
     ]
 
     search_fields = ('name',)
