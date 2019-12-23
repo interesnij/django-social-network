@@ -132,7 +132,7 @@ class CommunityNotifyView(TemplateView):
 	def post(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.notify_settings=CommunityNotificationsSettings.objects.get(community=self.community)
-		self.form=CommunityNotifyForm(request.POST,instance=self.notify_settings)
+		self.form=CommunityNotifyForm(request.POST)
 		if self.form.is_valid() and request.user.is_administrator_of_community_with_name(self.community.name):
 			self.form.save()
 			if request.is_ajax():
@@ -147,7 +147,7 @@ class CommunityPrivateView(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		self.form=CommunityPrivateForm(instance=self.community)
+		self.form=CommunityPrivateForm()
 		self.private_settings=CommunityPrivateSettings.objects.get(community=self.community)
 		return super(CommunityPrivateView,self).get(request,*args,**kwargs)
 
