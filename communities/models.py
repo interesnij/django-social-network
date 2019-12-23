@@ -57,7 +57,7 @@ class Community(models.Model):
     created = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создано")
     starrers = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='favorite_communities', verbose_name="Подписчики")
     banned_users = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='banned_of_communities', verbose_name="Черный список")
-    status = models.CharField(max_length=100, blank=True, blank=True, verbose_name="статус-слоган")
+    status = models.CharField(max_length=100, blank=True, verbose_name="статус-слоган")
     COMMUNITY_TYPE_PRIVATE = 'T'
     COMMUNITY_TYPE_PUBLIC = 'P'
     COMMUNITY_TYPE_CLOSED = 'C'
