@@ -69,6 +69,7 @@ class SettingsNotifyView(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.form=SettingsNotifyForm(instance=request.user)
+		self.notify_settings=UserNotificationsSettings.objects.get(user=request.user)
         return super(SettingsNotifyView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -94,6 +95,7 @@ class SettingsPrivateView(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.form=SettingsPrivateForm(instance=request.user)
+		self.private_settings=UserPrivateSettings.objects.get(user=request.user)
 		return super(SettingsPrivateView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
