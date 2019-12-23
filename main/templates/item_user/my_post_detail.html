@@ -44,9 +44,7 @@
       </div>
   </div>
 
-    {% if object.is_repost %}
-    {% include 'item_user/repost_detail.html' %}
-    {% endif %}
+
 
     <div class="card-body">
 
@@ -60,6 +58,10 @@
         <p class="">{{ object.post.doc }}</p>
       {% endif %}
     </div>
+    
+    {% if object.is_repost %}
+    {% include 'item_user/repost_detail.html' %}
+    {% endif %}
 
     {% include 'item_user/info.html' %}
 </div>
