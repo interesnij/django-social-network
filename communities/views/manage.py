@@ -118,7 +118,7 @@ class CommunityNotifyView(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		self.form=CommunityNotifyForm(instance=self.community)
+		self.form=CommunityNotifyForm()
 		self.notify_settings=CommunityNotificationsSettings.objects.get(community=self.community)
 		return super(CommunityNotifyView,self).get(request,*args,**kwargs)
 
