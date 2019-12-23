@@ -123,20 +123,13 @@
 </div>
 
 <script>
-    $('#form_repost_btn').click(function() {
-        var frm_repost = $('#FORM-REPOST');
-        var uuid = $('.form #user_item_pk').text();
+    $('#user_repost_btn').click(function() {
+        var frm_repost = $('#FORM-REPOST'); var uuid = $('.form #user_item_pk').text();
         $.ajax({
-            url: "/posts/repost_user_user/" + uuid + "/",
-            data: new FormData($(frm_repost)[0]),
-            contentType: false,
-            cache: false,
-            method: "post",
-            processData: false,
+            url: "/posts/repost_user_user/" + uuid + "/", data: new FormData($(frm_repost)[0]), contentType: false, cache: false, method: "post", processData: false,
             success: function(data) {$.toast({heading: '{{ request.user.first_name }}',text: 'Репост выполнен успешно!',showHideTransition: 'fade',icon: 'info'})},
             error: function(data) {console.log(data);}
         });
-
     });
 
     $('.add_board_hide').on('click', function() {$('#for_settings').hide();});
