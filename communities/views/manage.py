@@ -130,12 +130,7 @@ class CommunityNotifyView(TemplateView):
 
 	def post(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		try:
-			self.notify_settings=CommunityNotificationsSettings.objects.get(community=self.community)
-		except:
-			self.notify_settings = None
-		if not self.notify_settings:
-			self.user.notify_settings = CommunityNotificationsSettings.objects.create(community=self.community)
+		self.notify_settings=CommunityNotificationsSettings.objects.get(community=self.community)
 		self.form=CommunityNotifyForm(request.POST,instance=self.notify_settings)
 		if self.form.is_valid() and request.user.is_administrator_of_community_with_name(self.community.name):
 			self.form.save()
@@ -152,22 +147,19 @@ class CommunityPrivateView(TemplateView):
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.form=CommunityPrivateForm(instance=self.community)
+		self.private_settings=CommunityPrivateSettings.objects.get(community=self.community)
 		return super(CommunityPrivateView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		context=super(CommunityPrivateView,self).get_context_data(**kwargs)
 		context["form"]=self.form
 		context["community"]=self.community
+		context["private_settings"]=self.private_settings
 		return context
 
 	def post(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		try:
-			self.private_settings=CommunityPrivateSettings.objects.get(community=self.community)
-		except:
-			self.private_settings = None
-		if not self.private_settings:
-			self.user.private_settings = CommunityPrivateSettings.objects.create(community=self.community)
+		self.private_settings=CommunityPrivateSettings.objects.get(community=self.community)
 		self.form=CommunityPrivateForm(request.POST,instance=self.private_settings)
 		if self.form.is_valid() and request.user.is_administrator_of_community_with_name(self.community.name):
 			self.form.save()
