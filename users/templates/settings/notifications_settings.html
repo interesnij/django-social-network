@@ -15,57 +15,57 @@
                     <div class="card-body">
                         <p class="content-color-primary page-sub-title-small mt-2">
                             Заявки в друзья
-                            <input type="checkbox" {% if user.notifications_settings.connection_request_notifications %} checked {% endif %} name="connection_request_notifications" id="id_connection_request_notifications" class="switch switch-sm">
+                            <input type="checkbox" {% if notifications_settings.connection_request_notifications %} checked {% endif %} name="connection_request_notifications" id="id_connection_request_notifications" class="switch switch-sm">
                             <label style="margin-right:12px;bottom: 5px;" for="id_connection_request_notifications" class="bg-dark mb-2 border float-right"></label>
                         </p>
                         <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
                             Подтверждение заявки в друзья
-                            <input type="checkbox" {% if user.notifications_settings.connection_confirmed_notifications %} checked {% endif %} name="connection_confirmed_notifications" id="id_connection_confirmed_notifications" class="switch switch-sm">
+                            <input type="checkbox" {% if notifications_settings.connection_confirmed_notifications %} checked {% endif %} name="connection_confirmed_notifications" id="id_connection_confirmed_notifications" class="switch switch-sm">
                             <label style="margin-right:12px;bottom: 5px;" for="id_connection_confirmed_notifications" class="bg-dark mb-2 border float-right"></label>
                         </p>
                         <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
                             Приглашения в сообщества
-                            <input type="checkbox" {% if user.notifications_settings.community_invite_notifications %} checked {% endif %} name="community_invite_notifications" id="id_community_invite_notifications" class="switch switch-sm">
+                            <input type="checkbox" {% if notifications_settings.community_invite_notifications %} checked {% endif %} name="community_invite_notifications" id="id_community_invite_notifications" class="switch switch-sm">
                             <label style="margin-right:12px;bottom: 5px;" for="id_community_invite_notifications" class="bg-dark mb-2 border float-right"></label>
                         </p>
                         <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
                             Комментарии к записям
-                            <input type="checkbox" {% if user.notifications_settings.comment_notifications %} checked {% endif %} name="comment_notifications" id="id_comment_notifications" class="switch switch-sm">
+                            <input type="checkbox" {% if notifications_settings.comment_notifications %} checked {% endif %} name="comment_notifications" id="id_comment_notifications" class="switch switch-sm">
                             <label style="margin-right:12px;bottom: 5px;" for="id_comment_notifications" class="bg-dark mb-2 border float-right"></label>
                         </p>
                         <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
                             Реакции на записи
-                            <input type="checkbox" {% if user.notifications_settings.react_notifications %} checked {% endif %} name="react_notifications" id="id_react_notifications" class="switch switch-sm">
+                            <input type="checkbox" {% if notifications_settings.react_notifications %} checked {% endif %} name="react_notifications" id="id_react_notifications" class="switch switch-sm">
                             <label style="margin-right:12px;bottom: 5px;" for="id_react_notifications" class="bg-dark mb-2 border float-right"></label>
                         </p>
                         <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
                             Реакции на комментарии
-                            <input type="checkbox" {% if user.notifications_settings.comment_react_notifications %} checked {% endif %} name="comment_react_notifications" id="id_comment_react_notifications" class="switch switch-sm">
+                            <input type="checkbox" {% if notifications_settings.comment_react_notifications %} checked {% endif %} name="comment_react_notifications" id="id_comment_react_notifications" class="switch switch-sm">
                             <label style="margin-right:12px;bottom: 5px;" for="id_comment_react_notifications" class="bg-dark mb-2 border float-right"></label>
                         </p>
                         <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
                             Ответы на комментарии
-                            <input type="checkbox" {% if user.notifications_settings.comment_reply_notifications %} checked {% endif %} name="comment_reply_notifications" id="id_comment_reply_notifications" class="switch switch-sm">
+                            <input type="checkbox" {% if notifications_settings.comment_reply_notifications %} checked {% endif %} name="comment_reply_notifications" id="id_comment_reply_notifications" class="switch switch-sm">
                             <label style="margin-right:12px;bottom: 5px;" for="id_comment_reply_notifications" class="bg-dark mb-2 border float-right"></label>
                         </p>
                         <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
                             Реакции на ответы
-                            <input type="checkbox" {% if user.notifications_settings.comment_reply_react_notifications %} checked {% endif %} name="comment_reply_react_notifications" id="id_comment_reply_react_notifications" class="switch switch-sm">
+                            <input type="checkbox" {% if notifications_settings.comment_reply_react_notifications %} checked {% endif %} name="comment_reply_react_notifications" id="id_comment_reply_react_notifications" class="switch switch-sm">
                             <label style="margin-right:12px;bottom: 5px;" for="id_comment_reply_react_notifications" class="bg-dark mb-2 border float-right"></label>
                         </p>
                         <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
                             Репосты записей
-                            <input type="checkbox" {% if user.notifications_settings.repost_notifications %} checked {% endif %} name="repost_notifications" id="id_repost_notifications" class="switch switch-sm">
+                            <input type="checkbox" {% if notifications_settings.repost_notifications %} checked {% endif %} name="repost_notifications" id="id_repost_notifications" class="switch switch-sm">
                             <label style="margin-right:12px;bottom: 5px;" for="id_repost_notifications" class="bg-dark mb-2 border float-right"></label>
                         </p>
                         <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
                             Упоминания в записях
-                            <input type="checkbox" {% if user.notifications_settings.user_mention_notifications %} checked {% endif %} name="user_mention_notifications" id="id_user_mention_notifications" class="switch switch-sm">
+                            <input type="checkbox" {% if notifications_settings.user_mention_notifications %} checked {% endif %} name="user_mention_notifications" id="id_user_mention_notifications" class="switch switch-sm">
                             <label style="margin-right:12px;bottom: 5px;" for="id_user_mention_notifications" class="bg-dark mb-2 border float-right"></label>
                         </p>
                         <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
                             Упоминания в комменариях
-                            <input type="checkbox" {% if user.notifications_settings.comment_user_mention_notifications %} checked {% endif %} name="comment_user_mention_notifications" id="id_comment_user_mention_notifications" class="switch switch-sm">
+                            <input type="checkbox" {% if notifications_settings.comment_user_mention_notifications %} checked {% endif %} name="comment_user_mention_notifications" id="id_comment_user_mention_notifications" class="switch switch-sm">
                             <label style="margin-right:12px;bottom: 5px;" for="id_comment_user_mention_notifications" class="bg-dark mb-2 border float-right"></label>
                         </p>
 
