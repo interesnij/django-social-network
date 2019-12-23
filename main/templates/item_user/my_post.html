@@ -44,10 +44,6 @@
       </div>
   </div>
 
-    {% if object.is_repost %}
-    {% include 'item_user/repost.html' %}
-    {% endif %}
-
     <div class="card-body fullscreen" data-uuid="{{ object.creator.uuid }}" data-pk="{{ object.pk }}" style="cursor:pointer">
 
       {% if object.post.text %}
@@ -60,6 +56,10 @@
         <p class="">{{ object.post.doc }}</p>
       {% endif %}
     </div>
+
+    {% if object.is_repost %}
+      {% include 'item_user/repost.html' %}
+    {% endif %}
 
     {% include 'item_user/info.html' %}
 </div>
