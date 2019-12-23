@@ -1,7 +1,12 @@
 from django.contrib import admin
 
-from communities.models import CommunityCategory, CommunitySubCategory, Community, CommunityMembership
+from communities.models import *
 
+class CommunityNotificationsSettingsInline(admin.TabularInline):
+    model = CommunityNotificationsSettings
+
+class CommunityPrivateSettingsInline(admin.TabularInline):
+    model = CommunityPrivateSettings
 
 class CommunityCategoryAdmin(admin.ModelAdmin):
     search_fields = ('name',)
@@ -10,7 +15,13 @@ class CommunitySubCategoryAdmin(admin.ModelAdmin):
     search_fields = ('name',)
 
 class CommunityAdmin(admin.ModelAdmin):
+    inlines = [
+        CommunityNotificationsSettings,
+        CommunityPrivateSettings,
+    ]
+
     search_fields = ('name',)
+    list_display = ['name','type', 'category']
 
 class CommunityMembershipAdmin(admin.ModelAdmin):
     search_fields = ('name',)
