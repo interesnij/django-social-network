@@ -48,16 +48,16 @@ class Community(models.Model):
     category = models.ForeignKey(CommunitySubCategory, on_delete=models.CASCADE, related_name='community_sub_categories', verbose_name="Подкатегория сообщества")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='created_communities', null=False, blank=False, verbose_name="Создатель")
     name = models.CharField(max_length=100, blank=False, null=False, verbose_name="Название" )
-    description = models.CharField(max_length=500, null=True, verbose_name="Описание" )
-    rules = models.TextField(max_length=1000, null=True, verbose_name="Правила")
-    cover = ProcessedImageField(null=True, format='JPEG',
+    description = models.CharField(max_length=500, blank=True, verbose_name="Описание" )
+    rules = models.TextField(max_length=1000, blank=True, verbose_name="Правила")
+    cover = ProcessedImageField(blank=True, format='JPEG',
                                 options={'quality': 90},
                                 upload_to=upload_to_community_avatar_directory,
                                 processors=[ResizeToFit(width=1024, upscale=False)])
     created = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создано")
-    starrers = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='favorite_communities', verbose_name="Подписчики")
-    banned_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='banned_of_communities', verbose_name="Черный список")
-    status = models.CharField(max_length=100, blank=True, null=True, verbose_name="статус-слоган")
+    starrers = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='favorite_communities', verbose_name="Подписчики")
+    banned_users = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='banned_of_communities', verbose_name="Черный список")
+    status = models.CharField(max_length=100, blank=True, blank=True, verbose_name="статус-слоган")
     COMMUNITY_TYPE_PRIVATE = 'T'
     COMMUNITY_TYPE_PUBLIC = 'P'
     COMMUNITY_TYPE_CLOSED = 'C'
