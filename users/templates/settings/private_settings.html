@@ -15,7 +15,7 @@
                     <div class="card-body">
                         <p class="content-color-primary page-sub-title-small mt-2">
                             Закрытый профиль
-                            <input type="checkbox" {% if private_settings.is_private %} checked {% endif %} name="is_private" id="id_is_private" class="switch switch-sm">
+                            <input type="checkbox" {% if request.user.private_settings.is_private %} checked {% endif %} name="is_private" id="id_is_private" class="switch switch-sm">
                             <label style="margin-right:12px;bottom: 5px;" for="id_is_private" class="bg-dark mb-2 border float-right"></label>
                         </p>
                         <p class="content-color-primary page-sub-title-small mt-2">
