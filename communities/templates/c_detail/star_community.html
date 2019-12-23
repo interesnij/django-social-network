@@ -94,6 +94,7 @@
     </div>
 </div>
 
+{% include "base_block/modal_community_repost.html" %}
 <script>
     $(document).ready(function() {
         $('#lenta_load').html('').load("/communities/list/" + {{ community.pk }});

@@ -44,6 +44,7 @@
         </div>
     </div>
 
+{% include "base_block/modal_user_repost.html" %}
 <script>
 $(document).ready(function(){
 	$('#lenta_load').html('').load("/users/detail/list/" + {{ user.pk }});
