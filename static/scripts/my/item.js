@@ -19,8 +19,6 @@ $('.user_page').on('click', '.avatar_detail', function() {
 $('#ajax').on('click', '.photo_fullscreen_hide', function() { $('.photo_fullscreen').hide(); $('#photo_loader').empty(); });
 $('.item_fullscreen_hide').on('click', function() { $('.item_fullscreen').hide(); $('#item_loader').empty(); });
 
-$('#ajax').on('click', '#R_U', function() {console.log("click"); var item = $(this); var item_id = item.data("uuid"); $('#user_item_pk').html(item_id);});
-
 $('#ajax').on('click', '.show_replies', function() { var element = $(this); element.next().toggleClass('replies_open'); });
 
 $('#ajax').on('click', '.u_comment.comments_close', function() {
