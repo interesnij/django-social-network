@@ -55,11 +55,11 @@
       {% if object.post.doc %}
         <p class="">{{ object.post.doc }}</p>
       {% endif %}
-    </div>
 
-    {% if object.is_repost %}
-      {% include 'item_user/repost.html' %}
-    {% endif %}
+      {% if object.is_repost %}
+        {% include 'item_user/repost.html' %}
+      {% endif %}
+    </div>
 
     {% include 'item_user/info.html' %}
 </div>
