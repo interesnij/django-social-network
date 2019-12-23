@@ -131,7 +131,12 @@
             url: "/posts/repost_user_user/" + uuid + "/", data: new FormData($(frm_repost)[0]), contentType: false, cache: false, method: "post", processData: false,
             success: function(data) {$.toast({heading: '{{ request.user.first_name }}',text: 'Репост выполнен успешно!',showHideTransition: 'fade',icon: 'info'})},
             error: function(data) {console.log(data);}
-        });
+        })
+      }else if(document.getElementById('repost_radio_community').checked){
+
+      }
+      else if(document.getElementById('repost_radio_message').checked){
+
       };
 
     });
@@ -142,5 +147,7 @@
     $('#doc').on('click', function() {$('#for_doc').show();});
     $('#good').on('click', function() {$('#for_good').show();});
     $('#question').on('click', function() {$('#for_question').show();});
+    
+    $('#R_U').click(function() {console.log("click"); var item = $(this); var item_id = item.data("uuid"); $('#user_item_pk').html(item_id);});
 
 </script>
