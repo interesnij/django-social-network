@@ -108,13 +108,7 @@ class RepostUserUser(View, FormMixin):
             else:
                 self.parent=self.item
             self.is_repost=True
-            new_post=Post.objects.create(
-                                        creator=self.creator,
-                                        text=self.text,
-                                        comments_enabled=self.comments_enabled,
-                                        status = self.status,
-                                        parent = self.parent
-                                        )
+            new_post=Post.objects.create(creator=self.creator, text=self.text, comments_enabled=self.comments_enabled, status = self.status, parent = self.parent, is_repost=True, )
             if request.is_ajax() :
                 return HttpResponse("!")
 

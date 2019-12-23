@@ -31,8 +31,8 @@ class CommunityFollow(models.Model):
 
     class Meta:
         unique_together = ('user', 'community')
-        verbose_name = 'Подписчик'
-        verbose_name_plural = 'Подписчики'
+        verbose_name = 'Подписчик группы'
+        verbose_name_plural = 'Подписчики группы'
 
 
     @classmethod
