@@ -3,6 +3,7 @@
 
 {% block title %}Настройки - приватность{% endblock %}
 {% block content %}
+
 <div class="container mt-4 main-container">
     <div class="row">
         <div class="col-lg-7 col-md-8 col-sm-12 order-1">
@@ -16,42 +17,42 @@
                         <p class="content-color-primary page-sub-title-small mt-2">
                             Закрытый профиль
                             <input type="checkbox" {% if private_settings.is_private %} checked {% endif %} name="is_private" id="id_is_private" class="switch switch-sm">
-                            <label style="margin-right:12px;bottom: 5px;" for="id_is_private" class="bg-dark mb-2 border float-right"></label>
+                            <label style="margin-right:12px;bottom: 5px;" for="id_is_private" class="mb-2 border float-right"></label>
                         </p>
                         <p class="content-color-primary page-sub-title-small mt-2">
                             Вам могут писать сообщения
                             <input type="checkbox" {% if private_settings.can_message %} checked {% endif %} name="can_message" id="id_can_message" class="switch switch-sm">
-                            <label style="margin-right:12px;bottom: 5px;" for="id_can_message" class="bg-dark mb-2 border float-right"></label>
+                            <label style="margin-right:12px;bottom: 5px;" for="id_can_message" class="mb-2 border float-right"></label>
                         </p>
                         <p class="content-color-primary page-sub-title-small mt-2">
                             Фото открыты всем
                             <input type="checkbox" {% if private_settings.photo_visible_all %} checked {% endif %} name="photo_visible_all" id="id_photo_visible_all" class="switch switch-sm">
-                            <label style="margin-right:12px;bottom: 5px;" for="id_photo_visible_all" class="bg-dark mb-2 border float-right"></label>
+                            <label style="margin-right:12px;bottom: 5px;" for="id_photo_visible_all" class="mb-2 border float-right"></label>
                         </p>
                         <p class="content-color-primary page-sub-title-small mt-2">
                             Фото открыты друзьям
                             <input type="checkbox" {% if private_settings.photo_visible_frends %} checked {% endif %} name="photo_visible_frends" id="id_photo_visible_frends" class="switch switch-sm">
-                            <label style="margin-right:12px;bottom: 5px;" for="id_photo_visible_frends" class="bg-dark mb-2 border float-right"></label>
+                            <label style="margin-right:12px;bottom: 5px;" for="id_photo_visible_frends" class="mb-2 border float-right"></label>
                         </p>
                         <p class="content-color-primary page-sub-title-small mt-2">
                             Люди могут писать комментарии
                             <input type="checkbox" {% if private_settings.can_comments %} checked {% endif %} name="can_comments" id="id_can_comments" class="switch switch-sm">
-                            <label style="margin-right:12px;bottom: 5px;" for="id_can_comments" class="bg-dark mb-2 border float-right"></label>
+                            <label style="margin-right:12px;bottom: 5px;" for="id_can_comments" class="mb-2 border float-right"></label>
                         </p>
                         <p class="content-color-primary page-sub-title-small mt-2">
                             Люди могут оставлять записи
                             <input type="checkbox" {% if private_settings.can_add_post %} checked {% endif %} name="can_add_post" id="id_can_add_post" class="switch switch-sm">
-                            <label style="margin-right:12px;bottom: 5px;" for="id_can_add_post" class="bg-dark mb-2 border float-right"></label>
+                            <label style="margin-right:12px;bottom: 5px;" for="id_can_add_post" class="mb-2 border float-right"></label>
                         </p>
                         <p class="content-color-primary page-sub-title-small mt-2">
                             Люди могут писать статьи
                             <input type="checkbox" {% if private_settings.can_add_article %} checked {% endif %} name="can_add_article" id="id_can_add_article" class="switch switch-sm">
-                            <label style="margin-right:12px;bottom: 5px;" for="id_can_add_article" class="bg-dark mb-2 border float-right"></label>
+                            <label style="margin-right:12px;bottom: 5px;" for="id_can_add_article" class="mb-2 border float-right"></label>
                         </p>
                         <p class="content-color-primary page-sub-title-small mt-2">
                             Люди могут добавлять товары
                             <input type="checkbox" {% if private_settings.can_add_good %} checked {% endif %} name="can_add_good" id="id_can_add_good" class="switch switch-sm">
-                            <label style="margin-right:12px;bottom: 5px;" for="id_can_add_good" class="bg-dark mb-2 border float-right"></label>
+                            <label style="margin-right:12px;bottom: 5px;" for="id_can_add_good" class="mb-2 border float-right"></label>
                         </p>
                     </div>
                     <div class="card-footer">
