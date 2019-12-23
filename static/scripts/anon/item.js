@@ -11,6 +11,8 @@ $('#ajax').on('click', '.c_fullscreen', function() {
     $('#item_loader').html('').load("/communities/item/" + pk + "/" + uuid + "/"); $('.item_fullscreen').show();
 });
 
+$('#ajax').on('click', '#R_U', function() {console.log("click"); var item = $(this); var item_id = item.data("uuid"); $('#user_item_pk').html(item_id);});
+
 $('.user_page').on('click', '.avatar_detail', function() {
 		var photo = $(this); var photo_id = photo.data("id"); var user_uuid = photo.data("uuid");
 		$('#photo_loader').html('').load("/gallery/load/avatar_detail/" + photo_id + "/" + user_uuid + "/"); $('.photo_fullscreen').show();
