@@ -1,6 +1,6 @@
 {% load staticfiles humanize thumbnail %}
-<span style="margin-left: 5%;border-left: 1px solid #DDDDDD;">
-  <div class="card-header border-bottom" style="margin-top: -20px;">
+<span style="margin-left: 5%;border-left: 1px solid #DDDDDD;margin-top:-40px;">
+  <div class="card-header border-bottom">
     <div class="media" style="font-size: 0.8em;">
       {% if object.community %}
       <a href="{% url 'community_detail' pk=object.community.pk %}" class="ajax">
