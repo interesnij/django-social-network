@@ -132,7 +132,7 @@
             error: function(data) {console.log(data);}
         });
     });
-    $('.R_U').click(function() {console.log("click"); var item = $(this); var item_id = item.data("uuid"); $('#user_item_pk').html(item_id);}); 
+    $('#user_repost').click(function() {console.log("click"); var item = $(this); var item_id = item.data("uuid"); $('#user_item_pk').html(item_id);}); 
     $('.add_board_hide').on('click', function() {$('#for_settings').hide();});
     $('#images_upload').on('click', function() {$('#for_images_upload').show();});
     $('#settings').on('click', function() {$('#for_settings').show();});
