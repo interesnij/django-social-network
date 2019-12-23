@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load staticfiles liked_user %}
-{% block title %}Друзья {{ user.first_name|gent }} {{ user.last_name|gent }}{% endblock %}
+{% block title %}Фотографии {{ user.first_name|gent }} {{ user.last_name|gent }}{% endblock %}
 {% block content %}
 
 <link rel="stylesheet" href="{% static 'styles/dropzone.css' %}" />
@@ -8,7 +8,7 @@
 <div class="container-fluid" style="margin-top:30px">
     <div class="row">
         <div class="col-12 col-md-6">
-            <h5 class="mt-1">Друзья
+            <h5 class="mt-1">Фотографии
                 <a style="text-decoration:underline;" class="ajax" href="{% url 'users' pk=user.pk %}">
                   {{ user.first_name|gent }} {{ user.last_name|gent }}
                 </a>
