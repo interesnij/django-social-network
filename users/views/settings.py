@@ -68,8 +68,7 @@ class SettingsNotifyView(TemplateView):
     notify_settings=None
 
     def get(self,request,*args,**kwargs):
-        self.user=User.objects.get(pk=self.kwargs["pk"])
-        self.form=SettingsNotifyForm(instance=self.user)
+        self.form=SettingsNotifyForm(instance=request.user)
         return super(SettingsNotifyView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -79,10 +78,9 @@ class SettingsNotifyView(TemplateView):
         return context
 
     def post(self,request,*args,**kwargs):
-        self.user=User.objects.get(pk=self.kwargs["pk"])
         self.notify_settings=UserNotificationsSettings.objects.get(user=request.user)
         self.form=SettingsNotifyForm(request.POST,instance=self.notify_settings)
-        if self.form.is_valid() and self.user == request.user:
+        if self.form.is_valid():
             self.form.save()
             if request.is_ajax():
                 return HttpResponse ('!')
@@ -95,8 +93,7 @@ class SettingsPrivateView(TemplateView):
 	private_settings=None
 
 	def get(self,request,*args,**kwargs):
-		self.user=User.objects.get(pk=self.kwargs["pk"])
-		self.form=SettingsPrivateForm(instance=self.user)
+		self.form=SettingsPrivateForm(instance=request.user)
 		return super(SettingsPrivateView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -106,7 +103,6 @@ class SettingsPrivateView(TemplateView):
 		return context
 
 	def post(self,request,*args,**kwargs):
-		self.user=User.objects.get(pk=self.kwargs["pk"])
 		self.private_settings=UserPrivateSettings.objects.get(user=request.user)
 		self.form=SettingsPrivateForm(request.POST, instance=self.private_settings)
 		if self.form.is_valid():

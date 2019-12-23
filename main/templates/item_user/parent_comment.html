@@ -48,7 +48,7 @@
                         <div class="comment_like_pop" style="margin:15px">
                             <span>Оценили: {{ comment.likes.count }} {{ comment.likes.count|rupluralize:"человек,человека,людей" }}</span>
                             <br><br>
-                            <span style="display: flex;">
+                            <span style="display: flex;"> 
                                 {% for heart in comment.likes %}
                                 <a href="{% url 'user' pk=heart.user.pk %}" class="ajax" style="padding-right:10px">
                                     <figure style="margin: 0;" title="{{ heart.user.get_full_name }}">
