@@ -118,11 +118,6 @@ $("#ajax").on('click', '.reply_comment', function() {
     var reply_comment_form = $(this); var objectUser = reply_comment_form.prev().text().trim(); var form = reply_comment_form.next().find(".text-comment"); form.val(objectUser + ', '); reply_comment_form.next().show(); form.focus();
 })
 
-$('.R_U').on('click', function() {
-    var item = $(this); var item_id = item.data("uuid"); $('#user_item_pk').html(item_id);
-});
-
-
 $("#ajax").on('click', '.u_like', function() {
     var like = $(this); var pk = like.data('id'); var uuid = like.data('uuid'); var dislike = like.next().next();
     $.ajax({url: "/votes/user_like/" + uuid + "/" + pk + "/",type: 'POST',data: {'obj': pk},
