@@ -24,7 +24,7 @@
                             <div class="form-group ">
 
                                 <div class="custom-control custom-radio">
-                                    <input type="radio" name="radiogroup-1" {% if user == request.user %} disabled="disabled"{% endif %} class="custom-control-input" id="repost_radio_wall">
+                                    <input type="radio" name="radiogroup-1" {% if user == request.user %} disabled="disabled"{% else %}checked="checked"{% endif %} class="custom-control-input" id="repost_radio_wall">
                                     <label class="custom-control-label" for="repost_radio_wall">На своей стене</label>
                                 </div>
 
