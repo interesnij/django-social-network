@@ -44,12 +44,12 @@
                     <span class="likes_count {% if comment.likes|user_in:request_user %}svg_success{% endif %}" data-count="like">{% if comment.likes.count %}{{ comment.likes.count }}{% endif %}</span>
                   </span>
                     <span class="comment_like_window">
-                        {% if comment.likes %}
+                        {% if comment.window_likes %}
                         <div class="comment_like_pop" style="margin:15px">
                             <span>Оценили: {{ comment.likes.count }} {{ comment.likes.count|rupluralize:"человек,человека,людей" }}</span>
                             <br><br>
                             <span style="display: flex;">
-                                {% for heart in comment.likes %}
+                                {% for heart in comment.window_likes %}
                                 <a href="{% url 'user' pk=heart.user.pk %}" class="ajax" style="padding-right:10px">
                                     <figure style="margin: 0;" title="{{ heart.user.get_full_name }}">
                                       {% if heart.user.get_avatar %}
@@ -74,12 +74,12 @@
                     </span>
 
                       <span class="comment_dislike_window">
-                          {% if comment.dislike %}
+                          {% if comment.window_dislikes %}
                           <div class="comment_dislike_pop" style="margin:15px">
                               <span>Не оценили: {{ comment.dislikes.count }} {{ comment.dislikes.count|rupluralize:"человек,человека,людей" }}</span>
                               <br><br>
                               <span style="display: flex;">
-                                  {% for sheet in comment.dislikes %}
+                                  {% for sheet in comment.window_dislikes %}
                                   <a href="{% url 'user' pk=sheet.user.pk %}" class="ajax" style="padding-right:10px">
                                       <figure style="margin: 0;" title="{{ sheet.user.get_full_name }}">
                                         {% if sheet.user.profile.avatar %}

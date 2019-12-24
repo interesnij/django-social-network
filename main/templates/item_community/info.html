@@ -17,12 +17,12 @@
           </span>
 
           <span class="like_window">
-            {% if object.likes %}
+            {% if object.window_likes %}
           <div class="like_pop" style="margin:15px">
             <span>Оценили: {{ object.likes.count }} {{ object.likes.count|rupluralize:"человек,человека,людей" }}</span>
             <br><br>
             <span style="display: flex;">
-              {% for heart in object.likes %}
+              {% for heart in object.window_likes %}
               <a href="{% url 'user' pk=heart.user.pk %}" class="ajax" style="padding-right:10px">
                 <figure style="margin: 0;" title="{{ heart.user.get_full_name }}">
                     {% if heart.user.get_avatar %}
@@ -48,12 +48,12 @@
           </span>
 
           <span class="dislike_window">
-            {% if object.dislikes %}
+            {% if object.window_dislikes %}
           <div class="dislike_pop" style="margin:15px">
             <span>Не оценили: {{ object.dislikes.count }} {{ object.dislikes.count|rupluralize:"человек,человека,людей" }}</span>
             <br><br>
             <span style="display: flex;" title="{{ sheet.user.get_full_name }}">
-              {% for sheet in object.dislikes %}
+              {% for sheet in object.window_dislikes %}
               <a href="{% url 'user' pk=sheet.user.pk %}" class="ajax" style="padding-right:10px">
                 <figure style="margin: 0;">
                   {% if sheet.user.get_avatar %}
@@ -90,12 +90,12 @@
                 </span>
             </span>
             <span class="repost_window">
-              {% if object.get_reposts %}
+              {% if object.get_window_reposts %}
             <div class="repost_pop" style="margin:15px">
               <span>Поделились: {{ object.count_reposts }} {{ object.count_reposts|rupluralize:"человек,человека,людей" }}</span>
               <br><br>
               <span style="display: flex;">
-                {% for repost in object.get_reposts %}
+                {% for repost in object.get_window_reposts %}
                 <a href="{% url 'user' pk=repost.creator.pk %}" class="ajax" style="padding-right:10px">
                   <figure style="margin: 0;" title="{{ sheet.user.get_full_name }}">
                     {% if repost.creator.get_avatar %}

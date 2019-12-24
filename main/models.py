@@ -43,9 +43,7 @@ class Item(models.Model):
     status = models.CharField(blank=False, null=False, choices=STATUSES, default=STATUS_PUBLISHED, max_length=2, verbose_name="Статус статьи")
 
     class Meta:
-        indexes = (
-            BrinIndex(fields=['created']),
-        )
+        indexes = (BrinIndex(fields=['created']),)
         verbose_name="запись"
         verbose_name_plural="записи"
 
@@ -65,15 +63,6 @@ class Item(models.Model):
             i = i + comment.count_replies()
         i = i + parents_count
         return i
-
-    def get_reposts(self):
-        parents = Item.objects.filter(parent=self)
-        return parents
-
-    def count_reposts(self):
-        parents = self.get_reposts()
-        count_reposts = parents.count()
-        return count_reposts
 
     def __str__(self):
         return "{0}/{1}".format(self.creator.get_full_name(), self.views)
@@ -134,9 +123,30 @@ class Item(models.Model):
         likes = ItemVotes.objects.filter(parent=self, vote__gt=0)
         return likes
 
+    def window_likes(self):
+        likes = ItemVotes.objects.filter(parent=self, vote__gt=0)
+        return likes[0:6]
+
     def dislikes(self):
         dislikes = ItemVotes.objects.filter(parent=self, vote__lt=0)
         return dislikes
+
+    def window_dislikes(self):
+        dislikes = ItemVotes.objects.filter(parent=self, vote__lt=0)
+        return dislikes[0:6]
+
+    def get_reposts(self):
+        parents = Item.objects.filter(parent=self)
+        return parents
+
+    def get_window_reposts(self):
+        parents = Item.objects.filter(parent=self)
+        return parents[0:6]
+
+    def count_reposts(self):
+        parents = self.get_reposts()
+        count_reposts = parents.count()
+        return count_reposts
 
     def get_likes_for_item(self, user):
         reactions_query = user._make_get_votes_query(item=self)
@@ -174,9 +184,17 @@ class ItemComment(models.Model):
         likes = ItemCommentVotes.objects.filter(item=self, vote__gt=0)
         return likes
 
+    def window_likes(self):
+        likes = ItemCommentVotes.objects.filter(item=self, vote__gt=0)
+        return likes[0:6]
+
     def dislikes(self):
         dislikes = ItemCommentVotes.objects.filter(item=self, vote__lt=0)
         return dislikes
+
+    def window_dislikes(self):
+        dislikes = ItemCommentVotes.objects.filter(item=self, vote__lt=0)
+        return dislikes[0:6]
 
     def get_likes_for_comment_item(self, user):
         reactions_query = user._make_get_votes_query_comment(comment=self)

@@ -265,10 +265,14 @@ class User(AbstractUser):
 
 
     def count_followers(self):
-        return Follow.objects.filter(followed_user__id=self.pk).count()
+        followed_users = self.follows.values('followed_user_id')
+        followed_users_count = followed_users.count()
+        return followed_users_count
 
     def count_following(self):
-        return self.followers.count()
+        followed_users = self.followers.values('user_id')
+        followed_users_count = followed_users.count()
+        return followed_users_count
 
     def count_connections(self):
         return self.connections.count()
