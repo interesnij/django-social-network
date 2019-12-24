@@ -76,11 +76,10 @@ class Item(models.Model):
         parent = self.get_parent()
         return parent.thread.all()
 
-    def count_thread(self):
-        if not self.parent:
-            return self.get_thread().count()
-        else:
-            return None
+    def count_reposts(self):
+        parents = Item.objects.filter(poarent=self)
+        count_reposts = parents.count
+        return count_reposts
 
     def __str__(self):
         return "{0}/{1}".format(self.creator.get_full_name(), self.views)
