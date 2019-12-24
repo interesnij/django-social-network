@@ -78,7 +78,7 @@ class Item(models.Model):
 
     def count_reposts(self):
         parents = Item.objects.filter(parent=self)
-        count_reposts = parents.count
+        count_reposts = parents.count()
         return count_reposts
 
     def __str__(self):
