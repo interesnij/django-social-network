@@ -66,8 +66,12 @@ class Item(models.Model):
         i = i + parents_count
         return i
 
-    def count_reposts(self):
+    def get_reposts(self):
         parents = Item.objects.filter(parent=self)
+        return parents
+
+    def count_reposts(self):
+        parents = self.get_reposts()
         count_reposts = parents.count()
         return count_reposts
 
