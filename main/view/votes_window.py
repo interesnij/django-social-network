@@ -9,7 +9,6 @@ from common.checkers import check_is_not_blocked_with_user_with_id, check_is_con
 from common.checkers import check_can_get_posts_for_community_with_name
 from django.contrib.contenttypes.models import ContentType
 from rest_framework.exceptions import PermissionDenied
-from django.core import serializers
 
 
 class ItemUserLikeWindow(TemplateView):
@@ -173,5 +172,171 @@ class ItemCommunityCommentDislikeWindow(TemplateView):
 
     def get_context_data(self,**kwargs):
         context=super(ItemCommunityCommentDislikeWindow,self).get_context_data(**kwargs)
+        context["dislikes"]=self.dislikes
+        return context
+
+
+
+class AllItemUserLikeWindow(TemplateView):
+    template_name="item_votes/like_window.html"
+
+    def get(self,request,*args,**kwargs):
+        self.item = Item.objects.get(pk=self.kwargs["pk"])
+        self.user = User.objects.get(uuid=self.kwargs["uuid"])
+        if self.user != request.user and request.user.is_authenticated:
+            check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
+            if self.user.is_closed_profile():
+                check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
+            self.likes = self.item.get_likes_for_item(request.user)
+        elif self.user == request.user:
+            self.likes = self.item.get_likes_for_item(request.user)
+        elif request.user.is_anonymous and self.user.is_closed_profile():
+            raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
+        elif request.user.is_anonymous and not self.user.is_closed_profile():
+            self.likes = self.item.get_likes_for_item(request.user)
+        return super(AllItemUserLikeWindow,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context=super(AllItemUserLikeWindow,self).get_context_data(**kwargs)
+        context["likes"]=self.likes
+        return context
+
+
+class AllItemCommunityLikeWindow(TemplateView):
+    template_name="item_votes/like_window.html"
+
+    def get(self,request,*args,**kwargs):
+        self.item = Item.objects.get(pk=self.kwargs["pk"])
+        community = Community.objects.get(uuid=self.kwargs["uuid"])
+        check_can_get_posts_for_community_with_name(request.user,community.name)
+        self.likes = self.item.get_likes_for_item(request.user)
+        return super(AllItemCommunityLikeWindow,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context=super(AllItemCommunityLikeWindow,self).get_context_data(**kwargs)
+        context["likes"]=self.likes
+        return context
+
+
+class AllItemUserCommentLikeWindow(TemplateView):
+    template_name="item_votes/comment_like_window.html"
+
+    def get(self,request,*args,**kwargs):
+        self.comment = ItemComment.objects.get(pk=self.kwargs["pk"])
+        self.user = User.objects.get(uuid=self.kwargs["uuid"])
+        if self.user != request.user and request.user.is_authenticated:
+            check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
+            if self.user.is_closed_profile():
+                check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
+            self.likes = self.comment.get_likes_for_comment_item(request.user)
+        elif self.user == request.user:
+            self.likes = self.comment.get_likes_for_comment_item(request.user)
+        elif request.user.is_anonymous and self.user.is_closed_profile():
+            raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
+        elif request.user.is_anonymous and not self.user.is_closed_profile():
+            self.likes = self.comment.get_likes_for_comment_item(request.user)
+        return super(AllItemUserCommentLikeWindow,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context=super(AllItemUserCommentLikeWindow,self).get_context_data(**kwargs)
+        context["likes"]=self.likes
+        return context
+
+
+class AllItemCommunityCommentLikeWindow(TemplateView):
+    template_name="item_votes/comment_like_window.html"
+
+    def get(self,request,*args,**kwargs):
+        self.comment = ItemComment.objects.get(pk=self.kwargs["pk"])
+        community = Community.objects.get(uuid=self.kwargs["uuid"])
+        check_can_get_posts_for_community_with_name(request.user,community.name)
+        self.likes = self.comment.get_likes_for_comment_item(request.user)
+        return super(AllItemCommunityCommentLikeWindow,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context=super(AllItemCommunityCommentLikeWindow,self).get_context_data(**kwargs)
+        context["likes"]=self.likes
+        return context
+
+
+class AllItemUserDislikeWindow(TemplateView):
+    template_name="item_votes/dislike_window.html"
+
+    def get(self,request,*args,**kwargs):
+        self.item = Item.objects.get(pk=self.kwargs["pk"])
+        self.user = User.objects.get(uuid=self.kwargs["uuid"])
+        if self.user != request.user and request.user.is_authenticated:
+            check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
+            if self.user.is_closed_profile():
+                check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
+            self.dislikes = self.item.get_dislikes_for_item(request.user)
+        elif self.user == request.user:
+            self.dislikes = self.item.get_dislikes_for_item(request.user)
+        elif request.user.is_anonymous and self.user.is_closed_profile():
+            raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
+        elif request.user.is_anonymous and not self.user.is_closed_profile():
+            self.dislikes = self.item.get_dislikes_for_item(request.user)
+        return super(AllItemUserDislikeWindow,self).get(request,*args,**kwargs)
+
+
+    def get_context_data(self,**kwargs):
+        context=super(AllItemUserDislikeWindow,self).get_context_data(**kwargs)
+        context["dislikes"]=self.dislikes
+        return context
+
+
+class AllItemCommunityDislikeWindow(TemplateView):
+    template_name="item_votes/dislike_window.html"
+
+    def get(self,request,*args,**kwargs):
+        self.item = Item.objects.get(pk=self.kwargs["pk"])
+        community = Community.objects.get(uuid=self.kwargs["uuid"])
+        check_can_get_posts_for_community_with_name(request.user,community.name)
+        self.dislikes = self.item.get_dislikes_for_item(request.user)
+        return super(AllItemCommunityDislikeWindow,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context=super(AllItemCommunityDislikeWindow,self).get_context_data(**kwargs)
+        context["dislikes"]=self.dislikes
+        return context
+
+
+class AllItemUserCommentDislikeWindow(TemplateView):
+    template_name="item_votes/comment_dislike_window.html"
+
+    def get(self,request,*args,**kwargs):
+        self.comment = ItemComment.objects.get(pk=self.kwargs["pk"])
+        self.user = User.objects.get(uuid=self.kwargs["uuid"])
+        if self.user != request.user and request.user.is_authenticated:
+            check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
+            if self.user.is_closed_profile():
+                check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
+            self.dislikes = self.comment.get_dislikes_for_comment_item(request.user)
+        elif self.user == request.user:
+            self.dislikes = self.comment.get_dislikes_for_comment_item(request.user)
+        elif request.user.is_anonymous and self.user.is_closed_profile():
+            raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
+        elif request.user.is_anonymous and not self.user.is_closed_profile():
+            self.dislikes = self.comment.get_dislikes_for_comment_item(request.user)
+        return super(AllItemUserCommentDislikeWindow,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context=super(AllItemUserCommentDislikeWindow,self).get_context_data(**kwargs)
+        context["dislikes"]=self.dislikes
+        return context
+
+
+class AllItemCommunityCommentDislikeWindow(TemplateView):
+    template_name="item_votes/comment_dislike_window.html"
+
+    def get(self,request,*args,**kwargs):
+        self.comment = ItemComment.objects.get(pk=self.kwargs["pk"])
+        community = Community.objects.get(uuid=self.kwargs["uuid"])
+        check_can_get_posts_for_community_with_name(request.user,community.name)
+        self.likes = self.comment.get_dislikes_for_comment_item(request.user)
+        return super(AllItemCommunityCommentDislikeWindow,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context=super(AllItemCommunityCommentDislikeWindow,self).get_context_data(**kwargs)
         context["dislikes"]=self.dislikes
         return context
