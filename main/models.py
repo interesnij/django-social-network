@@ -77,7 +77,10 @@ class Item(models.Model):
         return parent.thread.all()
 
     def count_thread(self):
-        return self.get_thread().count()
+        if self.parent:
+            return self.get_thread().count()
+        else:
+            return None
 
     def __str__(self):
         return "{0}/{1}".format(self.creator.get_full_name(), self.views)
