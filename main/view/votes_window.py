@@ -178,7 +178,7 @@ class ItemCommunityCommentDislikeWindow(TemplateView):
 
 
 class AllItemUserLikeWindow(TemplateView):
-    template_name="item_votes/like_window.html"
+    template_name="item_votes/all_like_window.html"
 
     def get(self,request,*args,**kwargs):
         self.item = Item.objects.get(pk=self.kwargs["pk"])
@@ -203,7 +203,7 @@ class AllItemUserLikeWindow(TemplateView):
 
 
 class AllItemCommunityLikeWindow(TemplateView):
-    template_name="item_votes/like_window.html"
+    template_name="item_votes/all_like_window.html"
 
     def get(self,request,*args,**kwargs):
         self.item = Item.objects.get(pk=self.kwargs["pk"])
@@ -219,7 +219,7 @@ class AllItemCommunityLikeWindow(TemplateView):
 
 
 class AllItemUserCommentLikeWindow(TemplateView):
-    template_name="item_votes/comment_like_window.html"
+    template_name="item_votes/all_comment_like_window.html"
 
     def get(self,request,*args,**kwargs):
         self.comment = ItemComment.objects.get(pk=self.kwargs["pk"])
@@ -244,7 +244,7 @@ class AllItemUserCommentLikeWindow(TemplateView):
 
 
 class AllItemCommunityCommentLikeWindow(TemplateView):
-    template_name="item_votes/comment_like_window.html"
+    template_name="item_votes/all_comment_like_window.html"
 
     def get(self,request,*args,**kwargs):
         self.comment = ItemComment.objects.get(pk=self.kwargs["pk"])
@@ -260,7 +260,7 @@ class AllItemCommunityCommentLikeWindow(TemplateView):
 
 
 class AllItemUserDislikeWindow(TemplateView):
-    template_name="item_votes/dislike_window.html"
+    template_name="item_votes/all_dislike_window.html"
 
     def get(self,request,*args,**kwargs):
         self.item = Item.objects.get(pk=self.kwargs["pk"])
@@ -286,7 +286,7 @@ class AllItemUserDislikeWindow(TemplateView):
 
 
 class AllItemCommunityDislikeWindow(TemplateView):
-    template_name="item_votes/dislike_window.html"
+    template_name="item_votes/all_dislike_window.html"
 
     def get(self,request,*args,**kwargs):
         self.item = Item.objects.get(pk=self.kwargs["pk"])
@@ -302,7 +302,7 @@ class AllItemCommunityDislikeWindow(TemplateView):
 
 
 class AllItemUserCommentDislikeWindow(TemplateView):
-    template_name="item_votes/comment_dislike_window.html"
+    template_name="item_votes/all_comment_dislike_window.html"
 
     def get(self,request,*args,**kwargs):
         self.comment = ItemComment.objects.get(pk=self.kwargs["pk"])
@@ -327,7 +327,7 @@ class AllItemUserCommentDislikeWindow(TemplateView):
 
 
 class AllItemCommunityCommentDislikeWindow(TemplateView):
-    template_name="item_votes/comment_dislike_window.html"
+    template_name="item_votes/all_comment_dislike_window.html"
 
     def get(self,request,*args,**kwargs):
         self.comment = ItemComment.objects.get(pk=self.kwargs["pk"])
@@ -339,4 +339,45 @@ class AllItemCommunityCommentDislikeWindow(TemplateView):
     def get_context_data(self,**kwargs):
         context=super(AllItemCommunityCommentDislikeWindow,self).get_context_data(**kwargs)
         context["dislikes"]=self.dislikes
+        return context
+
+
+class AllItemUserRepostWindow(TemplateView):
+    template_name="item_votes/all_repost_window.html"
+
+    def get(self,request,*args,**kwargs):
+        self.item = Item.objects.get(pk=self.kwargs["pk"])
+        self.user = User.objects.get(uuid=self.kwargs["uuid"])
+        if self.user != request.user and request.user.is_authenticated:
+            check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
+            if self.user.is_closed_profile():
+                check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
+            self.reposts = self.item.get_reposts()
+        elif self.user == request.user:
+            self.reposts = self.item.get_reposts()
+        elif request.user.is_anonymous and self.user.is_closed_profile():
+            raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
+        elif request.user.is_anonymous and not self.user.is_closed_profile():
+            self.reposts = self.item.get_reposts()
+        return super(AllItemUserRepostWindow,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context=super(AllItemUserRepostWindow,self).get_context_data(**kwargs)
+        context["reposts"]=self.reposts
+        return context
+
+
+class AllItemCommunityRepostWindow(TemplateView):
+    template_name="item_votes/all_repost_window.html"
+
+    def get(self,request,*args,**kwargs):
+        self.item = Item.objects.get(pk=self.kwargs["pk"])
+        community = Community.objects.get(uuid=self.kwargs["uuid"])
+        check_can_get_posts_for_community_with_name(request.user,community.name)
+        self.reposts = self.item.get_reposts()
+        return super(AllItemCommunityRepostWindow,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context=super(AllItemCommunityRepostWindow,self).get_context_data(**kwargs)
+        context["reposts"]=self.reposts
         return context
