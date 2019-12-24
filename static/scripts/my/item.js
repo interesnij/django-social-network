@@ -14,7 +14,8 @@ $('#ajax').on('click', '.c_fullscreen', function() {
 $('#ajax').on('click', '.u_all_likes', function() {
     var btn = $(this); item = $(this).parents('.interaction'); var pk = item.data("pk"); var uuid = item.data("uuid");
     $('#votes_loader').html('').load("/window/all_user_like/" + uuid + "/" + pk + "/"); $('.votes_fullscreen').show();
-});
+});$('#ajax').on('click', '.votes_fullscreen_hide', function() { $('.votes_fullscreen').hide(); $('#votes_loader').empty(); });
+
 
 $('.user_page').on('click', '.avatar_detail', function() {
 		var photo = $(this); var photo_id = photo.data("id"); var user_uuid = photo.data("uuid");
