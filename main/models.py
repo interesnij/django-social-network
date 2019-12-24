@@ -70,7 +70,7 @@ class Item(models.Model):
         if self.parent:
             return self.parent
         else:
-            return self
+            return None
 
     def get_thread(self):
         parent = self.get_parent()
