@@ -1,7 +1,6 @@
 from django.conf.urls import url
 from main.view.votes import *
 from main.models import Item, ItemComment
-from common.models import ItemVotes
 from django.contrib.auth.decorators import login_required
 
 
