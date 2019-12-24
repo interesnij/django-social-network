@@ -10,7 +10,7 @@ $('#ajax').on('click', '.c_fullscreen', function() {
     var item = $(this); var pk = item.data("pk"); var uuid = item.data("uuid");
     $('#item_loader').html('').load("/communities/item/" + pk + "/" + uuid + "/"); $('.item_fullscreen').show();
 });
-$('body').on('click', '#R_U', function() {var item = $(this); var item_id = item.data("uuid"); $('#user_item_pk').html(item_id);});
+$('#ajax').on('click', '.u_repost', function() {var item = $(this); var item_id = item.data("uuid"); $('#user_item_pk').html(item_id);});
 
 $('.user_page').on('click', '.avatar_detail', function() {
 		var photo = $(this); var photo_id = photo.data("id"); var user_uuid = photo.data("uuid");

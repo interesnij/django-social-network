@@ -147,7 +147,8 @@ svg{
   }
 
   .like_window,
-  .dislike_window {
+  .dislike_window,
+  .repost_window {
       opacity: 0;
       visibility: hidden;
       position: absolute;
@@ -166,7 +167,8 @@ svg{
       transition: 0.5s;
   }
   .like_window:hover,
-  .dislike_window:hover {
+  .dislike_window:hover,
+  .repost_window:hover {
       z-index: 10;
       opacity: 1;
       visibility: visible;
@@ -183,8 +185,10 @@ svg{
   }
   .c_like:hover~.like_window,
   .c_dislike:hover~.dislike_window,
+  .c_repost:hover~.repost_window,
   .u_like:hover~.like_window,
-  .u_dislike:hover~.dislike_window{
+  .u_dislike:hover~.dislike_window,
+  .u_repost:hover~.repost_window{
       z-index: 10;
       opacity: 1;
       visibility: visible;

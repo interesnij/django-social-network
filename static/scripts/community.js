@@ -1,15 +1,11 @@
 $('.article_fullscreen_hide').on('click', function() {$('.article_fullscreen').hide(); $('#article_loader').empty();});
 
   $('#ajax').on('click', '.member_create', function() {
-    var member_create = $(this);
-    var pk = member_create.data('id');
-  $.ajax({
-      url: "/communities/add_community_member/" + pk + "/",
-      success: function () {
-        $('#ajax').html('').load("/communities/reload/" + pk + "/");
-      }
+    var member_create = $(this);var pk = member_create.data('id');
+  $.ajax({url: "/communities/add_community_member/" + pk + "/",success: function () {$('#ajax').html('').load("/communities/reload/" + pk + "/");}});
   });
-  });
+
+  $('#ajax').on('click', '.c_repost', function() {var item = $(this); var item_id = item.data("uuid"); $('#user_item_pk').html(item_id);});
 
   $('#ajax').on('click', '.member_delete', function() {
     var member_delete = $(this);
