@@ -2,7 +2,7 @@
 
 <div class="card-footer border-top py-2">
     <div class="row">
-        <div class="col interaction" id="interaction">
+        <div class="col interaction" id="interaction" data-id="{{ object.id }}" data-uuid="{{ object.creator.uuid }}">
 
           <span class="u_like" data-id="{{ object.id }}" data-uuid="{{ object.creator.uuid }}" title="Нравится">
             <svg class="svg_default {% if object.likes|user_in:request_user %}svg_success{% endif %}" fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
@@ -36,19 +36,15 @@
         </span>
 
         &nbsp;&nbsp;
-        <span class="u_dislike"
-              data-id="{{ object.id }}"
-              data-uuid="{{ object.creator.uuid }}"
-              title="Не нравится">
+        <span class="u_dislike" data-id="{{ object.id }}" data-uuid="{{ object.creator.uuid }}" title="Не нравится">
               <svg class="svg_default {% if object.dislikes|user_in:request_user %}svg_danger{% endif %}" fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M15 3H6c-.83 0-1.54.5-1.84 1.22l-3.02 7.05c-.09.23-.14.47-.14.73v2c0 1.1.9 2 2 2h6.31l-.95 4.57-.03.32c0 .41.17.79.44 1.06L9.83 23l6.59-6.59c.36-.36.58-.86.58-1.41V5c0-1.1-.9-2-2-2zm4 0v12h4V3h-4z"/></svg>
               <span class="dislikes_count {% if object.dislikes|user_in:request_user %}svg_danger{% endif %}" data-count="dislike">{% if object.dislikes.count %}{{ object.dislikes.count }}{% endif %}</span>
-
         </span>
 
         <span class="dislike_window">
           {% if object.window_dislikes %}
         <div class="dislike_pop" style="margin:15px">
-          <span class="u_all_dislikes" style="cursor:pointer">Не оценили: {{ object.dislikes.count }} {{ object.dislikes.count|rupluralize:"человек,человека,людей" }}</span>
+          <span class="u_all_dislikes" data-id="{{ object.id }}" data-uuid="{{ object.creator.uuid }}" style="cursor:pointer">Не оценили: {{ object.dislikes.count }} {{ object.dislikes.count|rupluralize:"человек,человека,людей" }}</span>
           <br><br>
           <span style="display: flex;">
             {% for sheet in object.window_dislikes %}
