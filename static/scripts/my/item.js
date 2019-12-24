@@ -11,6 +11,11 @@ $('#ajax').on('click', '.c_fullscreen', function() {
     $('#item_loader').html('').load("/communities/item/" + pk + "/" + uuid + "/"); $('.item_fullscreen').show();
 });
 
+$('#ajax').on('click', '.u_all_likes', function() {
+    var btn = $(this); item = $(this).parents('.interaction'); var pk = item.data("pk"); var uuid = item.data("uuid");
+    $('#votes_loader').html('').load("/window/all_user_like/" + uuid + "/" + pk + "/"); $('.votes_fullscreen').show();
+});
+
 $('.user_page').on('click', '.avatar_detail', function() {
 		var photo = $(this); var photo_id = photo.data("id"); var user_uuid = photo.data("uuid");
 		$('#photo_loader').html('').load("/gallery/load/avatar_detail/" + photo_id + "/" + user_uuid + "/"); $('.photo_fullscreen').show();
