@@ -2,7 +2,7 @@
 
 <div class="card-footer border-top py-2">
     <div class="row">
-        <div class="col interaction" id="interaction" data-id="{{ object.pk }}" data-uuid="{{ object.creator.uuid }}">
+        <div class="col interaction" id="interaction" data-pk="{{ object.pk }}" data-uuid="{{ object.creator.uuid }}">
 
           <span class="u_like" data-id="{{ object.id }}" data-uuid="{{ object.creator.uuid }}" title="Нравится">
             <svg class="svg_default {% if object.likes|user_in:request_user %}svg_success{% endif %}" fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
