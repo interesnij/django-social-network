@@ -66,16 +66,6 @@ class Item(models.Model):
         i = i + parents_count
         return i
 
-    def get_parent(self):
-        if self.parent:
-            return self.parent
-        else:
-            return None
-
-    def get_thread(self):
-        parent = self.get_parent()
-        return parent.thread.all()
-
     def count_reposts(self):
         parents = Item.objects.filter(parent=self)
         count_reposts = parents.count()
