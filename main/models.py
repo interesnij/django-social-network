@@ -77,7 +77,7 @@ class Item(models.Model):
         return parent.thread.all()
 
     def count_reposts(self):
-        parents = Item.objects.filter(poarent=self)
+        parents = Item.objects.filter(parent=self)
         count_reposts = parents.count
         return count_reposts
 
