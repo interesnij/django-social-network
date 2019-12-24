@@ -77,7 +77,7 @@ class Item(models.Model):
         return parent.thread.all()
 
     def count_thread(self):
-        if self.parent:
+        if not self.parent:
             return self.get_thread().count()
         else:
             return None
