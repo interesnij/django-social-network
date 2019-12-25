@@ -16,9 +16,9 @@ class ItemsCommunity(View):
         template = None
         community=Community.objects.get(pk=self.kwargs["pk"])
         try:
-            self.fixed = Item.objects.get(community=community, is_fixed=True)
+            fixed = Item.objects.get(community=community, is_fixed=True)
         except:
-            self.fixed = None
+            fixed = None
         if request.user.is_authenticated and request.user.is_member_of_community_with_name(community.name):
             if request.user.is_creator_of_community_with_name(community.name):
                 template_name = "detail_sections/admin_list.html"
@@ -43,8 +43,8 @@ class ItemsCommunity(View):
             item_list = community.get_posts().order_by('-created')
         current_page = Paginator(item_list, 10)
         page = request.GET.get('page')
-        context['object'] = self.fixed
-        context["community"]=self.community
+        context['object'] = fixed
+        context["community"]=community
         try:
             context['items_list'] = current_page.page(page)
         except PageNotAnInteger:
