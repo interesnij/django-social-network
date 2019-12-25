@@ -45,7 +45,6 @@
   </div>
 
     <div class="card-body fullscreen" data-uuid="{{ object.creator.uuid }}" data-pk="{{ object.pk }}" style="cursor:pointer;margin-top: -30px;">
-
       {% if object.post.text %}
         <p class="">{{ object.post.text|linebreaks }}</p>
       {% endif %}
@@ -56,7 +55,10 @@
         <p class="">{{ object.post.doc }}</p>
       {% endif %}
     </div>
-    
+
+    {% if object.is_repost %}
+      {% include 'item_user/repost.html' %}
+    {% endif %} 
 
     {% include 'item_user/info.html' %}
 </div>
