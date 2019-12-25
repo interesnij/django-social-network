@@ -55,17 +55,15 @@ class ItemCommunityCommentCreate(View):
 
 			if not comment.text and not photo and not photo2:
 				raise ValidationError('Напишите что-нибудь или прикрепите изображение')
-			check_can_get_posts_for_community_with_name(request.user,self.community.name)
-			comments = item.get_comments(request.user)
-			current_page = Paginator(comments, 10)
+			check_can_get_posts_for_community_with_name(request.user,community.name)
 			new_comment = comment.create_user_comment(commenter=request.user, parent_comment=None, item=item, text=comment.text)
 			if photo:
-				album=Album.objects.get(creator=request.user, title="Сохраненные фото", is_generic=True, community=None)
-				upload_photo = Photo.objects.create(creator=request.user, file=photo,community=None,is_public=True, album=album)
+				album=Album.objects.get(creator=request.user, title="Сохраненные фото", is_generic=True, community=community)
+				upload_photo = Photo.objects.create(creator=request.user, file=photo, community=community, is_public=True, album=album)
 				upload_photo.item_comment.add(new_comment)
 			if photo2:
-				album=Album.objects.get(creator=request.user, title="Сохраненные фото", is_generic=True, community=None)
-				upload_photo2 = Photo.objects.create(creator=request.user, file=photo2,community=None,is_public=True, album=album)
+				album=Album.objects.get(creator=request.user, title="Сохраненные фото", is_generic=True, community=community)
+				upload_photo2 = Photo.objects.create(creator=request.user, file=photo2, community=community, is_public=True, album=album)
 				upload_photo2.item_comment.add(new_comment)
 			new_comment.notification_community_comment(request.user)
 			html = render_to_string('item_community/parent_comment.html',{'comment': new_comment, 'request_user': request.user, "form_reply": CommentForm(), 'request': request})
@@ -82,18 +80,18 @@ class ItemCommunityReplyCreate(View):
 
 		if form_post.is_valid():
 			comment=form_post.save(commit=False)
-			item_comment_photo=form_post.cleaned_data['item_comment_photo']
-			item_comment_photo2=form_post.cleaned_data['item_comment_photo2']
-			if not comment.text and not item_comment_photo and not item_comment_photo2:
+			photo=form_post.cleaned_data['photo']
+			photo2=form_post.cleaned_data['photo2']
+			if not comment.text and not photo and not photo2:
 				raise ValidationError('Для добавления комментария необходимо написать что-то или прикрепить изображение')
-			check_can_get_posts_for_community_with_name(request.user,self.community.name)
+			check_can_get_posts_for_community_with_name(request.user,community.name)
 			new_comment = comment.create_user_comment(commenter=request.user, text=comment.text, parent_comment=parent)
 			if item_comment_photo:
-				album=Album.objects.get(creator=request.user, title="Сохраненные фото", is_generic=True, community=None)
-				Photo.objects.create(creator=request.user, file=item_comment_photo,community=None,is_public=True, album=album, item_comment=new_comment)
+				album=Album.objects.get(creator=request.user, title="Сохраненные фото", is_generic=True, community=community)
+				Photo.objects.create(creator=request.user, file=photo, community=community, is_public=True, album=album, item_comment=new_comment)
 			if item_comment_photo2:
-				album=Album.objects.get(creator=request.user, title="Сохраненные фото", is_generic=True, community=None)
-				Photo.objects.create(creator=request.user, file=item_comment_photo2,community=None,is_public=True, album=album, item_comment=new_comment)
+				album=Album.objects.get(creator=request.user, title="Сохраненные фото", is_generic=True, community=community)
+				Photo.objects.create(creator=request.user, file=photo2, community=community, is_public=True, album=album, item_comment=new_comment)
 			new_comment.notification_user_reply_comment(request.user)
 			html = render_to_string('item_community/reply_comment.html',{'reply': new_comment, 'request_user': request.user, "form_reply": CommentForm(), 'request': request})
 			return JsonResponse(html, safe=False)

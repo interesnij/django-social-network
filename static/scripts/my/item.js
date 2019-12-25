@@ -4,7 +4,6 @@
   */
 $('#ajax .stream').on('click', '.article_detail', function() {var item = $(this); var item_id = item.data("id");$('#article_loader').html('').load("/article/detail/" + item_id); $('.article_fullscreen').show();});
 $('#ajax').on('click', '.fullscreen', function() {var item = $(this); var item_pk = item.data("pk"); var user_uuid = item.data("uuid");$('#item_loader').html('').load("/users/detail/item/" + item_pk + "/" + user_uuid + "/"); $('.item_fullscreen').show();});
-$('#ajax').on('click', '.c_fullscreen', function() {var item = $(this); var pk = item.data("pk"); var uuid = item.data("uuid");$('#item_loader').html('').load("/communities/item/" + pk + "/" + uuid + "/"); $('.item_fullscreen').show();});
 
 $('#ajax').on('click', '.photo_fullscreen_hide', function() { $('.photo_fullscreen').hide(); $('#photo_loader').empty(); });
 $('.item_fullscreen_hide').on('click', function() { $('.item_fullscreen').hide(); $('#item_loader').empty(); });
@@ -49,8 +48,7 @@ $("#ajax").on('click', '.u_like', function() {
             like.find("[data-count='like']").text(json.like_count); like.find(".svg_default").toggleClass('svg_success'); like.find(".likes_count").toggleClass('svg_success'); like.siblings('.like_window').html('').load("/window/u_like_window/" + uuid + "/" + pk + "/");
             dislike.find("[data-count='dislike']").text(json.dislike_count); dislike.find(".svg_default").removeClass('svg_danger'); dislike.find(".dislikes_count").removeClass('svg_danger'); dislike.siblings('.dislike_window').html('').load("/window/u_dislike_window/" + uuid + "/" + pk + "/")
         }
-    });
-    return false;
+    });return false;
 });
 $("#ajax").on('click', '.u_dislike', function() {
         var dislike = $(this); item = dislike.parents('.interaction');var pk = item.data('pk'); var uuid = item.data('uuid'); var like = dislike.prev().prev();
@@ -143,6 +141,7 @@ $('#ajax').on('click', '.u_itemComment', function() {
     });
     return false;
 });
+
 $('#ajax').on('click', '.u_replyComment', function() {
     var button = $(this); var form2 = button.parent().parent().parent().parent(); var block = form2.parent(); var reply_stream = block.next().next(); var pk = button.data('pk'); var uuid = button.data('uuid');
     $.ajax({
