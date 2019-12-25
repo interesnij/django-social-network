@@ -119,18 +119,18 @@ class Item(models.Model):
         likes = ItemVotes.objects.filter(parent=self, vote__gt=0)
         return likes[0:6]
 
-    def get_repost_for_user(self, user_id):
+    def get_fixed_for_user(self, user_id):
         try:
-            item = Item.objects.get(creator__id=user_id,is_repost=True)
-            item.is_repost = False
-            item.save(update_fields=['is_repost'])
-            new_repost = Item.objects.get(creator__id=user_id,id=self.pk)
-            new_repost.is_repost = True
-            new_repost.save(update_fields=['is_repost'])
+            item = Item.objects.get(creator__id=user_id,is_fixed=True)
+            item.is_fixed = False
+            item.save(update_fields=['is_fixed'])
+            new_fixed = Item.objects.get(creator__id=user_id,id=self.pk)
+            new_fixed.is_fixed = True
+            new_fixed.save(update_fields=['is_fixed'])
         except:
-            new_repost = Item.objects.get(creator__id=user_id,id=self.pk)
-            new_repost.is_repost = True
-            new_repost.save(update_fields=['is_repost'])
+            new_fixed = Item.objects.get(creator__id=user_id,id=self.pk)
+            new_fixed.is_fixed = True
+            new_fixed.save(update_fields=['is_fixed'])
 
     def dislikes(self):
         dislikes = ItemVotes.objects.filter(parent=self, vote__lt=0)

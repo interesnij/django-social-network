@@ -13,7 +13,7 @@
         </figure>
       </a>
       {% else %}
-      <a href="" class="ajax">
+      <a href="{% url 'user' pk=object.parent.creator.pk %}" class="ajax">
         <figure>
           {% if object.parent.creator.get_avatar %}
             <img src="{{ object.parent.creator.get_avatar.file|thumbnail_url:'small_avatar' }}" style="border-radius: 50px;width:40px;" alt="image">
