@@ -73,26 +73,3 @@
         </div>
     </form>
 </div>
-
-<div class="card mb-4 article_fullscreen" style="display:none">
-    <span class="article_fullscreen_hide">
-      <svg class="svg_default svg_default_30" fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
-    </span>
-    <div id="article_loader" style="margin-top:30px"></div>
-</div>
-
-
-<script>
-  $('#ajax').on('click', '#community_article_add', function() {
-    var btn = $(this); var pk = btn.data('pk');
-    $('#article_loader').html('').load("/article/add_community/" + pk + "/");
-    $('.article_fullscreen').show();
-  })
-  $('.article_fullscreen_hide').on('click', function() {$('.article_fullscreen').hide(); $('#article_loader').empty();});
-  $('#images_upload').on('click', function() {$('#for_images_upload').show();});
-  $('#settings').on('click', function() {$('#for_settings').show();});
-  $('#gallery').on('click', function() {$('#for_gallery').show();});
-  $('#doc').on('click', function() {$('#for_doc').show();});
-  $('#good').on('click', function() {$('#for_good').show();});
-  $('#question').on('click', function() {$('#for_question').show();});
-</script>
