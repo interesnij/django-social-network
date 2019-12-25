@@ -40,7 +40,7 @@ $('.article_fullscreen_hide').on('click', function() {$('.article_fullscreen').h
   });
   });
 
-  $('#ajax').on('click', '.u_comment.comments_close', function() {
+  $('#ajax').on('click', '.c_comment.comments_close', function() {
       var btn = $(this);
       var item = btn.closest(".infinite-item");
       var uuid = item.attr("item-id");
