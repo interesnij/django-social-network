@@ -119,6 +119,19 @@ class Item(models.Model):
         likes = ItemVotes.objects.filter(parent=self, vote__gt=0)
         return likes[0:6]
 
+    def get_repost_for_user(self, user_id):
+        try:
+            item = Item.objects.get(creator__id=user_id,is_repost=True)
+            item.is_repost = False
+            item.save(update_fields=['is_repost'])
+            new_repost = Item.objects.get(creator__id=user_id,id=self.pk)
+            new_repost.is_repost = True
+            new_repost.save(update_fields=['is_repost'])
+        except:
+            new_repost = Item.objects.get(creator__id=user_id,id=self.pk)
+            new_repost.is_repost = True
+            new_repost.save(update_fields=['is_repost'])
+
     def dislikes(self):
         dislikes = ItemVotes.objects.filter(parent=self, vote__lt=0)
         return dislikes
