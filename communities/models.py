@@ -181,7 +181,7 @@ class Community(models.Model):
         return cls._get_trending_communities_with_query(query=trending_communities_query)
 
     def get_posts(self):
-        posts_query = Q(community_id=self.pk, is_deleted=False, status=Item.STATUS_PUBLISHED)
+        posts_query = Q(community_id=self.pk, is_deleted=False, is_fixed=False, status=Item.STATUS_PUBLISHED)
         exclude_reported_and_approved_posts_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         posts_query.add(exclude_reported_and_approved_posts_query, Q.AND)
         items = Item.objects.filter(posts_query)

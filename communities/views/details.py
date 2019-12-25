@@ -43,7 +43,7 @@ class ItemsCommunity(View):
             item_list = community.get_posts().order_by('-created')
         current_page = Paginator(item_list, 10)
         page = request.GET.get('page')
-        context['fixed'] = fixed
+        context['object'] = fixed
         context["community"]=community
         try:
             context['items_list'] = current_page.page(page)
