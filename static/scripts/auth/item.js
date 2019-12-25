@@ -89,7 +89,7 @@ $("#ajax").on('click', '.u_dislike', function() {
         });return false;
 });
 $("#ajax").on('click', '.u_like2', function() {
-          var like = $(this); item = like.parents('.comments_interaction'); var pk = item.data('pk'); var uuid = item.data('uuid'); var dislike = like.next().next();
+          var like = $(this); var pk = item.data('pk'); var uuid = like.data('uuid'); var dislike = like.next().next();
           $.ajax({
               url: "/votes/user_comment/" + uuid + "/" + pk + "/like/", type: 'POST', data: {'obj': pk},
               success: function(json) {
@@ -99,7 +99,7 @@ $("#ajax").on('click', '.u_like2', function() {
           });return false;
       });
 $("#ajax").on('click', '.u_dislike2', function() {
-        var dislike = $(this); item = dislike.parents('.comments_interaction'); var pk = item.data('pk'); var uuid = item.data('uuid'); var like = dislike.prev().prev();
+        var dislike = $(this); var uuid = like.data('uuid'); var like = dislike.prev().prev();
         $.ajax({
             url: "/votes/user_comment/" + uuid + "/" + pk + "/dislike/", type: 'POST', data: {'obj': pk},
             success: function(json) {
