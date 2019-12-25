@@ -22,7 +22,7 @@
 </style>
 
 
-<span class="stream_comments" data-pk="{{ comment.pk }}" data-uuid="{{ comment.commenter.uuid }}">
+<span class="stream_comments">
   <div></div>
   {% for comment in comment_list %}
   {% include 'item_user/parent_comment.html' with comment=comment  %}

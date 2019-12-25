@@ -123,7 +123,7 @@ $("#ajax").on('click', '.u_dislike', function() {
 });
 $("#ajax").on('click', '.u_like2', function() {
           var like = $(this); var pk = item.data('pk'); var uuid = like.data('uuid'); var dislike = like.next().next();
-          $.ajax({
+          $.ajax({ 
               url: "/votes/user_comment/" + uuid + "/" + pk + "/like/", type: 'POST', data: {'obj': pk},
               success: function(json) {
                   like.find("[data-count='like']").text(json.like_count); like.find(".svg_default").toggleClass('svg_success'); like.find(".likes_count").toggleClass('svg_success'); like.siblings('.comment_like_window').html('').load("/window/u_comment_like_window/" + uuid + "/" + pk + "/");
