@@ -116,7 +116,6 @@ def post_update_interactions(request):
 def user_fixed(request, pk):
 	item = Item.objects.get(pk=pk)
 	if request.user == item.creator:
-		item.is_fixed=True
 		item.get_fixed_for_user(request.user.pk)
 		return HttpResponse("!")
 	else:

@@ -110,8 +110,7 @@ def community_fixed(request, pk, uuid):
 	item = Item.objects.get(pk=pk)
 	community = Community.objects.get(uuid=uuid)
 	if request.user.is_staff_of_community_with_name(community.name):
-		item.is_fixed=True
-		item.save()
+		item.get_fixed_for_community(uuid)
 		return HttpResponse("!")
 	else:
 		return HttpResponse("Закрепляйте, пожалуйста, свои записи!")
