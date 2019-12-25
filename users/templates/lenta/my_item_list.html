@@ -15,13 +15,7 @@
 
     <span class="stream">
 
-        {% if object.article %}
-        {% include 'item_user/my_article.html' with article=article %}
-        {% endif %}
-
-        {% if object.post %}
-        {% include 'item_user/my_post.html' with post=post  %}
-        {% endif %}
+        
 
         {% for object in items_list %}
 
