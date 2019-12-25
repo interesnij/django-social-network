@@ -102,7 +102,7 @@ $('#ajax').on('click', '.u_replyParentComment', function() {
 });
 
 $("#ajax").on('click', '.u_like', function() {
-    like = $(this); item = like.parents('.interaction'); ; var pk = item.data('id'); var uuid = item.data('uuid'); var dislike = like.next().next();
+    like = $(this); item = like.parents('.interaction'); ; var pk = item.data('pk'); var uuid = item.data('uuid'); var dislike = like.next().next();
     $.ajax({url: "/votes/user_like/" + uuid + "/" + pk + "/",type: 'POST',data: {'obj': pk},
         success: function(json) {
             like.find("[data-count='like']").text(json.like_count); like.find(".svg_default").toggleClass('svg_success'); like.find(".likes_count").toggleClass('svg_success'); like.siblings('.like_window').html('').load("/window/u_like_window/" + uuid + "/" + pk + "/");
@@ -112,7 +112,7 @@ $("#ajax").on('click', '.u_like', function() {
     return false;
 });
 $("#ajax").on('click', '.u_dislike', function() {
-        var dislike = $(this); item = dislike.parents('.interaction');var pk = item.data('id'); var uuid = item.data('uuid'); var like = dislike.prev().prev();
+        var dislike = $(this); item = dislike.parents('.interaction');var pk = item.data('pk'); var uuid = item.data('uuid'); var like = dislike.prev().prev();
         $.ajax({
             url: "/votes/user_dislike/" + uuid + "/" + pk + "/", type: 'POST', data: {'obj': pk},
             success: function(json) {
@@ -122,7 +122,7 @@ $("#ajax").on('click', '.u_dislike', function() {
         });return false;
 });
 $("#ajax").on('click', '.u_like2', function() {
-          var like = $(this); item = like.parents('.interaction'); var pk = item.data('id'); var uuid = item.data('uuid'); var dislike = like.next().next();
+          var like = $(this); item = like.parents('.interaction'); var pk = item.data('pk'); var uuid = item.data('uuid'); var dislike = like.next().next();
           $.ajax({
               url: "/votes/user_comment/" + uuid + "/" + pk + "/like/", type: 'POST', data: {'obj': pk},
               success: function(json) {
@@ -132,7 +132,7 @@ $("#ajax").on('click', '.u_like2', function() {
           });return false;
       });
 $("#ajax").on('click', '.u_dislike2', function() {
-        var dislike = $(this); item = dislike.parents('.interaction'); var pk = item.data('id'); var uuid = item.data('uuid'); var like = dislike.prev().prev();
+        var dislike = $(this); item = dislike.parents('.interaction'); var pk = item.data('pk'); var uuid = item.data('uuid'); var like = dislike.prev().prev();
         $.ajax({
             url: "/votes/user_comment/" + uuid + "/" + pk + "/dislike/", type: 'POST', data: {'obj': pk},
             success: function(json) {
