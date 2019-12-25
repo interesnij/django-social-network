@@ -22,19 +22,25 @@ class ItemsCommunity(View):
         if request.user.is_authenticated and request.user.is_member_of_community_with_name(community.name):
             if request.user.is_creator_of_community_with_name(community.name):
                 template_name = "detail_sections/admin_list.html"
-                item_list = self.community.get_posts().order_by('-created')
+                item_list = community.get_posts().order_by('-created')
             elif request.user.is_moderator_of_community_with_name(community.name):
                 template_name = "detail_sections/admin_list.html"
+                item_list = community.get_posts().order_by('-created')
             elif request.user.is_administrator_of_community_with_name(community.name):
                 template_name = "detail_sections/admin_list.html"
+                item_list = community.get_posts().order_by('-created')
             elif request.user.is_star_from_community_with_name(community.name):
                 template_name = "detail_sections/star_list.html"
+                item_list = community.get_posts().order_by('-created')
             else:
                 template_name = "detail_sections/list.html"
+                item_list = community.get_posts().order_by('-created')
         elif request.user.is_authenticated and self.community.is_public():
             template_name = "detail_sections/list.html"
+            item_list = community.get_posts().order_by('-created')
         elif request.user.is_anonymous and self.community.is_public():
             template_name = "detail_sections/anon_list.html"
+            item_list = community.get_posts().order_by('-created')
         current_page = Paginator(item_list, 10)
         page = request.GET.get('page')
         context['object'] = self.fixed
