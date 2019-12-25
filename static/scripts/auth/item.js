@@ -12,11 +12,6 @@ $('#ajax').on('click', '.c_fullscreen', function() {
 });
 $('#ajax').on('click', '.u_repost', function() {var item = $(this); var item_id = item.data("uuid"); $('#user_item_pk').html(item_id);});
 
-$('.user_page').on('click', '.avatar_detail', function() {
-		var photo = $(this); var photo_id = photo.data("id"); var user_uuid = photo.data("uuid");
-		$('#photo_loader').html('').load("/gallery/load/avatar_detail/" + photo_id + "/" + user_uuid + "/"); $('.photo_fullscreen').show();
-});
-
 $('.photo_fullscreen_hide').on('click', function() { $('.photo_fullscreen').hide(); $('#photo_loader').empty(); });
 $('.item_fullscreen_hide').on('click', function() { $('.item_fullscreen').hide(); $('#item_loader').empty(); });
 $('.article_fullscreen_hide').on('click', function() {$('.article_fullscreen').hide(); $('#article_loader').empty();});
@@ -82,10 +77,6 @@ $('#ajax').on('click', '.u_replyParentComment', function() {
 $("#ajax").on('click', '.reply_comment', function() {
     var reply_comment_form = $(this); var objectUser = reply_comment_form.prev().text().trim(); var form = reply_comment_form.next().find(".text-comment"); form.val(objectUser + ', '); reply_comment_form.next().show(); form.focus();
 })
-
-$('.R_U').on('click', function() {
-    var item = $(this); var item_id = item.data("uuid"); $('#user_item_pk').html(item_id);
-});
 
 
 $("#ajax").on('click', '.u_like', function() {
