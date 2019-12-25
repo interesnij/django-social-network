@@ -12,7 +12,7 @@ $('#ajax').on('click', '.item_fullscreen_hide', function() { $('.item_fullscreen
 $('#ajax').on('click', '.votes_fullscreen_hide', function() { $('.votes_fullscreen').hide(); $('#votes_loader').empty(); });
 $('#ajax').on('click', '.article_fullscreen_hide', function() {$('.article_fullscreen').hide(); $('#article_loader').empty();});
 
- 
+
 /*!
    manage script of community
   */
