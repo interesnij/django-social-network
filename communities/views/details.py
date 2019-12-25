@@ -13,7 +13,7 @@ from rest_framework.exceptions import PermissionDenied
 class ItemsCommunity(View):
     def get(self,request,*args,**kwargs):
         context = {}
-        template = None
+        template_name = None
         community=Community.objects.get(pk=self.kwargs["pk"])
         try:
             fixed = Item.objects.get(community=community, is_fixed=True)
@@ -51,7 +51,7 @@ class ItemsCommunity(View):
             context['items_list'] = current_page.page(1)
         except EmptyPage:
             context['items_list'] = current_page.page(current_page.num_pages)
-        return render_to_response('detail_sections/list.html', context)
+        return render_to_response(template_name, context)
 
 
 class ItemCommunity(TemplateView):
