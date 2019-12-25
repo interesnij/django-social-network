@@ -13,23 +13,34 @@ from rest_framework.exceptions import PermissionDenied
 class ItemsCommunity(View):
     def get(self,request,*args,**kwargs):
         context = {}
-        self.community=Community.objects.get(pk=self.kwargs["pk"])
+        template = None
+        community=Community.objects.get(pk=self.kwargs["pk"])
         try:
-            self.fixed = Item.objects.get(community=self.community, is_fixed=True)
+            self.fixed = Item.objects.get(community=community, is_fixed=True)
         except:
             self.fixed = None
-        if request.user.is_authenticated:
-            check_can_get_posts_for_community_with_name(request.user,self.community.name)
-            item_list = self.community.get_posts().order_by('-created')
-            current_page = Paginator(item_list, 10)
-            page = request.GET.get('page')
-        elif request.user.is_anonymous and self.community.is_public:
-            item_list = self.community.get_posts().order_by('-created')
-            current_page = Paginator(item_list, 10)
-            page = request.GET.get('page')
-        elif request.user.is_anonymous and (self.community.is_closed or self.community.is_private):
-            raise PermissionDenied('У Вас недостаточно прав для просмотра информации группы',)
+         if request.user.is_authenticated and request.user.is_member_of_community_with_name(community.name):
+             if request.user.is_creator_of_community_with_name(community.name):
+                 template_name = "detail_sections/admin_list.html"
+                 item_list = self.community.get_posts().order_by('-created')
+             elif request.user.is_moderator_of_community_with_name(community.name):
+                 template_name = "detail_sections/admin_list.html"
+             elif request.user.is_administrator_of_community_with_name(community.name):
+                 template_name = "detail_sections/admin_list.html"
+             elif request.user.is_star_from_community_with_name(community.name):
+                 template_name = "detail_sections/star_list.html"
+             else:
+                 template_name = "c_detail/member_community.html"
+                 template_name = "detail_sections/list.html"
 
+         elif request.user.is_authenticated and self.community.is_public():
+             template_name = "detail_sections/list.html"
+
+         elif request.user.is_anonymous and self.community.is_public():
+             template_name = "detail_sections/anon_list.html"
+
+        current_page = Paginator(item_list, 10)
+        page = request.GET.get('page')
         context['object'] = self.fixed
         context["community"]=self.community
         try:
