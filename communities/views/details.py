@@ -15,10 +15,8 @@ class ItemsCommunity(View):
         context = {}
         template_name = None
         community=Community.objects.get(pk=self.kwargs["pk"])
-        try:
-            fixed = Item.objects.get(community=community, is_fixed=True)
-        except:
-            fixed = None
+        fixed = Item.objects.get(community=community, is_fixed=True)
+
         if request.user.is_authenticated and request.user.is_member_of_community_with_name(community.name):
             if request.user.is_creator_of_community_with_name(community.name):
                 template_name = "detail_sections/admin_list.html"
@@ -35,10 +33,10 @@ class ItemsCommunity(View):
             else:
                 template_name = "detail_sections/list.html"
                 item_list = community.get_posts().order_by('-created')
-        elif request.user.is_authenticated and self.community.is_public():
+        elif request.user.is_authenticated and community.is_public():
             template_name = "detail_sections/list.html"
             item_list = community.get_posts().order_by('-created')
-        elif request.user.is_anonymous and self.community.is_public():
+        elif request.user.is_anonymous and community.is_public():
             template_name = "detail_sections/anon_list.html"
             item_list = community.get_posts().order_by('-created')
         current_page = Paginator(item_list, 10)
