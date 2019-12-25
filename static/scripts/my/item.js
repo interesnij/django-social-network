@@ -1,17 +1,27 @@
+
+/*!
+   fullscreen's script
+  */
 $('#ajax .stream').on('click', '.article_detail', function() {var item = $(this); var item_id = item.data("id");$('#article_loader').html('').load("/article/detail/" + item_id); $('.article_fullscreen').show();});
 $('#ajax').on('click', '.fullscreen', function() {var item = $(this); var item_pk = item.data("pk"); var user_uuid = item.data("uuid");$('#item_loader').html('').load("/users/detail/item/" + item_pk + "/" + user_uuid + "/"); $('.item_fullscreen').show();});
 $('#ajax').on('click', '.c_fullscreen', function() {var item = $(this); var pk = item.data("pk"); var uuid = item.data("uuid");$('#item_loader').html('').load("/communities/item/" + pk + "/" + uuid + "/"); $('.item_fullscreen').show();});
-
-$('#ajax').on('click', '.u_all_likes', function() {var btn = $(this); item = $(this).parents('.interaction'); var pk = item.data("pk"); var uuid = item.data("uuid");$('#votes_loader').html('').load("/window/all_user_like/" + uuid + "/" + pk + "/"); $('.votes_fullscreen').show();});
-$('#ajax').on('click', '.u_all_dislikes', function() {var btn = $(this); item = $(this).parents('.interaction'); var pk = item.data("pk"); var uuid = item.data("uuid");$('#votes_loader').html('').load("/window/all_user_dislike/" + uuid + "/" + pk + "/"); $('.votes_fullscreen').show();});
-$('#ajax').on('click', '.u_all_reposts', function() {var btn = $(this); item = $(this).parents('.interaction'); var pk = item.data("pk"); var uuid = item.data("uuid");$('#votes_loader').html('').load("/window/all_user_reposts/" + uuid + "/" + pk + "/"); $('.votes_fullscreen').show();});
 
 $('#ajax').on('click', '.photo_fullscreen_hide', function() { $('.photo_fullscreen').hide(); $('#photo_loader').empty(); });
 $('.item_fullscreen_hide').on('click', function() { $('.item_fullscreen').hide(); $('#item_loader').empty(); });
 $('#ajax').on('click', '.votes_fullscreen_hide', function() { $('.votes_fullscreen').hide(); $('#votes_loader').empty(); });
 
-$('#ajax').on('click', '.show_replies', function() { var element = $(this); element.next().toggleClass('replies_open'); });
+/*!
+   all votes window
+  */
+$('#ajax').on('click', '.u_all_likes', function() {var btn = $(this); item = $(this).parents('.interaction'); var pk = item.data("pk"); var uuid = item.data("uuid");$('#votes_loader').html('').load("/window/all_user_like/" + uuid + "/" + pk + "/"); $('.votes_fullscreen').show();});
+$('#ajax').on('click', '.u_all_dislikes', function() {var btn = $(this); item = $(this).parents('.interaction'); var pk = item.data("pk"); var uuid = item.data("uuid");$('#votes_loader').html('').load("/window/all_user_dislike/" + uuid + "/" + pk + "/"); $('.votes_fullscreen').show();});
+$('#ajax').on('click', '.u_all_reposts', function() {var btn = $(this); item = $(this).parents('.interaction'); var pk = item.data("pk"); var uuid = item.data("uuid");$('#votes_loader').html('').load("/window/all_user_reposts/" + uuid + "/" + pk + "/"); $('.votes_fullscreen').show();});
 
+
+/*!
+   comments scripts
+  */
+$('#ajax').on('click', '.show_replies', function() { var element = $(this); element.next().toggleClass('replies_open'); });
 $('#ajax').on('click', '.u_comment.comments_close', function() {
     var btn = $(this); var item = btn.closest(".infinite-item"); var uuid = item.attr("item-id"); var pk = btn.data('pk'); var container = item.find(".load_comments")
     $.ajax({
@@ -21,11 +31,65 @@ $('#ajax').on('click', '.u_comment.comments_close', function() {
     }); return false;
 });
 
+/*!
+   card headers manage scripts
+  */
 $('#ajax').on('click', '.item_user_remove', function() {var remove = $(this); var pk = remove.data('id');$.ajax({url: "/user/delete/" + pk + "/",success: function(data) {$(remove).parents('.card').hide();$('.activefullscreen').hide();$.toast({heading: 'Информация',text: 'Запись успешно удалена!',showHideTransition: 'fade',icon: 'info'})}});});
 $('#ajax').on('click', '.item_user_fixed', function() {var fixed = $(this); var pk = fixed.parent().data('id');$.ajax({url: "/user/fixed/" + pk + "/",success: function(data) {fixed.parent().html("<span style='cursor:pointer' class='dropdown-item unfixed'>Открепить</span>");$.toast({heading: 'Информация',text: 'Запись закреплена!',showHideTransition: 'fade',icon: 'info'})}});});
 $('#ajax').on('click', '.item_user_unfixed', function() {var unfixed = $(this); var pk = unfixed.parent().data('id');$.ajax({url: "/user/unfixed/" + pk + "/",success: function(data) {unfixed.parent().html("<span style='cursor:pointer' class='dropdown-item fixed'>Закрепить</span>");$.toast({heading: 'Информация',text: 'Запись откреплена!',showHideTransition: 'fade',icon: 'info'})}});});
 $('#ajax').on('click', '.js-textareacopybtn', function() {btn = $(this);link = btn.find('.js-copytextarea');link.focus();link.select();try {var successful = document.execCommand('copy');var msg = successful ? 'successful' : 'unsuccessful';console.log('Copying text command was ' + msg);} catch (err) {console.log('Oops, unable to copy');}});
 
+/*!
+   votes post scripts for user items
+  */
+$("#ajax").on('click', '.u_like', function() {
+    like = $(this); item = like.parents('.interaction'); ; var pk = item.data('pk'); var uuid = item.data('uuid'); var dislike = like.next().next();
+    $.ajax({url: "/votes/user_like/" + uuid + "/" + pk + "/",type: 'POST',data: {'obj': pk},
+        success: function(json) {
+            like.find("[data-count='like']").text(json.like_count); like.find(".svg_default").toggleClass('svg_success'); like.find(".likes_count").toggleClass('svg_success'); like.siblings('.like_window').html('').load("/window/u_like_window/" + uuid + "/" + pk + "/");
+            dislike.find("[data-count='dislike']").text(json.dislike_count); dislike.find(".svg_default").removeClass('svg_danger'); dislike.find(".dislikes_count").removeClass('svg_danger'); dislike.siblings('.dislike_window').html('').load("/window/u_dislike_window/" + uuid + "/" + pk + "/")
+        }
+    });
+    return false;
+});
+$("#ajax").on('click', '.u_dislike', function() {
+        var dislike = $(this); item = dislike.parents('.interaction');var pk = item.data('pk'); var uuid = item.data('uuid'); var like = dislike.prev().prev();
+        $.ajax({
+            url: "/votes/user_dislike/" + uuid + "/" + pk + "/", type: 'POST', data: {'obj': pk},
+            success: function(json) {
+              like.find("[data-count='like']").text(json.like_count); like.find(".svg_default").removeClass('svg_success'); like.find(".likes_count").removeClass('svg_success'); like.siblings('.like_window').html('').load("/window/u_like_window/" + uuid + "/" + pk + "/");
+              dislike.find("[data-count='dislike']").text(json.dislike_count); dislike.find(".svg_default").toggleClass('svg_danger'); dislike.find(".dislikes_count").toggleClass('svg_danger'); dislike.siblings('.dislike_window').html('').load("/window/u_dislike_window/" + uuid + "/" + pk + "/")
+            }
+        });return false;
+});
+
+/*!
+   votes post scripts for user item comments
+  */
+$("#ajax").on('click', '.u_like2', function() {
+          var like = $(this); var pk = like.data('pk'); var uuid = like.data('uuid'); var dislike = like.next().next();
+          $.ajax({
+              url: "/votes/user_comment/" + uuid + "/" + pk + "/like/", type: 'POST', data: {'obj': pk},
+              success: function(json) {
+                  like.find("[data-count='like']").text(json.like_count); like.find(".svg_default").toggleClass('svg_success'); like.find(".likes_count").toggleClass('svg_success'); like.siblings('.comment_like_window').html('').load("/window/u_comment_like_window/" + uuid + "/" + pk + "/");
+                  dislike.find("[data-count='dislike']").text(json.dislike_count); dislike.find(".svg_default").removeClass('svg_danger'); dislike.find(".dislikes_count").removeClass('svg_danger'); dislike.siblings('.comment_dislike_window').html('').load("/window/u_comment_dislike_window/" + uuid + "/" + pk + "/")
+              }
+          });return false;
+      });
+$("#ajax").on('click', '.u_dislike2', function() {
+        var dislike = $(this); var pk = dislike.data('pk'); var uuid = dislike.data('uuid'); var like = dislike.prev().prev();
+        $.ajax({
+            url: "/votes/user_comment/" + uuid + "/" + pk + "/dislike/", type: 'POST', data: {'obj': pk},
+            success: function(json) {
+                like.find("[data-count='like']").text(json.like_count); like.find(".svg_default").removeClass('svg_success'); like.find(".likes_count").removeClass('svg_success'); like.siblings('.comment_like_window').html('').load("/window/u_comment_like_window/" + uuid + "/" + pk + "/");
+                dislike.find("[data-count='dislike']").text(json.dislike_count); dislike.find(".svg_default").toggleClass('svg_danger'); dislike.find(".dislikes_count").toggleClass('svg_danger'); dislike.siblings('.comment_dislike_window').html('').load("/window/u_comment_dislike_window/" + uuid + "/" + pk + "/")
+            }
+        });return false;
+});
+
+/*!
+   comment create scripts
+  */
 $('#ajax').on('click', '.comment_image', function() {
 		var photo = $(this); var pk = photo.data("id"); var uuid = photo.data("uuid");
 		$('#photo_loader').html('').load("/gallery/load/comment/" + pk + "/" + uuid + "/"); $('.photo_fullscreen').show();
@@ -99,45 +163,4 @@ $('#ajax').on('click', '.u_replyParentComment', function() {
         error: function(data) { $.toast({heading: 'Ошибка',text: 'Для публикации ответа нужно написать что-нибудь и/или вставить изображение(ия)',showHideTransition: 'fade',icon: 'error'}) },
     });
     return false;
-});
-
-$("#ajax").on('click', '.u_like', function() {
-    like = $(this); item = like.parents('.interaction'); ; var pk = item.data('pk'); var uuid = item.data('uuid'); var dislike = like.next().next();
-    $.ajax({url: "/votes/user_like/" + uuid + "/" + pk + "/",type: 'POST',data: {'obj': pk},
-        success: function(json) {
-            like.find("[data-count='like']").text(json.like_count); like.find(".svg_default").toggleClass('svg_success'); like.find(".likes_count").toggleClass('svg_success'); like.siblings('.like_window').html('').load("/window/u_like_window/" + uuid + "/" + pk + "/");
-            dislike.find("[data-count='dislike']").text(json.dislike_count); dislike.find(".svg_default").removeClass('svg_danger'); dislike.find(".dislikes_count").removeClass('svg_danger'); dislike.siblings('.dislike_window').html('').load("/window/u_dislike_window/" + uuid + "/" + pk + "/")
-        }
-    });
-    return false;
-});
-$("#ajax").on('click', '.u_dislike', function() {
-        var dislike = $(this); item = dislike.parents('.interaction');var pk = item.data('pk'); var uuid = item.data('uuid'); var like = dislike.prev().prev();
-        $.ajax({
-            url: "/votes/user_dislike/" + uuid + "/" + pk + "/", type: 'POST', data: {'obj': pk},
-            success: function(json) {
-              like.find("[data-count='like']").text(json.like_count); like.find(".svg_default").removeClass('svg_success'); like.find(".likes_count").removeClass('svg_success'); like.siblings('.like_window').html('').load("/window/u_like_window/" + uuid + "/" + pk + "/");
-              dislike.find("[data-count='dislike']").text(json.dislike_count); dislike.find(".svg_default").toggleClass('svg_danger'); dislike.find(".dislikes_count").toggleClass('svg_danger'); dislike.siblings('.dislike_window').html('').load("/window/u_dislike_window/" + uuid + "/" + pk + "/")
-            }
-        });return false;
-});
-$("#ajax").on('click', '.u_like2', function() {
-          var like = $(this); var pk = like.data('pk'); var uuid = like.data('uuid'); var dislike = like.next().next();
-          $.ajax({
-              url: "/votes/user_comment/" + uuid + "/" + pk + "/like/", type: 'POST', data: {'obj': pk},
-              success: function(json) {
-                  like.find("[data-count='like']").text(json.like_count); like.find(".svg_default").toggleClass('svg_success'); like.find(".likes_count").toggleClass('svg_success'); like.siblings('.comment_like_window').html('').load("/window/u_comment_like_window/" + uuid + "/" + pk + "/");
-                  dislike.find("[data-count='dislike']").text(json.dislike_count); dislike.find(".svg_default").removeClass('svg_danger'); dislike.find(".dislikes_count").removeClass('svg_danger'); dislike.siblings('.comment_dislike_window').html('').load("/window/u_comment_dislike_window/" + uuid + "/" + pk + "/")
-              }
-          });return false;
-      });
-$("#ajax").on('click', '.u_dislike2', function() {
-        var dislike = $(this); var pk = dislike.data('pk'); var uuid = dislike.data('uuid'); var like = dislike.prev().prev();
-        $.ajax({
-            url: "/votes/user_comment/" + uuid + "/" + pk + "/dislike/", type: 'POST', data: {'obj': pk},
-            success: function(json) {
-                like.find("[data-count='like']").text(json.like_count); like.find(".svg_default").removeClass('svg_success'); like.find(".likes_count").removeClass('svg_success'); like.siblings('.comment_like_window').html('').load("/window/u_comment_like_window/" + uuid + "/" + pk + "/");
-                dislike.find("[data-count='dislike']").text(json.dislike_count); dislike.find(".svg_default").toggleClass('svg_danger'); dislike.find(".dislikes_count").toggleClass('svg_danger'); dislike.siblings('.comment_dislike_window').html('').load("/window/u_comment_dislike_window/" + uuid + "/" + pk + "/")
-            }
-        });return false;
 });
