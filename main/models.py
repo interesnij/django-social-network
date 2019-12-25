@@ -47,14 +47,6 @@ class Item(models.Model):
         verbose_name="запись"
         verbose_name_plural="записи"
 
-    def save(self, *args, **kwargs):
-        if not self.is_fixed:
-            return super(Item, self).save(*args, **kwargs)
-        with transaction.atomic():
-            Item.objects.filter(
-                is_fixed=True).update(is_fixed=False)
-            return super(Item, self).save(*args, **kwargs)
-
     def count_comments(self):
         parent_comments = ItemComment.objects.filter(item=self)
         parents_count = parent_comments.count()
