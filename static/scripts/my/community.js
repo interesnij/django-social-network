@@ -20,6 +20,13 @@ $('#ajax').on('click', '.member_create', function() {var member_create = $(this)
 $('#ajax').on('click', '.member_delete', function() {var member_delete = $(this);var pk = member_delete.data('id');$.ajax({url: "/communities/delete_community_member/" + pk + "/",success: function () {$('#ajax').html('').load("/communities/reload/" + pk + "/");}});});
 $('#ajax').on('click', '.member_follow_create', function() {var member_follow_create = $(this);var pk = member_follow_create.data('id');$.ajax({url: "/follows/add_member/" + pk + "/",success: function () {$('#ajax').html('').load("/communities/reload/" + pk + "/");}});});
 $('#ajax').on('click', '.member_follow_delete', function() {var member_follow_delete = $(this);var pk = member_follow_delete.data('id');$.ajax({url: "/follows/delete_member/" + pk + "/",success: function () {$('#ajax').html('').load("/communities/reload/" + pk + "/");}});});
+/*!
+   card headers manage scripts
+  */
+$('#ajax').on('click', '.item_community_remove', function() {var link = $(this).parent(); var pk = link.data('id'); var uuid = link.data('uuid');$.ajax({url: "/community/delete/" + pk + "/" + uuid + "/",success: function(data) {$(remove).parents('.card').hide();$('.activefullscreen').hide();$.toast({heading: 'Информация',text: 'Запись успешно удалена!',showHideTransition: 'fade',icon: 'info'})}});});
+$('#ajax').on('click', '.item_community_fixed', function() {var link = $(this).parent().parent(); var pk = link.data('id'); var uuid = link.data('uuid');$.ajax({url: "/community/fixed/" + pk + "/" + uuid + "/",success: function(data) {fixed.parent().html("<span style='cursor:pointer' class='dropdown-item item_community_unfixed'> Открепить</span>");$.toast({heading: 'Информация',text: 'Запись закреплена!',showHideTransition: 'fade',icon: 'info'})}});});
+$('#ajax').on('click', '.item_community_unfixed', function() {var link = $(this); var pk = unfixed.parent().data('id');$.ajax({url: "/community/unfixed/" + pk + "/" + uuid + "/",success: function(data) {unfixed.parent().html("<span style='cursor:pointer' class='dropdown-item item_community_fixed'>Закрепить</span>");$.toast({heading: 'Информация',text: 'Запись откреплена!',showHideTransition: 'fade',icon: 'info'})}});});
+$('#ajax').on('click', '.js-textareacopybtn', function() {btn = $(this);link = btn.find('.js-copytextarea');link.focus();link.select();try {var successful = document.execCommand('copy');var msg = successful ? 'successful' : 'unsuccessful';console.log('Copying text command was ' + msg);} catch (err) {console.log('Oops, unable to copy');}});
 
 
 /*!
@@ -63,15 +70,6 @@ $('#ajax').on('click', '.c_repost', function() {var item = $(this); var item_id 
               }
           });   return false;
   });
-
-
-  /*!
-     card headers manage scripts
-    */
-  $('#ajax').on('click', '.item_community_remove', function() {var remove = $(this); var pk = remove.data('id');$.ajax({url: "/community/delete/" + pk + "/",success: function(data) {$(remove).parents('.card').hide();$('.activefullscreen').hide();$.toast({heading: 'Информация',text: 'Запись успешно удалена!',showHideTransition: 'fade',icon: 'info'})}});});
-  $('#ajax').on('click', '.item_community_fixed', function() {var fixed = $(this); var pk = fixed.parent().data('id');$.ajax({url: "/community/fixed/" + pk + "/",success: function(data) {fixed.parent().html("<span style='cursor:pointer' class='dropdown-item item_community_unfixed'> Открепить</span>");$.toast({heading: 'Информация',text: 'Запись закреплена!',showHideTransition: 'fade',icon: 'info'})}});});
-  $('#ajax').on('click', '.item_community_unfixed', function() {var unfixed = $(this); var pk = unfixed.parent().data('id');$.ajax({url: "/community/unfixed/" + pk + "/",success: function(data) {unfixed.parent().html("<span style='cursor:pointer' class='dropdown-item item_community_fixed'>Закрепить</span>");$.toast({heading: 'Информация',text: 'Запись откреплена!',showHideTransition: 'fade',icon: 'info'})}});});
-  $('#ajax').on('click', '.js-textareacopybtn', function() {btn = $(this);link = btn.find('.js-copytextarea');link.focus();link.select();try {var successful = document.execCommand('copy');var msg = successful ? 'successful' : 'unsuccessful';console.log('Copying text command was ' + msg);} catch (err) {console.log('Oops, unable to copy');}});
 
 
   /*!

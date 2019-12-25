@@ -25,10 +25,10 @@
               <a style="cursor:pointer" class="icon-circle icon-30 dropdown-toggle caret-none" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <svg class="svg_default" fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
               </a>
-              <div class="dropdown-menu dropdown-menu-right">
-                  <span data-id="{{ object.pk }}" data-uuid="{{ object.creator.uuid }}" style="cursor:pointer" class="dropdown-item item_community_remove">Удалить запись</span>
+              <div class="dropdown-menu dropdown-menu-right" data-id="{{ object.pk }}" data-uuid="{{ community.uuid }}">
+                  <span style="cursor:pointer" class="dropdown-item item_community_remove">Удалить запись</span>
                   <span style="cursor:pointer" class="dropdown-item">Редактировать</span>
-                  <span data-id="{{ object.pk }}">
+                  <span>
                     {% if object.is_fixed %}
                     <span style="cursor:pointer" class="dropdown-item item_community_unfixed">Открепить</span>
                     {% else %}
