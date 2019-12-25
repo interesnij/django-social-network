@@ -19,26 +19,22 @@ class ItemsCommunity(View):
             self.fixed = Item.objects.get(community=community, is_fixed=True)
         except:
             self.fixed = None
-         if request.user.is_authenticated and request.user.is_member_of_community_with_name(community.name):
-             if request.user.is_creator_of_community_with_name(community.name):
-                 template_name = "detail_sections/admin_list.html"
-                 item_list = self.community.get_posts().order_by('-created')
-             elif request.user.is_moderator_of_community_with_name(community.name):
-                 template_name = "detail_sections/admin_list.html"
-             elif request.user.is_administrator_of_community_with_name(community.name):
-                 template_name = "detail_sections/admin_list.html"
-             elif request.user.is_star_from_community_with_name(community.name):
-                 template_name = "detail_sections/star_list.html"
-             else:
-                 template_name = "c_detail/member_community.html"
-                 template_name = "detail_sections/list.html"
-
-         elif request.user.is_authenticated and self.community.is_public():
-             template_name = "detail_sections/list.html"
-
-         elif request.user.is_anonymous and self.community.is_public():
-             template_name = "detail_sections/anon_list.html"
-
+        if request.user.is_authenticated and request.user.is_member_of_community_with_name(community.name):
+            if request.user.is_creator_of_community_with_name(community.name):
+                template_name = "detail_sections/admin_list.html"
+                item_list = self.community.get_posts().order_by('-created')
+            elif request.user.is_moderator_of_community_with_name(community.name):
+                template_name = "detail_sections/admin_list.html"
+            elif request.user.is_administrator_of_community_with_name(community.name):
+                template_name = "detail_sections/admin_list.html"
+            elif request.user.is_star_from_community_with_name(community.name):
+                template_name = "detail_sections/star_list.html"
+            else:
+                template_name = "detail_sections/list.html"
+        elif request.user.is_authenticated and self.community.is_public():
+            template_name = "detail_sections/list.html"
+        elif request.user.is_anonymous and self.community.is_public():
+            template_name = "detail_sections/anon_list.html"
         current_page = Paginator(item_list, 10)
         page = request.GET.get('page')
         context['object'] = self.fixed
@@ -49,7 +45,6 @@ class ItemsCommunity(View):
             context['items_list'] = current_page.page(1)
         except EmptyPage:
             context['items_list'] = current_page.page(current_page.num_pages)
-
         return render_to_response('detail_sections/list.html', context)
 
 
