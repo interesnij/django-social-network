@@ -4,18 +4,14 @@
   */
 $('#ajax .stream').on('click', '.article_detail', function() {var item = $(this); var item_id = item.data("id");$('#article_loader').html('').load("/article/detail/" + item_id); $('.article_fullscreen').show();});
 $('#ajax').on('click', '.fullscreen', function() {var item = $(this); var item_pk = item.data("pk"); var user_uuid = item.data("uuid");$('#item_loader').html('').load("/users/detail/item/" + item_pk + "/" + user_uuid + "/"); $('.item_fullscreen').show();});
-
-$('#ajax').on('click', '.photo_fullscreen_hide', function() { $('.photo_fullscreen').hide(); $('#photo_loader').empty(); });
-$('.item_fullscreen_hide').on('click', function() { $('.item_fullscreen').hide(); $('#item_loader').empty(); });
-$('#ajax').on('click', '.votes_fullscreen_hide', function() { $('.votes_fullscreen').hide(); $('#votes_loader').empty(); });
-
-/*!
-   all votes window
-  */
 $('#ajax').on('click', '.u_all_likes', function() {var btn = $(this); item = $(this).parents('.interaction'); var pk = item.data("pk"); var uuid = item.data("uuid");$('#votes_loader').html('').load("/window/all_user_like/" + uuid + "/" + pk + "/"); $('.votes_fullscreen').show();});
 $('#ajax').on('click', '.u_all_dislikes', function() {var btn = $(this); item = $(this).parents('.interaction'); var pk = item.data("pk"); var uuid = item.data("uuid");$('#votes_loader').html('').load("/window/all_user_dislike/" + uuid + "/" + pk + "/"); $('.votes_fullscreen').show();});
 $('#ajax').on('click', '.u_all_reposts', function() {var btn = $(this); item = $(this).parents('.interaction'); var pk = item.data("pk"); var uuid = item.data("uuid");$('#votes_loader').html('').load("/window/all_user_reposts/" + uuid + "/" + pk + "/"); $('.votes_fullscreen').show();});
 
+$('#ajax').on('click', '.photo_fullscreen_hide', function() { $('.photo_fullscreen').hide(); $('#photo_loader').empty(); });
+$('#ajax').on('click', '.item_fullscreen_hide', function() { $('.item_fullscreen').hide(); $('#item_loader').empty(); });
+$('#ajax').on('click', '.votes_fullscreen_hide', function() { $('.votes_fullscreen').hide(); $('#votes_loader').empty(); });
+$('#ajax').on('click', '.article_fullscreen_hide', function() {$('.article_fullscreen').hide(); $('#article_loader').empty();});
 
 /*!
    comments scripts
@@ -34,8 +30,8 @@ $('#ajax').on('click', '.u_comment.comments_close', function() {
    card headers manage scripts
   */
 $('#ajax').on('click', '.item_user_remove', function() {var remove = $(this); var pk = remove.data('id');$.ajax({url: "/user/delete/" + pk + "/",success: function(data) {$(remove).parents('.card').hide();$('.activefullscreen').hide();$.toast({heading: 'Информация',text: 'Запись успешно удалена!',showHideTransition: 'fade',icon: 'info'})}});});
-$('#ajax').on('click', '.item_user_fixed', function() {var fixed = $(this); var pk = fixed.parent().data('id');$.ajax({url: "/user/fixed/" + pk + "/",success: function(data) {fixed.parent().html("<span style='cursor:pointer' class='dropdown-item unfixed'>Открепить</span>");$.toast({heading: 'Информация',text: 'Запись закреплена!',showHideTransition: 'fade',icon: 'info'})}});});
-$('#ajax').on('click', '.item_user_unfixed', function() {var unfixed = $(this); var pk = unfixed.parent().data('id');$.ajax({url: "/user/unfixed/" + pk + "/",success: function(data) {unfixed.parent().html("<span style='cursor:pointer' class='dropdown-item fixed'>Закрепить</span>");$.toast({heading: 'Информация',text: 'Запись откреплена!',showHideTransition: 'fade',icon: 'info'})}});});
+$('#ajax').on('click', '.item_user_fixed', function() {var fixed = $(this); var pk = fixed.parent().data('id');$.ajax({url: "/user/fixed/" + pk + "/",success: function(data) {fixed.parent().html("<span style='cursor:pointer' class='dropdown-item item_user_unfixed'>Открепить</span>");$.toast({heading: 'Информация',text: 'Запись закреплена!',showHideTransition: 'fade',icon: 'info'})}});});
+$('#ajax').on('click', '.item_user_unfixed', function() {var unfixed = $(this); var pk = unfixed.parent().data('id');$.ajax({url: "/user/unfixed/" + pk + "/",success: function(data) {unfixed.parent().html("<span style='cursor:pointer' class='dropdown-item item_user_fixed'>Закрепить</span>");$.toast({heading: 'Информация',text: 'Запись откреплена!',showHideTransition: 'fade',icon: 'info'})}});});
 $('#ajax').on('click', '.js-textareacopybtn', function() {btn = $(this);link = btn.find('.js-copytextarea');link.focus();link.select();try {var successful = document.execCommand('copy');var msg = successful ? 'successful' : 'unsuccessful';console.log('Copying text command was ' + msg);} catch (err) {console.log('Oops, unable to copy');}});
 
 /*!

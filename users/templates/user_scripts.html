@@ -8,8 +8,6 @@ $('.user_page').on('click', '.avatar_detail', function() {
 		$('#photo_loader').html('').load("/gallery/load/avatar_detail/" + photo_id + "/" + user_uuid + "/")
 		$('.photo_fullscreen').show();
 });
-
-$('.article_fullscreen_hide').on('click', function() {$('.article_fullscreen').hide(); $('#article_loader').empty();});
 </script>
 
 {% if request.user == user and  request.user.is_authenticated %}
@@ -95,9 +93,8 @@ $(document).ready(function () {
 	});
 </script>
 <script>
-  $("#article_add").click(function() {
-      $('#article_loader').html('').load("{% url 'article_add_user' pk=user.pk %}"); $('.article_fullscreen').show();
-  })
+  $("#article_add").click(function() {$('#article_loader').html('').load("{% url 'article_add_user' pk=user.pk %}"); $('.article_fullscreen').show();})
+	$('#ajax').on('click', '.article_fullscreen_hide', function() {$('.article_fullscreen').hide(); $('#article_loader').empty();});
 $('.user_page').on('click', '#form_post_btn', function() {
     var form_post = $('#form_post'); var stream = form_post.parent().next().next();
         $.ajax({
