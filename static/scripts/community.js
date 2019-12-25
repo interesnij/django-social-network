@@ -49,7 +49,7 @@ $('.article_fullscreen_hide').on('click', function() {$('.article_fullscreen').h
       $.ajax({
           url: "/community/comment/" + item + "/" + pk + "/", data: {'item': item}, cache: false,
           beforeSend: function() {
-            url.find(".load_comments").html("<span style='display:flex;justify-content: center;'><img src='/static/images/loading.gif'></span>");
+            item.find(".load_comments").html("<span style='display:flex;justify-content: center;'><img src='/static/images/loading.gif'></span>");
           },
           success: function(data) {
             container.html(data.comments);
