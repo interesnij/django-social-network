@@ -1,7 +1,7 @@
 {% load staticfiles humanize %}
 
 {% if items_list %}
-
+акуаук пу
 <div class="infinite-container">
   <div class="stream-update">
     <a href=""><span class="new-posts"></span> Загрузить новые записи</a>
@@ -9,11 +9,11 @@
 
   <span class="community_stream">
 
-    {% if community.article %}
+    {% if object.article %}
         {% include 'item_community/admin_article.html' with article=article %}
     {% endif %}
 
-    {% if community.post %}
+    {% if object.post %}
       {% include 'item_community/admin_post.html' with post=post  %}
     {% endif %}
 
