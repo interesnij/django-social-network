@@ -1,5 +1,12 @@
 {% load staticfiles humanize %}
-star
+{% if object %}
+{% if object.article %}
+    {% include 'item_community/admin_article.html' with article=article  %}
+{% endif %}
+
+{% if object.post %}
+    {% include 'item_community/admin_post.html' with post=post  %}
+{% endif %}
 {% if items_list %}
 
 <div class="infinite-container">
@@ -8,14 +15,6 @@ star
   </div>
 
   <span class="community_stream">
-
-    {% if community.article %}
-        {% include 'item_community/article.html' with article=article %}
-    {% endif %}
-
-    {% if community.post %}
-      {% include 'item_community/post.html' with post=post  %}
-    {% endif %}
 
     {% for object in items_list %}
 
