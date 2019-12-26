@@ -89,7 +89,7 @@ class ItemListView(View):
 			fixed = None
 		if user != request.user and request.user.is_authenticated:
 			check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
-			if self.user.is_closed_profile():
+			if user.is_closed_profile():
 				check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
 			items_list = user.get_posts().order_by('-created')
 			template = 'lenta/item_list.html'
