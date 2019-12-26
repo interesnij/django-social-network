@@ -8,7 +8,6 @@
     {% include 'item_community/admin_post.html' with post=post  %}
 {% endif %}
 
-{% if items_list %}
 
 <div class="infinite-container">
   <div class="stream-update">
@@ -16,6 +15,7 @@
   </div>
 
   <span class="community_stream">
+    {% if items_list %}
 
     {% for object in items_list %}
 
@@ -36,9 +36,10 @@
       {% endif %}
     </div>
 
+    {% endif %}
   </span>
 </div>
-{% endif %}
+
 {% if not object and not items_list %}
 <div class="card mb-4 post_empty" style="align-items: center;justify-content:center;">
   <div class="card-body">
