@@ -19,7 +19,7 @@ class UserCommunitiesList(View):
 			check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
 			if self.user.is_closed_profile():
 				check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
-			communities_list = Community.objects.filter(memberships__user__id=self.user.pk).order_by('-created')
+			communities_list = Community.objects.filter(memberships__user__id=self.user.pk)
 			template = 'user_community/communities_list.html'
 			current_page = Paginator(communities_list, 12)
 		elif request.user.is_anonymous and self.user.is_closed_profile():
@@ -29,7 +29,8 @@ class UserCommunitiesList(View):
 			template = 'user_community/communities_list.html'
 			current_page = Paginator(communities_list, 12)
 		elif self.user == request.user:
-			communities_list = Community.get_trending_communities_for_user_with_id(user_id=self.user.pk)
+			query = Community.objects.filter(memberships__user__id=self.user.pk)
+			communities_list = popular_list.filter(query)
 			template = 'user_community/communities_list.html'
 			current_page = Paginator(communities_list, 12)
 		page = request.GET.get('page')
