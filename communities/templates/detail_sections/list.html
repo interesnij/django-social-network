@@ -1,14 +1,14 @@
 {% load staticfiles humanize %}
-
+list
 {% if items_list %}
-листлистлист
+
 <div class="infinite-container">
   <div class="stream-update">
     <a href=""><span class="new-posts"></span> Загрузить новые записи</a>
   </div>
 
   <span class="community_stream">
-list
+
     {% if community.article %}
         {% include 'item_community/article.html' with article=article %}
     {% endif %}
