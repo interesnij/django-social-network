@@ -8,9 +8,9 @@
   {% include 'item_user/my_post.html' with post=post  %}
 {% endif %}
 
-{% if items_list %}
 
 <div class="lenta-container">
+  {% if items_list %}
     <div class="stream-update">
         <a href=""><span class="new-posts"></span> Загрузить новые записи</a>
     </div>
@@ -37,8 +37,8 @@
 
         </div>
     </span>
+    {% endif %}
 </div>
-{% endif %}
 
 {% if not object and not items_list %}
 <div class="card mb-4 post_empty" style="align-items: center;justify-content:center;">

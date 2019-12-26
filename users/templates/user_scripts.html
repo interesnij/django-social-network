@@ -68,11 +68,11 @@ function new_message_popap(new_message) {
 	$('#ajax').on('click', '.article_fullscreen_hide', function() {$('.article_fullscreen').hide(); $('#article_loader').empty();});
 
 $('.user_page').on('click', '#form_post_btn', function() {
-    var form_post = $('#form_post'); var stream = form_post.parent().next().next();
+    var form_post = $('#form_post'); var stream = form_post.parent().next();
         $.ajax({
             type: form_post.attr('method'), url: "{% url 'post_add_user' pk=user.pk %}", data: form_post.serialize(),
             success: function(data) {
-                stream.prepend(data); stream.find(".post_empty").hide(); $(".id_text").val(""); $(".add_board #for_images_upload").hide(); $(".add_board #for_gallery").hide(); $(".add_board #for_doc").hide(); $(".add_board #for_good").hide(); $(".add_board #for_question").hide(); $(".add_board #for_settings").hide();
+                stream.find(".lenta-container").prepend(data); stream.find(".post_empty").hide(); $(".id_text").val(""); $(".add_board #for_images_upload").hide(); $(".add_board #for_gallery").hide(); $(".add_board #for_doc").hide(); $(".add_board #for_good").hide(); $(".add_board #for_question").hide(); $(".add_board #for_settings").hide();
                 $.toast({ heading: '{{ request.user.first_name }}', text: 'Запись успешно создана!', showHideTransition: 'fade', icon: 'success' })},
             error: function(data) {$.toast({heading: '{{ request.user.first_name }}',text: 'Для публикации записи нужно написать что-нибудь и/или вставить изображение(ия)',showHideTransition: 'fade',icon: 'error'})}
         });
