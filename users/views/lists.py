@@ -107,6 +107,7 @@ class ItemListView(View):
 			current_page = Paginator(items_list, 10)
 
 		context['user'] = user
+		context['request_user'] = request.user
 		context['object'] = fixed
 		page = request.GET.get('page')
 		try:

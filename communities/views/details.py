@@ -46,6 +46,7 @@ class ItemsCommunity(View):
         page = request.GET.get('page')
         context['object'] = fixed
         context["community"]=community
+        context['request_user'] = request.user
         try:
             context['items_list'] = current_page.page(page)
         except PageNotAnInteger:
