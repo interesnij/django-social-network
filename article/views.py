@@ -27,19 +27,58 @@ class ArticleNewView(TemplateView):
         context["object"]=self.article
         return context
 
-class ArticleDetailView(TemplateView):
-    model=Article
-    template_name="article_detail.html"
+class ArticleUserDetailView(TemplateView):
+    template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.article = Article.objects.get(uuid=self.kwargs["uuid"])
-        self.article.views += 1
-        self.article.save()
-        return super(ArticleDetailView,self).get(request,*args,**kwargs)
+        self.user = User.objects.get(uuid=self.kwargs["uuid"])
+        self.item = Item.objects.get(pk=self.kwargs["pk"])
+        self.item.views += 1
+        self.item.save()
+
+        if self.user != request.user and request.user.is_authenticated:
+            check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
+            if self.user.is_closed_profile():
+                check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
+            self.template_name = "u_article.html"
+        elif request.user.is_anonymous and self.user.is_closed_profile():
+            raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
+        elif self.user == request.user and request.user.is_authenticated:
+            self.template_name = "my_article.html"
+        elif not self.user.is_closed_profile() and request.user.is_anonymous:
+            self.template_name = "u_article.html"
+        return super(ArticleUserDetailView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context=super(ArticleDetailView,self).get_context_data(**kwargs)
-        context["object"]=self.article
+        context=super(ArticleUserDetailView,self).get_context_data(**kwargs)
+        context["object"]=self.item
+        return context
+
+
+class ItemCommunity(TemplateView):
+    template_name = None
+
+    def get(self,request,*args,**kwargs):
+        self.community=Community.objects.get(uuid=self.kwargs["uuid"])
+        self.item = Item.objects.get(pk=self.kwargs["pk"])
+        self.item.views += 1
+        self.item.save()
+        if request.user.is_authenticated and request.user.is_member_of_community_with_name(self.community.name):
+            if request.user.is_staff_of_community_with_name(self.community.name):
+                self.template_name = "admin_article.html"
+            else:
+                self.template_name = "c_article.html"
+        elif request.user.is_authenticated and self.community.is_public():
+            self.template_name = "c_article.html"
+
+        elif request.user.is_anonymous and self.community.is_public():
+            self.template_name = "c_article.html"
+        return super(ItemCommunity,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context=super(ItemCommunity,self).get_context_data(**kwargs)
+        context["object"]=self.item
+        context["community"]=self.community
         return context
 
 

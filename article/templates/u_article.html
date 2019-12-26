@@ -1,0 +1,32 @@
+{% load staticfiles humanize %}
+
+<div class="card mb-4 infinite-item" style="display: block;">
+
+  {% include 'item_user/card_header.html' %}
+
+    <div class="card-body">
+        <h2 class="">{{ object.article.title }}</h2>
+        <br><br>
+        <figure class="">
+            {% if object.article.g_image %}
+            <img src="{{ object.article.g_image.url }}" alt="img">
+            {% else %}
+            <img src="{% static 'images/no-image.jpg' %}" alt="img" />
+            {% endif %}
+        </figure>
+        <div class="container">
+            <br><br>
+            {{ object.article.content|safe }}
+
+        </div>
+    </div>
+
+    {% include 'item_user/info.html' %}
+</div>
+
+<script>
+    $('.article_fullscreen_hide').on('click', function() {
+        $('.article_fullscreen').hide();
+        $('#article_loader').empty();
+    });
+</script>

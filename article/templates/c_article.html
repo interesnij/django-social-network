@@ -1,8 +1,8 @@
 {% load staticfiles humanize %}
 
-<div class="card mb-4 infinite-item" style="display: block;" item-id="{{ object.uuid }}">
+<div class="card mb-4 infinite-item" style="display: block;">
 
-    {% include 'item_user/card_header.html' %}
+  {% include 'item_community/card_header.html' %}
 
     <div class="card-body">
         <h2 class="">{{ object.article.title }}</h2>

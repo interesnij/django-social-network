@@ -8,7 +8,6 @@ from communities.models import Community
 
 
 class UserItemView(TemplateView):
-    model = Item
     template_name = None
 
     def get(self,request,*args,**kwargs):

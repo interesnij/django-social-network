@@ -1,7 +1,4 @@
-$('#ajax .stream').on('click', '.article_detail', function() {
-    var item = $(this); var item_id = item.data("id");
-    $('#article_loader').html('').load("/article/detail/" + item_id); $('.article_fullscreen').show();
-});
+$('#ajax .stream').on('click', '.u_article_detail', function() {var item = $(this);var pk = item.data("pk"); var uuid = item.data("uuid"); $('#article_loader').html('').load("/article/detail/" + pk + "/" + uuid + "/"); $('.article_fullscreen').show();});
 $('#ajax').on('click', '.fullscreen', function() {
     var item = $(this); var item_pk = item.data("pk"); var user_uuid = item.data("uuid");
     $('#item_loader').html('').load("/users/detail/item/" + item_pk + "/" + user_uuid + "/"); $('.item_fullscreen').show();
