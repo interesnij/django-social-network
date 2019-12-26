@@ -15,7 +15,10 @@ class ItemsCommunity(View):
         context = {}
         template_name = None
         community=Community.objects.get(pk=self.kwargs["pk"])
-        fixed = Item.objects.get(community=community, is_fixed=True)
+        try:
+            fixed = Item.objects.get(community=community, is_fixed=True)
+        except:
+            fixed = None
 
         if request.user.is_authenticated and request.user.is_member_of_community_with_name(community.name):
             if request.user.is_creator_of_community_with_name(community.name):
