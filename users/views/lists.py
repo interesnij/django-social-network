@@ -82,27 +82,30 @@ class ItemListView(View):
 	def get(self, request, *args, **kwargs):
 		context = {}
 		template = None
-		self.user=User.objects.get(pk=self.kwargs["pk"])
-		fixed = Item.objects.get(creator__id=self.user.pk, is_fixed=True)
-		if self.user != request.user and request.user.is_authenticated:
-			check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
+		user=User.objects.get(pk=self.kwargs["pk"])
+		try:
+			fixed = Item.objects.get(creator__id=user.pk, is_fixed=True)
+		except:
+			fixed = None
+		if user != request.user and request.user.is_authenticated:
+			check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
 			if self.user.is_closed_profile():
-				check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
-			items_list = self.user.get_posts().order_by('-created')
+				check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
+			items_list = user.get_posts().order_by('-created')
 			template = 'lenta/item_list.html'
 			current_page = Paginator(items_list, 10)
-		elif request.user.is_anonymous and self.user.is_closed_profile():
+		elif request.user.is_anonymous and user.is_closed_profile():
 			raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
-		elif request.user.is_anonymous and not self.user.is_closed_profile():
-			items_list = self.user.get_posts().order_by('-created')
+		elif request.user.is_anonymous and not user.is_closed_profile():
+			items_list = user.get_posts().order_by('-created')
 			template = 'lenta/item_list_anon.html'
 			current_page = Paginator(items_list, 10)
-		elif self.user == request.user:
-			items_list = self.user.get_posts().order_by('-created')
+		elif user == request.user:
+			items_list = user.get_posts().order_by('-created')
 			template = 'lenta/my_item_list.html'
 			current_page = Paginator(items_list, 10)
 
-		context['user'] = self.user
+		context['user'] = user
 		context['object'] = fixed
 		page = request.GET.get('page')
 		try:
