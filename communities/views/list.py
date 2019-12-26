@@ -4,13 +4,14 @@ from users.models import User
 
 
 class CommunitiesView(ListView):
-	template_name="communities.html"
-	model=Community
-	paginate_by=15
+	template_name = "communities.html"
+	model = Community
+	paginate_by = 15
 
 	def get_queryset(self):
-		self.user=User.objects.get(pk=self.kwargs["pk"])
-		groups=Community.objects.filter(memberships__user__id=self.user.pk).order_by('-created')
+		self.user = User.objects.get(pk=self.kwargs["pk"])
+		community_list = Community.get_trending_communities()
+		groups = community_list.filter(memberships__user__id=self.user.pk)
 		return groups
 
 
