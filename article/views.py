@@ -133,11 +133,10 @@ class ArticleCommunityCreate(TemplateView):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         if self.form.is_valid() and request.user.is_staff_of_community_with_name(self.community.name):
             article=self.form.save(commit=False)
-            article.creator=self.request.user
-            new_article=article.create_article( creator=article.creator, content=article.content, community=self.community, g_image=article.g_image, comments_enabled=article.comments_enabled, status=article.status, title=article.title,)
+            new_article=article.create_article( creator=request.user, content=article.content, community=self.community, g_image=article.g_image, comments_enabled=article.comments_enabled, status=article.status, title=article.title,)
 
             if request.is_ajax():
-                 html = render_to_string('item_community/admin_article.html',{'object': new_article,'request': request})
+                 html = render_to_string('item_community/admin_article.html',{'object': new_article, 'community': self.community, 'request': request})
                  return HttpResponse(html)
         else:
            HttpResponseBadRequest()
