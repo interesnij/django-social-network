@@ -8,36 +8,18 @@ $('.user_page').on('click', '.avatar_detail', function() {
 		$('#photo_loader').html('').load("/gallery/load/avatar_detail/" + photo_id + "/" + user_uuid + "/")
 		$('.photo_fullscreen').show();
 });
+
+    $('.add_board_hide').on('click', function() {$('#for_settings').hide();});
+    $('#images_upload').on('click', function() {$('#for_images_upload').show();});
+    $('#settings').on('click', function() {$('#for_settings').show();});
+    $('#gallery').on('click', function() {$('#for_gallery').show();});
+    $('#doc').on('click', function() {$('#for_doc').show();});
+    $('#good').on('click', function() {$('#for_good').show();});
+    $('#question').on('click', function() {$('#for_question').show();});
+
 </script>
 
 {% if request.user == user and  request.user.is_authenticated %}
-
-<script>
-function avatar_change_popap(avatar_change) {
-	if ($(".wrapper").length == 0){
-		$(avatar_change).wrapInner("<div class='wrapper'></div>");
-	}
-	$(avatar_change).show();
-	$(avatar_change).click(function(e) {
-		if ( e.target == this ) {
-			if ($(avatar_change).is(':visible')) {
-				$(avatar_change).hide();
-			}
-		}
-	});
-	$(avatar_change).find("button[name=avatar_close]").on("click", function() {
-		if ($(".formElementError").is(':visible')) {
-			$(".formElementError").remove();
-		}
-		$(avatar_change).hide();
-	});
-}
-$(document).ready(function () {
-	$("[data-js=avatar_change]").on("click", function() {
-		avatar_change_popap($(".avatar_change"));
-	});
-});
-</script>
 
 <script>
 var frm10 = $('#AVATAR-FORM');
@@ -63,29 +45,18 @@ frm10.submit(function () {
 
 <script>
 function new_message_popap(new_message) {
-	if ($(".wrapper").length == 0){
-		$(new_message).wrapInner("<div class='wrapper'></div>");
-	}
+	if ($(".wrapper").length == 0){$(new_message).wrapInner("<div class='wrapper'></div>");}
 	$(new_message).show();
-	$(new_message).click(function(e) {
-		if ( e.target == this ) {
-			if ($(new_message).is(':visible')) {
-				$(new_message).hide();
-			}
-		}
-	});
-	$(new_message).find("button[name=message_close]").on("click", function() {
-		if ($(".formElementError").is(':visible')) {
-			$(".formElementError").remove();
-		}
-		$(new_message).hide();
-	});
-}
-$(document).ready(function () {
-	$("[data-js=new_message]").on("click", function() {
-		new_message_popap($(".new_message"));
-	});
-});
+	$(new_message).click(function(e) {if ( e.target == this ) {if ($(new_message).is(':visible')) {$(new_message).hide();}}});
+	$(new_message).find("button[name=message_close]").on("click", function() {if ($(".formElementError").is(':visible')) {$(".formElementError").remove();}$(new_message).hide();});}
+	$(document).ready(function () {$("[data-js=new_message]").on("click", function() {new_message_popap($(".new_message"));});});
+
+	function avatar_change_popap(avatar_change) {
+		if ($(".wrapper").length == 0){$(avatar_change).wrapInner("<div class='wrapper'></div>");}
+		$(avatar_change).show();
+		$(avatar_change).click(function(e) {if ( e.target == this ) {if ($(avatar_change).is(':visible')) {$(avatar_change).hide();}}});
+		$(avatar_change).find("button[name=avatar_close]").on("click", function() {if ($(".formElementError").is(':visible')) {$(".formElementError").remove();}$(avatar_change).hide();});}
+	$(document).ready(function () {$("[data-js=avatar_change]").on("click", function() {avatar_change_popap($(".avatar_change"));});});
 </script>
 <script>
 	var lenta = new Waypoint.Infinite({
@@ -95,6 +66,7 @@ $(document).ready(function () {
 <script>
   $("#article_add").click(function() {$('#article_loader').html('').load("{% url 'article_add_user' pk=user.pk %}"); $('.article_fullscreen').show();})
 	$('#ajax').on('click', '.article_fullscreen_hide', function() {$('.article_fullscreen').hide(); $('#article_loader').empty();});
+
 $('.user_page').on('click', '#form_post_btn', function() {
     var form_post = $('#form_post'); var stream = form_post.parent().next().next();
         $.ajax({
