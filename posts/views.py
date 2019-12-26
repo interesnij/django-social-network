@@ -49,8 +49,7 @@ class PostUserCreate(View):
 
         if self.form_post.is_valid() and request.user == self.user:
             post=self.form_post.save(commit=False)
-            post.creator=self.user
-            new_post = post.create_post(creator=post.creator, text=post.text, community=None, comments_enabled=post.comments_enabled, status=post.status,)
+            new_post = post.create_post(creator=request.user, text=post.text, community=None, comments_enabled=post.comments_enabled, status=post.status,)
 
             if request.is_ajax() :
                 html = render_to_string('item_user/my_post.html', {'object': new_post,'request': request})
@@ -71,7 +70,7 @@ class PostCommunityCreate(View):
         community = Community.objects.get(pk=self.kwargs["pk"])
 
         if form_post.is_valid() and request.user.is_staff_of_community_with_name(community.name):
-            new_post=form_post.save(commit=False)
+            post=form_post.save(commit=False)
             new_post = post.create_post(creator=request.user, text=post.text, community=community, comments_enabled=post.comments_enabled, status=post.status,)
 
             if request.is_ajax() :
