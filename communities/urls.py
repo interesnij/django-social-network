@@ -1,4 +1,4 @@
-from django.conf.urls import url
+from django.conf.urls import url, include
 from communities.views.list import AllCommunities, CommunityMembersView
 from communities.views.details import ItemCommunity, ItemsCommunity, CommunityDetail, CommunityDetailReload
 from communities.views.progs import CommunityCreate, CommunitiesCatsView, GygView, CommunityMemberCreate, CommunityMemberDelete
