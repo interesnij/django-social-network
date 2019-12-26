@@ -121,7 +121,7 @@ def community_unfixed(request, pk, uuid):
 	community = Community.objects.get(uuid=uuid)
 	if request.user.is_staff_of_community_with_name(community.name):
 		item.is_fixed=False
-		item.save()
+		item.save(update_fields=['is_fixed'])
 		return HttpResponse("!")
 	else:
 		return HttpResponse("Открепляйте, пожалуйста, свои записи!")
@@ -131,7 +131,7 @@ def community_item_delete(request, pk, uuid):
 	community = Community.objects.get(uuid=uuid)
 	if request.user.is_staff_of_community_with_name(community.name):
 		item.is_deleted=True
-		item.save()
+		item.save(update_fields=['is_deleted'])
 		return HttpResponse("!")
 	else:
 		return HttpResponse("Удаляйте, пожалуйста, свои записи!")

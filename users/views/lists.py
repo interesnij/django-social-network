@@ -84,6 +84,7 @@ class ItemListView(View):
         context = {}
         template = None
         self.user=User.objects.get(pk=self.kwargs["pk"])
+		fixed = Item.objects.get(user__id=self.user.pk, is_fixed=True)
         if self.user != request.user and request.user.is_authenticated:
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
             if self.user.is_closed_profile():
@@ -103,6 +104,7 @@ class ItemListView(View):
             current_page = Paginator(items_list, 10)
         context['user'] = self.user
         context['request_user'] = request.user
+		context['object'] = fixed
         page = request.GET.get('page')
         try:
             context['items_list'] = current_page.page(page)

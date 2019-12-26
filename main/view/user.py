@@ -126,7 +126,7 @@ def user_unfixed(request, pk):
 	item = Item.objects.get(pk=pk)
 	if request.user == item.creator:
 		item.is_fixed=False
-		item.save()
+		item.save(update_fields=['is_fixed'])
 		return HttpResponse("!")
 	else:
 		return HttpResponse("Открепляйте, пожалуйста, свои записи!")
@@ -135,7 +135,7 @@ def user_item_delete(request, pk):
 	item = Item.objects.get(pk=pk)
 	if request.user == item.creator:
 		item.is_deleted=True
-		item.save()
+		item.save(update_fields=['is_deleted'])
 		return HttpResponse("!")
 	else:
 		return HttpResponse("Удаляйте, пожалуйста, свои записи!")
