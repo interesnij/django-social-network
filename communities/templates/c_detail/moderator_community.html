@@ -101,5 +101,6 @@
         $('#lenta_load').html('').load("/communities/list/" + {{ community.pk }});
     });
 </script>
+<script defer src="{% static 'scripts/auth/community.js' %}" type="text/javascript"></script>
 {% include "detail_sections/scripts.html" %}
 {% endblock %}

@@ -93,4 +93,5 @@ $('#ajax').on('click', '.member_follow_create', function() {
   $.ajax({url: "/follows/add_member/" + pk + "/", success: function () {$('#ajax').html('').load("/communities/reload/" + pk + "/");}});
 });
 </script>
+<script defer src="{% static 'scripts/auth/community.js' %}" type="text/javascript"></script>
 {% endblock %}

@@ -1,5 +1,5 @@
 {% load staticfiles humanize %}
-{% if object %}
+
 {% if object.article %}
     {% include 'item_community/admin_article.html' with article=article  %}
 {% endif %}
@@ -7,7 +7,7 @@
 {% if object.post %}
     {% include 'item_community/admin_post.html' with post=post  %}
 {% endif %}
- {% endif %}
+
 {% if items_list %}
 
 <div class="infinite-container">
