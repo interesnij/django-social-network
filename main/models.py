@@ -120,7 +120,7 @@ class Item(models.Model):
         return likes[0:6]
 
     def get_fixed_for_user(self, user_id):
-        try:
+        try: 
             item = Item.objects.get(creator__id=user_id,is_fixed=True)
             item.is_fixed = False
             item.save(update_fields=['is_fixed'])

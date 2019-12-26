@@ -75,7 +75,7 @@ class ArticleUserCreate(TemplateView):
             )
 
             if request.is_ajax() :
-                 html = render_to_string('generic/posts/article.html',{'object': new_article,'request': request})
+                 html = render_to_string('item_user/my_article.html',{'object': new_article,'request': request})
                  return HttpResponse(html)
         else:
            return HttpResponseBadRequest()
@@ -108,7 +108,7 @@ class ArticleCommunityCreate(TemplateView):
             new_article=self.form.save()
 
             if request.is_ajax() :
-                 html = render_to_string('generic/posts/article.html',{'object': new_article,'request': request})
+                 html = render_to_string('item_community/admin_article.html',{'object': new_article,'request': request})
                  return HttpResponse(html)
         else:
            HttpResponseBadRequest()
