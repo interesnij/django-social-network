@@ -60,85 +60,19 @@
 </form>
 
 <script>
-    var frm_art = $('#FORM-ARTICLE');
-    var block = $('#ajax');
+    var frm_art = $('#FORM-ARTICLE');var block = $('#ajax');
     $('#FORM-ARTICLE').submit(function(e) {
-        e.preventDefault();
-        CKEDITOR.instances.id_content.updateElement();
+        e.preventDefault(); CKEDITOR.instances.id_content.updateElement();
         $.ajax({
-            type: frm_art.attr('method'),
-            url: "{% url 'article_add_user' pk=user.pk %}",
-            data: new FormData($(frm_art)[0]),
-            contentType: false,
-            cache: false,
-            processData: false,
-            success: function(data) {
-                    block.find(".stream").prepend(data);
-                    $('.article_fullscreen').hide();
-                    $('#article_loader').empty();
-                    $.toast({
-                        heading: '{{ request.user.first_name }}',
-                        text: 'Статья успешно создана!',
-                        showHideTransition: 'fade',
-                        icon: 'success',
-                    })
-            },
-            error: function(data) {
-              $.toast({
-                  heading: '{{ request.user.first_name }}',
-                  text: 'Для публикации статьи нужно указать название, изображение, содержание',
-                  showHideTransition: 'fade',
-                  icon: 'error'
-              })
-            }
-        });
-        return false;
-    });
-</script>
-<script>
-    var imageLoader = document.getElementById("id_g_image");
-    var entrou = false;
-    $("#image-holder").on("click", function() {
-        $("#id_g_image").click();
+            type: frm_art.attr('method'),url: "{% url 'article_add_user' pk=user.pk %}",data: new FormData($(frm_art)[0]),contentType: false,cache: false,processData: false,
+            success: function(data) {block.find(".stream").prepend(data);block.find(".post_empty").hide();$('.article_fullscreen').hide();$('#article_loader').empty();$.toast({ heading: 'Информация', text: 'Статья успешно создана!', showHideTransition: 'fade', icon: 'success', })},
+            error: function(data) { $.toast({ heading: 'Ошибка', text: 'Для публикации статьи нужно указать название, изображение, содержание', showHideTransition: 'fade', icon: 'error' }) }
+        });return false;
     });
 
-    $("#id_g_image").on("change", function() {
-        if (!entrou) {
-            var imgPath = $(this)[0].value;
-            var extn = imgPath.substring(imgPath.lastIndexOf(".") + 1).toLowerCase();
+  var imageLoader = document.getElementById("id_g_image");var entrou = false;$("#image-holder").on("click", function() {$("#id_g_image").click();});$("#id_g_image").on("change", function() {if (!entrou) {var imgPath = $(this)[0].value;var extn = imgPath.substring(imgPath.lastIndexOf(".") + 1).toLowerCase();if (extn == "gif" || extn == "png" || extn == "jpg" || extn == "jpeg") {if (typeof FileReader != "undefined") {var image_holder = $("#image-holder");image_holder.empty();var reader = new FileReader();reader.onload = function(e) {$img = $("<img />", {id: "targetImageCrop",src: e.target.result,class: "thumb-image"}).appendTo(image_holder);};image_holder.show();reader.readAsDataURL($(this)[0].files[0]);}} else {this.value = null;}}entrou = true; setTimeout(function() { entrou = false; }, 1000); });
 
-            if (extn == "gif" || extn == "png" || extn == "jpg" || extn == "jpeg") {
-                if (typeof FileReader != "undefined") {
-                    var image_holder = $("#image-holder");
-                    image_holder.empty();
-
-                    var reader = new FileReader();
-                    reader.onload = function(e) {
-                        $img = $("<img />", {
-                            id: "targetImageCrop",
-                            src: e.target.result,
-                            class: "thumb-image"
-                        }).appendTo(image_holder);
-                    };
-
-                    image_holder.show();
-                    reader.readAsDataURL($(this)[0].files[0]);
-                }
-            } else {
-                this.value = null;
-            }
-        }
-        entrou = true;
-        setTimeout(function() {
-            entrou = false;
-        }, 1000);
-    });
-</script>
-<script>
-    $(".remove_form").click(function() {
-        $('.article_fullscreen').hide();
-        $('#article_loader').empty();
-    });
+    $(".remove_form").click(function() {$('.article_fullscreen').hide();$('#article_loader').empty();});
 </script>
 
 <script defer type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
