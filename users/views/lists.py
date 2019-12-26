@@ -79,38 +79,37 @@ class AllPossibleUsersList(View):
 
 
 class ItemListView(View):
+	def get(self, request, *args, **kwargs):
+		context = {}
+		template = None
+		self.user=User.objects.get(pk=self.kwargs["pk"])
+		fixed = Item.objects.get(user__id=self.user.pk, is_fixed=True)
+		if self.user != request.user and request.user.is_authenticated:
+			check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
+			if self.user.is_closed_profile():
+				check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
+			items_list = self.user.get_posts().order_by('-created')
+			template = 'lenta/item_list.html'
+			current_page = Paginator(items_list, 10)
+		elif request.user.is_anonymous and self.user.is_closed_profile():
+			raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
+		elif request.user.is_anonymous and not self.user.is_closed_profile():
+			items_list = self.user.get_posts().order_by('-created')
+			template = 'lenta/item_list_anon.html'
+			current_page = Paginator(items_list, 10)
+		elif self.user == request.user:
+			items_list = self.user.get_posts().order_by('-created')
+			template = 'lenta/my_item_list.html'
+			current_page = Paginator(items_list, 10)
 
-    def get(self, request, *args, **kwargs):
-        context = {}
-        template = None
-        self.user=User.objects.get(pk=self.kwargs["pk"])
-	    fixed = Item.objects.get(user__id=self.user.pk, is_fixed=True)
-        if self.user != request.user and request.user.is_authenticated:
-            check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
-            if self.user.is_closed_profile():
-                check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
-            items_list = self.user.get_posts().order_by('-created')
-            template = 'lenta/item_list.html'
-            current_page = Paginator(items_list, 10)
-        elif request.user.is_anonymous and self.user.is_closed_profile():
-            raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
-        elif request.user.is_anonymous and not self.user.is_closed_profile():
-            items_list = self.user.get_posts().order_by('-created')
-            template = 'lenta/item_list_anon.html'
-            current_page = Paginator(items_list, 10)
-        elif self.user == request.user:
-            items_list = self.user.get_posts().order_by('-created')
-            template = 'lenta/my_item_list.html'
-            current_page = Paginator(items_list, 10)
-        context['user'] = self.user
-        context['request_user'] = request.user
+		context['user'] = self.user
 		context['object'] = fixed
-        page = request.GET.get('page')
-        try:
-            context['items_list'] = current_page.page(page)
-        except PageNotAnInteger:
-            context['items_list'] = current_page.page(1)
-        except EmptyPage:
-            context['items_list'] = current_page.page(current_page.num_pages)
+		page = request.GET.get('page')
+		try:
+			context['items_list'] = current_page.page(page)
+		except PageNotAnInteger:
+			context['items_list'] = current_page.page(1)
+		except EmptyPage:
+			context['items_list'] = current_page.page(current_page.num_pages)
 
-        return render_to_response(template, context)
+		return render_to_response(template, context)
