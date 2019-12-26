@@ -93,5 +93,5 @@
 {% include "base_block/modal_community_repost.html" %}
 {% include "detail_sections/scripts.html" %}
 <script>$(document).ready(function() {$('#lenta_load').html('').load("/communities/list/" + {{ community.pk }});});</script>
-<script defer src="{% static 'scripts/my/community.js' %}" type="text/javascript"></script>
+
 {% endblock %}
