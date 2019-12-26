@@ -20,6 +20,6 @@ urlpatterns = [
     url(r'^add_community_member/(?P<pk>\d+)/$', CommunityMemberCreate.as_view(), name="add_community_member"),
     url(r'^delete_community_member/(?P<pk>\d+)/$', CommunityMemberDelete.as_view(), name="delete_community_member"),
 
-    url(r'^manage/', include('communties.url.manage')),
+    url(r'^manage/', include('communities.url.manage')),
 
 ]
