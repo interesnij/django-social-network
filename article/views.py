@@ -55,7 +55,7 @@ class ArticleUserDetailView(TemplateView):
         return context
 
 
-class ItemCommunity(TemplateView):
+class ArticleCommunityDetailView(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
@@ -73,10 +73,10 @@ class ItemCommunity(TemplateView):
 
         elif request.user.is_anonymous and self.community.is_public():
             self.template_name = "c_article.html"
-        return super(ItemCommunity,self).get(request,*args,**kwargs)
+        return super(ArticleCommunityDetailView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context=super(ItemCommunity,self).get_context_data(**kwargs)
+        context=super(ArticleCommunityDetailView,self).get_context_data(**kwargs)
         context["object"]=self.item
         context["community"]=self.community
         return context
