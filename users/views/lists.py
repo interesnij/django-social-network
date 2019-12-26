@@ -29,7 +29,7 @@ class UserCommunitiesList(View):
 			template = 'user_community/communities_list.html'
 			current_page = Paginator(communities_list, 12)
 		elif self.user == request.user:
-			communities_list = popular_list.filter(memberships__user__id=self.user.pk).order_by('-created')
+			communities_list = Community.get_trending_communities_for_user_with_id(user_id=self.user.pk)
 			template = 'user_community/communities_list.html'
 			current_page = Paginator(communities_list, 12)
 		page = request.GET.get('page')
