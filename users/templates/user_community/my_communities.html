@@ -56,7 +56,7 @@
                               </figure>
                               <div class="media-body">
                                   <a href="{% url 'community_detail' pk=object.pk %}" class="ajax">
-                                      <h6 class="my-0 mt-1">{{ object.get_full_name }}</h6>
+                                      <h6 class="my-0 mt-1">{{ object.name }}</h6>
                                   </a>
                                   <p class="small">{{ object.count_members }} {{ object.count_members|rupluralize:"подписчик,подписчика,подписчиков" }}</p>
                               </div>
