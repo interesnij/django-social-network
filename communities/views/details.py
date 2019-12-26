@@ -96,7 +96,7 @@ class CommunityDetail(TemplateView):
         self.membersheeps=CommunityMembership.objects.filter(community__id=self.community.pk)[0:5]
 
         if request.user.is_authenticated and request.user.is_member_of_community_with_name(self.community.name):
-            self.common_friends = request.user.get_common_friends_of_community(self.community)[0:5]
+            self.common_friends = request.user.get_common_friends_of_community(self.community.pk)[0:5]
             if request.user.is_creator_of_community_with_name(self.community.name):
                 self.template_name = "c_detail/creator_community.html"
             elif request.user.is_moderator_of_community_with_name(self.community.name):
@@ -107,18 +107,18 @@ class CommunityDetail(TemplateView):
                 self.template_name = "c_detail/star_community.html"
             else:
                 self.template_name = "c_detail/member_community.html"
-                self.common_friends = request.user.get_common_friends_of_community(self.community.name)[0:5]
+                self.common_friends = request.user.get_common_friends_of_community(self.community.pk)[0:5]
         elif request.user.is_authenticated and request.user.is_follow_from_community_with_name(self.community.pk):
-            self.common_friends = request.user.get_common_friends_of_community(self.community.name)[0:5]
+            self.common_friends = request.user.get_common_friends_of_community(self.community.pk)[0:5]
             self.template_name = "c_detail/follow_community.html"
         elif request.user.is_authenticated and request.user.is_banned_from_community_with_name(self.community):
             self.template_name = "c_detail/block_community.html"
 
         elif request.user.is_authenticated and self.community.is_public():
-            self.common_friends = request.user.get_common_friends_of_community(self.community)[0:5]
+            self.common_friends = request.user.get_common_friends_of_community(self.community.pk)[0:5]
             self.template_name = "c_detail/public_community.html"
         elif request.user.is_authenticated and self.community.is_closed():
-            self.common_friends = request.user.get_common_friends_of_community(self.community)[0:5]
+            self.common_friends = request.user.get_common_friends_of_community(self.community.pk)[0:5]
             self.template_name = "c_detail/close_community.html"
         elif request.user.is_authenticated and self.community.is_private():
             self.template_name = "c_detail/private_community.html"
