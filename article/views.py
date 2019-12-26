@@ -6,6 +6,7 @@ from article.models import Article
 from django.urls import reverse_lazy
 from django.http import HttpResponse, HttpResponseBadRequest
 from communities.models import Community
+from main.models import Item
 
 
 class ArticleView(TemplateView):
