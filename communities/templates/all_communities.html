@@ -62,34 +62,18 @@
             <div class="card-header">
                 <div class="media">
                     <div class="media-body">
-                        <h5 class="mt-1">Популярные группы</h5>
+                        <h5 class="mt-1">Категории </h5>
                     </div>
                 </div>
             </div>
-            <br><br>
         </div>
-
     </div>
 </div>
 
-<div class="card mb-4 community_fullscreen" style="display:none">
-    <span class="community_fullscreen_hide">
-        <img style="width:35px" src="{% static 'images/icons/close-24px.svg' %}" />
-    </span>
-    <div id="community_loader" style="margin-top:30px">
-
-    </div>
-</div>
+<div class="card mb-4 community_fullscreen" style="display:none"><span class="community_fullscreen_hide"><img style="width:35px" src="{% static 'images/icons/close-24px.svg' %}" /></span><div id="community_loader" style="margin-top:30px"></div></div>
 <script>
-    $("#community_add").click(function() {
-        $('#community_loader').html('').load("/communities/add/");
-        $('.community_fullscreen').show();
-    })
-</script>
-<script>
-    $('.community_fullscreen_hide').on('click', function() {
-        $('.community_fullscreen').hide();
-        $('#community_loader').empty();
+    $("#community_add").click(function() {$('#community_loader').html('').load("/communities/add/");$('.community_fullscreen').show();})
+    $('.community_fullscreen_hide').on('click', function() {$('.community_fullscreen').hide();$('#community_loader').empty();
     });
 </script>
 {% endblock %}
