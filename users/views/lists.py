@@ -13,6 +13,7 @@ class UserCommunitiesList(View):
 	def get(self, request, *args, **kwargs):
 		context = {}
 		template = None
+		popular_list = get_trending_communities()
 		self.user=User.objects.get(uuid=self.kwargs["uuid"])
 		if self.user != request.user and request.user.is_authenticated:
 			check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
@@ -32,6 +33,7 @@ class UserCommunitiesList(View):
 			template = 'user_community/communities_list.html'
 			current_page = Paginator(communities_list, 12)
 		page = request.GET.get('page')
+		context['popular_list'] = popular_list
 		context['user'] = self.user
 		try:
 			context['communities_list'] = current_page.page(page)

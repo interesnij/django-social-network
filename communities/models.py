@@ -140,14 +140,6 @@ class Community(models.Model):
         return cls.objects.filter(name=community_name, type='C').exists()
 
     @classmethod
-    def community_with_name_exists(cls, community_name):
-        """"
-        Есть ли сообщество, не удаленное?
-        """
-        query = Q(name=community_name, is_deleted=False)
-        return cls.objects.filter(query).exists()
-
-    @classmethod
     def get_community_with_name_for_user_with_id(cls, community_name, user_id):
         """"
         Получаем сообщества для пользователя?
