@@ -24,7 +24,7 @@ class Article(Item):
                                       )
 
     @classmethod
-    def create_article(cls, creator, community=None, g_image=None, content=None,
+    def create_article(cls, creator, title=None, community=None, g_image=None, content=None,
                     created=None, is_draft=False, status= None, comments_enabled=None ):
 
         article = Article.objects.create(
@@ -33,6 +33,7 @@ class Article(Item):
                                             g_image=g_image,
                                             community=community,
                                             comments_enabled=comments_enabled,
+                                            title=title
                                         )
 
         channel_layer = get_channel_layer()

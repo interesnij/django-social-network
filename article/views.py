@@ -63,10 +63,9 @@ class ArticleUserCreate(TemplateView):
         self.user=User.objects.get(pk=self.kwargs["pk"])
         if self.form.is_valid():
             article=self.form.save(commit=False)
-            article.creator=self.user
 
             new_article=article.create_article(
-                creator=article.creator,
+                creator=self.user,
                 content=article.content,
                 community=None,
                 g_image=article.g_image,
@@ -103,10 +102,17 @@ class ArticleCommunityCreate(TemplateView):
         self.form=ArticleForm(request.POST,request.FILES)
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         if self.form.is_valid():
-            new_article=self.form.save(commit=False)
-            new_article.creator=self.request.user
-            new_article.community=self.community
-            new_article=self.form.save()
+            article=self.form.save(commit=False)
+            article.creator=self.request.user
+            new_article=article.create_article(
+                creator=article.creator,
+                content=article.content,
+                community=self.community,
+                g_image=article.g_image,
+                comments_enabled=article.comments_enabled,
+                status=article.status,
+                title=article.title,
+            )
 
             if request.is_ajax() :
                  html = render_to_string('item_community/admin_article.html',{'object': new_article,'request': request})
