@@ -7,6 +7,7 @@ from django.urls import reverse_lazy
 from django.http import HttpResponse, HttpResponseBadRequest
 from communities.models import Community
 from main.models import Item
+from rest_framework.exceptions import PermissionDenied
 
 
 class ArticleView(TemplateView):
@@ -48,6 +49,7 @@ class ArticleUserDetailView(TemplateView):
             self.template_name = "my_article.html"
         elif not self.user.is_closed_profile() and request.user.is_anonymous:
             self.template_name = "u_article.html"
+
         return super(ArticleUserDetailView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -74,6 +76,8 @@ class ArticleCommunityDetailView(TemplateView):
 
         elif request.user.is_anonymous and self.community.is_public():
             self.template_name = "c_article.html"
+        else:
+            raise PermissionDenied('Ошибка доступа')
         return super(ArticleCommunityDetailView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -141,25 +145,3 @@ class ArticleCommunityCreate(TemplateView):
         else:
            HttpResponseBadRequest()
         return super(ArticleCommunityCreate,self).get(request,*args,**kwargs)
-
-
-class ArticleCommentCreateView(TemplateView):
-    template_name = "generic/posts/article_comment.html"
-
-    def post(self, request, *args, **kwargs):
-        comment = self.request.POST.get('text')
-        article = Article.objects.get(pk=post_pk)
-
-        new_comment = article.comments.create(creator=request.user, text=comment)
-        data = [
-                {
-                'commenter': new_comment.commenter.get_full_name(),
-                "comment": new_comment.text,
-                "comment_id": new_comment.pk,
-                }
-        ]
-        return JsonResponse(data, safe=False)
-
-        notification_handler(
-            user, article.creator, Notification.ARTICLE_COMMENT, action_object=reply_article,
-            id_value=str(post.uuid), key='social_update')
