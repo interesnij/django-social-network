@@ -222,7 +222,7 @@ class Community(models.Model):
 
     @classmethod
     def _make_trending_communities_query(cls, category_name=None):
-        trending_communities_query = Q(type=cls.COMMUNITY_TYPE_PUBLIC, is_deleted=False)
+        trending_communities_query = Q(is_deleted=False)
         if category_name:
             trending_communities_query.add(Q(categories__name=category_name), Q.AND)
         return trending_communities_query
