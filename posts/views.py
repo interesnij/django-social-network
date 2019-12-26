@@ -70,7 +70,7 @@ class PostCommunityCreate(View):
         form_post=PostCommunityForm(request.POST, request.FILES)
         community = Community.objects.get(pk=self.kwargs["pk"])
 
-        if form_post.is_valid() and request.user.is_staff_of_community_with_name(self.community.name):
+        if form_post.is_valid() and request.user.is_staff_of_community_with_name(community.name):
             new_post=form_post.save(commit=False)
             new_post = post.create_post(creator=request.user, text=post.text, community=community, comments_enabled=post.comments_enabled, status=post.status,)
 
