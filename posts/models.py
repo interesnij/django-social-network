@@ -23,7 +23,7 @@ class Post(Item):
             post = Post.objects.create(creator=creator, text=text, community=community, comments_enabled=comments_enabled, status = status, )
             channel_layer = get_channel_layer()
             payload = {
-                    "type": "receive",
+                    "type": "receive", 
                     "key": "additional_post",
                     "actor_name": post.creator.get_full_name()
                 }

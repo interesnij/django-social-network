@@ -1,4 +1,4 @@
-{% load staticfiles humanize liked_user %}
+{% load staticfiles humanize %}
 
 <div class="card mb-4 infinite-item" style="display: block;" item-id="{{ object.uuid }}">
 
@@ -9,9 +9,9 @@
         <br><br>
         <figure class="">
             {% if object.article.g_image %}
-            <img src="{{ object.article.g_image.url }}" alt="">
+            <img src="{{ object.article.g_image.url }}" alt="img">
             {% else %}
-            <img src="{% static 'images/no-image.jpg' %}" />
+            <img src="{% static 'images/no-image.jpg' %}" alt="img" />
             {% endif %}
         </figure>
         <div class="container">

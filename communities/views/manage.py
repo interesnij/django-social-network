@@ -27,7 +27,7 @@ class CommunityGeneralChange(TemplateView):
 	def post(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.form=GeneralCommunityForm(request.POST, instance=self.community)
-		if self.form.is_valid() and request.user.is_authenticated and request.user.is_administrator_of_community_with_name(self.community.name):
+		if self.form.is_valid() and request.user.is_administrator_of_community_with_name(self.community.name):
 			self.form.save()
 			if request.is_ajax():
 				return HttpResponse ('!')
@@ -104,7 +104,7 @@ class CommunityCatChange(TemplateView):
 	def post(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.form=CatCommunityForm(request.POST, instance=self.community)
-		if self.form.is_valid() and request.user.is_authenticated and request.user.is_administrator_of_community_with_name(self.community.name):
+		if self.form.is_valid() and request.user.is_administrator_of_community_with_name(self.community.name):
 			self.form.save()
 			if request.is_ajax():
 				return HttpResponse ('!')

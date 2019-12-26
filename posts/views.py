@@ -46,12 +46,8 @@ class PostUserCreate(View):
     def post(self,request,*args,**kwargs):
         self.form_post=PostForm(request.POST, request.FILES)
         self.user=User.objects.get(pk=self.kwargs["pk"])
-        if self.user != request.user and request.user.is_authenticated:
-            check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
-            if self.user.is_closed_profile:
-                check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
 
-        if self.form_post.is_valid():
+        if self.form_post.is_valid() and request.user == self.user:
             post=self.form_post.save(commit=False)
             post.creator=self.user
             new_post = post.create_post(creator=post.creator, text=post.text, community=None, comments_enabled=post.comments_enabled, status=post.status,)
@@ -73,12 +69,10 @@ class PostCommunityCreate(View):
     def post(self,request,*args,**kwargs):
         form_post=PostCommunityForm(request.POST, request.FILES)
         community = Community.objects.get(pk=self.kwargs["pk"])
-        check_can_get_posts_for_community_with_name(request.user,community.name)
-        if form_post.is_valid():
+
+        if form_post.is_valid() and request.user.is_staff_of_community_with_name(self.community.name):
             new_post=form_post.save(commit=False)
-            new_post.creator=request.user
-            new_post.community=community
-            new_post=form_post.save()
+            new_post = post.create_post(creator=request.user, text=post.text, community=community, comments_enabled=post.comments_enabled, status=post.status,)
 
             if request.is_ajax() :
                 html = render_to_string('item_community/admin_post.html',{'object': new_post,'community': community,'request': request})
@@ -92,7 +86,7 @@ class RepostUserUser(View, FormMixin):
     def post(self, request, *args, **kwargs):
         self.item = Item.objects.get(uuid=self.kwargs["uuid"])
         self.user = self.item.creator
-        if self.user != request.user and request.user.is_authenticated:
+        if self.user != request.user:
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
             if self.user.is_closed_profile:
                 check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
