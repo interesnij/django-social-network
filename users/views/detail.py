@@ -61,10 +61,10 @@ class AllPossibleUsers(TemplateView):
 
 class UserCommunities(TemplateView):
     template_name = None
-    popular_list = Community.get_trending_communities()[0:7]
 
     def get(self,request,*args,**kwargs):
         self.user=User.objects.get(pk=self.kwargs["pk"])
+        self.popular_list = Community.get_trending_communities()[0:7]
         if self.user == request.user:
             self.template_name = "user_community/my_communities.html"
 
@@ -89,7 +89,7 @@ class UserCommunities(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(UserCommunities, self).get_context_data(**kwargs)
         context['user'] = self.user
-        context['popular_list'] = popular_list
+        context['popular_list'] = self.popular_list
         return context
 
 
