@@ -29,22 +29,45 @@
     <div class="col-12 col-md-4">
         <br><br><br>
           <button id="community_add" class="btn btn-outline-success" style="margin-bottom:15px;width:100%;" type="button">Создать сообщество</button>
-        <div class="card mb-2">
-            <div class="card-header">
-                <div class="media">
-                    <div class="media-body"><h5 class="mt-1">Популярные группы</h5></div>
-                </div>
-            </div>
 
-        </div>
-        <br><br><br>
-        <div class="card mb-2">
-            <div class="card-header">
-                <div class="media">
-                    <div class="media-body"><h5 class="mt-1"><a href="{% url 'all_communities' %}">Все группы</a></h5></div>
-                </div>
-            </div>
-        </div>
+          {% if popular_list %}
+          <div class="card mb-2">
+              <div class="card-header">
+                  <div class="media">
+                      <div class="media-body">
+                          <h5 class="mt-1">Популярные группы</h5>
+                      </div>
+                      <a class="ajax" href="{% url 'all_communities' %}"">
+                          все
+                      </a>
+                  </div>
+              </div>
+              <div class="card-body px-0 py-0">
+                  <ul class="list-group border-top border-bottom list-group-flush">
+                      {% for object in popular_list %}
+                      <li class="list-group-item">
+                          <div class="media">
+                              <figure>
+                                {% if object.get_avatar %}
+                                  <img src="{{ object.get_avatar.file|thumbnail_url:'avatar' }}" style="border-radius:50px;width:50px;" alt="image">
+                                {% else %}
+                                  <svg fill="currentColor" class="svg_default svg_default_50" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                                {% endif %}
+                              </figure>
+                              <div class="media-body">
+                                  <a href="{% url 'community_detail' pk=object.pk %}" class="ajax">
+                                      <h6 class="my-0 mt-1">{{ object.get_full_name }}</h6>
+                                  </a>
+                                  <p class="small">{{ object.count_members }} {{ object.count_members|rupluralize:"подписчик,подписчика,подписчиков" }}</p>
+                              </div>
+                          </div>
+                      </li>
+                      {% endfor %}
+                  </ul>
+              </div>
+              <br><br>
+          </div>
+          {% endif %}
     </div>
 </div>
 
