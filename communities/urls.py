@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from communities.views.list import AllCommunities, CommunitiesView, CommunityMembersView
+from communities.views.list import AllCommunities, CommunityMembersView
 from communities.views.details import ItemCommunity, ItemsCommunity, CommunityDetail, CommunityDetailReload
 from communities.views.progs import CommunityCreate, CommunitiesCatsView, GygView, CommunityMemberCreate, CommunityMemberDelete
 from communities.views.manage import (
@@ -17,7 +17,7 @@ from communities.views.manage import (
 
 urlpatterns = [
     url(r'^all-communities/$', AllCommunities.as_view(), name='all_communities'),
-    
+
     url(r'^(?P<pk>\d+)/members/$', CommunityMembersView.as_view(), name='community_members'),
 
     url(r'^(?P<pk>\d+)/$', CommunityDetail.as_view(), name='community_detail'),
