@@ -49,6 +49,8 @@ class ArticleUserDetailView(TemplateView):
             self.template_name = "my_article.html"
         elif not self.user.is_closed_profile() and request.user.is_anonymous:
             self.template_name = "u_article.html"
+        else:
+            raise PermissionDenied('Ошибка доступа')
 
         return super(ArticleUserDetailView,self).get(request,*args,**kwargs)
 
