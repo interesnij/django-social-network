@@ -209,9 +209,6 @@ class Community(models.Model):
 
     @classmethod
     def get_trending_communities(cls, category_name=None):
-        """"
-        Метод, получающий популярные сообщетсва
-        """
         trending_communities_query = cls._make_trending_communities_query(category_name=category_name)
         return cls._get_trending_communities_with_query(query=trending_communities_query)
 
