@@ -1,7 +1,6 @@
 {% load liked_user staticfiles thumbnail %}
 
 <div class="card-footer border-top py-2">
-{{ comments }}
     <div class="row">
         <div class="col interaction" id="interaction" data-pk="{{ object.pk }}" data-uuid="{{ community.uuid }}">
           <span class="c_like {% if object.likes|user_in:request.user %}text-success {% endif %}" title="Нравится">
