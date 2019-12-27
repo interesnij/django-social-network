@@ -95,7 +95,7 @@ class ItemCommunityReplyCreate(View):
 				upload_photo2 = Photo.objects.create(creator=request.user, file=photo2, community=community, album=album)
 				upload_photo2.item_comment.add(new_comment)
 			new_comment.notification_user_reply_comment(request.user)
-			html = render_to_string('item_community/reply_comment.html',{'reply': new_comment, 'request_user': request.user, "form_reply": CommentForm(), 'request': request})
+			html = render_to_string('item_community/reply_comment.html',{'reply': new_comment, 'request_user': request.user, 'community': community, 'comment': parent,  "form_reply": CommentForm(), 'request': request})
 			return JsonResponse(html, safe=False)
 		else:
 			return HttpResponseBadRequest()
