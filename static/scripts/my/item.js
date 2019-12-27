@@ -148,7 +148,7 @@ $('#ajax').on('click', '.u_replyComment', function() {
     return false;
 });
 $('#ajax').on('click', '.u_replyParentComment', function() {
-    var button = $(this); var form3 = button.parent().parent().parent().parent(); var block = form3.parent(); var upload_block = form2.find(".upload_block"); var pk = button.data('pk'); var uuid = button.data('uuid'); var reply_stream = block.next().next();
+    var button = $(this); var form3 = button.parent().parent().parent().parent(); var block = form3.parent(); var upload_block = form3.find(".upload_block"); var pk = button.data('pk'); var uuid = button.data('uuid'); var reply_stream = block.next().next();
     $.ajax({
         url: '/user/reply-comment/' + uuid + "/" + pk + "/",
         data: new FormData($(form3)[0]), contentType: false, cache: false, processData: false, type: 'POST',

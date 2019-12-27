@@ -135,7 +135,7 @@
                       {% endif %}
                     </span>
 
-                    <span class="stream_reply_comments" style="margin-top: 20px;">
+                    <span class="stream_reply_comments">
                       {% for reply in comment.get_replies %}
                         {% include 'item_user/reply_comment.html' with reply=reply  %}
                         <br>
