@@ -139,12 +139,10 @@ $('#ajax').on('click', '.u_itemComment', function() {
 });
 
 $('#ajax').on('click', '.u_replyComment', function() {
-    var button = $(this); var form2 = button.parent().parent().parent().parent(); var block = form2.parent(); var reply_stream = block.next().next(); var pk = button.data('pk'); var uuid = button.data('uuid');
+    var button = $(this); var form2 = button.parent().parent().parent(); var block = form2.parent(); var upload_block = form2.find(".upload_block") var reply_stream = block.next().next(); var pk = button.data('pk'); var uuid = button.data('uuid');
     $.ajax({
-        url: '/user/reply-comment/' + uuid + "/" + pk + "/",
-        data: new FormData($(form2)[0]),
-        contentType: false, cache: false, processData: false, type: 'POST',
-        success: function(data) { $(".form-control-rounded").val(""); reply_stream.append(data); reply_stream.addClass("replies_open"); block.hide(); },
+        url: '/user/reply-comment/' + uuid + "/" + pk + "/", data: new FormData($(form2)[0]), contentType: false, cache: false, processData: false, type: 'POST',
+        success: function(data) { $(".form-control-rounded").val(""); reply_stream.append(data); reply_stream.addClass("replies_open"); block.hide(); upload_block.empty(); },
         error: function(data) { $.toast({heading: 'Ошибка',text: 'Для публикации ответа нужно написать что-нибудь и/или вставить изображение(ия)',showHideTransition: 'fade',icon: 'error'}) },
     });
     return false;
