@@ -128,9 +128,10 @@
                     </div>
                   {% endif %}
 
-                    <span style="cursor:pointer;display: flex; margin-top: 15px;margin-bottom: 15px;" class="show_replies content-color-primary mb-0">
+                    <span style="cursor:pointer;display: flex; margin-top: 15px;" class="show_replies content-color-primary mb-0">
                       {% if comment.count_replies %}
                     ----  {{ comment.count_replies }} {{ comment.count_replies|rupluralize:"ответ,ответа,ответов" }} ----
+                    <br>
                       {% endif %}
                     </span>
 
