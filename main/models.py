@@ -72,10 +72,10 @@ class Item(models.Model):
         item_community_notification_handler(user, self.creator, ItemCommunityNotification.REPOST, key='social_update', item=self, comment=None)
 
     def notification_community_like(self, user):
-        item_community_notification_handler(actor=user, recipient=self.creator, verb=ItemCommunityNotification.LIKE, key='social_update', item=self, comment=None)
-        
+        item_community_notification_handler(actor=user, recipient=self.creator, verb=ItemCommunityNotification.LIKE, key='social_update', community=self.item.community, item=self, comment=None)
+
     def notification_community_dislike(self, user):
-        item_community_notification_handler(actor=user, recipient=self.creator, verb=ItemCommunityNotification.DISLIKE, key='social_update', item=self, comment=None)
+        item_community_notification_handler(actor=user, recipient=self.creator, verb=ItemCommunityNotification.DISLIKE, key='social_update', community=self.item.community, item=self, comment=None)
 
     def get_comments(self, user):
         comments_query = self._make_get_comments_for_post_query(user=user)
