@@ -237,6 +237,9 @@ class ItemComment(models.Model):
     def notification_user_comment_dislike(self, user):
         item_notification_handler(user, self.commenter, ItemNotification.DISLIKE_COMMENT, item=self.item, comment=self, key='social_update')
 
+    def notification_community_comment(self, user, community, item):
+        item_community_notification_handler(user, community, item, ItemCommunityNotification.POST_COMMENT, comment=self, key='social_update')
+
     def notification_community_reply_comment(self, user):
         item_community_notification_handler(user, self.commenter, ItemCommunityNotification.POST_COMMENT_REPLY, comment=self, item=self.item, key='social_update')
 
