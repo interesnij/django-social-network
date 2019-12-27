@@ -95,10 +95,12 @@ class ItemReplyUserCreate(View):
 			new_comment = comment.create_user_comment(commenter=request.user, text=comment.text, parent_comment=parent)
 			if photo:
 				album=Album.objects.get(creator=request.user, title="Сохраненные фото", is_generic=True, community=None)
-				Photo.objects.create(creator=request.user, file=photo,community=None,is_public=True, album=album, item_comment=new_comment)
+				upload_photo = Photo.objects.create(creator=request.user, file=photo, community=None, album=album)
+				upload_photo.item_comment.add(new_comment)
 			if photo2:
 				album=Album.objects.get(creator=request.user, title="Сохраненные фото", is_generic=True, community=None)
-				Photo.objects.create(creator=request.user, file=photo2,community=None,is_public=True, album=album, item_comment=new_comment)
+				upload_photo2 = Photo.objects.create(creator=request.user, file=photo2, community=None, album=album)
+				upload_photo2.item_comment.add(new_comment)
 			new_comment.notification_user_reply_comment(request.user)
 			html = render_to_string('item_user/reply_comment.html',{'reply': new_comment, 'request_user': request.user, "form_reply": CommentForm(), 'request': request})
 			return JsonResponse(html, safe=False)
