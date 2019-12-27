@@ -14,7 +14,6 @@ from gallery.models import Album, Photo
 
 
 class ItemCommunityCommentList(View):
-	model=ItemComment
 
 	def get(self,request,*args,**kwargs):
 		item = Item.objects.get(uuid=self.kwargs["uuid"])
@@ -36,7 +35,7 @@ class ItemCommunityCommentList(View):
 			comment_list = current_page.page(1)
 		except EmptyPage:
 			comment_list = current_page.page(current_page.num_pages)
-		comments_html = render_to_string("item_community/comments.html", {"comment_list": comment_list, "request_user": request.user, "parent": item, "form_comment": CommentForm(), "form_reply": CommentForm(), "community": self.community})
+		comments_html = render_to_string("item_community/comments.html", {"comment_list": comments, "comments": comment_list, "request_user": request.user, "parent": item, "form_comment": CommentForm(), "form_reply": CommentForm(), "community": self.community})
 
 		return JsonResponse({ "comments": comments_html, })
 
