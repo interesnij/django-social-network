@@ -113,7 +113,7 @@ $('#ajax').on('click', '.c_repost', function() {var item = $(this); var item_id 
   $('#ajax').on('click', '.select_photo', function() {uuid = $(this).data("uuid");$('#photo_loader').html("").load("/users/load/img_load/" + uuid + "/"); $('.photo_fullscreen').show();});
 
 
-    $('#ajax').on('click', '.с_itemComment', function() {
+    $('#ajax').on('click', '.c_itemComment', function() {
         button1 = $(this); form1 = button1.parent().parent().parent(); upload_block = form1.find(".upload_block");
         $.ajax({
             url: '/community/post-comment/', data: new FormData($(form1)[0]), contentType: false, cache: false, processData: false, type: 'POST',
