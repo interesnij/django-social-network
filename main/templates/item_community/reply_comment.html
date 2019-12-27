@@ -1,6 +1,6 @@
 {% load staticfiles humanize liked_user thumbnail %}
 
-<div class="media " reply-id="{{ reply.id }}">
+<div class="media">
     <figure>
         {% if reply.commenter.get_avatar %}
           <img src="{{ reply.commenter.get_avatar.file.url }}" class="pull-left" style="border-radius:50%;width:30px;" alt="User Image" class="user-image">
@@ -12,14 +12,27 @@
         <h5 class="mt-0"><span class="commenter_first_name">{{ reply.commenter.first_name }}</span> {{ reply.commenter.last_name }}
             <small class="text-muted float-right">{{ reply.created|naturaltime }}</small>
         </h5>
-        <p>{{ reply.text|safe }}</p>
+        <p style="padding-bottom:10px;">{{ reply.text|safe }}</p>
+
+        {% if reply.comment_photo %}
+
+        <div class="row">
+          {% for object in reply.comment_photo.all %}
+          <div class="col-lg-6 col-md-6">
+              <img data-uuid="{{ object.uuid }}" data-id="{{ reply.commenter.pk }}"
+                   class="comment_image"
+                   style="width:100%;object-fit:cover;height:200px;cursor:pointer"
+                   src="{{ object.file.url }}" alt="">
+          </div>
+          {% endfor %}
+        </div>
+        {% endif %}
 
         <div class="border-top py-2">
             <div class="row">
                 <div class="col">
-                  <span class="c_like2 {% if reply.likes.all|user_in:request.user %}text-success {% endif %}"
-                        data-id="{{ reply.id }}"
-                        data-uuid="{{ reply.commenter.uuid }}"
+                  <span class="c_like2 {% if reply.likes|user_in:request.user %}text-success {% endif %}"
+                        data-pk="{{ comment.pk }}" data-uuid="{{ reply.commenter.uuid }}"
                         style="cursor:pointer"
                         title="Нравится">
                         <svg {% if reply.likes|user_in:request_user %}class="svg_success"{% else %}class="svg_default"{% endif %} fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
@@ -49,9 +62,8 @@
                         {% endif %}
                     </span>
                     &nbsp;
-                    <span class="c_dislike2 {% if reply.dislikes.all|user_in:request.user %}text-success {% endif %}"
-                          data-id="{{ reply.id }}"
-                          data-uuid="{{ reply.commenter.uuid }}"
+                    <span class="c_dislike2 {% if reply.dislikes|user_in:request.user %}text-success {% endif %}"
+                          data-pk="{{ comment.pk }}" data-uuid="{{ reply.commenter.uuid }}"
                           style="cursor:pointer"
                           title="Не нравится">
                           <svg {% if reply.dislikes|user_in:request_user %}class="svg_danger"{% else %}class="svg_default"{% endif %}  fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M15 3H6c-.83 0-1.54.5-1.84 1.22l-3.02 7.05c-.09.23-.14.47-.14.73v2c0 1.1.9 2 2 2h6.31l-.95 4.57-.03.32c0 .41.17.79.44 1.06L9.83 23l6.59-6.59c.36-.36.58-.86.58-1.41V5c0-1.1-.9-2-2-2zm4 0v12h4V3h-4z"/></svg>
@@ -86,7 +98,7 @@
                         ответить
                     </span>
 
-                    <div class="border-top reply_comment_form" style="margin-top:10px;display:none;margin-left:-50px;">
+                    <div class="border-top" style="margin-top:10px;display:none;margin-left:-50px;">
                         <form action="" method="post" class="replyParentComment_button">
                             {% csrf_token %}
 

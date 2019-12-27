@@ -1,6 +1,6 @@
 {% load staticfiles humanize liked_user thumbnail %}
 
-<div class="media" comment-id="{{ comment.id }}">
+<div class="media" style="{% if forloop.first %}padding-top:15px; {% endif %}margin-left:15px;margin-right:15px;">
     <figure>
         {% if comment.commenter.get_avatar %}
           <img src="{{ comment.commenter.get_avatar.file|thumbnail_url:'small_avatar' }}" class="pull-left" style="border-radius:50%;width:40px;" alt="User Image" class="user-image">
@@ -12,14 +12,25 @@
         <h5 class="mt-0"><span class="commenter_first_name">{{ comment.commenter.first_name }}</span> {{ comment.commenter.last_name }}
             <small class="text-muted float-right">{{ comment.created|naturaltime }}</small>
         </h5>
-        <p>{{ comment.text|safe }}</p>
+        <p style="padding-bottom:10px;">{{ comment.text|safe }}</p>
 
-        <div class="border-top py-2">
-            <div class="row" style="color: rgba(255, 255, 255, 0.65);">
+        {% if comment.comment_photo %}
+        <br>
+        <div class="row">
+          {% for object in comment.comment_photo.all %}
+          <div class="col-lg-6 col-md-6">
+              <img data-uuid="{{ object.uuid }}" data-id="{{ comment.commenter.pk }}" class="comment_image" style="width:100%;object-fit:cover;height:200px;cursor:pointer" src="{{ object.file.url }}" alt="">
+          </div>
+          {% endfor %}
+        </div>
+        <br>
+        {% endif %}
+
+        <div class="">
+            <div class="row">
                 <div class="col">
-                  <span class="c_like2 {% if object.likes.all|user_in:request.user %}text-success {% endif %}"
-                        data-id="{{ object.id }}"
-                        data-uuid="{{ community.uuid }}"
+                  <span class="c_like2 {% if object.likes|user_in:request.user %}text-success {% endif %}"
+                        data-pk="{{ comment.pk }}" data-uuid="{{ comment.commenter.uuid }}"
                         style="cursor:pointer"
                         title="Нравится">
                         <svg {% if comment.likes|user_in:request_user %}class="svg_success"{% else %}class="svg_default"{% endif %} fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
@@ -51,9 +62,8 @@
                   </span>
 
                 &nbsp;&nbsp;
-                <span class="c_dislike2 {% if object.dislikes.all|user_in:request.user %} text-danger {% endif %}"
-                      data-id="{{ object.id }}"
-                      data-uuid="{{ community.uuid }}"
+                <span class="c_dislike2 {% if object.dislikes|user_in:request.user %} text-danger {% endif %}"
+                      data-pk="{{ comment.pk }}" data-uuid="{{ comment.commenter.uuid }}"
                       style="cursor:pointer"
                       title="Не нравится">
                       <svg {% if comment.dislikes|user_in:request_user %}class="svg_danger"{% else %}class="svg_default"{% endif %}  fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M15 3H6c-.83 0-1.54.5-1.84 1.22l-3.02 7.05c-.09.23-.14.47-.14.73v2c0 1.1.9 2 2 2h6.31l-.95 4.57-.03.32c0 .41.17.79.44 1.06L9.83 23l6.59-6.59c.36-.36.58-.86.58-1.41V5c0-1.1-.9-2-2-2zm4 0v12h4V3h-4z"/></svg>
@@ -87,10 +97,26 @@
                         ответить
                     </span>
 
-                    <div class="border-top reply_comment_form" style="margin-top:10px;display:none">
+                    {% if request_user.is_authenticated %}
+                    <div class="border-top" style="margin-top:10px;display:none">
                         <form action="" method="post" class="replyComment_form">
                             {% csrf_token %}
+
+                            <div class="row img_block" style="margin:10px"></div>
+                            <div class="row upload_block" style="margin:10px"></div>
+
                             <div class="row no-gutters">
+                              <a id="dropdown_select_upload_comment" class="btn btn-link btn-sm text-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <svg fill="currentColor" style="margin-top:-4px;" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M16.5 6v11.5c0 2.21-1.79 4-4 4s-4-1.79-4-4V5c0-1.38 1.12-2.5 2.5-2.5s2.5 1.12 2.5 2.5v10.5c0 .55-.45 1-1 1s-1-.45-1-1V6H10v9.5c0 1.38 1.12 2.5 2.5 2.5s2.5-1.12 2.5-2.5V5c0-2.21-1.79-4-4-4S7 2.79 7 5v12.5c0 3.04 2.46 5.5 5.5 5.5s5.5-2.46 5.5-5.5V6h-1.5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+                              </a>
+                              <div class="dropdown-menu dropdown-menu-top" aria-labelledby="dropdown_select_upload_comment">
+                                  <a id="" style="cursor:pointer" class="dropdown-item upload_photo">Загрузить изображение</a>
+                                  <a id="" style="cursor:pointer" data-uuid="{{ user.uuid }}" class="dropdown-item select_photo">Выбрать изображение</a>
+                                  <a id="" style="cursor:pointer" class="dropdown-item">Выбрать запись</a>
+                                  <a id="" style="cursor:pointer" class="dropdown-item">Выбрать статью</a>
+                                  <a id="" style="cursor:pointer" class="dropdown-item">Выбрать товар</a>
+                              </div>
+
                                 <div class="col">
                                     <div class="input-group input-group-sm">
                                         <textarea id="id_text" name="text" class="form-control text-comment form-control-rounded"></textarea>
@@ -104,17 +130,18 @@
                             </div>
                         </form>
                     </div>
+                    {% endif %}
 
-
-                    <span style="cursor:pointer" class="show_replies content-color-primary mb-0">
+                    <span style="cursor:pointer;display: flex; margin-top: 15px;" class="show_replies content-color-primary mb-0">
                       {% if comment.count_replies %}
-                        {{ comment.count_replies }} {{ comment.count_replies|rupluralize:"ответ,ответа,ответов" }}
+                    ----  {{ comment.count_replies }} {{ comment.count_replies|rupluralize:"ответ,ответа,ответов" }} ----
+                    <br><br>
                       {% endif %}
                     </span>
 
                     <span class="stream_reply_comments">
                       {% for reply in comment.get_replies %}
-                        {% include 'item_user/reply_comment.html' with reply=reply  %}
+                        {% include 'item_community/reply_comment.html' with reply=reply  %}
                       {% endfor %}
                     </span>
                     {% endif %}

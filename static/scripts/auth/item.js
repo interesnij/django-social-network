@@ -38,38 +38,6 @@ $('#ajax').on('click', '.select_photo', function() {
   $('#photo_loader').html("").load("/users/load/img_load/" + uuid + "/"); $('.photo_fullscreen').show();
 });
 
-$('#ajax').on('click', '.u_itemComment', function() {
-    button1 = $(this); var form1 = button1.parent().parent().parent(); var img_block = button1.parent().prev()
-    $.ajax({
-        url: '/user/post-comment/', data: new FormData($(form1)[0]), contentType: false, cache: false, processData: false, type: 'POST',
-        success: function(data) { $(".form-control-rounded").val(""); form1.parent().prev().prev().append(data); form1.find('.img_block').empty()},
-        error: function(data) { $.toast({heading: 'Ошибка',text: 'Для публикации комментария нужно написать что-нибудь и/или вставить изображение(ия)',showHideTransition: 'fade',icon: 'error'}); },
-    });
-    return false;
-});
-
-$('#ajax').on('click', '.u_replyComment', function() {
-    var button = $(this); var form2 = button.parent().parent().parent().parent(); var block = form2.parent(); var reply_stream = block.next().next(); var pk = button.data('pk'); var uuid = button.data('uuid');
-    $.ajax({
-        url: '/user/reply-comment/' + uuid + "/" + pk + "/",
-        data: new FormData($(form2)[0]),
-        contentType: false, cache: false, processData: false, type: 'POST',
-        success: function(data) { $(".form-control-rounded").val(""); reply_stream.append(data); reply_stream.addClass("replies_open"); block.hide(); },
-        error: function(data) { $.toast({heading: 'Ошибка',text: 'Для публикации ответа нужно написать что-нибудь и/или вставить изображение(ия)',showHideTransition: 'fade',icon: 'error'}) },
-    });
-    return false;
-});
-
-$('#ajax').on('click', '.u_replyParentComment', function() {
-    var button = $(this); var form3 = button.parent().parent().parent().parent(); var block = form3.parent(); var pk = button.data('pk'); var uuid = button.data('uuid');
-    $.ajax({
-        url: '/user/reply-comment/' + uuid + "/" + pk + "/",
-        data: new FormData($(form3)[0]), contentType: false, cache: false, processData: false, type: 'POST',
-        success: function(data) { $(".form-control-rounded").val(""); form3.parent().prev().append(data); block.hide(); },
-        error: function(data) { $.toast({heading: 'Ошибка',text: 'Для публикации ответа нужно написать что-нибудь и/или вставить изображение(ия)',showHideTransition: 'fade',icon: 'error'}) },
-    });
-    return false;
-});
 
 $("#ajax").on('click', '.reply_comment', function() {
     var reply_comment_form = $(this); var objectUser = reply_comment_form.prev().text().trim(); var form = reply_comment_form.next().find(".text-comment"); form.val(objectUser + ', '); reply_comment_form.next().show(); form.focus();
@@ -143,3 +111,34 @@ $('#ajax').on('click', '.upload_photo', function() {
   });
 
   $('#ajax').on('click', '.js-textareacopybtn', function() {btn = $(this);link = btn.find('.js-copytextarea');link.focus();link.select();try {var successful = document.execCommand('copy');var msg = successful ? 'successful' : 'unsuccessful';console.log('Copying text command was ' + msg);} catch (err) {console.log('Oops, unable to copy');}});
+
+
+  $('#ajax').on('click', '.u_itemComment', function() {
+      button1 = $(this); var form1 = button1.parent().parent().parent(); var upload_block = form1.find(".upload_block");
+      $.ajax({
+          url: '/user/post-comment/', data: new FormData($(form1)[0]), contentType: false, cache: false, processData: false, type: 'POST',
+          success: function(data) { $(".form-control-rounded").val(""); form1.parent().prev().append(data); upload_block.empty()},
+          error: function(data) { $.toast({heading: 'Ошибка',text: 'Для публикации комментария нужно написать что-нибудь и/или вставить изображение(ия)',showHideTransition: 'fade',icon: 'error'}); },
+      });
+      return false;
+  });
+
+  $('#ajax').on('click', '.u_replyComment', function() {
+      var button = $(this); var form2 = button.parent().parent().parent().parent(); var block = form2.parent(); var upload_block = form2.find(".upload_block"); var reply_stream = block.next().next(); var pk = button.data('pk'); var uuid = button.data('uuid');
+      $.ajax({
+          url: '/user/reply-comment/' + uuid + "/" + pk + "/", data: new FormData($(form2)[0]), contentType: false, cache: false, processData: false, type: 'POST',
+          success: function(data) { $(".form-control-rounded").val(""); reply_stream.append(data); reply_stream.addClass("replies_open"); block.hide(); upload_block.empty(); },
+          error: function(data) { $.toast({heading: 'Ошибка',text: 'Для публикации ответа нужно написать что-нибудь и/или вставить изображение(ия)',showHideTransition: 'fade',icon: 'error'}) },
+      });
+      return false;
+  });
+  $('#ajax').on('click', '.u_replyParentComment', function() {
+      var button = $(this); var form3 = button.parent().parent().parent().parent(); var block = form3.parent(); var upload_block = form3.find(".upload_block"); var pk = button.data('pk'); var uuid = button.data('uuid'); var reply_stream = block.parents('.stream_reply_comments');
+      $.ajax({
+          url: '/user/reply-comment/' + uuid + "/" + pk + "/",
+          data: new FormData($(form3)[0]), contentType: false, cache: false, processData: false, type: 'POST',
+          success: function(data) { $(".form-control-rounded").val(""); reply_stream.append(data); block.hide(); },
+          error: function(data) { $.toast({heading: 'Ошибка',text: 'Для публикации ответа нужно написать что-нибудь и/или вставить изображение(ия)',showHideTransition: 'fade',icon: 'error'}) },
+      });
+      return false;
+  });
