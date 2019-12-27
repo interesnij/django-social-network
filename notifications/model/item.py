@@ -175,7 +175,7 @@ def item_community_notification_handler(actor, community, item, verb, comment, *
     persons = community.get_staff_members()
     for user in persons:
         ItemCommunityNotification.objects.create(actor=actor, community=community, item=item, comment=comment, recipient=user, verb=verb)
-    user_notification_broadcast(actor, key)
+    item_notification_broadcast(actor, key)
 
 
 def item_notification_broadcast(actor, key, **kwargs):
