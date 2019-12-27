@@ -36,9 +36,8 @@
   </div>
 </span>
 
-
-{% if request_user.is_authenticated %}
-<div class="border-top" {% if comment_list %}style="margin-top:-30px"{% endif %}>
+<div class="border-top" {% if not comment_list %}style="margin-top:-30px"{% endif %}>
+  {% if request_user.is_authenticated %}
     <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="row img_block" style="margin:10px"></div>
@@ -71,8 +70,8 @@
             </div>
         </div>
     </form>
+  {% endif %}
 </div>
-{% endif %}
 
 <script>
     function getCookie(name) {
