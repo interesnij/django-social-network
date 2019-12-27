@@ -137,7 +137,7 @@ $('#ajax').on('click', '.upload_photo', function() {
       $.ajax({
           url: '/user/reply-comment/' + uuid + "/" + pk + "/",
           data: new FormData($(form3)[0]), contentType: false, cache: false, processData: false, type: 'POST',
-          success: function(data) { $(".form-control-rounded").val(""); reply_stream.append(data); block.hide(); },
+          success: function(data) { $(".form-control-rounded").val(""); reply_stream.append(data); block.hide(); upload_block.empty(); },
           error: function(data) { $.toast({heading: 'Ошибка',text: 'Для публикации ответа нужно написать что-нибудь и/или вставить изображение(ия)',showHideTransition: 'fade',icon: 'error'}) },
       });
       return false;

@@ -38,7 +38,7 @@ $('#ajax').on('click', '.js-textareacopybtn', function() {btn = $(this);link = b
    votes post scripts for user items
   */
 $("#ajax").on('click', '.u_like', function() {
-    like = $(this); item = like.parents('.interaction'); ; var pk = item.data('pk'); var uuid = item.data('uuid'); var dislike = like.next().next();
+    like = $(this); item = like.parents('.interaction'); var pk = item.data('pk'); var uuid = item.data('uuid'); var dislike = like.next().next();
     $.ajax({url: "/votes/user_like/" + uuid + "/" + pk + "/",type: 'POST',data: {'obj': pk},
         success: function(json) {
             like.find("[data-count='like']").text(json.like_count); like.find(".svg_default").toggleClass('svg_success'); like.find(".likes_count").toggleClass('svg_success'); like.siblings('.like_window').html('').load("/window/u_like_window/" + uuid + "/" + pk + "/");
@@ -148,11 +148,11 @@ $('#ajax').on('click', '.u_replyComment', function() {
     return false;
 });
 $('#ajax').on('click', '.u_replyParentComment', function() {
-    var button = $(this); var form3 = button.parent().parent().parent().parent(); var block = form3.parent(); var upload_block = form3.find(".upload_block"); var pk = button.data('pk'); var uuid = button.data('uuid'); var reply_stream = block.parents('.stream_reply_comments'); 
+    var button = $(this); var form3 = button.parent().parent().parent().parent(); var block = form3.parent(); var upload_block = form3.find(".upload_block"); var pk = button.data('pk'); var uuid = button.data('uuid'); var reply_stream = block.parents('.stream_reply_comments');
     $.ajax({
         url: '/user/reply-comment/' + uuid + "/" + pk + "/",
         data: new FormData($(form3)[0]), contentType: false, cache: false, processData: false, type: 'POST',
-        success: function(data) { $(".form-control-rounded").val(""); reply_stream.append(data); block.hide(); },
+        success: function(data) { $(".form-control-rounded").val(""); reply_stream.append(data); block.hide(); upload_block.empty();},
         error: function(data) { $.toast({heading: 'Ошибка',text: 'Для публикации ответа нужно написать что-нибудь и/или вставить изображение(ия)',showHideTransition: 'fade',icon: 'error'}) },
     });
     return false;
