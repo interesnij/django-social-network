@@ -1,6 +1,6 @@
 {% load staticfiles humanize liked_user thumbnail %}
 
-<div class="media infinite-item" comment-id="{{ comment.id }}">
+<div class="media infinite-item" style="margin-left:15px;margin-right:15px;">
   <a href="{% url 'user' pk=comment.commenter.pk %}" class="ajax">
     <figure>
         {% if comment.commenter.get_avatar %}
