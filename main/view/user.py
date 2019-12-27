@@ -93,10 +93,10 @@ class ItemReplyUserCreate(View):
 					check_is_connected_with_user_with_id(user=request.user, user_id = user.id)
 
 			new_comment = comment.create_user_comment(commenter=request.user, text=comment.text, parent_comment=parent)
-			if item_comment_photo:
+			if photo:
 				album=Album.objects.get(creator=request.user, title="Сохраненные фото", is_generic=True, community=None)
 				Photo.objects.create(creator=request.user, file=photo,community=None,is_public=True, album=album, item_comment=new_comment)
-			if item_comment_photo2:
+			if photo2:
 				album=Album.objects.get(creator=request.user, title="Сохраненные фото", is_generic=True, community=None)
 				Photo.objects.create(creator=request.user, file=photo2,community=None,is_public=True, album=album, item_comment=new_comment)
 			new_comment.notification_user_reply_comment(request.user)
