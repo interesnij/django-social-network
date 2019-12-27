@@ -23,16 +23,9 @@ class User(AbstractUser):
     moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='users')
     is_email_verified = models.BooleanField(default=False)
     are_guidelines_accepted = models.BooleanField(default=False)
-    is_deleted = models.BooleanField(
-        verbose_name="Удален",
-        default=False,
-    )
-
+    is_deleted = models.BooleanField(verbose_name="Удален", default=False, )
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, verbose_name="uuid")
-    last_activity= models.DateTimeField(
-        default=timezone.now, blank=True, verbose_name='Активность')
-
-
+    last_activity= models.DateTimeField(default=timezone.now, blank=True, verbose_name='Активность')
 
     class Meta:
         verbose_name = 'пользователь'
@@ -474,7 +467,7 @@ class User(AbstractUser):
         return connection
 
     def get_common_friends_of_community(self, community_id):
-        community = Community.objects.get(pk=community_id) 
+        community = Community.objects.get(pk=community_id)
         my_frends = self.connections.values('target_user_id')
         community_frends = community.memberships.values('user_id')
         my_frends_ids = [target_user['target_user_id'] for target_user in my_frends]
