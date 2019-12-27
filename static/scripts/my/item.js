@@ -129,10 +129,10 @@ $('#ajax').on('click', '.u_comment.comments_open', function() {
 $('#ajax').on('click', '.select_photo', function() {uuid = $(this).data("uuid");$('#photo_loader').html("").load("/users/load/img_load/" + uuid + "/"); $('.photo_fullscreen').show();});
 
 $('#ajax').on('click', '.u_itemComment', function() {
-    button1 = $(this); var form1 = button1.parent().parent().parent(); var img_block = button1.parent().prev()
+    button1 = $(this); var form1 = button1.parent().parent().parent(); var img_block = form1.find(".img_block");
     $.ajax({
         url: '/user/post-comment/', data: new FormData($(form1)[0]), contentType: false, cache: false, processData: false, type: 'POST',
-        success: function(data) { $(".form-control-rounded").val(""); form1.parent().prev().prev().append(data); form1.find('.img_block').empty()},
+        success: function(data) { $(".form-control-rounded").val(""); form1.parent().prev().append(data); img_block.empty()},
         error: function(data) { $.toast({heading: 'Ошибка',text: 'Для публикации комментария нужно написать что-нибудь и/или вставить изображение(ия)',showHideTransition: 'fade',icon: 'error'}); },
     });
     return false;
