@@ -171,7 +171,7 @@ class ItemCommunityLikeCreate(View):
             like_count = likes.count()
         else:
             like_count = ""
-        dislikes = item.get_likes_for_item(request.user)
+        dislikes = item.get_dislikes_for_item(request.user)
         if dislikes.count() != 0:
             dislike_count = dislikes.count()
         else:
@@ -197,7 +197,7 @@ class ItemCommunityDislikeCreate(View):
         except ItemVotes.DoesNotExist:
             ItemVotes.objects.create(parent=item, user=request.user, vote=ItemVotes.DISLIKE)
             result = True
-        likes = item.get_dislikes_for_item(request.user)
+        likes = item.get_likes_for_item(request.user)
         if likes.count() != 0:
             like_count = likes.count()
         else:
@@ -232,7 +232,7 @@ class ItemCommentCommunityLikeCreate(View):
             like_count = likes.count()
         else:
             like_count = ""
-        dislikes = comment.get_likes_for_comment_item(request.user)
+        dislikes = comment.get_dislikes_for_comment_item(request.user)
         if dislikes.count() != 0:
             dislike_count = dislikes.count()
         else:
@@ -258,7 +258,7 @@ class ItemCommentCommunityDislikeCreate(View):
         except ItemCommentVotes.DoesNotExist:
             ItemCommentVotes.objects.create(item=comment, user=request.user, vote=ItemCommentVotes.DISLIKE)
             result = True
-        likes = comment.get_dislikes_for_comment_item(request.user)
+        likes = comment.get_likes_for_comment_item(request.user)
         if likes.count() != 0:
             like_count = likes.count()
         else:
