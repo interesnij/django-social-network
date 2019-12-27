@@ -114,7 +114,7 @@ $('#ajax').on('click', '.c_repost', function() {var item = $(this); var item_id 
 
 
     $('#ajax').on('click', '.с_itemComment', function() {
-        button1 = $(this); form1 = parent().parent().parent().parent(); upload_block = form1.find(".upload_block");
+        button1 = $(this); form1 = button1.parent().parent().parent(); upload_block = form1.find(".upload_block");
         $.ajax({
             url: '/community/post-comment/', data: new FormData($(form1)[0]), contentType: false, cache: false, processData: false, type: 'POST',
             success: function(data) { $(".form-control-rounded").val(""); form1.parent().prev().append(data); upload_block.empty()},
