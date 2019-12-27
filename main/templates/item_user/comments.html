@@ -22,11 +22,10 @@
 </style>
 
 
-<span class="stream_comments" style="display:block;margin-left:-15px;margin-right:-15px;">
-  <div></div>
+<span class="stream_comments bg-light-secondary" style="display:block;margin-left:-15px;margin-right:-15px;">
+
   {% for comment in comment_list %}
-  {% include 'item_user/parent_comment.html' with comment=comment  %}
-  <br>
+    {% include 'item_user/parent_comment.html' with comment=comment  %}
   {% endfor %}
 
   <div class="comments-load col-12 col-md-12">
