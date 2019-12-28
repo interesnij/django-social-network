@@ -241,7 +241,7 @@ class ItemComment(models.Model):
         item_community_notification_handler(actor=user, recipient=None, community=self.item.community, item=self.item, verb=ItemCommunityNotification.POST_COMMENT, comment=self, key='social_update')
 
     def notification_community_reply_comment(self, user):
-        item_community_notification_handler(actor=user, recipient=None, community=self.parent_comment.item.community, verb=ItemCommunityNotification.POST_COMMENT_REPLY, item=self.parent_comment.item, comment=self.parent_comment, key='social_update')
+        item_community_notification_handler(actor=user, recipient=None, community=self.item.community, verb=ItemCommunityNotification.POST_COMMENT_REPLY, item=self.parent_comment.item, comment=self.parent_comment, key='social_update')
 
     def notification_community_comment_like(self, user):
         item_community_notification_handler(actor=user, recipient=None, community=self.item.community, verb=ItemCommunityNotification.LIKE_COMMENT, comment=self, item=self.item, key='social_update')
