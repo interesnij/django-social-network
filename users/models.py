@@ -52,10 +52,6 @@ class User(AbstractUser):
         query = Q(Q(memberships__user=self, memberships__is_administrator=True) | Q(memberships__user=self, memberships__is_moderator=True))
         return Community.objects.filter(query)
 
-    def get_moderated_communities(self):
-        return Community.objects.filter(memberships__user=self, memberships__is_moderator=True)
-
-
         '''''проги для подписчиков  60-109'''''
 
     def follow_user(self, user):
