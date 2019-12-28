@@ -200,7 +200,7 @@ class UserAlbomList(View):
             raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.',)
         elif request.user.is_anonymous and not user.is_closed_profile():
             photos = user.get_photos_for_album(album_id=album.pk)
-        elif self.user == request.user:
+        elif user == request.user:
             photos = user.get_photos_for_album(album_id=album.pk)
 
         current_page = Paginator(photos, 12)
