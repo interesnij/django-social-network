@@ -189,24 +189,24 @@ class AlbumUserCreate(TemplateView):
 class UserAlbomList(View):
     def get(self,request,**kwargs):
         context = {}
-        self.album=Album.objects.get(uuid=self.kwargs["uuid"])
-        self.user=User.objects.get(pk=self.kwargs["pk"])
-        if self.user != request.user and request.user.is_authenticated:
-            check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
-            if self.user.is_closed_profile():
-                check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
-            photos = Photo.objects.filter(album=self.album)
-        elif request.user.is_anonymous and self.user.is_closed_profile():
+        album=Album.objects.get(uuid=self.kwargs["uuid"])
+        user=User.objects.get(pk=self.kwargs["pk"])
+        if user != request.user and request.user.is_authenticated:
+            check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
+            if user.is_closed_profile():
+                check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
+            photos = user.get_photos_for_album(album_id=album.pk)
+        elif request.user.is_anonymous and user.is_closed_profile():
             raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.',)
-        elif request.user.is_anonymous and not self.user.is_closed_profile():
-            photos = Photo.objects.filter(album=self.album)
+        elif request.user.is_anonymous and not user.is_closed_profile():
+            photos = user.get_photos_for_album(album_id=album.pk)
         elif self.user == request.user:
-            photos = Photo.objects.filter(album=self.album)
+            photos = user.get_photos_for_album(album_id=album.pk)
 
         current_page = Paginator(photos, 12)
         page = request.GET.get('page')
-        context['user'] = self.user
-        context['album'] = self.album
+        context['user'] = user
+        context['album'] = album
         try:
             context['photos'] = current_page.page(page)
         except PageNotAnInteger:

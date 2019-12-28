@@ -335,6 +335,13 @@ class User(AbstractUser):
         photos = Photo.objects.filter(photos_query)
         return photos
 
+    def get_photos_for_album(self, album_id):
+        photos_query = Q(creator_id=self.id, album_id=album_id, is_deleted=False, is_public=True, community=None)
+        exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
+        photos_query.add(exclude_reported_and_approved_photos_query, Q.AND)
+        photos = Photo.objects.filter(photos_query)
+        return photos
+
     def get_avatar_photos(self):
         photos_query = Q(creator_id=self.id, is_deleted=False, community=None, album_2__title="Фото со страницы", album_2__is_generic=True)
         exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
