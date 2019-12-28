@@ -14,6 +14,7 @@ from imagekit.models import ProcessedImageField
 from pilkit.processors import ResizeToFit, ResizeToFill
 from ckeditor_uploader.fields import RichTextUploadingField
 from rest_framework.exceptions import ValidationError
+from moderation.models import ModeratedObject
 
 
 class Item(models.Model):
