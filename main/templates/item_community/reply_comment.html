@@ -15,14 +15,10 @@
         <p style="padding-bottom:10px;">{{ reply.text|safe }}</p>
 
         {% if reply.comment_photo %}
-
-        <div class="row">
+        <div class="row" style="padding-bottom:10px;">
           {% for object in reply.comment_photo.all %}
           <div class="col-lg-6 col-md-6">
-              <img data-uuid="{{ object.uuid }}" data-id="{{ reply.commenter.pk }}"
-                   class="comment_image"
-                   style="width:100%;object-fit:cover;height:200px;cursor:pointer"
-                   src="{{ object.file.url }}" alt="">
+              <img data-uuid="{{ object.uuid }}" data-id="{{ reply.commenter.pk }}" class="comment_image" style="width:100%;object-fit:cover;height:200px;cursor:pointer" src="{{ object.file.url }}" alt="">
           </div>
           {% endfor %}
         </div>
@@ -31,10 +27,7 @@
         <div class="border-top py-2">
             <div class="row">
                 <div class="col">
-                  <span class="c_like2 {% if reply.likes|user_in:request.user %}text-success {% endif %}"
-                        data-pk="{{ comment.pk }}" data-uuid="{{ community.uuid }}"
-                        style="cursor:pointer"
-                        title="Нравится">
+                  <span class="c_like2 {% if reply.likes|user_in:request.user %}text-success {% endif %}" data-pk="{{ comment.pk }}" data-uuid="{{ community.uuid }}" style="cursor:pointer" title="Нравится">
                         <svg {% if reply.likes|user_in:request_user %}class="svg_success"{% else %}class="svg_default"{% endif %} fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                           <path fill="none" d="M0 0h24v24H0V0z"/><path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/>
                         </svg>
@@ -43,7 +36,7 @@
                     <span class="comment_like_window">
                         {% if reply.window_likes %}
                         <div class="comment_like_pop" style="margin:15px">
-                            <span>Оценили: {{ reply.likes.count }} {{ reply.likes.count|rupluralize:"человек,человека,людей" }}</span>
+                            <span class="u_all_comment_likes" style="cursor:pointer">Оценили: {{ reply.likes.count }} {{ reply.likes.count|rupluralize:"человек,человека,людей" }}</span>
                             <br><br>
                             <span style="display: flex;">
                                 {% for heart in reply.window_likes %}
@@ -62,10 +55,7 @@
                         {% endif %}
                     </span>
                     &nbsp;
-                    <span class="c_dislike2 {% if reply.dislikes|user_in:request.user %}text-success {% endif %}"
-                          data-pk="{{ comment.pk }}" data-uuid="{{ community.uuid }}"
-                          style="cursor:pointer"
-                          title="Не нравится">
+                    <span class="c_dislike2 {% if reply.dislikes|user_in:request.user %}text-success {% endif %}" data-pk="{{ comment.pk }}" data-uuid="{{ community.uuid }}" style="cursor:pointer" title="Не нравится">
                           <svg {% if reply.dislikes|user_in:request_user %}class="svg_danger"{% else %}class="svg_default"{% endif %}  fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M15 3H6c-.83 0-1.54.5-1.84 1.22l-3.02 7.05c-.09.23-.14.47-.14.73v2c0 1.1.9 2 2 2h6.31l-.95 4.57-.03.32c0 .41.17.79.44 1.06L9.83 23l6.59-6.59c.36-.36.58-.86.58-1.41V5c0-1.1-.9-2-2-2zm4 0v12h4V3h-4z"/></svg>
                           <span {% if reply.dislikes|user_in:request_user %}class="svg_danger"{% endif %} data-count="dislike">{% if reply.dislikes.count %}{{ reply.dislikes.count }}{% endif %}</span>
                     </span>
@@ -73,7 +63,7 @@
                       <span class="comment_dislike_window">
                           {% if reply.window_dislikes %}
                           <div class="comment_dislike_pop" style="margin:15px">
-                              <span>Не оценили: {{ reply.dislikes.count }} {{ reply.dislikes.count|rupluralize:"человек,человека,людей" }}</span>
+                              <span class="u_all_comment_likes" style="cursor:pointer">Не оценили: {{ reply.dislikes.count }} {{ reply.dislikes.count|rupluralize:"человек,человека,людей" }}</span>
                               <br><br>
                               <span style="display: flex;">
                                   {% for sheet in reply.window_dislikes %}

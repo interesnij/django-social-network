@@ -19,8 +19,8 @@
         </h5>
         <p style="padding-bottom:10px;">{{ comment.text|safe }}</p>
 
-        {% if comment.comment_photo %}
-        <div class="row">
+        {% if comment.comment_photo.all %}
+        <div class="row" style="padding-bottom:10px;">
           {% for object in comment.comment_photo.all %}
           <div class="col-lg-6 col-md-6">
               <img data-uuid="{{ object.uuid }}" data-id="{{ comment.commenter.pk }}" class="comment_image" style="width:100%;object-fit:cover;height:200px;cursor:pointer" src="{{ object.file.url }}" alt="">
@@ -41,7 +41,7 @@
                     <span class="comment_like_window">
                         {% if comment.window_likes %}
                         <div class="comment_like_pop" style="margin:15px">
-                            <span>Оценили: {{ comment.likes.count }} {{ comment.likes.count|rupluralize:"человек,человека,людей" }}</span>
+                            <span class="u_all_comment_likes" style="cursor:pointer">Оценили: {{ comment.likes.count }} {{ comment.likes.count|rupluralize:"человек,человека,людей" }}</span>
                             <br><br>
                             <span style="display: flex;">
                                 {% for heart in comment.window_likes %}
@@ -68,7 +68,7 @@
                       <span class="comment_dislike_window">
                           {% if comment.window_dislikes %}
                           <div class="comment_dislike_pop" style="margin:15px">
-                              <span>Не оценили: {{ comment.dislikes.count }} {{ comment.dislikes.count|rupluralize:"человек,человека,людей" }}</span>
+                              <span class="u_all_comment_dislikes" style="cursor:pointer">Не оценили: {{ comment.dislikes.count }} {{ comment.dislikes.count|rupluralize:"человек,человека,людей" }}</span>
                               <br><br>
                               <span style="display: flex;">
                                   {% for sheet in comment.window_dislikes %}
