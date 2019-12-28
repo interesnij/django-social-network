@@ -244,10 +244,10 @@ class ItemComment(models.Model):
         item_community_notification_handler(actor=user, recipient=None, community=item.community, verb=ItemCommunityNotification.POST_COMMENT_REPLY, comment=self, item=self.item, key='social_update')
 
     def notification_community_comment_like(self, user):
-        item_community_notification_handler(actor=user, recipient=None, community=item.community, verb=ItemCommunityNotification.LIKE_COMMENT, comment=self, item=self.item, key='social_update')
+        item_community_notification_handler(actor=user, recipient=None, community=self.item.community, verb=ItemCommunityNotification.LIKE_COMMENT, comment=self, item=self.item, key='social_update')
 
     def notification_community_comment_dislike(self, user):
-        item_community_notification_handler(actor=user, recipient=None, community=item.community, verb=ItemCommunityNotification.DISLIKE_COMMENT, comment=self, item=self.item, key='social_update')
+        item_community_notification_handler(actor=user, recipient=None, community=self.item.community, verb=ItemCommunityNotification.DISLIKE_COMMENT, comment=self, item=self.item, key='social_update')
 
     @classmethod
     def create_user_comment(cls, commenter, item=None, parent_comment=None, text=None, created=None ):
