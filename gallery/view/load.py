@@ -15,15 +15,6 @@ class UserPhoto(TemplateView):
     def get(self,request,*args,**kwargs):
         self.user=User.objects.get(uuid=self.kwargs["uuid"])
         self.photo = Photo.objects.get(pk=self.kwargs["pk"])
-        self.avatar_album = Album.objects.get(creator=self.user, title="Фото со страницы", is_generic=True, community=None)
-        try:
-            self._avatar = Photo.objects.filter(album_2=self.avatar_album).order_by('-id')[0]
-            if self._avatar.id == self.photo.id:
-                self.avatar = True
-            else:
-                self.avatar = None
-        except:
-            self.avatar = None
         if self.user != request.user and request.user.is_authenticated:
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
             if self.user.is_closed_profile():
@@ -45,7 +36,36 @@ class UserPhoto(TemplateView):
         context["user"]=self.user
         context["next"]=self.next
         context["prev"]=self.prev
-        context["avatar"]=self.avatar
+        return context
+
+class UserAlbumPhoto(TemplateView):
+    template_name="photo_user/album/photo.html"
+
+    def get(self,request,*args,**kwargs):
+        self.user=User.objects.get(uuid=self.kwargs["uuid"])
+        self.album=Album.objects.get(uuid=self.kwargs["album_uuid"])
+        self.photo = Photo.objects.get(pk=self.kwargs["pk"])
+        if self.user != request.user and request.user.is_authenticated:
+            check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
+            if self.user.is_closed_profile():
+                check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
+            self.photos = self.user.get_photos_for_album(album_id=self.album.pk)
+        elif self.user == request.user and request.user.is_authenticated:
+            self.photos = self.user.get_photos_for_album(album_id=self.album.pk)
+        elif self.user.is_closed_profile() and request.user.is_anonymous:
+            raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
+        elif not self.user.is_closed_profile() and request.user.is_anonymous:
+            self.photos = self.user.get_photos_for_album(album_id=self.album.pk)
+        self.next = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
+        self.prev = self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
+        return super(UserAlbumPhoto,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context=super(UserAlbumPhoto,self).get_context_data(**kwargs)
+        context["object"]=self.photo
+        context["user"]=self.user
+        context["next"]=self.next
+        context["prev"]=self.prev
         return context
 
 
