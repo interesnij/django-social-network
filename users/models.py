@@ -48,8 +48,9 @@ class User(AbstractUser):
     def get_favorite_communities(self):
         return self.favorite_communities.all()
 
-    def get_administrated_communities(self):
-        return Community.objects.filter(memberships__user=self, memberships__is_administrator=True)
+    def get_staffed_communities(self):
+        query = Q(Q(memberships__user=self, memberships__is_administrator=True) | Q(memberships__user=self, memberships__is_moderator=True))
+        return Community.objects.filter(query)
 
     def get_moderated_communities(self):
         return Community.objects.filter(memberships__user=self, memberships__is_moderator=True)
