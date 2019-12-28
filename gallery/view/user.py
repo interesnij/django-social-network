@@ -54,35 +54,34 @@ class UserGalleryView(TemplateView):
 		return context
 
 class UserAlbumView(TemplateView):
-	template_name = None
+    template_name = None
 
-	def get(self,request,*args,**kwargs):
-		self.user = User.objects.get(pk=self.kwargs["pk"])
+    def get(self,request,*args,**kwargs):
+        self.user = User.objects.get(pk=self.kwargs["pk"])
         self.album = Album.objects.get(uuid=self.kwargs["uuid"])
+        if self.user == request.user:
+            self.template_name="photo_user/album/my_album.html"
+        elif request.user != self.user and request.user.is_authenticated:
+            if request.user.is_blocked_with_user_with_id(user_id=self.user.id):
+                self.template_name = "photo_user/album/block_album.html"
+            elif self.user.is_closed_profile():
+                if not request.user.is_connected_with_user_with_id(user_id=self.user.id):
+                    self.template_name = "photo_user/album/close_album.html"
+                else:
+                    self.template_name = "photo_user/album/album.html"
+            else:
+                self.template_name = "photo_user/album/album.html"
+        elif request.user.is_anonymous and self.user.is_closed_profile():
+            self.template_name = "photo_user/album/close_album.html"
+        elif request.user.is_anonymous and not self.user.is_closed_profile():
+            self.template_name = "photo_user/album/anon_album.html"
+        return super(UserAlbumView,self).get(request,*args,**kwargs)
 
-		if self.user == request.user:
-			self.template_name="photo_user/album/my_album.html"
-		elif request.user != self.user and request.user.is_authenticated:
-			if request.user.is_blocked_with_user_with_id(user_id=self.user.id):
-				self.template_name = "photo_user/album/block_album.html"
-			elif self.user.is_closed_profile():
-				if not request.user.is_connected_with_user_with_id(user_id=self.user.id):
-					self.template_name = "photo_user/album/close_album.html"
-				else:
-					self.template_name = "photo_user/album/album.html"
-			else:
-				self.template_name = "photo_user/album/album.html"
-		elif request.user.is_anonymous and self.user.is_closed_profile():
-			self.template_name = "photo_user/album/close_album.html"
-		elif request.user.is_anonymous and not self.user.is_closed_profile():
-			self.template_name = "photo_user/album/anon_album.html"
-		return super(UserAlbumView,self).get(request,*args,**kwargs)
-
-	def get_context_data(self,**kwargs):
-		context=super(UserAlbumView,self).get_context_data(**kwargs)
-		context['user'] = self.user
+    def get_context_data(self,**kwargs):
+        context=super(UserAlbumView,self).get_context_data(**kwargs)
+        context['user'] = self.user
         context['album'] = self.album
-		return context
+        return context
 
 
 class UserAlbomReload(TemplateView):
