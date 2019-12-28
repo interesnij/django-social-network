@@ -1,6 +1,6 @@
 {% load staticfiles humanize thumbnail %}
 
-<div class="card mb-4 infinite-item" item-id="{{ object.uuid }}">
+<div class="card mb-4 infinite-item">
   <div class="card-header">
       <div class="media">
         <a href="{% url 'user' pk=object.creator.pk %}" class="ajax">
@@ -45,7 +45,7 @@
       </div>
   </div>
 
-    <div class="card-body u_article_detail" data-id="{{ object.uuid }}" style="cursor:pointer">
+    <div class="card-body u_article_detail"  data-pk="{{ object.pk }}" data-uuid="{{ object.creator.uuid }}" style="cursor:pointer">
          <div class="jumbotron mb-4 bg-dark text-center has-background-img position-relative box-shadow">
              <div class="row align-items-center no-gutters">
                     <figure class="background-img">

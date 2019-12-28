@@ -1,6 +1,6 @@
 {% load staticfiles humanize liked_user %}
 
-<div class="card mb-4 infinite-item" item-id="{{ object.uuid }}">
+<div class="card mb-4 infinite-item">
     {% include 'item_user/card_header.html' %}
 
     <div class="card-body u_article_detail" data-pk="{{ object.pk }}" data-uuid="{{ object.creator.uuid }}" style="cursor:pointer">

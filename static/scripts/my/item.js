@@ -2,7 +2,7 @@
 /*!
    fullscreen's script
   */
-$('#ajax .stream').on('click', '.u_article_detail', function() {var item = $(this); var pk = item.data("pk"); var uuid = item.data("uuid"); $('#article_loader').html('').load("/article/detail/" + pk + "/" + uuid + "/"); $('.article_fullscreen').show();});
+$('#ajax .stream').on('click', '.u_article_detail', function() {var item = $(this); var pk = item.data("pk");  var uuid = item.data("uuid"); $('#article_loader').html('').load("/article/detail/" + pk + "/" + uuid + "/"); $('.article_fullscreen').show();});
 $('#ajax').on('click', '.fullscreen', function() {var item = $(this); var item_pk = item.data("pk"); var user_uuid = item.data("uuid");$('#item_loader').html('').load("/users/detail/item/" + item_pk + "/" + user_uuid + "/"); $('.item_fullscreen').show();});
 $('#ajax').on('click', '.u_all_likes', function() {var btn = $(this); item = $(this).parents('.interaction'); var pk = item.data("pk"); var uuid = item.data("uuid");$('#votes_loader').html('').load("/window/all_user_like/" + uuid + "/" + pk + "/"); $('.votes_fullscreen').show();});
 $('#ajax').on('click', '.u_all_dislikes', function() {var btn = $(this); item = $(this).parents('.interaction'); var pk = item.data("pk"); var uuid = item.data("uuid");$('#votes_loader').html('').load("/window/all_user_dislike/" + uuid + "/" + pk + "/"); $('.votes_fullscreen').show();});
