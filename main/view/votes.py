@@ -26,13 +26,13 @@ class ItemUserLikeCreate(View):
                 likedislike.vote = ItemVotes.LIKE
                 likedislike.save(update_fields=['vote'])
                 result = True
-                item.notification_user_like(request.user)
             else:
                 likedislike.delete()
                 result = False
         except ItemVotes.DoesNotExist:
             ItemVotes.objects.create(parent=item, user=request.user, vote=ItemVotes.LIKE)
             result = True
+            item.notification_user_like(request.user)
         likes = item.get_likes_for_item(request.user)
         if likes.count() != 0:
             like_count = likes.count()
@@ -60,13 +60,13 @@ class ItemCommentUserLikeCreate(View):
                 likedislike.vote = ItemCommentVotes.LIKE
                 likedislike.save(update_fields=['vote'])
                 result = True
-                comment.notification_user_comment_like(request.user)
             else:
                 likedislike.delete()
                 result = False
         except ItemCommentVotes.DoesNotExist:
             ItemCommentVotes.objects.create(item=comment, user=request.user, vote=ItemCommentVotes.LIKE)
             result = True
+            comment.notification_user_comment_like(request.user)
         likes = comment.get_likes_for_comment_item(request.user)
         if likes.count() != 0:
             like_count = likes.count()
@@ -94,13 +94,13 @@ class ItemUserDislikeCreate(View):
                 likedislike.vote = ItemVotes.DISLIKE
                 likedislike.save(update_fields=['vote'])
                 result = True
-                item.notification_user_dislike(request.user)
             else:
                 likedislike.delete()
                 result = False
         except ItemVotes.DoesNotExist:
             ItemVotes.objects.create(parent=item, user=request.user, vote=ItemVotes.DISLIKE)
             result = True
+            item.notification_user_dislike(request.user)
         likes = item.get_likes_for_item(request.user)
         if likes.count() != 0:
             like_count = likes.count()
@@ -128,13 +128,13 @@ class ItemCommentUserDislikeCreate(View):
                 likedislike.vote = ItemCommentVotes.DISLIKE
                 likedislike.save(update_fields=['vote'])
                 result = True
-                comment.notification_user_comment_dislike(request.user)
             else:
                 likedislike.delete()
                 result = False
         except ItemCommentVotes.DoesNotExist:
             ItemCommentVotes.objects.create(item=comment, user=request.user, vote=ItemCommentVotes.DISLIKE)
             result = True
+            comment.notification_user_comment_dislike(request.user)
         likes = comment.get_likes_for_comment_item(request.user)
         if likes.count() != 0:
             like_count = likes.count()
@@ -159,13 +159,13 @@ class ItemCommunityLikeCreate(View):
                 likedislike.vote = ItemVotes.LIKE
                 likedislike.save(update_fields=['vote'])
                 result = True
-                item.notification_community_like(request.user)
             else:
                 likedislike.delete()
                 result = False
         except ItemVotes.DoesNotExist:
             ItemVotes.objects.create(parent=item, user=request.user, vote=ItemVotes.LIKE)
             result = True
+            item.notification_community_like(request.user)
         likes = item.get_likes_for_item(request.user)
         if likes.count() != 0:
             like_count = likes.count()
@@ -190,13 +190,13 @@ class ItemCommunityDislikeCreate(View):
                 likedislike.vote = ItemVotes.DISLIKE
                 likedislike.save(update_fields=['vote'])
                 result = True
-                item.notification_community_dislike(request.user)
             else:
                 likedislike.delete()
                 result = False
         except ItemVotes.DoesNotExist:
             ItemVotes.objects.create(parent=item, user=request.user, vote=ItemVotes.DISLIKE)
             result = True
+            item.notification_community_dislike(request.user)
         likes = item.get_likes_for_item(request.user)
         if likes.count() != 0:
             like_count = likes.count()
@@ -220,13 +220,13 @@ class ItemCommentCommunityLikeCreate(View):
                 likedislike.vote = ItemCommentVotes.LIKE
                 likedislike.save(update_fields=['vote'])
                 result = True
-                comment.notification_community_comment_like(request.user)
             else:
                 likedislike.delete()
                 result = False
         except ItemCommentVotes.DoesNotExist:
             ItemCommentVotes.objects.create(item=comment, user=request.user, vote=ItemCommentVotes.LIKE)
             result = True
+            comment.notification_community_comment_like(request.user)
         likes = comment.get_likes_for_comment_item(request.user)
         if likes.count() != 0:
             like_count = likes.count()
@@ -251,13 +251,13 @@ class ItemCommentCommunityDislikeCreate(View):
                 likedislike.vote = ItemCommentVotes.DISLIKE
                 likedislike.save(update_fields=['vote'])
                 result = True
-                comment.notification_community_comment_dislike(request.user)
             else:
                 likedislike.delete()
                 result = False
         except ItemCommentVotes.DoesNotExist:
             ItemCommentVotes.objects.create(item=comment, user=request.user, vote=ItemCommentVotes.DISLIKE)
             result = True
+            comment.notification_community_comment_dislike(request.user)
         likes = comment.get_likes_for_comment_item(request.user)
         if likes.count() != 0:
             like_count = likes.count()
