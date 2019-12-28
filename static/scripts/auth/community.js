@@ -32,29 +32,9 @@ $("#ajax").on('click', '.c_dislike', function() {var dislike = $(this); item = d
 
 $('#ajax').on('click', '.c_repost', function() {var item = $(this); var item_id = item.data("uuid"); $('#user_item_pk').html(item_id);});
 
-  $("#ajax").on('click', '.c_like2', function() {
-            var like = $(this); var pk = like.data('pk'); var uuid = like.data('uuid'); var dislike = like.next().next();
-            $.ajax({
-                url: "/votes/community_comment/" + uuid + "/" + pk + "/like/", type: 'POST', data: {'obj': pk},
-                success: function(json) {
-                  like.find("[data-count='like']").text(json.like_count); like.find(".svg_default").toggleClass('svg_success'); like.find(".likes_count").toggleClass('svg_success'); like.siblings('.comment_like_window').html('').load("/window/c_comment_like_window/" + uuid + "/" + pk + "/");
-                  dislike.find("[data-count='dislike']").text(json.dislike_count); dislike.find(".svg_default").removeClass('svg_danger'); dislike.find(".dislikes_count").removeClass('svg_danger'); dislike.siblings('.comment_dislike_window').html('').load("/window/c_comment_dislike_window/" + uuid + "/" + pk + "/")
-                }
-            }); return false;
-        });
+$("#ajax").on('click', '.c_like2', function() {var like = $(this); var pk = like.data('pk'); var uuid = like.data('uuid'); var dislike = like.next().next();$.ajax({url: "/votes/community_comment/" + uuid + "/" + pk + "/like/", type: 'POST', data: {'obj': pk},success: function(json) {like.find("[data-count='like']").text(json.like_count); like.find(".svg_default").toggleClass('svg_success'); like.find(".likes_count").toggleClass('svg_success'); like.siblings('.comment_like_window').html('').load("/window/c_comment_like_window/" + uuid + "/" + pk + "/");dislike.find("[data-count='dislike']").text(json.dislike_count); dislike.find(".svg_default").removeClass('svg_danger'); dislike.find(".dislikes_count").removeClass('svg_danger'); dislike.siblings('.comment_dislike_window').html('').load("/window/c_comment_dislike_window/" + uuid + "/" + pk + "/")}}); return false;});
 
-  $("#ajax").on('click', '.c_dislike2', function() {
-          var dislike = $(this); var pk = dislike.data('pk'); var uuid = dislike.data('uuid'); var like = dislike.prev().prev();
-          $.ajax({
-              url: "/votes/community_comment/" + uuid + "/" + pk + "/dislike/",
-              type: 'POST',
-              data: { 'obj': pk },
-              success: function(json) {
-                like.find("[data-count='like']").text(json.like_count); like.find(".svg_default").removeClass('svg_success'); like.find(".likes_count").removeClass('svg_success'); like.siblings('.comment_like_window').html('').load("/window/c_comment_like_window/" + uuid + "/" + pk + "/");
-                dislike.find("[data-count='dislike']").text(json.dislike_count); dislike.find(".svg_default").toggleClass('svg_danger'); dislike.find(".dislikes_count").toggleClass('svg_danger'); dislike.siblings('.comment_dislike_window').html('').load("/window/c_comment_dislike_window/" + uuid + "/" + pk + "/")
-              }
-          });   return false;
-  });
+$("#ajax").on('click', '.c_dislike2', function() {var dislike = $(this); var pk = dislike.data('pk'); var uuid = dislike.data('uuid'); var like = dislike.prev().prev();$.ajax({url: "/votes/community_comment/" + uuid + "/" + pk + "/dislike/",type: 'POST',data: { 'obj': pk },success: function(json) {like.find("[data-count='like']").text(json.like_count); like.find(".svg_default").removeClass('svg_success'); like.find(".likes_count").removeClass('svg_success'); like.siblings('.comment_like_window').html('').load("/window/c_comment_like_window/" + uuid + "/" + pk + "/");dislike.find("[data-count='dislike']").text(json.dislike_count); dislike.find(".svg_default").toggleClass('svg_danger'); dislike.find(".dislikes_count").toggleClass('svg_danger'); dislike.siblings('.comment_dislike_window').html('').load("/window/c_comment_dislike_window/" + uuid + "/" + pk + "/")}});return false;});
 
 
   /*!

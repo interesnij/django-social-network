@@ -168,7 +168,7 @@ class ItemCommunityCommentDislikeWindow(TemplateView):
         self.comment = ItemComment.objects.get(pk=self.kwargs["pk"])
         community = Community.objects.get(uuid=self.kwargs["uuid"])
         check_can_get_posts_for_community_with_name(request.user,community.name)
-        self.likes = self.comment.get_dislikes_for_comment_item(request.user)[0:6]
+        self.dislikes = self.comment.get_dislikes_for_comment_item(request.user)[0:6]
         return super(ItemCommunityCommentDislikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -333,7 +333,7 @@ class AllItemCommunityCommentDislikeWindow(TemplateView):
         self.comment = ItemComment.objects.get(pk=self.kwargs["pk"])
         community = Community.objects.get(uuid=self.kwargs["uuid"])
         check_can_get_posts_for_community_with_name(request.user,community.name)
-        self.likes = self.comment.get_dislikes_for_comment_item(request.user)
+        self.dislikes = self.comment.get_dislikes_for_comment_item(request.user)
         return super(AllItemCommunityCommentDislikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
