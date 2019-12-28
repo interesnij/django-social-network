@@ -20,7 +20,6 @@
         <p style="padding-bottom:10px;">{{ comment.text|safe }}</p>
 
         {% if comment.comment_photo %}
-        <br>
         <div class="row">
           {% for object in comment.comment_photo.all %}
           <div class="col-lg-6 col-md-6">
@@ -28,7 +27,6 @@
           </div>
           {% endfor %}
         </div>
-        <br>
         {% endif %}
 
         <div class="">
