@@ -30,8 +30,8 @@
 {% if albums_list %}
 <div class="row">
     {% for object in albums_list %}
-    {% if object.photo_set.count %}
     <div class="col-sm-12 col-md-6 col-lg-4 cover_block infinite-item">
+      <a href="{% url 'user_album' pk=user.pk uuid=object.uuid %}" class="ajax">
         <div class="card rounded-0 border-0 mb-4">
             <div class="card-header">
                 <div class="media">
@@ -58,8 +58,9 @@
                 <p class="mb-0 content-color-secondary f-sm albom_description">{{ object.description }}</p>
             </div>
         </div>
+        </a>
     </div>
-    {% endif %}
+
     {% endfor %}
 </div>
 {% endif %}
