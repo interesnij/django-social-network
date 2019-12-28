@@ -187,33 +187,33 @@ class AlbumUserCreate(TemplateView):
 
 
 class UserAlbomList(View):
-	def get(self,request,**kwargs):
-		context = {}
-		self.album=Album.objects.get(uuid=self.kwargs["uuid"])
-		self.user=User.objects.get(pk=self.kwargs["pk"])
+    def get(self,request,**kwargs):
+        context = {}
+        self.album=Album.objects.get(uuid=self.kwargs["uuid"])
+        self.user=User.objects.get(pk=self.kwargs["pk"])
         if self.user != request.user and request.user.is_authenticated:
-			check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
-			if self.user.is_closed_profile():
-				check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
-			photos = Photo.objects.filter(album=self.album)
-		elif request.user.is_anonymous and self.user.is_closed_profile():
-			raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.',)
-		elif request.user.is_anonymous and not self.user.is_closed_profile():
-			photos = Photo.objects.filter(album=self.album)
-		elif self.user == request.user:
-			photos = Photo.objects.filter(album=self.album)
+            check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
+            if self.user.is_closed_profile():
+                check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
+            photos = Photo.objects.filter(album=self.album)
+        elif request.user.is_anonymous and self.user.is_closed_profile():
+            raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.',)
+        elif request.user.is_anonymous and not self.user.is_closed_profile():
+            photos = Photo.objects.filter(album=self.album)
+        elif self.user == request.user:
+            photos = Photo.objects.filter(album=self.album)
 
         current_page = Paginator(photos, 12)
-		page = request.GET.get('page')
-		context['user'] = self.user
+        page = request.GET.get('page')
+        context['user'] = self.user
         context['album'] = self.album
-		try:
-			context['photos'] = current_page.page(page)
-		except PageNotAnInteger:
-			context['photos'] = current_page.page(1)
-		except EmptyPage:
-			context['photos'] = current_page.page(current_page.num_pages)
-		return render_to_response('photo_user/album/album_list.html', context)
+        try:
+            context['photos'] = current_page.page(page)
+        except PageNotAnInteger:
+            context['photos'] = current_page.page(1)
+        except EmptyPage:
+            context['photos'] = current_page.page(current_page.num_pages)
+        return render_to_response('photo_user/album/album_list.html', context)
 
 class UserAlbumsList(View):
 	def get(self,request,**kwargs):
