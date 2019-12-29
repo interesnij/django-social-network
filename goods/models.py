@@ -97,76 +97,74 @@ class Good(models.Model):
 	def notification_community_dislike(self, user):
 		good_community_notification_handler(actor=user, recipient=None, verb=GoodCommunityNotification.DISLIKE, key='social_update', community=self.community, good=self, comment=None)
 
-    def get_comments(self, user):
-        comments_query = self._make_get_comments_for_post_query(user=user)
-        return GoodComment.objects.filter(comments_query)
+	def get_comments(self, user):
+		comments_query = self._make_get_comments_for_post_query(user=user)
+		return GoodComment.objects.filter(comments_query)
+	def get_comment_replies(self, post_comment_id):
+		post_comment = GoodComment.objects.get(pk=post_comment_id)
+		return self.get_comment_replies_for_comment_with_post(post_comment=post_comment)
 
-    def get_comment_replies(self, post_comment_id):
-        post_comment = GoodComment.objects.get(pk=post_comment_id)
-        return self.get_comment_replies_for_comment_with_post(post_comment=post_comment)
+	def get_comment_replies_for_comment_with_post(self, post_comment):
+		comment_replies_query = self._make_get_comments_for_post_query(self, post_comment_parent_id=post_comment.pk)
+		return GoodComment.objects.filter(comment_replies_query)
 
-    def get_comment_replies_for_comment_with_post(self, post_comment):
-        comment_replies_query = self._make_get_comments_for_post_query(self, post_comment_parent_id=post_comment.pk)
-        return GoodComment.objects.filter(comment_replies_query)
+	def _make_get_comments_for_post_query(self, user, post_comment_parent_id=None):
+		comments_query = Q(good_id=self.pk)
+		if post_comment_parent_id is None:
+			comments_query.add(Q(parent_comment__isnull=True), Q.AND)
+		else:
+			comments_query.add(Q(parent_comment__id=post_comment_parent_id), Q.AND)
+		post_community = self.community
+		if post_community:
+			if not user.is_staff_of_community_with_name(community_name=post_community.name):
+				blocked_users_query = ~Q(Q(commenter__blocked_by_users__blocker_id=user.pk) | Q(commenter__user_blocks__blocked_user_id=user.pk))
+				blocked_users_query_staff_members = Q(commenter__communities_memberships__community_id=post_community.pk)
+				blocked_users_query_staff_members.add(Q(commenter__communities_memberships__is_administrator=True) | Q(commenter__communities_memberships__is_moderator=True), Q.AND)
+				blocked_users_query.add(~blocked_users_query_staff_members, Q.AND)
+				comments_query.add(blocked_users_query, Q.AND)
+				#comments_query.add(~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED), Q.AND)
+		else:
+			blocked_users_query = ~Q(Q(commenter__blocked_by_users__blocker_id=user.pk) | Q(commenter__user_blocks__blocked_user_id=user.pk))
+			comments_query.add(blocked_users_query, Q.AND)
+			comments_query.add(~Q(moderated_object__reports__reporter_id=user.pk), Q.AND)
+			comments_query.add(Q(is_deleted=False), Q.AND)
+		return comments_query
 
-    def _make_get_comments_for_post_query(self, user, post_comment_parent_id=None):
-        comments_query = Q(good_id=self.pk)
-        if post_comment_parent_id is None:
-            comments_query.add(Q(parent_comment__isnull=True), Q.AND)
-        else:
-            comments_query.add(Q(parent_comment__id=post_comment_parent_id), Q.AND)
-        post_community = self.community
-        if post_community:
-            if not user.is_staff_of_community_with_name(community_name=post_community.name):
-                blocked_users_query = ~Q(Q(commenter__blocked_by_users__blocker_id=user.pk) | Q(commenter__user_blocks__blocked_user_id=user.pk))
-                blocked_users_query_staff_members = Q(commenter__communities_memberships__community_id=post_community.pk)
-                blocked_users_query_staff_members.add(Q(commenter__communities_memberships__is_administrator=True) | Q(commenter__communities_memberships__is_moderator=True), Q.AND)
-                blocked_users_query.add(~blocked_users_query_staff_members, Q.AND)
-                comments_query.add(blocked_users_query, Q.AND)
-                #comments_query.add(~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED), Q.AND)
-        else:
-            blocked_users_query = ~Q(Q(commenter__blocked_by_users__blocker_id=user.pk) | Q(commenter__user_blocks__blocked_user_id=user.pk))
-            comments_query.add(blocked_users_query, Q.AND)
-        comments_query.add(~Q(moderated_object__reports__reporter_id=user.pk), Q.AND)
-        comments_query.add(Q(is_deleted=False), Q.AND)
-        return comments_query
+	def likes(self):
+		likes =GoodVotes.objects.filter(parent=self, vote__gt=0)
+		return likes
 
-    def likes(self):
-        likes =GoodVotes.objects.filter(parent=self, vote__gt=0)
-        return likes
+	def window_likes(self):
+		likes = GoodVotes.objects.filter(parent=self, vote__gt=0)
+		return likes[0:6]
 
-    def window_likes(self):
-        likes = GoodVotes.objects.filter(parent=self, vote__gt=0)
-        return likes[0:6]
+	def dislikes(self):
+		dislikes = GoodVotes.objects.filter(parent=self, vote__lt=0)
+		return dislikes
+	def window_dislikes(self):
+		dislikes = GoodVotes.objects.filter(parent=self, vote__lt=0)
+		return dislikes[0:6]
 
-    def dislikes(self):
-        dislikes = GoodVotes.objects.filter(parent=self, vote__lt=0)
-        return dislikes
+	def get_reposts(self):
+		parents = Good.objects.filter(parent=self)
+		return parents
 
-    def window_dislikes(self):
-        dislikes = GoodVotes.objects.filter(parent=self, vote__lt=0)
-        return dislikes[0:6]
+	def get_window_reposts(self):
+		parents = Good.objects.filter(parent=self)
+		return parents[0:6]
 
-    def get_reposts(self):
-        parents = Good.objects.filter(parent=self)
-        return parents
+	def count_reposts(self):
+		parents = self.get_reposts()
+		count_reposts = parents.count()
+		return count_reposts
 
-    def get_window_reposts(self):
-        parents = Good.objects.filter(parent=self)
-        return parents[0:6]
+	def get_likes_for_item(self, user):
+		reactions_query = user._make_get_votes_query(good=self)
+		return GoodVotes.objects.filter(parent=self, vote__gt=0).filter(reactions_query)
 
-    def count_reposts(self):
-        parents = self.get_reposts()
-        count_reposts = parents.count()
-        return count_reposts
-
-    def get_likes_for_item(self, user):
-        reactions_query = user._make_get_votes_query(good=self)
-        return GoodVotes.objects.filter(parent=self, vote__gt=0).filter(reactions_query)
-
-    def get_dislikes_for_item(self, user):
-        reactions_query = user._make_get_votes_query(good=self)
-        return GoodVotes.objects.filter(parent=self, vote__lt=0).filter(reactions_query)
+	def get_dislikes_for_item(self, user):
+		reactions_query = user._make_get_votes_query(good=self)
+		return GoodVotes.objects.filter(parent=self, vote__lt=0).filter(reactions_query)
 
 
 class GoodComment(models.Model):
