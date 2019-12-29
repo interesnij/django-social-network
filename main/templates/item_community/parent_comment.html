@@ -28,7 +28,7 @@
             <div class="row">
                 <div class="col">
                   <span class="c_like2 {% if comment.likes|user_in:request.user %}text-success {% endif %}" data-pk="{{ comment.pk }}" data-uuid="{{ community.uuid }}" style="cursor:pointer" title="Нравится">
-                        <svg {% if comment.likes|user_in:request_user %}class="svg_success"{% else %}class="svg_default"{% endif %} fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        <svg class="svg_s_info svg_default {% if comment.likes|user_in:request_user %}svg_success{% endif %}" fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                           <path fill="none" d="M0 0h24v24H0V0z"/><path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/>
                         </svg>
                         <span {% if comment.likes|user_in:request_user %}style="color:#41cd52"{% endif %} data-count="like">{% if comment.likes.count %}{{ comment.likes.count }}{% endif %}</span>
@@ -58,7 +58,7 @@
 
                 &nbsp;&nbsp;
                 <span class="c_dislike2 {% if comment.dislikes|user_in:request.user %} text-danger {% endif %}" data-pk="{{ comment.pk }}" data-uuid="{{ community.uuid }}" style="cursor:pointer" title="Не нравится">
-                      <svg {% if comment.dislikes|user_in:request_user %}class="svg_danger"{% else %}class="svg_default"{% endif %}  fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M15 3H6c-.83 0-1.54.5-1.84 1.22l-3.02 7.05c-.09.23-.14.47-.14.73v2c0 1.1.9 2 2 2h6.31l-.95 4.57-.03.32c0 .41.17.79.44 1.06L9.83 23l6.59-6.59c.36-.36.58-.86.58-1.41V5c0-1.1-.9-2-2-2zm4 0v12h4V3h-4z"/></svg>
+                      <svg class="svg_s_info svg_default {% if comment.dislikes|user_in:request_user %}svg_danger{% endif %}"  fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M15 3H6c-.83 0-1.54.5-1.84 1.22l-3.02 7.05c-.09.23-.14.47-.14.73v2c0 1.1.9 2 2 2h6.31l-.95 4.57-.03.32c0 .41.17.79.44 1.06L9.83 23l6.59-6.59c.36-.36.58-.86.58-1.41V5c0-1.1-.9-2-2-2zm4 0v12h4V3h-4z"/></svg>
                       <span {% if comment.dislikes|user_in:request_user %}class="svg_danger"{% endif %} data-count="dislike">{% if comment.dislikes.count %}{{ comment.dislikes.count }}{% endif %}</span>
                 </span>
 
@@ -99,7 +99,7 @@
 
                             <div class="row no-gutters">
                               <a id="dropdown_select_upload_comment" class="btn btn-link btn-sm text-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <svg fill="currentColor" style="margin-top:-4px;" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M16.5 6v11.5c0 2.21-1.79 4-4 4s-4-1.79-4-4V5c0-1.38 1.12-2.5 2.5-2.5s2.5 1.12 2.5 2.5v10.5c0 .55-.45 1-1 1s-1-.45-1-1V6H10v9.5c0 1.38 1.12 2.5 2.5 2.5s2.5-1.12 2.5-2.5V5c0-2.21-1.79-4-4-4S7 2.79 7 5v12.5c0 3.04 2.46 5.5 5.5 5.5s5.5-2.46 5.5-5.5V6h-1.5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+                                <svg fill="svg_info currentColor" style="margin-top:-4px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16.5 6v11.5c0 2.21-1.79 4-4 4s-4-1.79-4-4V5c0-1.38 1.12-2.5 2.5-2.5s2.5 1.12 2.5 2.5v10.5c0 .55-.45 1-1 1s-1-.45-1-1V6H10v9.5c0 1.38 1.12 2.5 2.5 2.5s2.5-1.12 2.5-2.5V5c0-2.21-1.79-4-4-4S7 2.79 7 5v12.5c0 3.04 2.46 5.5 5.5 5.5s5.5-2.46 5.5-5.5V6h-1.5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
                               </a>
                               <div class="dropdown-menu dropdown-menu-top" aria-labelledby="dropdown_select_upload_comment">
                                   <a id="" style="cursor:pointer" class="dropdown-item upload_photo">Загрузить изображение</a>
