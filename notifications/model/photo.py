@@ -93,7 +93,8 @@ class PhotoNotification(models.Model):
 
 
 class PhotoCommunityNotification(models.Model):
-    recipient = models.ForeignKey('communities.Community', on_delete=models.CASCADE, related_name='photo_community_notifications', verbose_name="Сообщество")
+    community = models.ForeignKey('communities.Community', related_name='community_photo_notify', on_delete=models.CASCADE, verbose_name="Сообщество")
+    recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='community_photo_recipient', verbose_name="Сообщество")
     actor = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="Инициатор", on_delete=models.CASCADE)
     timestamp = models.DateTimeField(default=timezone.now, editable=False, db_index=True, verbose_name="Создано")
     unread  = models.BooleanField(default=True, db_index=True)
@@ -181,14 +182,12 @@ def photo_notification_handler(actor, recipient, verb, photo,**kwargs):
     else:
         pass
 
-
-def photo_community_notification_handler(actor, community, verb, **kwargs):
+def photo_community_notification_handler(actor, community, recipient, good, verb, comment, **kwargs):
     key = kwargs.pop('key', 'notification')
     persons = community.get_staff_members()
     for user in persons:
-        PhotoCommunityNotification.objects.create(actor=actor, community=community, recipient=user,verb=verb)
-    user_notification_broadcast(actor, key)
-
+        PhotoCommunityNotification.objects.create(actor=actor, community=community, item=item, comment=comment, recipient=user, verb=verb)
+    photo_notification_broadcast(actor, key)
 
 def photo_notification_broadcast(actor, key, **kwargs):
     channel_layer = get_channel_layer()
