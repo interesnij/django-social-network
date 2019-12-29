@@ -59,7 +59,7 @@ class ItemCommentUserCreate(View):
 				check_is_not_blocked_with_user_with_id(user=request.user, user_id = user.pk)
 				if user.is_closed_profile():
 					check_is_connected_with_user_with_id(user=request.user, user_id = user.pk)
-			new_comment = comment.create_user_comment(commenter=request.user, parent_comment=None, item=item, text=comment.text)
+			new_comment = comment.create_comment(commenter=request.user, parent_comment=None, item=item, text=comment.text)
 			if photo:
 				album=Album.objects.get(creator=request.user, title="Сохраненные фото", is_generic=True, community=None)
 				upload_photo = Photo.objects.create(creator=request.user, file=photo,community=None,is_public=True, album=album)
@@ -92,7 +92,7 @@ class ItemReplyUserCreate(View):
 				if user.is_closed_profile():
 					check_is_connected_with_user_with_id(user=request.user, user_id = user.id)
 
-			new_comment = comment.create_user_comment(commenter=request.user, text=comment.text, parent_comment=parent)
+			new_comment = comment.create_comment(commenter=request.user, text=comment.text, parent_comment=parent)
 			if photo:
 				album=Album.objects.get(creator=request.user, title="Сохраненные фото", is_generic=True, community=None)
 				upload_photo = Photo.objects.create(creator=request.user, file=photo, community=None, album=album)

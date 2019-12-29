@@ -27,7 +27,7 @@ class CommunityFollow(models.Model):
     community = models.ForeignKey('communities.Community', db_index=False, on_delete=models.CASCADE, related_name='community', null=False, verbose_name="На какое сообщество подписывается")
 
     def notification_community_follow(self, user):
-        community_notification_handler(user, self.community, UserCommunityNotification.CONNECTION_REQUEST, key='notification')
+        community_notification_handler(actor=user, recipient=None, verb=UserCommunityNotification.CONNECTION_REQUEST, community=self.community, key='notification')
 
     class Meta:
         unique_together = ('user', 'community')

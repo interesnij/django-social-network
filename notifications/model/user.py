@@ -89,7 +89,6 @@ class UserCommunityNotification(models.Model):
 
     CONNECTION_REQUEST = 'CR'
     CONNECTION_CONFIRMED = 'CC'
-    COMMUNITY_INVITE = 'CI'
     JOIN = 'J'
 
     NOTIFICATION_TYPES = (

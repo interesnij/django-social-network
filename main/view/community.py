@@ -56,7 +56,7 @@ class ItemCommunityCommentCreate(View):
 			if not comment.text and not photo and not photo2:
 				raise ValidationError('Напишите что-нибудь или прикрепите изображение')
 			check_can_get_posts_for_community_with_name(request.user,community.name)
-			new_comment = comment.create_user_comment(commenter=request.user, parent_comment=None, item=item, text=comment.text)
+			new_comment = comment.create_comment(commenter=request.user, parent_comment=None, item=item, text=comment.text)
 			if photo:
 				album=Album.objects.get(creator=request.user, title="Сохраненные фото", is_generic=True, community=community)
 				upload_photo = Photo.objects.create(creator=request.user, file=photo, community=community, is_public=True, album=album)
@@ -85,7 +85,7 @@ class ItemCommunityReplyCreate(View):
 			if not comment.text and not photo and not photo2:
 				raise ValidationError('Для добавления комментария необходимо написать что-то или прикрепить изображение')
 			check_can_get_posts_for_community_with_name(request.user,community.name)
-			new_comment = comment.create_user_comment(commenter=request.user, text=comment.text, parent_comment=parent)
+			new_comment = comment.create_comment(commenter=request.user, text=comment.text, parent_comment=parent)
 			if photo:
 				album=Album.objects.get(creator=request.user, title="Сохраненные фото", is_generic=True, community=community)
 				upload_photo = Photo.objects.create(creator=request.user, file=photo, community=community, album=album)
