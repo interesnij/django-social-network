@@ -50,10 +50,7 @@ class Community(models.Model):
     name = models.CharField(max_length=100, blank=False, null=False, verbose_name="Название" )
     description = models.CharField(max_length=500, blank=True, null=True, verbose_name="Описание" )
     rules = models.TextField(max_length=1000, blank=True, null=True, verbose_name="Правила")
-    cover = ProcessedImageField(blank=True, format='JPEG',
-                                options={'quality': 90},
-                                upload_to=upload_to_community_avatar_directory,
-                                processors=[ResizeToFit(width=1024, upscale=False)])
+    cover = ProcessedImageField(blank=True, format='JPEG',options={'quality': 90},upload_to=upload_to_community_avatar_directory,processors=[ResizeToFit(width=1024, upscale=False)])
     created = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создано")
     starrers = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='favorite_communities', verbose_name="Подписчики")
     banned_users = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='banned_of_communities', verbose_name="Черный список")
@@ -68,10 +65,7 @@ class Community(models.Model):
     )
     type = models.CharField(choices=COMMUNITY_TYPES, default='P', max_length=2)
     invites_enabled = models.BooleanField(default=True, verbose_name="Разрешить приглашения")
-    is_deleted = models.BooleanField(
-        default=False,
-        verbose_name="Удаленное"
-    )
+    is_deleted = models.BooleanField(default=False,verbose_name="Удаленное")
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, verbose_name="uuid")
 
     class Meta:

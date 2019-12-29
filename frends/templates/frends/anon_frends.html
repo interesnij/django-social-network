@@ -138,13 +138,8 @@
 </div>
 
 <script>
-$(document).ready(function(){
-	$('#all_frends').html('').load("/frends/all-list/" + "{{ user.uuid }}");
-});
-$('#ajax').on('click', '.online', function() {
-  $('#tabhome223-tab').removeClass('online');
-	$('#online_frends').html('').load("/frends/online/" + "{{ user.uuid }}");
-});
+  $(document).ready(function(){$('#all_frends').html('').load("/frends/all-list/" + "{{ user.uuid }}");});
+  $('#ajax').on('click', '.online', function() {$('#tabhome223-tab').removeClass('online');$('#online_frends').html('').load("/frends/online/" + "{{ user.uuid }}");});
 </script>
 
 {% endblock %}

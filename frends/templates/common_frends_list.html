@@ -1,8 +1,6 @@
 {% load staticfiles thumbnail %}
 
-<br>
 {% if common_list %}
-
     <ul class="list-group common-container">
         {% for object in common_list %}
           <li class="list-group-item infinite-item">
@@ -41,7 +39,5 @@
 </div>
 {% endif %}
 <script>
-  var common_infinite = new Waypoint.Infinite({
-      element: $('.common-container')[0], onBeforePageLoad: function() { $('.load').show(); }, onAfterPageLoad: function($items) { $('.load').hide(); }
-  });
+  var common_infinite = new Waypoint.Infinite({element: $('.common-container')[0], onBeforePageLoad: function() { $('.load').show(); }, onAfterPageLoad: function($items) { $('.load').hide(); }});
 </script>

@@ -60,21 +60,6 @@
     </div>
 </div>
 <script>
-  $('#ajax').on('click', '#private_button', function() {
-    var form_private = $('#private_form');
-        $.ajax({
-            type: form_private.attr('method'),
-            url: "{% url 'community_private' pk=community.pk %}",
-            data: form_private.serialize(),
-            success: function (data) {
-              $('#ajax').html('').load("/communities/reload/" + {{ community.pk }} + "/");
-              $('title').text('{{ user.get_full_name }}');
-            },
-            error: function(data) {
-                console.log("Все не ОК")
-            }
-        });
-        return false;
-    });
+  $('#ajax').on('click', '#private_button', function() {var form_private = $('#private_form');$.ajax({type: form_private.attr('method'),url: "{% url 'community_private' pk=community.pk %}",data: form_private.serialize(),success: function (data) {$('#ajax').html('').load("/communities/reload/" + {{ community.pk }} + "/");$('title').text('{{ user.get_full_name }}');},error: function(data) {console.log("Все не ОК")}});return false;});
 </script>
 {% endblock %}

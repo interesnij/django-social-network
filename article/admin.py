@@ -7,6 +7,4 @@ class ArticleAdmin(admin.ModelAdmin):
     list_display = ['creator','created', 'is_deleted']
     list_filter = ['is_deleted', 'created',]
 
-
-
 admin.site.register(Article, ArticleAdmin)

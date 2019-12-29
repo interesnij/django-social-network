@@ -37,7 +37,6 @@ class ArticleUserDetailView(TemplateView):
         self.item = Item.objects.get(pk=self.kwargs["pk"])
         self.item.views += 1
         self.item.save()
-
         if self.user != request.user and request.user.is_authenticated:
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
             if self.user.is_closed_profile():
@@ -51,7 +50,6 @@ class ArticleUserDetailView(TemplateView):
             self.template_name = "u_article.html"
         else:
             raise PermissionDenied('Ошибка доступа')
-
         return super(ArticleUserDetailView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -75,7 +73,6 @@ class ArticleCommunityDetailView(TemplateView):
                 self.template_name = "c_article.html"
         elif request.user.is_authenticated and self.community.is_public():
             self.template_name = "c_article.html"
-
         elif request.user.is_anonymous and self.community.is_public():
             self.template_name = "c_article.html"
         else:
@@ -92,7 +89,6 @@ class ArticleCommunityDetailView(TemplateView):
 class ArticleUserCreate(TemplateView):
     template_name="article_add.html"
     form=None
-    success_url="/"
 
     def get(self,request,*args,**kwargs):
         self.user=User.objects.get(pk=self.kwargs["pk"])
@@ -121,7 +117,6 @@ class ArticleUserCreate(TemplateView):
 class ArticleCommunityCreate(TemplateView):
     template_name="article_add_community.html"
     form=None
-    success_url="/"
 
     def get(self,request,*args,**kwargs):
         self.form=ArticleForm()
@@ -140,7 +135,6 @@ class ArticleCommunityCreate(TemplateView):
         if self.form.is_valid() and request.user.is_staff_of_community_with_name(self.community.name):
             article=self.form.save(commit=False)
             new_article=article.create_article( creator=request.user, content=article.content, community=self.community, g_image=article.g_image, comments_enabled=article.comments_enabled, status=article.status, title=article.title,)
-
             if request.is_ajax():
                  html = render_to_string('item_community/admin_article.html',{'object': new_article, 'community': self.community, 'request': request})
                  return HttpResponse(html)

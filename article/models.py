@@ -12,29 +12,12 @@ from main.models import Item
 
 class Article(Item):
     title = models.CharField(max_length=100, blank=False, null=False, verbose_name="Заголовок" )
-    g_image = ProcessedImageField(verbose_name='Главное изображение', blank=False, format='JPEG',
-                                 options={'quality': 80}, processors=[ResizeToFill(1024, 700)],
-                                 upload_to='articles/%Y/%m/%d')
-    content = RichTextUploadingField(config_name='default',
-                                      external_plugin_resources=[(
-                                          'youtube',
-                                          '/static/ckeditor_plugins/youtube/youtube/',
-                                          'plugin.js',
-                                          )],
-                                      )
+    g_image = ProcessedImageField(verbose_name='Главное изображение', blank=False, format='JPEG',options={'quality': 80}, processors=[ResizeToFill(1024, 700)],upload_to='articles/%Y/%m/%d')
+    content = RichTextUploadingField(config_name='default',external_plugin_resources=[('youtube','/static/ckeditor_plugins/youtube/youtube/','plugin.js',)],)
 
     @classmethod
-    def create_article(cls, creator, title=None, community=None, g_image=None, content=None,
-                    created=None, is_draft=False, status= None, comments_enabled=None ):
-
-        article = Article.objects.create(
-                                            creator=creator,
-                                            content=content,
-                                            g_image=g_image,
-                                            community=community,
-                                            comments_enabled=comments_enabled,
-                                            title=title
-                                        )
+    def create_article(cls, creator, title=None, community=None, g_image=None, content=None, created=None, is_draft=False, status= None, comments_enabled=None ):
+        article = Article.objects.create(creator=creator,content=content,g_image=g_image,community=community,comments_enabled=comments_enabled,title=title)
 
         channel_layer = get_channel_layer()
         payload = {
@@ -52,4 +35,4 @@ class Article(Item):
         verbose_name_plural="статьи"
 
     def __str__(self):
-        return self.creator.get_full_name()
+        return self.title

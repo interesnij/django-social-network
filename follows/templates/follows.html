@@ -1,4 +1,3 @@
-
 {% load staticfiles thumbnail %}
 {% if follows_list %}
 <ul class="follows-container list-group">
@@ -31,9 +30,7 @@
 </ul>
 
 <script>
-  var follows_infinite = new Waypoint.Infinite({
-      element: $('.follows-container')[0], onBeforePageLoad: function() { $('.follows_load').show(); }, onAfterPageLoad: function($items) { $('.follows_load').hide(); }
-  });
+  var follows_infinite = new Waypoint.Infinite({element: $('.follows-container')[0], onBeforePageLoad: function() { $('.follows_load').show(); }, onAfterPageLoad: function($items) { $('.follows_load').hide(); }});
 </script>
 
 {% endif %}

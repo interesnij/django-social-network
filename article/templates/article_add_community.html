@@ -1,24 +1,9 @@
 {% load staticfiles %}
 <style>
     .id_g_image input { display: none; }
-
-    #image-holder {
-        border: 2px dashed #FF0000;
-        color: rgba(0, 0, 0, 0.8);
-        padding: 10px;
-        text-align: center;
-        margin: 10px;
-    }
-
-    #image-holder:hover {
-        cursor: pointer;
-        margin: 9px;
-    }
-
-    #image-holder img {
-        height: auto;
-        width: 100%;
-    }
+    #image-holder {border: 2px dashed #FF0000;color: rgba(0, 0, 0, 0.8);padding: 10px;text-align: center;margin: 10px;}
+    #image-holder:hover {cursor: pointer;margin: 9px;}
+    #image-holder img {height: auto;width: 100%;}
 </style>
 
 <br>
@@ -37,9 +22,7 @@
         <div id="image-holder">
             <h4 style="font-weight:bold;font-size:70px;color:#CECECE">обложка</h4>
             <p>Нажмите, чтобы добавить</p>
-
             <i style="">(обязательно)</i>
-
         </div>
     </div>
     <br>
@@ -61,8 +44,7 @@
 </form>
 
 <script>
-var frm_art = $('#FORM-ARTICLE');
-var block = $('#ajax');
+var frm_art = $('#FORM-ARTICLE');var block = $('#ajax');
 $('#FORM-ARTICLE').submit(function(e) {
     e.preventDefault(); CKEDITOR.instances.id_content.updateElement();
     $.ajax({
@@ -71,11 +53,8 @@ $('#FORM-ARTICLE').submit(function(e) {
         error: function(data) { $.toast({ heading: '{{ request.user.first_name }}', text: 'Для публикации статьи нужно указать название, изображение, содержание', showHideTransition: 'fade', icon: 'error' }) }
     });return false;
 });
-
 var imageLoader = document.getElementById("id_g_image");var entrou = false;$("#image-holder").on("click", function() { $("#id_g_image").click(); });$("#id_g_image").on("change", function() {if (!entrou) { var imgPath = $(this)[0].value; var extn = imgPath.substring(imgPath.lastIndexOf(".") + 1).toLowerCase();if (extn == "gif" || extn == "png" || extn == "jpg" || extn == "jpeg") { if (typeof FileReader != "undefined") { var image_holder = $("#image-holder"); image_holder.empty(); var reader = new FileReader(); reader.onload = function(e) { $img = $("<img />", { id: "targetImageCrop", src: e.target.result, class: "thumb-image" }).appendTo(image_holder); };image_holder.show(); reader.readAsDataURL($(this)[0].files[0]); } } else { this.value = null; } } entrou = true; setTimeout(function() { entrou = false; }, 1000); });
-
 $(".remove_form").click(function() { $('.article_fullscreen').hide(); $('#article_loader').empty(); });
-
 $('.article_fullscreen_hide').on('click', function() { $('.article_fullscreen').hide(); $('#article_loader').empty(); });
 </script>
 

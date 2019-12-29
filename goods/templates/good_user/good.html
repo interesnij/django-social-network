@@ -107,22 +107,13 @@
 
 {% endif %}
 
-<div class="">
-    {% if prev %}
-    <script>
-        $('.prev_item').on('click', function() {
-            $('#good_loader').html('').load("{% url 'user_good' pk=prev.pk uuid=user.uuid %}");
-        });
-    </script>
-
-    {% endif %}
-    {% if next %}
-    <script>
-        $('.next_item').on('click', function() {
-            $('#good_loader').html('').load("{% url 'user_good' pk=next.pk uuid=user.uuid %}");
-        });
-    </script>
-    {% endif %}
+<div>
+{% if prev %}
+  <script>$('.prev_item').on('click', function() {$('#good_loader').html('').load("{% url 'user_good' pk=prev.pk uuid=user.uuid %}");});</script>
+{% endif %}
+{% if next %}
+  <script>$('.next_item').on('click', function() {$('#good_loader').html('').load("{% url 'user_good' pk=next.pk uuid=user.uuid %}");});</script>
+{% endif %}
 </div>
 <script>
     $('.good_fullscreen_hide').on('click', function() {
