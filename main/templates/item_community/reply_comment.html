@@ -24,7 +24,7 @@
         </div>
         {% endif %}
 
-        <div class="border-top py-2">
+        <div class="">
             <div class="row">
                 <div class="col">
                   <span class="c_like2 {% if reply.likes|user_in:request.user %}text-success {% endif %}" data-pk="{{ comment.pk }}" data-uuid="{{ community.uuid }}" style="cursor:pointer" title="Нравится">
