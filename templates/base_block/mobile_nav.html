@@ -15,7 +15,7 @@
         <div class="media w-100 my-3">
           <figure class="avatar-40 rounded-circle align-self-start " style="width: 100%;">
             {% if request.user.get_avatar %}
-              <img src="{{ request.user.get_avatar.file|thumbnail_url:'avatar' }} }}" alt="image" style="border-radius:50px;width:100%;">
+              <img src="{{ request.user.get_avatar.file|thumbnail_url:'avatar' }}" alt="image" style="border-radius:50px;width:100%;">
             {% else %}
               <svg fill="currentColor" style="width:100%;width:100%;" class="svg_default" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
             {% endif %}
