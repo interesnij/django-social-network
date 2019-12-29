@@ -86,21 +86,16 @@ class Good(models.Model):
 
 	def notification_user_repost(self, user):
 		good_notification_handler(user, self.creator, verb=GoodNotification.REPOST, key='social_update', good=self, comment=None)
-
-    def notification_user_like(self, user):
-        good_notification_handler(user, self.creator, verb=GoodNotification.LIKE, key='social_update', good=self, comment=None)
-
-    def notification_user_dislike(self, user):
-        good_notification_handler(user, self.creator, verb=GoodNotification.DISLIKE, key='social_update', good=self, comment=None)
-
-    def notification_community_repost(self, user):
-        good_community_notification_handler(actor=user, recipient=None, verb=GoodCommunityNotification.REPOST, key='social_update', community=self.community, good=self, comment=None)
-
-    def notification_community_like(self, user):
-        good_community_notification_handler(actor=user, recipient=None, verb=GoodCommunityNotification.LIKE, key='social_update', community=self.community, good=self, comment=None)
-
-    def notification_community_dislike(self, user):
-        good_community_notification_handler(actor=user, recipient=None, verb=GoodCommunityNotification.DISLIKE, key='social_update', community=self.community, good=self, comment=None)
+	def notification_user_like(self, user):
+		good_notification_handler(user, self.creator, verb=GoodNotification.LIKE, key='social_update', good=self, comment=None)
+	def notification_user_dislike(self, user):
+		good_notification_handler(user, self.creator, verb=GoodNotification.DISLIKE, key='social_update', good=self, comment=None)
+	def notification_community_repost(self, user):
+		good_community_notification_handler(actor=user, recipient=None, verb=GoodCommunityNotification.REPOST, key='social_update', community=self.community, good=self, comment=None)
+	def notification_community_like(self, user):
+		good_community_notification_handler(actor=user, recipient=None, verb=GoodCommunityNotification.LIKE, key='social_update', community=self.community, good=self, comment=None)
+	def notification_community_dislike(self, user):
+		good_community_notification_handler(actor=user, recipient=None, verb=GoodCommunityNotification.DISLIKE, key='social_update', community=self.community, good=self, comment=None)
 
     def get_comments(self, user):
         comments_query = self._make_get_comments_for_post_query(user=user)
