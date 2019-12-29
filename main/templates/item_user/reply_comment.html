@@ -62,7 +62,7 @@
                   </span>
                     &nbsp;
                     <span class="u_dislike2 {% if reply.dislikes|user_in:request_user %}text-success {% endif %}" data-pk="{{ comment.pk }}" data-uuid="{{ reply.commenter.uuid }}" title="Не нравится">
-                          <svg class="svg_s_infosvg_default {% if reply.dislikes|user_in:request_user %}svg_danger{% endif %}" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M15 3H6c-.83 0-1.54.5-1.84 1.22l-3.02 7.05c-.09.23-.14.47-.14.73v2c0 1.1.9 2 2 2h6.31l-.95 4.57-.03.32c0 .41.17.79.44 1.06L9.83 23l6.59-6.59c.36-.36.58-.86.58-1.41V5c0-1.1-.9-2-2-2zm4 0v12h4V3h-4z"/></svg>
+                          <svg class="svg_s_info svg_default {% if reply.dislikes|user_in:request_user %}svg_danger{% endif %}" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M15 3H6c-.83 0-1.54.5-1.84 1.22l-3.02 7.05c-.09.23-.14.47-.14.73v2c0 1.1.9 2 2 2h6.31l-.95 4.57-.03.32c0 .41.17.79.44 1.06L9.83 23l6.59-6.59c.36-.36.58-.86.58-1.41V5c0-1.1-.9-2-2-2zm4 0v12h4V3h-4z"/></svg>
                           <span class="dislikes_count {% if reply.dislikes|user_in:request_user %}svg_danger{% endif %}" data-count="dislike">{% if reply.dislikes.count %}{{ reply.dislikes.count }}{% endif %}</span>
                     </span>
 
