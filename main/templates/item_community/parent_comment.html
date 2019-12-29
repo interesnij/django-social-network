@@ -134,8 +134,9 @@
                     <span class="stream_reply_comments">
                       {% for reply in comment.get_replies %}
                         {% include 'item_community/reply_comment.html' with reply=reply  %}
+                        <br>
                       {% endfor %}
-                      <br>
+
                     </span>
 
                 </div>
