@@ -41,6 +41,9 @@ class Album(models.Model):
         elif Photo.objects.filter(album_2=self).exists():
             photo = Photo.objects.filter(album_2=self).last()
             return photo
+        elif Photo.objects.filter(album=self).exists():
+            photo = Photo.objects.filter(album=self).last()
+            return photo
         else:
             return False
 
