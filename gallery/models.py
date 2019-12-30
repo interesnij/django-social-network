@@ -35,6 +35,15 @@ class Album(models.Model):
     def __str__(self):
         return self.title
 
+    def get_cover_photo(self):
+        if self.cover_photo:
+            return self.cover_photo
+        elif:
+            photo = Photo.objects.get(album=self).last()
+            return photo
+        else:
+            return False
+
 
 class Photo(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, db_index=True,verbose_name="uuid")
