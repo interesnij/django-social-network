@@ -52,7 +52,7 @@
             </div>
             <div class="card-body">
               <a href="{% url 'user_album' pk=user.pk uuid=object.uuid %}" class="ajax">
-                <img style="width:100%" src="{{ object.get_cover_photo.file.url }}" />
+                <img style="width: 100%;object-fit: cover;height: 200px;" src="{{ object.get_cover_photo.file.url }}" />
                 <p class="mb-0 content-color-secondary f-sm albom_description">{{ object.description }}</p>
               </a>
             </div>
