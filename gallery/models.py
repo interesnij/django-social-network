@@ -38,7 +38,7 @@ class Album(models.Model):
     def get_cover_photo(self):
         if self.cover_photo:
             return self.cover_photo
-        elif:
+        elif Photo.objects.get(album=self).exists():
             photo = Photo.objects.get(album=self).last()
             return photo
         else:
