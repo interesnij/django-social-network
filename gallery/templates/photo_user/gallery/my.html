@@ -7,17 +7,13 @@
 
 <div class="container-fluid" style="margin-top:30px">
     <div class="row">
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-8">
             <h5 class="mt-1">Мои альбомы</h5>
         </div>
-        <div class="col-12 col-md-6">
-            <div class="row">
-                <div class="col-12 col-md-6">
+        <div class="col-12 col-md-4">
                     <button id="albums_add" data-uuid="{{ user.uuid }}" class="btn btn-outline-success" style="margin-bottom:15px;width:100%" type="button">
                         Добавить альбом
                     </button>
-                </div>
-            </div>
         </div>
     </div>
 </div>
@@ -28,18 +24,14 @@
 
 <div class="container-fluid" style="margin-top:30px">
     <div class="row">
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-8">
             <h5 class="mt-1">Мои фотографии</h5>
             Фото: {{ user.count_photos }}
         </div>
-        <div class="col-12 col-md-6">
-            <div class="row">
-                <div class="col-12 col-md-6">
+        <div class="col-12 col-md-4">
                     <button id="photos_add" class="btn btn-outline-success" style="margin-bottom:15px;width:100%" type="button">
                         Добавить фотографии
                     </button>
-                </div>
-            </div>
         </div>
     </div>
 </div>
