@@ -31,7 +31,7 @@ class UserGalleryView(TemplateView):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
 
 		if self.user == request.user:
-			self.template_name="photo_user/gallery/my_gallery.html"
+			self.template_name="photo_user/gallery/my.html"
 		elif request.user != self.user and request.user.is_authenticated:
 			if request.user.is_blocked_with_user_with_id(user_id=self.user.id):
 				self.template_name = "photo_user/gallery/block_gallery.html"
