@@ -182,7 +182,7 @@ class AlbumUserCreate(TemplateView):
 		self.user = User.objects.get(uuid=self.kwargs["uuid"])
 		if self.form.is_valid() and self.user == request.user and request.is_ajax():
 			album = self.form.save(commit=False)
-			new_album = Photo.objects.create(title=album.title, description=album.description, is_generic=False, is_public=album.is_public, order=album.order,creator=album.creator)
+			new_album = Photo.objects.create(title=album.title, description=album.description, is_generic=False, is_public=album.is_public, order=album.order,creator=self.user)
 		else:
 			return HttpResponseBadRequest()
 		return super(AlbumUserCreate,self).get(request,*args,**kwargs)
