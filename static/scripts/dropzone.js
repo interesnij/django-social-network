@@ -909,7 +909,9 @@ var Dropzone = function (_Emitter) {
             return file.previewElement.classList.add("dz-complete");
           }
         },
-        completemultiple: function completemultiple() {},
+        completemultiple: function completemultiple() {
+          console.log("complite")
+        },
         maxfilesexceeded: function maxfilesexceeded() {},
         maxfilesreached: function maxfilesreached() {},
         queuecomplete: function queuecomplete() {},
