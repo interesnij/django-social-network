@@ -10,14 +10,3 @@ $('.album-container').on('click', '.album_photo_detail', function() {
     $('#photo_loader').html('').load("/gallery/load/u_photo/" + pk + "/" + uuid + "/" + uuid2 + "/")
     $('.photo_fullscreen').show();
 });
-
-
-Dropzone.options.myDropZoneForm = {
-    acceptedFiles: 'image/*, audio/*, video/*',
-    maxFiles: 100,
-    init: function () {
-        this.on("successmultiple", function(files, response) {
-          console.log("!")
-        });
-    }
-}

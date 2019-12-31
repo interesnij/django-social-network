@@ -541,7 +541,8 @@ var Dropzone = function (_Emitter) {
         sendingmultiple: function sendingmultiple() {},
 
         success: function success(file) {
-          console.log("!!!")
+          $('#photos_add_window').hide();
+          
           if (file.previewElement) {
             return file.previewElement.classList.add("dz-success");
           }
