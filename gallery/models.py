@@ -47,6 +47,9 @@ class Album(models.Model):
         else:
             return False
 
+    def count_photo(self):
+        return self.album_1.count()
+
 
 class Photo(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, db_index=True,verbose_name="uuid")
