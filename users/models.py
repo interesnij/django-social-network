@@ -349,12 +349,12 @@ class User(AbstractUser):
         photos_query_1 = Q(creator_id=self.id, album_id=album_id, is_deleted=False, is_public=True, community=None)
         photos_query_2 = Q(creator_id=self.id, album_2_id=album_id, is_deleted=False, is_public=True, community=None)
         exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
-        if photos_query_1:
+        if photos_query_2:
+            photos_query_2.add(exclude_reported_and_approved_photos_query, Q.AND)
+            photos = Photo.objects.filter(photos_query_12)
+        elif photos_query_1:
             photos_query_1.add(exclude_reported_and_approved_photos_query, Q.AND)
             photos = Photo.objects.filter(photos_query_1)
-        elif photos_query_2:
-            photos_query_2.add(exclude_reported_and_approved_photos_query, Q.AND)
-            photos = Photo.objects.filter(photos_query_2)
         return photos
     def get_photos_for_my_album(self, album_id):
         photos_query = Q(creator_id=self.id, album_id=album_id, is_deleted=False, community=None)
