@@ -8,7 +8,7 @@
 <div class="container-fluid" style="margin-top:30px">
     <div class="row">
         <div class="col-12">
-            <h5 class="mt-1">Альбомы
+            <h5 class="mt-1">Альбомы {% if not user.is_album_exists %}- пока нет{% endif %}
                 <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=user.pk %}">
                   {{ user.first_name|gent }} {{ user.last_name|gent }}
                 </a>

@@ -8,7 +8,7 @@
 <div class="container-fluid" style="margin-top:30px">
     <div class="row">
         <div class="col-12 col-md-8">
-            <h5 class="mt-1">Мои альбомы</h5>
+            <h5 class="mt-1">Мои альбомы</h5> {% if not user.is_album_exists %}- пока нет{% endif %}
         </div>
         <div class="col-12 col-md-4">
           <button id="albums_add" data-uuid="{{ user.uuid }}" class="btn btn-outline-success" style="margin-bottom:15px;width:100%" type="button">
