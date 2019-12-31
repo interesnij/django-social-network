@@ -53,7 +53,7 @@ class Album(models.Model):
         else:
             return self.album_1.count()
 
-    def is_generic(self):
+    def album_is_generic(self):
         if self.is_generic:
             return True
         else:
