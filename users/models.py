@@ -346,9 +346,9 @@ class User(AbstractUser):
         return photos
 
     def get_photos_for_album(self, album):
-        try:
+        if Photo.objects.filter(album_2=album).exists():
             photos_query = Q(creator_id=self.id, album_2=album, is_deleted=False, is_public=True, community=None)
-        except:
+        elif Photo.objects.filter(album=album).exists():
             photos_query = Q(creator_id=self.id, album=album, is_deleted=False, is_public=True, community=None)
         photos_query.add(exclude_reported_and_approved_photos_query, Q.AND)
         photos = Photo.objects.filter(photos_query)
