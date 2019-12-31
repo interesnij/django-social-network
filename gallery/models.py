@@ -53,6 +53,12 @@ class Album(models.Model):
         else:
             return self.album_1.count()
 
+    def is_generic(self):
+        if self.is_generic:
+            return True
+        else:
+            return False
+
 
 class Photo(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, db_index=True,verbose_name="uuid")
