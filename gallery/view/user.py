@@ -151,7 +151,7 @@ class PhotoUserCreate(View,AjaxResponseMixin,JSONResponseMixin):
         uploaded_file = request.FILES['file']
         if self.user == request.user:
             Photo.objects.create(file=uploaded_file, creator=self.user)
-            return self.render_json_response(response_dict, status=200)
+            return HttpResponse ('!')
 
 class PhotoAlbumUserCreate(View,AjaxResponseMixin,JSONResponseMixin):
     def post(self, request, *args, **kwargs):
@@ -160,7 +160,7 @@ class PhotoAlbumUserCreate(View,AjaxResponseMixin,JSONResponseMixin):
         uploaded_file = request.FILES['file']
         if self.user == request.user:
             Photo.objects.create(album=self.album, file=uploaded_file, creator=self.user)
-            return self.render_json_response(response_dict, status=200)
+            return HttpResponse ('!')
 
 class AlbumUserCreate(TemplateView):
 	template_name="photo_user/add_album.html"
