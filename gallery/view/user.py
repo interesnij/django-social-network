@@ -52,7 +52,7 @@ class UserGalleryView(TemplateView):
         elif request.user.is_anonymous and not self.user.is_closed_profile():
             self.template_name = "photo_user/gallery/anon_gallery.html"
         return super(UserGalleryView,self).get(request,*args,**kwargs)
-        
+
     def get_context_data(self,**kwargs):
         context=super(UserGalleryView,self).get_context_data(**kwargs)
         context['user'] = self.user
@@ -115,9 +115,8 @@ class UserAlbomReload(TemplateView):
     """
     загрузка нового альбома после его создания
     """
-	template_name="photo_user/album_reload.html"
-
-	def get(self,request,*args,**kwargs):
+    template_name="photo_user/album_reload.html"
+    def get(self,request,*args,**kwargs):
 		self.album=Album.objects.get(uuid=self.kwargs["uuid"])
 		self.photos = Photo.objects.filter(album=self.album)
 		return super(UserAlbomReload,self).get(request,*args,**kwargs)
