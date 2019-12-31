@@ -199,14 +199,20 @@ class Community(models.Model):
         return goods
 
     def get_photos_for_album(self, album_id):
-        photos_query = Q(is_deleted=False, album_id=album_id, is_public=True, community_id=self.pk)
         exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
+        try:
+            photos_query = Q(is_deleted=False, album_2_id=album_id, is_public=True)
+        except:
+            photos_query = Q(is_deleted=False, album_id=album_id, is_public=True)
         photos_query.add(exclude_reported_and_approved_photos_query, Q.AND)
         photos = Photo.objects.filter(photos_query)
         return photos
     def get_photos_for_admin_album(self, album_id):
-        photos_query = Q(is_deleted=False, album_id=album_id, community_id=self.pk)
         exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
+        try:
+            photos_query = Q(is_deleted=False, album_2_id=album_id)
+        except:
+            photos_query = Q(is_deleted=False, album_id=album_id)
         photos_query.add(exclude_reported_and_approved_photos_query, Q.AND)
         photos = Photo.objects.filter(photos_query)
         return photos
