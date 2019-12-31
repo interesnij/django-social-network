@@ -61,12 +61,12 @@
       $('#albums_load').html('').load("/gallery/user/albums/" + "{{ user.uuid }}");
       $('#photo_load').html('').load("/gallery/user/photos/" + "{{ user.uuid }}");
   });
-  $("#add-photos").dropzone({
-    maxFiles: 2000,
-    success: function(file, response){
-      console.log("!!!!!!");
-    }
-});
+
+  var dz = $(".my-awesome-dropzone").dropzone()[0];
+  dz.dropzone.on("success", function () {
+      console.log("!");
+   }));
+
   $("#photos_add").click(function() { $('#photos_add_window').show(); })
   $("#albums_add").click(function() { var user = $(this); var user_id = user.data("uuid"); $('#photo_add_loader').html('').load("/gallery/user/add_album/" + user_id + "/"); $('.add_fullscreen').show(); })
   $('.add_fullscreen_hide').on('click', function() { $('.add_fullscreen').hide(); $('#photo_loader').empty(); });
