@@ -117,15 +117,15 @@ class UserAlbomReload(TemplateView):
     """
     template_name="photo_user/album_reload.html"
     def get(self,request,*args,**kwargs):
-		self.album=Album.objects.get(uuid=self.kwargs["uuid"])
-		self.photos = Photo.objects.filter(album=self.album)
-		return super(UserAlbomReload,self).get(request,*args,**kwargs)
+        self.album=Album.objects.get(uuid=self.kwargs["uuid"])
+        self.photos = Photo.objects.filter(album=self.album)
+        return super(UserAlbomReload,self).get(request,*args,**kwargs)
 
-	def get_context_data(self,**kwargs):
-		context=super(UserAlbomReload,self).get_context_data(**kwargs)
-		context['album'] = self.album
-		context['photos'] = self.photos
-		return context
+    def get_context_data(self,**kwargs):
+        context=super(UserAlbomReload,self).get_context_data(**kwargs)
+        context['album'] = self.album
+        context['photos'] = self.photos
+        return context
 
 
 class UserAddAvatar(TemplateView):
