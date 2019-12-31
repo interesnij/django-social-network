@@ -161,6 +161,7 @@ class PhotoAlbumUserCreate(View):
             Photo.objects.create(album=self.album, file=uploaded_file, creator=self.user)
             return HttpResponse ('!')
 
+
 class AlbumUserCreate(TemplateView):
 	template_name="photo_user/add_album.html"
 	form=None
@@ -179,10 +180,9 @@ class AlbumUserCreate(TemplateView):
 	def post(self,request,*args,**kwargs):
 		self.form = AlbumForm(request.POST)
 		self.user = User.objects.get(uuid=self.kwargs["uuid"])
-		if self.form.is_valid() and request.is_ajax():
-			new_album = self.form.save(commit=False)
-			new_album.creator=self.user
-			new_album = self.form.save()
+		if self.form.is_valid() and self.user == request.user and request.is_ajax():
+			album = self.form.save(commit=False)
+			new_album = Photo.objects.create(title=album.title, description=album.description, is_generic=False, is_public=album.is_public, order=album.order,creator=album.creator)
 		else:
 			return HttpResponseBadRequest()
 		return super(AlbumUserCreate,self).get(request,*args,**kwargs)
