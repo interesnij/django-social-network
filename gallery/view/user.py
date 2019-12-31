@@ -13,6 +13,9 @@ from rest_framework.exceptions import PermissionDenied
 
 
 class AvatarReload(TemplateView):
+    """
+    после загрузки аватара перезагружает окошко с аватаром пользователя
+    """
     template_name="photo_user/avatar_reload.html"
 
     def get(self,request,*args,**kwargs):
@@ -25,6 +28,9 @@ class AvatarReload(TemplateView):
 
 
 class UserGalleryView(TemplateView):
+    """
+    галерея для пользователя, своя галерея, галерея для анонима, плюс другие варианты
+    """
 	template_name = None
 
 	def get(self,request,*args,**kwargs):
@@ -53,7 +59,11 @@ class UserGalleryView(TemplateView):
 		context['user'] = self.user
 		return context
 
+
 class UserAlbumView(TemplateView):
+    """
+    альбом для пользователя, свой альбом, альбом для анонима, плюс другие варианты
+    """
     template_name = None
 
     def get(self,request,*args,**kwargs):
@@ -85,6 +95,9 @@ class UserAlbumView(TemplateView):
 
 
 class UserAlbomReload(TemplateView):
+    """
+    загрузка нового альбома после его создания
+    """
 	template_name="photo_user/album_reload.html"
 
 	def get(self,request,*args,**kwargs):
@@ -100,6 +113,9 @@ class UserAlbomReload(TemplateView):
 
 
 class NewAlbomView(TemplateView):
+    """
+    промежуточная страница, получающая последний альбом пользователя для показа его как нового
+    """
     template_name = "photo_user/new_album.html"
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(uuid=self.kwargs["uuid"])
@@ -116,6 +132,9 @@ class NewAlbomView(TemplateView):
 
 
 class UserAddAvatar(TemplateView):
+    """
+    изменение аватара пользователя
+    """
     template_name = "photo_user/user_add_avatar.html"
 
     def get(self,request,*args,**kwargs):
@@ -146,6 +165,9 @@ class UserAddAvatar(TemplateView):
 
 
 class PhotoUserCreate(View):
+    """
+    асинхронная мульти загрузка фотографий пользователя прямо в галерею
+    """
     def post(self, request, *args, **kwargs):
         self.user = User.objects.get(uuid=self.kwargs["uuid"])
         uploaded_file = request.FILES['file']
@@ -153,7 +175,11 @@ class PhotoUserCreate(View):
             Photo.objects.create(file=uploaded_file, creator=self.user)
             return HttpResponse ('!')
 
+
 class PhotoAlbumUserCreate(View):
+    """
+    асинхронная мульти загрузка фотографий пользователя в альбом
+    """
     def post(self, request, *args, **kwargs):
         self.user = User.objects.get(uuid=self.kwargs["uuid"])
         self.album = Album.objects.get(pk=self.kwargs["pk"])
@@ -164,6 +190,9 @@ class PhotoAlbumUserCreate(View):
 
 
 class AlbumUserCreate(TemplateView):
+    """
+    создание альбома пользователя
+    """
 	template_name="photo_user/add_album.html"
 	form=None
 
@@ -190,6 +219,9 @@ class AlbumUserCreate(TemplateView):
 
 
 class UserAlbomList(View):
+    """
+     СПИСОК ФОТОГРАФИЙ АЛЬБОМА ПОЛЬЗОВАТЕЛЯ С РАЗНЫМИ РАЗРЕШЕНИЯМИ
+    """
     def get(self,request,**kwargs):
         context = {}
         album=Album.objects.get(uuid=self.kwargs["uuid"])
@@ -218,7 +250,11 @@ class UserAlbomList(View):
             context['photos'] = current_page.page(current_page.num_pages)
         return render_to_response('photo_user/album/album_list.html', context)
 
+
 class UserAlbumsList(View):
+    """
+    СПИСОК АЛЬБОМОВ ПОЛЬЗОВАТЕЛЯ С РАЗНЫМИ РАЗРЕШЕНИЯМИ
+    """
 	def get(self,request,**kwargs):
 		context = {}
 		self.user = User.objects.get(uuid=self.kwargs["uuid"])
@@ -247,7 +283,11 @@ class UserAlbumsList(View):
 			context['albums_list'] = current_page.page(current_page.num_pages)
 		return render_to_response('photo_user/albums.html', context)
 
+
 class UserPhotosList(View):
+    """
+    СПИСОК ВСЕХ ФОТОГРАФИЙ ПОЛЬЗОВАТЕЛЯ С РАЗНЫМИ РАЗРЕШЕНИЯМИ
+    """
 	def get(self,request,**kwargs):
 		context = {}
 		self.user = User.objects.get(uuid=self.kwargs["uuid"])
