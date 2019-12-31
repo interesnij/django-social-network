@@ -190,29 +190,29 @@ class AlbumUserCreate(TemplateView):
     """
     создание альбома пользователя
     """
-	template_name="photo_user/add_album.html"
-	form=None
+    template_name="photo_user/add_album.html"
+    form=None
 
-	def get(self,request,*args,**kwargs):
-		self.form=AlbumForm()
-		self.user = User.objects.get(uuid=self.kwargs["uuid"])
-		return super(AlbumUserCreate,self).get(request,*args,**kwargs)
+    def get(self,request,*args,**kwargs):
+        self.form=AlbumForm()
+        self.user = User.objects.get(uuid=self.kwargs["uuid"])
+        return super(AlbumUserCreate,self).get(request,*args,**kwargs)
 
-	def get_context_data(self,**kwargs):
-		context=super(AlbumUserCreate,self).get_context_data(**kwargs)
-		context["form"]=self.form
-		context["user"]=self.user
-		return context
+    def get_context_data(self,**kwargs):
+        context=super(AlbumUserCreate,self).get_context_data(**kwargs)
+        context["form"]=self.form
+        context["user"]=self.user
+        return context
 
-	def post(self,request,*args,**kwargs):
-		self.form = AlbumForm(request.POST)
-		self.user = User.objects.get(uuid=self.kwargs["uuid"])
-		if self.form.is_valid() and self.user == request.user and request.is_ajax():
-			album = self.form.save(commit=False)
-			new_album = Album.objects.create(title=album.title, description=album.description, is_generic=False, is_public=album.is_public, order=album.order,creator=self.user)
-		else:
-			return HttpResponseBadRequest()
-		return super(AlbumUserCreate,self).get(request,*args,**kwargs)
+    def post(self,request,*args,**kwargs):
+        self.form = AlbumForm(request.POST)
+        self.user = User.objects.get(uuid=self.kwargs["uuid"])
+        if self.form.is_valid() and self.user == request.user and request.is_ajax():
+            album = self.form.save(commit=False)
+            new_album = Album.objects.create(title=album.title, description=album.description, is_generic=False, is_public=album.is_public, order=album.order,creator=self.user)
+        else:
+            return HttpResponseBadRequest()
+        return super(AlbumUserCreate,self).get(request,*args,**kwargs)
 
 
 class UserAlbomList(View):
