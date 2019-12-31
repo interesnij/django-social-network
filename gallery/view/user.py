@@ -146,18 +146,18 @@ class UserAddAvatar(TemplateView):
 
 
 class PhotoUserCreate(View,AjaxResponseMixin,JSONResponseMixin):
-	def post(self, request, *args, **kwargs):
-		self.user = User.objects.get(uuid=self.kwargs["uuid"])
-		uploaded_file = request.FILES['file']
+    def post(self, request, *args, **kwargs):
+        self.user = User.objects.get(uuid=self.kwargs["uuid"])
+        uploaded_file = request.FILES['file']
         if self.user == request.user:
             Photo.objects.create(file=uploaded_file, creator=self.user)
             return self.render_json_response(response_dict, status=200)
 
 class PhotoAlbumUserCreate(View,AjaxResponseMixin,JSONResponseMixin):
-	def post(self, request, *args, **kwargs):
-		self.user = User.objects.get(uuid=self.kwargs["uuid"])
-		self.album = Album.objects.get(pk=self.kwargs["pk"])
-		uploaded_file = request.FILES['file']
+    def post(self, request, *args, **kwargs):
+        self.user = User.objects.get(uuid=self.kwargs["uuid"])
+        self.album = Album.objects.get(pk=self.kwargs["pk"])
+        uploaded_file = request.FILES['file']
         if self.user == request.user:
             Photo.objects.create(album=self.album, file=uploaded_file, creator=self.user)
             return self.render_json_response(response_dict, status=200)
