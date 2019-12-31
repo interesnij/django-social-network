@@ -348,9 +348,9 @@ class User(AbstractUser):
     def get_photos_for_album(self, album_id):
         exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         try:
-            photos_query = Q(album_2_id=album, is_deleted=False, is_public=True, community=None)
+            photos_query = Q(album_2_id=album_id, is_deleted=False, is_public=True, community=None)
         except:
-            photos_query = Q(album_id=album, is_deleted=False, is_public=True, community=None)
+            photos_query = Q(album_id=album_id, is_deleted=False, is_public=True, community=None)
         photos_query.add(exclude_reported_and_approved_photos_query, Q.AND)
         photos = Photo.objects.filter(photos_query)
         return photos

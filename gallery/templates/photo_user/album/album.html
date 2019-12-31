@@ -5,16 +5,11 @@
 
 <div class="container-fluid" style="margin-top:30px">
     <div class="row">
-        <div class="col-12 col-md-8">
-            <h5 class="mt-1">{{ album.title }} - <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=user.pk %}">
-              {{ user.first_name|gent }} {{ user.last_name|gent }}</a>
+        <div class="col-12 col-md-6">
+            <h5 class="mt-1">{{ album.title }} - <a class="ajax" href="{% url 'user_gallery' pk=user.pk %}">галерея </a>
+              <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=user.pk %}">{{ user.first_name|gent }} {{ user.last_name|gent }}</a>
             </h5>
             Фото: {{ album.photo_set.count }}
-        </div>
-        <div class="col-12 col-md-4">
-          <a href="{% url 'user_gallery' pk=user.pk %}" class="btn btn-outline-success ajax" style="margin-bottom:15px;width:100%" type="button">
-              Назад
-          </a>
         </div>
     </div>
 </div>
