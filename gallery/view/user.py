@@ -94,24 +94,6 @@ class UserAlbumView(TemplateView):
         return context
 
 
-class UserAlbomReload(TemplateView):
-    """
-    загрузка нового альбома после его создания
-    """
-	template_name="photo_user/album_reload.html"
-
-	def get(self,request,*args,**kwargs):
-		self.album=Album.objects.get(uuid=self.kwargs["uuid"])
-		self.photos = Photo.objects.filter(album=self.album)
-		return super(UserAlbomReload,self).get(request,*args,**kwargs)
-
-	def get_context_data(self,**kwargs):
-		context=super(UserAlbomReload,self).get_context_data(**kwargs)
-		context['album'] = self.album
-		context['photos'] = self.photos
-		return context
-
-
 class NewAlbomView(TemplateView):
     """
     промежуточная страница, получающая последний альбом пользователя для показа его как нового
@@ -129,6 +111,23 @@ class NewAlbomView(TemplateView):
         context["pk"] = self.user.pk
         context["new_url"] = self.new_url
         return context
+        
+class UserAlbomReload(TemplateView):
+    """
+    загрузка нового альбома после его создания
+    """
+	template_name="photo_user/album_reload.html"
+
+	def get(self,request,*args,**kwargs):
+		self.album=Album.objects.get(uuid=self.kwargs["uuid"])
+		self.photos = Photo.objects.filter(album=self.album)
+		return super(UserAlbomReload,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context=super(UserAlbomReload,self).get_context_data(**kwargs)
+		context['album'] = self.album
+		context['photos'] = self.photos
+		return context
 
 
 class UserAddAvatar(TemplateView):

@@ -1,0 +1,43 @@
+{% load staticfiles humanize liked_user %}
+
+<span class="text-hide-xs">
+  {% if prev %}
+    <span class="prev_item"><svg class="svg_default" style="width:50px;height:50px;" fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/><path fill="none" d="M0 0h24v24H0V0z"/></svg></span>
+  {% endif %}
+  {% if next %}
+    <span class="next_item"><svg class="svg_default" style="width:50px;height:50px;" fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"/><path fill="none" d="M0 0h24v24H0V0z"/></svg></span>
+  {% endif %}
+</span>
+
+<div class="mb-4">
+  <div class="row">
+    <div class="col-lg-8 col-md-7 col-sm-12 order-1">
+      <div class="card rounded-0 border-0 mb-4">
+        <img style="width: 100%;" src="{{ object.file.url }}" alt="">
+      </div>
+      <div class="dropdown d-inline-block">
+          <a style="cursor:pointer" class="dropdown-toggle caret-none" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              настройки
+          </a>
+          <span class="dropdown-item photo_bad">Пожаловаться</span>
+          </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-5 col-sm-12 order-2 ">
+
+      {% include 'photo_user/card_header.html' %}
+
+      {{ object.album_2.title }} | {{ object.album.title }}
+    </div>
+  </div>
+</div>
+
+  {% if prev %}
+    <script>
+    	$('.prev_item').on('click', function () {uuid = "{{ user.uuid }}";pk = "{{ prev.pk }}";$('#photo_loader').html('').load("/gallery/load/photo/" + pk + "/" + uuid + "/");});
+    </script>
+   {% endif %}
+
+   {% if next %}
+    <script>$('.next_item').on('click', function () {uuid = "{{ user.uuid }}";pk = "{{ next.pk }}";$('#photo_loader').html('').load("/gallery/load/photo/" + pk + "/" + uuid + "/");});</script>
+  {% endif %}

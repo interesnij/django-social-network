@@ -10,7 +10,10 @@ from rest_framework.exceptions import PermissionDenied
 
 
 class UserPhoto(TemplateView):
-    template_name="photo_user/photo.html"
+    """
+    страница отдельного фото в списке или везде для пользователя с разрещениями и без
+    """
+    template_name = None
 
     def get(self,request,*args,**kwargs):
         self.user=User.objects.get(uuid=self.kwargs["uuid"])
@@ -20,12 +23,15 @@ class UserPhoto(TemplateView):
             if self.user.is_closed_profile():
                 check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
             self.photos = self.user.get_photos()
+            self.template_name="photo_user/photo/index:photo.html"
         elif self.user == request.user and request.user.is_authenticated:
-            self.photos = self.user.get_photos()
+            self.photos = self.user.get_my_photos()
+            self.template_name="photo_user/photo/index:my_photo.html"
         elif self.user.is_closed_profile() and request.user.is_anonymous:
             raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
         elif not self.user.is_closed_profile() and request.user.is_anonymous:
             self.photos = self.user.get_photos()
+            self.template_name="photo_user/photo/index:anon_photo.html"
         self.next = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
         self.prev = self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
         return super(UserPhoto,self).get(request,*args,**kwargs)
@@ -39,6 +45,9 @@ class UserPhoto(TemplateView):
         return context
 
 class UserAlbumPhoto(TemplateView):
+    """
+    страница отдельного фото в альбоме для пользователя с разрещениями и без
+    """
     template_name="photo_user/album/photo.html"
 
     def get(self,request,*args,**kwargs):
@@ -51,7 +60,7 @@ class UserAlbumPhoto(TemplateView):
                 check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
             self.photos = self.user.get_photos_for_album(album_id=self.album.pk)
         elif self.user == request.user and request.user.is_authenticated:
-            self.photos = self.user.get_photos_for_album(album_id=self.album.pk)
+            self.photos = self.user.get_photos_for_my_album(album_id=self.album.pk)
         elif self.user.is_closed_profile() and request.user.is_anonymous:
             raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
         elif not self.user.is_closed_profile() and request.user.is_anonymous:
@@ -70,6 +79,9 @@ class UserAlbumPhoto(TemplateView):
 
 
 class UserCommentPhoto(TemplateView):
+    """
+    страница отдельного фото комментария к записям пользователя с разрещениями и без
+    """
     template_name="photo_user/photo.html"
 
     def get(self,request,*args,**kwargs):
@@ -94,6 +106,9 @@ class UserCommentPhoto(TemplateView):
 
 
 class UserDetailAvatar(TemplateView):
+    """
+    страница отдельного фото аватаров (альбом "Фото со страницы") пользователя с разрещениями и без
+    """
     template_name="photo_user/photo.html"
 
     def get(self,request,*args,**kwargs):
