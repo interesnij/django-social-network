@@ -1,6 +1,6 @@
 <script>
 $(document).ready(function() {
-  $('#ajax').html('').load("/gallery/album/reload/" + "{{ new_url }}" + "/");
+  $('#ajax').html('').load("/gallery/album/reload/" + pk + "/{{ album.uuid }}" + "/");
   $('title').text('{{ album.name }}');
 })
 

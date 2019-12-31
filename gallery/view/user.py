@@ -110,8 +110,8 @@ class AlbomGygView(TemplateView):
 
 	def get_context_data(self,**kwargs):
 		context=super(AlbomGygView,self).get_context_data(**kwargs)
-		context["new_url"]=self.new_url
 		context["album"]=self.album
+        context["pk"]=self.user.pk
 		return context
 
 
