@@ -61,7 +61,7 @@
       $('#albums_load').html('').load("/gallery/user/albums/" + "{{ user.uuid }}");
       $('#photo_load').html('').load("/gallery/user/photos/" + "{{ user.uuid }}");
   });
-  var myDropzone = $("#storageDropzone").dropzone({
+  var myDropzone = $("#add-photos").dropzone({
     init: function () {
         this.on("processing", function (file) {
             $scope.$apply($scope.working = true);
