@@ -145,7 +145,7 @@ class UserAddAvatar(TemplateView):
         return super(UserAddAvatar,self).get(request,*args,**kwargs)
 
 
-class PhotoUserCreate(View,AjaxResponseMixin,JSONResponseMixin):
+class PhotoUserCreate(View):
     def post(self, request, *args, **kwargs):
         self.user = User.objects.get(uuid=self.kwargs["uuid"])
         uploaded_file = request.FILES['file']
@@ -153,7 +153,7 @@ class PhotoUserCreate(View,AjaxResponseMixin,JSONResponseMixin):
             Photo.objects.create(file=uploaded_file, creator=self.user)
             return HttpResponse ('!')
 
-class PhotoAlbumUserCreate(View,AjaxResponseMixin,JSONResponseMixin):
+class PhotoAlbumUserCreate(View):
     def post(self, request, *args, **kwargs):
         self.user = User.objects.get(uuid=self.kwargs["uuid"])
         self.album = Album.objects.get(pk=self.kwargs["pk"])
