@@ -111,6 +111,7 @@ class NewAlbomView(TemplateView):
         context = super(NewAlbomView,self).get_context_data(**kwargs)
         context["album"] = self.album
         context["pk"] = self.user.pk
+        context["new_url"] = self.new_url
         return context
 
 
