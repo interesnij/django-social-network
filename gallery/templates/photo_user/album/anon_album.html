@@ -11,6 +11,11 @@
             </h5>
             Фото: {{ album.photo_set.count }}
         </div>
+        <div class="col-12 col-md-4">
+          <a href="{% url 'user_gallery' pk=user.pk %}" class="btn btn-outline-success ajax" style="margin-bottom:15px;width:100%" type="button">
+              Назад
+          </a>
+        </div>
     </div>
 </div>
 

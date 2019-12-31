@@ -198,7 +198,7 @@ class UserAlbomList(View):
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
             if user.is_closed_profile():
                 check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
-            photos = user.get_photos_for_album(album=album).order_by('-created')
+            photos = user.get_photos_for_album(album_id=album.pk).order_by('-created')
         elif request.user.is_anonymous and user.is_closed_profile():
             raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.',)
         elif request.user.is_anonymous and not user.is_closed_profile():
