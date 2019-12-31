@@ -48,7 +48,10 @@ class Album(models.Model):
             return False
 
     def count_photo(self):
-        return self.album_1.count()
+        if self.album_1:
+            return self.album_1.count()
+        if self.album_2:
+            return self.album_2.count()
 
 
 class Photo(models.Model):
