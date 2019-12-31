@@ -40,6 +40,7 @@
     <div id="photos_add_window" style="display:none">
         <form id="add-photos" method="post" action="{% url 'photo_add_user' user.uuid %}" class="dropzone">
             {% csrf_token %}
+            <input id="uuid" type="hidden" value="{{ user.uuid }}">
         </form>
         <br><br>
     </div>

@@ -542,7 +542,8 @@ var Dropzone = function (_Emitter) {
 
         success: function success(file) {
           $('#photos_add_window').hide();
-          
+          uuid = $('#uuid').val();
+          $('#photo_load').html('').load("/gallery/user/photos/" + uuid + "/");
           if (file.previewElement) {
             return file.previewElement.classList.add("dz-success");
           }
