@@ -62,7 +62,7 @@
       $('#photo_load').html('').load("/gallery/user/photos/" + "{{ user.uuid }}");
   });
 
-  var dz = $(".my-awesome-dropzone").dropzone()[0];
+  var dz = $(".add-photos").dropzone()[0];
   dz.dropzone.on("success", function () {
       console.log("!");
    });
