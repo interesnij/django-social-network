@@ -11,7 +11,7 @@ class AlbumAdmin(admin.ModelAdmin):
             model = Album
 
 class PhotoAdmin(admin.ModelAdmin):
-    search_fields = ('creator','id')
+    search_fields = ('creator')
     list_display = ['creator','created', 'is_deleted']
     list_filter = ['creator', ]
 
