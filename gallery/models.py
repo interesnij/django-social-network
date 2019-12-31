@@ -50,7 +50,7 @@ class Album(models.Model):
     def count_photo(self):
         if self.album_1:
             return self.album_1.count()
-        if self.album_2:
+        elif self.album_2:
             return self.album_2.count()
 
 
