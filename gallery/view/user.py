@@ -153,7 +153,7 @@ class PhotoUserCreate(View,AjaxResponseMixin,JSONResponseMixin):
             Photo.objects.create(file=uploaded_file, creator=self.user)
             return HttpResponse ('!')
 
-class PhotoAlbumUserCreate(View):
+class PhotoAlbumUserCreate(View,AjaxResponseMixin,JSONResponseMixin):
     def post(self, request, *args, **kwargs):
         self.user = User.objects.get(uuid=self.kwargs["uuid"])
         self.album = Album.objects.get(pk=self.kwargs["pk"])
