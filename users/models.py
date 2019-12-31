@@ -68,9 +68,7 @@ class User(AbstractUser):
         return self.follow_community_with_name(community_name)
 
     def follow_community_with_name(self, community_name):
-        check_can_join_community_with_name(
-            user=self,
-            community_name=community_name)
+        check_can_join_community_with_name(user=self, community_name=community_name)
         follow = CommunityFollow.create_follow(user_id=self.pk, community_name=community_name)
         return follow
 
@@ -173,14 +171,12 @@ class User(AbstractUser):
             target_connection__user_id=user_id).exists()
 
     def is_connected_with_user_with_username(self, username):
-        return self.connections.filter(
-            target_connection__user__username=username).exists()
+        return self.connections.filter(target_connection__user__username=username).exists()
 
     def is_pending_confirm_connection_for_user_with_id(self, user_id):
         if not self.is_connected_with_user_with_id(user_id):
             return False
-        connection = self.connections.filter(
-            target_connection__user_id=user_id).get()
+        connection = self.connections.filter(target_connection__user_id=user_id).get()
         return not connection.circles.exists()
 
     def is_global_moderator(self):
@@ -188,15 +184,13 @@ class User(AbstractUser):
         return self.is_member_of_community_with_name(community_name=moderators_community_name)
 
     def is_invited_to_community_with_name(self, community_name):
-        return Community.is_user_with_username_invited_to_community_with_name(username=self.username,
-                                                                              community_name=community_name)
+        return Community.is_user_with_username_invited_to_community_with_name(username=self.username, community_name=community_name)
 
     def is_administrator_of_community_with_name(self, community_name):
         return self.communities_memberships.filter(community__name=community_name, is_administrator=True).exists()
 
     def is_staff_of_community_with_name(self, community_name):
-        return self.is_administrator_of_community_with_name(
-            community_name=community_name) or self.is_moderator_of_community_with_name(community_name=community_name)
+        return self.is_administrator_of_community_with_name(community_name=community_name) or self.is_moderator_of_community_with_name(community_name=community_name)
 
     def is_member_of_community_with_name(self, community_name):
         return self.communities_memberships.filter(community__name=community_name).exists()
@@ -240,15 +234,13 @@ class User(AbstractUser):
         return self.photo_creator.filter(creator__id=self.pk).exists()
 
     def is_suspended(self):
-        return self.moderation_penalties.filter(type=ModerationPenalty.TYPE_SUSPENSION,
-                                                expiration__gt=timezone.now()).exists()
+        return self.moderation_penalties.filter(type=ModerationPenalty.TYPE_SUSPENSION, expiration__gt=timezone.now()).exists()
 
     def is_administrator_of_community_with_name(self, community_name):
         return self.communities_memberships.filter(community__name=community_name, is_administrator=True).exists()
 
     def is_staff_of_community_with_name(self, community_name):
-        return self.is_administrator_of_community_with_name(
-            community_name=community_name) or self.is_moderator_of_community_with_name(community_name=community_name)
+        return self.is_administrator_of_community_with_name(community_name=community_name) or self.is_moderator_of_community_with_name(community_name=community_name)
 
 
     ''''' количества всякие  196-216 '''''
@@ -327,6 +319,18 @@ class User(AbstractUser):
         posts_query.add(exclude_reported_and_approved_posts_query, Q.AND)
         items = Item.objects.filter(posts_query)
         return items
+    def get_draft_posts(self):
+        posts_query = Q(creator_id=self.id, is_deleted=False, is_fixed=False, status=Item.STATUS_DRAFT, community=None)
+        exclude_reported_and_approved_posts_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
+        posts_query.add(exclude_reported_and_approved_posts_query, Q.AND)
+        items = Item.objects.filter(posts_query)
+        return items
+    def get_archive_posts(self):
+        posts_query = Q(creator_id=self.id, is_deleted=False, is_fixed=False, status=Item.STATUS_ARHIVED, community=None)
+        exclude_reported_and_approved_posts_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
+        posts_query.add(exclude_reported_and_approved_posts_query, Q.AND)
+        items = Item.objects.filter(posts_query)
+        return items
 
     def get_photos(self):
         photos_query = Q(creator_id=self.id, is_deleted=False, is_public=True, community=None)
@@ -334,9 +338,21 @@ class User(AbstractUser):
         photos_query.add(exclude_reported_and_approved_photos_query, Q.AND)
         photos = Photo.objects.filter(photos_query)
         return photos
+    def get_my_photos(self):
+        photos_query = Q(creator_id=self.id, is_deleted=False, community=None)
+        exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
+        photos_query.add(exclude_reported_and_approved_photos_query, Q.AND)
+        photos = Photo.objects.filter(photos_query)
+        return photos
 
     def get_photos_for_album(self, album_id):
         photos_query = Q(creator_id=self.id, album_id=album_id, is_deleted=False, is_public=True, community=None)
+        exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
+        photos_query.add(exclude_reported_and_approved_photos_query, Q.AND)
+        photos = Photo.objects.filter(photos_query)
+        return photos
+    def get_photos_for_my_album(self, album_id):
+        photos_query = Q(creator_id=self.id, album_id=album_id, is_deleted=False, community=None)
         exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         photos_query.add(exclude_reported_and_approved_photos_query, Q.AND)
         photos = Photo.objects.filter(photos_query)
@@ -355,9 +371,21 @@ class User(AbstractUser):
         albums_query.add(exclude_reported_and_approved_albums_query, Q.AND)
         albums = Album.objects.filter(albums_query)
         return albums
+    def get_my_albums(self):
+        albums_query = Q(creator_id=self.id, is_deleted=False, community=None)
+        exclude_reported_and_approved_albums_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
+        albums_query.add(exclude_reported_and_approved_albums_query, Q.AND)
+        albums = Album.objects.filter(albums_query)
+        return albums
 
     def get_goods(self):
         goods_query = Q(creator_id=self.id, is_deleted=False, status=Good.STATUS_PUBLISHED)
+        exclude_reported_and_approved_goods_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
+        goods_query.add(exclude_reported_and_approved_goods_query, Q.AND)
+        goods = Good.objects.filter(goods_query)
+        return goods
+    def get_my_goods(self):
+        goods_query = Q(creator_id=self.id, is_deleted=False)
         exclude_reported_and_approved_goods_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         goods_query.add(exclude_reported_and_approved_goods_query, Q.AND)
         goods = Good.objects.filter(goods_query)
@@ -504,7 +532,6 @@ class User(AbstractUser):
     def _make_get_votes_query(self, item):
         reactions_query = Q(parent_id=item.pk)
         post_community = item.community
-
         if post_community:
             if not self.is_staff_of_community_with_name(community_name=post_community.name):
                 blocked_users_query = ~Q(Q(user__blocked_by_users__blocker_id=self.pk) | Q(user__user_blocks__blocked_user_id=self.pk))
@@ -523,7 +550,6 @@ class User(AbstractUser):
             post_community = comment.item.community
         except:
             post_community = comment.parent_comment.item.community
-
         if post_community:
             if not self.is_staff_of_community_with_name(community_name=post_community.name):
                 blocked_users_query = ~Q(Q(user__blocked_by_users__blocker_id=self.pk) | Q(user__user_blocks__blocked_user_id=self.pk))
@@ -560,9 +586,7 @@ class UserBlock(models.Model):
 
     class Meta:
         unique_together = ('blocked_user', 'blocker',)
-        indexes = [
-            models.Index(fields=['blocked_user', 'blocker']),
-        ]
+        indexes = [models.Index(fields=['blocked_user', 'blocker']),]
 
 
 class UserNotificationsSettings(models.Model):
@@ -623,19 +647,4 @@ class UserProfile(models.Model):
     class Meta:
         verbose_name = 'Профиль пользователя'
         verbose_name_plural = 'Профили пользователей'
-
-        index_together = [
-            ('id', 'user'),
-        ]
-
-
-@receiver(post_save, sender=settings.AUTH_USER_MODEL, dispatch_uid='bootstrap_notifications_settings')
-def create_user_notifications_settings(sender, instance=None, created=False, **kwargs):
-    """"
-    Create a user notifications settings for users
-    """
-    if created:
-        bootstrap_user_notifications_settings(instance)
-
-def bootstrap_user_notifications_settings(user):
-    return UserNotificationsSettings.create_notifications_settings(user=user)
+        index_together = [('id', 'user'),]

@@ -53,7 +53,7 @@ class UserGoodsList(View):
             goods_list = self.user.get_goods().order_by('-created')
             current_page = Paginator(goods_list, 6)
         elif self.user == request.user:
-            goods_list = self.user.get_goods().order_by('-created')
+            goods_list = self.user.get_my_goods().order_by('-created')
             current_page = Paginator(goods_list, 6)
         elif request.user.is_anonymous and self.user.is_closed_profile():
             raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
@@ -84,7 +84,7 @@ class UserGood(TemplateView):
                 check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
             self.goods = self.user.get_goods()
         elif self.user == request.user and request.user.is_authenticated:
-            self.goods = self.user.get_goods()
+            self.goods = self.user.get_my_goods()
         elif self.user.is_closed_profile() and request.user.is_anonymous:
             raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
         elif not self.user.is_closed_profile() and request.user.is_anonymous:

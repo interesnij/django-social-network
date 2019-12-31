@@ -144,20 +144,23 @@ class UserAddAvatar(TemplateView):
             return HttpResponse ('!!!')
         return super(UserAddAvatar,self).get(request,*args,**kwargs)
 
-class PhotoUserCreate(View,AjaxResponseMixin,JSONResponseMixin):
 
+class PhotoUserCreate(View,AjaxResponseMixin,JSONResponseMixin):
 	def post(self, request, *args, **kwargs):
 		self.user = User.objects.get(uuid=self.kwargs["uuid"])
-		try:
-			self.album = Album.objects.get(pk=self.kwargs["pk"])
-		except:
-			self.album = None
-
 		uploaded_file = request.FILES['file']
-		Photo.objects.create(album=self.album, file=uploaded_file, creator=self.user)
+        if self.user == request.user:
+            Photo.objects.create(file=uploaded_file, creator=self.user)
+            return self.render_json_response(response_dict, status=200)
 
-		response_dict = {'message': 'File uploaded successfully!',}
-		return self.render_json_response(response_dict, status=200)
+class PhotoAlbumUserCreate(View,AjaxResponseMixin,JSONResponseMixin):
+	def post(self, request, *args, **kwargs):
+		self.user = User.objects.get(uuid=self.kwargs["uuid"])
+		self.album = Album.objects.get(pk=self.kwargs["pk"])
+		uploaded_file = request.FILES['file']
+        if self.user == request.user:
+            Photo.objects.create(album=self.album, file=uploaded_file, creator=self.user)
+            return self.render_json_response(response_dict, status=200)
 
 class AlbumUserCreate(TemplateView):
 	template_name="photo_user/add_album.html"
@@ -201,7 +204,7 @@ class UserAlbomList(View):
         elif request.user.is_anonymous and not user.is_closed_profile():
             photos = user.get_photos_for_album(album_id=album.pk).order_by('-created')
         elif user == request.user:
-            photos = user.get_photos_for_album(album_id=album.pk).order_by('-created')
+            photos = user.get_photos_for_my_album(album_id=album.pk).order_by('-created')
 
         current_page = Paginator(photos, 12)
         page = request.GET.get('page')
@@ -231,7 +234,7 @@ class UserAlbumsList(View):
 			albums_list = self.user.get_albums().order_by('-created')
 			current_page = Paginator(albums_list, 12)
 		elif self.user == request.user:
-			albums_list = self.user.get_albums().order_by('-created')
+			albums_list = self.user.get_my_albums().order_by('-created')
 			current_page = Paginator(albums_list, 12)
 
 		page = request.GET.get('page')
@@ -260,7 +263,7 @@ class UserPhotosList(View):
 			photo_list = self.user.get_photos().order_by('-created')
 			current_page = Paginator(photo_list, 12)
 		elif self.user == request.user:
-			photo_list = self.user.get_photos().order_by('-created')
+			photo_list = self.user.get_my_photos().order_by('-created')
 			current_page = Paginator(photo_list, 12)
 
 		page = request.GET.get('page')

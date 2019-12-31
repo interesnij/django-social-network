@@ -172,9 +172,27 @@ class Community(models.Model):
         posts_query.add(exclude_reported_and_approved_posts_query, Q.AND)
         items = Item.objects.filter(posts_query)
         return items
+    def get_draft_posts(self):
+        posts_query = Q(community_id=self.pk, is_deleted=False, is_fixed=False, status=Item.STATUS_DRAFT)
+        exclude_reported_and_approved_posts_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
+        posts_query.add(exclude_reported_and_approved_posts_query, Q.AND)
+        items = Item.objects.filter(posts_query)
+        return items
+    def get_archive_posts(self):
+        posts_query = Q(community_id=self.pk, is_deleted=False, is_fixed=False, status=Item.STATUS_ARHIVED)
+        exclude_reported_and_approved_posts_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
+        posts_query.add(exclude_reported_and_approved_posts_query, Q.AND)
+        items = Item.objects.filter(posts_query)
+        return items
 
     def get_goods(self):
         goods_query = Q(community_id=self.pk, is_deleted=False, status=Good.STATUS_PUBLISHED)
+        exclude_reported_and_approved_goods_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
+        goods_query.add(exclude_reported_and_approved_goods_query, Q.AND)
+        goods = Good.objects.filter(goods_query)
+        return goods
+    def get_admin_goods(self):
+        goods_query = Q(community_id=self.pk, is_deleted=False)
         exclude_reported_and_approved_goods_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         goods_query.add(exclude_reported_and_approved_goods_query, Q.AND)
         goods = Good.objects.filter(goods_query)
@@ -186,9 +204,21 @@ class Community(models.Model):
         photos_query.add(exclude_reported_and_approved_photos_query, Q.AND)
         photos = Photo.objects.filter(photos_query)
         return photos
+    def get_photos_for_admin_album(self, album_id):
+        photos_query = Q(is_deleted=False, album_id=album_id, community_id=self.pk)
+        exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
+        photos_query.add(exclude_reported_and_approved_photos_query, Q.AND)
+        photos = Photo.objects.filter(photos_query)
+        return photos
 
     def get_photos(self):
         photos_query = Q(is_deleted=False, is_public=True, community=self)
+        exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
+        photos_query.add(exclude_reported_and_approved_photos_query, Q.AND)
+        photos = Photo.objects.filter(photos_query)
+        return photos
+    def get_admin_photos(self):
+        photos_query = Q(is_deleted=False, community=self)
         exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         photos_query.add(exclude_reported_and_approved_photos_query, Q.AND)
         photos = Photo.objects.filter(photos_query)

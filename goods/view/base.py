@@ -15,7 +15,6 @@ class GoodsCats(TemplateView):
 	categ = None
 
 	def get(self,request,*args,**kwargs):
-
 		self.categ = GoodSubCategory.objects.filter(category__order=self.kwargs["order"])
 		return super(GoodsCats,self).get(request,*args,**kwargs)
 
