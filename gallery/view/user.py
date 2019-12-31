@@ -99,20 +99,19 @@ class UserAlbomReload(TemplateView):
 		return context
 
 
-class AlbomGygView(TemplateView):
-	template_name="photo_user/gygyg.html"
+class NewAlbomView(TemplateView):
+    template_name = "photo_user/new_album.html"
+    def get(self,request,*args,**kwargs):
+        self.user = User.objects.get(uuid=self.kwargs["uuid"])
+        self.album = Album.objects.filter(creator=self.user)
+        self.new_url = self.album.last().uuid
+        return super(NewAlbomView,self).get(request,*args,**kwargs)
 
-	def get(self,request,*args,**kwargs):
-		self.user = User.objects.get(uuid=self.kwargs["uuid"])
-		self.album = Album.objects.filter(creator=self.user)
-		self.new_url = self.album.last().uuid
-		return super(AlbomGygView,self).get(request,*args,**kwargs)
-
-	def get_context_data(self,**kwargs):
-		context=super(AlbomGygView,self).get_context_data(**kwargs)
-		context["album"]=self.album
-        context["pk"]=self.user.pk
-		return context
+    def get_context_data(self,**kwargs):
+        context = super(NewAlbomView,self).get_context_data(**kwargs)
+        context["album"] = self.album
+        context["pk"] = self.user.pk
+        return context
 
 
 class UserAddAvatar(TemplateView):
