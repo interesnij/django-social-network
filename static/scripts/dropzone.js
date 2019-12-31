@@ -209,7 +209,11 @@ var Dropzone = function (_Emitter) {
 
         dictFileSizeUnits: { tb: "TB", gb: "GB", mb: "MB", kb: "KB", b: "b" },
 
-        init: function init() {},
+        init: function init() {
+          this.on("successmultiple", function(files, response) {
+            console.log("!")
+          });
+        },
 
         params: function params(files, xhr, chunk) {
           if (chunk) {
