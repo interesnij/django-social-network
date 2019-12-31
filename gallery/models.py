@@ -47,10 +47,11 @@ class Album(models.Model):
         else:
             return False
 
-    def count_photo1(self):
-        return self.album_1.count()
-    def count_photo2(self):
-        return self.album_2.count()
+    def count_photo(self):
+        if self.title == "Фото со страницы":
+            return self.album_2.count()
+        else:
+            return self.album_1.count()
 
 
 class Photo(models.Model):
