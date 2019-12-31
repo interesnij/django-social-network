@@ -606,37 +606,7 @@ var Dropzone = function (_Emitter) {
     }
   }]);
 
-  function Dropzone(el, options) {
-    _classCallCheck(this, Dropzone);
-
-    var _this = _possibleConstructorReturn(this, (Dropzone.__proto__ || Object.getPrototypeOf(Dropzone)).call(this));
-
-    var fallback = void 0,
-        left = void 0;
-    _this.element = el;
-    // For backwards compatibility since the version was in the prototype previously
-    _this.version = Dropzone.version;
-
-    _this.defaultOptions.previewTemplate = _this.defaultOptions.previewTemplate.replace(/\n*/g, "");
-
-    _this.clickableElements = [];
-    _this.listeners = [];
-    _this.files = []; // All files
-
-    if (typeof _this.element === "string") {
-      _this.element = document.querySelector(_this.element);
-    }
-
-    // Not checking if instance of HTMLElement or Element since IE9 is extremely weird.
-    if (!_this.element || _this.element.nodeType == null) {
-      throw new Error("Invalid dropzone element.");
-    }
-
-    if (_this.element.dropzone) {
-      throw new Error("Dropzone already attached.");
-    }
-
-
+  
 
   // Returns all files that have been accepted
 
