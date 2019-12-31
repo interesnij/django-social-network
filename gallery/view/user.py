@@ -31,10 +31,9 @@ class UserGalleryView(TemplateView):
     """
     галерея для пользователя, своя галерея, галерея для анонима, плюс другие варианты
     """
-	template_name = None
-
-	def get(self,request,*args,**kwargs):
-		self.user = User.objects.get(pk=self.kwargs["pk"])
+    template_name = None
+    def get(self,request,*args,**kwargs):
+        self.user = User.objects.get(pk=self.kwargs["pk"])
 
 		if self.user == request.user:
 			self.template_name="photo_user/gallery/my_gallery.html"
@@ -111,7 +110,7 @@ class NewAlbomView(TemplateView):
         context["pk"] = self.user.pk
         context["new_url"] = self.new_url
         return context
-        
+
 class UserAlbomReload(TemplateView):
     """
     загрузка нового альбома после его создания
