@@ -889,7 +889,9 @@ var Dropzone = function (_Emitter) {
             return file.previewElement.classList.add("dz-success");
           }
         },
-        successmultiple: function successmultiple() {},
+        successmultiple: function successmultiple() {
+          console.log("complite");
+        },
 
 
         // When the upload is canceled.
@@ -910,7 +912,7 @@ var Dropzone = function (_Emitter) {
           }
         },
         completemultiple: function completemultiple() {
-          console.log("complite")
+
         },
         maxfilesexceeded: function maxfilesexceeded() {},
         maxfilesreached: function maxfilesreached() {},
