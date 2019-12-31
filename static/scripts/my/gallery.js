@@ -10,3 +10,11 @@ $('.album-container').on('click', '.album_photo_detail', function() {
     $('#photo_loader').html('').load("/gallery/load/u_photo/" + pk + "/" + uuid + "/" + uuid2 + "/")
     $('.photo_fullscreen').show();
 });
+
+Dropzone.options.inner = {
+  init: function() {
+    this.on("completemultiple", function(file) {
+      console.log("fff");
+    })
+  },
+};
