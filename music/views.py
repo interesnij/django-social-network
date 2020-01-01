@@ -19,6 +19,8 @@ class AllMusicListView(View):
         all_tracks = client.get('/tracks', order='created_at', limit=page_size, linked_partitioning=1)
         for track in all_tracks.collection:
             print(track.title)
+        while all_tracks.next_href != None:
+            all_tracks = client.get(all_tracks.next_href, limit=page_size, order='created_at', linked_partitioning=1)
         context['request_user'] = request.user
         context['all_tracks'] = all_tracks
         return render_to_response('all_music_list.html', context)
