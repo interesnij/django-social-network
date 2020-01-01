@@ -13,7 +13,8 @@ class AllMusicListView(View):
     template_name="all_music_list.html"
     def get(self,request,*args,**kwargs):
         self.client = soundcloud.Client(client_id='dce5652caa1b66331903493735ddd64d')
-        all_tracks = self.client.get('/tracks', genres='punk')
+        all_tracks = self.client.get('/tracks', genres='all', order='created_at', limit=page_size)
+        page_size = 100
         html = render_to_string('all_music_list.html',{'all_tracks': all_tracks, 'request_user': request.user, 'request': request})
         return JsonResponse(html, safe=False)
 
