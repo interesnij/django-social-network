@@ -14,7 +14,7 @@ class AllMusicListView(View):
     def get(self,request,*args,**kwargs):
         context = {}
         client = soundcloud.Client(client_id='dce5652caa1b66331903493735ddd64d')
-        all_tracks = client.get('/tracks' )
+        all_tracks = client.get('/charts/new?genre=all-music&country=all-countries' )
         context['request_user'] = request.user
         context['all_tracks'] = all_tracks
         return render_to_response('all_music_list.html', context)
