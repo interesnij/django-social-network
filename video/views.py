@@ -1,3 +1,5 @@
-from django.shortcuts import render
+from django.views.generic.base import TemplateView
 
-# Create your views here.
+
+class AllVideoView(TemplateView):
+    template_name="all_video.html"

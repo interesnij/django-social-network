@@ -1,4 +1,5 @@
 import os
+from config.installed import DJANGO_APPS, LIBRARY_APPS, NETWORK_APPS
 
 PROJECT_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -10,48 +11,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-
-INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'django.contrib.humanize',
-    'django.contrib.sites',
-    'rest_framework',
-    'imagekit',
-    'rest_framework.authtoken',
-    'channels',
-    'easy_thumbnails',
-    'allauth',
-    'allauth.account',
-    'rest_auth.registration',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.vk',
-    'rest_auth',
-    'django_extensions',
-    'goods',
-    'users',
-    'communities',
-    'posts',
-    'follows',
-    'invitations',
-    'moderation',
-    'notifications',
-    'main',
-    'ckeditor',
-    'ckeditor_uploader',
-    'frends',
-    'chat',
-    'gallery',
-    'article',
-    'common',
-]
-
-
 SITE_ID = 1
+
+INSTALLED_APPS = DJANGO_APPS + LIBRARY_APPS + NETWORK_APPS
 
 
 CKEDITOR_CONFIGS = {
@@ -114,20 +76,7 @@ DATABASES = {
 
 
 
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
-]
+AUTH_PASSWORD_VALIDATORS = [{'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',},{'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',},{'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',},{'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',},]
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
@@ -245,17 +194,5 @@ THUMBNAIL_ALIASES = {
     "":{
         "avatar": {"size":(100,100)},
         "small_avatar": {"size":(60,60)},
-    },
-    "boom_shop":{
-        "boom": {"size":(300,300)},
-    },
-    "floret_store":{
-        "floret": {"size":(200,200)},
-    },
-    "faberlic":{
-        "faberlic": {"size":(200,200)},
-    },
-    "goods2":{
-        "goo": {"size":(350,450)},
     },
 }
