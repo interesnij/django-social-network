@@ -16,7 +16,7 @@ class AllMusicListView(View):
         context = {}
         page_size = 10
         client = soundcloud.Client(client_id='dce5652caa1b66331903493735ddd64d')
-        all_tracks = client.get('/tracks', order='created_at', limit=page_size)
+        all_tracks = client.get('/tracks', order='created_at')
         if all_tracks.count() > 10:
             all_tracks = client.get('/tracks', order='created_at', limit=page_size, linked_partitioning=1)
         context['request_user'] = request.user
