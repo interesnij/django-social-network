@@ -126,7 +126,7 @@ class ProfileUserView(TemplateView):
         self.N = 143729872
         self.S = []
         while self.N > 143729800:
-            self.S.append(self.N)
+            self.S.append(str(self.N))
             self.N = self.N - 1
 
         return super(ProfileUserView,self).get(request,*args,**kwargs)
