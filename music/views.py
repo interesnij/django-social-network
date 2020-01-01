@@ -25,7 +25,7 @@ class AllMusicListView(View):
         print response.status_code
         print response.json()
         context['request_user'] = request.user
-        context['all_tracks'] = all_tracks
+        context['all_tracks'] = response.json()
         return render_to_response('all_music_list.html', context)
 
 
