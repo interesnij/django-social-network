@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from music.views import AllMusicView
+from music.views import AllMusicView, AllMusicListView, AllSearchMusicView
 from django.contrib.auth.decorators import login_required
 
 
