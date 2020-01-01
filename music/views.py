@@ -14,12 +14,16 @@ class AllMusicListView(View):
     template_name = "all_music_list.html"
     def get(self,request,*args,**kwargs):
         context = {}
+        c=1
         page_size = 10
         client = soundcloud.Client(client_id='dce5652caa1b66331903493735ddd64d')
-        all_tracks = client.get('/tracks', order='created_at', limit=page_size,)
-        for track in all_tracks:
-            print (track.title)
         all_tracks = client.get('/tracks', order='created_at', limit=page_size, linked_partitioning=1)
+        for track in all_tracks:
+            print(track.title)
+        while all_tracks.next_href != None:
+            all_tracks = client.get('/tracks', order='created_at', limit=page_size, linked_partitioning=1)
+            for track in all_tracks:
+                print(track.title)
         context['request_user'] = request.user
         context['all_tracks'] = all_tracks
         return render_to_response('all_music_list.html', context)
