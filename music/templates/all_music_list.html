@@ -5,7 +5,11 @@
     <li class="list-group-item infinite-item">
         <div class="media">
             <figure>
-                <img class="thumb" src="{{ object.artwork_url }}" />
+              {% if object.artwork_url %}
+                <img style="width:30px;heigth:auto" src="{{ object.artwork_url }}" />
+                {% else %}
+                  <img style="width:30px;heigth:30px" src="{% static 'images/icons/person-24px.svg' %}" />
+                {% endif %}
             </figure>
             {{ object.duration }}
             <div class="media-body">
