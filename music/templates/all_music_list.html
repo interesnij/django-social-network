@@ -5,15 +5,14 @@
     <li class="list-group-item infinite-item">
         <div class="media">
             <figure>
-
-                <img class="thumb" src="https://i1.sndcdn.com{{ object.artwork_url }}" />
-
+                <img class="thumb" src="{{ object.image }}" />
             </figure>
+            {{ object.description  }}
             <div class="media-body">
                 <a href="" class="ajax">
-                    <h6 class="my-0 mt-1">{{ object.title }}{{ object.stream_url }} {{ object.name }}{{ object.genre }}</h6>
+                    <h6 class="my-0 mt-1">{{ object.title }} {{ object.name }}</h6>
                 </a>
-                <a href="" class="small">Написать сообщение</a>
+                <a href="" class="small">{{ object.genre }}</a>
             </div>
         </div>
     </li>
