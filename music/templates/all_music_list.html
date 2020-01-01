@@ -21,13 +21,6 @@
         </div>
     </li>
     {% endfor %}
-    <div class="load col-12 col-md-12">
-        {% if all_tracks.next_href %}
-        <a style="display:flex;justify-content:center;" class="infinite-more-link" href="https://api.soundcloud.com/tracks?client_id=dce5652caa1b66331903493735ddd64d&limit=10&linked_partitioning=1">
-            <img style="width: 30px;" src="{% static 'images/loading.gif' %}">
-        </a>
-        {% endif %}
-    </div>
 </ul>
 {% else %}
 <div class="card mb-4" style="align-items: center;justify-content:center;">
@@ -37,9 +30,3 @@
   <h6 style="margin-bottom: 20px;"> Композиций нет...</h6>
 </div>
 {% endif %}
-
-<script>
-  var infinite = new Waypoint.Infinite({
-    element: $('.all-music-container')[0], onBeforePageLoad: function() { $('.load').show(); }, onAfterPageLoad: function($items) { $('.load').hide(); }
-  });
-</script>
