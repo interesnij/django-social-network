@@ -22,7 +22,7 @@ class AllMusicListView(View):
         N = 143729872
         S = []
         while N > 143729000:
-            S = list.append(str(N))
+            S = list.append(list(N))
             N = N - 1
 
         track_ids = list(range(1, N+1))
