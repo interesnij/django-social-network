@@ -22,7 +22,7 @@ class AllMusicListView(View):
         N = 143729872
         S = []
         while N > 143729800:
-            S.append(N)
+            S.append(str(N))
             N = N - 1
 
         tracks_url ='http://api.soundcloud.com/tracks'
