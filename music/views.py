@@ -25,7 +25,6 @@ class AllMusicListView(View):
             S.append([N,])
             N = N - 1
 
-        track_ids = list(range(1, N+1))
         tracks_url ='http://api.soundcloud.com/tracks'
         payload = {'client_id': client_id, 'ids': ','.join(S)}
         response = requests.get(tracks_url, params=payload)
@@ -33,6 +32,7 @@ class AllMusicListView(View):
         print(response.json())
         context['request_user'] = request.user
         context['all_tracks'] = response.json()
+        context['S'] = S
         return render_to_response('all_music_list.html', context)
 
 
