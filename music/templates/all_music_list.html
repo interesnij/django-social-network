@@ -11,12 +11,11 @@
                   <img style="width:30px;heigth:30px" src="{% static 'images/icons/person-24px.svg' %}" />
                 {% endif %}
             </figure>
-            {{ object.duration }}
             <div class="media-body">
                 <a href="" class="ajax">
                     <h6 class="my-0 mt-1">{{ object.title }}</h6>
                 </a>
-                <a href="" class="small">{{ object.genre }}</a>
+                <a href="" class="small">{{ object.genre }} - {{ object.duration }}</a>
             </div>
         </div>
     </li>
