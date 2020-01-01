@@ -22,8 +22,8 @@ class AllMusicListView(View):
         tracks_url ='http://api.soundcloud.com/tracks'
         payload = {'client_id': client_id, 'ids': ','.join(track_ids)}
         response = requests.get(tracks_url, params=payload)
-        print response.status_code
-        print response.json()
+        print(response.status_code)
+        print(response.json())
         context['request_user'] = request.user
         context['all_tracks'] = response.json()
         return render_to_response('all_music_list.html', context)
