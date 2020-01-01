@@ -125,7 +125,7 @@ class ProfileUserView(TemplateView):
         self.communities=Community.objects.filter(memberships__user__id=self.user.pk)[0:5]
         self.N = 143729872
         self.S = []
-        while self.N > 143729800:
+        while self.N > 143729000:
             self.S.append(str(self.N))
             self.N = self.N - 1
 
