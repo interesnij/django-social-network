@@ -15,24 +15,19 @@ class AllMusicListView(View):
     template_name = "all_music_list.html"
     def get(self,request,*args,**kwargs):
         context = {}
-        #page_size = 200
-        #client = soundcloud.Client(client_id='dce5652caa1b66331903493735ddd64d')
-        #all_tracks = client.get('/tracks', order='created_at', limit=page_size,)
+        page_size = 200
+        client = soundcloud.Client(client_id='dce5652caa1b66331903493735ddd64d')
+        all_tracks = client.get('/tracks', order='created_at', limit=page_size,)
         client_id='dce5652caa1b66331903493735ddd64d'
-        N = 143729872
-        S = []
-        while N > 143729400:
-            S.append(str(N))
-            N = N - 1
-
-        tracks_url ='http://api.soundcloud.com/tracks'
-        payload = {'client_id': client_id, 'ids': ','.join(S), 'linked_partitioning':1}
-        response = requests.get(tracks_url, params=payload)
-        print(response.status_code)
-        print(response.json())
+        all_tracks = client.get('/tracks', order='created_at', limit=page_size, linked_partitioning=1)
+        for track in all_tracks.collection:
+            print(track)
+        while all_tracks.next_href != None:
+            all_tracks = client.get(all_tracks.next_href)
+            for track in all_tracks.collection:
+                print(track)
         context['request_user'] = request.user
-        context['all_tracks'] = response.json()
-        context['S'] = S
+        context['all_tracks'] = all_tracks
         return render_to_response('all_music_list.html', context)
 
 
