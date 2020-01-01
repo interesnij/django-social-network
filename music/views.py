@@ -1,7 +1,7 @@
 import soundcloud
 from django.views.generic.base import TemplateView
 from django.views import View
-from django.template.loader import render_to_string
+from django.shortcuts import render_to_response
 from django.http import JsonResponse
 
 
@@ -12,11 +12,12 @@ class AllMusicView(TemplateView):
 class AllMusicListView(View):
     template_name="all_music_list.html"
     def get(self,request,*args,**kwargs):
+        context = {}
         client = soundcloud.Client(client_id='dce5652caa1b66331903493735ddd64d')
         page_size = 100
-        all_tracks = client.get('/tracks', genres='all', order='created_at', limit=page_size)
-        html = render_to_string('all_music_list.html',{'all_tracks': all_tracks, 'request_user': request.user, 'request': request})
-        return JsonResponse(html, safe=False)
+        context['request_user'] = request.user
+        context['all_tracks'] = all_tracks
+        return render_to_response('all_music_list.html', context)
 
 
 class AllSearchMusicView(View):
