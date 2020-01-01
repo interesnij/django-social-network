@@ -19,8 +19,11 @@ class AllMusicListView(View):
         #client = soundcloud.Client(client_id='dce5652caa1b66331903493735ddd64d')
         #all_tracks = client.get('/tracks', order='created_at', limit=page_size,)
         client_id='dce5652caa1b66331903493735ddd64d'
-        N = 1000
-        S = ["143729872", "6621631", "6621632", "6621633", "6621634", "66216315", "6621636", "6621637", "6621638", "6621639", "6621640"]
+        N = 143729872
+        S = []
+        while N > 143729000:
+            S = list.append(N)
+            N = N - 1
 
         track_ids = list(range(1, N+1))
         tracks_url ='http://api.soundcloud.com/tracks'
