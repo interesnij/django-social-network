@@ -21,7 +21,7 @@ class AllMusicListView(View):
         client_id='dce5652caa1b66331903493735ddd64d'
         N = 143729872
         S = []
-        while N > 143729000:
+        while N > 143729800:
             S.append(N)
             N = N - 1
 
