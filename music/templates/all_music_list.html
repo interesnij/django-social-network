@@ -6,12 +6,12 @@
         <div class="media">
             <figure>
 
-                <img class="thumb" src="{% static 'images/icons/person-24px.svg' %}" />
+                <img class="thumb" src="{{ object.artwork_url }}" />
 
             </figure>
             <div class="media-body">
                 <a href="" class="ajax">
-                    <h6 class="my-0 mt-1">{{ object.link }}{{ object.url }} {{ object.name }}{{ object.genre }}</h6>
+                    <h6 class="my-0 mt-1">{{ object.title }}{{ object.url }} {{ object.name }}{{ object.genre }}</h6>
                 </a>
                 <a href="" class="small">Написать сообщение</a>
             </div>
