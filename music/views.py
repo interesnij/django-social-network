@@ -20,10 +20,10 @@ class AllMusicListView(View):
         #all_tracks = client.get('/tracks', order='created_at', limit=page_size,)
         client_id='dce5652caa1b66331903493735ddd64d'
         N = 1000
-        S = []
+        S = ["13158665", "6621631", "1111111"]
         track_ids = list(range(1, N+1))
         tracks_url ='http://api.soundcloud.com/tracks'
-        payload = {'client_id': client_id, 'ids': ','.join("13158665", "6621631", "1111111")}
+        payload = {'client_id': client_id, 'ids': ','.join(S)}
         response = requests.get(tracks_url, params=payload)
         print(response.status_code)
         print(response.json())
