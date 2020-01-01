@@ -22,7 +22,11 @@ class AllMusicListView(View):
 
             c=c+ [track,]
 
-        
+        while all_tracks.next_href != None:
+            all_tracks = client.get(all_tracks.next_href)
+            for track in all_tracks.collection:
+
+                c=c+ [track,]
 
         context['request_user'] = request.user
         context['all_tracks'] = all_tracks
