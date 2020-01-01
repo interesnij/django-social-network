@@ -123,11 +123,11 @@ class ProfileUserView(TemplateView):
 
         self.online_frends = self.user.get_pop_online_connection()
         self.communities=Community.objects.filter(memberships__user__id=self.user.pk)[0:5]
-        N = 143729872
-        S = []
-        while N > 143729800:
-            S.append([N,])
-            N = N - 1
+        self.N = 143729872
+        self.S = []
+        while self.N > 143729800:
+            self.S.append([self.N,])
+            self.N = self.N - 1
 
         return super(ProfileUserView,self).get(request,*args,**kwargs)
 
