@@ -20,7 +20,7 @@ page_size = 200
 all_tracks = client.get('/tracks', order='created_at', limit=page_size, linked_partitioning=1)
 for track in all_tracks.collection:
     a = track.created_at
-    a.datetime.strptime('Jun 1 2005  1:33PM', '%b %d %Y %I:%M%p')
+    a = datetime.strptime('Jun 1 2005  1:33PM', '%b %d %Y %I:%M%p')
     SoundParsing.objects.create(
                                 artwork_url=track.artwork_url,
                                 bpm=track.bpm,
