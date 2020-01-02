@@ -46,7 +46,7 @@ for track in all_tracks.collection:
                                 release_year=track.release_year,
                                 title=track.title,
                                 uri=track.uri,
-                                label_name=track.label_name[:50],
+                                label_name=label_name,
                                 user=track.user,
                                 )
 while all_tracks.next_href != None and all_tracks.count() < 301:
