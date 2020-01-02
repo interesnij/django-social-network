@@ -1,7 +1,7 @@
 {% load staticfiles thumbnail %}
 {% if all_tracks %}
 
-<ul class="all-music-container list-group">
+<ul class="all-music-container list-group jp-playlist">
     {% for object in all_tracks %}
     <li class="list-group-item infinite-item">
         <div class="media">
@@ -41,4 +41,19 @@
 
 <script>
   var all_music_infinite = new Waypoint.Infinite({element: $('.all-music-container')[0], onBeforePageLoad: function() { $('.music-load').show(); }, onAfterPageLoad: function($items) { $('.music-load').hide(); }});
+
+  $(document).ready(function(){
+	new jPlayerPlaylist({
+		jPlayer: "#music_player",
+		cssSelectorAncestor: "#music_player_container"
+	}, {
+		swfPath: "{% static 'scripts/Jplayer.swf' %}",
+		supplied: "oga, mp3",
+		wmode: "window",
+		useStateClassSkin: true,
+		autoBlur: false,
+		smoothPlayBar: true,
+		keyEnabled: true
+	});
+});
 </script>
