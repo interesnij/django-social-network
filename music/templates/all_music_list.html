@@ -86,54 +86,72 @@ $(document).ready(function(){
 });
 </script>
 
-<div class="container">
- <div class="row">
-   <div style="left:0;right:0">
 <div id="jquery_jplayer_1" class="jp-jplayer"></div>
-<div id="jp_container_1" class="jp-audio" role="application" aria-label="media player">
- <div class="jp-type-playlist">
-   <div class="jp-gui jp-interface">
-     <div class="jp-controls">
-       <button class="jp-previous" role="button" tabindex="0">previous</button>
-       <button class="jp-play" role="button" tabindex="0">play</button>
-       <button class="jp-next" role="button" tabindex="0">next</button>
-       <button class="jp-stop" role="button" tabindex="0">stop</button>
-     </div>
-     <div class="jp-progress">
-       <div class="jp-seek-bar">
-         <div class="jp-play-bar"></div>
-       </div>
-     </div>
-     <div class="jp-volume-controls">
-       <button class="jp-mute" role="button" tabindex="0">mute</button>
-       <button class="jp-volume-max" role="button" tabindex="0">max volume</button>
-       <div class="jp-volume-bar">
-         <div class="jp-volume-bar-value"></div>
-       </div>
-     </div>
-     <div class="jp-time-holder">
-       <div class="jp-current-time" role="timer" aria-label="time">&nbsp;</div>
-       <div class="jp-duration" role="timer" aria-label="duration">&nbsp;</div>
-     </div>
-     <div class="jp-toggles">
-       <button class="jp-repeat" role="button" tabindex="0">repeat</button>
-       <button class="jp-shuffle" role="button" tabindex="0">shuffle</button>
-     </div>
-   </div>
-   <div class="jp-playlist">
-     <ul>
-       <li>&nbsp;</li>
-     </ul>
-   </div>
-   <div class="jp-no-solution">
-     <span>Update Required</span>
-     To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>.
-   </div>
- </div>
-</div>
-</div>
-</div>
-</div>
+        <div id="jp_container_1" class="jp-audio">
+
+            <div class="jp-type-playlist">
+                <div class="jp-gui jp-interface">
+                    <ul class="jp-controls">
+                        <li>
+                            <label id="name-of-the-song-that-plays"></label>
+                        </li>
+                        <li><a href="javascript:;" class="jp-play" tabindex="1">play</a></li>
+                        <li><a href="javascript:;" class="jp-pause" tabindex="1">pause</a></li>
+                        <li><a href="javascript:;" class="jp-previous" tabindex="1">previous</a></li>
+                        <li><a href="javascript:;" class="jp-next" tabindex="1">next</a></li>
+                        <div class="clear"></div>
+                    </ul>
+                    <!-- Прогресс бар -->
+                    <div class="jp-progress">
+                        <div class="jp-seek-bar">
+                            <div class="jp-play-bar"></div>
+                        </div>
+                    </div>
+                    <!-- Регулятор громкости -->
+                    <div class="jp-volume-bar">
+                        <div class="jp-volume-bar-value"></div>
+                    </div>
+                    <!-- Остаток времени -->
+                    <div class="jp-time-holder">
+                        <div class="jp-current-time"></div>
+                    </div>
+
+                    <div class="clear"></div>
+
+                    <!-- Кнопки повторения и перемешивания плейлиста -->
+                    <ul class="jp-toggles">
+                        <li>
+                            <a href="javascript:;" class="jp-shuffle" tabindex="1" title="shuffle">shuffle</a>
+                        </li>
+                        <li>
+                            <a href="javascript:;" class="jp-shuffle-off" tabindex="1" title="shuffle off">shuffle off</a>
+                        </li>
+                        <li>
+                            <a href="javascript:;" class="jp-repeat" tabindex="1" title="repeat">repeat</a>
+                        </li>
+                        <li>
+                            <a href="javascript:;" class="jp-repeat-off" tabindex="1" title="repeat off">repeat off</a>
+                        </li>
+                    </ul>
+                    <div class="clear"></div>
+                </div>
+                <!-- Будущий плейлист -->
+                <div class="jp-playlist">
+                    <ul>
+                        <li></li>
+                    </ul>
+                </div>
+                <!-- Сообщение об ошибке -->
+                <div class="jp-no-solution">
+                    <span>Update Required</span>
+                    To play the media you will need to either update your browser to a recent version or update your
+                    <a href="http://get.adobe.com/flashplayer/" target="_blank">
+                        Flash plugin
+                    </a>.
+                </div>
+            </div>
+        </div>
+
 
 
 <ul class="all-music-container list-group jp-playlist">
@@ -177,18 +195,120 @@ $(document).ready(function(){
 <script>
   var all_music_infinite = new Waypoint.Infinite({element: $('.all-music-container')[0], onBeforePageLoad: function() { $('.music-load').show(); }, onAfterPageLoad: function($items) { $('.music-load').hide(); }});
 
-  $(document).ready(function(){
-	new jPlayerPlaylist({
-		jPlayer: "#music_player",
-		cssSelectorAncestor: "#music_player_container"
-	}, {
-		swfPath: "{% static 'scripts/Jplayer.swf' %}",
-		supplied: "oga, mp3",
-		wmode: "window",
-		useStateClassSkin: true,
-		autoBlur: false,
-		smoothPlayBar: true,
-		keyEnabled: true
-	});
+  //<![CDATA[
+$(document).ready(function(){
+
+    var cssSelector = {
+        jPlayer: "#jquery_jplayer_1",
+        cssSelectorAncestor: "#jp_container_1"
+    };
+
+    var playlist = [
+        {
+            author:"TSP",
+            title:"Cro Magnon Man",
+            discription: "Текст песни / описание",
+            mp3:"http://www.jplayer.org/audio/mp3/TSP-01-Cro_magnon_man.mp3",
+            oga:"http://www.jplayer.org/audio/ogg/TSP-01-Cro_magnon_man.ogg"
+        },
+        {
+            author:"TSP",
+            title:"Your Face",
+            discription: "Текст песни / описание",
+            mp3:"http://www.jplayer.org/audio/mp3/TSP-05-Your_face.mp3",
+            oga:"http://www.jplayer.org/audio/ogg/TSP-05-Your_face.ogg"
+        },
+        {
+            author:"TSP",
+            title:"Cyber Sonnet",
+            discription: "Текст песни / описание",
+            mp3:"http://www.jplayer.org/audio/mp3/TSP-07-Cybersonnet.mp3",
+            oga:"http://www.jplayer.org/audio/ogg/TSP-07-Cybersonnet.ogg"
+        },
+        {
+            author:"Miaow",
+            title:"Tempered Song",
+            discription: "Текст песни / описание",
+            mp3:"http://www.jplayer.org/audio/mp3/Miaow-01-Tempered-song.mp3",
+            oga:"http://www.jplayer.org/audio/ogg/Miaow-01-Tempered-song.ogg"
+        },
+        {
+            author:"Miaow",
+            title:"Hidden",
+            discription: "Текст песни / описание",
+            mp3:"http://www.jplayer.org/audio/mp3/Miaow-02-Hidden.mp3",
+            oga:"http://www.jplayer.org/audio/ogg/Miaow-02-Hidden.ogg"
+        },
+        {
+            author:"Miaow",
+            title:"Lentement",
+            free:true,
+            discription: "Текст песни / описание",
+            mp3:"http://www.jplayer.org/audio/mp3/Miaow-03-Lentement.mp3",
+            oga:"http://www.jplayer.org/audio/ogg/Miaow-03-Lentement.ogg"
+        },
+        {
+            author:"Miaow",
+            title:"Lismore",
+            discription: "Текст песни / описание",
+            mp3:"http://www.jplayer.org/audio/mp3/Miaow-04-Lismore.mp3",
+            oga:"http://www.jplayer.org/audio/ogg/Miaow-04-Lismore.ogg"
+        },
+        {
+            author:"Miaow",
+            title:"The Separation",
+            discription: "Текст песни / описание",
+            mp3:"http://www.jplayer.org/audio/mp3/Miaow-05-The-separation.mp3",
+            oga:"http://www.jplayer.org/audio/ogg/Miaow-05-The-separation.ogg"
+        },
+        {
+            author:"Miaow",
+            title:"Beside Me",
+            discription: "Текст песни / описание",
+            mp3:"http://www.jplayer.org/audio/mp3/Miaow-06-Beside-me.mp3",
+            oga:"http://www.jplayer.org/audio/ogg/Miaow-06-Beside-me.ogg"
+        },
+        {
+            author:"Miaow",
+            title:"Bubble",
+            free:true,
+            discription: "Текст песни / описание",
+            mp3:"http://www.jplayer.org/audio/mp3/Miaow-07-Bubble.mp3",
+            oga:"http://www.jplayer.org/audio/ogg/Miaow-07-Bubble.ogg"
+        },
+        {
+            author:"Miaow",
+            title:"Stirring of a Fool",
+            discription: "Текст песни / описание",
+            mp3:"http://www.jplayer.org/audio/mp3/Miaow-08-Stirring-of-a-fool.mp3",
+            oga:"http://www.jplayer.org/audio/ogg/Miaow-08-Stirring-of-a-fool.ogg"
+        },
+        {
+            author:"Miaow",
+            title:"Partir",
+            free: true,
+            discription: "Текст песни / описание",
+            mp3:"http://www.jplayer.org/audio/mp3/Miaow-09-Partir.mp3",
+            oga:"http://www.jplayer.org/audio/ogg/Miaow-09-Partir.ogg"
+        },
+        {
+            author:"Miaow",
+            title:"Thin Ice",
+            discription: "Текст песни / описание",
+            mp3:"http://www.jplayer.org/audio/mp3/Miaow-10-Thin-ice.mp3",
+            oga:"http://www.jplayer.org/audio/ogg/Miaow-10-Thin-ice.ogg"
+        }
+    ];
+
+    var options = {
+        swfPath: "js",
+        supplied: "oga, mp3",
+        wmode: "window",
+        smoothPlayBar: false,
+        keyEnabled: true
+    };
+
+    new jPlayerPlaylist(cssSelector, playlist, options);
 });
+//]]>
 </script>
