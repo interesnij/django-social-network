@@ -19,7 +19,7 @@ client = soundcloud.Client(client_id='dce5652caa1b66331903493735ddd64d')
 page_size = 200
 all_tracks = client.get('/tracks', order='created_at', limit=page_size, linked_partitioning=1)
 for track in all_tracks.collection:
-    a = all_tracks.created_at
+    a = tracks.created_at
     a.datetime()
     SoundParsing.objects.create(
                                 artwork_url=track.artwork_url,
