@@ -2,6 +2,7 @@ from django.db import models
 
 
 class SoundParsing(models.Model):
+    id = models.IntegerField(primary_key=True)
     artwork_url = models.URLField(max_length=255, blank=True, null=True)
     bpm = models.CharField(max_length=255, blank=True, null=True)
     created_at = models.DateTimeField(max_length=255, blank=True, null=True)
@@ -26,3 +27,6 @@ class SoundParsing(models.Model):
 
     class Meta:
         ordering = ('-created_at',)
+
+    def is_track_exists(self, id):
+        return self.connections.get(id=self.pk).exists()
