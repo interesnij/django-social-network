@@ -16,7 +16,7 @@ class AllMusicListView(View):
     def get(self,request,*args,**kwargs):
         context = {}
         all_tracks = SoundParsing.objects.only("id")
-        current_page = Paginator(communities_list, 30)
+        current_page = Paginator(all_tracks, 30)
         page = request.GET.get('page')
         context['all_tracks'] = all_tracks
         try:
