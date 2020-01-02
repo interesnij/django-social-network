@@ -138,23 +138,33 @@ $(document).ready(function(){
                 <!-- Будущий плейлист -->
                 <div class="jp-playlist">
                     <ul>
-                        <li></li>
+                      {% for object in all_tracks %}
+                      <li class="list-group-item infinite-item">
+                          <div class="media">
+                              <figure>
+                                {% if object.artwork_url %}
+                                  <img style="width:30px;heigth:auto" src="{{ object.artwork_url }}" />
+                                  {% else %}
+                                    <img style="width:30px;heigth:30px" src="{% static 'images/icons/person-24px.svg' %}" />
+                                  {% endif %}
+                              </figure>
+                              <div class="media-body">
+                                  <a href="" class="ajax">
+                                      <h6 class="my-0 mt-1">{{ object.title }}</h6>
+                                  </a>
+                                  <a href="" class="small">{{ object.genre }} - {{ object.duration }}</a>
+                              </div>
+                          </div>
+                      </li>
+                      {% endfor %}
                     </ul>
-                </div>
-                <!-- Сообщение об ошибке -->
-                <div class="jp-no-solution">
-                    <span>Update Required</span>
-                    To play the media you will need to either update your browser to a recent version or update your
-                    <a href="http://get.adobe.com/flashplayer/" target="_blank">
-                        Flash plugin
-                    </a>.
                 </div>
             </div>
         </div>
 
 
 
-<ul class="all-music-container list-group jp-playlist">
+<ul class="all-music-container list-group">
     {% for object in all_tracks %}
     <li class="list-group-item infinite-item">
         <div class="media">
