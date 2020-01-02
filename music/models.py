@@ -9,7 +9,6 @@ class SoundParsing(models.Model):
     duration = models.CharField(max_length=255, blank=True, null=True)
     genre = models.CharField(max_length=255, blank=True, null=True)
     permalink = models.CharField(max_length=255, blank=True, null=True)
-    permalink_url = models.URLField(max_length=255, blank=True, null=True)
     release_day = models.CharField(max_length=255, blank=True, null=True)
     release_month = models.CharField(max_length=255, blank=True, null=True)
     release_year = models.CharField(max_length=255, blank=True, null=True)
@@ -17,8 +16,6 @@ class SoundParsing(models.Model):
     streamable = models.BooleanField(default=True, null=True)
     title = models.CharField(max_length=255, blank=True, null=True)
     uri = models.CharField(max_length=255, blank=True, null=True)
-    label_name = models.CharField(max_length=500, blank=True, null=True)
-    user = models.CharField(max_length=255, blank=True, null=True)
 
     def __str__(self):
         return self.title
