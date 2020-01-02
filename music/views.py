@@ -18,11 +18,11 @@ class AllMusicListView(View):
         client = soundcloud.Client(client_id='dce5652caa1b66331903493735ddd64d')
         all_tracks = client.get('/tracks', order='created_at', limit=page_size, linked_partitioning=1)
         for track in all_tracks.collection:
-            print(track)
+            print(track.title)
         while all_tracks.next_href != None:
             all_tracks = client.get(all_tracks.next_href, order='created_at', limit=page_size, linked_partitioning=1)
             for track in all_tracks.collection:
-                print(track)
+                print(track.title)
         response = render('all_music_list.html',{'all_tracks':all_tracks})
         return response
 
