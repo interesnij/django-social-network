@@ -33,7 +33,7 @@ for track in all_tracks.collection:
         except:
             label_name = ''
         user = track.user
-        user_list = list(user.keys())
+        user_list = list(user.values())
         SoundParsing.objects.create(
                                 id=track.id,
                                 artwork_url=track.artwork_url,
