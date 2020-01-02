@@ -58,17 +58,17 @@ while all_tracks.next_href != None and count < 301:
             SoundParsing.objects.get(id=track.id)
         except:
             SoundParsing.objects.create(
+                                    id=track.id,
                                     artwork_url=track.artwork_url,
                                     bpm=track.bpm,
                                     created_at=created_at,
                                     duration=track.duration,
                                     genre=track.genre,
                                     permalink=track.permalink,
-                                    stream_url=track.stream_url,
+                                    stream_url=stream_url,
                                     streamable=track.streamable,
                                     release_month=track.release_month,
                                     release_year=track.release_year,
                                     title=track.title,
-                                    isrc=track.isrc,
-                                    )
+                                    uri=track.uri,)
         count = count + 1
