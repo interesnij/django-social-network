@@ -16,7 +16,7 @@ class AllMusicListView(View):
     def get(self,request,*args,**kwargs):
         context = {}
         all_tracks = SoundParsing.objects.only("id")
-        context['all_tracks'] = self.all_tracks
+        context['all_tracks'] = all_tracks
         return render_to_response('all_music_list.html.html', context)
 
 
