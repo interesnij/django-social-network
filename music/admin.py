@@ -7,3 +7,6 @@ class SoundParsingAdmin(admin.ModelAdmin):
     search_fields = ['title']
     class Meta:
             model = SoundParsing
+
+
+admin.site.register(SoundParsing, SoundParsingAdmin)
