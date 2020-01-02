@@ -23,7 +23,7 @@ for track in all_tracks.collection:
     a = datetime.strptime('Jun 1 2005  1:33PM', '%b %d %Y %I:%M%p')
     SoundParsing.objects.create(
                                 artwork_url=track.artwork_url,
-                                #bpm=track.bpm,
+                                bpm=track.bpm,
                                 created_at=a,
                                 duration=track.duration,
                                 genre=track.genre,
@@ -34,12 +34,12 @@ for track in all_tracks.collection:
                                 #release_month=track.release_month,
                                 #release_year=track.release_year,
                                 stream_url=track.stream_url,
-                                #streamable=track.streamable,
-                                #tag_list=track.tag_list,
+                                streamable=track.streamable,
+                                tag_list=track.tag_list,
                                 title=track.title,
-                                #uri=track.uri,
-                                #isrc=track.isrc,
-                                #label_name=track.label_name,
+                                uri=track.uri,
+                                isrc=track.isrc,
+                                label_name=track.label_name,
                                 )
 while all_tracks.next_href != None and all_tracks.count() < 301:
     all_tracks = client.get(all_tracks.next_href, order='created_at', limit=page_size, linked_partitioning=1)
