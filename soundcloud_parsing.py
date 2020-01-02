@@ -17,7 +17,8 @@ from datetime import datetime, date, time
 
 client = soundcloud.Client(client_id='dce5652caa1b66331903493735ddd64d')
 page_size = 10
-all_tracks = client.get('/tracks', order='created_at', limit=page_size, linked_partitioning=1)
+all_tracks = client.get('/tracks', order='created_at', limit=page_size, linked_partitioning=1
+count = 0
 for track in all_tracks.collection:
     created_at = track.created_at
     created_at = datetime.strptime('Jun 1 2005  1:33PM', '%b %d %Y %I:%M%p')
@@ -45,9 +46,10 @@ for track in all_tracks.collection:
                                 release_month=track.release_month,
                                 release_year=track.release_year,
                                 title=track.title,
-                                uri=track.uri,
-                                )
-while all_tracks.next_href != None and sum(all_tracks) < 301:
+                                uri=track.uri,)
+        count = count + 1
+
+while all_tracks.next_href != None and sum(count) < 301:
     all_tracks = client.get(all_tracks.next_href, order='created_at', limit=page_size, linked_partitioning=1)
     for track in all_tracks.collection:
         created_at = track.created_at
@@ -69,3 +71,4 @@ while all_tracks.next_href != None and sum(all_tracks) < 301:
                                     title=track.title,
                                     isrc=track.isrc,
                                     )
+        count = count + 1
