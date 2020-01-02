@@ -29,4 +29,4 @@ class SoundParsing(models.Model):
         ordering = ('-created_at',)
 
     def is_track_exists(self, id):
-        return self.connections.get(id=self.pk).exists()
+        return SoundParsing.objects.get(id=self.pk).exists()
