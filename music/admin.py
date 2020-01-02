@@ -3,7 +3,7 @@ from .models import SoundParsing
 
 
 class SoundParsingAdmin(admin.ModelAdmin):
-    list_display = ['title','order','image']
+    list_display = ['title']
     search_fields = ['title']
     class Meta:
             model = SoundParsing
