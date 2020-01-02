@@ -28,6 +28,10 @@ for track in all_tracks.collection:
             stream_url = track.stream_url
         except:
             stream_url = ''
+        try:
+            label_name = track.label_name[:50]
+        except:
+            label_name = ''
         SoundParsing.objects.create(
                                 id=track.id,
                                 artwork_url=track.artwork_url,
@@ -43,7 +47,7 @@ for track in all_tracks.collection:
                                 title=track.title,
                                 uri=track.uri,
                                 label_name=track.label_name[:50],
-                                user=track.user[:50],
+                                user=track.user,
                                 )
 while all_tracks.next_href != None and all_tracks.count() < 301:
     all_tracks = client.get(all_tracks.next_href, order='created_at', limit=page_size, linked_partitioning=1)
