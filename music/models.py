@@ -19,7 +19,7 @@ class SoundParsing(models.Model):
     title = models.CharField(max_length=255, blank=True, null=True)
     uri = models.CharField(max_length=255, blank=True, null=True)
     isrc = models.CharField(max_length=255, blank=True, null=True)
-    label_name = models.CharField(max_length=255, blank=True, null=True)
+    label_name = models.CharField(max_length=500, blank=True, null=True)
 
     def __str__(self):
         return self.title
