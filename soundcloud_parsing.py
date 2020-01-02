@@ -19,10 +19,11 @@ client = soundcloud.Client(client_id='dce5652caa1b66331903493735ddd64d')
 page_size = 200
 all_tracks = client.get('/tracks', order='created_at', limit=page_size, linked_partitioning=1)
 for track in all_tracks.collection:
+    a = datetime.datetime(track.created_at)
     SoundParsing.objects.create(
                                 artwork_url=track.artwork_url,
                                 bpm=track.bpm,
-                                created_at=track.created_at,
+                                created_at=a,
                                 duration=track.duration,
                                 genre=track.genre,
                                 permalink=track.permalink,
@@ -35,9 +36,9 @@ for track in all_tracks.collection:
                                 streamable=track.streamable,
                                 tag_list=track.tag_list,
                                 title=track.title,
-                                #uri=track.uri,
-                                #isrc=track.isrc,
-                                #label_name=track.label_name.datetime.isoformat(sep='T'),
+                                uri=track.uri,
+                                isrc=track.isrc,
+                                label_name=track.label_name.datetime.isoformat(sep='T'),
                                 )
 while all_tracks.next_href != None and all_tracks.count() < 5001:
     all_tracks = client.get(all_tracks.next_href, order='created_at', limit=page_size, linked_partitioning=1)
@@ -58,7 +59,7 @@ while all_tracks.next_href != None and all_tracks.count() < 5001:
                                     streamable=track.streamable,
                                     tag_list=track.tag_list,
                                     title=track.title,
-                                    #uri=track.uri,
-                                    #isrc=track.isrc,
-                                    #label_name=track.label_name,
+                                    uri=track.uri,
+                                    isrc=track.isrc,
+                                    label_name=track.label_name,
                                     )
