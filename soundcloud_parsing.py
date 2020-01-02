@@ -21,7 +21,9 @@ all_tracks = client.get('/tracks', order='created_at', limit=page_size, linked_p
 for track in all_tracks.collection:
     created_at = track.created_at
     created_at = datetime.strptime('Jun 1 2005  1:33PM', '%b %d %Y %I:%M%p')
-    if SoundParsing.is_track_exists(track.id):
+    try:
+        SoundParsing.objects.get(id=track.id)
+    except:
         SoundParsing.objects.create(
                                 id=track.id,
                                 artwork_url=track.artwork_url,
@@ -46,7 +48,9 @@ while all_tracks.next_href != None and all_tracks.count() < 301:
     for track in all_tracks.collection:
         created_at = track.created_at
         created_at = datetime.strptime('Jun 1 2005  1:33PM', '%b %d %Y %I:%M%p')
-        if SoundParsing.is_track_exists(track.id):
+        try:
+            SoundParsing.objects.get(id=track.id)
+        except:
             SoundParsing.objects.create(
                                     artwork_url=track.artwork_url,
                                     bpm=track.bpm,

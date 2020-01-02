@@ -27,6 +27,3 @@ class SoundParsing(models.Model):
 
     class Meta:
         ordering = ('-created_at',)
-
-    def is_track_exists(self, id):
-        return SoundParsing.objects.get(id=self.pk).exists()
