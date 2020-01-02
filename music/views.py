@@ -20,11 +20,11 @@ class AllMusicListView(View):
         page = request.GET.get('page')
         context['all_tracks'] = all_tracks
         try:
-			context['all_tracks'] = current_page.page(page)
-		except PageNotAnInteger:
-			context['all_tracks'] = current_page.page(1)
-		except EmptyPage:
-			context['all_tracks'] = current_page.page(current_page.num_pages)
+            context['all_tracks'] = current_page.page(page)
+        except PageNotAnInteger:
+            context['all_tracks'] = current_page.page(1)
+        except EmptyPage:
+            context['all_tracks'] = current_page.page(current_page.num_pages)
         return render_to_response('all_music_list.html', context)
 
 
