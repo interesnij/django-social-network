@@ -21,10 +21,10 @@
         </div>
     </li>
     {% endfor %}
-    <div class="items-load col-12 col-md-12">
+    <div class="music-load col-12 col-md-12">
         {% if all_tracks.has_next %}
         <a style="display:flex;justify-content:center;" class="infinite-more-link" href="{% url 'all_music_list' %}?page={{ all_tracks.next_page_number }}">
-            <img src="{% static 'images/loading.gif' %}">
+            <img style="width: 30px;" src="{% static 'images/loading.gif' %}">
         </a>
         {% endif %}
 
@@ -40,5 +40,5 @@
 {% endif %}
 
 <script>
-  var all_music_infinite = new Waypoint.Infinite({element: $('.all-music-container')[0], onBeforePageLoad: function() { $('.load').show(); }, onAfterPageLoad: function($items) { $('.load').hide(); }});
+  var all_music_infinite = new Waypoint.Infinite({element: $('.all-music-container')[0], onBeforePageLoad: function() { $('.music-load').show(); }, onAfterPageLoad: function($items) { $('.music-load').hide(); }});
 </script>
