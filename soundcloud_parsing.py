@@ -36,7 +36,7 @@ for track in all_tracks.collection:
                                 tag_list=track.tag_list,
                                 title=track.title,
                                 uri=track.uri,
-                                isrc=track.isrc,
+                                #isrc=track.isrc,
                                 #label_name=track.label_name.datetime.isoformat(sep='T'),
                                 )
 while all_tracks.next_href != None and all_tracks.count() < 5001:
@@ -59,6 +59,6 @@ while all_tracks.next_href != None and all_tracks.count() < 5001:
                                     tag_list=track.tag_list,
                                     title=track.title,
                                     uri=track.uri,
-                                    isrc=track.isrc,
+                                    #isrc=track.isrc,
                                     #label_name=track.label_name,
                                     )
