@@ -5,7 +5,6 @@ class SoundParsing(models.Model):
     artwork_url = models.URLField(max_length=255, blank=True)
     bpm = models.CharField(max_length=255, blank=True)
     created_at = models.DateTimeField(max_length=255, blank=True, null=True)
-    description = models.TextField(blank=True)
     duration = models.CharField(max_length=255, blank=True)
     genre = models.CharField(max_length=255, blank=True)
     permalink = models.CharField(max_length=255, blank=True)
@@ -19,6 +18,12 @@ class SoundParsing(models.Model):
     tag_list = models.CharField(max_length=255, blank=True)
     title = models.CharField(max_length=255, blank=True)
     uri = models.CharField(max_length=255, blank=True)
+    isrc = models.CharField(max_length=255, blank=True)
+    user_name = models.CharField(max_length=255, blank=True)
+    user_avatar = models.CharField(max_length=255, blank=True)
 
     def __str__(self):
         return self.title
+
+    class Meta:
+        ordering = ('-created_at',)
