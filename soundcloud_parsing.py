@@ -49,7 +49,7 @@ for track in all_tracks.collection:
                                 uri=track.uri,)
         count = count + 1
 
-while all_tracks.next_href != None and sum(count) < 301:
+while all_tracks.next_href != None and count < 301:
     all_tracks = client.get(all_tracks.next_href, order='created_at', limit=page_size, linked_partitioning=1)
     for track in all_tracks.collection:
         created_at = track.created_at
