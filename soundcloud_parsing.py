@@ -24,6 +24,10 @@ for track in all_tracks.collection:
     try:
         SoundParsing.objects.get(id=track.id)
     except:
+        try:
+            stream_url = track.stream_url
+        except:
+            stream_url = ''
         SoundParsing.objects.create(
                                 id=track.id,
                                 artwork_url=track.artwork_url,
@@ -32,16 +36,14 @@ for track in all_tracks.collection:
                                 duration=track.duration,
                                 genre=track.genre,
                                 permalink=track.permalink,
-                                permalink_url=track.permalink_url,
-                                stream_url=track.stream_url,
+                                stream_url=stream_url,
                                 streamable=track.streamable,
                                 release_month=track.release_month,
                                 release_year=track.release_year,
-                                tag_list=track.tag_list,
                                 title=track.title,
                                 uri=track.uri,
-                                isrc=track.isrc,
-                                label_name=track.label_name,
+                                label_name=track.label_name[:50],
+                                user=track.user[:50],
                                 )
 while all_tracks.next_href != None and all_tracks.count() < 301:
     all_tracks = client.get(all_tracks.next_href, order='created_at', limit=page_size, linked_partitioning=1)
@@ -58,14 +60,11 @@ while all_tracks.next_href != None and all_tracks.count() < 301:
                                     duration=track.duration,
                                     genre=track.genre,
                                     permalink=track.permalink,
-                                    permalink_url=track.permalink_url,
                                     stream_url=track.stream_url,
                                     streamable=track.streamable,
                                     release_month=track.release_month,
                                     release_year=track.release_year,
-                                    tag_list=track.tag_list,
                                     title=track.title,
-                                    uri=track.uri,
                                     isrc=track.isrc,
-                                    label_name=track.label_name,
+                                    label_name=track.label_name[:50],
                                     )
