@@ -14,7 +14,6 @@ class AllMusicView(TemplateView):
 class AllMusicListView(View):
 
     def get(self,request,*args,**kwargs):
-        page_size = 10
         context = {}
         all_tracks = SoundParsing.objects.only("id")
         context['all_tracks'] = self.all_tracks

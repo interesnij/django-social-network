@@ -15,6 +15,7 @@ from music.models import SoundParsing
 
 
 client = soundcloud.Client(client_id='dce5652caa1b66331903493735ddd64d')
+page_size = 10
 all_tracks = client.get('/tracks', order='created_at', limit=page_size, linked_partitioning=1)
 for user in users.collection:
     SoundParsing.objects.create(title=user.title)
