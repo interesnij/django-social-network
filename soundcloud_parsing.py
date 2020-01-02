@@ -36,8 +36,7 @@ for track in all_tracks.collection:
                                 title=track.title,
                                 uri=track.uri,
                                 isrc=track.isrc,
-                                user_name=track.user_name,
-                                user_avatar=track.user_avatar,
+                                label_name=track.label_name,
                                 )
 while all_tracks.next_href != None and all_tracks.count() < 5001:
     all_tracks = client.get(all_tracks.next_href, order='created_at', limit=page_size, linked_partitioning=1)
@@ -60,6 +59,5 @@ while all_tracks.next_href != None and all_tracks.count() < 5001:
                                     title=track.title,
                                     uri=track.uri,
                                     isrc=track.isrc,
-                                    user_name=track.user_name,
-                                    user_avatar=track.user_avatar,
+                                    label_name=track.label_name,
                                     )
