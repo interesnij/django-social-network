@@ -7,11 +7,11 @@
 
             <div class="jp-type-playlist">
                 <div class="jp-gui jp-interface">
-                    <ul class="jp-controls">
+                    <ul id="player_controls_{{ player.id }}" class="jp-controls">
                         <li>
                             <label id="name-of-the-song-that-plays"></label>
                         </li>
-                        <li><a href="javascript:;" class="jp-play" tabindex="1">play</a></li>
+                        <li><a id="player_play_{{ player.id }}" class="jp-play" tabindex="1">play</a></li>
                         <li><a href="javascript:;" class="jp-pause" tabindex="1">pause</a></li>
                         <li><a href="javascript:;" class="jp-previous" tabindex="1">previous</a></li>
                         <li><a href="javascript:;" class="jp-next" tabindex="1">next</a></li>
