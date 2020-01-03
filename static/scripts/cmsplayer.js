@@ -86,7 +86,7 @@
             playItem = index;
             var playlist = get_playlist();
 
-            element.jPlayer("setFile", [playlist[playItem]]);
+            element.jPlayer("setFile", playlist[playItem.mp3]);
             element.trigger('cmsplayer_config', [playlist[playItem]]);
         }
         element.data('cmsplayer.playListConfig', playListConfig);
