@@ -29,7 +29,7 @@ class Playlist(models.Model):
             data['permalink'] = track.permalink
             data['ogg'] = track.stream_url
             data['uri'] = track.uri
-            data['mp3'] = song.uri.url
+            data['mp3'] = track.uri.url
             data['release_year'] = track.release_year
             playlist.append(data)
         return playlist
