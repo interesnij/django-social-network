@@ -25,7 +25,6 @@ count = 0
 for track in all_tracks.collection:
     created_at = track.created_at
     created_at = datetime.strptime('Jun 1 2005  1:33PM', '%b %d %Y %I:%M%p')
-    genre = "'" + track.genre + "'"
     try:
         SoundParsing.objects.get(id=track.id)
     except:
@@ -33,7 +32,7 @@ for track in all_tracks.collection:
             stream_url = track.stream_url
         except:
             stream_url = ''
-        if genre in genres_list_names:
+        if track.genre and track.genre in genres_list_names:
             SoundParsing.objects.create(
                                 id=track.id,
                                 artwork_url=track.artwork_url,
@@ -62,7 +61,7 @@ while all_tracks.next_href != None and count < 21:
                 stream_url = track.stream_url
             except:
                 stream_url = ''
-            if track.genre in genres_list_names:
+            if track.genre and track.genre in genres_list_names:
                 SoundParsing.objects.create(
                                     id=track.id,
                                     artwork_url=track.artwork_url,
