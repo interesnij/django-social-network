@@ -49,19 +49,18 @@
                     </ul>
                     <div class="clear"></div>
                 </div>
-                {% block playlist %}
-	               <div id="playlist_list_{{ player.id }}" class="cmsplaylist">
-		                 <ul>
-		                    {% for song in player.playlist %}
-			                   {% block playlist_song %}
-			                    {% include "music/track.html" %}
-			                   {% endblock %}
-		                    {% endfor %}
-		                  </ul>
-	                </div>
-	              {% endblock %}
+
             </div>
         </div>
+        {% block playlist %}
+         <div id="playlist_list_{{ player.id }}" class="cmsplaylist">
+             <ul>
+                {% for song in player.playlist %}
+                  {% include "music/track.html" %}
+                {% endfor %}
+              </ul>
+          </div>
+        {% endblock %}
 
 {% else %}
 <div class="card mb-4" style="align-items: center;justify-content:center;">
