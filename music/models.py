@@ -1,3 +1,4 @@
+import soundcloud
 from django.conf import settings
 from django.db import models
 from common.utils import safe_json
@@ -19,11 +20,14 @@ class Playlist(models.Model):
 
     def playlist(self):
         playlist = []
+        client = soundcloud.Client(client_id='dce5652caa1b66331903493735ddd64d')
         for track in self.track.all():
             data = {}
+            track_url = track.uri
+            embed_info = client.get('/oembed', url=track_url)
             data['title'] = track.title
             data['artwork_url'] = track.artwork_url
-            data['mp3'] = track.uri
+            data['mp3'] = embed_info
             data['author'] = "Винни Пух"
             playlist.append(data)
         return playlist
