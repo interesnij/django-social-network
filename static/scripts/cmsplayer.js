@@ -85,7 +85,7 @@
             $("#playlist_item_"+playerid+"_"+index).addClass("playlist_current");
             playItem = index;
             var playlist = get_playlist();
-            element.jPlayer("setFile", 'https://soundcloud.com/bilgeco/scenes-from-a-memory-part-3');
+            element.jPlayer("setFile", 'https://api.soundcloud.com/tracks/737810995');
             }
 
             element.trigger('cmsplayer_config', [playlist[playItem]]);
