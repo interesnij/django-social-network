@@ -18,7 +18,7 @@ from datetime import datetime, date, time
 genres_list = SounGenres.objects.values('name')
 genres_list_names = [name['name'] for name in genres_list]
 client = soundcloud.Client(client_id='dce5652caa1b66331903493735ddd64d')
-page_size = 10
+page_size = 200
 all_tracks = client.get('/tracks', order="playback_count", limit=page_size, linked_partitioning=1)
 count = 0
 
