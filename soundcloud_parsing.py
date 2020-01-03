@@ -64,7 +64,8 @@ while all_tracks.next_href != None and count < 1000:
             except:
                 stream_url = ''
             if track.genre and track.release_year and track.genre in genres_list_names:
-                genre =SounGenres.objects.get(name=track.genre.replace("'", '') )
+                genre = SounGenres.objects.get(name=track.genre.replace("'", '') )
+                permalink = 'https://api.soundcloud.com/oembed?url=' + track.permalink_url + '&client_id=dce5652caa1b66331903493735ddd64d'
                 new_track = SoundParsing.objects.create(
                                     id=track.id,
                                     artwork_url=track.artwork_url,
@@ -72,7 +73,7 @@ while all_tracks.next_href != None and count < 1000:
                                     created_at=created_at,
                                     duration=track.duration,
                                     genre=genre,
-                                    permalink=track.permalink_url,
+                                    permalink=permalink,
                                     stream_url=stream_url,
                                     streamable=track.streamable,
                                     title=track.title,
