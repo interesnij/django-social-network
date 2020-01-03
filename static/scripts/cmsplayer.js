@@ -7,7 +7,7 @@
         function get_playlist(){
             return element.data('cmsplayer.playlist');
         }
-        var playerid = options.playerid;
+        var playerid = options.playerid; 
         var autoplay = options.autoplay;
         var autonext = options.autonext;
         var playItem = 0;
