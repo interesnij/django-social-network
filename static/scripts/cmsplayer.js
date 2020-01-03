@@ -86,7 +86,7 @@
             playItem = index;
             var playlist = get_playlist();
 
-            element.jPlayer("setFile", 'https://api.soundcloud.com/tracks/737810995');
+            element.jPlayer("setFile", [playlist[playItem]]);
             element.trigger('cmsplayer_config', [playlist[playItem]]);
         }
         element.data('cmsplayer.playListConfig', playListConfig);
