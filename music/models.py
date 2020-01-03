@@ -25,7 +25,7 @@ class Playlist(models.Model):
         for track in self.track.all():
             data = {}
             track_url = unquote(track.permalink)
-            embed_info = client.get('/oembed', url=track_url)
+            embed_info = 'https://api.soundcloud.com/oembed?url=https://soundcloud.com/teenagecomputer/teenage-computer-the-dream-3&client_id=dce5652caa1b66331903493735ddd64d'
             data['title'] = track.title
             data['artwork_url'] = track.artwork_url
             data['mp3'] = track_url
