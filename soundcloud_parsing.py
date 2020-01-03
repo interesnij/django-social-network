@@ -42,7 +42,7 @@ for track in all_tracks.collection:
                                 created_at=created_at,
                                 duration=track.duration,
                                 genre=genre,
-                                permalink=track.permalink,
+                                permalink=track.permalink_url,
                                 stream_url=stream_url,
                                 streamable=track.streamable,
                                 title=track.title,
