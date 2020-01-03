@@ -85,7 +85,7 @@
             $("#playlist_item_"+playerid+"_"+index).addClass("playlist_current");
             playItem = index;
             var playlist = get_playlist();
-            if (playlist[playItem].ogg)
+            if (playlist[playItem].uri)
             {
                 element.jPlayer("setFile", playlist[playItem].mp3, playlist[playItem].ogg);
             }
