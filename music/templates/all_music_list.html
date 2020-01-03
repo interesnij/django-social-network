@@ -1,40 +1,64 @@
 {% load staticfiles thumbnail %}
 {% if all_tracks %}
-<script src="{% static 'scripts/cmsplayer.js' %}" type="text/javascript"></script>
+<div id="jquery_jplayer_1" class="jp-jplayer"></div>
+        <div id="jp_container_1" class="jp-audio">
 
-<div id="jquery_jplayer_{{ player.id }}" class="jp-jplayer"></div>
-<div id="player_container_{{ player.id }}" class="cmsplayer">
+            <div class="jp-type-playlist">
+                <div class="jp-gui jp-interface">
+                    <ul class="jp-controls">
+                        <li>
+                            <label id="name-of-the-song-that-plays"></label>
+                        </li>
+                        <li><a href="javascript:;" class="jp-play" tabindex="1">play</a></li>
+                        <li><a href="javascript:;" class="jp-pause" tabindex="1">pause</a></li>
+                        <li><a href="javascript:;" class="jp-previous" tabindex="1">previous</a></li>
+                        <li><a href="javascript:;" class="jp-next" tabindex="1">next</a></li>
+                        <div class="clear"></div>
+                    </ul>
+                    <!-- Прогресс бар -->
+                    <div class="jp-progress">
+                        <div class="jp-seek-bar">
+                            <div class="jp-play-bar"></div>
+                        </div>
+                    </div>
+                    <!-- Регулятор громкости -->
+                    <div class="jp-volume-bar">
+                        <div class="jp-volume-bar-value"></div>
+                    </div>
+                    <!-- Остаток времени -->
+                    <div class="jp-time-holder">
+                        <div class="jp-current-time"></div>
+                    </div>
 
-  <ul id="player_controls_{{ player.id }}" class="controls">
-    <li id="player_play_{{ player.id }}" class="play">play</li>
-    <li id="player_pause_{{ player.id }}" class="pause">pause</li>
-    <li id="player_stop_{{ player.id }}" class="stop">stop</li>
-    <li id="player_volume_min_{{ player.id }}" class="volume-min">min volume</li>
-    <li id="player_volume_max_{{ player.id }}" class="volume-max">max volume</li>
-    <li id="ctrl_prev_{{ player.id }}" class="prev">previous</li>
-    <li id="ctrl_next_{{ player.id }}" class="next">next</li>
-  </ul>
+                    <div class="clear"></div>
 
-  <div id="play_time_{{ player.id }}" class="playtime"></div>
-  <div id="total_time_{{ player.id }}" class="totaltime"></div>
-
-  <div id="player_progress_{{ player.id }}" class="progress">
-    <div id="player_progress_load_bar_{{ player.id }}" class="loadbar">
-      <div id="player_progress_play_bar_{{ player.id }}" class="playbar"></div>
-    </div>
-  </div>
-
-  <div id="player_volume_bar_{{ player.id }}" class="volumebar">
-    <div id="player_volume_bar_value_{{ player.id }}" class="volumebarvalue"></div>
-  </div>
-</div>
-<div id="playlist_list_{{ player.id }}" class="cmsplaylist">
-  <ul>
-  {% for object in player.playlist %}
-    {% include "music/track.html" %}
-  {% endfor %}
-  </ul>
-</div>
+                    <!-- Кнопки повторения и перемешивания плейлиста -->
+                    <ul class="jp-toggles">
+                        <li>
+                            <a href="javascript:;" class="jp-shuffle" tabindex="1" title="shuffle">shuffle</a>
+                        </li>
+                        <li>
+                            <a href="javascript:;" class="jp-shuffle-off" tabindex="1" title="shuffle off">shuffle off</a>
+                        </li>
+                        <li>
+                            <a href="javascript:;" class="jp-repeat" tabindex="1" title="repeat">repeat</a>
+                        </li>
+                        <li>
+                            <a href="javascript:;" class="jp-repeat-off" tabindex="1" title="repeat off">repeat off</a>
+                        </li>
+                    </ul>
+                    <div class="clear"></div>
+                </div>
+                <!-- Будущий плейлист -->
+                <div class="jp-playlist">
+                    <ul>
+                      {% for object in player.playlist %}
+                        {% include "music/track.html" %}
+                      {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
 
 {% else %}
 <div class="card mb-4" style="align-items: center;justify-content:center;">
@@ -48,18 +72,20 @@
 <script>
   var all_music_infinite = new Waypoint.Infinite({element: $('.all-music-container')[0], onBeforePageLoad: function() { $('.music-load').show(); }, onAfterPageLoad: function($items) { $('.music-load').hide(); }});
 
-  $(document).ready(function(){
-      var player = $('#jquery_jplayer_{{ player.id }}');
-    player.cmsPlayer(
-      {
-          playlist: {{ player.get_json_playlist }},
-          autoplay: {{ player.get_json_autoplay }},
-          playerid: "{{ player.id }}",
-          autonext: true,
-        cssPrefix: 'jqjp_{{ player.id }}',
-        swfPath: 'http://' + window.location.host + {{ player.get_base_path }},
-        useStateClassSkin: true,
-      }
-    );
-  });
+  <script type="text/javascript">
+$(document).ready(function(){
+ new jPlayerPlaylist({
+   jPlayer: "#jquery_jplayer_1",
+   cssSelectorAncestor: "#jp_container_1"
+ }, {{ player.get_json_playlist }} ,{
+   swfPath: "{% static 'jquery.jplayer.swf' %}",
+   supplied: "oga, mp3",
+   wmode: "window",
+   useStateClassSkin: true,
+   autoBlur: false,
+   smoothPlayBar: true,
+   keyEnabled: true
+ });
+});
+</script>
 </script>
