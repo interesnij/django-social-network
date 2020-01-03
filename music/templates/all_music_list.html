@@ -53,25 +53,9 @@
                 <!-- Будущий плейлист -->
                 <div class="jp-playlist">
                     <ul>
-                      {% for object in all_tracks %}
-                      <li class="list-group-item infinite-item">
-                          <div class="media">
-                              <figure>
-                                {% if object.artwork_url %}
-                                  <img style="width:30px;heigth:auto" src="{{ object.artwork_url }}" />
-                                  {% else %}
-                                    <img style="width:30px;heigth:30px" src="{% static 'images/icons/person-24px.svg' %}" />
-                                  {% endif %}
-                              </figure>
-                              <div class="media-body">
-                                  <a href="" class="ajax">
-                                      <h6 class="my-0 mt-1">{{ object.title }}</h6>
-                                  </a>
-                                  <a href="" class="small">{{ object.genre }} - {{ object.duration }}</a>
-                              </div>
-                          </div>
-                      </li>
-                      {% endfor %}
+                      {% for object in player.playlist %}
+                  			{% include "music/track.html" %}
+                  		{% endfor %}
                     </ul>
                 </div>
             </div>
@@ -120,120 +104,18 @@
 <script>
   var all_music_infinite = new Waypoint.Infinite({element: $('.all-music-container')[0], onBeforePageLoad: function() { $('.music-load').show(); }, onAfterPageLoad: function($items) { $('.music-load').hide(); }});
 
-  //<![CDATA[
-$(document).ready(function(){
-
-    var cssSelector = {
-        jPlayer: "#jquery_jplayer_1",
-        cssSelectorAncestor: "#jp_container_1"
-    };
-
-    var playlist = [
-        {
-            author:"TSP",
-            title:"Cro Magnon Man",
-            discription: "Текст песни / описание",
-            mp3:"http://www.jplayer.org/audio/mp3/TSP-01-Cro_magnon_man.mp3",
-            oga:"http://www.jplayer.org/audio/ogg/TSP-01-Cro_magnon_man.ogg"
-        },
-        {
-            author:"TSP",
-            title:"Your Face",
-            discription: "Текст песни / описание",
-            mp3:"http://www.jplayer.org/audio/mp3/TSP-05-Your_face.mp3",
-            oga:"http://www.jplayer.org/audio/ogg/TSP-05-Your_face.ogg"
-        },
-        {
-            author:"TSP",
-            title:"Cyber Sonnet",
-            discription: "Текст песни / описание",
-            mp3:"http://www.jplayer.org/audio/mp3/TSP-07-Cybersonnet.mp3",
-            oga:"http://www.jplayer.org/audio/ogg/TSP-07-Cybersonnet.ogg"
-        },
-        {
-            author:"Miaow",
-            title:"Tempered Song",
-            discription: "Текст песни / описание",
-            mp3:"http://www.jplayer.org/audio/mp3/Miaow-01-Tempered-song.mp3",
-            oga:"http://www.jplayer.org/audio/ogg/Miaow-01-Tempered-song.ogg"
-        },
-        {
-            author:"Miaow",
-            title:"Hidden",
-            discription: "Текст песни / описание",
-            mp3:"http://www.jplayer.org/audio/mp3/Miaow-02-Hidden.mp3",
-            oga:"http://www.jplayer.org/audio/ogg/Miaow-02-Hidden.ogg"
-        },
-        {
-            author:"Miaow",
-            title:"Lentement",
-            free:true,
-            discription: "Текст песни / описание",
-            mp3:"http://www.jplayer.org/audio/mp3/Miaow-03-Lentement.mp3",
-            oga:"http://www.jplayer.org/audio/ogg/Miaow-03-Lentement.ogg"
-        },
-        {
-            author:"Miaow",
-            title:"Lismore",
-            discription: "Текст песни / описание",
-            mp3:"http://www.jplayer.org/audio/mp3/Miaow-04-Lismore.mp3",
-            oga:"http://www.jplayer.org/audio/ogg/Miaow-04-Lismore.ogg"
-        },
-        {
-            author:"Miaow",
-            title:"The Separation",
-            discription: "Текст песни / описание",
-            mp3:"http://www.jplayer.org/audio/mp3/Miaow-05-The-separation.mp3",
-            oga:"http://www.jplayer.org/audio/ogg/Miaow-05-The-separation.ogg"
-        },
-        {
-            author:"Miaow",
-            title:"Beside Me",
-            discription: "Текст песни / описание",
-            mp3:"http://www.jplayer.org/audio/mp3/Miaow-06-Beside-me.mp3",
-            oga:"http://www.jplayer.org/audio/ogg/Miaow-06-Beside-me.ogg"
-        },
-        {
-            author:"Miaow",
-            title:"Bubble",
-            free:true,
-            discription: "Текст песни / описание",
-            mp3:"http://www.jplayer.org/audio/mp3/Miaow-07-Bubble.mp3",
-            oga:"http://www.jplayer.org/audio/ogg/Miaow-07-Bubble.ogg"
-        },
-        {
-            author:"Miaow",
-            title:"Stirring of a Fool",
-            discription: "Текст песни / описание",
-            mp3:"http://www.jplayer.org/audio/mp3/Miaow-08-Stirring-of-a-fool.mp3",
-            oga:"http://www.jplayer.org/audio/ogg/Miaow-08-Stirring-of-a-fool.ogg"
-        },
-        {
-            author:"Miaow",
-            title:"Partir",
-            free: true,
-            discription: "Текст песни / описание",
-            mp3:"http://www.jplayer.org/audio/mp3/Miaow-09-Partir.mp3",
-            oga:"http://www.jplayer.org/audio/ogg/Miaow-09-Partir.ogg"
-        },
-        {
-            author:"Miaow",
-            title:"Thin Ice",
-            discription: "Текст песни / описание",
-            mp3:"http://www.jplayer.org/audio/mp3/Miaow-10-Thin-ice.mp3",
-            oga:"http://www.jplayer.org/audio/ogg/Miaow-10-Thin-ice.ogg"
-        }
-    ];
-
-    var options = {
-        swfPath: "js",
-        supplied: "oga, mp3",
-        wmode: "window",
-        smoothPlayBar: false,
-        keyEnabled: true
-    };
-
-    new jPlayerPlaylist(cssSelector, playlist, options);
-});
-//]]>
+  $(document).ready(function(){
+      var player = $('#jquery_jplayer_{{ player.id }}');
+    player.cmsPlayer(
+      {
+          playlist: {{ player.get_json_playlist }},
+          autoplay: {{ player.get_json_autoplay }},
+          playerid: "{{ player.id }}",
+          autonext: true,
+        cssPrefix: 'jqjp_{{ player.id }}',
+        swfPath: 'http://' + window.location.host + {{ player.get_base_path }},
+        customCssIds: true
+      }
+    );
+  });
 </script>
