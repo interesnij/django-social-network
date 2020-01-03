@@ -45,7 +45,7 @@ for track in all_tracks.collection:
                                 uri=track.uri,)
         count = count + 1
 
-while all_tracks.next_href != None and count < 301:
+while all_tracks.next_href != None and count < 21:
     all_tracks = client.get(all_tracks.next_href, q='чиж и ко', order='playback\_count', limit=page_size, linked_partitioning=1)
     for track in all_tracks.collection:
         created_at = track.created_at
