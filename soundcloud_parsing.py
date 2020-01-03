@@ -35,6 +35,7 @@ for track in all_tracks.collection:
             stream_url = ''
         if track.genre and track.release_year and track.genre in genres_list_names:
             genre =SounGenres.objects.get(name=track.genre.replace("'", '') )
+            stream_url = client.get(track.stream_url, allow_redirects=False)
             new_track = SoundParsing.objects.create(
                                 id=track.id,
                                 artwork_url=track.artwork_url,
@@ -42,7 +43,7 @@ for track in all_tracks.collection:
                                 created_at=created_at,
                                 duration=track.duration,
                                 genre=genre,
-                                permalink=track.permalink_url,
+                                permalink=stream_url.location,
                                 stream_url=stream_url,
                                 streamable=track.streamable,
                                 title=track.title,
@@ -65,7 +66,7 @@ while all_tracks.next_href != None and count < 1000:
                 stream_url = ''
             if track.genre and track.release_year and track.genre in genres_list_names:
                 genre = SounGenres.objects.get(name=track.genre.replace("'", '') )
-                stream_url = track.stream_url + '&client_id=dce5652caa1b66331903493735ddd64d'
+                stream_url = client.get(track.stream_url, allow_redirects=False)
                 new_track = SoundParsing.objects.create(
                                     id=track.id,
                                     artwork_url=track.artwork_url,
@@ -73,7 +74,7 @@ while all_tracks.next_href != None and count < 1000:
                                     created_at=created_at,
                                     duration=track.duration,
                                     genre=genre,
-                                    permalink=stream_url,
+                                    permalink=stream_url.location,
                                     stream_url=stream_url,
                                     streamable=track.streamable,
                                     title=track.title,
