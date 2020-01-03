@@ -25,7 +25,7 @@ class Playlist(models.Model):
             data = {}
             data['title'] = track.title
             data['artwork_url'] = track.artwork_url
-            data['mp3'] = track.permalink
+            data['mp3'] = track.permalink.location
             data['author'] = "Винни Пух"
             playlist.append(data)
         return playlist
