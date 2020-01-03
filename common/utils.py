@@ -7,7 +7,7 @@ import json
 
 
 def safe_json(data):
-    return mark_safe(json(data))
+    return mark_safe(json.dumps(data)) 
 
 class PlayerObject(dict):
     def __init__(self, playerid, playlist, autoplay, base_path, ogg_support):
