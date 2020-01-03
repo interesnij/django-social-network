@@ -72,19 +72,28 @@
 <script>
   var all_music_infinite = new Waypoint.Infinite({element: $('.all-music-container')[0], onBeforePageLoad: function() { $('.music-load').show(); }, onAfterPageLoad: function($items) { $('.music-load').hide(); }});
 
-$(document).ready(function(){
- new jPlayerPlaylist({
-   jPlayer: "#jquery_jplayer_1",
-   cssSelectorAncestor: "#jp_container_1"
- }, {{ player.get_json_playlist }} ,{
-   swfPath: "{% static 'jquery.jplayer.swf' %}",
-   supplied: "oga, mp3",
-   wmode: "window",
-   useStateClassSkin: true,
-   autoBlur: false,
-   smoothPlayBar: true,
-   keyEnabled: true
- });
-});
+
+  $(document).ready(function(){
+  	    {% block javascript_library %}
+  	    if (!document.cmsPlayerLoaded){
+  	    	$("head").append('<scr' + 'ipt type="text/javascript" src="{{ MEDIA_URL }}jplayer/js/cmsplayer.js"></scr' + 'ipt>');
+  	    }
+  	    {% endblock %}
+  	    var player = $('#jquery_jplayer_1');
+  		player.cmsPlayer(
+  			{
+  			    {% block javascript_initdata %}
+  			    playlist: {{ player.get_json_playlist }},
+  			    autoplay: {{ player.get_json_autoplay }},
+  			    playerid: "{{ player.id }}",
+  			    autonext: true,
+  				cssPrefix: 'jqjp_{{ player.id }}',
+  				swfPath: 'http://' + window.location.host + {{ player.get_base_path }},
+  				oggSupport: {{ player.get_json_ogg_support }},
+  				customCssIds: true
+  				{% endblock %}
+  			}
+  		);
+  	});
 
 </script>
