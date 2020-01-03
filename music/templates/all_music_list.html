@@ -49,14 +49,17 @@
                     </ul>
                     <div class="clear"></div>
                 </div>
-                <!-- Будущий плейлист -->
-                <div class="jp-playlist">
-                    <ul>
-                      {% for object in player.playlist %}
-                        {% include "music/track.html" %}
-                      {% endfor %}
-                    </ul>
-                </div>
+                {% block playlist %}
+	               <div id="playlist_list_{{ player.id }}" class="cmsplaylist">
+		                 <ul>
+		                    {% for song in player.playlist %}
+			                   {% block playlist_song %}
+			                    {% include "music/track.html" %}
+			                   {% endblock %}
+		                    {% endfor %}
+		                  </ul>
+	                </div>
+	              {% endblock %}
             </div>
         </div>
 
