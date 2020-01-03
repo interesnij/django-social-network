@@ -22,7 +22,7 @@ class Playlist(models.Model):
         for track in self.track.all():
             data = {}
             data['title'] = track.title
-            data['artwork_url'] = track.artwork_url.url
+            data['artwork_url'] = track.artwork_url
             data['bpm'] = track.bpm
             data['duration'] = track.duration
             data['genre'] = track.genre.name
