@@ -19,7 +19,6 @@ class Playlist(models.Model):
 
     def playlist(self):
         playlist = []
-        ogg_support = self.ogg_support()
         for track in self.track.all():
             data = {}
             data['title'] = track.title
