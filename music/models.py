@@ -14,10 +14,10 @@ class Playlist(models.Model):
 
     def get_json_playlist(self):
         if not hasattr(self, '_cached_playlist'):
-            self._cached_playlist = safe_json(self.full_playlist())
+            self._cached_playlist = safe_json(self.playlist())
         return self._cached_playlist
 
-    def full_playlist(self):
+    def playlist(self):
         playlist = []
         for track in self.track.all():
             data = {}
