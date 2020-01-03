@@ -85,9 +85,14 @@
             $("#playlist_item_"+playerid+"_"+index).addClass("playlist_current");
             playItem = index;
             var playlist = get_playlist();
-            element.jPlayer("setFile", [playlist[playItem]]);
+            if (playlist[playItem].ogg)
+            {
+                element.jPlayer("setFile", playlist[playItem].mp3, playlist[playItem].ogg);
             }
-
+            else
+            {
+                element.jPlayer("setFile", playlist[playItem].mp3);
+            }
             element.trigger('cmsplayer_config', [playlist[playItem]]);
         }
         element.data('cmsplayer.playListConfig', playListConfig);
