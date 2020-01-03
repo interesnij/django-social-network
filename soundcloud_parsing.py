@@ -33,13 +33,14 @@ for track in all_tracks.collection:
         except:
             stream_url = ''
         if track.genre and track.genre in genres_list_names:
+            genre =SounGenres.objects.get(name=track.genre.replace("'", '') )
             SoundParsing.objects.create(
                                 id=track.id,
                                 artwork_url=track.artwork_url,
                                 bpm=track.bpm,
                                 created_at=created_at,
                                 duration=track.duration,
-                                genre__name=track.genre.replace("'", ''),
+                                genre=genre,
                                 permalink=track.permalink,
                                 stream_url=stream_url,
                                 streamable=track.streamable,
@@ -62,13 +63,14 @@ while all_tracks.next_href != None and count < 21:
             except:
                 stream_url = ''
             if track.genre and track.genre in genres_list_names:
+                genre =SounGenres.objects.get(name=track.genre.replace("'", '') )
                 SoundParsing.objects.create(
                                     id=track.id,
                                     artwork_url=track.artwork_url,
                                     bpm=track.bpm,
                                     created_at=created_at,
                                     duration=track.duration,
-                                    genre__name=track.genre.replace("'", ''),
+                                    genre=genre,
                                     permalink=track.permalink,
                                     stream_url=stream_url,
                                     streamable=track.streamable,
