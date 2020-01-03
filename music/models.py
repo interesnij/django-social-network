@@ -24,9 +24,8 @@ class Playlist(models.Model):
         client = soundcloud.Client(client_id='dce5652caa1b66331903493735ddd64d')
         for track in self.track.all():
             data = {}
-            track_url = track.permalink
+            track_url = unquote(unquote(track.permalink))
             embed_info = client.get('/oembed', url=track_url)
-            embed_info.unquote(unquote(embed_info))
             data['title'] = track.title
             data['artwork_url'] = track.artwork_url
             data['mp3'] = track_url
