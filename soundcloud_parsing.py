@@ -35,7 +35,7 @@ for track in all_tracks.collection:
             stream_url = ''
         if track.genre and track.release_year and track.genre in genres_list_names:
             genre =SounGenres.objects.get(name=track.genre.replace("'", '') )
-            SoundParsing.objects.create(
+            new_track = SoundParsing.objects.create(
                                 id=track.id,
                                 artwork_url=track.artwork_url,
                                 bpm=track.bpm,
@@ -47,9 +47,9 @@ for track in all_tracks.collection:
                                 streamable=track.streamable,
                                 title=track.title,
                                 uri=track.uri,
-                                release_year=track.release_year,
-                                playlist=all_track_playlist,)
+                                release_year=track.release_year,)
         count = count + 1
+        all_track_playlist.add(new_track)
 
 while all_tracks.next_href != None and count < 1000:
     all_tracks = client.get(all_tracks.next_href, order="playback_count", limit=page_size, linked_partitioning=1)
@@ -65,7 +65,7 @@ while all_tracks.next_href != None and count < 1000:
                 stream_url = ''
             if track.genre and track.release_year and track.genre in genres_list_names:
                 genre =SounGenres.objects.get(name=track.genre.replace("'", '') )
-                SoundParsing.objects.create(
+                new_track = SoundParsing.objects.create(
                                     id=track.id,
                                     artwork_url=track.artwork_url,
                                     bpm=track.bpm,
@@ -77,6 +77,6 @@ while all_tracks.next_href != None and count < 1000:
                                     streamable=track.streamable,
                                     title=track.title,
                                     uri=track.uri,
-                                    release_year=track.release_year,
-                                    playlist=all_track_playlist,)
+                                    release_year=track.release_year,)
         count = count + 1
+        all_track_playlist.add(new_track)
