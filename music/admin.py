@@ -10,4 +10,4 @@ class SoundParsingAdmin(admin.ModelAdmin):
 
 
 admin.site.register(SoundParsing, SoundParsingAdmin)
-admin.site.register(SounGenres, SounGenresAdmin)
+admin.site.register(SounGenres)
