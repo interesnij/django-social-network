@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import SoundParsing
+from .models import SoundParsing, SounGenres
 
 
 class SoundParsingAdmin(admin.ModelAdmin):
@@ -10,3 +10,4 @@ class SoundParsingAdmin(admin.ModelAdmin):
 
 
 admin.site.register(SoundParsing, SoundParsingAdmin)
+admin.site.register(SounGenres, SounGenresAdmin)
