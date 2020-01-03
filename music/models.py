@@ -23,14 +23,8 @@ class Playlist(models.Model):
             data = {}
             data['title'] = track.title
             data['artwork_url'] = track.artwork_url
-            data['bpm'] = track.bpm
-            data['duration'] = track.duration
-            data['genre'] = track.genre.name
-            data['permalink'] = track.permalink
-            data['ogg'] = track.stream_url
-            data['uri'] = track.uri
+            data['uri'] = track.stream_url
             data['mp3'] = track.uri
-            data['release_year'] = track.release_year
             playlist.append(data)
         return playlist
 
