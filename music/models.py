@@ -24,10 +24,11 @@ class Playlist(models.Model):
         for track in self.track.all():
             data = {}
             track_url = track.permalink
+            trtr = 'https://api.soundcloud.com/oembed?client_id=dce5652caa1b66331903493735ddd64d&url=https://soundcloud.com/Fteenagecomputer/Fteenage-computer-the-dream-3'
             embed_info = client.get('/oembed', url=track_url)
             data['title'] = track.title
             data['artwork_url'] = track.artwork_url
-            data['mp3'] = embed_info
+            data['mp3'] = trtr
             data['author'] = "Винни Пух"
             playlist.append(data)
         return playlist
