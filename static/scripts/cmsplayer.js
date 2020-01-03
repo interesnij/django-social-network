@@ -7,21 +7,21 @@
         function get_playlist(){
             return element.data('cmsplayer.playlist');
         }
-        var playerid = options.playerid; 
+        var playerid = options.playerid;
         var autoplay = options.autoplay;
         var autonext = options.autonext;
         var playItem = 0;
         var playtime = $("#play_time_"+playerid);
         var totaltime =  $("#total_time_"+playerid);
-        element.jPlayer("cssId", "play", "player_play_"+playerid)
-        .jPlayer("cssId", "pause", "player_pause_"+playerid)
-        .jPlayer("cssId", "stop", "player_stop_"+playerid)
-        .jPlayer("cssId", "loadBar", "player_progress_load_bar_"+playerid)
-        .jPlayer("cssId", "playBar", "player_progress_play_bar_"+playerid)
-        .jPlayer("cssId", "volumeMin", "player_volume_min_"+playerid)
-        .jPlayer("cssId", "volumeMax", "player_volume_max_"+playerid)
-        .jPlayer("cssId", "volumeBar", "player_volume_bar_"+playerid)
-        .jPlayer("cssId", "volumeBarValue", "player_volume_bar_value_"+playerid)
+        element.jPlayer("cssId", "jp-play", "jp-player_play_"+playerid)
+        .jPlayer("cssId", "pause", "jp-player_pause_"+playerid)
+        .jPlayer("cssId", "stop", "jp-player_stop_"+playerid)
+        .jPlayer("cssId", "loadBar", "jp-player_progress_load_bar_"+playerid)
+        .jPlayer("cssId", "playBar", "jp-player_progress_play_bar_"+playerid)
+        .jPlayer("cssId", "volumeMin", "jp-player_volume_min_"+playerid)
+        .jPlayer("cssId", "volumeMax", "jp-player_volume_max_"+playerid)
+        .jPlayer("cssId", "volumeBar", "jp-player_volume_bar_"+playerid)
+        .jPlayer("cssId", "volumeBarValue", "jp-player_volume_bar_value_"+playerid)
         .jPlayer("onProgressChange", function(loadPercent, playedPercentRelative, playedPercentAbsolute, playedTime, totalTime) {
             var myPlayedTime = new Date(playedTime);
             var ptMin = (myPlayedTime.getUTCMinutes() < 10) ? "0" + myPlayedTime.getUTCMinutes() : myPlayedTime.getUTCMinutes();
