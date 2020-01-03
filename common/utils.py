@@ -2,12 +2,12 @@ from django.conf import settings
 from django.template import RequestContext
 from django.template.loader import render_to_string
 from django.utils.safestring import mark_safe
-from django.utils.simplejson import dumps
+import json
 
 
 
 def safe_json(data):
-    return mark_safe(dumps(data))
+    return mark_safe(json(data))
 
 class PlayerObject(dict):
     def __init__(self, playerid, playlist, autoplay, base_path, ogg_support):
