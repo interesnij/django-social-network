@@ -2,9 +2,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic.base import TemplateView
 from django.views import View
 from django.shortcuts import render_to_response
-from django.http import JsonResponse
-from rest_framework.response import Response
-from music.models import SoundParsing
+from music.models import SoundParsing, Playlist
 
 
 class AllMusicView(TemplateView):
@@ -15,10 +13,12 @@ class AllMusicListView(View):
 
     def get(self,request,*args,**kwargs):
         context = {}
-        all_tracks = SoundParsing.objects.only("id")
+        player = Playlist.objects.get(id=1)
+        all_tracks = SoundParsing.objects.only('id')
         current_page = Paginator(all_tracks, 30)
         page = request.GET.get('page')
         context['all_tracks'] = all_tracks
+        context['player'] = player
         try:
             context['all_tracks'] = current_page.page(page)
         except PageNotAnInteger:
