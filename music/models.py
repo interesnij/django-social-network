@@ -1,4 +1,44 @@
+from django.conf import settings
 from django.db import models
+from common.utils import safe_json
+
+
+class Playlist(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=255, unique=True)
+    track = models.ManyToManyField('music.SoundParsing', related_name='players')
+    autoplay = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.name
+
+    def get_json_playlist(self):
+        if not hasattr(self, '_cached_playlist'):
+            self._cached_playlist = safe_json(self.playlist())
+        return self._cached_playlist
+
+    def playlist(self):
+        playlist = []
+        ogg_support = self.ogg_support()
+        for track in self.track.all():
+            data = {}
+            data['title'] = track.title
+            data['artwork_url'] = track.artwork_url.url
+            data['bpm'] = track.bpm
+            data['duration'] = track.duration
+            data['genre'] = track.genre.name
+            data['permalink'] = track.permalink
+            data['stream_url'] = track.stream_url
+            data['uri'] = track.uri
+            data['release_year'] = track.release_year
+            playlist.append(data)
+        return playlist
+
+    def get_base_path(self):
+        return safe_json(settings.JPLAYER_BASE_PATH)
+
+    def get_json_autoplay(self):
+        return safe_json(self.autoplay)
 
 
 class SounGenres(models.Model):
