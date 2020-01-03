@@ -48,7 +48,7 @@ for track in all_tracks.collection:
                                 title=track.title,
                                 uri=track.uri,
                                 release_year=track.release_year,)
-            all_track_playlist.add(new_track)
+            all_track_playlist.track.add(new_track)
         count = count + 1
 
 while all_tracks.next_href != None and count < 1000:
@@ -78,5 +78,5 @@ while all_tracks.next_href != None and count < 1000:
                                     title=track.title,
                                     uri=track.uri,
                                     release_year=track.release_year,)
-                all_track_playlist.add(new_track)
+                all_track_playlist.track.add(new_track)
         count = count + 1
