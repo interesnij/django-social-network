@@ -45,10 +45,12 @@ for track in all_tracks.collection:
                                 stream_url=stream_url,
                                 streamable=track.streamable,
                                 title=track.title,
-                                uri=track.uri,)
+                                uri=track.uri,
+                                release_month=track.release_month,
+                                release_year=track.release_year,)
         count = count + 1
 
-while all_tracks.next_href != None and count < 21:
+while all_tracks.next_href != None and count < 200:
     all_tracks = client.get(all_tracks.next_href, order="playback_count", limit=page_size, linked_partitioning=1)
     for track in all_tracks.collection:
         created_at = track.created_at
@@ -73,5 +75,7 @@ while all_tracks.next_href != None and count < 21:
                                     stream_url=stream_url,
                                     streamable=track.streamable,
                                     title=track.title,
-                                    uri=track.uri,)
+                                    uri=track.uri,
+                                    release_month=track.release_month,
+                                    release_year=track.release_year,)
         count = count + 1
