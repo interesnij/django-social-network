@@ -25,7 +25,7 @@ class Playlist(models.Model):
             data = {}
             data['title'] = track.title
             data['artwork_url'] = track.artwork_url
-            data['mp3'] = track.permalink.location
+            data['mp3'] = track.stream_url
             data['author'] = "Винни Пух"
             playlist.append(data)
         return playlist
@@ -52,8 +52,8 @@ class SoundParsing(models.Model):
     created_at = models.DateTimeField(max_length=255, blank=True, null=True)
     duration = models.CharField(max_length=255, blank=True, null=True)
     genre = models.ForeignKey(SounGenres, on_delete=models.CASCADE, verbose_name="Жанр трека")
-    permalink = models.CharField(max_length=500, blank=True, null=True)
-    stream_url = models.URLField(max_length=255, blank=True, null=True)
+    permalink = models.CharField(max_length=100, blank=True, null=True)
+    stream_url = models.URLField(max_length=1000, blank=True, null=True)
     streamable = models.BooleanField(default=True, null=True)
     title = models.CharField(max_length=255, blank=True, null=True)
     uri = models.CharField(max_length=255, blank=True, null=True)
