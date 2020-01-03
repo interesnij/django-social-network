@@ -25,7 +25,7 @@ class AllMusicListView(View):
             context['all_tracks'] = current_page.page(1)
         except EmptyPage:
             context['all_tracks'] = current_page.page(current_page.num_pages)
-        return render_to_response('all_music_list.html', context)
+        return render_to_response('all_music_list2.html', context)
 
 
 class AllSearchMusicView(View):
