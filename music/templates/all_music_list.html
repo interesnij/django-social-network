@@ -12,24 +12,24 @@
                             <label id="name-of-the-song-that-plays"></label>
                         </li>
                         <li><a id="player_play_{{ player.id }}" class="jp-play" tabindex="1">play</a></li>
-                        <li><a href="javascript:;" class="jp-pause" tabindex="1">pause</a></li>
-                        <li><a href="javascript:;" class="jp-previous" tabindex="1">previous</a></li>
-                        <li><a href="javascript:;" class="jp-next" tabindex="1">next</a></li>
+                        <li><a id="player_pause_{{ player.id }}" class="jp-pause" tabindex="1">pause</a></li>
+                        <li><a id="ctrl_prev_{{ player.id }}" class="jp-previous" tabindex="1">previous</a></li>
+                        <li><a id="ctrl_next_{{ player.id }}" class="jp-next" tabindex="1">next</a></li>
                         <div class="clear"></div>
                     </ul>
                     <!-- Прогресс бар -->
-                    <div class="jp-progress">
+                    <div id="player_progress_{{ player.id }}" class="jp-progress">
                         <div class="jp-seek-bar">
-                            <div class="jp-play-bar"></div>
+                            <div id="player_volume_bar_value_{{ player.id }}" class="jp-play-bar"></div>
                         </div>
                     </div>
                     <!-- Регулятор громкости -->
-                    <div class="jp-volume-bar">
-                        <div class="jp-volume-bar-value"></div>
+                    <div id="player_volume_bar_{{ player.id }}" class="jp-volume-bar">
+                        <div id="player_volume_bar_value_{{ player.id }}" class="jp-volume-bar-value"></div>
                     </div>
                     <!-- Остаток времени -->
                     <div class="jp-time-holder">
-                        <div class="jp-current-time"></div>
+                        <div id="play_time_{{ player.id }}" class="jp-current-time"></div>
                     </div>
 
                     <div class="clear"></div>
