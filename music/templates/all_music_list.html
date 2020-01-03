@@ -101,6 +101,8 @@
 </div>
 {% endif %}
 
+<script src="{% static 'scripts/cmsplayer.js' %}" type="text/javascript"></script>
+
 <script>
   var all_music_infinite = new Waypoint.Infinite({element: $('.all-music-container')[0], onBeforePageLoad: function() { $('.music-load').show(); }, onAfterPageLoad: function($items) { $('.music-load').hide(); }});
 
@@ -119,5 +121,3 @@
     );
   });
 </script>
-
-<script src="{% static 'scripts/cmsplayer.js' %}" type="text/javascript"></script>
