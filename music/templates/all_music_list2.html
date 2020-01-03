@@ -60,12 +60,7 @@
 
   <script>
 $(document).ready(function(){
-  var headers =  {
-    'Access-Control-Allow-Credentials' : true,
-    'Access-Control-Allow-Origin':'*',
-    'Access-Control-Allow-Methods':'GET',
-    'Access-Control-Allow-Headers':'application/json',
-  };
+
     var cssSelector = {
         jPlayer: "#jquery_jplayer_1",
         cssSelectorAncestor: "#jp_container_1"
@@ -73,7 +68,7 @@ $(document).ready(function(){
     var playlist = {{ player.get_json_playlist }};
 
     var options = {
-        swfPath: "js",
+        swfPath: "/static/jquery.jplayer.swf",
         supplied: "oga, mp3",
         wmode: "window",
         smoothPlayBar: false,
