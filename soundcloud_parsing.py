@@ -29,10 +29,6 @@ for track in all_tracks.collection:
             stream_url = track.stream_url
         except:
             stream_url = ''
-        try:
-            label_name = track.label_name[:50]
-        except:
-            label_name = ''
         SoundParsing.objects.create(
                                 id=track.id,
                                 artwork_url=track.artwork_url,
