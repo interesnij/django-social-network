@@ -55,7 +55,7 @@
         {% block playlist %}
          <div id="playlist_list_{{ player.id }}" class="cmsplaylist">
              <ul>
-                {% for song in player.playlist %}
+                {% for object in player.playlist %}
                   {% include "music/track.html" %}
                 {% endfor %}
               </ul>
