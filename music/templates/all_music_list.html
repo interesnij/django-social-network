@@ -81,7 +81,6 @@
   	    var player = $('#jquery_jplayer_1');
   		player.cmsPlayer(
   			{
-  			    {% block javascript_initdata %}
   			    playlist: {{ player.get_json_playlist }},
   			    autoplay: {{ player.get_json_autoplay }},
   			    playerid: "{{ player.id }}",
@@ -89,7 +88,6 @@
   				cssPrefix: 'jqjp_{{ player.id }}',
   				swfPath: 'http://' + window.location.host + {{ player.get_base_path }},
   				customCssIds: true
-  				{% endblock %}
   			}
   		);
   	});
