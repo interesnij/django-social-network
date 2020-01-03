@@ -17,7 +17,7 @@ from datetime import datetime, date, time
 
 client = soundcloud.Client(client_id='dce5652caa1b66331903493735ddd64d')
 page_size = 10
-all_tracks = client.get('/tracks', q='чиж и ко', order='playback\_count', limit=page_size, linked_partitioning=1)
+all_tracks = client.get('/tracks', q='чиж и ко', order='playback', limit=page_size, linked_partitioning=1)
 count = 0
 for track in all_tracks.collection:
     created_at = track.created_at
@@ -46,7 +46,7 @@ for track in all_tracks.collection:
         count = count + 1
 
 while all_tracks.next_href != None and count < 21:
-    all_tracks = client.get(all_tracks.next_href, q='чиж и ко', order='playback\_count', limit=page_size, linked_partitioning=1)
+    all_tracks = client.get(all_tracks.next_href, q='чиж и ко', order='playback', limit=page_size, linked_partitioning=1)
     for track in all_tracks.collection:
         created_at = track.created_at
         created_at = datetime.strptime('Jun 1 2005  1:33PM', '%b %d %Y %I:%M%p')
