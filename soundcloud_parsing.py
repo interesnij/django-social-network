@@ -11,7 +11,7 @@ import django
 django.setup()
 
 import soundcloud
-from music.models import SoundParsing, SounGenres
+from music.models import SoundParsing, SounGenres, Playlist
 from datetime import datetime, date, time
 
 
@@ -21,6 +21,7 @@ client = soundcloud.Client(client_id='dce5652caa1b66331903493735ddd64d')
 page_size = 200
 all_tracks = client.get('/tracks', order="playback_count", limit=page_size, linked_partitioning=1)
 count = 0
+all_track_playlist = Playlist.objects.get(id=1)
 
 for track in all_tracks.collection:
     created_at = track.created_at
@@ -46,8 +47,8 @@ for track in all_tracks.collection:
                                 streamable=track.streamable,
                                 title=track.title,
                                 uri=track.uri,
-                                release_month=track.release_month,
-                                release_year=track.release_year,)
+                                release_year=track.release_year,
+                                playlist=all_track_playlist,)
         count = count + 1
 
 while all_tracks.next_href != None and count < 20000:
@@ -76,6 +77,6 @@ while all_tracks.next_href != None and count < 20000:
                                     streamable=track.streamable,
                                     title=track.title,
                                     uri=track.uri,
-                                    release_month=track.release_month,
-                                    release_year=track.release_year,)
+                                    release_year=track.release_year,
+                                    playlist=all_track_playlist,)
         count = count + 1
