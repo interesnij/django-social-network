@@ -50,7 +50,7 @@ for track in all_tracks.collection:
                                 release_year=track.release_year,)
         count = count + 1
 
-while all_tracks.next_href != None and count < 200:
+while all_tracks.next_href != None and count < 20000:
     all_tracks = client.get(all_tracks.next_href, order="playback_count", limit=page_size, linked_partitioning=1)
     for track in all_tracks.collection:
         created_at = track.created_at
