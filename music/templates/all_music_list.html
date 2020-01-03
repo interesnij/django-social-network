@@ -1,5 +1,6 @@
 {% load staticfiles thumbnail %}
 {% if all_tracks %}
+<script src="{% static 'scripts/cmsplayer.js' %}" type="text/javascript"></script>
 
 <div id="jquery_jplayer_{{ player.id }}" class="jp-jplayer"></div>
 <div id="player_container_{{ player.id }}" class="cmsplayer">
@@ -44,8 +45,6 @@
 </div>
 {% endif %}
 
-<script src="{% static 'scripts/cmsplayer.js' %}" type="text/javascript"></script>
-
 <script>
   var all_music_infinite = new Waypoint.Infinite({element: $('.all-music-container')[0], onBeforePageLoad: function() { $('.music-load').show(); }, onAfterPageLoad: function($items) { $('.music-load').hide(); }});
 
@@ -59,7 +58,7 @@
           autonext: true,
         cssPrefix: 'jqjp_{{ player.id }}',
         swfPath: 'http://' + window.location.host + {{ player.get_base_path }},
-        customCssIds: true
+        useStateClassSkin: true,
       }
     );
   });
