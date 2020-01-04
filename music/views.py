@@ -4,6 +4,7 @@ from django.views import View
 from django.shortcuts import render_to_response
 from music.models import SoundParsing, Playlist
 import json
+from common.utils import safe_json
 
 
 class AllMusicView(TemplateView):
@@ -26,7 +27,7 @@ class AllMusicListView(View):
             context['all_tracks'] = current_page.page(1)
         except EmptyPage:
             context['all_tracks'] = current_page.page(current_page.num_pages)
-        list = json.dumps([item.get_json() for item in all_tracks])
+        list = json.dumps([safe_json(item) for item in all_tracks])
         context['list'] = list
         return render_to_response('all_music_list2.html', context)
 
