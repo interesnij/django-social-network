@@ -461,30 +461,30 @@ div.jp-type-playlist div.jp-playlist a:hover {
     color:#FFFFFF;
 }
 
-#ajax .jp-playlist .jp-playlist-current .svg_default{
+#ajax .jp-playlist .svg_default{
   color:#FFFFFF;
 }
-#ajax .jp-playlist .jp-playlist-current .track_genre{
+#ajax .jp-playlist .track_genre{
   bottom:17px;
   position:relative;
   padding-left: 64px;
 }
-#ajax .jp-playlist .jp-playlist-current .track_img{
+#ajax .jp-playlist .track_img{
   width:55px;
   padding-left:7px;
   height:auto;
 }
-#ajax .jp-playlist .jp-playlist-current .track_item_li{
+#ajax .jp-playlist .track_item_li{
   white-space:nowrap;
   overflow:hidden;
 }
-#ajax .jp-playlist .jp-playlist-current .span_btn{
+#ajax .jp-playlist .span_btn{
   float:right;
   position:relative;
   padding-right:10px;
   bottom:17px;
 }
-#ajax .jp-playlist .jp-playlist-current .track_title{
+#ajax .jp-playlist .track_title{
   left:10px;
   bottom:10px;
   position:relative;
