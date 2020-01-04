@@ -456,8 +456,9 @@ div.jp-type-playlist div.jp-playlist a:hover {
     color:#0d88c1;
 }
 div.jp-type-playlist div.jp-playlist a.jp-playlist-current {
-    color:#fff;
     position: relative;
+    background-color: #5f7fa2;
+    color:#FFFFFF;
 }
 
 div.jp-type-playlist div.jp-playlist a.jp-playlist-item-remove {
