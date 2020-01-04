@@ -461,7 +461,7 @@ div.jp-type-playlist div.jp-playlist a:hover {
     color:#FFFFFF;
 }
 
-#ajax .jp-playlist .svg_default{
+#ajax .jp-playlist .jp-playlist-current .svg_default{
   color:#FFFFFF;
 }
 #ajax .jp-playlist .track_genre{
