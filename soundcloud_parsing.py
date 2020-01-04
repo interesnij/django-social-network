@@ -33,7 +33,7 @@ for track in all_tracks.collection:
             stream_url = track.stream_url
         except:
             stream_url = ''
-        if track.genre and track.license == "no-rights-reserved" and track.genre in genres_list_names:
+        if track.genre and track.genre in genres_list_names:
             genre =SounGenres.objects.get(name=track.genre.replace("'", '') )
             stream_url = client.get(track.stream_url, allow_redirects=False)
             new_track = SoundParsing.objects.create(
@@ -63,7 +63,7 @@ while all_tracks.next_href != None and count < 100:
                 stream_url = track.stream_url
             except:
                 stream_url = ''
-            if track.genre and track.license == "cc-by-sa" and track.genre in genres_list_names:
+            if track.genre and track.genre in genres_list_names:
                 genre = SounGenres.objects.get(name=track.genre.replace("'", '') )
                 stream_url = client.get(track.stream_url, allow_redirects=False)
                 new_track = SoundParsing.objects.create(
