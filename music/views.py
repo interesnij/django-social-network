@@ -16,7 +16,7 @@ class AllMusicListView(View):
     def get(self,request,*args,**kwargs):
         context = {}
         player = Playlist.objects.get(id=1)
-        all_tracks = SoundParsing.objects.all()
+        all_tracks = player.get_json_playlist()
         current_page = Paginator(all_tracks, 30)
         page = request.GET.get('page')
         context['all_tracks'] = all_tracks
@@ -27,8 +27,6 @@ class AllMusicListView(View):
             context['all_tracks'] = current_page.page(1)
         except EmptyPage:
             context['all_tracks'] = current_page.page(current_page.num_pages)
-        list = json.dumps([safe_json(item) for item in all_tracks])
-        context['list'] = list
         return render_to_response('all_music_list2.html', context)
 
 
