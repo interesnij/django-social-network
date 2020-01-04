@@ -20,7 +20,7 @@ class Playlist(models.Model):
             self._cached_playlist = safe_json(self.playlist())
         return self._cached_playlist
 
-    def playlist(self, request):
+    def playlist(self):
         playlist = []
         queryset = self.track.all()
         paginator = Paginator(queryset, 2)
@@ -32,7 +32,7 @@ class Playlist(models.Model):
             data['author'] = "Винни Пух"
             playlist.append(data)
         try:
-             page = int(request.POST.get('page','1'))
+             page = int(self.POST.get('page','1'))
         except ValueError:
              page = 1
         try:
