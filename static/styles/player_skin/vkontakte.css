@@ -467,7 +467,7 @@ div.jp-type-playlist div.jp-playlist a:hover {
 #ajax .jp-playlist .track_genre{
   bottom:17px;
   position:relative;
-  padding-left: 64px;
+  margin-left: 64px;
 }
 #ajax .jp-playlist .track_img{
   width:55px;
