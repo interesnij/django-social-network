@@ -474,6 +474,21 @@ div.jp-type-playlist div.jp-playlist a:hover {
   padding-left:7px;
   height:auto;
 }
+#ajax .jp-playlist .track_repost{
+  width:20px;
+  height:auto;
+  cursor:pointer;
+}
+#ajax .jp-playlist .track_add{
+  width:20px;
+  height:auto;
+  cursor:pointer;
+}
+#ajax .jp-playlist .track_remove{
+  width:20px;
+  height:auto;
+  cursor:pointer;
+}
 #ajax .jp-playlist .track_item_li{
   white-space:nowrap;
   overflow:hidden;
