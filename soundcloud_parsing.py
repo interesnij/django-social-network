@@ -35,7 +35,7 @@ for track in all_tracks.collection:
             stream_url = ''
         if track.genre and track.genre in genres_list_names:
             genre =SounGenres.objects.get(name=track.genre.replace("'", '') )
-            stream_url = client.get(track.stream_url, allow_redirects=False)
+            stream_url = client.get(track.stream_url)
             new_track = SoundParsing.objects.create(
                                 id=track.id,
                                 artwork_url=track.artwork_url,
