@@ -393,6 +393,7 @@ div.jp-playlist ul {
     list-style-type:none;
     padding-top: 16px;
     margin:0;
+    padding-left: 20px;
 }
 
 div.jp-details li {
@@ -400,7 +401,9 @@ div.jp-details li {
     font-weight:bold;
 }
 
-
+div.track-title{
+  padding-left: 10px;
+}
 
 div.jp-playlist p {
     font-size: 12px;
@@ -410,7 +413,7 @@ div.jp-playlist p {
 
 div.jp-playlist li {
     position: relative;
-    padding:5px 0 4px 20px;
+    padding:5px 0 4px 0px;
     border-bottom:1px solid #eee;
 }
 
