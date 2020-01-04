@@ -18,7 +18,7 @@ from datetime import datetime, date, time
 genres_list = SounGenres.objects.values('name')
 genres_list_names = [name['name'] for name in genres_list]
 client = soundcloud.Client(client_id='dce5652caa1b66331903493735ddd64d')
-page_size = 200
+page_size = 50
 all_tracks = client.get('/tracks', order="playback_count", limit=page_size, linked_partitioning=1)
 count = 0
 all_track_playlist = Playlist.objects.get(id=1)
@@ -35,7 +35,7 @@ for track in all_tracks.collection:
             stream_url = ''
         if track.genre and track.genre in genres_list_names:
             genre =SounGenres.objects.get(name=track.genre.replace("'", '') )
-            stream_url = client.get(track.stream_url)
+            #stream_url = client.get(track.stream_url)
             new_track = SoundParsing.objects.create(
                                 id=track.id,
                                 artwork_url=track.artwork_url,
@@ -43,7 +43,7 @@ for track in all_tracks.collection:
                                 created_at=created_at,
                                 duration=track.duration,
                                 genre=genre,
-                                stream_url=stream_url.location,
+                                stream_url=track.stream_url,
                                 streamable=track.streamable,
                                 title=track.title,
                                 uri=track.uri,
@@ -73,7 +73,7 @@ while all_tracks.next_href != None and count < 10:
                                     created_at=created_at,
                                     duration=track.duration,
                                     genre=genre,
-                                    stream_url=stream_url.location,
+                                    stream_url=track.stream_url,
                                     streamable=track.streamable,
                                     title=track.title,
                                     uri=track.uri,
