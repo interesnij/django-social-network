@@ -31,7 +31,6 @@ for track in all_tracks.collection:
     except:
         if track.genre and track.release_year and track.genre in genres_list_names:
             genre =SounGenres.objects.get(name=track.genre.replace("'", '') )
-            stream_url = track.uri + '/stream?client_id=' + 'dce5652caa1b66331903493735ddd64d'
             new_track = SoundParsing.objects.create(
                                 id=track.id,
                                 artwork_url=track.artwork_url,
@@ -39,7 +38,7 @@ for track in all_tracks.collection:
                                 created_at=created_at,
                                 duration=track.duration,
                                 genre=genre,
-                                stream_url=stream_url,
+                                stream_url=track.stream_url,
                                 streamable=track.streamable,
                                 title=track.title,
                                 uri=track.uri,
@@ -57,7 +56,6 @@ while all_tracks.next_href != None and count < 2000:
         except:
             if track.genre and track.release_year and track.genre in genres_list_names:
                 genre = SounGenres.objects.get(name=track.genre.replace("'", '') )
-                stream_url = track.uri + '/stream?client_id=' + 'dce5652caa1b66331903493735ddd64d'
                 new_track = SoundParsing.objects.create(
                                     id=track.id,
                                     artwork_url=track.artwork_url,
@@ -65,7 +63,7 @@ while all_tracks.next_href != None and count < 2000:
                                     created_at=created_at,
                                     duration=track.duration,
                                     genre=genre,
-                                    stream_url=stream_url,
+                                    stream_url=track.stream_url,
                                     streamable=track.streamable,
                                     title=track.title,
                                     uri=track.uri,

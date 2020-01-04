@@ -27,7 +27,7 @@ class Playlist(models.Model):
             data = {}
             data['title'] = track.title
             data['artwork_url'] = track.artwork_url
-            data['mp3'] = track.stream_url
+            data['mp3'] = track.uri + '/stream?client_id=' + 'dce5652caa1b66331903493735ddd64d'
             data['author'] = "Винни Пух"
             playlist.append(data)
         return playlist
