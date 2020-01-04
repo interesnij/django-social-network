@@ -393,9 +393,6 @@ div.jp-playlist ul {
     list-style-type:none;
     padding-top: 16px;
     margin:0;
-    padding:0 20px;
-    font-size:.72em;
-    background-color: #fff;
 }
 
 div.jp-details li {
@@ -416,15 +413,7 @@ div.jp-playlist li {
     padding:5px 0 4px 20px;
     border-bottom:1px solid #eee;
 }
-div.jp-playlist li .jp-playlist-item:after {
-    background: url("/static/images/audio_icons.png") -226px -29px no-repeat;
-    content: "";
-    position: absolute;
-    width: 11px;
-    height: 16px;
-    display: block;
-    left: -20px;
-    top: 1px;
+
 }
 div.jp-playlist li.jp-playlist-current .jp-playlist-item:after {
     background-position: -167px -29px;
