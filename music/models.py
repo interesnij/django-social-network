@@ -32,7 +32,7 @@ class Playlist(models.Model):
             data['author'] = "Винни Пух"
             playlist.append(data)
         try:
-             page = int(request.POST.get('page','1'))
+             page = int(self.request.POST.get('page','1'))
         except ValueError:
              page = 1
         try:
