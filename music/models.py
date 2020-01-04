@@ -23,7 +23,6 @@ class Playlist(models.Model):
     def playlist(self):
         playlist = []
         queryset = self.track.all()
-        paginator = Paginator(queryset, 2)
         for track in queryset:
             data = {}
             data['title'] = track.title
@@ -31,15 +30,7 @@ class Playlist(models.Model):
             data['mp3'] = track.stream_url
             data['author'] = "Винни Пух"
             playlist.append(data)
-        try:
-             page = int(self.POST.get('page','1'))
-        except ValueError:
-             page = 1
-        try:
-            results = paginator.page(page)
-        except (EmptyPage, InvalidPage):
-            results = paginator.page(paginator.num_pages)
-        return HttpResponse(json.dumps([item.get_json() for item in results.object_list]) , content_type='application/json')
+        return playlist
 
     def get_base_path(self):
         return safe_json(settings.JPLAYER_BASE_PATH)
