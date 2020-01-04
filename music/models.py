@@ -25,7 +25,7 @@ class Playlist(models.Model):
         queryset = self.track.all()
         for track in queryset:
             url = track.uri + '/stream?client_id=' + 'dce5652caa1b66331903493735ddd64d'
-            genre = "'" + track.genre + "'"
+            genre = str(track.genre)
             data = {}
             data['title'] = track.title
             data['artwork_url'] = track.artwork_url
