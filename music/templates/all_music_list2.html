@@ -1,5 +1,5 @@
 {% load staticfiles thumbnail %}
-{{ all_list }}
+{{ all_tracks }}
 <div id="jquery_jplayer_1" class="jp-jplayer"></div>
         <div id="jp_container_1" class="jp-audio">
 
@@ -65,7 +65,7 @@ $(document).ready(function(){
         jPlayer: "#jquery_jplayer_1",
         cssSelectorAncestor: "#jp_container_1"
     };
-    var playlist = {{ all_list }};
+    var playlist = {{ all_tracks }};
 
     var options = {
         swfPath: "/static/jquery.jplayer.swf",
