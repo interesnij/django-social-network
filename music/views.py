@@ -3,6 +3,7 @@ from django.views.generic.base import TemplateView
 from django.views import View
 from django.shortcuts import render_to_response
 from music.models import SoundParsing, Playlist
+import json
 
 
 class AllMusicView(TemplateView):
@@ -14,7 +15,7 @@ class AllMusicListView(View):
     def get(self,request,*args,**kwargs):
         context = {}
         player = Playlist.objects.get(id=1)
-        all_tracks = player.playlist()
+        all_tracks = player.objects.all()
         current_page = Paginator(all_tracks, 30)
         page = request.GET.get('page')
         context['all_tracks'] = all_tracks
@@ -25,6 +26,8 @@ class AllMusicListView(View):
             context['all_tracks'] = current_page.page(1)
         except EmptyPage:
             context['all_tracks'] = current_page.page(current_page.num_pages)
+        list = json.dumps([item.get_json() for item in all_tracks])
+        context['list'] = list
         return render_to_response('all_music_list2.html', context)
 
 
