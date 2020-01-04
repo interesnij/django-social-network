@@ -50,7 +50,7 @@
                     <div class="clear"></div>
                 </div>
                 <!-- Будущий плейлист -->
-                <div class="jp-playlist">
+                <div class="jp-playlist all-music-container">
                     <ul>
                         <li></li>
                     </ul>
@@ -77,4 +77,6 @@ $(document).ready(function(){
 
     new jPlayerPlaylist(cssSelector, playlist, options);
 });
+
+var all_music_infinite = new Waypoint.Infinite({element: $('.all-music-container')[0], onBeforePageLoad: function() { $('.music-load').show(); }, onAfterPageLoad: function($items) { $('.music-load').hide(); }});
 </script>

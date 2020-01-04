@@ -2,7 +2,8 @@ import soundcloud
 from django.conf import settings
 from django.db import models
 from common.utils import safe_json
-from urllib.parse import unquote
+from django.http import HttpResponse
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 class Playlist(models.Model):
@@ -21,14 +22,24 @@ class Playlist(models.Model):
 
     def playlist(self):
         playlist = []
-        for track in self.track.all():
+        queryset = self.track.all()
+        paginator = Paginator(queryset, 2)
+        for track in queryset:
             data = {}
             data['title'] = track.title
             data['artwork_url'] = track.artwork_url
             data['mp3'] = track.stream_url
             data['author'] = "Винни Пух"
             playlist.append(data)
-        return playlist
+        try:
+             page = int(request.POST.get('page','1'))
+        except ValueError:
+             page = 1
+        try:
+            results = paginator.page(page)
+        except (EmptyPage, InvalidPage):
+            results = paginator.page(paginator.num_pages)
+        return HttpResponse(json.dumps([item.get_json() for item in results.object_list]) , content_type='application/json')
 
     def get_base_path(self):
         return safe_json(settings.JPLAYER_BASE_PATH)
