@@ -29,13 +29,9 @@ for track in all_tracks.collection:
     try:
         SoundParsing.objects.get(id=track.id)
     except:
-        try:
-            stream_url = track.stream_url
-        except:
-            stream_url = ''
-        if track.genre and track.genre in genres_list_names:
+        if track.genre and track.stream_url and track.genre in genres_list_names:
             genre =SounGenres.objects.get(name=track.genre.replace("'", '') )
-            #stream_url = client.get(track.stream_url)
+            stream_url = client.get(track.stream_url, allow_redirects=False)
             new_track = SoundParsing.objects.create(
                                 id=track.id,
                                 artwork_url=track.artwork_url,
@@ -43,7 +39,7 @@ for track in all_tracks.collection:
                                 created_at=created_at,
                                 duration=track.duration,
                                 genre=genre,
-                                stream_url=track.stream_url,
+                                stream_url=track.stream_url.location,
                                 streamable=track.streamable,
                                 title=track.title,
                                 uri=track.uri,
@@ -59,11 +55,7 @@ while all_tracks.next_href != None and count < 10:
         try:
             SoundParsing.objects.get(id=track.id)
         except:
-            try:
-                stream_url = track.stream_url
-            except:
-                stream_url = ''
-            if track.genre and track.genre in genres_list_names:
+            if track.genre and track.stream_url and track.genre in genres_list_names:
                 genre = SounGenres.objects.get(name=track.genre.replace("'", '') )
                 stream_url = client.get(track.stream_url, allow_redirects=False)
                 new_track = SoundParsing.objects.create(
@@ -73,7 +65,7 @@ while all_tracks.next_href != None and count < 10:
                                     created_at=created_at,
                                     duration=track.duration,
                                     genre=genre,
-                                    stream_url=track.stream_url,
+                                    stream_url=track.stream_url.location,
                                     streamable=track.streamable,
                                     title=track.title,
                                     uri=track.uri,
