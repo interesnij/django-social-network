@@ -27,6 +27,8 @@ class AllMusicListView(View):
             context['all_tracks'] = current_page.page(1)
         except EmptyPage:
             context['all_tracks'] = current_page.page(current_page.num_pages)
+        all_list = list(map(lambda player: player.get_json_playlist(), list(all_tracks)))
+        context['all_list'] = all_list
         return render_to_response('all_music_list2.html', context)
 
 
