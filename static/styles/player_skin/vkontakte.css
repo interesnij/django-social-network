@@ -413,7 +413,7 @@ div.jp-playlist p {
 
 div.jp-playlist li {
     position: relative;
-    padding:5px 0 4px 0px;
+    padding:5px 0 0px 0px;
     border-bottom:1px solid #eee;
 }
 
