@@ -474,17 +474,17 @@ div.jp-type-playlist div.jp-playlist a:hover {
   padding-left:7px;
   height:auto;
 }
-#ajax .jp-playlist .track_repost{
+#ajax .jp-playlist .track_repost svg{
   width:20px;
   height:auto;
   cursor:pointer;
 }
-#ajax .jp-playlist .track_add{
+#ajax .jp-playlist .track_add svg{
   width:20px;
   height:auto;
   cursor:pointer;
 }
-#ajax .jp-playlist .track_remove{
+#ajax .jp-playlist .track_remove svg{
   width:20px;
   height:auto;
   cursor:pointer;
