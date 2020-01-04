@@ -22,8 +22,8 @@ class Playlist(models.Model):
     def playlist(self):
         playlist = []
         client = soundcloud.Client(client_id='dce5652caa1b66331903493735ddd64d')
-        stream_url = client.get(track.stream_url, allow_redirects=False)
         for track in self.track.all():
+            stream_url = client.get(track.stream_url, allow_redirects=False)
             data = {}
             data['title'] = track.title
             data['artwork_url'] = track.artwork_url
