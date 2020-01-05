@@ -4,14 +4,92 @@ from django.db import models
 from common.utils import safe_json
 from django.http import HttpResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from communities.models import Community
 
 
+class SounGenres(models.Model):
+    name = models.CharField(max_length=100)
+    order = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name="жанр"
+        verbose_name_plural="жанры"
+
+
+class SoundSymbol(models.Model):
+    name = models.CharField(max_length=100)
+    order = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name="буква поиска музыки"
+        verbose_name_plural="буквы поиска музыки"
+
+
+class SoundTags(models.Model):
+    name = models.CharField(max_length=100)
+    order = models.IntegerField(default=0)
+    symbol = models.ForeignKey(SoundSymbol, on_delete=models.CASCADE, verbose_name="Буква")
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name="музыкальный тег"
+        verbose_name_plural="музыкальные теги"
 
 
 class SoundList(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255, unique=True)
     track = models.ManyToManyField('music.SoundParsing', related_name='players', blank="True")
+    autoplay = models.BooleanField(default=False)
+    community = models.ForeignKey('communities.Community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE, verbose_name="Создатель")
+
+    def __str__(self):
+        return self.name
+
+    def get_json_playlist(self):
+        if not hasattr(self, '_cached_playlist'):
+            self._cached_playlist = safe_json(self.playlist())
+        return self._cached_playlist
+
+    def playlist(self):
+        playlist = []
+        queryset = self.track.all()
+        for track in queryset:
+            url = track.uri + '/stream?client_id=' + 'dce5652caa1b66331903493735ddd64d'
+            genre = str(track.genre)
+            data = {}
+            data['title'] = track.title
+            data['artwork_url'] = track.artwork_url
+            data['mp3'] = url
+            data['genre'] = genre
+            playlist.append(data)
+        return playlist
+
+    def get_base_path(self):
+        return safe_json(settings.JPLAYER_BASE_PATH)
+
+    def get_json_autoplay(self):
+        return safe_json(self.autoplay)
+
+    class Meta:
+        verbose_name="список: весь, человека или сообщества"
+        verbose_name_plural="списки: весь, человека или сообщества"
+
+
+class SoundTagsList(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=255, unique=True)
+    tag = models.ForeignKey(SoundTags, on_delete=models.CASCADE, verbose_name="Буква")
+    track = models.ManyToManyField('music.SoundParsing', blank="True")
     autoplay = models.BooleanField(default=False)
 
     def __str__(self):
@@ -43,45 +121,8 @@ class SoundList(models.Model):
         return safe_json(self.autoplay)
 
     class Meta:
-        verbose_name="список"
-        verbose_name_plural="списки"
-
-
-class SounGenres(models.Model):
-    name = models.CharField(max_length=100)
-    order = models.IntegerField(default=0)
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        verbose_name="жанр"
-        verbose_name_plural="жанры"
-
-
-class SoundSymbol(models.Model):
-    name = models.CharField(max_length=100)
-    order = models.IntegerField(default=0)
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        verbose_name="буква"
-        verbose_name_plural="буквы"
-
-
-class SoundTags(models.Model):
-    name = models.CharField(max_length=100)
-    order = models.IntegerField(default=0)
-    symbol = models.ForeignKey(SoundSymbol, on_delete=models.CASCADE, verbose_name="Буква")
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        verbose_name="тег поиска"
-        verbose_name_plural="теги поиска"
+        verbose_name="треки тега"
+        verbose_name_plural="треки тега"
 
 
 class SoundParsing(models.Model):
