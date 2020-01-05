@@ -7,7 +7,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from communities.models import Community
 
 
-class SounGenres(models.Model):
+class SoundGenres(models.Model):
     name = models.CharField(max_length=100)
     order = models.IntegerField(default=0)
 

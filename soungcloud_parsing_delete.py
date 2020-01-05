@@ -13,7 +13,11 @@ import django
 django.setup()
 
 from django.conf import settings
-from music.models import SoundParsing
+from music.models import *
 
 
 SoundParsing.objects.all().delete()
+SoundGenres.objects.all().delete()
+SoundSymbol.objects.all().delete()
+SoundList.objects.all().delete()
+SoundTagsList.objects.all().delete()
