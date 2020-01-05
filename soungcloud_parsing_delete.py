@@ -16,8 +16,8 @@ from django.conf import settings
 from music.models import *
 
 
-SoundParsing.objects.all().delete()
+#SoundSymbol.objects.all().delete()
 SoundGenres.objects.all().delete()
-SoundSymbol.objects.all().delete()
 SoundList.objects.all().delete()
-SoundTagsList.objects.all().delete()
+SoundTags.objects.all().delete()
+SoundParsing.objects.all().delete()
