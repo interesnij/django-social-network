@@ -27,6 +27,7 @@ all_track_playlist = SoundList.objects.get(id=2)
 for tag in a_rus_list:
     tracks = client.get('/tracks', q=tag, limit=page_size, linked_partitioning=1)
     if tracks:
+        litera = SoundSymbol.objects.get(name="А")
         for track in tracks.collection:
             created_at = track.created_at
             created_at = datetime.strptime('Jun 1 2005  1:33PM', '%b %d %Y %I:%M%p')
@@ -34,9 +35,9 @@ for tag in a_rus_list:
                 SoundParsing.objects.get(id=track.id)
             except:
                 try:
-                    self_tag = SoundTags.objects.get(name=tag, symbol__name="А")
+                    self_tag = SoundTags.objects.get(name=tag, symbol=litera)
                 except:
-                    self_tag = SoundTags.objects.create(name=tag, symbol__name="А")
+                    self_tag = SoundTags.objects.create(name=tag, symbol=litera)
                 if track.genre and track.release_year and track.duration > 90000 and track.genre in genres_list_names:
                     genre =SounGenres.objects.get(name=track.genre.replace("'", '') )
                     new_track = SoundParsing.objects.create(id=track.id, tag=self_tag, artwork_url=track.artwork_url, created_at=created_at, duration=track.duration, genre=genre, stream_url=track.stream_url, title=track.title, uri=track.uri, release_year=track.release_year)
@@ -50,7 +51,7 @@ for tag in a_rus_list:
                 try:
                     SoundParsing.objects.get(id=track.id)
                 except:
-                    self_tag = SoundTags.objects.get(name=tag, symbol__name="А")
+                    self_tag = SoundTags.objects.get(name=tag, symbol=litera)
                     if track.genre and track.release_year and track.duration > 90000 and track.genre in genres_list_names:
                         genre =SounGenres.objects.get(name=track.genre.replace("'", '') )
                         new_track = SoundParsing.objects.create(id=track.id, tag=self_tag, artwork_url=track.artwork_url, created_at=created_at, duration=track.duration, genre=genre, stream_url=track.stream_url, title=track.title, uri=track.uri, release_year=track.release_year)
