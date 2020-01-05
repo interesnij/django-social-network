@@ -117,7 +117,7 @@ class SoundParsing(models.Model):
     artwork_url = models.URLField(max_length=255, blank=True, null=True)
     created_at = models.DateTimeField(max_length=255, blank=True, null=True)
     duration = models.CharField(max_length=255, blank=True, null=True)
-    genre = models.ForeignKey(SounGenres, on_delete=models.CASCADE, verbose_name="Жанр трека")
+    genre = models.ForeignKey(SoundGenres, on_delete=models.CASCADE, verbose_name="Жанр трека")
     permalink = models.CharField(max_length=100, blank=True, null=True)
     stream_url = models.URLField(max_length=1000, blank=True, null=True)
     tag = models.ForeignKey(SoundTagsList, on_delete=models.CASCADE, verbose_name="Буква")
