@@ -22,13 +22,13 @@ class AllTagsMusicView(TemplateView):
     template_name="music/tags_music.html"
 
     def get(self,request,*args,**kwargs):
-        self.simbol=SoundSymbol.objects.get(pk=self.kwargs["pk"])
-        self.tags=SoundTags.objects.filter(simbol=self.simbol)
+        self.symbol=SoundSymbol.objects.get(pk=self.kwargs["pk"])
+        self.tags=SoundTags.objects.filter(symbol=self.symbol)
         return super(AllTagsMusicView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context=super(AllTagsMusicView,self).get_context_data(**kwargs)
-        context["simbol"] = self.simbol
+        context["symbol"] = self.symbol
         context["tags"] = self.tags
         return context
 
