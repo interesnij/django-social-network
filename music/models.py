@@ -31,19 +31,6 @@ class SoundSymbol(models.Model):
         verbose_name_plural="буквы поиска музыки"
 
 
-class SoundTags(models.Model):
-    name = models.CharField(max_length=100)
-    order = models.IntegerField(default=0)
-    symbol = models.ForeignKey(SoundSymbol, on_delete=models.CASCADE, verbose_name="Буква")
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        verbose_name="музыкальный тег"
-        verbose_name_plural="музыкальные теги"
-
-
 class SoundList(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255, unique=True)
@@ -90,7 +77,8 @@ class SoundTagsList(models.Model):
     name = models.CharField(max_length=255, unique=True)
     tag = models.ForeignKey(SoundTags, on_delete=models.CASCADE, verbose_name="Буква")
     track = models.ManyToManyField('music.SoundParsing', blank="True")
-    autoplay = models.BooleanField(default=False)
+    order = models.IntegerField(default=0)
+    symbol = models.ForeignKey(SoundSymbol, on_delete=models.CASCADE, verbose_name="Буква")
 
     def __str__(self):
         return self.name
