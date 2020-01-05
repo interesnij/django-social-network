@@ -2,7 +2,7 @@
 from locale import *
 import sys,os
 
-project_dir = '../../tr/tr/'
+project_dir = '../tr/tr/'
 
 sys.path.append(project_dir)
 os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
