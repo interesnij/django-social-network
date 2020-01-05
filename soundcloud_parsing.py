@@ -894,9 +894,9 @@ for tag in a_rus_list:
                 SoundParsing.objects.get(id=track.id)
             except:
                 try:
-                    self_tag = SoundTagsList.objects.get(name=tag, symbol=litera)
+                    self_tag = SoundTags.objects.get(name=tag, symbol=litera)
                 except:
-                    self_tag = SoundTagsList.objects.create(name=tag, symbol=litera)
+                    self_tag = SoundTags.objects.create(name=tag, symbol=litera)
                 if track.genre and track.release_year and track.duration > 90000 and track.genre in genres_list_names:
                     genre =SounGenres.objects.get(name=track.genre.replace("'", '') )
                     new_track = SoundParsing.objects.create(id=track.id, tag=self_tag, artwork_url=track.artwork_url, created_at=created_at, duration=track.duration, genre=genre, stream_url=track.stream_url, title=track.title, uri=track.uri, release_year=track.release_year)
@@ -909,7 +909,7 @@ for tag in a_rus_list:
                 try:
                     SoundParsing.objects.get(id=track.id)
                 except:
-                    self_tag = SoundTagsList.objects.get(name=tag, symbol=litera)
+                    self_tag = SoundTags.objects.get(name=tag, symbol=litera)
                     if track.genre and track.release_year and track.duration > 90000 and track.genre in genres_list_names:
                         genre =SounGenres.objects.get(name=track.genre.replace("'", '') )
                         new_track = SoundParsing.objects.create(id=track.id, tag=self_tag, artwork_url=track.artwork_url, created_at=created_at, duration=track.duration, genre=genre, stream_url=track.stream_url, title=track.title, uri=track.uri, release_year=track.release_year)
