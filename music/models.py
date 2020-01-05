@@ -81,31 +81,6 @@ class SoundTags(models.Model):
     def __str__(self):
         return self.name
 
-    def get_json_playlist(self):
-        if not hasattr(self, '_cached_playlist'):
-            self._cached_playlist = safe_json(self.playlist())
-        return self._cached_playlist
-
-    def playlist(self):
-        playlist = []
-        queryset = self.track.all()
-        for track in queryset:
-            url = track.uri + '/stream?client_id=' + 'dce5652caa1b66331903493735ddd64d'
-            genre = str(track.genre)
-            data = {}
-            data['title'] = track.title
-            data['artwork_url'] = track.artwork_url
-            data['mp3'] = url
-            data['genre'] = genre
-            playlist.append(data)
-        return playlist
-
-    def get_base_path(self):
-        return safe_json(settings.JPLAYER_BASE_PATH)
-
-    def get_json_autoplay(self):
-        return safe_json(self.autoplay)
-
     class Meta:
         verbose_name="треки тега"
         verbose_name_plural="треки тега"
