@@ -901,7 +901,7 @@ for tag in a_rus_list:
                     genre =SounGenres.objects.get(name=track.genre.replace("'", '') )
                     new_track = SoundParsing.objects.create(id=track.id, tag=self_tag, artwork_url=track.artwork_url, created_at=created_at, duration=track.duration, genre=genre, stream_url=track.stream_url, title=track.title, uri=track.uri, release_year=track.release_year)
                 count = count + 1
-        while tracks.next_href != None and count < 1000:
+        while tracks.next_href != None and count < 2000:
             tracks = client.get(tracks.next_href, limit=page_size, linked_partitioning=1)
             for track in tracks.collection:
                 created_at = track.created_at
