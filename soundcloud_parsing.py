@@ -39,7 +39,7 @@ for tag in a_rus_list:
                     self_tag = SoundTags.objects.create(name=tag, symbol="А")
                 if track.genre and track.release_year and track.duration > 90000 and track.genre in genres_list_names:
                     genre =SounGenres.objects.get(name=track.genre.replace("'", '') )
-                    new_track = SoundParsing.objects.create(id=track.id, tag=self_tag, artwork_url=track.artwork_url, created_at=created_at, duration=track.duration, genre=genre, stream_url=track.stream_url, title=track.title, uri=track.uri, release_year=track.release_year, tag=track.tag)
+                    new_track = SoundParsing.objects.create(id=track.id, tag=self_tag, artwork_url=track.artwork_url, created_at=created_at, duration=track.duration, genre=genre, stream_url=track.stream_url, title=track.title, uri=track.uri, release_year=track.release_year)
                     all_track_playlist.track.add(new_track)
                 count = count + 1
         while tracks.next_href != None and count < 1000:
@@ -53,6 +53,6 @@ for tag in a_rus_list:
                     self_tag = SoundTags.objects.get(name=tag, simbol="А")
                     if track.genre and track.release_year and track.duration > 90000 and track.genre in genres_list_names:
                         genre =SounGenres.objects.get(name=track.genre.replace("'", '') )
-                        new_track = SoundParsing.objects.create(id=track.id, tag=self_tag, artwork_url=track.artwork_url, created_at=created_at, duration=track.duration, genre=genre, stream_url=track.stream_url, title=track.title, uri=track.uri, release_year=track.release_year, tag=track.tag)
+                        new_track = SoundParsing.objects.create(id=track.id, tag=self_tag, artwork_url=track.artwork_url, created_at=created_at, duration=track.duration, genre=genre, stream_url=track.stream_url, title=track.title, uri=track.uri, release_year=track.release_year)
                         all_track_playlist.track.add(new_track)
                     count = count + 1
