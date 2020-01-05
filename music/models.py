@@ -75,7 +75,6 @@ class SoundList(models.Model):
 class SoundTagsList(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255, unique=True)
-    tag = models.ForeignKey(SoundTags, on_delete=models.CASCADE, verbose_name="Буква")
     track = models.ManyToManyField('music.SoundParsing', blank="True")
     order = models.IntegerField(default=0)
     symbol = models.ForeignKey(SoundSymbol, on_delete=models.CASCADE, verbose_name="Буква")
