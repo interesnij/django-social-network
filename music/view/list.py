@@ -19,8 +19,8 @@ class AllTagListView(View):
 
     def get(self,request,*args,**kwargs):
         context = {}
-        self.tag=SoundTags.objects.get(pk=self.kwargs["pk"])
-        all_tracks = self.tag.get_json_playlist()
+        tag=SoundTags.objects.get(pk=self.kwargs["pk"])
+        all_tracks = tag.get_json_playlist()
         context['all_tracks'] = all_tracks
         context['tag'] = tag
         return render_to_response('music/tag_music_list.html', context)
