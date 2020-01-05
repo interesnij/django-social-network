@@ -1,29 +1,25 @@
 {% extends "base.html" %}
 {% load staticfiles thumbnail %}
-{% block title %}Все композиции{% endblock %}
+{% block title %}Поиск треков по алфавиту{% endblock %}
 
 {% block content %}
 
 <div class="row">
     <div class="col-12 col-md-8">
         <br><br><br>
-        <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Поиск музыки" aria-label="Recipient's username">
-            <div class="input-group-append">
-                <button class="btn btn-outline-link" type="button">Искать</button>
-            </div>
-        </div>
         <div class="card mb-2">
             <div class="card-header">
                 <div class="media">
                     <div class="media-body">
-                        <h5 class="mt-1">Все композиции</h5>
+                        <h5 class="mt-1">Поиск треков по алфавиту</h5>
                     </div>
                 </div>
             </div>
             <br><br>
             <div class="card-body px-0 py-0">
-              <span id="music_load"></span>
+              {% for object in simbols %}
+                {{ object.name }}
+              {% endfor %}
             </div>
         </div>
     </div>
@@ -34,10 +30,4 @@
     </div>
 </div>
 
-<script>
-$(document).ready(function(){
-  $('#music_load').html('').load("/music/all_music_list/");
-});
-
-</script>
 {% endblock %}

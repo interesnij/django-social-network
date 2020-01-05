@@ -2,14 +2,20 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic.base import TemplateView
 from django.views import View
 from django.shortcuts import render_to_response
-from music.models import SoundParsing, SoundList
-import json
-from common.utils import safe_json
+from music.models import *
 
 
 class AllMusicView(TemplateView):
     template_name="all_music.html"
 
+    def get(self,request,*args,**kwargs):
+        self.simbols=SoundSymbol.objects.only("pk")
+        return super(AllMusicView,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context=super(AllMusicView,self).get_context_data(**kwargs)
+        context["simbols"] = self.simbols
+        return context
 
 class AllMusicListView(View):
 
