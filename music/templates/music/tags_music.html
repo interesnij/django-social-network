@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load staticfiles thumbnail %}
-{% block title %}Поиск треков по алфавиту{% endblock %}
+{% block title %}Теги буквы {{ tag.name }}{% endblock %}
 
 {% block content %}
 
@@ -11,14 +11,14 @@
             <div class="card-header">
                 <div class="media">
                     <div class="media-body">
-                        <h5 class="mt-1">Поиск треков по алфавиту</h5>
+                        <h5 class="mt-1">Теги буквы {{ simbol.name }}</h5>
                     </div>
                 </div>
             </div>
             <br><br>
             <div class="card-body px-0 py-0">
-              {% for object in simbols %}
-                <a href="{% url 'tags_music' pk=object.pk %}">{{ object.name }}</a>
+              {% for object in tags %}
+                <a href="{% url 'tag_all_music' pk=object.pk %}">{{ object.name }}</a>
               {% endfor %}
             </div>
         </div>

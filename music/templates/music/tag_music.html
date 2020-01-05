@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load staticfiles thumbnail %}
-{% block title %}Поиск треков по алфавиту{% endblock %}
+{% block title %}Треки тега {{ tag.name }}{% endblock %}
 
 {% block content %}
 
@@ -11,15 +11,13 @@
             <div class="card-header">
                 <div class="media">
                     <div class="media-body">
-                        <h5 class="mt-1">Поиск треков по алфавиту</h5>
+                        <h5 class="mt-1">Треки тега {{ tag.name }}</h5>
                     </div>
                 </div>
             </div>
             <br><br>
             <div class="card-body px-0 py-0">
-              {% for object in simbols %}
-                <a href="{% url 'tags_music' pk=object.pk %}">{{ object.name }}</a>
-              {% endfor %}
+              <span id="tag_tracks_load"></span>
             </div>
         </div>
     </div>
@@ -30,4 +28,9 @@
     </div>
 </div>
 
+<script>
+$(document).ready(function(){
+  $('#tag_tracks_load').html('').load("/music/list/all_tag_list/" + {{ tag.pk }});
+});
+</script>
 {% endblock %}

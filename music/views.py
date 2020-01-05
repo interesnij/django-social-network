@@ -17,17 +17,33 @@ class AllMusicView(TemplateView):
         context["simbols"] = self.simbols
         return context
 
-class AllMusicListView(View):
+
+class AllTagsMusicView(TemplateView):
+    template_name="music/tags_music.html"
 
     def get(self,request,*args,**kwargs):
-        context = {}
-        player = SoundList.objects.get(id=2)
-        all_tracks = player.get_json_playlist()
-        current_page = Paginator(all_tracks, 30)
-        page = request.GET.get('page')
-        context['all_tracks'] = all_tracks
-        context['player'] = player
-        return render_to_response('all_music_list2.html', context)
+        self.simbol=SoundSymbol.objects.get(pk=self.kwargs["pk"])
+        self.tags=SoundTags.objects.filter(simbol=self.simbol)
+        return super(AllTagsMusicView,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context=super(AllTagsMusicView,self).get_context_data(**kwargs)
+        context["simbol"] = self.simbol
+        context["tags"] = self.tags
+        return context
+
+
+class AllTagMusicView(TemplateView):
+    template_name="music/tag_music.html"
+
+    def get(self,request,*args,**kwargs):
+        self.tag=SoundTags.objects.get(pk=self.kwargs["pk"])
+        return super(AllTagMusicView,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context=super(AllTagMusicView,self).get_context_data(**kwargs)
+        context["tag"] = self.tags
+        return context
 
 
 class AllSearchMusicView(View):
