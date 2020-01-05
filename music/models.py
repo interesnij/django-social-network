@@ -6,7 +6,9 @@ from django.http import HttpResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
-class Playlist(models.Model):
+
+
+class SoundList(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255, unique=True)
     track = models.ManyToManyField('music.SoundParsing', related_name='players', blank="True")
@@ -40,6 +42,10 @@ class Playlist(models.Model):
     def get_json_autoplay(self):
         return safe_json(self.autoplay)
 
+    class Meta:
+        verbose_name="список"
+        verbose_name_plural="списки"
+
 
 class SounGenres(models.Model):
     name = models.CharField(max_length=100)
@@ -48,17 +54,45 @@ class SounGenres(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name="жанр"
+        verbose_name_plural="жанры"
+
+
+class SoundSymbol(models.Model):
+    name = models.CharField(max_length=100)
+    order = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name="буква"
+        verbose_name_plural="буквы"
+
+
+class SoundTags(models.Model):
+    name = models.CharField(max_length=100)
+    order = models.IntegerField(default=0)
+    symbol = models.ForeignKey(SoundSymbol, on_delete=models.CASCADE, verbose_name="Буква")
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name="тег поиска"
+        verbose_name_plural="теги поиска"
+
 
 class SoundParsing(models.Model):
     id = models.IntegerField(primary_key=True)
     artwork_url = models.URLField(max_length=255, blank=True, null=True)
-    bpm = models.CharField(max_length=255, blank=True, null=True)
     created_at = models.DateTimeField(max_length=255, blank=True, null=True)
     duration = models.CharField(max_length=255, blank=True, null=True)
     genre = models.ForeignKey(SounGenres, on_delete=models.CASCADE, verbose_name="Жанр трека")
     permalink = models.CharField(max_length=100, blank=True, null=True)
     stream_url = models.URLField(max_length=1000, blank=True, null=True)
-    streamable = models.BooleanField(default=True, null=True)
+    tag = models.ForeignKey(SoundTags, on_delete=models.CASCADE, verbose_name="Буква")
     title = models.CharField(max_length=255, blank=True, null=True)
     uri = models.CharField(max_length=255, blank=True, null=True)
     release_year = models.CharField(max_length=255, blank=True, null=True)
@@ -68,3 +102,5 @@ class SoundParsing(models.Model):
 
     class Meta:
         ordering = ('-created_at',)
+        verbose_name="спарсенные треки"
+        verbose_name_plural="спарсенные треки"

@@ -2,7 +2,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic.base import TemplateView
 from django.views import View
 from django.shortcuts import render_to_response
-from music.models import SoundParsing, Playlist
+from music.models import SoundParsing, SoundList
 import json
 from common.utils import safe_json
 
@@ -15,7 +15,7 @@ class AllMusicListView(View):
 
     def get(self,request,*args,**kwargs):
         context = {}
-        player = Playlist.objects.get(id=1)
+        player = SoundList.objects.get(id=1)
         all_tracks = player.get_json_playlist()
         current_page = Paginator(all_tracks, 30)
         page = request.GET.get('page')
