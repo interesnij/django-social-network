@@ -72,10 +72,9 @@ class SoundList(models.Model):
         verbose_name_plural="списки: весь, человека или сообщества"
 
 
-class SoundTagsList(models.Model):
+class SoundTags(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255, unique=True)
-    track = models.ManyToManyField('music.SoundParsing', blank="True")
     order = models.IntegerField(default=0)
     symbol = models.ForeignKey(SoundSymbol, on_delete=models.CASCADE, verbose_name="Буква")
 
@@ -120,7 +119,7 @@ class SoundParsing(models.Model):
     genre = models.ForeignKey(SoundGenres, on_delete=models.CASCADE, verbose_name="Жанр трека")
     permalink = models.CharField(max_length=100, blank=True, null=True)
     stream_url = models.URLField(max_length=1000, blank=True, null=True)
-    tag = models.ForeignKey(SoundTagsList, on_delete=models.CASCADE, verbose_name="Буква")
+    tag = models.ForeignKey(SoundTags, on_delete=models.CASCADE, verbose_name="Буква")
     title = models.CharField(max_length=255, blank=True, null=True)
     uri = models.CharField(max_length=255, blank=True, null=True)
     release_year = models.CharField(max_length=255, blank=True, null=True)
