@@ -5,7 +5,7 @@ import sys,os
 project_dir = '../../tr/tr/'
 
 sys.path.append(project_dir)
-
+from django.conf import settings
 import django
 django.setup()
 
