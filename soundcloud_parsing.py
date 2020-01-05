@@ -883,7 +883,6 @@ a_rus_list = [
 litera = SoundSymbol.objects.get(name="А")
 
 count = 0
-all_track_playlist = SoundList.objects.get(id=2)
 
 for tag in a_rus_list:
     tracks = client.get('/tracks', q=tag, limit=page_size, linked_partitioning=1)
