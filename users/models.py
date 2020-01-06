@@ -399,7 +399,6 @@ class User(AbstractUser):
         return goods
 
     def get_music(self):
-        music_query = Q(is_deleted=False, players_id = )
         exclude_reported_and_approved_goods_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         list = SoundList.objects.get(creator_id=self.id)
         music_query = Q(players_id=list.pk ,is_deleted=False)
@@ -407,7 +406,6 @@ class User(AbstractUser):
         music_list = SoundParsing.objects.filter(music_query)
         return music_list
     def get_my_music(self):
-        music_query = Q(is_deleted=False, players_id = )
         exclude_reported_and_approved_goods_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         list = SoundList.objects.get(creator_id=self.id)
         music_query = Q(players_id=list.pk ,is_deleted=False)
