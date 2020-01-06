@@ -1,5 +1,5 @@
 from django.conf.urls import url, include
-from users.views.detail import ProfileUserView, AllUsers, UserCommunities, AllPossibleUsers
+from users.views.detail import *
 
 
 urlpatterns = [
@@ -11,6 +11,7 @@ urlpatterns = [
 
     url(r'^(?P<pk>\d+)/$', ProfileUserView.as_view(), name='user'),
     url(r'^(?P<pk>\d+)/communities/$', UserCommunities.as_view(), name='communities'),
+    url(r'^(?P<pk>\d+)/music/$', UserMusic.as_view(), name='user_music'),
     url(r'^all-users/$', AllUsers.as_view(), name='all_users'),
     url(r'^(?P<pk>\d+)/possible-users/$', AllPossibleUsers.as_view(), name='all_common_users'),
 ]

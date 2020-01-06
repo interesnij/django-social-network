@@ -138,6 +138,7 @@ class SoundTags(models.Model):
 
 
 class SoundParsing(models.Model):
+    moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='music')
     id = models.IntegerField(primary_key=True)
     artwork_url = models.URLField(max_length=255, blank=True, null=True)
     created_at = models.DateTimeField(max_length=255, blank=True, null=True)
@@ -149,6 +150,8 @@ class SoundParsing(models.Model):
     title = models.CharField(max_length=255, blank=True, null=True)
     uri = models.CharField(max_length=255, blank=True, null=True)
     release_year = models.CharField(max_length=255, blank=True, null=True)
+    is_deleted = models.BooleanField(verbose_name="Удален",default=False )
+
 
     def __str__(self):
         return self.title
