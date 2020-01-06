@@ -100,7 +100,7 @@ class SoundTags(models.Model):
 
         genres_query = Q(id__in=genres_list)
         result = SoundGenres.objects.filter(genres_query)
-        return genres_query
+        return result
 
 
     def get_json_playlist(self):
