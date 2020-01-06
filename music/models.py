@@ -5,6 +5,7 @@ from common.utils import safe_json
 from django.http import HttpResponse
 from communities.models import Community
 from django.db.models import Q
+from django.contrib.contenttypes.fields import GenericRelation
 
 
 class SoundGenres(models.Model):
