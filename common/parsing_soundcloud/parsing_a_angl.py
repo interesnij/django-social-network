@@ -1163,7 +1163,7 @@ a_angl_list_8 = [
 'Angus Macrae',
 'Ani',
 'Ani Karo',
-'ANi'E',
+'ANi"E',
 'Ania',
 'Anica Russo',
 'Aniello',
