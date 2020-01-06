@@ -117,8 +117,8 @@ class SoundTags(models.Model):
         return safe_json(self.autoplay)
 
     class Meta:
-        verbose_name="треки тега"
-        verbose_name_plural="треки тега"
+        verbose_name="тег"
+        verbose_name_plural="теги"
 
 
 class SoundParsing(models.Model):
