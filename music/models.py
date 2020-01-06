@@ -20,8 +20,17 @@ class SoundGenres(models.Model):
 
 
 class SoundSymbol(models.Model):
+    RUS_SYMBOL = 'RS'
+    ANGL_SYMBOL = 'AS'
+    SYMBOL_TYPES = (
+        (RUS_SYMBOL, 'русские исполнители'),
+        (ANGL_SYMBOL, 'английские исполнители'),
+        (NUMBER_SYMBOL, 'исполнители по цифрам'),
+        )
+
     name = models.CharField(max_length=100)
     order = models.IntegerField(default=0)
+    type = models.CharField(max_length=5, choices=SYMBOL_TYPES, default=ANGL_SYMBOL, verbose_name="Язык исполнителя")
 
     def __str__(self):
         return self.name

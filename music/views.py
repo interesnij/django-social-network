@@ -9,12 +9,16 @@ class AllMusicView(TemplateView):
     template_name="all_music.html"
 
     def get(self,request,*args,**kwargs):
-        self.simbols=SoundSymbol.objects.only("pk")
+        self.rus_simbols=SoundSymbol.objects.filter(type=RUS_SYMBOL)
+        self.angl_simbols=SoundSymbol.objects.filter(type=ANGL_SYMBOL)
+        self.number_simbols=SoundSymbol.objects.filter(type=NUMBER_SYMBOL)
         return super(AllMusicView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context=super(AllMusicView,self).get_context_data(**kwargs)
-        context["simbols"] = self.simbols
+        context["rus_simbols"] = self.rus_simbols
+        context["angl_simbols"] = self.angl_simbols
+        context["number_simbols"] = self.number_simbols
         return context
 
 
