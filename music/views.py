@@ -9,7 +9,7 @@ class AllMusicView(TemplateView):
     template_name="all_music.html"
 
     def get(self,request,*args,**kwargs):
-        self.rus_simbols=SoundSymbol.objects.filter(type=RUS_SYMBOL)
+        self.rus_simbols=SoundSymbol.objects.filter(type='RS') 
         self.angl_simbols=SoundSymbol.objects.filter(type=ANGL_SYMBOL)
         self.number_simbols=SoundSymbol.objects.filter(type=NUMBER_SYMBOL)
         return super(AllMusicView,self).get(request,*args,**kwargs)
