@@ -94,7 +94,8 @@ class SoundTags(models.Model):
     def get_genres(self):
         genres_list = []
         genres = self.soundparsing_set.all().values('genre_id')
-        for genre in genres:
+        genres_ids = [id['genre_id'] for id in genres]
+        for genre in genres_ids:
             if not genre in genres_list:
                 genres_list = genres_list + [genre,]
 
