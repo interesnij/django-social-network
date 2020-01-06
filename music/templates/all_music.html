@@ -7,10 +7,10 @@
 <div class="container mt-3 main-container">
     <div class="row">
         <div class="col-12 col-md-12 col-lg-8">
-          <br><br><br>
+          <br><br>
             <div class="media mt-2 mb-3">
               <div class="media-body">
-                <h4 class="content-color-primary mb-0">Русские теги <small class="content-color-secondary float-right mr-2 mt-1">всего 10000</small></h4>
+                <h4 class="content-color-primary mb-0">Поиск русских тегов <small class="content-color-secondary float-right mr-2 mt-1">всего 10000</small></h4>
               </div>
             </div>
             <div class="row overflow-x-auto no-gutters pb-2 mb-3">
@@ -24,15 +24,40 @@
                     </ul>
                 </div>
             </div>
-              <br><br><br>
-              {% for object in angl_simbols %}
-                <a href="{% url 'tags_music' pk=object.pk %}">{{ object.name }}</a>
-              {% endfor %}
-              <br><br><br>
-              {% for object in number_simbols %}
-                <a href="{% url 'tags_music' pk=object.pk %}">{{ object.name }}</a>
-              {% endfor %}
+
+            <div class="media mt-2 mb-3">
+              <div class="media-body">
+                <h4 class="content-color-primary mb-0">Поиск англ. тегов <small class="content-color-secondary float-right mr-2 mt-1">всего 10000</small></h4>
+              </div>
             </div>
+            <div class="row overflow-x-auto no-gutters pb-2 mb-3">
+                <div class="col-12">
+                    <ul class="date-list" style="width: 1175.94px;">
+                      {% for object in angl_simbols %}
+                        <li class="date">
+                            <h6 class="content-color-primary mb-0">{{ object.name }}</h6>
+                        </li>
+                      {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <div class="media mt-2 mb-3">
+              <div class="media-body">
+                <h4 class="content-color-primary mb-0">Поиск числовых тегов <small class="content-color-secondary float-right mr-2 mt-1">всего 10000</small></h4>
+              </div>
+            </div>
+            <div class="row overflow-x-auto no-gutters pb-2 mb-3">
+                <div class="col-12">
+                    <ul class="date-list" style="width: 1175.94px;">
+                      {% for object in number_simbols %}
+                        <li class="date">
+                            <h6 class="content-color-primary mb-0">{{ object.name }}</h6>
+                        </li>
+                      {% endfor %}
+                    </ul>
+                </div>
+            </div>
+          </div>
         </div>
     </div>
 
