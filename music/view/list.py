@@ -31,7 +31,7 @@ class TagsList(View):
         context = {}
         symbol = SoundSymbol.objects.get(pk=self.kwargs["pk"])
         tag_list = SoundTags.objects.filter(symbol=symbol)
-        current_page = Paginator(users_list, 24)
+        current_page = Paginator(tag_list, 24)
         page = request.GET.get('page')
         context['symbol'] = symbol
 
