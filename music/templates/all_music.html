@@ -17,7 +17,15 @@
             </div>
             <br><br>
             <div class="card-body px-0 py-0">
-              {% for object in simbols %}
+              {% for object in rus_simbols %}
+                <a href="{% url 'tags_music' pk=object.pk %}">{{ object.name }}</a>
+              {% endfor %}
+              <br><br><br>
+              {% for object in angl_simbols %}
+                <a href="{% url 'tags_music' pk=object.pk %}">{{ object.name }}</a>
+              {% endfor %}
+              <br><br><br>
+              {% for object in number_simbols %}
                 <a href="{% url 'tags_music' pk=object.pk %}">{{ object.name }}</a>
               {% endfor %}
             </div>
