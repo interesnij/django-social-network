@@ -9,7 +9,7 @@
       <div class="card-body">
           <div class="media">
               <div class="media-body">
-                  <p class=" mb-0">{% for genre in object.get_genres %}{{ genre.nаme }}{% endfor %}</p>
+                  <p class=" mb-0">{% for key, value in object.get_genres %}{{ value }}{% endfor %}</p>
                   <h4 class="mb-0">{{ object.name }}</h4>
               </div>
           </div>
