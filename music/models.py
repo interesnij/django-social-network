@@ -93,12 +93,12 @@ class SoundTags(models.Model):
 
     def get_genres(self):
         genres_list = []
-        genres = self.soundparsing_set.all().values('genre_name')
+        genres = self.soundparsing_set.all().values('genre_id')
         for genre in genres:
             if not genre in genres_list:
                 genres_list = genres_list + [genre,]
 
-        genres_query = Q(name__in=genres_list)
+        genres_query = Q(id__in=genres_list)
         result = SoundGenres.objects.filter(genres_query)
         return genres_query
 
