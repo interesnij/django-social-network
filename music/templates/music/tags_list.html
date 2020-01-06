@@ -2,13 +2,13 @@
 
 {% if tag_list %}
 
-<div class="media mt-2 mb-3">
+<div class="media mt-2 mb-3" style="margin-top: 25px;">
   <div class="media-body">
     <h4 class="content-color-primary mb-0">Музыкальные теги буквы {{ symbol.name }}<small class="content-color-secondary float-right mr-2 mt-1">Всего {{ symbol.get_tags_count }}</small></h4>
   </div>
 </div>
 
-<div class="row tags-container" style="margin-top: 50px;">
+<div class="row tags-container" style="margin-top: 25px;">
 {% for object in tag_list %}
 <div class="col-12 infinite-item">
   <div class="card mb-4">
