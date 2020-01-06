@@ -2,7 +2,7 @@
 {% if follows_list %}
 <ul class="follows-container list-group">
     {% for object in follows_list %}
-    <li class="list-group-item">
+    <li class="list-group-item infinite-item">
         <div class="media">
             <figure>
               {% if object.get_avatar %}

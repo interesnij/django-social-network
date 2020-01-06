@@ -91,6 +91,15 @@ class SoundTags(models.Model):
     def __str__(self):
         return self.name
 
+    def get_genres(self):
+        genres_list = []
+        genres = self.soundparsing_set.all().values('genre')
+        for genre in genres:
+            if not genre in genres_list:
+                genres_list = genres_list + [genre,]
+        return genres_list
+
+
     def get_json_playlist(self):
         if not hasattr(self, '_cached_playlist'):
             self._cached_playlist = safe_json(self.playlist())

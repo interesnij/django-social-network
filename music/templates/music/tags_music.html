@@ -4,23 +4,20 @@
 
 {% block content %}
 
-<div class="row">
-    <div class="col-12 col-md-8">
-        <br><br><br>
-        <div class="card mb-2">
-            <div class="card-header">
-                <div class="media">
-                    <div class="media-body">
-                        <h5 class="mt-1">Теги буквы {{ symbol.name }}</h5>
-                    </div>
-                </div>
+<div class="container mt-3 main-container">
+    <div class="row">
+        <div class="col-12 col-md-12 col-lg-8">
+          <br><br>
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Поиск тегов по символу {{ symbol.name }}" aria-label="Recipient's username">
+            <div class="input-group-append">
+              <button class="btn btn-outline-link" type="button">Искать</button>
             </div>
-            <br><br>
-            <div class="card-body px-0 py-0">
-              {% for object in tags %}
-                <a href="{% url 'tag_all_music' pk=object.pk %}">{{ object.name }}</a>
-              {% endfor %}
-            </div>
+          </div>
+
+          <span id="tags_list_load"></span>
+          
+        </div>
         </div>
     </div>
 
@@ -28,6 +25,11 @@
         <br><br><br>
 
     </div>
-</div>
 
+
+    <script>
+    $(document).ready(function(){
+      $('#tags_list_load').html('').load("/music/list/tag_list/" + {{ symbol.pk }});
+    });
+    </script>
 {% endblock %}

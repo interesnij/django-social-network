@@ -24,3 +24,20 @@ class AllTagListView(View):
         context['all_tracks'] = all_tracks
         context['tag'] = tag
         return render_to_response('music/tag_music_list.html', context)
+
+
+class TagsList(View):
+	def get(self, request, *args, **kwargs):
+		context = {}
+        symbol = SoundSymbol.objects.get(pk=self.kwargs["pk"])
+		tag_list = SoundTags.objects.filter(symbol=symbol)
+		current_page = Paginator(users_list, 24)
+		page = request.GET.get('page')
+
+		try:
+			context['tag_list'] = current_page.page(page)
+		except PageNotAnInteger:
+			context['tag_list'] = current_page.page(1)
+		except EmptyPage:
+			context['tag_list'] = current_page.page(current_page.num_pages)
+		return render_to_response('music/tags_list.html', context)
