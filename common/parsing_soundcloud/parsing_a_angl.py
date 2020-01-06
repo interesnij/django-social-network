@@ -94,7 +94,9 @@ a_angl_list_1 = [
 'Aarophat',
 'Aarre',
 'Ab-Soul feat. Aloe Blacc',
-'Abandoned Rainbow',
+'Abandoned Rainbow',]
+
+a_angl_list_2 = [
 'Abaz & Артём Татищевский',
 'ABBA',
 'Abbi',
@@ -172,7 +174,7 @@ a_angl_list_1 = [
 'Adam Seal',
 'Adam Sick',]
 
-a_angl_list_2 = [
+a_angl_list_3 = [
 'Adam Szabo',
 'Adam Tyler',
 'Adam Walker',
@@ -245,7 +247,9 @@ a_angl_list_2 = [
 'Adult Karate feat. Adaline',
 'AduShinova',
 'ADVANCE',
-'Adventure Club',
+'Adventure Club',]
+
+a_angl_list_4 = [
 'Ady Jara',
 'Ady Suleiman',
 'Aedanz',
@@ -324,7 +328,7 @@ a_angl_list_2 = [
 'Aint',
 'Air Bag One',]
 
-a_angl_list_3 = [
+a_angl_list_5 = [
 'Air Station',
 'Air Traffic Controller',
 'Airbase',
@@ -400,7 +404,9 @@ a_angl_list_3 = [
 'Alan Parsons',
 'Alan Peter',
 'Alan Pinheiro',
-'Alan Price',
+'Alan Price',]
+
+a_angl_list_6 = [
 'Alan Roy',
 'Alan Silvestri',
 'Alan Smith',
@@ -476,7 +482,7 @@ a_angl_list_3 = [
 'Alejandro Montero',
 'Alek Sandar',]
 
-a_angl_list_4 = [
+a_angl_list_7 = [
 'Alek Sandar, Dess & Boyplay',
 'Alek Trance',
 'Aleks Ache',
@@ -552,7 +558,9 @@ a_angl_list_4 = [
 'Alex Kozobolis',
 'Alex Krit',
 'Alex L',
-'Alex Leavon',
+'Alex Leavon',]
+
+a_angl_list_8 = [
 'Alex M.',
 'Alex M.O.R.P.H.',
 'Alex Madden',
@@ -624,7 +632,7 @@ a_angl_list_4 = [
 'Alexander Volosnikov',
 'Alexandra Burke',]
 
-a_angl_list_5 = [
+a_angl_list_9 = [
 'Alexandra Damiani',
 'Alexandra Joner',
 'Alexandra Moon',
@@ -699,7 +707,9 @@ a_angl_list_5 = [
 'Alien Ant Farm',
 'Alicja',
 'Alien Ant Farm',
-'Alien24',
+'Alien24',]
+
+a_angl_list_10 = [
 'Alien24 feat. Esc.Ape',
 'Aliesa Nicole',
 'Alika',
@@ -776,7 +786,7 @@ a_angl_list_5 = [
 'Alma',
 'Almadrava',]
 
-a_angl_list_6 = [
+a_angl_list_11 = [
 'Almira',
 'Almost Home',
 'Almy & G.O.D.',
@@ -853,7 +863,9 @@ a_angl_list_6 = [
 'Amanda Larson',
 'Amanda Lear',
 'Amanda Mair',
-'Amanda Seyfried',
+'Amanda Seyfried',]
+
+a_angl_list_12 = [
 'Amanda Wilson',
 'Amanda Winberg',
 'Amandine Bourgeois',
@@ -928,7 +940,7 @@ a_angl_list_6 = [
 'AMPR feat. PRXZM',
 'Amr Diab',]
 
-a_angl_list_7 = [
+a_angl_list_13 = [
 'Amsterdam',
 'Amsterdam Avenue',
 'AMTRAC',
@@ -1013,7 +1025,9 @@ a_angl_list_7 = [
 'Andre Zuniga',
 'Andrea',
 'Andrea Begley',
-'Andrea Bertolini',
+'Andrea Bertolini',]
+
+a_angl_list_14 = [
 'Andrea Bocelli',
 'Andrea Carnell',
 'Andrea Coluzzi',
@@ -1080,7 +1094,7 @@ a_angl_list_7 = [
 'Andrew Strong',
 'Andrew Whitman',]
 
-a_angl_list_8 = [
+a_angl_list_15 = [
 'Andrey Aponik',
 'Andrey Kravtsov',
 'Andrey Lucky',
@@ -1155,7 +1169,9 @@ a_angl_list_8 = [
 'Angell',
 'Angelo Di Pippo',
 'Anger',
-'Anggun',
+'Anggun',]
+
+a_angl_list_16 = [
 'Angie',
 'Angie Miller',
 'Angie Van Burg',
@@ -1232,7 +1248,7 @@ a_angl_list_8 = [
 'Annalia',
 'Annalisa',]
 
-a_angl_list_9 = [
+a_angl_list_17 = [
 'Anne Dereaux',
 'Anne-Marie',
 'Annelie',
@@ -1305,7 +1321,9 @@ a_angl_list_9 = [
 'Anton Powers',
 'Antonia',
 'Antonia Markova',
-'Antonio Campos',
+'Antonio Campos',]
+
+a_angl_list_18 = [
 'Antonio Carlos Jobim',
 'Antonio Cobo',
 'Antonio Giacca',
@@ -1384,7 +1402,7 @@ a_angl_list_9 = [
 'Arctic Moon',
 'Arctic Night',]
 
-a_angl_list_10 = [
+a_angl_list_19 = [
 'Arctic Ocean',
 'Arcuate',
 'Arden Cho',
@@ -1459,7 +1477,9 @@ a_angl_list_10 = [
 'Arsenie',
 'Arsenium',
 'Arseniy Guri',
-'Arseniya',
+'Arseniya',]
+
+a_angl_list_20 = [
 'Arst One',
 'Art & Shock',
 'Art Key',
@@ -1536,7 +1556,7 @@ a_angl_list_10 = [
 'Astor Quinquela',
 'Astrid',]
 
-a_angl_list_11 = [
+a_angl_list_21 = [
 'Astrid S',
 'Astronomyy',
 'Astrud De Mata',
@@ -1601,7 +1621,9 @@ a_angl_list_11 = [
 'Aura Dione',
 'Aurela Gace',
 'Aurelia',
-'Aurelien Noel',
+'Aurelien Noel',]
+
+a_angl_list_22 = [
 'Auri',
 'Aurora',
 'Aurora Night',
@@ -1688,7 +1710,7 @@ a_angl_list_11 = [
 'Aynine',
 'Aynsley Lister',]
 
-a_angl_list_12 = [
+a_angl_list_23 = [
 'Ayo',
 'Aysel',
 'Aysha',
@@ -1716,7 +1738,7 @@ litera = SoundSymbol.objects.get(name="A")
 
 count = 0
 
-for tag in a_angl_list_2:
+for tag in a_angl_list_23:
     tracks = client.get('/tracks', q=tag, limit=page_size, linked_partitioning=1)
     if tracks:
         for track in tracks.collection:
@@ -1742,7 +1764,10 @@ for tag in a_angl_list_2:
                     SoundParsing.objects.get(id=track.id)
                 except:
                     if track.genre and track.release_year and track.duration > 90000 and track.genre in genres_list_names:
-                        self_tag = SoundTags.objects.get(name=tag, symbol=litera)
+                        try:
+                            self_tag = SoundTags.objects.get(name=tag, symbol=litera)
+                        except:
+                            self_tag = SoundTags.objects.create(name=tag, symbol=litera)
                         genre =SoundGenres.objects.get(name=track.genre.replace("'", '') )
                         new_track = SoundParsing.objects.create(id=track.id, tag=self_tag, artwork_url=track.artwork_url, created_at=created_at, duration=track.duration, genre=genre, stream_url=track.stream_url, title=track.title, uri=track.uri, release_year=track.release_year)
                     count = count + 1
