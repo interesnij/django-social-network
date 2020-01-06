@@ -1,7 +1,7 @@
 from django.views import View
 from django.shortcuts import render_to_response
 from music.models import *
-
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 class AllMusicListView(View):
@@ -27,17 +27,18 @@ class AllTagListView(View):
 
 
 class TagsList(View):
-	def get(self, request, *args, **kwargs):
-		context = {}
+    def get(self, request, *args, **kwargs):
+        context = {}
         symbol = SoundSymbol.objects.get(pk=self.kwargs["pk"])
-		tag_list = SoundTags.objects.filter(symbol=symbol)
-		current_page = Paginator(users_list, 24)
-		page = request.GET.get('page')
+        tag_list = SoundTags.objects.filter(symbol=symbol)
+        current_page = Paginator(users_list, 24)
+        page = request.GET.get('page')
+        context['symbol'] = symbol
 
-		try:
-			context['tag_list'] = current_page.page(page)
-		except PageNotAnInteger:
-			context['tag_list'] = current_page.page(1)
-		except EmptyPage:
-			context['tag_list'] = current_page.page(current_page.num_pages)
-		return render_to_response('music/tags_list.html', context)
+        try:
+            context['tag_list'] = current_page.page(page)
+        except PageNotAnInteger:
+            context['tag_list'] = current_page.page(1)
+        except EmptyPage:
+            context['tag_list'] = current_page.page(current_page.num_pages)
+        return render_to_response('music/tags_list.html', context)
