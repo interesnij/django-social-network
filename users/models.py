@@ -14,6 +14,7 @@ from frends.models import Connect
 from posts.models import Post
 from common.models import ItemVotes
 from gallery.models import Photo, Album
+from music.models import SoundParsing
 from moderation.models import ModeratedObject, ModerationPenalty
 from common.checkers import *
 from django.db.models import Q, F, Count
