@@ -89,7 +89,7 @@ class SoundTags(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255, unique=True)
     order = models.IntegerField(default=0)
-    symbol = models.ForeignKey(SoundSymbol, related_name="symbol_papa" on_delete=models.CASCADE, verbose_name="Буква")
+    symbol = models.ForeignKey(SoundSymbol, related_name="symbol_papa", on_delete=models.CASCADE, verbose_name="Буква")
 
     def __str__(self):
         return self.name
