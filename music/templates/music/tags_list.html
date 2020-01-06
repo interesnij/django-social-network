@@ -3,13 +3,14 @@
 {% if tag_list %}
 
 <div class="row overflow-x-auto no-gutters pb-2 mb-3 tags-container">
+  <div class="row">
 {% for object in tag_list %}
 <div class="col-12 col-md-6 infinite-item">
   <div class="card mb-4">
       <div class="card-body">
           <div class="media">
               <div class="media-body">
-                  <p class=" mb-0">{{ object.get_genres }}</p>
+                  <p class=" mb-0">{% for genre in object.get_genres %}{{ genre.name }}{% endfor %}</p>
                   <h4 class="mb-0">{{ object.name }}</h4>
               </div>
           </div>
@@ -24,6 +25,7 @@
         <img style="width: 30px;" src="{% static 'images/loading.gif' %}">
     </a>
     {% endif %}
+</div>
 </div>
 </div>
 
