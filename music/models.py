@@ -22,6 +22,7 @@ class SoundGenres(models.Model):
 class SoundSymbol(models.Model):
     RUS_SYMBOL = 'RS'
     ANGL_SYMBOL = 'AS'
+    NUMBER_SYMBOL = 'NS'
     SYMBOL_TYPES = (
         (RUS_SYMBOL, 'русские исполнители'),
         (ANGL_SYMBOL, 'английские исполнители'),
