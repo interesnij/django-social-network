@@ -471,11 +471,13 @@ genres_list_names = [name['name'] for name in genres_list]
 "Вячеслав Самарин",
 ]
 
+
+
 litera = SoundSymbol.objects.get(name="В")
 
 count = 0
 
-for tag in б_rus_list_1:
+for tag in б_rus_list_2:
     tracks = client.get('/tracks', q=tag, limit=page_size, linked_partitioning=1)
     if tracks:
         for track in tracks.collection:
