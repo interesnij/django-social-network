@@ -49,7 +49,7 @@ genres_list_names = [name['name'] for name in genres_list]
 "Павел Шубин и Андрей Якиманский",
 "Павла и Денис Ковальский",
 "Павлентий Чернов",
-"Павло Табаков"",
+"Павло Табаков",
 "Пальчики Оближешь",
 "Пан and Dino MC 47",
 "Панакота",
@@ -205,7 +205,7 @@ litera = SoundSymbol.objects.get(name="П")
 
 count = 0
 
-for tag in п_rus_list_1:
+for tag in п_rus_list_3:
     tracks = client.get('/tracks', q=tag, limit=page_size, linked_partitioning=1)
     if tracks:
         for track in tracks.collection:
