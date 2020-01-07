@@ -162,4 +162,4 @@ class SoundParsing(models.Model):
         ordering = ('-created_at',)
         verbose_name="спарсенные треки"
         verbose_name_plural="спарсенные треки"
-        indexes = (BrinIndex(fields=['created']),)
+        indexes = (BrinIndex(fields=['created_at']),)
