@@ -21,7 +21,15 @@ genres_list = SoundGenres.objects.values('name')
 genres_list_names = [name['name'] for name in genres_list]
 
 ц_rus_list_1 = [
-
+"Цвет Алоэ",
+"Цветаев Владимир",
+"Цветы",
+"Цвіт Кульбаби",
+"ЦГН",
+"ЦельРазгром (Миша Маваши)",
+"Цой Анита",
+"Цыганова Вика",
+"Цыплёнок Цыпа",
 ]
 
 litera = SoundSymbol.objects.get(name="Ц")
