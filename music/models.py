@@ -6,6 +6,7 @@ from django.http import HttpResponse
 from communities.models import Community
 from django.db.models import Q
 from django.contrib.contenttypes.fields import GenericRelation
+from django.contrib.postgres.indexes import BrinIndex
 
 
 class SoundGenres(models.Model):
@@ -161,3 +162,4 @@ class SoundParsing(models.Model):
         ordering = ('-created_at',)
         verbose_name="спарсенные треки"
         verbose_name_plural="спарсенные треки"
+        indexes = (BrinIndex(fields=['created']),)
