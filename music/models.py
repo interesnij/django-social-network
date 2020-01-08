@@ -3,7 +3,6 @@ from django.conf import settings
 from django.db import models
 from common.utils import safe_json
 from django.http import HttpResponse
-from communities.models import Community
 from django.db.models import Q
 from django.contrib.contenttypes.fields import GenericRelation
 from django.contrib.postgres.indexes import BrinIndex
