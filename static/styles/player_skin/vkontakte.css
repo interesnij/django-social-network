@@ -461,53 +461,53 @@ div.jp-type-playlist div.jp-playlist a:hover {
     color:#FFFFFF;
 }
 
-#ajax .jp-playlist .jp-playlist-current .svg_default{
+.jp-playlist .jp-playlist-current .svg_default{
   color:#FFFFFF;
 }
-#ajax .jp-playlist .track_genre{
+.jp-playlist .track_genre{
   bottom:19px;
   position:relative;
   margin-left: 64px;
   font-size: 13px
 }
-#ajax .jp-playlist .track_img{
+.jp-playlist .track_img{
   width:55px;
   padding-left:7px;
   height:auto;
   cursor:pointer;
 }
-#ajax .jp-playlist .track_repost svg{
+.jp-playlist .track_repost svg{
   width:20px;
   height:auto;
   cursor:pointer;
 }
-#ajax .jp-playlist .track_add svg{
+.jp-playlist .track_add svg{
   width:25px;
   height:auto;
   cursor:pointer;
 }
-#ajax .jp-playlist .track_remove svg{
+.jp-playlist .track_remove svg{
   width:20px;
   height:auto;
   cursor:pointer;
 }
 
-#ajax .jp-playlist .gen_div{
+.jp-playlist .gen_div{
   top:10px;
   position:relative;
   top:10px;
 }
-#ajax .jp-playlist .track_item_li{
+.jp-playlist .track_item_li{
   white-space:nowrap;
   overflow:hidden;
 }
-#ajax .jp-playlist .span_btn{
+.jp-playlist .span_btn{
   float:right;
   position:relative;
   padding-right:10px;
   bottom:10px;
 }
-#ajax .jp-playlist .track_title{
+ .jp-playlist .track_title{
   left:10px;
   bottom:10px;
   position:relative;
