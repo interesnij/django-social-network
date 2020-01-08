@@ -73,5 +73,23 @@
 
     {% include "base_block/footer.html" %}
     {% include "generic/gallery/photo_popover.html" %}
+    <script>
+    $(document).ready(function(){
+        var cssSelector = {
+            jPlayer: "#jquery_jplayer_1",
+            cssSelectorAncestor: "#ajax"
+        };
+        var playlist = {{ user.get_json_my_playlist }};
+
+        var options = {
+            swfPath: "/static/jquery.jplayer.swf",
+            supplied: "oga, mp3",
+            wmode: "window",
+            smoothPlayBar: false,
+            keyEnabled: true
+        };
+        new jPlayerPlaylist(cssSelector, playlist, options);
+    });
+    </script>
   </body>
 </html>
