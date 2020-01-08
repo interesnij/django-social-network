@@ -18,6 +18,7 @@ from music.models import SoundParsing
 from moderation.models import ModeratedObject, ModerationPenalty
 from common.checkers import *
 from django.db.models import Q, F, Count
+from common.utils import safe_json
 
 
 class User(AbstractUser):
@@ -412,6 +413,23 @@ class User(AbstractUser):
         music_query.add(exclude_reported_and_approved_goods_query, Q.AND)
         music_list = SoundParsing.objects.filter(music_query)
         return music_list
+    def get_json_my_playlist(self):
+        if not hasattr(self, '_cached_playlist'):
+            self._cached_playlist = safe_json(self.my_playlist())
+        return self._cached_playlist
+    def my_playlist(self):
+        playlist = []
+        queryset = self.get_my_music()
+        for track in queryset:
+            url = track.uri + '/stream?client_id=' + 'dce5652caa1b66331903493735ddd64d'
+            genre = str(track.genre)
+            data = {}
+            data['title'] = track.title
+            data['artwork_url'] = track.artwork_url
+            data['mp3'] = url
+            data['genre'] = genre
+            playlist.append(data)
+        return playlist
 
     def get_avatar(self):
         try:

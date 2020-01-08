@@ -6,6 +6,7 @@ from rest_framework import serializers
 from rest_framework.response import Response
 from gallery.models import Album
 from users.models import UserProfile, UserPrivateSettings, UserNotificationsSettings
+from music.models import SoundList
 
 
 class RegisterSerializer(serializers.Serializer):
@@ -50,5 +51,6 @@ class RegisterSerializer(serializers.Serializer):
         Album.objects.create(creator=user, community=None, title="Сохраненные фото", is_generic=True,)
         Album.objects.create(creator=user, community=None, title="Фото со стены", is_generic=True,)
         Album.objects.create(creator=user, community=None, title="Фото со страницы",  is_generic=True,)
+        SoundList.objects.create(creator=user, community=None, name="Сгенерированный плейлист",)
 
         return user

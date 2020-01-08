@@ -146,6 +146,7 @@
             </div>
 
             <!-- ПЛЕЕР-->
+            {% if user.is_authenticated %}
             <div class="dropdown text-hide-xs d-inline-block">
                 <a class="btn header-color-secondary dropdown-toggle" href="#" role="button" id="dropdownMusicLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <div id="jquery_jplayer_1" class="jp-jplayer"></div>
@@ -179,6 +180,7 @@
                   <!-- СЮДА ГРУЗИМ ПЛЕЙЛИСТ ЛИБО ПО УМОЛЧАНИЮ ЛИБО ВЫБРАННЫЙ-->
                 </div>
             </div>
+            {% endif %}
             <!-- /ПЛЕЕР-->
 
             <div class="col text-right">

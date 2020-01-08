@@ -14,6 +14,7 @@ from goods.models import Good
 from common.model_loaders import get_user_model
 from notifications.model.user import *
 from gallery.models import Album, Photo
+from music.models import SoundList
 
 
 class CommunityCategory(models.Model):
@@ -84,6 +85,8 @@ class Community(models.Model):
         Album.objects.create(creator=creator, community=community, title="Сохраненные фото", is_generic=True,)
         Album.objects.create(creator=creator, community=community, title="Фото со стены", is_generic=True,)
         Album.objects.create(creator=creator, community=community, title="Фото со страницы", is_generic=True,)
+        SoundList.objects.create(creator=user, community=community, name="Сгенерированный плейлист",)
+
         CommunityNotificationsSettings.objects.create(community=community)
         CommunityPrivateSettings.objects.create(community=community)
         return community

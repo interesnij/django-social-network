@@ -119,7 +119,7 @@ $(document).ready(function(){
         jPlayer: "#jquery_jplayer_1",
         cssSelectorAncestor: "#ajax"
     };
-    var playlist = {{ tag.get_json_playlist }};
+    var playlist = {{ user.get_json_my_playlist }};
 
     var options = {
         swfPath: "/static/jquery.jplayer.swf",

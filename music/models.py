@@ -50,7 +50,6 @@ class SoundList(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255, unique=True)
     track = models.ManyToManyField('music.SoundParsing', related_name='players', blank="True")
-    autoplay = models.BooleanField(default=False)
     community = models.ForeignKey('communities.Community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE, verbose_name="Создатель")
 
