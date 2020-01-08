@@ -14,11 +14,12 @@ from frends.models import Connect
 from posts.models import Post
 from common.models import ItemVotes
 from gallery.models import Photo, Album
-from music.models import SoundParsing
+from music.models import SoundParsing, SoundList
 from moderation.models import ModeratedObject, ModerationPenalty
 from common.checkers import *
 from django.db.models import Q, F, Count
 from common.utils import safe_json
+
 
 
 class User(AbstractUser):
