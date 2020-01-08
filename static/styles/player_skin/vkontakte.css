@@ -490,6 +490,12 @@ div.jp-type-playlist div.jp-playlist a:hover {
   height:auto;
   cursor:pointer;
 }
+
+#ajax .jp-playlist .gen_div{
+  top:10px;
+  position:relative;
+  top:10px;
+}
 #ajax .jp-playlist .track_item_li{
   white-space:nowrap;
   overflow:hidden;
