@@ -113,3 +113,20 @@ $(window).on('load', function () {
     $('.wrapper').css('padding-bottom', $('body > footer').outerHeight() );
     $('body > footer').css('margin-top', -( $('body > footer').outerHeight() ));
 });
+
+$(document).ready(function(){
+    var cssSelector = {
+        jPlayer: "#jquery_jplayer_1",
+        cssSelectorAncestor: "#ajax"
+    };
+    var playlist = {{ request.user.get_json_my_playlist }};
+
+    var options = {
+        swfPath: "/static/jquery.jplayer.swf",
+        supplied: "oga, mp3",
+        wmode: "window",
+        smoothPlayBar: false,
+        keyEnabled: true
+    };
+    new jPlayerPlaylist(cssSelector, playlist, options);
+});
