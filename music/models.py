@@ -55,7 +55,10 @@ class SoundList(models.Model):
     def __str__(self):
         return self.name
 
-    
+    def get_json_playlist(self):
+        if not hasattr(self, '_cached_playlist'):
+            self._cached_playlist = safe_json(self.playlist())
+        return self._cached_playlist
 
     def playlist(self):
         playlist = []

@@ -51,6 +51,6 @@ class RegisterSerializer(serializers.Serializer):
         Album.objects.create(creator=user, community=None, title="Сохраненные фото", is_generic=True,)
         Album.objects.create(creator=user, community=None, title="Фото со стены", is_generic=True,)
         Album.objects.create(creator=user, community=None, title="Фото со страницы",  is_generic=True,)
-        SoundList.objects.create(creator=user, community=None, name="Сгенерированный плейлист",)
+        SoundList.objects.create(creator=user, community=None, name="my_first_generic_playlist_number_12345678900000000",)
 
         return user

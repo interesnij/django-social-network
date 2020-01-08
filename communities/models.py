@@ -85,7 +85,7 @@ class Community(models.Model):
         Album.objects.create(creator=creator, community=community, title="Сохраненные фото", is_generic=True,)
         Album.objects.create(creator=creator, community=community, title="Фото со стены", is_generic=True,)
         Album.objects.create(creator=creator, community=community, title="Фото со страницы", is_generic=True,)
-        SoundList.objects.create(creator=user, community=community, name="Сгенерированный плейлист",)
+        SoundList.objects.create(creator=user, community=community, name="my_first_generic_playlist_number_12345678900000000",)
 
         CommunityNotificationsSettings.objects.create(community=community)
         CommunityPrivateSettings.objects.create(community=community)
