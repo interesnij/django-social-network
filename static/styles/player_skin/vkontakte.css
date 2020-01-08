@@ -473,6 +473,7 @@ div.jp-type-playlist div.jp-playlist a:hover {
   width:55px;
   padding-left:7px;
   height:auto;
+  cursor:pointer;
 }
 #ajax .jp-playlist .track_repost svg{
   width:20px;
