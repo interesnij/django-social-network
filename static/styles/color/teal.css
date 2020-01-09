@@ -4,7 +4,7 @@ html {
   height: 100%;
 }
 
-.svg_default { color:#FFFFFF !important}
+.svg_default { color:rgba(255, 255, 255, 0.65) !important}
 
 body {
   background-color: #0095a8;
