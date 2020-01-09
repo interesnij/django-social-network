@@ -14,7 +14,7 @@ $(".tracks-container .track_item").click(function() {
   myPlaylist.setPlaylist(list);
   myPlaylist.play(track_id);
   var media = document.getElementById("jquery_jplayer_1");
-  var playPromise = media.play();
+  const playPromise = media.play();
     if (playPromise !== null){
       playPromise.catch(() => { media.play(); })
     }
