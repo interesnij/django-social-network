@@ -13,15 +13,13 @@ $(".tracks-container .track_item").click(function() {
   $("#music_json_list").append(inner_list);
   myPlaylist.pause();
   myPlaylist.setPlaylist(list);
-  function fix(item) {
     var thePromise = myPlaylist.play(track_id);;
     if (thePromise != undefined) {
         thePromise.then(function(_) {
             myPlaylist.pause();
             myPlaylist.currentTime = 0;
         });
-    }
-}
+};
 });
 
 var tracks_infinite = new Waypoint.Infinite({element: $('.tracks-container')[0], onBeforePageLoad: function() { $('.tracks_load').show(); }, onAfterPageLoad: function($items) { $('.tracks_load').hide(); }});
