@@ -34,6 +34,7 @@ class TagsList(View):
         current_page = Paginator(tag_list, 24)
         page = request.GET.get('page')
         context['symbol'] = symbol
+        context['request_user'] = request.user
 
         try:
             context['tag_list'] = current_page.page(page)
