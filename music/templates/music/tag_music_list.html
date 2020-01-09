@@ -24,6 +24,7 @@
         smoothPlayBar: false,
         keyEnabled: true
     };
-    var myPlaylist = new jPlayerPlaylist(cssSelector, playlist, options);
+    var myPlaylist = new jPlayerPlaylist(cssSelector, options);
+    myPlaylist.setPlaylist('{{ tag.get_json_playlist }}')
   });
 </script>
