@@ -423,7 +423,7 @@ class User(AbstractUser):
         try:
             sound_list = UserTempSoundList.objects.get(user=self)
             list = SoundList.objects.get(id=sound_list__list__id)
-        try:
+        except:
             tag_list = UserTempSoundList.objects.get(user=self)
             tag = SoundTags.objects.get(id=tag_list__tad__id)
         except:
