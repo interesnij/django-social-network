@@ -4,6 +4,8 @@ html {
   height: 100%;
 }
 
+.svg_default { color:#FFFFFF; }
+
 body {
   background-color: #0095a8;
   font-size: 1em;
