@@ -10,7 +10,7 @@ $(".tracks-container .track_item").click(function() {
   track = $(this); track_id = track.data('counter');
   $("#music_json_list").append('');
 	myPlaylist.setPlaylist({{ tag.get_json_playlist }});
-  myPlaylist.play();
+  myPlaylist.play(track_id);
 });
 
 var tracks_infinite = new Waypoint.Infinite({element: $('.tracks-container')[0], onBeforePageLoad: function() { $('.tracks_load').show(); }, onAfterPageLoad: function($items) { $('.tracks_load').hide(); }});
