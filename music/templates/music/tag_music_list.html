@@ -11,7 +11,19 @@
 
 <script>
   $(document).ready(function(){
-    $('.jp-playlist').empty();
-    $('.jp-playlist').append('{{ tag.get_json_playlist }}')
+    var cssSelector = {
+        jPlayer: "#jquery_jplayer_1",
+        cssSelectorAncestor: ".main-header"
+    };
+    var playlist = {{ tag.get_json_playlist }};
+
+    var options = {
+        swfPath: "/static/jquery.jplayer.swf",
+        supplied: "oga, mp3",
+        wmode: "window",
+        smoothPlayBar: false,
+        keyEnabled: true
+    };
+    var myPlaylist = new jPlayerPlaylist(cssSelector, playlist, options);
   });
 </script>
