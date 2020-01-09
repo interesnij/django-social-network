@@ -13,20 +13,11 @@ $(".tracks-container .track_item").click(function() {
   $("#music_json_list").append(inner_list);
   myPlaylist.setPlaylist(list);
   myPlaylist.play(track_id);
-  function fix(item) {
-    var thePromise = item.play();
-
-    if (thePromise != undefined) {
-
-        thePromise.then(function(_) {
-
-            item.pause();
-            item.currentTime = 0;
-
-        });
-
+  var media = document.getElementById("jquery_jplayer_1");
+  var playPromise = media.play();
+    if (playPromise !== null){
+      playPromise.catch(() => { media.play(); })
     }
-}
 });
 
 var tracks_infinite = new Waypoint.Infinite({element: $('.tracks-container')[0], onBeforePageLoad: function() { $('.tracks_load').show(); }, onAfterPageLoad: function($items) { $('.tracks_load').hide(); }});
