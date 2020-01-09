@@ -420,10 +420,14 @@ class User(AbstractUser):
         return self._cached_playlist
     def my_playlist(self):
         playlist = []
-        if SoundList.is_temp_list(self):
+        try:
             sound_list = UserTempSoundList.objects.get(user=self)
             list = SoundList.objects.get(id=sound_list__list__id)
-        queryset = self.get_my_music()
+        try:
+            tag_list = UserTempSoundList.objects.get(user=self)
+            tag = SoundTags.objects.get(id=tag_list__tad__id)
+        except:
+            queryset = self.get_my_music()
         for track in queryset:
             url = track.uri + '/stream?client_id=' + 'dce5652caa1b66331903493735ddd64d'
             genre = str(track.genre)
