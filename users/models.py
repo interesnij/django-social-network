@@ -14,7 +14,7 @@ from frends.models import Connect
 from posts.models import Post
 from common.models import ItemVotes
 from gallery.models import Photo, Album
-from music.models import SoundParsing, SoundList
+from music.models import *
 from moderation.models import ModeratedObject, ModerationPenalty
 from common.checkers import *
 from django.db.models import Q, F, Count
@@ -420,6 +420,9 @@ class User(AbstractUser):
         return self._cached_playlist
     def my_playlist(self):
         playlist = []
+        if SoundList.is_temp_list(self):
+            sound_list = UserTempSoundList.objects.get(user=self)
+            list = SoundList.objects.get(id=sound_list__list__id)
         queryset = self.get_my_music()
         for track in queryset:
             url = track.uri + '/stream?client_id=' + 'dce5652caa1b66331903493735ddd64d'

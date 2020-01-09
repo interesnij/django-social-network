@@ -60,6 +60,9 @@ class SoundList(models.Model):
             self._cached_playlist = safe_json(self.playlist())
         return self._cached_playlist
 
+    def is_temp_list(self, user):
+        UserTempSoundList.objects.get(list=self, user=user).exists()
+
     def playlist(self):
         playlist = []
         queryset = self.track.all()
@@ -99,6 +102,9 @@ class SoundTags(models.Model):
         genres_query = Q(id__in=genres_list)
         result = SoundGenres.objects.filter(genres_query)
         return result
+
+    def is_temp_tag(self, user):
+        UserTempSoundList.objects.get(tag=self, user=user).exists()
 
     def get_json_playlist(self):
         if not hasattr(self, '_cached_playlist'):
