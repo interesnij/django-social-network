@@ -1,11 +1,7 @@
 {% load staticfiles %}
 
 <script>
-      var cssSelector = {jPlayer: "#jquery_jplayer_1",cssSelectorAncestor: ".main-header"};
-      var playlist = {{ request.user.get_json_my_playlist }};
-      var options = { swfPath: "/static/jquery.jplayer.swf", supplied: "oga, mp3", wmode: "window", smoothPlayBar: false, keyEnabled: true};
-      var myPlaylist = new jPlayerPlaylist(cssSelector, playlist, options);
-			
+
 $('.user_page').on('click', '.avatar_detail', function() {
 		var photo = $(this);
 		var photo_id = photo.data("id");
