@@ -19,7 +19,7 @@
                       {% for object in rus_simbols %}
                         <li class="date">
                           <h6 style="border:1px black solid;padding:10px;" class="content-color-primary mb-0">
-                            <a href="{% url 'tags_music' pk=object.pk %}">
+                            <a href="{% url 'tags_music' pk=object.pk %}" data-html="#ajax" class="ajax">
                               {{ object.name }}
                             </a>
                           </h6>
@@ -40,7 +40,7 @@
                       {% for object in angl_simbols %}
                         <li class="date">
                             <h6 style="border:1px black solid;padding:10px;" class="content-color-primary mb-0">
-                              <a href="{% url 'tags_music' pk=object.pk %}">
+                              <a href="{% url 'tags_music' pk=object.pk %}" data-html="#ajax" class="ajax">
                                 {{ object.name }}
                               </a>
                             </h6>
@@ -60,7 +60,7 @@
                       {% for object in number_simbols %}
                         <li class="date">
                           <h6 style="border:1px black solid;padding:10px;" class="content-color-primary mb-0">
-                            <a href="{% url 'tags_music' pk=object.pk %}">
+                            <a href="{% url 'tags_music' pk=object.pk %}" data-html="#ajax" class="ajax">
                               {{ object.name }}
                             </a>
                           </h6>

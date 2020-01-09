@@ -6,7 +6,7 @@
     {% for object in communities_list %}
     <li class="list-group-item infinite-item">
         <div class="media">
-            <a href="{% url 'community_detail' pk=object.pk %}" class="ajax">
+            <a href="{% url 'community_detail' pk=object.pk %}" class="ajax" data-html="#ajax">
                 <figure>
                   {% if object.get_avatar %}
                     <img src="{{ object.get_avatar|thumbnail_url:'avatar' }}" style="border-radius:50px;width:50px;" alt="image">
@@ -16,7 +16,7 @@
                 </figure>
             </a>
             <div class="media-body">
-                <a href="{% url 'community_detail' pk=object.pk %}" class="ajax">
+                <a href="{% url 'community_detail' pk=object.pk %}" class="ajax" data-html="#ajax">
                     <h6 class="my-0 mt-1">{{ object.name }}
                     </h6>
                 </a>

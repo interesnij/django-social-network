@@ -19,7 +19,7 @@
                 <div class="media">
                     <div class="media-body">
                         <h5 class="mt-1">Черный список сообщества -
-                            <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=community.pk %}">
+                            <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=community.pk %}" data-html="#ajax">
                                 {{ community.name }}
                             </a>
                         </h5>
@@ -40,7 +40,7 @@
                               {% endif %}
                             </figure>
                             <div class="media-body">
-                                <a href="{% url 'user' pk=object.pk %}" class="ajax">
+                                <a href="{% url 'user' pk=object.pk %}" class="ajax" data-html="#ajax">
                                     <h6 class="my-0 mt-1">{{ object.get_full_name }}</h6>
                                 </a>
                                 <a href="" class="small">Разбанить</a>

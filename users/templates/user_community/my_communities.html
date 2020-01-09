@@ -37,7 +37,7 @@
                       <div class="media-body">
                           <h5 class="mt-1">Популярные группы</h5>
                       </div>
-                      <a class="ajax" href="{% url 'all_communities' %}"">
+                      <a class="ajax" href="{% url 'all_communities' %}" data-html="#ajax">
                           все
                       </a>
                   </div>
@@ -55,7 +55,7 @@
                                 {% endif %}
                               </figure>
                               <div class="media-body">
-                                  <a href="{% url 'community_detail' pk=object.pk %}" class="ajax">
+                                  <a href="{% url 'community_detail' pk=object.pk %}" class="ajax" data-html="#ajax">
                                       <h6 class="my-0 mt-1">{{ object.name }}</h6>
                                   </a>
                                   <p class="small">{{ object.count_members }} {{ object.count_members|rupluralize:"подписчик,подписчика,подписчиков" }}</p>

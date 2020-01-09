@@ -94,9 +94,9 @@
                 </button>
                 <div class="dropdown-menu" x-placement="bottom-start">
                     <a class="dropdown-item" data-js="avatar_change" href="#">Аватар</a>
-                    <a class="dropdown-item ajax" href="{% url 'user_general_form' user.pk %}">Мои контакты</a>
-                    <a class="dropdown-item ajax" href="{% url 'user_about_form' user.pk %}">Обо мне</a>
-                    <a class="dropdown-item ajax" href="{% url 'user_design' user.pk %}">Внешний вид</a>
+                    <a class="dropdown-item ajax" href="{% url 'user_general_form' request.user.pk %}" data-html="#ajax">Мои контакты</a>
+                    <a class="dropdown-item ajax" href="{% url 'user_about_form' request.user.pk %}" data-html="#ajax">Обо мне</a>
+                    <a class="dropdown-item ajax" href="{% url 'user_design' request.user.pk %}" data-html="#ajax">Внешний вид</a>
                 </div>
             </div>
         </span>
@@ -106,8 +106,8 @@
                 Настройки
             </button>
             <div class="dropdown-menu" x-placement="bottom-start">
-                <a class="dropdown-item ajax" href="{% url 'user_settings_private' user.pk %}">Приватность</a>
-                <a class="dropdown-item ajax" href="{% url 'user_settings_notify' user.pk %}">Уведомления</a>
+                <a class="dropdown-item ajax" href="{% url 'user_settings_private' user.pk %}" data-html="#ajax">Приватность</a>
+                <a class="dropdown-item ajax" href="{% url 'user_settings_notify' user.pk %}" data-html="#ajax">Уведомления</a>
             </div>
         </div>
         </span>

@@ -6,7 +6,7 @@
             <div class="media-body">
                 <h4 class="content-color-primary mb-0">Группы </h4>
             </div>
-            <a href="{% url 'communities' pk=user.pk %}" class="ajax">
+            <a href="{% url 'communities' pk=user.pk %}" class="ajax" data-html="#ajax">
                 все
             </a>
         </div>
@@ -24,7 +24,7 @@
                     {% endif %}
                 </figure>
                 <div class="media-body">
-                    <a href="{% url 'community_detail' pk=object.pk %}" class="ajax">
+                    <a href="{% url 'community_detail' pk=object.pk %}" class="ajax" data-html="#ajax">
                         <h6 class="my-0 mt-1">{{ object.name }}
                         </h6>
                     </a>
@@ -40,7 +40,7 @@
 <div class="card mb-4" style="">
     <div class="card-header">
         <div class="media" style="display: flex;align-items: center;justify-content: center;">
-            <a href="{% url 'all_communities' %}" class="ajax">
+            <a href="{% url 'all_communities' %}" class="ajax" data-html="#ajax">
                 <div class="media-body">
                     <h4 class="content-color-primary mb-0">Вступайте в группы</h4>
                 </div>

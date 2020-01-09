@@ -5,7 +5,7 @@
    <div class="col text-center">
      <div class="media">
        <div class="media-body">
-         <a href="{% url 'frends' pk=user.pk %}" class="ajax">
+         <a href="{% url 'frends' pk=user.pk %}" class="ajax" data-html="#ajax">
          <h4 class="content-color-primary mb-0">{{ user.count_connections }}</h4>
          <p class="content-color-secondary mb-0">{{ user.count_connections|rupluralize:"друг,друга,друзей" }}</p>
          </a>
@@ -17,7 +17,7 @@
    <div class="col text-center">
      <div class="media">
        <div class="media-body">
-         <a href="{% url 'follows' pk=user.pk %}" class="ajax">
+         <a href="{% url 'follows' pk=user.pk %}" class="ajax" data-html="#ajax">
          <h4 class="content-color-primary mb-0">{{ user.count_following }}</h4>
          <p class="content-color-secondary mb-0">{{ user.count_following|rupluralize:"подписчик,подписчика,подписчиков" }}</p>
          </a>
@@ -29,7 +29,7 @@
    <div class="col text-center">
      <div class="media">
        <div class="media-body">
-         <a href="{% url 'communities' pk=user.pk %}" class="ajax">
+         <a href="{% url 'communities' pk=user.pk %}" class="ajax" data-html="#ajax">
          <h4 class="content-color-primary mb-0">{{ user.count_community }}</h4>
          <p class="content-color-secondary mb-0">{{ user.count_community|rupluralize:"сообщество,сообщества,сообществ" }}</p>
          </a>
@@ -41,7 +41,7 @@
    <div class="col text-center">
      <div class="media">
        <div class="media-body">
-         <a href="{% url 'user_goods' pk=user.pk %}" class="ajax">
+         <a href="{% url 'user_goods' pk=user.pk %}" class="ajax" data-html="#ajax">
          <h4 class="content-color-primary mb-0">{{ user.count_goods }}</h4>
          <p class="content-color-secondary mb-0">{{ user.count_goods|rupluralize:"товар,товара,товаров" }}</p>
          </a>
@@ -53,7 +53,7 @@
    <div class="col text-center">
      <div class="media">
        <div class="media-body">
-         <a href="{% url 'user_gallery' pk=user.pk %}" class="ajax">
+         <a href="{% url 'user_gallery' pk=user.pk %}" class="ajax" data-html="#ajax">
          <h4 class="content-color-primary mb-0">{{ user.count_photos }}</h4>
          <p class="content-color-secondary mb-0">{{ user.count_photos|rupluralize:"фотография,фотографии,фотографий" }}</p>
          </a>

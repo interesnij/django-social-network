@@ -1,7 +1,7 @@
 {% load staticfiles humanize liked_user thumbnail %}
 
 <div class="media infinite-item" style="{% if forloop.first %}padding-top:15px; {% endif %}margin-left:15px;margin-right:15px;">
-  <a href="{% url 'user' pk=comment.commenter.pk %}" class="ajax">
+  <a href="{% url 'user' pk=comment.commenter.pk %}" class="ajax" data-html="#ajax">
     <figure>
         {% if comment.commenter.get_avatar %}
           <img src="{{ comment.commenter.get_avatar.file|thumbnail_url:'small_avatar' }}" class="pull-left" style="border-radius:50%;width:40px;" alt="User Image" class="user-image">
@@ -12,7 +12,7 @@
   </a>
     <div class="media-body">
         <h5 class="mt-0">
-          <a href="{% url 'user' pk=comment.commenter.pk %}" class="ajax">
+          <a href="{% url 'user' pk=comment.commenter.pk %}" class="ajax" data-html="#ajax">
             <span class="commenter_first_name">{{ comment.commenter.first_name }}</span> {{ comment.commenter.last_name }}
           </a>
             <small class="text-muted float-right">{{ comment.created|naturaltime }}</small>
@@ -45,7 +45,7 @@
                             <br><br>
                             <span style="display: flex;">
                                 {% for heart in comment.window_likes %}
-                                <a href="{% url 'user' pk=heart.user.pk %}" class="ajax" style="padding-right:10px">
+                                <a href="{% url 'user' pk=heart.user.pk %}" class="ajax" data-html="#ajax" style="padding-right:10px">
                                     <figure style="margin: 0;" title="{{ heart.user.get_full_name }}">
                                       {% if heart.user.get_avatar %}
                                         <img src="{{ heart.user.get_avatar.file|thumbnail_url:'small_avatar' }}" style="border-radius: 50px;width:50px;" alt="image">
@@ -72,7 +72,7 @@
                               <br><br>
                               <span style="display: flex;">
                                   {% for sheet in comment.window_dislikes %}
-                                  <a href="{% url 'user' pk=sheet.user.pk %}" class="ajax" style="padding-right:10px">
+                                  <a href="{% url 'user' pk=sheet.user.pk %}" class="ajax" data-html="#ajax" style="padding-right:10px">
                                       <figure style="margin: 0;" title="{{ sheet.user.get_full_name }}">
                                         {% if sheet.user.profile.avatar %}
                                           <img src="{{ sheet.user.get_avatar.file|thumbnail_url:'small_avatar' }}" style="border-radius: 50px;width:50px;" alt="image">

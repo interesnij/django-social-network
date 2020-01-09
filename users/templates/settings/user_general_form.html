@@ -82,9 +82,9 @@
         </div>
         <div class="col-lg-5 col-md-4 col-sm-12 order-2">
             <ul style="list-style-type:none">
-                <li style="margin-bottom:8px;"><a href="{% url 'user_general_form' pk=request.user.id %}" class="ajax">Мои контакты</a></li>
-                <li style="margin-bottom:8px;"><a href="{% url 'user_about_form' pk=request.user.id %}" class="ajax">Обо мне</a></li>
-                <li style="margin-bottom:8px;"><a href="{% url 'user_design' pk=request.user.id %}" class="ajax">Внешний вид</a></li>
+                <li style="margin-bottom:8px;"><a href="{% url 'user_general_form' pk=request.user.id %}" class="ajax" data-html="#ajax">Мои контакты</a></li>
+                <li style="margin-bottom:8px;"><a href="{% url 'user_about_form' pk=request.user.id %}" class="ajax" data-html="#ajax">Обо мне</a></li>
+                <li style="margin-bottom:8px;"><a href="{% url 'user_design' pk=request.user.id %}" class="ajax" data-html="#ajax">Внешний вид</a></li>
             </ul>
         </div>
 

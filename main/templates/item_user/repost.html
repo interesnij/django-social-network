@@ -3,7 +3,7 @@
   <div class="card-header border-bottom">
     <div class="media" style="font-size: 0.8em;">
       {% if object.community %}
-      <a href="{% url 'community_detail' pk=object.community.pk %}" class="ajax">
+      <a href="{% url 'community_detail' pk=object.community.pk %}" class="ajax" data-html="#ajax">
         <figure>
           {% if object.community.get_avatar %}
             <img src="{{ object.community.get_avatar.file|thumbnail_url:'small_avatar' }}" style="border-radius: 50px;width:40px;" alt="image">
@@ -13,7 +13,7 @@
         </figure>
       </a>
       {% else %}
-      <a href="{% url 'user' pk=object.parent.creator.pk %}" class="ajax">
+      <a href="{% url 'user' pk=object.parent.creator.pk %}" class="ajax" data-html="#ajax">
         <figure>
           {% if object.parent.creator.get_avatar %}
             <img src="{{ object.parent.creator.get_avatar.file|thumbnail_url:'small_avatar' }}" style="border-radius: 50px;width:40px;" alt="image">
@@ -26,11 +26,11 @@
         <div class="media-body">
             <h6 class="mb-0">
               {% if object.community %}
-              <a href="{% url 'community_detail' pk=object.community.pk %}" class="ajax">
+              <a href="{% url 'community_detail' pk=object.community.pk %}" class="ajax" data-html="#ajax">
                 {{ object.community.name }} &nbsp;
               </a>
               {% else %}
-              <a href="{% url 'user' pk=object.parent.creator.pk %}" class="ajax">
+              <a href="{% url 'user' pk=object.parent.creator.pk %}" class="ajax" data-html="#ajax">
                 {{ object.parent.creator.get_full_name }} &nbsp;
               </a>
               {% endif %}
