@@ -14,9 +14,7 @@ $(".tracks-container .track_item").click(function() {
   myPlaylist.setPlaylist(list);
   myPlaylist.play(track_id);
   playPromise = myPlaylist.play();
-    if (playPromise !== null){
-      playPromise }
-    }
+    if (playPromise !== null){playPromise }
 });
 
 var tracks_infinite = new Waypoint.Infinite({element: $('.tracks-container')[0], onBeforePageLoad: function() { $('.tracks_load').show(); }, onAfterPageLoad: function($items) { $('.tracks_load').hide(); }});
