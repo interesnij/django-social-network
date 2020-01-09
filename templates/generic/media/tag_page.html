@@ -12,6 +12,7 @@ $(".tracks-container .track_item").click(function() {
   inner_list = list.innerHTML
   $("#music_json_list").append(inner_list);
   myPlaylist.setPlaylist(list);
+  myPlaylist.play(track_id);
   function fix(item) {
     var thePromise = item.play();
 
