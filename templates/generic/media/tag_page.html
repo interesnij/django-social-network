@@ -12,16 +12,7 @@ $(".tracks-container .track_item").click(function() {
   inner_list = list.innerHTML
   $("#music_json_list").append(inner_list);
 	myPlaylist.setPlaylist(list);
-  var playPromise = myPlaylist.play(track_id);
-  if (playPromise !== undefined) {
-    playPromise.then(_ => {
-       myPlaylist.pause()
-    })
-    .catch(error => {
-      // Auto-play was prevented
-      // Show paused UI.
-    });
-  }
+  myPlaylist.play(track_id);
 });
 
 var tracks_infinite = new Waypoint.Infinite({element: $('.tracks-container')[0], onBeforePageLoad: function() { $('.tracks_load').show(); }, onAfterPageLoad: function($items) { $('.tracks_load').hide(); }});
