@@ -10,7 +10,6 @@
 
 
 <script>
-  $('#ajax.track_item_li').on('click', function() {
     var cssSelector = {
         jPlayer: "#jquery_jplayer_1",
         cssSelectorAncestor: "#ajax"
@@ -25,6 +24,8 @@
         keyEnabled: true
     };
     var myPlaylist = new jPlayerPlaylist(cssSelector, options);
-    myPlaylist.setPlaylist(playlist)
+    myPlaylist.setPlaylist(playlist);
+
+  $('#ajax.track_item_li').on('click', function() {
   });
 </script>
