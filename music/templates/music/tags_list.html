@@ -1,6 +1,6 @@
 {% load staticfiles %}
 
-{% if tag_list %}
+{% if tags_list %}
 
 <div class="media" style="margin-top: 35px;">
   <div class="media-body">
@@ -10,7 +10,7 @@
 </div>
 
 <div class="row tags-container" style="margin-top: 25px;">
-{% for object in tag_list %}
+{% for object in tags_list %}
 <div class="col-12 infinite-item">
   <div class="card mb-4">
       <div class="card-body">
@@ -30,8 +30,8 @@
 {% endfor %}
 
 <div class="tags_load col-12 col-md-12">
-    {% if tag_list.has_next %}
-    <a style="display:flex;justify-content:center;" class="infinite-more-link" href="/music/list/tag_list/{{ symbol.pk }}/?page={{ tag_list.next_page_number }}">
+    {% if tags_list.has_next %}
+    <a style="display:flex;justify-content:center;" class="infinite-more-link" href="/music/list/tag_list/{{ symbol.pk }}/?page={{ tags_list.next_page_number }}">
         <img style="width: 30px;" src="{% static 'images/loading.gif' %}">
     </a>
     {% endif %}
