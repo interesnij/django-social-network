@@ -424,6 +424,10 @@ class User(AbstractUser):
         list = SoundList.objects.get(id=sound_list__list__id)
         tag_list = UserTempSoundList.objects.get(user=self)
         tag = SoundTags.objects.get(id=tag_list__tag__id)
+        if list:
+            queryset = []
+        elif tag:
+            queryset = []
         else:
             queryset = self.get_my_music()
         for track in queryset:
