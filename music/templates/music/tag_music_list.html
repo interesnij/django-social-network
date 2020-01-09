@@ -13,7 +13,7 @@
                   {% else %}
                     <img style="width:30px;heigth:30px" src="{% static 'images/icons/person-24px.svg' %}" />
                   {% endif %}
-              </figure>
+              </figure> 
               <div class="media-body">
                   <h6 class="my-0 mt-1">{{ object.title }}</h6>
                   <a href="" class="small ajax">{{ object.genre }} - {{ object.duration }}</a>
@@ -23,7 +23,7 @@
       {% endfor %}
       <div class="tracks_load col-12 col-md-12">
           {% if tag_list.has_next %}
-          <a style="display:flex;justify-content:center;" class="infinite-more-link" href="/music/list/all_tag_list/{{ tag.pk }}/?page={{ follows_list.next_page_number }}">
+          <a style="display:flex;justify-content:center;" class="infinite-more-link" href="/music/list/all_tag_list/{{ tag.pk }}/?page={{ tag_list.next_page_number }}">
               <img style="width: 30px;" src="{% static 'images/loading.gif' %}">
           </a>
           {% endif %}
