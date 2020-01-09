@@ -13,8 +13,7 @@ $(".tracks-container .track_item").click(function() {
   $("#music_json_list").append(inner_list);
   myPlaylist.setPlaylist(list);
   myPlaylist.play(track_id);
-  var media = document.getElementById("jquery_jplayer_1");
-  const playPromise = media.play();
+  playPromise = myPlaylist.play();
     if (playPromise !== null){
       playPromise.catch(() => { media.play(); })
     }
