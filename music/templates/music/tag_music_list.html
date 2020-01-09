@@ -1,16 +1,18 @@
 {% load staticfiles thumbnail %}
 
 
-<div class="jp-playlist all-music-container">
+<div class="jp-playlist2 all-music-container">
     <ul>
         <li></li>
     </ul>
 </div>
 
+
+<script defer src="{% static 'scripts/playlist_2.js' %}" type="text/javascript"></script>
 <script>
   $(document).ready(function(){
       var cssSelector = {
-          
+          jPlayer: "#jquery_jplayer_1",
           cssSelectorAncestor: "#ajax"
       };
       var playlist = {{ tag.get_json_playlist }};
