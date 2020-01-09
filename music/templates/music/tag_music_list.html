@@ -9,6 +9,7 @@
 
 <script>
   $(document).ready(function(){
-      myPlaylist.setPlaylist({{ tag.get_json_playlist }})
+    $(.jp-playlist).empty();
+    $(.jp-playlist).add({{ tag.get_json_playlist }})
   });
 </script>
