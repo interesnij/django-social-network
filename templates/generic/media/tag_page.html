@@ -7,10 +7,9 @@
   var myPlaylist = new jPlayerPlaylist(cssSelector, playlist, options);
 
 $(".tracks-container .track_item").click(function() {
-  playlist.remove()
   track = $(this); track_id = track.data('counter');
   list = {{ tag.get_json_playlist }};
-  inner_list = list.innerHTML
+  inner_list = list.innerHTML;
   $("#music_json_list").append(inner_list);
   myPlaylist.setPlaylist(list);
   myPlaylist.play(track_id);
