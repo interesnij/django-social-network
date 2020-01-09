@@ -1,3 +1,5 @@
+{% load staticfiles %}
+
 <script>
   var cssSelector = {jPlayer: "#jquery_jplayer_1",cssSelectorAncestor: ".main-header"};
   var playlist = {{ request.user.get_json_my_playlist }};
