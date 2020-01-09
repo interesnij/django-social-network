@@ -1,7 +1,5 @@
 {% load staticfiles %}
 
-<script src="{% static 'scripts/jquery.jplayer.min.js' %}" type="text/javascript"></script>
-<script src="{% static 'scripts/jplayer.playlist.min.js' %}" type="text/javascript"></script>
 <script>
   var cssSelector = {jPlayer: "#jquery_jplayer_1",cssSelectorAncestor: ".main-header"};
   var playlist = {{ request.user.get_json_my_playlist }};
