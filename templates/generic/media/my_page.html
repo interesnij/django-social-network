@@ -2,11 +2,11 @@
 
 <script>
   var cssSelector = {jPlayer: "#jquery_jplayer_1",cssSelectorAncestor: ".main-header"};
-
+  my_playlist = {{ request.user.get_json_my_playlist }};
   if ($("#music_json_list").empty()){
     playlist = $("#music_json_list").innerHtml
   }else{
-    playlist = '{{ request.user.get_json_my_playlist }}'
+    playlist = my_playlist
   };
 
   var options = { swfPath: "/static/jquery.jplayer.swf", supplied: "oga, mp3", wmode: "window", smoothPlayBar: false, keyEnabled: true};
