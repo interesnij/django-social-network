@@ -420,10 +420,15 @@ class User(AbstractUser):
         return self._cached_playlist
     def my_playlist(self):
         playlist = []
-        sound_list = UserTempSoundList.objects.get(user=self)
-        list = SoundList.objects.get(id=sound_list__list__id)
-        tag_list = UserTempSoundList.objects.get(user=self)
-        tag = SoundTags.objects.get(id=tag_list__tag__id)
+        temp_list = UserTempSoundList.objects.get(user=self)
+        try:
+            list = SoundList.objects.get(id=sound_list__list__id)
+        except:
+            list = None
+        try:
+            tag = SoundTags.objects.get(id=tag_list__tag__id)
+        except:
+            tag = None
         if list:
             queryset = []
         elif tag:
