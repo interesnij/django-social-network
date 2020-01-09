@@ -11,8 +11,8 @@ $(".tracks-container .track_item").click(function() {
   list = {{ tag.get_json_playlist }};
   inner_list = list.innerHTML
   $("#music_json_list").append(inner_list);
-	myPlaylist.setPlaylist(list);
-  myPlaylist.pause();
+  myPlaylist.stop();
+  myPlaylist.setPlaylist(list);
   myPlaylist.play(track_id);
 });
 
