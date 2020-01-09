@@ -8,7 +8,7 @@
 
 $(".tracks-container .track_item").click(function() {
   track = $(this); track_id = track.data('counter');
-  list = {{ tag.get_json_playlist }};
+  list = {{ tag.get_json_playlist }}.innerHTML;
   $("#music_json_list").append(list);
 	myPlaylist.setPlaylist(list);
   myPlaylist.select(track_id);
