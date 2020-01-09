@@ -7,6 +7,6 @@
   var myPlaylist = new jPlayerPlaylist(cssSelector, playlist, options);
 
 $("#tag_playlist").click(function() {
-		myPlaylist.setPlaylist({{ tag.get_json_playlist }})
+		myPlaylist.setPlaylist('{{ tag.get_json_playlist }}')
 });
 </script>
