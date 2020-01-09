@@ -2,7 +2,7 @@
 
 {% if tag_list %}
 
-<div class="jp-playlist tracks-container">
+<div class="tracks-container">
     <ul>
       {% for object in tag_list %}
       <li class="list-group-item infinite-item">
@@ -13,7 +13,7 @@
                   {% else %}
                     <img style="width:30px;heigth:30px" src="{% static 'images/icons/person-24px.svg' %}" />
                   {% endif %}
-              </figure> 
+              </figure>
               <div class="media-body">
                   <h6 class="my-0 mt-1">{{ object.title }}</h6>
                   <a href="" class="small ajax">{{ object.genre }} - {{ object.duration }}</a>
