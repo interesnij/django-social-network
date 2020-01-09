@@ -8,7 +8,11 @@
   var options = { swfPath: "/static/jquery.jplayer.swf", supplied: "oga, mp3", wmode: "window", smoothPlayBar: false, keyEnabled: true};
   var myPlaylist = new jPlayerPlaylist(cssSelector, playlist, options);
 
-$("#tag_playlist").click(function() {
-		myPlaylist.setPlaylist({{ tag.get_json_playlist }})
+$(".tracks-container .track_item").click(function() {
+  track = $(this); track_id = btn.data('counter');
+	myPlaylist.setPlaylist({{ tag.get_json_playlist }});
+  myPlaylist.play(track_id);
 });
+
+var tracks_infinite = new Waypoint.Infinite({element: $('.tracks-container')[0], onBeforePageLoad: function() { $('.tracks_load').show(); }, onAfterPageLoad: function($items) { $('.tracks_load').hide(); }});
 </script>
