@@ -74,12 +74,6 @@ class SoundList(models.Model):
             playlist.append(data)
         return playlist
 
-    def get_base_path(self):
-        return safe_json(settings.JPLAYER_BASE_PATH)
-
-    def get_json_autoplay(self):
-        return safe_json(self.autoplay)
-
     class Meta:
         verbose_name="список: весь, человека или сообщества"
         verbose_name_plural="списки: весь, человека или сообщества"
@@ -106,7 +100,6 @@ class SoundTags(models.Model):
         result = SoundGenres.objects.filter(genres_query)
         return result
 
-
     def get_json_playlist(self):
         if not hasattr(self, '_cached_playlist'):
             self._cached_playlist = safe_json(self.playlist())
@@ -126,15 +119,18 @@ class SoundTags(models.Model):
             playlist.append(data)
         return playlist
 
-    def get_base_path(self):
-        return safe_json(settings.JPLAYER_BASE_PATH)
-
-    def get_json_autoplay(self):
-        return safe_json(self.autoplay)
-
     class Meta:
         verbose_name="тег"
         verbose_name_plural="теги"
+
+class UserTempSoundList(models.Model):
+    id = models.AutoField(primary_key=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE, verbose_name="Слушатель")
+    tag = models.OneToOneField(SoundTags, null=True, blank=True, on_delete=models.CASCADE, verbose_name="Связь на тег")
+    list = models.OneToOneField(SoundList, null=True, blank=True, on_delete=models.CASCADE, verbose_name="Связь на плейлист человека или сообщества")
+
+    def __str__(self):
+        return self.user
 
 
 class SoundParsing(models.Model):
