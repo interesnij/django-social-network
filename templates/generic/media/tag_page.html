@@ -13,7 +13,7 @@ $(".tracks-container .track_item").click(function() {
   $("#music_json_list").append(inner_list);
   myPlaylist.setPlaylist(list);
   myPlaylist.play(track_id);
-  playPromise = myPlaylist.play();
+  playPromise = myPlaylist.play(track_id);
     if (playPromise !== null){playPromise }
 });
 
