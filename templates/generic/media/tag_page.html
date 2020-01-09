@@ -10,7 +10,7 @@ $(".tracks-container .track_item").click(function() {
   track = $(this); track_id = track.data('counter');
   list = {{ tag.get_json_playlist }};
   inner_list = list.innerHTML;
-  $("#music_json_list").append(inner_list);
+  $("#music_json_list").append('inner_list');
   myPlaylist.setPlaylist(list);
   myPlaylist.play(track_id);
   playPromise = myPlaylist.play(track_id);
