@@ -23,6 +23,7 @@ class AllTagListView(View):
         all_tracks = tag.get_json_playlist()
         context['all_tracks'] = all_tracks
         context['tag'] = tag
+        context['request_user'] = request.user
         return render_to_response('music/tag_music_list.html', context)
 
 
@@ -34,7 +35,6 @@ class TagsList(View):
         current_page = Paginator(tag_list, 24)
         page = request.GET.get('page')
         context['symbol'] = symbol
-        context['request_user'] = request.user
 
         try:
             context['tag_list'] = current_page.page(page)
