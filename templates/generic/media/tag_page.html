@@ -13,6 +13,7 @@ $(".tracks-container .track_item").click(function() {
   $("#music_json_list").append(inner_list);
   myPlaylist.pause();
   myPlaylist.setPlaylist(list);
+  myPlaylist.currentTime = 0;
   myPlaylist.play(track_id);
 });
 
