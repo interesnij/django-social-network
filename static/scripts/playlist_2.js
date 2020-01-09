@@ -72,8 +72,8 @@
     };
     jPlayerPlaylist.prototype = {
         _cssSelector: {
-            jPlayer: "#jquery_jplayer_2",
-            cssSelectorAncestor: "#jp_container_2"
+            jPlayer: "#jquery_jplayer_1",
+            cssSelectorAncestor: "#jp_container_1"
         },
         _options: {
             playlistOptions: {
