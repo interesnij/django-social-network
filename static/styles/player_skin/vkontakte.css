@@ -470,7 +470,8 @@ div.jp-type-playlist div.jp-playlist a:hover {
   margin-left: 64px;
   font-size: 13px
 }
-.jp-playlist .track_img{
+.jp-playlist .track_img,
+#ajax .jp-playlist .track_img{
   width:55px;
   padding-left:7px;
   height:auto;
