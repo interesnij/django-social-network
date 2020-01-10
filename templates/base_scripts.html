@@ -26,7 +26,7 @@ $('body').on('click', '.tracks-container .track_item', function() {
     tag_pk = track.parent().parent().parent().data('pk');
     $.ajax({
       url: "/music/manage/temp_tag/" + tag_pk + "/",
-      success: function(data) { $('body').find('.music-dropdown').html('').load("/user/load/playlist/" + '{{ request.user.uuid }}' + "/");}
+      success: function(data) { $('body').find('.music-dropdown').html('').load("/users/load/playlist/" + '{{ request.user.uuid }}' + "/");}
     }); return false;
     myPlaylist.play(track_id);
   });
