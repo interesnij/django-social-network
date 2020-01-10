@@ -142,7 +142,7 @@ class UserTempSoundList(models.Model):
     list = models.OneToOneField(SoundList, related_name='list_field', null=True, blank=True, on_delete=models.CASCADE, verbose_name="Связь на плейлист человека или сообщества")
 
     def __str__(self):
-        return self.user
+        return self.user.get_full_name()
 
 
 class SoundParsing(models.Model):
