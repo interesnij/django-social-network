@@ -92,7 +92,7 @@
         tag_pk = track.parent().parent().parent().data('pk');
         $.ajax({
           url: "/music/manage/temp_tag/" + tag_pk + "/",
-          success: function(data) { playlist_block.html('').load("/users/load/playlist/" + '{{ request.user.uuid }}' + "/");playlist_block.addClass(${ tag_pk })
+          success: function(data) { playlist_block.html('').load("/users/load/playlist/" + '{{ request.user.uuid }}' + "/");playlist_block.addClass('${ tag_pk }')
         }); return false;
 
         myPlaylist.play()
