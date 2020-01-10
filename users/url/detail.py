@@ -1,6 +1,6 @@
 from django.conf.urls import url
 from users.views.detail import *
-from users.views.lists import AllUsersList, ItemListView, UserCommunitiesList, AllPossibleUsersList
+from users.views.lists import *
 
 urlpatterns = [
     url(r'^all_users_list/$', AllUsersList.as_view(), name='all_users_list'),
@@ -8,5 +8,5 @@ urlpatterns = [
     url(r'^communities/(?P<uuid>[0-9a-f-]+)/$', UserCommunitiesList.as_view()),
     url(r'^list/(?P<pk>\d+)/$', ItemListView.as_view()),
     url(r'^possible/(?P<uuid>[0-9a-f-]+)/$', AllPossibleUsersList.as_view()),
-
+    url(r'^music_list/(?P<uuid>[0-9a-f-]+)/$', UserMusicList.as_view()),
 ]

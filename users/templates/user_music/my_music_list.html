@@ -1,10 +1,10 @@
-{% load staticfiles %}
+{% load staticfiles thumbnail %}
 
-{% if tag_list %}
+{% if music_list %}
 
 <div class="tracks-container">
     <ul data-pk="{{ tag.pk }}">
-      {% for object in tag_list %}
+      {% for object in music_list %}
       <li class="list-group-item infinite-item">
           <div class="media">
               <figure class="track_item" data-counter="{{ forloop.counter0 }}" style="cursor:pointer">
@@ -35,8 +35,8 @@
       </li>
       {% endfor %}
       <div class="tracks_load col-12 col-md-12">
-          {% if tag_list.has_next %}
-          <a style="display:flex;justify-content:center;" class="infinite-more-link" href="/music/list/all_tag_list/{{ tag.pk }}/?page={{ tag_list.next_page_number }}">
+          {% if music_list.has_next %}
+          <a style="display:flex;justify-content:center;" class="infinite-more-link" href="/users/list/music_list/{{ user.uuid }}/?page={{ music_list.next_page_number }}">
               <img style="width: 30px;" src="{% static 'images/loading.gif' %}">
           </a>
           {% endif %}

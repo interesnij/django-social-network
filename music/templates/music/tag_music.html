@@ -33,9 +33,4 @@ $(document).ready(function(){
   $('#tag_tracks_load').html('').load("/music/list/all_tag_list/" + {{ tag.pk }});
 });
 </script>
-{% include "generic/media/tag_page.html" %}
-{% endblock %}
-
-{% block playlist %}
-
 {% endblock %}

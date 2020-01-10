@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% load staticfiles thumbnail %}
+{% block title %}Моя музыка{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-12 col-md-8">
+        <br><br><br>
+        <div class="card mb-2">
+            <div class="card-header">
+                <div class="media">
+                    <div class="media-body">
+                        <h5 class="mt-1">Моя музыка</h5>
+                    </div>
+                </div>
+            </div>
+            <br><br>
+            <div class="card-body px-0 py-0">
+              <span id="user_tracks_load"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-4">
+        <br><br><br>
+        <div class="card mb-2">
+            <div class="card-header">
+              <div class="media">
+                  <div class="media-body">
+                    <h5 class="mt-1">
+                      <a href="{% url 'all_music' %}" data-html="#ajax" class="ajax">Все группы</a>
+                    </h5>
+                  </div>
+              </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+$(document).ready(function(){
+  $('#user_tracks_load').html('').load("/user/list/music_list/" + {{ user.uuid }});
+});
+</script>
+{% endblock %}

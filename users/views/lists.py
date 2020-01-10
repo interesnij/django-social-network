@@ -43,6 +43,39 @@ class UserCommunitiesList(View):
 		return render_to_response(template, context)
 
 
+class UserMusicList(View):
+	def get(self, request, *args, **kwargs):
+		context = {}
+		template = None
+		self.user=User.objects.get(uuid=self.kwargs["uuid"])
+		if self.user != request.user and request.user.is_authenticated:
+			check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
+			if self.user.is_closed_profile():
+				check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
+			music_list = self.user.get_music()
+			template = 'user_music/music_list.html'
+			current_page = Paginator(music_list, 20)
+		elif request.user.is_anonymous and self.user.is_closed_profile():
+			raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
+		elif request.user.is_anonymous and not self.user.is_closed_profile():
+			music_list = self.user.get_music()
+			template = 'user_music/music_list.html'
+			current_page = Paginator(music_list, 20)
+		elif self.user == request.user:
+			music_list = self.user.get_my_music()
+			template = 'user_music/my_music_list.html'
+			current_page = Paginator(music_list, 20)
+		page = request.GET.get('page')
+		context['user'] = self.user
+		try:
+			context['music_list'] = current_page.page(page)
+		except PageNotAnInteger:
+			context['music_list'] = current_page.page(1)
+		except EmptyPage:
+			context['music_list'] = current_page.page(current_page.num_pages)
+		return render_to_response(template, context)
+
+
 class AllUsersList(View):
 	def get(self, request, *args, **kwargs):
 		context = {}
