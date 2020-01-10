@@ -420,13 +420,15 @@ class User(AbstractUser):
         cached_playlist = safe_json(self.my_playlist())
         return cached_playlist
     def my_playlist(self):
+        temp_list = UserTempSoundList.objects.get(user=self)
         try:
-            temp_list = UserTempSoundList.objects.get(user=self)
             list = SoundList.objects.get(id=temp_list__list__id)
         except:
             list = None
-        tag_temp_list = UserTempSoundList.objects.get(user=self)
-        tag_music = SoundTags.objects.get(pk=tag_temp_list.tag.pk)
+        try:
+            tag_music = SoundTags.objects.get(pk=tag_temp_list.tag.pk)
+        except:
+            tag_music = None
         if list:
             queryset = list.get_json_playlist()
             return queryset
