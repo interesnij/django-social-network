@@ -246,8 +246,7 @@ class User(AbstractUser):
         return self.is_administrator_of_community_with_name(community_name=community_name) or self.is_moderator_of_community_with_name(community_name=community_name)
 
     def is_track_exists(self, track_id):
-        list = SoundList.objects.get(creator_id=self.id, name="my_first_generic_playlist_number_12345678900000000")
-        return SoundParsing.objects.get(id=track_id, players__id=list.pk).exists()
+        return self.user_playlist.filter(track__id=track_id).exists()
 
     ''''' количества всякие  196-216 '''''
 
