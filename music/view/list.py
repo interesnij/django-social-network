@@ -34,8 +34,11 @@ class AllTagListView(View):
         tag=SoundTags.objects.get(pk=self.kwargs["pk"])
         tag_list = SoundParsing.objects.filter(tag__id=tag.pk)
         current_page = Paginator(tag_list, 24)
+        aaa = UserTempSoundList.objects.get(user=request.user)
+        bbb = SoundParsing.objects.get(pk=aaa.tag.pk)
         page = request.GET.get('page')
         context['tag'] = tag
+        context['bbb'] = bbb
         context['request_user'] = request.user
 
         try:
