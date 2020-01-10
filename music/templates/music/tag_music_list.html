@@ -2,7 +2,7 @@
 
 {% if tag_list %}
 
-{{ bbb.name }}
+{{ request_user.get_json_my_playlist }}
 <div class="tracks-container">
     <ul data-pk="{{ tag.pk }}">
       {% for object in tag_list %}
