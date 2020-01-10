@@ -95,9 +95,8 @@
           url: "/music/manage/temp_tag/" + tag_pk + "/",
           success: function(data) { playlist_block.html('').load("/users/load/playlist/" + '{{ request.user.uuid }}' + "/");playlist_block.addClass('tag_' + tag_pk)}
         });
-        };
+      }else{myPlaylist.play(track_id)};
 
-        myPlaylist.play(track_id)
       });
 
     </script>
