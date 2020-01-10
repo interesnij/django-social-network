@@ -424,12 +424,13 @@ class User(AbstractUser):
         playlist = []
         try:
             temp_list = UserTempSoundList.objects.get(user=self)
-            list = SoundList.objects.get(id=sound_list__list__id)
+            list = SoundList.objects.get(id=temp_list__list__id)
         except:
             list = None
         try:
-            tag_list = UserTempSoundList.objects.get(user=self)
-            tag = SoundTags.objects.get(id=tag_list__tag.pk)
+            tag_temp_list = UserTempSoundList.objects.get(user=self)
+            tag= SoundTags.objects.get(tag_field=tag_temp_list)
+
         except:
             tag = None
         if list:
@@ -437,7 +438,8 @@ class User(AbstractUser):
         elif tag:
             queryset = tag.get_json_playlist()
         else:
-            queryset = self.get_my_music()
+            #queryset = self.get_my_music()
+            queryset=[1,2,3]
         for track in queryset:
             url = track.uri + '/stream?client_id=' + 'dce5652caa1b66331903493735ddd64d'
             genre = str(track.genre)
