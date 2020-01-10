@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from users.views.load import ProfileStatReload, ProfileButtonReload, ProfileReload, UserImagesLoad
+from users.views.load import *
 
 
 urlpatterns = [
