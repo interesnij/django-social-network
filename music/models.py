@@ -61,7 +61,7 @@ class SoundList(models.Model):
         return self._cached_playlist
 
     def is_temp_list(self, user):
-        UserTempSoundList.objects.get(list=self, user=user).exists()
+        self.list_field.filter(user=user).exists()
 
     def playlist(self):
         playlist = []
@@ -105,7 +105,7 @@ class SoundTags(models.Model):
         return result
 
     def is_temp_tag(self, user):
-        UserTempSoundList.objects.get(tag=self, user=user).exists()
+        self.tag_field.filter(user=user).exists()
 
     def get_json_playlist(self):
         if not hasattr(self, '_cached_playlist'):
@@ -134,8 +134,8 @@ class SoundTags(models.Model):
 class UserTempSoundList(models.Model):
     id = models.AutoField(primary_key=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE, verbose_name="Слушатель")
-    tag = models.OneToOneField(SoundTags, null=True, blank=True, on_delete=models.CASCADE, verbose_name="Связь на тег")
-    list = models.OneToOneField(SoundList, null=True, blank=True, on_delete=models.CASCADE, verbose_name="Связь на плейлист человека или сообщества")
+    tag = models.OneToOneField(SoundTags, related_name='tag_field', null=True, blank=True, on_delete=models.CASCADE, verbose_name="Связь на тег")
+    list = models.OneToOneField(SoundList, related_name='list_field', null=True, blank=True, on_delete=models.CASCADE, verbose_name="Связь на плейлист человека или сообщества")
 
     def __str__(self):
         return self.user
