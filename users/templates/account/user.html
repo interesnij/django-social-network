@@ -95,5 +95,9 @@ $(document).ready(function () {
     </span>
     <div id="article_loader" style="margin-top:30px"></div>
 </div>
-{% include "generic/media/user_page.html" %}
+
+{% endblock %}
+
+{% block playlist %}
+  {% include "generic/media/user_page.html" %}
 {% endblock %}
