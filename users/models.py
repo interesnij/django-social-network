@@ -426,7 +426,7 @@ class User(AbstractUser):
         except:
             list = None
         try:
-            tag_music = SoundTags.objects.get(pk=tag_temp_list.tag.pk)
+            tag_music = SoundTags.objects.get(pk=temp_list.tag.pk)
         except:
             tag_music = None
         if list:
