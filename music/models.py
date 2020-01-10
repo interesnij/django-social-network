@@ -107,10 +107,7 @@ class SoundTags(models.Model):
     def is_temp_tag(self, user):
         self.tag_field.filter(user=user).exists()
 
-    def get_json_playlist(self):
-        if not hasattr(self, '_cached_playlist'):
-            self._cached_playlist = safe_json(self.playlist())
-        return self._cached_playlist
+    
 
     def playlist(self):
         playlist = []
