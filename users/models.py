@@ -447,6 +447,7 @@ class User(AbstractUser):
             data['artwork_url'] = track.artwork_url
             data['mp3'] = url
             data['genre'] = genre
+            data['pk'] = track.pk
             playlist.append(data)
         return playlist
 

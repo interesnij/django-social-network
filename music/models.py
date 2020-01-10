@@ -74,6 +74,7 @@ class SoundList(models.Model):
             data['artwork_url'] = track.artwork_url
             data['mp3'] = url
             data['genre'] = genre
+            data['pk'] = track.pk
             playlist.append(data)
         return playlist
 
@@ -122,6 +123,7 @@ class SoundTags(models.Model):
             data['artwork_url'] = track.artwork_url
             data['mp3'] = url
             data['genre'] = genre
+            data['pk'] = track.pk
             playlist.append(data)
         return playlist
 
