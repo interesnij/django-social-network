@@ -28,3 +28,23 @@
         <li></li>
     </ul>
 </div>
+
+<script>
+
+var cssSelector = {jPlayer: "#jquery_jplayer_1",cssSelectorAncestor: ".main-header"};
+var playlist = {{ request.user.my_playlist }};
+var options = { swfPath: "/static/jquery.jplayer.swf", supplied: "oga, mp3", wmode: "window", smoothPlayBar: false, keyEnabled: true};
+var myPlaylist = new jPlayerPlaylist(cssSelector, playlist, options);
+
+$('body').on('click', '.tracks-container .track_item', function() {
+    track = $(this);
+    track_id = track.data('counter');
+    tag_pk = track.parent().parent().parent().data('pk');
+    $.ajax({
+      url: "/music/manage/temp_tag/" + tag_pk + "/",
+      success: function(data) { $('body').find('.music-dropdown').html('').load("/users/load/playlist/" + '{{ request.user.uuid }}' + "/");}
+    }); return false;
+    myPlaylist.play(track_id);
+  });
+
+</script>
