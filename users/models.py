@@ -439,7 +439,7 @@ class User(AbstractUser):
             queryset = tag.get_json_playlist()
         else:
             #queryset = self.get_my_music()
-            queryset=[1,2,3]
+            queryset=[]
         for track in queryset:
             url = track.uri + '/stream?client_id=' + 'dce5652caa1b66331903493735ddd64d'
             genre = str(track.genre)
