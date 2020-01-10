@@ -416,9 +416,7 @@ class User(AbstractUser):
         music_query.add(exclude_reported_and_approved_goods_query, Q.AND)
         music_list = SoundParsing.objects.filter(music_query)
         return music_list
-    def get_json_my_playlist(self):
-        cached_playlist = safe_json(self.my_playlist())
-        return cached_playlist
+
     def my_playlist(self):
         temp_list = UserTempSoundList.objects.get(user=self)
         try:
@@ -431,8 +429,10 @@ class User(AbstractUser):
             tag_music = None
         if list:
             playlist = list.get_json_playlist()
+            return playlist
         elif tag_music:
             playlist = tag_music.get_json_playlist()
+            return playlist
         else:
             playlist = []
             queryset = self.get_my_music()
@@ -446,7 +446,8 @@ class User(AbstractUser):
                 data['genre'] = genre
                 data['pk'] = track.pk
                 playlist.append(data)
-            return playlist
+            cached_playlist = safe_json(playlist)
+            return cached_playlist
 
     def get_avatar(self):
         try:
