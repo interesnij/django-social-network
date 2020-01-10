@@ -27,7 +27,7 @@ $(".tracks-container .track_item").click(function() {
     $.ajax({
       url: "/music/manage/temp_tag/" + tag_pk + "/",
       success: function(data) { body.find('.music-dropdown').html('').load("/user/load/playlist/" + '{{ request.user.uuid }}' + "/");}
-    }); return false;'
+    }); return false;
     myPlaylist.play(track_id);
 
 </script>
