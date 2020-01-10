@@ -58,6 +58,26 @@ class SoundList(models.Model):
     def is_temp_list(self, user):
         self.list_field.filter(user=user).exists()
 
+    def get_json_playlist(self):
+        if not hasattr(self, '_cached_playlist'):
+            self._cached_playlist = safe_json(self.playlist())
+        return self._cached_playlist
+
+    def playlist(self):
+        playlist = []
+        queryset = self.track.all()
+        for track in queryset:
+            url = track.uri + '/stream?client_id=' + 'dce5652caa1b66331903493735ddd64d'
+            genre = str(track.genre)
+            data = {}
+            data['title'] = track.title
+            data['artwork_url'] = track.artwork_url
+            data['mp3'] = url
+            data['genre'] = genre
+            data['pk'] = track.pk
+            playlist.append(data)
+        return playlist
+
     class Meta:
         verbose_name="список: весь, человека или сообщества"
         verbose_name_plural="списки: весь, человека или сообщества"
@@ -90,6 +110,26 @@ class SoundTags(models.Model):
             return True
         except:
             return False
+
+    def get_json_playlist(self):
+        if not hasattr(self, '_cached_playlist'):
+            self._cached_playlist = safe_json(self.playlist())
+        return self._cached_playlist
+
+    def playlist(self):
+        playlist = []
+        queryset = self.soundparsing_set.all()
+        for track in queryset:
+            url = track.uri + '/stream?client_id=' + 'dce5652caa1b66331903493735ddd64d'
+            genre = str(track.genre)
+            data = {}
+            data['title'] = track.title
+            data['artwork_url'] = track.artwork_url
+            data['mp3'] = url
+            data['genre'] = genre
+            data['pk'] = track.pk
+            playlist.append(data)
+        return playlist
 
     class Meta:
         verbose_name="тег"
