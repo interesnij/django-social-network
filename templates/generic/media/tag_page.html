@@ -1,19 +1,6 @@
 {% load staticfiles %}
 
 <script>
-  var cssSelector = {jPlayer: "#jquery_jplayer_1",cssSelectorAncestor: ".main-header"};
-  var playlist = {{ request.user.get_json_my_playlist }};
-  var options = { swfPath: "/static/jquery.jplayer.swf", supplied: "oga, mp3", wmode: "window", smoothPlayBar: false, keyEnabled: true};
-  var myPlaylist = new jPlayerPlaylist(cssSelector, playlist, options);
-
-$(".tracks-container .track_item").click(function() {
-  track = $(this); track_id = track.data('counter');
-  list = {{ tag.get_json_playlist }};
-  myPlaylist.setPlaylist(list);
-  myPlaylist.play(track_id);
-  playPromise = myPlaylist.play(track_id);
-    if (playPromise !== null){playPromise }
-});
 
 var tracks_infinite = new Waypoint.Infinite({element: $('.tracks-container')[0], onBeforePageLoad: function() { $('.tracks_load').show(); }, onAfterPageLoad: function($items) { $('.tracks_load').hide(); }});
 </script>
