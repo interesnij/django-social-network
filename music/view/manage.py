@@ -26,7 +26,7 @@ class TempTagOn(View):
     def get(self, request, *args, **kwargs):
         self.tag=SoundTags.objects.get(pk=self.kwargs["pk"])
         if self.tag.is_temp_tag(user=request.user):
-            return HttpResponse("!")
+            return HttpResponse("!!!") 
         temp_tag = UserTempSoundList.objects.get(user=request.user)
         temp_tag.list = None
         temp_tag.tag = self.tag

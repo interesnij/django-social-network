@@ -106,7 +106,7 @@ class SoundTags(models.Model):
 
     def is_temp_tag(self, user):
         try:
-            UserTempSoundList.objects.filter(user=user, tag=self)
+            UserTempSoundList.objects.get(user=user, tag=self)
             return True
         except:
             return False
