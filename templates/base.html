@@ -93,7 +93,7 @@
           url: "/music/manage/temp_tag/" + tag_pk + "/",
           success: function(data) { $('body').find('.music-dropdown').html('').load("/users/load/playlist/" + '{{ request.user.uuid }}' + "/");}
         }); return false;
-        myPlaylist.play(track_id);
+        myPlaylist.play();
       });
 
     </script>
