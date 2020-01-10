@@ -430,11 +430,9 @@ class User(AbstractUser):
         except:
             tag_music = None
         if list:
-            queryset = list.get_json_playlist()
-            return queryset
+            playlist = list.get_json_playlist()
         elif tag_music:
-            return tag_music.get_json_playlist()
-
+            playlist = tag_music.get_json_playlist()
         else:
             playlist = []
             queryset = self.get_my_music()
