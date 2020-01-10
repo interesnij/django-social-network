@@ -428,7 +428,8 @@ class User(AbstractUser):
         except:
             list = None
         tag_temp_list = UserTempSoundList.objects.get(user=self)
-        tag = SoundTags.objects.get(tag=tag_temp_list.tag)
+        tag = tag_temp_list.tag
+        tag_music = SoundTags.objects.get(pk=tag.pk)
         if list:
             queryset = list.get_json_playlist()
         elif tag:
