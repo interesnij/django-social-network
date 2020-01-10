@@ -137,7 +137,7 @@ class SoundTags(models.Model):
 
 class UserTempSoundList(models.Model):
     id = models.AutoField(primary_key=True)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE, verbose_name="Слушатель")
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE, verbose_name="Слушатель")
     tag = models.OneToOneField(SoundTags, related_name='tag_field', null=True, blank=True, on_delete=models.CASCADE, verbose_name="Связь на тег")
     list = models.OneToOneField(SoundList, related_name='list_field', null=True, blank=True, on_delete=models.CASCADE, verbose_name="Связь на плейлист человека или сообщества")
 
