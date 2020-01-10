@@ -420,7 +420,6 @@ class User(AbstractUser):
         cached_playlist = safe_json(self.my_playlist())
         return cached_playlist
     def my_playlist(self):
-        playlist = []
         try:
             temp_list = UserTempSoundList.objects.get(user=self)
             list = SoundList.objects.get(id=temp_list__list__id)
@@ -431,11 +430,13 @@ class User(AbstractUser):
         tag_music = SoundTags.objects.get(pk=tag.pk)
         if list:
             queryset = list.get_json_playlist()
+            return queryset
         elif tag:
             queryset = tag.get_json_playlist()
+            return queryset
         else:
-            #queryset = self.get_my_music()
-            queryset=[]
+            playlist = []
+            queryset = self.get_my_music()
         for track in queryset:
             url = track.uri + '/stream?client_id=' + 'dce5652caa1b66331903493735ddd64d'
             genre = str(track.genre)
