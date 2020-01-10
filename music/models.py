@@ -112,8 +112,9 @@ class SoundTags(models.Model):
             return False
 
     def get_json_playlist(self):
-        cached_playlist = safe_json(self.playlist())
-        return cached_playlist
+        if not hasattr(self, '_cached_playlist'):
+            self._cached_playlist = safe_json(self.playlist())
+        return self._cached_playlist
 
     def playlist(self):
         playlist = []
