@@ -77,7 +77,7 @@
 
     {% include "base_block/footer.html" %}
     {% include "generic/gallery/photo_popover.html" %}
-    
+
     <script>
 
     var cssSelector = {jPlayer: "#jquery_jplayer_1",cssSelectorAncestor: ".main-header"};
@@ -91,9 +91,8 @@
         tag_pk = track.parent().parent().parent().data('pk');
         $.ajax({
           url: "/music/manage/temp_tag/" + tag_pk + "/",
-          success: function(data) { $('body').find('.music-dropdown').html('').load("/users/load/playlist/" + '{{ request.user.uuid }}' + "/");}
+          success: function(data) { $('body').find('.music-dropdown').html('').load("/users/load/playlist/" + '{{ request.user.uuid }}' + "/");myPlaylist.play(track_id);}
         }); return false;
-        myPlaylist.play(track_id);
       });
 
     </script>
