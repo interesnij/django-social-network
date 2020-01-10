@@ -435,7 +435,7 @@ class User(AbstractUser):
         if list:
             queryset = list.get_json_playlist()
         elif tag:
-            queryset = self.get_json_playlist()
+            queryset = tag.get_json_playlist()
         else:
             queryset = self.get_my_music()
         for track in queryset:
