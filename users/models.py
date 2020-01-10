@@ -416,7 +416,10 @@ class User(AbstractUser):
         music_query.add(exclude_reported_and_approved_goods_query, Q.AND)
         music_list = SoundParsing.objects.filter(music_query)
         return music_list
-    
+    def get_json_my_playlist(self):
+        if not hasattr(self, '_cached_playlist'):
+            self._cached_playlist = safe_json(self.my_playlist())
+        return self._cached_playlist
     def my_playlist(self):
         playlist = []
         try:
