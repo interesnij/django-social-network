@@ -10,4 +10,5 @@ urlpatterns = [
     url(r'^tag/(?P<pk>\d+)/$', AllTagMusicView.as_view(), name='tag_all_music'),
 
     url(r'^list/', include('music.url.list')),
+    url(r'^manage/', include('music.url.manage')),
 ]

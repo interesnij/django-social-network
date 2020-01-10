@@ -245,6 +245,9 @@ class User(AbstractUser):
     def is_staff_of_community_with_name(self, community_name):
         return self.is_administrator_of_community_with_name(community_name=community_name) or self.is_moderator_of_community_with_name(community_name=community_name)
 
+    def is_track_exists(self, track_id):
+        list = SoundList.objects.get(creator_id=self.id, name="my_first_generic_playlist_number_12345678900000000")
+        return SoundParsing.objects.get(track__id=track_id).exists()
 
     ''''' количества всякие  196-216 '''''
 
@@ -431,9 +434,9 @@ class User(AbstractUser):
         except:
             tag = None
         if list:
-            queryset = []
+            queryset = list.get_json_playlist()
         elif tag:
-            queryset = []
+            queryset = self.get_json_playlist()
         else:
             queryset = self.get_my_music()
         for track in queryset:
