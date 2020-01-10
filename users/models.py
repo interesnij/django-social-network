@@ -247,7 +247,7 @@ class User(AbstractUser):
 
     def is_track_exists(self, track_id):
         list = SoundList.objects.get(creator_id=self.id, name="my_first_generic_playlist_number_12345678900000000")
-        return SoundParsing.objects.get(track__id=track_id).exists()
+        return SoundParsing.objects.get(players__id=track_id).exists()
 
     ''''' количества всякие  196-216 '''''
 
