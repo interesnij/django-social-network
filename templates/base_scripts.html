@@ -23,7 +23,7 @@ var myPlaylist = new jPlayerPlaylist(cssSelector, playlist, options);
 $('body').on('click', '.tracks-container .track_item', function() {
     track = $(this);
     track_id = track.data('counter');
-    tag_pk = track.parent().parent().parent().data('pk');
+    tag_pk = track.data('pk');
     $.ajax({
       url: "/music/manage/temp_tag/" + tag_pk + "/",
       success: function(data) { body.find('.music-dropdown').html('').load("/user/load/playlist/" + '{{ request.user.uuid }}' + "/");}
