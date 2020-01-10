@@ -438,17 +438,17 @@ class User(AbstractUser):
         else:
             playlist = []
             queryset = self.get_my_music()
-        for track in queryset:
-            url = track.uri + '/stream?client_id=' + 'dce5652caa1b66331903493735ddd64d'
-            genre = str(track.genre)
-            data = {}
-            data['title'] = track.title
-            data['artwork_url'] = track.artwork_url
-            data['mp3'] = url
-            data['genre'] = genre
-            data['pk'] = track.pk
-            playlist.append(data)
-        return playlist
+            for track in queryset:
+                url = track.uri + '/stream?client_id=' + 'dce5652caa1b66331903493735ddd64d'
+                genre = str(track.genre)
+                data = {}
+                data['title'] = track.title
+                data['artwork_url'] = track.artwork_url
+                data['mp3'] = url
+                data['genre'] = genre
+                data['pk'] = track.pk
+                playlist.append(data)
+            return playlist
 
     def get_avatar(self):
         try:
