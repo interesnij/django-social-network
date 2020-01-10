@@ -3,11 +3,11 @@
 {% if tag_list %}
 
 <div class="tracks-container">
-    <ul>
+    <ul data-pk="{{ tag.pk }}">
       {% for object in tag_list %}
       <li class="list-group-item infinite-item">
           <div class="media">
-              <figure class="track_item" data-id="{{ tag.pk }}" data-counter="{{ forloop.counter0 }}" style="cursor:pointer">
+              <figure class="track_item" data-counter="{{ forloop.counter0 }}" style="cursor:pointer">
                 <a href='javascript:;' onclick='$("#name-of-the-song-that-plays").html("{{ object.title }}".substr(0,65))'>
                   {% if object.artwork_url %}
                     <img style="width:50px;heigth:auto" src="{{ object.artwork_url }}" />
