@@ -29,5 +29,6 @@ $(".tracks-container .track_item").click(function() {
       success: function(data) { body.find('.music-dropdown').html('').load("/user/load/playlist/" + '{{ request.user.uuid }}' + "/");}
     }); return false;
     myPlaylist.play(track_id);
+  });
 
 </script>
