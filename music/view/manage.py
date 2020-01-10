@@ -37,7 +37,7 @@ class MyListOn(View):
     """
     Выставляем собственный плейлист пользователя как активный.
     """
-    def get(self, request, *args, **kwargs):)
+    def get(self, request, *args, **kwargs):
         my_list = UserTempSoundList.objects.get(user=request.user)
         my_list.list = None
         my_list.tag = None
