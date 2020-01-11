@@ -136,7 +136,7 @@
 </style>
 <header class="main-header">
     <div class="container-fluid">
-        <div class="align-items-center" style="display:flex;flex-wrap:wrap;">
+        <div class="align-items-center noclose" style="display:flex;flex-wrap:wrap;">
             <div class="col-auto" style="padding-left: 0;">
               {% if user.is_authenticated %}
               <button class="btn pink-gradient btn-icon d-sm-none" id="left-menu">
@@ -155,7 +155,7 @@
                 <a class="btn header-color-secondary dropdown-toggle music_header_btn" href="#" role="button" id="dropdownMusicLink" data-toggle="dropdown">
                   gfh
                 </a>
-                <div class="dropdown-menu music-dropdown noclose" style="width: 700px;left:20rem" aria-labelledby="dropdownMusicLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <div class="dropdown-menu music-dropdown" style="width: 700px;left:20rem" aria-labelledby="dropdownMusicLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
                   {% include 'base_block/player.html' %}
 
