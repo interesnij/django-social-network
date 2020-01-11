@@ -2,7 +2,7 @@
 
 {% if tag_list %}
 <div class="tracks-container">
-    <ul data-pk="{{ tag.pk }}" class="ul_track_list">
+    <ul data-pk="{{ tag.pk }}" class="ul_track_list" style="display: contents;">
       {% for object in tag_list %}
       <li class="list-group-item infinite-item id_{{ object.id }}">
           <div class="media">

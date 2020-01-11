@@ -3,7 +3,7 @@
 {% if music_list %}
 
 <div class="user_tracks-container">
-    <ul data-pk="{{ tag.pk }}">
+    <ul data-pk="{{ tag.pk }}" style="display: contents;">
       {% for object in music_list %}
       <li class="list-group-item infinite-item">
           <div class="media">
