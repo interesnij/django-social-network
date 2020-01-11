@@ -111,10 +111,7 @@ class SoundTags(models.Model):
         result = SoundGenres.objects.filter(genres_query)
         return result
 
-    def get_json_playlist(self):
-        if not hasattr(self, '_cached_playlist'):
-            self._cached_playlist = safe_json(self.playlist())
-        return self._cached_playlist
+    
 
     def playlist(self):
         playlist = []
@@ -131,7 +128,7 @@ class SoundTags(models.Model):
             if self.is_track_in_tag(track.pk):
                 data['is_my_track'] = 1
             else:
-                data['is_my_track'] = 0
+                data['is_my_track'] = None
             playlist.append(data)
         return playlist
 
