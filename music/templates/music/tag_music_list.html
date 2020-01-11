@@ -4,8 +4,7 @@
 <div class="tracks-container">
     <ul data-pk="{{ tag.pk }}" class="ul_track_list">
       {% for object in tag_list %}
-      {% if not request_user|is_track_exists:object.id %}аимпаеае{% endif %}
-      <li class="list-group-item infinite-item" class="id_{{ object.id }}">
+      <li class="list-group-item infinite-item id_{{ object.id }}">
           <div class="media">
               <figure class="track_item" data-counter="{{ forloop.counter0 }}" style="cursor:pointer">
                 <a>
