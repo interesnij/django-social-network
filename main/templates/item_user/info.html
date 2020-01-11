@@ -15,7 +15,7 @@
 
           <span class="like_window">
             {% if object.window_likes %}
-          <div class="like_pop" style="margin:15px">
+          <div class="like_pop card" style="margin:15px">
             <span class="u_all_likes" style="cursor:pointer">Оценили: {{ object.likes.count }} {{ object.likes.count|rupluralize:"человек,человека,людей" }}</span>
             <br><br>
             <span style="display: flex;">
