@@ -1,7 +1,7 @@
 {% load staticfiles get_key %}
 
 {% if tag_list %}
-<div class="tracks-container" id="tag_playlist">
+<div class="tracks-container tag_playlist">
     <ul data-pk="{{ tag.pk }}" class="ul_track_list" style="display: contents;">
       {% for object in tag_list %}
       <li class="list-group-item infinite-item id_{{ object.id }}">
