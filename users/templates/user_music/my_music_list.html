@@ -5,7 +5,7 @@
 <div class="tracks-container">
     <ul data-pk="{{ tag.pk }}">
       {% for object in music_list %}
-      {% if request_user|is_track_exists:"object.id" %}True{% endif %}
+      {% if request_user|is_track_exists:object.id %}True{% endif %}
       <li class="list-group-item infinite-item">
           <div class="media">
               <figure class="track_item" data-counter="{{ forloop.counter0 }}" style="cursor:pointer">
