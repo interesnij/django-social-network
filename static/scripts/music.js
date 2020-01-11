@@ -26,6 +26,9 @@ $('body').on('click', '.track_remove', function() {
   });
 });
 
-$('body').on('click', '.music-dropdown', function(e) {
-  e.preventDefault()
+
+$('.music-dropdown').on({
+    "shown.bs.dropdown": function() { this.closable = false; },
+    "click":             function() { this.closable = true; },
+    "hide.bs.dropdown":  function() { return this.closable; }
 });
