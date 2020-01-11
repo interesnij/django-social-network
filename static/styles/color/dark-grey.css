@@ -13,7 +13,8 @@ html {
 .repost_window,
 .comment_like_window,
 .comment_dislike_window,
-.main-header .dropdown-menu{
+.main-header .dropdown-menu,
+.jp-gui .jp-interface{
   background: #252525 !important;
   color: rgba(255, 255, 255, 0.65) !important;
 }
