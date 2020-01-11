@@ -97,7 +97,7 @@ class SoundTags(models.Model):
         return self.name
 
     def is_track_in_tag(self, track_id):
-        self.tag_field.filter(id=track_id).exists()
+        self.track_tag.filter(id=track_id).exists()
 
     def get_genres(self):
         genres_list = []
@@ -158,7 +158,7 @@ class SoundParsing(models.Model):
     genre = models.ForeignKey(SoundGenres, on_delete=models.CASCADE, verbose_name="Жанр трека")
     permalink = models.CharField(max_length=100, blank=True, null=True)
     stream_url = models.URLField(max_length=1000, blank=True, null=True)
-    tag = models.ForeignKey(SoundTags, on_delete=models.CASCADE, verbose_name="Буква")
+    tag = models.ForeignKey(SoundTags, related_name='track_tag', on_delete=models.CASCADE, verbose_name="Буква")
     title = models.CharField(max_length=255, blank=True, null=True)
     uri = models.CharField(max_length=255, blank=True, null=True)
     release_year = models.CharField(max_length=255, blank=True, null=True)
