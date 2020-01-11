@@ -17,7 +17,7 @@ $('body').on('click', '.track_remove', function() {
   block = btn.parent();
   pk = block.parent().data("pk");
   $.ajax({
-      url: "/music/manage/delete_track/" + pk + "/",
+      url: "/music/manage/remove_track/" + pk + "/",
       success: function (data) {
         $.toast({heading: 'Информация',text: 'Трек удален из Вашего основного плейлиста!',showHideTransition: 'fade',icon: 'info'});
         btn.remove();
