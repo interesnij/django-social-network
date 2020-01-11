@@ -106,7 +106,7 @@
 
     });
 
-    $('#ajax').on('click', '#user_playlist. tracks-container .track_item', function() {
+    $('#ajax').on('click', '#user_playlist .tracks-container .track_item', function() {
         track = $(this); track_id = track.data('counter'); playlist_block = $('body').find('.music-dropdown'); tag_pk = track.parent().parent().parent().data('pk');
         if (!playlist_block.hasClass('my_playlist')){
         $.ajax({
