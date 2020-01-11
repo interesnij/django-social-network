@@ -1,7 +1,7 @@
 {% load staticfiles get_key %}
 
 {% if music_list %}
-<div class="jp-jplayer"></div>
+<div class="jp-progress"><div class="jp-seek-bar"><div class="jp-play-bar"></div></div></div>
 <div class="user_tracks-container">
     <ul data-pk="{{ tag.pk }}">
       {% for object in music_list %}
