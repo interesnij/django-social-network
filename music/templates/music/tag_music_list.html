@@ -2,7 +2,7 @@
 
 {% if tag_list %}
 <div class="tracks-container">
-    <ul data-pk="{{ tag.pk }}">
+    <ul data-pk="{{ tag.pk }}" class="ul_track_list">
       {% for object in tag_list %}
       {% if not request_user|is_track_exists:object.id %}аимпаеае{% endif %}
       <li class="list-group-item infinite-item">

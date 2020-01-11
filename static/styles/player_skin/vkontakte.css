@@ -446,7 +446,7 @@ div.jp-type-playlist div.jp-playlist li.jp-playlist-current p{
     color: #fff;
 }
 #ajax .jp-playlist-current{
-    border: 1px solid #000000 !important;
+    border: 1px solid #000000 !important; 
 }
 
 div.jp-type-playlist div.jp-playlist a{
