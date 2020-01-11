@@ -60,11 +60,6 @@ function new_message_popap(new_message) {
 	$(document).ready(function () {$("[data-js=avatar_change]").on("click", function() {avatar_change_popap($(".avatar_change"));});});
 </script>
 <script>
-	var lenta = new Waypoint.Infinite({
-	    element: $('.lenta-container')[0], onBeforePageLoad: function() { $('.items-load').show(); }, onAfterPageLoad: function($items) { $('.items-load').hide(); }
-	});
-</script>
-<script>
   $("#article_add").click(function() {$('#article_loader').html('').load("{% url 'article_add_user' pk=user.pk %}"); $('.article_fullscreen').show();})
 	$('#ajax').on('click', '.article_fullscreen_hide', function() {$('.article_fullscreen').hide(); $('#article_loader').empty();});
 
