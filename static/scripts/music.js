@@ -27,7 +27,7 @@ $('body').on('click', '.track_remove', function() {
 });
 
 
-$('.music-dropdown').on({
+$('.align-items-center').on({
     "shown.bs.dropdown": function() { this.closable = false; },
     "click":             function() { this.closable = true; },
     "hide.bs.dropdown":  function() { return this.closable; }
