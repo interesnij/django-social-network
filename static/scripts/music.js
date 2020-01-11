@@ -26,4 +26,4 @@ $('body').on('click', '.track_remove', function() {
   });
 });
 
-$(document).on("click.dropdown.music-dropdown", ".noclose", function (e) { e.stopPropagation() });
+$(document).on("click.bs.dropdown.data-api", ".noclose", function (e) { e.stopPropagation() });
