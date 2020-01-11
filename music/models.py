@@ -55,8 +55,8 @@ class SoundList(models.Model):
     def __str__(self):
         return self.name
 
-    def is_track_in_list(self, track_id): 
-        self.players.filter(id=track_id).exists()
+    def is_track_in_list(self, track_id):
+        self.track.filter(id=track_id).exists() 
 
     def get_json_playlist(self):
         if not hasattr(self, '_cached_playlist'):
