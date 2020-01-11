@@ -56,7 +56,7 @@ class SoundList(models.Model):
         return self.name
 
     def is_track_in_list(self, track_id):
-        self.track.filter(id=track_id).exists() 
+        self.track.filter(id=track_id).exists()
 
     def get_json_playlist(self):
         if not hasattr(self, '_cached_playlist'):
@@ -158,7 +158,6 @@ class SoundParsing(models.Model):
         return self.title
 
     class Meta:
-        ordering = ('-created_at',)
         verbose_name="спарсенные треки"
         verbose_name_plural="спарсенные треки"
         indexes = (BrinIndex(fields=['created_at']),)
