@@ -1,7 +1,7 @@
 {% load staticfiles %}
 
 {% if tag_list %}
-
+{% if not request_user|is_track_exists:object.id %}аимпаеае{% endif %}
 <div class="tracks-container">
     <ul data-pk="{{ tag.pk }}">
       {% for object in tag_list %}
