@@ -411,16 +411,14 @@ div.jp-playlist p {
     margin-top: 6px;
 }
 
-div.jp-playlist li,
-div.jp-playlist2 li {
+div.jp-playlist li{
     position: relative;
     padding:5px 0 0px 0px;
     border-bottom:1px solid #eee;
 }
 
 }
-div.jp-playlist li.jp-playlist-current .jp-playlist-item:after,
-div.jp-playlist2 li.jp-playlist-current .jp-playlist-item:after {
+div.jp-playlist li.jp-playlist-current .jp-playlist-item:after{
     background-position: -167px -29px;
     left: -22px;
     width: 12px;
@@ -428,32 +426,30 @@ div.jp-playlist2 li.jp-playlist-current .jp-playlist-item:after {
 }
 
 
-div.jp-playlist li div,
-div.jp-playlist2 li div {
+div.jp-playlist li div{
     display:inline;
 }
 
 /* Note that the first-child (IE6) and last-child (IE6/7/8) selectors do not work on IE */
 
-div.jp-type-playlist div.jp-playlist li:last-child,
-div.jp-type-playlist div.jp-playlist2 li:last-child {
+div.jp-type-playlist div.jp-playlist li:last-child{
     padding:5px 0 5px 20px;
     border-bottom:none;
 }
-div.jp-type-playlist div.jp-playlist li.jp-playlist-current,
-div.jp-type-playlist div.jp-playlist2 li.jp-playlist-current {
+div.jp-type-playlist div.jp-playlist li.jp-playlist-current{
     /*list-style-type:square;*/
     /*list-style-position:inside;*/
     /*padding-left:7px;*/
     background-color: #5f7fa2;
 }
-div.jp-type-playlist div.jp-playlist li.jp-playlist-current p,
-div.jp-type-playlist div.jp-playlist2 li.jp-playlist-current p {
+div.jp-type-playlist div.jp-playlist li.jp-playlist-current p{
     color: #fff;
 }
+#ajax .jp-playlist-current{
+    border: 1px solid #000000 !important;
+}
 
-div.jp-type-playlist div.jp-playlist a,
-div.jp-type-playlist div.jp-playlist2 a {
+div.jp-type-playlist div.jp-playlist a{
     color: #333;
     text-decoration: none;
     margin-left: 8px;
@@ -462,70 +458,59 @@ div.jp-type-playlist div.jp-playlist2 a {
 div.jp-type-playlist div.jp-playlist a:hover {
     color:#0d88c1;
 }
-.jp-playlist .jp-playlist-current,
-.jp-playlist2 .jp-playlist-current {
+.jp-playlist .jp-playlist-current{
     position: relative;
     background-color: #5f7fa2;
     color:#FFFFFF;
 }
 
-.jp-playlist .jp-playlist-current .svg_default,
-.jp-playlist2 .jp-playlist-current .svg_default{
+.jp-playlist .jp-playlist-current .svg_default{
   color:#FFFFFF;
 }
-.jp-playlist .track_genre,
-.jp-playlist2 .track_genre{
+.jp-playlist .track_genre{
   bottom:19px;
   position:relative;
   margin-left: 64px;
   font-size: 13px
 }
-.jp-playlist .track_img,
-.jp-playlist2 .track_img{
+.jp-playlist .track_img{
   width:55px;
   padding-left:7px;
   height:auto;
   cursor:pointer;
 }
-.jp-playlist .track_repost svg,
-.jp-playlist2 .track_repost svg{
+.jp-playlist .track_repost svg{
   width:20px;
   height:auto;
   cursor:pointer;
 }
-.jp-playlist .track_add svg,
-.jp-playlist2 .track_add svg{
+.jp-playlist .track_add svg{
   width:25px;
   height:auto;
   cursor:pointer;
 }
-.jp-playlist .track_remove svg,
-.jp-playlist2 .track_remove svg{
+.jp-playlist .track_remove svg{
   width:20px;
   height:auto;
   cursor:pointer;
 }
 
-.jp-playlist .gen_div,
-.jp-playlist2 .gen_div{
+.jp-playlist .gen_div{
   top:10px;
   position:relative;
   top:10px;
 }
-.jp-playlist .track_item_li,
-.jp-playlist2 .track_item_li{
+.jp-playlist .track_item_li{
   white-space:nowrap;
   overflow:hidden;
 }
-.jp-playlist .span_btn,
-.jp-playlist2 .span_btn{
+.jp-playlist .span_btn{
   float:right;
   position:relative;
   padding-right:10px;
   bottom:10px;
 }
- .jp-playlist .track_title,
- .jp-playlist2 .track_title{
+ .jp-playlist .track_title{
   left:10px;
   bottom:10px;
   position:relative;
