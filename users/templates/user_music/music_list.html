@@ -2,7 +2,7 @@
 
 {% if music_list %}
 
-<div class="tracks-container">
+<div class="user_tracks-container">
     <ul data-pk="{{ tag.pk }}">
       {% for object in music_list %}
       <li class="list-group-item infinite-item">
@@ -53,6 +53,6 @@
 </div>
 
 <script>
-var tracks_infinite = new Waypoint.Infinite({element: $('.tracks-container')[0], onBeforePageLoad: function() { $('.tracks_load').show(); }, onAfterPageLoad: function($items) { $('.tracks_load').hide(); }});
+var tracks_infinite = new Waypoint.Infinite({element: $('.user_tracks-container')[0], onBeforePageLoad: function() { $('.tracks_load').show(); }, onAfterPageLoad: function($items) { $('.tracks_load').hide(); }});
 </script>
 {% endif %}
