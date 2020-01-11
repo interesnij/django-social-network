@@ -5,7 +5,7 @@
 <div class="tracks-container user_playlist">
     <ul style="display: contents;" class="ul_track_list">
       {% for object in music_list %}
-      <li class="list-group-item infinite-item">
+      <li class="list-group-item infinite-item id_{{ object.id }}">
           <div class="media">
               <figure class="track_item" data-counter="{{ forloop.counter0 }}" style="cursor:pointer">
                 <a>
