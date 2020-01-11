@@ -1,7 +1,3 @@
-var cssSelector = {jPlayer: "#jquery_jplayer_1",cssSelectorAncestor: ".main-header"};
-var playlist = {{ request.user.my_playlist }};
-var options = { swfPath: "/static/jquery.jplayer.swf", supplied: "oga, mp3", wmode: "window", smoothPlayBar: false, keyEnabled: true};
-var myPlaylist = new jPlayerPlaylist(cssSelector, playlist, options);
 
 $('#ajax').on('click', '.tracks-container .track_item', function() {
     track = $(this); track_id = track.data('counter'); playlist_block = $('body').find('.music-dropdown'); tag_pk = track.parent().parent().parent().data('pk');
