@@ -1,10 +1,10 @@
 {% load staticfiles get_key %}
 
 {% if tag_list %}
-{% if not request_user|is_track_exists:object.id %}аимпаеае{% endif %}
 <div class="tracks-container">
     <ul data-pk="{{ tag.pk }}">
       {% for object in tag_list %}
+      {% if not request_user|is_track_exists:object.id %}аимпаеае{% endif %}
       <li class="list-group-item infinite-item">
           <div class="media">
               <figure class="track_item" data-counter="{{ forloop.counter0 }}" style="cursor:pointer">
