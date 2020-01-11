@@ -67,6 +67,7 @@ class UserMusicList(View):
 			current_page = Paginator(music_list, 20)
 		page = request.GET.get('page')
 		context['user'] = self.user
+		context['request_user'] = request.user
 		try:
 			context['music_list'] = current_page.page(page)
 		except PageNotAnInteger:
