@@ -11,8 +11,6 @@ class TempListOn(View):
     """
     def get(self, request, *args, **kwargs):
         self.list=SoundList.objects.get(pk=self.kwargs["pk"])
-        if self.list.is_temp_list(user=request.user):
-            HttpResponse("!")
         temp_list = UserTempSoundList.objects.get(user=request.user)
         temp_list.list = self.list
         temp_list.tag = None
@@ -24,7 +22,7 @@ class TempTagOn(View):
     Выставляем поисковый тег (исполнителя) для пользователя как активный.
     """
     def get(self, request, *args, **kwargs):
-        self.tag=SoundTags.objects.get(pk=self.kwargs["pk"]) 
+        self.tag=SoundTags.objects.get(pk=self.kwargs["pk"])
         temp_tag = UserTempSoundList.objects.get(user=request.user)
         temp_tag.list = None
         temp_tag.tag = self.tag
@@ -49,7 +47,7 @@ class TrackAdd(View):
     def get(self, request, *args, **kwargs):
         track = SoundParsing.objects.get(pk=self.kwargs["pk"])
         my_list = SoundList.objects.get(creator_id=request.user.pk, name="my_first_generic_playlist_number_12345678900000000")
-        if not request.user.is_track_exists(track.pk):
+        if not my_list.is_track_in_list(track.pk):
             my_list.track.add(track)
         return HttpResponse("!")
 

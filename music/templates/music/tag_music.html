@@ -24,7 +24,28 @@
 
     <div class="col-12 col-md-4">
         <br><br><br>
-
+        <div class="card mb-2">
+            <div class="card-header">
+              <div class="media">
+                  <div class="media-body">
+                    <h5 class="mt-1">
+                      <a href="{% url 'tags_music' pk=tag.simbol.pk %}" data-html="#ajax" class="ajax">Вернуться к списку тегов буквы {{ tag.simbol.name }}</a>
+                    </h5>
+                  </div>
+              </div>
+            </div>
+        </div>
+        <div class="card mb-2">
+            <div class="card-header">
+              <div class="media">
+                  <div class="media-body">
+                    <h5 class="mt-1">
+                      <a href="{% url 'all_music' %}" data-html="#ajax" class="ajax">Вернуться в каталог музыки</a>
+                    </h5>
+                  </div>
+              </div>
+            </div>
+        </div>
     </div>
 </div>
 

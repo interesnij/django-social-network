@@ -55,8 +55,8 @@ class SoundList(models.Model):
     def __str__(self):
         return self.name
 
-    def is_temp_list(self, user):
-        self.list_field.filter(user=user).exists()
+    def is_track_in_list(self, track_id): 
+        self.players.filter(id=track_id).exists()
 
     def get_json_playlist(self):
         if not hasattr(self, '_cached_playlist'):
@@ -103,13 +103,6 @@ class SoundTags(models.Model):
         genres_query = Q(id__in=genres_list)
         result = SoundGenres.objects.filter(genres_query)
         return result
-
-    def is_temp_tag(self, user):
-        try:
-            UserTempSoundList.objects.get(user=user, tag=self)
-            return True
-        except:
-            return False
 
     def get_json_playlist(self):
         if not hasattr(self, '_cached_playlist'):
