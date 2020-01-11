@@ -57,7 +57,7 @@ class TrackRemove(View):
     """
     def get(self, request, *args, **kwargs):
         track = SoundParsing.objects.get(pk=self.kwargs["pk"])
-        my_list = SoundList.objects.get(creator_id=self.id, name="my_first_generic_playlist_number_12345678900000000")
+        my_list = SoundList.objects.get(creator_id=request.user.pk, name="my_first_generic_playlist_number_12345678900000000")
         if not request.user.is_track_exists(track.pk):
             my_list.track.remove(track)
         return HttpResponse("!")
