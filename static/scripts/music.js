@@ -25,3 +25,7 @@ $('body').on('click', '.track_remove', function() {
       }
   });
 });
+
+$('body').on('click', '.music-dropdown', function(e) {
+  e.preventDefault()
+});
