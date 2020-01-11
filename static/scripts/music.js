@@ -1,23 +1,4 @@
 
-$('#ajax').on('click', '.tracks-container .track_item', function() {
-    track = $(this); track_id = track.data('counter'); playlist_block = $('body').find('.music-dropdown'); tag_pk = track.parent().parent().parent().data('pk');
-    if (!playlist_block.hasClass('tag_' + tag_pk)){
-    $.ajax({
-      url: "/music/manage/temp_tag/" + tag_pk + "/",
-      success: function(data) { playlist_block.html('').load("/users/load/playlist/" + '{{ request.user.uuid }}' + "/");playlist_block.addClass('tag_' + tag_pk)}
-    });}else{myPlaylist.play(track_id)};
-
-  });
-
-  $('#ajax').on('click', '.user_tracks-container .track_item', function() {
-      track = $(this); track_id = track.data('counter'); playlist_block = $('body').find('.music-dropdown'); tag_pk = track.parent().parent().parent().data('pk');
-      if (!playlist_block.hasClass('my_playlist')){
-      $.ajax({
-        url: "/music/manage/my_list/",
-        success: function(data) { playlist_block.html('').load("/users/load/playlist/" + '{{ request.user.uuid }}' + "/");playlist_block.addClass('my_playlist')}
-      });}else{myPlaylist.play(track_id)};
-
-    });
 
 
 $('body').on('click', '.track_add', function() {
