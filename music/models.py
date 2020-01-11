@@ -74,6 +74,10 @@ class SoundList(models.Model):
             data['artwork_url'] = track.artwork_url
             data['mp3'] = url
             data['genre'] = genre
+            if self.is_track_in_list(track.pk):
+                data['is_my_track'] = 1
+            else:
+                data['is_my_track'] = 0
             data['pk'] = track.pk
             playlist.append(data)
         return playlist
@@ -91,6 +95,9 @@ class SoundTags(models.Model):
 
     def __str__(self):
         return self.name
+
+    def is_track_in_tag(self, track_id):
+        self.soundparsing.filter(id=track_id).exists()
 
     def get_genres(self):
         genres_list = []
@@ -121,6 +128,10 @@ class SoundTags(models.Model):
             data['mp3'] = url
             data['genre'] = genre
             data['pk'] = track.pk
+            if self.is_track_in_tag(track.pk):
+                data['is_my_track'] = 1
+            else:
+                data['is_my_track'] = 0
             playlist.append(data)
         return playlist
 

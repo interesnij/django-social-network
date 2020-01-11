@@ -444,6 +444,10 @@ class User(AbstractUser):
                 data['artwork_url'] = track.artwork_url
                 data['mp3'] = url
                 data['genre'] = genre
+                if self.is_track_exists(track.pk):
+                    data['is_my_track'] = 1
+                else:
+                    data['is_my_track'] = 0
                 data['pk'] = track.pk
                 playlist.append(data)
             cached_playlist = safe_json(playlist)
