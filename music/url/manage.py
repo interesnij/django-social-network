@@ -3,9 +3,9 @@ from music.view.manage import *
 from django.contrib.auth.decorators import login_required
 
 urlpatterns = [
-    url(r'^temp_list/(?P<pk>\d+)/$', TempListOn.as_view(), name='temp_list_on'),
-    url(r'^temp_tag/(?P<pk>\d+)/$', TempTagOn.as_view(), name='tag_list_on'),
-    url(r'^my_list/$', MyListOn.as_view(), name='my_list_on'),
-    url(r'^add_track/(?P<pk>\d+)/$', TrackAdd.as_view(), name='track_add'),
-    url(r'^remove_track/(?P<pk>\d+)/$', TrackRemove.as_view(), name='track_remove'),
+    url(r'^temp_list/(?P<pk>\d+)/$', login_required(TempListOn.as_view())),
+    url(r'^temp_tag/(?P<pk>\d+)/$', login_required(TempTagOn.as_view())),
+    url(r'^my_list/$', login_required(MyListOn.as_view())),
+    url(r'^add_track/(?P<pk>\d+)/$', login_required(TrackAdd.as_view())),
+    url(r'^remove_track/(?P<pk>\d+)/$', login_required(TrackRemove.as_view())),
 ]
