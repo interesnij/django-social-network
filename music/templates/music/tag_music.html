@@ -29,7 +29,7 @@
               <div class="media">
                   <div class="media-body">
                     <h5 class="mt-1">
-                      <a href="{% url 'tags_music' pk=symbol.pk %}" data-html="#ajax" class="ajax">Вернуться к списку тегов буквы {{ symbol.name }}</a>
+                      <a href="{% url 'tags_music' pk=tag.symbol.pk %}" data-html="#ajax" class="ajax">Вернуться к списку тегов буквы {{ tag.symbol.name }}</a>
                     </h5>
                   </div>
               </div>
