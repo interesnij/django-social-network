@@ -97,7 +97,7 @@ class SoundTags(models.Model):
         return self.name
 
     def is_track_in_tag(self, track_id):
-        self.soundparsing.filter(id=track_id).exists()
+        self.tag_field.filter(id=track_id).exists()
 
     def get_genres(self):
         genres_list = []
