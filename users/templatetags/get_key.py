@@ -3,8 +3,8 @@ register=template.Library()
 
 
 @register.filter
-def is_track_exists(track_id):
-    if request.user.is_track_exists(track_id):
+def is_track_exists(user, track_id):
+    if user.is_track_exists(track_id):
         return True
     else:
         return False
