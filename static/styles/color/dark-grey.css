@@ -4,7 +4,7 @@ html {
 }
 #ajax .jp-playlist-current{
     border: 1px solid #FFFFFF !important;
-    background-image: url(https://i.gifer.com/2L29.gif);
+    background-image: url(/static/images/music_visual_night.gif);
     background-position: left bottom;
     background-size: 20%;
     background-repeat: no-repeat;
