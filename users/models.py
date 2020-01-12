@@ -248,8 +248,14 @@ class User(AbstractUser):
     def is_track_exists(self, track_id):
         return self.user_playlist.filter(track__id=track_id, name="my_first_generic_playlist_number_12345678900000000").exists()
 
-    ''''' количества всякие  196-216 '''''
+    def is_user_playlist(self):
+        return self.usertempsoundlist.filter(user=self, tag=None, list=None).exists()
 
+    def is_tag_playlist(self, tag):
+        return self.usertempsoundlist.filter(user=self, tag=tag, list=None).exists()
+
+
+    ''''' количества всякие  196-216 '''''
 
     def count_followers(self):
         followed_users = self.follows.values('followed_user_id')
@@ -262,7 +268,7 @@ class User(AbstractUser):
         return followed_users_count
 
     def count_connections(self):
-        return self.connections.count()
+        return self.connections.values('user_id')count()
 
     def count_community(self):
         return self.communities_memberships.count()
@@ -420,7 +426,7 @@ class User(AbstractUser):
     def my_playlist(self):
         temp_list = UserTempSoundList.objects.get(user=self)
         try:
-            list = SoundList.objects.get(id=temp_list__list__id)
+            list = SoundList.objects.get(pk=temp_list.list.pk)
         except:
             list = None
         try:
@@ -428,11 +434,9 @@ class User(AbstractUser):
         except:
             tag_music = None
         if list:
-            playlist = list.get_json_playlist()
-            return playlist
+            return list.get_json_playlist()
         elif tag_music:
-            playlist = tag_music.get_json_playlist()
-            return playlist
+            return tag_music.get_json_playlist()
         else:
             playlist = []
             queryset = self.get_my_music()
@@ -462,16 +466,16 @@ class User(AbstractUser):
 
     def get_followers(self):
         followers_query = self._make_followers_query()
-        return User.objects.filter(followers_query).distinct()
+        return User.objects.filter(followers_query)
 
     def get_followings(self):
         followings_query = self._make_followings_query()
-        return User.objects.filter(followings_query).distinct()
+        return User.objects.filter(followings_query)
 
     def get_timeline_posts(self):
-        return self._get_timeline_posts_with_no_filters()
+        return self._get_timeline_posts()
 
-    def _get_timeline_posts_with_no_filters(self):
+    def _get_timeline_posts(self):
         posts_select_related = ('creator', 'community')
         items_only = ('id', 'uuid', 'created', 'creator__username', 'creator__id',
                         'creator__profile__id', 'community__id', 'community__name')
@@ -508,25 +512,6 @@ class User(AbstractUser):
         followed_users_query.add(reported_posts_exclusion_query, Q.AND)
         query = User.objects.filter(followed_users_query)
         return query
-
-    def get_possible_friends2(self):
-        frends = self.connections.values('target_user_id')
-        if not frends:
-            return "not frends"
-        frends_ids = [target_user['target_user_id'] for target_user in frends]
-        query = Q()
-        for frend in frends_ids:
-            user = User.objects.get(pk=frend)
-            frends_frends = user.connections.values('user_id')
-            frend_frend_ids = [target_user['user_id'] for target_user in frends_frends]
-            _query = Q(target_connection__user_id__in=frend_frend_ids)
-            blocked = ~Q(Q(target_connection__user__blocked_by_users__blocker_id=self.pk) | Q(target_connection__user__user_blocks__blocked_user_id=self.pk))
-            connections = ~Q(Q(target_connection__user_id=self.pk) | Q(target_connection__target_user_id=self.pk))
-            _query.add(blocked, Q.AND)
-            _query.add(connections, Q.AND)
-            query.add(_query, Q.AND)
-        connection = Connect.objects.filter(query)
-        return connection
 
     def get_possible_friends(self):
         frends = self.connections.values('target_user_id')
@@ -582,9 +567,7 @@ class User(AbstractUser):
         return community_to_join
 
     def leave_community_with_name(self, community_name):
-        check_can_leave_community_with_name(
-            user=self,
-            community_name=community_name)
+        check_can_leave_community_with_name(user=self, community_name=community_name)
         community_to_leave = Community.objects.get(name=community_name)
         if self.has_favorite_community_with_name(community_name):
             self.unfavorite_community_with_name(community_name=community_name)
@@ -651,19 +634,24 @@ class UserBlock(models.Model):
         indexes = [models.Index(fields=['blocked_user', 'blocker']),]
 
 
-class UserNotificationsSettings(models.Model):
+class UserNotificationsSettings(models.Model): 
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='notifications_settings', verbose_name="Пользователь")
     comment_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления о комментариях к записям")
-    react_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления о реакциях к записи")
     comment_reply_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления об ответах на комментарии к записям")
-    comment_reply_react_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления реакциях на ответы к комментариям")
-    comment_react_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления о реакциях на комментарии к записям")
     connection_request_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления о заявках в друзья")
     connection_confirmed_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления о приеме заявки в друзья")
     community_invite_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления о приглашениях в сообщества")
     comment_user_mention_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления об упоминаниях в комментариях к записям")
     user_mention_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления об упоминаниях в записям")
     repost_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления о репостах записей")
+
+    like_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления о лайках к записям")
+    dislike_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления о дизлайках к записям")
+    comment_like_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления о лайках на комментарии к записям")
+    comment_dislike_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления о дизлайках на комментарии к записям")
+    comment_reply_like_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления о лайках на ответы к комментариям")
+    comment_reply_dislike_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления о дизлайках на ответы к комментариям")
+
 
     @classmethod
     def create_notifications_settings(cls, user):

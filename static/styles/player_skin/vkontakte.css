@@ -446,7 +446,7 @@ div.jp-type-playlist div.jp-playlist li.jp-playlist-current p{
     color: #fff;
 }
 #ajax .jp-playlist-current{
-    border: 1px solid #000000 !important;
+    border: 1px solid #000000 !important; 
     background-image: url(/static/images/music_visual_day.gif);
     background-position: left bottom;
     background-size: 20%;

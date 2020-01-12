@@ -353,9 +353,6 @@ class Community(models.Model):
         return community.banned_users.filter(community_banned_users_query)
 
     def get_staff_members(self):
-        """"
-        Получаем весь персонал группы
-        """
         staff_members_query = Q(communities_memberships__community_id=self.pk)
         staff_members_query.add(
             Q(communities_memberships__is_administrator=True) | Q(communities_memberships__is_moderator=True), Q.AND)
@@ -363,22 +360,16 @@ class Community(models.Model):
         return User.objects.filter(staff_members_query)
 
     def is_private(self):
-        """"
-        Группа приватная?
-        """
         return self.type is self.COMMUNITY_TYPE_PRIVATE
 
     def is_closed(self):
-        """"
-        Группа закрытая?
-        """
         return self.type is self.COMMUNITY_TYPE_CLOSED
 
     def is_public(self):
-        """"
-        Группа открытая?
-        """
         return self.type is self.COMMUNITY_TYPE_PUBLIC
+
+    def is_community_playlist(self, user):
+        return user.usertempsoundlist.filter(user=self, tag=None, list__community__pk=self.pk).exists()
 
     def add_moderator(self, user):
         user_membership = self.memberships.get(user=user)

@@ -55,14 +55,18 @@ class SettingsNotifyForm(forms.ModelForm):
         model = UserNotificationsSettings
         fields = (
             'comment_notifications',
-            'react_notifications',
             'comment_reply_notifications',
-            'comment_reply_react_notifications',
-            'comment_react_notifications',
             'connection_request_notifications',
             'connection_confirmed_notifications',
             'community_invite_notifications',
             'comment_user_mention_notifications',
             'user_mention_notifications',
             'repost_notifications',
+
+            'like_notifications',
+            'dislike_notifications',
+            'comment_like_notifications',
+            'comment_dislike_notifications',
+            'comment_reply_like_notifications',
+            'comment_reply_dislike_notifications',
         )
