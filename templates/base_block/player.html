@@ -31,5 +31,14 @@
 </div>
 
 <script>
+
+  var cssSelector = {jPlayer: "#jquery_jplayer_1",cssSelectorAncestor: ".main-header"};
+
+  var playlist = {{ request.user.my_playlist }};
+
+  var options = { swfPath: "/static/jquery.jplayer.swf", supplied: "oga, mp3", wmode: "window", smoothPlayBar: false, keyEnabled: true};
+
+  var myPlaylist = new jPlayerPlaylist(cssSelector, playlist, options);
+  
   myPlaylist.play(track_id);
 </script>
