@@ -52,7 +52,7 @@
 <script>
 $(document).ready(function(){
   $('#tag_tracks_load').html('').load("/music/list/all_tag_list/" + {{ tag.pk }});
-  $('body').find('.music-dropdown').addClass('tag_' + tag_pk);
+  $('body').find('.music-dropdown').addClass('tag_' + {{ tag.id }});
 });
 </script>
 {% endblock %}
