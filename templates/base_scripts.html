@@ -56,7 +56,8 @@ $('#ajax').on('click', '.user_playlist .track_item', function() {
       success: function(data) {
         load_playlist(playlist_block);
         playlist_block.removeClass().addClass('dropdown-menu music-dropdown my_playlist');
-        $('body').find('.init_autoplay').append("<script" + ">my_playlist_play()</ " + "script>")
+        a = "<script" + ">my_playlist_play()</ " + "script>"
+        $('body').find('.init_autoplay').append(a)
       }
     });
     }else{my_playlist_play(track_id);};
