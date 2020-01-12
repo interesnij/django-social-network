@@ -268,7 +268,7 @@ class User(AbstractUser):
         return followed_users_count
 
     def count_connections(self):
-        return self.connections.values('user_id')count()
+        return self.connections.values('user_id').count()
 
     def count_community(self):
         return self.communities_memberships.count()
@@ -634,7 +634,7 @@ class UserBlock(models.Model):
         indexes = [models.Index(fields=['blocked_user', 'blocker']),]
 
 
-class UserNotificationsSettings(models.Model): 
+class UserNotificationsSettings(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='notifications_settings', verbose_name="Пользователь")
     comment_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления о комментариях к записям")
     comment_reply_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления об ответах на комментарии к записям")
