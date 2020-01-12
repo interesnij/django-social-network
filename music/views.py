@@ -43,7 +43,7 @@ class AllTagMusicView(TemplateView):
     def get(self,request,*args,**kwargs):
         self.tag=SoundTags.objects.get(pk=self.kwargs["pk"])
         if request.user.is_authenticated:
-            self.is_tag_playlist = request.user.is_tag_playlist(self.tag)    
+            self.is_tag_playlist = request.user.is_tag_playlist(self.tag)
         return super(AllTagMusicView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
