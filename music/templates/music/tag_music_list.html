@@ -4,9 +4,9 @@
 <div class="tracks-container tag_playlist">
     <ul data-pk="{{ tag.pk }}" class="ul_track_list" style="display: contents;">
       {% for object in tag_list %}
-      <li class="list-group-item infinite-item id_{{ object.id }}">
+      <li class="list-group-item infinite-item id_{{ object.id }}" data-counter="{{ forloop.counter0 }}">
           <div class="media">
-              <figure class="track_item" data-counter="{{ forloop.counter0 }}" style="cursor:pointer">
+              <figure class="track_item" style="cursor:pointer">
                 <a>
                   {% if object.artwork_url %}
                     <img style="width:50px;heigth:auto" src="{{ object.artwork_url }}" />
