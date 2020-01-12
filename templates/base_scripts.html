@@ -24,12 +24,13 @@ var myPlaylist = new jPlayerPlaylist(cssSelector, playlist, options);
 function my_playlist_play(track_id) {
   myPlaylist.play(track_id);
 };
+
+function callback(){
+    my_playlist_play(track_id);
+}
 function load_playlist(playlist_block, callback) {
   playlist_block.html('').load("/users/load/playlist/" + '{{ request.user.uuid }}' + "/");
   callback();
-}
-function callback(){
-    my_playlist_play(track_id);
 }
 
 
