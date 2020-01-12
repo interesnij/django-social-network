@@ -36,5 +36,6 @@ var playlist = {{ request.user.my_playlist }};
 var options = { swfPath: "/static/jquery.jplayer.swf", supplied: "oga, mp3", wmode: "window", smoothPlayBar: false, keyEnabled: true};
 var myPlaylist = new jPlayerPlaylist(cssSelector, playlist, options);
 
-
 </script>
+
+<span id="init_autoplay"></span>
