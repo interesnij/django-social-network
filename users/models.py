@@ -248,11 +248,11 @@ class User(AbstractUser):
     def is_track_exists(self, track_id):
         return self.user_playlist.filter(track__id=track_id, name="my_first_generic_playlist_number_12345678900000000").exists()
 
-    def is_user_playlist(self): 
-        return self.usertempsoundlist.filter(user=self, tag=None, list=None).exists()
+    def is_user_playlist(self):
+        return self.user_of_field.filter(user=self, tag=None, list=None).exists()
 
     def is_tag_playlist(self, tag):
-        return self.usertempsoundlist.filter(user=self, tag=tag, list=None).exists()
+        return self.user_of_field.filter(user=self, tag=tag, list=None).exists()
 
 
     ''''' количества всякие  196-216 '''''
