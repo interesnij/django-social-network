@@ -27,7 +27,7 @@ function my_playlist_play(track_id) {
 
 var items = document.getElementsByClassName('music-dropdown')[0];
   for (var i = 0, len = items.classList.length; i < len; i++) {
-    if (/tag_/.test(items.children[i].className[i])) {
+    if (/tag_/.test(items.className[i])) {
       console.log(items.className[i]);
   }
 }
