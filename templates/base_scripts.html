@@ -31,14 +31,14 @@ $('#ajax').on('click', '.tag_playlist .track_item', function() {
   track = $(this); track_id = track.data('counter'); playlist_block = $('body').find('.music-dropdown'); tag_pk = track.parent().parent().parent().data('pk')
   if (!playlist_block.hasClass('tag_' + tag_pk)){
 
-  $.ajax({
+  posting = $.ajax({
     url: "/music/manage/temp_tag/" + tag_pk + "/",
     success: function(data) {
       playlist_block.html('').load("/users/load/playlist/" + '{{ request.user.uuid }}' + "/");
       playlist_block.removeClass().addClass('dropdown-menu music-dropdown tag_' + tag_pk);
     }
   });
-  .done(function() { my_playlist_play(track_id) })
+  posting.done(function() { my_playlist_play(track_id) })
   }else{
     my_playlist_play(track_id);
   };
@@ -47,7 +47,7 @@ $('#ajax').on('click', '.tag_playlist .track_item', function() {
 $('#ajax').on('click', '.user_playlist .track_item', function() {
       track = $(this); track_id = track.data('counter'); playlist_block = $('body').find('.music-dropdown');
     if (!playlist_block.hasClass('my_playlist')){
-    $.ajax({
+    posting = $.ajax({
 
       url: "/music/manage/my_list/",
       success: function(data) {
@@ -55,7 +55,7 @@ $('#ajax').on('click', '.user_playlist .track_item', function() {
         playlist_block.removeClass().addClass('dropdown-menu music-dropdown my_playlist');
       }
     });
-      .done(function() { my_playlist_play(track_id) })
+      posting.done(function() { my_playlist_play(track_id) })
     }else{my_playlist_play(track_id);};
   });
 
