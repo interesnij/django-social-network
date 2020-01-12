@@ -31,7 +31,7 @@ function load_playlist(playlist_block, callback) {
 
 $('#ajax').on('click', '.tag_playlist .track_item', function() {
 
-  track = $(this); track.parents('.infinite-item').data('counter'); playlist_block = $('body').find('.music-dropdown'); tag_pk = track.parents('.infinite-item').data('pk')
+  track = $(this); track.parents('.infinite-item').data('counter'); playlist_block = $('body').find('.music-dropdown'); tag_pk = track.parents('.ul_track_list').data('pk')
   if (!playlist_block.hasClass('tag_' + tag_pk)){
 
   $.ajax({
