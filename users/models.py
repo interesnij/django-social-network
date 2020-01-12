@@ -256,7 +256,11 @@ class User(AbstractUser):
             return False
 
     def is_tag_playlist(self, tag):
-        return UserTempSoundList.user_of_field.get(user=self, tag=tag, list=None).exists()
+        try:
+            UserTempSoundList.objects.get(user=self, tag=tag, list=None).exists()
+            return True
+        except:
+            return False
 
 
     ''''' количества всякие  196-216 '''''

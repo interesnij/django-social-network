@@ -52,6 +52,10 @@
 <script>
 $(document).ready(function(){
   $('#tag_tracks_load').html('').load("/music/list/all_tag_list/" + {{ tag.pk }});
+  {% if user.is_tag_playlist %}
+    playlist_block = $('body').find('.music-dropdown');
+    playlist_block.addClass('user_{{ user.pk }}');
+  {% endif %}
 });
 </script>
 {% endblock %}
