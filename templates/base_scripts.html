@@ -42,9 +42,6 @@ $('#ajax').on('click', '.tag_playlist .track_item', function() {
 $('#ajax').on('click', '.user_playlist .track_item', function() {
       track = $(this); track_id = track.data('counter'); playlist_block = $('body').find('.music-dropdown');
     if (!playlist_block.hasClass('my_playlist')){
-      if (){
-        console.log('true');
-      };
     $.ajax({
 
       url: "/music/manage/my_list/",
