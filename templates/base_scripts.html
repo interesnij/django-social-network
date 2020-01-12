@@ -25,6 +25,13 @@ function my_playlist_play(track_id) {
   myPlaylist.play(track_id);
 }
 
+var items = document.getElementsByClassName('music-dropdown')[0];
+  for (var i = 0, len = items.classList.length; i < len; i++) {
+    if (/tag_/.test(items.children[i].className[i])) {
+      console.log(items.className[i]);
+  }
+}
+
 $('#ajax').on('click', '.tag_playlist .track_item', function() {
 
   track = $(this); track_id = track.data('counter'); playlist_block = $('body').find('.music-dropdown'); tag_pk = track.parent().parent().parent().data('pk')
@@ -48,10 +55,7 @@ $('#ajax').on('click', '.user_playlist .track_item', function() {
 
       url: "/music/manage/my_list/",
       success: function(data) { playlist_block.html('').load("/users/load/playlist/" + '{{ request.user.uuid }}' + "/");playlist_block.addClass('my_playlist');my_playlist_play(track_id)}
-    });}else{my_playlist_play(track_id);
-      if (playlist_block.classList.some(c => /my_.*/.test(c))){
-        console.log('true');
-      };};
-
+    });}else{my_playlist_play(track_id);};
   });
+
 </script>
