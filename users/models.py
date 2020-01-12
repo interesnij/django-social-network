@@ -249,10 +249,14 @@ class User(AbstractUser):
         return self.user_playlist.filter(track__id=track_id, name="my_first_generic_playlist_number_12345678900000000").exists()
 
     def is_user_playlist(self):
-        return self.user_of_field.get(user=self, tag=None, list=None).exists()
+        try:
+            UserTempSoundList.objects.get(user=self, tag=None, list=None)
+            return True
+        except:
+            return False
 
     def is_tag_playlist(self, tag):
-        return self.user_of_field.get(user=self, tag=tag, list=None).exists()
+        return UserTempSoundList.user_of_field.get(user=self, tag=tag, list=None).exists()
 
 
     ''''' количества всякие  196-216 '''''
