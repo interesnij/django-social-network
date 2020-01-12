@@ -1,3 +1,40 @@
 {% load staticfiles %}
 
-<script defer src="{% static 'scripts/main.js' %}" type="text/javascript"></script>
+<script defer src="{% static 'scripts/popper.min.js' %}" type="text/javascript"></script>
+<script defer src="{% static 'scripts/bootstrap.min.js' %}" type="text/javascript"></script>
+<script defer src="{% static 'scripts/jquery.cookie.js' %}" type="text/javascript"></script>
+<script defer src="{% static 'scripts/cockie.js' %}" type="text/javascript"></script>
+<script defer src="{% static 'scripts/websocketbridge.js' %}" type="text/javascript"></script>
+<script defer src="{% static 'scripts/lazysizes.min.js' %}" type="text/javascript"></script>
+<script defer src="{% static 'scripts/jquery.waypoints.min.js' %}" type="text/javascript"></script>
+<script defer src="{% static 'scripts/infinite.min.js' %}" type="text/javascript"></script>
+<script defer src="{% static 'scripts/frend_follow.js' %}" type="text/javascript"></script>
+<script defer src="{% static 'scripts/music.js' %}" type="text/javascript"></script>
+<script defer src="{% static 'scripts/jquery.toast.min.js' %}" type="text/javascript"></script>
+
+<script>
+var cssSelector = {jPlayer: "#jquery_jplayer_1",cssSelectorAncestor: ".main-header"};
+var playlist = {{ request.user.my_playlist }};
+var options = { swfPath: "/static/jquery.jplayer.swf", supplied: "oga, mp3", wmode: "window", smoothPlayBar: false, keyEnabled: true};
+var myPlaylist = new jPlayerPlaylist(cssSelector, playlist, options);
+
+$('#ajax').on('click', '.tag_playlist .track_item', function() {
+  track = $(this); track_id = track.data('counter'); playlist_block = $('body').find('.music-dropdown'); tag_pk = track.parent().parent().parent().data('pk');
+  if (!playlist_block.hasClass('tag_' + tag_pk)){
+  $.ajax({
+    url: "/music/manage/temp_tag/" + tag_pk + "/",
+    success: function(data) { playlist_block.html('').load("/users/load/playlist/" + '{{ request.user.uuid }}' + "/");playlist_block.addClass('tag_' + tag_pk);}
+  });}else{myPlaylist.play(track_id)};
+
+});
+
+$('#ajax').on('click', '.user_playlist .track_item', function() {
+    track = $(this); track_id = track.data('counter'); playlist_block = $('body').find('.music-dropdown'); tag_pk = track.parent().parent().parent().data('pk');
+    if (!playlist_block.hasClass('my_playlist')){
+    $.ajax({
+      url: "/music/manage/my_list/",
+      success: function(data) { playlist_block.html('').load("/users/load/playlist/" + '{{ request.user.uuid }}' + "/");playlist_block.addClass('my_playlist');myPlaylist.play(track_id)}
+    });}else{myPlaylist.play(track_id)};
+
+  });
+</script>
