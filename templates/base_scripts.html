@@ -49,7 +49,7 @@ $('#ajax').on('click', '.user_playlist .track_item', function() {
       url: "/music/manage/my_list/",
       success: function(data) { playlist_block.html('').load("/users/load/playlist/" + '{{ request.user.uuid }}' + "/");playlist_block.addClass('my_playlist');my_playlist_play(track_id)}
     });}else{my_playlist_play(track_id);
-      if (playlist_block.className.split(' ').some(c => /my_.*/.test(c))){
+      if (playlist_block.classList.split(' ').some(c => /my_.*/.test(c))){
         console.log('true');
       };};
 
