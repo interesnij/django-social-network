@@ -10,9 +10,9 @@ class TempListOn(View):
     Выставляем плейлист человека или сообщества для пользователя как активный.
     """
     def get(self, request, *args, **kwargs):
-        self.list=SoundList.objects.get(pk=self.kwargs["pk"])
+        list = SoundList.objects.get(pk=self.kwargs["pk"])
         temp_list = UserTempSoundList.objects.get(user=request.user)
-        temp_list.list = self.list
+        temp_list.list = list
         temp_list.tag = None
         temp_list.save()
         return HttpResponse("!")
@@ -22,10 +22,10 @@ class TempTagOn(View):
     Выставляем поисковый тег (исполнителя) для пользователя как активный.
     """
     def get(self, request, *args, **kwargs):
-        self.tag=SoundTags.objects.get(pk=self.kwargs["pk"])
+        tag = SoundTags.objects.get(pk=self.kwargs["pk"])
         temp_tag = UserTempSoundList.objects.get(user=request.user)
         temp_tag.list = None
-        temp_tag.tag = self.tag
+        temp_tag.tag = tag
         temp_tag.save()
         return HttpResponse("!")
 
@@ -34,7 +34,8 @@ class MyListOn(View):
     Выставляем собственный плейлист пользователя как активный.
     """
     def get(self, request, *args, **kwargs):
-        my_list = UserTempSoundList.objects.get(user=request.user)
+        user = User.objects.get(pk=self.kwargs["pk"])
+        my_list = UserTempSoundList.objects.get(user=user)
         my_list.list = None
         my_list.tag = None
         my_list.save()

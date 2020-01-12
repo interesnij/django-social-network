@@ -41,7 +41,10 @@
 <script>
 $(document).ready(function(){
   $('#user_tracks_load').html('').load("/users/detail/music_list/" + '{{ user.uuid }}');
-
+  {% if user.is_user_playlist %}
+    playlist_block = $('body').find('.music-dropdown');
+    playlist_block.addClass('user_{{ user.pk }}');
+  {% endif %}
 });
 </script>
 {% endblock %}

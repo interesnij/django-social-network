@@ -48,14 +48,14 @@ $('#ajax').on('click', '.tag_playlist .track_item', function() {
 });
 
 $('#ajax').on('click', '.user_playlist .track_item', function() {
-      track = $(this); track_id = track.data('counter'); playlist_block = $('body').find('.music-dropdown');
-    if (!playlist_block.hasClass('my_playlist')){
+      track = $(this); track_id = track.data('counter'); playlist_block = $('body').find('.music-dropdown'); user_pk = {{ user.pk }};
+    if (!playlist_block.hasClass('user_' + user_pk)){
     $.ajax({
 
-      url: "/music/manage/my_list/",
+      url: "/music/manage/my_list/" + user_pk + "/",
       success: function(data) {
         load_playlist(playlist_block);
-        playlist_block.removeClass().addClass('dropdown-menu music-dropdown my_playlist');
+        playlist_block.removeClass().addClass('dropdown-menu music-dropdown user_' + user_pk);
         setTimeout(function(){ my_playlist_play(track_id)},2000);
       }
     });
