@@ -36,7 +36,7 @@ $('#ajax').on('click', '.tag_playlist .track_item', function() {
     success: function(data) {
       playlist_block.html('').load("/users/load/playlist/" + '{{ request.user.uuid }}' + "/");
       playlist_block.removeClass().addClass('dropdown-menu music-dropdown tag_' + tag_pk);
-      my_playlist_play(track_id)
+      setTimeout(function(){ my_playlist_play(track_id)},2000);
     }
   });
   }else{
@@ -53,7 +53,7 @@ $('#ajax').on('click', '.user_playlist .track_item', function() {
       success: function(data) {
         playlist_block.html('').load("/users/load/playlist/" + '{{ request.user.uuid }}' + "/");
         playlist_block.removeClass().addClass('dropdown-menu music-dropdown my_playlist');
-        my_playlist_play(track_id)
+        setTimeout(function(){ my_playlist_play(track_id)},2000);
       }
     });}else{my_playlist_play(track_id);};
   });
