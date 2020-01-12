@@ -48,7 +48,7 @@ $('#ajax').on('click', '.tag_playlist .track_item', function() {
 });
 
 $('#ajax').on('click', '.user_playlist .track_item', function() {
-      track = $(this); track_id = track.data('counter'); playlist_block = $('body').find('.music-dropdown'); user_pk = {{ user.pk }};
+      track = $(this); track_id = track.parents('.infinite-item').data('counter'); playlist_block = $('body').find('.music-dropdown'); user_pk = {{ user.pk }};
     if (!playlist_block.hasClass('user_' + user_pk)){
     $.ajax({
 
