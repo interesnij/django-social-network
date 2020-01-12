@@ -39,7 +39,7 @@ $('#ajax').on('click', '.tag_playlist .track_item', function() {
     success: function(data) {
       load_playlist(playlist_block);
       playlist_block.removeClass().addClass('dropdown-menu music-dropdown tag_' + tag_pk);
-      playlist_block.find('#init_autoplay').append("my_playlist_play(" track_id + ")")
+      playlist_block.find('#init_autoplay').append("my_playlist_play(" + track_id + ")")
     }
   });
   }else{
