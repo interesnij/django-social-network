@@ -27,10 +27,6 @@ function my_playlist_play(track_id) {
 
 function load_playlist(playlist_block, callback) {
   playlist_block.html('').load("/users/load/playlist/" + '{{ request.user.uuid }}' + "/");
-  callback();
-}
-function callback(){
-    my_playlist_play(track_id);
 }
 
 $('#ajax').on('click', '.tag_playlist .track_item', function() {
@@ -42,6 +38,9 @@ $('#ajax').on('click', '.tag_playlist .track_item', function() {
     url: "/music/manage/temp_tag/" + tag_pk + "/",
     success: function(data) {
       load_playlist(playlist_block);
+      $.ajaxComplete(function () {
+        my_playlist_play(track_id);
+      });
       playlist_block.removeClass().addClass('dropdown-menu music-dropdown tag_' + tag_pk);
     }
   });
@@ -58,6 +57,9 @@ $('#ajax').on('click', '.user_playlist .track_item', function() {
       url: "/music/manage/my_list/",
       success: function(data) {
         load_playlist(playlist_block);
+        $.ajaxComplete(function () {
+          my_playlist_play(track_id);
+        });
         playlist_block.removeClass().addClass('dropdown-menu music-dropdown my_playlist');
       }
     });
