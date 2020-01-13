@@ -447,7 +447,7 @@ class User(AbstractUser):
             return tag_music.get_json_playlist()
         else:
             playlist = []
-            queryset = list(reversed(self.get_my_music()))
+            queryset = self.get_my_music()
             for track in queryset:
                 url = track.uri + '/stream?client_id=' + 'dce5652caa1b66331903493735ddd64d'
                 genre = str(track.genre)
@@ -462,6 +462,7 @@ class User(AbstractUser):
                     data['is_my_track'] = 0
                 data['pk'] = track.pk
                 playlist.append(data)
+                playlist = list(reversed(playlist))
             cached_playlist = safe_json(playlist)
             return cached_playlist
 
