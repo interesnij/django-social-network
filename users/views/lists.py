@@ -52,13 +52,13 @@ class UserMusicList(View):
 			check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
 			if self.user.is_closed_profile():
 				check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
-			music_list = self.user.get_music()
+			music_list = list(reversed(self.user.get_music()))
 			template = 'user_music/music_list.html'
 			current_page = Paginator(music_list, 20)
 		elif request.user.is_anonymous and self.user.is_closed_profile():
 			raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
 		elif request.user.is_anonymous and not self.user.is_closed_profile():
-			music_list = self.user.get_music()
+			music_list = list(reversed(self.user.get_music()))
 			template = 'user_music/music_list.html'
 			current_page = Paginator(music_list, 20)
 		elif self.user == request.user:

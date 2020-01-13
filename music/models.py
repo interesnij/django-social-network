@@ -65,7 +65,7 @@ class SoundList(models.Model):
 
     def playlist(self):
         playlist = []
-        queryset = self.track.all()
+        queryset = reversed(self.track.all())
         for track in queryset:
             url = track.uri + '/stream?client_id=' + 'dce5652caa1b66331903493735ddd64d'
             genre = str(track.genre)
@@ -118,7 +118,7 @@ class SoundTags(models.Model):
 
     def playlist(self):
         playlist = []
-        queryset = self.track_tag.all()
+        queryset = reversed(self.track_tag.all())
         for track in queryset:
             url = track.uri + '/stream?client_id=' + 'dce5652caa1b66331903493735ddd64d'
             genre = str(track.genre)
