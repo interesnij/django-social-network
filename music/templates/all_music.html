@@ -39,11 +39,11 @@
                     <ul class="date-list" style="width: 1175.94px;">
                       {% for object in angl_simbols %}
                         <li class="date">
+                          <a href="{% url 'tags_music' pk=object.pk %}" data-html="#ajax" class="ajax">
                             <h6 style="border:1px black solid;padding:10px;" class="content-color-primary mb-0">
-                              <a href="{% url 'tags_music' pk=object.pk %}" data-html="#ajax" class="ajax">
                                 {{ object.name }}
-                              </a>
                             </h6>
+                          </a>
                         </li>
                       {% endfor %}
                     </ul>
@@ -59,11 +59,11 @@
                     <ul class="date-list" style="width: 1175.94px;">
                       {% for object in number_simbols %}
                         <li class="date">
+                          <a href="{% url 'tags_music' pk=object.pk %}" data-html="#ajax" class="ajax">
                           <h6 style="border:1px black solid;padding:10px;" class="content-color-primary mb-0">
-                            <a href="{% url 'tags_music' pk=object.pk %}" data-html="#ajax" class="ajax">
                               {{ object.name }}
-                            </a>
                           </h6>
+                          </a>
                         </li>
                       {% endfor %}
                     </ul>
