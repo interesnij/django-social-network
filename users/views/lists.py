@@ -62,7 +62,7 @@ class UserMusicList(View):
 			template = 'user_music/music_list.html'
 			current_page = Paginator(music_list, 20)
 		elif self.user == request.user:
-			music_list = self.user.get_my_music()
+			music_list = self.user.get_my_music().order_by("-players__track")
 			template = 'user_music/my_music_list.html'
 			current_page = Paginator(music_list, 20)
 		page = request.GET.get('page')
