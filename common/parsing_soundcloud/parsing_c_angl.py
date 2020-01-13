@@ -537,7 +537,7 @@ c_rus_list_10 = [
 "Charlotte Black",
 "Charlotte Cardin",
 "Charlotte Church",
-"Charlotte Devaney",
+"Charlotte Devaney",]
 
 c_rus_list_11 = [
 "Charlotte Gainsbourg",
