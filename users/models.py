@@ -428,7 +428,7 @@ class User(AbstractUser):
         list = SoundList.objects.get(creator_id=self.id, name="my_first_generic_playlist_number_12345678900000000")
         music_query = Q(players=list, is_deleted=False)
         music_query.add(exclude_reported_and_approved_goods_query, Q.AND)
-        music_list = list(reversed(SoundParsing.objects.filter(music_query)))
+        music_list = SoundParsing.objects.filter(music_query)
         return music_list
 
     def my_playlist(self):
@@ -463,7 +463,7 @@ class User(AbstractUser):
                 data['pk'] = track.pk
                 playlist.append(data)
             cached_playlist = safe_json(playlist)
-            return cached_playlist
+            return reversed(cached_playlist)
 
     def get_avatar(self):
         try:
