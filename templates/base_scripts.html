@@ -65,14 +65,13 @@ $('#ajax').on('click', '.user_playlist .track_item', function() {
     }else{my_playlist_play(track_id);};
   });
 
+  $('#ajax').on('click', '.jp-playlist-current .track_item', function() {
+    track = $(this); li = track.parents('.infinite-item'); track_id = li.data('counter');
+    my_playlist_stop(track_id); li.addClass("playlist_pause");
+    });
+
+  $('#ajax').on('click', '.playlist_pause .track_item', function() {
+    track = $(this); li = track.parents('.infinite-item'); track_id = li.data('counter');
+    my_playlist_play(track_id); li.removeClass("playlist_pause")
+    });
 </script>
-
-$('#ajax').on('click', '.jp-playlist-current .track_item', function() {
-  track = $(this); li = track.parents('.infinite-item'); track_id = li.data('counter');
-  my_playlist_stop(track_id); li.addClass("playlist_pause");
-  });
-
-$('#ajax').on('click', '.playlist_pause .track_item', function() {
-  track = $(this); li = track.parents('.infinite-item'); track_id = li.data('counter');
-  my_playlist_play(track_id); li.removeClass("playlist_pause")
-  });
