@@ -429,7 +429,7 @@ class User(AbstractUser):
         music_query = Q(players=list, is_deleted=False)
         music_query.add(exclude_reported_and_approved_goods_query, Q.AND)
         music_list = SoundParsing.objects.filter(music_query)
-        return music_list
+        return list(reversed(music_list))
 
     def my_playlist(self):
         temp_list = UserTempSoundList.objects.get(user=self)
