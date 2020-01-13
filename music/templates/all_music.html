@@ -17,13 +17,15 @@
                 <div class="col-12">
                     <ul class="date-list" style="width: 1175.94px;">
                       {% for object in rus_simbols %}
+                      <a href="{% url 'tags_music' pk=object.pk %}" data-html="#ajax" class="ajax">
                         <li class="date">
                           <h6 style="border:1px black solid;padding:10px;" class="content-color-primary mb-0">
-                            <a href="{% url 'tags_music' pk=object.pk %}" data-html="#ajax" class="ajax">
+
                               {{ object.name }}
-                            </a>
+
                           </h6>
                         </li>
+                        </a>
                       {% endfor %}
                     </ul>
                 </div>
