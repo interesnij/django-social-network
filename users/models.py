@@ -428,7 +428,7 @@ class User(AbstractUser):
         list = SoundList.objects.get(creator_id=self.id, name="my_first_generic_playlist_number_12345678900000000")
         music_query = Q(players=list, is_deleted=False)
         music_query.add(exclude_reported_and_approved_goods_query, Q.AND)
-        music_list = SoundParsing.objects.filter(music_query)
+        music_list = list(reversed(SoundParsing.objects.filter(music_query)))
         return music_list
 
     def my_playlist(self):
@@ -447,7 +447,7 @@ class User(AbstractUser):
             return tag_music.get_json_playlist()
         else:
             playlist = []
-            queryset = list(reversed(self.get_my_music()))
+            queryset = self.get_my_music()
             for track in queryset:
                 url = track.uri + '/stream?client_id=' + 'dce5652caa1b66331903493735ddd64d'
                 genre = str(track.genre)
