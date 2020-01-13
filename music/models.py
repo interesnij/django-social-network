@@ -165,9 +165,6 @@ class SoundParsing(models.Model):
     def __str__(self):
         return self.title
 
-    def all_music_count(): 
-        return SoundParsing.objects.values('release_year').count()
-
     class Meta:
         verbose_name="спарсенные треки"
         verbose_name_plural="спарсенные треки"
