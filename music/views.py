@@ -12,6 +12,7 @@ class AllMusicView(TemplateView):
         self.rus_simbols=SoundSymbol.objects.filter(type='RS')
         self.angl_simbols=SoundSymbol.objects.filter(type='AS')
         self.number_simbols=SoundSymbol.objects.filter(type='NS')
+        self.all_music_count = SoundParsing.objects.only('release_year').count()
         return super(AllMusicView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -19,6 +20,7 @@ class AllMusicView(TemplateView):
         context["rus_simbols"] = self.rus_simbols
         context["angl_simbols"] = self.angl_simbols
         context["number_simbols"] = self.number_simbols
+        context["all_music_count"] = self.all_music_count
         return context
 
 
