@@ -462,8 +462,9 @@ class User(AbstractUser):
                     data['is_my_track'] = 0
                 data['pk'] = track.pk
                 playlist.append(data)
+                reversed(playlist)
             cached_playlist = safe_json(playlist)
-            return reversed(cached_playlist)
+            return cached_playlist
 
     def get_avatar(self):
         try:
