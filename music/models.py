@@ -164,9 +164,6 @@ class SoundParsing(models.Model):
     release_year = models.CharField(max_length=255, blank=True, null=True)
     is_deleted = models.BooleanField(verbose_name="Удален",default=False )
 
-    def ordered_track_fot_playlist(self):
-        return self.players.all().order_by('-pk')
-
     def __str__(self):
         return self.title
 
