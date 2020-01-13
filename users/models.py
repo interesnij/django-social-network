@@ -447,7 +447,7 @@ class User(AbstractUser):
             return tag_music.get_json_playlist()
         else:
             playlist = []
-            queryset = self.get_my_music()
+            queryset = reversed(self.get_my_music())
             for track in queryset:
                 url = track.uri + '/stream?client_id=' + 'dce5652caa1b66331903493735ddd64d'
                 genre = str(track.genre)
@@ -463,7 +463,7 @@ class User(AbstractUser):
                 data['pk'] = track.pk
                 playlist.append(data)
             cached_playlist = safe_json(playlist)
-            return reversed(cached_playlist)
+            return cached_playlist
 
     def get_avatar(self):
         try:
