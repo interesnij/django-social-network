@@ -67,12 +67,12 @@ $('#ajax').on('click', '.user_playlist .track_item', function() {
 
 </script>
 
-$('#ajax').on('click', '.user_playlist .jp-playlist-current .track_item', function() {
+$('#ajax').on('click', '.jp-playlist-current .track_item', function() {
   track = $(this); li = track.parents('.infinite-item'); track_id = li.data('counter');
   my_playlist_stop(track_id); li.addClass("playlist_pause");
   });
 
-$('#ajax').on('click', '.user_playlist .playlist_pause .track_item', function() {
+$('#ajax').on('click', '.playlist_pause .track_item', function() {
   track = $(this); li = track.parents('.infinite-item'); track_id = li.data('counter');
   my_playlist_play(track_id); li.removeClass("playlist_pause")
   });
