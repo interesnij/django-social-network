@@ -1474,7 +1474,7 @@ d_rus_list_28 = [
 "DJ Arta",
 "DJ Assad",
 "Dj Axpe feat. Tanya Dream",
-"DJ Aymoune & AnyRiad",
+"DJ Aymoune & AnyRiad",]
 
 d_rus_list_29 = [
 "DJ BaBa & Iman Amity feat. Tony T",
@@ -2449,14 +2449,13 @@ d_rus_list_47 = [
 "DИK",
 "Dиаспора",
 "Dругой Ветер",
-
 ]
 
 litera = SoundSymbol.objects.get(name="D")
 
 count = 0
 
-for tag in d_rus_list_1:
+for tag in d_rus_list_47:
     tracks = client.get('/tracks', q=tag, limit=page_size, linked_partitioning=1)
     if tracks:
         for track in tracks.collection:
