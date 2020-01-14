@@ -19,4 +19,4 @@ from music.models import *
 #SoundSymbol.objects.all().delete()
 SoundList.objects.all().delete()
 SoundTags.objects.all().delete()
-SoundParsing.objects.all().delete()
+SoundcloudParsing.objects.all().delete()

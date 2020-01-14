@@ -11,7 +11,7 @@ import django
 django.setup()
 
 import soundcloud
-from music.models import SoundParsing, SounGenres, Playlist
+from music.models import SoundcloudParsing, SounGenres, Playlist
 from datetime import datetime, date, time
 
 
