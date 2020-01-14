@@ -162,7 +162,7 @@ class SoundcloudParsing(models.Model):
     uri = models.CharField(max_length=255, blank=True, null=True)
     release_year = models.CharField(max_length=255, blank=True, null=True)
     is_deleted = models.BooleanField(verbose_name="Удален",default=False )
-    listen = models.IntegerField(primary_key=True)
+    listen = models.IntegerField(default=0)
 
     def __str__(self):
         return self.title
