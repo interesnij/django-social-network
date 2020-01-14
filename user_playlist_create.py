@@ -12,5 +12,5 @@ django.setup()
 from music.models import *
 from users.models import User
 
-user = User.objects.get(pk-1)
+user = User.objects.get(pk=1)
 SoundList.objects.create(creator=user, name="my_first_generic_playlist_number_12345678900000000")
