@@ -87,6 +87,8 @@ for tag in з_rus_list_1:
             created_at = datetime.strptime('Jun 1 2005  1:33PM', '%b %d %Y %I:%M%p')
             if track.description:
                 description = track.description[:500]
+            else:
+                description=None
             try:
                 SoundcloudParsing.objects.get(id=track.id)
             except:
@@ -105,6 +107,8 @@ for tag in з_rus_list_1:
                 created_at = datetime.strptime('Jun 1 2005  1:33PM', '%b %d %Y %I:%M%p')
                 if track.description:
                     description = track.description[:500]
+                else:
+                    description=None
                 try:
                     SoundcloudParsing.objects.get(id=track.id)
                 except:
