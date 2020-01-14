@@ -69,7 +69,9 @@ a_angl_list_1 = [
 'A+',
 'A$AP Rocky',
 'A1',
-'A5',
+'A5',]
+
+a_angl_list_2 = [
 'Bondy',
 'Aadagio',
 'AaLai',
@@ -94,9 +96,7 @@ a_angl_list_1 = [
 'Aarophat',
 'Aarre',
 'Ab-Soul feat. Aloe Blacc',
-'Abandoned Rainbow',]
-
-a_angl_list_2 = [
+'Abandoned Rainbow',
 'Abaz & Артём Татищевский',
 'ABBA',
 'Abbi',
@@ -121,7 +121,9 @@ a_angl_list_2 = [
 'Abrina feat. Eric Bellinger',
 'Abrina feat. Jeremih',
 'Abror Filar',
-'Absolute Dancefloor',
+'Absolute Dancefloor',]
+
+a_angl_list_3 = [
 'Absolute feat. Mozhdah',
 'Absound feat. BianK',
 'Abune Dharay',
@@ -171,10 +173,10 @@ a_angl_list_2 = [
 'Adam Rafferty',
 'Adam Rickitt',
 'Adam Rom',
-'Adam Seal',
-'Adam Sick',]
+'Adam Seal',]
 
-a_angl_list_3 = [
+a_angl_list_4 = [
+'Adam Sick',
 'Adam Szabo',
 'Adam Tyler',
 'Adam Walker',
@@ -223,7 +225,9 @@ a_angl_list_3 = [
 'Adria Ortega',
 'Adrian Eftimie',
 'Adrian Lulgjuraj & Bledar Sejko',
-'Adrian Lux',
+'Adrian Lux',]
+
+a_angl_list_5 = [
 'Adrian Melbrand',
 'Adrian Mesu feat. Diana Francesco',
 'Adrian Milena',
@@ -247,9 +251,7 @@ a_angl_list_3 = [
 'Adult Karate feat. Adaline',
 'AduShinova',
 'ADVANCE',
-'Adventure Club',]
-
-a_angl_list_4 = [
+'Adventure Club',
 'Ady Jara',
 'Ady Suleiman',
 'Aedanz',
@@ -275,7 +277,9 @@ a_angl_list_4 = [
 'Afshin Amini & Ali Aminian',
 'After School',
 'Afterlife',
-'Afternova',
+'Afternova',]
+
+a_angl_list_6 = [
 'Agamemnon Project',
 'Agamma',
 'AGAYA',
@@ -328,7 +332,7 @@ a_angl_list_4 = [
 'Aint',
 'Air Bag One',]
 
-a_angl_list_5 = [
+a_angl_list_7 = [
 'Air Station',
 'Air Traffic Controller',
 'Airbase',
@@ -378,7 +382,9 @@ a_angl_list_5 = [
 'Akord',
 'Akris & Teddy',
 'Akritis',
-'AkroSonix',
+'AkroSonix',]
+
+a_angl_list_8 = [
 'Aksioma Project',
 'AkTi & Al’Ba',
 'Aktive',
@@ -404,9 +410,7 @@ a_angl_list_5 = [
 'Alan Parsons',
 'Alan Peter',
 'Alan Pinheiro',
-'Alan Price',]
-
-a_angl_list_6 = [
+'Alan Price',
 'Alan Roy',
 'Alan Silvestri',
 'Alan Smith',
@@ -430,7 +434,9 @@ a_angl_list_6 = [
 'Alb',
 'Alb Negru',
 'Alba Soler',
-'Alba Wings',
+'Alba Wings',]
+
+a_angl_list_9 = [
 'Albannach',
 'Albert Brite',
 'Albert Castiglia',
@@ -482,7 +488,7 @@ a_angl_list_6 = [
 'Alejandro Montero',
 'Alek Sandar',]
 
-a_angl_list_7 = [
+a_angl_list_10 = [
 'Alek Sandar, Dess & Boyplay',
 'Alek Trance',
 'Aleks Ache',
@@ -532,7 +538,9 @@ a_angl_list_7 = [
 'Alex Dars',
 'Alex Dobson',
 'Alex Ferrari',
-'Alex G',
+'Alex G',]
+
+a_angl_list_11 = [
 'Alex Gaudino',
 'Alex Gaudino, Bottai',
 'Alex Geralead',
@@ -558,9 +566,7 @@ a_angl_list_7 = [
 'Alex Kozobolis',
 'Alex Krit',
 'Alex L',
-'Alex Leavon',]
-
-a_angl_list_8 = [
+'Alex Leavon',
 'Alex M.',
 'Alex M.O.R.P.H.',
 'Alex Madden',
@@ -584,7 +590,9 @@ a_angl_list_8 = [
 'Alex Oshean',
 'Alex Palmieri',
 'Alex Preston',
-'Alex Price',
+'Alex Price',]
+
+a_angl_list_12 = [
 'Alex Rosales',
 'Alex Saidac',
 'Alex Sayz',
@@ -630,9 +638,9 @@ a_angl_list_8 = [
 'Alexander Star feat. Toi',
 'Alexander Turok',
 'Alexander Volosnikov',
-'Alexandra Burke',]
+'Alexandra Burke',
 
-a_angl_list_9 = [
+a_angl_list_13 = [
 'Alexandra Damiani',
 'Alexandra Joner',
 'Alexandra Moon',
