@@ -20,58 +20,17 @@ page_size = 200
 genres_list = SoundGenres.objects.values('name')
 genres_list_names = [name['name'] for name in genres_list]
 
-ш_rus_list_1 = [
-"Шабля",
-"Шайни Лориэн",
-"Шала",
-"Шалих",
-"Шамиль Кашешов",
-"Шамо и Кристина",
-"Шан-Хай",
-"Шанис",
-"Шао-Бао",
-"ШаолинЬ",
-"ШаолинЬ и KoF",
-"Шарип Саидов",
-"Шарип Умханов (Шариф)",
-"Шариф",
-"Шатунов Юра",
-"Шаумаров",
-"Шафиров",
-"Шахерезада",
-"Шахзода",
-"Шахло Ахмедова",
-"Шахматист (Рыночные Отношения)",
-"Шеff",
-"Шейх Мансур",
-"ШеремеТ feat. MC Kan",
-"Шерлок Холмс и доктор Ватсон",
-"ШиZZa",
-"Шик & SERPO",
-"Шима (Братубрат)",
-"Шиншиллы",
-"Школьник feat. Murovei",
-"Шлем feat. Коля Найк",
-"Шматов Юрий, Шматова Инна и Юлия Началова",
-"Шоколад",
-"Шоколадка",
-"Шопен",
-"Шоу-Группа Класс!",
-"Шоу-Группа Улыбка",
-"Шпильки",
-"Штар",
-"Штора (Типси Тип & Zambezi)",
-"Штурм Наталья",
-"Шура",
-"Шым (Каста)",
-
+щ_rus_list_1 = [
+"Щенников Владимир",
+"Щерbakов feat. Andy Rey",
+"ЩИ",
 ]
 
-litera = SoundSymbol.objects.get(name="Ш")
+litera = SoundSymbol.objects.get(name="Щ")
 
 count = 0
 
-for tag in ш_rus_list_1:
+for tag in щ_rus_list_1:
     tracks = client.get('/tracks', q=tag, limit=page_size, linked_partitioning=1)
     if tracks:
         for track in tracks.collection:
