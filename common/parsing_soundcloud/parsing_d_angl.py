@@ -2449,6 +2449,7 @@ d_rus_list_47 = [
 "DИK",
 "Dиаспора",
 "Dругой Ветер",
+
 ]
 
 litera = SoundSymbol.objects.get(name="D")
