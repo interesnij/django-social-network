@@ -1474,7 +1474,7 @@ d_rus_list_28 = [
 "DJ Arta",
 "DJ Assad",
 "Dj Axpe feat. Tanya Dream",
-"DJ Aymoune & AnyRiad",
+"DJ Aymoune & AnyRiad",]
 
 d_rus_list_29 = [
 "DJ BaBa & Iman Amity feat. Tony T",
