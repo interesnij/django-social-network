@@ -638,7 +638,7 @@ a_angl_list_12 = [
 'Alexander Star feat. Toi',
 'Alexander Turok',
 'Alexander Volosnikov',
-'Alexandra Burke',
+'Alexandra Burke',]
 
 a_angl_list_13 = [
 'Alexandra Damiani',
@@ -794,7 +794,7 @@ a_angl_list_15 = [
 'Ally Sereda',
 'Allysia',
 'Alma',
-'Almadrava',
+'Almadrava',]
 
 a_angl_list_16 = [
 'Almira',
