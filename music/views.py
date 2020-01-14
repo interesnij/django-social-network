@@ -12,7 +12,7 @@ class AllMusicView(TemplateView):
         self.rus_simbols=SoundSymbol.objects.filter(type='RS')
         self.angl_simbols=SoundSymbol.objects.filter(type='AS')
         self.number_simbols=SoundSymbol.objects.filter(type='NS')
-        self.all_music_count = SoundParsing.objects.only('release_year').count()
+        self.all_music_count = SoundcloudParsing.objects.only('release_year').count()
         self.rus_tegs_count = SoundTags.objects.filter(symbol__type='RS').values('pk').count()
         self.angl_tegs_count = SoundTags.objects.filter(symbol__type='AS').values('pk').count()
         self.number_tegs_count = SoundTags.objects.filter(symbol__type='NS').values('pk').count()
