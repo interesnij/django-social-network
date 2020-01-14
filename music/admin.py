@@ -17,7 +17,7 @@ class SoundTagsAdmin(admin.ModelAdmin):
             model = SoundTags
 
 
-admin.site.register(SoundcloudParsing, SoundParsingAdmin)
+admin.site.register(SoundcloudParsing, SoundcloudParsingAdmin)
 admin.site.register(SoundGenres)
 admin.site.register(SoundList)
 admin.site.register(SoundSymbol)
