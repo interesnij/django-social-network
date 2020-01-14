@@ -32,8 +32,8 @@ class AllTagListView(View):
     def get(self,request,*args,**kwargs):
         context = {}
         tag=SoundTags.objects.get(pk=self.kwargs["pk"])
-        tag_list = SoundParsing.objects.filter(tag__id=tag.pk)
-        current_page = Paginator(tag_list, 24) 
+        tag_list = SoundcloudParsing.objects.filter(tag__id=tag.pk)
+        current_page = Paginator(tag_list, 24)
         page = request.GET.get('page')
         context['tag'] = tag
         context['request_user'] = request.user

@@ -46,7 +46,7 @@ class TrackAdd(View):
     Добавляем трек в свой плейлист, если его там нет
     """
     def get(self, request, *args, **kwargs):
-        track = SoundParsing.objects.get(pk=self.kwargs["pk"])
+        track = SoundcloudParsing.objects.get(pk=self.kwargs["pk"])
         my_list = SoundList.objects.get(creator_id=request.user.pk, name="my_first_generic_playlist_number_12345678900000000")
         if not my_list.is_track_in_list(track.pk):
             my_list.track.add(track)
@@ -57,7 +57,7 @@ class TrackRemove(View):
     Удаляем трек из своего плейлиста, если он там есть
     """
     def get(self, request, *args, **kwargs):
-        track = SoundParsing.objects.get(pk=self.kwargs["pk"])
+        track = SoundcloudParsing.objects.get(pk=self.kwargs["pk"])
         my_list = SoundList.objects.get(creator_id=request.user.pk, name="my_first_generic_playlist_number_12345678900000000")
         if not my_list.is_track_in_list(track.pk):
             my_list.track.remove(track)
