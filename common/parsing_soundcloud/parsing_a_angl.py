@@ -690,7 +690,9 @@ a_angl_list_13 = [
 'AliMcGuirk',
 'Ali Sotoodeh',
 'Ali Wilson',
-'Alia',
+'Alia',]
+
+a_angl_list_14 = [
 'Alice',
 'Alice Berg',
 'Alice Chater',
@@ -715,9 +717,7 @@ a_angl_list_13 = [
 'Alien Ant Farm',
 'Alicja',
 'Alien Ant Farm',
-'Alien24',]
-
-a_angl_list_10 = [
+'Alien24',
 'Alien24 feat. Esc.Ape',
 'Aliesa Nicole',
 'Alika',
@@ -742,7 +742,9 @@ a_angl_list_10 = [
 'Alisan Aslan',
 'Alisan Porter',
 'Alisha',
-'Alisher',
+'Alisher',]
+
+a_angl_list_15 = [
 'Alison Wonderland',
 'Alisse Wendel',
 'Alisson & Turner',
@@ -792,9 +794,9 @@ a_angl_list_10 = [
 'Ally Sereda',
 'Allysia',
 'Alma',
-'Almadrava',]
+'Almadrava',
 
-a_angl_list_11 = [
+a_angl_list_16 = [
 'Almira',
 'Almost Home',
 'Almy & G.O.D.',
@@ -844,7 +846,9 @@ a_angl_list_11 = [
 'Alyanna',
 'Alyanna Lu',
 'Alycia',
-'Alycia Stefano',
+'Alycia Stefano',]
+
+a_angl_list_17 = [
 'Alys Lopez',
 'Alysha',
 'Alyson Stoner',
@@ -871,9 +875,7 @@ a_angl_list_11 = [
 'Amanda Larson',
 'Amanda Lear',
 'Amanda Mair',
-'Amanda Seyfried',]
-
-a_angl_list_12 = [
+'Amanda Seyfried',
 'Amanda Wilson',
 'Amanda Winberg',
 'Amandine Bourgeois',
@@ -896,7 +898,9 @@ a_angl_list_12 = [
 'Ambiworx',
 'Ambray',
 'Ambre feat. G-Eazy & BJ The Chicago Kid',
-'Ambre Perkins & Kehlani',
+'Ambre Perkins & Kehlani',]
+
+a_angl_list_18 = [
 'Ambrela',
 'AMCHI',
 'AmeD & DJ MriD',
@@ -948,7 +952,7 @@ a_angl_list_12 = [
 'AMPR feat. PRXZM',
 'Amr Diab',]
 
-a_angl_list_13 = [
+a_angl_list_19 = [
 'Amsterdam',
 'Amsterdam Avenue',
 'AMTRAC',
@@ -998,7 +1002,9 @@ a_angl_list_13 = [
 'Anca Florescu',
 'Anca Pop',
 'Ancelada',
-'Ancorah',
+'Ancorah',]
+
+a_angl_list_20 = [
 'And One',
 'Anda Adam',
 'Anda Allexa',
@@ -1033,9 +1039,7 @@ a_angl_list_13 = [
 'Andre Zuniga',
 'Andrea',
 'Andrea Begley',
-'Andrea Bertolini',]
-
-a_angl_list_14 = [
+'Andrea Bertolini',
 'Andrea Bocelli',
 'Andrea Carnell',
 'Andrea Coluzzi',
@@ -1050,7 +1054,9 @@ a_angl_list_14 = [
 'Andrea Ferrini',
 'Andrea Ghirotti',
 'Andrea Manzoni Trio',
-'Andrea Martin',
+'Andrea Martin',]
+
+a_angl_list_21 = [
 'Andrea Prete, Dj Ciruzz',
 'Andrea Ribeca',
 'Andrea Rincon',
@@ -1102,7 +1108,7 @@ a_angl_list_14 = [
 'Andrew Strong',
 'Andrew Whitman',]
 
-a_angl_list_15 = [
+a_angl_list_22 = [
 'Andrey Aponik',
 'Andrey Kravtsov',
 'Andrey Lucky',
@@ -1152,7 +1158,9 @@ a_angl_list_15 = [
 'Andybody',
 'Andyskopes',
 'Aneela',
-'Aneesh Gera & Lisa Williams',
+'Aneesh Gera & Lisa Williams',]
+
+a_angl_list_23 = [
 'Anelya',
 'Anes',
 'Aneta Sablik',
@@ -1177,9 +1185,7 @@ a_angl_list_15 = [
 'Angell',
 'Angelo Di Pippo',
 'Anger',
-'Anggun',]
-
-a_angl_list_16 = [
+'Anggun',
 'Angie',
 'Angie Miller',
 'Angie Van Burg',
@@ -1204,7 +1210,9 @@ a_angl_list_16 = [
 'Aniri',
 'Anis Don Demina',
 'Anita Baker',
-'Anita Feat Chris Oliver',
+'Anita Feat Chris Oliver',]
+
+a_angl_list_24 = [
 'Anita O"day',
 'Anitta',
 'Anivar',
@@ -1256,7 +1264,7 @@ a_angl_list_16 = [
 'Annalia',
 'Annalisa',]
 
-a_angl_list_17 = [
+a_angl_list_25 = [
 'Anne Dereaux',
 'Anne-Marie',
 'Annelie',
@@ -1306,7 +1314,9 @@ a_angl_list_17 = [
 'Anthony Jasmin',
 'Anthony Keyrouz',
 'Anthony Ragni',
-'Anthony Rother',
+'Anthony Rother',]
+
+a_angl_list_26 = [
 'Anthony Wilson',
 'Anthya',
 'Anti Up',
@@ -1329,9 +1339,7 @@ a_angl_list_17 = [
 'Anton Powers',
 'Antonia',
 'Antonia Markova',
-'Antonio Campos',]
-
-a_angl_list_18 = [
+'Antonio Campos',
 'Antonio Carlos Jobim',
 'Antonio Cobo',
 'Antonio Giacca',
@@ -1358,7 +1366,9 @@ a_angl_list_18 = [
 'Anzej Dezan',
 'Anzheli',
 'Apache Indian',
-'Apaches',
+'Apaches',]
+
+a_angl_list_27 = [
 'Apashe',
 'Ape Drums',
 'Ape School',
@@ -1410,7 +1420,7 @@ a_angl_list_18 = [
 'Arctic Moon',
 'Arctic Night',]
 
-a_angl_list_19 = [
+a_angl_list_28 = [
 'Arctic Ocean',
 'Arcuate',
 'Arden Cho',
@@ -1460,7 +1470,9 @@ a_angl_list_19 = [
 'Arman Mardigian',
 'Armand Lassagne',
 'Armin van Buuren',
-'Armitage',
+'Armitage',]
+
+a_angl_list_29 = [
 'Armos',
 'Army Of Lovers',
 'Arnella',
@@ -1485,9 +1497,7 @@ a_angl_list_19 = [
 'Arsenie',
 'Arsenium',
 'Arseniy Guri',
-'Arseniya',]
-
-a_angl_list_20 = [
+'Arseniya',
 'Arst One',
 'Art & Shock',
 'Art Key',
@@ -1512,7 +1522,9 @@ a_angl_list_20 = [
 'ASAMMUELL',
 'Asammuell',
 'ASAP Ferg',
-'Asap Rocky',
+'Asap Rocky',]
+
+a_angl_list_30 = [
 'Asbjorn',
 'Asgeir',
 'Ash',
@@ -1564,7 +1576,7 @@ a_angl_list_20 = [
 'Astor Quinquela',
 'Astrid',]
 
-a_angl_list_21 = [
+a_angl_list_31 = [
 'Astrid S',
 'Astronomyy',
 'Astrud De Mata',
@@ -1614,7 +1626,9 @@ a_angl_list_21 = [
 'Audiolove',
 'Audiomachine',
 'Audion',
-'Audiosoulz',
+'Audiosoulz',]
+
+a_angl_list_32 = [
 'Audium',
 'Audley Rollen',
 'August',
@@ -1629,9 +1643,7 @@ a_angl_list_21 = [
 'Aura Dione',
 'Aurela Gace',
 'Aurelia',
-'Aurelien Noel',]
-
-a_angl_list_22 = [
+'Aurelien Noel',
 'Auri',
 'Aurora',
 'Aurora Night',
@@ -1666,7 +1678,9 @@ a_angl_list_22 = [
 'Aventura',
 'Avenue One',
 'Average White Band',
-'Avernus',
+'Avernus',]
+
+a_angl_list_33 = [
 'Avery Storm',
 'Avery Watts',
 'Avicii',
@@ -1718,7 +1732,7 @@ a_angl_list_22 = [
 'Aynine',
 'Aynsley Lister',]
 
-a_angl_list_23 = [
+a_angl_list_34 = [
 'Ayo',
 'Aysel',
 'Aysha',
@@ -1746,7 +1760,7 @@ litera = SoundSymbol.objects.get(name="A")
 
 count = 0
 
-for tag in a_angl_list_23:
+for tag in a_angl_list_1:
     tracks = client.get('/tracks', q=tag, limit=page_size, linked_partitioning=1)
     if tracks:
         for track in tracks.collection:
