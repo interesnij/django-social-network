@@ -1242,7 +1242,7 @@ litera = SoundSymbol.objects.get(name="K")
 
 count = 0
 
-for tag in k_rus_list_21:
+for tag in k_rus_list_22:
     tracks = client.get('/tracks', q=tag, limit=page_size, linked_partitioning=1)
     if tracks:
         for track in tracks.collection:
