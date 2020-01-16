@@ -19,98 +19,15 @@ page_size = 200
 genres_list = SoundGenres.objects.values('name')
 genres_list_names = [name['name'] for name in genres_list]
 
-x_rus_list_1 = [
-"X Ambassadors",
-"X Lovers",
-"X Stress",
-"X-Ander",
-"X-Cess!",
-"X-Change feat. Jimmy Burney",
-"X-Fade",
-"X-Hard",
-"X-Killer",
-"X-Mode and Dj Nil",
-"X-Pander",
-"X-Perience",
-"X-Pression",
-"X-Stylez & Two-M feat. Pedro Rodrigues",
-"X-Tension",
-"X-treme",
-"X-Unicum feat. Margo Raj",
-"X-Vertigo & Renco feat. Tab",
-"Xaanti",
-"Xamm",
-"Xan Griffin",
-"Xan Young",
-"Xana",
-"Xandee",
-"Xandl",
-"Xandra",
-"Xandria",
-"Xandro",
-"Xanwow",
-"Xav feat. Akon",
-"Xavi Alfaro",
-"Xavier Dunn",
-"Xaxa",
-"XB & Linnea Schossow",
-"Xcho",
-"Xclent",
-"XDT feat. Cina",
-"Xemplify",
-"Xen feat. L Loko",
-"Xenia Ghali",
-"Xenianew",
-"XES",
-"Xeuphoria feat. Charlotte Haining",
-"Xeya",
-"Xhensila",
-"Xian & The Entranced",
-"Xie",
-"Xilent",
-"xKore feat. Gravity",
-"XLDeluxe",]
+y_rus_list_1 = [
 
-x_rus_list_2 = [
-"Xmas Bells of the Caribbean",
-"Xmas Lounge Project",
-"XO feat. James Chatburn",
-"XO feat. Leo Kalyan",
-"XoDa feat. Terry",
-"XOMA",
-"Xonia",
-"XOV",
-"Xpectra",
-"Xristina Salti",
-"Xriz",
-"Xroyce",
-"XS",
-"XSO",
-"Xstay",
-"Xten feat. Angelika",
-"XTM feat. Annia",
-"XtriM",
-"XTV",
-"Xuman",
-"Xuso Jones",
-"XX FAM",
-"Xxl",
-"XXXTentacion",
-"XY&O",
-"XYconstant",
-"XYLO",
-"Xyloo",
-"Xyphon",
-"Xypo feat. A-Sho",
-"Xzaltacia",
-"Xzibit",
 ]
 
-litera = SoundSymbol.objects.get(name="X")
+litera = SoundSymbol.objects.get(name="Y")
 
 count = 0
 
-for tag in x_rus_list_4:
+for tag in y_rus_list_4:
     tracks = client.get('/tracks', q=tag, limit=page_size, linked_partitioning=1)
     if tracks:
         for track in tracks.collection:
