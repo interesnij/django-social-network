@@ -69,7 +69,9 @@ w_rus_list_1 = [
 "Waplan feat. Myah Marie",
 "Waqas feat. Medina",
 "Warmarshal",
-"Warrant",
+"Warrant",]
+
+w_rus_list_2 = [
 "Warrborn",
 "Warren Parnell",
 "Warren Zevon",
@@ -119,7 +121,9 @@ w_rus_list_1 = [
 "We Are Are We",
 "We Are Augustines",
 "We Are Fury",
-"We Are Legends",
+"We Are Legends",]
+
+w_rus_list_3 = [
 "We Are Loud",
 "We Are Me",
 "We Are Scientists",
@@ -169,7 +173,9 @@ w_rus_list_1 = [
 "Westlife",
 "Westphal & Whyman feat. Sophie Zeller",
 "Wet Bed Gang",
-"Wet Fingers",
+"Wet Fingers",]
+
+w_rus_list_4 = [
 "Wet Wet Wet",
 "Weval",
 "Wezz Devall",
@@ -219,7 +225,9 @@ w_rus_list_1 = [
 "Whitney Woerz",
 "Whizzkids",
 "Who Is Fancy",
-"Who.am.i",
+"Who.am.i",]
+
+w_rus_list_5 = [
 "WhoisFiyah & MishCatt",
 "Whole-Z feat. Julia Guerra",
 "WhoMadeWho",
@@ -269,7 +277,9 @@ w_rus_list_1 = [
 "Will K feat. AMY MIYU",
 "Will Matla",
 "Will Not Fear & Sutt",
-"Will Rees",
+"Will Rees",]
+
+w_rus_list_6 = [
 "Will Schuester feat. Finn Hudson",
 "Will See",
 "Will Simms",
@@ -319,8 +329,9 @@ w_rus_list_1 = [
 "Winter",
 "Winter Leaves",
 "WiseNoize feat. Yvee",
-"Wish I Was feat. Luna",
-"Wisin",
+"Wish I Was feat. Luna",]
+
+w_rus_list_7 = [
 "Wit Blu",
 "Witchcraft",
 "Witchwood",
@@ -370,7 +381,9 @@ w_rus_list_1 = [
 "Woodkid",
 "Woody Van Eyden",
 "Woofax",
-"Wookie feat. Eliza Doolittle",
+"Wookie feat. Eliza Doolittle",]
+
+w_rus_list_8 = [
 "Wooli & AFK feat. Jay Fresh",
 "Worakls",
 "Work Drugs",
