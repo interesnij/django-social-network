@@ -69,7 +69,9 @@ t_rus_list_1 = [
 "Taches feat. Shoffy",
 "Tacoma",
 "Taddy Porter",
-"Taet",
+"Taet",]
+
+t_rus_list_2 = [
 "Tafubar",
 "Taglo feat. Daphne Maresca",
 "TAHDEM Foundation",
@@ -119,7 +121,9 @@ t_rus_list_1 = [
 "Talvihorros",
 "Tam Cooper",
 "Tamar Braxton",
-"Tamar Sabadini",
+"Tamar Sabadini",]
+
+t_rus_list_3 = [
 "Tambour",
 "Tame Impala",
 "Tamer feat. Shaggy",
@@ -169,7 +173,9 @@ t_rus_list_1 = [
 "Tape Five",
 "Tapo & Raya",
 "Tara Carosielli",
-"Tara feat. Spankers",
+"Tara feat. Spankers",]
+
+t_rus_list_4 = [
 "Tara McDonald",
 "Tara Nabavi",
 "Tara vs Manilla Maniacs",
@@ -219,7 +225,9 @@ t_rus_list_1 = [
 "Taya feat. Lotto Boyzz",
 "Tayla Parx",
 "Taylor Mathews",
-"Taylor & Gaspar Laci",
+"Taylor & Gaspar Laci",]
+
+t_rus_list_5 = [
 "Taylor & Silv-R",
 "Taylor Davis",
 "Taylor Dayne",
@@ -269,7 +277,9 @@ t_rus_list_1 = [
 "Ted Nugent",
 "Teddy Beats",
 "Teddy Jackson",
-"Teddy Killerz",
+"Teddy Killerz",]
+
+t_rus_list_6 = [
 "Teddy McLane",
 "Teddy Tee feat. Dej Loaf",
 "Teddybears feat. Beenie Man",
@@ -319,7 +329,9 @@ t_rus_list_1 = [
 "Tender",
 "Tenek",
 "Tenishia",
-"Tenka",
+"Tenka",]
+
+t_rus_list_7 = [
 "Tenna Torres",
 "Tennebreck",
 "Tension",
@@ -369,7 +381,9 @@ t_rus_list_1 = [
 "Tess Clare",
 "Tessa Rae",
 "Tetris",
-"Tex James feat. B.o.B & Stuey Rock",
+"Tex James feat. B.o.B & Stuey Rock",]
+
+t_rus_list_8 = [
 "Tex!No",
 "Texas Lightning",
 "Teyana Taylor",
@@ -419,7 +433,9 @@ t_rus_list_1 = [
 "The Artifice Precept",
 "The Asteroids Galaxy Tour",
 "The Aston Shuffle",
-"The Attic Sleepers",
+"The Attic Sleepers",]
+
+t_rus_list_9 = [
 "The Avener",
 "The Avett Brothers",
 "The Awesome Welles",
@@ -469,7 +485,9 @@ t_rus_list_1 = [
 "The Bryan Ferry Orchestra",
 "The Buddaheads",
 "The Buggles",
-"The Bunch",
+"The Bunch",]
+
+t_rus_list_10 = [
 "The Buster Pearson Band",
 "The Byrds",
 "The Cab",
@@ -519,7 +537,9 @@ t_rus_list_1 = [
 "The Count & KC Lights feat. Pepper Rose",
 "The Courteeners",
 "The Cousins",
-"The Cracken",
+"The Cracken",]
+
+t_rus_list_11 = [
 "The Cranberries",
 "The Crazylovers",
 "The Crossing",
@@ -569,7 +589,9 @@ t_rus_list_1 = [
 "The Eternal Afflict",
 "The Everly Brothers",
 "The Exciters",
-"The Exies",
+"The Exies",]
+
+t_rus_list_12 = [
 "The Extraverse",
 "The Fabulous Thunderbirds",
 "The Faim",
@@ -619,7 +641,9 @@ t_rus_list_1 = [
 "The Gossip",
 "The Grasp",
 "The Grates",
-"The Greatest View feat. Isabella Manfredi",
+"The Greatest View feat. Isabella Manfredi",]
+
+t_rus_list_13 = [
 "The Groove Merchants",
 "The Guess Who",
 "The Hard Concert",
@@ -669,7 +693,9 @@ t_rus_list_1 = [
 "The Jimmy Castor Bunch",
 "The JND",
 "The Jocker´s",
-"The Juke Joints",
+"The Juke Joints",]
+
+t_rus_list_14 = [
 "The Junky Sound",
 "The Just",
 "The Kasbah",
@@ -719,7 +745,9 @@ t_rus_list_1 = [
 "The Mass Brothers",
 "The Massey Boyz",
 "The Matrixx",
-"The Mavrik",
+"The Mavrik",]
+
+t_rus_list_15 = [
 "The Maya Secret",
 "The Menace feat. Chris Brown",
 "The Meters",
@@ -769,7 +797,9 @@ t_rus_list_1 = [
 "The Paradise",
 "The Parakit",
 "The Party",
-"The Partybangers",
+"The Partybangers",]
+
+t_rus_list_16 = [
 "The Partysquad",
 "The Partystoppers",
 "The People Movers",
@@ -819,7 +849,9 @@ t_rus_list_1 = [
 "The Reign",
 "The Reign Of Kindo",
 "The Reincarnation",
-"The ReLOUD feat. Crystal Waters",
+"The ReLOUD feat. Crystal Waters",]
+
+t_rus_list_17 = [
 "The Reverend",
 "The Rex Carroll Band",
 "The RH Factor",
@@ -869,7 +901,9 @@ t_rus_list_1 = [
 "The Smiths",
 "The Smokin Joe Kubek Band",
 "The Smooth Commander",
-"The Snakehandlers Blues Band",
+"The Snakehandlers Blues Band",]
+
+t_rus_list_18 = [
 "The Soaked Lamb",
 "The SoapGirls",
 "The Sonics",
@@ -919,7 +953,9 @@ t_rus_list_1 = [
 "The Tech Thieves",
 "The Temper Trap",
 "The Temptations",
-"The Three Degrees",
+"The Three Degrees",]
+
+t_rus_list_19 = [
 "The Thrillseekers",
 "The Ting Tings",
 "The Tonica feat. Deelara",
@@ -969,7 +1005,9 @@ t_rus_list_1 = [
 "The Whiteliner & Pretty Pink feat. Nina Hall",
 "The Wickeed",
 "The Wild",
-"The Winery Dogs",
+"The Winery Dogs",]
+
+t_rus_list_20 = [
 "The Winners feat. Alex Win",
 "The WLT",
 "The Wombats",
@@ -1019,7 +1057,9 @@ t_rus_list_1 = [
 "Thepianoguys",
 "There For Tomorrow",
 "Theresa Rex",
-"Therese Neaime",
+"Therese Neaime",]
+
+t_rus_list_21 = [
 "Therr Maitz",
 "These Four Walls",
 "Thesese Neaime",
@@ -1069,7 +1109,9 @@ t_rus_list_1 = [
 "Thomas Sagstad feat. Wildo",
 "Thomas Scheffler",
 "Thomas Sopper",
-"Thomas You feat. Mc Trini",
+"Thomas You feat. Mc Trini",]
+
+t_rus_list_22 = [
 "Thompson Square",
 "Thomston",
 "Thomston & Wafia",
@@ -1119,7 +1161,9 @@ t_rus_list_1 = [
 "Tiffany Young",
 "Tiga",
 "Tiger Family",
-"Tigerlily",
+"Tigerlily",]
+
+t_rus_list_23 = [
 "TigerSwan",
 "Tigertown",
 "Tiggi Hawke",
@@ -1169,7 +1213,9 @@ t_rus_list_1 = [
 "Timalone",
 "Timaro",
 "Timbaland",
-"TimBigFamily",
+"TimBigFamily",]
+
+t_rus_list_24 = [
 "Timbo",
 "Time Frequenz",
 "Time Takers feat. DEV & Tinchy Stryder",
@@ -1219,7 +1265,9 @@ t_rus_list_1 = [
 "Tinsley Ellis",
 "Tintal",
 "Tintern Abbey",
-"Tinyak & RiJes",
+"Tinyak & RiJes",]
+
+t_rus_list_25 = [
 "Tip",
 "Tiphani Abney",
 "Tiramisu",
@@ -1269,7 +1317,9 @@ t_rus_list_1 = [
 "Toby Turner",
 "Toby Yams",
 "TobyMac",
-"Toca Lounge",
+"Toca Lounge",]
+
+t_rus_list_26 = [
 "Tocadisco",
 "Tod Pale & DJ Smilres",
 "Todd Carey",
@@ -1323,7 +1373,9 @@ t_rus_list_1 = [
 "Tom Hangs feat. Shermanology",
 "Tom Hillock & David Krutten",
 "Tom Hooker",
-"Tom Jackson",
+"Tom Jackson",]
+
+t_rus_list_27 = [
 "Tom Jules",
 "Tom Kurv feat. Desy",
 "Tom Light",
@@ -1373,7 +1425,9 @@ t_rus_list_1 = [
 "Tomas",
 "Tomas Barfod feat. Eddie Chacon",
 "Tomas Heredia",
-"Tomas Heredia feat. Tata",
+"Tomas Heredia feat. Tata",]
+
+t_rus_list_28 = [
 "Tomas Thordarson",
 "Tomatito",
 "Tomatoes",
@@ -1423,7 +1477,9 @@ t_rus_list_1 = [
 "Toni Tonini feat. Jean Niqo, D-Vibe & Vali",
 "Tonich Zachitano feat. S-Bizz",
 "Tonight Alive",
-"Tonino Baliardo",
+"Tonino Baliardo",]
+
+t_rus_list_29 = [
 "Tonite Only feat. Yeah Boy",
 "Tonny Gomez ft. Juanlu Navarro, Mecer & Javi Ramirez",
 "Tony & Alisa",
@@ -1473,7 +1529,9 @@ t_rus_list_1 = [
 "Tony Wilson",
 "Tony Wong",
 "Tony Zampa",
-"Tony-Gun",
+"Tony-Gun",]
+
+t_rus_list_30 = [
 "TonyDex",
 "Tonykola & Капа",
 "TONИ",
@@ -1523,7 +1581,9 @@ t_rus_list_1 = [
 "Total Science feat. Grimm",
 "Total Sound feat. Nathalia",
 "Total Toly",
-"Totem",
+"Totem",]
+
+t_rus_list_31 = [
 "Totemo",
 "Totes",
 "Toto Cutugno",
@@ -1573,7 +1633,9 @@ t_rus_list_1 = [
 "Trans Balear",
 "Trans Lady Evelina",
 "Transviolet",
-"Trapzillas & Los XL",
+"Trapzillas & Los XL",]
+
+t_rus_list_32 = [
 "Trash Talk",
 "Trasponder",
 "Traudes",
@@ -1623,7 +1685,9 @@ t_rus_list_1 = [
 "TRFN",
 "TRG feat. DJ R'an",
 "TRGL",
-"Triana Iglesias & Loke",
+"Triana Iglesias & Loke",]
+
+t_rus_list_33 = [
 "Triana Park",
 "Triangle sun",
 "Triarchy",
@@ -1673,7 +1737,9 @@ t_rus_list_1 = [
 "Trixxie & Cheat Codes",
 "Trobi",
 "Trofimm",
-"TrOLL3R",
+"TrOLL3R",]
+
+t_rus_list_34 = [
 "Tropicon",
 "Tropkillaz",
 "Trouble Nation",
@@ -1723,7 +1789,9 @@ t_rus_list_1 = [
 "Tube Tonic",
 "Tucandeo & Esmee Bor Stotijn",
 "Tuff London feat. Rachel Barror",
-"Tuff Touch",
+"Tuff Touch",]
+
+t_rus_list_35 = [
 "Tujamo",
 "Tula",
 "Tulia",
@@ -1773,7 +1841,9 @@ t_rus_list_1 = [
 "Twin Twin",
 "Twin VI",
 "Twin Wild",
-"TwinCloth",
+"TwinCloth",]
+
+t_rus_list_36 = [
 "Twine",
 "Twinnie Lee Moore",
 "Twins",
