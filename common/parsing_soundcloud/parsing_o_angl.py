@@ -69,7 +69,9 @@ o_rus_list_1 = [
 "Oceans To Athena",
 "Octavian",
 "Odd Collection",
-"Odd Mob feat. Starley",
+"Odd Mob feat. Starley",]
+
+o_rus_list_2 = [
 "Odea feat. Kevin Flum",
 "ODEE",
 "ODESZA",
@@ -119,7 +121,9 @@ o_rus_list_1 = [
 "OK Corral",
 "OK Go",
 "Okay Funky, Fufu Afreaq, Camilo & Grande",
-"OKEY & LeaH",
+"OKEY & LeaH",]
+
+o_rus_list_3 = [
 "Oklou",
 "Okrim feat. Monty",
 "Oks",
@@ -169,7 +173,9 @@ o_rus_list_1 = [
 "Oliver feat. MNDR",
 "Oliver feat. Scott Mellis",
 "Oliver Gross",
-"Oliver Heldens",
+"Oliver Heldens",]
+
+o_rus_list_4 = [
 "Oliver Huntemann",
 "Oliver Ingrosso & Adam Avant",
 "Oliver Koletzki",
@@ -219,7 +225,9 @@ o_rus_list_1 = [
 "OLyA X",
 "Omar & The Howlers",
 "Omar Akram",
-"Omar And The Howlers",
+"Omar And The Howlers",]
+
+o_rus_list_5 = [
 "Omar Diaz & Bigtopo",
 "Omar feat. Letty",
 "Omar J",
@@ -269,7 +277,9 @@ o_rus_list_1 = [
 "One Republic",
 "One Sky",
 "One T1me feat. Илага",
-"One Two Eight",
+"One Two Eight",]
+
+o_rus_list_6 = [
 "One Way",
 "One-T",
 "One23",
@@ -319,7 +329,9 @@ o_rus_list_1 = [
 "Oraine",
 "Orange County & DJ Vitality",
 "Orange Goblin",
-"Orano & Karen Elliot",
+"Orano & Karen Elliot",]
+
+o_rus_list_7 = [
 "Oraventus feat. Irem",
 "Orbel feat. Silva Hakobyan",
 "Orbitell",
@@ -369,7 +381,9 @@ o_rus_list_1 = [
 "Oskar (Fraktal)",
 "Oskar Broken",
 "Oskar Schuster",
-"Oski & Hydraulix feat. Macntaj",
+"Oski & Hydraulix feat. Macntaj",]
+
+o_rus_list_8 = [
 "Osman Altun",
 "Osmani Garcia",
 "OSQAR",
@@ -419,7 +433,9 @@ o_rus_list_1 = [
 "OUTLYA",
 "Outr3ach & J-Marin feat. Kaitlin Grace",
 "Outsiders and Amanda Wilson",
-"Outwork",
+"Outwork",]
+
+o_rus_list_9 = [
 "Ov Psychic Youth",
 "OV7",
 "Ova Sky",
