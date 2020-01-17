@@ -135,6 +135,9 @@ class SoundTags(models.Model):
             playlist.append(data)
         return playlist
 
+    def get_tracks_count(self):
+        return self.track_tag.count()
+
     class Meta:
         verbose_name="тег"
         verbose_name_plural="теги"

@@ -4,47 +4,43 @@
 
 {% block content %}
 
-<div class="row">
-    <div class="col-12 col-md-8">
-        <br><br><br>
-        <div class="card mb-2">
-            <div class="card-header">
+<div class="container mt-3 main-container">
+    <div class="row">
+        <div class="col-12 col-md-12 col-lg-8">
+          <br><br>
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Поиск тегов по тегу {{ tag.name }}" aria-label="Recipient's username">
+            <div class="input-group-append">
+              <button class="btn btn-outline-link" type="button">Искать</button>
+            </div>
+          </div>
+          <span id="tag_tracks_load"></span>
+
+        </div>
+        <div class="col-12 col-md-4">
+          <br><br>
+          <div class="card mb-2">
+              <div class="card-header">
                 <div class="media">
                     <div class="media-body">
-                        <h5 class="mt-1">Треки тега {{ tag.name }}</h5>
+                      <h5 class="mt-1">
+                        <a href="{% url 'tags_music' pk=tag.symbol.pk %}" data-html="#ajax" class="ajax">Вернуться к списку тегов буквы {{ tag.symbol.name }}</a>
+                      </h5>
                     </div>
                 </div>
-            </div>
-            <br><br>
-            <div class="card-body px-0 py-0">
-              <span id="tag_tracks_load"></span>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-12 col-md-4">
-        <br><br><br>
-        <div class="card mb-2">
-            <div class="card-header">
-              <div class="media">
-                  <div class="media-body">
-                    <h5 class="mt-1">
-                      <a href="{% url 'tags_music' pk=tag.symbol.pk %}" data-html="#ajax" class="ajax">Вернуться к списку тегов буквы {{ tag.symbol.name }}</a>
-                    </h5>
-                  </div>
               </div>
-            </div>
-        </div>
-        <div class="card mb-2">
-            <div class="card-header">
-              <div class="media">
-                  <div class="media-body">
-                    <h5 class="mt-1">
-                      <a href="{% url 'all_music' %}" data-html="#ajax" class="ajax">Вернуться в каталог музыки</a>
-                    </h5>
-                  </div>
+          </div>
+          <div class="card mb-2">
+              <div class="card-header">
+                <div class="media">
+                    <div class="media-body">
+                      <h5 class="mt-1">
+                        <a href="{% url 'all_music' %}" data-html="#ajax" class="ajax">Вернуться в каталог музыки</a>
+                      </h5>
+                    </div>
+                </div>
               </div>
-            </div>
+          </div>
         </div>
     </div>
 </div>
