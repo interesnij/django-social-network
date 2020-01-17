@@ -47,7 +47,7 @@ class TagList(View):
         return render_to_response('music/tag_music_list.html', context)
 
 
-class GenreListView(View):
+class GenreList(View):
     """
     Список треков отдельного жанра
     """
