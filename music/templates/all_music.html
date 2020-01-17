@@ -88,7 +88,7 @@
           <div class="card-header">
               <div class="media">
                   <div class="media-body">
-                      <h5 class="mt-1">Жанры</h5>
+                      <h3 class="mt-1">Жанры</h3>
                   </div>
               </div>
           </div>
@@ -98,8 +98,7 @@
                   <li class="list-group-item">
                       <div class="media">
                           <div class="media-body">
-                              <h6 class="my-0 mt-1">{{ object.name }}</h6>
-                              <p class="small">Треков: {{ object.get_tracks_count }}</p>
+                              <h6 class="my-0 mt-1"><a href="{% url 'genre_music' pk=object.pk %}" data-html="#ajax" class="ajax">{{ object.name }}</a></h6>
                           </div>
                       </div>
                   </li>

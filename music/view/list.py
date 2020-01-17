@@ -25,7 +25,7 @@ class TagsList(View):
         return render_to_response('music/tags_list.html', context)
 
 
-class AllTagListView(View):
+class TagList(View):
     """
     Список треков отдельного тега
     """
@@ -45,3 +45,25 @@ class AllTagListView(View):
         except EmptyPage:
             context['tag_list'] = current_page.page(current_page.num_pages)
         return render_to_response('music/tag_music_list.html', context)
+
+
+class GenreListView(View):
+    """
+    Список треков отдельного жанра
+    """
+    def get(self,request,*args,**kwargs):
+        context = {}
+        genre = SoundGenres.objects.get(pk=self.kwargs["pk"])
+        genre_list = SoundcloudParsing.objects.filter(genre__id=tag.pk)
+        current_page = Paginator(genre_list, 24)
+        page = request.GET.get('page')
+        context['genre'] = genre
+        context['request_user'] = request.user
+
+        try:
+            context['genre_list'] = current_page.page(page)
+        except PageNotAnInteger:
+            context['genre_list'] = current_page.page(1)
+        except EmptyPage:
+            context['genre_list'] = current_page.page(current_page.num_pages)
+        return render_to_response('music/genre_music_list.html', context)

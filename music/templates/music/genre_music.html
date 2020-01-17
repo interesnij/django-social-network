@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load staticfiles thumbnail %}
+{% block title %}Треки жанра {{ genre.name }}{% endblock %}
+
+{% block content %}
+
+<div class="container mt-3 main-container">
+    <div class="row">
+        <div class="col-12 col-md-12 col-lg-8">
+          <br>
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Поиск треков по жанру {{ genre.name }}">
+            <div class="input-group-append">
+              <button class="btn btn-outline-link" type="button">Искать</button>
+            </div>
+          </div>
+
+          <span id="genre_tracks_load"></span>
+
+        </div>
+        <div class="col-12 col-md-4">
+          <br><br>
+          <div class="card mb-2">
+              <div class="card-header">
+                <div class="media">
+                    <div class="media-body">
+                      <h5 class="mt-1">
+                        <a href="{% url 'all_music' %}" data-html="#ajax" class="ajax">Вернуться в каталог музыки</a>
+                      </h5>
+                    </div>
+                </div>
+              </div>
+          </div>
+        </div>
+    </div>
+</div>
+
+<script>
+$(document).ready(function(){
+  $('#genre_tracks_load').html('').load("/music/list/genre_list/" + {{ genre.pk }});
+  {% if user.is_tag_playlist %}
+    playlist_block = $('body').find('.music-dropdown');
+    playlist_block.addClass('user_{{ user.pk }}');
+  {% endif %}
+});
+</script>
+{% endblock %}

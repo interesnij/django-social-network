@@ -2,15 +2,15 @@
 
 <div class="media" style="margin-top: 35px;">
   <div class="media-body">
-    <h4 class="content-color-primary mb-0">Треки тега {{ tag.name }}
-    <small class="content-color-secondary float-right mr-2 mt-1">Всего {{ tag.get_tracks_count }}</small></h4>
+    <h4 class="content-color-primary mb-0">Треки жанра {{ genre.name }}
+    <small class="content-color-secondary float-right mr-2 mt-1">Всего {{ genre.get_tracks_count }}</small></h4>
   </div>
 </div>
 <br><br>
-{% if tag_list %}
+{% if genre_list %}
 <div class="tracks-container tag_playlist">
-    <ul data-pk="{{ tag.pk }}" class="ul_track_list" style="display: contents;">
-      {% for object in tag_list %}
+    <ul data-pk="{{ genre.pk }}" class="ul_track_list" style="display: contents;">
+      {% for object in genre_list %}
       <li class="list-group-item infinite-item id_{{ object.id }}" data-counter="{{ forloop.counter0 }}">
           <div class="media">
               <figure class="track_item" style="cursor:pointer">
@@ -49,8 +49,8 @@
       </li>
       {% endfor %}
       <div class="tracks_load col-12 col-md-12">
-          {% if tag_list.has_next %}
-          <a style="display:flex;justify-content:center;" class="infinite-more-link" href="/music/list/all_tag_list/{{ tag.pk }}/?page={{ tag_list.next_page_number }}">
+          {% if genre_list.has_next %}
+          <a style="display:flex;justify-content:center;" class="infinite-more-link" href="/music/list/genre_list/{{ genre.pk }}/?page={{ genre_list.next_page_number }}">
               <img style="width: 30px;" src="{% static 'images/loading.gif' %}">
           </a>
           {% endif %}
