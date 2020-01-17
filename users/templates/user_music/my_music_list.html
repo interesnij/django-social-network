@@ -1,5 +1,7 @@
 {% load staticfiles get_key %}
 
+{% if music_list %}
+
 <div class="media" style="margin-top: 35px;">
   <div class="media-body">
     <h4 class="content-color-primary mb-0">Моя музыка
@@ -7,8 +9,6 @@
   </div>
 </div>
 <br><br>
-
-{% if music_list %}
 
 <div class="tracks-container user_playlist">
     <ul style="display: contents;" class="ul_track_list">
@@ -59,6 +59,15 @@
       </div>
     </ul>
 </div>
+
+{% else %}
+<div class="card mb-4" style="align-items: center;justify-content:center;">
+  <div class="card-body" style="margin-top: 10%;">
+  <svg class='svg_default thumb_big' fill='currentColor' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='none' d='M0 0h24v24H0z'/><path d='M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z'/></svg>
+  </div>
+  <h6 style="margin-bottom: 20px;">У Вас пока нет музыки. <a href="{% url 'all_music' %}" style="text-decoration:underline;" data-html="#ajax" class="ajax">Перейдите в каталог</a> музыкальных композиций и выбирайте из сотен тысяч треков</h6>
+</div>
+{% endif %}
 
 <script>
 var tracks_infinite = new Waypoint.Infinite({element: $('.tracks-container')[0], onBeforePageLoad: function() { $('.tracks_load').show(); }, onAfterPageLoad: function($items) { $('.tracks_load').hide(); }});
