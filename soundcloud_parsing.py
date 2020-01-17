@@ -19,30 +19,17 @@ page_size = 200
 genres_list = SoundGenres.objects.values('name')
 genres_list_names = [name['name'] for name in genres_list]
 
-list_5_1 = [
-"5 After Midnight",
-"5 Miles Out",
-"5 Seconds Of Summer",
-"5'nizza",
-"50 Cent",
-"55 Escape",
-"5ivesta",
-"5ivesta Family",
-"5Napback",
-"5nizza",
-"5P & Rene",
-"5Period feat. Loc-Dog, Tony VA, Levon Morozov",
-"5sta",
-"5Утра",
-
-
+list_6_1 = [
+"6 Dogs",
+"6ix9ine",
+"6lack",
 ]
 
-litera = SoundSymbol.objects.get(name="5")
+litera = SoundSymbol.objects.get(name="6")
 
 count = 0
 
-for tag in list_5_1:
+for tag in list_6_1:
     tracks = client.get('/tracks', q=tag, limit=page_size, linked_partitioning=1)
     if tracks:
         for track in tracks.collection:
