@@ -286,7 +286,7 @@ litera = SoundSymbol.objects.get(name="Y")
 
 count = 0
 
-for tag in y_rus_list_3:
+for tag in y_rus_list_4:
     tracks = client.get('/tracks', q=tag, limit=page_size, linked_partitioning=1)
     if tracks:
         for track in tracks.collection:
