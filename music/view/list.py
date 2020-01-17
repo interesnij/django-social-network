@@ -54,7 +54,7 @@ class GenreList(View):
     def get(self,request,*args,**kwargs):
         context = {}
         genre = SoundGenres.objects.get(pk=self.kwargs["pk"])
-        genre_list = SoundcloudParsing.objects.filter(genre__id=tag.pk)
+        genre_list = SoundcloudParsing.objects.filter(genre__id=genre.pk)
         current_page = Paginator(genre_list, 24)
         page = request.GET.get('page')
         context['genre'] = genre
