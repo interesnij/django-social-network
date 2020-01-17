@@ -19,17 +19,25 @@ page_size = 200
 genres_list = SoundGenres.objects.values('name')
 genres_list_names = [name['name'] for name in genres_list]
 
-list_6_1 = [
-"6 Dogs",
-"6ix9ine",
-"6lack",
+list_7_1 = [
+"7 Baltic",
+"7 Days Away",
+"7 Hills",
+"7 Skies",
+"7 Years",
+"78 Градусов",
+"78violet",
+"7Chariot",
+"7even (GR), George Kara",
+"7Hills",
+"7б",
 ]
 
-litera = SoundSymbol.objects.get(name="6")
+litera = SoundSymbol.objects.get(name="7")
 
 count = 0
 
-for tag in list_6_1:
+for tag in list_7_1:
     tracks = client.get('/tracks', q=tag, limit=page_size, linked_partitioning=1)
     if tracks:
         for track in tracks.collection:
