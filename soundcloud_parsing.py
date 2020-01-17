@@ -19,37 +19,30 @@ page_size = 200
 genres_list = SoundGenres.objects.values('name')
 genres_list_names = [name['name'] for name in genres_list]
 
-list_4_1 = [
-"4 Seas",
-"4 Strings",
-"4 The Cause",
-"40 Miles feat. Sveva Gray",
-"40s Mood",
-"430 Steps",
-"45 Калибр",
-"4atty aka Tilla",
-"4B feat. Chris Brown",
-"4BLOCK",
-"4Fun",
-"4G",
-"4i",
-"4Joann",
-"4K",
-"4Magic",
-"4Minute",
-"4Noize",
-"4POST (Дима Бикбаев)",
-"4Q's feat. Темча К.",
-"4SGM",
-"4естно & Айк Дым",
-"4МТА feat. Денис Океан & Дима Кузьмин",
+list_5_1 = [
+"5 After Midnight",
+"5 Miles Out",
+"5 Seconds Of Summer",
+"5'nizza",
+"50 Cent",
+"55 Escape",
+"5ivesta",
+"5ivesta Family",
+"5Napback",
+"5nizza",
+"5P & Rene",
+"5Period feat. Loc-Dog, Tony VA, Levon Morozov",
+"5sta",
+"5Утра",
+
+
 ]
 
-litera = SoundSymbol.objects.get(name="4")
+litera = SoundSymbol.objects.get(name="5")
 
 count = 0
 
-for tag in list_4_1:
+for tag in list_5_1:
     tracks = client.get('/tracks', q=tag, limit=page_size, linked_partitioning=1)
     if tracks:
         for track in tracks.collection:
