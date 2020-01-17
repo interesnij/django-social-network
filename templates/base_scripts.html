@@ -33,10 +33,8 @@ function load_playlist(playlist_block, callback) {
 }
 
 $('#ajax').on('click', '.tag_playlist .track_item', function() {
-
-  track = $(this); track_id = track.parents('.infinite-item').data('counter'); playlist_block = $('body').find('.music-dropdown'); tag_pk = track.parents('.ul_track_list').data('pk')
+  track = $(this); track_id = track.parents('.infinite-item').data('counter'); playlist_block = $('body').find('.music-dropdown'); tag_pk = track.parents('.ul_track_list').data('pk');
   if (!playlist_block.hasClass('tag_' + tag_pk)){
-
   $.ajax({
     url: "/music/manage/temp_tag/" + tag_pk + "/",
     success: function(data) {
@@ -49,13 +47,11 @@ $('#ajax').on('click', '.tag_playlist .track_item', function() {
     my_playlist_play(track_id);
   };
 });
-
-$('#ajax').on('click', '.user_playlist .track_item', function() {
-      track = $(this); track_id = track.parents('.infinite-item').data('counter'); playlist_block = $('body').find('.music-dropdown'); user_pk = {{ user.pk }};
+$('#ajax').on('click', '.genre_playlist .track_item', function() {
+      track = $(this); track_id = track.parents('.infinite-item').data('counter'); playlist_block = $('body').find('.music-dropdown'); genre_pk =  = track.parents('.ul_track_list').data('pk');
     if (!playlist_block.hasClass('user_' + user_pk)){
     $.ajax({
-
-      url: "/music/manage/my_list/" + user_pk + "/",
+      url: "/music/manage/temp_genre/" + user_pk + "/",
       success: function(data) {
         load_playlist(playlist_block);
         playlist_block.removeClass().addClass('dropdown-menu music-dropdown user_' + user_pk);
@@ -64,6 +60,20 @@ $('#ajax').on('click', '.user_playlist .track_item', function() {
     });
     }else{my_playlist_play(track_id);};
   });
+  $('#ajax').on('click', '.user_playlist .track_item', function() {
+        track = $(this); track_id = track.parents('.infinite-item').data('counter'); playlist_block = $('body').find('.music-dropdown'); user_pk = {{ user.pk }};
+      if (!playlist_block.hasClass('user_' + user_pk)){
+      $.ajax({
+
+        url: "/music/manage/my_list/" + user_pk + "/",
+        success: function(data) {
+          load_playlist(playlist_block);
+          playlist_block.removeClass().addClass('dropdown-menu music-dropdown user_' + user_pk);
+          setTimeout(function(){ my_playlist_play(track_id)},2000);
+        }
+      });
+      }else{my_playlist_play(track_id);};
+    });
 
   $('#ajax').on('click', '.jp-playlist-current .track_item', function() {
     track = $(this); li = track.parents('.infinite-item'); track_id = li.data('counter');

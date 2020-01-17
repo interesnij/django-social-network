@@ -69,13 +69,13 @@ class GenreMusicView(TemplateView):
     def get(self,request,*args,**kwargs):
         self.genre = SoundGenres.objects.get(pk=self.kwargs["pk"])
         if request.user.is_authenticated:
-            self.is_tag_playlist = request.user.is_tag_playlist(self.tag)
+            self.is_genre_playlist = request.user.is_genre_playlist(self.genre)
         return super(GenreMusicView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context = super(GenreMusicView,self).get_context_data(**kwargs)
         context["genre"] = self.genre
-        context["is_tag_playlist"] = self.is_tag_playlist
+        context["is_genre_playlist"] = self.is_genre_playlist
         return context
 
 

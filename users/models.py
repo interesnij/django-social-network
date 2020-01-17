@@ -250,14 +250,21 @@ class User(AbstractUser):
 
     def is_user_playlist(self):
         try:
-            UserTempSoundList.objects.get(user=self, tag=None, list=None)
+            UserTempSoundList.objects.get(user=self, tag=None, list=None, genre=None)
             return True
         except:
             return False
 
     def is_tag_playlist(self, tag):
         try:
-            UserTempSoundList.objects.get(user=self, tag=tag, list=None).exists()
+            UserTempSoundList.objects.get(user=self, tag=tag, list=None, genre=None).exists()
+            return True
+        except:
+            return False
+
+    def is_genre_playlist(self, genre):
+        try:
+            UserTempSoundList.objects.get(user=self, tag=None, list=None, genre=genre).exists()
             return True
         except:
             return False
@@ -445,10 +452,16 @@ class User(AbstractUser):
             tag_music = SoundTags.objects.get(pk=temp_list.tag.pk)
         except:
             tag_music = None
+        try:
+            genre_music = SoundGenres.objects.get(pk=temp_list.genre.pk)
+        except:
+            genre_music = None
         if list:
             return list.get_json_playlist()
         elif tag_music:
             return tag_music.get_json_playlist()
+        elif genre_music:
+            return genre_music.get_json_playlist()
         else:
             playlist = []
             queryset = reversed(self.get_my_music())

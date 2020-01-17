@@ -14,6 +14,7 @@ class TempListOn(View):
         temp_list = UserTempSoundList.objects.get(user=request.user)
         temp_list.list = list
         temp_list.tag = None
+        temp_list.genre = None
         temp_list.save()
         return HttpResponse("!")
 
@@ -25,19 +26,34 @@ class TempTagOn(View):
         tag = SoundTags.objects.get(pk=self.kwargs["pk"])
         temp_tag = UserTempSoundList.objects.get(user=request.user)
         temp_tag.list = None
+        temp_tag.genre = None
         temp_tag.tag = tag
         temp_tag.save()
         return HttpResponse("!")
 
-class MyListOn(View):
+class TempGenreOn(View):
     """
-    Выставляем собственный плейлист пользователя как активный.
+    Выставляем плейлист жанра как активный.
+    """
+    def get(self, request, *args, **kwargs):
+        genre = SoundGenres.objects.get(pk=self.kwargs["pk"])
+        temp_tag = UserTempSoundList.objects.get(user=request.user)
+        temp_tag.list = None
+        temp_tag.genre = genre
+        temp_tag.tag = None
+        temp_tag.save()
+        return HttpResponse("!")
+
+class UserListOn(View):
+    """
+    Выставляем плейлист пользователя как активный.
     """
     def get(self, request, *args, **kwargs):
         user = User.objects.get(pk=self.kwargs["pk"])
         my_list = UserTempSoundList.objects.get(user=user)
         my_list.list = None
         my_list.tag = None
+        my_list.genre = None
         my_list.save()
         return HttpResponse("!")
 
