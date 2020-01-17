@@ -16,6 +16,7 @@ class AllMusicView(TemplateView):
         self.rus_tegs_count = SoundTags.objects.filter(symbol__type='RS').values('pk').count()
         self.angl_tegs_count = SoundTags.objects.filter(symbol__type='AS').values('pk').count()
         self.number_tegs_count = SoundTags.objects.filter(symbol__type='NS').values('pk').count()
+        self.genres = SoundGenres.objects.only('id')
         return super(AllMusicView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -27,6 +28,7 @@ class AllMusicView(TemplateView):
         context["rus_tegs_count"] = self.rus_tegs_count
         context["angl_tegs_count"] = self.angl_tegs_count
         context["number_tegs_count"] = self.number_tegs_count
+        context["genres"] = self.genres
         return context
 
 

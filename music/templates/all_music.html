@@ -3,7 +3,7 @@
 {% block title %}Поиск треков по алфавиту{% endblock %}
 
 {% block content %}
-Всего композиций {{ all_music_count }}
+
 <div class="container mt-3 main-container">
     <div class="row">
         <div class="col-12 col-md-12 col-lg-8">
@@ -74,8 +74,40 @@
     </div>
 
     <div class="col-12 col-md-4">
-        <br><br><br>
+        <br>
+        <div class="card mb-2">
+            <div class="card-header">
+              <div class="media">
+                  <div class="media-body">
+                    Всего композиций {{ all_music_count }}
+                  </div>
+              </div>
+            </div>
+        </div>
 
+        <div class="card mb-4 ">
+                        <div class="card-header">
+                            <div class="media">
+                                <div class="media-body">
+                                    <h5 class="mt-1">Жанры</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body px-0 py-0">
+                            <ul class="list-group border-top border-bottom list-group-flush">
+                              {% for object in genres %}
+                                <li class="list-group-item">
+                                    <div class="media">
+                                        <div class="media-body">
+                                            <h6 class="my-0 mt-1">{{ object.name }}</h6>
+                                            <p class="small">Треков: {{ object.get_tracks_count }}</p>
+                                        </div>
+                                    </div>
+                                </li>
+                              {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
     </div>
 
 {% endblock %}

@@ -15,6 +15,9 @@ class SoundGenres(models.Model):
     def __str__(self):
         return self.name
 
+    def get_tracks_count(self):
+        return self.track_genre.count()
+
     class Meta:
         verbose_name="жанр"
         verbose_name_plural="жанры"
@@ -159,7 +162,7 @@ class SoundcloudParsing(models.Model):
     created_at = models.DateTimeField(max_length=255, blank=True, null=True)
     duration = models.CharField(max_length=255, blank=True, null=True)
     description = models.CharField(max_length=500, blank=True, null=True)
-    genre = models.ForeignKey(SoundGenres, on_delete=models.CASCADE, verbose_name="Жанр трека")
+    genre = models.ForeignKey(SoundGenres, related_name='track_genre', on_delete=models.CASCADE, verbose_name="Жанр трека")
     tag = models.ForeignKey(SoundTags, related_name='track_tag', on_delete=models.CASCADE, verbose_name="Буква")
     title = models.CharField(max_length=255, blank=True, null=True)
     uri = models.CharField(max_length=255, blank=True, null=True)
