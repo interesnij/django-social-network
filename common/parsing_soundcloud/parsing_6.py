@@ -20,7 +20,9 @@ genres_list = SoundGenres.objects.values('name')
 genres_list_names = [name['name'] for name in genres_list]
 
 list_6_1 = [
-
+"6 Dogs",
+"6ix9ine",
+"6lack",
 ]
 
 litera = SoundSymbol.objects.get(name="6")
