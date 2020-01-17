@@ -1,4 +1,12 @@
-{% load staticfiles thumbnail %}
+{% load staticfiles liked_user %}
+
+<div class="media" style="margin-top: 35px;">
+  <div class="media-body">
+    <h4 class="content-color-primary mb-0">Музыка {{ user.first_name|gent }} {{ user.last_name|gent }}
+    <small class="content-color-secondary float-right mr-2 mt-1">Всего {{ user.get_music_count }}</small></h4>
+  </div>
+</div>
+<br><br>
 
 {% if music_list %}
 
