@@ -13,5 +13,5 @@ urlpatterns = [
     url(r'^unfixed/(?P<uuid>[0-9a-f-]+)/$', login_required(user_unfixed)),
 	url(r'^off_comment/(?P<uuid>[0-9a-f-]+)/$', login_required(user_off_comment)),
     url(r'^on_comment/(?P<uuid>[0-9a-f-]+)/$', login_required(user_on_comment)),
-    url(r'^delete/(?P<uuid>[0-9a-f-]+)/$', login_required(user_item_delete)),
+    url(r'^delete/(?P<uuid>[0-9a-f-]+)/$', login_required(user_item_delete))
 ]
