@@ -43,6 +43,24 @@ class UserCommunitiesList(View):
 		return render_to_response(template, context)
 
 
+class UserManageCommunitiesList(View):
+	def get(self, request, *args, **kwargs):
+		context = {}
+		template = "communities_list_with_staffed.html"
+		self.user=User.objects.get(uuid=self.kwargs["uuid"])
+		manage_communities_list = self.user.get_staffed_communities()
+		current_page = Paginator(manage_communities_list, 12)
+		page = request.GET.get('page')
+		context['user'] = self.user
+		try:
+			context['manage_communities_list'] = current_page.page(page)
+		except PageNotAnInteger:
+			context['manage_communities_list'] = current_page.page(1)
+		except EmptyPage:
+			context['manage_communities_list'] = current_page.page(current_page.num_pages)
+		return render_to_response(template, context)
+
+
 class UserMusicList(View):
 	def get(self, request, *args, **kwargs):
 		context = {}

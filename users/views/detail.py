@@ -65,8 +65,10 @@ class UserCommunities(TemplateView):
         self.user=User.objects.get(pk=self.kwargs["pk"])
         self.popular_list = Community.get_trending_communities()[0:7]
         if self.user == request.user:
-            self.template_name = "user_community/my_communities.html"
-
+            if self.user.get_staffed_communities():
+                self.template_name = "user_community/my_communities_with_staffed.html"
+            else:
+                self.template_name = "user_community/my_communities.html"
         elif request.user != self.user and request.user.is_authenticated:
             if request.user.is_blocked_with_user_with_id(user_id=self.user.id):
                 self.template_name = "user_community/block_communities.html"
