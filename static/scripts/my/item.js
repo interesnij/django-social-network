@@ -18,7 +18,7 @@ $('#ajax').on('click', '.article_fullscreen_hide', function() {$('.article_fulls
   */
 $('#ajax').on('click', '.show_replies', function() { var element = $(this); element.next().toggleClass('replies_open'); });
 $('#ajax').on('click', '.u_comment.comments_close', function() {
-    var btn = $(this); var item = btn.closest(".infinite-item"); var uuid = item.attr("item-id"); var pk = btn.data('pk'); var container = item.find(".load_comments")
+    var btn = $(this); var item = btn.closest(".infinite-item"); var uuid = item.attr("item-id"); var pk = item.attr("user-id"); var container = item.find(".load_comments")
     $.ajax({
         url: "/user/comment/" + uuid + "/" + pk + "/", data: {'uuid': uuid}, cache: false,
         beforeSend: function() { item.find(".load_comments").html("<span style='display:flex;justify-content: center;'><img src='/static/images/loading.gif'></span>"); },
