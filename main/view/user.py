@@ -115,17 +115,16 @@ def post_update_interactions(request):
     return JsonResponse(data)
 
 
-def user_fixed(request, pk):
-	item = Item.objects.get(pk=pk)
+def user_fixed(request, uuid):
+	item = Item.objects.get(uuid=uuid)
 	if request.user == item.creator:
 		item.get_fixed_for_user(request.user.pk)
 		return HttpResponse("!")
 	else:
 		return HttpResponse("Закрепляйте, пожалуйста, свои записи!")
 
-
-def user_unfixed(request, pk):
-	item = Item.objects.get(pk=pk)
+def user_unfixed(request, uuid):
+	item = Item.objects.get(uuid=uuid)
 	if request.user == item.creator:
 		item.is_fixed=False
 		item.save(update_fields=['is_fixed'])
@@ -133,8 +132,27 @@ def user_unfixed(request, pk):
 	else:
 		return HttpResponse("Открепляйте, пожалуйста, свои записи!")
 
-def user_item_delete(request, pk):
-	item = Item.objects.get(pk=pk)
+
+def user_off_comment(request, uuid):
+	item = Item.objects.get(uuid=uuid)
+	if request.user == item.creator:
+		item.comments_enabled=False
+		item.save(update_fields=['comments_enabled'])
+		return HttpResponse("!")
+	else:
+		return HttpResponse("Пожалуйста, отключайте комментарии к своим записям!")
+
+def user_on_comment(request, uuid):
+	item = Item.objects.get(uuid=uuid)
+	if request.user == item.creator:
+		item.comments_enabled=True
+		item.save(update_fields=['comments_enabled'])
+		return HttpResponse("!")
+	else:
+		return HttpResponse("Пожалуйста, включайте комментарии к своим записям!")
+
+def user_item_delete(request, uuid):
+	item = Item.objects.get(uuid=uuid)
 	if request.user == item.creator:
 		item.is_deleted=True
 		item.save(update_fields=['is_deleted'])

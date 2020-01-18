@@ -1,14 +1,9 @@
-$('#ajax .stream').on('click', '.u_article_detail', function() {var item = $(this);var pk = item.data("pk"); var uuid = item.data("uuid"); $('#article_loader').html('').load("/article/detail/" + pk + "/" + uuid + "/"); $('.article_fullscreen').show();});
-$('#ajax').on('click', '.fullscreen', function() {
-    var item = $(this); var item_pk = item.data("pk"); var user_uuid = item.data("uuid");
-    $('#item_loader').html('').load("/users/detail/item/" + item_pk + "/" + user_uuid + "/"); $('.item_fullscreen').show();
-});
-$('#ajax').on('click', '.c_fullscreen', function() {
-    var item = $(this); var pk = item.data("pk"); var uuid = item.data("uuid");
-    $('#item_loader').html('').load("/communities/item/" + pk + "/" + uuid + "/"); $('.item_fullscreen').show();
-});
-$('#ajax').on('click', '.u_repost', function() {var item = $(this); var item_id = item.data("uuid"); $('#user_item_pk').html(item_id);});
-
+$('#ajax .stream').on('click', '.u_article_detail', function() {var item = $(this).parents(".infinite-item"); var pk = item.attr("user-id");  var uuid = item.attr("item-id"); $('#article_loader').html('').load("/article/detail/" + pk + "/" + uuid + "/"); $('.article_fullscreen').show();});
+$('#ajax').on('click', '.fullscreen', function() {var item = $(this).parents(".infinite-item"); var pk = item.attr("user-id"); var uuid = item.attr("item-id");$('#item_loader').html('').load("/users/detail/item/" + pk + "/" + uuid + "/"); $('.item_fullscreen').show();});
+$('#ajax').on('click', '.u_all_likes', function() {var btn = $(this); item = $(this).parents('.infinite-item'); var pk = item.attr("user-id"); var uuid = item.attr("user-id");$('#votes_loader').html('').load("/window/all_user_like/" + uuid + "/" + pk + "/"); $('.votes_fullscreen').show();});
+$('#ajax').on('click', '.u_all_dislikes', function() {var btn = $(this); item = $(this).parents('.infinite-item'); var pk = item.attr("user-id"); var uuid = item.attr("user-id");$('#votes_loader').html('').load("/window/all_user_dislike/" + uuid + "/" + pk + "/"); $('.votes_fullscreen').show();});
+$('#ajax').on('click', '.u_all_reposts', function() {var btn = $(this); item = $(this).parents('.infinite-item'); var pk = item.attr("user-id"); var uuid = item.attr("user-id");$('#votes_loader').html('').load("/window/all_user_reposts/" + uuid + "/" + pk + "/"); $('.votes_fullscreen').show();});
+$('#ajax').on('click', '.u_repost', function() {var item = $(this).parents('.infinite-item'); var uuid = item.attr("item-id"); $('#user_item_pk').html(uuid);});
 $('.photo_fullscreen_hide').on('click', function() { $('.photo_fullscreen').hide(); $('#photo_loader').empty(); });
 $('.item_fullscreen_hide').on('click', function() { $('.item_fullscreen').hide(); $('#item_loader').empty(); });
 $('.article_fullscreen_hide').on('click', function() {$('.article_fullscreen').hide(); $('#article_loader').empty();});
@@ -23,10 +18,10 @@ $('#ajax').on('click', '.u_comment.comments_close', function() {
         success: function(data) { container.html(data.comments); btn.addClass("comments_open").removeClass("comments_close")}
     }); return false;
 });
-
 $('#ajax').on('click', '.u_comment.comments_open', function() {
   var btn = $(this); var item = btn.closest(".infinite-item"); var container = item.find(".load_comments"); container.empty(); btn.removeClass('comments_open').addClass("comments_close");
 });
+
 
 $('#ajax').on('click', '.comment_image', function() {
 		var photo = $(this); var pk = photo.data("id"); var uuid = photo.data("uuid");
@@ -43,8 +38,17 @@ $("#ajax").on('click', '.reply_comment', function() {
     var reply_comment_form = $(this); var objectUser = reply_comment_form.prev().text().trim(); var form = reply_comment_form.next().find(".text-comment"); form.val(objectUser + ', '); reply_comment_form.next().show(); form.focus();
 })
 
+$("#ajax").on('click', '.u_like', function() {
+    like = $(this); item = like.parents('.infinite-item'); var pk = item.attr("user-id"); var uuid = item.attr("item-id"); var dislike = like.next().next();
+    $.ajax({url: "/votes/user_like/" + uuid + "/" + pk + "/",type: 'POST',data: {'obj': pk},
+        success: function(json) {
+            like.find("[data-count='like']").text(json.like_count); like.find(".svg_default").toggleClass('svg_success'); like.find(".likes_count").toggleClass('svg_success'); like.siblings('.like_window').html('').load("/window/u_like_window/" + uuid + "/" + pk + "/");
+            dislike.find("[data-count='dislike']").text(json.dislike_count); dislike.find(".svg_default").removeClass('svg_danger'); dislike.find(".dislikes_count").removeClass('svg_danger'); dislike.siblings('.dislike_window').html('').load("/window/u_dislike_window/" + uuid + "/" + pk + "/")
+        }
+    });return false;
+});
 $("#ajax").on('click', '.u_dislike', function() {
-        var dislike = $(this); item = dislike.parents('.interaction');var pk = item.data('pk'); var uuid = item.data('uuid'); var like = dislike.prev().prev();
+        var dislike = $(this); item = dislike.parents('.infinite-item');var pk = item.attr("user-id"); var uuid = item.attr("item-id"); var like = dislike.prev().prev();
         $.ajax({
             url: "/votes/user_dislike/" + uuid + "/" + pk + "/", type: 'POST', data: {'obj': pk},
             success: function(json) {
@@ -52,27 +56,6 @@ $("#ajax").on('click', '.u_dislike', function() {
               dislike.find("[data-count='dislike']").text(json.dislike_count); dislike.find(".svg_default").toggleClass('svg_danger'); dislike.find(".dislikes_count").toggleClass('svg_danger'); dislike.siblings('.dislike_window').html('').load("/window/u_dislike_window/" + uuid + "/" + pk + "/")
             }
         });return false;
-});
-$("#ajax").on('click', '.u_like2', function() {
-          var like = $(this); var pk = like.data('pk'); var uuid = like.data('uuid'); var dislike = like.next().next();
-          $.ajax({
-              url: "/votes/user_comment/" + uuid + "/" + pk + "/like/", type: 'POST', data: {'obj': pk},
-              success: function(json) {
-                  like.find("[data-count='like']").text(json.like_count); like.find(".svg_default").toggleClass('svg_success'); like.find(".likes_count").toggleClass('svg_success'); like.siblings('.comment_like_window').html('').load("/window/u_comment_like_window/" + uuid + "/" + pk + "/");
-                  dislike.find("[data-count='dislike']").text(json.dislike_count); dislike.find(".svg_default").removeClass('svg_danger'); dislike.find(".dislikes_count").removeClass('svg_danger'); dislike.siblings('.comment_dislike_window').html('').load("/window/u_comment_dislike_window/" + uuid + "/" + pk + "/")
-              }
-          });return false;
-      });
-$("#ajax").on('click', '.u_dislike2', function() {
-        var dislike = $(this); var pk = dislike.data('pk'); var uuid = dislike.data('uuid'); var like = dislike.prev().prev();
-        $.ajax({
-            url: "/votes/user_comment/" + uuid + "/" + pk + "/dislike/", type: 'POST', data: {'obj': pk},
-            success: function(json) {
-                like.find("[data-count='like']").text(json.like_count); like.find(".svg_default").removeClass('svg_success'); like.find(".likes_count").removeClass('svg_success'); like.siblings('.comment_like_window').html('').load("/window/u_comment_like_window/" + uuid + "/" + pk + "/");
-                dislike.find("[data-count='dislike']").text(json.dislike_count); dislike.find(".svg_default").toggleClass('svg_danger'); dislike.find(".dislikes_count").toggleClass('svg_danger'); dislike.siblings('.comment_dislike_window').html('').load("/window/u_comment_dislike_window/" + uuid + "/" + pk + "/")
-            }
-        });return false;
-});
 
 
 $('#ajax').on('click', '.upload_photo', function() {

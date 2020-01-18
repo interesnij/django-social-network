@@ -1,5 +1,5 @@
 {% load staticfiles humanize liked_user thumbnail %}
-<div class="card mb-4 infinite-item" item-id="{{ object.uuid }}">
+<div class="card mb-4 infinite-item" item-id="{{ object.uuid }}" community-id="{{ community.pk }}">
 
   {% include 'item_community/admin_card_header.html' %}
 

@@ -14,8 +14,8 @@ from rest_framework.exceptions import PermissionDenied
 
 class ItemUserLikeCreate(View):
     def post(self, request, **kwargs):
-        item = Item.objects.get(pk=self.kwargs["pk"])
-        user = User.objects.get(uuid=self.kwargs["uuid"])
+        item = Item.objects.get(uuid=self.kwargs["uuid"])
+        user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
             if user.is_closed_profile():
@@ -82,8 +82,8 @@ class ItemCommentUserLikeCreate(View):
 
 class ItemUserDislikeCreate(View):
     def post(self, request, **kwargs):
-        item = Item.objects.get(pk=self.kwargs["pk"])
-        user = User.objects.get(uuid=self.kwargs["uuid"])
+        item = Item.objects.get(uuid=self.kwargs["uuid"])
+        user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
             if user.is_closed_profile():
@@ -150,8 +150,8 @@ class ItemCommentUserDislikeCreate(View):
 
 class ItemCommunityLikeCreate(View):
     def post(self, request, **kwargs):
-        item = Item.objects.get(pk=self.kwargs["pk"])
-        community = Community.objects.get(uuid=self.kwargs["uuid"])
+        item = Item.objects.get(uuid=self.kwargs["uuid"])
+        community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_posts_for_community_with_name(request.user,community.name)
         try:
             likedislike = ItemVotes.objects.get(parent=item, user=request.user)
@@ -181,8 +181,8 @@ class ItemCommunityLikeCreate(View):
 
 class ItemCommunityDislikeCreate(View):
     def post(self, request, **kwargs):
-        item = Item.objects.get(pk=self.kwargs["pk"])
-        community = Community.objects.get(uuid=self.kwargs["uuid"])
+        item = Item.objects.get(uuid=self.kwargs["uuid"])
+        community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_posts_for_community_with_name(request.user,community.name)
         try:
             likedislike = ItemVotes.objects.get(parent=item, user=request.user)

@@ -182,8 +182,8 @@ class AllItemUserLikeWindow(TemplateView):
     template_name="item_votes/u_all_like_window.html"
 
     def get(self,request,*args,**kwargs):
-        self.item = Item.objects.get(pk=self.kwargs["pk"])
-        self.user = User.objects.get(uuid=self.kwargs["uuid"])
+        self.item = Item.objects.get(uuid=self.kwargs["uuid"])
+        self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user != request.user and request.user.is_authenticated:
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
             if self.user.is_closed_profile():
@@ -207,8 +207,8 @@ class AllItemUserDislikeWindow(TemplateView):
     template_name="item_votes/u_all_dislike_window.html"
 
     def get(self,request,*args,**kwargs):
-        self.item = Item.objects.get(pk=self.kwargs["pk"])
-        self.user = User.objects.get(uuid=self.kwargs["uuid"])
+        self.item = Item.objects.get(uuid=self.kwargs["uuid"])
+        self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user != request.user and request.user.is_authenticated:
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
             if self.user.is_closed_profile():
@@ -282,8 +282,8 @@ class AllItemCommunityLikeWindow(TemplateView):
     template_name="item_votes/c_all_like_window.html"
 
     def get(self,request,*args,**kwargs):
-        self.item = Item.objects.get(pk=self.kwargs["pk"])
-        community = Community.objects.get(uuid=self.kwargs["uuid"])
+        self.item = Item.objects.get(uuid=self.kwargs["uuid"])
+        community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_posts_for_community_with_name(request.user,community.name)
         self.likes = self.item.get_likes_for_item(request.user)
         return super(AllItemCommunityLikeWindow,self).get(request,*args,**kwargs)
@@ -298,8 +298,8 @@ class AllItemCommunityDislikeWindow(TemplateView):
     template_name="item_votes/c_all_dislike_window.html"
 
     def get(self,request,*args,**kwargs):
-        self.item = Item.objects.get(pk=self.kwargs["pk"])
-        community = Community.objects.get(uuid=self.kwargs["uuid"])
+        self.item = Item.objects.get(uuid=self.kwargs["uuid"])
+        community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_posts_for_community_with_name(request.user,community.name)
         self.dislikes = self.item.get_dislikes_for_item(request.user)
         return super(AllItemCommunityDislikeWindow,self).get(request,*args,**kwargs)

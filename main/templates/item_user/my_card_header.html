@@ -26,16 +26,22 @@
               <svg class="svg_info svg_default" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
             </a>
             <div class="dropdown-menu dropdown-menu-right">
-                <span data-id="{{ object.pk }}" style="cursor:pointer" class="dropdown-item item_user_remove">Удалить запись</span>
+                <span style="cursor:pointer" class="dropdown-item item_user_remove">Удалить запись</span>
                 <span style="cursor:pointer" class="dropdown-item">Редактировать</span>
-                <span data-id="{{ object.pk }}">
+                <span style="cursor:pointer">
                   {% if object.is_fixed %}
-                  <span style="cursor:pointer" class="dropdown-item item_user_unfixed">Открепить</span>
+                    <span class="dropdown-item item_user_unfixed">Открепить</span>
                   {% else %}
-                  <span style="cursor:pointer" class="dropdown-item item_user_fixed">Закрепить</span>
+                    <span class="dropdown-item item_user_unfixed">Закрепить</span>
                   {% endif %}
                 </span>
-                <span style="cursor:pointer" class="dropdown-item">Выключить комментарии</span>
+                <span style="cursor:pointer">
+                  {% if object.comments_enabled %}
+                    <span class="dropdown-item item_user_off_comment">Выключить комментарии</span>
+                  {% else %}
+                    <span class="dropdown-item item_user_on_comment">Включить комментарии</span>
+                  {% endif %}
+                <span>
                 <span style="cursor: pointer;" class="dropdown-item js-textareacopybtn">Скопировать ссылку
                   <textarea style="opacity: 0;height:1px;width:1px" class="js-copytextarea">http://трезвый.рус{% url 'user_item_detail' uuid=object.uuid %}</textarea>
                 </span>

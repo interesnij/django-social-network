@@ -9,7 +9,7 @@ class MainPageView(TemplateView):
 	template_name=None
 	def get(self,request,*args,**kwargs):
 		if request.user.is_authenticated:
-			self.template_name="main/mainpage.html"
+			self.template_name="main/news.html"
 		else:
 			self.template_name="main/auth.html"
 		return super(MainPageView,self).get(request,*args,**kwargs)

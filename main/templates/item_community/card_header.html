@@ -25,20 +25,7 @@
               <svg class="svg_info svg_default" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
             </a>
             <div class="dropdown-menu dropdown-menu-right">
-              {% if request.user == object.creator or staff %}
-                <span data-id="{{ object.pk }}" data-uuid="{{ object.creator.uuid }}" style="cursor:pointer" class="dropdown-item remove">Удалить запись</span>
-                <span style="cursor:pointer" class="dropdown-item">Редактировать</span>
-                <span data-id="{{ object.pk }}">
-                  {% if object.is_fixed %}
-                  <span style="cursor:pointer" class="dropdown-item unfixed">Открепить</span>
-                  {% else %}
-                  <span style="cursor:pointer" class="dropdown-item fixed">Закрепить</span>
-                  {% endif %}
-                </span>
-                <span data-action="item_check_comment" style="cursor:pointer" class="dropdown-item">Выключить комментарии</span>
-              {% else %}
                 <span data-actiond="item_bad" class="dropdown-item">Пожаловаться</span>
-              {% endif %}
             </div>
         </div>
     </div>

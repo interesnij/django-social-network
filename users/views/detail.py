@@ -11,8 +11,8 @@ class UserItemView(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.user = User.objects.get(uuid=self.kwargs["uuid"])
-        self.item = Item.objects.get(pk=self.kwargs["pk"])
+        self.user = User.objects.get(pk=self.kwargs["pk"])
+        self.item = Item.objects.get(uuid=self.kwargs["uuid"])
         self.item.views += 1
         self.item.save()
         self.template_name = "lenta/user_item.html"

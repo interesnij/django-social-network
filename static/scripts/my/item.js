@@ -2,11 +2,11 @@
 /*!
    fullscreen's script
   */
-$('#ajax .stream').on('click', '.u_article_detail', function() {var item = $(this); var pk = item.data("pk");  var uuid = item.data("uuid"); $('#article_loader').html('').load("/article/detail/" + pk + "/" + uuid + "/"); $('.article_fullscreen').show();});
-$('#ajax').on('click', '.fullscreen', function() {var item = $(this); var item_pk = item.data("pk"); var user_uuid = item.data("uuid");$('#item_loader').html('').load("/users/detail/item/" + item_pk + "/" + user_uuid + "/"); $('.item_fullscreen').show();});
-$('#ajax').on('click', '.u_all_likes', function() {var btn = $(this); item = $(this).parents('.interaction'); var pk = item.data("pk"); var uuid = item.data("uuid");$('#votes_loader').html('').load("/window/all_user_like/" + uuid + "/" + pk + "/"); $('.votes_fullscreen').show();});
-$('#ajax').on('click', '.u_all_dislikes', function() {var btn = $(this); item = $(this).parents('.interaction'); var pk = item.data("pk"); var uuid = item.data("uuid");$('#votes_loader').html('').load("/window/all_user_dislike/" + uuid + "/" + pk + "/"); $('.votes_fullscreen').show();});
-$('#ajax').on('click', '.u_all_reposts', function() {var btn = $(this); item = $(this).parents('.interaction'); var pk = item.data("pk"); var uuid = item.data("uuid");$('#votes_loader').html('').load("/window/all_user_reposts/" + uuid + "/" + pk + "/"); $('.votes_fullscreen').show();});
+$('#ajax .stream').on('click', '.u_article_detail', function() {var item = $(this).parents(".infinite-item"); var pk = item.attr("user-id");  var uuid = item.attr("item-id"); $('#article_loader').html('').load("/article/detail/" + pk + "/" + uuid + "/"); $('.article_fullscreen').show();});
+$('#ajax').on('click', '.fullscreen', function() {var item = $(this).parents(".infinite-item"); var pk = item.attr("user-id"); var uuid = item.attr("item-id");$('#item_loader').html('').load("/users/detail/item/" + pk + "/" + uuid + "/"); $('.item_fullscreen').show();});
+$('#ajax').on('click', '.u_all_likes', function() {var btn = $(this); item = $(this).parents('.infinite-item'); var pk = item.attr("user-id"); var uuid = item.attr("user-id");$('#votes_loader').html('').load("/window/all_user_like/" + uuid + "/" + pk + "/"); $('.votes_fullscreen').show();});
+$('#ajax').on('click', '.u_all_dislikes', function() {var btn = $(this); item = $(this).parents('.infinite-item'); var pk = item.attr("user-id"); var uuid = item.attr("user-id");$('#votes_loader').html('').load("/window/all_user_dislike/" + uuid + "/" + pk + "/"); $('.votes_fullscreen').show();});
+$('#ajax').on('click', '.u_all_reposts', function() {var btn = $(this); item = $(this).parents('.infinite-item'); var pk = item.attr("user-id"); var uuid = item.attr("user-id");$('#votes_loader').html('').load("/window/all_user_reposts/" + uuid + "/" + pk + "/"); $('.votes_fullscreen').show();});
 
 $('#ajax').on('click', '.photo_fullscreen_hide', function() { $('.photo_fullscreen').hide(); $('#photo_loader').empty(); });
 $('#ajax').on('click', '.item_fullscreen_hide', function() { $('.item_fullscreen').hide(); $('#item_loader').empty(); });
@@ -25,20 +25,25 @@ $('#ajax').on('click', '.u_comment.comments_close', function() {
         success: function(data) { container.html(data.comments); btn.addClass("comments_open").removeClass("comments_close")}
     }); return false;
 });
+$('#ajax').on('click', '.u_comment.comments_open', function() {
+  var btn = $(this); var item = btn.closest(".infinite-item"); var container = item.find(".load_comments"); container.empty(); btn.removeClass('comments_open').addClass("comments_close");
+});
 
 /*!
    card headers manage scripts
   */
-$('#ajax').on('click', '.item_user_remove', function() {var remove = $(this); var pk = remove.data('id');$.ajax({url: "/user/delete/" + pk + "/",success: function(data) {$(remove).parents('.card').hide();$('.activefullscreen').hide();$.toast({heading: 'Информация',text: 'Запись успешно удалена!',showHideTransition: 'fade',icon: 'info'})}});});
-$('#ajax').on('click', '.item_user_fixed', function() {var fixed = $(this); var pk = fixed.parent().data('id');$.ajax({url: "/user/fixed/" + pk + "/",success: function(data) {fixed.parent().html("<span style='cursor:pointer' class='dropdown-item item_user_unfixed'>Открепить</span>");$.toast({heading: 'Информация',text: 'Запись закреплена!',showHideTransition: 'fade',icon: 'info'})}});});
-$('#ajax').on('click', '.item_user_unfixed', function() {var unfixed = $(this); var pk = unfixed.parent().data('id');$.ajax({url: "/user/unfixed/" + pk + "/",success: function(data) {unfixed.parent().html("<span style='cursor:pointer' class='dropdown-item item_user_fixed'>Закрепить</span>");$.toast({heading: 'Информация',text: 'Запись откреплена!',showHideTransition: 'fade',icon: 'info'})}});});
+$('#ajax').on('click', '.item_user_remove', function() {var remove = $(this); var uuid = remove.parents(".infinite-item").attr("item-id");$.ajax({url: "/user/delete/" + uuid + "/",success: function(data) {$(remove).parents('.card').hide();$('.activefullscreen').hide();$.toast({heading: 'Информация',text: 'Запись успешно удалена!',showHideTransition: 'fade',icon: 'info'})}});});
+$('#ajax').on('click', '.item_user_fixed', function() {var fixed = $(this);var uuid = fixed.parents(".infinite-item").attr("item-id");$.ajax({url: "/user/fixed/" + uuid + "/",success: function(data) {fixed.parent().html("<span class='dropdown-item item_user_unfixed'>Открепить</span>");$.toast({heading: 'Информация',text: 'Запись закреплена!',showHideTransition: 'fade',icon: 'info'})}});});
+$('#ajax').on('click', '.item_user_unfixed', function() {var unfixed = $(this); var uuid = unfixed.parents(".infinite-item").attr("item-id");$.ajax({url: "/user/unfixed/" + uuid + "/",success: function(data) {unfixed.parent().html("<span class='dropdown-item item_user_fixed'>Закрепить</span>");$.toast({heading: 'Информация',text: 'Запись откреплена!',showHideTransition: 'fade',icon: 'info'})}});});
+$('#ajax').on('click', '.item_user_off_comment', function() {var off = $(this);var uuid = off.parents(".infinite-item").attr("item-id");$.ajax({url: "/user/off_comment/" + uuid + "/",success: function(data) {off.parent().html("<span class='dropdown-item item_user_on_comment'>Включить комментарии</span>");$.toast({heading: 'Информация',text: 'Комментарии выключены!',showHideTransition: 'fade',icon: 'info'})}});});
+$('#ajax').on('click', '.item_user_on_comment', function() {var on = $(this); var uuid = on.parents(".infinite-item").attr("item-id");$.ajax({url: "/user/on_comment/" + uuid + "/",success: function(data) {on.parent().html("<span class='dropdown-item item_user_off_comment'>Выключить комментарии</span>");$.toast({heading: 'Информация',text: 'Комментарии включены!',showHideTransition: 'fade',icon: 'info'})}});});
 $('#ajax').on('click', '.js-textareacopybtn', function() {btn = $(this);link = btn.find('.js-copytextarea');link.focus();link.select();try {var successful = document.execCommand('copy');var msg = successful ? 'successful' : 'unsuccessful';console.log('Copying text command was ' + msg);} catch (err) {console.log('Oops, unable to copy');}});
 
 /*!
    votes post scripts for user items
   */
 $("#ajax").on('click', '.u_like', function() {
-    like = $(this); item = like.parents('.interaction'); var pk = item.data('pk'); var uuid = item.data('uuid'); var dislike = like.next().next();
+    like = $(this); item = like.parents('.infinite-item'); var pk = item.attr("user-id"); var uuid = item.attr("item-id"); var dislike = like.next().next();
     $.ajax({url: "/votes/user_like/" + uuid + "/" + pk + "/",type: 'POST',data: {'obj': pk},
         success: function(json) {
             like.find("[data-count='like']").text(json.like_count); like.find(".svg_default").toggleClass('svg_success'); like.find(".likes_count").toggleClass('svg_success'); like.siblings('.like_window').html('').load("/window/u_like_window/" + uuid + "/" + pk + "/");
@@ -47,7 +52,7 @@ $("#ajax").on('click', '.u_like', function() {
     });return false;
 });
 $("#ajax").on('click', '.u_dislike', function() {
-        var dislike = $(this); item = dislike.parents('.interaction');var pk = item.data('pk'); var uuid = item.data('uuid'); var like = dislike.prev().prev();
+        var dislike = $(this); item = dislike.parents('.infinite-item');var pk = item.attr("user-id"); var uuid = item.attr("item-id"); var like = dislike.prev().prev();
         $.ajax({
             url: "/votes/user_dislike/" + uuid + "/" + pk + "/", type: 'POST', data: {'obj': pk},
             success: function(json) {
