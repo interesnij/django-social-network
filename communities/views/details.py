@@ -61,21 +61,29 @@ class ItemCommunity(TemplateView):
     template_name="detail_sections/item.html"
 
     def get(self,request,*args,**kwargs):
-        self.community=Community.objects.get(uuid=self.kwargs["uuid"])
-        self.item = Item.objects.get(pk=self.kwargs["pk"])
+        self.community=Community.objects.get(pk=self.kwargs["pk"])
+        self.item = Item.objects.get(uuid=self.kwargs["uuid"])
         self.item.views += 1
         self.item.save()
-        if request.user.is_authenticated:
-            check_can_get_posts_for_community_with_name(request.user,self.community.name)
-            self.items = self.community.get_posts()
-            self.next = self.items.filter(pk__gt=self.item.pk).order_by('pk').first()
-            self.prev = self.items.filter(pk__lt=self.item.pk).order_by('-pk').first()
-        elif request.user.is_anonymous and self.community.is_public:
-            self.items = self.community.get_posts()
-            self.next = self.items.filter(pk__gt=self.item.pk).order_by('pk').first()
-            self.prev = self.items.filter(pk__lt=self.item.pk).order_by('-pk').first()
-        elif request.user.is_anonymous and (self.community.is_closed or self.community.is_private):
-            raise PermissionDenied('У Вас недостаточно прав для просмотра информации группы',)
+        self.items = self.community.get_posts()
+        self.next = self.items.filter(pk__gt=self.item.pk).order_by('pk').first()
+        self.prev = self.items.filter(pk__lt=self.item.pk).order_by('-pk').first()
+
+        if request.user.is_authenticated and request.user.is_member_of_community_with_name(community.name):
+            if request.user.is_creator_of_community_with_name(community.name):
+                self.template_name = "detail_sections/admin_item.html"
+            elif request.user.is_moderator_of_community_with_name(community.name):
+                self.template_name = "detail_sections/admin_item.html"
+            elif request.user.is_administrator_of_community_with_name(community.name):
+                self.template_name = "detail_sections/admin_item.html"
+            elif request.user.is_star_from_community_with_name(community.name):
+                self.template_name = "detail_sections/item.html"
+            else:
+                self.template_name = "detail_sections/item.html"
+        elif request.user.is_authenticated and community.is_public():
+            self.template_name = "detail_sections/item.html"
+        elif request.user.is_anonymous and community.is_public():
+            self.template_name = "detail_sections/item.html"
         return super(ItemCommunity,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
