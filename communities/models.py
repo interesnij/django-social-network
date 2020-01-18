@@ -268,6 +268,7 @@ class Community(models.Model):
     @classmethod
     def get_community_with_name_members(cls, community_name):
         community_members_query = Q(communities_memberships__community__name=community_name)
+        User = get_user_model()
         return User.objects.filter(community_members_query)
 
 
