@@ -7,7 +7,7 @@
 <div class="container mt-4 main-container">
     <div class="row">
         <div class="col-lg-7 col-md-8 col-sm-12 order-1">
-            <form action="" id="info_form" method="post" class="contact-form">
+            <form action="" id="info_form" class="contact-form">
                 {% csrf_token %}
                 <div class="card mb-4">
                     <div class="card-header border-bottom">
@@ -64,7 +64,7 @@
   $('#ajax').on('click', '#general_button', function() {
     var frm = $('#info_form');
         $.ajax({
-            type: frm.attr('method'),
+            type: "post",
             url: "{% url 'community_general_form' pk=community.pk %}",
             data: frm.serialize(),
             success: function(data) {
