@@ -487,12 +487,6 @@ class Community(models.Model):
                                                                     action_type=action_type,
                                                                     source_user=source_user)
 
-    def save(self, *args, **kwargs):
-        if not self.id:
-            self.created = timezone.now()
-        self.name = self.name.lower()
-        return super(Community, self).save(*args, **kwargs)
-
     def __str__(self):
         return self.name
 
