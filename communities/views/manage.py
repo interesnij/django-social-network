@@ -26,9 +26,9 @@ class CommunityGeneralChange(TemplateView):
 
 	def post(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		self.form=GeneralCommunityForm(request.POST)
+		self.form=GeneralCommunityForm(request.POST, instance=self.community)
 		if self.form.is_valid() and request.is_ajax() and request.user.is_administrator_of_community_with_name(self.community.name):
-			self.form.save(commit=False)
+			self.form.save()
 			return HttpResponse('!')
 		else:
 			return HttpResponseBadRequest()
