@@ -62,8 +62,8 @@ class ArticleCommunityDetailView(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.community=Community.objects.get(uuid=self.kwargs["uuid"])
-        self.item = Item.objects.get(pk=self.kwargs["pk"])
+        self.community=Community.objects.get(pk=self.kwargs["pk"])
+        self.item = Item.objects.get(uuid=self.kwargs["uuid"])
         self.item.views += 1
         self.item.save()
         if request.user.is_authenticated and request.user.is_member_of_community_with_name(self.community.name):
