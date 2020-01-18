@@ -15,7 +15,7 @@ class CommunityGeneralChange(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		self.form=GeneralCommunityForm()
+		self.form=GeneralCommunityForm(instance=self.community)
 		return super(CommunityGeneralChange,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -28,7 +28,7 @@ class CommunityGeneralChange(TemplateView):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.form=GeneralCommunityForm(request.POST)
 		if self.form.is_valid() and request.is_ajax() and request.user.is_administrator_of_community_with_name(self.community.name):
-			self.form.save()
+			self.form.save(commit=False)
 			return HttpResponse('!')
 		else:
 			return HttpResponseBadRequest()
@@ -54,7 +54,8 @@ class CommunityAvatarChange(TemplateView):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.form=AvatarCommunityForm(request.POST,request.FILES, instance=self.community)
 		if self.form.is_valid():
-			self.form.save()
+			self.form.save(commit=False)
+
 			if request.is_ajax():
 				return HttpResponse ('!')
 		return super(CommunityAvatarChange,self).post(request,*args,**kwargs)
