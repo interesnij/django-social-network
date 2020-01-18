@@ -109,8 +109,8 @@ def post_update_interactions(request):
 
 
 def community_fixed(request, pk, uuid):
-	item = Item.objects.get(pk=pk)
-	community = Community.objects.get(uuid=uuid)
+	item = Item.objects.get(uuid=uuid)
+	community = Community.objects.get(pk=pk)
 	if request.user.is_staff_of_community_with_name(community.name):
 		item.get_fixed_for_community(uuid)
 		return HttpResponse("!")
@@ -118,8 +118,8 @@ def community_fixed(request, pk, uuid):
 		return HttpResponse("Закрепляйте, пожалуйста, свои записи!")
 
 def community_unfixed(request, pk, uuid):
-	item = Item.objects.get(pk=pk)
-	community = Community.objects.get(uuid=uuid)
+	item = Item.objects.get(uuid=uuid)
+	community = Community.objects.get(pk=pk)
 	if request.user.is_staff_of_community_with_name(community.name):
 		item.is_fixed=False
 		item.save(update_fields=['is_fixed'])
