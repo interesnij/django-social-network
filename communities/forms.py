@@ -9,9 +9,12 @@ class CommunityForm(forms.ModelForm):
 
 
 class GeneralCommunityForm(forms.ModelForm):
+	description = forms.CharField( label="",widget=forms.TextInput(
+            attrs={'class': 'form-control'}
+        ))
 	class Meta:
 		model = Community
-		fields = ['name', 'description', 'rules', 'status',] 
+		fields = ['name', 'description', 'rules', 'status',]
 
 
 class CoverCommunityForm(forms.ModelForm):
