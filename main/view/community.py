@@ -117,13 +117,32 @@ def community_fixed(request, pk, uuid):
 	else:
 		return HttpResponse("Закрепляйте, пожалуйста, свои записи!")
 
-
 def community_unfixed(request, pk, uuid):
 	item = Item.objects.get(pk=pk)
 	community = Community.objects.get(uuid=uuid)
 	if request.user.is_staff_of_community_with_name(community.name):
 		item.is_fixed=False
 		item.save(update_fields=['is_fixed'])
+		return HttpResponse("!")
+	else:
+		return HttpResponse("Открепляйте, пожалуйста, свои записи!")
+
+def community_off_comment(request, pk, uuid):
+    item = Item.objects.get(uuid=uuid)
+    community = Community.objects.get(pk=pk)
+    if request.user.is_staff_of_community_with_name(community.name):
+        item.comments_enabled=False
+        item.save(update_fields=['comments_enabled'])
+        return HttpResponse("!")
+    else:
+        return HttpResponse("Закрепляйте, пожалуйста, свои записи!")
+
+def community_on_comment(request, pk, uuid):
+	item = Item.objects.get(uuid=uuid)
+	community = Community.objects.get(pk=pk)
+	if request.user.is_staff_of_community_with_name(community.name):
+		item.comments_enabled=True
+		item.save(update_fields=['comments_enabled'])
 		return HttpResponse("!")
 	else:
 		return HttpResponse("Открепляйте, пожалуйста, свои записи!")
