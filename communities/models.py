@@ -265,6 +265,13 @@ class Community(models.Model):
         return trending_communities_query
 
 
+    @classmethod
+    def get_community_with_name_members(cls, community_name):
+        community_members_query = Q(communities_memberships__community__name=community_name)
+        return User.objects.filter(community_members_query)
+
+
+
     EXCLUDE_COMMUNITY_ADMINISTRATORS_KEYWORD = 'administrators'
     EXCLUDE_COMMUNITY_MODERATORS_KEYWORD = 'moderators'
 
