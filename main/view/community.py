@@ -109,17 +109,18 @@ def post_update_interactions(request):
 
 
 def community_fixed(request, pk, uuid):
-	item = Item.objects.get(uuid=uuid)
-	community = Community.objects.get(pk=pk)
+	item = Item.objects.get(pk=pk)
+	community = Community.objects.get(uuid=uuid)
 	if request.user.is_staff_of_community_with_name(community.name):
 		item.get_fixed_for_community(uuid)
 		return HttpResponse("!")
 	else:
 		return HttpResponse("Закрепляйте, пожалуйста, свои записи!")
 
+
 def community_unfixed(request, pk, uuid):
-	item = Item.objects.get(uuid=uuid)
-	community = Community.objects.get(pk=pk)
+	item = Item.objects.get(pk=pk)
+	community = Community.objects.get(uuid=uuid)
 	if request.user.is_staff_of_community_with_name(community.name):
 		item.is_fixed=False
 		item.save(update_fields=['is_fixed'])
@@ -127,30 +128,9 @@ def community_unfixed(request, pk, uuid):
 	else:
 		return HttpResponse("Открепляйте, пожалуйста, свои записи!")
 
-def community_off_comment(request, pk, uuid):
-    item = Item.objects.get(uuid=uuid)
-    community = Community.objects.get(pk=pk)
-    if request.user.is_staff_of_community_with_name(community.name):
-        item.comments_enabled=False
-        item.save(update_fields=['comments_enabled'])
-        return HttpResponse("!")
-    else:
-        return HttpResponse("Закрепляйте, пожалуйста, свои записи!")
-
-def community_on_comment(request, pk, uuid):
-	item = Item.objects.get(uuid=uuid)
-	community = Community.objects.get(pk=pk)
-	if request.user.is_staff_of_community_with_name(community.name):
-		item.comments_enabled=True
-		item.save(update_fields=['comments_enabled'])
-		return HttpResponse("!")
-	else:
-		return HttpResponse("Открепляйте, пожалуйста, свои записи!")
-
-
 def community_item_delete(request, pk, uuid):
-	item = Item.objects.get(uuid=uuid)
-	community = Community.objects.get(pk=pk)
+	item = Item.objects.get(pk=pk)
+	community = Community.objects.get(uuid=uuid)
 	if request.user.is_staff_of_community_with_name(community.name):
 		item.is_deleted=True
 		item.save(update_fields=['is_deleted'])
@@ -164,7 +144,6 @@ class ItemCommunityDetail(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.item = Item.objects.get(uuid=self.kwargs["uuid"])
-        self.community = Community.objects.get(pk=self.kwargs["pk"])
 		if request.user.is_authenticated:
 			check_can_get_posts_for_community_with_name(request.user,self.community.name)
 			self.object = self.item
@@ -177,4 +156,4 @@ class ItemCommunityDetail(TemplateView):
 	def get_context_data(self,**kwargs):
 		context=super(ItemCommunityDetail,self).get_context_data(**kwargs)
 		context["object"]=self.object
-		return context                                                                                                                                                                                                                                                                                                                                                           
+		return context
