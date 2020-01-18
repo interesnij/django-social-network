@@ -27,7 +27,7 @@
 
   {% if prev %}
     <script>
-    	$('.prev_item').on('click', function () {$('#item_loader').html('').load("{% url 'user_item' pk=prev.pk uuid=user.uuid %}");});
+    	$('.prev_item').on('click', function () {$('#item_loader').html('').load("{% url 'user_item' uuid=prev.uuid pk=user.pk %}");});
     </script>
    {% endif %}
 

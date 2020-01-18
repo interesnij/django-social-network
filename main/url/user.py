@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 
 urlpatterns = [
 	url(r'^detail/(?P<uuid>[0-9a-f-]+)/$', ItemUserDetail.as_view(), name="user_item_detail"),
-	url(r'^comment/(?P<uuid>[0-9a-f-]+)/(?P<pk>\d+)/$', ItemUserCommentList.as_view()),
+	url(r'^comment/(?P<uuid>[0-9a-f-]+)/(?P<pk>\d+)/$', ItemUserCommentList.as_view()), 
     url(r'^post-comment/$', login_required(ItemCommentUserCreate.as_view())),
     url(r'^reply-comment/(?P<uuid>[0-9a-f-]+)/(?P<pk>\d+)/$', login_required(ItemReplyUserCreate.as_view())),
 
