@@ -10,7 +10,7 @@ class CommunityForm(forms.ModelForm):
 
 class GeneralCommunityForm(forms.ModelForm):
 	name = forms.CharField( label="",widget=forms.TextInput(attrs={'class': 'form-control'}))
-	description = forms.CharField( label="", required=False, widget=forms.TextInput(attrs={'class': 'form-control'}))
+	description = forms.CharField( label="", required=False, widget=forms.TextInput(attrs={'class': 'form-control', 'rows': '4'}))
 	rules = forms.CharField( label="", required=False, widget=forms.TextInput(attrs={'class': 'form-control'}))
 	status = forms.CharField( label="",required=False, widget=forms.TextInput(attrs={'class': 'form-control'}))
 	class Meta:
