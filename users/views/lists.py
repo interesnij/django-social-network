@@ -46,7 +46,7 @@ class UserCommunitiesList(View):
 class UserManageCommunitiesList(View):
 	def get(self, request, *args, **kwargs):
 		context = {}
-		template = "communities_list_with_staffed.html"
+		template = "user_community/communities_list_with_staffed.html"
 		self.user=User.objects.get(uuid=self.kwargs["uuid"])
 		manage_communities_list = self.user.get_staffed_communities()
 		current_page = Paginator(manage_communities_list, 12)
