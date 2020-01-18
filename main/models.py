@@ -132,16 +132,16 @@ class Item(models.Model):
             new_fixed.is_fixed = True
             new_fixed.save(update_fields=['is_fixed'])
 
-    def get_fixed_for_community(self, community_uuid):
+    def get_fixed_for_community(self, community_id):
         try:
-            item = Item.objects.get(community__uuid=community_uuid,is_fixed=True)
+            item = Item.objects.get(community__id=community_id,is_fixed=True)
             item.is_fixed = False
             item.save(update_fields=['is_fixed'])
-            new_fixed = Item.objects.get(creator__id=user_id,id=self.pk)
+            new_fixed = Item.objects.get(pk=self.pk)
             new_fixed.is_fixed = True
             new_fixed.save(update_fields=['is_fixed'])
         except:
-            new_fixed = Item.objects.get(community__uuid=community_uuid,id=self.pk)
+            new_fixed = Item.objects.get(community__id=community_id,id=self.pk)
             new_fixed.is_fixed = True
             new_fixed.save(update_fields=['is_fixed'])
 
