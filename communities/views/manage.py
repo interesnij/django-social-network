@@ -1,7 +1,7 @@
 from django.views.generic import ListView
 from communities.models import *
 from django.views.generic.base import TemplateView
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseBadRequest
 from django.views import View
 from communities.forms import *
 from users.models import User
@@ -29,7 +29,9 @@ class CommunityGeneralChange(TemplateView):
 		self.form=GeneralCommunityForm(request.POST)
 		if self.form.is_valid() and request.is_ajax() and request.user.is_administrator_of_community_with_name(self.community.name):
 			self.form.save()
-			return HttpResponse ('!')
+			return HttpResponse('!')
+		else:
+			return HttpResponseBadRequest()
 		return super(CommunityGeneralChange,self).post(request,*args,**kwargs)
 
 
