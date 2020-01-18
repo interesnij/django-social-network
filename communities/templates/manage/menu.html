@@ -2,7 +2,7 @@
     <button class="btn btn-primary mb-2 collapsed" style="display: block" type="button" data-toggle="collapse" data-target="#communitySettings" aria-expanded="false" aria-controls="collapseExample">
 				Настройки <span class="text-hide-xs">сообщества</span>
 		</button>
-    <div class="collapse" id="communitySettings" style="">
+    <div class="collapse" id="communitySettings" style="display: contents;">
       <div class="card card-body">
         <ul style="list-style-type:none">
           <li style="margin-bottom:8px;"><a href="{% url 'community_general_form' pk=community.pk %}" class="ajax" data-html="#ajax">Информации</a></li>
@@ -11,10 +11,10 @@
         </ul>
       </div>
     </div>
-    <button class="btn btn-success mb-2 collapsed" style="display: block" type="button" data-toggle="collapse" data-target="#communityMembership" aria-expanded="false" aria-controls="collapseExample">
+    <button class="btn btn-success mb-2 collapsed" style="display: block;margin-top: 20px;" type="button" data-toggle="collapse" data-target="#communityMembership" aria-expanded="false" aria-controls="collapseExample">
 				Участники <span class="text-hide-xs">сообщества</span>
 		</button>
-    <div class="collapse" id="communityMembership" style="">
+    <div class="collapse" id="communityMembership" style="display: contents;">
       <div class="card card-body">
         <ul style="list-style-type:none">
           {% if community.is_closed %}
