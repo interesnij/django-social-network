@@ -603,7 +603,7 @@ class User(AbstractUser):
         if self.has_favorite_community_with_name(community_name):
             self.unfavorite_community_with_name(community_name=community_name)
         community_to_leave.remove_member(self)
-        return community_to_leave
+        return community_to_leave 
 
     def _make_get_votes_query(self, item):
         reactions_query = Q(parent_id=item.pk)

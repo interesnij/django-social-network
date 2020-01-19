@@ -132,7 +132,7 @@ $('#ajax').on('click', '.member_create', function() {
   $.ajax({
     url: "/communities/progs/add_member/" + pk + "/" + uuid + "/",
     success: function () {
-      member_delete.parent().html("<span class='show_staff_window' style='cursor:pointer'>Изменить полномочия</span> |<span class='member_delete' style='cursor:pointer'>Удалить</span>");
+      member_create.parent().html("<span class='show_staff_window' style='cursor:pointer'>Изменить полномочия</span> |<span class='member_delete' style='cursor:pointer'>Удалить</span>");
       li.removeClass("style_removed_object");
     }});
   });
