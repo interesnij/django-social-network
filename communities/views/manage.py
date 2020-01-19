@@ -291,3 +291,26 @@ class CommunityMemberManageView(ListView):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		membersheeps=self.community.get_community_with_name_members(self.community.name)
 		return membersheeps
+
+
+class ShowStaffWindow(TemplateView):
+	template_name="manage/staff_window.html"
+
+	def get(self,request,*args,**kwargs):
+		self.community = Community.objects.get(pk=self.kwargs["pk"])
+		self.user = User.objects.get(uuid=self.kwargs["uuid"])
+		self.administrator = self.user.is_administrator_of_community_with_name(self.community)
+		self.moderator = self.user.is_moderator_of_community_with_name(self.community)
+		self.editor = self.user.is_editor_of_community_with_name(self.community)
+		self.advertiser = self.user.is_advertiser_of_community_with_name(self.community)
+		return super(ShowStaffWindow,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context=super(ShowStaffWindow,self).get_context_data(**kwargs)
+		context["community"]=self.community
+		context["user"]=self.user
+		context["administrator"]=self.administrator
+		context["moderator"]=self.moderator
+		context["editor"]=self.editor
+		context["advertiser"]=self.advertiser
+		return context

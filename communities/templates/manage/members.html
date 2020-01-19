@@ -12,6 +12,17 @@
   .style_removed_object figure{
     opacity:0.5;
   }
+  .manage_window_fullscreen{
+    position: fixed;top: 0;left: 0;width: 100%;height: 100%;z-index: 20;padding: 5%;display: block;overflow: auto;
+  }
+  @media screen and (min-width: 621px) {
+    .manage_window_fullscreen{
+      left: 20%;width: 60%;padding-left: 5%;padding-right: 5%;
+    }
+  }
+  .manage_window_fullscreen_hide{
+    cursor: pointer;float: right;
+  }
 
 </style>
 <div class="container mt-4 main-container">
@@ -96,7 +107,7 @@
                                 {% endif %}
                               {% else %}
                                 <span class="small">
-                                  <span class="show_staff_window" style="cursor:pointer">Изменить полномочия</span> | <span class="member_delete" style="cursor:pointer">Удалить</span>
+                                  <span class="show_staff_window" style="cursor:pointer">Назначить руководителем</span> | <span class="member_delete" style="cursor:pointer">Удалить</span>
                                 </span>
                               {% endif %}
                             </div>
@@ -119,35 +130,29 @@
 </div>
 </div>
 
+
+<div class="card mb-4 manage_window_fullscreen" style="display:none">
+  <span class="manage_window_fullscreen_hide">
+    <svg class="svg_default svg_default_30" fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+  </span>
+  <div id="load_staff_window" style="margin-top:30px"></div>
+</div>
 <script>
-$(document).ready(function(){
-  var members_infinite = new Waypoint.Infinite({element: $('.members-container')[0], onBeforePageLoad: function() { $('.members_load').show(); }, onAfterPageLoad: function($items) { $('.members_load').hide(); }});
-});
+  $('#ajax').on('click', '.show_staff_window', function() {
+     $('.manage_window_fullscreen').show();
+   });
+  $('#ajax').on('click', '.manage_window_fullscreen_hide', function() {
+     $('.manage_window_fullscreen').hide();
+   });
 
-$('#ajax').on('click', '.member_create', function() {
-  var member_create = $(this);
-  var li = member_create.parents(".list-group-item");
-  var pk = li.data('pk');
-  var uuid = li.data('uuid');
-  $.ajax({
-    url: "/communities/progs/add_member/" + pk + "/" + uuid + "/",
-    success: function () {
-      member_create.parent().html("<span class='show_staff_window' style='cursor:pointer'>Изменить полномочия</span> |<span class='member_delete' style='cursor:pointer'>Удалить</span>");
-      li.removeClass("style_removed_object");
-    }});
+  $(document).ready(function(){
+   var members_infinite = new Waypoint.Infinite({element: $('.members-container')[0], onBeforePageLoad: function() { $('.members_load').show(); }, onAfterPageLoad: function($items) { $('.members_load').hide(); }});
   });
-
-$('#ajax').on('click', '.member_delete', function() {
-  var member_delete = $(this);
-  var li = member_delete.parents(".list-group-item")
-  var pk = li.data('pk');
-  var uuid = li.data('uuid');
-  $.ajax({
-    url: "/communities/progs/delete_member/" + pk + "/" + uuid + "/",
-    success: function () {
-      member_delete.parent().html("<span class='member_create' style='cursor:pointer;color:rgba(0, 0, 0, 1);'>Восстановить</span>");
-      li.addClass("style_removed_object");
-    }});
-  });
+  $('#ajax').on('click', '.member_create', function() {
+   var member_create = $(this); var li = member_create.parents(".list-group-item"); var pk = li.data('pk'); var uuid = li.data('uuid'); $.ajax({ url: "/communities/progs/add_member/" + pk + "/" + uuid + "/", success: function () { member_create.parent().html("<span class='show_staff_window' style='cursor:pointer'>Изменить полномочия</span> |<span class='member_delete' style='cursor:pointer'>Удалить</span>"); li.removeClass("style_removed_object"); }});
+   });
+  $('#ajax').on('click', '.member_delete', function() {
+   var member_delete = $(this); var li = member_delete.parents(".list-group-item"); var pk = li.data('pk'); var uuid = li.data('uuid'); $.ajax({ url: "/communities/progs/delete_member/" + pk + "/" + uuid + "/", success: function () { member_delete.parent().html("<span class='member_create' style='cursor:pointer;color:rgba(0, 0, 0, 1);'>Восстановить</span>"); li.addClass("style_removed_object"); }});
+   });
 </script>
 {% endblock %}

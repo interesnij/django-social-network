@@ -189,9 +189,6 @@ class User(AbstractUser):
     def is_invited_to_community_with_name(self, community_name):
         return Community.is_user_with_username_invited_to_community_with_name(username=self.username, community_name=community_name)
 
-    def is_administrator_of_community_with_name(self, community_name):
-        return self.communities_memberships.filter(community__name=community_name, is_administrator=True).exists()
-
     def is_staff_of_community_with_name(self, community_name):
         return self.is_administrator_of_community_with_name(community_name=community_name) or self.is_moderator_of_community_with_name(community_name=community_name)
 
@@ -221,8 +218,20 @@ class User(AbstractUser):
     def is_creator_of_community_with_name(self, community_name):
         return self.created_communities.filter(name=community_name).exists()
 
+    def is_staff_of_community_with_name(self, community_name):
+        return self.is_administrator_of_community_with_name(community_name=community_name) or self.is_moderator_of_community_with_name(community_name=community_name)
+
+    def is_administrator_of_community_with_name(self, community_name):
+        return self.communities_memberships.filter(community__name=community_name, is_administrator=True).exists()
+
     def is_moderator_of_community_with_name(self, community_name):
         return self.communities_memberships.filter(community__name=community_name, is_moderator=True).exists()
+
+    def is_advertiser_of_community_with_name(self, community_name):
+        return self.communities_memberships.filter(community__name=community_name, is_advertiser=True).exists()
+
+    def is_editor_of_community_with_name(self, community_name):
+        return self.communities_memberships.filter(community__name=community_name, is_editor=True).exists()
 
     def is_following_user_with_id(self, user_id):
         return self.follows.filter(followed_user__id=user_id).exists()
@@ -238,12 +247,6 @@ class User(AbstractUser):
 
     def is_suspended(self):
         return self.moderation_penalties.filter(type=ModerationPenalty.TYPE_SUSPENSION, expiration__gt=timezone.now()).exists()
-
-    def is_administrator_of_community_with_name(self, community_name):
-        return self.communities_memberships.filter(community__name=community_name, is_administrator=True).exists()
-
-    def is_staff_of_community_with_name(self, community_name):
-        return self.is_administrator_of_community_with_name(community_name=community_name) or self.is_moderator_of_community_with_name(community_name=community_name)
 
     def is_track_exists(self, track_id):
         return self.user_playlist.filter(track__id=track_id, name="my_first_generic_playlist_number_12345678900000000").exists()
@@ -603,7 +606,7 @@ class User(AbstractUser):
         if self.has_favorite_community_with_name(community_name):
             self.unfavorite_community_with_name(community_name=community_name)
         community_to_leave.remove_member(self)
-        return community_to_leave 
+        return community_to_leave
 
     def _make_get_votes_query(self, item):
         reactions_query = Q(parent_id=item.pk)
