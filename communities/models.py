@@ -253,6 +253,12 @@ class Community(models.Model):
         return User.objects.filter(community_administrators_query)
 
     @classmethod
+    def get_community_with_name_moderatiors(cls, community_name):
+        community_administrators_query = Q(communities_memberships__community__name=community_name, communities_memberships__is_moderatior=True)
+        User = get_user_model()
+        return User.objects.filter(community_administrators_query)
+
+    @classmethod
     def get_community_with_name_creator(cls, community_id):
         community = Community.objects.get(pk=community_id)
         User = get_user_model()
