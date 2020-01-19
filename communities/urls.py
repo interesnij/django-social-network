@@ -1,7 +1,6 @@
 from django.conf.urls import url, include
 from communities.views.list import AllCommunities, CommunityMembersView
 from communities.views.details import ItemCommunity, ItemsCommunity, CommunityDetail, CommunityDetailReload
-from communities.views.progs import CommunityCreate, CommunitiesCatsView, GygView, CommunityMemberCreate, CommunityMemberDelete
 
 
 urlpatterns = [
@@ -14,12 +13,7 @@ urlpatterns = [
     url(r'^item/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', ItemCommunity.as_view(), name='community_item'),
     url(r'^list/(?P<pk>\d+)/$', ItemsCommunity.as_view(), name="community_item_list"),
 
-    url(r'^add/$', CommunityCreate.as_view(), name="add_community"),
-    url(r'^cat/(?P<order>\d+)/$',CommunitiesCatsView.as_view(), name="communities_cats"),
-    url(r'^gygyg/$', GygView.as_view(), name="community_ggg"),
-    url(r'^add_community_member/(?P<pk>\d+)/$', CommunityMemberCreate.as_view(), name="add_community_member"),
-    url(r'^delete_community_member/(?P<pk>\d+)/$', CommunityMemberDelete.as_view(), name="delete_community_member"),
-
     url(r'^manage/', include('communities.url.manage')),
+    url(r'^progs/', include('communities.url.progs')),
 
 ]
