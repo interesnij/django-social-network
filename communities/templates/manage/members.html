@@ -45,8 +45,8 @@
                                 <a href="{% url 'user' pk=object.pk %}" class="ajax" data-html="#ajax">
                                     <h6 class="my-0 mt-1">{{ object.get_full_name }}</h6>
                                 </a>
-                                {% if object in administrators or object.pk == creator.pk %}
-                                  <span class="">{% if object.pk == creator.pk %}Владелец{% else %}Администратор{% endif %}</span>
+                                {% if object in administrators or object == community.creator %}
+                                  <span class="">{% if object == community.creator %}Владелец{% else %}Администратор{% endif %}</span>
                                 {% endif %}
                                 <span class="small"><a href="">Дать полномочия</a> | <a href="">Удалить из сообщества</a></span>
                             </div>
