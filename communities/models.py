@@ -318,7 +318,7 @@ class Community(models.Model):
 
     def get_staff_members(self):
         staff_members_query = Q(communities_memberships__community_id=self.pk)
-        staff_members_query.add(Q(communities_memberships__is_administrator=True) | Q(communities_memberships__is_moderator=True), Q.AND)
+        staff_members_query.add(Q(communities_memberships__is_administrator=True) | Q(communities_memberships__is_moderator=True)| Q(communities_memberships__is_advertiser=True)| Q(communities_memberships__is_editor=True), Q.AND)
         User = get_user_model()
         return User.objects.filter(staff_members_query)
 
