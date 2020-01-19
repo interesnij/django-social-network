@@ -31,9 +31,8 @@
             <div class="card-body px-0 py-0">
                 <ul class="list-group members-container">
                     {% for object in object_list %}
-                    {% if object.communities_memberships.is_administrator %}
-                      это админ
-                    {% endif %}
+                    {{ object.communities_memberships }}
+                      
                     <li class="list-group-item">
                         <div class="media">
                             <figure>
