@@ -60,7 +60,6 @@ class CommunityMemberCreate(View):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.user = User.objects.get(uuid=self.kwargs["uuid"])
 		new_member = self.user.join_community_with_name(self.community.name)
-		self.community.notification_new_member(request.user)
 		return HttpResponse("!")
 
 class CommunityMemberDelete(View):
