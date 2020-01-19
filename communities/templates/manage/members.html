@@ -36,7 +36,7 @@
                 <ul class="list-group members-container">
                     {% for object in object_list %}
 
-                    <li class="list-group-item" data-pk="{{ object.pk }}">
+                    <li class="list-group-item" data-uuid="{{ object.uuid }}" data-pk="{{ community.pk }}">
                         <div class="media">
                             <figure>
                               {% if object.get_avatar %}
@@ -128,8 +128,9 @@ $('#ajax').on('click', '.member_create', function() {
   var member_create = $(this);
   var li = member_delete.parents(".list-group-item");
   var pk = li.data('pk');
+  var uuid = li.data('uuid');
   $.ajax({
-    url: "/communities/progs/create_member/" + pk + "/",
+    url: "/communities/progs/create_member/" + pk + "/" + uuid + "/",
     success: function () {
       member_delete.parent().html("<span class='show_staff_window' style='cursor:pointer'>Изменить полномочия</span> |<span class='member_delete' style='cursor:pointer'>Удалить</span>");
       li.removeClass("style_removed_object");
@@ -140,8 +141,9 @@ $('#ajax').on('click', '.member_delete', function() {
   var member_delete = $(this);
   var li = member_delete.parents(".list-group-item")
   var pk = li.data('pk');
+  var uuid = li.data('uuid');
   $.ajax({
-    url: "/communities/progs/delete_member/" + pk + "/",
+    url: "/communities/progs/delete_member/" + pk + "/" + uuid + "/",
     success: function () {
       member_delete.parent().html("<span class='member_create' style='cursor:pointer;opacity:1'>Восстановить</span>");
       li.addClass("style_removed_object");

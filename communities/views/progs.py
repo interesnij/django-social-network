@@ -57,7 +57,8 @@ class CommunityMemberCreate(View):
 	success_url = "/"
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		new_member = request.user.join_community_with_name(self.community.name)
+		self.user = User.objects.get(uuid=self.kwargs["uuid"])
+		new_member = self.user.join_community_with_name(self.community.name)
 		self.community.notification_new_member(request.user)
 		return HttpResponse("!")
 
@@ -65,7 +66,8 @@ class CommunityMemberDelete(View):
 	success_url = "/"
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		request.user.leave_community_with_name(self.community.name)
+		self.user = User.objects.get(uuid=self.kwargs["uuid"])
+		self.user.leave_community_with_name(self.community.name)
 		return HttpResponse("!")
 
 
