@@ -6,7 +6,7 @@ from users.models import User
 class CommunityMembersView(ListView):
 	template_name="members.html"
 	model=Community
-	paginate_by=1
+	paginate_by=15
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
