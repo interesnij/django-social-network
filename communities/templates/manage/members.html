@@ -32,7 +32,7 @@
                 <ul class="list-group members-container">
                     {% for object in object_list %}
                     {{ object.communities_memberships.is_administrator }} | {{ object.communities_memberships.created }}
-
+                    {% if community.communities_memberships == user %}rgreg{% endif %}
                     <li class="list-group-item">
                         <div class="media">
                             <figure>
