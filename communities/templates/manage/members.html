@@ -31,8 +31,8 @@
             <div class="card-body px-0 py-0">
                 <ul class="list-group members-container">
                     {% for object in object_list %}
-                    
-                    {% if community.communities_memberships.is_administrator == user %}rgreg{% endif %}
+
+                    {% if community.memberships.is_administrator == user %}rgreg{% endif %}
                     <li class="list-group-item">
                         <div class="media">
                             <figure>
