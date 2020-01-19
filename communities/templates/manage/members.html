@@ -47,11 +47,34 @@
                                 </a>
                                 {% if object in administrators or object == community.creator %}
                                   <span class="">
-                                    {% if object == community.creator %}Владелец{% else %}Администратор{% endif %}
+                                    {% if object == community.creator %}Владелец
+                                    {% else %}Администратор<br>
+                                    <span class="small"><a href="">Дать полномочия</a> | <a href="">Удалить из сообщества</a></span>
+                                    {% endif %}
                                     <br>
                                   </span>
                                 {% endif %}
-                                <span class="small"><a href="">Дать полномочия</a> | <a href="">Удалить из сообщества</a></span>
+                                {% if object in moderators %}
+                                  <span class="">
+                                    Модератор<br>
+                                    <span class="small"><a href="">Редактировать</a> | <a href="">Разжаловать</a></span>
+                                    <br>
+                                  </span>
+                                {% endif %}
+                                {% if object in editors %}
+                                  <span class="">
+                                    Редактор<br>
+                                    <span class="small"><a href="">Редактировать</a> | <a href="">Разжаловать</a></span>
+                                    <br>
+                                  </span>
+                                {% endif %}
+                                {% if object in advertisers %}
+                                  <span class="">
+                                    Рекламодатель<br>
+                                    <span class="small"><a href="">Редактировать</a> | <a href="">Разжаловать</a></span>
+                                    <br>
+                                  </span>
+                                {% endif %}
                             </div>
                         </div>
                     </li>
