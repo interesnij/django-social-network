@@ -133,8 +133,8 @@ $('#ajax').on('click', '.member_create', function() {
     success: function () {
       member_delete.parent().html("<span class='show_staff_window' style='cursor:pointer'>Изменить полномочия</span> |<span class='member_delete' style='cursor:pointer'>Удалить</span>");
       li.removeClass("style_removed_object");
-    });
-});
+    }});
+  });
 
 $('#ajax').on('click', '.member_delete', function() {
   var member_delete = $(this);
