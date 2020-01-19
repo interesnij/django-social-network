@@ -31,9 +31,9 @@
             <div class="card-body px-0 py-0">
                 <ul class="list-group members-container">
                     {% for object in object_list %}
-                    1{{ community.memberships }}
-                    2{{ community.communitymembership }}
-                    3{{ community.communities_memberships }}
+                    1{{ community.memberships.is_administrator }}
+                    2{{ object.communities_memberships }}
+                    3{{ object.communities_memberships.is_administrator }}
                     <li class="list-group-item">
                         <div class="media">
                             <figure>
