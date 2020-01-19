@@ -31,7 +31,7 @@
             <div class="card-body px-0 py-0">
                 <ul class="list-group members-container">
                     {% for object in object_list %}
-                    {{ object.communities_memberships }} | {{ object.memberships }}
+                    {{ object.communities_memberships.is_administrator }} | {{ object.communities_memberships.created }}
 
                     <li class="list-group-item">
                         <div class="media">
