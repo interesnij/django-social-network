@@ -4,6 +4,7 @@ from django.views import View
 from django.http import HttpResponse, HttpResponseBadRequest
 from communities.forms import CommunityForm
 from gallery.models import Album
+from users.models import User
 
 
 class CommunityCreate(TemplateView):
