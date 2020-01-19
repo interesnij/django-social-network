@@ -273,12 +273,20 @@ class CommunityMemberManageView(ListView):
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.administrators = Community.get_community_with_name_administrators(self.community)
+		self.moderators = Community.get_community_with_name_moderators(self.community)
+		self.editors = Community.get_community_with_name_editors(self.community)
+		self.advertisers = Community.get_community_with_name_advertisers(self.community)
+		self.creator = Community.get_community_with_name_creator(self.community.pk)
 		return super(CommunityMemberManageView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		context=super(CommunityMemberManageView,self).get_context_data(**kwargs)
 		context["community"]=self.community
 		context["administrators"]=self.administrators
+		context["moderators"]=self.moderators
+		context["editors"]=self.editors
+		context["advertisers"]=self.advertisers
+		context["creator"]=self.creator
 		return context
 
 	def get_queryset(self):

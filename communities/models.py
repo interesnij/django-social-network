@@ -93,39 +93,24 @@ class Community(models.Model):
 
     @classmethod
     def is_user_with_username_member_of_community_with_name(cls, username, community_name):
-        """"
-        Есть ли пользователь в сообществе?
-        """
         return cls.objects.filter(name=community_name, memberships__user__username=username).exists()
 
     @classmethod
     def is_user_with_username_administrator_of_community_with_name(cls, user_id, community_name):
-        """"
-        Администратор ли пользователь в сообществе?
-        """
         return cls.objects.filter(name=community_name, memberships__user__id=user_id,
                                   memberships__is_administrator=True).exists()
 
     @classmethod
     def is_user_with_username_moderator_of_community_with_name(cls, username, community_name):
-        """"
-        Модератор ли пользователь в сообществе?
-        """
         return cls.objects.filter(name=community_name, memberships__user__username=username,
                                   memberships__is_moderator=True).exists()
 
     @classmethod
     def is_user_with_username_banned_from_community_with_name(cls, username, community_name):
-        """"
-        Забанен ли пользователь в сообществе?
-        """
         return cls.objects.filter(name=community_name, banned_users__username=username).exists()
 
     @classmethod
     def is_community_with_name_invites_enabled(cls, community_name):
-        """"
-        Нужно ли приглашение в сообщество?
-        """
         return cls.objects.filter(name=community_name, invites_enabled=True).exists()
 
     @classmethod
@@ -138,26 +123,17 @@ class Community(models.Model):
 
     @classmethod
     def get_community_with_name_for_user_with_id(cls, community_name, user_id):
-        """"
-        Получаем сообщества для пользователя?
-        """
         query = Q(name=community_name, is_deleted=False)
         query.add(~Q(banned_users__id=user_id), Q.AND)
         return cls.objects.get(query)
 
     @classmethod
     def search_communities_with_query(cls, query):
-        """"
-        Возврат списка сообществ при поиске
-        """
         query = cls._make_search_communities_query(query=query)
         return cls.objects.filter(query)
 
     @classmethod
     def _make_search_communities_query(cls, query):
-        """"
-        Метод, получающий список сообществ при поиске
-        """
         communities_query = Q(name__icontains=query)
         communities_query.add(Q(title__icontains=query), Q.OR)
         communities_query.add(Q(is_deleted=False), Q.AND)
@@ -254,8 +230,7 @@ class Community(models.Model):
 
     @classmethod
     def _get_trending_communities_with_query(cls, query):
-        return cls.objects.annotate(Count('memberships')).filter(query).order_by(
-            '-memberships__count', '-created')
+        return cls.objects.annotate(Count('memberships')).filter(query).order_by('-memberships__count', '-created')
 
     @classmethod
     def _make_trending_communities_query(cls, category_name=None):
@@ -271,90 +246,71 @@ class Community(models.Model):
         User = get_user_model()
         return User.objects.filter(community_members_query)
 
-
-
-    EXCLUDE_COMMUNITY_ADMINISTRATORS_KEYWORD = 'administrators'
-    EXCLUDE_COMMUNITY_MODERATORS_KEYWORD = 'moderators'
-
-    @classmethod
-    def search_community_with_name_members(cls, community_name, query):
-        """"
-        Поиск по участникам группы
-        """
-        db_query = Q(communities_memberships__community__name=community_name)
-
-        community_members_query = Q(communities_memberships__user__username__icontains=query)
-        community_members_query.add(Q(communities_memberships__user__profile__name__icontains=query), Q.OR)
-
-        db_query.add(community_members_query, Q.AND)
-
-        User = get_user_model()
-        return User.objects.filter(db_query)
-
     @classmethod
     def get_community_with_name_administrators(cls, community_name):
-        community_administrators_query = Q(communities_memberships__community__name=community_name,
-                                           communities_memberships__is_administrator=True)
+        community_administrators_query = Q(communities_memberships__community__name=community_name, communities_memberships__is_administrator=True)
         User = get_user_model()
         return User.objects.filter(community_administrators_query)
 
-
     @classmethod
-    def search_community_with_name_administrators(cls, community_name, query):
-        """"
-        Поиск по администраторам группы
-        """
-        db_query = Q(communities_memberships__community__name=community_name,
-                     communities_memberships__is_administrator=True)
-
-        community_members_query = Q(communities_memberships__user__username__icontains=query)
-        community_members_query.add(Q(communities_memberships__user__profile__name__icontains=query), Q.OR)
-
-        db_query.add(community_members_query, Q.AND)
+    def get_community_with_name_creator(cls, community_id):
+        community = Community.objects.get(pk=community_id)
         User = get_user_model()
-        return User.objects.filter(db_query)
+        return User.objects.filter(id=community__creator__id)
 
     @classmethod
-    def get_community_with_name_moderators(cls, community_name):
-        community_moderators_query = Q(communities_memberships__community__name=community_name,
-                                       communities_memberships__is_moderator=True)
+    def get_community_with_name_editors(cls, community_name):
+        community_moderators_query = Q(communities_memberships__community__name=community_name, communities_memberships__is_editor=True)
+        User = get_user_model()
+        return User.objects.filter(community_moderators_query)
+
+    @classmethod
+    def get_community_with_name_advertisers(cls, community_name):
+        community_moderators_query = Q(communities_memberships__community__name=community_name, communities_memberships__is_advertiser=True)
         User = get_user_model()
         return User.objects.filter(community_moderators_query)
 
     @classmethod
     def get_community_with_name_follows(cls, community_name):
-        community_moderators_query = Q(communities_memberships__community__name=community_name,
-                                       communities_memberships__is_moderator=True)
+        community_moderators_query = Q(communities_memberships__community__name=community_name, communities_memberships__is_moderator=True)
         User = get_user_model()
         return User.objects.filter(community_moderators_query)
-
-    @classmethod
-    def search_community_with_name_moderators(cls, community_name, query):
-        """"
-        Поиск по модераторам группы
-        """
-        db_query = Q(communities_memberships__community__name=community_name,
-                     communities_memberships__is_moderator=True)
-
-        community_members_query = Q(communities_memberships__user__username__icontains=query)
-        community_members_query.add(Q(communities_memberships__user__profile__name__icontains=query), Q.OR)
-
-        db_query.add(community_members_query, Q.AND)
-        User = get_user_model()
-        return User.objects.filter(db_query)
 
     @classmethod
     def get_community_with_name_banned_users(cls, community_name):
         community = Community.objects.get(name=community_name)
         community_members_query = Q()
-
         return community.banned_users.filter(community_members_query)
 
     @classmethod
+    def search_community_with_name_members(cls, community_name, query):
+        db_query = Q(communities_memberships__community__name=community_name)
+        community_members_query = Q(communities_memberships__user__username__icontains=query)
+        community_members_query.add(Q(communities_memberships__user__profile__name__icontains=query), Q.OR)
+        db_query.add(community_members_query, Q.AND)
+        User = get_user_model()
+        return User.objects.filter(db_query)
+
+    @classmethod
+    def search_community_with_name_moderators(cls, community_name, query):
+        db_query = Q(communities_memberships__community__name=community_name, communities_memberships__is_moderator=True)
+        community_members_query = Q(communities_memberships__user__username__icontains=query)
+        community_members_query.add(Q(communities_memberships__user__profile__name__icontains=query), Q.OR)
+        db_query.add(community_members_query, Q.AND)
+        User = get_user_model()
+        return User.objects.filter(db_query)
+
+    @classmethod
+    def search_community_with_name_administrators(cls, community_name, query):
+        db_query = Q(communities_memberships__community__name=community_name, communities_memberships__is_administrator=True)
+        community_members_query = Q(communities_memberships__user__username__icontains=query)
+        community_members_query.add(Q(communities_memberships__user__profile__name__icontains=query), Q.OR)
+        db_query.add(community_members_query, Q.AND)
+        User = get_user_model()
+        return User.objects.filter(db_query)
+
+    @classmethod
     def search_community_with_name_banned_users(cls, community_name, query):
-        """"
-        Поиск по черному списку группы
-        """
         community = Community.objects.get(name=community_name)
         community_banned_users_query = Q(username__icontains=query)
         community_banned_users_query.add(Q(profile__name__icontains=query), Q.OR)
@@ -362,8 +318,7 @@ class Community(models.Model):
 
     def get_staff_members(self):
         staff_members_query = Q(communities_memberships__community_id=self.pk)
-        staff_members_query.add(
-            Q(communities_memberships__is_administrator=True) | Q(communities_memberships__is_moderator=True), Q.AND)
+        staff_members_query.add(Q(communities_memberships__is_administrator=True) | Q(communities_memberships__is_moderator=True), Q.AND)
         User = get_user_model()
         return User.objects.filter(staff_members_query)
 
@@ -420,80 +375,46 @@ class Community(models.Model):
         return CommunityInvite.create_community_invite(creator=creator, invited_user=invited_user, community=self)
 
     def create_user_ban_log(self, source_user, target_user):
-        return self._create_log(action_type='B',
-                                source_user=source_user,
-                                target_user=target_user)
+        return self._create_log(action_type='B', source_user=source_user, target_user=target_user)
 
     def create_user_unban_log(self, source_user, target_user):
-        return self._create_log(action_type='U',
-                                source_user=source_user,
-                                target_user=target_user)
+        return self._create_log(action_type='U', source_user=source_user, target_user=target_user)
 
     def create_add_administrator_log(self, source_user, target_user):
-        return self._create_log(action_type='AA',
-                                source_user=source_user,
-                                target_user=target_user)
+        return self._create_log(action_type='AA', source_user=source_user, target_user=target_user)
 
     def create_remove_administrator_log(self, source_user, target_user):
-        return self._create_log(action_type='RA',
-                                source_user=source_user,
-                                target_user=target_user)
+        return self._create_log(action_type='RA', source_user=source_user, target_user=target_user)
 
     def create_add_moderator_log(self, source_user, target_user):
-        return self._create_log(action_type='AM',
-                                source_user=source_user,
-                                target_user=target_user)
+        return self._create_log(action_type='AM', source_user=source_user, target_user=target_user)
 
     def create_remove_moderator_log(self, source_user, target_user):
-        return self._create_log(action_type='RM',
-                                source_user=source_user,
-                                target_user=target_user)
+        return self._create_log(action_type='RM', source_user=source_user, target_user=target_user)
 
     def create_remove_post_log(self, source_user, target_user):
-        return self._create_log(action_type='RP',
-                                source_user=source_user,
-                                target_user=target_user)
+        return self._create_log(action_type='RP', source_user=source_user, target_user=target_user)
 
     def create_remove_post_comment_log(self, source_user, target_user):
-        return self._create_log(action_type='RPC',
-                                source_user=source_user,
-                                target_user=target_user)
+        return self._create_log(action_type='RPC', source_user=source_user, target_user=target_user)
 
     def create_remove_post_comment_reply_log(self, source_user, target_user):
-        return self._create_log(action_type='RPCR',
-                                source_user=source_user,
-                                target_user=target_user)
+        return self._create_log(action_type='RPCR', source_user=source_user, target_user=target_user)
 
     def create_disable_post_comments_log(self, source_user, target_user, post):
-        return self._create_log(action_type='DPC',
-                                post=post,
-                                source_user=source_user,
-                                target_user=target_user)
+        return self._create_log(action_type='DPC', post=post, source_user=source_user, target_user=target_user)
 
     def create_enable_post_comments_log(self, source_user, target_user, post):
-        return self._create_log(action_type='EPC',
-                                post=post,
-                                source_user=source_user,
-                                target_user=target_user)
+        return self._create_log(action_type='EPC', post=post, source_user=source_user, target_user=target_user)
 
     def create_open_post_log(self, source_user, target_user, post):
-        return self._create_log(action_type='OP',
-                                post=post,
-                                source_user=source_user,
-                                target_user=target_user)
+        return self._create_log(action_type='OP', post=post, source_user=source_user, target_user=target_user)
 
     def create_close_post_log(self, source_user, target_user, post):
-        return self._create_log(action_type='CP',
-                                post=post,
-                                source_user=source_user,
-                                target_user=target_user)
+        return self._create_log(action_type='CP', post=post, source_user=source_user, target_user=target_user)
 
     def _create_log(self, action_type, source_user, target_user, post=None):
-        return CommunityModeratorUserActionLog.create_community_log(community=self,
-                                                                    post=post,
-                                                                    target_user=target_user,
-                                                                    action_type=action_type,
-                                                                    source_user=source_user)
+        return CommunityModeratorUserActionLog.create_community_log(community=self, post=post, target_user=target_user, action_type=action_type, source_user=source_user)
 
     def __str__(self):
         return self.name
