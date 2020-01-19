@@ -126,7 +126,7 @@ $(document).ready(function(){
 
 $('#ajax').on('click', '.member_create', function() {
   var member_create = $(this);
-  var li = member_delete.parents(".list-group-item");
+  var li = member_create.parents(".list-group-item");
   var pk = li.data('pk');
   var uuid = li.data('uuid');
   $.ajax({
