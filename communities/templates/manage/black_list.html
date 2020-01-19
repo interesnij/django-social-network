@@ -8,6 +8,8 @@
 <div class="container mt-4 main-container">
 <div class="row">
     <div class="col-lg-7 col-md-8 col-sm-12 order-1">
+
+      {% if object_list %}
         <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="Поиск по черному списку" aria-label="Recipient's username">
             <div class="input-group-append">
@@ -28,7 +30,7 @@
             </div>
             <br><br>
             <div class="card-body px-0 py-0">
-              {% if object_list %}
+
                 <ul class="list-group black_list-container">
                     {% for object in object_list %}
                     <li class="list-group-item">
@@ -57,18 +59,19 @@
                         {% endif %}
                     </div>
                 </ul>
-                {% else %}
-                <div class="col-12 col-md-12 col-lg-8">
-                  <div class="card mb-4" style="align-items: center;justify-content:center;">
-                    <div class="card-body">
-                      <svg fill="currentColor" class="thumb_big svg_default" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
-                    </div>
-                    <h6 style="margin-bottom: 20px;margin: 20px;">В черном списке никого нет</h6>
-                  </div>
-                </div>
-                {% endif %}
+
             </div>
         </div>
+        {% else %}
+        <div class="col-12 col-md-12 col-lg-8">
+          <div class="card mb-4" style="align-items: center;justify-content:center;">
+            <div class="card-body">
+              <svg fill="currentColor" class="thumb_big svg_default" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+            </div>
+            <h6 style="margin-bottom: 20px;margin: 20px;">В черном списке никого нет</h6>
+          </div>
+        </div>
+        {% endif %}
     </div>
 
     {% include 'manage/menu_members.html' %}
