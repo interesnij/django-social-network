@@ -27,9 +27,13 @@
                 </div>
             </div>
             <br><br>
+
             <div class="card-body px-0 py-0">
                 <ul class="list-group members-container">
                     {% for object in object_list %}
+                    {% if object.communities_memberships.is_is_administrator %}
+                      это админ
+                    {% endif %}
                     <li class="list-group-item">
                         <div class="media">
                             <figure>
@@ -43,7 +47,7 @@
                                 <a href="{% url 'user' pk=object.pk %}" class="ajax" data-html="#ajax">
                                     <h6 class="my-0 mt-1">{{ object.get_full_name }}</h6>
                                 </a>
-                                <span class="small"><a href="">Разжаловать</a> | <a href="">Редактировать</a></span>
+                                <span class="small"><a href="">Дать полномочия</a> | <a href="">Удалить из сообщества</a></span>
                             </div>
                         </div>
                     </li>

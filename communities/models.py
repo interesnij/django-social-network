@@ -507,6 +507,8 @@ class CommunityMembership(models.Model):
     community = models.ForeignKey(Community, db_index=False, on_delete=models.CASCADE, related_name='memberships', null=False, blank=False, verbose_name="Сообщество")
     is_administrator = models.BooleanField(default=False, verbose_name="Это администратор")
     is_moderator = models.BooleanField(default=False, verbose_name="Это модератор")
+    is_editor = models.BooleanField(default=False, verbose_name="Это редактор")
+    is_advertiser = models.BooleanField(default=False, verbose_name="Это рекламодатель")
     created = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создано")
 
     def __str__(self):
