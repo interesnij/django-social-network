@@ -72,7 +72,7 @@
 
 <div class="card mb-4 community_fullscreen" style="display:none"><span class="community_fullscreen_hide"><img style="width:35px" src="{% static 'images/icons/close-24px.svg' %}" /></span><div id="community_loader" style="margin-top:30px"></div></div>
 <script>
-    $("#community_add").click(function() {$('#community_loader').html('').load("/communities/add/");$('.community_fullscreen').show();})
+    $("#community_add").click(function() {$('#community_loader').html('').load("/communities/add/progs/");$('.community_fullscreen').show();})
     $('.community_fullscreen_hide').on('click', function() {$('.community_fullscreen').hide();$('#community_loader').empty();
     });
 </script>
