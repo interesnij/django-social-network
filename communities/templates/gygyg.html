@@ -3,13 +3,7 @@
 {% block title %}Общество создается{% endblock %}
 {% block content %}
 
-<div class="col-md-8 col-lg-6 col-xl-5 mx-auto" style="display: flex;
-                                                       flex-flow: column nowrap;
-                                                       align-items: center;
-                                                       align-content: center;
-                                                       justify-content: center;
-                                                       margin-top: 70px;">
-
+<div class="col-md-8 col-lg-6 col-xl-5 mx-auto" style="display: flex; flex-flow: column nowrap; align-items: center; align-content: center; justify-content: center; margin-top: 70px;">
   <img style="width:120px;margin-bottom:5px" src="{% static 'images/icons/group-24px.svg' %}" />
 
   <br><br><br>
@@ -24,6 +18,6 @@ function Stells() {
   $('#ajax').html('').load("/communities/reload/" + {{ new_url }} + "/");
   $('title').text('{{ object.name }}');
 }
-setTimeout(Stells, 3000);
+setTimeout(Stells, 2000);
 </script>
 {% endblock %}
