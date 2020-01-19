@@ -6,7 +6,7 @@
 {% block content %}
 <style>
   .style_removed_object{
-    color: rgba(0, 0, 0, 0.7);
+    color: rgba(0, 0, 0, 0.6);
   }
 </style>
 <div class="container mt-4 main-container">
@@ -145,7 +145,7 @@ $('#ajax').on('click', '.member_delete', function() {
   $.ajax({
     url: "/communities/progs/delete_member/" + pk + "/" + uuid + "/",
     success: function () {
-      member_delete.parent().html("<span class='member_create' style='cursor:pointer;color:rgba(0, 0, 0, 0.7);'>Восстановить</span>");
+      member_delete.parent().html("<span class='member_create' style='cursor:pointer;color:rgba(0, 0, 0, 1);'>Восстановить</span>");
       li.addClass("style_removed_object");
     }});
   });
