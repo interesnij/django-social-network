@@ -28,7 +28,7 @@
             </div>
             <br><br>
             <div class="card-body px-0 py-0">
-                <ul class="list-group border-top border-bottom list-group-flush">
+                <ul class="list-group admins-container">
                     {% for object in object_list %}
                     <li class="list-group-item">
                         <div class="media">
@@ -48,6 +48,13 @@
                         </div>
                     </li>
                     {% endfor %}
+                    <div class="admins_load col-12 col-md-12">
+                        {% if page_obj.has_next  %}
+                        <a style="display:flex;justify-content:center;" class="infinite-more-link" href="/communities/manage/{{ community.pk }}/admins/?page={{ page_obj.next_page_number }}">
+                            <img style="width: 30px;" src="{% static 'images/loading.gif' %}">
+                        </a>
+                        {% endif %}
+                    </div>
                 </ul>
             </div>
         </div>
@@ -56,4 +63,10 @@
    {% include 'manage/menu_members.html' %}
 </div>
 </div>
+
+<script>
+$(document).ready(function(){
+  var admins_infinite = new Waypoint.Infinite({element: $('.admins-container')[0], onBeforePageLoad: function() { $('.admins_load').show(); }, onAfterPageLoad: function($items) { $('.admins_load').hide(); }});
+});
+</script>
 {% endblock %}
