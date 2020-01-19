@@ -581,6 +581,12 @@ class User(AbstractUser):
         connection = User.objects.filter(query)
         return connection
 
+    def unfavorite_community_with_name(self, community_name):
+        check_can_unfavorite_community_with_name(user=self, community_name=community_name)
+        community_to_unfavorite = Community.objects.get(name=community_name)
+        self.favorite_communities.remove(community_to_unfavorite)
+        return community_to_unfavorite
+
     def join_community_with_name(self, community_name):
         check_can_join_community_with_name(user=self, community_name=community_name)
         community_to_join = Community.objects.get(name=community_name)
