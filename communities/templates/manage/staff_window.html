@@ -60,6 +60,7 @@ $('.add_staff_options').click(function() {
     var uuid = '{{ user.uuid }}';
     var pk = {{ community.pk }};
     if (document.getElementById('user_moderator').checked) {
+    {% if notmoderator %}
     $.ajax({
         url: "/communities/progs/add_moderator/" + pk + "/" + uuid + "/",
         success: function(data) {
@@ -68,6 +69,10 @@ $('.add_staff_options').click(function() {
           $('#load_staff_window').empty();
         },
     })
+    {% else %}
+    $('.manage_window_fullscreen').hide();
+    $('#load_staff_window').empty();
+    {% endif %}
   }else if(document.getElementById('user_editor').checked){
 
   }
