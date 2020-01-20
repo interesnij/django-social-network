@@ -14,4 +14,8 @@ urlpatterns = [
     url(r'^delete_admin/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityAdminDelete.as_view()),
     url(r'^add_moderator/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityModerCreate.as_view()),
     url(r'^delete_moderator/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityModerDelete.as_view()),
+    url(r'^add_editor/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityEditorCreate.as_view()),
+    url(r'^delete_editor/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityEditorDelete.as_view()),
+    url(r'^add_advertiser/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityAdvertiserCreate.as_view()),
+    url(r'^delete_advertiser/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityAdvertiserDelete.as_view()),
 ]

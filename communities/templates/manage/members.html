@@ -189,5 +189,31 @@ $('#ajax').on('click', '.remove_moderator', function() {
     }
   });
 });
+$('#ajax').on('click', '.remove_editor', function() {
+  var remove_admin = $(this);
+  var li = remove_admin.parents(".list-group-item");
+  var pk = li.data('pk');
+  var uuid = li.data('uuid');
+  $.ajax({
+    url: "/communities/progs/delete_editor/" + pk + "/" + uuid + "/",
+    success: function () {
+      remove_admin.parent().parent().addClass("small").html("<span class='show_staff_window' style='cursor:pointer'>Назначить руководителем</span> | <span class='member_delete' style='cursor:pointer'>Удалить</span>");
+      $.toast({heading: 'Информация',text: 'Редактор "{{ user.get_full_name}}" успешно лишен полномочий в сообществе "{{ community.name }}"!',showHideTransition: 'fade',icon: 'info'});
+    }
+  });
+});
+$('#ajax').on('click', '.remove_advertiser', function() {
+  var remove_admin = $(this);
+  var li = remove_admin.parents(".list-group-item");
+  var pk = li.data('pk');
+  var uuid = li.data('uuid');
+  $.ajax({
+    url: "/communities/progs/delete_advertiser/" + pk + "/" + uuid + "/",
+    success: function () {
+      remove_admin.parent().parent().addClass("small").html("<span class='show_staff_window' style='cursor:pointer'>Назначить руководителем</span> | <span class='member_delete' style='cursor:pointer'>Удалить</span>");
+      $.toast({heading: 'Информация',text: 'Редактор "{{ user.get_full_name}}" успешно лишен полномочий в сообществе "{{ community.name }}"!',showHideTransition: 'fade',icon: 'info'});
+    }
+  });
+});
 </script>
 {% endblock %}

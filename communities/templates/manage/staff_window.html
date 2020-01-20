@@ -75,13 +75,52 @@ $('.add_staff_options').click(function() {
     $('#load_staff_window').empty();
     {% endif %}
   }else if(document.getElementById('user_editor').checked){
-
+    {% if not editor %}
+    $.ajax({
+        url: "/communities/progs/add_editor/" + pk + "/" + uuid + "/",
+        success: function(data) {
+          $.toast({heading: 'Информация',text: 'Редактор "{{ user.get_full_name}}" успешно назначен в сообщество "{{ community.name }}"!',showHideTransition: 'fade',icon: 'info'});
+          $('.manage_window_fullscreen').hide();
+          $('#load_staff_window').empty();
+          $('.li_{{user.pk }} .staff_btn').removeClass("small").html("<span class='staff_btn'>Редактор<br><span class='small'><span class='show_staff_window' style='cursor:pointer'>Редактировать</span> | <span class='remove_editor' style='cursor:pointer'>Разжаловать</span></span><br></span>")
+        },
+    })
+    {% else %}
+    $('.manage_window_fullscreen').hide();
+    $('#load_staff_window').empty();
+    {% endif %}
   }
   else if(document.getElementById('user_administrator').checked){
-
+    {% if not administrator %}
+    $.ajax({
+        url: "/communities/progs/add_admin/" + pk + "/" + uuid + "/",
+        success: function(data) {
+          $.toast({heading: 'Информация',text: 'Администратор "{{ user.get_full_name}}" успешно назначен в сообщество "{{ community.name }}"!',showHideTransition: 'fade',icon: 'info'});
+          $('.manage_window_fullscreen').hide();
+          $('#load_staff_window').empty();
+          $('.li_{{user.pk }} .staff_btn').removeClass("small").html("<span class='staff_btn'>Администратор<br><span class='small'><span class='show_staff_window' style='cursor:pointer'>Редактировать</span> | <span class='remove_administrator' style='cursor:pointer'>Разжаловать</span></span><br></span>")
+        },
+    })
+    {% else %}
+    $('.manage_window_fullscreen').hide();
+    $('#load_staff_window').empty();
+    {% endif %}
   }
   else if(document.getElementById('user_advertiser').checked){
-
+    {% if not advertiser %}
+    $.ajax({
+        url: "/communities/progs/add_advertiser/" + pk + "/" + uuid + "/",
+        success: function(data) {
+          $.toast({heading: 'Информация',text: 'Рекламодатель "{{ user.get_full_name}}" успешно назначен в сообщество "{{ community.name }}"!',showHideTransition: 'fade',icon: 'info'});
+          $('.manage_window_fullscreen').hide();
+          $('#load_staff_window').empty();
+          $('.li_{{user.pk }} .staff_btn').removeClass("small").html("<span class='staff_btn'>Рекламодатель<br><span class='small'><span class='show_staff_window' style='cursor:pointer'>Редактировать</span> | <span class='remove_advertiser' style='cursor:pointer'>Разжаловать</span></span><br></span>")
+        },
+    })
+    {% else %}
+    $('.manage_window_fullscreen').hide();
+    $('#load_staff_window').empty();
+    {% endif %}
   };
 
 });

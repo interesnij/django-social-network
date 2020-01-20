@@ -342,7 +342,6 @@ class Community(models.Model):
         user_membership.is_advertiser = False
         user_membership.save()
         return user_membership
-
     def add_moderator(self, user):
         user_membership = self.memberships.get(user=user)
         user_membership.is_moderator = True
@@ -351,17 +350,42 @@ class Community(models.Model):
         user_membership.is_advertiser = False
         user_membership.save()
         return user_membership
+    def add_editor(self, user):
+        user_membership = self.memberships.get(user=user)
+        user_membership.is_moderator = False
+        user_membership.is_administrator = False
+        user_membership.is_editor = True
+        user_membership.is_advertiser = False
+        user_membership.save()
+        return user_membership
+    def add_advertiser(self, user):
+        user_membership = self.memberships.get(user=user)
+        user_membership.is_moderator = False
+        user_membership.is_administrator = False
+        user_membership.is_editor = False
+        user_membership.is_advertiser = True
+        user_membership.save()
+        return user_membership
 
     def remove_administrator(self, user):
         user_membership = self.memberships.get(user=user)
         user_membership.is_administrator = False
         user_membership.save(update_fields=['is_administrator'])
         return user_membership
-
     def remove_moderator(self, user):
         user_membership = self.memberships.get(user=user)
         user_membership.is_moderator = False
         user_membership.save(update_fields=['is_moderator'])
+        return user_membership
+    def remove_editor(self, user):
+        user_membership = self.memberships.get(user=user)
+        user_membership.is_editor = False
+        user_membership.save(update_fields=['is_editor'])
+        return user_membership
+    def remove_advertiser(self, user):
+        user_membership = self.memberships.get(user=user)
+        user_membership.is_advertiser = False
+        user_membership.save(update_fields=['is_advertiser'])
         return user_membership
 
     def add_member(self, user):
