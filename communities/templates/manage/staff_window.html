@@ -57,7 +57,7 @@
 </div>
 <script>
 $('.add_staff_options').click(function() {
-    var uuid = {{ user.uuid }};
+    var uuid = '{{ user.uuid }}';
     var pk = {{ community.pk }};
     if (document.getElementById('user_moderator').checked) {
     $.ajax({
