@@ -96,8 +96,9 @@ class CommunityFollowCreate(View):
 	success_url = "/"
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		new_follow = request.user.community_follow_user(self.community)
-		new_follow.notification_community_follow(request.user)
+		self.user = User.objects.get(uuid=self.kwargs["uuid"])
+		new_follow = self.user.community_follow_user(self.community)
+		new_follow.notification_community_follow(self.user)
 		return HttpResponse("!")
 
 
@@ -105,5 +106,6 @@ class CommunityFollowDelete(View):
 	success_url = "/"
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		request.user.community_unfollow_user(self.community)
+		self.user = User.objects.get(uuid=self.kwargs["uuid"])
+		self.user.community_unfollow_user(self.community)
 		return HttpResponse("!")

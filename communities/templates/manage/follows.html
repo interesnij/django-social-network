@@ -31,7 +31,7 @@
               {% if object_list %}
                 <ul class="list-group follows-container">
                     {% for object in object_list %}
-                    <li class="list-group-item">
+                    <li class="list-group-item li_{{object.pk }}" data-uuid="{{ object.uuid }}" data-pk="{{ community.pk }}">
                         <div class="media">
                             <figure>
                               {% if object.user.get_avatar %}
@@ -44,8 +44,9 @@
                                 <a href="{% url 'user' pk=object.user.pk %}" class="ajax" data-html="#ajax">
                                     <h6 class="my-0 mt-1">{{ object.user.get_full_name }}</h6>
                                 </a>
-                                <a href="" class="small">Одобрить</a>
-                                <a href="" class="small">Отклонить</a>
+                                <span class="small">
+                                  <span class="community_member_create" style="cursor:pointer">Одобрить</span> | <span class="community_follow_delete" style="cursor:pointer">Отклонить</span>
+                                </span>
                             </div>
                         </div>
                     </li>
