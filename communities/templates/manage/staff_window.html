@@ -9,9 +9,9 @@
         <div class="row ">
             <div class="col-lg-4 col-md-4">
               {% if user.get_avatar %}
-                <img src="{{ user.get_avatar.file.url }}" alt="">
+                <img style="width:100%;height:auto" src="{{ user.get_avatar.file.url }}" alt="">
               {% else %}
-                <svg fill="currentColor" class="svg_default" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+                <svg fill="currentColor" class="svg_default" style="width:100%;height:auto" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
               {% endif %}
             </div>
             <div class="col-lg-8 col-md-8">
@@ -25,23 +25,26 @@
         <div class="form-group ">
             <div class="custom-control custom-radio">
                 <input type="radio" name="radiogroup-1" {% if moderator %} checked="checked"{% endif %} class="custom-control-input" id="user_moderator">
-                <label class="custom-control-label" for="user_moderator"><h4>Модератор</h4></label>
-                <p style="padding-top:15px;font-size:15px">Может удалять добавленные пользователями материалы, управлять чёрным списком сообщества</p>
+                <label class="custom-control-label" for="user_moderator"><h6>Модератор</h6></label>
+                <p style="padding-top:12px;font-size:15px">Может удалять добавленные пользователями материалы, управлять чёрным списком сообщества</p>
             </div>
             <hr>
             <div class="custom-control custom-radio">
                 <input type="radio" name="radiogroup-1" {% if editor %} checked="checked"{% endif %} class="custom-control-input" id="user_editor">
-                <label class="custom-control-label" for="user_editor">Редактор</label>
+                <label class="custom-control-label" for="user_editor"><h6>Редактор</h6>
+                  <p style="padding-top:12px;font-size:15px">Может писать от имени сообщества, добавлять, удалять и редактировать контент, обновлять основную фотографию</p>
             </div>
             <hr>
             <div class="custom-control custom-radio">
                 <input type="radio" name="radiogroup-1"{% if administrator %} checked="checked"{% endif %} class="custom-control-input" id="user_adminidtrator">
-                <label class="custom-control-label" for="user_adminidtrator">Администратор</label>
+                <label class="custom-control-label" for="user_adminidtrator"><h6>Администратор</h6></label>
+                <p style="padding-top:12px;font-size:15px">Может назначать и снимать администраторов, изменять название и адрес сообщества</p>
             </div>
             <hr>
             <div class="custom-control custom-radio">
                 <input type="radio" name="radiogroup-1"{% if advertiser %} checked="checked"{% endif %} class="custom-control-input" id="user_advertiser">
-                <label class="custom-control-label" for="user_advertiser">Рекламодатель</label>
+                <label class="custom-control-label" for="user_advertiser"><h6>Рекламодатель</h6></label>
+                <p style="padding-top:12px;font-size:15px">Может размещать рекламные записи от имени сообщества</p>
             </div>
         </div>
         <br><hr>
