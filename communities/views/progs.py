@@ -88,6 +88,23 @@ class CommunityAdminDelete(View):
 		return HttpResponse("!")
 
 
+class CommunityModerCreate(View):
+	success_url = "/"
+	def get(self,request,*args,**kwargs):
+		self.community = Community.objects.get(pk=self.kwargs["pk"])
+		self.user = User.objects.get(uuid=self.kwargs["uuid"])
+		new_admin = self.community.add_moderator(self.user)
+		return HttpResponse("!")
+
+class CommunityModerDelete(View):
+	success_url = "/"
+	def get(self,request,*args,**kwargs):
+		self.community = Community.objects.get(pk=self.kwargs["pk"])
+		self.user = User.objects.get(uuid=self.kwargs["uuid"])
+		new_admin = self.community.remove_moderator(self.user)
+		return HttpResponse("!")
+
+
 class GygView(TemplateView):
 	template_name="gygyg.html"
 
