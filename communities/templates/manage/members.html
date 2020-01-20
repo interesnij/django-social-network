@@ -142,7 +142,7 @@
     var btn = $(this).parents(".list-group-item");
     var pk = btn.data("pk");
     var uuid = btn.data("uuid");
-    $('#load_staff_window').html('').load("/community/manage/staff_window/" + pk + "/" + uuid + "/");
+    $('#load_staff_window').html('').load("/communities/manage/staff_window/" + pk + "/" + uuid + "/");
     $('.manage_window_fullscreen').show();
   });
 
