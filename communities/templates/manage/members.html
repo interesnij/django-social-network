@@ -52,7 +52,7 @@
                 <ul class="list-group members-container">
                     {% for object in object_list %}
 
-                    <li class="list-group-item" data-uuid="{{ object.uuid }}" data-pk="{{ community.pk }}">
+                    <li class="list-group-item li_{{object.pk }}" data-uuid="{{ object.uuid }}" data-pk="{{ community.pk }}">
                         <div class="media">
                             <figure>
                               {% if object.get_avatar %}
@@ -68,7 +68,7 @@
                               {% if object in community.get_staff_members %}
 
                                 {% if object in administrators or object == community.creator %}
-                                  <span class="">
+                                  <span class="staff_btn">
                                     {% if object == community.creator %}Владелец
                                     {% else %}Администратор<br>
                                     <span class="small">
@@ -79,7 +79,7 @@
                                   </span>
                                 {% endif %}
                                 {% if object in moderators %}
-                                  <span class="">
+                                  <span class="staff_btn">
                                     Модератор<br>
                                     <span class="small">
                                       <span class="show_staff_window" style="cursor:pointer">Редактировать</span> | <span class="remove_moderator" style="cursor:pointer">Разжаловать</span>
@@ -88,7 +88,7 @@
                                   </span>
                                 {% endif %}
                                 {% if object in editors %}
-                                  <span class="">
+                                  <span class="staff_btn">
                                     Редактор<br>
                                     <span class="small">
                                       <span class="show_staff_window" style="cursor:pointer">Редактировать</span> | <span class="remove_editor" style="cursor:pointer">Разжаловать</span>
@@ -97,7 +97,7 @@
                                   </span>
                                 {% endif %}
                                 {% if object in advertisers %}
-                                  <span class="">
+                                  <span class="staff_btn">
                                     Рекламодатель<br>
                                     <span class="small">
                                       <span class="show_staff_window" style="cursor:pointer">Редактировать</span> | <span class="remove_advertiser" style="cursor:pointer">Разжаловать</span>
@@ -106,9 +106,11 @@
                                   </span>
                                 {% endif %}
                               {% else %}
+                              <span class="staff_btn">
                                 <span class="small">
                                   <span class="show_staff_window" style="cursor:pointer">Назначить руководителем</span> | <span class="member_delete" style="cursor:pointer">Удалить</span>
                                 </span>
+                              </span>
                               {% endif %}
                             </div>
                         </div>

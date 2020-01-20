@@ -67,6 +67,7 @@ $('.add_staff_options').click(function() {
           $.toast({heading: 'Информация',text: 'Модератор "{{ user.get_full_name}}" успешно назначен в сообщество "{{ community.name }}"!',showHideTransition: 'fade',icon: 'info'});
           $('.manage_window_fullscreen').hide();
           $('#load_staff_window').empty();
+          $('.li_{{object.pk }} .staff_btn').html("<span class='staff_btn'>Модератор<br><span class='small'><span class='show_staff_window' style='cursor:pointer'>Редактировать</span> | <span class='remove_moderator' style='cursor:pointer'>Разжаловать</span></span><br></span>")
         },
     })
     {% else %}
