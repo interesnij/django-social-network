@@ -17,7 +17,7 @@ urlpatterns = [
     url(r'^(?P<pk>[0-9]+)/follows/$', login_required(CommunityFollowsView.as_view()), name='community_follows'),
     url(r'^(?P<pk>[0-9]+)/members/$', login_required(CommunityMemberManageView.as_view()), name='community_member_manage'),
     url(r'^(?P<pk>[0-9]+)/editors/$', login_required(CommunityEditorsView.as_view()), name='community_editors'),
-    url(r'^(?P<pk>[0-9]+)/advertisers/$', login_required(CommunityAdvertisersView.as_view()), name='community_advertisers'),
+    url(r'^(?P<pk>[0-9]+)/rekl/$', login_required(CommunityAdvertisersView.as_view()), name='community_advertisers'),
 
     url(r'^staff_window/(?P<pk>[0-9]+)/(?P<uuid>[0-9a-f-]+)/$', login_required(CommunityStaffWindow.as_view())),
 ]

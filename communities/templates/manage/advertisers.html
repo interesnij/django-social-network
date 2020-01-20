@@ -4,6 +4,95 @@
 {% block title %}Рекламодатели сообщества - {{ community.name }}{% endblock %}
 
 {% block content %}
+<div class="container mt-4 main-container">
+<div class="row">
+    <div class="col-lg-7 col-md-8 col-sm-12 order-1">
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Поиск по рекламодателям" aria-label="Recipient's username">
+            <div class="input-group-append">
+                <button class="btn btn-outline-link" type="button">Искать</button>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <div class="media">
+                    <div class="media-body">
+                        <h5 class="mt-1">Рекламодатели сообщества -
+                            <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=community.pk %}" data-html="#ajax">
+                                {{ community.name }}
+                            </a>
+                        </h5>
+                    </div>
+                </div>
+            </div>
+            <br><br>
+            <div class="card-body px-0 py-0">
+              {% if object_list %}
+                <ul class="list-group advertisers-container">
+                    {% for object in object_list %}
+                    <li class="list-group-item li_{{object.pk }}" data-uuid="{{ object.uuid }}" data-pk="{{ community.pk }}">
+                        <div class="media">
+                            <figure>
+                              {% if object.get_avatar %}
+                                <img src="{{ object.get_avatar.file|thumbnail_url:'avatar' }}" style="border-radius:50px;width:50px;" alt="image">
+                              {% else %}
+                                <svg fill="currentColor" class="svg_default svg_default_50" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+                              {% endif %}
+                            </figure>
+                            <div class="media-body">
+                                <a href="{% url 'user' pk=object.pk %}" class="ajax" data-html="#ajax">
+                                    <h6 class="my-0 mt-1">{{ object.get_full_name }}</h6>
+                                </a>
+                                <span class="staff_btn">
+                                  Рекламодатель<br>
+                                  <span class="small">
+                                    <span class="show_staff_window" style="cursor:pointer">Редактировать</span> | <span class="remove_advertiser" style="cursor:pointer">Разжаловать</span>
+                                  </span>
+                                  <br>
+                                </span>
+                            </div>
+                        </div>
+                    </li>
+                    {% endfor %}
+                    <div class="advertisers_load col-12 col-md-12">
+                        {% if page_obj.has_next  %}
+                        <a style="display:flex;justify-content:center;" class="infinite-more-link" href="/communities/manage/{{ community.pk }}/advertisers/?page={{ page_obj.next_page_number }}">
+                            <img style="width: 30px;" src="{% static 'images/loading.gif' %}">
+                        </a>
+                        {% endif %}
+                    </div>
+                </ul>
+                {% else %}
+                <div class="col-12">
+                  <div class="card moder_empty" style="align-items: center;justify-content:center;">
+                    <div class="card-body">
+                      <svg fill="currentColor" class="thumb_big svg_default" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+                    </div>
+                    <h6 style="margin-bottom: 20px;margin: 20px;">Рекламодателей пока нет</h6>
+                  </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
 
+    {% include 'manage/menu_members.html' %}
+</div>
+</div>
+
+<div class="card mb-4 manage_window_fullscreen" style="display:none">
+  <span class="manage_window_fullscreen_hide">
+    <svg class="svg_default svg_default_30" fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+  </span>
+  <div id="load_staff_window" style="margin-top:30px"></div>
+</div>
+
+<script>
+$(document).ready(function(){
+  var advertisers_infinite = new Waypoint.Infinite({element: $('.advertisers-container')[0], onBeforePageLoad: function() { $('.advertisers_load').show(); }, onAfterPageLoad: function($items) { $('.advertisers_load').hide(); }});
+});
+</script>
+
+{% include 'manage/staff_script.html' %}
 
 {% endblock %}
