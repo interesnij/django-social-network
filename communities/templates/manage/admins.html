@@ -30,7 +30,7 @@
             <div class="card-body px-0 py-0">
                 <ul class="list-group admins-container">
                     {% for object in object_list %}
-                    <li class="list-group-item">
+                    <li class="list-group-item li_{{object.pk }}" data-uuid="{{ object.uuid }}" data-pk="{{ community.pk }}">
                         <div class="media">
                             <figure>
                               {% if object.get_avatar %}
@@ -43,7 +43,17 @@
                                 <a href="{% url 'user' pk=object.pk %}" class="ajax" data-html="#ajax">
                                     <h6 class="my-0 mt-1">{{ object.get_full_name }}</h6>
                                 </a>
-                                <span class="small"><a href="">Разжаловать</a> | <a href="">Редактировать</a></span>
+                                <span class="staff_btn">
+                                  {% if object == community.creator %}
+                                    Владелец
+                                  {% else %}
+                                    Администратор<br>
+                                    <span class="small">
+                                      <span class="show_staff_window" style="cursor:pointer">Редактировать</span> | <span class="remove_admin" style="cursor:pointer">Разжаловать</span>
+                                    </span>
+                                  {% endif %}
+                                  <br>
+                                </span>
                             </div>
                         </div>
                     </li>
@@ -64,9 +74,42 @@
 </div>
 </div>
 
+<div class="card mb-4 manage_window_fullscreen" style="display:none">
+  <span class="manage_window_fullscreen_hide">
+    <svg class="svg_default svg_default_30" fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+  </span>
+  <div id="load_staff_window" style="margin-top:30px"></div>
+</div>
+
 <script>
 $(document).ready(function(){
   var admins_infinite = new Waypoint.Infinite({element: $('.admins-container')[0], onBeforePageLoad: function() { $('.admins_load').show(); }, onAfterPageLoad: function($items) { $('.admins_load').hide(); }});
 });
+
+$('#ajax').on('click', '.show_staff_window', function() {
+  var btn = $(this).parents(".list-group-item");
+  var pk = btn.data("pk");
+  var uuid = btn.data("uuid");
+  $('#load_staff_window').html('').load("/communities/manage/staff_window/" + pk + "/" + uuid + "/");
+  $('.manage_window_fullscreen').show();
+});
+
+$('#ajax').on('click', '.manage_window_fullscreen_hide', function() {
+   $('.manage_window_fullscreen').hide();
+   $('#load_staff_window').empty();
+ });
+
+ $('#ajax').on('click', '.show_staff_window', function() {
+   var btn = $(this).parents(".list-group-item");
+   var pk = btn.data("pk");
+   var uuid = btn.data("uuid");
+   $('#load_staff_window').html('').load("/communities/manage/staff_window/" + pk + "/" + uuid + "/");
+   $('.manage_window_fullscreen').show();
+ });
+
+ $('#ajax').on('click', '.manage_window_fullscreen_hide', function() {
+    $('.manage_window_fullscreen').hide();
+    $('#load_staff_window').empty();
+  });
 </script>
 {% endblock %}
