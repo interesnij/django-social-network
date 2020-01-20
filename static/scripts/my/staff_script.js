@@ -1,4 +1,4 @@
-<script>
+
 $('#ajax').on('click', '.show_staff_window', function() {
   var btn = $(this).parents(".list-group-item");
   var pk = btn.data("pk");
@@ -40,7 +40,7 @@ $('#ajax').on('click', '.remove_admin', function() {
     url: "/communities/progs/delete_admin/" + pk + "/" + uuid + "/",
     success: function () {
       remove_admin.parent().parent().addClass("small").html("<span class='show_staff_window' style='cursor:pointer'>Назначить руководителем</span> | <span class='member_delete' style='cursor:pointer'>Удалить</span>");
-      $.toast({heading: 'Информация',text: 'Модератор "{{ user.get_full_name}}" успешно лишен полномочий в сообществе "{{ community.name }}"!',showHideTransition: 'fade',icon: 'info'});
+      $.toast({heading: 'Информация',text: 'Администратор успешно лишен полномочий!',showHideTransition: 'fade',icon: 'info'});
     }
   });
 });
@@ -53,7 +53,7 @@ $('#ajax').on('click', '.remove_moderator', function() {
     url: "/communities/progs/delete_moderator/" + pk + "/" + uuid + "/",
     success: function () {
       remove_admin.parent().parent().addClass("small").html("<span class='show_staff_window' style='cursor:pointer'>Назначить руководителем</span> | <span class='member_delete' style='cursor:pointer'>Удалить</span>");
-      $.toast({heading: 'Информация',text: 'Модератор "{{ user.get_full_name}}" успешно лишен полномочий в сообществе "{{ community.name }}"!',showHideTransition: 'fade',icon: 'info'});
+      $.toast({heading: 'Информация',text: 'Модератор успешно лишен полномочий!',showHideTransition: 'fade',icon: 'info'});
     }
   });
 });
@@ -66,7 +66,7 @@ $('#ajax').on('click', '.remove_editor', function() {
     url: "/communities/progs/delete_editor/" + pk + "/" + uuid + "/",
     success: function () {
       remove_admin.parent().parent().addClass("small").html("<span class='show_staff_window' style='cursor:pointer'>Назначить руководителем</span> | <span class='member_delete' style='cursor:pointer'>Удалить</span>");
-      $.toast({heading: 'Информация',text: 'Редактор "{{ user.get_full_name}}" успешно лишен полномочий в сообществе "{{ community.name }}"!',showHideTransition: 'fade',icon: 'info'});
+      $.toast({heading: 'Информация',text: 'Редактор успешно лишен полномочий!',showHideTransition: 'fade',icon: 'info'});
     }
   });
 });
@@ -79,8 +79,7 @@ $('#ajax').on('click', '.remove_advertiser', function() {
     url: "/communities/progs/delete_advertiser/" + pk + "/" + uuid + "/",
     success: function () {
       remove_admin.parent().parent().addClass("small").html("<span class='show_staff_window' style='cursor:pointer'>Назначить руководителем</span> | <span class='member_delete' style='cursor:pointer'>Удалить</span>");
-      $.toast({heading: 'Информация',text: 'Редактор "{{ user.get_full_name}}" успешно лишен полномочий в сообществе "{{ community.name }}"!',showHideTransition: 'fade',icon: 'info'});
+      $.toast({heading: 'Информация',text: 'Рекламодатель успешно лишен полномочий!',showHideTransition: 'fade',icon: 'info'});
     }
   });
 });
-</script>
