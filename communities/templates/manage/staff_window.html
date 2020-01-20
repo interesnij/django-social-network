@@ -55,6 +55,7 @@
     </div>
   </div>
 </div>
+
 <script>
 $('.add_staff_options').click(function() {
     var uuid = '{{ user.uuid }}';
@@ -98,7 +99,7 @@ $('.add_staff_options').click(function() {
           $.toast({heading: 'Информация',text: 'Администратор "{{ user.get_full_name}}" успешно назначен в сообщество "{{ community.name }}"!',showHideTransition: 'fade',icon: 'info'});
           $('.manage_window_fullscreen').hide();
           $('#load_staff_window').empty();
-          $('.li_{{user.pk }} .staff_btn').removeClass("small").html("<span class='staff_btn'>Администратор<br><span class='small'><span class='show_staff_window' style='cursor:pointer'>Редактировать</span> | <span class='remove_administrator' style='cursor:pointer'>Разжаловать</span></span><br></span>")
+          $('.li_{{user.pk }} .staff_btn').removeClass("small").html("<span class='staff_btn'>Администратор<br><span class='small'><span class='show_staff_window' style='cursor:pointer'>Редактировать</span> | <span class='remove_admin' style='cursor:pointer'>Разжаловать</span></span><br></span>")
         },
     })
     {% else %}

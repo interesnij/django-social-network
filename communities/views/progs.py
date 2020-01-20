@@ -61,7 +61,6 @@ class CommunityMemberCreate(View):
 		self.user = User.objects.get(uuid=self.kwargs["uuid"])
 		new_member = self.user.join_community_with_name(self.community.name)
 		return HttpResponse("!")
-
 class CommunityMemberDelete(View):
 	success_url = "/"
 	def get(self,request,*args,**kwargs):
@@ -76,14 +75,20 @@ class CommunityAdminCreate(View):
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.user = User.objects.get(uuid=self.kwargs["uuid"])
-		new_admin = self.community.add_administrator(self.user)
-		return HttpResponse("!")
+		if request.user.is_administrator_of_community_with_name(self.community.name):
+			new_admin = self.community.add_administrator(self.user)
+			return HttpResponse("!")
+		else:
+			return HttpResponse("!")
 class CommunityAdminDelete(View):
 	success_url = "/"
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.user = User.objects.get(uuid=self.kwargs["uuid"])
-		new_admin = self.community.remove_administrator(self.user)
+		if request.user.is_administrator_of_community_with_name(self.community.name):
+			new_admin = self.community.remove_administrator(self.user)
+		else:
+			return HttpResponse("!")
 		return HttpResponse("!")
 
 
@@ -92,14 +97,20 @@ class CommunityModerCreate(View):
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.user = User.objects.get(uuid=self.kwargs["uuid"])
-		new_admin = self.community.add_moderator(self.user)
+		if request.user.is_administrator_of_community_with_name(self.community.name):
+			new_moderator = self.community.add_moderator(self.user)
+		else:
+			return HttpResponse("!")
 		return HttpResponse("!")
 class CommunityModerDelete(View):
 	success_url = "/"
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.user = User.objects.get(uuid=self.kwargs["uuid"])
-		new_admin = self.community.remove_moderator(self.user)
+		if request.user.is_administrator_of_community_with_name(self.community.name):
+			new_moderator = self.community.remove_moderator(self.user)
+		else:
+			return HttpResponse("!")
 		return HttpResponse("!")
 
 class CommunityEditorCreate(View):
@@ -107,14 +118,20 @@ class CommunityEditorCreate(View):
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.user = User.objects.get(uuid=self.kwargs["uuid"])
-		new_admin = self.community.add_editor(self.user)
+		if request.user.is_administrator_of_community_with_name(self.community.name):
+			new_editor = self.community.add_editor(self.user)
+		else:
+			return HttpResponse("!")
 		return HttpResponse("!")
 class CommunityEditorDelete(View):
 	success_url = "/"
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.user = User.objects.get(uuid=self.kwargs["uuid"])
-		new_admin = self.community.remove_editor(self.user)
+		if request.user.is_administrator_of_community_with_name(self.community.name):
+			new_editor = self.community.remove_editor(self.user)
+		else:
+			return HttpResponse("!")
 		return HttpResponse("!")
 
 class CommunityAdvertiserCreate(View):
@@ -122,14 +139,20 @@ class CommunityAdvertiserCreate(View):
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.user = User.objects.get(uuid=self.kwargs["uuid"])
-		new_admin = self.community.add_advertiser(self.user)
+		if request.user.is_administrator_of_community_with_name(self.community.name):
+			new_advertiser = self.community.add_advertiser(self.user)
+		else:
+			return HttpResponse("!")
 		return HttpResponse("!")
 class CommunityAdvertiserDelete(View):
 	success_url = "/"
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.user = User.objects.get(uuid=self.kwargs["uuid"])
-		new_admin = self.community.remove_advertiser(self.user)
+		if request.user.is_administrator_of_community_with_name(self.community.name):
+			new_advertiser = self.community.remove_advertiser(self.user)
+		else:
+			return HttpResponse("!")
 		return HttpResponse("!")
 
 
