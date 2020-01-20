@@ -60,7 +60,7 @@ $('.add_staff_options').click(function() {
     var uuid = '{{ user.uuid }}';
     var pk = {{ community.pk }};
     if (document.getElementById('user_moderator').checked) {
-    {% if notmoderator %}
+    {% if not moderator %}
     $.ajax({
         url: "/communities/progs/add_moderator/" + pk + "/" + uuid + "/",
         success: function(data) {
