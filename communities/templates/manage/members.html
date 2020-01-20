@@ -72,7 +72,7 @@
                                     {% if object == community.creator %}Владелец
                                     {% else %}Администратор<br>
                                     <span class="small">
-                                      <span class="show_staff_window" style="cursor:pointer">Редактировать</span> | <span style="cursor:pointer">Разжаловать</span>
+                                      <span class="show_staff_window" style="cursor:pointer">Редактировать</span> | <span class="remove_admin" style="cursor:pointer">Разжаловать</span>
                                     </span>
                                     {% endif %}
                                     <br>
@@ -82,7 +82,7 @@
                                   <span class="">
                                     Модератор<br>
                                     <span class="small">
-                                      <span class="show_staff_window" style="cursor:pointer">Редактировать</span> | <span style="cursor:pointer">Разжаловать</span>
+                                      <span class="show_staff_window" style="cursor:pointer">Редактировать</span> | <span class="remove_moderator" style="cursor:pointer">Разжаловать</span>
                                     </span>
                                     <br>
                                   </span>
@@ -91,7 +91,7 @@
                                   <span class="">
                                     Редактор<br>
                                     <span class="small">
-                                      <span class="show_staff_window" style="cursor:pointer">Редактировать</span> | <span style="cursor:pointer">Разжаловать</span>
+                                      <span class="show_staff_window" style="cursor:pointer">Редактировать</span> | <span class="remove_editor" style="cursor:pointer">Разжаловать</span>
                                     </span>
                                     <br>
                                   </span>
@@ -100,7 +100,7 @@
                                   <span class="">
                                     Рекламодатель<br>
                                     <span class="small">
-                                      <span class="show_staff_window" style="cursor:pointer">Редактировать</span> | <span class="" style="cursor:pointer">Разжаловать</span>
+                                      <span class="show_staff_window" style="cursor:pointer">Редактировать</span> | <span class="remove_advertiser" style="cursor:pointer">Разжаловать</span>
                                     </span>
                                     <br>
                                   </span>
@@ -160,5 +160,32 @@
   $('#ajax').on('click', '.member_delete', function() {
    var member_delete = $(this); var li = member_delete.parents(".list-group-item"); var pk = li.data('pk'); var uuid = li.data('uuid'); $.ajax({ url: "/communities/progs/delete_member/" + pk + "/" + uuid + "/", success: function () { member_delete.parent().html("<span class='member_create' style='cursor:pointer;color:rgba(0, 0, 0, 1);'>Восстановить</span>"); li.addClass("style_removed_object"); }});
    });
+
+$('#ajax').on('click', '.remove_admin', function() {
+  var remove_admin = $(this);
+  var li = remove_admin.parents(".list-group-item");
+  var pk = li.data('pk');
+  var uuid = li.data('uuid');
+  $.ajax({
+    url: "/communities/progs/delete_admin/" + pk + "/" + uuid + "/",
+    success: function () {
+      remove_admin.parent().html("<span class='show_staff_window' style='cursor:pointer'>Назначить руководителем</span> | <span class='member_delete' style='cursor:pointer'>Удалить</span>");
+      $.toast({heading: 'Информация',text: 'Модератор "{{ user.get_full_name}}" успешно лишен полномочий в сообществе "{{ community.name }}"!',showHideTransition: 'fade',icon: 'info'});
+    }
+  });
+});
+$('#ajax').on('click', '.remove_moderator', function() {
+  var remove_admin = $(this);
+  var li = remove_admin.parents(".list-group-item");
+  var pk = li.data('pk');
+  var uuid = li.data('uuid');
+  $.ajax({
+    url: "/communities/progs/delete_moderator/" + pk + "/" + uuid + "/",
+    success: function () {
+      remove_admin.parent().html("<span class='show_staff_window' style='cursor:pointer'>Назначить руководителем</span> | <span class='member_delete' style='cursor:pointer'>Удалить</span>");
+      $.toast({heading: 'Информация',text: 'Модератор "{{ user.get_full_name}}" успешно лишен полномочий в сообществе "{{ community.name }}"!',showHideTransition: 'fade',icon: 'info'});
+    }
+  });
+});
 </script>
 {% endblock %}
