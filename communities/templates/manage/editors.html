@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 {% load staticfiles humanize thumbnail %}
 
-{% block title %}Модераторы сообщества - {{ community.name }}{% endblock %}
+{% block title %}Редакторы сообщества - {{ community.name }}{% endblock %}
 
 {% block content %}
 <div class="container mt-4 main-container">
 <div class="row">
     <div class="col-lg-7 col-md-8 col-sm-12 order-1">
         <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Поиск по модераторам" aria-label="Recipient's username">
+            <input type="text" class="form-control" placeholder="Поиск по редакторам" aria-label="Recipient's username">
             <div class="input-group-append">
                 <button class="btn btn-outline-link" type="button">Искать</button>
             </div>
@@ -17,7 +17,7 @@
             <div class="card-header">
                 <div class="media">
                     <div class="media-body">
-                        <h5 class="mt-1">Модераторы сообщества -
+                        <h5 class="mt-1">Редакторы сообщества -
                             <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=community.pk %}" data-html="#ajax">
                                 {{ community.name }}
                             </a>
@@ -28,7 +28,7 @@
             <br><br>
             <div class="card-body px-0 py-0">
               {% if object_list %}
-                <ul class="list-group moders-container">
+                <ul class="list-group editors-container">
                     {% for object in object_list %}
                     <li class="list-group-item li_{{object.pk }}" data-uuid="{{ object.uuid }}" data-pk="{{ community.pk }}">
                         <div class="media">
@@ -44,9 +44,9 @@
                                     <h6 class="my-0 mt-1">{{ object.get_full_name }}</h6>
                                 </a>
                                 <span class="staff_btn">
-                                  Модератор<br>
+                                  Редактор<br>
                                   <span class="small">
-                                    <span class="show_staff_window" style="cursor:pointer">Редактировать</span> | <span class="remove_moderator" style="cursor:pointer">Разжаловать</span>
+                                    <span class="show_staff_window" style="cursor:pointer">Редактировать</span> | <span class="remove_editors" style="cursor:pointer">Разжаловать</span>
                                   </span>
                                   <br>
                                 </span>
@@ -54,9 +54,9 @@
                         </div>
                     </li>
                     {% endfor %}
-                    <div class="moders_load col-12 col-md-12">
+                    <div class="editors_load col-12 col-md-12">
                         {% if page_obj.has_next  %}
-                        <a style="display:flex;justify-content:center;" class="infinite-more-link" href="/communities/manage/{{ community.pk }}/moders/?page={{ page_obj.next_page_number }}">
+                        <a style="display:flex;justify-content:center;" class="infinite-more-link" href="/communities/manage/{{ community.pk }}/editors/?page={{ page_obj.next_page_number }}">
                             <img style="width: 30px;" src="{% static 'images/loading.gif' %}">
                         </a>
                         {% endif %}
@@ -89,10 +89,9 @@
 
 <script>
 $(document).ready(function(){
-  var moders_infinite = new Waypoint.Infinite({element: $('.moders-container')[0], onBeforePageLoad: function() { $('.moders_load').show(); }, onAfterPageLoad: function($items) { $('.moders_load').hide(); }});
+  var editors_infinite = new Waypoint.Infinite({element: $('.editors-container')[0], onBeforePageLoad: function() { $('.editors_load').show(); }, onAfterPageLoad: function($items) { $('.editors_load').hide(); }});
 });
 </script>
-
 {% include 'manage/staff_script.html' %}
 
 {% endblock %}

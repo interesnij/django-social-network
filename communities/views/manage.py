@@ -196,6 +196,56 @@ class CommunityAdminView(ListView):
 		return admins
 
 
+class CommunityEditorsView(ListView):
+	template_name = None
+	model = User
+	paginate_by = 15
+
+	def get(self,request,*args,**kwargs):
+		self.community = Community.objects.get(pk=self.kwargs["pk"])
+		return super(CommunityEditorsView,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(CommunityEditorsView,self).get_context_data(**kwargs)
+		context["community"] = self.community
+		return context
+
+	def get_queryset(self):
+		self.community = Community.objects.get(pk=self.kwargs["pk"])
+		if self.request.user.is_authenticated and self.community.is_user_with_username_administrator_of_community_with_name(self.request.user.pk, self.community.name):
+			admins = self.community.get_community_with_name_editors(self.community.name)
+			self.template_name="manage/editors.html"
+		else:
+			admins = ""
+			self.template_name="generic/fake/admins.html"
+		return admins
+
+
+class CommunityAdvertisersView(ListView):
+	template_name = None
+	model = User
+	paginate_by = 15
+
+	def get(self,request,*args,**kwargs):
+		self.community = Community.objects.get(pk=self.kwargs["pk"])
+		return super(CommunityAdvertisersView,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(CommunityAdvertisersView,self).get_context_data(**kwargs)
+		context["community"] = self.community
+		return context
+
+	def get_queryset(self):
+		self.community = Community.objects.get(pk=self.kwargs["pk"])
+		if self.request.user.is_authenticated and self.community.is_user_with_username_administrator_of_community_with_name(self.request.user.pk, self.community.name):
+			admins = self.community.get_community_with_name_advertisers(self.community.name)
+			self.template_name="manage/advertisers.html"
+		else:
+			admins = ""
+			self.template_name="generic/fake/admins.html"
+		return admins
+
+
 class CommunityModersView(ListView):
 	template_name="manage/moders.html"
 	model=User

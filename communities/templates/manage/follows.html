@@ -81,4 +81,7 @@ $(document).ready(function(){
   var follows_infinite = new Waypoint.Infinite({element: $('.follows-container')[0], onBeforePageLoad: function() { $('.follows_load').show(); }, onAfterPageLoad: function($items) { $('.follows_load').hide(); }});
 });
 </script>
+
+{% include 'manage/staff_script.html' %}
+
 {% endblock %}
