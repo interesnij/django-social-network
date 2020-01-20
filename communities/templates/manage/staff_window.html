@@ -18,7 +18,7 @@
               <a href="{% url 'user' pk=user.pk %}" class="ajax" data-html="#ajax">
                   <h6 class="my-0 mt-1">{{ user.get_full_name }}</h6>
               </a>
-              <p>Вы собираетесь назначить этого подписчика руководителем сообщества.</p>
+              <p style="padding-top:10px;">Вы собираетесь назначить этого подписчика руководителем сообщества.</p>
             </div>
         </div>
         <br><br><hr>
@@ -63,10 +63,10 @@ $('.add_staff_options').click(function() {
     $.ajax({
         url: "/communities/progs/add_moderator/" + pk + "/" + uuid + "/",
         success: function(data) {
-          $.toast({heading: 'Информация',text: 'Модератор "{{ user.get_full_name}}" успешно назначен в сообщество "{{ community.name }}"!',showHideTransition: 'fade',icon: 'info'};
+          $.toast({heading: 'Информация',text: 'Модератор "{{ user.get_full_name}}" успешно назначен в сообщество "{{ community.name }}"!',showHideTransition: 'fade',icon: 'info'});
           $('.manage_window_fullscreen').hide();
           $('#load_staff_window').empty();
-          )},
+        },
     })
   }else if(document.getElementById('user_editor').checked){
 
