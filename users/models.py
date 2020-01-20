@@ -596,7 +596,7 @@ class User(AbstractUser):
         community_to_join.add_member(self)
         if community_to_join.is_private():
             CommunityInvite.objects.filter(community_name=community_name, invited_user__id=self.id).delete()
-        if community_to_join.is_closed():
+        elif community_to_join.is_closed():
             CommunityFollow.objects.filter(community_name=community_name, community_follows__id=self.id).delete()
         return community_to_join
 
