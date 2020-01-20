@@ -30,7 +30,7 @@
               {% if object_list %}
                 <ul class="list-group moders-container">
                     {% for object in object_list %}
-                    <li class="list-group-item">
+                    <li class="list-group-item li_{{object.pk }}" data-uuid="{{ object.uuid }}" data-pk="{{ community.pk }}">
                         <div class="media">
                             <figure>
                               {% if object.get_avatar %}
@@ -43,7 +43,13 @@
                                 <a href="{% url 'user' pk=object.pk %}" class="ajax" data-html="#ajax">
                                     <h6 class="my-0 mt-1">{{ object.get_full_name }}</h6>
                                 </a>
-                                <a href="" class="small">Разжаловать</a>
+                                <span class="staff_btn">
+                                  Модератор<br>
+                                  <span class="small">
+                                    <span class="show_staff_window" style="cursor:pointer">Редактировать</span> | <span class="remove_moderator" style="cursor:pointer">Разжаловать</span>
+                                  </span>
+                                  <br>
+                                </span>
                             </div>
                         </div>
                     </li>
@@ -58,7 +64,7 @@
                 </ul>
                 {% else %}
                 <div class="col-12">
-                  <div class="card" style="align-items: center;justify-content:center;">
+                  <div class="card moder_empty" style="align-items: center;justify-content:center;">
                     <div class="card-body">
                       <svg fill="currentColor" class="thumb_big svg_default" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
                     </div>
@@ -74,9 +80,101 @@
 </div>
 </div>
 
+<div class="card mb-4 manage_window_fullscreen" style="display:none">
+  <span class="manage_window_fullscreen_hide">
+    <svg class="svg_default svg_default_30" fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+  </span>
+  <div id="load_staff_window" style="margin-top:30px"></div>
+</div>
+
 <script>
 $(document).ready(function(){
   var moders_infinite = new Waypoint.Infinite({element: $('.moders-container')[0], onBeforePageLoad: function() { $('.moders_load').show(); }, onAfterPageLoad: function($items) { $('.moders_load').hide(); }});
+});
+
+$('#ajax').on('click', '.show_staff_window', function() {
+  var btn = $(this).parents(".list-group-item");
+  var pk = btn.data("pk");
+  var uuid = btn.data("uuid");
+  $('#load_staff_window').html('').load("/communities/manage/staff_window/" + pk + "/" + uuid + "/");
+  $('.manage_window_fullscreen').show();
+});
+
+$('#ajax').on('click', '.manage_window_fullscreen_hide', function() {
+   $('.manage_window_fullscreen').hide();
+   $('#load_staff_window').empty();
+ });
+
+ $('#ajax').on('click', '.show_staff_window', function() {
+   var btn = $(this).parents(".list-group-item");
+   var pk = btn.data("pk");
+   var uuid = btn.data("uuid");
+   $('#load_staff_window').html('').load("/communities/manage/staff_window/" + pk + "/" + uuid + "/");
+   $('.manage_window_fullscreen').show();
+ });
+
+ $('#ajax').on('click', '.manage_window_fullscreen_hide', function() {
+    $('.manage_window_fullscreen').hide();
+    $('#load_staff_window').empty();
+  });
+  $('#ajax').on('click', '.member_create', function() {
+   var member_create = $(this); var li = member_create.parents(".list-group-item"); var pk = li.data('pk'); var uuid = li.data('uuid'); $.ajax({ url: "/communities/progs/add_member/" + pk + "/" + uuid + "/", success: function () { member_create.parent().html("<span class='show_staff_window' style='cursor:pointer'>Изменить полномочия</span> |<span class='member_delete' style='cursor:pointer'>Удалить</span>"); li.removeClass("style_removed_object"); }});
+   });
+  $('#ajax').on('click', '.member_delete', function() {
+   var member_delete = $(this); var li = member_delete.parents(".list-group-item"); var pk = li.data('pk'); var uuid = li.data('uuid'); $.ajax({ url: "/communities/progs/delete_member/" + pk + "/" + uuid + "/", success: function () { member_delete.parent().html("<span class='member_create' style='cursor:pointer;color:rgba(0, 0, 0, 1);'>Восстановить</span>"); li.addClass("style_removed_object"); }});
+   });
+
+$('#ajax').on('click', '.remove_admin', function() {
+  var remove_admin = $(this);
+  var li = remove_admin.parents(".list-group-item");
+  var pk = li.data('pk');
+  var uuid = li.data('uuid');
+  $.ajax({
+    url: "/communities/progs/delete_admin/" + pk + "/" + uuid + "/",
+    success: function () {
+      remove_admin.parent().parent().addClass("small").html("<span class='show_staff_window' style='cursor:pointer'>Назначить руководителем</span> | <span class='member_delete' style='cursor:pointer'>Удалить</span>");
+      $.toast({heading: 'Информация',text: 'Модератор "{{ user.get_full_name}}" успешно лишен полномочий в сообществе "{{ community.name }}"!',showHideTransition: 'fade',icon: 'info'});
+    }
+  });
+});
+$('#ajax').on('click', '.remove_moderator', function() {
+  var remove_admin = $(this);
+  var li = remove_admin.parents(".list-group-item");
+  var pk = li.data('pk');
+  var uuid = li.data('uuid');
+  $.ajax({
+    url: "/communities/progs/delete_moderator/" + pk + "/" + uuid + "/",
+    success: function () {
+      remove_admin.parent().parent().addClass("small").html("<span class='show_staff_window' style='cursor:pointer'>Назначить руководителем</span> | <span class='member_delete' style='cursor:pointer'>Удалить</span>");
+      $.toast({heading: 'Информация',text: 'Модератор "{{ user.get_full_name}}" успешно лишен полномочий в сообществе "{{ community.name }}"!',showHideTransition: 'fade',icon: 'info'});
+    }
+  });
+});
+$('#ajax').on('click', '.remove_editor', function() {
+  var remove_admin = $(this);
+  var li = remove_admin.parents(".list-group-item");
+  var pk = li.data('pk');
+  var uuid = li.data('uuid');
+  $.ajax({
+    url: "/communities/progs/delete_editor/" + pk + "/" + uuid + "/",
+    success: function () {
+      remove_admin.parent().parent().addClass("small").html("<span class='show_staff_window' style='cursor:pointer'>Назначить руководителем</span> | <span class='member_delete' style='cursor:pointer'>Удалить</span>");
+      $.toast({heading: 'Информация',text: 'Редактор "{{ user.get_full_name}}" успешно лишен полномочий в сообществе "{{ community.name }}"!',showHideTransition: 'fade',icon: 'info'});
+    }
+  });
+});
+$('#ajax').on('click', '.remove_advertiser', function() {
+  var remove_admin = $(this);
+  var li = remove_admin.parents(".list-group-item");
+  var pk = li.data('pk');
+  var uuid = li.data('uuid');
+  $.ajax({
+    url: "/communities/progs/delete_advertiser/" + pk + "/" + uuid + "/",
+    success: function () {
+      remove_admin.parent().parent().addClass("small").html("<span class='show_staff_window' style='cursor:pointer'>Назначить руководителем</span> | <span class='member_delete' style='cursor:pointer'>Удалить</span>");
+      $.toast({heading: 'Информация',text: 'Редактор "{{ user.get_full_name}}" успешно лишен полномочий в сообществе "{{ community.name }}"!',showHideTransition: 'fade',icon: 'info'});
+    }
+  });
 });
 </script>
 {% endblock %}
