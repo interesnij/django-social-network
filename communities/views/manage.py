@@ -293,7 +293,7 @@ class CommunityMemberManageView(ListView):
 		return membersheeps
 
 
-class ShowStaffWindow(TemplateView):
+class CommunityStaffWindow(TemplateView):
 	template_name="manage/staff_window.html"
 
 	def get(self,request,*args,**kwargs):
@@ -303,10 +303,10 @@ class ShowStaffWindow(TemplateView):
 		self.moderator = self.user.is_moderator_of_community_with_name(self.community)
 		self.editor = self.user.is_editor_of_community_with_name(self.community)
 		self.advertiser = self.user.is_advertiser_of_community_with_name(self.community)
-		return super(ShowStaffWindow,self).get(request,*args,**kwargs)
+		return super(CommunityStaffWindow,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context=super(ShowStaffWindow,self).get_context_data(**kwargs)
+		context=super(CommunityStaffWindow,self).get_context_data(**kwargs)
 		context["community"]=self.community
 		context["user"]=self.user
 		context["administrator"]=self.administrator

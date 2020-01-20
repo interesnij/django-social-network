@@ -15,5 +15,5 @@ urlpatterns = [
     url(r'^(?P<pk>[0-9]+)/black_list/$', login_required(CommunityBlackListView.as_view()), name='community_black_list'),
     url(r'^(?P<pk>[0-9]+)/follows/$', login_required(CommunityFollowsView.as_view()), name='community_follows'),
     url(r'^(?P<pk>[0-9]+)/members/$', login_required(CommunityMemberManageView.as_view()), name='community_member_manage'),
-    url(r'^show_staff_window/(?P<pk>[0-9]+)/(?P<uuid>[0-9a-f-]+)/$', login_required(ShowStaffWindow.as_view())),
+    url(r'^staff_window/(?P<pk>[0-9]+)/(?P<uuid>[0-9a-f-]+)/$', login_required(CommunityStaffWindow.as_view())),
 ]

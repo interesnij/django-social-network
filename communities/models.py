@@ -334,28 +334,34 @@ class Community(models.Model):
     def is_community_playlist(self, user):
         return user.usertempsoundlist.filter(user=self, tag=None, list__community__pk=self.pk).exists()
 
+    def add_administrator(self, user):
+        user_membership = self.memberships.get(user=user)
+        user_membership.is_moderator = False
+        user_membership.is_administrator = True
+        user_membership.is_editor = False
+        user_membership.is_advertiser = False
+        user_membership.save()
+        return user_membership
+
     def add_moderator(self, user):
         user_membership = self.memberships.get(user=user)
         user_membership.is_moderator = True
-        user_membership.save()
-        return user_membership
-
-    def remove_moderator(self, user):
-        user_membership = self.memberships.get(user=user)
-        user_membership.is_moderator = False
-        user_membership.save()
-        return user_membership
-
-    def add_administrator(self, user):
-        user_membership = self.memberships.get(user=user)
-        user_membership.is_administrator = True
+        user_membership.is_administrator = False
+        user_membership.is_editor = False
+        user_membership.is_advertiser = False
         user_membership.save()
         return user_membership
 
     def remove_administrator(self, user):
         user_membership = self.memberships.get(user=user)
         user_membership.is_administrator = False
-        user_membership.save()
+        user_membership.save(update_fields=['is_administrator'])
+        return user_membership
+
+    def remove_moderator(self, user):
+        user_membership = self.memberships.get(user=user)
+        user_membership.is_moderator = False
+        user_membership.save(update_fields=['is_moderator'])
         return user_membership
 
     def add_member(self, user):
