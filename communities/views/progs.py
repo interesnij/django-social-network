@@ -60,6 +60,8 @@ class CommunityMemberCreate(View):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.user = User.objects.get(uuid=self.kwargs["uuid"])
 		new_member = self.user.join_community_with_name(self.community.name)
+		if self.community.is_closed():
+			self.user.community_unfollow_user(self.community.name)
 		return HttpResponse("!")
 class CommunityMemberDelete(View):
 	success_url = "/"
