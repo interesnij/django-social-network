@@ -20,8 +20,10 @@
           {% if community.is_closed %}
             <li style="margin-bottom:8px;"><a href="{% url 'community_follows' pk=community.pk %}" class="ajax" data-html="#ajax">Заявки на членство</a></li>
           {% endif %}
-          <li style="margin-bottom:8px;"><a href="{% url 'community_admins' pk=community.pk %}" class="ajax" data-html="#ajax">Администраторы</a></li>
           <li style="margin-bottom:8px;"><a href="{% url 'community_moders' pk=community.pk %}" class="ajax" data-html="#ajax">Модераторы</a></li>
+          <li style="margin-bottom:8px;"><a href="{% url 'community_editors' pk=community.pk %}" class="ajax" data-html="#ajax">Редакторы</a></li>
+          <li style="margin-bottom:8px;"><a href="{% url 'community_advertisers' pk=community.pk %}" class="ajax" data-html="#ajax">Рекламщики</a></li>
+          <li style="margin-bottom:8px;"><a href="{% url 'community_admins' pk=community.pk %}" class="ajax" data-html="#ajax">Администраторы</a></li>
           <li style="margin-bottom:8px;"><a href="{% url 'community_black_list' pk=community.pk %}" class="ajax" data-html="#ajax">Черный список</a></li>
         </ul>
       </div>
