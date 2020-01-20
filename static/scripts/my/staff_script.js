@@ -45,7 +45,7 @@ $('#ajax').on('click', '.manage_window_fullscreen_hide', function() {
      var pk = li.data('pk');
      var uuid = li.data('uuid');
      $.ajax({
-       url: "/follows/create_member/" + pk + "/" + uuid + "/",
+       url: "/follows/add_member/" + pk + "/" + uuid + "/",
        success: function () {
          community_follow_create.parent().html("<span class='community_follow_delete' style='cursor:pointer;color:rgba(0, 0, 0, 1);'>Восстановить</span>");
          li.removeClass("style_removed_object"); }
