@@ -53,7 +53,7 @@ class Community(models.Model):
     rules = models.TextField(max_length=1000, blank=True, null=True, verbose_name="Правила")
     cover = ProcessedImageField(blank=True, format='JPEG',options={'quality': 90},upload_to=upload_to_community_avatar_directory,processors=[ResizeToFit(width=1024, upscale=False)])
     created = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создано")
-    starrers = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='favorite_communities', verbose_name="Подписчики")
+    starrers = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='favorite_communities', verbose_name="Фавориты")
     banned_users = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='banned_of_communities', verbose_name="Черный список")
     status = models.CharField(max_length=100, blank=True, verbose_name="статус-слоган")
     COMMUNITY_TYPE_PRIVATE = 'T'
@@ -364,7 +364,7 @@ class Community(models.Model):
 
     def remove_member(self, user):
         user_membership = self.memberships.get(user=user)
-        user_membership.delete() 
+        user_membership.delete()
 
     def notification_new_member(self, user):
         community_notification_handler(actor=user, recipient=None, verb=UserCommunityNotification.JOIN, community=self.community, key='notification')
