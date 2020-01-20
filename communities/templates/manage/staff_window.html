@@ -26,33 +26,57 @@
             <div class="custom-control custom-radio">
                 <input type="radio" name="radiogroup-1" {% if moderator %} checked="checked"{% endif %} class="custom-control-input" id="user_moderator">
                 <label class="custom-control-label" for="user_moderator"><h6>Модератор</h6></label>
-                <p style="padding-top:12px;font-size:15px">Может удалять добавленные пользователями материалы, управлять чёрным списком сообщества</p>
+                <p style="padding-top:10px;font-size:15px">Может удалять добавленные пользователями материалы, управлять чёрным списком сообщества</p>
             </div>
             <hr>
             <div class="custom-control custom-radio">
                 <input type="radio" name="radiogroup-1" {% if editor %} checked="checked"{% endif %} class="custom-control-input" id="user_editor">
                 <label class="custom-control-label" for="user_editor"><h6>Редактор</h6>
-                  <p style="padding-top:12px;font-size:15px">Может писать от имени сообщества, добавлять, удалять и редактировать контент, обновлять основную фотографию</p>
+                  <p style="padding-top:10px;font-size:15px">Может писать от имени сообщества, добавлять, удалять и редактировать контент, обновлять основную фотографию</p>
             </div>
             <hr>
             <div class="custom-control custom-radio">
-                <input type="radio" name="radiogroup-1"{% if administrator %} checked="checked"{% endif %} class="custom-control-input" id="user_adminidtrator">
-                <label class="custom-control-label" for="user_adminidtrator"><h6>Администратор</h6></label>
-                <p style="padding-top:12px;font-size:15px">Может назначать и снимать администраторов, изменять название и адрес сообщества</p>
+                <input type="radio" name="radiogroup-1"{% if administrator %} checked="checked"{% endif %} class="custom-control-input" id="user_administrator">
+                <label class="custom-control-label" for="user_administrator"><h6>Администратор</h6></label>
+                <p style="padding-top:10px;font-size:15px">Может назначать и снимать администраторов, изменять название и адрес сообщества</p>
             </div>
             <hr>
             <div class="custom-control custom-radio">
                 <input type="radio" name="radiogroup-1"{% if advertiser %} checked="checked"{% endif %} class="custom-control-input" id="user_advertiser">
                 <label class="custom-control-label" for="user_advertiser"><h6>Рекламодатель</h6></label>
-                <p style="padding-top:12px;font-size:15px">Может размещать рекламные записи от имени сообщества</p>
+                <p style="padding-top:10px;font-size:15px">Может размещать рекламные записи от имени сообщества</p>
             </div>
         </div>
         <br><hr>
 
     </div>
     <div class="card-footer">
-        <button class="btn btn-secondary manage_window_fullscreen_hide">Отмена</button>
-        <button class="btn btn-success float-right">Назначить</button>
+        <button class="btn btn-success float-right add_staff_options">Назначить</button>
     </div>
   </div>
 </div>
+<script>
+$('.add_staff_options').click(function() {
+    var uuid = {{ user.uuid }};
+    var pk = {{ community.pk }};
+    if (document.getElementById('user_moderator').checked) {
+    $.ajax({
+        url: "/communities/progs/add_moderator/" + pk + "/" + uuid + "/",
+        success: function(data) {
+          $.toast({heading: 'Информация',text: 'Модератор "{{ user.get_full_name}}" успешно назначен в сообщество "{{ community.name }}"!',showHideTransition: 'fade',icon: 'info'};
+          $('.manage_window_fullscreen').hide();
+          $('#load_staff_window').empty();
+          )},
+    })
+  }else if(document.getElementById('user_editor').checked){
+
+  }
+  else if(document.getElementById('user_administrator').checked){
+
+  };
+  else if(document.getElementById('user_advertiser').checked){
+
+  };
+
+});
+</script>
