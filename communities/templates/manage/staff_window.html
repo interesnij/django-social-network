@@ -21,6 +21,26 @@
                                   </a>
                                 </div>
                             </div>
+                            <div class="form-group ">
+
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" name="radiogroup-1" {% if moderator %} checked="checked"{% endif %} class="custom-control-input" id="user_moderator">
+                                    <label class="custom-control-label" for="user_moderator">Модератор</label>
+                                </div>
+
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" name="radiogroup-1" {% if editor %} checked="checked"{% endif %} class="custom-control-input" id="user_editor">
+                                    <label class="custom-control-label" for="user_editor">Редактор</label>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" name="radiogroup-1"{% if administrator %} checked="checked"{% endif %} class="custom-control-input" id="user_adminidtrator">
+                                    <label class="custom-control-label" for="user_adminidtrator">Администратор</label>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" name="radiogroup-1"{% if advertiser %} checked="checked"{% endif %} class="custom-control-input" id="user_advertiser">
+                                    <label class="custom-control-label" for="user_advertiser">Рекламодатель</label>
+                                </div>
+                            </div>
                             <br>
                             <hr>
 
