@@ -169,7 +169,7 @@ $('#ajax').on('click', '.remove_admin', function() {
   $.ajax({
     url: "/communities/progs/delete_admin/" + pk + "/" + uuid + "/",
     success: function () {
-      remove_admin.parent().parent().html("<span class='show_staff_window' style='cursor:pointer'>Назначить руководителем</span> | <span class='member_delete' style='cursor:pointer'>Удалить</span>");
+      remove_admin.parent().parent().addClass("small").html("<span class='show_staff_window' style='cursor:pointer'>Назначить руководителем</span> | <span class='member_delete' style='cursor:pointer'>Удалить</span>");
       $.toast({heading: 'Информация',text: 'Модератор "{{ user.get_full_name}}" успешно лишен полномочий в сообществе "{{ community.name }}"!',showHideTransition: 'fade',icon: 'info'});
     }
   });
@@ -182,7 +182,7 @@ $('#ajax').on('click', '.remove_moderator', function() {
   $.ajax({
     url: "/communities/progs/delete_moderator/" + pk + "/" + uuid + "/",
     success: function () {
-      remove_admin.parent().parent().html("<span class='show_staff_window' style='cursor:pointer'>Назначить руководителем</span> | <span class='member_delete' style='cursor:pointer'>Удалить</span>");
+      remove_admin.parent().parent().addClass("small").html("<span class='show_staff_window' style='cursor:pointer'>Назначить руководителем</span> | <span class='member_delete' style='cursor:pointer'>Удалить</span>");
       $.toast({heading: 'Информация',text: 'Модератор "{{ user.get_full_name}}" успешно лишен полномочий в сообществе "{{ community.name }}"!',showHideTransition: 'fade',icon: 'info'});
     }
   });
