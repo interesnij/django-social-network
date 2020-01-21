@@ -112,6 +112,10 @@ class CommunityDetail(TemplateView):
                 self.template_name = "c_detail/moderator_community.html"
             elif request.user.is_administrator_of_community_with_name(self.community.name):
                 self.template_name = "c_detail/admin_community.html"
+            elif request.user.is_editor_of_community_with_name(self.community):
+                self.template_name = "c_detail/editor_community.html"
+            elif request.user.is_advertiser_of_community_with_name(self.community.name):
+                self.template_name = "c_detail/advertiser_community.html"
             elif request.user.is_star_from_community_with_name(self.community.name):
                 self.template_name = "c_detail/star_community.html"
             else:
@@ -156,16 +160,11 @@ class CommunityDetailReload(TemplateView):
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         self.membersheeps=CommunityMembership.objects.filter(community__id=self.community.pk)[0:5]
-        self.editor = request.user.is_editor_of_community_with_name(self.community.name)
 
         if request.user.is_authenticated and request.user.is_member_of_community_with_name(self.community.name):
             self.common_friends = request.user.get_common_friends_of_community(self.community.pk)[0:5]
             if request.user.is_creator_of_community_with_name(self.community.name):
                 self.template_name = "c_detail/creator_community.html"
-            elif request.user.is_editor_of_community_with_name(self.community):
-                self.template_name = "c_detail/editor_community.html"
-            elif request.user.is_advertiser_of_community_with_name(self.community.name):
-                self.template_name = "c_detail/advertiser_community.html"
             elif request.user.is_moderator_of_community_with_name(self.community.name):
                 self.template_name = "c_detail/moderator_community.html"
             elif request.user.is_administrator_of_community_with_name(self.community.name):
@@ -195,5 +194,4 @@ class CommunityDetailReload(TemplateView):
         context["membersheeps"]=self.membersheeps
         context["community"]=self.community
         context["common_friends"]=self.common_friends
-        context["editor"]=self.editor
         return context
