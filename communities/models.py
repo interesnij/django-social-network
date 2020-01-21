@@ -79,8 +79,8 @@ class Community(models.Model):
             invites_enabled = False
         else:
             invites_enabled = True
-        community = cls.objects.create(name=name, creator=creator, description=description, type=type, rules=rules,invites_enabled=invites_enabled, category=category)
-        CommunityMembership.create_membership(user=creator, is_administrator=True, is_moderator=False,community=community)
+        community = cls.objects.create(name=name, creator=creator, description=description, type=type, rules=rules, invites_enabled=invites_enabled, category=category)
+        CommunityMembership.create_membership(user=creator, is_administrator=True, is_advertiser=False, is_editor=False, is_moderator=False, community=community)
         community.save()
         Album.objects.create(creator=creator, community=community, title="Сохраненные фото", is_generic=True,)
         Album.objects.create(creator=creator, community=community, title="Фото со стены", is_generic=True,)
@@ -464,9 +464,8 @@ class CommunityMembership(models.Model):
         return self.user.get_full_name()
 
     @classmethod
-    def create_membership(cls, user, community, is_administrator=False, is_moderator=False):
-        membership = cls.objects.create(user=user, community=community, is_administrator=is_administrator,
-                                        is_moderator=is_moderator)
+    def create_membership(cls, user, community, is_administrator=False, is_editor=False,is_advertiser=False, is_moderator=False):
+        membership = cls.objects.create(user=user, community=community, is_administrator=is_administrator, is_editor=is_editor, is_advertiser=is_advertiser, is_moderator=is_moderator)
 
         return membership
 
