@@ -25,13 +25,13 @@ class ItemsCommunity(View):
                 template_name = "detail_sections/admin_list.html"
                 item_list = community.get_posts().order_by('-created')
             elif request.user.is_moderator_of_community_with_name(community.name):
-                template_name = "detail_sections/admin_list.html"
+                template_name = "detail_sections/moderator_list.html"
                 item_list = community.get_posts().order_by('-created')
             elif request.user.is_administrator_of_community_with_name(community.name):
                 template_name = "detail_sections/admin_list.html"
                 item_list = community.get_posts().order_by('-created')
-            elif request.user.is_star_from_community_with_name(community.name):
-                template_name = "detail_sections/star_list.html"
+            elif request.user.is_editor_of_community_with_name(community.name):
+                template_name = "detail_sections/editor_list.html"
                 item_list = community.get_posts().order_by('-created')
             else:
                 template_name = "detail_sections/list.html"
@@ -73,11 +73,9 @@ class ItemCommunity(TemplateView):
             if request.user.is_creator_of_community_with_name(self.community.name):
                 self.template_name = "detail_sections/admin_item.html"
             elif request.user.is_moderator_of_community_with_name(self.community.name):
-                self.template_name = "detail_sections/admin_item.html"
+                self.template_name = "detail_sections/moderator_item.html"
             elif request.user.is_administrator_of_community_with_name(self.community.name):
                 self.template_name = "detail_sections/admin_item.html"
-            elif request.user.is_star_from_community_with_name(self.community.name):
-                self.template_name = "detail_sections/item.html"
             else:
                 self.template_name = "detail_sections/item.html"
         elif request.user.is_authenticated and community.is_public():
