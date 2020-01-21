@@ -40,10 +40,10 @@
     <div id="album_photo_load" style="width: 100%;"></div>
   </div>
 
-{% include 'photo_user/album/dropzone.html' %}
 <script>
   $(document).ready(function() {$('#album_photo_load').html('').load("/gallery/user/album_list/" + "{{ user.pk }}/" + "{{ album.uuid }}/");});
-  $("#photos_add").click(function() { $('#photos_add_window').show(); })
+  $("#photos_add").click(function() { $('#photos_add_window').show();
+ })
 </script>
-
+{% include 'photo_user/album/dropzone.html' %}
 {% endblock %}
