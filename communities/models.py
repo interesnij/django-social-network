@@ -464,7 +464,7 @@ class CommunityMembership(models.Model):
         return self.user.get_full_name()
 
     @classmethod
-    def create_membership(cls, user, community, is_administrator=False, is_editor=False,is_advertiser=False, is_moderator=False):
+    def create_membership(cls, user, community, is_administrator=False, is_editor=False, is_advertiser=False, is_moderator=False):
         membership = cls.objects.create(user=user, community=community, is_administrator=is_administrator, is_editor=is_editor, is_advertiser=is_advertiser, is_moderator=is_moderator)
         return membership
 
@@ -474,7 +474,14 @@ class CommunityMembership(models.Model):
         return super(CommunityMembership, self).save(*args, **kwargs)
 
     class Meta:
-        
+        unique_together = (('user', 'community'),)
+        indexes = [
+            models.Index(fields=['community', 'user']),
+            models.Index(fields=['community', 'user', 'is_administrator']),
+            models.Index(fields=['community', 'user', 'is_moderator']),
+            models.Index(fields=['community', 'user', 'is_editor']),
+            models.Index(fields=['community', 'user', 'is_advertiser']),
+            ]
         verbose_name = 'подписчик сообщества'
         verbose_name_plural = 'подписчики сообщества'
 
