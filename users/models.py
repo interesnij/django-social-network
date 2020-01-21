@@ -52,7 +52,7 @@ class User(AbstractUser):
         return self.favorite_communities.all()
 
     def get_staffed_communities(self):
-        query = Q(Q(memberships__user=self, memberships__is_administrator=True) | Q(memberships__user=self, memberships__is_moderator=True))
+        query = Q(Q(memberships__user=self, memberships__is_administrator=True) | Q(memberships__user=self, memberships__is_moderator=True) | Q(communities_memberships__is_advertiser=True) | Q(communities_memberships__is_editor=True))
         return Community.objects.filter(query)
 
         '''''проги для подписчиков  60-109'''''

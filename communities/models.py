@@ -97,13 +97,11 @@ class Community(models.Model):
 
     @classmethod
     def is_user_with_username_administrator_of_community_with_name(cls, user_id, community_name):
-        return cls.objects.filter(name=community_name, memberships__user__id=user_id,
-                                  memberships__is_administrator=True).exists()
+        return cls.objects.filter(name=community_name, memberships__user__id=user_id, memberships__is_administrator=True).exists()
 
     @classmethod
     def is_user_with_username_moderator_of_community_with_name(cls, username, community_name):
-        return cls.objects.filter(name=community_name, memberships__user__username=username,
-                                  memberships__is_moderator=True).exists()
+        return cls.objects.filter(name=community_name, memberships__user__username=username, memberships__is_moderator=True).exists()
 
     @classmethod
     def is_user_with_username_banned_from_community_with_name(cls, username, community_name):
@@ -318,7 +316,7 @@ class Community(models.Model):
 
     def get_staff_members(self):
         staff_members_query = Q(communities_memberships__community_id=self.pk)
-        staff_members_query.add(Q(communities_memberships__is_administrator=True) | Q(communities_memberships__is_moderator=True)| Q(communities_memberships__is_advertiser=True)| Q(communities_memberships__is_editor=True), Q.AND)
+        staff_members_query.add(Q(communities_memberships__is_administrator=True) | Q(communities_memberships__is_moderator=True) | Q(communities_memberships__is_advertiser=True) | Q(communities_memberships__is_editor=True), Q.AND)
         User = get_user_model()
         return User.objects.filter(staff_members_query)
 
