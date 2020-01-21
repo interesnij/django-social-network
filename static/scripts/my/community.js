@@ -188,7 +188,7 @@ $("#ajax").on('click', '.c_dislike2', function() {var dislike = $(this); var pk 
           var member_follow_create = $(this); var pk = member_follow_create.data('id');
           $.ajax({url: "/follows/add_member/" + pk + "/", success: function () {$('#ajax').html('').load("/communities/reload/" + pk + "/");}});
         });
-        $('#ajax').on('click', '.member_create', function() {var member_create = $(this);var pk = member_create.data('id');var uuid = member_create.data('uuid');$.ajax({url: "/communities/progs/create_member/" + pk + "/" + uuid + "/",success: function () {$('#ajax').html('').load("/communities/reload/" + pk + "/");}});});
+        $('#ajax').on('click', '.member_create', function() {var member_create = $(this);var pk = member_create.data('id');var uuid = member_create.data('uuid');$.ajax({url: "/communities/progs/add_member/" + pk + "/" + uuid + "/",success: function () {$('#ajax').html('').load("/communities/reload/" + pk + "/");}});});
         $('#ajax').on('click', '.member_delete', function() {var member_delete = $(this);var pk = member_delete.data('id');var uuid = member_create.data('uuid');$.ajax({url: "/communities/progs/delete_member/" + pk + "/" + uuid + "/",success: function () {$('#ajax').html('').load("/communities/reload/" + pk + "/");}});});
         $('#ajax').on('click', '.community_follow_create', function() {
          var community_follow_create = $(this);
