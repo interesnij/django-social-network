@@ -165,6 +165,10 @@ class CommunityDetailReload(TemplateView):
                 self.template_name = "c_detail/moderator_community.html"
             elif request.user.is_administrator_of_community_with_name(self.community.name):
                 self.template_name = "c_detail/admin_community.html"
+            elif request.user.is_editor_of_community_with_name(self.community.name):
+                self.template_name = "c_detail/editor_community.html"
+            elif request.user.is_advertiser_of_community_with_name(self.community.name):
+                self.template_name = "c_detail/advertiser_community.html"
             elif request.user.is_star_from_community_with_name(self.community.name):
                 self.template_name = "c_detail/star_community.html"
             else:
