@@ -39,6 +39,12 @@ $('#ajax').on('click', '.manage_window_fullscreen_hide', function() {
         li.addClass("style_removed_object"); }
       });
     });
+    $('#ajax').on('click', '.member_follow_create', function() {
+      var member_follow_create = $(this); var pk = member_follow_create.data('id');
+      $.ajax({url: "/follows/add_member/" + pk + "/", success: function () {$('#ajax').html('').load("/communities/reload/" + pk + "/");}});
+    });
+    $('#ajax').on('click', '.member_create', function() {var member_create = $(this);var pk = member_create.data('id');$.ajax({url: "/communities/progs/create_member/" + pk + "/",success: function () {$('#ajax').html('').load("/communities/reload/" + pk + "/");}});});
+    $('#ajax').on('click', '.member_delete', function() {var member_delete = $(this);var pk = member_delete.data('id');$.ajax({url: "/communities/progs/delete_member/" + pk + "/",success: function () {$('#ajax').html('').load("/communities/reload/" + pk + "/");}});});
     $('#ajax').on('click', '.community_follow_create', function() {
      var community_follow_create = $(this);
      var li = community_follow_create.parents(".list-group-item");
@@ -51,7 +57,8 @@ $('#ajax').on('click', '.manage_window_fullscreen_hide', function() {
          li.removeClass("style_removed_object"); }
        });
      });
-
+$('#ajax').on('click', '.member_follow_create', function() {var member_follow_create = $(this);var pk = member_follow_create.data('id');var uuid = member_follow_create.data('uuid');$.ajax({url: "/follows/add_member/" + pk + "/" + uuid + "/",success: function () {$('#ajax').html('').load("/communities/reload/" + pk + "/");}});});
+$('#ajax').on('click', '.member_follow_delete', function() {var member_follow_delete = $(this);var pk = member_follow_delete.data('id');var uuid = member_follow_delete.data('uuid');$.ajax({url: "/follows/delete_member/" + pk + "/" + uuid + "/",success: function () {$('#ajax').html('').load("/communities/reload/" + pk + "/");}});});
   $('#ajax').on('click', '.community_member_delete', function() {
    var member_delete = $(this); var li = member_delete.parents(".list-group-item"); var pk = li.data('pk'); var uuid = li.data('uuid'); $.ajax({ url: "/communities/progs/delete_member/" + pk + "/" + uuid + "/", success: function () { member_delete.parent().html("<span class='community_member_create' style='cursor:pointer;color:rgba(0, 0, 0, 1);'>Восстановить</span>"); li.addClass("style_removed_object"); }});
    });
