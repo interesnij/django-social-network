@@ -1,6 +1,6 @@
 {% load staticfiles humanize thumbnail %}
 
-<div class="card mb-4 infinite-item" style="display: block;">
+<div class="card mb-4 infinite-item" style="display: block;" item-id="{{ object.uuid }}" community-id="{{ community.pk }}">
 
   {% include 'item_community/admin_card_header.html' %}
 
