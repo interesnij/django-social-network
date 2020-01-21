@@ -173,7 +173,6 @@ class CommunityDetailReload(TemplateView):
                 self.template_name = "c_detail/star_community.html"
             else:
                 self.template_name = "c_detail/member_community.html"
-                self.common_friends = request.user.get_common_friends_of_community(self.community.pk)[0:5]
         elif request.user.is_authenticated and request.user.is_follow_from_community_with_name(self.community.pk):
             self.common_friends = request.user.get_common_friends_of_community(self.community.pk)[0:5]
             self.template_name = "c_detail/follow_community.html"
