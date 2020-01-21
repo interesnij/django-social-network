@@ -148,8 +148,8 @@ def community_on_comment(request, pk, uuid):
 		return HttpResponse("Открепляйте, пожалуйста, свои записи!")
 
 def community_item_delete(request, pk, uuid):
-	item = Item.objects.get(pk=pk)
-	community = Community.objects.get(uuid=uuid)
+	item = Item.objects.get(uuid=uuid)
+	community = Community.objects.get(pk=pk)
 	if request.user.is_staff_of_community_with_name(community.name):
 		item.is_deleted=True
 		item.save(update_fields=['is_deleted'])

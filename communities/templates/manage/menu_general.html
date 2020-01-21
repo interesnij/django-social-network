@@ -17,6 +17,7 @@
     <div class="collapse" id="communityMembership">
       <div class="card card-body" style="display: contents;">
         <ul style="list-style-type:none">
+          <li style="margin-bottom:8px;"><a href="{% url 'community_member_manage' pk=community.pk %}" class="ajax" data-html="#ajax">Подписчики</a></li>
           {% if community.is_closed %}
             <li style="margin-bottom:8px;"><a href="{% url 'community_follows' pk=community.pk %}" class="ajax" data-html="#ajax">Заявки на членство</a></li>
           {% endif %}
