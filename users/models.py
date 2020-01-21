@@ -240,10 +240,10 @@ class User(AbstractUser):
         return self.follows.filter(followed_user__username=user_username).exists()
 
     def is_album_exists(self):
-        return self.created_user.filter(creator__id=self.pk, is_generic=False).exists()
+        return self.created_user.filter(creator__id=self.pk, is_generic=False, community=None).exists()
 
     def is_photo_exists(self):
-        return self.photo_creator.filter(creator__id=self.pk).exists()
+        return self.photo_creator.filter(creator__id=self.pk, community=None).exists()
 
     def is_suspended(self):
         return self.moderation_penalties.filter(type=ModerationPenalty.TYPE_SUSPENSION, expiration__gt=timezone.now()).exists()

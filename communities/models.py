@@ -480,6 +480,8 @@ class CommunityMembership(models.Model):
             models.Index(fields=['community', 'user']),
             models.Index(fields=['community', 'user', 'is_administrator']),
             models.Index(fields=['community', 'user', 'is_moderator']),
+            models.Index(fields=['community', 'user', 'is_editor']),
+            models.Index(fields=['community', 'user', 'is_advertiser']),
             ]
         verbose_name = 'подписчик сообщества'
         verbose_name_plural = 'подписчики сообщества'
