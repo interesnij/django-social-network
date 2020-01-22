@@ -9,6 +9,12 @@ from common.checkers import check_is_not_blocked_with_user_with_id, check_is_con
 
 class UserPhotoDescription(View):
     form_image = None
+
+    def get(self,request,*args,**kwargs):
+        self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+		self.form=GeneralUserForm(instance=self.photo)
+		return super(UserGeneralChange,self).get(request,*args,**kwargs)
+
     def post(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
