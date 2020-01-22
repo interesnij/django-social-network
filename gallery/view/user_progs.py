@@ -16,8 +16,9 @@ class UserPhotoDescription(View):
         self.form_image = PhotoDescriptionForm(request.POST,instance=self.photo)
         if self.form_image.is_valid() and self.user == request.user:
             self.form_image.save(commit=False)
-            self.photo=self.form_image.cleaned_data['description']
-            self.photo.save(update_fields=['description'])
+            self.description = self.form_image.cleaned_data['description']
+            self.photo.description = self.description
+            self.photo.save()
             return HttpResponse("!")
         else:
             return HttpResponseBadRequest()
