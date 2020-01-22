@@ -9,7 +9,7 @@ from common.checkers import check_is_not_blocked_with_user_with_id, check_is_con
 
 class UserPhotoDescription(TemplateView):
     template_name = "photo_user/photo/my_photo.html"
-	form_image=None
+    form_image=None
 
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
