@@ -15,8 +15,8 @@ class UserPhotoDescription(View):
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         self.form_image = PhotoDescriptionForm(request.POST,instance=self.photo)
         if self.form_image.is_valid() and self.user == request.user:
-            
-            self.photo.save()
+
+            self.form_image.save()
             return HttpResponse("!")
         else:
             return HttpResponseBadRequest()

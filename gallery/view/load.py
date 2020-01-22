@@ -51,6 +51,14 @@ class UserPhoto(TemplateView):
         context["form_image"]=PhotoDescriptionForm()
         return context
 
+    def post(self,request,*args,**kwargs):
+        self.user=User.objects.get(uuid=self.kwargs["uuid"])
+        self.photo = Photo.objects.get(pk=self.kwargs["pk"])
+        self.form_image = PhotoDescriptionForm(request.POST,instance=self.photo)
+        if self.form_image.is_valid() and self.user == request.user:
+            self.form_image.save()
+            return HttpResponse("!")
+
 class UserAlbumPhoto(TemplateView):
     """
     страница отдельного фото в альбоме для пользователя с разрещениями и без
