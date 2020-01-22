@@ -18,6 +18,10 @@ class UserPhoto(TemplateView):
     def get(self,request,*args,**kwargs):
         self.user=User.objects.get(uuid=self.kwargs["uuid"])
         self.photo = Photo.objects.get(pk=self.kwargs["pk"])
+        if self.photo = self.user.get_avatar_photos().order_by('-id')[0]:
+            avatar = 1
+        else:
+            avatar = None
         if self.user != request.user and request.user.is_authenticated:
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
             if self.user.is_closed_profile():
@@ -42,6 +46,7 @@ class UserPhoto(TemplateView):
         context["user"]=self.user
         context["next"]=self.next
         context["prev"]=self.prev
+        context["avatar"]=self.avatar
         return context
 
 class UserAlbumPhoto(TemplateView):

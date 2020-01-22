@@ -74,6 +74,7 @@ class Photo(models.Model):
     is_deleted = models.BooleanField(verbose_name="Удален",default=False )
     item = models.ManyToManyField(Item, related_name='item_photo')
     item_comment = models.ManyToManyField(ItemComment, related_name='comment_photo')
+    comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
