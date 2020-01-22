@@ -10,15 +10,14 @@ from common.checkers import check_is_not_blocked_with_user_with_id, check_is_con
 class UserPhotoDescription(View):
     form_image = None
 
-    def get(self,request,*args,**kwargs):
+    def post(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         self.form_image = PhotoDescriptionForm(request.POST,instance=self.photo)
         if self.form_image.is_valid() and self.user == request.user:
-            self.form_image.save(commit=False)
-            self.photo.description = self.form_image.description
-            self.photo.save()
-            return HttpResponse("!")
+            self.form_image.save()
+            if request.is_ajax():
+                return HttpResponse("!")
         else:
             return HttpResponseBadRequest()
 
