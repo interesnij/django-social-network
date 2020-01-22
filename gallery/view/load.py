@@ -7,6 +7,7 @@ from common.checkers import check_is_not_blocked_with_user_with_id, check_is_con
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render_to_response
 from rest_framework.exceptions import PermissionDenied
+from gallery.forms import PhotoDescriptionForm
 
 
 class UserPhoto(TemplateView):
@@ -47,6 +48,7 @@ class UserPhoto(TemplateView):
         context["next"]=self.next
         context["prev"]=self.prev
         context["avatar"]=self.avatar
+        context["user_form"]=PhotoDescriptionForm()
         return context
 
 class UserAlbumPhoto(TemplateView):
@@ -83,6 +85,7 @@ class UserAlbumPhoto(TemplateView):
         context["user"]=self.user
         context["next"]=self.next
         context["prev"]=self.prev
+        context["user_form"]=PhotoDescriptionForm()
         return context
 
 
@@ -113,6 +116,7 @@ class UserCommentPhoto(TemplateView):
     def get_context_data(self,**kwargs):
         context=super(UserCommentPhoto,self).get_context_data(**kwargs)
         context["object"]=self.photo
+        context["user_form"]=PhotoDescriptionForm()
         return context
 
 
@@ -149,4 +153,5 @@ class UserDetailAvatar(TemplateView):
         context["user"] = self.user
         context["next"] = self.next
         context["prev"] = self.prev
+        context["user_form"]=PhotoDescriptionForm()
         return context

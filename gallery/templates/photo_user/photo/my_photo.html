@@ -18,6 +18,7 @@
 
       <span id="btn_console">
         <span  style="cursor:pointer" class="user_photo_remove">Удалить</span>
+        &nbsp;
         <span>
           {% if avatar %}
             <span style="cursor:pointer" class="u_unset_avatar">Убрать аватар</span>
@@ -25,6 +26,7 @@
             <span style="cursor:pointer" class="u_set_avatar">На аватар</span>
           {% endif %}
         </span>
+        &nbsp;
           <span>
             {% if object.is_public %}
             <span style="cursor:pointer" class="u_photo_on_private">Включить приватность</span>
@@ -32,6 +34,7 @@
             <span style="cursor:pointer" class="u_photo_off_private">Отключить приватность</span>
             {% endif %}
           </span>
+          &nbsp;
           <span>
             {% if object.comments_enabled %}
               <span style="cursor:pointer" class="u_photo_off_comment">Выключить комментарии</span>
@@ -129,7 +132,7 @@
         $.ajax({
             url: '/gallery/user_progs/abort_delete/' + pk + "/" + uuid + "/",
             success: function(data) {
-              remove_block.empty().append('<span  style="cursor:pointer" class="user_photo_remove">Удалить</span><span>{% if object.avatar %}<span style="cursor:pointer" class="u_unset_avatar">Убрать аватар</span>{% else %}<span style="cursor:pointer" class="u_set_avatar">На аватар</span>{% endif %}</span><span>{% if object.is_public %}<span style="cursor:pointer" class="u_photo_toggle_private">Скрыть фото</span>{% else %}<span style="cursor:pointer" class="u_photo_toggle_private">Показать фото</span>{% endif %}</span><span style="cursor:pointer" class="u_photo_off_comment">Выключить комментарии</span>');
+              remove_block.empty().append('<span style="cursor:pointer" class="user_photo_remove">Удалить</span>&nbsp;<span>{% if object.avatar %}<span style="cursor:pointer" class="u_unset_avatar">Убрать аватар</span>{% else %}<span style="cursor:pointer" class="u_set_avatar">На аватар</span>{% endif %}</span>&nbsp;<span>{% if object.is_public %}<span style="cursor:pointer" class="u_photo_toggle_private">Скрыть фото</span>{% else %}<span style="cursor:pointer" class="u_photo_toggle_private">Показать фото</span>{% endif %}</span>&nbsp;<span style="cursor:pointer" class="u_photo_off_comment">Выключить комментарии</span>');
               display.removeClass("style_removed_object");
               $.toast({heading: 'Информация',text: 'Фотография успешно восстановлена',showHideTransition: 'fade',icon: 'link'});
             }});
@@ -145,7 +148,7 @@
         $.ajax({
             url: '/gallery/user_progs/close_comment/' + pk + "/" + uuid + "/",
             success: function(data) {
-              remove_block.append('<span style="cursor:pointer" class="u_photo_on_comment">Включить комментарии</span>');
+              remove_block.empty().append('<span style="cursor:pointer" class="u_photo_on_comment">Включить комментарии</span>');
               $.toast({heading: 'Информация',text: 'Комментарии успешно отключены',showHideTransition: 'fade',icon: 'link'});
             }});
         return false;
@@ -159,7 +162,7 @@
         $.ajax({
             url: '/gallery/user_progs/close_comment/' + pk + "/" + uuid + "/",
             success: function(data) {
-              remove_block.append('<span style="cursor:pointer" class="u_photo_off_comment">Выключить комментарии</span>');
+              remove_block.empty().append('<span style="cursor:pointer" class="u_photo_off_comment">Выключить комментарии</span>');
               $.toast({heading: 'Информация',text: 'Комментарии успешно включены',showHideTransition: 'fade',icon: 'link'});
             }});
         return false;
@@ -173,7 +176,7 @@
         $.ajax({
             url: '/gallery/user_progs/on_private/' + pk + "/" + uuid + "/",
             success: function(data) {
-              remove_block.append('<span style="cursor:pointer" class="u_photo_off_private">Отключить приватность</span>');
+              remove_block.empty().append('<span style="cursor:pointer" class="u_photo_off_private">Отключить приватность</span>');
               $.toast({heading: 'Информация',text: 'Приватность успешно включена',showHideTransition: 'fade',icon: 'link'});
             }});
         return false;
@@ -187,7 +190,7 @@
         $.ajax({
             url: '/gallery/user_progs/off_private/' + pk + "/" + uuid + "/",
             success: function(data) {
-              remove_block.append('<span style="cursor:pointer" class="u_photo_on_private">Включить приватность</span>');
+              remove_block.empty().append('<span style="cursor:pointer" class="u_photo_on_private">Включить приватность</span>');
               $.toast({heading: 'Информация',text: 'Приватность успешно отключена',showHideTransition: 'fade',icon: 'link'});
             }});
         return false;
@@ -202,7 +205,7 @@
         $.ajax({
             url: '/gallery/user_progs/remove_avatar/' + pk + "/" + uuid + "/",
             success: function(data) {
-              remove_block.append('<span style="cursor:pointer" class="u_set_avatar">На аватар</span>');
+              remove_block.empty().append('<span style="cursor:pointer" class="u_set_avatar">На аватар</span>');
               $.toast({heading: 'Информация',text: 'Аватар успешно обновился',showHideTransition: 'fade',icon: 'link'});
             }});
         return false;
@@ -216,7 +219,7 @@
         $.ajax({
             url: '/gallery/user_progs/add_avatar/' + pk + "/" + uuid + "/",
             success: function(data) {
-              remove_block.append('<span style="cursor:pointer" class="u_unset_avatar">Убрать аватар</span>');
+              remove_block.empty().append('<span style="cursor:pointer" class="u_unset_avatar">Убрать аватар</span>');
               $.toast({heading: 'Информация',text: 'Аватар успешно обновился',showHideTransition: 'fade',icon: 'link'});
             }});
         return false;
