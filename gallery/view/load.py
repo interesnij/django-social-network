@@ -18,7 +18,7 @@ class UserPhoto(TemplateView):
     def get(self,request,*args,**kwargs):
         self.user=User.objects.get(uuid=self.kwargs["uuid"])
         self.photo = Photo.objects.get(pk=self.kwargs["pk"])
-        if self.photo = self.user.get_avatar_photos().order_by('-id')[0]:
+        if self.photo == self.user.get_avatar_photos().order_by('-id')[0]:
             avatar = 1
         else:
             avatar = None
