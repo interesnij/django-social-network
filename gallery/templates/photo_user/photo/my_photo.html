@@ -60,7 +60,7 @@
           <span style="cursor:pointer" class="u_photo_edit">Добавить описание</span>
         {% endif %}
       </span>
-      <span id="block_description_form" style="display:none">
+      <span id="block_description_form" >
         <form action="" method="post">
             {% csrf_token %}
             <div class="row no-gutters">
@@ -114,7 +114,7 @@
        var pk = display.data('pk');
        var uuid = display.data('uuid');
        $.ajax({
-           url: '/gallery/load/photo/' + pk + "/" + uuid + "/",
+           url: '/gallery/user_progs/description/' + pk + "/" + uuid + "/",
            type: form2.attr('method'),
            success: function(data) {
              description = $("#id_description").val();

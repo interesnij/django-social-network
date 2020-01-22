@@ -87,6 +87,13 @@ class Photo(models.Model):
         return photo
 
     @classmethod
+    def photo_description(cls, uuid, description):
+        photo = Photo.objects.get(uuid=uuid)
+        photo.description=description
+        photo.save()
+        return photo
+
+    @classmethod
     def create_avatar(cls, creator, album_2=None, file=None, community=None, created=None, is_public=None, description=None):
         photo = Photo.objects.create(creator=creator, file=file, community=community, is_public=is_public, album_2=album_2, description=description,)
         return photo
