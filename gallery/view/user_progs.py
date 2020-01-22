@@ -14,7 +14,7 @@ class UserPhotoDescription(View):
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         form_image = PhotoDescriptionForm(request.POST)
         if form_image.is_valid():
-            form_image.save(update_fields=['description'])
+            form_image.save()
             return HttpResponse("!")
         else:
             return HttpResponseBadRequest()
@@ -27,7 +27,7 @@ class UserPhotoDelete(View):
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         if user == request.user:
             photo.is_deleted = True
-            photo.save()
+            photo.save(update_fields=['is_deleted'])
         return HttpResponse("!")
 
 class UserPhotoAbortDelete(View):
