@@ -98,6 +98,7 @@
        uuid = display.data('uuid');
        $.ajax({
            url: '/gallery/user_progs/abort_delete/' + pk + "/" + uuid + "/",
+           method:"post",
            success: function(data) {
              remove_block.empty().append('<span  style="cursor:pointer" id="user_photo_remove">Удалить</span>&nbsp;<span>{% if avatar %}<span style="cursor:pointer" class="u_unset_avatar">Убрать аватар</span>{% else %}<span style="cursor:pointer" class="u_set_avatar">На аватар</span>{% endif %}</span>&nbsp;<span>{% if object.is_public %}<span style="cursor:pointer" class="u_photo_on_private">Включить приватность</span>{% else %}<span style="cursor:pointer" class="u_photo_off_private">Отключить приватность</span>{% endif %}</span>&nbsp;<span>{% if object.comments_enabled %}<span style="cursor:pointer" class="u_photo_off_comment">Выключить комментарии</span>{% else %}<span style="cursor:pointer" class="u_photo_on_comment">Включить комментарии</span>{% endif %}</span>');
              display.removeClass("style_removed_object");
