@@ -16,6 +16,7 @@ class UserPhotoDescription(View):
         if form_image.is_valid() and user == request.user:
             form_image.save(commit=False)
             form_image.creator=user
+            form_image.save()
             return HttpResponse("!")
         else:
             return HttpResponseBadRequest()
