@@ -16,9 +16,9 @@ class AvatarUserForm(forms.ModelForm):
 
 class PhotoDescriptionForm(forms.ModelForm):
 	description = forms.CharField( label="", required=False, widget=forms.Textarea(attrs={'class': 'form-control', 'rows': '4'}))
-    class Meta:
-        model = Photo
-        fields = ['description',]
+	class Meta:
+		model = Photo
+		fields = ['description',]
 
 
 class AvatarCommunityForm(forms.ModelForm):
