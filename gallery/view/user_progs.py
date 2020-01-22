@@ -17,11 +17,6 @@ class UserPhotoDescription(TemplateView):
         self.form_image=PhotoDescriptionForm(instance=self.photo)
         return super(UserPhotoDescription,self).get(request,*args,**kwargs)
 
-    def get_context_data(self,**kwargs):
-        context=super(UserPhotoDescription,self).get_context_data(**kwargs)
-        context["form_image"]=self.form_image
-        return context
-
     def post(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
