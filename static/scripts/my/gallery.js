@@ -38,7 +38,7 @@ $('#ajax').on('click', '.u_photo_edit', function() {
      return false;
  });
 
- $('#ajax').on('click', '.user_photo_remove', function() {
+ $('#ajax').on('click', '#user_photo_remove', function() {
      button = $(this);
      display = button.parents(".data_display");
      remove_block = button.parent();
