@@ -30,6 +30,7 @@ $('#ajax').on('click', '.u_photo_edit', function() {
      var uuid = display.data('uuid');
      $.ajax({
          url: '/gallery/user_progs/description/' + pk + "/" + uuid + "/",
+         method:'post',
          success: function(data) {
            description = $("#id_description").val();
            description_block.append(description + "<br><span style='cursor:pointer' class='u_photo_edit'>Редактировать</span>");

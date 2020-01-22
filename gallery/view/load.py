@@ -48,7 +48,7 @@ class UserPhoto(TemplateView):
         context["next"]=self.next
         context["prev"]=self.prev
         context["avatar"]=self.avatar
-        context["user_form"]=PhotoDescriptionForm()
+        context["form_image"]=PhotoDescriptionForm()
         return context
 
 class UserAlbumPhoto(TemplateView):
