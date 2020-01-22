@@ -12,8 +12,8 @@ class UserPhotoDescription(View):
 
     def get(self,request,*args,**kwargs):
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-        self.form=GeneralUserForm(instance=self.photo)
-        return super(UserGeneralChange,self).get(request,*args,**kwargs)
+        self.form=PhotoDescriptionForm(instance=self.photo)
+        return super(UserPhotoDescription,self).get(request,*args,**kwargs)
 
     def post(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
