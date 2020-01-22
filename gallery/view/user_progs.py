@@ -7,45 +7,31 @@ from django.views import View
 from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
 
 
-class UserPhotoDescription(View):
-    form_image = None
+class UserPhotoDescription(TemplateView):
+    template_name = "photo_user/photo/my_photo.html"
+	form_image=None
+
+    def get(self,request,*args,**kwargs):
+        self.user = User.objects.get(pk=self.kwargs["pk"])
+        self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+        self.form_image=PhotoDescriptionForm(instance=self.photo)
+        return super(UserPhotoDescription,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context=super(UserPhotoDescription,self).get_context_data(**kwargs)
+        context["form_image"]=self.form_image
+        return context
 
     def post(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-        form_image = PhotoDescriptionForm(request.POST,instance=self.photo)
-        if form_image.is_valid() and user == request.user:
-
-            form_image.save()
-            return HttpResponse("!")
-        else:
-            return HttpResponseBadRequest()
-
-class UserPhotoDescription(TemplateView):
-	template_name = "photo_user/photo/my_photo.html"
-	form=form_image
-
-	def get(self,request,*args,**kwargs):
-		self.user = User.objects.get(pk=self.kwargs["pk"])
+        self.user = User.objects.get(pk=self.kwargs["pk"])
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-		self.form_image=PhotoDescriptionForm(instance=self.photo)
-		return super(UserPhotoDescription,self).get(request,*args,**kwargs)
-
-	def get_context_data(self,**kwargs):
-		context=super(UserPhotoDescription,self).get_context_data(**kwargs)
-		context["form_image"]=self.form_image
-		return context
-
-	def post(self,request,*args,**kwargs):
-		self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-		self.form_image=PhotoDescriptionForm(request.POST, instance=self.photo)
-		if self.form_image.is_valid():
-			self.photo.description = self.form.cleaned_data['description']
-			self.photo.save()
-			if request.is_ajax():
-				return HttpResponse ('!')
-		return super(UserPhotoDescription,self).post(request,*args,**kwargs)
+        self.form_image=PhotoDescriptionForm(request.POST, instance=self.photo)
+        if self.form_image.is_valid():
+            self.photo.description = self.form.cleaned_data['description']
+            self.photo.save()
+            if request.is_ajax():
+                return HttpResponse ('!')
+        return super(UserPhotoDescription,self).post(request,*args,**kwargs)
 
 class UserPhotoDelete(View):
     success_url = "/"
