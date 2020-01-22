@@ -12,7 +12,7 @@ class UserPhotoDescription(View):
     def post(self,request,*args,**kwargs):
         user = User.objects.get(pk=self.kwargs["pk"])
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-        form_image = PhotoDescriptionForm(request.POST, instanse=photo)
+        form_image = PhotoDescriptionForm(request.POST)
         if form_post.is_valid():
             form_post.save(update_fields=['description'])
             return HttpResponse("!")
