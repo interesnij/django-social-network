@@ -47,28 +47,13 @@ $('#ajax').on('click', '.u_photo_edit', function() {
      $.ajax({
          url: '/gallery/user_progs/delete/' + pk + "/" + uuid + "/",
          success: function(data) {
-           remove_block.empty().append("<span style='cursor:pointer;color:rgba(0, 0, 0, 1);' class='user_photo_abort_remove'>Восстановить</span>");
+           remove_block.empty().append("<span style='cursor:pointer;color:rgba(0, 0, 0, 1);' id='user_photo_abort_remove'>Восстановить</span>");
            display.addClass("style_removed_object");
            $.toast({heading: 'Информация',text: 'Фотография успешно удалена',showHideTransition: 'fade',icon: 'link'});
          }});
      return false;
  });
 
- $('#ajax').on('click', '.user_photo_abort_remove', function() {
-     button = $(this);
-     display = button.parents(".data_display");
-     remove_block = button.parent();
-     pk = display.data('pk');
-     uuid = display.data('uuid');
-     $.ajax({
-         url: '/gallery/user_progs/abort_delete/' + pk + "/" + uuid + "/",
-         success: function(data) {
-           remove_block.empty().append('<span style="cursor:pointer" class="user_photo_remove">Удалить</span>&nbsp;<span>{% if object.avatar %}<span style="cursor:pointer" class="u_unset_avatar">Убрать аватар</span>{% else %}<span style="cursor:pointer" class="u_set_avatar">На аватар</span>{% endif %}</span>&nbsp;<span>{% if object.is_public %}<span style="cursor:pointer" class="u_photo_toggle_private">Скрыть фото</span>{% else %}<span style="cursor:pointer" class="u_photo_toggle_private">Показать фото</span>{% endif %}</span>&nbsp;<span style="cursor:pointer" class="u_photo_off_comment">Выключить комментарии</span>');
-           display.removeClass("style_removed_object");
-           $.toast({heading: 'Информация',text: 'Фотография успешно восстановлена',showHideTransition: 'fade',icon: 'link'});
-         }});
-     return false;
- });
 
  $('#ajax').on('click', '.u_photo_off_comment', function() {
      button = $(this);
