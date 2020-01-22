@@ -63,6 +63,7 @@ class UserAlbumPhoto(TemplateView):
         self.user=User.objects.get(uuid=self.kwargs["uuid"])
         self.album=Album.objects.get(uuid=self.kwargs["album_uuid"])
         self.photo = Photo.objects.get(pk=self.kwargs["pk"])
+        self.form_image = PhotoDescriptionForm(request.POST,instance=self.photo)
         if self.user != request.user and request.user.is_authenticated:
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
             if self.user.is_closed_profile():
@@ -99,6 +100,7 @@ class UserCommentPhoto(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.user=User.objects.get(pk=self.kwargs["pk"])
+        self.form_image = PhotoDescriptionForm(request.POST,instance=self.photo)
         if self.user != request.user and request.user.is_authenticated:
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
             if self.user.is_closed_profile():
@@ -131,6 +133,7 @@ class UserDetailAvatar(TemplateView):
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(uuid=self.kwargs["uuid"])
         self.photo = Photo.objects.get(pk=self.kwargs["pk"])
+        self.form_image = PhotoDescriptionForm(request.POST,instance=self.photo)
         if self.user != request.user and request.user.is_authenticated:
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
             if self.user.is_closed_profile():
