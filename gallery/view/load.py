@@ -49,7 +49,7 @@ class UserPhoto(TemplateView):
         context["next"]=self.next
         context["prev"]=self.prev
         context["avatar"]=self.avatar
-        
+        context["form_image"]=self.form_image
         return context
 
 
