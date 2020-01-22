@@ -27,7 +27,7 @@ class UserPhotoDelete(View):
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         if user == request.user:
             photo.is_deleted = True
-            photo.save(update_fields=['is_deleted'])
+            photo.save()
         return HttpResponse("!")
 
 class UserPhotoAbortDelete(View):
