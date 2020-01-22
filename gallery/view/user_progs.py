@@ -12,7 +12,7 @@ class UserPhotoDescription(View):
     def post(self,request,*args,**kwargs):
         user = User.objects.get(pk=self.kwargs["pk"])
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-        form_image = PhotoDescriptionForm(request.POST)
+        form_image = PhotoDescriptionForm(request.POST,instance=photo)
         if form_image.is_valid() and user == request.user:
             description = form_image.save(commit=False)
             description.creator=user
