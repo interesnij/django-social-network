@@ -115,6 +115,7 @@
        var uuid = display.data('uuid');
        $.ajax({
            url: '/gallery/user_progs/description/' + pk + "/" + uuid + "/",
+           data: form2.serialise(),
            type: 'post',
            success: function(data) {
              description = $("#id_description").val();
