@@ -5,8 +5,8 @@ $('#ajax').on('click', '.photo_detail', function() {
     $('.photo_fullscreen').show();
 });
 
-$('.album-container').on('click', '.album_photo_detail', function() {
-    photo = $(this); pk = photo.data("pk"); uuid = photo.data("uuid"); uuid2 = photo.data("uuid2");
+$('#ajax').on('click', '.album_photo_detail', function() {
+    photo = $(this); pk = photo.data("pk"); uuid = photo.parent().data("uuid"); uuid2 = photo.parent().data("uuid2");
     $('#photo_loader').html('').load("/gallery/load/u_photo/" + pk + "/" + uuid + "/" + uuid2 + "/")
     $('.photo_fullscreen').show();
 });

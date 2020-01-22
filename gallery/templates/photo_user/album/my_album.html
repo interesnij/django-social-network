@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load staticfiles liked_user %}
-{% block title %}Мои фотографии{% endblock %}
+{% block title %}{{ album.title }} - мой альбом{% endblock %}
 {% block content %}
 
 <link rel="stylesheet" href="{% static 'styles/dropzone.css' %}" />
