@@ -15,9 +15,10 @@ class UserPhotoDescription(View):
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         self.form_image = PhotoDescriptionForm(request.POST,instance=self.photo)
         if self.form_image.is_valid() and self.user == request.user:
-            self.form_image.save()
-            if request.is_ajax():
-                return HttpResponse("!")
+            self.form_image.save(commit=False)
+            photo=form_post.cleaned_data['description']
+            self.photo.save(update_fields=['description'])
+            return HttpResponse("!")
         else:
             return HttpResponseBadRequest()
 
