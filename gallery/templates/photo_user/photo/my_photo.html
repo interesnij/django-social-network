@@ -116,7 +116,7 @@
               remove_block.append("<span style='cursor:pointer;color:rgba(0, 0, 0, 1);' class='user_photo_abort_remove'>Восстановить</span>");
               display.addClass("style_removed_object");
               $.toast({heading: 'Информация',text: 'Фотография успешно удалена',showHideTransition: 'fade',icon: 'link'});
-            });
+            }});
         return false;
     });
 
@@ -132,7 +132,7 @@
               remove_block.append('<span  style="cursor:pointer" class="user_photo_remove">Удалить</span><span>{% if object.avatar %}<span style="cursor:pointer" class="u_unset_avatar">Убрать аватар</span>{% else %}<span style="cursor:pointer" class="u_set_avatar">На аватар</span>{% endif %}</span><span>{% if object.is_public %}<span style="cursor:pointer" class="u_photo_toggle_private">Скрыть фото</span>{% else %}<span style="cursor:pointer" class="u_photo_toggle_private">Показать фото</span>{% endif %}</span><span style="cursor:pointer" class="u_photo_off_comment">Выключить комментарии</span>');
               display.removeClass("style_removed_object");
               $.toast({heading: 'Информация',text: 'Фотография успешно восстановлена',showHideTransition: 'fade',icon: 'link'});
-            });
+            }});
         return false;
     });
 
@@ -147,7 +147,7 @@
             success: function(data) {
               remove_block.append('<span style="cursor:pointer" class="u_photo_on_comment">Включить комментарии</span>');
               $.toast({heading: 'Информация',text: 'Комментарии успешно отключены',showHideTransition: 'fade',icon: 'link'});
-            });
+            }});
         return false;
     });
     $('#ajax').on('click', '.u_photo_on_comment', function() {
@@ -161,7 +161,7 @@
             success: function(data) {
               remove_block.append('<span style="cursor:pointer" class="u_photo_off_comment">Выключить комментарии</span>');
               $.toast({heading: 'Информация',text: 'Комментарии успешно включены',showHideTransition: 'fade',icon: 'link'});
-            });
+            }});
         return false;
     });
     $('#ajax').on('click', '.u_photo_on_private', function() {
@@ -175,7 +175,7 @@
             success: function(data) {
               remove_block.append('<span style="cursor:pointer" class="u_photo_off_private">Отключить приватность</span>');
               $.toast({heading: 'Информация',text: 'Приватность успешно включена',showHideTransition: 'fade',icon: 'link'});
-            });
+            }});
         return false;
     });
     $('#ajax').on('click', '.u_photo_off_private', function() {
@@ -189,7 +189,7 @@
             success: function(data) {
               remove_block.append('<span style="cursor:pointer" class="u_photo_on_private">Включить приватность</span>');
               $.toast({heading: 'Информация',text: 'Приватность успешно отключена',showHideTransition: 'fade',icon: 'link'});
-            });
+            }});
         return false;
     });
 
@@ -204,7 +204,7 @@
             success: function(data) {
               remove_block.append('<span style="cursor:pointer" class="u_set_avatar">На аватар</span>');
               $.toast({heading: 'Информация',text: 'Аватар успешно обновился',showHideTransition: 'fade',icon: 'link'});
-            });
+            }});
         return false;
     });
     $('#ajax').on('click', '.u_set_avatar', function() {
@@ -218,7 +218,7 @@
             success: function(data) {
               remove_block.append('<span style="cursor:pointer" class="u_unset_avatar">Убрать аватар</span>');
               $.toast({heading: 'Информация',text: 'Аватар успешно обновился',showHideTransition: 'fade',icon: 'link'});
-            });
+            }});
         return false;
     });
   </script>
