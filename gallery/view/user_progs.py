@@ -8,12 +8,12 @@ from common.checkers import check_is_not_blocked_with_user_with_id, check_is_con
 
 
 class UserPhotoDescription(View):
-	form_image = None
-	def post(self,request,*args,**kwargs):
-		user = User.objects.get(pk=self.kwargs["pk"])
-		photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+    form_image = None
+    def post(self,request,*args,**kwargs):
+        user = User.objects.get(pk=self.kwargs["pk"])
+        photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         form_image = PhotoDescriptionForm(request.POST, instanse=photo)
-		if form_post.is_valid():
+        if form_post.is_valid():
             form_post.save(update_fields=['description'])
             return HttpResponse("!")
         else:
