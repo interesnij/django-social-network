@@ -22,7 +22,6 @@ class UserPhotoDescription(TemplateView):
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         self.form_image=PhotoDescriptionForm(request.POST, instance=self.photo)
         if self.form_image.is_valid():
-            self.photo.description = self.form_image.cleaned_data['description']
             self.form_image.save()
             if request.is_ajax():
                 return HttpResponse ('!')
