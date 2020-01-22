@@ -21,22 +21,7 @@ $('#ajax').on('click', '.u_photo_edit', function() {
   $('#block_description_form').show();
 });
 
- $('#ajax').on('click', '.u_photo_description_btn', function() {
-     var button = $(this);
-     var form2 = button.parent().parent().parent();
-     display = button.parents(".data_display");
-     description_block = form2.parent().prev();
-     var pk = display.data('pk');
-     var uuid = display.data('uuid');
-     $.ajax({
-         url: '/gallery/user_progs/description/' + pk + "/" + uuid + "/",
-         success: function(data) {
-           description = $("#id_description").val();
-           description_block.empty().append(description + "<br><br><span style='cursor:pointer' class='u_photo_edit'>Редактировать</span>");
-           form2.parent().hide();
-         }});
-     return false;
- });
+
 
  $('#ajax').on('click', '#user_photo_remove', function() {
      button = $(this);

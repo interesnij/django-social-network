@@ -70,7 +70,7 @@
                     </div>
                 </div>
                 <div class="col-auto">
-                    <button class="btn btn-outline-primary btn-rounded btn-sm ml-2 u_photo_description_btn" type="button">
+                    <button class="btn btn-outline-primary btn-rounded btn-sm ml-2" id="u_photo_description_btn" type="button">
                       <svg class="svg_info" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
                     </button>
                 </div>
@@ -102,6 +102,23 @@
              remove_block.empty().append('<span  style="cursor:pointer" id="user_photo_remove">Удалить</span>&nbsp;<span>{% if avatar %}<span style="cursor:pointer" class="u_unset_avatar">Убрать аватар</span>{% else %}<span style="cursor:pointer" class="u_set_avatar">На аватар</span>{% endif %}</span>&nbsp;<span>{% if object.is_public %}<span style="cursor:pointer" class="u_photo_on_private">Включить приватность</span>{% else %}<span style="cursor:pointer" class="u_photo_off_private">Отключить приватность</span>{% endif %}</span>&nbsp;<span>{% if object.comments_enabled %}<span style="cursor:pointer" class="u_photo_off_comment">Выключить комментарии</span>{% else %}<span style="cursor:pointer" class="u_photo_on_comment">Включить комментарии</span>{% endif %}</span>');
              display.removeClass("style_removed_object");
              $.toast({heading: 'Информация',text: 'Фотография успешно восстановлена',showHideTransition: 'fade',icon: 'link'});
+           }});
+       return false;
+   });
+
+   $('#ajax').on('click', '#u_photo_description_btn', function() {
+       var button = $(this);
+       var form2 = button.parent().parent().parent();
+       display = button.parents(".data_display");
+       description_block = form2.parent().prev();
+       var pk = display.data('pk');
+       var uuid = display.data('uuid');
+       $.ajax({
+           url: '/gallery/user_progs/description/' + pk + "/" + uuid + "/",
+           success: function(data) {
+             description = $("#id_description").val();
+             description_block.empty().append(description + "<br><br><span style='cursor:pointer' class='u_photo_edit'>Редактировать</span>");
+             form2.parent().hide();
            }});
        return false;
    });
