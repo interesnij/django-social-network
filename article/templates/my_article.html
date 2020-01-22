@@ -1,6 +1,6 @@
 {% load staticfiles humanize thumbnail %}
 
-<div class="card mb-4 infinite-item" style="display: block;" item-id="{{ object.uuid }}" community-id="{{ user.pk }}">
+<div class="card mb-4 infinite-item" style="display: block;" item-id="{{ object.uuid }}" user-id="{{ user.pk }}">
 
   {% include 'item_user/my_card_header.html' %}
 
