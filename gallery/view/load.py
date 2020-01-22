@@ -19,7 +19,7 @@ class UserPhoto(TemplateView):
     def get(self,request,*args,**kwargs):
         self.user=User.objects.get(uuid=self.kwargs["uuid"])
         self.photo = Photo.objects.get(pk=self.kwargs["pk"])
-        self.form_image = PhotoDescriptionForm(request.POST,instance=self.photo)
+        self.form_image = PhotoDescriptionForm(instance=self.photo)
         if self.photo == self.user.get_avatar_photos().order_by('-id')[0]:
             self.avatar = 1
         else:
@@ -49,7 +49,7 @@ class UserPhoto(TemplateView):
         context["next"]=self.next
         context["prev"]=self.prev
         context["avatar"]=self.avatar
-        context["form_image"]=self.form_image
+        
         return context
 
 
