@@ -15,7 +15,7 @@ class AvatarUserForm(forms.ModelForm):
         fields = ['file',]
 
 class PhotoDescriptionForm(forms.ModelForm):
-	description = forms.CharField( label="", required=False, widget=forms.Textarea(attrs={'class': 'form-control', 'rows': '4'}))
+	description = forms.CharField( label="", required=False, widget=forms.Textarea(attrs={'class': 'form-control', 'style': 'height: auto;', 'rows': '4'}))
 	class Meta:
 		model = Photo
 		fields = ['description',]
