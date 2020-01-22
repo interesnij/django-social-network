@@ -33,7 +33,7 @@ $('#ajax').on('click', '.u_photo_edit', function() {
          method:'post',
          success: function(data) {
            description = $("#id_description").val();
-           description_block.append(description + "<br><span style='cursor:pointer' class='u_photo_edit'>Редактировать</span>");
+           description_block.empty().append(description + "<br><span style='cursor:pointer' class='u_photo_edit'>Редактировать</span>");
            form2.parent().hide();
          }});
      return false;
