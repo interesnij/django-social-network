@@ -114,7 +114,7 @@
        var pk = display.data('pk');
        var uuid = display.data('uuid');
        $.ajax({
-           url: '/gallery/user_progs/description/' + pk + "/" + uuid + "/",
+           url: '/gallery/user/load/photo/' + pk + "/" + uuid + "/",
            method:"post",
            success: function(data) {
              description = $("#id_description").val();
