@@ -72,8 +72,8 @@ class Photo(models.Model):
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создано")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='photo_creator', null=False, blank=False, verbose_name="Создатель")
     is_deleted = models.BooleanField(verbose_name="Удален",default=False )
-    item = models.ManyToManyField(Item, related_name='item_photo')
-    item_comment = models.ManyToManyField(ItemComment, related_name='comment_photo')
+    item = models.ManyToManyField(Item, blank=True, null=True, related_name='item_photo')
+    item_comment = models.ManyToManyField(ItemComment, blank=True, null=True, related_name='comment_photo')
     comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
 
     class Meta:
