@@ -95,7 +95,7 @@
        $.ajax({
            url: '/gallery/user_progs/abort_delete/' + pk + "/" + uuid + "/",
            success: function(data) {
-             remove_block.empty().append('<span style="cursor:pointer" class="user_photo_remove">Удалить</span>&nbsp;<span>{% if object.avatar %}<span style="cursor:pointer" class="u_unset_avatar">Убрать аватар</span>{% else %}<span style="cursor:pointer" class="u_set_avatar">На аватар</span>{% endif %}</span>&nbsp;<span>{% if object.is_public %}<span style="cursor:pointer" class="u_photo_on_private">Скрыть фото</span>{% else %}<span style="cursor:pointer" class="u_photo_toggle_private">Показать фото</span>{% endif %}</span>&nbsp;<span style="cursor:pointer" class="u_photo_off_comment">Выключить комментарии</span>');
+             remove_block.empty().append('<span style="cursor:pointer" class="user_photo_remove">Удалить</span>&nbsp;<span>{% if object.avatar %}<span style="cursor:pointer" class="u_unset_avatar">Убрать аватар</span>{% else %}<span style="cursor:pointer" class="u_set_avatar">На аватар</span>{% endif %}</span>&nbsp;<span>{% if object.is_public %}<span style="cursor:pointer" class="u_photo_on_private">Скрыть фото</span>{% else %}<span style="cursor:pointer" class="u_photo_toggle_private">Показать фото</span>{% endif %}</span>&nbsp;<span>{% if object.comments_enabled %}<span style="cursor:pointer" class="u_photo_off_comment">Выключить комментарии</span>{% else %}<span style="cursor:pointer" class="u_photo_on_comment">Включить комментарии</span>{% endif %}</span>');
              display.removeClass("style_removed_object");
              $.toast({heading: 'Информация',text: 'Фотография успешно восстановлена',showHideTransition: 'fade',icon: 'link'});
            }});
