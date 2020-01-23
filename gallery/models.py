@@ -125,6 +125,7 @@ class Photo(models.Model):
     def is_avatar(self, user):
         if self.album_2:
             if user.get_avatar_photos().order_by('-id')[0]:
+                last = user.get_avatar_photos().order_by('-id')[0]
                 if self.pk == last.pk:
                     return True
                 else:
