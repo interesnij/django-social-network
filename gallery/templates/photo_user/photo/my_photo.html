@@ -1,4 +1,4 @@
-{% load staticfiles humanize liked_user %}
+{% load staticfiles humanize liked_user is_avatar %}
 
 <span class="text-hide-xs">
   {% if prev %}
@@ -26,7 +26,7 @@
 
       <span id="btn_console">
         <span>
-          {% if avatar %}
+          {% if object|it_is_avatar:request.user %}
             <span style="cursor:pointer" class="u_unset_avatar">Убрать аватар</span>
           {% else %}
             <span style="cursor:pointer" class="u_set_avatar">На аватар</span>
