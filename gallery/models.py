@@ -122,6 +122,14 @@ class Photo(models.Model):
         post_comment = PhotoComment.objects.get(pk=post_comment_id)
         return self.get_comment_replies_for_comment_with_post(post_comment=post_comment)
 
+    def is_avatar(self, user):
+        try:
+            avatar = user.get_avatar_photos().order_by('-id')[0]
+            if self.pk == avatar.pk:
+                return True
+        except:
+            return False
+
     def get_comment_replies_for_comment_with_post(self, post_comment):
         comment_replies_query = self._make_get_comments_for_post_query(self, post_comment_parent_id=post_comment.pk)
         return ItemComment.objects.filter(comment_replies_query)
