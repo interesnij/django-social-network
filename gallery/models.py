@@ -35,12 +35,17 @@ class Album(models.Model):
     def __str__(self):
         return self.title
 
-    def get_cover_photo(self):
+    def get_cover_photo_for_avatars(self):
         if self.cover_photo:
             return self.cover_photo
         elif Photo.objects.filter(album_2=self, is_deleted=False).exists():
             photo = Photo.objects.filter(album_2=self, is_deleted=False).last()
             return photo
+        else:
+            return False
+    def get_cover_photo(self):
+        if self.cover_photo:
+            return self.cover_photo
         elif Photo.objects.filter(album=self, is_deleted=False).exists():
             photo = Photo.objects.filter(album=self, is_deleted=False).last()
             return photo
@@ -49,9 +54,9 @@ class Album(models.Model):
 
     def count_photo(self):
         if self.title == "Фото со страницы":
-            return self.album_2.count()
+            return self.album_2.filter(is_deleted=False).count()
         else:
-            return self.album_1.count()
+            return self.album_1.filter(is_deleted=False).count()
 
     def album_is_generic(self):
         if self.is_generic:
