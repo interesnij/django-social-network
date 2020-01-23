@@ -123,7 +123,9 @@ class Photo(models.Model):
         return self.get_comment_replies_for_comment_with_post(post_comment=post_comment)
 
     def is_avatar(self):
-        if self.album_2.exists():
+        if self.album_2:
+            last = self.album_2.last()
+            if self.pk == last.pk
             return True
         else:
             return False
