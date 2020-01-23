@@ -19,10 +19,12 @@
           <svg class="svg_default" style="width:100%;height:auto" fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
         {% endif %}
     </div>
+      <span>
+        <span style="cursor:pointer" id="user_photo_remove">Удалить</span>
+      </span>
+      &nbsp;
 
       <span id="btn_console">
-        <span  style="cursor:pointer" id="user_photo_remove">Удалить</span>
-        &nbsp;
         <span>
           {% if avatar %}
             <span style="cursor:pointer" class="u_unset_avatar">Убрать аватар</span>
@@ -80,7 +82,6 @@
   </div>
 </div>
 
-<textarea type="text" rows="4" name="description" class="form-control" id="id_description"></textarea>
   <script>
     {% if prev %}
     $('.prev_item').on('click', function () {uuid = "{{ user.uuid }}";pk = "{{ prev.pk }}";$('#photo_loader').html('').load("/gallery/load/photo/" + pk + "/" + uuid + "/");});
@@ -88,39 +89,4 @@
     {% if next %}
      $('.next_item').on('click', function () {uuid = "{{ user.uuid }}";pk = "{{ next.pk }}";$('#photo_loader').html('').load("/gallery/load/photo/" + pk + "/" + uuid + "/");});
    {% endif %}
-
-   $('#ajax').on('click', '#user_photo_abort_remove', function() {
-       button = $(this);
-       display = button.parents(".data_display");
-       remove_block = button.parent();
-       pk = display.data('pk');
-       uuid = display.data('uuid');
-       $.ajax({
-           url: '/gallery/user_progs/abort_delete/' + pk + "/" + uuid + "/",
-           success: function(data) {
-             remove_block.empty().append('<span  style="cursor:pointer" id="user_photo_remove">Удалить</span>&nbsp;<span>{% if avatar %}<span style="cursor:pointer" class="u_unset_avatar">Убрать аватар</span>{% else %}<span style="cursor:pointer" class="u_set_avatar">На аватар</span>{% endif %}</span>&nbsp;<span>{% if object.is_public %}<span style="cursor:pointer" class="u_photo_on_private">Включить приватность</span>{% else %}<span style="cursor:pointer" class="u_photo_off_private">Отключить приватность</span>{% endif %}</span>&nbsp;<span>{% if object.comments_enabled %}<span style="cursor:pointer" class="u_photo_off_comment">Выключить комментарии</span>{% else %}<span style="cursor:pointer" class="u_photo_on_comment">Включить комментарии</span>{% endif %}</span>');
-             display.removeClass("style_removed_object");
-             $.toast({heading: 'Информация',text: 'Фотография успешно восстановлена',showHideTransition: 'fade',icon: 'link'});
-           }});
-       return false;
-   });
-
-   $('#ajax').on('click', '#u_photo_description_btn', function() {
-       var button = $(this);
-       var form2 = button.parent().parent().parent();
-       display = button.parents(".data_display");
-       description_block = form2.parent().prev();
-       var pk = display.data('pk');
-       var uuid = display.data('uuid');
-       $.ajax({
-           url: '/gallery/user_progs/description/' + pk + "/" + uuid + "/",
-           data: form2.serialize(),
-           type: 'post',
-           success: function(data) {
-             description = $("#id_description").val();
-             description_block.empty().append(description + "<br><br><span style='cursor:pointer' class='u_photo_edit'>Редактировать</span>");
-             form2.parent().hide();
-           }});
-       return false;
-   });
   </script>
