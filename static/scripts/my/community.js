@@ -11,7 +11,8 @@ $('#ajax').on('click', '.photo_fullscreen_hide', function() { $('.photo_fullscre
 $('#ajax').on('click', '.item_fullscreen_hide', function() { $('.item_fullscreen').hide(); $('#item_loader').empty(); });
 $('#ajax').on('click', '.votes_fullscreen_hide', function() { $('.votes_fullscreen').hide(); $('#votes_loader').empty(); });
 $('#ajax').on('click', '.article_fullscreen_hide', function() {$('.article_fullscreen').hide(); $('#article_loader').empty();});
-
+$('#ajax').on('click', '.community_fullscreen_hide', function() {$('.community_fullscreen').hide();$('#community_loader').empty();});
+$('#ajax').on('click', '.community_add', function() {$('#community_loader').html('').load("/communities/add/progs/");$('.community_fullscreen').show();})
 
 /*!
    card headers manage scripts

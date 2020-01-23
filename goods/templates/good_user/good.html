@@ -115,12 +115,6 @@
   <script>$('.next_item').on('click', function() {$('#good_loader').html('').load("{% url 'user_good' pk=next.pk uuid=user.uuid %}");});</script>
 {% endif %}
 </div>
-<script>
-    $('.good_fullscreen_hide').on('click', function() {
-        $('.good_fullscreen').hide();
-        $('#good_loader').empty();
-    });
-</script>
 
 <script defer src="{% static 'scripts/swiper.min.js' %}" type="text/javascript"></script>
 <script>
