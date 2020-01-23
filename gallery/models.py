@@ -125,8 +125,10 @@ class Photo(models.Model):
     def is_avatar(self):
         if self.album_2:
             last = self.album_2.last()
-            if self.pk == last.pk
-            return True
+            if self.pk == last.pk:
+                return True
+            else:
+                return False
         else:
             return False
 
