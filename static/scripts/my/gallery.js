@@ -117,7 +117,6 @@ $('#ajax').on('click', '.u_photo_edit', function() {
          url: '/gallery/user_progs/abort_delete/' + pk + "/" + uuid + "/",
          success: function(data) {
            remove_block.empty().append('<span  style="cursor:pointer" id="user_photo_remove">Удалить</span>');
-           remove_block.next().show();
            display.removeClass("style_removed_object");
            $.toast({heading: 'Информация',text: 'Фотография успешно восстановлена',showHideTransition: 'fade',icon: 'link'});
          }});
@@ -133,7 +132,6 @@ $('#ajax').on('click', '.u_photo_edit', function() {
          url: '/gallery/user_progs/delete/' + pk + "/" + uuid + "/",
          success: function(data) {
            remove_block.empty().append("<span style='cursor:pointer;color:rgba(0, 0, 0, 1);' id='user_photo_abort_remove'>Восстановить</span>");
-           remove_block.next().hide();
            display.addClass("style_removed_object");
            $.toast({heading: 'Информация',text: 'Фотография успешно удалена',showHideTransition: 'fade',icon: 'link'});
          }});
