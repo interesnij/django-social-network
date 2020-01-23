@@ -64,7 +64,6 @@
         <br>
         <form style="margin-top: 15px;">
             {% csrf_token %}
-            <div class="row no-gutters">
                 <div class="col">
                     <div class="input-group input-group-sm">
                       {{ form_image.description }}
@@ -75,14 +74,13 @@
                       <svg class="svg_info" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
                     </button>
                 </div>
-            </div>
         </form>
       </span>
     </div>
   </div>
 </div>
 
-
+<textarea type="text" rows="4" name="description" class="form-control" id="id_description"></textarea>
   <script>
     {% if prev %}
     $('.prev_item').on('click', function () {uuid = "{{ user.uuid }}";pk = "{{ prev.pk }}";$('#photo_loader').html('').load("/gallery/load/photo/" + pk + "/" + uuid + "/");});
