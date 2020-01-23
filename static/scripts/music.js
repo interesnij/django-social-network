@@ -52,7 +52,10 @@ $('#ajax').on('click', '.playlist_pause .track_item', function() {
     };
   });
   $('#ajax').on('click', '.genre_playlist .track_item', function() {
-        track = $(this); track_id = track.parents('.infinite-item').data('counter'); playlist_block = $('body').find('.music-dropdown'); genre_pk = track.parents('.ul_track_list').data('pk');
+        track = $(this);
+        track_id = track.parents('.infinite-item').data('counter');
+        playlist_block = $('body').find('.music-dropdown');
+        genre_pk = track.parents('.ul_track_list').data('pk');
       if (!playlist_block.hasClass('genre_' + genre_pk)){
       $.ajax({
         url: "/music/manage/temp_genre/" + genre_pk + "/",
@@ -65,7 +68,10 @@ $('#ajax').on('click', '.playlist_pause .track_item', function() {
       }else{my_playlist_play(track_id);};
     });
     $('#ajax').on('click', '.user_playlist .track_item', function() {
-          track = $(this); track_id = track.parents('.infinite-item').data('counter'); playlist_block = $('body').find('.music-dropdown'); user_pk = {{ user.pk }};
+          track = $(this);
+          track_id = track.parents('.infinite-item').data('counter');
+          playlist_block = $('body').find('.music-dropdown');
+          user_pk = track.parents('.ul_track_list').data('pk');
         if (!playlist_block.hasClass('user_' + user_pk)){
         $.ajax({
 
