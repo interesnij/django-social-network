@@ -20,11 +20,7 @@ class UserPhoto(TemplateView):
         self.user=User.objects.get(uuid=self.kwargs["uuid"])
         self.photo = Photo.objects.get(pk=self.kwargs["pk"])
         self.form_image = PhotoDescriptionForm(instance=self.photo)
-        try:
-            self.photo.is_avatar(request.user)
-            self.avatar = 1
-        except:
-            self.avatar = None
+        avatar = self.photo.is_avatar(request.user)
         if self.user != request.user and request.user.is_authenticated:
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
             if self.user.is_closed_profile():
