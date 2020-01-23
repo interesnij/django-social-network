@@ -255,6 +255,7 @@ class UserAlbumsList(View):
     def get(self,request,**kwargs):
         context = {}
         self.user = User.objects.get(uuid=self.kwargs["uuid"])
+        self.avatars_album = Album.objects.get(creator=self.user, is_generic=True, community=None, title="Фото со страницы")
         if self.user != request.user and request.user.is_authenticated:
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
             if self.user.is_closed_profile():
@@ -271,6 +272,7 @@ class UserAlbumsList(View):
             current_page = Paginator(albums_list, 12)
         page = request.GET.get('page')
         context['user'] = self.user
+        context['avatars_album'] = self.avatars_album
         try:
             context['albums_list'] = current_page.page(page)
         except PageNotAnInteger:
