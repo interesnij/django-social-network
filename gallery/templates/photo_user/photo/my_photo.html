@@ -27,9 +27,9 @@
       <span id="btn_console">
         <span>
           {% if object|it_is_avatar:request.user %}
-            <span style="cursor:pointer" class="u_unset_avatar">Убрать аватар</span>
+            Это ваш аватар - <span style="cursor:pointer" class="u_unset_avatar">убрать аватар</span>
           {% else %}
-            <span style="cursor:pointer" class="u_set_avatar">На аватар</span>
+            <span style="cursor:pointer" class="u_set_avatar">Сделать аватаром</span>
           {% endif %}
         </span>
         &nbsp;
