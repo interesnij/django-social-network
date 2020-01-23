@@ -122,15 +122,16 @@ class Photo(models.Model):
         post_comment = PhotoComment.objects.get(pk=post_comment_id)
         return self.get_comment_replies_for_comment_with_post(post_comment=post_comment)
 
-    def is_avatar(self):
+    def is_avatar(self, user):
         if self.album_2:
-            last = self.album_2.last()
-            if self.pk == last.pk:
-                return True
-            else:
+            try:
+                user.get_avatar_photos().order_by('-id')[0]
+                if self.pk == last.pk:
+                    return True
+                else:
+                    return False
+            except:
                 return False
-        else:
-            return False
 
     def get_comment_replies_for_comment_with_post(self, post_comment):
         comment_replies_query = self._make_get_comments_for_post_query(self, post_comment_parent_id=post_comment.pk)

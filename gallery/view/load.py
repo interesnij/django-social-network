@@ -21,7 +21,7 @@ class UserPhoto(TemplateView):
         self.photo = Photo.objects.get(pk=self.kwargs["pk"])
         self.form_image = PhotoDescriptionForm(instance=self.photo)
         try:
-            self.photo == self.user.get_avatar_photos().order_by('-id')[0]
+            self.photo.is_avatar(request.user)
             self.avatar = 1
         except:
             self.avatar = None
