@@ -439,7 +439,7 @@ class User(AbstractUser):
 
     def get_my_music(self):
         exclude_reported_and_approved_goods_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
-        list = SoundList.objects.get(creator_id=self.id, name="my_first_generic_playlist_number_12345678900000000")
+        list = SoundList.objects.get(creator_id=self.id, community=None, name="my_first_generic_playlist_number_12345678900000000") 
         music_query = Q(players=list, is_deleted=False)
         music_query.add(exclude_reported_and_approved_goods_query, Q.AND)
         music_list = SoundcloudParsing.objects.filter(music_query)
