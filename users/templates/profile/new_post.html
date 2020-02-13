@@ -4,7 +4,7 @@
     <form action="" id="form_post" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="card-body p-0">
-            <textarea name="text" id="id_text" class="id_text form-control bg-light-secondary border-0" rows="2" placeholder="Что у Вас нового?"></textarea>
+            <textarea name="text" class="id_text form-control bg-light-secondary border-0" rows="2" placeholder="Что у Вас нового?"></textarea>
         </div>
         <div class="card-footer border-top">
 
@@ -32,7 +32,7 @@
                     </div>
                     <div class="form-group ">
                         <label>статус</label>
-                        <select class="form-control" id="id_status" name="status" data-live-search="true" tabindex="-1" aria-hidden="true">
+                        <select class="form-control" name="status" data-live-search="true" tabindex="-1" aria-hidden="true">
                             <option value="P" checked>Опубликовано</option>
                             <option value="D">Отложено</option>
                         </select>
