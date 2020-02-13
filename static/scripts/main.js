@@ -113,3 +113,5 @@ $(window).on('load', function () {
     $('.wrapper').css('padding-bottom', $('body > footer').outerHeight() );
     $('body > footer').css('margin-top', -( $('body > footer').outerHeight() ));
 });
+
+  $.ajaxPrefilter(function( options, original_Options, jqXHR ) {options.async = true;});
