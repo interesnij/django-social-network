@@ -77,12 +77,13 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
     'users.middleware.UpdateLastActivityMiddleware',
+    'django_cookies_samesite.middleware.CookiesSameSite',
 ]
 
 ROOT_URLCONF = 'tr.urls'
 
+SESSION_COOKIE_SAMESITE = 'Lax'
 
 TEMPLATES = [
     {
