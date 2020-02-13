@@ -1,29 +1,5 @@
 
-$('#ajax').on('click', '.show_staff_window', function() {
-  var btn = $(this).parents(".list-group-item");
-  var pk = btn.data("pk");
-  var uuid = btn.data("uuid");
-  $('#load_staff_window').html('').load("/communities/manage/staff_window/" + pk + "/" + uuid + "/");
-  $('.manage_window_fullscreen').show();
-});
 
-$('#ajax').on('click', '.manage_window_fullscreen_hide', function() {
-   $('.manage_window_fullscreen').hide();
-   $('#load_staff_window').empty();
- });
-
- $('#ajax').on('click', '.show_staff_window', function() {
-   var btn = $(this).parents(".list-group-item");
-   var pk = btn.data("pk");
-   var uuid = btn.data("uuid");
-   $('#load_staff_window').html('').load("/communities/manage/staff_window/" + pk + "/" + uuid + "/");
-   $('.manage_window_fullscreen').show();
- });
-
- $('#ajax').on('click', '.manage_window_fullscreen_hide', function() {
-    $('.manage_window_fullscreen').hide();
-    $('#load_staff_window').empty();
-  });
   $('#ajax').on('click', '.community_member_create', function() {
    var member_create = $(this); var li = member_create.parents(".list-group-item"); var pk = li.data('pk'); var uuid = li.data('uuid'); $.ajax({ url: "/communities/progs/add_member/" + pk + "/" + uuid + "/", success: function () { member_create.parent().html("<span class='show_staff_window' style='cursor:pointer'>Изменить полномочия</span> |<span class='community_member_delete' style='cursor:pointer'>Удалить</span>"); li.removeClass("style_removed_object"); }});
    });

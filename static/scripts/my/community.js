@@ -1,19 +1,4 @@
-/*!
-   fullscreen's script of community
-  */
-$('#ajax').on('click', '.c_article_detail', function() {var item = $(this).parent(); var pk = item.attr("community-id"); var uuid = item.attr("item-id"); $('#article_loader').html('').load("/article/read/" + pk + "/" + uuid + "/"); $('.article_fullscreen').show();});
-$('#ajax').on('click', '.c_fullscreen', function() {var item = $(this).parent(); var pk = item.attr("community-id"); var uuid = item.attr("item-id");$('#item_loader').html('').load("/communities/item/" + pk + "/" + uuid + "/"); $('.item_fullscreen').show();});
-$('#ajax').on('click', '.c_all_likes', function() {var btn = $(this); item = $(this).parents('.infinite-item'); var pk = item.attr("community-id"); var uuid = item.attr("item-id");$('#votes_loader').html('').load("/window/all_community_like/" + uuid + "/" + pk + "/"); $('.votes_fullscreen').show();});
-$('#ajax').on('click', '.c_all_dislikes', function() {var btn = $(this); item = $(this).parents('.infinite-item'); var pk = item.attr("community-id"); var uuid = item.attr("item-id");$('#votes_loader').html('').load("/window/all_community_dislike/" + uuid + "/" + pk + "/"); $('.votes_fullscreen').show();});
-$('#ajax').on('click', '.c_all_reposts', function() {var btn = $(this); item = $(this).parents('.infinite-item'); var pk = item.attr("community-id"); var uuid = item.attr("item-id");$('#votes_loader').html('').load("/window/all_community_reposts/" + uuid + "/" + pk + "/"); $('.votes_fullscreen').show();});
-
-$('#ajax').on('click', '.photo_fullscreen_hide', function() { $('.photo_fullscreen').hide(); $('#photo_loader').empty(); });
-$('#ajax').on('click', '.item_fullscreen_hide', function() { $('.item_fullscreen').hide(); $('#item_loader').empty(); });
-$('#ajax').on('click', '.votes_fullscreen_hide', function() { $('.votes_fullscreen').hide(); $('#votes_loader').empty(); });
-$('#ajax').on('click', '.article_fullscreen_hide', function() {$('.article_fullscreen').hide(); $('#article_loader').empty();});
-$('#ajax').on('click', '.community_fullscreen_hide', function() {$('.community_fullscreen').hide();$('#community_loader').empty();});
-$('#ajax').on('click', '.community_add', function() {$('#community_loader').html('').load("/communities/add/progs/");$('.community_fullscreen').show();})
-
+$('#ajax').on('click', '.community_add', function() {$('#community_loader').html('').load("/communities/add/progs/");$('.community_fullscreen').show();console.log("add community open")})
 /*!
    card headers manage scripts
   */

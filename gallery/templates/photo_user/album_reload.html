@@ -17,7 +17,7 @@
                 </div>
                 {% if album.album_is_generic %}
                 <div class="col-12 col-md-6">
-                    <button id="photos_add" class="btn btn-outline-success" style="margin-bottom:15px;width:100%" type="button">
+                    <button class="u_photos_add" class="btn btn-outline-success" style="margin-bottom:15px;width:100%" type="button">
                         Добавить фотографии
                     </button>
                 </div>
@@ -40,5 +40,4 @@
 {% include 'photo_user/album/dropzone.html' %}
 <script>
   $(document).ready(function() {$('#album_photo_load').html('').load("/gallery/user/album_list/" + "{{ user.pk }}/" + "{{ album.uuid }}/");});
-  $("#photos_add").click(function() { $('#photos_add_window').show(); })
 </script>
