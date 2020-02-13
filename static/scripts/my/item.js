@@ -2,15 +2,15 @@
 /*!
    fullscreen's script
   */
-$('#ajax .stream').on('click', '.u_article_detail', function() {var item = $(this).parents(".infinite-item"); var pk = item.attr("user-id");  var uuid = item.attr("item-id"); $('#article_loader').html('').load("/article/detail/" + pk + "/" + uuid + "/"); $('.article_fullscreen').show().addClass("article_open_100");});
-$('#ajax').on('click', '.fullscreen', function() {var item = $(this).parents(".infinite-item"); var pk = item.attr("user-id"); var uuid = item.attr("item-id");$('#item_loader').html('').load("/users/detail/item/" + pk + "/" + uuid + "/"); $('.item_fullscreen').show();});
-$('#ajax').on('click', '.u_all_likes', function() {var btn = $(this); item = $(this).parents('.infinite-item'); var pk = item.attr("user-id"); var uuid = item.attr("user-id");$('#votes_loader').html('').load("/window/all_user_like/" + uuid + "/" + pk + "/"); $('.votes_fullscreen').show();});
-$('#ajax').on('click', '.u_all_dislikes', function() {var btn = $(this); item = $(this).parents('.infinite-item'); var pk = item.attr("user-id"); var uuid = item.attr("user-id");$('#votes_loader').html('').load("/window/all_user_dislike/" + uuid + "/" + pk + "/"); $('.votes_fullscreen').show();});
-$('#ajax').on('click', '.u_all_reposts', function() {var btn = $(this); item = $(this).parents('.infinite-item'); var pk = item.attr("user-id"); var uuid = item.attr("user-id");$('#votes_loader').html('').load("/window/all_user_reposts/" + uuid + "/" + pk + "/"); $('.votes_fullscreen').show();});
-$('#ajax').on('click', '.photo_fullscreen_hide', function() { $('.photo_fullscreen').hide(); $('#photo_loader').empty(); });
-$('#ajax').on('click', '.votes_fullscreen_hide', function() { $('.votes_fullscreen').hide(); $('#votes_loader').empty(); });
-$('#ajax').on('click', '.article_fullscreen_hide', function() {$('.article_fullscreen').hide(); $('#article_loader').empty();});
-$('.item_fullscreen_hide').click( function() { $('.item_fullscreen').hide(); $('#item_loader').empty(); console.log("window closed")});
+$('.u_article_detail').click(function() {var item = $(this).parents(".infinite-item"); var pk = item.attr("user-id");  var uuid = item.attr("item-id"); $('#article_loader').html('').load("/article/detail/" + pk + "/" + uuid + "/"); $('.article_fullscreen').show().addClass("article_open_100");});
+$('.fullscreen').click(function() {var item = $(this).parents(".infinite-item"); var pk = item.attr("user-id"); var uuid = item.attr("item-id");$('#item_loader').html('').load("/users/detail/item/" + pk + "/" + uuid + "/"); $('.item_fullscreen').show();});
+$('.u_all_likes').click(function() {var btn = $(this); item = $(this).parents('.infinite-item'); var pk = item.attr("user-id"); var uuid = item.attr("user-id");$('#votes_loader').html('').load("/window/all_user_like/" + uuid + "/" + pk + "/"); $('.votes_fullscreen').show();});
+$('.u_all_dislikes').click(function() {var btn = $(this); item = $(this).parents('.infinite-item'); var pk = item.attr("user-id"); var uuid = item.attr("user-id");$('#votes_loader').html('').load("/window/all_user_dislike/" + uuid + "/" + pk + "/"); $('.votes_fullscreen').show();});
+$('.u_all_reposts').click(function() {var btn = $(this); item = $(this).parents('.infinite-item'); var pk = item.attr("user-id"); var uuid = item.attr("user-id");$('#votes_loader').html('').load("/window/all_user_reposts/" + uuid + "/" + pk + "/"); $('.votes_fullscreen').show();});
+$('.photo_fullscreen_hide').click(function() { $('.photo_fullscreen').hide(); $('#photo_loader').empty(); });
+$('.votes_fullscreen_hide').click(function() { $('.votes_fullscreen').hide(); $('#votes_loader').empty(); });
+$('.article_fullscreen_hide').click(function() {$('.article_fullscreen').hide(); $('#article_loader').empty();});
+$('.item_fullscreen_hide').click(function() { $('.item_fullscreen').hide(); $('#item_loader').empty(); console.log("item closed")});
 /*!
    comments scripts
   */
