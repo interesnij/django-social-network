@@ -10,7 +10,7 @@ $('#ajax').on('click', '.u_all_reposts', function() {var btn = $(this); item = $
 $('#ajax').on('click', '.photo_fullscreen_hide', function() { $('.photo_fullscreen').hide(); $('#photo_loader').empty(); });
 $('#ajax').on('click', '.votes_fullscreen_hide', function() { $('.votes_fullscreen').hide(); $('#votes_loader').empty(); });
 $('#ajax').on('click', '.article_fullscreen_hide', function() {$('.article_fullscreen').hide(); $('#article_loader').empty();});
-
+$('.item_fullscreen_hide').click( function() { $('.item_fullscreen').hide(); $('#item_loader').empty(); console.log("window closed")});
 /*!
    comments scripts
   */
