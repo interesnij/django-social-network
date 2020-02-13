@@ -35,7 +35,6 @@ LIBRARY_APPS = [
     'allauth.socialaccount.providers.vk',
     'rest_auth',
     'django_extensions',
-    'django-cookies-samesite',
 ]
 NETWORK_APPS = [
     'goods',
@@ -80,7 +79,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'users.middleware.UpdateLastActivityMiddleware',
-    'django_cookies_samesite.middleware.CookiesSameSite',
 ]
 
 ROOT_URLCONF = 'tr.urls'
