@@ -35,6 +35,7 @@ LIBRARY_APPS = [
     'allauth.socialaccount.providers.vk',
     'rest_auth',
     'django_extensions',
+    'django-cookies-samesite',
 ]
 NETWORK_APPS = [
     'goods',
