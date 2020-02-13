@@ -11,8 +11,10 @@ from django.contrib.contenttypes.models import ContentType
 from rest_framework.exceptions import PermissionDenied
 
 
-#перезагрузка окна с последними лайками для записи пользователя
 class ItemUserLikeWindow(TemplateView):
+    """
+    Перезагрузка окна с последними лайками для записи пользователя
+    """
     template_name="item_votes/u_like_window.html"
 
     def get(self,request,*args,**kwargs):
@@ -36,8 +38,10 @@ class ItemUserLikeWindow(TemplateView):
         context["likes"]=self.likes
         return context
 
-#перезагрузка окна с последними дизлайками для записи пользователя
 class ItemUserCommentLikeWindow(TemplateView):
+    """
+    Перезагрузка окна с последними дизлайками для записи пользователя
+    """
     template_name="item_votes/u_comment_like_window.html"
 
     def get(self,request,*args,**kwargs):
@@ -61,8 +65,10 @@ class ItemUserCommentLikeWindow(TemplateView):
         context["likes"]=self.likes
         return context
 
-#перезагрузка окна с последними лайками для комментария записи пользователя
 class ItemUserDislikeWindow(TemplateView):
+    """
+    Перезагрузка окна с последними лайками для комментария записи пользователя
+    """
     template_name="item_votes/u_dislike_window.html"
 
     def get(self,request,*args,**kwargs):
@@ -86,8 +92,10 @@ class ItemUserDislikeWindow(TemplateView):
         context["dislikes"]=self.dislikes
         return context
 
-#перезагрузка окна с последними дизлайками для комментария записи пользователя
 class ItemUserCommentDislikeWindow(TemplateView):
+    """
+    Перезагрузка окна с последними дизлайками для комментария записи пользователя
+    """
     template_name="item_votes/u_comment_dislike_window.html"
 
     def get(self,request,*args,**kwargs):
@@ -112,8 +120,10 @@ class ItemUserCommentDislikeWindow(TemplateView):
         return context
 
 
-#перезагрузка окна с последними лайками для записи сообщества
 class ItemCommunityLikeWindow(TemplateView):
+    """
+    Перезагрузка окна с последними лайками для записи сообщества
+    """
     template_name="item_votes/c_like_window.html"
 
     def get(self,request,*args,**kwargs):
@@ -128,8 +138,10 @@ class ItemCommunityLikeWindow(TemplateView):
         context["likes"]=self.likes
         return context
 
-#перезагрузка окна с последними дизлайками для записи сообщества
 class ItemCommunityDislikeWindow(TemplateView):
+    """
+    Перезагрузка окна с последними дизлайками для записи сообщества
+    """
     template_name="item_votes/c_dislike_window.html"
 
     def get(self,request,*args,**kwargs):
@@ -144,8 +156,10 @@ class ItemCommunityDislikeWindow(TemplateView):
         context["dislikes"]=self.dislikes
         return context
 
-#перезагрузка окна с последними лайками для комментария записи сообщества
 class ItemCommunityCommentLikeWindow(TemplateView):
+    """
+    Перезагрузка окна с последними лайками для комментария записи сообщества
+    """
     template_name="item_votes/c_comment_like_window.html"
 
     def get(self,request,*args,**kwargs):
@@ -160,8 +174,10 @@ class ItemCommunityCommentLikeWindow(TemplateView):
         context["likes"]=self.likes
         return context
 
-#перезагрузка окна с последними дизлайками для комментария записи сообщества
 class ItemCommunityCommentDislikeWindow(TemplateView):
+    """
+    Перезагрузка окна с последними дизлайками для комментария записи сообщества
+    """
     template_name="item_votes/c_comment_dislike_window.html"
 
     def get(self,request,*args,**kwargs):
@@ -177,8 +193,10 @@ class ItemCommunityCommentDislikeWindow(TemplateView):
         return context
 
 
-#Окно со всеми лайками для записи пользователя
 class AllItemUserLikeWindow(TemplateView):
+    """
+    Окно со всеми лайками для записи пользователя
+    """
     template_name="item_votes/u_all_like_window.html"
 
     def get(self,request,*args,**kwargs):
@@ -202,8 +220,10 @@ class AllItemUserLikeWindow(TemplateView):
         context["likes"]=self.likes
         return context
 
-#Окно со всеми дизлайками для записи пользователя
 class AllItemUserDislikeWindow(TemplateView):
+    """
+    Окно со всеми дизлайками для записи пользователя
+    """
     template_name="item_votes/u_all_dislike_window.html"
 
     def get(self,request,*args,**kwargs):
@@ -226,8 +246,10 @@ class AllItemUserDislikeWindow(TemplateView):
         context["dislikes"]=self.dislikes
         return context
 
-#Окно со всеми дизлайками для комментария записи пользователя
 class AllItemUserCommentDislikeWindow(TemplateView):
+    """
+    Окно со всеми дизлайками для комментария записи пользователя
+    """
     template_name="item_votes/u_all_comment_dislike_window.html"
 
     def get(self,request,*args,**kwargs):
@@ -251,8 +273,10 @@ class AllItemUserCommentDislikeWindow(TemplateView):
         context["dislikes"]=self.dislikes
         return context
 
-#Окно со всеми лайками для комментария записи пользователя
 class AllItemUserCommentLikeWindow(TemplateView):
+    """
+    Окно со всеми лайками для комментария записи пользователя
+    """
     template_name="item_votes/u_all_comment_like_window.html"
 
     def get(self,request,*args,**kwargs):
@@ -277,8 +301,10 @@ class AllItemUserCommentLikeWindow(TemplateView):
         return context
 
 
-#Окно со всеми лайками для записи сообщества
 class AllItemCommunityLikeWindow(TemplateView):
+    """
+    Окно со всеми лайками для записи сообщества
+    """
     template_name="item_votes/c_all_like_window.html"
 
     def get(self,request,*args,**kwargs):
@@ -293,8 +319,10 @@ class AllItemCommunityLikeWindow(TemplateView):
         context["likes"]=self.likes
         return context
 
-#Окно со всеми дизлайками для записи сообщества
 class AllItemCommunityDislikeWindow(TemplateView):
+    """
+    Окно со всеми лайками для диззаписи сообщества
+    """
     template_name="item_votes/c_all_dislike_window.html"
 
     def get(self,request,*args,**kwargs):
@@ -309,8 +337,10 @@ class AllItemCommunityDislikeWindow(TemplateView):
         context["dislikes"]=self.dislikes
         return context
 
-#Окно со всеми лайками для комментария к записи сообщества
 class AllItemCommunityCommentLikeWindow(TemplateView):
+    """
+    Окно со всеми лайками для комментария к записи сообщества
+    """
     template_name="item_votes/c_all_comment_like_window.html"
 
     def get(self,request,*args,**kwargs):
@@ -325,8 +355,10 @@ class AllItemCommunityCommentLikeWindow(TemplateView):
         context["likes"]=self.likes
         return context
 
-#Окно со всеми дизлайками для комментирия к записи сообщества
 class AllItemCommunityCommentDislikeWindow(TemplateView):
+    """
+    Окно со всеми дизлайками для комментария к записи сообщества
+    """
     template_name="item_votes/c_all_comment_dislike_window.html"
 
     def get(self,request,*args,**kwargs):
@@ -343,6 +375,9 @@ class AllItemCommunityCommentDislikeWindow(TemplateView):
 
 #Окно со всеми поделившимися записью пользователя
 class AllItemUserRepostWindow(TemplateView):
+    """
+    Окно со всеми поделившимися записью пользователя
+    """
     template_name="item_votes/u_all_repost_window.html"
 
     def get(self,request,*args,**kwargs):
@@ -366,8 +401,10 @@ class AllItemUserRepostWindow(TemplateView):
         context["reposts"]=self.reposts
         return context
 
-#Окно со всеми поделившимися записью сообщества
 class AllItemCommunityRepostWindow(TemplateView):
+    """
+    Окно со всеми поделившимися записью сообщества
+    """
     template_name="item_votes/c_all_repost_window.html"
 
     def get(self,request,*args,**kwargs):
