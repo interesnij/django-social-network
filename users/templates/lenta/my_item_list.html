@@ -53,5 +53,5 @@
 	var lenta = new Waypoint.Infinite({
 	    element: $('.lenta-container')[0], onBeforePageLoad: function() { $('.items-load').show(); }, onAfterPageLoad: function($items) { $('.items-load').hide(); }
 	});
-$('#ajax').on('click', '.item_fullscreen_hide', function() { $('.item_fullscreen').hide(); $('#item_loader').empty(); console.log("window closed")});
+$('.item_fullscreen_hide').click( function() { $('.item_fullscreen').hide(); $('#item_loader').empty(); console.log("window closed")});
 </script>
