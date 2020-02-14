@@ -7,6 +7,9 @@ body {
 .header-color-primary {
   color: #ffffff;
 }
+.media p {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
 .header-color-secondary {
   color: rgba(255, 255, 255, 0.7);
 }

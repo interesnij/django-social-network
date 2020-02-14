@@ -23,6 +23,9 @@ body {
 .content-color-primary {
   color: #ffffff;
 }
+.media p {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
 .content-color-secondary {
   color: rgba(255, 255, 255, 0.65);
 }

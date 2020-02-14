@@ -20,6 +20,9 @@ body {
 .bg-light-opac {
   background-color: #6a1338;
 }
+.media p {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
 .content-color-primary {
   color: #ffffff;
 }

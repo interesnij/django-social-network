@@ -11,7 +11,7 @@ body {
   color: #888888;
 }
 .media p {
-  color: black;
+  color: black !important;
 }
 .text-muted,
 .text-secondary {

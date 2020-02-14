@@ -2307,7 +2307,6 @@ body.dragging * {
 .media p {
   line-height: 1.4em;
   margin-bottom: 0;
-  color: rgba(255, 255, 255, 0.7);
   display: inline-block;
   width: 100%;
 }

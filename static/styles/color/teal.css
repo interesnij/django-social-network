@@ -15,6 +15,9 @@ body {
 .text-secondary {
   color: rgba(255, 255, 255, 0.4) !important;
 }
+.media p {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
 .boxed-page .wrapper {
   background-color: #009eb2;
 }

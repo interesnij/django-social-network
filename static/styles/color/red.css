@@ -17,6 +17,9 @@ body {
 .boxed-page .wrapper {
   background-color: #d53434;
 }
+.media p {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
 .bg-light-opac {
   background-color: #d63939;
 }

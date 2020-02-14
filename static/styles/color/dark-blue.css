@@ -10,6 +10,9 @@ body {
 .header-color-secondary {
   color: rgba(255, 255, 255, 0.7);
 }
+.media p {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
 .text-muted,
 .text-secondary {
   color: rgba(255, 255, 255, 0.4) !important;

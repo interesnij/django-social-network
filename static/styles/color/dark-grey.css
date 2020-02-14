@@ -18,6 +18,9 @@
   background: #252525 !important;
   color: rgba(255, 255, 255, 0.65) !important;
 }
+.media p {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
 body {
   background-color: #111111;
   font-size: 1em;
