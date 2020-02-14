@@ -2288,7 +2288,6 @@ body.dragging * {
 
 .media h5 {
   font-weight: 500;
-  color: #ffffff;
 }
 
 .media h5 small {
@@ -2636,11 +2635,6 @@ body.dragging * {
   display: inline-block;
   color: #ffffff;
 }
-
-.form-control::placeholder {
-  color: rgba(255, 255, 255, 0.6);
-}
-
 
 .line-control-menu-bar .dropdown-menu > li > a:hover, .line-control-menu-bar .dropdown-menu > li > a:focus, .line-control-menu-bar .dropdown-submenu:hover > a, .line-control-menu-bar .dropdown-submenu:focus > a, .line-control-status-bar .dropdown-menu > li > a:hover, .line-control-status-bar .dropdown-menu > li > a:focus, .line-control-status-bar .dropdown-submenu:hover > a, .line-control-status-bar .dropdown-submenu:focus > a {
   background-color: #7979ff;
