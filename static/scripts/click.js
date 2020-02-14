@@ -43,7 +43,6 @@ $('#ajax').on('click', '.u_all_reposts', function() {var btn = $(this); item = $
   $('.item_fullscreen_hide').click(function() { $('.item_fullscreen').hide(); $('#item_loader').empty(); console.log("user post closed")});
   $('.community_fullscreen_hide').click(function() {$('.community_fullscreen').hide();$('#community_loader').empty(); console.log("community post closed")});
   $('.community_manage_fullscreen_hide').click(function() {$('.manage_window_fullscreen').hide();$('#load_staff_window').empty();console.log("staff community closed")});
-  $('.photo_fullscreen_hide').click(function() {$('.photo_fullscreen').hide();$('#photo_loader').empty();console.log("community add closed")});
   $('.good_fullscreen_hide').click(function() {$('.good_add_fullscreen').hide();$('#good_add_loader').empty();console.log("good closed")});
 
 
