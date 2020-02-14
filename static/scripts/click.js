@@ -33,7 +33,7 @@ $('#ajax').on('click', '.u_all_reposts', function() {var btn = $(this); item = $
   $('#ajax').on('click', '.u_albums_add', function() {user = $(this);user_id = user.data("uuid"); $('#photo_add_loader').html('').load("/gallery/user/add_album/" + user_id + "/"); $('.photofullscreen').show();console.log("user album photos add open")})
   $('#ajax').on('click', '.u_photo_edit', function() {$('#block_description_form').show();console.log("user description photo open");});
   $("#photos_add").click(function() {$('#photos_add_window').show();console.log("user photo form open")})
-  $("#albums_add").click(function() {user = $(this);user_id = user.data("uuid");$('#photo_loader').html('').load("/gallery/user/add_album/" + user_id + "/");$('.photo_fullscreen').show();console.log("user album add open")})
+  $("#albums_add").click(function() {user = $(this);user_id = user.data("uuid");$('#photo_add_loader').html('').load("/gallery/user/add_album/" + user_id + "/");$('.photo_fullscreen').show();console.log("user album add open")})
   /*!
      fullscreen close scripts
     */
