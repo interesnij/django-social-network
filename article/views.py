@@ -8,6 +8,7 @@ from django.http import HttpResponse, HttpResponseBadRequest
 from communities.models import Community
 from main.models import Item
 from rest_framework.exceptions import PermissionDenied
+from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
 
 
 class ArticleView(TemplateView):
