@@ -1,13 +1,5 @@
 
 
-$('#ajax').on('click', '.u_photos_add', function() { $('#photos_add_window').show(); })
-$('#ajax').on('click', '.u_albums_add', function() { var user = $(this); var user_id = user.data("uuid"); $('#photo_add_loader').html('').load("/gallery/user/add_album/" + user_id + "/"); $('.add_fullscreen').show(); })
- 
-
-$('#ajax').on('click', '.u_photo_edit', function() {
-  $('#block_description_form').show();
-});
-
  $('#ajax').on('click', '.u_photo_off_comment', function() {
      button = $(this);
      display = button.parents(".data_display");
