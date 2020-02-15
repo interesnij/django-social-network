@@ -117,6 +117,7 @@
     $.ajax({
       url: "/users/progs/color/" + color + "/",
       success: function() {
+        $(".theme-color .custom-control-input").prop('checked', false);
         $('head').append("<link rel='stylesheet' href='/static/styles/color/" + color + ".css' />")
       }
     })
