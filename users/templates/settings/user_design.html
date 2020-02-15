@@ -23,7 +23,7 @@
                     <li class="list-group-item">
                         <div class="theme-color">
                             <div class="custom-control custom-radio" data-color="white">
-                                <input {% if request.user.color_settings.color == 'white' %} checked {% endif %} type="radio" id="color_white" class="custom-control-input" checked="">
+                                <input {% if request.user.color_settings.color == 'white' %} checked {% endif %} type="radio" id="color_white" class="custom-control-input">
                                 <label class="custom-control-label bg-white" for="color_white"></label>
                             </div>
                             <div class="custom-control custom-radio" data-color="dark-blue">
@@ -111,11 +111,12 @@
 
   <script>
   $('.custom-radio').click(function() {
-    color = $(this).data("color"); 
+    color = $(this).data("color");
+    input = color.find(".custom-control-input");
     $.ajax({
       url: "/users/progs/color/" + color + "/",
       success: function(data) {
-        color.input.checked=true
+        input.checked=true
       }
     });return false;
   });
