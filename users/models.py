@@ -692,7 +692,7 @@ class UserNotificationsSettings(models.Model):
         return UserNotificationsSettings.objects.create(user=user)
 
 
-class UserColorSettings(models.Model):
+class UserColorSettings(models.Model): 
     COLOR = (
         ('white', 'white'),
         ('blue', 'blue'),
