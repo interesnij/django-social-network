@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
             name='UserColorSettings',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('color', models.BooleanField(choices=[('W', 'white'), ('BL', 'blue'), ('BR', 'brown'), ('DBL', 'dark-blue'), ('DBR', 'dark-brown'), ('DGR', 'dark-green'), ('DGR', 'dark-grey'), ('DMR', 'dark-maroon'), ('DP', 'dark-pink'), ('DPR', 'dark-purple'), ('G', 'grey'), ('O', 'orange'), ('P', 'purple'), ('R', 'red'), ('SB', 'skyblue'), ('T', 'teal')], default='W', max_length=4, verbose_name='Цвет')),
+                ('color', models.CharField(choices=[('W', 'white'), ('BL', 'blue'), ('BR', 'brown'), ('DBL', 'dark-blue'), ('DBR', 'dark-brown'), ('DGR', 'dark-green'), ('DGR', 'dark-grey'), ('DMR', 'dark-maroon'), ('DP', 'dark-pink'), ('DPR', 'dark-purple'), ('G', 'grey'), ('O', 'orange'), ('P', 'purple'), ('R', 'red'), ('SB', 'skyblue'), ('T', 'teal')], default='white', max_length=4, verbose_name='Цвет')),
                 ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, related_name='color_settings', to=settings.AUTH_USER_MODEL, verbose_name='Пользователь')),
             ],
         ),
