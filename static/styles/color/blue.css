@@ -150,7 +150,7 @@ a.media:hover {
 .svg_default { color:#ffffff; }
 .svg_success { color:#ffffff; }
 .svg_danger { color:#ffffff }
-
+.mt-0 a {color:#ffffff}
 .svg_default_30 {border: #ffffff solid 1px;}
 .svg_default_40 {border: #ffffff solid 1px;}
 .svg_default_50 {border: #ffffff solid 1px;}
