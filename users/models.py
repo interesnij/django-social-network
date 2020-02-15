@@ -713,7 +713,7 @@ class UserColorSettings(models.Model):
     )
 
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='color_settings', verbose_name="Пользователь")
-    color = models.BooleanField(max_length=20, choices=COLOR, default=WHITE, verbose_name="Цвет")
+    color = models.BooleanField(max_length=20, choices=COLOR, default='white', verbose_name="Цвет")
 
 
 class UserPrivateSettings(models.Model):
