@@ -144,3 +144,23 @@ a.media:hover {
 .wizard-1.nav-tabs .nav-item a.nav-link.active:before {
   border-left: 20px solid #111837;
 }
+
+
+.svg_default { color:#ffffff; }
+.svg_success { color:#ffffff; }
+.svg_danger { color:#ffffff }
+.mt-0 a {color:#ffffff}
+.svg_default_30 {border: #ffffff solid 1px;}
+.svg_default_40 {border: #ffffff solid 1px;}
+.svg_default_50 {border: #ffffff solid 1px;}
+
+.like_window:hover, .dislike_window:hover, .repost_window:hover {background: #111837; color: #ffffff;}
+.comment_like_window:hover, .comment_dislike_window:hover {background: #111837; color: #ffffff;}
+.c_like:hover~.like_window, .c_dislike:hover~.dislike_window, .c_repost:hover~.repost_window, .u_like:hover~.like_window, .u_dislike:hover~.dislike_window, .u_repost:hover~.repost_window{background: #111837; color: #ffffff;}
+.c_like2:hover~.comment_like_window, .c_dislike2:hover~.comment_dislike_window, .u_like2:hover~.comment_like_window,  .u_dislike2:hover~.comment_dislike_window{background:#111837; color: #ffffff;}
+.thumb{
+border:#ffffff solid 1px;
+}
+.thumb_small{
+  border:#ffffff solid 1px;
+}
