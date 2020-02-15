@@ -116,7 +116,7 @@
     $.ajax({
       url: "/users/progs/color/" + color + "/",
       success: function(data) {
-        input.checked=true
+        $('.theme-color input').checked=false;
       }
     });return false;
   });
