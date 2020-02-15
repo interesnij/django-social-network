@@ -692,6 +692,46 @@ class UserNotificationsSettings(models.Model):
         return UserNotificationsSettings.objects.create(user=user)
 
 
+class UserColorSettings(models.Model):
+    WHITE = 'W'
+    BLUE = 'BL'
+    BROWN = 'BR'
+    DARKBLUE = 'DBL'
+    DARKBROWN = 'DBR'
+    DARKGREEN = 'DGR'
+    DARKGREY = 'DGR'
+    DARKMAROON = 'DMR'
+    DARKPINK = 'DP'
+    DARKPURPLE =  'DPR'
+    GREY =  'G'
+    ORANGE = 'O'
+    PURPLE = 'P'
+    RED = 'R'
+    SKYBLUE = 'SB'
+    TEAL = 'T'
+    COLOR = (
+        (WHITE, 'white'),
+        (BLUE, 'blue'),
+        (BROWN, 'brown'),
+        (DARKBLUE, 'dark-blue'),
+        (DARKBROWN, 'dark-brown'),
+        (DARKGREEN, 'dark-green'),
+        (DARKGREY, 'dark-grey'),
+        (DARKMAROON, 'dark-maroon'),
+        (DARKPINK, 'dark-pink'),
+        (DARKPURPLE, 'dark-purple'),
+        (GREY, 'grey'),
+        (ORANGE, 'orange'),
+        (PURPLE, 'purple'),
+        (RED, 'red'),
+        (SKYBLUE, 'skyblue'),
+        (TEAL, 'teal'),
+    )
+
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='color_settings', verbose_name="Пользователь")
+    color = models.BooleanField(max_length=4, choices=COLOR, default=WHITE, verbose_name="Цвет")
+
+
 class UserPrivateSettings(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name="user_private", on_delete=models.CASCADE, verbose_name="Пользователь")
     is_private = models.BooleanField(default=False, verbose_name="Закрытый профиль")
