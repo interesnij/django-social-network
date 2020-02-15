@@ -1,12 +1,39 @@
 #ajax .jp-playlist-current{
     border: 1px solid #FFFFFF !important;
-    background-image: url(/static/images/music_visual_night.gif);
-    background-position: left bottom;
-    background-size: 150px;
-    background-repeat: no-repeat;
-    background-position: top center, center center, top left;
 
 }
+div.jp-type-playlist div.jp-playlist li.jp-playlist-current{
+    background-color: #111111;
+}
+div.jp-type-playlist div.jp-playlist li.jp-playlist-current p{
+    color: #fff;
+}
+div.jp-interface {
+    background-color: #252525;
+}
+div.jp-video div.jp-interface {
+    border-top:1px solid #111111;
+}
+div.jp-progress {
+    background-color: #ddd;
+}
+.jp-playlist .jp-playlist-current{
+    background-color: #111111;
+    color:#FFFFFF;
+}
+div.jp-type-playlist div.jp-playlist span.jp-free-media a:hover{
+    color:#252525;
+}
+.jp-no-solution {
+    background-color:#eee;
+    border:2px solid #fff;
+    color:#000;
+}
+.jp-no-solution a {
+    color:#000;
+}
+
+
 body {
   background-color: #111111;
   font-size: 1em;

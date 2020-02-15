@@ -60,7 +60,6 @@ div.jp-video-full div.jp-interface {
 
 div.jp-interface {
     position: relative;
-    background-color: #F0F1F2;
     width:100%;
 }
 
@@ -73,10 +72,6 @@ div.jp-audio div.jp-type-playlist div.jp-interface {
 
 div.jp-audio-stream div.jp-type-single div.jp-interface {
     height:80px;
-}
-
-div.jp-video div.jp-interface {
-    border-top:1px solid #009be3;
 }
 
 /* @group CONTROLS */
@@ -191,7 +186,6 @@ a.jp-next:hover {
 div.jp-progress {
     overflow:hidden;
     float: left;
-    background-color: #ddd;
 }
 div.jp-audio div.jp-progress {
     position: absolute;
@@ -436,17 +430,8 @@ div.jp-type-playlist div.jp-playlist li:last-child{
     padding:5px 0 5px 20px;
     border-bottom:none;
 }
-div.jp-type-playlist div.jp-playlist li.jp-playlist-current{
-    /*list-style-type:square;*/
-    /*list-style-position:inside;*/
-    /*padding-left:7px;*/
-    background-color: #5f7fa2;
-}
-div.jp-type-playlist div.jp-playlist li.jp-playlist-current p{
-    color: #fff;
-}
+
 #ajax .jp-playlist-current{
-    border: 1px solid #000000 !important; 
     background-image: url(/static/images/music_visual_day.gif);
     background-position: left bottom;
     background-size: 20%;
@@ -465,8 +450,6 @@ div.jp-type-playlist div.jp-playlist a:hover {
 }
 .jp-playlist .jp-playlist-current{
     position: relative;
-    background-color: #5f7fa2;
-    color:#FFFFFF;
 }
 
 .jp-playlist .jp-playlist-current .svg_default{
@@ -530,9 +513,6 @@ div.jp-type-playlist div.jp-playlist span.jp-free-media {
 div.jp-type-playlist div.jp-playlist span.jp-free-media a{
     color:#666;
 }
-div.jp-type-playlist div.jp-playlist span.jp-free-media a:hover{
-    color:#0d88c1;
-}
 
 /* @end */
 
@@ -571,10 +551,6 @@ div.jp-video-play:hover a.jp-video-play-icon {
     background: url("/static/images/vkontakte.video.play.png") 0 -100px no-repeat;
 }
 
-
-
-
-
 div.jp-jplayer audio,
 div.jp-jplayer {
     width:0px;
@@ -584,10 +560,6 @@ div.jp-jplayer {
 div.jp-jplayer {
     background-color: #000000;
 }
-
-
-
-
 
 /* @group TOGGLES */
 
@@ -705,14 +677,7 @@ a.jp-shuffle-off:hover {
 .jp-no-solution {
     padding:5px;
     font-size:.8em;
-    background-color:#eee;
-    border:2px solid #009be3;
-    color:#000;
     display:none;
-}
-
-.jp-no-solution a {
-    color:#000;
 }
 
 .jp-no-solution span {
