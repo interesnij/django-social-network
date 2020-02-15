@@ -2692,6 +2692,9 @@ body.dragging * {
 .dark-blue {
   background-color: #252d47;
 }
+.dark {
+  background-color: #000000;
+}
 
 .dark-purple {
   background-color: #3d274a;

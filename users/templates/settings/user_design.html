@@ -13,15 +13,6 @@
                 <div class="card-body">
                 <p class="content-color-primary page-sub-title-small mt-2">
                   <span class="icon-circle mr-2">
-                    <svg fill="currentColor" class="svg_default" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M6.76 4.84l-1.8-1.79-1.41 1.41 1.79 1.79 1.42-1.41zM4 10.5H1v2h3v-2zm9-9.95h-2V3.5h2V.55zm7.45 3.91l-1.41-1.41-1.79 1.79 1.41 1.41 1.79-1.79zm-3.21 13.7l1.79 1.8 1.41-1.41-1.8-1.79-1.4 1.4zM20 10.5v2h3v-2h-3zm-8-5c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm-1 16.95h2V19.5h-2v2.95zm-7.45-3.91l1.41 1.41 1.79-1.8-1.41-1.41-1.79 1.8z"/></svg>
-                  </span>
-                  Ночной режим
-                    <input type="checkbox" id="darktheme" class="switch switch-sm">
-                    <label style="margin-right:12px" for="darktheme" class="bg-dark mb-2 border float-right"></label>
-                </p>
-
-                <p class="content-color-primary page-sub-title-small mt-2">
-                  <span class="icon-circle mr-2">
                     <svg fill="currentColor" class="svg_default" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9c.83 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.01-.23-.26-.38-.61-.38-.99 0-.83.67-1.5 1.5-1.5H16c2.76 0 5-2.24 5-5 0-4.42-4.03-8-9-8zm-5.5 9c-.83 0-1.5-.67-1.5-1.5S5.67 9 6.5 9 8 9.67 8 10.5 7.33 12 6.5 12zm3-4C8.67 8 8 7.33 8 6.5S8.67 5 9.5 5s1.5.67 1.5 1.5S10.33 8 9.5 8zm5 0c-.83 0-1.5-.67-1.5-1.5S13.67 5 14.5 5s1.5.67 1.5 1.5S15.33 8 14.5 8zm3 4c-.83 0-1.5-.67-1.5-1.5S16.67 9 17.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
 
                   </span>
@@ -32,68 +23,72 @@
                     <li class="list-group-item">
                         <div class="theme-color">
                             <div class="custom-control custom-radio">
-                                <input type="radio" id="customRadioonpage1" name="style-sheet-color-2" class="custom-control-input" checked="">
-                                <label class="custom-control-label bg-white" for="customRadioonpage1" data-title="style"></label>
+                                <input {% if request.user.color_settings.color == 'white' %} checked {% endif %} type="radio" id="color_white" class="custom-control-input" checked="">
+                                <label class="custom-control-label bg-white" for="color_white"></label>
                             </div>
                             <div class="custom-control custom-radio">
-                                <input type="radio" id="customRadioonpage2" name="style-sheet-color-2" class="custom-control-input">
-                                <label class="custom-control-label dark-blue" for="customRadioonpage2" data-title="dark-blue"></label>
+                                <input {% if request.user.color_settings.color == 'dark-blue' %} checked {% endif %} type="radio" id="color_dark_blue" class="custom-control-input">
+                                <label class="custom-control-label dark-blue" for="color_dark_blue"></label>
                             </div>
                             <div class="custom-control custom-radio">
-                                <input type="radio" id="customRadioonpage3" name="style-sheet-color-2" class="custom-control-input">
-                                <label class="custom-control-label dark-purple" for="customRadioonpage3" data-title="dark-purple"></label>
+                                <input {% if request.user.color_settings.color == 'dark-purple' %} checked {% endif %} type="radio" id="color_dark_purple" class="custom-control-input">
+                                <label class="custom-control-label dark-purple" for="color_dark_purple"></label>
                             </div>
                             <div class="custom-control custom-radio">
-                                <input type="radio" id="customRadioonpage4" name="style-sheet-color-2" class="custom-control-input">
-                                <label class="custom-control-label dark-maroon" for="customRadioonpage4" data-title="dark-maroon"></label>
+                                <input {% if request.user.color_settings.color == 'dark-maroon' %} checked {% endif %} type="radio" id="color_dark_maroon" class="custom-control-input">
+                                <label class="custom-control-label dark-maroon" for="color_dark_maroon"></label>
                             </div>
                             <div class="custom-control custom-radio">
-                                <input type="radio" id="customRadioonpage5" name="style-sheet-color-2" class="custom-control-input">
-                                <label class="custom-control-label dark-grey" for="customRadioonpage5" data-title="dark-grey"></label>
+                                <input {% if request.user.color_settings.color == 'dark-grey' %} checked {% endif %} type="radio" id="color_dark_grey" class="custom-control-input">
+                                <label class="custom-control-label dark-grey" for="color_dark_grey"></label>
                             </div>
                             <div class="custom-control custom-radio">
-                                <input type="radio" id="customRadioonpage6" name="style-sheet-color-2" class="custom-control-input">
-                                <label class="custom-control-label dark-pink" for="customRadioonpage6" data-title="dark-pink"></label>
+                                <input {% if request.user.color_settings.color == 'dark-pink' %} checked {% endif %} type="radio" id="color_dark_pink" class="custom-control-input">
+                                <label class="custom-control-label dark-pink" for="color_dark_pink"></label>
                             </div>
                             <div class="custom-control custom-radio">
-                                <input type="radio" id="customRadioonpage7" name="style-sheet-color-2" class="custom-control-input">
-                                <label class="custom-control-label dark-brown" for="customRadioonpage7" data-title="dark-brown"></label>
+                                <input {% if request.user.color_settings.color == 'dark-brown' %} checked {% endif %} type="radio" id="color_dark_brown" class="custom-control-input">
+                                <label class="custom-control-label dark-brown" for="color_dark_brown"></label>
                             </div>
                             <div class="custom-control custom-radio">
-                                <input type="radio" id="customRadioonpage8" name="style-sheet-color-2" class="custom-control-input">
-                                <label class="custom-control-label dark-green" for="customRadioonpage8" data-title="dark-green"></label>
+                                <input {% if request.user.color_settings.color == 'dark-green' %} checked {% endif %} type="radio" id="color_dark_green" class="custom-control-input">
+                                <label class="custom-control-label dark-green" for="color_dark_green"></label>
                             </div>
                             <div class="custom-control custom-radio">
-                                <input type="radio" id="customRadioonpage1mat" name="style-sheet-color-2" class="custom-control-input">
-                                <label class="custom-control-label red" for="customRadioonpage1mat" data-title="red"></label>
+                                <input {% if request.user.color_settings.color == 'red' %} checked {% endif %} type="radio" id="color_red" class="custom-control-input">
+                                <label class="custom-control-label red" for="color_red"></label>
                             </div>
                             <div class="custom-control custom-radio">
-                                <input type="radio" id="customRadioonpage2mat" name="style-sheet-color-2" class="custom-control-input">
-                                <label class="custom-control-label purple" for="customRadioonpage2mat" data-title="purple"></label>
+                                <input {% if request.user.color_settings.color == 'purple' %} checked {% endif %} type="radio" id="color_purple" class="custom-control-input">
+                                <label class="custom-control-label purple" for="color_purple"></label>
                             </div>
                             <div class="custom-control custom-radio">
-                                <input type="radio" id="customRadioonpage4mat" name="style-sheet-color-2" class="custom-control-input">
-                                <label class="custom-control-label blue" for="customRadioonpage4mat" data-title="blue"></label>
+                                <input {% if request.user.color_settings.color == 'blue' %} checked {% endif %} type="radio" id="color_blue" class="custom-control-input">
+                                <label class="custom-control-label blue" for="color_blue"></label>
                             </div>
                             <div class="custom-control custom-radio">
-                                <input type="radio" id="customRadioonpage6mat" name="style-sheet-color-2" class="custom-control-input">
-                                <label class="custom-control-label skyblue" for="customRadioonpage6mat" data-title="skyblue"></label>
+                                <input {% if request.user.color_settings.color == 'skyblue' %} checked {% endif %} type="radio" id="color_skyblue" class="custom-control-input">
+                                <label class="custom-control-label skyblue" for="color_skyblue"></label>
                             </div>
                             <div class="custom-control custom-radio">
-                                <input type="radio" id="customRadioonpage5mat" name="style-sheet-color-2" class="custom-control-input">
-                                <label class="custom-control-label teal" for="customRadioonpage5mat" data-title="teal"></label>
+                                <input {% if request.user.color_settings.color == 'teal' %} checked {% endif %} type="radio" id="color_steal" class="custom-control-input">
+                                <label class="custom-control-label teal" for="color_steal"></label>
                             </div>
                             <div class="custom-control custom-radio">
-                                <input type="radio" id="customRadioonpage7mat" name="style-sheet-color-2" class="custom-control-input">
-                                <label class="custom-control-label orange" for="customRadioonpage7mat" data-title="orange"></label>
+                                <input {% if request.user.color_settings.color == 'orange' %} checked {% endif %} type="radio" id="color_orange" class="custom-control-input">
+                                <label class="custom-control-label orange" for="color_orange"></label>
                             </div>
                             <div class="custom-control custom-radio">
-                                <input type="radio" id="customRadioonpage3mat" name="style-sheet-color-2" class="custom-control-input">
-                                <label class="custom-control-label brown" for="customRadioonpage3mat" data-title="brown"></label>
+                                <input {% if request.user.color_settings.color == 'brown' %} checked {% endif %} type="radio" id="color_brown" class="custom-control-input">
+                                <label class="custom-control-label brown" for="color_brown"></label>
                             </div>
                             <div class="custom-control custom-radio">
-                                <input type="radio" id="customRadioonpage8mat" name="style-sheet-color-2" class="custom-control-input">
-                                <label class="custom-control-label grey" for="customRadioonpage8mat" data-title="grey"></label>
+                                <input {% if request.user.color_settings.color == 'grey' %} checked {% endif %} type="radio" id="color_grey" class="custom-control-input">
+                                <label class="custom-control-label grey" for="color_grey"></label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input {% if request.user.color_settings.color == 'dark' %} checked {% endif %} type="radio" id="color_dark" class="custom-control-input">
+                                <label class="custom-control-label dark" for="color_dark"></label>
                             </div>
                             <div class="clearfix"></div>
                         </div>
