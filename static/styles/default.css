@@ -1793,7 +1793,6 @@ body.dragging * {
   padding: 0;
   line-height: 44px;
   flex-direction: row;
-  color: rgba(255, 255, 255, 0.7);
   position: relative;
 }
 
