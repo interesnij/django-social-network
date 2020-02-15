@@ -115,7 +115,7 @@
     input = div.find(".custom-control-input");
     $.ajax({
       url: "/users/progs/color/" + color + "/",
-      success: function(data) {
+      success: function() {
         $('.theme-color input').checked=false;
       }
     });return false;
