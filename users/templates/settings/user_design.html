@@ -117,6 +117,7 @@
     $.ajax({
       url: "/users/progs/color/" + color + "/",
       success: function() {
+        $('head').append("<link rel='stylesheet' href='/static/styles/color/" + color + ".css' />")
       }
     })
   });
