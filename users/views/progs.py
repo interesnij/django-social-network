@@ -19,9 +19,9 @@ class UserUnbanCreate(View):
         return HttpResponse('Пользователь разблокирован')
 
 
-class UserColorChange(View): 
+class UserColorChange(View):
     def get(self,request,*args,**kwargs):
-        model = UserColorSettings.objects.get(user=request.user, color=self.kwargs["color"])
+        model = UserColorSettings.objects.get(user=request.user)
         color = self.kwargs["color"]
         if model.color == color:
             return HttpResponse('Этот цвет уже выбран')
