@@ -692,28 +692,7 @@ class UserNotificationsSettings(models.Model):
         return UserNotificationsSettings.objects.create(user=user)
 
 
-class UserColorSettings(models.Model):
-    COLOR = (
-        ('white', 'white'),
-        ('blue', 'blue'),
-        ('brown', 'brown'),
-        ('dark-blue', 'dark-blue'),
-        ('dark-brown', 'dark-brown'),
-        ('dark-green', 'dark-green'),
-        ('dark-grey', 'dark-grey'),
-        ('dark-maroon', 'dark-maroon'),
-        ('dark-pink', 'dark-pink'),
-        ('dark-purple', 'dark-purple'),
-        ('grey', 'grey'),
-        ('orange', 'orange'),
-        ('purple', 'purple'),
-        ('red', 'red'),
-        ('skyblue', 'skyblue'),
-        ('teal', 'teal'),
-    )
 
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='color_settings', verbose_name="Пользователь")
-    color = models.CharField(max_length=20, choices=COLOR, default='white', verbose_name="Цвет")
 
 
 class UserPrivateSettings(models.Model):
