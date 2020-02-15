@@ -1,6 +1,9 @@
+.music-dropdown{
+  background: #333333;
+}
+
 #ajax .jp-playlist-current{
     border: 1px solid #FFFFFF !important;
-
 }
 div.jp-type-playlist div.jp-playlist li.jp-playlist-current{
     background-color: #111111;
@@ -18,7 +21,7 @@ div.jp-progress {
     background-color: #ddd;
 }
 .jp-playlist .jp-playlist-current{
-    background-color: #111111;
+    background-color: #111111 !important;;
     color:#FFFFFF;
 }
 div.jp-type-playlist div.jp-playlist span.jp-free-media a:hover{
@@ -35,7 +38,9 @@ div.jp-type-playlist div.jp-playlist span.jp-free-media a:hover{
 .jp-playlist .track_item_li {
   background-color:#333333;
 }
-
+.jp-playlist ul{
+  background-color:#333333;
+}
 
 body {
   background-color: #111111;
