@@ -111,7 +111,7 @@
 
   <script>
   $('.custom-radio').click(function() {
-    color = $(this).data("color");
+    color = $(this).data("color"); 
     $.ajax({
       url: "/users/progs/color/" + color + "/",
       success: function(data) {
