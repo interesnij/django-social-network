@@ -144,3 +144,22 @@ a.media:hover {
 .wizard-1.nav-tabs .nav-item a.nav-link.active:before {
   border-left: 20px solid #f6f8fa;
 }
+
+.svg_default { color:#6C757D; }
+.svg_success { color:#41cd52; }
+.svg_danger { color:#FF0000 }
+
+.svg_default_30 {border: #6C757D solid 1px;}
+.svg_default_40 {border: #6C757D solid 1px;}
+.svg_default_50 {border: #6C757D solid 1px;}
+
+.like_window:hover, .dislike_window:hover, .repost_window:hover {background: #D6DAE1; color: black;}
+.comment_like_window:hover, .comment_dislike_window:hover {background: #D6DAE1; color: black;}
+.c_like:hover~.like_window, .c_dislike:hover~.dislike_window, .c_repost:hover~.repost_window, .u_like:hover~.like_window, .u_dislike:hover~.dislike_window, .u_repost:hover~.repost_window{background: #D6DAE1; color: black;}
+.c_like2:hover~.comment_like_window, .c_dislike2:hover~.comment_dislike_window, .u_like2:hover~.comment_like_window,  .u_dislike2:hover~.comment_dislike_window{background: #D6DAE1; color: black;}
+.thumb{
+border:#6C757D solid 1px;
+}
+.thumb_small{
+  border:#6C757D solid 1px;
+}
