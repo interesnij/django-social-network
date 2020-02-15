@@ -1478,8 +1478,7 @@ body.dragging * {
 
 .logo {
   font-weight: 300;
-  color: rgba(255, 255, 255, 0.7);
-  line-height: 20px;
+  color: #A426F1;
   font-size: 1.2em;
   display: inline-block;
   vertical-align: middle;
