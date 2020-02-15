@@ -111,10 +111,10 @@
 
   <script>
   $('.custom-radio').click(function() {
-    color = $(this).data("color");
+    color = $(this);
     input = color.find(".custom-control-input");
     $.ajax({
-      url: "/users/progs/color/" + color + "/",
+      url: "/users/progs/color/" + color.data("color") + "/",
       success: function(data) {
         input.checked=true
       }
