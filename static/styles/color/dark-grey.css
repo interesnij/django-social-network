@@ -32,6 +32,9 @@ div.jp-type-playlist div.jp-playlist span.jp-free-media a:hover{
 .jp-no-solution a {
     color:#000;
 }
+.jp-playlist .track_item_li {
+  background-color:#333333;
+}
 
 
 body {
