@@ -11,12 +11,16 @@ class UserNotificationsSettingsInline(admin.TabularInline):
 class UserPrivateSettingsInline(admin.TabularInline):
     model = UserPrivateSettings
 
+class UserColorSettingsInline(admin.TabularInline):
+    model = UserColorSettings
+
 
 class UserAdmin(admin.ModelAdmin):
     inlines = [
         UserProfileInline,
         UserNotificationsSettingsInline,
         UserPrivateSettingsInline,
+        UserColorSettingsInline,
     ]
     search_fields = ('last_name','first_name')
 
