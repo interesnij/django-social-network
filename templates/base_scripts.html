@@ -38,5 +38,5 @@ function load_playlist(playlist_block, callback) {
 }
 
 $(document).on("click.bs.dropdown.data-api", ".noclose", function (e) { e.stopPropagation() });
-$('head').append("<link rel='stylesheet' href='/static/styles/color/" + "{{ request.user.color_settings.color }}" + ".css'")
+$('head').append("<link rel='stylesheet' href='/static/styles/color/" + "{{ request.user.color_settings.color }}" + ".css' />")
 </script>
