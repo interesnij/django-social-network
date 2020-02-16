@@ -7,7 +7,7 @@ a {
 .music-dropdown{
   background: #ffffff !important;
 }
-.form-control::placeholder{color:rgba(0, 0, 0, 0.8);font-style: italic;}
+.form-control::placeholder{color:rgba(0, 0, 0, 0.7);font-style: italic;}
 
 #ajax .jp-playlist-current{
   border: 1px solid #000000 !important;
