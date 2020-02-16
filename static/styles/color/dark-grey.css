@@ -208,9 +208,12 @@ a.media:hover {
 .mt-0 a, .mt-0 p, .media-body p{color: rgba(255, 255, 255, 0.6) !important;}
 .svg_default_30 {border: rgba(255, 255, 255, 0.6) solid 1px;}
 .svg_default_40 {border: rgba(255, 255, 255, 0.6) solid 1px;}
-.svg_default_50 {border: rgba(255, 255, 255, 0.6) solid 1px;} 
+.svg_default_50 {border: rgba(255, 255, 255, 0.6) solid 1px;}
 .dropdown-menu{color:rgba(255, 255, 255, 0.6) !important; background-color: #323232 !important}
-
+.dropdown-menu .dropdown-item:hover {
+    background-color: #111111 !important;
+    color: rgba(255, 255, 255, 0.6) !important;
+}
 .like_window:hover, .dislike_window:hover, .repost_window:hover {background: #161616 !important; color: rgba(255, 255, 255, 0.6) !important;}
 .comment_like_window:hover, .comment_dislike_window:hover {background: #161616 !important;color: rgba(255, 255, 255, 0.6) !important;}
 .c_like:hover~.like_window, .c_dislike:hover~.dislike_window, .c_repost:hover~.repost_window, .u_like:hover~.like_window, .u_dislike:hover~.dislike_window, .u_repost:hover~.repost_window{background: #161616 !important; color: rgba(255, 255, 255, 0.6) !important;}
