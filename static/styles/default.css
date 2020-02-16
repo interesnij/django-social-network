@@ -715,7 +715,7 @@ body.dragging * {
 }
 
 /* pink gradient */
-.pink-gradient, .dropdown-menu .dropdown-item:active, .dropdown-menu .dropdown-item.active,
+.pink-gradient,
 .pink-gradient-active.active,
 .pink-gradient-active.router-link-active,
 .pink-gradient-active.active:hover,
@@ -730,8 +730,7 @@ body.dragging * {
   background-repeat: repeat;
 }
 
-.pink-gradient h5, .dropdown-menu .dropdown-item:active h5, .dropdown-menu .dropdown-item.active h5,
-.pink-gradient .header-color-primary, .dropdown-menu .dropdown-item:active .header-color-primary, .dropdown-menu .dropdown-item.active .header-color-primary,
+.pink-gradient h5,
 .pink-gradient-active.active h5,
 .pink-gradient-active.active .header-color-primary,
 .pink-gradient-active.router-link-active h5,
@@ -743,8 +742,7 @@ body.dragging * {
   color: #ffffff;
 }
 
-.pink-gradient p, .dropdown-menu .dropdown-item:active p, .dropdown-menu .dropdown-item.active p,
-.pink-gradient .header-color-secondary, .dropdown-menu .dropdown-item:active .header-color-secondary, .dropdown-menu .dropdown-item.active .header-color-secondary,
+.pink-gradient p,
 .pink-gradient-active.active p,
 .pink-gradient-active.active .header-color-secondary,
 .pink-gradient-active.router-link-active p,
@@ -757,8 +755,7 @@ body.dragging * {
   opacity: 0.7;
 }
 
-.pink-gradient.media h5, .dropdown-menu .media.dropdown-item:active h5, .dropdown-menu .media.dropdown-item.active h5,
-.pink-gradient.media small, .dropdown-menu .media.dropdown-item:active small, .dropdown-menu .media.dropdown-item.active small,
+.pink-gradient.media h5
 .pink-gradient-active.active.media h5,
 .pink-gradient-active.active.media small,
 .pink-gradient-active.router-link-active.media h5,
@@ -770,8 +767,7 @@ body.dragging * {
   color: #ffffff;
 }
 
-.pink-gradient.media p, .dropdown-menu .media.dropdown-item:active p, .dropdown-menu .media.dropdown-item.active p,
-.pink-gradient.media .text-muted, .dropdown-menu .media.dropdown-item:active .text-muted, .dropdown-menu .media.dropdown-item.active .text-muted,
+.pink-gradient.media p,
 .pink-gradient-active.active.media p,
 .pink-gradient-active.active.media .text-muted,
 .pink-gradient-active.router-link-active.media p,
@@ -782,13 +778,6 @@ body.dragging * {
 .pink-gradient-active:active.media .text-muted {
   color: #ffffff !important;
   opacity: 0.7;
-}
-
-.btn.pink-gradient:hover, .dropdown-menu .btn.dropdown-item:hover:active, .dropdown-menu .btn.dropdown-item.active:hover {
-  color: #ffffff !important;
-  background-image: -moz-linear-gradient(45deg, #680ade 0%, #c513c9 100%) !important;
-  background-image: -webkit-linear-gradient(45deg, #680ade 0%, #c513c9 100%) !important;
-  background-image: -ms-linear-gradient(45deg, #680ade 0%, #c513c9 100%) !important;
 }
 
 /* primary gradient */
