@@ -210,9 +210,9 @@ a.media:hover {
 .c_like2:hover~.comment_like_window, .c_dislike2:hover~.comment_dislike_window, .u_like2:hover~.comment_like_window,  .u_dislike2:hover~.comment_dislike_window{background: #D6DAE1; color: rgba(0, 0, 0, 0.8);}
 .thumb{border:#6C757D solid 1px;}
 .thumb_small{border:#6C757D solid 1px;}
-.dropdown-menu{color:rgba(0, 0, 0, 0.8) !important; background-color: rgba(255, 255, 255) !important}
+.dropdown-menu{color:rgba(0, 0, 0, 0.9) !important; background-color: rgba(255, 255, 255) !important}
 .dropdown-menu .dropdown-item:hover {
     background-color: #F0F2F6 !important;
     color: rgba(0, 0, 0) !important;
 }
-.mt-0 a, .mt-0 p, .media-body p, .card-body p{color: rgba(0, 0, 0, 0.8) !important;}
+.mt-0 a, .mt-0 p, .media-body p, .card-body p{color: rgba(0, 0, 0, 0.9) !important;}
