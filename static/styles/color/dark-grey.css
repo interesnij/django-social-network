@@ -196,10 +196,10 @@ a.media:hover {
   border-left: 20px solid #161616;
 }
 
-.svg_default {
-  color: rgba(255, 255, 255, 0.6); 
+.btn_default svg, .btn_default span{ 
+  color: rgba(255, 255, 255, 0.6);
 }
-.svg_default svg:hover, .svg_default span:hover, .svg_default_30:hover{
+.btn_default svg:hover, .svg_default span:hover, .svg_default_30:hover{
   color: rgba(255, 255, 255, 0.8);
 }
 .btn_success svg, .btn_success span{ color:#41cd52; }
