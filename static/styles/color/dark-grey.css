@@ -208,7 +208,7 @@ a.media:hover {
 .mt-0 a, .mt-0 p, .media-body p{color: rgba(255, 255, 255, 0.6) !important;}
 .svg_default_30 {border: rgba(255, 255, 255, 0.6) solid 1px;}
 .svg_default_40 {border: rgba(255, 255, 255, 0.6) solid 1px;}
-.svg_default_50 {border: rgba(255, 255, 255, 0.6) solid 1px;}
+.svg_default_50 {border: rgba(255, 255, 255, 0.6) solid 1px;} 
 .dropdown-menu{color:rgba(255, 255, 255, 0.6) !important; background-color: #323232 !important}
 
 .like_window:hover, .dislike_window:hover, .repost_window:hover {background: #161616 !important; color: rgba(255, 255, 255, 0.6) !important;}
