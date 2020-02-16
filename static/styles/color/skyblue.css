@@ -2,9 +2,9 @@ a:hover{
   color: #ffffff !important;
 }
 a {
-  color: rgba(255, 255, 255, 0.8) !important;
+  color: rgba(255, 255, 255, 0.9) !important;
 }
-.mt-0 a, .mt-0 p, .media-body p, .card-body p{color: rgba(255, 255, 255, 0.8) !important;}
+.mt-0 a, .mt-0 p, .media-body p, .card-body p{color: rgba(255, 255, 255, 0.9) !important;}
 
 .music-dropdown{
   background: #008DC1 !important;
@@ -18,7 +18,7 @@ a {
 
 .jp-playlist .jp-playlist-current, .jp-playlist .jp-playlist-current a{
     background-color: #0094CB !important;
-    color: rgba(255, 255, 255, 0.7) !important
+    color: rgba(255, 255, 255, 0.9) !important
 }
 
 div.jp-interface {
@@ -58,7 +58,7 @@ body {
   color: #ffffff;
 }
 .header-color-secondary {
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.9);
 }
 .text-muted,
 .text-secondary {
@@ -68,7 +68,7 @@ body {
   background-color: #009bd5;
 }
 .media p {
-  color: rgba(255, 255, 255, 0.7) !important;
+  color: rgba(255, 255, 255, 0.9) !important;
 }
 .bg-light-opac {
   background-color: #009fda;
@@ -77,7 +77,7 @@ body {
   color: #ffffff;
 }
 .content-color-secondary {
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.9);
 }
 .list-group-item.new {
   background-color: rgba(121, 121, 255, 0.05);
@@ -92,7 +92,7 @@ body {
 .card .card-footer.bg-light-secondary,
 .bg-light-secondary {
   background-color: rgba(255, 255, 255, 0.06) !important;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.9);
 }
 .loader {
   background: #0094cb;
@@ -196,33 +196,33 @@ a.media:hover {
 }
 
 .btn_default svg, .btn_default span{
-  color: rgba(255, 255, 255, 0.7) !important;
+  color: rgba(255, 255, 255, 0.9) !important;
 }
 .btn_default button{
   background-color: #0FB7F5 !important;
 }
-.svg_default{color: rgba(255, 255, 255, 0.7)}
+.svg_default{color: rgba(255, 255, 255, 0.9)}
 .btn_default svg:hover, .svg_default span:hover, .svg_default_30:hover{
   color: rgba(255, 255, 255, 0.9) !important;
 }
 .btn_success svg, .btn_success span{ color:#41cd52 !important;}
 .btn_danger svg, .btn_danger span{ color:#FF0000 !important}
-.svg_default_30 {border: rgba(255, 255, 255, 0.7) solid 1px;}
-.svg_default_40 {border: rgba(255, 255, 255, 0.7) solid 1px;}
-.svg_default_50 {border: rgba(255, 255, 255, 0.7) solid 1px;}
-.dropdown-menu{color:rgba(255, 255, 255, 0.8) !important; background-color: #0FB7F5 !important}
+.svg_default_30 {border: rgba(255, 255, 255, 0.9) solid 1px;}
+.svg_default_40 {border: rgba(255, 255, 255, 0.9) solid 1px;}
+.svg_default_50 {border: rgba(255, 255, 255, 0.9) solid 1px;}
+.dropdown-menu{color:rgba(255, 255, 255, 0.9) !important; background-color: #0FB7F5 !important}
 .dropdown-menu .dropdown-item:hover {
     background-color: #0094CB !important;
-    color: rgba(255, 255, 255, 0.8) !important;
+    color: rgba(255, 255, 255, 0.9) !important;
 }
 
-.like_window:hover, .dislike_window:hover, .repost_window:hover {background: #009bd5; color: rgba(255, 255, 255, 0.8) !important;}
-.comment_like_window:hover, .comment_dislike_window:hover {background: #009bd5; color: rgba(255, 255, 255, 0.8) !important;}
-.c_like:hover~.like_window, .c_dislike:hover~.dislike_window, .c_repost:hover~.repost_window, .u_like:hover~.like_window, .u_dislike:hover~.dislike_window, .u_repost:hover~.repost_window{background: #009bd5; color: rgba(255, 255, 255, 0.8) !important;}
-.c_like2:hover~.comment_like_window, .c_dislike2:hover~.comment_dislike_window, .u_like2:hover~.comment_like_window,  .u_dislike2:hover~.comment_dislike_window{background:#009bd5; color: rgba(255, 255, 255, 0.8) !important;}
-.thumb
-border:#ffffff solid 1px;
+.like_window:hover, .dislike_window:hover, .repost_window:hover {background: #009bd5; color: rgba(255, 255, 255, 0.9) !important;}
+.comment_like_window:hover, .comment_dislike_window:hover {background: #009bd5; color: rgba(255, 255, 255, 0.9) !important;}
+.c_like:hover~.like_window, .c_dislike:hover~.dislike_window, .c_repost:hover~.repost_window, .u_like:hover~.like_window, .u_dislike:hover~.dislike_window, .u_repost:hover~.repost_window{background: #009bd5; color: rgba(255, 255, 255, 0.9) !important;}
+.c_like2:hover~.comment_like_window, .c_dislike2:hover~.comment_dislike_window, .u_like2:hover~.comment_like_window,  .u_dislike2:hover~.comment_dislike_window{background:#009bd5; color: rgba(255, 255, 255, 0.9) !important;}
+.thumb{
+border: rgba(255, 255, 255, 0.9) solid 1px;
 }
 .thumb_small{
-  border:#ffffff solid 1px;
+  border:rgba(255, 255, 255, 0.9) solid 1px;
 }
