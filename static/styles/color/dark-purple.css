@@ -18,12 +18,11 @@ a {
     background-image: url(/static/images/music_visual_night.gif);
   }
 
-div.jp-type-playlist div.jp-playlist li.jp-playlist-current{
+div.jp-type-playlist div.jp-playlist li.jp-playlist-current, .jp-playlist .jp-playlist-current a{
     background-color: #271531;
+    color: rgba(255, 255, 255, 0.7) !important
 }
-div.jp-type-playlist div.jp-playlist li.jp-playlist-current p{
-    color: rgba(255, 255, 255, 0.7) !important;
-}
+
 div.jp-interface {
     background-color: #E0E0E0;
 }
