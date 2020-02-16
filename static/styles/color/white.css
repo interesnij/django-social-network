@@ -208,3 +208,4 @@ border:#6C757D solid 1px;
 .thumb_small{
   border:#6C757D solid 1px;
 }
+.mt-0 a, .mt-0 p, .media-body p, .card-body p{color: rgba(0, 0, 0, 0.6);}
