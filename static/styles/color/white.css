@@ -2,7 +2,7 @@ a:hover{
   color: black !important;
 }
 svg:hover{
-  color: black !important
+  color: rgba(0, 0, 0, 0.7) !important
 }
 a {
   color: rgba(0, 0, 0, 0.7) !important
