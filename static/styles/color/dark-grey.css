@@ -15,7 +15,7 @@ div.jp-type-playlist div.jp-playlist li.jp-playlist-current p{
     color: #fff;
 }
 div.jp-interface {
-    background-color: #252525;
+    background-color: #E0E0E0;
 }
 div.jp-video div.jp-interface {
     border-top:1px solid #111111;
@@ -24,7 +24,7 @@ div.jp-progress {
     background-color: #ddd;
 }
 .jp-playlist .jp-playlist-current{
-    background-color: #111111 !important;;
+    background-color: #111111 !important;
     color:#FFFFFF;
 }
 div.jp-type-playlist div.jp-playlist span.jp-free-media a:hover{
