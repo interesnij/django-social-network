@@ -16,9 +16,9 @@ a {
   background-image: url(/static/images/music_visual_day.gif);
   }
 
-.jp-playlist .jp-playlist-current{
+.jp-playlist .jp-playlist-current, .jp-playlist .jp-playlist-current a{
     background-color: #5f7fa2 !important;
-    color:#FFFFFF;
+    color:#FFFFFF !important;
 }
 div.jp-type-playlist div.jp-playlist li.jp-playlist-current p{
     color: #fff;
