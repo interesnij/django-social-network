@@ -1,13 +1,52 @@
 a:hover{
   color: #ffffff !important;
 }
-svg:hover{
-  color: #ffffff !important
-}
 a {
   color: rgba(255, 255, 255, 0.7) !important
 }
 .mt-0 a, .mt-0 p, .media-body p, .card-body p{color: rgba(255, 255, 255, 0.6);}
+
+.music-dropdown{
+  background: #004D33 !important;
+}
+
+#ajax .jp-playlist-current{
+    border: 1px solid #ffffff !important;
+    background-image: url(/static/images/music_visual_night.gif);
+  }
+
+
+.jp-playlist .jp-playlist-current, .jp-playlist .jp-playlist-current a{
+    background-color: #002418 !important;
+    color: rgba(255, 255, 255, 0.7) !important
+}
+
+div.jp-interface {
+    background-color: #E0E0E0 !important;
+}
+div.jp-video div.jp-interface {
+    border-top:1px solid #111111;
+}
+div.jp-progress {
+    background-color: #ddd;
+}
+div.jp-type-playlist div.jp-playlist span.jp-free-media a:hover{
+    color:#252525;
+}
+.jp-no-solution {
+    background-color:#eee;
+    border:2px solid #fff;
+    color:#000;
+}
+.jp-no-solution a {
+    color:#000;
+}
+.jp-playlist .track_item_li {
+  background-color:#004D33;
+}
+.jp-playlist ul{
+  background-color:#004D33;
+}
 
 body {
   background-color: #002418;
@@ -156,21 +195,34 @@ a.media:hover {
   border-left: 20px solid #002e1f;
 }
 
-.svg_default { color:#ffffff; }
-.svg_success { color:#41cd52; }
-.svg_danger { color:#FF0000 }
-.mt-0 a {color:#ffffff}
-.svg_default_30 {border: #ffffff solid 1px;}
-.svg_default_40 {border: #ffffff solid 1px;}
-.svg_default_50 {border: #ffffff solid 1px;}
+.btn_default svg, .btn_default span{
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+.btn_default button{
+  background-color: #004D33 !important;
+}
+.svg_default{color: rgba(255, 255, 255, 0.6)}
+.btn_default svg:hover, .svg_default span:hover, .svg_default_30:hover{
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+.btn_success svg, .btn_success span{ color:#41cd52 !important;}
+.btn_danger svg, .btn_danger span{ color:#FF0000 !important}
+.svg_default_30 {border: rgba(255, 255, 255, 0.6) solid 1px;}
+.svg_default_40 {border: rgba(255, 255, 255, 0.6) solid 1px;}
+.svg_default_50 {border: rgba(255, 255, 255, 0.6) solid 1px;}
+.dropdown-menu{color:rgba(255, 255, 255, 0.6) !important; background-color: #004D33 !important}
+.dropdown-menu .dropdown-item:hover {
+    background-color: #002418 !important;
+    color: rgba(255, 255, 255, 0.6) !important;
+}
 
-.like_window:hover, .dislike_window:hover, .repost_window:hover {background: #002e1f; color: #ffffff;}
-.comment_like_window:hover, .comment_dislike_window:hover {background: #002e1f; color: #ffffff;}
-.c_like:hover~.like_window, .c_dislike:hover~.dislike_window, .c_repost:hover~.repost_window, .u_like:hover~.like_window, .u_dislike:hover~.dislike_window, .u_repost:hover~.repost_window{background: #002e1f; color: #ffffff;}
-.c_like2:hover~.comment_like_window, .c_dislike2:hover~.comment_dislike_window, .u_like2:hover~.comment_like_window,  .u_dislike2:hover~.comment_dislike_window{background:#002e1f; color: #ffffff;}
+.like_window:hover, .dislike_window:hover, .repost_window:hover {background: #002e1f; color: rgba(255, 255, 255, 0.6) !important;}
+.comment_like_window:hover, .comment_dislike_window:hover {background: #002e1f; color: rgba(255, 255, 255, 0.6) !important;}
+.c_like:hover~.like_window, .c_dislike:hover~.dislike_window, .c_repost:hover~.repost_window, .u_like:hover~.like_window, .u_dislike:hover~.dislike_window, .u_repost:hover~.repost_window{background: #002e1f; color:rgba(255, 255, 255, 0.6) !important;}
+.c_like2:hover~.comment_like_window, .c_dislike2:hover~.comment_dislike_window, .u_like2:hover~.comment_like_window,  .u_dislike2:hover~.comment_dislike_window{background:#002e1f; color:rgba(255, 255, 255, 0.6) !important;}
 .thumb{
-border:#ffffff solid 1px;
+border:rgba(255, 255, 255, 0.6) solid 1px;
 }
 .thumb_small{
-  border:#ffffff solid 1px;
+  border:rgba(255, 255, 255, 0.6) solid 1px;
 }
