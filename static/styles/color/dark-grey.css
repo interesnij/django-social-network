@@ -208,7 +208,6 @@ a.media:hover {
 }
 .btn_success svg, .btn_success span{ color:#41cd52; !important}
 .btn_danger svg, .btn_danger span{ color:#FF0000 !important}
-.mt-0 a, .mt-0 p, .media-body p{color: rgba(255, 255, 255, 0.6) !important;}
 .svg_default_30 {border: rgba(255, 255, 255, 0.6) solid 1px;}
 .svg_default_40 {border: rgba(255, 255, 255, 0.6) solid 1px;}
 .svg_default_50 {border: rgba(255, 255, 255, 0.6) solid 1px;}

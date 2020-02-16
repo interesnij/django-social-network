@@ -4,7 +4,7 @@ a:hover{
 a {
   color: rgba(255, 255, 255, 0.7) !important
 }
-.mt-0 a, .mt-0 p, .media-body p, .card-body p{color: rgba(255, 255, 255, 0.6);}
+.mt-0 a, .mt-0 p, .media-body p, .card-body p{color: rgba(255, 255, 255, 0.6) !important;}
 
 a:hover{
   color:#ffffff !important;
@@ -198,13 +198,19 @@ a.media:hover {
   border-left: 20px solid #111837;
 }
 
-
-.svg_default {
-  color: rgba(255, 255, 255, 0.6);
+.btn_default svg, .btn_default span{
+  color: rgba(255, 255, 255, 0.6) !important;
 }
+.btn_default button{
+  background-color: #191919 !important;
+}
+.svg_default{color: rgba(255, 255, 255, 0.6)}
+.btn_default svg:hover, .svg_default span:hover, .svg_default_30:hover{
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+.btn_success svg, .btn_success span{ color:#41cd52 !important;}
+.btn_danger svg, .btn_danger span{ color:#FF0000 !important}
 
-.svg_success, .svg_success:hover { color:#41cd52; }
-.svg_danger, .svg_danger:hover { color:#FF0000 }
 .svg_default_30 {border: rgba(255, 255, 255, 0.6) solid 1px;}
 .svg_default_40 {border: rgba(255, 255, 255, 0.6) solid 1px;}
 .svg_default_50 {border: rgba(255, 255, 255, 0.6) solid 1px;}
