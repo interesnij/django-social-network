@@ -1,5 +1,8 @@
 a:hover{
-  color:#ffffff !important;
+  color: #ffffff !important;
+}
+svg:hover{
+  color: #ffffff !important
 }
 a {
   color: rgba(255, 255, 255, 0.7) !important
@@ -215,5 +218,5 @@ a.media:hover {
 border: rgba(255, 255, 255, 0.6) solid 1px;
 }
 .thumb_small{
-  border:#ffffff solid 1px;
+  border:rgba(255, 255, 255, 0.6) solid 1px;
 }
