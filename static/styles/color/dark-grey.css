@@ -16,7 +16,7 @@ a {
   }
 
 
-div.jp-type-playlist div.jp-playlist li.jp-playlist-current, .jp-playlist .jp-playlist-current a{
+.jp-playlist .jp-playlist-current, .jp-playlist .jp-playlist-current a{
     background-color: #111111;
     color: rgba(255, 255, 255, 0.7) !important
 }
