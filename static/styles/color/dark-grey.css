@@ -1,9 +1,6 @@
 a:hover{
   color: #ffffff !important;
 }
-svg:hover{
-  color: #ffffff !important
-}
 a {
   color: rgba(255, 255, 255, 0.7) !important
 }
@@ -201,6 +198,9 @@ a.media:hover {
 
 .svg_default {
   color: rgba(255, 255, 255, 0.6);
+}
+.svg_default:hover, .svg_default_30:hover{
+  color: rgba(255, 255, 255, 0.8);
 }
 .svg_success { color:#41cd52; }
 .svg_danger { color:#FF0000 }
