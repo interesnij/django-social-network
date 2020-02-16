@@ -198,7 +198,7 @@ a.media:hover {
   border-left: 20px solid #f6f8fa;
 }
 
-.svg_default { color:rgba(0, 0, 0, 0.7); }
+.svg_default { color:rgba(0, 0, 0, 0.5); }
 .svg_success { color:#41cd52; }
 .svg_danger { color:#FF0000 }
 
