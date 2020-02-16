@@ -4,6 +4,8 @@ a:hover{
 a {
   color: rgba(255, 255, 255, 0.7) !important
 }
+.mt-0 a, .mt-0 p, .media-body p{color: rgba(255, 255, 255, 0.6);}
+
 .music-dropdown{
   background: #333333 !important;
 }
@@ -200,7 +202,7 @@ a.media:hover {
 }
 .svg_success { color: rgba(255, 255, 255, 0.6); }
 .svg_danger { color: rgba(255, 255, 255, 0.6);}
-.mt-0 a {color: rgba(255, 255, 255, 0.6);}
+.mt-0 a, .mt-0 p, .media-body p{color: rgba(255, 255, 255, 0.6);}
 .svg_default_30 {border: rgba(255, 255, 255, 0.6) solid 1px;}
 .svg_default_40 {border: rgba(255, 255, 255, 0.6) solid 1px;}
 .svg_default_50 {border: rgba(255, 255, 255, 0.6) solid 1px;}
