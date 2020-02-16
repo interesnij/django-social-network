@@ -202,9 +202,6 @@ a.media:hover {
 .svg_default {
   color: rgba(255, 255, 255, 0.6);
 }
-.svg_info:hover, .svg_default_30:hover, .svg_s_info:hover {
-  color: #ffffff !important;
-}
 
 .svg_success, .svg_success:hover { color:#41cd52; }
 .svg_danger, .svg_danger:hover { color:#FF0000 }
