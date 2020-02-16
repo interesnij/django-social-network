@@ -1,3 +1,47 @@
+.music-dropdown{
+  background: #ffffff !important;
+}
+
+#ajax .jp-playlist-current{
+  border: 1px solid #000000 !important;
+  background-image: url(/static/images/music_visual_day.gif);
+  }
+
+.jp-playlist .jp-playlist-current{
+    background-color: #5f7fa2 !important;;
+    color:#FFFFFF;
+}
+div.jp-type-playlist div.jp-playlist li.jp-playlist-current p{
+    color: #fff;
+}
+div.jp-interface {
+    background-color: #FFFFFF;
+}
+div.jp-video div.jp-interface {
+    border-top:1px solid #111111;
+}
+div.jp-progress {
+    background-color: #ddd;
+}
+div.jp-type-playlist div.jp-playlist span.jp-free-media a:hover{
+    color:#252525;
+}
+.jp-no-solution {
+    background-color:#eee;
+    border:2px solid #fff;
+    color:#000;
+}
+.jp-no-solution a {
+    color:#000;
+}
+.jp-playlist .track_item_li {
+  background-color:#FFFFFF;
+}
+.jp-playlist ul{
+  background-color:#FFFFFF;
+}
+
+
 body {
   background-color: #f0f2f6;
   font-size: 1em;
@@ -146,7 +190,7 @@ a.media:hover {
 }
 
 .svg_default { color:#6C757D; }
-.svg_success { color:#41cd52; } 
+.svg_success { color:#41cd52; }
 .svg_danger { color:#FF0000 }
 
 .svg_default_30 {border: #6C757D solid 1px;}

@@ -1,10 +1,13 @@
 .music-dropdown{
-  background: #333333 !important;;
+  background: #333333 !important;
 }
 
 #ajax .jp-playlist-current{
-    border: 1px solid #FFFFFF !important;
-}
+    border: 1px solid #000000 !important;
+    background-image: url(/static/images/music_visual_night.gif);
+  }
+
+
 div.jp-type-playlist div.jp-playlist li.jp-playlist-current{
     background-color: #111111;
 }
