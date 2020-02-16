@@ -22,13 +22,11 @@ a:hover{
   background-image: url(/static/images/music_visual_day.gif);
   }
 
-.jp-playlist .jp-playlist-current{
+.jp-playlist .jp-playlist-current, .jp-playlist .jp-playlist-current a{
     background-color: #0f152f !important;
-    color:#FFFFFF;
+    color: rgba(255, 255, 255, 0.7) !important
 }
-div.jp-type-playlist div.jp-playlist li.jp-playlist-current p{
-    color: #fff;
-}
+
 div.jp-interface {
     background-color: #0f152f;
 }
@@ -209,18 +207,21 @@ a.media:hover {
 }
 .svg_success { color:#41cd52; }
 .svg_danger { color:#FF0000 }
-.mt-0 a {color:#ffffff}
-.svg_default_30 {border: #ffffff solid 1px;}
-.svg_default_40 {border: #ffffff solid 1px;}
-.svg_default_50 {border: #ffffff solid 1px;}
-
-.like_window:hover, .dislike_window:hover, .repost_window:hover {background: #111837; color: #ffffff;}
-.comment_like_window:hover, .comment_dislike_window:hover {background: #111837; color: #ffffff;}
-.c_like:hover~.like_window, .c_dislike:hover~.dislike_window, .c_repost:hover~.repost_window, .u_like:hover~.like_window, .u_dislike:hover~.dislike_window, .u_repost:hover~.repost_window{background: #111837; color: #ffffff;}
-.c_like2:hover~.comment_like_window, .c_dislike2:hover~.comment_dislike_window, .u_like2:hover~.comment_like_window,  .u_dislike2:hover~.comment_dislike_window{background:#111837; color: #ffffff;}
+.svg_default_30 {border: rgba(255, 255, 255, 0.6) solid 1px;}
+.svg_default_40 {border: rgba(255, 255, 255, 0.6) solid 1px;}
+.svg_default_50 {border: rgba(255, 255, 255, 0.6) solid 1px;}
+.dropdown-menu{color:rgba(255, 255, 255, 0.6) !important; background-color: #111837 !important}
+.dropdown-menu .dropdown-item:hover {
+    background-color: #233160 !important;
+    color: rgba(255, 255, 255, 0.6) !important;
+}
+.like_window:hover, .dislike_window:hover, .repost_window:hover {background: #111837; color: rgba(255, 255, 255, 0.6)}
+.comment_like_window:hover, .comment_dislike_window:hover {background: #111837; color: rgba(255, 255, 255, 0.6)}
+.c_like:hover~.like_window, .c_dislike:hover~.dislike_window, .c_repost:hover~.repost_window, .u_like:hover~.like_window, .u_dislike:hover~.dislike_window, .u_repost:hover~.repost_window{background: #111837; rgba(255, 255, 255, 0.6)}
+.c_like2:hover~.comment_like_window, .c_dislike2:hover~.comment_dislike_window, .u_like2:hover~.comment_like_window,  .u_dislike2:hover~.comment_dislike_window{background:#111837; color: rgba(255, 255, 255, 0.6)}
 .thumb{
-border:#ffffff solid 1px;
+border:rgba(255, 255, 255, 0.6) solid 1px;
 }
 .thumb_small{
-  border:#ffffff solid 1px;
+  border:rgba(255, 255, 255, 0.6) solid 1px;
 }
