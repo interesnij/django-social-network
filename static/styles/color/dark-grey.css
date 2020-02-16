@@ -197,7 +197,7 @@ a.media:hover {
 }
 
 .svg_default {
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.6); 
 }
 .svg_default svg:hover, .svg_default span:hover, .svg_default_30:hover{
   color: rgba(255, 255, 255, 0.8);
