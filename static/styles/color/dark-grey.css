@@ -14,7 +14,7 @@ a {
 }
 
 #ajax .jp-playlist-current{
-    border: 1px solid #000000 !important;
+    border: 1px solid #ffffff !important;
     background-image: url(/static/images/music_visual_night.gif);
   }
 
