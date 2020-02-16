@@ -146,8 +146,8 @@ a.media:hover {
 }
 
 .svg_default { color:#ffffff; }
-.svg_success { color:#ffffff; }
-.svg_danger { color:#ffffff }
+.svg_success { color:#41cd52; }
+.svg_danger { color:#FF0000 }
 .mt-0 a {color:#ffffff}
 .svg_default_30 {border: #ffffff solid 1px;}
 .svg_default_40 {border: #ffffff solid 1px;}

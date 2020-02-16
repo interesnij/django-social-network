@@ -203,8 +203,8 @@ a.media:hover {
 .svg_default {
   color: rgba(255, 255, 255, 0.6);
 }
-.svg_success { color: rgba(255, 255, 255, 0.6); }
-.svg_danger { color: rgba(255, 255, 255, 0.6);}
+.svg_success { color:#41cd52; }
+.svg_danger { color:#FF0000 }
 .mt-0 a, .mt-0 p, .media-body p{color: rgba(255, 255, 255, 0.6);}
 .svg_default_30 {border: rgba(255, 255, 255, 0.6) solid 1px;}
 .svg_default_40 {border: rgba(255, 255, 255, 0.6) solid 1px;}
