@@ -13,7 +13,7 @@ a {
     background-image: url(/static/images/music_visual_night.gif);
   }
 .jp-playlist .jp-playlist-current, .jp-playlist .jp-playlist-current a{
-    background-color: #271531 !important;
+    background-color: #400E1D !important;
     color: rgba(255, 255, 255, 0.7) !important
 }
 
