@@ -1,9 +1,6 @@
 a:hover{
   color: black !important;
 }
-svg:hover{
-  color: rgba(0, 0, 0, 0.7) !important
-}
 a {
   color: rgba(0, 0, 0, 0.7) !important
 }
@@ -197,8 +194,15 @@ a.media:hover {
 }
 
 .svg_default { color:rgba(0, 0, 0, 0.5); }
-.svg_success { color:#41cd52; }
-.svg_danger { color:#FF0000 }
+.btn_default svg, .btn_default span{
+  color:rgba(0, 0, 0, 0.5);
+}
+
+.btn_default svg:hover, .svg_default span:hover, .svg_default_30:hover{
+  color: rgba(0, 0, 0, 0.8);
+}
+.btn_success svg, .btn_success span{ color:#41cd52;}
+.btn_danger svg, .btn_danger span{ color:#FF0000}
 
 .svg_default_30 {border: #6C757D solid 1px;}
 .svg_default_40 {border: #6C757D solid 1px;}
