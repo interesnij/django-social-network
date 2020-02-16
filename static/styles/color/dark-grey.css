@@ -30,10 +30,6 @@ div.jp-video div.jp-interface {
 div.jp-progress {
     background-color: #ddd;
 }
-.jp-playlist .jp-playlist-current{
-    background-color: #111111 !important;
-    color:#FFFFFF !important;
-}
 div.jp-type-playlist div.jp-playlist span.jp-free-media a:hover{
     color:#252525;
 }
@@ -206,7 +202,7 @@ a.media:hover {
 .btn_default svg:hover, .svg_default span:hover, .svg_default_30:hover{
   color: rgba(255, 255, 255, 0.8) !important;
 }
-.btn_success svg, .btn_success span{ color:#41cd52; !important}
+.btn_success svg, .btn_success span{ color:#41cd52 !important;}
 .btn_danger svg, .btn_danger span{ color:#FF0000 !important}
 .svg_default_30 {border: rgba(255, 255, 255, 0.6) solid 1px;}
 .svg_default_40 {border: rgba(255, 255, 255, 0.6) solid 1px;}
