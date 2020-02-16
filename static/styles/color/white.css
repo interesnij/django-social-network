@@ -218,6 +218,6 @@ border:#6C757D solid 1px;
 .dropdown-menu{color:rgba(0, 0, 0, 0.7) !important; background-color: rgba(255, 255, 255) !important}
 .dropdown-menu .dropdown-item:hover {
     background-color: #F0F2F6 !important;
-    color: rgba(255, 255, 255) !important;
+    color: rgba(0, 0, 0) !important;
 }
 .mt-0 a, .mt-0 p, .media-body p, .card-body p{color: rgba(0, 0, 0, 0.7);}
