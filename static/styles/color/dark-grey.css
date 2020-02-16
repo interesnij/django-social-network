@@ -2,9 +2,9 @@ a:hover{
   color: #ffffff !important;
 }
 a {
-  color: rgba(255, 255, 255, 0.7) !important
+  color: rgba(255, 255, 255, 0.7) !important;
 }
-.mt-0 a, .mt-0 p, .media-body p, .card-body p{color: rgba(255, 255, 255, 0.6);}
+.mt-0 a, .mt-0 p, .media-body p, .card-body p{color: rgba(255, 255, 255, 0.6) !important;}
 
 .music-dropdown{
   background: #333333 !important;
@@ -17,12 +17,12 @@ a {
 
 
 .jp-playlist .jp-playlist-current, .jp-playlist .jp-playlist-current a{
-    background-color: #111111;
+    background-color: #111111 !important;
     color: rgba(255, 255, 255, 0.7) !important
 }
 
 div.jp-interface {
-    background-color: #E0E0E0;
+    background-color: #E0E0E0 !important;
 }
 div.jp-video div.jp-interface {
     border-top:1px solid #111111;
@@ -32,7 +32,7 @@ div.jp-progress {
 }
 .jp-playlist .jp-playlist-current{
     background-color: #111111 !important;
-    color:#FFFFFF;
+    color:#FFFFFF !important;
 }
 div.jp-type-playlist div.jp-playlist span.jp-free-media a:hover{
     color:#252525;
@@ -46,39 +46,39 @@ div.jp-type-playlist div.jp-playlist span.jp-free-media a:hover{
     color:#000;
 }
 .jp-playlist .track_item_li {
-  background-color:#333333;
+  background-color:#333333 !important;
 }
 .jp-playlist ul{
-  background-color:#333333;
+  background-color:#333333 !important;
 }
 
 body {
-  background-color: #111111;
+  background-color: #111111 !important;
   font-size: 1em;
   line-height: 1.4em;
-  color: #ffffff;
+  color: #ffffff !important;
 }
 .header-color-primary {
   color: rgba(255, 255, 255, 0.7) !important;
 }
 .header-color-secondary {
-  color: rgba(255, 255, 255, 0.65);
+  color: rgba(255, 255, 255, 0.65) !important;
 }
 .text-muted,
 .text-secondary {
   color: rgba(255, 255, 255, 0.4) !important;
 }
 .boxed-page .wrapper {
-  background-color: #161616;
+  background-color: #161616 !important;
 }
 .bg-light-opac {
-  background-color: #191919;
+  background-color: #191919 !important;
 }
 .content-color-primary {
   color: rgba(255, 255, 255, 0.7) !important;
 }
 .content-color-secondary {
-  color: rgba(255, 255, 255, 0.65);
+  color: rgba(255, 255, 255, 0.65) !important;
 }
 .list-group-item.new {
   background-color: rgba(121, 121, 255, 0.05);
@@ -87,134 +87,134 @@ body {
   background-color: rgba(121, 121, 255, 0.05);
 }
 .popover.tour-tour .popover-title {
-  background-color: #7979ff;
-  color: #fff;
+  background-color: #7979ff !important;
+  color: #fff !important;
 }
 .card .card-footer.bg-light-secondary,
 .bg-light-secondary {
   background-color: rgba(255, 255, 255, 0.06) !important;
-  color: rgba(255, 255, 255, 0.65);
+  color: rgba(255, 255, 255, 0.65) !important;
 }
 .loader {
-  background: #111111;
+  background: #111111 !important;
 }
 .main-header {
-  background-color: #333333;
+  background-color: #333333 !important;
 }
 .search-header .input-group .form-control {
-  background-color: rgba(17, 17, 17, 0.5);
+  background-color: rgba(17, 17, 17, 0.5) !important;
 }
 .sidebar {
-  background: #222222;
-  color: #ffffff;
+  background: #222222 !important;
+  color: #ffffff !important;
 }
 .sidebar.sidebar-right > div::-webkit-scrollbar-track {
-  background: #222222;
+  background: #222222 !important;
 }
 .sidebar.sidebar-right > div::-webkit-scrollbar-thumb {
-  background: #7b7b7b;
+  background: #7b7b7b !important;
 }
 .sidebar.sidebar-right .close-sidebar {
-  background: #222222;
+  background: #222222 !important;
   color: rgba(255, 255, 255, 0.7) !important;
 }
 .sidebar .nav {
-  background: rgba(34, 34, 34, 0.65);
+  background: rgba(34, 34, 34, 0.65) !important;
 }
 .sidebar .nav .nav-item .nav-link:hover {
   background: #2f2f2f;
 }
 .sidebar .nav .nav-item .nav-link.active.dropdwown-toggle, .sidebar .nav .nav-item .nav-link.router-link-active.dropdwown-toggle {
   color: rgba(255, 255, 255, 0.7) !important;
-  background: #2f2f2f;
+  background: #2f2f2f !important;
 }
 .sidebar::-webkit-scrollbar-track {
-  background: #222222;
+  background: #222222 !important;
 }
 .sidebar::-webkit-scrollbar-thumb {
-  background: #7b7b7b;
+  background: #7b7b7b !important;
 }
 .iconsibarbar .sidebar-left .nav .nav-item .nav-link.dropdwown-toggle + .nav {
-  background: #151515;
+  background: #151515 !important;
 }
 .card {
-  background-color: #252525;
+  background-color: #252525 !important;
 }
 .staked {
-  border: 2px solid #444444;
+  border: 2px solid #444444 !important;
 }
 a.media:hover {
-  background-color: rgba(17, 17, 17, 0.4);
+  background-color: rgba(17, 17, 17, 0.4) !important;
 }
 .switch + label {
-  background-color: #040404;
+  background-color: #040404 !important;
 }
 .switch:not(:checked) + label {
   background-color: #040404 !important;
 }
 .checkbox-user-check.active {
-  background: #7979ff;
+  background: #7979ff !important;
 }
 .form-control {
   background-color: #191919;
-  border-color: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.2) !important;
   color: rgba(255, 255, 255, 0.7) !important;
 }
 .form-control:focus {
   border-color: rgba(255, 255, 255, 0.5);
-  background-color: #2b2b2b;
+  background-color: #2b2b2b !important;
   color: rgba(255, 255, 255, 0.6);
 }
 .line-control-menu-bar, .line-control-status-bar {
-  background: #111111;
+  background: #111111 !important;
 }
 .close-setting-sidebar {
-  background: #2b2b2b;
+  background: #2b2b2b !important;
 }
 .chat-window .card .card-body {
-  background: #111111;
+  background: #111111 !important;
 }
 .chatlist li .media .media-body {
-  background: #1e1e1e;
+  background: #1e1e1e !important;
 }
 .chatlist li .media .media-body:before {
-  background: #1e1e1e;
+  background: #1e1e1e !important;
 }
 .wizard-1.nav-tabs .nav-item:after {
-  border-right: 20px solid #161616;
+  border-right: 20px solid #161616 !important;
 }
 .wizard-1.nav-tabs .nav-item:before {
-  border-right: 20px solid #161616;
+  border-right: 20px solid #161616 !important;
 }
 .wizard-1.nav-tabs .nav-item a.nav-link {
-  background-color: #161616;
+  background-color: #161616 !important;
 }
 .wizard-1.nav-tabs .nav-item a.nav-link.active:after {
-  border-left: 20px solid #161616;
+  border-left: 20px solid #161616 !important;
 }
 .wizard-1.nav-tabs .nav-item a.nav-link.active:before {
-  border-left: 20px solid #161616;
+  border-left: 20px solid #161616 !important;
 }
 
 .btn_default svg, .btn_default span{
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.6) !important;
 }
 .svg_default{color: rgba(255, 255, 255, 0.6)}
 .btn_default svg:hover, .svg_default span:hover, .svg_default_30:hover{
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.8) !important;
 }
-.btn_success svg, .btn_success span{ color:#41cd52;}
-.btn_danger svg, .btn_danger span{ color:#FF0000}
-.mt-0 a, .mt-0 p, .media-body p{color: rgba(255, 255, 255, 0.6);}
+.btn_success svg, .btn_success span{ color:#41cd52; !important}
+.btn_danger svg, .btn_danger span{ color:#FF0000 !important}
+.mt-0 a, .mt-0 p, .media-body p{color: rgba(255, 255, 255, 0.6) !important;}
 .svg_default_30 {border: rgba(255, 255, 255, 0.6) solid 1px;}
 .svg_default_40 {border: rgba(255, 255, 255, 0.6) solid 1px;}
 .svg_default_50 {border: rgba(255, 255, 255, 0.6) solid 1px;}
 .dropdown-menu{color:rgba(255, 255, 255, 0.6) !important; background-color: #323232 !important}
 
-.like_window:hover, .dislike_window:hover, .repost_window:hover {background: #161616; color: rgba(255, 255, 255, 0.6);}
-.comment_like_window:hover, .comment_dislike_window:hover {background: #161616;color: rgba(255, 255, 255, 0.6);}
-.c_like:hover~.like_window, .c_dislike:hover~.dislike_window, .c_repost:hover~.repost_window, .u_like:hover~.like_window, .u_dislike:hover~.dislike_window, .u_repost:hover~.repost_window{background: #161616; color: rgba(255, 255, 255, 0.6);}
-.c_like2:hover~.comment_like_window, .c_dislike2:hover~.comment_dislike_window, .u_like2:hover~.comment_like_window,  .u_dislike2:hover~.comment_dislike_window{background:#161616; color: rgba(255, 255, 255, 0.6);}
+.like_window:hover, .dislike_window:hover, .repost_window:hover {background: #161616 !important; color: rgba(255, 255, 255, 0.6) !important;}
+.comment_like_window:hover, .comment_dislike_window:hover {background: #161616 !important;color: rgba(255, 255, 255, 0.6) !important;}
+.c_like:hover~.like_window, .c_dislike:hover~.dislike_window, .c_repost:hover~.repost_window, .u_like:hover~.like_window, .u_dislike:hover~.dislike_window, .u_repost:hover~.repost_window{background: #161616 !important; color: rgba(255, 255, 255, 0.6) !important;}
+.c_like2:hover~.comment_like_window, .c_dislike2:hover~.comment_dislike_window, .u_like2:hover~.comment_like_window,  .u_dislike2:hover~.comment_dislike_window{background:#161616 !important; color: rgba(255, 255, 255, 0.6) !important;}
 .thumb{
 border: rgba(255, 255, 255, 0.6) solid 1px;
 }
