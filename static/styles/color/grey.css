@@ -9,7 +9,7 @@ a {
 .music-dropdown{
   background: #75919F !important;
 }
-
+.form-control::placeholder{color: rgba(255, 255, 255, 0.6);font-style: italic;}
 #ajax .jp-playlist-current{
     border: 1px solid #ffffff !important;
     background-image: url(/static/images/music_visual_night.gif);

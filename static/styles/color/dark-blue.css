@@ -9,7 +9,7 @@ a {
 a:hover{
   color:#ffffff !important;
 }
-
+.form-control::placeholder{color: rgba(255, 255, 255, 0.6);font-style: italic;}
 .music-dropdown{
   background: #233160 !important;
 }
