@@ -1,3 +1,7 @@
+a:hover{
+  color:#ffffff !important;
+}
+
 .music-dropdown{
   background: #ffffff !important;
 }
@@ -15,7 +19,7 @@ div.jp-type-playlist div.jp-playlist li.jp-playlist-current p{
     color: #fff;
 }
 div.jp-interface {
-    background-color: #FFFFFF;
+    background-color: #D5D5D5;
 }
 div.jp-video div.jp-interface {
     border-top:1px solid #111111;
