@@ -73,10 +73,10 @@ body {
   background-color: #fafafc;
 }
 .content-color-primary {
-  color: (0, 0, 0, 0.7);
+  color: rgba(0, 0, 0, 0.7);
 }
 .content-color-secondary {
-  color: (0, 0, 0, 0.7);
+  color: rgba(0, 0, 0, 0.7);
 }
 .list-group-item.new {
   background-color: rgba(121, 121, 255, 0.05);
