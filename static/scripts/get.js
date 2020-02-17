@@ -3,7 +3,7 @@
   */
 $('#ajax').on('click', '.u_article_detail', function() {item = $(this).parents(".infinite-item");pk = item.attr("user-id");uuid = item.attr("item-id"); $('#article_loader').html('').load("/article/detail/" + pk + "/" + uuid + "/"); $('.article_fullscreen').show().addClass("article_open_100");console.log("article user open")});
 $('#ajax').on('click', '.fullscreen', function() {item = $(this).parents(".infinite-item");pk = item.attr("user-id");uuid = item.attr("item-id");$('#item_loader').html('').load("/users/detail/item/" + pk + "/" + uuid + "/"); $('.item_fullscreen').show();console.log("item user open")});
-
+$('#ajax').on('click', '.avatar_detail', function() {photo = $(this);photo_id = photo.data("id");user_uuid = photo.data("uuid");$('#photo_loader').html('').load("/gallery/load/avatar_detail/" + photo_id + "/" + user_uuid + "/");$('.photo_fullscreen').show();});
 $('#ajax').on('click', '.u_photo_detail', function() {photo = $(this); photo_id = photo.data("id"); user_uuid = photo.data("uuid");$('#photo_loader').html('').load("/gallery/load/photo/" + photo_id + "/" + user_uuid + "/");$('.photo_fullscreen').show();console.log("user photo open")});
 $('#ajax').on('click', '.u_album_photo_detail', function() {photo = $(this); pk = photo.data("pk"); uuid = photo.parent().data("uuid"); uuid2 = photo.parent().data("uuid2");$('#photo_loader').html('').load("/gallery/load/u_photo/" + pk + "/" + uuid + "/" + uuid2 + "/");$('.photo_fullscreen').show();console.log("user album photo open")});
 
@@ -14,6 +14,13 @@ $('#ajax').on('click', '.u_all_dislikes', function() {var btn = $(this); item = 
 $('#ajax').on('click', '.u_all_reposts', function() {var btn = $(this); item = $(this).parents('.infinite-item');pk = item.attr("user-id");uuid = item.attr("item-id");$('#votes_loader').html('').load("/window/all_user_reposts/" + uuid + "/" + pk + "/"); $('.votes_fullscreen').show();console.log("reposts user open")});
 
 
+$('.add_board_hide').on('click', function() {$('#for_settings').hide();});
+$('#images_upload').on('click', function() {$('#for_images_upload').show();});
+$('#settings').on('click', function() {$('#for_settings').show();});
+$('#gallery').on('click', function() {$('#for_gallery').show();});
+$('#doc').on('click', function() {$('#for_doc').show();});
+$('#good').on('click', function() {$('#for_good').show();});
+$('#question').on('click', function() {$('#for_question').show();});
 /*!
    fullscreen open scripts for community
   */
@@ -28,7 +35,7 @@ $('#ajax').on('click', '.u_all_reposts', function() {var btn = $(this); item = $
 
   $('#ajax').on('click', '.community_add', function() {$('#community_loader').html('').load("/communities/add/progs/");$('.community_fullscreen').show();console.log("add community open")})
   $('#ajax').on('click', '#community_article_add', function() {var btn = $(this); var pk = btn.data('pk');$('#article_loader').html('').load("/article/add_community/" + pk + "/");$('.article_fullscreen').show();console.log("add community article open")})
-
+  $('#ajax').on('click', '#article_add', function() {$('#article_loader').html('').load("{% url 'article_add_user' pk=user.pk %}"); $('.article_fullscreen').show();})
   $('#ajax').on('click', '.u_photos_add', function() { $('#photos_add_window').show();console.log("user photos add open")})
   $('#ajax').on('click', '.u_albums_add', function() {user = $(this);user_id = user.data("uuid"); $('#photo_add_loader').html('').load("/gallery/user/add_album/" + user_id + "/"); $('.photofullscreen').show();console.log("user album photos add open")})
   $('body').on('click', '.u_photo_edit', function() {$('#block_description_form').show();console.log("user description photo open");});

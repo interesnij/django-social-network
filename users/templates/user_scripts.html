@@ -1,25 +1,5 @@
 {% load staticfiles %}
 
-<script>
-
-$('.user_page').on('click', '.avatar_detail', function() {
-		var photo = $(this);
-		var photo_id = photo.data("id");
-		var user_uuid = photo.data("uuid");
-		$('#photo_loader').html('').load("/gallery/load/avatar_detail/" + photo_id + "/" + user_uuid + "/")
-		$('.photo_fullscreen').show();
-});
-
-    $('.add_board_hide').on('click', function() {$('#for_settings').hide();});
-    $('#images_upload').on('click', function() {$('#for_images_upload').show();});
-    $('#settings').on('click', function() {$('#for_settings').show();});
-    $('#gallery').on('click', function() {$('#for_gallery').show();});
-    $('#doc').on('click', function() {$('#for_doc').show();});
-    $('#good').on('click', function() {$('#for_good').show();});
-    $('#question').on('click', function() {$('#for_question').show();});
-
-</script>
-
 {% if request.user == user and  request.user.is_authenticated %}
 
 <script>
@@ -58,20 +38,4 @@ function new_message_popap(new_message) {
 		$(avatar_change).click(function(e) {if ( e.target == this ) {if ($(avatar_change).is(':visible')) {$(avatar_change).hide();}}});
 		$(avatar_change).find("button[name=avatar_close]").on("click", function() {if ($(".formElementError").is(':visible')) {$(".formElementError").remove();}$(avatar_change).hide();});}
 	$(document).ready(function () {$("[data-js=avatar_change]").on("click", function() {avatar_change_popap($(".avatar_change"));});});
-</script>
-<script>
-  $("#article_add").click(function() {$('#article_loader').html('').load("{% url 'article_add_user' pk=user.pk %}"); $('.article_fullscreen').show();})
-	$('#ajax').on('click', '.article_fullscreen_hide', function() {$('.article_fullscreen').hide(); $('#article_loader').empty();});
-
-$('.user_page').on('click', '#form_post_btn', function() {
-    var form_post = $('#form_post'); var stream = form_post.parent().next();
-        $.ajax({
-            type: form_post.attr('method'), url: "{% url 'post_add_user' pk=user.pk %}", data: form_post.serialize(),
-            success: function(data) {
-                stream.find(".lenta-container").prepend(data); stream.find(".post_empty").hide(); $(".id_text").val(""); $(".add_board #for_images_upload").hide(); $(".add_board #for_gallery").hide(); $(".add_board #for_doc").hide(); $(".add_board #for_good").hide(); $(".add_board #for_question").hide(); $(".add_board #for_settings").hide();
-                $.toast({ heading: '{{ request.user.first_name }}', text: 'Запись успешно создана!', showHideTransition: 'fade', icon: 'success' })},
-            error: function(data) {$.toast({heading: '{{ request.user.first_name }}',text: 'Для публикации записи нужно написать что-нибудь и/или вставить изображение(ия)',showHideTransition: 'fade',icon: 'error'})}
-        });
-        return false;
-    });
 </script>
