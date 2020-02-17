@@ -143,7 +143,7 @@
                     {% if object.article.g_image %}
                     <img class="lazyload" data-src="{{ object.article.g_image.url }}" alt="">
                     {% else %}
-                    <img class="lazyload" data-src="{% static 'images/no-image.jpg' %}" />
+                    <img class="lazyload" data-src="/static/images/no-image.jpg" />
                     {% endif %}
                 </figure>
                 <div class="container">
