@@ -21,7 +21,7 @@ $("body").on('click', '.u_like', function() {
         }
     });return false;
 });
-$("#ajax").on('click', '.u_dislike', function() {
+$("body").on('click', '.u_dislike', function() {
         var dislike = $(this); item = dislike.parents('.infinite-item');var pk = item.attr("user-id"); var uuid = item.attr("item-id"); var like = dislike.prev().prev();
         $.ajax({
             url: "/votes/user_dislike/" + uuid + "/" + pk + "/", type: 'POST', data: {'obj': pk},
@@ -35,7 +35,7 @@ $("#ajax").on('click', '.u_dislike', function() {
 /*!
    votes post scripts for user item comments
   */
-$("#ajax").on('click', '.u_like2', function() {
+$("body").on('click', '.u_like2', function() {
           var like = $(this); var pk = like.data('pk'); var uuid = like.data('uuid'); var dislike = like.next().next();
           $.ajax({
               url: "/votes/user_comment/" + uuid + "/" + pk + "/like/", type: 'POST', data: {'obj': pk},
@@ -45,7 +45,7 @@ $("#ajax").on('click', '.u_like2', function() {
               }
           });return false;
       });
-$("#ajax").on('click', '.u_dislike2', function() {
+$("body").on('click', '.u_dislike2', function() {
         var dislike = $(this); var pk = dislike.data('pk'); var uuid = dislike.data('uuid'); var like = dislike.prev().prev();
         $.ajax({
             url: "/votes/user_comment/" + uuid + "/" + pk + "/dislike/", type: 'POST', data: {'obj': pk},
@@ -60,7 +60,7 @@ $("#ajax").on('click', '.u_dislike2', function() {
    comment create scripts
   */
 
-$('#ajax').on('click', '.u_itemComment', function() {
+$('body').on('click', '.u_itemComment', function() {
     button1 = $(this); var form1 = button1.parent().parent().parent(); var upload_block = form1.find(".upload_block");
     $.ajax({
         url: '/user/post-comment/', data: new FormData($(form1)[0]), contentType: false, cache: false, processData: false, type: 'POST',
@@ -70,7 +70,7 @@ $('#ajax').on('click', '.u_itemComment', function() {
     return false;
 });
 
-$('#ajax').on('click', '.u_replyComment', function() {
+$('body').on('click', '.u_replyComment', function() {
     var button = $(this); var form2 = button.parent().parent().parent().parent(); var block = form2.parent(); var upload_block = form2.find(".upload_block"); var reply_stream = block.next().next(); var pk = button.data('pk'); var uuid = button.data('uuid');
     $.ajax({
         url: '/user/reply-comment/' + uuid + "/" + pk + "/", data: new FormData($(form2)[0]), contentType: false, cache: false, processData: false, type: 'POST',
@@ -79,7 +79,7 @@ $('#ajax').on('click', '.u_replyComment', function() {
     });
     return false;
 });
-$('#ajax').on('click', '.u_replyParentComment', function() {
+$('body').on('click', '.u_replyParentComment', function() {
     var button = $(this); var form3 = button.parent().parent().parent().parent(); var block = form3.parent(); var upload_block = form3.find(".upload_block"); var pk = button.data('pk'); var uuid = button.data('uuid'); var reply_stream = block.parents('.stream_reply_comments');
     $.ajax({
         url: '/user/reply-comment/' + uuid + "/" + pk + "/",
