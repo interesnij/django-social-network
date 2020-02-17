@@ -70,9 +70,7 @@ class ItemCommunity(TemplateView):
         self.prev = self.items.filter(pk__lt=self.item.pk).order_by('-pk').first()
 
         if request.user.is_authenticated and request.user.is_member_of_community_with_name(self.community.name):
-            if request.user.is_creator_of_community_with_name(self.community.name):
-                self.template_name = "detail_sections/admin_item.html"
-            elif request.user.is_moderator_of_community_with_name(self.community.name):
+            if request.user.is_moderator_of_community_with_name(self.community.name):
                 self.template_name = "detail_sections/moderator_item.html"
             elif request.user.is_administrator_of_community_with_name(self.community.name):
                 self.template_name = "detail_sections/admin_item.html"
