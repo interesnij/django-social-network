@@ -69,7 +69,7 @@ $("body").on('click', '.reply_comment', function() {var reply_comment_form = $(t
 
 $('body').on('click', '.select_photo', function() {uuid = $(this).data("uuid");$('#photo_loader').html("").load("/users/load/img_load/" + uuid + "/"); $('.photo_fullscreen').show();console.log("select image for comment form")});
 
-
+$('body').on('click', '.c_item_repost', function() {item = $(this).parents('.infinite-item');item_id = item.attr("item-id"); $('#user_item_pk').html(item_id);});
 /*!
    community comments scripts
   */
