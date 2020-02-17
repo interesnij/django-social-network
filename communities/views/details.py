@@ -88,7 +88,7 @@ class ItemCommunity(TemplateView):
         context["community"]=self.community
         context["next"]=self.next
         context["prev"]=self.prev
-        context["request_user"]=request.user
+        context["request_user"]=self.request.user
         return context
 
 
