@@ -9,29 +9,6 @@ $('#ajax').on('click', '.item_user_off_comment', function() {var off = $(this);v
 $('#ajax').on('click', '.item_user_on_comment', function() {var on = $(this); var uuid = on.parents(".infinite-item").attr("item-id");$.ajax({url: "/user/on_comment/" + uuid + "/",success: function(data) {on.parent().html("<span class='dropdown-item item_user_off_comment'>Выключить комментарии</span>");$.toast({heading: 'Информация',text: 'Комментарии включены!',showHideTransition: 'fade',icon: 'info'})}});});
 $('#ajax').on('click', '.js-textareacopybtn', function() {btn = $(this);link = btn.find('.js-copytextarea');link.focus();link.select();try {var successful = document.execCommand('copy');var msg = successful ? 'successful' : 'unsuccessful';console.log('Copying text command was ' + msg);} catch (err) {console.log('Oops, unable to copy');}});
 
-/*!
-   votes post scripts for user item comments
-  */
-$("body").on('click', '.u_like2', function() {
-          var like = $(this); var pk = like.data('pk'); var uuid = like.data('uuid'); var dislike = like.next().next();
-          $.ajax({
-              url: "/votes/user_comment/" + uuid + "/" + pk + "/like/", type: 'POST', data: {'obj': pk},
-              success: function(json) {
-                  like.find("[data-count='like']").text(json.like_count); like.find(".svg_default").toggleClass('svg_success'); like.find(".likes_count").toggleClass('svg_success'); like.siblings('.comment_like_window').html('').load("/window/u_comment_like_window/" + uuid + "/" + pk + "/");
-                  dislike.find("[data-count='dislike']").text(json.dislike_count); dislike.find(".svg_default").removeClass('svg_danger'); dislike.find(".dislikes_count").removeClass('svg_danger'); dislike.siblings('.comment_dislike_window').html('').load("/window/u_comment_dislike_window/" + uuid + "/" + pk + "/")
-              }
-          });return false;
-      });
-$("body").on('click', '.u_dislike2', function() {
-        var dislike = $(this); var pk = dislike.data('pk'); var uuid = dislike.data('uuid'); var like = dislike.prev().prev();
-        $.ajax({
-            url: "/votes/user_comment/" + uuid + "/" + pk + "/dislike/", type: 'POST', data: {'obj': pk},
-            success: function(json) {
-                like.find("[data-count='like']").text(json.like_count); like.find(".svg_default").removeClass('svg_success'); like.find(".likes_count").removeClass('svg_success'); like.siblings('.comment_like_window').html('').load("/window/u_comment_like_window/" + uuid + "/" + pk + "/");
-                dislike.find("[data-count='dislike']").text(json.dislike_count); dislike.find(".svg_default").toggleClass('svg_danger'); dislike.find(".dislikes_count").toggleClass('svg_danger'); dislike.siblings('.comment_dislike_window').html('').load("/window/u_comment_dislike_window/" + uuid + "/" + pk + "/")
-            }
-        });return false;
-});
 
 /*!
    comment create scripts
