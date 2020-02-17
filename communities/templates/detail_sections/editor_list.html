@@ -1,8 +1,8 @@
 {% load humanize thumbnail %}
 
 {% if object.article %}
-
-<div class="card-header">
+<div class="mb-4 infinite-item" item-id="{{ object.uuid }}" community-id="{{ community.pk }}">
+  <div class="card-header">
     <div class="media">
       <a href="{% url 'community_detail' pk=object.community.pk %}" class="ajax">
         <figure>
