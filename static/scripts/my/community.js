@@ -11,17 +11,17 @@ $('#ajax').on('click', '.js-textareacopybtn', function() {btn = $(this);link = b
 /*!
    get votes script of community
   */
-$("#ajax").on('click', '.c_like', function() {like = $(this); item = like.parents('.infinite-item'); var uuid = item.attr("item-id"); var pk = item.attr("community-id"); dislike = like.next().next();$.ajax({url: "/votes/community_like/" + uuid + "/" + pk + "/", type: 'POST', data: {'obj': pk},success: function(json) {like.find("[data-count='like']").text(json.like_count); like.find(".svg_default").toggleClass('svg_success'); like.find(".likes_count").toggleClass('svg_success'); like.siblings('.like_window').html('').load("/window/c_like_window/" + uuid + "/" + pk + "/");dislike.find("[data-count='dislike']").text(json.dislike_count);dislike.find(".svg_default").removeClass('svg_danger'); dislike.find(".dislikes_count").removeClass('svg_danger');dislike.siblings('.dislike_window').html('').load("/window/c_dislike_window/" + uuid + "/" + pk + "/")}}); return false;});
+$("body").on('click', '.c_like', function() {like = $(this); item = like.parents('.infinite-item'); var uuid = item.attr("item-id"); var pk = item.attr("community-id"); dislike = like.next().next();$.ajax({url: "/votes/community_like/" + uuid + "/" + pk + "/", type: 'POST', data: {'obj': pk},success: function(json) {like.find("[data-count='like']").text(json.like_count); like.find(".svg_default").toggleClass('svg_success'); like.find(".likes_count").toggleClass('svg_success'); like.siblings('.like_window').html('').load("/window/c_like_window/" + uuid + "/" + pk + "/");dislike.find("[data-count='dislike']").text(json.dislike_count);dislike.find(".svg_default").removeClass('svg_danger'); dislike.find(".dislikes_count").removeClass('svg_danger');dislike.siblings('.dislike_window').html('').load("/window/c_dislike_window/" + uuid + "/" + pk + "/")}}); return false;});
 
-$("#ajax").on('click', '.c_dislike', function() {var dislike = $(this); item = dislike.parents('.infinite-item'); var uuid = item.attr("item-id"); var pk = item.attr("community-id"); var like = dislike.prev().prev();$.ajax({url: "/votes/community_dislike/" + uuid + "/" + pk + "/", type: 'POST', data: {'obj': pk},success: function(json) {like.find("[data-count='like']").text(json.like_count); like.find(".svg_default").removeClass('svg_success'); like.find(".likes_count").removeClass('svg_success'); like.siblings('.like_window').html('').load("/window/c_like_window/" + uuid + "/" + pk + "/");dislike.find("[data-count='dislike']").text(json.dislike_count); dislike.find(".svg_default").toggleClass('svg_danger');dislike.find(".dislikes_count").toggleClass('svg_danger');dislike.siblings('.dislike_window').html('').load("/window/c_dislike_window/" + uuid + "/" + pk + "/")}}); return false;});
+$("body").on('click', '.c_dislike', function() {var dislike = $(this); item = dislike.parents('.infinite-item'); var uuid = item.attr("item-id"); var pk = item.attr("community-id"); var like = dislike.prev().prev();$.ajax({url: "/votes/community_dislike/" + uuid + "/" + pk + "/", type: 'POST', data: {'obj': pk},success: function(json) {like.find("[data-count='like']").text(json.like_count); like.find(".svg_default").removeClass('svg_success'); like.find(".likes_count").removeClass('svg_success'); like.siblings('.like_window').html('').load("/window/c_like_window/" + uuid + "/" + pk + "/");dislike.find("[data-count='dislike']").text(json.dislike_count); dislike.find(".svg_default").toggleClass('svg_danger');dislike.find(".dislikes_count").toggleClass('svg_danger');dislike.siblings('.dislike_window').html('').load("/window/c_dislike_window/" + uuid + "/" + pk + "/")}}); return false;});
 
-$('#ajax').on('click', '.c_repost', function() {var item = $(this).parents('.infinite-item'); var item_id = item.attr("item-id"); $('#user_item_pk').html(item_id);});
+$('body').on('click', '.c_repost', function() {var item = $(this).parents('.infinite-item'); var item_id = item.attr("item-id"); $('#user_item_pk').html(item_id);});
 
-$("#ajax").on('click', '.c_like2', function() {var like = $(this); var pk = like.data('pk'); var uuid = like.data('uuid'); var dislike = like.next().next();$.ajax({url: "/votes/community_comment/" + uuid + "/" + pk + "/like/", type: 'POST', data: {'obj': pk},success: function(json) {like.find("[data-count='like']").text(json.like_count); like.find(".svg_default").toggleClass('svg_success'); like.find(".likes_count").toggleClass('svg_success'); like.siblings('.comment_like_window').html('').load("/window/c_comment_like_window/" + uuid + "/" + pk + "/");dislike.find("[data-count='dislike']").text(json.dislike_count); dislike.find(".svg_default").removeClass('svg_danger'); dislike.find(".dislikes_count").removeClass('svg_danger'); dislike.siblings('.comment_dislike_window').html('').load("/window/c_comment_dislike_window/" + uuid + "/" + pk + "/")}}); return false;});
+$("body").on('click', '.c_like2', function() {var like = $(this); var pk = like.data('pk'); var uuid = like.data('uuid'); var dislike = like.next().next();$.ajax({url: "/votes/community_comment/" + uuid + "/" + pk + "/like/", type: 'POST', data: {'obj': pk},success: function(json) {like.find("[data-count='like']").text(json.like_count); like.find(".svg_default").toggleClass('svg_success'); like.find(".likes_count").toggleClass('svg_success'); like.siblings('.comment_like_window').html('').load("/window/c_comment_like_window/" + uuid + "/" + pk + "/");dislike.find("[data-count='dislike']").text(json.dislike_count); dislike.find(".svg_default").removeClass('svg_danger'); dislike.find(".dislikes_count").removeClass('svg_danger'); dislike.siblings('.comment_dislike_window').html('').load("/window/c_comment_dislike_window/" + uuid + "/" + pk + "/")}}); return false;});
 
-$("#ajax").on('click', '.c_dislike2', function() {var dislike = $(this); var pk = dislike.data('pk'); var uuid = dislike.data('uuid'); var like = dislike.prev().prev();$.ajax({url: "/votes/community_comment/" + uuid + "/" + pk + "/dislike/",type: 'POST',data: { 'obj': pk },success: function(json) {like.find("[data-count='like']").text(json.like_count); like.find(".svg_default").removeClass('svg_success'); like.find(".likes_count").removeClass('svg_success'); like.siblings('.comment_like_window').html('').load("/window/c_comment_like_window/" + uuid + "/" + pk + "/");dislike.find("[data-count='dislike']").text(json.dislike_count); dislike.find(".svg_default").toggleClass('svg_danger'); dislike.find(".dislikes_count").toggleClass('svg_danger'); dislike.siblings('.comment_dislike_window').html('').load("/window/c_comment_dislike_window/" + uuid + "/" + pk + "/")}});return false;});
+$("body").on('click', '.c_dislike2', function() {var dislike = $(this); var pk = dislike.data('pk'); var uuid = dislike.data('uuid'); var like = dislike.prev().prev();$.ajax({url: "/votes/community_comment/" + uuid + "/" + pk + "/dislike/",type: 'POST',data: { 'obj': pk },success: function(json) {like.find("[data-count='like']").text(json.like_count); like.find(".svg_default").removeClass('svg_success'); like.find(".likes_count").removeClass('svg_success'); like.siblings('.comment_like_window').html('').load("/window/c_comment_like_window/" + uuid + "/" + pk + "/");dislike.find("[data-count='dislike']").text(json.dislike_count); dislike.find(".svg_default").toggleClass('svg_danger'); dislike.find(".dislikes_count").toggleClass('svg_danger'); dislike.siblings('.comment_dislike_window').html('').load("/window/c_comment_dislike_window/" + uuid + "/" + pk + "/")}});return false;});
 
-    $('#ajax').on('click', '.c_itemComment', function() {
+    $('body').on('click', '.c_itemComment', function() {
         button1 = $(this); form1 = button1.parent().parent().parent(); upload_block = form1.find(".upload_block");
         $.ajax({
             url: '/community/post-comment/', data: new FormData($(form1)[0]), contentType: false, cache: false, processData: false, type: 'POST',
@@ -42,7 +42,7 @@ $("#ajax").on('click', '.c_dislike2', function() {var dislike = $(this); var pk 
         });
         return false;
     });
-    $('#ajax').on('click', '.c_replyParentComment', function() {
+    $('body').on('click', '.c_replyParentComment', function() {
         button = $(this); form3 = button.parent().parent().parent().parent(); block = form3.parent(); upload_block = form3.find(".upload_block"); pk = button.data('pk'); uuid = button.data('uuid'); reply_stream = block.parents('.stream_reply_comments');
         $.ajax({
             url: '/community/reply-comment/' + uuid + "/" + pk + "/",
@@ -103,56 +103,3 @@ $("#ajax").on('click', '.c_dislike2', function() {var dislike = $(this); var pk 
       $('#ajax').on('click', '.community_member_delete', function() {
        var member_delete = $(this); var li = member_delete.parents(".list-group-item"); var pk = li.data('pk'); var uuid = li.data('uuid'); $.ajax({ url: "/communities/progs/delete_member/" + pk + "/" + uuid + "/", success: function () { member_delete.parent().html("<span class='community_member_create' style='cursor:pointer;color:rgba(0, 0, 0, 1);'>Восстановить</span>"); li.addClass("style_removed_object"); }});
        });
-
-    $('#ajax').on('click', '.remove_admin', function() {
-      var remove_admin = $(this);
-      var li = remove_admin.parents(".list-group-item");
-      var pk = li.data('pk');
-      var uuid = li.data('uuid');
-      $.ajax({
-        url: "/communities/progs/delete_admin/" + pk + "/" + uuid + "/",
-        success: function () {
-          remove_admin.parent().parent().addClass("small").html("<span class='show_staff_window' style='cursor:pointer'>Назначить руководителем</span> | <span class='member_delete' style='cursor:pointer'>Удалить</span>");
-          $.toast({heading: 'Информация',text: 'Администратор успешно лишен полномочий!',showHideTransition: 'fade',icon: 'info'});
-        }
-      });
-    });
-    $('#ajax').on('click', '.remove_moderator', function() {
-      var remove_admin = $(this);
-      var li = remove_admin.parents(".list-group-item");
-      var pk = li.data('pk');
-      var uuid = li.data('uuid');
-      $.ajax({
-        url: "/communities/progs/delete_moderator/" + pk + "/" + uuid + "/",
-        success: function () {
-          remove_admin.parent().parent().addClass("small").html("<span class='show_staff_window' style='cursor:pointer'>Назначить руководителем</span> | <span class='member_delete' style='cursor:pointer'>Удалить</span>");
-          $.toast({heading: 'Информация',text: 'Модератор успешно лишен полномочий!',showHideTransition: 'fade',icon: 'info'});
-        }
-      });
-    });
-    $('#ajax').on('click', '.remove_editor', function() {
-      var remove_admin = $(this);
-      var li = remove_admin.parents(".list-group-item");
-      var pk = li.data('pk');
-      var uuid = li.data('uuid');
-      $.ajax({
-        url: "/communities/progs/delete_editor/" + pk + "/" + uuid + "/",
-        success: function () {
-          remove_admin.parent().parent().addClass("small").html("<span class='show_staff_window' style='cursor:pointer'>Назначить руководителем</span> | <span class='member_delete' style='cursor:pointer'>Удалить</span>");
-          $.toast({heading: 'Информация',text: 'Редактор успешно лишен полномочий!',showHideTransition: 'fade',icon: 'info'});
-        }
-      });
-    });
-    $('#ajax').on('click', '.remove_advertiser', function() {
-      var remove_admin = $(this);
-      var li = remove_admin.parents(".list-group-item");
-      var pk = li.data('pk');
-      var uuid = li.data('uuid');
-      $.ajax({
-        url: "/communities/progs/delete_advertiser/" + pk + "/" + uuid + "/",
-        success: function () {
-          remove_admin.parent().parent().addClass("small").html("<span class='show_staff_window' style='cursor:pointer'>Назначить руководителем</span> | <span class='member_delete' style='cursor:pointer'>Удалить</span>");
-          $.toast({heading: 'Информация',text: 'Рекламодатель успешно лишен полномочий!',showHideTransition: 'fade',icon: 'info'});
-        }
-      });
-    });
