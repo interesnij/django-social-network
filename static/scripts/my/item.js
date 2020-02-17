@@ -12,7 +12,7 @@ $('#ajax').on('click', '.js-textareacopybtn', function() {btn = $(this);link = b
 /*!
    votes post scripts for user items
   */
-$(".u_like").click(function() {
+$(".infinite-item").on('click', '.u_like', function() {
     like = $(this); item = like.parents('.infinite-item'); var pk = item.attr("user-id"); var uuid = item.attr("item-id"); var dislike = like.next().next();
     $.ajax({url: "/votes/user_like/" + uuid + "/" + pk + "/",type: 'POST',data: {'obj': pk},
         success: function(json) {
