@@ -2,8 +2,30 @@ body,
 html {
   height: 100%;
 }
-
-
+@media screen and (max-width: 620px) {
+   .gadget-only{
+    display: none;
+    }
+    .desc-only{
+      display: visible;
+    }
+}
+@media screen and (min-width: 621px) {
+   .desc-only{
+    display: visible;
+  }
+}
+a {
+  color: inherit;
+}
+@media screen and (min-width: 621px) {
+   .activefullscreen{
+     left: 20%;
+     width: 60%;
+     padding-left: 5%;
+     padding-right: 5%;
+  }
+}
 a:hover {
   text-decoration: none;
 }
