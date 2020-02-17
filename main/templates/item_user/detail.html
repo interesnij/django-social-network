@@ -18,15 +18,11 @@
 </nav>
 
 {% if object.post %}
-<div class="mb-4 infinite-item" item-id="{{ object.uuid }}">
   {% include 'item_user/post_detail.html' %}
-</div>
 {% endif %}
 
 {% if object.article %}
-<div class="mb-4 infinite-item" item-id="{{ object.uuid }}">
-    {% include 'item_user/article.html' with article=article  %}
-</div>
+  {% include 'item_user/article.html' with article=article  %}
 {% endif %}
 
 {% endblock %}
