@@ -29,7 +29,6 @@ class UserItemView(TemplateView):
             self.items = self.user.get_posts()
         elif not self.user.is_closed_profile() and request.user.is_anonymous:
             self.items = self.user.get_posts()
-
         self.next = self.items.filter(pk__gt=self.item.pk).order_by('pk').first()
         self.prev = self.items.filter(pk__lt=self.item.pk).order_by('-pk').first()
         return super(UserItemView,self).get(request,*args,**kwargs)
@@ -40,6 +39,7 @@ class UserItemView(TemplateView):
         context["user"] = self.user
         context["next"] = self.next
         context["prev"] = self.prev
+        context["request_user"]=self.request.user
         return context
 
 
