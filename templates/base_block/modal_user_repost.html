@@ -4,7 +4,6 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content box-shadow">
             <div class="modal-body text-center pr-4 pl-4">
-
                 <div class="card-body">
                     <ul class="nav nav-tabs justify-content-center" role="tablist">
                         <li class="nav-item">
@@ -22,12 +21,10 @@
                     <div class="tab-content">
                         <div class="tab-pane fade active show" id="tabhome123" role="tabpanel" aria-labelledby="tabhome123-tab">
                             <div class="form-group ">
-
                                 <div class="custom-control custom-radio">
                                     <input type="radio" name="radiogroup-1" {% if user == request.user %} disabled="disabled"{% else %}checked="checked"{% endif %} class="custom-control-input" id="repost_radio_wall">
                                     <label class="custom-control-label" for="repost_radio_wall">На своей стене</label>
                                 </div>
-
                                 <div class="custom-control custom-radio">
                                     <input type="radio" name="radiogroup-1" class="custom-control-input" id="repost_radio_community">
                                     <label class="custom-control-label" for="repost_radio_community">В сообществе</label>
@@ -47,7 +44,6 @@
                                       <textarea name="text" class="id_text form-control bg-light-secondary border-0" rows="2" placeholder="Что у Вас нового?"></textarea>
                                   </div>
                                   <div class="card-footer border-top btn_default">
-
                                       <span class="add_board">
                                           <div id="for_images_upload" style="display:none;margin:10px"></div>
                                           <div id="for_gallery" style="display:none;margin:10px">gallery</div>
@@ -123,7 +119,7 @@
 </div>
 
 <script>
-    $('#user_repost_btn').click(function() {
+    $('#user_item_repost').click(function() {
         var frm_repost = $('#FORM-REPOST'); var uuid = $('.form #user_item_pk').text();
 
         if (document.getElementById('repost_radio_wall').checked) {
@@ -140,12 +136,5 @@
       };
 
     });
-    $('.add_board_hide').on('click', function() {$('#for_settings').hide();});
-    $('#images_upload').on('click', function() {$('#for_images_upload').show();});
-    $('#settings').on('click', function() {$('#for_settings').show();});
-    $('#gallery').on('click', function() {$('#for_gallery').show();});
-    $('#doc').on('click', function() {$('#for_doc').show();});
-    $('#good').on('click', function() {$('#for_good').show();});
-    $('#question').on('click', function() {$('#for_question').show();});
 
 </script>
