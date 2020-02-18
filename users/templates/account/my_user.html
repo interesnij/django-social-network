@@ -49,7 +49,7 @@
 {% include 'user_scripts.html' %}
 
 <script>
-document.addEventListener('DOMContentLoaded', function(){
+document.addEventListener('#ajax', function(){
   var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link.open( 'GET', '/users/detail/list/' + '{{ user.pk }}', true );
   link.onreadystatechange = function () {
