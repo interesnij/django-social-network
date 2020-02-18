@@ -109,6 +109,11 @@
    var json = Object.assign(...Array.from(formEntries, ([x,y]) => ({[x]:y})));
    fetch('{% url "user_settings_notify" pk=request.user.pk %}', {
      method: 'POST',
+     headers: {
+      "X-CSRFToken": getCookie("csrftoken"),
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
      body: JSON.stringify(json)
    });
 })
