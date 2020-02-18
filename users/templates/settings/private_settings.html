@@ -78,7 +78,9 @@
      method: 'POST',
      body: formEntries,
    };
-   fetch('{% url "user_settings_private" pk=request.user.pk %}', options).then(data => {console.log("Все ОК")}).catch(error => {console.log("Все не ОК")})
+   fetch('{% url "user_settings_private" pk=request.user.pk %}', options).then(data => {
+     $.toast({heading: 'Информация',text: 'Настройки успешно применены',showHideTransition: 'fade',icon: 'info'})
+   }).catch(error => {console.log("Все не ОК")})
  })
 </script>
 {% endblock %}
