@@ -31,8 +31,7 @@ class UserGeneralChange(TemplateView):
 			user.last_name = self.form.cleaned_data['last_name']
 			user.save()
 			self.form.save()
-			if request.is_ajax():
-				return HttpResponse ('!')
+			return HttpResponse ('!')
 		return super(UserGeneralChange,self).post(request,*args,**kwargs)
 
 
@@ -57,8 +56,7 @@ class UserAboutChange(TemplateView):
 		self.form=AboutUserForm(request.POST,instance=self.profile)
 		if self.form.is_valid():
 			self.form.save()
-			if request.is_ajax():
-				return HttpResponse ('!')
+			return HttpResponse ('!')
 		return super(UserAboutChange,self).post(request,*args,**kwargs)
 
 

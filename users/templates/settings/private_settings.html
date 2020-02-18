@@ -79,7 +79,7 @@
      body: formEntries,
    };
    fetch('{% url "user_settings_private" pk=request.user.pk %}', options).then(data => {
-     $.toast({heading: 'Информация',text: 'Настройки успешно применены',showHideTransition: 'fade',icon: 'info'})
+     console.log("Все ОК")
    }).catch(error => {console.log("Все не ОК")})
  })
 </script>
