@@ -47,7 +47,7 @@
       if ( link.readyState == 4 ) {
           if ( link.status == 200 ) {
               var user_tracks_load = document.getElementById("user_tracks_load");
-              load_cat_list.innerHTML = link.responseText;
+              user_tracks_load.innerHTML = link.responseText;
           }
       }
   };
