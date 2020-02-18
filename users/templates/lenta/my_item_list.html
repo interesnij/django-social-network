@@ -48,9 +48,3 @@
   <h6 style="margin-bottom: 20px;"> Пока записей нет...</h6>
 </div>
 {% endif %}
-
-<script>
-	var lenta = new Waypoint.Infinite({
-	    element: $('.lenta-container')[0], onBeforePageLoad: function() { $('.items-load').show(); }, onAfterPageLoad: function($items) { $('.items-load').hide(); }
-	});
-</script>

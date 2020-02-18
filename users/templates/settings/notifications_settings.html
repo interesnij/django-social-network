@@ -103,21 +103,27 @@
     </div>
 </div>
 <script type="text/javascript">
-    $('.buttonbutton').on('click', function() {
-        var formss = $('#NOTIFY-FORM');
-        $.ajax({
-            type: formss.attr('method'),
-            url: "{% url 'user_settings_notify' pk=request.user.pk %}",
-            data: formss.serialize(),
-            success: function(data) {
-              $('#ajax').html('').load("{% url 'profile_reload' request.user.pk %}");
-              $('title').text('{{ user.get_full_name }}');
-            },
-            error: function(data) {
-                console.log("Все не ОК")
+  document.querySelector(".buttonbutton").addEventListener("click", (e) => {
+    var frm10 = document.getElementById('NOTIFY-FORM');
+  	fetch("{% url 'user_settings_notify' pk=request.user.pk %}")
+  	.then(data => {
+  		data = frm10.serialize()
+      var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+      link.open( 'GET', '{% url "profile_reload" request.user.pk %}', true );
+      link.onreadystatechange = function () {
+        if ( link.readyState == 4 ) {
+            if ( link.status == 200 ) {
+                var reload_block = document.getElementById("ajax");
+                reload_block.innerHTML = link.responseText;
             }
-        });
-        return false;
+        }
+    };
+    link.send( null );
+    document.title = "{{ user.get_full_name }}";
+    }).catch(error => {
+      console.log("Все не ОК")
+    })
+
     });
 </script>
 {% endblock %}
