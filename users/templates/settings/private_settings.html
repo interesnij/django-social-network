@@ -76,10 +76,9 @@
     var form = document.getElementById('PRIVATE-FORM');
     var formData = new FormData(form)[0];
     var cooka = getCookie("csrftoken");
-    formData.append("X-CSRFToken", cooka);
     var request = new XMLHttpRequest();
     request.open('POST', '{% url "user_settings_private" pk=request.user.pk %}', true);
-    request.setRequestHeader('accept', 'application/json','X-CSRFToken': csrftoken)
+    request.setRequestHeader('accept', 'application/json','X-CSRFToken': 'cooka')
         });
     request.send(formData);
 })
