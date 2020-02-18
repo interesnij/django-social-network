@@ -103,6 +103,14 @@
     </div>
 </div>
 <script type="text/javascript">
-
+ document.querySelector(".buttonbutton").addEventListener("click", (e) => {
+   var form10 = document.getElementById('NOTIFY-FORM');
+   var formEntries = new FormData(form10).entries();
+   var json = Object.assign(...Array.from(formEntries, ([x,y]) => ({[x]:y})));
+   fetch('{% url "user_settings_notify" pk=request.user.pk %}', {
+     method: 'POST',
+     body: JSON.stringify(json)
+   });
+})
 </script>
 {% endblock %}
