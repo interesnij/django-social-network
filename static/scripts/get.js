@@ -97,11 +97,12 @@ $('body').on('click', '.c_item_repost', function() {item = $(this).parents('.inf
   */
   var goods_infinite = new Waypoint.Infinite({element: $('.goods-container')[0], onBeforePageLoad: function() { $('.load').show(); }, onAfterPageLoad: function($items) { $('.load').hide(); }});
   var lenta = new Waypoint.Infinite({element: $('.lenta-container')[0], onBeforePageLoad: function() { $('.items-load').show(); }, onAfterPageLoad: function($items) { $('.items-load').hide(); }});
-  var infinite = new Waypoint.Infinite({element: $('.communities_manage_container')[0], onBeforePageLoad: function() { $('.c_load').show(); }, onAfterPageLoad: function($items) { $('.c_load').hide(); }});
-  var infinite = new Waypoint.Infinite({element: $('.communities_container')[0], onBeforePageLoad: function() { $('.communities_load').show(); }, onAfterPageLoad: function($items) { $('.communities_load').hide(); }});
+  var communities_infinite = new Waypoint.Infinite({element: $('.communities_manage_container')[0], onBeforePageLoad: function() { $('.c_load').show(); }, onAfterPageLoad: function($items) { $('.c_load').hide(); }});
+  var communities2_infinite = new Waypoint.Infinite({element: $('.communities_container')[0], onBeforePageLoad: function() { $('.communities_load').show(); }, onAfterPageLoad: function($items) { $('.communities_load').hide(); }});
   var tracks_infinite = new Waypoint.Infinite({element: $('.tracks-container')[0], onBeforePageLoad: function() { $('.tracks_load').show(); }, onAfterPageLoad: function($items) { $('.tracks_load').hide(); }});
-
-
+  var users_infinite = new Waypoint.Infinite({element: $('.all-users-container')[0], onBeforePageLoad: function() { $('.load').show(); }, onAfterPageLoad: function($items) { $('.load').hide(); }});
+  var photos_infinite = new Waypoint.Infinite({element: $('.photos-load')[0], onBeforePageLoad: function() { $('.load').show(); }, onAfterPageLoad: function($items) { $('.load').hide(); }});
+  var pos_infinite = new Waypoint.Infinite({element: $('.possible-container')[0], onBeforePageLoad: function() { $('.possible_load').show(); }, onAfterPageLoad: function($items) { $('.possible_load').hide(); }});
   /*!
        music scripts for user
     */
