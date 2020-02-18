@@ -78,7 +78,7 @@
      method: 'POST',
      body: formEntries,
    };
-   fetch('{% url "user_settings_private" pk=request.user.pk %}', options);
+   fetch('{% url "user_settings_private" pk=request.user.pk %}', options).then(data => {console.log("Все ОК")}).catch(error => {console.log("Все не ОК")})
  })
 </script>
 {% endblock %}
