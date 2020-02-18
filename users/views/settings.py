@@ -82,8 +82,8 @@ class SettingsNotifyView(TemplateView):
 		self.notify_settings=UserNotificationsSettings.objects.get(user=request.user)
 		self.form=SettingsNotifyForm(request.POST,instance=self.notify_settings)
 		if self.form.is_valid():
-			self.form.save()
-			return HttpResponse ('!')
+			self.result = self.form.save()
+			return HttpResponse (self.result)
 		return super(SettingsNotifyView,self).post(request,*args,**kwargs)
 
 
