@@ -51,7 +51,7 @@
 <script>
 document.addEventListener('DOMContentLoaded', function(){
   var req = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  req.open( 'GET', '/users/detail/list/" + {{ user.pk }}', true );
+  req.open( 'GET', '/users/detail/list/' + '{{ user.pk }}', true );
   req.onreadystatechange = function () {
     if ( req.readyState == 4 ) {
         if ( req.status == 200 ) {
