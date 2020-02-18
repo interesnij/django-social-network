@@ -114,7 +114,7 @@
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
-     body: formEntries
+     body: JSON.stringify(data)
    }).then(data => {
     console.log("Все ОК")
   }).catch(error => {
