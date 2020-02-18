@@ -106,7 +106,6 @@
  document.querySelector(".buttonbutton").addEventListener("click", (e) => {
    var form10 = document.getElementById('NOTIFY-FORM');
    var formEntries = new FormData(form10);
-   var json = Object.assign(...Array.from(formEntries, ([x,y]) => ({[x]:y})));
    fetch('{% url "user_settings_notify" pk=request.user.pk %}', {
      method: 'POST',
      headers: {
@@ -114,7 +113,7 @@
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
-     body: JSON.stringify(data)
+     body: JSON.stringify(formEntries)
    }).then(data => {
     console.log("Все ОК")
   }).catch(error => {
