@@ -108,8 +108,7 @@ class SettingsPrivateView(TemplateView):
 		self.form=SettingsPrivateForm(request.POST, instance=self.private_settings)
 		if self.form.is_valid():
 			self.form.save()
-			if request.is_ajax():
-				return HttpResponse ('!')
+			return HttpResponse ('!')
 		return super(SettingsPrivateView,self).post(request,*args,**kwargs)
 
 
