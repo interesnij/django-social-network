@@ -50,9 +50,8 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function(){
-  var link1, link2 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  var link1 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link1.open( 'GET', '/users/detail/list/' + '{{ user.pk }}', true );
-  link2.open( 'GET', '/users/load/profile_stat/' + '{{ user.pk }}', true );
   link1.onreadystatechange = function () {
     if ( link1.readyState == 4 ) {
         if ( link1.status == 200 ) {
@@ -61,17 +60,18 @@ document.addEventListener('DOMContentLoaded', function(){
         }
     }
 };
-link2.onreadystatechange = function () {
-  if ( link2.readyState == 4 ) {
-      if ( link2.status == 200 ) {
+link1.send( null );
+
+link1.open( 'GET', '/users/load/profile_stat/' + '{{ user.pk }}', true );
+link1.onreadystatechange = function () {
+  if ( link1.readyState == 4 ) {
+      if ( link1.status == 200 ) {
           var stat_load = document.getElementById("stat_load");
-          stat_load.innerHTML = link2.responseText;
+          stat_load.innerHTML = link1.responseText;
       }
   }
 };
-
-link1.send( null ); link2.send( null );
-
+link1.send( null );
 });
 </script>
 
