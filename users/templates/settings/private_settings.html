@@ -79,6 +79,7 @@
     request.open('POST', '{% url "user_settings_private" pk=request.user.pk %}', true);
     request.setRequestHeader('accept', 'application/json');
     request.setRequestHeader("X-CSRFToken", getCookie("csrftoken"));
+    request.setRequestHeader('Content-Type', 'application/json');
     request.send(formData);
 })
 
