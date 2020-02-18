@@ -81,7 +81,7 @@
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
-    body: frm10.serialize()
+    body: JSON.stringify(frm10)
   }).then(data => {
     data = frm10.serialize()
     var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' )
