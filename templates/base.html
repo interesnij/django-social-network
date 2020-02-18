@@ -14,7 +14,7 @@
     {% if request.user.is_anonymous %}
       <link rel="stylesheet" media="none" onload="if(media!='all')media='all'" href="{% static 'styles/color/white.css' %}"  />
     {% endif %}
-    <script src="{% static 'scripts/jquery.js' %}" type="text/javascript"></script>
+    <script defer src="{% static 'scripts/jquery.js' %}" type="text/javascript"></script>
 </head>
   <body class="fixed-header sidebar-left-close">
     <div class="wrapper">
