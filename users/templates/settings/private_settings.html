@@ -75,11 +75,10 @@
   document.querySelector(".buttonbutton").addEventListener("click", (e) => {
     var form = document.getElementById('PRIVATE-FORM');
     var formData = new FormData(form)[0];
-    var cooka = getCookie("csrftoken");
     var request = new XMLHttpRequest();
     request.open('POST', '{% url "user_settings_private" pk=request.user.pk %}', true);
     request.setRequestHeader('accept', 'application/json');
-    request.setRequestHeader(cooka, "X-CSRFToken")
+    request.setRequestHeader("X-CSRFToken", "111111111111111");
         });
     request.send(formData);
 })
