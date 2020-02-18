@@ -7,21 +7,14 @@
     {% block meta %}{% endblock %}
     <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon" />
     <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon" />
-    <link rel="stylesheet" href="{% static 'styles/bootstrap.min.css' %}" media="none" onload="if(media!='all')media='all'" />
+    <link rel="stylesheet" href="{% static 'styles/load.css' %}" media="all" />
     <link rel="stylesheet" href="{% static 'styles/default.css' %}" media="all" />
+    <link rel="stylesheet" href="{% static 'styles/bootstrap.min.css' %}" media="none" onload="if(media!='all')media='all'" />
     <link rel="stylesheet" href="{% static 'styles/player_skin/vkontakte.css' %}" media="none" onload="if(media!='all')media='all'" />
     {% if request.user.is_anonymous %}
       <link rel="stylesheet" media="none" onload="if(media!='all')media='all'" href="{% static 'styles/color/white.css' %}"  />
     {% endif %}
     <script src="{% static 'scripts/jquery.js' %}" type="text/javascript"></script>
-    <style>
-    .col-md-1{flex:0 0 8.33333%;max-width:8.33333%;position:relative;width:100%;min-height:1px;padding-right:15px;padding-left:15px}
-    .col-md-2{flex:0 0 16.66667%;max-width:16.66667%;position:relative;width:100%;min-height:1px;padding-right:15px;padding-left:15px}
-    .col-md-5{flex:0 0 41.66667%;max-width:41.66667%;position:relative;width:100%;min-height:1px;padding-right:15px;padding-left:15px}
-    .col-md-7{flex:0 0 58.33333%;max-width:58.33333%;position:relative;width:100%;min-height:1px;padding-right:15px;padding-left:15px}
-    .col-md-10{flex:0 0 83.33333%;max-width:83.33333%;position:relative;width:100%;min-height:1px;padding-right:15px;padding-left:15px}
-    
-    </style>
 </head>
   <body class="fixed-header sidebar-left-close">
     <div class="wrapper">
