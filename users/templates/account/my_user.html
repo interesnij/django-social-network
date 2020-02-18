@@ -51,7 +51,8 @@
 <script>
 document.addEventListener('DOMContentLoaded', function(){
   if((e = document.querySelector("#ajax") !== null)
-    $('#lenta_load').html('').load("/users/detail/list/" + {{ user.pk }});
+    lenta_load = document.querySelector("#lenta_load")
+    lenta_load.html('').load("/users/detail/list/" + {{ user.pk }});
     $('#stat_load').html('').load("/users/load/profile_stat/" + {{ user.pk }});
   });
 });
