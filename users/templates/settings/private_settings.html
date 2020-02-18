@@ -56,7 +56,7 @@
                         </p>
                     </div>
                     <div class="card-footer">
-                        <button type="button" class="mb-2 btn btn-sm btn-success float-right buttonbutton">Сохранить</button>
+                        <button type="button" class="mb-2 btn btn-sm btn-success float-right pr_btn">Сохранить</button>
                     </div>
                 </div>
             </form>
@@ -72,9 +72,9 @@
 </div>
 <script type="text/javascript">
 
-  document.querySelector(".buttonbutton").addEventListener("click", (e) => {
-    var form = document.getElementById('PRIVATE-FORM');
-    var formData = new FormData(form);
+  document.querySelector(".pr_btn").addEventListener("click", (e) => {
+    var form10 = document.getElementById('PRIVATE-FORM');
+    var formData = new FormData(form10)[0];
     var request = new XMLHttpRequest();
     request.open('POST', '{% url "user_settings_private" pk=request.user.pk %}', true);
     request.setRequestHeader('accept', 'application/json');
