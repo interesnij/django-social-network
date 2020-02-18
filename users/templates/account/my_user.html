@@ -52,7 +52,17 @@
 document.addEventListener('DOMContentLoaded', function(){
   var req = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   req.open( 'GET', '/users/detail/list/" + {{ user.pk }}', true );
-    document.getElementById("lenta_load").innerHTML = req.responseText
+  req.onreadystatechange = function () {
+    if ( req.readyState == 4 ) {
+        if ( req.status == 200 ) {
+            var lenta_load = document.getElementById("lenta_load");
+            lenta_load.innerHTML = req.responseText;
+        }
+    }
+};
+
+req.send( null );
+
     document.getElementById("stat_load").append(fetch("/users/load/profile_stat/" + {{ user.pk }}));
 });
 </script>
