@@ -49,7 +49,7 @@
 {% include 'user_scripts.html' %}
 
 <script defer>
-$(document).ready(function(){
+document.addEventListener('DOMContentLoaded', function(){
 	$('#lenta_load').html('').load("/users/detail/list/" + {{ user.pk }});
 	$('#stat_load').html('').load("/users/load/profile_stat/" + {{ user.pk }});
 });
