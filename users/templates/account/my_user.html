@@ -10,7 +10,7 @@
 {% endblock %}
 {% block content %}
 <div class="row user_page">
-    <div class="col-md-5 col-sm-12 order-1">
+    <div class="col-lg-4 col-md-5 col-sm-12 order-1">
 
         {% include 'profile/card_profile.html' %}
 
@@ -25,7 +25,7 @@
         {% include 'profile/gallery.html' %}
 
     </div>
-    <div class="col-md-7 col-sm-12 order-2 ">
+    <div class="col-lg-8 col-md-7 col-sm-12 order-2 ">
         <div class="card mb-4" style="padding:10px">
             <h3 class="mb-0">{{ user.get_full_name }}</h3>
             {% if user.get_online %}
