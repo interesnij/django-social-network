@@ -75,7 +75,7 @@
   document.querySelector(".buttonbutton").addEventListener("click", (e) => {
     var form = document.getElementById('PRIVATE-FORM');
     var formData = new FormData(form)[0];
-    formData.append("X-CSRFToken": getCookie("csrftoken"));
+    formData.append("X-CSRFToken": "getCookie("csrftoken")");
     var request = new XMLHttpRequest();
     request.open('POST', '{% url "user_settings_private" pk=request.user.pk %}', true);
     var cooka = getCookie("csrftoken")
