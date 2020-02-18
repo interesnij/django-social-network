@@ -50,7 +50,7 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function(){
-    document.getElementById("lenta_load").fetch("/users/detail/list/" + {{ user.pk }});
+    document.getElementById("lenta_load").append(fetch("/users/detail/list/" + {{ user.pk }}));
     document.getElementById("stat_load").html('').load("/users/load/profile_stat/" + {{ user.pk }});
 });
 </script>
