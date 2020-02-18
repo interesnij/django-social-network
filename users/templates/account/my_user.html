@@ -50,10 +50,8 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function(){
-    lenta_load = document.getElementById("lenta_load")
-    stat_load = document.getElementById("stat_load")
-    lenta_load.add("/users/detail/list/" + {{ user.pk }});
-    stat_load.html('').load("/users/load/profile_stat/" + {{ user.pk }});
+    document.getElementById("lenta_load").append("/users/detail/list/" + {{ user.pk }});
+    document.getElementById("stat_load").html('').load("/users/load/profile_stat/" + {{ user.pk }});
 });
 </script>
 
