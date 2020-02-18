@@ -101,7 +101,14 @@ $('body').on('click', '.c_item_repost', function() {item = $(this).parents('.inf
   var lenta = new Waypoint.Infinite({
       element: $('.lenta-container')[0], onBeforePageLoad: function() { $('.items-load').show(); }, onAfterPageLoad: function($items) { $('.items-load').hide(); }
   });
+  var infinite = new Waypoint.Infinite({
+      element: $('.communities_manage_container')[0], onBeforePageLoad: function() { $('.c_load').show(); }, onAfterPageLoad: function($items) { $('.c_load').hide(); }
+  });
+  var infinite = new Waypoint.Infinite({
+      element: $('.communities_container')[0], onBeforePageLoad: function() { $('.communities_load').show(); }, onAfterPageLoad: function($items) { $('.communities_load').hide(); }
+  });
 
+  
   /*!
        music scripts for user
     */

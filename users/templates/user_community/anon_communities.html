@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load staticfiles thumbnail liked_user %}
+{% load liked_user %}
 {% block title %}Сообщества {{ user.first_name|gent }} {{ user.last_name|gent }}{% endblock %}
 {% block content %}
 
@@ -21,9 +21,7 @@
             </div>
 
             <div class="card-body px-0 py-0">
-
                 <span id="load_cat_list"></span>
-
             </div>
         </div>
     </div>
@@ -39,4 +37,23 @@
         </div>
     </div>
 </div>
+<script>
+  var ready = (callback) => {
+  if (document.readyState != "loading") callback();
+  else document.addEventListener("DOMContentLoaded", callback);
+  }
+  ready(() => {
+    var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    link.open( 'GET', '/users/detail/communities/' + '{{ user.uuid }}', true );
+    link.onreadystatechange = function () {
+      if ( link.readyState == 4 ) {
+          if ( link.status == 200 ) {
+              var load_cat_list = document.getElementById("load_cat_list");
+              load_cat_list.innerHTML = link.responseText;
+          }
+      }
+  };
+  link.send( null );
+  });
+</script>
 {% endblock %}
