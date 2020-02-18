@@ -98,7 +98,9 @@ $('body').on('click', '.c_item_repost', function() {item = $(this).parents('.inf
   var goods_infinite = new Waypoint.Infinite({
       element: $('.goods-container')[0], onBeforePageLoad: function() { $('.load').show(); }, onAfterPageLoad: function($items) { $('.load').hide(); }
   });
-
+  var lenta = new Waypoint.Infinite({
+      element: $('.lenta-container')[0], onBeforePageLoad: function() { $('.items-load').show(); }, onAfterPageLoad: function($items) { $('.items-load').hide(); }
+  });
 
   /*!
        music scripts for user
