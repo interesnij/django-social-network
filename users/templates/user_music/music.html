@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load staticfiles liked_user %}
+{% load liked_user %}
 {% block title %}Музыка {{ user.first_name|gent }} {{ user.last_name|gent }}{% endblock %}
 
 {% block content %}
@@ -36,12 +36,26 @@
 
 
 <script>
-$(document).ready(function(){
-  $('#user_tracks_load').html('').load("/users/detail/music_list/" + '{{ user.uuid }}');
+  var ready = (callback) => {
+  if (document.readyState != "loading") callback();
+  else document.addEventListener("DOMContentLoaded", callback);
+  }
+  ready(() => {
+    var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    link.open( 'GET', '/users/detail/music_list/' + '{{ user.uuid }}', true );
+    link.onreadystatechange = function () {
+      if ( link.readyState == 4 ) {
+          if ( link.status == 200 ) {
+              var user_tracks_load = document.getElementById("user_tracks_load");
+              load_cat_list.innerHTML = link.responseText;
+          }
+      }
+  };
+  link.send( null );
+  });
   {% if user.is_user_playlist %}
-    playlist_block = $('body').find('.music-dropdown');
-    playlist_block.addClass('user_{{ user.pk }}');
+    playlist_block = document.querySelector('.music-dropdown');
+    playlist_block.classList.remove('user_{{ user.pk }}');
   {% endif %}
-});
 </script>
 {% endblock %}

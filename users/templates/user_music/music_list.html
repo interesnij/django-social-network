@@ -1,4 +1,4 @@
-{% load staticfiles liked_user %}
+{% load liked_user %}
 
 <div class="media" style="margin-top: 35px;">
   <div class="media-body">
@@ -60,7 +60,4 @@
     </ul>
 </div>
 
-<script>
-var tracks_infinite = new Waypoint.Infinite({element: $('.tracks-container')[0], onBeforePageLoad: function() { $('.tracks_load').show(); }, onAfterPageLoad: function($items) { $('.tracks_load').hide(); }});
-</script>
 {% endif %}
