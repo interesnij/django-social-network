@@ -72,16 +72,15 @@
 </div>
 <script type="text/javascript">
 
-  document.querySelector(".pr_btn").addEventListener("click", (e) => {
     var form10 = document.getElementById('PRIVATE-FORM');
+    form10.addEventListener('submit', function(event) {
     var formData = new FormData(form10)[0];
     var request = new XMLHttpRequest();
-    request.open('POST', '{% url "user_settings_private" pk=request.user.pk %}', false);
+    request.open('POST', '{% url "user_settings_private" pk=request.user.pk %}', true);
     request.setRequestHeader('accept', 'application/json');
     request.setRequestHeader("X-CSRFToken", getCookie("csrftoken"));
     request.setRequestHeader('Content-Type', 'application/json');
     request.send(formData);
 })
-
 </script>
 {% endblock %}
