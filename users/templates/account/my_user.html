@@ -50,7 +50,7 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function(){
-  if((e = document.querySelector("#ajax") !== null)
+  if((e = document.querySelector("#ajax") !== null){
     lenta_load = document.getElementById("lenta_load")
     stat_load = document.getElementById("stat_load")
     lenta_load.html('').load("/users/detail/list/" + {{ user.pk }});
