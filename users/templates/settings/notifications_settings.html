@@ -105,7 +105,14 @@
 <script type="text/javascript">
   document.querySelector(".buttonbutton").addEventListener("click", (e) => {
     var frm10 = document.getElementById('NOTIFY-FORM');
-  	fetch("{% url 'user_settings_notify' pk=request.user.pk %}")
+  	var varResponse = await fetch("{% url 'user_settings_notify' pk=request.user.pk %}"){
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({a: 1, b: 'Textual content'})
+    }
   	.then(data => {
   		data = frm10.serialize()
       var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' )
