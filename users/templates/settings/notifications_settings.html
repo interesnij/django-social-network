@@ -105,7 +105,7 @@
 <script type="text/javascript">
  document.querySelector(".buttonbutton").addEventListener("click", (e) => {
    var form10 = document.getElementById('NOTIFY-FORM');
-   var formEntries = new FormData(form10);
+   var formEntries = new FormData(form10)[0];
    fetch('{% url "user_settings_notify" pk=request.user.pk %}', {
      method: 'POST',
      headers: {
