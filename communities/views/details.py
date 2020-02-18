@@ -76,9 +76,9 @@ class ItemCommunity(TemplateView):
                 self.template_name = "detail_sections/admin_item.html"
             else:
                 self.template_name = "detail_sections/item.html"
-        elif request.user.is_authenticated and community.is_public():
+        elif request.user.is_authenticated and self.community.is_public():
             self.template_name = "detail_sections/item.html"
-        elif request.user.is_anonymous and community.is_public():
+        elif request.user.is_anonymous and self.community.is_public():
             self.template_name = "detail_sections/item.html"
         return super(ItemCommunity,self).get(request,*args,**kwargs)
 
