@@ -72,29 +72,12 @@
 </div>
 <script type="text/javascript">
   document.querySelector(".buttonbutton").addEventListener("click", (e) => {
-    var frm10 = document.getElementById('PRIVATE-FORM');
-    (async () => {
-  var rawResponse = await fetch('{% url "user_settings_private" pk=request.user.pk %}', {
-    method: 'POST',
-    headers: {
-      "X-CSRFToken": getCookie("csrftoken"),
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(frm10)
-  }).then(data => {
-    data = frm10.serialize()
-    var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' )
-    link.open( 'GET', '{% url "profile_reload" request.user.pk %}', true )
-    link.onreadystatechange = function () {if ( link.readyState == 4 ) {if ( link.status == 200 ) {var reload_block = document.getElementById("ajax")
-    reload_block.innerHTML = link.responseText;}}};
-    link.send( null )
-    document.title = "{{ user.get_full_name }}";
-  }).catch(error => {
-    console.log("Все не ОК")
-  })
-
-})();
+    var form = document.getElementById('PRIVATE-FORM');
+    var formData = new FormData(form);
+    var request = new XMLHttpRequest();
+    request.open('POST', '{% url "user_settings_private" pk=request.user.pk %}', true);
+    request.setRequestHeader('accept', 'application/json');
+    request.send(formData);
 })
 
 </script>
