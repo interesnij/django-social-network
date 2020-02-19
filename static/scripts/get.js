@@ -110,6 +110,10 @@ $('body').on('click', '.c_item_repost', function() {item = $(this).parents('.inf
   var follows_infinite = new Waypoint.Infinite({element: $('.follows-container')[0], onBeforePageLoad: function() { $('.follows_load').show(); }, onAfterPageLoad: function($items) { $('.follows_load').hide(); }});
   var members_infinite = new Waypoint.Infinite({element: $('.members-container')[0], onBeforePageLoad: function() { $('.members_load').show(); }, onAfterPageLoad: function($items) { $('.members_load').hide(); }});
   var moders_infinite = new Waypoint.Infinite({element: $('.moders-container')[0], onBeforePageLoad: function() { $('.moders_load').show(); }, onAfterPageLoad: function($items) { $('.moders_load').hide(); }});
+  var follows_infinite = new Waypoint.Infinite({element: $('.follows-container')[0], onBeforePageLoad: function() { $('.follows_load').show(); }, onAfterPageLoad: function($items) { $('.follows_load').hide(); }});
+  var common_infinite = new Waypoint.Infinite({element: $('.common-container')[0], onBeforePageLoad: function() { $('.load').show(); }, onAfterPageLoad: function($items) { $('.load').hide(); }});
+  var frends_infinite = new Waypoint.Infinite({element: $('.frends-container')[0], onBeforePageLoad: function() { $('.load').show(); }, onAfterPageLoad: function($items) { $('.load').hide(); }});
+  var online_infinite = new Waypoint.Infinite({element: $('.online-container')[0], onBeforePageLoad: function() { $('.load').show(); }, onAfterPageLoad: function($items) { $('.load').hide(); }});
 
   /*!
        music scripts for user

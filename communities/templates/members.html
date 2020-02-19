@@ -65,9 +65,4 @@
     </div>
 </div>
 
-<script>
-$(document).ready(function(){
-  var members_infinite = new Waypoint.Infinite({element: $('.members-container')[0], onBeforePageLoad: function() { $('.members_load').show(); }, onAfterPageLoad: function($items) { $('.members_load').hide(); }});
-});
-</script>
 {% endblock %}

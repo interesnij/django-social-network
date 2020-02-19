@@ -72,8 +72,22 @@
     </div>
 </div>
 <script>
-$(document).ready(function(){
-	$('#follows_list').html('').load("/follows/list/" + "{{ user.uuid }}" + "/");
-});
+  var ready = (callback) => {
+  if (document.readyState != "loading") callback();
+  else document.addEventListener("DOMContentLoaded", callback);
+  }
+  ready(() => {
+    var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    link.open( 'GET', '/follows/list/' + '{{ user.pk }}', true );
+    link.onreadystatechange = function () {
+      if ( link.readyState == 4 ) {
+          if ( link.status == 200 ) {
+              var follows_list = document.getElementById("follows_list");
+              follows_list.innerHTML = link.responseText;
+          }
+      }
+  };
+  link.send( null );
+  });
 </script>
 {% endblock %}
