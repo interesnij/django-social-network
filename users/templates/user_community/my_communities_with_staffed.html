@@ -125,7 +125,8 @@
   link.send( null );
   });
   document.querySelector(".my_manage_communities").addEventListener("click", (e) => {
-      document.getElementById("tabhome223-tab").classList.remove('my_manage_communities');
+    if (document.querySelector("#tabhome223-tab").classList.contains("my_manage_communities")) {
+      tab = document.getElementById("tabhome223-tab");tab.classList.remove('my_manage_communities');
       var link_2 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
       link_2.open( 'GET', '/users/detail/manage_communities/' + '{{ user.uuid }}', true );
       link_2.onreadystatechange = function () {
@@ -137,6 +138,7 @@
         }
       };
       link_2.send( null );
+    }
     });
 </script>
 {% endblock %}
