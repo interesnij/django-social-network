@@ -56,6 +56,7 @@
 </div>
 
 <script>
+  var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   document.querySelector(".add_com").addEventListener("click", (e) => {
    var form10 = document.getElementById('FORM-COMMUNITY');
    var formEntries = new FormData(form10);
@@ -66,7 +67,16 @@
    fetch('{% url "add_community" %}', options).then(data => {
      document.querySelector(".community_fullscreen").style.display = "none";
      document.getElementById('community_loader').innerHTML = "";
-     var link = fetch( 'GET', '/communities/progs/gygyg/');
+     link.open( 'GET', "/users/1", true );
+     link.onreadystatechange = function () {
+       if ( link.readyState == 4 ) {
+           if ( link.status == 200 ) {
+               var sub = document.getElementById("subcat");
+               sub.innerHTML = link.responseText;
+           }
+       }
+   };
+   link.send( null );
      var com_load = document.getElementById("ajax");
      com_load.innerHTML = link.responseText;}).catch(error => {console.log("Все не ОК")})
 });
@@ -76,17 +86,16 @@
         if (val == '') {
           document.getElementById('subcat').innerHTML = "";
         } else {
-          var link2 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-          link2.open( 'GET', "/communities/progs/cat/" + val + "/", true );
-          link2.onreadystatechange = function () {
-            if ( link2.readyState == 4 ) {
-                if ( link2.status == 200 ) {
+          link.open( 'GET', "/communities/progs/cat/" + val + "/", true );
+          link.onreadystatechange = function () {
+            if ( link.readyState == 4 ) {
+                if ( link.status == 200 ) {
                     var sub = document.getElementById("subcat");
-                    sub.innerHTML = link2.responseText;
+                    sub.innerHTML = link.responseText;
                 }
             }
         };
-        link2.send( null );
+        link.send( null );
         };
     })
 
