@@ -61,11 +61,6 @@
    var formEntries = new FormData(form10);
    var options = {
      method: 'POST',
-     headers: {
-      "X-CSRFToken": getCookie("csrftoken"),
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
      body: formEntries,
    };
    fetch('{% url "add_community" %}', options).then(data => {
