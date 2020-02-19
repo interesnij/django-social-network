@@ -62,7 +62,7 @@ document.querySelector(".add_staff_options").addEventListener("click", (e) => {
     var pk = {{ community.pk }};
     if (document.getElementById('user_moderator').checked) {
     {% if not moderator %}
-    fetch("/communities/progs/add_moderator/" + pk + "/" + uuid + "/", options).then(data => {
+    fetch("/communities/progs/add_moderator/" + pk + "/" + uuid + "/").then(data => {
       document.querySelector(".manage_window_fullscreen").style.display = "none";
       document.getElementById('load_staff_window').innerHTML = "";
       document.querySelector(".li_{{user.pk }} .staff_btn").classList.remove("small").innerHTML = "<span class='staff_btn'>Модератор<br><span class='small'><span class='show_staff_window' style='cursor:pointer'>Редактировать</span> | <span class='remove_moderator' style='cursor:pointer'>Разжаловать</span></span><br></span>";
