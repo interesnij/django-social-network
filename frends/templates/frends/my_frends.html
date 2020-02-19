@@ -111,7 +111,7 @@
   var ready = (callback) => {
   if (document.readyState != "loading") callback();
   else document.addEventListener("DOMContentLoaded", callback);
-  }
+};
   ready(() => {
     var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     link.open( 'GET', '/frends/all-list/' + '{{ user.uuid }}', true );
@@ -126,7 +126,6 @@
   link.send( null );
   });
   document.querySelector(".online").addEventListener("click", (e) => {
-
       if (document.querySelector("#tabhome223-tab").classList.contains("online")) {
       var tab = document.getElementById("tabhome223-tab"); tab.classList.remove('online');
       var link_2 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
