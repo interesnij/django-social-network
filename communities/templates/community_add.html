@@ -58,7 +58,7 @@
 <script>
   function loadCat() {
     var http = new XMLHttpRequest();
-    http.open('GET', '/users/1/', true);
+    http.open('GET', '{% url "community_ggg" %}', true);  
     ajax = document.getElementById('ajax')
     ajax.innerHTML = http.responseText;
     http.send(null);
