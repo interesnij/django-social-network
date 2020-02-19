@@ -61,25 +61,20 @@
     </div>
 </div>
 
-<script>
-  $('#ajax').on('click', '#general_button', function() {
-    var frm = $('#info_form');
-        $.ajax({
-            type: "post",
-            url: "{% url 'community_general_form' pk=community.pk %}",
-            data: frm.serialize(),
-            success: function(data) {
-                $('#ajax').html('').load("/communities/reload/" + {{ community.pk }} + "/");
-                $('title').text('{{ community.name }}');
-            },
-            error: function(data) {
-                console.log("Все не ОК")
-            }
-        });
-        return false;
-    });
-
+<script type="text/javascript">
+  document.querySelector("#general_button").addEventListener("click", (e) => {
+   var form10 = document.getElementById('info_form');
+   var formEntries = new FormData(form10);
+   var options = {
+     method: 'POST',
+     body: formEntries,
+   };
+   fetch('{% url "community_general_form" pk=community.pk %}', options).then(data => {
+     console.log("Все ОК")
+   }).catch(error => {console.log("Все не ОК")})
+})
 </script>
+
 
 
 {% endblock %}

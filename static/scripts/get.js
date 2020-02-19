@@ -103,6 +103,14 @@ $('body').on('click', '.c_item_repost', function() {item = $(this).parents('.inf
   var users_infinite = new Waypoint.Infinite({element: $('.all-users-container')[0], onBeforePageLoad: function() { $('.load').show(); }, onAfterPageLoad: function($items) { $('.load').hide(); }});
   var photos_infinite = new Waypoint.Infinite({element: $('.photos-load')[0], onBeforePageLoad: function() { $('.load').show(); }, onAfterPageLoad: function($items) { $('.load').hide(); }});
   var pos_infinite = new Waypoint.Infinite({element: $('.possible-container')[0], onBeforePageLoad: function() { $('.possible_load').show(); }, onAfterPageLoad: function($items) { $('.possible_load').hide(); }});
+  var admins_infinite = new Waypoint.Infinite({element: $('.admins-container')[0], onBeforePageLoad: function() { $('.admins_load').show(); }, onAfterPageLoad: function($items) { $('.admins_load').hide(); }});
+  var advertisers_infinite = new Waypoint.Infinite({element: $('.advertisers-container')[0], onBeforePageLoad: function() { $('.advertisers_load').show(); }, onAfterPageLoad: function($items) { $('.advertisers_load').hide(); }});
+  var black_list_infinite = new Waypoint.Infinite({element: $('.black_list-container')[0], onBeforePageLoad: function() { $('.black_list_load').show(); }, onAfterPageLoad: function($items) { $('.black_list_load').hide(); }});
+  var editors_infinite = new Waypoint.Infinite({element: $('.editors-container')[0], onBeforePageLoad: function() { $('.editors_load').show(); }, onAfterPageLoad: function($items) { $('.editors_load').hide(); }});
+  var follows_infinite = new Waypoint.Infinite({element: $('.follows-container')[0], onBeforePageLoad: function() { $('.follows_load').show(); }, onAfterPageLoad: function($items) { $('.follows_load').hide(); }});
+  var members_infinite = new Waypoint.Infinite({element: $('.members-container')[0], onBeforePageLoad: function() { $('.members_load').show(); }, onAfterPageLoad: function($items) { $('.members_load').hide(); }});
+  var moders_infinite = new Waypoint.Infinite({element: $('.moders-container')[0], onBeforePageLoad: function() { $('.moders_load').show(); }, onAfterPageLoad: function($items) { $('.moders_load').hide(); }});
+
   /*!
        music scripts for user
     */
