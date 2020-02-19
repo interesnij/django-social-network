@@ -127,6 +127,7 @@
   });
   document.querySelector(".online").addEventListener("click", (e) => {
       var tab = document.getElementById("tabhome223-tab"); tab.classList.remove('online');
+      if (document.querySelector("#tabhome223-tab").classList.contains("online")) {
       var link_2 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
       link_2.open( 'GET', '/frends/online/' + '{{ user.uuid }}', true );
       link_2.onreadystatechange = function () {
@@ -138,6 +139,7 @@
         }
       };
       link_2.send( null );
+    }
     });
 </script>
 {% endblock %}
