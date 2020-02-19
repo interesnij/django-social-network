@@ -61,6 +61,7 @@
    var options = {
      method: 'POST',
      body: formEntries,
+     
    };
    fetch('{% url "add_community" %}', options).then(data => {
      document.querySelector(".community_fullscreen").style.display = "none";
