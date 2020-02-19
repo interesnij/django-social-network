@@ -59,7 +59,8 @@
   function loadCat() {
     var http = new XMLHttpRequest();
     http.open('GET', '/users/1/', true);
-    http.onreadystatechange = function () {if (this.readyState == 4 && this.status == 200) {document.getElementById('ajax').innerHTML = http.responseText;}}
+    ajax = document.getElementById('ajax')
+    ajax.innerHTML = http.responseText;
     http.send(null);
   }
   document.querySelector(".add_com").addEventListener("click", (e) => {
@@ -70,7 +71,6 @@
      body: formEntries,
    };
    fetch('{% url "add_community" %}', options).then(data => {
-     document.querySelector(".community_fullscreen").style.display = "none";
      loadCat()
    }).catch(error => {console.log("Все не ОК")});
 
