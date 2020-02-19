@@ -69,16 +69,12 @@
    var options = {
      method: 'POST',
      body: formEntries,
-     headers: {
-      "X-CSRFToken": getCookie("csrftoken"),
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
+     
    };
    fetch('{% url "add_community" %}', options).then(data => {
      document.querySelector(".community_fullscreen").style.display = "none";
      document.getElementById('community_loader').innerHTML = "";
-     
+
    }).catch(error => {console.log("Все не ОК")});
 
 });
