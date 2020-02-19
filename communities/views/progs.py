@@ -14,18 +14,12 @@ class CommunityCreate(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.form=CommunityForm()
-		try:
-			self.new_community = Community.objects.only('id').last()
-			self.new_url = self.new_community.pk + 1
-		except:
-			self.new_url = 1
 		return super(CommunityCreate,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		context=super(CommunityCreate,self).get_context_data(**kwargs)
 		context["form"]=self.form
 		context["categories"]=self.categories
-		context["new_url"]=self.new_url
 		return context
 
 	def post(self,request,*args,**kwargs):
