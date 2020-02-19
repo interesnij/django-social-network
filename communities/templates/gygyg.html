@@ -14,10 +14,16 @@
 
 
 <script>
-function Stells() {
-  $('#ajax').html('').load("/communities/reload/" + {{ new_url }} + "/");
-  $('title').text('{{ object.name }}');
-}
-setTimeout(Stells, 2000);
+  var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link.open( 'GET', "/communities/reload/" + {{ new_url }} + "/", true );
+  link.onreadystatechange = function () {
+    if ( link.readyState == 4 ) {
+        if ( link.status == 200 ) {
+            var com_load = document.getElementById("ajax");
+            com_load.innerHTML = link.responseText;
+        }
+    }
+};
+
 </script>
 {% endblock %}
