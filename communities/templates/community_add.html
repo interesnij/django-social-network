@@ -1,7 +1,7 @@
 {% load staticfiles %}
 
 <div class="col-md-8 col-lg-6 col-xl-5 mx-auto">
-    <form action="" id="FORM-COMMUNITY" method="post">
+    <form action="" id="COMMUNITY">
       {% csrf_token %}
         <div class="card mb-4">
             <div class="card-header border-bottom">
@@ -65,7 +65,7 @@
 <script>
   document.querySelector(".add_com").addEventListener("click", (e) => {
    e.preventDefault;
-   var form10 = document.getElementById('FORM-COMMUNITY');
+   var form10 = document.getElementById('COMMUNITY');
    var formEntries = new FormData(form10);
    var options = {
      method: 'POST',
