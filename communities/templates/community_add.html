@@ -71,7 +71,7 @@
      link.onreadystatechange = function () {
        if ( link.readyState == 4 ) {
            if ( link.status == 200 ) {
-               var sub = document.getElementById("ajax");
+               var sub = document.getElementById("community_add");
                sub.innerHTML = link.responseText;
            }
        }
