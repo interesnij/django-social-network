@@ -71,7 +71,9 @@
      method: 'POST',
      body: formEntries,
    };
-   fetch('{% url "add_community" %}', options);
+   fetch('{% url "add_community" %}', options).then(data => {
+     console.log("Все ОК")
+   }).catch(error => {console.log("Все не ОК")});
 });
 </script>
 <script>
