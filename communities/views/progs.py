@@ -33,8 +33,7 @@ class CommunityCreate(TemplateView):
 		if self.form.is_valid():
 			new_community=self.form.save(commit=False)
 			community = Community.create_community(name=new_community.name,category=new_community.category,type=new_community.type,creator=request.user)
-			if request.is_ajax() :
-				return HttpResponse("!")
+			return HttpResponse("!")
 		else:
 			return HttpResponseBadRequest()
 		return super(CommunityCreate,self).get(request,*args,**kwargs)
@@ -64,7 +63,7 @@ class CommunityMemberCreate(View):
 class CommunityMemberDelete(View):
 	success_url = "/"
 	def get(self,request,*args,**kwargs):
-		self.community = Community.objects.get(pk=self.kwargs["pk"]) 
+		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.user = User.objects.get(uuid=self.kwargs["uuid"])
 		self.user.leave_community_with_name(self.community.name)
 		return HttpResponse("!")
