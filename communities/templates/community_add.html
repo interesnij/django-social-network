@@ -68,8 +68,7 @@
      document.getElementById('community_loader').innerHTML = "";
      var link = fetch( 'GET', '/communities/progs/gygyg/');
      var com_load = document.getElementById("ajax");
-     com_load.innerHTML = link.responseText;
-   }.catch(error => {console.log("Все не ОК")})
+     com_load.innerHTML = link.responseText;}).catch(error => {console.log("Все не ОК")})
 });
 
     document.querySelector("#sub_category").addEventListener( 'change', function() {
