@@ -69,11 +69,9 @@
    var options = {
      method: 'POST',
      body: formEntries,
-     
    };
    fetch('{% url "add_community" %}', options).then(data => {
-     document.querySelector(".community_fullscreen").style.display = "none";
-     document.getElementById('community_loader').innerHTML = "";
+     console.log("Все ОК")
 
    }).catch(error => {console.log("Все не ОК")});
 
@@ -96,7 +94,7 @@
         };
         link.send( null );
         };
-    })
+    });
 
   document.querySelector(".remove_form").addEventListener("click", (e) => {
     document.querySelector(".community_fullscreen").style.display = "none";
