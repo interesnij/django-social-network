@@ -1,17 +1,12 @@
-{% extends "base.html" %}
-{% load staticfiles humanize %}
-{% block title %}Общество создается{% endblock %}
-{% block content %}
 
 <div class="col-md-8 col-lg-6 col-xl-5 mx-auto" style="display: flex; flex-flow: column nowrap; align-items: center; align-content: center; justify-content: center; margin-top: 70px;">
-  <img style="width:120px;margin-bottom:5px" src="{% static 'images/icons/group-24px.svg' %}" />
+  <svg class="svg_info svg_big" style="margin-bottom:5px" fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
 
   <br><br><br>
   <p style="font-size: 25px;">Группа создаётся...</p>
   <br>
 
 </div>
-
 
 <script>
   var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -26,4 +21,3 @@
 };
 
 </script>
-{% endblock %}
