@@ -66,15 +66,9 @@
    fetch('{% url "add_community" %}', options).then(data => {
      document.querySelector(".community_fullscreen").style.display = "none";
      document.getElementById('community_loader').innerHTML = "";
-     var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-     link.open( 'GET', '/communities/progs/gygyg/', true );
-     link.onreadystatechange = function () {
-       if ( link.readyState == 4 ) {
-           if ( link.status == 200 ) {
-               var com_load = document.getElementById("ajax");
-               com_load.innerHTML = link.responseText;
-           }
-       }
+     var link = fetch( 'GET', '/communities/progs/gygyg/');
+     var com_load = document.getElementById("ajax");
+     com_load.innerHTML = link.responseText;
    };
    link.send( null );
    }).catch(error => {console.log("Все не ОК")})
