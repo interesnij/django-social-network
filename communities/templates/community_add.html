@@ -47,7 +47,7 @@
             </div>
             <div class="card-footer">
                 <button class="btn btn-secondary remove_form">Отмена</button>
-                <button class="btn btn-success float-right">Создать</button>
+                <button class="btn btn-success float-right add_com">Создать</button>
             </div>
         </div>
     </form>
@@ -55,43 +55,51 @@
 </div>
 
 <script>
-    var frm_com = $('#FORM-COMMUNITY');
-    $('#FORM-COMMUNITY').submit(function() {
-        $.ajax({
-            type: frm_com.attr('method'),
-            url: "{% url 'add_community' %}",
-            data: frm_com.serialize(),
-            success: function(data) {
-                $('.community_fullscreen').hide();
-                $('#community_loader').empty();
-                $('#ajax').html('').load("/communities/progs/gygyg/"); 
-                $('title').text('Сообщество создается...');
-            },
-            error: function(data) {
-                $.toast({
-                    heading: '{{ request.user.first_name }}',
-                    text: 'Для создания сообщества нужно заполнить название, категорию и тип открытости будущего сообщества',
-                    showHideTransition: 'fade',
-                    icon: 'error'
-                })
-            }
-        });
-        return false;
-    });
-</script>
-<script>
-    $('#sub_category').change(function() {
-        var val = $(this).val();
+  document.querySelector(".add_com").addEventListener("click", (e) => {
+   var form10 = document.getElementById('FORM-COMMUNITY');
+   var formEntries = new FormData(form10);
+   var options = {
+     method: 'POST',
+     body: formEntries,
+   };
+   fetch('{% url "add_community" %}', options).then(data => {
+     document.querySelector(".community_fullscreen").style.display = "none";
+     document.getElementById('community_loader').innerHTML = "";
+     var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+     link.open( 'GET', '/communities/progs/gygyg/', true );
+     link.onreadystatechange = function () {
+       if ( link.readyState == 4 ) {
+           if ( link.status == 200 ) {
+               var com_load = document.getElementById("ajax");
+               com_load.innerHTML = link.responseText;
+           }
+       }
+   };
+   link.send( null );
+   }).catch(error => {console.log("Все не ОК")})
+});
+
+    document.querySelector("#sub_category").addEventListener( 'change', function() {
+        var val = value(this);
         if (val == '') {
-            $('#subcat').empty();
+          document.getElementById('subcat').innerHTML = "";
         } else {
-            $('#subcat').html('').load("/communities/progs/cat/" + val + "/");
+          var link2 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+          link2.open( 'GET', "/communities/progs/cat/" + val + "/", true );
+          link2.onreadystatechange = function () {
+            if ( link2.readyState == 4 ) {
+                if ( link2.status == 200 ) {
+                    var sub = document.getElementById("subcat");
+                    sub.innerHTML = link2.responseText;
+                }
+            }
+        };
+        link2.send( null );
         };
     })
-</script>
-<script>
-    $(".remove_form").click(function() {
-        $('.community_fullscreen').hide();
-        $('#community_loader').empty();
-    });
+
+  document.querySelector(".remove_form").addEventListener("click", (e) => {
+    document.querySelector(".community_fullscreen").style.display = "none";
+    document.getElementById('community_loader').innerHTML = "";
+  });
 </script>
