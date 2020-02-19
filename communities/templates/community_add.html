@@ -80,7 +80,7 @@
 });
 
     document.querySelector("#sub_category").addEventListener( 'change', function() {
-        var val = value(this);
+        var val = this.value;
         if (val == '') {
           document.getElementById('subcat').innerHTML = "";
         } else {
