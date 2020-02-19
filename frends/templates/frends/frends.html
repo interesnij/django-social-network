@@ -181,8 +181,8 @@
         link_3.onreadystatechange = function () {
           if ( link_3.readyState == 4 ) {
               if ( link_3.status == 200 ) {
-                  var online_frends = document.getElementById("online_frends");
-                  online_frends.innerHTML = link_3.responseText;
+                  var common_frends = document.getElementById("common_frends");
+                  common_frends.innerHTML = link_3.responseText;
               }
           }
         };
