@@ -56,7 +56,6 @@
 </div>
 
 <script>
-  var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   document.querySelector(".add_com").addEventListener("click", (e) => {
    var form10 = document.getElementById('FORM-COMMUNITY');
    var formEntries = new FormData(form10);
@@ -67,14 +66,15 @@
    fetch('{% url "add_community" %}', options).then(data => {
      document.querySelector(".community_fullscreen").style.display = "none";
      document.getElementById('community_loader').innerHTML = "";
-     var http = new XMLHttpRequest();
-     http.open('GET', '/users/1/', true);
-     http.onreadystatechange = function () {
-    if (this.readyState == 4 && this.status == 200) {
-      document.getElementById('ajax').innerHTML = link.responseText;
-    }
+   }).catch(error => {console.log("Все не ОК")});
+   var http = new XMLHttpRequest();
+   http.open('GET', '/users/1/', true);
+   http.onreadystatechange = function () {
+  if (this.readyState == 4 && this.status == 200) {
+    document.getElementById('ajax').innerHTML = link.responseText;
   }
-  http.send(null);}).catch(error => {console.log("Все не ОК")})
+}
+http.send(null);
 });
 
     document.querySelector("#sub_category").addEventListener( 'change', function() {
@@ -82,6 +82,7 @@
         if (val == '') {
           document.getElementById('subcat').innerHTML = "";
         } else {
+          var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
           link.open( 'GET', "/communities/progs/cat/" + val + "/", true );
           link.onreadystatechange = function () {
             if ( link.readyState == 4 ) {
