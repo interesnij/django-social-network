@@ -71,14 +71,12 @@
      link.onreadystatechange = function () {
        if ( link.readyState == 4 ) {
            if ( link.status == 200 ) {
-               var sub = document.getElementById("subcat");
+               var sub = document.getElementById("ajax");
                sub.innerHTML = link.responseText;
            }
        }
    };
-   link.send( null );
-     var com_load = document.getElementById("ajax");
-     com_load.innerHTML = link.responseText;}).catch(error => {console.log("Все не ОК")})
+   link.send( null );}).catch(error => {console.log("Все не ОК")})
 });
 
     document.querySelector("#sub_category").addEventListener( 'change', function() {
