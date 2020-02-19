@@ -58,7 +58,7 @@
 <script>
   function loadCat() {
     var http = new XMLHttpRequest();
-    http.open('GET', '{% url "community_ggg" %}', true);  
+    http.open('GET', '{% url "community_ggg" %}', true);
     ajax = document.getElementById('ajax')
     ajax.innerHTML = http.responseText;
     http.send(null);
@@ -69,6 +69,11 @@
    var options = {
      method: 'POST',
      body: formEntries,
+     headers: {
+      "X-CSRFToken": getCookie("csrftoken"),
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
    };
    fetch('{% url "add_community" %}', options).then(data => {
      loadCat()
