@@ -67,7 +67,7 @@
    fetch('{% url "add_community" %}', options).then(data => {
      document.querySelector(".community_fullscreen").style.display = "none";
      document.getElementById('community_loader').innerHTML = "";
-     link.open( 'GET', "/users/1", true );
+     link.open( 'GET', "/users/1/", true );
      link.onreadystatechange = function () {
        if ( link.readyState == 4 ) {
            if ( link.status == 200 ) {
