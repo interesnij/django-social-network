@@ -50,9 +50,8 @@ onscroll = function(){
     link_3.send()
     if (link_3.status == 404 ) {loaded = true; return; console.log("ошибка")}
     link_3.onload = function(e) {
-      if (this.status == 200) {
-      console.log(e.target.response);
-    }
+      if (this.status == 200) {console.log("норм");}
+      if (this.status == 404) {console.log("ошибочка нах");}
   };
     link_3.onreadystatechange = function () {
     if ( this.readyState == 4 && this.status == 200 ) {
