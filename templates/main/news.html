@@ -44,8 +44,7 @@
     if(window.scrollY+1 >= document.documentElement.scrollHeight-scroll){
       console.log("конец прокрутки");
       var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-      try {link_3.open( 'GET', '{% url "news_list" %}?page=' + page++, true )}catch (err) {loaded=true};
-      if(!loaded){
+      try {link_3.open( 'GET', '{% url "news_list" %}?page=' + page++, true )}catch (err) {return false};
         link_3.onreadystatechange = function () {
           if ( link_3.readyState == 4 ) {
             var elem = document.createElement('span');
@@ -55,9 +54,9 @@
             stream_load.append(load_stream);
           }
         };
-      };
       try {link_3.send( null )}catch (err) {loaded=true};
       console.log(page);
+
     }
 }
   });
