@@ -49,8 +49,7 @@ onscroll = function(){
     link_3.open( 'GET', '{% url "news_list" %}?page=' + page++, true );
     link_3.send()
     link_3.onload = function(e) {
-      if (this.status == 200) {console.log("норм");}
-      if (this.status == 404) {onscroll.return}
+      if (this.status == 404) {link_3=[]}
   };
     link_3.onreadystatechange = function () {
     if ( this.readyState == 4 && this.status == 200 ) {
@@ -61,7 +60,6 @@ onscroll = function(){
       stream_load.append(load_stream);
       }
     }
-  console.log(page);
   }
 };
 </script>
