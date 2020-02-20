@@ -52,7 +52,7 @@ $('body').on('click', '.user_playlist .track_item', function() {track = $(this);
 
 $(document).on("click.bs.dropdown.data-api", ".noclose", function (e) { e.stopPropagation() });
 style = "<link rel='stylesheet' href='/static/styles/color/" + "{{ request.user.color_settings.color }}" + ".css' />";
-document.head.appendChild(style);
+document.getElementsByTagName("head")[0].appendChild(style);
 $.ajaxPrefilter(function( options, original_Options, jqXHR ) {options.async = true;});
 </script>
 {% endif %}
