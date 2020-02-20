@@ -51,7 +51,8 @@ $('body').on('click', '.genre_playlist .track_item', function() {track = $(this)
 $('body').on('click', '.user_playlist .track_item', function() {track = $(this);track_id = track.parents('.infinite-item').data('counter');playlist_block = $('body').find('.music-dropdown');user_pk = track.parents('.ul_track_list').data('pk');if (!playlist_block.hasClass('user_' + user_pk)){$.ajax({url: "/music/manage/my_list/" + user_pk + "/",success: function(data) {load_playlist(playlist_block);playlist_block.removeClass().addClass('dropdown-menu music-dropdown user_' + user_pk);setTimeout(function(){ my_playlist_play(track_id)},2000);}});}else{my_playlist_play(track_id);};});
 
 $(document).on("click.bs.dropdown.data-api", ".noclose", function (e) { e.stopPropagation() });
-document.head.appendChild("<link rel='stylesheet' href='/static/styles/color/" + "{{ request.user.color_settings.color }}" + ".css' />");
+style = "<link rel='stylesheet' href='/static/styles/color/" + "{{ request.user.color_settings.color }}" + ".css' />";
+document.head.appendChild(style);
 $.ajaxPrefilter(function( options, original_Options, jqXHR ) {options.async = true;});
 </script>
 {% endif %}
