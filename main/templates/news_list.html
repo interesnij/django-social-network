@@ -42,7 +42,7 @@
 {% endif %}
 
 {% if page_obj.has_next %}
-,eeeeee
+
   <a style="display:flex;justify-content:center;">
     <img src="{% static 'images/loading.gif' %}">
   </a>
@@ -63,7 +63,7 @@
             link_3.open( 'GET', '{% url "news_list" %}?page={{ page_obj.next_page_number }}', true );
             link_3.onreadystatechange = function () {
             if ( link_3.readyState == 4 ) {
-                if ( link_3.status == 200 ) {stream.append(link_3.responseText);}}
+                if ( link_3.status == 200 ) {stream.add(link_3.responseText);}}
               };
             link_3.send( null );
             load = false;
