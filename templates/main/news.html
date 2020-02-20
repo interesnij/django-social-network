@@ -65,7 +65,9 @@ onscroll = function(){
       if (windowRelativeBottom > document.documentElement.clientHeight + 100) break;
       document.body.insertAdjacentHTML("beforeend", `<p>Date: ${new Date()}</p>`);
     }
-  }
+  };
+
+  populate();
 });
 
 </script>
