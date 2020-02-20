@@ -91,32 +91,6 @@ $('body').on('click', '.c_item_repost', function() {item = $(this).parents('.inf
   $('body').on('click', '.u_comment.comments_close', function() {btn = $(this);item = btn.closest(".infinite-item");uuid = item.attr("item-id");pk = item.attr("user-id");container = item.find(".load_comments");$.ajax({url: "/user/comment/" + uuid + "/" + pk + "/", data: {'uuid': uuid}, cache: false,beforeSend: function() { item.find(".load_comments").html("<span style='display:flex;justify-content: center;'><img src='/static/images/loading.gif'></span>"); },success: function(data) {   container.html(data.comments);btn.addClass("comments_open").removeClass("comments_close");console.log("show comments")}}); return false;});
   $('body').on('click', '.u_comment.comments_open', function() {btn = $(this);item = btn.closest(".infinite-item");container = item.find(".load_comments");container.empty();btn.removeClass('comments_open').addClass("comments_close");console.log("hide comments");});
 
-
-/*!
-   Infinite scripts
-  */
-  var goods_infinite = new Waypoint.Infinite({element: $('.goods-container')[0], onBeforePageLoad: function() { $('.load').show(); }, onAfterPageLoad: function($items) { $('.load').hide(); }});
-  var lenta = new Waypoint.Infinite({element: $('.lenta-container')[0], onBeforePageLoad: function() { $('.items-load').show(); }, onAfterPageLoad: function($items) { $('.items-load').hide(); }});
-  var communities_infinite = new Waypoint.Infinite({element: $('.communities_manage_container')[0], onBeforePageLoad: function() { $('.c_load').show(); }, onAfterPageLoad: function($items) { $('.c_load').hide(); }});
-  var communities2_infinite = new Waypoint.Infinite({element: $('.communities_container')[0], onBeforePageLoad: function() { $('.communities_load').show(); }, onAfterPageLoad: function($items) { $('.communities_load').hide(); }});
-  var tracks_infinite = new Waypoint.Infinite({element: $('.tracks-container')[0], onBeforePageLoad: function() { $('.tracks_load').show(); }, onAfterPageLoad: function($items) { $('.tracks_load').hide(); }});
-  var users_infinite = new Waypoint.Infinite({element: $('.all-users-container')[0], onBeforePageLoad: function() { $('.load').show(); }, onAfterPageLoad: function($items) { $('.load').hide(); }});
-  var photos_infinite = new Waypoint.Infinite({element: $('.photos-load')[0], onBeforePageLoad: function() { $('.load').show(); }, onAfterPageLoad: function($items) { $('.load').hide(); }});
-  var pos_infinite = new Waypoint.Infinite({element: $('.possible-container')[0], onBeforePageLoad: function() { $('.possible_load').show(); }, onAfterPageLoad: function($items) { $('.possible_load').hide(); }});
-  var admins_infinite = new Waypoint.Infinite({element: $('.admins-container')[0], onBeforePageLoad: function() { $('.admins_load').show(); }, onAfterPageLoad: function($items) { $('.admins_load').hide(); }});
-  var advertisers_infinite = new Waypoint.Infinite({element: $('.advertisers-container')[0], onBeforePageLoad: function() { $('.advertisers_load').show(); }, onAfterPageLoad: function($items) { $('.advertisers_load').hide(); }});
-  var black_list_infinite = new Waypoint.Infinite({element: $('.black_list-container')[0], onBeforePageLoad: function() { $('.black_list_load').show(); }, onAfterPageLoad: function($items) { $('.black_list_load').hide(); }});
-  var editors_infinite = new Waypoint.Infinite({element: $('.editors-container')[0], onBeforePageLoad: function() { $('.editors_load').show(); }, onAfterPageLoad: function($items) { $('.editors_load').hide(); }});
-  var follows_infinite = new Waypoint.Infinite({element: $('.follows-container')[0], onBeforePageLoad: function() { $('.follows_load').show(); }, onAfterPageLoad: function($items) { $('.follows_load').hide(); }});
-  var members_infinite = new Waypoint.Infinite({element: $('.members-container')[0], onBeforePageLoad: function() { $('.members_load').show(); }, onAfterPageLoad: function($items) { $('.members_load').hide(); }});
-  var moders_infinite = new Waypoint.Infinite({element: $('.moders-container')[0], onBeforePageLoad: function() { $('.moders_load').show(); }, onAfterPageLoad: function($items) { $('.moders_load').hide(); }});
-  var follows_infinite = new Waypoint.Infinite({element: $('.follows-container')[0], onBeforePageLoad: function() { $('.follows_load').show(); }, onAfterPageLoad: function($items) { $('.follows_load').hide(); }});
-  var common_infinite = new Waypoint.Infinite({element: $('.common-container')[0], onBeforePageLoad: function() { $('.load').show(); }, onAfterPageLoad: function($items) { $('.load').hide(); }});
-  var frends_infinite = new Waypoint.Infinite({element: $('.frends-container')[0], onBeforePageLoad: function() { $('.load').show(); }, onAfterPageLoad: function($items) { $('.load').hide(); }});
-  var online_infinite = new Waypoint.Infinite({element: $('.online-container')[0], onBeforePageLoad: function() { $('.load').show(); }, onAfterPageLoad: function($items) { $('.load').hide(); }});
-  var albums_infinite = new Waypoint.Infinite({element: $('.album-container')[0], onBeforePageLoad: function() { $('.load').show(); }, onAfterPageLoad: function($items) { $('.load').hide(); }});
-  var photos_infinite = new Waypoint.Infinite({element: $('.photos-container')[0], onBeforePageLoad: function() { $('.load').show(); }, onAfterPageLoad: function($items) { $('.load').hide(); }});
-  
   /*!
        music scripts for user
     */
