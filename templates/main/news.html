@@ -45,6 +45,7 @@ onscroll = function(){
       console.log("конец прокрутки");
       var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
       try {link_3.open( 'GET', '{% url "news_list" %}?page=' + page++, true )} catch (err) {loaded = true};
+      document.documentElement.clientHeight + 100;
       link_3.onreadystatechange = function () {
       if ( link_3.readyState == 4 ) {
         var elem = document.createElement('span');
