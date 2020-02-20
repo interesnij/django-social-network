@@ -39,19 +39,20 @@
   onscroll = function(){
     if(window.scrollY+1 >= document.documentElement.scrollHeight-document.documentElement.clientHeight){
       console.log("конец прокрутки");
-
-        var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-        link_3.open( 'GET', '{% url "news_list" %}?page={{ page_obj.next_page_number }}', true );
-        link_3.onreadystatechange = function () {
-        if ( link_3.readyState == 4 ) {
-          var elem = document.createElement('span');
-          var stream_load = document.getElementById("stream");
-          elem.innerHTML = link_3.responseText;
-          var load_stream = elem.querySelector(".stream");
-          stream_load.append(load_stream);
-        }
+      var page = 2
+      var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+      link_3.open( 'GET', '{% url "news_list" %}?page=' + page, true );
+      link_3.onreadystatechange = function () {
+      if ( link_3.readyState == 4 ) {
+        var elem = document.createElement('span');
+        var stream_load = document.getElementById("stream");
+        elem.innerHTML = link_3.responseText;
+        var load_stream = elem.querySelector(".stream");
+        stream_load.append(load_stream);
+      }
       };
       link_3.send( null );
+      page = page + 1;
     }
 }
   });
