@@ -37,5 +37,17 @@
   link.send( null );
   });
 
+
+  var out = document.getElementById('out');
+  var element = document.getElementById("stream");
+  var temp = element.scrollTop
+  element.scrollTop = 1 + element.scrollHeight - element.clientHeight;
+  var height = element.scrollTop;
+  element.scrollTop = temp;
+  element.onscroll = function() {
+    var scroll = element.scrollTop ;
+    out.innerHTML = scroll + ' : ' + height ;
+    if( height - scroll === 0 ) out.innerHTML += "end"
+  }
 </script>
 {% endblock %}
