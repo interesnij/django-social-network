@@ -41,11 +41,11 @@
 </div>
 {% endif %}
 
-{% if page_obj.has_next %}
+<a style="display:flex;justify-content:center;">
+  <img src="{% static 'images/loading.gif' %}">
+</a>
 
-  <a style="display:flex;justify-content:center;">
-    <img src="{% static 'images/loading.gif' %}">
-  </a>
+{% if page_obj.has_next %}
   <script>
     var loaded = false;
     var stream = document.getElementById("stream");
@@ -58,11 +58,12 @@
             link_3.open( 'GET', '{% url "news_list" %}?page={{ page_obj.next_page_number }}', true );
             link_3.onreadystatechange = function () {
             if ( link_3.readyState == 4 ) {
-              var elem = document.createElement('apsn');
+              var elem = document.createElement('span');
               var stream_load = document.querySelector(".stream");
               elem.innerHTML = link_3.responseText;
               var load_stream = elem.querySelector(".stream");
-              stream_load.append(load_stream);
+              var html = load_stream.innerHTM
+              stream_load.append(html);
             }
           };
           link_3.send( null );
