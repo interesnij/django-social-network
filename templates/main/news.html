@@ -50,7 +50,7 @@ onscroll = function(){
     link_3.send()
     link_3.onload = function(e) {
       if (this.status == 200) {console.log("норм");}
-      if (this.status == 404) {onscroll.exit()}
+      if (this.status == 404) {onscroll.return}
   };
     link_3.onreadystatechange = function () {
     if ( this.readyState == 4 && this.status == 200 ) {
