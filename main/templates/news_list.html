@@ -61,7 +61,7 @@
               var elem = document.createElement('span');
               var stream_load = document.querySelector(".stream");
               elem.innerHTML = link_3.responseText;
-              var html = elem.innerHTML;
+              var html = link_3.responseText.innerHTML;
               stream_load.append(html);
             }
           };
