@@ -57,7 +57,7 @@ onscroll = function(){
       var stream_load = document.getElementById("stream");
       elem.innerHTML = link_3.responseText;
       var load_stream = elem.querySelector(".stream");
-      if(!load_stream).length < 5){
+      if(!load_stream){
         loaded = true
       };
       stream_load.append(load_stream);
