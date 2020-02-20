@@ -48,7 +48,6 @@
 {% if page_obj.has_next %}
   <script>
     var loaded = false;
-    var stream = document.getElementById("stream");
 
       onscroll = function(){
         if(!loaded && window.scrollY+1 >= document.documentElement.scrollHeight-document.documentElement.clientHeight){
