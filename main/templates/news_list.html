@@ -55,6 +55,13 @@
 
 <script>
   var timeline = new Waypoint.Infinite({
-      element: $('.timeline-container')[0], onBeforePageLoad: function() { $('.news_load').show(); }, onAfterPageLoad: function($items) { $('.news_load').hide(); }
-  });
+      element: document.querySelector(".timeline-container")[0],
+      onBeforePageLoad: function() {
+        document.querySelector(".news_load").style.display = "block";
+        $('.news_load').show();
+      },
+      onAfterPageLoad: function($items) {
+        document.querySelector(".news_load").style.display = "none"; 
+      }
+    });
 </script>

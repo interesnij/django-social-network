@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load staticfiles liked_user %}
+{% load liked_user %}
 {% block title %}Товары {{ user.first_name|gent }} {{ user.last_name|gent }}{% endblock %}
 {% block content %}
 
@@ -20,10 +20,25 @@
     <div id="goods_load"></div>
 </div>
 
+
 <script>
-    $(document).ready(function() {
-        $('#goods_load').html('').load("/goods/user/goods/" + {{ user.pk }});
-    });
+  var ready = (callback) => {
+  if (document.readyState != "loading") callback();
+  else document.addEventListener("DOMContentLoaded", callback);
+  }
+  ready(() => {
+    var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    link.open( 'GET', '/goods/user/goods/' + '{{ user.pk }}', true );
+    link.onreadystatechange = function () {
+      if ( link.readyState == 4 ) {
+          if ( link.status == 200 ) {
+              var goods_load = document.getElementById("goods_load");
+              goods_load.innerHTML = link.responseText;
+          }
+      }
+  };
+  link.send( null );
+  });
 </script>
 
 {% endblock %}

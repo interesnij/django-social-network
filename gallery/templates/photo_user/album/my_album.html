@@ -41,7 +41,23 @@
   </div>
 
 <script>
-  $(document).ready(function() {$('#album_photo_load').html('').load("/gallery/user/album_list/" + "{{ user.pk }}/" + "{{ album.uuid }}/");});
+  var ready = (callback) => {
+  if (document.readyState != "loading") callback();
+  else document.addEventListener("DOMContentLoaded", callback);
+  }
+  ready(() => {
+    var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    link.open( 'GET', '/gallery/user/album_list/' + '{{ user.pk }}' + '{{ album.uuid }}/', true );
+    link.onreadystatechange = function () {
+      if ( link.readyState == 4 ) {
+          if ( link.status == 200 ) {
+              var album_photo_load = document.getElementById("album_photo_load");
+              album_photo_load.innerHTML = link.responseText;
+          }
+      }
+  };
+  link.send( null );
+  });
 </script>
 {% include 'photo_user/album/dropzone.html' %}
 {% endblock %}

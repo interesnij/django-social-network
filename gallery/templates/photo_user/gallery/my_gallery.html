@@ -47,9 +47,34 @@
   </div>
 
 <script>
-  $(document).ready(function() {
-      $('#albums_load').html('').load("/gallery/user/albums/" + "{{ user.uuid }}");
-      $('#photo_load').html('').load("/gallery/user/photos/" + "{{ user.uuid }}");
+  var ready = (callback) => {
+  if (document.readyState != "loading") callback();
+  else document.addEventListener("DOMContentLoaded", callback);
+  }
+  ready(() => {
+    var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    link.open( 'GET', '/gallery/user/albums/' + '{{ user.uuid }}', true );
+    link.onreadystatechange = function () {
+      if ( link.readyState == 4 ) {
+          if ( link.status == 200 ) {
+              var albums_load = document.getElementById("albums_load");
+              albums_load.innerHTML = link.responseText;
+          }
+      }
+  };
+  link.send( null );
+
+  var link_2 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_2.open( 'GET', '/gallery/user/photos/' + '{{ user.uuid }}', true );
+  link_2.onreadystatechange = function () {
+    if ( link_2.readyState == 4 ) {
+        if ( link_2.status == 200 ) {
+            var photo_load = document.getElementById("photo_load");
+            photo_load.innerHTML = link_2.responseText;
+        }
+    }
+  };
+  link_2.send( null );
   });
 </script>
 
