@@ -52,15 +52,3 @@
   <h6 style="margin-bottom: 20px;"> Пока записей нет...</h6>
 </div>
 {% endif %}
-
-<script>
-  var timeline = new Waypoint.Infinite({
-      element: document.querySelector(".timeline-container"),
-      onBeforePageLoad: function() {
-        document.querySelector(".news_load").style.display = "block";
-      },
-      onAfterPageLoad: function($items) {
-        document.querySelector(".news_load").style.display = "none";
-      }
-    });
-</script>
