@@ -50,10 +50,6 @@
     var loaded = false;
     var stream = document.getElementById("stream");
 
-    var ready = (callback) => {
-    if (document.readyState != "loading") callback();
-    else document.addEventListener("DOMContentLoaded", callback);
-    }
       onscroll = function(){
         if(!loaded && window.scrollY+1 >= document.documentElement.scrollHeight-document.documentElement.clientHeight){
           console.log("конец прокрутки");
@@ -65,7 +61,8 @@
               var elem = document.createElement('span');
               var stream_load = document.querySelector(".stream");
               elem.innerHTML = link_3.responseText;
-              stream_load.append(elem);
+              var html = elem.innerHTML;
+              stream_load.append(html);
             }
           };
           link_3.send( null );
