@@ -51,7 +51,8 @@
     <img src="{% static 'images/loading.gif' %}">
   </a>
   <script>
-    if($(window).scrollTop()+$(window).height()>=$(document).height()){
+    var stream = document.getElementById("stream");
+    if(document).scrollTop() + document.height()>=stream.height()){
     console.log('ура! конец страницы!')
 }
   </script>
