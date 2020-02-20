@@ -60,8 +60,18 @@
     ready(() => {
       onscroll = function(){
         if(window.scrollY+1 >= document.documentElement.scrollHeight-document.documentElement.clientHeight)
-        console.log("конец прокрутки")
-        }
-    });
+          console.log("конец прокрутки");
+          var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+          link.open( 'GET', '/main/news/', true );
+          link.onreadystatechange = function () {
+            if ( link.readyState == 4 ) {
+                if ( link.status == 200 ) {
+                    stream.appendChild(link.responseText);
+                  }
+                }
+      };
+      link.send( null );
+    }
+  });
   </script>
 {% endif %}
