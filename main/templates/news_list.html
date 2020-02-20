@@ -47,13 +47,6 @@
     <img src="{% static 'images/loading.gif' %}">
   </a>
   <script>
-    var load = false;
-    function load_start() {
-      load = true;
-    }
-    function load_stop() {
-      load = false;
-    }
     var stream = document.getElementById("stream");
 
     var ready = (callback) => {
@@ -62,9 +55,9 @@
     }
     ready(() => {
       onscroll = function(){
+        load = true;
         if(window.scrollY+1 >= document.documentElement.scrollHeight-document.documentElement.clientHeight && load)
           console.log("конец прокрутки");
-          load_start();
 
             var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
             link_3.open( 'GET', '{% url "news_list" %}?page={{ page_obj.next_page_number }}', true );
@@ -73,7 +66,7 @@
                 if ( link_3.status == 200 ) {stream.append(link_3.responseText);}}
               };
             link_3.send( null );
-            load_stop()
+            load = false;
     }
   });
 
