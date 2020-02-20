@@ -58,10 +58,11 @@
             link_3.open( 'GET', '{% url "news_list" %}?page={{ page_obj.next_page_number }}', true );
             link_3.onreadystatechange = function () {
             if ( link_3.readyState == 4 ) {
-              var elem = '';
+              var elem = createElement('apsn');
               var stream_load = document.querySelector(".stream");
               elem.innerHTML = link_3.responseText;
-              stream_load.append(elem);
+              var load_stream = elem.querySelector(".stream");
+              stream_load.append(load_stream);
             }
           };
           link_3.send( null );
