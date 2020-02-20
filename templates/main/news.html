@@ -47,7 +47,7 @@ onscroll = function(){
     console.log("конец прокрутки");
     var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     link_3.open( 'GET', '{% url "news_list" %}?page=' + page++, true );
-    if (link_3.error ) {loaded = true; console.log("ошибка")}
+    if (link_3.status === 404 ) {return; console.log("ошибка")}
     link_3.send()
     link_3.onreadystatechange = function () {
     if ( link_3.readyState == 4 ) {
