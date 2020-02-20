@@ -51,10 +51,10 @@
         var stream_load = document.getElementById("stream");
         elem.innerHTML = link_3.responseText;
         var load_stream = elem.querySelector(".stream");
+        if(!load_stream){return false};
         stream_load.append(load_stream);
       }
       };
-      if(!load_stream){return false};
       link_3.send( null );
       console.log(page);
     }
