@@ -38,6 +38,7 @@
 
   var page = 2;
   var scroll = document.documentElement.clientHeight + 30;
+  var loaded = false;
 
   onscroll = function(){
     if(window.scrollY+1 >= document.documentElement.scrollHeight-scroll){
@@ -53,7 +54,8 @@
         stream_load.append(load_stream);
       }
       };
-      if(load_stream){link_3.send( null )};
+      if(!load_stream){return false};
+      link_3.send( null );
       console.log(page);
     }
 }
