@@ -37,24 +37,7 @@
   link.send( null );
 
   var loaded = false;
-  onscroll = function(){
-    if(!loaded && window.scrollY+1 >= document.documentElement.scrollHeight-document.documentElement.clientHeight){
-      console.log("конец прокрутки");
-
-        var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-        link_3.open( 'GET', '{% url "news_list" %}?page={{ page_obj.next_page_number }}', true );
-        link_3.onreadystatechange = function () {
-        if ( link_3.readyState == 4 ) {
-          var elem = document.createElement('span');
-          var stream_load = document.querySelector(".stream");
-          elem.innerHTML = link_3.responseText;
-          stream_load.append(elem);
-        }
-      };
-      link_3.send( null );
-      
-    }
-}
+  
   });
 
 </script>
