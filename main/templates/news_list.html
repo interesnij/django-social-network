@@ -33,6 +33,12 @@
 
     {% if page_obj.has_next %}
       <script>
+
+        var ready = (callback) => {
+        if (document.readyState != "loading") callback();
+        else document.addEventListener("DOMContentLoaded", callback);
+        }
+        ready(() => {
         var loaded = false;
 
           onscroll = function(){
@@ -54,6 +60,7 @@
               loaded = true;
             }
         }
+    });
       </script>
     {% endif %}
   </span>
