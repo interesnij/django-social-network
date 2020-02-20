@@ -52,7 +52,16 @@
   </a>
   <script>
     var stream = document.getElementById("stream");
-    
 
+    var ready = (callback) => {
+    if (document.readyState != "loading") callback();
+    else document.addEventListener("DOMContentLoaded", callback);
+    }
+    ready(() => {
+      onscroll = function(){
+        if(window.scrollY+1 >= document.documentElement.scrollHeight-document.documentElement.clientHeight)
+        console.log("конец прокрутки")
+        }
+    });
   </script>
 {% endif %}
