@@ -62,7 +62,7 @@
     }
     ready(() => {
       onscroll = function(){
-        if(window.scrollY+1 >= document.documentElement.scrollHeight-document.documentElement.clientHeight)
+        if(window.scrollY+1 >= document.documentElement.scrollHeight-document.documentElement.clientHeight && load)
           console.log("конец прокрутки");
           load_start();
 
@@ -74,7 +74,6 @@
               };
             link_3.send( null );
             load_stop()
-        if(!load) return false;
     }
   });
 
