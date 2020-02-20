@@ -63,11 +63,12 @@
             link_3.open( 'GET', '{% url "news_list" %}?page={{ page_obj.next_page_number }}', true );
             link_3.onreadystatechange = function () {
             if ( link_3.readyState == 4 ) {
-              text = link_3.responseText;
-                if ( link_3.status == 200 ) {stream.append(text);}}
-              };
-            link_3.send( null );
-            loaded = true;
+              var stream_load = document.querySelector(".stream");
+              stream_load.innerHTML = link_3.responseText;
+            }
+          };
+          link_3.send( null );
+          loaded = true;
         }
     }
   });
