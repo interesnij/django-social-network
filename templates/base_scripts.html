@@ -43,7 +43,7 @@ function addStyleSheets (href) {
     $link.href = href;
 
     $head.appendChild($link);
-};addStyleSheets("/static/styles/color/" + "{{ request.user.color_settings.color }}");
+};addStyleSheets("/static/styles/color/" + "{{ request.user.color_settings.color }}" + ".css");
   });
 </script>
 <script>
