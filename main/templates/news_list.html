@@ -35,21 +35,21 @@
     {% endfor %}
     {% if page_obj.has_next %}
     ,eeeeee
-      <a style="display:flex;justify-content:center;" class="infinite-more-link" href="{% url 'news_list' %}?page={{ page_obj.next_page_number }}">
+      <a style="display:flex;justify-content:center;">
         <img src="{% static 'images/loading.gif' %}">
       </a>
       <script>
-        var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-        link.open( 'GET', '{% url "news_list" %}?page={{ page_obj.next_page_number }}', true );
-        link.onreadystatechange = function () {
-          if ( link.readyState == 4 ) {
-              if ( link.status == 200 ) {
+        var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+        link_3.open( 'GET', '{% url "news_list" %}?page={{ page_obj.next_page_number }}', true );
+        link_3.onreadystatechange = function () {
+          if ( link_3.readyState == 4 ) {
+              if ( link_3.status == 200 ) {
                   var stream = document.querySelector(".stream");
-                  stream.appendChild = link.responseText;
+                  stream.appendChild = link_3.responseText;
               }
           }
       };
-      link.send( null );
+      link_3.send( null );
       </script>
     {% endif %}
   </span>
