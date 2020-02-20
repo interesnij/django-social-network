@@ -46,7 +46,7 @@ onscroll = function(){
       var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
       link_3.open( 'GET', '{% url "news_list" %}?page=' + page++, true );
       link_3.send()
-      if (xhr.status != 200) {
+      if (link_3.status != 200) {
         loaded = true;
       }
       link_3.onreadystatechange = function () {
