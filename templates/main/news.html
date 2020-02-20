@@ -49,6 +49,11 @@ onscroll = function(){
     link_3.open( 'GET', '{% url "news_list" %}?page=' + page++, true );
     link_3.send()
     if (link_3.status == 404 ) {loaded = true; return; console.log("ошибка")}
+    link_3.onload = function(e) {
+      if (this.status == 200) {
+      console.log(e.target.response);
+    }
+  };
     link_3.onreadystatechange = function () {
     if ( this.readyState == 4 && this.status == 200 ) {
       var elem = document.createElement('span');
