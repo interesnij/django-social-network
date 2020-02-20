@@ -37,9 +37,10 @@
   link.send( null );
 
   var page = 1;
+  var cont = document.querySelector(".main-container")
 
   onscroll = function(){
-    if (document.offsetHeight + document.scrollTop >= document.scrollHeight) {
+    if (cont.offsetHeight + cont.scrollTop >= cont.scrollHeight) {
       console.log("конец прокрутки");
       var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
       link_3.open( 'GET', '{% url "news_list" %}?page=' + page, true );
