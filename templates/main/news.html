@@ -40,7 +40,7 @@
   var scroll = document.documentElement.clientHeight + 30;
   var loaded = false;
 
-    if(window.scrollY+1 >= document.documentElement.scrollHeight-scroll){
+    if(!loaded && window.scrollY+1 >= document.documentElement.scrollHeight-scroll){
       console.log("конец прокрутки");
       var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
       link_3.open( 'GET', '{% url "news_list" %}?page=' + page++, true );
@@ -51,9 +51,9 @@
         elem.innerHTML = link_3.responseText;
         var load_stream = elem.querySelector(".stream");
         stream_load.append(load_stream);
-      }
+      }else{loaded = true}
     };
-    try {link_3.send()}catch (err) {return false};
+    try {link_3.send()}catch (err) {loaded = true};
     console.log(page);
     }
 });
