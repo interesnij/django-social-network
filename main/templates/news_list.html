@@ -54,7 +54,6 @@
     if (document.readyState != "loading") callback();
     else document.addEventListener("DOMContentLoaded", callback);
     }
-    ready(() => {
       onscroll = function(){
         if(!loaded && window.scrollY+1 >= document.documentElement.scrollHeight-document.documentElement.clientHeight){
           console.log("конец прокрутки");
@@ -72,7 +71,6 @@
           link_3.send( null );
         }
     }
-  });
 
   </script>
 {% endif %}
