@@ -116,9 +116,7 @@ $('body').on('click', '.c_item_repost', function() {item = $(this).parents('.inf
   var online_infinite = new Waypoint.Infinite({element: $('.online-container')[0], onBeforePageLoad: function() { $('.load').show(); }, onAfterPageLoad: function($items) { $('.load').hide(); }});
   var albums_infinite = new Waypoint.Infinite({element: $('.album-container')[0], onBeforePageLoad: function() { $('.load').show(); }, onAfterPageLoad: function($items) { $('.load').hide(); }});
   var photos_infinite = new Waypoint.Infinite({element: $('.photos-container')[0], onBeforePageLoad: function() { $('.load').show(); }, onAfterPageLoad: function($items) { $('.load').hide(); }});
-  var timeline = new Waypoint.Infinite({
-      element: $('.timeline-container')[0], onBeforePageLoad: function() { $('.news_load').show(); }, onAfterPageLoad: function($items) { $('.news_load').hide(); }
-  });
+  
   /*!
        music scripts for user
     */
