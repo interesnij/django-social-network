@@ -54,7 +54,13 @@
 {% endif %}
 
 <script>
+  var ready = (callback) => {
+  if (document.readyState != "loading") callback();
+  else document.addEventListener("DOMContentLoaded", callback);
+  }
+  ready(() => {
   var timeline = new Waypoint.Infinite({
       element: $('.timeline-container')[0], onBeforePageLoad: function() { $('.news_load').show(); }, onAfterPageLoad: function($items) { $('.news_load').hide(); }
+  });
   });
 </script>
