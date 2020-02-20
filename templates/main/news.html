@@ -57,6 +57,14 @@ onscroll = function(){
     link_3.send(null)
     console.log(page);
     }
+  };
+
+  function populate() {
+    while(true) {
+      let windowRelativeBottom = document.documentElement.getBoundingClientRect().bottom;
+      if (windowRelativeBottom > document.documentElement.clientHeight + 100) break;
+      document.body.insertAdjacentHTML("beforeend", `<p>Date: ${new Date()}</p>`);
+    }
   }
 });
 
