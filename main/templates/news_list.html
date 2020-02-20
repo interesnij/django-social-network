@@ -63,7 +63,7 @@
             link_3.open( 'GET', '{% url "news_list" %}?page={{ page_obj.next_page_number }}', true );
             link_3.onreadystatechange = function () {
             if ( link_3.readyState == 4 ) {
-              text = link_3.responseText;
+              text = "<span>" + link_3.responseText + "</span>";
                 if ( link_3.status == 200 ) {stream.appendChild(text);}}
               };
             link_3.send( null );
