@@ -37,16 +37,5 @@
   link.send( null );
   });
 
-
-    var timeline = new Waypoint.Infinite({
-        element: document.querySelector(".timeline-container"),
-        onBeforePageLoad: function() {
-          document.querySelector(".news_load").style.display = "block";
-        },
-        onAfterPageLoad: function($items) {
-          document.querySelector(".news_load").style.display = "none";
-        }
-      });
-
 </script>
 {% endblock %}
