@@ -1,15 +1,11 @@
 {% load staticfiles thumbnail %}
 
 {% if object_list %}
-
-<div class="timeline-container">
   <div class="stream-update">
     <a href=""><span class="new-posts"></span> Загрузить новые записи</a>
   </div>
   <br>
-  <p id="out">0.0</p>
   <span class="stream" id="stream">
-
     <br>
     {% for object in object_list %}
 
@@ -35,7 +31,7 @@
 
     {% endfor %}
   </span>
-</div>
+
 {% else %}
 <div class="card mb-4 post_empty" style="align-items: center;justify-content:center;">
   <div class="card-body">
@@ -51,6 +47,13 @@
     <img src="{% static 'images/loading.gif' %}">
   </a>
   <script>
+    var load = false;
+    function load_start() {
+      load = true;
+    }
+    function load_stop() {
+      load = false;
+    }
     var stream = document.getElementById("stream");
 
     var ready = (callback) => {
@@ -61,17 +64,18 @@
       onscroll = function(){
         if(window.scrollY+1 >= document.documentElement.scrollHeight-document.documentElement.clientHeight)
           console.log("конец прокрутки");
-          var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-          link.open( 'GET', '{% url "news_list" %}?page={{ page_obj.next_page_number }}', true );
-          link.onreadystatechange = function () {
-            if ( link.readyState == 4 ) {
-                if ( link.status == 200 ) {
-                    stream.append(link.responseText);
-                  }
-                }
-      };
-      link.send( null );
+          load_start();
     }
   });
+  if(load){
+    var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    link.open( 'GET', '{% url "news_list" %}?page={{ page_obj.next_page_number }}', true );
+    link.onreadystatechange = function () {
+    if ( link.readyState == 4 ) {
+        if ( link.status == 200 ) {stream.append(link.responseText);}}
+      };
+    link.send( null );
+    load_stop()
+  }
   </script>
 {% endif %}
