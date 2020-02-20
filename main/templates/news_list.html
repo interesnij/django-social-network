@@ -47,6 +47,7 @@
     <img src="{% static 'images/loading.gif' %}">
   </a>
   <script>
+    var loaded = false;
     var stream = document.getElementById("stream");
 
     var ready = (callback) => {
@@ -55,8 +56,7 @@
     }
     ready(() => {
       onscroll = function(){
-        load = true;
-        if(window.scrollY+1 >= document.documentElement.scrollHeight-document.documentElement.clientHeight && load)
+        if(!loaded && window.scrollY+1 >= document.documentElement.scrollHeight-document.documentElement.clientHeight)
           console.log("конец прокрутки");
 
             var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -67,7 +67,7 @@
                 if ( link_3.status == 200 ) {stream.appendChild(text);}}
               };
             link_3.send( null );
-            load = false;
+            loaded = true;
     }
   });
 
