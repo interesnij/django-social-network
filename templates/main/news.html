@@ -39,7 +39,7 @@
   var page = 1;
 
   onscroll = function(){
-    if (news_load.offsetHeight + news_load.scrollTop >= news_load.scrollHeight) {
+    if (document.offsetHeight + document.scrollTop >= document.scrollHeight) {
       console.log("конец прокрутки");
       var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
       link_3.open( 'GET', '{% url "news_list" %}?page=' + page, true );
