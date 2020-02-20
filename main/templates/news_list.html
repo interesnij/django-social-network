@@ -66,7 +66,6 @@
           console.log("конец прокрутки");
           load_start();
 
-          if(load){
             var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
             link_3.open( 'GET', '{% url "news_list" %}?page={{ page_obj.next_page_number }}', true );
             link_3.onreadystatechange = function () {
@@ -75,7 +74,7 @@
               };
             link_3.send( null );
             load_stop()
-          }
+        if(!load) return false;
     }
   });
 
