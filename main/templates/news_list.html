@@ -51,6 +51,8 @@
     <img src="{% static 'images/loading.gif' %}">
   </a>
   <script>
-    
+    if($(window).scrollTop()+$(window).height()>=$(document).height()){
+    console.log('ура! конец страницы!')
+}
   </script>
 {% endif %}
