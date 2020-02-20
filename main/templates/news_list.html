@@ -1,10 +1,6 @@
-{% load staticfiles thumbnail %}
 
 {% if object_list %}
-  <div class="stream-update">
-    <a href=""><span class="new-posts"></span> Загрузить новые записи</a>
-  </div>
-  <br>
+
   <span class="stream" id="stream">
 
     {% for object in object_list %}
@@ -40,7 +36,3 @@
   <h6 style="margin-bottom: 20px;"> Пока записей нет...</h6>
 </div>
 {% endif %}
-
-<a style="display:flex;justify-content:center;">
-  <img src="{% static 'images/loading.gif' %}">
-</a>
