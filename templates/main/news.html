@@ -35,8 +35,6 @@
       }
   };
   link.send( null );
-  });
-
 
   var out = document.getElementById('out');
   var element = document.getElementById("stream");
@@ -49,5 +47,6 @@
     out.innerHTML = scroll + ' : ' + height ;
     if( height - scroll === 0 ) out.innerHTML += "end"
   }
+  });
 </script>
 {% endblock %}
