@@ -69,7 +69,43 @@
           });
       };
 
-  
+      ready(() => {
+      var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+      link.open( 'GET', '/music/list/all_tag_list/' + '{{ tag.pk }}', true );
+      link.onreadystatechange = function () {
+        if ( link.readyState == 4 ) {
+            if ( link.status == 200 ) {
+                var tag_tracks_load = document.getElementById("tag_tracks_load");
+                tag_tracks_load.innerHTML = link.responseText;
+            }
+        }
+      };
+      link.send( null );
+      {% if user.is_tag_playlist %}
+      playlist_block = document.querySelector(".music-dropdown");
+      playlist_block.classList.add('user_{{ user.pk }}');
+      {% endif %}
 
+      on('#ajax', 'click', '.track_item', function(e) {
+      var tag_playlist = document.querySelector(".tag_playlist");
+      var track = tag_playlist.querySelector(".track_item");
+      var track_id = track.getAttribute('data-counter');
+      var playlist_block = document.querySelector(".music-dropdown");
+      var tag_pk = tag_playlist.getAttribute('data-pk');
+      if (!playlist_block.classList.contains('tag_' + tag_pk)){
+        $.ajax({
+          url: "/music/manage/temp_tag/" + tag_pk + "/",
+          success: function(data) {
+            load_playlist(playlist_block);
+            playlist_block.className = "";
+            playlist_block.classList.add("dropdown-menu", "music-dropdown", "tag_" + tag_pk);
+            setTimeout(function(){ my_playlist_play(track_id)},2000);
+          }
+        });
+      }else{
+        my_playlist_play(track_id);
+      };
+    });
+  })
 </script>
 {% endblock %}
