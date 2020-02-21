@@ -285,10 +285,6 @@ class User(AbstractUser):
         followed_users_count = followed_users.count()
         return followed_users_count
 
-    def get_music_count(self):
-        playlist = self.user_playlist__players.count()
-        return playlist
-
     def count_connections(self):
         return self.connections.values('user_id').count()
 
@@ -487,7 +483,7 @@ class User(AbstractUser):
                 cached_playlist = safe_json(playlist)
                 return cached_playlist
             else:
-                return ''
+                playlist = False
 
     def get_avatar(self):
         try:
