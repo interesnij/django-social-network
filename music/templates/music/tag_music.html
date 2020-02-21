@@ -104,7 +104,7 @@ on('#ajax', 'click', '.track_item', function(e) {
       success: function(data) {
         load_playlist(playlist_block);
         playlist_block.className = "";
-        playlist_block.classList.add('dropdown-menu music-dropdown tag_' + tag_pk);
+        playlist_block.classList.add("dropdown-menu", "music-dropdown", "tag_" + tag_pk);
         setTimeout(function(){ my_playlist_play(track_id)},2000);
       }
     });
