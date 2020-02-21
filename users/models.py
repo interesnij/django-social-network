@@ -482,11 +482,11 @@ class User(AbstractUser):
                     data['is_my_track'] = 0
                 data['pk'] = track.pk
                 playlist.append(data)
-                if playlist:
-                    cached_playlist = safe_json(playlist)
-                    return cached_playlist
-                else:
-                    return ''
+            if playlist:
+                cached_playlist = safe_json(playlist)
+                return cached_playlist
+            else:
+                return ''
 
     def get_avatar(self):
         try:
