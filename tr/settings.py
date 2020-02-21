@@ -83,8 +83,6 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'tr.urls'
 
-SESSION_COOKIE_SAMESITE = None
-
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
