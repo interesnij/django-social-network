@@ -31,6 +31,7 @@
   };
   link_playlist.send( null );
   };
+  
 ready(() => {
     document.querySelector(".music-dropdown").addEventListener("click", (e) => {
       e.stopPropagation()
@@ -49,7 +50,6 @@ document.querySelector("#left-menu").addEventListener("click", (e) => {document.
 document.querySelector(".backdrop").addEventListener("click", (e) => {document.body.classList.toggle('sidebar-left-close');});
 
 function addStyleSheets (href) {$head = document.head,$link = document.createElement('link');$link.rel = 'stylesheet';$link.href = href;$head.appendChild($link);};addStyleSheets("/static/styles/color/" + "{% if request.user.color_settings.color %}{{ request.user.color_settings.color }}{% else %}white{% endif %}" + ".css");
-  });
 
   on('#tag_tracks_load', 'click', '.track_item', function(e) {
   var tag_playlist = document.querySelector(".tag_playlist");
@@ -71,6 +71,7 @@ function addStyleSheets (href) {$head = document.head,$link = document.createEle
     myPlaylist.pause(track_id);
   };
   });
+});
 </script>
 <script>
   $('body').on('click', '.playlist_pause .track_item', function() {track = $(this); li = track.parents('.infinite-item'); track_id = li.data('counter');my_playlist_play(track_id); li.removeClass("playlist_pause")});
