@@ -37,7 +37,7 @@ document.querySelector(".backdrop").addEventListener("click", (e) => {
     document.body.classList.toggle('sidebar-left-close');
 });
 
-function addStyleSheets (href) {$head = document.head,$link = document.createElement('link');$link.rel = 'stylesheet';$link.href = href;$head.appendChild($link);};addStyleSheets("/static/styles/color/" + "{{ request.user.color_settings.color }}" + ".css");
+function addStyleSheets (href) {$head = document.head,$link = document.createElement('link');$link.rel = 'stylesheet';$link.href = href;$head.appendChild($link);};addStyleSheets("/static/styles/color/" + "{% if request.user.color_settings.color %}{{ request.user.color_settings.color }}{% else %}white{% endif %}" + ".css");
   });
 </script>
 <script>
