@@ -26,9 +26,6 @@ ready(() => {
     var myPlaylist = new jPlayerPlaylist(cssSelector, playlist, options);
     document.querySelector(".music_header_btn").style.display = "block";
 
-    function my_playlist_play(track_id) {myPlaylist.play(track_id);};
-    function my_playlist_stop(track_id) {myPlaylist.pause(track_id);};
-
     document.querySelector(".music-dropdown").addEventListener("click", (e) => {
       e.stopPropagation()
     });
