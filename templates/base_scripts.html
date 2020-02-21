@@ -20,7 +20,7 @@
   }
 ready(() => {
 var cssSelector = {jPlayer: "#jquery_jplayer_1",cssSelectorAncestor: ".main-header"};
-if({{ request.user.my_playlist }} === ""){playlist = 0}else{playlist = {{ request.user.my_playlist }}};
+if(!{{ request.user.my_playlist }}){playlist = 0}else{playlist = {{ request.user.my_playlist }}};
 var options = { swfPath: "/static/jquery.jplayer.swf", supplied: "oga, mp3", wmode: "window", smoothPlayBar: false, keyEnabled: true};
 var myPlaylist = new jPlayerPlaylist(cssSelector, playlist, options);
 
