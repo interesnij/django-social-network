@@ -55,11 +55,11 @@
   var tag_playlist = document.querySelector(".tag_playlist");
   var track = tag_playlist.querySelector(".track_item");
   track.addEventListener("click", (e) => {
-    var track_ = this.parentNode;
-    var track__ = track_.parentNode;
-    var track_id = track__.parentNode.data('counter');
+    var track_ = this.parentElement;
+    var track__ = track_.parentElement;
+    var track_id = track__.parentElement.data('counter');
     var playlist_block = document.querySelector(".music-dropdown");
-    var tag_pk = track.parentNode.parentNode.parentNode.data('pk');
+    var tag_pk = track.parentElement.parentElement.parentElement.data('pk');
     if (!playlist_block.classList.contains('tag_' + tag_pk)){
       $.ajax({
         url: "/music/manage/temp_tag/" + tag_pk + "/",
