@@ -33,7 +33,7 @@ ready(() => {
     document.querySelector(".music-dropdown").addEventListener("click", (e) => {
       e.stopPropagation()
     });
-
+    function my_playlist_play(track_id) {myPlaylist.play(track_id);};
 document.querySelector("#left-menu").addEventListener("click", (e) => {document.body.classList.toggle('sidebar-left-close');});
 document.querySelector(".backdrop").addEventListener("click", (e) => {document.body.classList.toggle('sidebar-left-close');});
 
