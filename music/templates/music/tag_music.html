@@ -86,7 +86,7 @@
       playlist_block.classList.add('user_{{ user.pk }}');
       {% endif %}
 
-      on('.ul_track_list', 'click', '.track_item', function(e) {
+      on('#tag_tracks_load', 'click', '.track_item', function(e) {
       var tag_playlist = document.querySelector(".tag_playlist");
       var track = tag_playlist.querySelector(".track_item");
       var track_id = track.getAttribute('data-counter');
