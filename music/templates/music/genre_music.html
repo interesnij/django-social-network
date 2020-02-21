@@ -36,11 +36,26 @@
 </div>
 
 <script>
-$(document).ready(function(){
-  $('#genre_tracks_load').html('').load("/music/list/genre_list/" + {{ genre.pk }});
+  var ready = (callback) => {
+  if (document.readyState != "loading") callback();
+  else document.addEventListener("DOMContentLoaded", callback);
+  }
+ready(() => {
+  var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link.open( 'GET', '/music/list/genre_list/' + '{{ genre.pk }}', true );
+  link.onreadystatechange = function () {
+    if ( link.readyState == 4 ) {
+        if ( link.status == 200 ) {
+            var genre_tracks_load = document.getElementById("genre_tracks_load");
+            genre_tracks_load.innerHTML = link.responseText;
+        }
+    }
+};
+link.send( null );
+
   {% if user.is_genre_playlist %}
-    playlist_block = $('body').find('.music-dropdown');
-    playlist_block.addClass('genre_{{ genre.pk }}');
+    playlist_block = document.querySelector(".music-dropdown");
+    playlist_block.classList.add('genre_{{ genre.pk }}');
   {% endif %}
 });
 </script>
