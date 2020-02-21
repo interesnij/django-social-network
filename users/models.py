@@ -286,9 +286,8 @@ class User(AbstractUser):
         return followed_users_count
 
     def get_music_count(self):
-        playlist = self.user_playlist
-        music_query_count = playlist.players.count()
-        return music_query_count
+        playlist = self.user_playlist__players.count()
+        return playlist
 
     def count_connections(self):
         return self.connections.values('user_id').count()
