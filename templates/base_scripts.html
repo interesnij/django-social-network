@@ -19,6 +19,13 @@
   if (document.readyState != "loading") callback();
   else document.addEventListener("DOMContentLoaded", callback);
   }
+
+ready(() => {
+    document.querySelector(".music-dropdown").addEventListener("click", (e) => {
+      e.stopPropagation()
+    });
+  {% if request.user.my_playlist %}
+
   function load_playlist(playlist_block, callback) {
     var link_playlist = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     link_playlist.open( 'GET', '/users/load/playlist/' + '{{ request.user.uuid }}', true );
@@ -31,12 +38,7 @@
   };
   link_playlist.send( null );
   };
-
-ready(() => {
-    document.querySelector(".music-dropdown").addEventListener("click", (e) => {
-      e.stopPropagation()
-    });
-  {% if request.user.my_playlist %}
+  
     var cssSelector = {jPlayer: "#jquery_jplayer_1",cssSelectorAncestor: ".main-header"};
     var playlist = {{ request.user.my_playlist }};
     var options = { swfPath: "/static/jquery.jplayer.swf", supplied: "oga, mp3", wmode: "window", smoothPlayBar: false, keyEnabled: true};
