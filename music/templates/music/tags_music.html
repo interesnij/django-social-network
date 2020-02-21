@@ -34,11 +34,25 @@
     </div>
 </div>
 
+<script>
+var ready = (callback) => {
+if (document.readyState != "loading") callback();
+else document.addEventListener("DOMContentLoaded", callback);
+}
+ready(() => {
+var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+link.open( 'GET', '/music/list/tag_list/' + '{{ symbol.pk }}', true );
+link.onreadystatechange = function () {
+  if ( link.readyState == 4 ) {
+      if ( link.status == 200 ) {
+          var tags_list_load = document.getElementById("tags_list_load");
+          tags_list_load.innerHTML = link.responseText;
+      }
+  }
+};
+link.send( null );
 
+});
 
-    <script>
-    $(document).ready(function(){
-      $('#tags_list_load').html('').load("/music/list/tag_list/" + {{ symbol.pk }});
-    });
     </script>
 {% endblock %}
