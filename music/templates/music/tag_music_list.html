@@ -52,8 +52,8 @@
 </div>
 
 <script>
-  var tag_tracks_load = document.querySelector("#tag_tracks_load");
-  var track = tag_tracks_load.querySelector(".track_item");
+  var tag_playlist = document.querySelector(".tag_playlist");
+  var track = tag_playlist.querySelector(".track_item");
   track.addEventListener("click", (e) => {
     var track_id = this.parentElement.parentElement.data('counter');
     var playlist_block = document.querySelector(".music-dropdown");
