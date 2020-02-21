@@ -8,8 +8,8 @@
 </div>
 <br><br>
 {% if tag_list %}
-<div class="tracks-container tag_playlist">
-    <ul data-pk="{{ tag.pk }}" class="ul_track_list" style="display: contents;">
+<div class="tracks-container tag_playlist" data-pk="{{ tag.pk }}">
+    <ul class="ul_track_list" style="display: contents;">
       {% for object in tag_list %}
       <li class="list-group-item infinite-item id_{{ object.id }}">
           <div class="media">
@@ -57,7 +57,7 @@
   track.addEventListener("click", (e) => {
     var track_id = track.getAttribute('data-counter');
     var playlist_block = document.querySelector(".music-dropdown");
-    var tag_pk = track.parentElement.parentElement.parentElement.data('pk');
+    var tag_pk = tag_playlist.getAttribute('data-pk');
     if (!playlist_block.classList.contains('tag_' + tag_pk)){
       $.ajax({
         url: "/music/manage/temp_tag/" + tag_pk + "/",
