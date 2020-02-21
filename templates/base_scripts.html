@@ -24,6 +24,7 @@ ready(() => {
     var playlist = {{ request.user.my_playlist }};
     var options = { swfPath: "/static/jquery.jplayer.swf", supplied: "oga, mp3", wmode: "window", smoothPlayBar: false, keyEnabled: true};
     var myPlaylist = new jPlayerPlaylist(cssSelector, playlist, options);
+    document.querySelector(".noclose").style.display = "block";
 
     function my_playlist_play(track_id) {myPlaylist.play(track_id);};
     function my_playlist_stop(track_id) {myPlaylist.pause(track_id);};
