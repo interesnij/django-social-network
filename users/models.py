@@ -482,8 +482,11 @@ class User(AbstractUser):
                     data['is_my_track'] = 0
                 data['pk'] = track.pk
                 playlist.append(data)
-            cached_playlist = safe_json(playlist)
-            return cached_playlist
+                if playlist:
+                    cached_playlist = safe_json(playlist)
+                    return cached_playlist
+                else:
+                    return ''
 
     def get_avatar(self):
         try:
@@ -692,7 +695,7 @@ class UserNotificationsSettings(models.Model):
         return UserNotificationsSettings.objects.create(user=user)
 
 
-class UserColorSettings(models.Model): 
+class UserColorSettings(models.Model):
     COLOR = (
         ('white', 'white'),
         ('blue', 'blue'),
