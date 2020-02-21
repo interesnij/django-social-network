@@ -52,6 +52,12 @@
 </div>
 
 <script>
+
+  var ready = (callback) => {
+  if (document.readyState != "loading") callback();
+  else document.addEventListener("DOMContentLoaded", callback);
+  }
+  ready(() => {
   playlist = document.querySelector(".tag_playlist");
   playlist.querySelector(".track_item").addEventListener("click", (e) => {
     track_id = this.parentElement.parentElement.data('counter');
@@ -71,5 +77,6 @@
       my_playlist_play(track_id);
     };
   });
+});
 </script>
 {% endif %}
