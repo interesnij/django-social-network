@@ -285,6 +285,11 @@ class User(AbstractUser):
         followed_users_count = followed_users.count()
         return followed_users_count
 
+    def get_music_count(self):
+        music_query = self.user_playlist.values('id')
+        music_query_count = music_query.count()
+        return music_query_count
+
     def count_connections(self):
         return self.connections.values('user_id').count()
 
@@ -433,9 +438,6 @@ class User(AbstractUser):
         music_query.add(exclude_reported_and_approved_music_query, Q.AND)
         music_list = SoundcloudParsing.objects.filter(music_query)
         return music_list
-
-    def get_music_count(self):
-        self.get_music().count()
 
     def get_my_music(self):
         exclude_reported_and_approved_music_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
