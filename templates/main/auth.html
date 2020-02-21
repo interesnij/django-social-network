@@ -141,7 +141,7 @@
               },
             };
 
-            fetch('{% url "login" %}', options).then(data => {
+            fetch('{% url "rest_login" %}', options).then(data => {
               window.location = "{% url 'main' %}";
             }).catch(error => {document.querySelector(".login-response").innerHTML("ошибка");})
 
