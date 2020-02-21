@@ -55,7 +55,8 @@
   var tag_playlist = document.querySelector(".tag_playlist");
   var track = tag_playlist.querySelector(".track_item");
   track.addEventListener("click", (e) => {
-    var track_id = this.parentNode.parentNode.data('counter');
+    var track_ = this.parentNode.parentNode.data('counter');
+    var track_id = track_.parentNode.data('counter');
     var playlist_block = document.querySelector(".music-dropdown");
     var tag_pk = track.parentNode.parentNode.parentNode.data('pk');
     if (!playlist_block.classList.contains('tag_' + tag_pk)){
