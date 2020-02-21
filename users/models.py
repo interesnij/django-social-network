@@ -287,7 +287,7 @@ class User(AbstractUser):
 
     def get_music_count(self):
         playlist = self.user_playlist
-        music_query_count = playlist.track.all().count()
+        music_query_count = playlist.players.count()
         return music_query_count
 
     def count_connections(self):
