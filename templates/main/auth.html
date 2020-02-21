@@ -100,7 +100,6 @@
   if (document.readyState != "loading") callback();
   else document.addEventListener("DOMContentLoaded", callback);
   }
-  ready(() => {
 
     var error_response2 = function(data) {
         $('.reg-response').html("Что-то пошло не так... ");
@@ -108,7 +107,7 @@
     var susccess_response2 = function(data) {
 
     }
-
+ready(() => {
         $('#register_ajax').click(function() {
             var form2 = $('#signup');
             $.post(form2.attr('action'), form2.serialize())
@@ -120,13 +119,19 @@
                 });
             return false;
         });
-
+</script>
+<script>
+  var ready = (callback) => {
+  if (document.readyState != "loading") callback();
+  else document.addEventListener("DOMContentLoaded", callback);
+  }
     var error_response = function(data) {
         document.querySelector(".login-response").innerHTML("ошибка");
     }
     var susccess_response = function(data) {
         window.location = "{% url 'main' %}";
     }
+  ready(() => {
     document.querySelector("#logg").addEventListener("click", (e) => {
       var form3 = $('#login_form');
       $.post(form3.attr('action'), form3.serialize())
