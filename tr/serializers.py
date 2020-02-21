@@ -5,7 +5,7 @@ from allauth.account.utils import setup_user_email
 from rest_framework import serializers
 from rest_framework.response import Response
 from gallery.models import Album
-from users.models import UserProfile, UserPrivateSettings, UserNotificationsSettings
+from users.models import UserProfile, UserPrivateSettings, UserNotificationsSettings, UserColorSettings
 from music.models import SoundList
 
 
