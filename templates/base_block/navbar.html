@@ -77,7 +77,7 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-right profile-dropdown" aria-labelledby="dropdownMenuLink">
 
-                        <a class="dropdown-item pink-gradient-active ajax" href="{% url 'user' pk=request.user.pk %}" data-html="#ajax">
+                        <a class="dropdown-item ajax" href="{% url 'user' pk=request.user.pk %}" data-html="#ajax">
                             <div class="row align-items-center">
                                 <div class="col">Моя страница</div>
                                 <div class="col-auto">
@@ -86,7 +86,7 @@
                             </div>
                         </a>
                         <div class="dropdown-divider m-0"></div>
-                        <a class="dropdown-item pink-gradient-active ajax" href="{% url 'logout' %}" data-html="#ajax">
+                        <a class="dropdown-item ajax" href="{% url 'logout' %}" data-html="#ajax">
                             <div class="row align-items-center">
                                 <div class="col">Выход</div>
                                 <div class="col-auto">

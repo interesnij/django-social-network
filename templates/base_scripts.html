@@ -30,9 +30,7 @@ ready(() => {
     function my_playlist_stop(track_id) {myPlaylist.pause(track_id);};
     function load_playlist(playlist_block, callback) {playlist_block.html('').load("/users/load/playlist/" + '{{ request.user.uuid }}' + "/");};
 
-    var nocloseElement = document.createElement("div");
-    document.querySelector(".noclose").appendChild(nocloseElement);
-    nocloseElement.addEventListener("click", (e) => {
+    document.querySelector(".music-dropdown").addEventListener("click", (e) => {
       e.stopPropagation()
     });
   {% endif %}
