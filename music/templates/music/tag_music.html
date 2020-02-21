@@ -99,7 +99,7 @@
             load_playlist(playlist_block);
             playlist_block.className = "";
             playlist_block.classList.add("dropdown-menu", "music-dropdown", "tag_" + tag_pk);
-            setTimeout(function(){ my_playlist_play(track_id)},2000);
+            setTimeout(function(){ document.querySelector(".jp-playlist").play(track_id)},2000);
           }
         });
       }else{
