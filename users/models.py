@@ -715,6 +715,10 @@ class UserColorSettings(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='color_settings', verbose_name="Пользователь")
     color = models.CharField(max_length=20, choices=COLOR, default='white', verbose_name="Цвет")
 
+    @classmethod
+    def create_private_settings(cls, user):
+        return UserColorSettings.objects.create(user=user)
+
 
 class UserPrivateSettings(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name="user_private", on_delete=models.CASCADE, verbose_name="Пользователь")
