@@ -68,7 +68,7 @@
               }
           });
       };
-      
+
   var ready = (callback) => {
   if (document.readyState != "loading") callback();
   else document.addEventListener("DOMContentLoaded", callback);
@@ -93,7 +93,7 @@ link.send( null );
 {% endif %}
 });
 
-on('#ajax', 'click', '.track', function(e) {
+on('#ajax', 'click', '.track_item', function(e) {
   var tag_playlist = document.querySelector(".tag_playlist");
   var track = tag_playlist.querySelector(".track_item");
   var track_id = track.getAttribute('data-counter');
