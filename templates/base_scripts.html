@@ -17,6 +17,18 @@
   if (document.readyState != "loading") callback();
   else document.addEventListener("DOMContentLoaded", callback);
   }
+  function load_playlist(playlist_block, callback) {
+    var link_playlist = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    link_playlist.open( 'GET', '/users/load/playlist/' + '{{ request.user.uuid }}', true );
+    link_playlist.onreadystatechange = function () {
+      if ( link_playlist.readyState == 4 ) {
+          if ( link_playlist.status == 200 ) {
+              playlist_block.innerHTML = link_playlist.responseText;
+          }
+      }
+  };
+  link_playlist.send( null );
+  };
 ready(() => {
     document.querySelector(".music-dropdown").addEventListener("click", (e) => {
       e.stopPropagation()
