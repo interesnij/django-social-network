@@ -12,8 +12,8 @@
     <ul data-pk="{{ tag.pk }}" class="ul_track_list" style="display: contents;">
       {% for object in tag_list %}
       <li class="list-group-item infinite-item id_{{ object.id }}">
-          <div class="media" data-counter="{{ forloop.counter0 }}">
-              <figure class="track_item" style="cursor:pointer">
+          <div class="media">
+              <figure class="track_item" style="cursor:pointer" data-counter="{{ forloop.counter0 }}">
                 <a>
                   {% if object.artwork_url %}
                     <img style="width:50px;heigth:auto" src="{{ object.artwork_url }}" />
@@ -55,7 +55,7 @@
   var tag_playlist = document.querySelector(".tag_playlist");
   var track = tag_playlist.querySelector(".track_item");
   track.addEventListener("click", (e) => {
-    var track_id = this.parentElement.getAttribute('data-counter');
+    var track_id = this.getAttribute('data-counter');
     var playlist_block = document.querySelector(".music-dropdown");
     var tag_pk = track.parentElement.parentElement.parentElement.data('pk');
     if (!playlist_block.classList.contains('tag_' + tag_pk)){
