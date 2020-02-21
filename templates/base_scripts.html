@@ -20,10 +20,9 @@
   }
 ready(() => {
 var cssSelector = {jPlayer: "#jquery_jplayer_1",cssSelectorAncestor: ".main-header"};
-var playlist; if({{ request.user.my_playlist }}){playlist = {{ request.user.my_playlist }}};
 
 var options = { swfPath: "/static/jquery.jplayer.swf", supplied: "oga, mp3", wmode: "window", smoothPlayBar: false, keyEnabled: true};
-var myPlaylist = new jPlayerPlaylist(cssSelector, playlist, options);
+var myPlaylist = new jPlayerPlaylist(cssSelector, {{ request.user.my_playlist }}, options);
 
 function my_playlist_play(track_id) {myPlaylist.play(track_id);};
 function my_playlist_stop(track_id) {myPlaylist.pause(track_id);};
