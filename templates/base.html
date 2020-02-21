@@ -33,12 +33,12 @@
             <div class="col-md-7" id="ajax" style="padding-right:0px;padding-left:0px;">
           	   {% block content %}
           	   {% endblock %}
+
+               {% include "base_block/fullscreens.html" %}
 					   </div>
 					<div class="col-md-2 gadget-only"></div>
 				</span>
     </div>
-
-    {% include "base_block/fullscreens.html" %}
     {% include "base_block/modal_user_repost.html" %}
     {% include "base_block/modal_community_repost.html" %}
 
