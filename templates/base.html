@@ -11,9 +11,6 @@
     <link rel="stylesheet" href="{% static 'styles/default.css' %}" />
     <link rel="stylesheet" href="{% static 'styles/load.css' %}" media="none" onload="if(media!='all')media='all'" />
     <link rel="stylesheet" href="{% static 'styles/player_skin/vkontakte.css' %}" media="none" onload="if(media!='all')media='all'" />
-    {% if request.user.is_anonymous %}
-      <link rel="stylesheet" media="none" onload="if(media!='all')media='all'" href="{% static 'styles/color/white.css' %}"  />
-    {% endif %}
 </head>
   <body class="fixed-header sidebar-left-close">
     <div class="wrapper">
