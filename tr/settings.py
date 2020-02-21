@@ -12,7 +12,7 @@ ALLOWED_HOSTS = ['*']
 
 SITE_ID = 1
 
-DJANGO_APPS = [
+INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -22,8 +22,6 @@ DJANGO_APPS = [
     'django.contrib.humanize',
     'django.contrib.sites',
     'rest_framework',
-]
-LIBRARY_APPS = [
     'imagekit',
     'rest_framework.authtoken',
     'channels',
@@ -35,8 +33,6 @@ LIBRARY_APPS = [
     'allauth.socialaccount.providers.vk',
     'rest_auth',
     'django_extensions',
-]
-NETWORK_APPS = [
     'goods',
     'users',
     'communities',
@@ -56,8 +52,6 @@ NETWORK_APPS = [
     'music',
     'video',
 ]
-
-INSTALLED_APPS = DJANGO_APPS + LIBRARY_APPS + NETWORK_APPS
 
 
 CKEDITOR_CONFIGS = {
