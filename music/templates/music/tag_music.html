@@ -70,28 +70,6 @@ link.send( null );
   playlist_block.classList.add('user_{{ user.pk }}');
 {% endif %}
 
-var tag_tracks_load = document.querySelector("#tag_tracks_load");
-var track = tag_tracks_load.querySelector(".track_item");
-track.addEventListener("click", (e) => {
-  var track_id = this.parentElement.parentElement.data('counter');
-  var playlist_block = document.querySelector(".music-dropdown");
-  var tag_pk = track.parentElement.parentElement.parentElement.data('pk');
-  if (!playlist_block.classList.contains('tag_' + tag_pk)){
-    $.ajax({
-      url: "/music/manage/temp_tag/" + tag_pk + "/",
-      success: function(data) {
-        load_playlist(playlist_block);
-        playlist_block.className = "";
-        playlist_block.classList.add('dropdown-menu music-dropdown tag_' + tag_pk);
-        setTimeout(function(){ my_playlist_play(track_id)},2000);
-      }
-    });
-  }else{
-    my_playlist_play(track_id);
-  };
-})
-
-
 });
 </script>
 {% endblock %}
