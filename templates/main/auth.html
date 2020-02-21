@@ -117,26 +117,30 @@
     });
 </script>
 <script type="text/javascript">
+  var ready = (callback) => {
+  if (document.readyState != "loading") callback();
+  else document.addEventListener("DOMContentLoaded", callback);
+  }
+  ready(() => {
     var error_response = function(data) {
-        $('.login-response').html("ошибка");
+        document.querySelector(".login-response").innerHTML("ошибка");
     }
     var susccess_response = function(data) {
         window.location = "{% url 'main' %}";
     }
-    $().ready(function() {
-        $('#logg').click(function() {
-            var form3 = $('#login_form');
-            $.post(form3.attr('action'), form3.serialize())
-                .fail(function(data) {
-                    error_response(data);
-                    console.log(data);
-                })
-                .done(function(data) {
-                    susccess_response(data);
-                });
-            return false;
+    document.querySelector("#logg").addEventListener("click", (e) => {
+            var form3 = document.getElementById('login_form');
+            var formEntries = new FormData(form3);
+            var options = {
+              method: 'POST',
+              body: formEntries,
+            };
+            fetch('{% url "logout" %}', options).then(data => {
+              window.location = "{% url 'main' %}";
+            }).catch(error => {document.querySelector(".login-response").innerHTML("ошибка");})
+
         });
-    });
+  });
 </script>
 
 {% endblock %}
