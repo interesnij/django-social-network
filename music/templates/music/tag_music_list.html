@@ -54,7 +54,7 @@
 <script>
   var tag_playlist = document.querySelector(".tag_playlist");
   var track = tag_playlist.querySelector(".track_item");
-  track.addEventListener("click", (e) => {
+  on('#ajax', 'click', '.track', function(e) {
     var track_id = track.getAttribute('data-counter');
     var playlist_block = document.querySelector(".music-dropdown");
     var tag_pk = tag_playlist.getAttribute('data-pk');
