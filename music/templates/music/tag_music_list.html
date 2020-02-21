@@ -53,30 +53,5 @@
 
 <script>
 
-  var ready = (callback) => {
-  if (document.readyState != "loading") callback();
-  else document.addEventListener("DOMContentLoaded", callback);
-  }
-  ready(() => {
-  playlist = document.querySelector(".tag_playlist");
-  playlist.querySelector(".track_item").addEventListener("click", (e) => {
-    track_id = this.parentElement.parentElement.data('counter');
-    playlist_block = document.querySelector(".music-dropdown");
-    tag_pk = track.parentElement.parentElement.parentElement.data('pk');
-    if (!playlist_block.classList.contains('tag_' + tag_pk)){
-      $.ajax({
-        url: "/music/manage/temp_tag/" + tag_pk + "/",
-        success: function(data) {
-          load_playlist(playlist_block);
-          playlist_block.className = "";
-          playlist_block.classList.add('dropdown-menu music-dropdown tag_' + tag_pk);
-          setTimeout(function(){ my_playlist_play(track_id)},2000);
-        }
-      });
-    }else{
-      my_playlist_play(track_id);
-    };
-  });
-});
 </script>
 {% endif %}
