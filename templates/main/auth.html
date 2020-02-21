@@ -119,7 +119,7 @@ ready(() => {
                 });
             return false;
         });
-    });  
+    });
 </script>
 <script>
   var ready = (callback) => {
@@ -132,21 +132,26 @@ ready(() => {
     var susccess_response = function(data) {
         window.location = "{% url 'main' %}";
     }
-  ready(() => {
-    document.querySelector("#logg").addEventListener("click", (e) => {
-      var form3 = $('#login_form');
-      $.post(form3.attr('action'), form3.serialize())
-          .fail(function(data) {
-              error_response(data);
-              console.log(data);
-          })
-          .done(function(data) {
-              susccess_response(data);
+    var error_response = function(data) {
+          $('.login-response').html("ошибка");
+      }
+      var susccess_response = function(data) {
+          window.location = "{% url 'main' %}";
+      }
+      $().ready(function() {
+          $('#logg').click(function() {
+              var form3 = $('#login_form');
+              $.post(form3.attr('action'), form3.serialize())
+                  .fail(function(data) {
+                      error_response(data);
+                      console.log(data);
+                  })
+                  .done(function(data) {
+                      susccess_response(data);
+                  });
+              return false;
           });
-          return false;
-
-        });
-  });
+      });
 </script>
 
 {% endblock %}
