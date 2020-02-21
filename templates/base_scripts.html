@@ -33,6 +33,16 @@ ready(() => {
     document.querySelector(".music-dropdown").addEventListener("click", (e) => {
       e.stopPropagation()
     });
+  {% if request.user.my_playlist %}
+    var cssSelector = {jPlayer: "#jquery_jplayer_1",cssSelectorAncestor: ".main-header"};
+    var playlist = {{ request.user.my_playlist }};
+    var options = { swfPath: "/static/jquery.jplayer.swf", supplied: "oga, mp3", wmode: "window", smoothPlayBar: false, keyEnabled: true};
+    var myPlaylist = new jPlayerPlaylist(cssSelector, playlist, options);
+    function my_playlist_play(track_id) {myPlaylist.play(track_id);};
+    document.querySelector(".music_header_btn").style.display = "block";
+    function my_playlist_stop(track_id) {myPlaylist.pause(track_id);};
+  {% endif %}
+
 document.querySelector("#left-menu").addEventListener("click", (e) => {document.body.classList.toggle('sidebar-left-close');});
 document.querySelector(".backdrop").addEventListener("click", (e) => {document.body.classList.toggle('sidebar-left-close');});
 
