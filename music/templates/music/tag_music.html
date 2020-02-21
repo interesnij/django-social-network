@@ -91,7 +91,6 @@ link.send( null );
   playlist_block = document.querySelector(".music-dropdown");
   playlist_block.classList.add('user_{{ user.pk }}');
 {% endif %}
-});
 
 on('#ajax', 'click', '.track_item', function(e) {
   var tag_playlist = document.querySelector(".tag_playlist");
@@ -113,5 +112,7 @@ on('#ajax', 'click', '.track_item', function(e) {
     my_playlist_play(track_id);
   };
 })
+});
+
 </script>
 {% endblock %}
