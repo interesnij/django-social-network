@@ -138,6 +138,7 @@ ready(() => {
       var susccess_response = function(data) {
           window.location = "{% url 'main' %}";
       }
+    ready(() => {
           $('#logg').click(function() {
               var form3 = $('#login_form');
               $.post(form3.attr('action'), form3.serialize())
@@ -150,6 +151,7 @@ ready(() => {
                   });
               return false;
       });
+    });
 </script>
 
 {% endblock %}
