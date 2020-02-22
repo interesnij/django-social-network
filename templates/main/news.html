@@ -52,7 +52,7 @@
   var loaded = false;
 
  on('#ajax', function(e) {
-
+   onscroll = function(){
     height = document.documentElement.clientHeight-1;
     if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
       if (loaded){return};
@@ -75,6 +75,7 @@
       }
     }
   });
+}
 });
 </script>
 
