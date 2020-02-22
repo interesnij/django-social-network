@@ -8,21 +8,33 @@
       {% if object.community %}
 
         {% if object.article %}
+        {% if object.is_repost %} Сообщество {{ object.community.name }} поделилось статьей {% endif %}
           {% include 'item_community/article.html' with article=article  %}
         {% endif %}
-
         {% if object.post %}
+        {% if object.is_repost %} Сообщество {{ object.community.name }} поделилось записью {% endif %}
           {% include 'item_community/post.html' with post=post  %}
         {% endif %}
 
       {% else %}
+
         {% if object.article %}
-          {% include 'item_user/article.html' with article=article  %}
+          {% if object.is_repost %} {{ object.creator }} поделился статьей {% endif %}
+          {% if object.creator == request.user %}
+            {% include 'item_user/my_article.html' with article=article %}
+          {% else %}
+            {% include 'item_user/article.html' with article=article %}
+          {% endif %}
+        {% endif %}
+        {% if object.post %}
+          {% if object.is_repost %} {{ object.creator }} поделился записью {% endif %}
+          {% if object.creator == request.user %}
+            {% include 'item_user/my_post.html' with post=post %}
+          {% else %}
+            {% include 'item_user/post.html' with post=post %}
+          {% endif %}
         {% endif %}
 
-        {% if object.post %}
-          {% include 'item_user/post.html' with post=post  %}
-        {% endif %}
       {% endif %}
 
     {% endfor %}

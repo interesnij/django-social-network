@@ -52,7 +52,7 @@ class User(AbstractUser):
         return self.favorite_communities.all()
 
     def get_staffed_communities(self):
-        query = Q(Q(memberships__user=self, memberships__is_administrator=True) | Q(memberships__user=self, memberships__is_moderator=True) | Q(memberships__user=self, memberships__is_advertiser=True) | Q(memberships__user=self, memberships__is_editor=True))
+        query = Q(Q(memberships__user=self, memberships__is_administrator=True) | Q(memberships__user=self, memberships__is_moderator=True) | Q(memberships__user=self, memberships__is_editor=True))
         return Community.objects.filter(query)
 
         '''''проги для подписчиков  60-109'''''
@@ -190,7 +190,7 @@ class User(AbstractUser):
         return Community.is_user_with_username_invited_to_community_with_name(username=self.username, community_name=community_name)
 
     def is_staff_of_community_with_name(self, community_name):
-        return self.is_administrator_of_community_with_name(community_name=community_name) or self.is_moderator_of_community_with_name(community_name=community_name)
+        return self.is_administrator_of_community_with_name(community_name=community_name) or self.is_moderator_of_community_with_name(community_name=community_name) or self.is_editor_of_community_with_name(community_name=community_name)
 
     def is_member_of_community_with_name(self, community_name):
         return self.communities_memberships.filter(community__name=community_name).exists()
