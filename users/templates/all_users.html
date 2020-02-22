@@ -62,12 +62,12 @@
       link_3.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
         var elem = document.createElement('span');
-        var stream_load = document.getElementById("all-users-container");
+        var friends_load = document.getElementById("all-users-container");
         elem.innerHTML = link_3.responseText;
         if(elem.getElementsByClassName('infinite-item').length < 16){
           loaded = true
         };
-        stream_load.append(elem);
+        friends_load.append(elem);
         }
       }
     }
