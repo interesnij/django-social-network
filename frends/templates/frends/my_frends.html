@@ -64,6 +64,11 @@
 
     <div class="col-12 col-md-4">
         <br><br><br>
+        <div class="card">
+            <div class="card-body px-0 py-0">
+               <h5 class="mt-1"><a href="{% url 'all_users' %}" class="ajax" data-html="#ajax">Найти друзей</a></h5>
+            </div>
+        </div>
         {% if featured_users != "not frends" and featured_users %}
         <div class="card">
             <div class="card-header">
@@ -71,7 +76,7 @@
                     <div class="media-body">
                         <h5 class="mt-1">Возможные друзья</h5>
                     </div>
-                    <a class="ajax" href="{% url 'all_common_users' pk=user.pk %}" data-html="#ajax">
+                    <a href="{% url 'all_common_users' pk=user.pk %}" class="ajax" data-html="#ajax">
                         все
                     </a>
                 </div>
