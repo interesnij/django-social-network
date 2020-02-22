@@ -41,17 +41,7 @@
           </div>
       </li>
       {% endfor %}
-      <div class="tracks_load col-12 col-md-12">
-          {% if genre_list.has_next %}
-          <a style="display:flex;justify-content:center;" class="infinite-more-link" href="/music/list/genre_list/{{ genre.pk }}/?page={{ genre_list.next_page_number }}">
-              <img style="width: 30px;" src="{% static 'images/loading.gif' %}">
-          </a>
-          {% endif %}
-      </div>
     </ul>
 </div>
 
-<script>
-var tracks_infinite = new Waypoint.Infinite({element: $('.tracks-container')[0], onBeforePageLoad: function() { $('.tracks_load').show(); }, onAfterPageLoad: function($items) { $('.tracks_load').hide(); }});
-</script>
 {% endif %}
