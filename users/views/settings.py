@@ -11,8 +11,7 @@ class UserGeneralChange(TemplateView):
 	profile=None
 
 	def get(self,request,*args,**kwargs):
-		self.user=request.user
-		self.form=GeneralUserForm(instance=self.user)
+		self.form=GeneralUserForm(instance=request.user)
 		return super(UserGeneralChange,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -22,8 +21,10 @@ class UserGeneralChange(TemplateView):
 		return context
 
 	def post(self,request,*args,**kwargs):
-		self.user=request.user
-		self.profile=UserProfile.objects.get(user=request.user)
+		try:
+			self.profile=UserProfile.objects.get(user=request.user)
+		except:
+			self.profile=UserProfile.objects.create(user=request.user)
 		self.form=GeneralUserForm(request.POST,instance=self.profile)
 		if self.form.is_valid():
 			user = self.request.user
@@ -41,8 +42,7 @@ class UserAboutChange(TemplateView):
 	profile=None
 
 	def get(self,request,*args,**kwargs):
-		self.user=request.user
-		self.form=AboutUserForm(instance=self.user)
+		self.form=AboutUserForm(instance=request.user)
 		return super(UserAboutChange,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -52,7 +52,10 @@ class UserAboutChange(TemplateView):
 		return context
 
 	def post(self,request,*args,**kwargs):
-		self.profile=UserProfile.objects.get(user=request.user)
+		try:
+			self.profile=UserProfile.objects.get(user=request.user)
+		except:
+			self.profile=UserProfile.objects.create(user=request.user)
 		self.form=AboutUserForm(request.POST,instance=self.profile)
 		if self.form.is_valid():
 			self.form.save()
@@ -67,7 +70,6 @@ class SettingsNotifyView(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.form=SettingsNotifyForm()
-		self.notify_settings=UserNotificationsSettings.objects.get(user=request.user)
 		return super(SettingsNotifyView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -77,7 +79,10 @@ class SettingsNotifyView(TemplateView):
 		return context
 
 	def post(self,request,*args,**kwargs):
-		self.notify_settings=UserNotificationsSettings.objects.get(user=request.user)
+		try:
+			self.notify_settings=UserNotificationsSettings.objects.get(user=request.user)
+		except:
+			self.notify_settings=UserNotificationsSettings.objects.create(user=request.user)
 		self.form=SettingsNotifyForm(request.POST,instance=self.notify_settings)
 		if self.form.is_valid():
 			self.result = self.form.save()
@@ -92,7 +97,6 @@ class SettingsPrivateView(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.form=SettingsPrivateForm(instance=request.user)
-		self.private_settings=UserPrivateSettings.objects.get(user=request.user)
 		return super(SettingsPrivateView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -102,7 +106,10 @@ class SettingsPrivateView(TemplateView):
 		return context
 
 	def post(self,request,*args,**kwargs):
-		self.private_settings=UserPrivateSettings.objects.get(user=request.user)
+		try:
+			self.private_settings=UserPrivateSettings.objects.get(user=request.user)
+		except:
+			self.private_settings=UserPrivateSettings.objects.create(user=request.user)
 		self.form=SettingsPrivateForm(request.POST, instance=self.private_settings)
 		if self.form.is_valid():
 			self.form.save()
