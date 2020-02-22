@@ -46,13 +46,15 @@
           }
       }
   };
-  var newsElement = document.createElement("div");
-  news_load.appendChild(newsElement);
+
   link.send( null );
 
+  var page = 2;
+  var loaded = false;
+  var newsElement = document.createElement("div");
+  news_load.appendChild(newsElement);
+
   newsElement.addEventListener("DOMContentLoaded", onscroll = function(){
-   var page = 2;
-   var loaded = false;
     height = document.documentElement.clientHeight-1;
     if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
       if (loaded && document.title != "Новости"){return};
