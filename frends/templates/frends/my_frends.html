@@ -78,10 +78,10 @@
             </div>
             <div class="card-body px-0 py-0">
                 <ul class="list-group border-top border-bottom list-group-flush">
-                  {% for object in featured_users %}
+                  {% for object in user.get_possible_friends %}
                   <li class="list-group-item">
                       <div class="media">
-                        <a href="" class="ajax" data-html="#ajax">
+                        <a href="{% url 'user' pk=object.pk %}" class="ajax" data-html="#ajax">
                           <figure>
                             {% if object.get_avatar %}
                               <img src="{{ object.get_avatar.file|thumbnail_url:'avatar' }}" style="border-radius:50px;width:50px;" alt="image">
@@ -91,10 +91,10 @@
                           </figure>
                         </a>
                         <div class="media-body">
-                            <a href="" class="ajax" data-html="#ajax">
+                            <a href="{% url 'user' pk=object.pk %}" class="ajax" data-html="#ajax">
                                 <h6 class="my-0 mt-1">{{ object.get_full_name }}</h6>
                             </a>
-                            <a href="" class="small">Написать сообщение</a>
+                            <a href="{% url 'user' pk=object.pk %}" class="small">Написать сообщение</a>
                         </div>
                       </div>
                   </li>
