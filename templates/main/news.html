@@ -52,7 +52,7 @@
   var page = 2;
   var loaded = false;
 
-  ready(() => {
+
     height = document.documentElement.clientHeight-1;
     if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
       if (loaded && document.title != "Новости"){return};
@@ -74,7 +74,7 @@
         }
       }
     }
-  }
+
 });
 </script>
 
