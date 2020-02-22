@@ -52,7 +52,7 @@
   var loaded = false;
 
   onscroll = function(){
-    height = document.documentElement.clientHeight-1;
+    height = news_load.clientHeight-1;
     if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
       if (loaded){return};
       var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
