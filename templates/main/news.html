@@ -49,11 +49,11 @@
 
   link.send( null );
 
-  var page = 2;
-  var loaded = false;
 
 });
-    height = document.documentElement.clientHeight-1;
+  var page = 2;
+  var loaded = false;
+  var height = document.documentElement.clientHeight-1;
     if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
       if (loaded){return};
       var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
