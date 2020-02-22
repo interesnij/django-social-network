@@ -12,11 +12,45 @@
 
 <div class="container mt-4 main-container">
     <div class="row">
-        <div class="col-12 col-md-12 col-lg-8">
+        <div class="col-12 col-md-8 col-lg-8">
           <div class="stream-update">
             <a href=""><span class="new-posts"></span> Загрузить новые записи</a>
           </div>
           <div id="news_load"></div>
+        </div>
+        <div class="col-12 col-md-4 col-lg-4">
+          <div class="nav flex-column nav-pills faqnav">
+            <a class="ajax" href="/main/" data-html="#ajax">
+              <div class="icon-20">
+                <svg class="svg_info svg_default"style="margin-bottom:5px"fill="currentColor"xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"><path d="M0 0h24v24H0z"fill="none"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/><svg>
+              </div>
+              &nbsp;Новости
+            </a>
+            <a class="ajax" href="/main/recomended/" data-html="#ajax">
+              <div class="icon-20">
+                <svg class="svg_info svg_default"style="margin-bottom:5px"fill="currentColor"xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"><path d="M0 0h24v24H0z"fill="none"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/><svg>
+              </div>
+              &nbsp;Рекомендации
+            </a>
+            <a class="ajax" href="/main/like/" data-html="#ajax">
+              <div class="icon-20">
+                <svg class="svg_info" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/></svg>
+              </div>
+              &nbsp;Вы одобрили
+            </a>
+            <a class="ajax" href="/main/dislike/" data-html="#ajax">
+              <div class="icon-20">
+                <svg class="svg_info" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M15 3H6c-.83 0-1.54.5-1.84 1.22l-3.02 7.05c-.09.23-.14.47-.14.73v2c0 1.1.9 2 2 2h6.31l-.95 4.57-.03.32c0 .41.17.79.44 1.06L9.83 23l6.59-6.59c.36-.36.58-.86.58-1.41V5c0-1.1-.9-2-2-2zm4 0v12h4V3h-4z"/></svg>
+              </div>
+              &nbsp;Вы не одобрили
+            </a>
+            <a class="ajax" href="/main/comments/" data-html="#ajax">
+              <div class="icon-20">
+                <svg class="svg_info svg_default" style="margin-bottom:5px" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+              </div>
+              &nbsp;Ваши комментарии
+            </a>
+          </div>
         </div>
     </div>
 </div>
