@@ -95,7 +95,10 @@ class UserAddAvatarPhoto(View):
     def get(self,request,*args,**kwargs):
         user = User.objects.get(pk=self.kwargs["pk"])
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-        album = Album.objects.get(creator=user, community=None, title="Фото со страницы",  is_generic=True,)
+        try:
+            album = Album.objects.get(creator=user, community=None, title="Фото со страницы",  is_generic=True,)
+        except:
+            album = Album.objects.create(creator=user, community=None, title="Фото со страницы",  is_generic=True,)
         if user == request.user:
             photo.album_2 = album
             photo.save(update_fields=['album_2'])
@@ -108,5 +111,10 @@ class UserRemoveAvatarPhoto(View):
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         if user == request.user:
             photo.album_2 = None
-            photo.save(update_fields=['album_2'])
+            try:
+                album = Album.objects.get(creator=user, community=None, title="Сохраненные фото",  is_generic=True,)
+            except:
+                album = Album.objects.create(creator=user, community=None, title="Сохраненные фото",  is_generic=True,)
+            photo.album = album
+            photo.save()
         return HttpResponse("!")

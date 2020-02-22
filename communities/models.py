@@ -82,13 +82,6 @@ class Community(models.Model):
         community = cls.objects.create(name=name, creator=creator, description=description, type=type, rules=rules, invites_enabled=invites_enabled, category=category)
         CommunityMembership.create_membership(user=creator, is_administrator=True, is_advertiser=False, is_editor=False, is_moderator=False, community=community)
         community.save()
-        Album.objects.create(creator=creator, community=community, title="Сохраненные фото", is_generic=True,)
-        Album.objects.create(creator=creator, community=community, title="Фото со стены", is_generic=True,)
-        Album.objects.create(creator=creator, community=community, title="Фото со страницы", is_generic=True,)
-        SoundList.objects.create(creator=creator, community=community, name="my_first_generic_playlist_number_12345678900000000",)
-
-        CommunityNotificationsSettings.objects.create(community=community)
-        CommunityPrivateSettings.objects.create(community=community)
         return community
 
     @classmethod

@@ -21,7 +21,10 @@ class UserUnbanCreate(View):
 
 class UserColorChange(View):
     def get(self,request,*args,**kwargs):
-        model = UserColorSettings.objects.get(user=request.user)
+        try:
+            model = UserColorSettings.objects.get(user=request.user)
+        except:
+            model = UserColorSettings.objects.create(user=request.user)
         color = self.kwargs["color"]
         if model.color == color:
             return HttpResponse('Этот цвет уже выбран')

@@ -58,11 +58,17 @@ class ItemCommunityCommentCreate(View):
 			check_can_get_posts_for_community_with_name(request.user,community.name)
 			new_comment = comment.create_comment(commenter=request.user, parent_comment=None, item=item, text=comment.text)
 			if photo:
-				album=Album.objects.get(creator=request.user, title="Сохраненные фото", is_generic=True, community=community)
+				try:
+					album=Album.objects.get(creator=request.user, title="Сохраненные фото", is_generic=True, community=community)
+				except:
+					album=Album.objects.create(creator=request.user, title="Сохраненные фото", is_generic=True, community=community)
 				upload_photo = Photo.objects.create(creator=request.user, file=photo, community=community, is_public=True, album=album)
 				upload_photo.item_comment.add(new_comment)
 			if photo2:
-				album=Album.objects.get(creator=request.user, title="Сохраненные фото", is_generic=True, community=community)
+				try:
+					album=Album.objects.get(creator=request.user, title="Сохраненные фото", is_generic=True, community=community)
+				except:
+					album=Album.objects.create(creator=request.user, title="Сохраненные фото", is_generic=True, community=community)
 				upload_photo2 = Photo.objects.create(creator=request.user, file=photo2, community=community, is_public=True, album=album)
 				upload_photo2.item_comment.add(new_comment)
 			new_comment.notification_community_comment(request.user)
@@ -87,11 +93,17 @@ class ItemCommunityReplyCreate(View):
 			check_can_get_posts_for_community_with_name(request.user,community.name)
 			new_comment = comment.create_comment(commenter=request.user, text=comment.text, parent_comment=parent)
 			if photo:
-				album=Album.objects.get(creator=request.user, title="Сохраненные фото", is_generic=True, community=community)
+				try:
+					album=Album.objects.get(creator=request.user, title="Сохраненные фото", is_generic=True, community=community)
+				except:
+					album=Album.objects.create(creator=request.user, title="Сохраненные фото", is_generic=True, community=community)
 				upload_photo = Photo.objects.create(creator=request.user, file=photo, community=community, album=album)
 				upload_photo.item_comment.add(new_comment)
 			if photo2:
-				album=Album.objects.get(creator=request.user, title="Сохраненные фото", is_generic=True, community=community)
+				try:
+					album=Album.objects.get(creator=request.user, title="Сохраненные фото", is_generic=True, community=community)
+				except:
+					album=Album.objects.create(creator=request.user, title="Сохраненные фото", is_generic=True, community=community)
 				upload_photo2 = Photo.objects.create(creator=request.user, file=photo2, community=community, album=album)
 				upload_photo2.item_comment.add(new_comment)
 			new_comment.notification_community_reply_comment(request.user)

@@ -11,7 +11,10 @@ class TempListOn(View):
     """
     def get(self, request, *args, **kwargs):
         list = SoundList.objects.get(pk=self.kwargs["pk"])
-        temp_list = UserTempSoundList.objects.get(user=request.user)
+        try:
+            temp_list = UserTempSoundList.objects.get(user=request.user)
+        except:
+            temp_list = UserTempSoundList.objects.create(user=request.user)
         temp_list.list = list
         temp_list.tag = None
         temp_list.genre = None
@@ -24,7 +27,10 @@ class TempTagOn(View):
     """
     def get(self, request, *args, **kwargs):
         tag = SoundTags.objects.get(pk=self.kwargs["pk"])
-        temp_tag = UserTempSoundList.objects.get(user=request.user)
+        try:
+            temp_tag = UserTempSoundList.objects.get(user=request.user)
+        except:
+            temp_tag = UserTempSoundList.objects.create(user=request.user)
         temp_tag.list = None
         temp_tag.genre = None
         temp_tag.tag = tag
@@ -37,11 +43,14 @@ class TempGenreOn(View):
     """
     def get(self, request, *args, **kwargs):
         genre = SoundGenres.objects.get(pk=self.kwargs["pk"])
-        temp_tag = UserTempSoundList.objects.get(user=request.user)
-        temp_tag.list = None
-        temp_tag.genre = genre
-        temp_tag.tag = None
-        temp_tag.save()
+        try:
+            temp_genre = UserTempSoundList.objects.get(user=request.user)
+        except:
+            temp_genre = UserTempSoundList.objects.create(user=request.user)
+        temp_genre.list = None
+        temp_genre.genre = genre
+        temp_genre.tag = None
+        temp_genre.save()
         return HttpResponse("!")
 
 class UserListOn(View):
@@ -50,7 +59,10 @@ class UserListOn(View):
     """
     def get(self, request, *args, **kwargs):
         user = User.objects.get(pk=self.kwargs["pk"])
-        my_list = UserTempSoundList.objects.get(user=user)
+        try:
+            my_list = UserTempSoundList.objects.get(user=request.user)
+        except:
+            my_list = UserTempSoundList.objects.create(user=request.user)
         my_list.list = None
         my_list.tag = None
         my_list.genre = None
