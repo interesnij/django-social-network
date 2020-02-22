@@ -43,16 +43,16 @@
           if ( link.status == 200 ) {
               var news_load = document.getElementById("news_load");
               news_load.innerHTML = link.responseText;
+              var newsElement = document.createElement("div");
+              news_load.appendChild(newsElement);
           }
       }
   };
   link.send( null );
 
-
- on('#ajax', 'document.DOMContentLoaded', '#news_load', function(e) {
+  newsElement.addEventListener("DOMContentLoaded", onscroll = function(){
    var page = 2;
    var loaded = false;
-   onscroll = function(){
     height = document.documentElement.clientHeight-1;
     if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
       if (loaded && document.title != "Новости"){return};
@@ -74,7 +74,7 @@
         }
       }
     }
-  };
+  });
 });
 </script>
 
