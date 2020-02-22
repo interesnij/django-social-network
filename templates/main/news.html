@@ -51,7 +51,7 @@
   var page = 2;
   var loaded = false;
 
- on('#ajax', 'resize', function(e) {
+ on('#ajax', function(e) {
 
     height = document.documentElement.clientHeight-1;
     if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
