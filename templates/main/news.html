@@ -68,7 +68,7 @@ onscroll = function(){
       var elem = document.createElement('span');
       var stream_load = document.getElementById("stream");
       elem.innerHTML = link_3.responseText;
-      if( currentCount*12 < {{ request.user.get_timeline_posts.count }}){
+      if( currentCount*12 > {{ request.user.get_timeline_posts.count }}){
         loaded = true
       };
       stream_load.append(elem);
