@@ -22,16 +22,7 @@ class MainPageView(TemplateView):
 class NewsListView(ListView):
 	template_name="news_list.html"
 	model=Item
-	paginate_by=17
-
-	def get(self,request,*args,**kwargs):
-		self.page = request.GET.get('page')
-		return super(NewsListView,self).get(request,*args,**kwargs)
-
-	def get_context_data(self,**kwargs):
-		context=super(NewsListView,self).get_context_data(**kwargs)
-		context["page"]=self.page
-		return context
+	paginate_by=16
 
 	def get_queryset(self):
 		self.user=self.request.user
