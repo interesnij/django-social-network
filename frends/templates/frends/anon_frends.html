@@ -18,11 +18,6 @@
                       Онлайн <span class="text-hide-xs"> друзья</span>
                   </a>
               </li>
-              <li class="nav-item">
-                  <a class="nav-link" id="tabhome323-tab" data-toggle="tab" href="#tabhome323" role="tab" aria-controls="tabhome323" aria-selected="false">
-                      Общие <span class="text-hide-xs"> друзья</span>
-                  </a>
-              </li>
           </ul>
       </div>
       <div class="card mb-2">
@@ -69,22 +64,6 @@
                                   <span id="online_frends"></span>
 
                                 </div>
-
-                                <div class="tab-pane fade" id="tabhome323" role="tabpanel" aria-labelledby="tabhome323-tab">
-                                  <div class="media-body">
-                                      <h5 class="mt-1">Общие друзья</h5>
-                                  </div>
-                                  <br>
-                                  <div class="input-group mb-3">
-                                      <input type="text" class="form-control" placeholder="Поиск по общим друзьям" aria-label="Recipient's username">
-                                      <div class="input-group-append">
-                                          <button class="btn btn-outline-link" type="button">Искать</button>
-                                      </div>
-                                  </div>
-
-                                  <span id="common_frends"></span>
-
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -94,47 +73,7 @@
     </div>
 
     <div class="col-12 col-md-4">
-        <br><br><br>
-        {% if featured_users %}
-        <div class="card">
-            <div class="card-header">
-                <div class="media">
-                    <div class="media-body">
-                        <h5 class="mt-1">Возможные друзья</h5>
-                    </div>
-                    <a class="ajax" href="{% url 'all_common_users' pk=user.pk %}" data-html="#ajax">
-                        все
-                    </a>
-                </div>
-            </div>
-            <div class="card-body px-0 py-0">
-                <ul class="list-group border-top border-bottom list-group-flush">
-                    {% for object in featured_users %}
-                    <li class="list-group-item">
-                        <div class="media">
-                          <a href="{% url 'user' pk=object.pk %}" class="ajax" data-html="#ajax">
-                            <figure>
-                              {% if object.get_avatar %}
-                                <img src="{{ object.get_avatar.file|thumbnail_url:'avatar' }}" style="border-radius:50px;width:50px;" alt="image">
-                              {% else %}
-                                <svg fill="currentColor" class="svg_default svg_default_50" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
-                              {% endif %}
-                            </figure>
-                          </a>
-                          <div class="media-body">
-                              <a href="{% url 'user' pk=object.pk %}" class="ajax" data-html="#ajax">
-                                  <h6 class="my-0 mt-1">{{ object.get_full_name }}</h6>
-                              </a>
-                              <a href="" class="small">Написать сообщение</a>
-                          </div>
-                        </div>
-                    </li>
-                    {% endfor %}
-                </ul>
-            </div>
-            <br><br>
-        </div>
-        {% endif %}
+
     </div>
 </div>
 
