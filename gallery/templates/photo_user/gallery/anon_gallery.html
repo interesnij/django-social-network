@@ -10,7 +10,7 @@
         <div class="col-12">
             <h5 class="mt-1">Альбомы
                 <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=user.pk %}" data-html="#ajax">
-                  {{ user.first_name|gent }} {{ user.last_name|gent }} {% if not user.is_album_exists %}- пока нет{% endif %}
+                  {{ user.first_name|gent }} {{ user.last_name|gent }} {% if not user.is_album_exists %}- альбомов нет{% endif %}
                 </a>
             </h5>
         </div>
