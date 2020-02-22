@@ -48,9 +48,10 @@
   };
   link.send( null );
 
-  var page = 2;
-  var loaded = false;
 
+ on('#ajax', 'document.DOMContentLoaded', '#news_load', function(e) {
+   var page = 2;
+   var loaded = false;
    onscroll = function(){
     height = document.documentElement.clientHeight-1;
     if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
