@@ -22,8 +22,8 @@ class MainPageView(TemplateView):
 class NewsListView(ListView):
 	template_name="news_list.html"
 	model=Item
-	paginate_by=16
-	
+	paginate_by=12
+
 	def get(self,request,*args,**kwargs):
 		self.page = request.GET.get('page')
 		return super(NewsListView,self).get(request,*args,**kwargs)

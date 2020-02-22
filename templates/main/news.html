@@ -50,10 +50,12 @@
 });
 var page = 2;
 var loaded = false;
+var currentCount = 1;
 
 onscroll = function(){
   height = document.documentElement.clientHeight-1;
   if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
+    currentCount++;
     if (loaded){return};
     var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     link_3.open( 'GET', '{% url "news_list" %}?page=' + page++, true );
@@ -66,7 +68,7 @@ onscroll = function(){
       var elem = document.createElement('span');
       var stream_load = document.getElementById("stream");
       elem.innerHTML = link_3.responseText;
-      if({{ page_obj.paginator.per_page }} < {{ page_obj.paginator.count }}){
+      if( currentCount*12 < {{ request.user.get_timeline_posts.count }}){
         loaded = true
       };
       stream_load.append(elem);
