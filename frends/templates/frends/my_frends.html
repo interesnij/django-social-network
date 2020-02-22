@@ -71,7 +71,7 @@
                     <div class="media-body">
                         <h5 class="mt-1">Возможные друзья</h5>
                     </div>
-                    <a class="ajax" href="{% url 'all_common_users' pk=user.pk %}" data-html="#ajax">
+                    <a class="ajax" href="{% url 'all_common_users' uuid=user.uuid %}" data-html="#ajax">
                         все
                     </a>
                 </div>
@@ -121,7 +121,7 @@
   };
   link.send( null );
   });
-  
+
   document.querySelector(".online").addEventListener("click", (e) => {
       if (document.querySelector("#tabhome223-tab").classList.contains("online")) {
       var tab = document.getElementById("tabhome223-tab"); tab.classList.remove('online');
