@@ -22,7 +22,7 @@ class MainPageView(TemplateView):
 class NewsListView(ListView):
 	template_name="news_list.html"
 	model=Item
-	paginate_by=12
+	paginate_by=17
 
 	def get(self,request,*args,**kwargs):
 		self.page = request.GET.get('page')
