@@ -43,11 +43,11 @@
           if ( link.status == 200 ) {
               var news_load = document.getElementById("news_load");
               news_load.innerHTML = link.responseText;
-              var newsElement = document.createElement("div");
-              news_load.appendChild(newsElement);
           }
       }
-  };
+  }
+  var newsElement = document.createElement("div");
+  news_load.appendChild(newsElement);
   link.send( null );
 
   newsElement.addEventListener("DOMContentLoaded", onscroll = function(){
