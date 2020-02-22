@@ -23,7 +23,10 @@ class NewsListView(ListView):
 	template_name="news_list.html"
 	model=Item
 	paginate_by=16
-	self.page = request.GET.get('page')
+	
+	def get(self,request,*args,**kwargs):
+		self.page = request.GET.get('page')
+		return super(NewsListView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		context=super(NewsListView,self).get_context_data(**kwargs)
