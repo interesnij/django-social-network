@@ -1,7 +1,5 @@
-{% load staticfiles %}
 
 {% if tags_list %}
-<br><br>
 
 <div class="row tags-container" style="margin-top: 25px;">
 {% for object in tags_list %}
@@ -10,7 +8,7 @@
       <div class="card-body">
           <div class="media">
               <div class="media-body">
-                  <p class=" mb-0">{% for genre in object.get_genres %}{{ genre.name }}{% if not forloop.last%}, {% endif %}&nbsp;{% endfor %}</p>
+                  <p class="mb-0">{% for genre in object.get_genres %}{{ genre.name }}{% if not forloop.last%}, {% endif %}&nbsp;{% endfor %}</p>
                   <h4 class="mb-0">
                     <a class="ajax" href="{% url 'tag_all_music' pk=object.pk %}" data-html="#ajax">
                        {{ object.name }}
