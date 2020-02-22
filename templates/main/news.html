@@ -54,8 +54,7 @@
   var page = 2;
   var loaded = false;
   var height = document.documentElement.clientHeight-1;
-    if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
-      if (loaded){return};
+    if(!loaded && window.scrollY+1 >= document.documentElement.scrollHeight-height){
       var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
       link_3.open( 'GET', '{% url "news_list" %}?page=' + page++, true );
       link_3.onload = function(e) {
