@@ -24,6 +24,9 @@ ready(() => {
     document.querySelector(".music-dropdown").addEventListener("click", (e) => {
       e.stopPropagation()
     });
+    document.querySelector(".ajax").addEventListener("click", (e) => {
+      document.getElementById("page_scripts").innerHTML = "";
+    });
   {% if request.user.my_playlist %}
 
   function load_playlist(playlist_block, callback) {
