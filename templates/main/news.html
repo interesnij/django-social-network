@@ -51,11 +51,10 @@
   var page = 2;
   var loaded = false;
 
- on('#ajax', function(e) {
    onscroll = function(){
     height = document.documentElement.clientHeight-1;
     if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
-      if (loaded){return};
+      if (loaded && !news_load){return};
       var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
       link_3.open( 'GET', '{% url "news_list" %}?page=' + page++, true );
       link_3.onload = function(e) {
@@ -75,7 +74,6 @@
       }
     }
   };
-})
 });
 </script>
 
