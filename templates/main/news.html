@@ -66,7 +66,6 @@ onscroll = function(){
       var elem = document.createElement('span');
       var stream_load = document.getElementById("stream");
       elem.innerHTML = link_3.responseText;
-      var item_count = page * {{ page.paginator.count }};
       if({{ page.end_index }} < {{ page.paginator.count }}){
         loaded = true
       };
