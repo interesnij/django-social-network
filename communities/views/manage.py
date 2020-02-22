@@ -121,7 +121,10 @@ class CommunityNotifyView(TemplateView):
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.form=CommunityNotifyForm()
-		self.notify_settings=CommunityNotificationsSettings.objects.get(community=self.community)
+		try:
+			self.notify_settings=CommunityNotificationsSettings.objects.get(community=self.community)
+		except:
+			self.notify_settings=CommunityNotificationsSettings.objects.create(community=self.community)
 		return super(CommunityNotifyView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -162,7 +165,10 @@ class CommunityPrivateView(TemplateView):
 
 	def post(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		self.private_settings=CommunityPrivateSettings.objects.get(community=self.community)
+		try:
+			self.private_settings=CommunityPrivateSettings.objects.get(community=self.community)
+		except:
+			self.private_settings=CommunityPrivateSettings.objects.create(community=self.community)
 		self.form=CommunityPrivateForm(request.POST,instance=self.private_settings)
 		if self.form.is_valid() and request.user.is_administrator_of_community_with_name(self.community.name):
 			self.form.save()
