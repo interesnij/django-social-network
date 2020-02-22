@@ -1,10 +1,10 @@
 
 {% if object.article %}
-  {% include 'item_user/my_article.html' with article=article %}
+  {% include 'item_user/article.html' with article=article %}
 {% endif %}
 
 {% if object.post %}
-  {% include 'item_user/my_post.html' with post=post  %}
+  {% include 'item_user/post.html' with post=post  %}
 {% endif %}
 
 {% if items_list %}
@@ -33,14 +33,6 @@
           {% endif %}
 
         {% endfor %}
-
-        <div class="items-load col-12 col-md-12">
-            {% if items_list.has_next %}
-            <a style="display:flex;justify-content:center;" class="infinite-more-link" href="{% url 'user_item_list' user.pk %}?page={{ items_list.next_page_number }}">
-                <img src="/static/images/loading.gif">
-            </a>
-            {% endif %}
-        </div>
     </span>
 </div>
 

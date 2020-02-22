@@ -1,5 +1,3 @@
-{% load staticfiles humanize thumbnail %}
-
 <div class="card mb-4 infinite-item" item-id="{{ object.uuid }}" user-id="{{ user.pk }}">
 
   {% include 'item_user/my_card_header.html' %}
@@ -11,7 +9,7 @@
                       {% if object.article.g_image %}
                         <img class="lazyload" data-src="{{ object.article.g_image.url }}" alt="">
                       {% else %}
-                        <img class="lazyload" data-src="{% static 'images/no-image.jpg' %}" />
+                        <img class="lazyload" data-src="/static/images/no-image.jpg" />
                       {% endif %}
                     </figure>
                     <div class="container">

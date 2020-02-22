@@ -1,4 +1,4 @@
-{% load staticfiles humanize thumbnail%}
+{% load humanize thumbnail%}
 <span style="margin-left: 5%;border-left: 1px solid #DDDDDD;">
   <div class="card-header border-bottom" style="margin-top: -20px;">
     <div class="media" style="font-size: 0.8em;">
@@ -57,7 +57,7 @@
                       {% if object.parent.article.image %}
                         <img class="lazyload" data-src="{{ object.parent.article.image.url }}" alt="">
                       {% else %}
-                        <img class="lazyload" data-src="{% static 'images/no-image.jpg' %}" />
+                        <img class="lazyload" data-src="/static/images/no-image.jpg" />
                       {% endif %}
                     </figure>
                     <div class="container">

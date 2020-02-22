@@ -1,8 +1,6 @@
 {% extends "base.html" %}
-{% load staticfiles thumbnail %}
-
+{% load thumbnail %}
 {% block title %}Мои друзья{% endblock %}
-
 {% block content %}
 
 <div class="row">
@@ -83,6 +81,7 @@
                     {% for object in featured_users %}
                     <li class="list-group-item">
                         <div class="media">
+                          <a href="{% url 'user' pk=object.pk %}" class="ajax" data-html="#ajax">
                             <figure>
                               {% if object.get_avatar %}
                                 <img src="{{ object.get_avatar.file|thumbnail_url:'avatar' }}" style="border-radius:50px;width:50px;" alt="image">
@@ -90,12 +89,13 @@
                                 <svg fill="currentColor" class="svg_default svg_default_50" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
                               {% endif %}
                             </figure>
-                            <div class="media-body">
-                                <a href="{% url 'user' pk=object.pk %}" class="ajax" data-html="#ajax">
-                                    <h6 class="my-0 mt-1">{{ object.get_full_name }}</h6>
-                                </a>
-                                <a href="" class="small">Написать сообщение</a>
-                            </div>
+                          </a>
+                          <div class="media-body">
+                              <a href="{% url 'user' pk=object.pk %}" class="ajax" data-html="#ajax">
+                                  <h6 class="my-0 mt-1">{{ object.get_full_name }}</h6>
+                              </a>
+                              <a href="" class="small">Написать сообщение</a>
+                          </div>
                         </div>
                     </li>
                     {% endfor %}
@@ -108,10 +108,6 @@
 </div>
 
 <script>
-  var ready = (callback) => {
-  if (document.readyState != "loading") callback();
-  else document.addEventListener("DOMContentLoaded", callback);
-};
   ready(() => {
     var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     link.open( 'GET', '/frends/all-list/' + '{{ user.uuid }}', true );
@@ -125,6 +121,7 @@
   };
   link.send( null );
   });
+  
   document.querySelector(".online").addEventListener("click", (e) => {
       if (document.querySelector("#tabhome223-tab").classList.contains("online")) {
       var tab = document.getElementById("tabhome223-tab"); tab.classList.remove('online');

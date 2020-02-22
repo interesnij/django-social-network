@@ -1,8 +1,7 @@
 {% extends "base.html" %}
-{% load staticfiles liked_user %}
+{% load liked_user %}
 {% block title %}Товары {{ user.first_name|gent }} {{ user.last_name|gent }}{% endblock %}
 {% block content %}
-
 
 <div class="container mt-4 main-container">
   <div class="card mb-4" style="align-items: center;justify-content:center;">
@@ -12,6 +11,5 @@
     <h6 style="margin-bottom: 20px;"> Пользователь ограничил доступ к своей странице</h6>
   </div>
 </div>
-
 
 {% endblock %}

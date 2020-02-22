@@ -38,10 +38,6 @@
     </div>
 </div>
 <script>
-  var ready = (callback) => {
-  if (document.readyState != "loading") callback();
-  else document.addEventListener("DOMContentLoaded", callback);
-  }
   ready(() => {
     var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     link.open( 'GET', '/users/detail/communities/' + '{{ user.uuid }}', true );

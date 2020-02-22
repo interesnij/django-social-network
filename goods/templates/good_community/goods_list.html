@@ -1,4 +1,4 @@
-{% load staticfiles liked_user %}
+{% load liked_user %}
 
 <div class="row goods_stream infinite-container">
 {% if goods_list %}
@@ -14,7 +14,7 @@
                                 {% if object.image %}
                                 <img style="width:100%" src="{{ object.image.url }}" alt="">
                                 {% else %}
-                                <img style="width:100%" src="{% static 'images/no-image.jpg' %}" />
+                                <img style="width:100%" src="/static/images/no-image.jpg" />
                                 {% endif %}
                             </div>
                         </div>
@@ -39,14 +39,7 @@
 </div>
 
 {% endfor %}
-<div class="load col-12 col-md-12">
-    {% if goods_list.has_next %}
-    <a style="display:flex;justify-content:center;" class="infinite-more-link" href="?page={{ goods_list.next_page_number }}">
-        <img src="{% static 'images/loading.gif' %}">
-    </a>
-    {% endif %}
 
-</div>
 {% else %}
 <h6> Пока ничего нет...</h6>
 {% endif %}

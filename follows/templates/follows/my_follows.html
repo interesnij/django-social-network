@@ -42,19 +42,21 @@
                     {% for object in featured_users %}
                     <li class="list-group-item">
                         <div class="media">
+                          <a href="{% url 'user' pk=object.user.pk %}" class="ajax" data-html="#ajax">
                             <figure>
-                                {% if object.user.get_avatar %}
+                              {% if object.user.get_avatar %}
                                 <img src="{{ object.user.get_avatar.file|thumbnail_url:'avatar' }}" style="border-radius:50px;width:50px;" alt="image">
-                                {% else %}
+                              {% else %}
                                 <img class="thumb" src="{% static 'images/icons/person-24px.svg' %}" />
-                                {% endif %}
+                              {% endif %}
                             </figure>
-                            <div class="media-body">
-                                <a href="{% url 'user' pk=object.user.pk %}" class="ajax" data-html="#ajax">
-                                    <h6 class="my-0 mt-1">{{ object.user.get_full_name }}</h6>
-                                </a>
-                                <a href="" class="small">Написать сообщение</a>
-                            </div>
+                          </a>
+                          <div class="media-body">
+                              <a href="{% url 'user' pk=object.user.pk %}" class="ajax" data-html="#ajax">
+                                  <h6 class="my-0 mt-1">{{ object.user.get_full_name }}</h6>
+                              </a>
+                              <a href="" class="small">Написать сообщение</a>
+                          </div>
                         </div>
                     </li>
                     {% endfor %}
@@ -67,10 +69,6 @@
 </div>
 
 <script>
-  var ready = (callback) => {
-  if (document.readyState != "loading") callback();
-  else document.addEventListener("DOMContentLoaded", callback);
-  }
   ready(() => {
     var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     link.open( 'GET', '/follows/list/' + '{{ user.pk }}', true );

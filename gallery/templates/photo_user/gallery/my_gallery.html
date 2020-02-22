@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-{% load staticfiles liked_user %}
 {% block title %}Мои фотографии{% endblock %}
 {% block content %}
 
@@ -47,10 +46,6 @@
   </div>
 
 <script>
-  var ready = (callback) => {
-  if (document.readyState != "loading") callback();
-  else document.addEventListener("DOMContentLoaded", callback);
-  }
   ready(() => {
     var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     link.open( 'GET', '/gallery/user/albums/' + '{{ user.uuid }}', true );

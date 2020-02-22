@@ -168,13 +168,6 @@
       {% endif %}
 
     {% endfor %}
-    <div class="load col-12 col-md-12" >
-      {% if items_list.has_next %}
-        <a style="display:flex;justify-content:center;" class="infinite-more-link" href="{% url 'community_item_list' community.pk %}?page={{ items_list.next_page_number }}">
-          <img src="/static/images/loading.gif">
-        </a>
-      {% endif %}
-    </div>
 
     {% endif %}
   </span>

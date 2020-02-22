@@ -15,7 +15,7 @@
           </div>
           <div class="card mb-2">
               <div class="card-header">
-                <div class="media"> 
+                <div class="media">
                   <div class="media-body">
                       <h5 class="mt-1">Моя музыка
                         <small class="content-color-secondary float-right mr-2 mt-1">Всего {{ user.get_music.count }}</small>
@@ -46,10 +46,6 @@
 </div>
 
 <script>
-  var ready = (callback) => {
-  if (document.readyState != "loading") callback();
-  else document.addEventListener("DOMContentLoaded", callback);
-  }
   ready(() => {
     var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     link.open( 'GET', '/users/detail/music_list/' + '{{ user.uuid }}', true );
