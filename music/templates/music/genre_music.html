@@ -14,8 +14,20 @@
               <button class="btn btn-outline-link" type="button">Искать</button>
             </div>
           </div>
-
-          <span id="genre_tracks_load"></span>
+          <div class="card mb-2">
+              <div class="card-header">
+                <div class="media">
+                  <div class="media-body">
+                      <h5 class="mt-1">Треки жанра {{ genre.name }}
+                        <small class="content-color-secondary float-right mr-2 mt-1">Всего {{ genre.get_tracks_count }}</small>
+                      </h5>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <span id="genre_tracks_load"></span>
+              </div>
+          </div>
 
         </div>
         <div class="col-12 col-md-4">

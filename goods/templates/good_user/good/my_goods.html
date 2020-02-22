@@ -18,20 +18,20 @@
         </button>
       </div>
     </div>
-    <div class="row">
+    <div class="container mt-4 main-container">
       <div class="col-12 col-md-8">
         <div class="card mb-2">
             <div class="card-header">
               <div class="media">
                 <div class="media-body">
                     <h5 class="mt-1">Мои товары
-                      <small class="content-color-secondary float-right mr-2 mt-1">Всего {{ user.get_music.count }}</small>
+                      <small class="content-color-secondary float-right mr-2 mt-1">Всего {{ user.count_goods }}</small>
                     </h5>
                 </div>
               </div>
             </div>
             <div class="card-body">
-              <span id="goods_load" class="music_script_check"></span>
+              <span id="goods_load"></span>
             </div>
         </div>
       </div>

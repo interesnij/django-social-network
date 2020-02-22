@@ -1,11 +1,5 @@
 {% load staticfiles get_key %}
 
-<div class="media" style="margin-top: 35px;">
-  <div class="media-body">
-    <h4 class="content-color-primary mb-0">Треки тега {{ tag.name }}
-    <small class="content-color-secondary float-right mr-2 mt-1">Всего {{ tag.get_tracks_count }}</small></h4>
-  </div>
-</div>
 <br><br>
 {% if tag_list %}
 <div class="tracks-container tag_playlist" data-pk="{{ tag.pk }}">
@@ -52,6 +46,6 @@
 </div>
 
 <script>
-  
+
 </script>
 {% endif %}

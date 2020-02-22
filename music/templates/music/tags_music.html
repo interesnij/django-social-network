@@ -14,7 +14,20 @@
               <button class="btn btn-outline-link" type="button">Искать</button>
             </div>
           </div>
-            <span id="tags_list_load"></span>
+          <div class="card mb-2">
+              <div class="card-header">
+                <div class="media">
+                  <div class="media-body">
+                      <h5 class="mt-1">Теги буквы {{ symbol.name }}
+                        <small class="content-color-secondary float-right mr-2 mt-1">Всего {{ symbol.get_tags_count }}</small>
+                      </h5>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <span id="tags_list_load"></span>
+              </div>
+          </div>
 
         </div>
         <div class="col-12 col-md-4">
@@ -35,10 +48,6 @@
 </div>
 
 <script>
-var ready = (callback) => {
-if (document.readyState != "loading") callback();
-else document.addEventListener("DOMContentLoaded", callback);
-}
 ready(() => {
 var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
 link.open( 'GET', '/music/list/tag_list/' + '{{ symbol.pk }}', true );
@@ -53,6 +62,5 @@ link.onreadystatechange = function () {
 link.send( null );
 
 });
-
-    </script>
+</script>
 {% endblock %}

@@ -14,8 +14,20 @@
               <button class="btn btn-outline-link" type="button">Искать</button>
             </div>
           </div>
-
-          <span id="tag_tracks_load"></span>
+          <div class="card mb-2">
+              <div class="card-header">
+                <div class="media">
+                  <div class="media-body">
+                      <h5 class="mt-1">Треки тега {{ tag.name }}
+                        <small class="content-color-secondary float-right mr-2 mt-1">Всего {{ tag.get_tracks_count }}</small>
+                      </h5>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <span id="tag_tracks_load"></span>
+              </div>
+          </div>
 
         </div>
         <div class="col-12 col-md-4">
