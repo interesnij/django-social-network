@@ -99,7 +99,7 @@ class AllUsersList(View):
 	def get(self, request, *args, **kwargs):
 		context = {}
 		users_list = User.objects.only('pk')
-		current_page = Paginator(users_list, 7)
+		current_page = Paginator(users_list, 16)
 		page = request.GET.get('page')
 
 		try:
