@@ -6,7 +6,7 @@
           {% for object in online_list %}
           <li class="list-group-item infinite-item">
               <div class="media">
-                <a href="{% url 'user' uuid=object.uuid %}" class="ajax" data-html="#ajax">
+                <a href="{% url 'user' pk=object.pk %}" class="ajax" data-html="#ajax">
                   <figure>
                     {% if object.get_avatar %}
                       <img src="{{ object.get_avatar.file|thumbnail_url:'avatar' }}" style="border-radius:50px;width:50px;" alt="image">
@@ -16,7 +16,7 @@
                   </figure>
                 </a>
                 <div class="media-body">
-                    <a href="{% url 'user' uuid=object.uuid %}" class="ajax" data-html="#ajax">
+                    <a href="{% url 'user' pk=object.pk %}" class="ajax" data-html="#ajax">
                         <h6 class="my-0 mt-1">{{ object.get_full_name }}</h6>
                     </a>
                     <a href="" class="small">Написать сообщение</a>
