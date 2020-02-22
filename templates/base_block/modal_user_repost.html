@@ -119,6 +119,7 @@
 </div>
 
 <script>
+  ready(() => {
     $('#user_item_repost').click(function() {
         var frm_repost = $('#FORM-REPOST'); var uuid = $('.form #user_item_pk').text();
 
@@ -132,9 +133,7 @@
 
       }
       else if(document.getElementById('repost_radio_message').checked){
-
       };
-
     });
-
+});
 </script>
