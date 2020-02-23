@@ -60,17 +60,16 @@ class FollowsListView(View):
             follows_list=self.user.get_follows()
         elif self.user == request.user:
             follows_list=self.user.get_follows()
-
 		current_page = Paginator(follows_list, 15)
-        context['user'] = self.user
-        page = request.GET.get('page')
-        try:
-            context['follows_list'] = current_page.page(page)
-        except PageNotAnInteger:
-            context['follows_list'] = current_page.page(1)
-        except EmptyPage:
-            context['follows_list'] = current_page.page(current_page.num_pages)
-        return render_to_response('follows.html', context)
+		context['user'] = self.user
+		page = request.GET.get('page')
+		try:
+			context['follows_list'] = current_page.page(page)
+		except PageNotAnInteger:
+			context['follows_list'] = current_page.page(1)
+		except EmptyPage:
+			context['follows_list'] = current_page.page(current_page.num_pages)
+		return render_to_response('follows.html', context)
 
 
 
