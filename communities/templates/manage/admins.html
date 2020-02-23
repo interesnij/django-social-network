@@ -79,6 +79,7 @@
   var page = 2;
   var loaded = false;
   onscroll = function(){
+    try{
     if(document.getElementById("admins-container").querySelector('.list-group-item')){
     var height = document.documentElement.clientHeight-1;
     if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
@@ -101,7 +102,7 @@
         }
       }
     }
-  }
+  }catch{return}
 }
 });
 </script>
