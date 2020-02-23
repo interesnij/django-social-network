@@ -59,7 +59,8 @@ onscroll = function(){
     var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     link_3.open( 'GET', '{% url "news_list" %}?page=' + page++, true );
     link_3.onload = function(e) {if (this.status != 200) { console.log("ошибочка"); loaded = true; }};
-    if(!loaded){link_3.send()};
+    if (loaded){return};
+    link_3.send();
 
     link_3.onreadystatechange = function () {
     if ( this.readyState == 4 && this.status == 200 ) {
@@ -70,6 +71,7 @@ onscroll = function(){
         loaded = true;
       };
       stream_load.append(elem);
+      if (loaded){return};
       }
     }
   }
