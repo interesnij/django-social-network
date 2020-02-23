@@ -51,6 +51,7 @@
 var page = 2;
 var loaded = false;
 onscroll = function(){
+  if (loaded){return};
   try{
   if(news_load.querySelectorAll('.infinite-item').length === 15){
   height = news_load.clientHeight-100;
