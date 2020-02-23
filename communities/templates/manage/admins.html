@@ -82,7 +82,7 @@
     if(document.getElementById("admins-container").querySelector('.admins')){
     var height = document.documentElement.clientHeight-1;
     if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
-      if (loaded){delete link_3;return};
+      if (loaded){return};
       var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
       link_3.open( 'GET', '/communities/manage/admins/' + '{{ community.pk }}/?page=' + page++, true );
       link_3.onload = function(e) {
@@ -95,7 +95,7 @@
         var load = document.getElementById("admins-container");
         elem.innerHTML = link_3.responseText;
         if(elem.getElementsByClassName('admins').length < 15){
-          loaded = true; delete link_3;
+          loaded = true;
         };
         load.append(elem);
         }
