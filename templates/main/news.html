@@ -51,7 +51,6 @@
 var page = 2;
 var loaded = false;
 
-{% if object_list.next_page_number %}
 onscroll = function(){
   height = document.documentElement.clientHeight-1;
   if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
@@ -62,7 +61,7 @@ onscroll = function(){
       if (this.status == 404) {loaded = true};
       if (this.status == 200) {link_3.send()};
     };
-    
+
     link_3.onreadystatechange = function () {
     if ( this.readyState == 4 && this.status == 200 ) {
       var elem = document.createElement('span');
@@ -76,7 +75,7 @@ onscroll = function(){
     }
   }
 };
-{% endif %}
+
 </script>
 
 {% endblock %}
