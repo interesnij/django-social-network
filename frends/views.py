@@ -67,7 +67,7 @@ class AllFrendsListView(View):
 			context['friends_list'] = current_page.page(1)
 		except EmptyPage:
 			context['friends_list'] = current_page.page(current_page.num_pages)
-		return render_to_response('friends_list.html', context)
+		return render_to_response('frends_list.html', context)
 
 
 class OnlineFrendsListView(View):
