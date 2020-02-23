@@ -33,12 +33,12 @@ class CommunityAlbumsList(View):
 		if request.user.is_authenticated:
 			check_can_get_posts_for_community_with_name(request.user,self.community.name)
 			albums_list = self.community.get_albums().order_by('-created')
-			current_page = Paginator(albums_list, 12)
 		if request.user.is_anonymous and self.community.is_public:
 			albums_list = self.community.get_posts().order_by('-created')
-			current_page = Paginator(albums_list, 10)
 		if request.user.is_anonymous and (self.community.is_closed or self.community.is_private):
 			raise PermissionDenied('У Вас недостаточно прав для просмотра информации группы')
+
+		current_page = Paginator(albums_list, 15)
 		page = request.GET.get('page')
 		context['user'] = self.user
 		try:
@@ -57,13 +57,11 @@ class CommunityPhotosList(View):
 		if request.user.is_authenticated:
 			check_can_get_posts_for_community_with_name(request.user,self.community.name)
 			photo_list = self.community.get_photos().order_by('-created')
-			current_page = Paginator(photo_list, 12)
 		if request.user.is_anonymous and self.community.is_public:
 			photo_list = self.community.get_posts().order_by('-created')
-			current_page = Paginator(photo_list, 10)
-			page = request.GET.get('page')
 		if request.user.is_anonymous and (self.community.is_closed or self.community.is_private):
 			raise PermissionDenied('У Вас недостаточно прав для просмотра информации группы')
+		current_page = Paginator(photo_list, 15)
 		page = request.GET.get('page')
 		context['community'] = self.community
 		try:
@@ -112,12 +110,11 @@ class CommunityAlbomView(View):
 		if request.user.is_authenticated:
 			check_can_get_posts_for_community_with_name(request.user,self.community.name)
 			photos = Photo.objects.filter(album=self.album).order_by('-created')
-			current_page = Paginator(photos, 12)
 		if request.user.is_anonymous and self.community.is_public:
 			photos = Photo.objects.filter(album=self.album).order_by('-created')
-			current_page = Paginator(photos, 12)
 		if request.user.is_anonymous and (self.community.is_closed or self.community.is_private):
 			raise PermissionDenied('У Вас недостаточно прав для просмотра информации группы')
+		current_page = Paginator(photos, 15)
 		page = request.GET.get('page')
 		context['community'] = self.community
 		try:

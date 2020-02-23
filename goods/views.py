@@ -36,7 +36,7 @@ class UserGoodsList(View):
 			if self.user.is_closed_profile:
 				check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
 		goods = self.user.get_goods().order_by('-created')
-		current_page = Paginator(goods, 6)
+		current_page = Paginator(goods, 10)
 		page = request.GET.get('page')
 		context['user'] = self.user
 		try:

@@ -31,7 +31,7 @@ class CommunityGoodsList(View):
 		self.community=Community.objects.get(pk=self.kwargs["pk"])
 		check_can_get_posts_for_community_with_name(request.user,self.community.name)
 		goods = self.community.get_goods().order_by('-created')
-		current_page = Paginator(goods, 6)
+		current_page = Paginator(goods, 10)
 		page = request.GET.get('page')
 		context['user'] = self.user
 		try:

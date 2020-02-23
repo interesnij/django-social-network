@@ -54,15 +54,14 @@ class FollowsListView(View):
             if self.user.is_closed_profile():
                 check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
             follows_list=self.user.get_follows()
-            current_page = Paginator(follows_list, 1)
         elif request.user.is_anonymous and self.user.is_closed_profile():
             raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
         elif request.user.is_anonymous and not self.user.is_closed_profile():
             follows_list=self.user.get_follows()
-            current_page = Paginator(follows_list, 1)
         elif self.user == request.user:
             follows_list=self.user.get_follows()
-            current_page = Paginator(follows_list, 1)
+
+		current_page = Paginator(follows_list, 15)
         context['user'] = self.user
         page = request.GET.get('page')
         try:

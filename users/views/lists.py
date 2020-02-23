@@ -21,17 +21,16 @@ class UserCommunitiesList(View):
 				check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
 			communities_list = Community.objects.filter(memberships__user__id=self.user.pk)
 			template = 'user_community/communities_list.html'
-			current_page = Paginator(communities_list, 12)
 		elif request.user.is_anonymous and self.user.is_closed_profile():
 			raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
 		elif request.user.is_anonymous and not self.user.is_closed_profile():
 			communities_list = Community.objects.filter(memberships__user__id=self.user.pk).order_by('-created')
 			template = 'user_community/communities_list.html'
-			current_page = Paginator(communities_list, 12)
 		elif self.user == request.user:
 			communities_list = Community.objects.filter(memberships__user__id=self.user.pk)
 			template = 'user_community/communities_list.html'
-			current_page = Paginator(communities_list, 12)
+
+		current_page = Paginator(communities_list, 15)
 		page = request.GET.get('page')
 		context['user'] = self.user
 		try:
@@ -99,7 +98,7 @@ class AllUsersList(View):
 	def get(self, request, *args, **kwargs):
 		context = {}
 		users_list = User.objects.only('pk')
-		current_page = Paginator(users_list, 8)
+		current_page = Paginator(users_list, 15)
 		page = request.GET.get('page')
 
 		try:

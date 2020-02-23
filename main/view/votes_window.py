@@ -4,10 +4,10 @@ from main.models import Item, ItemComment
 from communities.models import Community
 from django.http import JsonResponse, HttpResponse
 from django.views import View
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from common.models import ItemVotes, ItemCommentVotes
 from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
 from common.checkers import check_can_get_posts_for_community_with_name
-from django.contrib.contenttypes.models import ContentType
 from rest_framework.exceptions import PermissionDenied
 
 
@@ -15,7 +15,7 @@ class ItemUserLikeWindow(TemplateView):
     """
     Перезагрузка окна с последними лайками для записи пользователя
     """
-    template_name="item_votes/u_like_window.html"
+    template_name="item_votes/u_like.html"
 
     def get(self,request,*args,**kwargs):
         self.item = Item.objects.get(uuid=self.kwargs["uuid"])
@@ -42,7 +42,7 @@ class ItemUserCommentLikeWindow(TemplateView):
     """
     Перезагрузка окна с последними дизлайками для записи пользователя
     """
-    template_name="item_votes/u_comment_like_window.html"
+    template_name="item_votes/u_comment_like.html"
 
     def get(self,request,*args,**kwargs):
         self.comment = ItemComment.objects.get(pk=self.kwargs["pk"])
@@ -69,7 +69,7 @@ class ItemUserDislikeWindow(TemplateView):
     """
     Перезагрузка окна с последними лайками для комментария записи пользователя
     """
-    template_name="item_votes/u_dislike_window.html"
+    template_name="item_votes/u_dislike.html"
 
     def get(self,request,*args,**kwargs):
         self.item = Item.objects.get(uuid=self.kwargs["uuid"])
@@ -96,7 +96,7 @@ class ItemUserCommentDislikeWindow(TemplateView):
     """
     Перезагрузка окна с последними дизлайками для комментария записи пользователя
     """
-    template_name="item_votes/u_comment_dislike_window.html"
+    template_name="item_votes/u_comment_dislike.html"
 
     def get(self,request,*args,**kwargs):
         self.comment = ItemComment.objects.get(pk=self.kwargs["pk"])
@@ -124,7 +124,7 @@ class ItemCommunityLikeWindow(TemplateView):
     """
     Перезагрузка окна с последними лайками для записи сообщества
     """
-    template_name="item_votes/c_like_window.html"
+    template_name="item_votes/c_like.html"
 
     def get(self,request,*args,**kwargs):
         self.item = Item.objects.get(uuid=self.kwargs["uuid"])
@@ -142,7 +142,7 @@ class ItemCommunityDislikeWindow(TemplateView):
     """
     Перезагрузка окна с последними дизлайками для записи сообщества
     """
-    template_name="item_votes/c_dislike_window.html"
+    template_name="item_votes/c_dislike.html"
 
     def get(self,request,*args,**kwargs):
         self.item = Item.objects.get(uuid=self.kwargs["uuid"])
@@ -160,7 +160,7 @@ class ItemCommunityCommentLikeWindow(TemplateView):
     """
     Перезагрузка окна с последними лайками для комментария записи сообщества
     """
-    template_name="item_votes/c_comment_like_window.html"
+    template_name="item_votes/c_comment_like.html"
 
     def get(self,request,*args,**kwargs):
         self.comment = ItemComment.objects.get(pk=self.kwargs["pk"])
@@ -178,7 +178,7 @@ class ItemCommunityCommentDislikeWindow(TemplateView):
     """
     Перезагрузка окна с последними дизлайками для комментария записи сообщества
     """
-    template_name="item_votes/c_comment_dislike_window.html"
+    template_name="item_votes/c_comment_dislike.html"
 
     def get(self,request,*args,**kwargs):
         self.comment = ItemComment.objects.get(pk=self.kwargs["pk"])
@@ -193,228 +193,265 @@ class ItemCommunityCommentDislikeWindow(TemplateView):
         return context
 
 
-class AllItemUserLikeWindow(TemplateView):
+class AllItemUserLikeWindow(View):
     """
     Окно со всеми лайками для записи пользователя
     """
-    template_name="item_votes/u_all_like_window.html"
+    template_name="item_votes/u_all_like.html"
 
     def get(self,request,*args,**kwargs):
-        self.item = Item.objects.get(uuid=self.kwargs["uuid"])
-        self.user = User.objects.get(pk=self.kwargs["pk"])
-        if self.user != request.user and request.user.is_authenticated:
-            check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
-            if self.user.is_closed_profile():
-                check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
-            self.likes = self.item.get_likes_for_item(request.user)
-        elif self.user == request.user:
-            self.likes = self.item.get_likes_for_item(request.user)
-        elif request.user.is_anonymous and self.user.is_closed_profile():
+        item = Item.objects.get(uuid=self.kwargs["uuid"])
+        user = User.objects.get(pk=self.kwargs["pk"])
+        if user != request.user and request.user.is_authenticated:
+            check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
+            if user.is_closed_profile():
+                check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
+            likes = item.get_likes_for_item(request.user)
+        elif user == request.user:
+            likes = item.get_likes_for_item(request.user)
+        elif request.user.is_anonymous and user.is_closed_profile():
             raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
-        elif request.user.is_anonymous and not self.user.is_closed_profile():
-            self.likes = self.item.get_likes_for_item(request.user)
-        return super(AllItemUserLikeWindow,self).get(request,*args,**kwargs)
+        elif request.user.is_anonymous and not user.is_closed_profile():
+            likes = item.get_likes_for_item(request.user)
+        current_page = Paginator(likes, 15)
+        page = request.GET.get('page')
 
-    def get_context_data(self,**kwargs):
-        context=super(AllItemUserLikeWindow,self).get_context_data(**kwargs)
-        context["likes"]=self.likes
-        return context
+        context['user'] = user
+        try:
+			context['likes'] = current_page.page(page)
+		except PageNotAnInteger:
+			context['likes'] = current_page.page(1)
+		except EmptyPage:
+			context['likes'] = current_page.page(current_page.num_pages)
+        return render_to_response(template_name, context)
 
-class AllItemUserDislikeWindow(TemplateView):
+class AllItemUserDislikeWindow(View):
     """
     Окно со всеми дизлайками для записи пользователя
     """
-    template_name="item_votes/u_all_dislike_window.html"
+    template_name="item_votes/u_all_dislike.html"
 
     def get(self,request,*args,**kwargs):
-        self.item = Item.objects.get(uuid=self.kwargs["uuid"])
-        self.user = User.objects.get(pk=self.kwargs["pk"])
-        if self.user != request.user and request.user.is_authenticated:
-            check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
-            if self.user.is_closed_profile():
-                check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
-            self.dislikes = self.item.get_dislikes_for_item(request.user)
-        elif self.user == request.user:
-            self.dislikes = self.item.get_dislikes_for_item(request.user)
-        elif request.user.is_anonymous and self.user.is_closed_profile():
+        item = Item.objects.get(uuid=self.kwargs["uuid"])
+        user = User.objects.get(pk=self.kwargs["pk"])
+        if user != request.user and request.user.is_authenticated:
+            check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
+            if user.is_closed_profile():
+                check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
+            dislikes = item.get_dislikes_for_item(request.user)
+        elif user == request.user:
+            dislikes = item.get_dislikes_for_item(request.user)
+        elif request.user.is_anonymous and user.is_closed_profile():
             raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
-        elif request.user.is_anonymous and not self.user.is_closed_profile():
-            self.dislikes = self.item.get_dislikes_for_item(request.user)
-        return super(AllItemUserDislikeWindow,self).get(request,*args,**kwargs)
-    def get_context_data(self,**kwargs):
-        context=super(AllItemUserDislikeWindow,self).get_context_data(**kwargs)
-        context["dislikes"]=self.dislikes
-        return context
+        elif request.user.is_anonymous and not user.is_closed_profile():
+            dislikes = item.get_dislikes_for_item(request.user)
+        current_page = Paginator(dislikes, 15)
+        page = request.GET.get('page')
+		context['user'] = user
+        try:
+			context['dislikes'] = current_page.page(page)
+		except PageNotAnInteger:
+			context['dislikes'] = current_page.page(1)
+		except EmptyPage:
+			context['dislikes'] = current_page.page(current_page.num_pages)
+        return render_to_response(template_name, context)
 
-class AllItemUserCommentDislikeWindow(TemplateView):
+class AllItemUserCommentDislikeWindow(View):
     """
     Окно со всеми дизлайками для комментария записи пользователя
     """
-    template_name="item_votes/u_all_comment_dislike_window.html"
+    template_name="item_votes/u_all_comment_dislike.html"
 
     def get(self,request,*args,**kwargs):
-        self.comment = ItemComment.objects.get(pk=self.kwargs["pk"])
-        self.user = User.objects.get(uuid=self.kwargs["uuid"])
-        if self.user != request.user and request.user.is_authenticated:
-            check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
-            if self.user.is_closed_profile():
-                check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
-            self.dislikes = self.comment.get_dislikes_for_comment_item(request.user)
-        elif self.user == request.user:
-            self.dislikes = self.comment.get_dislikes_for_comment_item(request.user)
-        elif request.user.is_anonymous and self.user.is_closed_profile():
+        comment = ItemComment.objects.get(pk=self.kwargs["pk"])
+        user = User.objects.get(uuid=self.kwargs["uuid"])
+        if user != request.user and request.user.is_authenticated:
+            check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
+            if user.is_closed_profile():
+                check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
+            dislikes = comment.get_dislikes_for_comment_item(request.user)
+        elif user == request.user:
+            dislikes = comment.get_dislikes_for_comment_item(request.user)
+        elif request.user.is_anonymous and user.is_closed_profile():
             raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
-        elif request.user.is_anonymous and not self.user.is_closed_profile():
-            self.dislikes = self.comment.get_dislikes_for_comment_item(request.user)
-        return super(AllItemUserCommentDislikeWindow,self).get(request,*args,**kwargs)
+        elif request.user.is_anonymous and not user.is_closed_profile():
+            dislikes = self.comment.get_dislikes_for_comment_item(request.user)
+        current_page = Paginator(dislikes, 15)
+        page = request.GET.get('page')
+		context['user'] = user
+        try:
+			context['dislikes'] = current_page.page(page)
+		except PageNotAnInteger:
+			context['dislikes'] = current_page.page(1)
+		except EmptyPage:
+			context['dislikes'] = current_page.page(current_page.num_pages)
+        return render_to_response(template_name, context)
 
-    def get_context_data(self,**kwargs):
-        context=super(AllItemUserCommentDislikeWindow,self).get_context_data(**kwargs)
-        context["dislikes"]=self.dislikes
-        return context
-
-class AllItemUserCommentLikeWindow(TemplateView):
+class AllItemUserCommentLikeWindow(View):
     """
     Окно со всеми лайками для комментария записи пользователя
     """
-    template_name="item_votes/u_all_comment_like_window.html"
+    template_name="item_votes/u_all_comment_like.html"
 
     def get(self,request,*args,**kwargs):
-        self.comment = ItemComment.objects.get(pk=self.kwargs["pk"])
-        self.user = User.objects.get(uuid=self.kwargs["uuid"])
-        if self.user != request.user and request.user.is_authenticated:
-            check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
-            if self.user.is_closed_profile():
-                check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
-            self.likes = self.comment.get_likes_for_comment_item(request.user)
-        elif self.user == request.user:
-            self.likes = self.comment.get_likes_for_comment_item(request.user)
-        elif request.user.is_anonymous and self.user.is_closed_profile():
+        comment = ItemComment.objects.get(pk=self.kwargs["pk"])
+        user = User.objects.get(uuid=self.kwargs["uuid"])
+        if user != request.user and request.user.is_authenticated:
+            check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
+                check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
+            likes = comment.get_likes_for_comment_item(request.user)
+        elif user == request.user:
+            likes = comment.get_likes_for_comment_item(request.user)
+        elif request.user.is_anonymous and user.is_closed_profile():
             raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
-        elif request.user.is_anonymous and not self.user.is_closed_profile():
-            self.likes = self.comment.get_likes_for_comment_item(request.user)
-        return super(AllItemUserCommentLikeWindow,self).get(request,*args,**kwargs)
+        elif request.user.is_anonymous and not user.is_closed_profile():
+            likes = comment.get_likes_for_comment_item(request.user)
+        current_page = Paginator(likes, 15)
+        page = request.GET.get('page')
+		context['request_user'] = request.user
+        try:
+			context['likes'] = current_page.page(page)
+		except PageNotAnInteger:
+			context['likes'] = current_page.page(1)
+		except EmptyPage:
+			context['likes'] = current_page.page(current_page.num_pages)
+        return render_to_response(template_name, context)
 
-    def get_context_data(self,**kwargs):
-        context=super(AllItemUserCommentLikeWindow,self).get_context_data(**kwargs)
-        context["likes"]=self.likes
-        return context
 
-
-class AllItemCommunityLikeWindow(TemplateView):
+class AllItemCommunityLikeWindow(View):
     """
     Окно со всеми лайками для записи сообщества
     """
-    template_name="item_votes/c_all_like_window.html"
+    template_name="item_votes/c_all_like.html"
 
     def get(self,request,*args,**kwargs):
-        self.item = Item.objects.get(uuid=self.kwargs["uuid"])
+        item = Item.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_posts_for_community_with_name(request.user,community.name)
-        self.likes = self.item.get_likes_for_item(request.user)
-        return super(AllItemCommunityLikeWindow,self).get(request,*args,**kwargs)
+        likes = item.get_likes_for_item(request.user)
+        current_page = Paginator(likes, 15)
+        page = request.GET.get('page')
+        context["community"]=community
+        context['request_user'] = request.user
+        try:
+            context['likes'] = current_page.page(page)
+        except PageNotAnInteger:
+            context['likes'] = current_page.page(1)
+        except EmptyPage:
+            context['likes'] = current_page.page(current_page.num_pages)
+        return render_to_response(template_name, context)
 
-    def get_context_data(self,**kwargs):
-        context=super(AllItemCommunityLikeWindow,self).get_context_data(**kwargs)
-        context["likes"]=self.likes
-        return context
-
-class AllItemCommunityDislikeWindow(TemplateView):
+class AllItemCommunityDislikeWindow(View):
     """
     Окно со всеми лайками для диззаписи сообщества
     """
-    template_name="item_votes/c_all_dislike_window.html"
+    template_name="item_votes/c_all_dislike.html"
 
     def get(self,request,*args,**kwargs):
-        self.item = Item.objects.get(uuid=self.kwargs["uuid"])
+        item = Item.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_posts_for_community_with_name(request.user,community.name)
-        self.dislikes = self.item.get_dislikes_for_item(request.user)
-        return super(AllItemCommunityDislikeWindow,self).get(request,*args,**kwargs)
+        dislikes = item.get_dislikes_for_item(request.user)
+        current_page = Paginator(dislikes, 15)
+        page = request.GET.get('page')
+        context["community"]=community
+        context['request_user'] = request.user
+        try:
+            context['dislikes'] = current_page.page(page)
+        except PageNotAnInteger:
+            context['dislikes'] = current_page.page(1)
+        except EmptyPage:
+            context['dislikes'] = current_page.page(current_page.num_pages)
+        return render_to_response(template_name, context)
 
-    def get_context_data(self,**kwargs):
-        context=super(AllItemCommunityDislikeWindow,self).get_context_data(**kwargs)
-        context["dislikes"]=self.dislikes
-        return context
-
-class AllItemCommunityCommentLikeWindow(TemplateView):
+class AllItemCommunityCommentLikeWindow(View):
     """
     Окно со всеми лайками для комментария к записи сообщества
     """
-    template_name="item_votes/c_all_comment_like_window.html"
+    template_name="item_votes/c_all_comment_like.html"
 
     def get(self,request,*args,**kwargs):
-        self.comment = ItemComment.objects.get(pk=self.kwargs["pk"])
+        comment = ItemComment.objects.get(pk=self.kwargs["pk"])
         community = Community.objects.get(uuid=self.kwargs["uuid"])
         check_can_get_posts_for_community_with_name(request.user,community.name)
-        self.likes = self.comment.get_likes_for_comment_item(request.user)
-        return super(AllItemCommunityCommentLikeWindow,self).get(request,*args,**kwargs)
+        likes = comment.get_likes_for_comment_item(request.user)
+        current_page = Paginator(likes, 15)
+        page = request.GET.get('page')
+        context["community"]=community
+        context['request_user'] = request.user
+        try:
+            context['likes'] = current_page.page(page)
+        except PageNotAnInteger:
+            context['likes'] = current_page.page(1)
+        except EmptyPage:
+            context['likes'] = current_page.page(current_page.num_pages)
+        return render_to_response(template_name, context)
 
-    def get_context_data(self,**kwargs):
-        context=super(AllItemCommunityCommentLikeWindow,self).get_context_data(**kwargs)
-        context["likes"]=self.likes
-        return context
-
-class AllItemCommunityCommentDislikeWindow(TemplateView):
+class AllItemCommunityCommentDislikeWindow(View):
     """
     Окно со всеми дизлайками для комментария к записи сообщества
     """
-    template_name="item_votes/c_all_comment_dislike_window.html"
+    template_name="item_votes/c_all_comment_dislike.html"
 
     def get(self,request,*args,**kwargs):
-        self.comment = ItemComment.objects.get(pk=self.kwargs["pk"])
+        comment = ItemComment.objects.get(pk=self.kwargs["pk"])
         community = Community.objects.get(uuid=self.kwargs["uuid"])
         check_can_get_posts_for_community_with_name(request.user,community.name)
-        self.dislikes = self.comment.get_dislikes_for_comment_item(request.user)
-        return super(AllItemCommunityCommentDislikeWindow,self).get(request,*args,**kwargs)
+        dislikes = self.comment.get_dislikes_for_comment_item(request.user)
+        current_page = Paginator(dislikes, 15)
+        page = request.GET.get('page')
+        context["community"]=community
+        context['request_user'] = request.user
+        try:
+            context['dislikes'] = current_page.page(page)
+        except PageNotAnInteger:
+            context['dislikes'] = current_page.page(1)
+        except EmptyPage:
+            context['dislikes'] = current_page.page(current_page.num_pages)
+        return render_to_response(template_name, context)
 
-    def get_context_data(self,**kwargs):
-        context=super(AllItemCommunityCommentDislikeWindow,self).get_context_data(**kwargs)
-        context["dislikes"]=self.dislikes
-        return context
-
-#Окно со всеми поделившимися записью пользователя
-class AllItemUserRepostWindow(TemplateView):
+class AllItemUserRepostWindow(View):
     """
     Окно со всеми поделившимися записью пользователя
     """
-    template_name="item_votes/u_all_repost_window.html"
+    template_name="item_votes/u_all_repost.html"
 
     def get(self,request,*args,**kwargs):
-        self.item = Item.objects.get(pk=self.kwargs["pk"])
-        self.user = User.objects.get(uuid=self.kwargs["uuid"])
-        if self.user != request.user and request.user.is_authenticated:
-            check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
-            if self.user.is_closed_profile():
-                check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
-            self.reposts = self.item.get_reposts()
-        elif self.user == request.user:
-            self.reposts = self.item.get_reposts()
-        elif request.user.is_anonymous and self.user.is_closed_profile():
+        item = Item.objects.get(pk=self.kwargs["pk"])
+        user = User.objects.get(uuid=self.kwargs["uuid"])
+        if user != request.user and request.user.is_authenticated:
+            check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
+            if user.is_closed_profile():
+                check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
+            reposts = item.get_reposts()
+        elif user == request.user:
+            reposts = item.get_reposts()
+        elif request.user.is_anonymous and user.is_closed_profile():
             raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
-        elif request.user.is_anonymous and not self.user.is_closed_profile():
-            self.reposts = self.item.get_reposts()
-        return super(AllItemUserRepostWindow,self).get(request,*args,**kwargs)
+        elif request.user.is_anonymous and not user.is_closed_profile():
+            reposts = item.get_reposts()
+        return render_to_response(template_name, context)
 
-    def get_context_data(self,**kwargs):
-        context=super(AllItemUserRepostWindow,self).get_context_data(**kwargs)
-        context["reposts"]=self.reposts
-        return context
 
-class AllItemCommunityRepostWindow(TemplateView):
+class AllItemCommunityRepostWindow(View):
     """
     Окно со всеми поделившимися записью сообщества
     """
-    template_name="item_votes/c_all_repost_window.html"
+    template_name="item_votes/c_all_repost.html"
 
     def get(self,request,*args,**kwargs):
-        self.item = Item.objects.get(pk=self.kwargs["pk"])
+        item = Item.objects.get(pk=self.kwargs["pk"])
         community = Community.objects.get(uuid=self.kwargs["uuid"])
         check_can_get_posts_for_community_with_name(request.user,community.name)
-        self.reposts = self.item.get_reposts()
-        return super(AllItemCommunityRepostWindow,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        context=super(AllItemCommunityRepostWindow,self).get_context_data(**kwargs)
-        context["reposts"]=self.reposts
-        return context
+        reposts = item.get_reposts()
+        current_page = Paginator(reposts, 15)
+        page = request.GET.get('page')
+        context["community"]=community
+        context['request_user'] = request.user
+        try:
+            context['reposts'] = current_page.page(page)
+        except PageNotAnInteger:
+            context['reposts'] = current_page.page(1)
+        except EmptyPage:
+            context['reposts'] = current_page.page(current_page.num_pages)
+        return render_to_response(template_name, context)

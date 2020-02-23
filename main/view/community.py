@@ -22,14 +22,12 @@ class ItemCommunityCommentList(View):
 		if request.user.is_authenticated:
 			check_can_get_posts_for_community_with_name(request.user,self.community.name)
 			comments = item.get_comments(request.user)
-			current_page = Paginator(comments, 10)
 		if request.user.is_anonymous and self.community.is_public:
 			comments = item.get_comments(request.user)
-			current_page = Paginator(comments, 10)
 		if request.user.is_anonymous and (self.community.is_closed or self.community.is_private):
 			raise PermissionDenied('У Вас недостаточно прав для просмотра информации группы')
 		page = request.GET.get('page')
-		current_page = Paginator(comments, 10)
+		current_page = Paginator(comments, 15)
 		try:
 			comment_list = current_page.page(page)
 		except PageNotAnInteger:

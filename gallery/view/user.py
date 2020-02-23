@@ -235,7 +235,7 @@ class UserAlbomList(View):
         elif user == request.user:
             photos = user.get_photos_for_my_album(album_id=album.pk).order_by('-created')
 
-        current_page = Paginator(photos, 12)
+        current_page = Paginator(photos, 15)
         page = request.GET.get('page')
         context['user'] = user
         context['album'] = album
@@ -261,15 +261,13 @@ class UserAlbumsList(View):
             if self.user.is_closed_profile():
                 check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
             albums_list = self.user.get_albums().order_by('-created')
-            current_page = Paginator(albums_list, 12)
         elif request.user.is_anonymous and self.user.is_closed_profile():
             raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
         elif request.user.is_anonymous and not self.user.is_closed_profile():
             albums_list = self.user.get_albums().order_by('-created')
-            current_page = Paginator(albums_list, 12)
         elif self.user == request.user:
             albums_list = self.user.get_my_albums().order_by('-created')
-            current_page = Paginator(albums_list, 12)
+        current_page = Paginator(albums_list, 15)
         page = request.GET.get('page')
         context['user'] = self.user
         context['avatars_album'] = self.avatars_album
@@ -294,15 +292,13 @@ class UserPhotosList(View):
             if self.user.is_closed_profile():
                 check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
             photo_list = self.user.get_photos().order_by('-created')
-            current_page = Paginator(photo_list, 12)
         elif request.user.is_anonymous and self.user.is_closed_profile():
             raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.',)
         elif request.user.is_anonymous and not self.user.is_closed_profile():
             photo_list = self.user.get_photos().order_by('-created')
-            current_page = Paginator(photo_list, 12)
         elif self.user == request.user:
             photo_list = self.user.get_my_photos().order_by('-created')
-            current_page = Paginator(photo_list, 12)
+        current_page = Paginator(photo_list, 15)
         page = request.GET.get('page')
         context['user'] = self.user
         try:
