@@ -47,8 +47,11 @@ class UserManageCommunitiesList(View):
 		context = {}
 		template = "user_community/communities_list_with_staffed.html"
 		self.user=User.objects.get(uuid=self.kwargs["uuid"])
-		manage_communities_list = self.user.get_staffed_communities()
-		current_page = Paginator(manage_communities_list, 12)
+		if self.user ==request.user:
+			manage_communities_list = self.user.get_staffed_communities()
+		else:
+			manage_communities_list = ""
+		current_page = Paginator(manage_communities_list, 15)
 		page = request.GET.get('page')
 		context['user'] = self.user
 		try:
@@ -71,17 +74,15 @@ class UserMusicList(View):
 				check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
 			music_list = list(reversed(self.user.get_music()))
 			template = 'user_music/music_list.html'
-			current_page = Paginator(music_list, 20)
 		elif request.user.is_anonymous and self.user.is_closed_profile():
 			raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
 		elif request.user.is_anonymous and not self.user.is_closed_profile():
 			music_list = list(reversed(self.user.get_music()))
 			template = 'user_music/music_list.html'
-			current_page = Paginator(music_list, 20)
 		elif self.user == request.user:
 			music_list = list(reversed(self.user.get_my_music()))
 			template = 'user_music/my_music_list.html'
-			current_page = Paginator(music_list, 20)
+		current_page = Paginator(music_list, 15)
 		page = request.GET.get('page')
 		context['user'] = self.user
 		context['request_user'] = request.user
@@ -115,7 +116,7 @@ class AllPossibleUsersList(View):
 		context = {}
 		if request.user.is_authenticated:
 			possible_list = request.user.get_possible_friends()
-			current_page = Paginator(possible_list, 12)
+			current_page = Paginator(possible_list, 15)
 			page = request.GET.get('page')
 		else:
 			possible_list = None
@@ -145,19 +146,15 @@ class ItemListView(View):
 				check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
 			items_list = user.get_posts().order_by('-created')
 			template = 'lenta/item_list.html'
-			current_page = Paginator(items_list, 10)
 		elif request.user.is_anonymous and user.is_closed_profile():
 			raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
 		elif request.user.is_anonymous and not user.is_closed_profile():
 			items_list = user.get_posts().order_by('-created')
 			template = 'lenta/item_list_anon.html'
-			current_page = Paginator(items_list, 10)
 		elif user == request.user:
 			items_list = user.get_posts().order_by('-created')
 			template = 'lenta/my_item_list.html'
-			current_page = Paginator(items_list, 10)
-
-		context['user'] = user
+		current_page = Paginator(items_list, 15)
 		context['request_user'] = request.user
 		context['object'] = fixed
 		page = request.GET.get('page')

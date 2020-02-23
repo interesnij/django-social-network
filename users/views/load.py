@@ -28,11 +28,9 @@ class UserImagesLoad(View):
 			if self.user.is_closed_profile():
 				check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
 			photo_list = self.user.get_photos().order_by('-created')
-			current_page = Paginator(photo_list, 12)
 		elif self.user == request.user and self.user.is_authenticated:
 			photo_list = self.user.get_photos().order_by('-created')
-			current_page = Paginator(photo_list, 12)
-
+        current_page = Paginator(photo_list, 15)
 		page = request.GET.get('page')
 		context['user'] = self.user
 		try:
