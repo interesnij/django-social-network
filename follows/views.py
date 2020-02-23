@@ -46,20 +46,20 @@ class FollowsView(TemplateView):
 
 
 class FollowsListView(View):
-    def get(self, request, *args, **kwargs):
-        context = {}
-        self.user=User.objects.get(uuid=self.kwargs["uuid"])
-        if self.user != request.user and request.user.is_authenticated:
-            check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
-            if self.user.is_closed_profile():
-                check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
-            follows_list=self.user.get_follows()
-        elif request.user.is_anonymous and self.user.is_closed_profile():
-            raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
-        elif request.user.is_anonymous and not self.user.is_closed_profile():
-            follows_list=self.user.get_follows()
-        elif self.user == request.user:
-            follows_list=self.user.get_follows()
+	def get(self, request, *args, **kwargs):
+		context = {}
+		self.user=User.objects.get(uuid=self.kwargs["uuid"])
+		if self.user != request.user and request.user.is_authenticated:
+			check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
+			if self.user.is_closed_profile():
+				check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
+			follows_list=self.user.get_follows()
+		elif request.user.is_anonymous and self.user.is_closed_profile():
+			raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
+		elif request.user.is_anonymous and not self.user.is_closed_profile():
+			follows_list=self.user.get_follows()
+		elif self.user == request.user:
+			follows_list=self.user.get_follows()
 		current_page = Paginator(follows_list, 15)
 		context['user'] = self.user
 		page = request.GET.get('page')
@@ -70,7 +70,6 @@ class FollowsListView(View):
 		except EmptyPage:
 			context['follows_list'] = current_page.page(current_page.num_pages)
 		return render_to_response('follows.html', context)
-
 
 
 class FollowCreate(View):
