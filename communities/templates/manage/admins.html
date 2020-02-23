@@ -26,7 +26,7 @@
             </div>
 
             <div class="card-body px-0 py-0">
-                <ul class="list-group admins-container">
+                <ul class="list-group" id="admins-container">
                     {% for object in object_list %}
                     <li class="list-group-item li_{{object.pk }}" data-uuid="{{ object.uuid }}" data-pk="{{ community.pk }}">
                         <div class="media">
@@ -74,5 +74,31 @@
   <div id="load_staff_window" style="margin-top:30px"></div>
 </div>
 
-
+<script>
+  var page = 2;
+  var loaded = false;
+  onscroll = function(){
+    var height = document.documentElement.clientHeight-1;
+    if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
+      if (loaded){return};
+      var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+      link_3.open( 'GET', '/communities/manage/admins/' + '{{ community.pk }}/?page=' + page++, true );
+      link_3.onload = function(e) {
+        if (this.status == 404) {loaded = true}
+    };
+    link_3.send()
+      link_3.onreadystatechange = function () {
+      if ( this.readyState == 4 && this.status == 200 ) {
+        var elem = document.createElement('span');
+        var load = document.getElementById("admins-container");
+        elem.innerHTML = link_3.responseText;
+        if(elem.getElementsByClassName('infinite-item').length < 15){
+          loaded = true
+        };
+        load.append(elem);
+        }
+      }
+    }
+  };
+</script>
 {% endblock %}
