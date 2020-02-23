@@ -27,7 +27,7 @@
 
             <div class="card-body px-0 py-0">
               {% if object_list %}
-                <ul class="list-group black_list-container">
+                <ul class="list-group" id="blacklist-container">
                     {% for object in object_list %}
                     <li class="list-group-item">
                         <div class="media">
@@ -69,4 +69,35 @@
 </div>
 </div>
 
+<script>
+  var page = 2;
+  var loaded = false;
+  onscroll = function(){
+    try{
+    if(document.getElementById("blacklist-container").querySelector('.list-group-item')){
+    var height = document.documentElement.clientHeight-1;
+    if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
+      if (loaded){return};
+      var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+      link_3.open( 'GET', '/communities/manage/black_list/' + '{{ community.pk }}/?page=' + page++, true );
+      link_3.onload = function(e) {
+        if (this.status == 404) {loaded = true} else{ link_3.send() }
+      };
+
+      link_3.onreadystatechange = function () {
+      if ( this.readyState == 4 && this.status == 200 ) {
+        var elem = document.createElement('span');
+        var load = document.getElementById("blacklist-container");
+        elem.innerHTML = link_3.responseText;
+        if(elem.getElementsByClassName('list-group-item').length < 15){
+          loaded = true
+        };
+        load.append(elem);
+        }
+      }
+    }
+  }
+  }catch{return}
+  }
+</script>
 {% endblock %}
