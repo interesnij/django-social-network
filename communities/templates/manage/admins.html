@@ -79,7 +79,7 @@
   var loaded = false;
   onscroll = function(){
     try{
-    if(document.getElementById("admins-container").querySelector('.admins')){
+    if(document.getElementById("admins-container").querySelectorAll('.admins') > 14){
     var height = document.documentElement.clientHeight-1;
     if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
       if (loaded){return};
