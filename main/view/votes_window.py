@@ -247,7 +247,7 @@ class AllItemUserDislikeWindow(View):
             dislikes = item.get_dislikes_for_item(request.user)
         current_page = Paginator(dislikes, 15)
         page = request.GET.get('page')
-		context['user'] = user
+        context['user'] = user
         try:
             context['dislikes'] = current_page.page(page)
         except PageNotAnInteger:
