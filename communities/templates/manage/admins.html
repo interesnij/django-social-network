@@ -79,7 +79,7 @@
   var loaded = false;
   onscroll = function(){
     try{
-    var admins = getElementById("admins-container");
+    var admins = getElementById("admins-container"); 
     if(admins.querySelectorAll('.admins') === 15){
     var height = document.documentElement.clientHeight-1;
     if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
@@ -93,12 +93,11 @@
       link_3.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
         var elem = document.createElement('span');
-        var load = document.getElementById("admins-container");
         elem.innerHTML = link_3.responseText;
         if(elem.getElementsByClassName('admins').length < 15){
           loaded = true;
         };
-        load.append(elem);
+        admins.append(elem);
         }
       }
     }

@@ -86,7 +86,8 @@
   var loaded = false;
   onscroll = function(){
     try{
-    if(document.getElementById("advertisers-container").querySelector('.advertisers')){
+    var advertisers = document.getElementById("advertisers-container");
+    if(advertisers.querySelector('.advertisers')){
     var height = document.documentElement.clientHeight-1;
     if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
       if (loaded){return};
@@ -99,12 +100,11 @@
       link_3.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
         var elem = document.createElement('span');
-        var load = document.getElementById("advertisers-container");
         elem.innerHTML = link_3.responseText;
         if(elem.getElementsByClassName('advertisers').length < 15){
           loaded = true
         };
-        load.append(elem);
+        advertisers.append(elem);
         }
       }
     }

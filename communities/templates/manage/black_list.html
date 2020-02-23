@@ -74,7 +74,8 @@
   var loaded = false;
   onscroll = function(){
     try{
-    if(document.getElementById("blacklist-container").querySelector('.blacklist')){
+      var blacklist = document.getElementById("blacklist-container");
+    if(blacklist.querySelector('.blacklist')){
     var height = document.documentElement.clientHeight-1;
     if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
       if (loaded){return};
@@ -87,12 +88,11 @@
       link_3.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
         var elem = document.createElement('span');
-        var load = document.getElementById("blacklist-container");
         elem.innerHTML = link_3.responseText;
         if(elem.getElementsByClassName('blacklist').length < 15){
           loaded = true
         };
-        load.append(elem);
+        blacklist.append(elem);
         }
       }
     }
