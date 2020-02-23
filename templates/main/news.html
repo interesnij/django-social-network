@@ -52,13 +52,14 @@ var page = 2;
 var loaded = false;
 
 onscroll = function(){
+  load_stop = function(){return}
   height = document.documentElement.clientHeight-1;
   if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
     if (loaded){return};
     var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     link_3.open( 'GET', '{% url "news_list" %}?page=' + page++, true );
-    link_3.onload = function(e) {if (this.status != 200) {loaded = true}; if (this.status == 200) {link_3.send()}};
-
+    link_3.onload = function(e) {if (this.status != 200) {loaded = true} else {load_stop()}};
+    link_3.send()
     link_3.onreadystatechange = function () {
     if ( this.readyState == 4 && this.status == 200 ) {
       var elem = document.createElement('span');
