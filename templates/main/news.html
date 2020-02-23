@@ -47,7 +47,9 @@
       }
   };
   link.send( null );
-if(news_load.getElementsByClassName('infinite-item').length > 14){
+
+var stream = document.getElementById("stream");
+if(stream.getElementsByClassName('infinite-item').length > 14){
 var page = 2;
 var loaded = false;
 
