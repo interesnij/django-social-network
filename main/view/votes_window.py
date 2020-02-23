@@ -198,8 +198,6 @@ class AllItemUserLikeWindow(View):
     """
     Окно со всеми лайками для записи пользователя
     """
-    template_name="item_votes/u_all_like.html"
-
     def get(self,request,*args,**kwargs):
         context = {}
         item = Item.objects.get(uuid=self.kwargs["uuid"])
@@ -225,14 +223,12 @@ class AllItemUserLikeWindow(View):
             context['likes'] = current_page.page(1)
         except EmptyPage:
             context['likes'] = current_page.page(current_page.num_pages)
-        return render_to_response(template_name, context)
+        return render_to_response("item_votes/u_all_like.html", context)
 
 class AllItemUserDislikeWindow(View):
     """
     Окно со всеми дизлайками для записи пользователя
     """
-    template_name="item_votes/u_all_dislike.html"
-
     def get(self,request,*args,**kwargs):
         context = {}
         item = Item.objects.get(uuid=self.kwargs["uuid"])
@@ -257,14 +253,12 @@ class AllItemUserDislikeWindow(View):
             context['dislikes'] = current_page.page(1)
         except EmptyPage:
             context['dislikes'] = current_page.page(current_page.num_pages)
-        return render_to_response(template_name, context)
+        return render_to_response("item_votes/u_all_dislike.html", context)
 
 class AllItemUserCommentDislikeWindow(View):
     """
     Окно со всеми дизлайками для комментария записи пользователя
     """
-    template_name="item_votes/u_all_comment_dislike.html"
-
     def get(self,request,*args,**kwargs):
         context = {}
         comment = ItemComment.objects.get(pk=self.kwargs["pk"])
@@ -289,14 +283,12 @@ class AllItemUserCommentDislikeWindow(View):
             context['dislikes'] = current_page.page(1)
         except EmptyPage:
             context['dislikes'] = current_page.page(current_page.num_pages)
-        return render_to_response(template_name, context)
+        return render_to_response("item_votes/u_all_comment_dislike.html", context)
 
 class AllItemUserCommentLikeWindow(View):
     """
     Окно со всеми лайками для комментария записи пользователя
     """
-    template_name="item_votes/u_all_comment_like.html"
-
     def get(self,request,*args,**kwargs):
         context = {}
         comment = ItemComment.objects.get(pk=self.kwargs["pk"])
@@ -321,15 +313,13 @@ class AllItemUserCommentLikeWindow(View):
             context['likes'] = current_page.page(1)
         except EmptyPage:
             context['likes'] = current_page.page(current_page.num_pages)
-        return render_to_response(template_name, context)
+        return render_to_response("item_votes/u_all_comment_like.html", context)
 
 
 class AllItemCommunityLikeWindow(View):
     """
     Окно со всеми лайками для записи сообщества
     """
-    template_name="item_votes/c_all_like.html"
-
     def get(self,request,*args,**kwargs):
         context = {}
         item = Item.objects.get(uuid=self.kwargs["uuid"])
@@ -346,14 +336,12 @@ class AllItemCommunityLikeWindow(View):
             context['likes'] = current_page.page(1)
         except EmptyPage:
             context['likes'] = current_page.page(current_page.num_pages)
-        return render_to_response(template_name, context)
+        return render_to_response("item_votes/c_all_like.html", context)
 
 class AllItemCommunityDislikeWindow(View):
     """
     Окно со всеми лайками для диззаписи сообщества
     """
-    template_name="item_votes/c_all_dislike.html"
-
     def get(self,request,*args,**kwargs):
         context = {}
         item = Item.objects.get(uuid=self.kwargs["uuid"])
@@ -370,14 +358,12 @@ class AllItemCommunityDislikeWindow(View):
             context['dislikes'] = current_page.page(1)
         except EmptyPage:
             context['dislikes'] = current_page.page(current_page.num_pages)
-        return render_to_response(template_name, context)
+        return render_to_response("item_votes/c_all_dislike.html", context)
 
 class AllItemCommunityCommentLikeWindow(View):
     """
     Окно со всеми лайками для комментария к записи сообщества
     """
-    template_name="item_votes/c_all_comment_like.html"
-
     def get(self,request,*args,**kwargs):
         context = {}
         comment = ItemComment.objects.get(pk=self.kwargs["pk"])
@@ -394,14 +380,12 @@ class AllItemCommunityCommentLikeWindow(View):
             context['likes'] = current_page.page(1)
         except EmptyPage:
             context['likes'] = current_page.page(current_page.num_pages)
-        return render_to_response(template_name, context)
+        return render_to_response("item_votes/c_all_comment_like.html", context)
 
 class AllItemCommunityCommentDislikeWindow(View):
     """
     Окно со всеми дизлайками для комментария к записи сообщества
     """
-    template_name="item_votes/c_all_comment_dislike.html"
-
     def get(self,request,*args,**kwargs):
         context = {}
         comment = ItemComment.objects.get(pk=self.kwargs["pk"])
@@ -418,14 +402,12 @@ class AllItemCommunityCommentDislikeWindow(View):
             context['dislikes'] = current_page.page(1)
         except EmptyPage:
             context['dislikes'] = current_page.page(current_page.num_pages)
-        return render_to_response(template_name, context)
+        return render_to_response("item_votes/c_all_comment_dislike.html", context)
 
 class AllItemUserRepostWindow(View):
     """
     Окно со всеми поделившимися записью пользователя
     """
-    template_name="item_votes/u_all_repost.html"
-
     def get(self,request,*args,**kwargs):
         context = {}
         item = Item.objects.get(pk=self.kwargs["pk"])
@@ -441,15 +423,13 @@ class AllItemUserRepostWindow(View):
             raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
         elif request.user.is_anonymous and not user.is_closed_profile():
             reposts = item.get_reposts()
-        return render_to_response(template_name, context)
+        return render_to_response("item_votes/u_all_repost.html", context)
 
 
 class AllItemCommunityRepostWindow(View):
     """
     Окно со всеми поделившимися записью сообщества
     """
-    template_name="item_votes/c_all_repost.html"
-
     def get(self,request,*args,**kwargs):
         context = {}
         item = Item.objects.get(pk=self.kwargs["pk"])
@@ -466,4 +446,4 @@ class AllItemCommunityRepostWindow(View):
             context['reposts'] = current_page.page(1)
         except EmptyPage:
             context['reposts'] = current_page.page(current_page.num_pages)
-        return render_to_response(template_name, context)
+        return render_to_response("item_votes/c_all_repost.html", context)
