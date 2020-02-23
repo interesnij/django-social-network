@@ -218,11 +218,11 @@ class AllItemUserLikeWindow(View):
 
         context['user'] = user
         try:
-			context['likes'] = current_page.page(page)
-		except PageNotAnInteger:
-			context['likes'] = current_page.page(1)
-		except EmptyPage:
-			context['likes'] = current_page.page(current_page.num_pages)
+            context['likes'] = current_page.page(page)
+        except PageNotAnInteger:
+            context['likes'] = current_page.page(1)
+        except EmptyPage:
+            context['likes'] = current_page.page(current_page.num_pages)
         return render_to_response(template_name, context)
 
 class AllItemUserDislikeWindow(View):
@@ -249,11 +249,11 @@ class AllItemUserDislikeWindow(View):
         page = request.GET.get('page')
 		context['user'] = user
         try:
-			context['dislikes'] = current_page.page(page)
-		except PageNotAnInteger:
-			context['dislikes'] = current_page.page(1)
-		except EmptyPage:
-			context['dislikes'] = current_page.page(current_page.num_pages)
+            context['dislikes'] = current_page.page(page)
+        except PageNotAnInteger:
+            context['dislikes'] = current_page.page(1)
+        except EmptyPage:
+            context['dislikes'] = current_page.page(current_page.num_pages)
         return render_to_response(template_name, context)
 
 class AllItemUserCommentDislikeWindow(View):
@@ -280,11 +280,11 @@ class AllItemUserCommentDislikeWindow(View):
         page = request.GET.get('page')
 		context['user'] = user
         try:
-			context['dislikes'] = current_page.page(page)
-		except PageNotAnInteger:
-			context['dislikes'] = current_page.page(1)
-		except EmptyPage:
-			context['dislikes'] = current_page.page(current_page.num_pages)
+            context['dislikes'] = current_page.page(page)
+        except PageNotAnInteger:
+            context['dislikes'] = current_page.page(1)
+        except EmptyPage:
+            context['dislikes'] = current_page.page(current_page.num_pages)
         return render_to_response(template_name, context)
 
 class AllItemUserCommentLikeWindow(View):
@@ -310,11 +310,11 @@ class AllItemUserCommentLikeWindow(View):
         page = request.GET.get('page')
 		context['request_user'] = request.user
         try:
-			context['likes'] = current_page.page(page)
-		except PageNotAnInteger:
-			context['likes'] = current_page.page(1)
-		except EmptyPage:
-			context['likes'] = current_page.page(current_page.num_pages)
+            context['likes'] = current_page.page(page)
+        except PageNotAnInteger:
+            context['likes'] = current_page.page(1)
+        except EmptyPage:
+            context['likes'] = current_page.page(current_page.num_pages)
         return render_to_response(template_name, context)
 
 
