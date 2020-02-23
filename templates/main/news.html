@@ -51,10 +51,9 @@
 var page = 2;
 var loaded = false;
 onscroll = function(){
-  if (loaded){return};
   try{
   if(news_load.querySelectorAll('.infinite-item').length === 15){
-  height = news_load.clientHeight-100;
+  height = news_load.clientHeight;
   if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
     if (loaded){return};
     var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
