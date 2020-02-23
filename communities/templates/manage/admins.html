@@ -28,7 +28,7 @@
             <div class="card-body px-0 py-0">
                 <ul class="list-group" id="admins-container">
                     {% for object in object_list %}
-                    <li class="list-group-item li_{{object.pk }}" data-uuid="{{ object.uuid }}" data-pk="{{ community.pk }}">
+                    <li class="list-group-item li_{{object.pk }} admins" data-uuid="{{ object.uuid }}" data-pk="{{ community.pk }}">
                         <div class="media">
                           <a href="{% url 'user' pk=object.pk %}" class="ajax" data-html="#ajax">
                             <figure>
@@ -79,7 +79,7 @@
   var loaded = false;
   onscroll = function(){
     try{
-    if(document.getElementById("admins-container").querySelector('.list-group-item')){
+    if(document.getElementById("admins-container").querySelector('.admins')){
     var height = document.documentElement.clientHeight-1;
     if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
       if (loaded){return};
@@ -94,7 +94,7 @@
         var elem = document.createElement('span');
         var load = document.getElementById("admins-container");
         elem.innerHTML = link_3.responseText;
-        if(elem.getElementsByClassName('list-group-item').length < 15){
+        if(elem.getElementsByClassName('admins').length < 15){
           loaded = true
         };
         load.append(elem);

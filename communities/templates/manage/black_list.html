@@ -29,7 +29,7 @@
               {% if object_list %}
                 <ul class="list-group" id="blacklist-container">
                     {% for object in object_list %}
-                    <li class="list-group-item">
+                    <li class="list-group-item blacklist">
                         <div class="media">
                           <a href="{% url 'user' pk=object.pk %}" class="ajax" data-html="#ajax">
                             <figure>
@@ -74,7 +74,7 @@
   var loaded = false;
   onscroll = function(){
     try{
-    if(document.getElementById("blacklist-container").querySelector('.list-group-item')){
+    if(document.getElementById("blacklist-container").querySelector('.blacklist')){
     var height = document.documentElement.clientHeight-1;
     if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
       if (loaded){return};
@@ -89,7 +89,7 @@
         var elem = document.createElement('span');
         var load = document.getElementById("blacklist-container");
         elem.innerHTML = link_3.responseText;
-        if(elem.getElementsByClassName('list-group-item').length < 15){
+        if(elem.getElementsByClassName('blacklist').length < 15){
           loaded = true
         };
         load.append(elem);
