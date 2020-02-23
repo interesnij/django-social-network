@@ -309,7 +309,7 @@ class AllItemUserCommentLikeWindow(View):
             likes = comment.get_likes_for_comment_item(request.user)
         current_page = Paginator(likes, 15)
         page = request.GET.get('page')
-		context['request_user'] = request.user
+        context['request_user'] = request.user  
         try:
             context['likes'] = current_page.page(page)
         except PageNotAnInteger:
