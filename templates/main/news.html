@@ -52,14 +52,15 @@ var page = 2;
 var loaded = false;
 onscroll = function(){
   try{
-
+  function transferFailed(evt) {alert("При загрузке файла произошла ошибка.");}
   if(news_load.querySelectorAll('.infinite-item').length === 15){
   height = news_load.clientHeight-100;
   if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
     if (loaded){return};
     var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     link_3.open( 'GET', '{% url "news_list" %}?page=' + page++, true );
-    link_3.onload = function(e) {if (this.status != 200) {console.log("ошибочка");return false}};
+    link_3.onload = function(e) {if (this.status != 200) {console.log("ошибочка");link_3.abort()}};
+    link_3.addEventListener("error", transferFailed, false);
     link_3.send();
     link_3.onreadystatechange = function () {
     if ( this.readyState == 4 && this.status == 200 ) {
