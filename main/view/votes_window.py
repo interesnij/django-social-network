@@ -200,6 +200,7 @@ class AllItemUserLikeWindow(View):
     template_name="item_votes/u_all_like.html"
 
     def get(self,request,*args,**kwargs):
+        context = {}
         item = Item.objects.get(uuid=self.kwargs["uuid"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user and request.user.is_authenticated:
@@ -232,6 +233,7 @@ class AllItemUserDislikeWindow(View):
     template_name="item_votes/u_all_dislike.html"
 
     def get(self,request,*args,**kwargs):
+        context = {}
         item = Item.objects.get(uuid=self.kwargs["uuid"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user and request.user.is_authenticated:
@@ -263,6 +265,7 @@ class AllItemUserCommentDislikeWindow(View):
     template_name="item_votes/u_all_comment_dislike.html"
 
     def get(self,request,*args,**kwargs):
+        context = {}
         comment = ItemComment.objects.get(pk=self.kwargs["pk"])
         user = User.objects.get(uuid=self.kwargs["uuid"])
         if user != request.user and request.user.is_authenticated:
@@ -294,6 +297,7 @@ class AllItemUserCommentLikeWindow(View):
     template_name="item_votes/u_all_comment_like.html"
 
     def get(self,request,*args,**kwargs):
+        context = {}
         comment = ItemComment.objects.get(pk=self.kwargs["pk"])
         user = User.objects.get(uuid=self.kwargs["uuid"])
         if user != request.user and request.user.is_authenticated:
@@ -309,7 +313,7 @@ class AllItemUserCommentLikeWindow(View):
             likes = comment.get_likes_for_comment_item(request.user)
         current_page = Paginator(likes, 15)
         page = request.GET.get('page')
-        context['request_user'] = request.user  
+        context['request_user'] = request.user
         try:
             context['likes'] = current_page.page(page)
         except PageNotAnInteger:
@@ -326,6 +330,7 @@ class AllItemCommunityLikeWindow(View):
     template_name="item_votes/c_all_like.html"
 
     def get(self,request,*args,**kwargs):
+        context = {}
         item = Item.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_posts_for_community_with_name(request.user,community.name)
@@ -349,6 +354,7 @@ class AllItemCommunityDislikeWindow(View):
     template_name="item_votes/c_all_dislike.html"
 
     def get(self,request,*args,**kwargs):
+        context = {}
         item = Item.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_posts_for_community_with_name(request.user,community.name)
@@ -372,6 +378,7 @@ class AllItemCommunityCommentLikeWindow(View):
     template_name="item_votes/c_all_comment_like.html"
 
     def get(self,request,*args,**kwargs):
+        context = {}
         comment = ItemComment.objects.get(pk=self.kwargs["pk"])
         community = Community.objects.get(uuid=self.kwargs["uuid"])
         check_can_get_posts_for_community_with_name(request.user,community.name)
@@ -395,6 +402,7 @@ class AllItemCommunityCommentDislikeWindow(View):
     template_name="item_votes/c_all_comment_dislike.html"
 
     def get(self,request,*args,**kwargs):
+        context = {}
         comment = ItemComment.objects.get(pk=self.kwargs["pk"])
         community = Community.objects.get(uuid=self.kwargs["uuid"])
         check_can_get_posts_for_community_with_name(request.user,community.name)
@@ -418,6 +426,7 @@ class AllItemUserRepostWindow(View):
     template_name="item_votes/u_all_repost.html"
 
     def get(self,request,*args,**kwargs):
+        context = {}
         item = Item.objects.get(pk=self.kwargs["pk"])
         user = User.objects.get(uuid=self.kwargs["uuid"])
         if user != request.user and request.user.is_authenticated:
@@ -441,6 +450,7 @@ class AllItemCommunityRepostWindow(View):
     template_name="item_votes/c_all_repost.html"
 
     def get(self,request,*args,**kwargs):
+        context = {}
         item = Item.objects.get(pk=self.kwargs["pk"])
         community = Community.objects.get(uuid=self.kwargs["uuid"])
         check_can_get_posts_for_community_with_name(request.user,community.name)
