@@ -48,10 +48,10 @@
   };
   link.send( null );
 
+if(document.getElementById("news_load").querySelector('.infinite-item')){
 var page = 2;
 var loaded = false;
 onscroll = function(){
-  if(document.getElementById("news_load").querySelector('.infinite-item')){
   height = document.documentElement.clientHeight-1;
   if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
     if (loaded){return};
