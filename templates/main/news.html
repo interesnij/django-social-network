@@ -51,7 +51,7 @@
 var page = 2;
 var loaded = false;
 onscroll = function(){
-  if(news_load.querySelector('.infinite-item')){
+  if(document.getElementById("news_load").querySelector('.infinite-item')){
   height = document.documentElement.clientHeight-1;
   if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
     if (loaded){return};
