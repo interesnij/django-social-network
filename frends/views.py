@@ -78,13 +78,13 @@ class OnlineFrendsListView(View):
 			check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
 			if self.user.is_closed_profile():
 				check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
-			online_list=self.user.get_all_connection()
+			online_list=self.user.get_online_connection()
 		elif request.user.is_anonymous and self.user.is_closed_profile():
 			raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
 		elif request.user.is_anonymous and not self.user.is_closed_profile():
-			online_list=self.user.get_all_connection()
+			online_list=self.user.get_online_connection()
 		elif self.user == request.user:
-			online_list=self.user.get_all_connection()
+			online_list=self.user.get_online_connection()
 		current_page = Paginator(online_list, 15)
 		context['user'] = self.user
 		page = request.GET.get('page')
@@ -98,32 +98,30 @@ class OnlineFrendsListView(View):
 
 
 class CommonFrendsListView(View):
-    def get(self, request, *args, **kwargs):
-        context = {}
-        self.user=User.objects.get(uuid=self.kwargs["uuid"])
-        if self.user != request.user and request.user.is_authenticated:
-            check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
-            if self.user.is_closed_profile():
-                check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
-            common_list = request.user.get_common_friends_of_user(self.user)
-        elif request.user.is_anonymous and self.user.is_closed_profile():
-            raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
-        elif request.user.is_anonymous and not self.user.is_closed_profile():
-            common_list = request.user.get_common_friends_of_user(self.user)
-        elif self.user == request.user:
-            common_list = request.user.get_common_friends_of_user(self.user)
-
+	def get(self, request, *args, **kwargs):
+		context = {}
+		self.user=User.objects.get(uuid=self.kwargs["uuid"])
+		if self.user != request.user and request.user.is_authenticated:
+			check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
+			if self.user.is_closed_profile():
+				check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
+			common_list=self.user.get_common_friends_of_user()
+		elif request.user.is_anonymous and self.user.is_closed_profile():
+			raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
+		elif request.user.is_anonymous and not self.user.is_closed_profile():
+			common_list=self.user.get_common_friends_of_user()
+		elif self.user == request.user:
+			common_list=self.user.get_common_friends_of_user()
 		current_page = Paginator(common_list, 15)
-        context['user'] = self.user
-        context['request_user'] = request.user
-        page = request.GET.get('page')
-        try:
-            context['common_list'] = current_page.page(page)
-        except PageNotAnInteger:
-            context['common_list'] = current_page.page(1)
-        except EmptyPage:
-            context['common_list'] = current_page.page(current_page.num_pages)
-        return render_to_response('common_frends_list.html', context)
+		context['user'] = self.user
+		page = request.GET.get('page')
+		try:
+			context['common_list'] = current_page.page(page)
+		except PageNotAnInteger:
+			context['common_list'] = current_page.page(1)
+		except EmptyPage:
+			context['common_list'] = current_page.page(current_page.num_pages)
+		return render_to_response('common_frends_list.html', context)
 
 
 class ConnectCreate(View):
