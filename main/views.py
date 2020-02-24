@@ -26,7 +26,7 @@ class NewsListView(ListView):
 
 	def get_queryset(self):
 		if self.request.user.is_authenticated:
-			items = request.user.get_timeline_posts().order_by('-created')
+			items = self.request.user.get_timeline_posts().order_by('-created')
 		else:
 			items=None
 		return items
