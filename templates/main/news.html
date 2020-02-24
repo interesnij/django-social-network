@@ -48,11 +48,11 @@
   };
   link.send( null );
 
-//try{
+
 var page = 2;
 var loaded = false;
 onscroll = function(){
-//  if(news_load.querySelectorAll('.infinite-item').length === 5){
+  if(news_load.querySelectorAll('.infinite-item').length === 5){
   height = document.documentElement.clientHeig+50;
   if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
 
@@ -73,9 +73,9 @@ onscroll = function(){
       }
     }
   }
-//}
 }
-//}catch{return}
+}
+
 
 });
 </script>
