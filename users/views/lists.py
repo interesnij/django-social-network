@@ -156,6 +156,7 @@ class ItemListView(View):
 			template = 'lenta/my_item_list.html'
 		current_page = Paginator(items_list, 15)
 		context['request_user'] = request.user
+		context['user'] = self.user
 		context['object'] = fixed
 		page = request.GET.get('page')
 		try:
