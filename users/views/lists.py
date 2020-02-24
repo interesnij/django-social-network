@@ -151,3 +151,13 @@ class ItemListView(View):
 			context['items_list'] = current_page.page(current_page.num_pages)
 
 		return render_to_response(template, context)
+
+
+class AllUsers(ListView):
+	template_name="all_users.html"
+	model=User
+	paginate_by=5
+
+	def get_queryset(self):
+		items = User.objects.only("pk")
+		return items
