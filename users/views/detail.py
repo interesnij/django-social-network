@@ -43,23 +43,6 @@ class UserItemView(TemplateView):
         return context
 
 
-class AllUsers(View):
-	def get(self, request, *args, **kwargs):
-		context = {}
-		users_list = User.objects.only("pk")
-		current_page = Paginator(users_list, 5)
-		page = request.GET.get('page')
-
-		try:
-			context['users_list'] = current_page.page(page)
-		except PageNotAnInteger:
-			context['users_list'] = current_page.page(1)
-		except EmptyPage:
-			context['users_list'] = current_page.page(current_page.num_pages)
-		return render_to_response('all_users.html', context)
-
-
-
 class AllPossibleUsers(TemplateView):
     template_name = None
 
@@ -182,7 +165,7 @@ class ProfileUserView(TemplateView):
         return context
 
 
-class NewsListView(ListView):
+class AllUsers(ListView):
 	template_name="all_users.html"
 	model=User
 	paginate_by=5
