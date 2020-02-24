@@ -53,7 +53,7 @@ var loaded = false;
 var stream_load = document.getElementById("stream");
 onscroll = function(){
   try{
-  if(stream_load.querySelectorAll('.infinite-item').length === 5){
+
   height = document.documentElement.clientHeight-1;
   if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
     if (loaded){return};
@@ -71,7 +71,7 @@ onscroll = function(){
       }
     }
   }
-}
+
 }catch{return}
 }
 
