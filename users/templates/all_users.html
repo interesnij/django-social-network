@@ -70,7 +70,7 @@
   onscroll = function(){
     try{
     var all_users = document.getElementById("all-users-container");
-    if(all_users.querySelectorAll('.infinite-item').length === (page-1)*5){
+    if(all_users.querySelectorAll('.user').length === (page-1)*5){
     height = document.documentElement.clientHeight-1;
     if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
       if (loaded){return};
