@@ -54,13 +54,12 @@
       if (loaded){return};
       var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
       link_3.open( 'GET', '{% url "all_users_list" %}?page=' + page++, true );
-      link_3.onload = function(e) {if (this.status == 404) {loaded = true}};
-      if(!loaded){link_3.send()};
+      link_3.send();
       link_3.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
         var elem = document.createElement('span');
         elem.innerHTML = link_3.responseText;
-        if(elem.getElementsByClassName('infinite-item').length < 5){loaded = true};
+        if(elem.getElementsByClassName('infinite-item').length === (page-1)*5){loaded = true};
         var friends_load = document.getElementById("all-users-container");
         friends_load.append(elem);
         }
