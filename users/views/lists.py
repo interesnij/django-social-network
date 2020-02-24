@@ -95,22 +95,6 @@ class UserMusicList(View):
 		return render_to_response(template, context)
 
 
-class AllUsersList(View):
-	def get(self, request, *args, **kwargs):
-		context = {}
-		users_list = User.objects.only("pk")
-		current_page = Paginator(users_list, 5)
-		page = request.GET.get('page')
-
-		try:
-			context['users_list'] = current_page.page(page)
-		except PageNotAnInteger:
-			context['users_list'] = current_page.page(1)
-		except EmptyPage:
-			context['users_list'] = current_page.page(current_page.num_pages)
-		return render_to_response('all_users_list.html', context)
-
-
 class AllPossibleUsersList(View):
 	def get(self, request, *args, **kwargs):
 		context = {}
