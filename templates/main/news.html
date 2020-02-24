@@ -53,10 +53,10 @@ var loaded = false;
 onscroll = function(){
   try{
   if(news_load.querySelectorAll('.infinite-item').length === 8){
-  height = document.documentElement.clientHeight+10;
+  height = document.documentElement.clientHeight+100;
   if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
-    height = height-100
     if (loaded){return};
+    setTimeout(function() {
     var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     link_3.open( 'GET', '{% url "news_list" %}?page=' + page++, true );
     link_3.onload = function() {if (this.status != 200) { loaded = true; }};
@@ -73,6 +73,7 @@ onscroll = function(){
       stream_load.append(elem);
       }
     }
+  }, 3000);
   }
 }
 }catch{return}
