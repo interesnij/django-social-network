@@ -50,7 +50,7 @@
 
 var page = 2;
 var loaded = false;
-(function(){
+onscroll = function(){
   try{
   if(news_load.querySelectorAll('.infinite-item').length === 15){
   height = document.documentElement.clientHeight+50;
@@ -76,7 +76,6 @@ var loaded = false;
 }
 }catch{return}
 }
-)
 });
 </script>
 
