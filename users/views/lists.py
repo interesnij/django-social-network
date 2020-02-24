@@ -98,7 +98,7 @@ class UserMusicList(View):
 class AllUsersList(View):
 	def get(self, request, *args, **kwargs):
 		context = {}
-		users_list = User.objects.all()
+		users_list = User.objects.only("pk")
 		current_page = Paginator(users_list, 5)
 		page = request.GET.get('page')
 
