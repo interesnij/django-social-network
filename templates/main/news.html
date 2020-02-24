@@ -50,11 +50,11 @@
 
 var page = 2;
 var loaded = false;
-onscroll = function(e){
+onscroll = function(){
   try{
   if(news_load.querySelectorAll('.infinite-item').length === 5){
-  height = news_load.clientHeight+100;
-  if(window.scrollY = height){
+  height = document.documentElement.clientHeight;
+  if(window.scrollY >= document.documentElement.scrollHeight-height){
     if (loaded){return};
     var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     link_3.open( 'GET', '{% url "news_list" %}?page=' + page++, true );
@@ -72,7 +72,7 @@ onscroll = function(e){
       stream_load.append(elem);
       }
     }
-  };e.return
+  }
 }
 }catch{return}
 }
