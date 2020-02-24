@@ -78,9 +78,8 @@
       link_3.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
         var elem = document.createElement('span');
-        var users_list = document.createElement('span');
         elem.innerHTML = link_3.responseText;
-        users_list.innerHTML = elem.getElementsByClassName("user");
+        users_list = elem.querySelector(".list-group");
         if(elem.getElementsByClassName('user').length === (page-1)*5){loaded = true};
         var all_users = document.getElementById("all-users-container");
         all_users.append(users_list);
