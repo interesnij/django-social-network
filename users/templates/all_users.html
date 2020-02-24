@@ -21,10 +21,10 @@
             </div>
             <br><br>
             <div class="card-body px-0 py-0">
-              {% if users_list %}
+              {% if object_list %}
               <ul class="list-group" id="all-users-container">
-                  {% for object in users_list %}
-                  <li class="list-group-item infinite-item">
+                  {% for object in object_list %}
+                  <li class="list-group-item user">
                       <div class="media">
                         <a href="{% url 'user' pk=object.pk %}" class="ajax" data-html="#ajax">
                           <figure>
@@ -80,7 +80,7 @@
       if ( this.readyState == 4 && this.status == 200 ) {
         var elem = document.createElement('span');
         elem.innerHTML = link_3.responseText;
-        if(elem.getElementsByClassName('infinite-item').length === (page-1)*5){loaded = true};
+        if(elem.getElementsByClassName('user').length === (page-1)*5){loaded = true};
         var friends_load = document.getElementById("all-users-container");
         friends_load.append(elem);
         }
