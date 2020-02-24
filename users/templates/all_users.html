@@ -46,11 +46,10 @@
   };
   link.send( null );
 
-  var page = 2;
-  var loaded = false;
-
   onscroll = function(){
     try{
+      var page = 2;
+      var loaded = false;
     height = document.documentElement.clientHeight-1;
     if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
       if (loaded){return};
