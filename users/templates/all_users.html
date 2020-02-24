@@ -69,6 +69,8 @@
   var loaded = false;
   onscroll = function(){
     try{
+    var all_users = document.getElementById("all-users-container");
+    if(all_users.querySelectorAll('.infinite-item').length === (page-1)*5){
     height = document.documentElement.clientHeight-1;
     if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
       if (loaded){return};
@@ -80,13 +82,12 @@
         var elem = document.createElement('span');
         elem.innerHTML = link_3.responseText;
         users_list = elem.querySelector(".list-group");
-        users = users_list.querySelectorAll('user');
-        if(elem.getElementsByClassName('user').length === (page-1)*5){loaded = true};
-        var all_users = document.getElementById("all-users-container");
-        all_users.append(users);
+        if(users_list.getElementsByClassName('user').length === 5){loaded = true};
+        all_users.append(users_list);
         }
       }
     }
+  }
   }catch{return};
 }
 
