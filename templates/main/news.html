@@ -50,9 +50,10 @@
 
 var page = 2;
 var loaded = false;
+var stream_load = document.getElementById("stream");
 onscroll = function(){
   try{
-  if(news_load.querySelectorAll('.infinite-item').length === 5){
+  if(stream_load.querySelectorAll('.infinite-item').length === 5){
   height = document.documentElement.clientHeight-1;
   if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
     if (loaded){return};
@@ -64,7 +65,6 @@ onscroll = function(){
     link_3.onreadystatechange = function () {
     if ( this.readyState == 4 && this.status == 200 ) {
       var elem = document.createElement('span');
-      var stream_load = document.getElementById("stream");
       elem.innerHTML = link_3.responseText;
       //if(elem.getElementsByClassName('infinite-item').length < 5){};
       stream_load.append(elem);
