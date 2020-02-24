@@ -50,12 +50,12 @@
 
 var page = 2;
 var loaded = false;
-var stream_load = document.getElementById("stream");
 onscroll = function(){
   try{
 
   height = document.documentElement.clientHeight-1;
   if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
+    var stream_load = document.getElementById("stream");
     if (loaded){return};
     var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     link_3.open( 'GET', '{% url "news_list" %}?page=' + page++, true );
