@@ -52,9 +52,10 @@ var page = 2;
 var loaded = false;
 onscroll = function(){
   try{
-  if(news_load.querySelectorAll('.infinite-item').length === 30){
+  if(news_load.querySelectorAll('.infinite-item').length === 8){
   height = document.documentElement.clientHeight-1;
   if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
+    height = height+100
     if (loaded){return};
     var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     link_3.open( 'GET', '{% url "news_list" %}?page=' + page++, true );
@@ -66,7 +67,7 @@ onscroll = function(){
       var elem = document.createElement('span');
       var stream_load = document.getElementById("stream");
       elem.innerHTML = link_3.responseText;
-      if(elem.getElementsByClassName('infinite-item').length < 30){
+      if(elem.getElementsByClassName('infinite-item').length < 8){
         loaded = true;
       };
       stream_load.append(elem);
