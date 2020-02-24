@@ -80,7 +80,7 @@
         var elem = document.createElement('span');
         elem.innerHTML = link_3.responseText;
         users_list = elem.querySelector(".list-group");
-        users = users_list.replace('<ul class="list-group" id="all-users-container">','').replace('</ul>','')
+        users = users_list.getElementsByClassName('user');
         if(elem.getElementsByClassName('user').length === (page-1)*5){loaded = true};
         var all_users = document.getElementById("all-users-container");
         all_users.append(users);
