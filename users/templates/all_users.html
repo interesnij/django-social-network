@@ -51,28 +51,26 @@
   var loaded = false;
 
   onscroll = function(){
+    try{
     height = document.documentElement.clientHeight-1;
     if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
       if (loaded){return};
       var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
       link_3.open( 'GET', '/users/detail/all_users_list/?page=' + page++, true );
-      link_3.onload = function(e) {
-        if (this.status == 404) {loaded = true}
-    };
-    link_3.send()
+      link_3.onload = function(e) {if (this.status == 404) {loaded = true}};
+      link_3.send()
       link_3.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
         var elem = document.createElement('span');
         var friends_load = document.getElementById("all-users-container");
         elem.innerHTML = link_3.responseText;
-        if(elem.getElementsByClassName('infinite-item').length < 16){
-          loaded = true
-        };
+        if(elem.getElementsByClassName('infinite-item').length < 5){loaded = true};
         friends_load.append(elem);
         }
       }
     }
-  };
+  }catch{return};
+}
 </script>
 
 {% endblock %}
