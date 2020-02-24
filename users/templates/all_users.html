@@ -79,7 +79,8 @@
       if ( this.readyState == 4 && this.status == 200 ) {
         var elem = document.createElement('span');
         elem.innerHTML = link_3.responseText;
-        users_list = elem.querySelector(".list-group").innerHTML;
+        users_list = elem.querySelector(".list-group");
+        users_list.replace('<ul class="list-group" id="all-users-container">','').replace('</ul>','')
         if(elem.getElementsByClassName('user').length === (page-1)*5){loaded = true};
         var all_users = document.getElementById("all-users-container");
         all_users.append(users_list);
