@@ -80,6 +80,7 @@ ready(() => {
   var loaded = false;
   onscroll = function(){
     try{
+    if(news_load.querySelectorAll('.admins').length === (page-1)*30){
     var height = document.documentElement.clientHeight-1;
     if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
       if (loaded){return};
@@ -91,12 +92,12 @@ ready(() => {
       if ( this.readyState == 4 && this.status == 200 ) {
         var elem = document.createElement('span');
         elem.innerHTML = link_3.responseText;
-        if(elem.getElementsByClassName('admins').length < 15){loaded = true;};
+        if(elem.getElementsByClassName('admins').length === (page-1)*30){loaded = true;};
         var admins = getElementById("admins-container");
         admins.append(elem);
         }
       }
-    }
+    }}
   }catch{return}
   }
 });

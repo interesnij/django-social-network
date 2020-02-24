@@ -22,12 +22,11 @@ class MainPageView(TemplateView):
 class NewsListView(ListView):
 	template_name="news_list.html"
 	model=Item
-	paginate_by=5
+	paginate_by=30
 
 	def get_queryset(self):
-		self.user=self.request.user
-		if self.user.is_authenticated:
-			items = self.user.get_timeline_posts().order_by('-created')
+		if request.user.is_authenticated:
+			items = request.user.get_timeline_posts().order_by('-created')
 		else:
 			items=None
 		return items
