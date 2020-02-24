@@ -55,7 +55,7 @@ onscroll = function(){
   if(news_load.querySelectorAll('.infinite-item').length === 8){
   height = document.documentElement.clientHeight+10;
   if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
-    height = height+100
+    height = height-100
     if (loaded){return};
     var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     link_3.open( 'GET', '{% url "news_list" %}?page=' + page++, true );
