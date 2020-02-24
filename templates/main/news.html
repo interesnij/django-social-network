@@ -51,11 +51,12 @@
 var page = 2;
 var loaded = false;
 onscroll = function(){
+  if (loaded){return};
   try{
   if(news_load.querySelectorAll('.infinite-item').length === 15){
   height = document.documentElement.clientHeight+50;
   if(window.scrollY >= document.documentElement.scrollHeight-height){
-    if (loaded && !onscroll){return};
+    if (loaded){return};
     var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     link_3.open( 'GET', '{% url "news_list" %}?page=' + page++, true );
     link_3.onload = function() {if (this.status != 200) { loaded = true; }};
