@@ -144,8 +144,8 @@
     }
     });
 
-try{
     onscroll = function(){
+      try{
       var friends = document.getElementById("friends_container");
       if(friends.querySelectorAll('.list-group-item').length === (page-1)*2){
       var height = document.documentElement.clientHeight-1;
@@ -164,32 +164,28 @@ try{
           }
         }
       }}
-    }
-  }catch{return}
-
-
-try{
-    onscroll = function(){
-      var online = document.getElementById("online_container");
-      if(online.querySelectorAll('.list-group-item').length === (page-1)*2){
-      var height = document.documentElement.clientHeight-1;
-      if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
-        if (loaded){return};
-        var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-        link_3.open( 'GET', '/friends/online/' + '{{ user.uuid }}/?page=' + page++, true );
-        link_3.send();
-        link_3.onreadystatechange = function () {
-        if ( this.readyState == 4 && this.status == 200 ) {
-          var elem = document.createElement('span');
-          elem.innerHTML = link_3.responseText;
-          var online_list = elem.querySelector(".list-group");
-          if(online_list.getElementsByClassName('list-group-item').length === 2){loaded = true;};
-          online.append(online_list);
-          }
+    }catch{return};
+    
+    try{
+    var online = document.getElementById("online_container");
+    if(online.querySelectorAll('.list-group-item').length === (page-1)*2){
+    var height = document.documentElement.clientHeight-1;
+    if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
+      if (loaded){return};
+      var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+      link_3.open( 'GET', '/friends/online/' + '{{ user.uuid }}/?page=' + page++, true );
+      link_3.send();
+      link_3.onreadystatechange = function () {
+      if ( this.readyState == 4 && this.status == 200 ) {
+        var elem = document.createElement('span');
+        elem.innerHTML = link_3.responseText;
+        var online_list = elem.querySelector(".list-group");
+        if(online_list.getElementsByClassName('list-group-item').length === 2){loaded = true;};
+        online.append(online_list);
         }
-      }}
-    }
-  }catch{return}
+      }
+    }}
+  }
 
 </script>
 {% endblock %}
