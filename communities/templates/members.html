@@ -78,7 +78,7 @@
         var elem = document.createElement('span');
         elem.innerHTML = link_3.responseText;
         members_list = elem.querySelector(".list-group");
-        if(members.getElementsByClassName('member').length === 5){loaded = true;};
+        if(members_list.getElementsByClassName('member').length === 5){loaded = true;};
         members.append(members_list);
         }
       }
