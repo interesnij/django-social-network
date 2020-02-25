@@ -54,7 +54,7 @@ class AllCommunities(ListView):
 		return groups
 
 	def get_context_data(self,**kwargs):
-		context=super(CommunityFriendsView,self).get_context_data(**kwargs)
+		context=super(AllCommunities,self).get_context_data(**kwargs)
 		context["communities_categories"]=communities_categories
 		return context
 
