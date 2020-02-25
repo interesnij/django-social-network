@@ -17,7 +17,7 @@
             <div class="card-header">
                 <div class="media">
                     <div class="media-body">
-                        <h5 class="mt-1">Все сообщества</h5>
+                        <h5 class="mt-1">Сообщества категории "{{ category.name}}"</h5>
                     </div>
                 </div>
             </div>
@@ -87,7 +87,7 @@
   var loaded = false;
 
   onscroll = function(){
-    try{
+  //  try{
     var communities = document.getElementById("cat_communities_container");
     if(communities.querySelectorAll('.list-group-item').length === (page-1)*30){
     var height = document.documentElement.clientHeight-1;
@@ -106,7 +106,7 @@
         }
       }
     }}
-  }catch{return}
+//  }catch{return}
 }
 });
 </script>
