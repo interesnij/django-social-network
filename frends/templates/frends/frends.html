@@ -142,7 +142,7 @@
 <script>
   ready(() => {
     var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    link.open( 'GET', '/frends/all-list/' + '{{ user.uuid }}', true );
+    link.open( 'GET', '/friends/all-list/' + '{{ user.uuid }}', true );
     link.onreadystatechange = function () {
       if ( link.readyState == 4 ) {
           if ( link.status == 200 ) {
@@ -158,7 +158,7 @@
       if (document.querySelector("#tabhome223-tab").classList.contains("online")) {
       var tab = document.getElementById("tabhome223-tab"); tab.classList.remove('online');
       var link_2 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-      link_2.open( 'GET', '/frends/online/' + '{{ user.uuid }}', true );
+      link_2.open( 'GET', '/friends/online/' + '{{ user.uuid }}', true );
       link_2.onreadystatechange = function () {
         if ( link_2.readyState == 4 ) {
             if ( link_2.status == 200 ) {
@@ -175,7 +175,7 @@
         if (document.querySelector("#tabhome323-tab").classList.contains("common")) {
         var tab = document.getElementById("tabhome323-tab"); tab.classList.remove('common');
         var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-        link_3.open( 'GET', '/frends/common/' + '{{ user.uuid }}', true );
+        link_3.open( 'GET', '/friends/common/' + '{{ user.uuid }}', true );
         link_3.onreadystatechange = function () {
           if ( link_3.readyState == 4 ) {
               if ( link_3.status == 200 ) {
