@@ -26,7 +26,7 @@
             </div>
 
             <div class="card-body px-0 py-0">
-                <ul class="list-group members-container">
+                <ul class="list-group" id="members-container">
                     {% for object in object_list %}
 
                     <li class="list-group-item li_{{object.pk }}" data-uuid="{{ object.uuid }}" data-pk="{{ community.pk }}">
@@ -117,8 +117,9 @@
   var loaded = false;
 
   onscroll = function(){
+    try{
     var members = getElementById("members-container");
-
+    if(admins.querySelectorAll('.admin').length === (page-1)*5){
     var height = document.documentElement.clientHeight-1;
     if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
       if (loaded){return};
@@ -134,8 +135,8 @@
         members.append(members_list);
         }
       }
-    }
-  }
+    }}
+  }catch{return}
 });
 </script>
 {% endblock %}
