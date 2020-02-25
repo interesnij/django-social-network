@@ -105,13 +105,13 @@ class CommonFrendsListView(View):
 			check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
 			if self.user.is_closed_profile():
 				check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
-			common_list=self.user.get_common_friends_of_user()
+			common_list=self.user.get_common_friends_of_user(request.user)
 		elif request.user.is_anonymous and self.user.is_closed_profile():
 			raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
 		elif request.user.is_anonymous and not self.user.is_closed_profile():
-			common_list=self.user.get_common_friends_of_user()
+			common_list=self.user.get_common_friends_of_user(request.user)
 		elif self.user == request.user:
-			common_list=self.user.get_common_friends_of_user()
+			common_list=self.user.get_common_friends_of_user(request.user)
 		current_page = Paginator(common_list, 15)
 		context['user'] = self.user
 		page = request.GET.get('page')
