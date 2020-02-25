@@ -81,7 +81,7 @@ ready(() => {
 
   onscroll = function(){
     try{
-    var admins = getElementById("admins-container");
+    var admins = document.getElementById("admins-container");
 
     if(admins.querySelectorAll('.admin').length === (page-1)*30){
     var height = document.documentElement.clientHeight-1;
