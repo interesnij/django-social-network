@@ -119,7 +119,7 @@
   onscroll = function(){
     try{
     var members = getElementById("members-container");
-    if(members.querySelectorAll('.admin').length === (page-1)*5){
+    if(members.querySelectorAll('.list-group-item').length === (page-1)*5){
     var height = document.documentElement.clientHeight-1;
     if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
       if (loaded){return};
