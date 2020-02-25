@@ -6,7 +6,7 @@ from communities.views.details import ItemCommunity, ItemsCommunity, CommunityDe
 urlpatterns = [
     url(r'^all-communities/$', AllCommunities.as_view(), name='all_communities'),
 
-    url(r'^(?P<pk>\d+)/members/$', CommunityMembersView.as_view(), name='community_members'),
+    url(r'^members/(?P<pk>\d+)/$', CommunityMembersView.as_view(), name='community_members'),
 
     url(r'^(?P<pk>\d+)/$', CommunityDetail.as_view(), name='community_detail'),
     url(r'^reload/(?P<pk>\d+)/$', CommunityDetailReload.as_view(), name='community_detail_reload'),
