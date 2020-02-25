@@ -180,7 +180,7 @@ class CommunityPrivateView(TemplateView):
 class CommunityAdminView(ListView):
 	template_name = None
 	model = User
-	paginate_by = 15
+	paginate_by = 30
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
@@ -255,7 +255,7 @@ class CommunityAdvertisersView(ListView):
 class CommunityModersView(ListView):
 	template_name="manage/moders.html"
 	model=User
-	paginate_by=15
+	paginate_by=5
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
