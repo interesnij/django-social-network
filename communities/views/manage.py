@@ -324,7 +324,7 @@ class CommunityFollowsView(ListView):
 class CommunityMemberManageView(ListView):
 	template_name="manage/members.html"
 	model=Community
-	paginate_by=15
+	paginate_by=5
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
