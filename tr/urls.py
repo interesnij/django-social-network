@@ -31,7 +31,7 @@ urlpatterns = [
     url(r'^moderation/', include('moderation.urls')),
     url(r'^notifications/', include('notifications.urls')),
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),
-    url(r'^frends/', include('frends.urls')),
+    url(r'^friends/', include('frends.urls')),
     url(r'^chat/', include('chat.urls')),
     url(r'^gallery/', include('gallery.urls')),
     url(r'^article/', include('article.urls')),

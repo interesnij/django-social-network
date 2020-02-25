@@ -1,5 +1,5 @@
 from django.conf.urls import url, include
-from communities.views.list import AllCommunities, CommunityMembersView
+from communities.views.list import AllCommunities, CommunityMembersView, CommunityFriendsView
 from communities.views.details import ItemCommunity, ItemsCommunity, CommunityDetail, CommunityDetailReload
 
 
@@ -7,7 +7,7 @@ urlpatterns = [
     url(r'^all-communities/$', AllCommunities.as_view(), name='all_communities'),
 
     url(r'^members/(?P<pk>\d+)/$', CommunityMembersView.as_view(), name='community_members'),
-
+    url(r'^friends/(?P<pk>\d+)/$', CommunityFriendsView.as_view(), name='community_friends'),
     url(r'^(?P<pk>\d+)/$', CommunityDetail.as_view(), name='community_detail'),
     url(r'^reload/(?P<pk>\d+)/$', CommunityDetailReload.as_view(), name='community_detail_reload'),
     url(r'^item/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', ItemCommunity.as_view(), name='community_item'),

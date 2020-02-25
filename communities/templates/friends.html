@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load thumbnail %}
-{% block title %}Подписчики сообщества "{{ community.name }}"{% endblock %}
+{% block title %}"{{ community.name }}" - друзья в сообществе{% endblock %}
 {% block content %}
 
 <div class="row">
@@ -16,7 +16,7 @@
             <div class="card-header">
                 <div class="media">
                     <div class="media-body">
-                        <h5 class="mt-1">Подписчики сообщества
+                        <h5 class="mt-1">Друзья в сообществе
                             <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=community.pk %}" data-html="#ajax">
                                 {{ community.name }}
                             </a>
@@ -26,7 +26,7 @@
             </div>
             <br><br>
             <div class="card-body px-0 py-0">
-                <ul class="list-group" id="members-container">
+                <ul class="list-group" id="friends-container">
                     {% for object in object_list %}
                     <li class="list-group-item infinite-item">
                         <div class="media">
@@ -64,21 +64,21 @@
 
   onscroll = function(){
     try{
-    var members = document.getElementById("members-container");
-    if(members.querySelectorAll('.list-group-item').length === (page-1)*30){
+    var friends = document.getElementById("friends-container");
+    if(friends.querySelectorAll('.list-group-item').length === (page-1)*30){
     var height = document.documentElement.clientHeight-1;
     if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
       if (loaded){return};
       var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-      link_3.open( 'GET', '/communities/members/' + '{{ community.pk }}/?page=' + page++, true );
+      link_3.open( 'GET', '/communities/friends/' + '{{ community.pk }}/?page=' + page++, true );
       link_3.send();
       link_3.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
         var elem = document.createElement('span');
         elem.innerHTML = link_3.responseText;
-        var members_list = elem.querySelector(".list-group");
-        if(members_list.getElementsByClassName('list-group-item').length === 30){loaded = true;};
-        members.append(members_list);
+        var friends_list = elem.querySelector(".list-group");
+        if(friends_list.getElementsByClassName('list-group-item').length === 30){loaded = true;};
+        friends.append(friends_list);
         }
       }
     }}
