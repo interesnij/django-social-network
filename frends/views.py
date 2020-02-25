@@ -12,7 +12,6 @@ class FrendsListView(TemplateView):
 	template_name = None
 
 	def get(self, request, *args, **kwargs):
-		context = {}
 		self.user=User.objects.get(pk=self.kwargs["pk"])
 		self.featured_users = request.user.get_possible_friends()[0:10]
 		if self.user == request.user:
@@ -37,15 +36,20 @@ class FrendsListView(TemplateView):
 			friends_list=self.user.get_all_connection()
 
 		current_page = Paginator(friends_list, 2)
-		context['user'] = self.user
 		page = request.GET.get('page')
-		try:
-			context['friends_list'] = current_page.page(page)
-		except PageNotAnInteger:
-			context['friends_list'] = current_page.page(1)
-		except EmptyPage:
-			context['friends_list'] = current_page.page(current_page.num_pages)
-		return render_to_response(self.template_name, context)
+		return super(FrendsListView,self).get(request,*args,**kwargs)
+
+		def get_context_data(self,**kwargs):
+			context=super(FrendsListView,self).get_context_data(**kwargs)
+			context['user'] = self.user
+			context['featured_users'] = self.featured_users
+			try:
+				context['friends_list'] = current_page.page(page)
+			except PageNotAnInteger:
+				context['friends_list'] = current_page.page(1)
+			except EmptyPage:
+				context['friends_list'] = current_page.page(current_page.num_pages)
+			return context
 
 
 class OnlineFrendsListView(View):
