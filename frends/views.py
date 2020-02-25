@@ -85,7 +85,7 @@ class OnlineFrendsListView(View):
 			online_list=self.user.get_online_connection()
 		elif self.user == request.user:
 			online_list=self.user.get_online_connection()
-		current_page = Paginator(online_list, 15)
+		current_page = Paginator(online_list, 1)
 		context['user'] = self.user
 		page = request.GET.get('page')
 		try:
