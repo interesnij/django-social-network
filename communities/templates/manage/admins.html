@@ -28,7 +28,7 @@
             <div class="card-body px-0 py-0">
                 <ul class="list-group" id="admins-container">
                     {% for object in object_list %}
-                    <li class="list-group-item li_{{object.pk }} admins" data-uuid="{{ object.uuid }}" data-pk="{{ community.pk }}">
+                    <li class="list-group-item li_{{object.pk }} admin" data-uuid="{{ object.uuid }}" data-pk="{{ community.pk }}">
                         <div class="media">
                           <a href="{% url 'user' pk=object.pk %}" class="ajax" data-html="#ajax">
                             <figure>
@@ -78,23 +78,25 @@
 ready(() => {
   var page = 2;
   var loaded = false;
+
   onscroll = function(){
     try{
-    if(news_load.querySelectorAll('.admins').length === (page-1)*30){
+    var admins = getElementById("admins-container");
+
+    if(admins.querySelectorAll('.admin').length === (page-1)*30){
     var height = document.documentElement.clientHeight-1;
     if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
       if (loaded){return};
       var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
       link_3.open( 'GET', '/communities/manage/admins/' + '{{ community.pk }}/?page=' + page++, true );
-      link_3.onload = function(e) {if (this.status == 404) {loaded = true}};
       link_3.send();
       link_3.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
         var elem = document.createElement('span');
         elem.innerHTML = link_3.responseText;
-        if(elem.getElementsByClassName('admins').length === (page-1)*30){loaded = true;};
-        var admins = getElementById("admins-container");
-        admins.append(elem);
+        admins_list = elem.querySelector(".list-group");
+        if(admins_list.getElementsByClassName('admin').length === 30){loaded = true;};
+        admins.append(admins_list);
         }
       }
     }}
