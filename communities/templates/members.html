@@ -58,12 +58,11 @@
     </div>
 </div>
 <script>
-
+ ready(() => {
   var page = 2;
   var loaded = false;
 
   onscroll = function(){
-    try{
     var members = getElementById("members-container");
 
     if(members.querySelectorAll('.list-group-item').length === (page-1)*5){
@@ -83,8 +82,7 @@
         }
       }
     }}
-  }catch{return}
   }
-
+});
 </script>
 {% endblock %}
