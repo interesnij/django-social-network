@@ -74,5 +74,5 @@ class CommunityCategoryView(ListView):
 
 	def get_queryset(self):
 		self.cat = CommunityCategory.objects.get(pk=self.kwargs["pk"])
-		categories=Community.objects.folter(category__sudcategory = self.cat)
+		categories=Community.objects.filter(category__sudcategory = self.cat)
 		return categories
