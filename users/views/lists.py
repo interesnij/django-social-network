@@ -156,7 +156,7 @@ class ItemListView(View):
 class AllUsers(ListView):
 	template_name="all_users.html"
 	model=User
-	paginate_by=5
+	paginate_by=30
 
 	def get_queryset(self):
 		items = User.objects.only("pk")
