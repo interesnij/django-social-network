@@ -1,9 +1,9 @@
 {% load thumbnail %}
 
 {% if friends_list %}
-    <ul class="frends-container list-group">
+    <ul class="list-group" id="friends_container">
       {% for object in friends_list %}
-      <li class="list-group-item infinite-item">
+      <li class="list-group-item">
             <div class="media">
               <a href="{% url 'user' pk=object.pk %}" class="ajax" data-html="#ajax">
                 <figure>

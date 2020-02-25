@@ -58,7 +58,7 @@ class AllFrendsListView(View):
 			friends_list=self.user.get_all_connection()
 		elif self.user == request.user:
 			friends_list=self.user.get_all_connection()
-		current_page = Paginator(friends_list, 15)
+		current_page = Paginator(friends_list, 2)
 		context['user'] = self.user
 		page = request.GET.get('page')
 		try:
