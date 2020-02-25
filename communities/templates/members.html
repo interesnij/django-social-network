@@ -26,9 +26,9 @@
             </div>
             <br><br>
             <div class="card-body px-0 py-0">
-                <ul class="list-group members-container">
+                <ul class="list-group" id="members-container">
                     {% for object in object_list %}
-                    <li class="list-group-item infinite-item">
+                    <li class="list-group-item infinite-item member">
                         <div class="media">
                           <a href="{% url 'user' pk=object.pk %}" class="ajax" data-html="#ajax">
                             <figure>
@@ -57,5 +57,34 @@
 
     </div>
 </div>
+<script>
+ready(() => {
+  var page = 2;
+  var loaded = false;
 
+  onscroll = function(){
+    try{
+    var members = getElementById("members-container");
+
+    if(members.querySelectorAll('.member').length === (page-1)*5){
+    var height = document.documentElement.clientHeight-1;
+    if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
+      if (loaded){return};
+      var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+      link_3.open( 'GET', '/communities/manage/members/' + '{{ community.pk }}/?page=' + page++, true );
+      link_3.send();
+      link_3.onreadystatechange = function () {
+      if ( this.readyState == 4 && this.status == 200 ) {
+        var elem = document.createElement('span');
+        elem.innerHTML = link_3.responseText;
+        members_list = elem.querySelector(".list-group");
+        if(members.getElementsByClassName('member').length === 5){loaded = true;};
+        members.append(members_list);
+        }
+      }
+    }}
+  }catch{return}
+  }
+});
+</script>
 {% endblock %}
