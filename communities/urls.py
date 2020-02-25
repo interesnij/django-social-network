@@ -1,5 +1,5 @@
 from django.conf.urls import url, include
-from communities.views.list import AllCommunities, CommunityMembersView, CommunityFriendsView, CommunityCatView
+from communities.views.list import AllCommunities, CommunityMembersView, CommunityFriendsView, CommunityCategoryView
 from communities.views.details import ItemCommunity, ItemsCommunity, CommunityDetail, CommunityDetailReload
 
 
