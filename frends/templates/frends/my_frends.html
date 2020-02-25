@@ -168,7 +168,7 @@ friends_load = function(){
       }
     }
   }}
-}}catch{return};;
+}catch{return}};
 
 online_load = function(){
   try{
@@ -194,7 +194,7 @@ online_load = function(){
 };
 
     onscroll = function(){
-
+      friends_load();
       online_load();
 }
 </script>
