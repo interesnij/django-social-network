@@ -143,13 +143,13 @@
       link_2.send( null );
     }
     });
-    
+
     var page = 2;
     var loaded = false;
     onscroll = function(){
 //      try{
       var friends = document.getElementById("friends_container");
-      if(friends.querySelectorAll('.list-group-item').length === (page-1)*30){
+      if(friends.querySelectorAll('.list-group-item').length === (page-1)*2){
       var height = document.documentElement.clientHeight-1;
       if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
         if (loaded){return};
@@ -161,7 +161,7 @@
           var elem = document.createElement('span');
           elem.innerHTML = link_3.responseText;
           var friends_list = elem.querySelector(".list-group");
-          if(friends_list.getElementsByClassName('list-group-item').length === 30){loaded = true;};
+          if(friends_list.getElementsByClassName('list-group-item').length === 2){loaded = true;};
           friends.append(friends_list);
           }
         }
