@@ -13,7 +13,7 @@ class FrendsListView(TemplateView):
 
 	def get(self, request, *args, **kwargs):
 		context = {}
-		self.user=User.objects.get(uuid=self.kwargs["uuid"])
+		self.user=User.objects.get(pk=self.kwargs["pk"])
 		self.featured_users = request.user.get_possible_friends()[0:10]
 		if self.user == request.user:
 			self.template_name="frends/my_frends.html"
