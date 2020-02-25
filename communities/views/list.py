@@ -47,7 +47,33 @@ class AllCommunities(ListView):
 	template_name="all_communities.html"
 	model=Community
 	paginate_by=30
+	communities_categories = CommunityCategory.objects.only("pk")
 
 	def get_queryset(self):
 		groups=Community.get_trending_communities()
 		return groups
+
+	def get_context_data(self,**kwargs):
+		context=super(CommunityFriendsView,self).get_context_data(**kwargs)
+		context["communities_categories"]=communities_categories
+		return context
+
+
+class CommunityCatView(ListView):
+	template_name="cat.html"
+	model=Community
+	paginate_by=30
+
+	def get(self,request,*args,**kwargs):
+		self.cat = CommunityCategory.objects.get(pk=self.kwargs["pk"])
+		return super(CommunityCatView,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context=super(CommunityCatView,self).get_context_data(**kwargs)
+		context["category"]=self.cat
+		return context
+
+	def get_queryset(self):
+		self.cat = CommunityCategory.objects.get(pk=self.kwargs["pk"])
+		categories=Community.objects.folter(category__sudcategory = self.cat)
+		return categories

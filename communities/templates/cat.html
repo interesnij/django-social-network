@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 {% load thumbnail liked_user %}
-{% block title %}Все сообщества{% endblock %}
+{% block title %}Сообщества категории "{{ category.name}}"{% endblock %}
 {% block content %}
 
 <div class="row">
     <div class="col-12 col-md-8">
         <br><br><br>
         <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Поиск сообществ" aria-label="Recipient's username">
+            <input type="text" class="form-control" placeholder="Поиск по категории" aria-label="Recipient's username">
             <div class="input-group-append">
                 <button class="btn btn-outline-link" type="button">Искать</button>
             </div>
@@ -22,7 +22,7 @@
                 </div>
             </div>
             <div class="card-body px-0 py-0">
-                <ul class="list-group" id="all_communities_container">
+                <ul class="list-group" id="cat_communities_container">
                     {% for object in object_list %}
                     <li class="list-group-item">
                         <div class="media">
@@ -66,7 +66,7 @@
                 </div>
             </div>
             <div class="card-body px-0 py-0">
-                <ul class="list-group">
+                <ul class="list-group border-top border-bottom list-group-flush" style="max-height: 520px;overflow: auto;">
                   {% for object in communities_categories %}
                     <li class="list-group-item">
                         <div class="media">
@@ -88,13 +88,13 @@
 
   onscroll = function(){
     try{
-    var communities = document.getElementById("all_communities_container");
+    var communities = document.getElementById("cat_communities_container");
     if(communities.querySelectorAll('.list-group-item').length === (page-1)*30){
     var height = document.documentElement.clientHeight-1;
     if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
       if (loaded){return};
       var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-      link_3.open( 'GET', '/communities/all-communities/?page=' + page++, true );
+      link_3.open( 'GET', '/communities/cat/' + '{{ category.pk }}/?page=' + page++, true );
       link_3.send();
       link_3.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
