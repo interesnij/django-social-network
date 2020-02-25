@@ -145,6 +145,8 @@
     });
 
     onscroll = function(){
+      var page = 2;
+      var loaded = false;
       try{
       var friends = document.getElementById("friends_container");
       if(friends.querySelectorAll('.list-group-item').length === (page-1)*2){
@@ -165,7 +167,7 @@
         }
       }}
     }catch{return};
-    
+
     try{
     var online = document.getElementById("online_container");
     if(online.querySelectorAll('.list-group-item').length === (page-1)*2){
@@ -185,7 +187,7 @@
         }
       }
     }}
-  }
-
+  }catch{return};
+}
 </script>
 {% endblock %}
