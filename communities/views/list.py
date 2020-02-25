@@ -70,6 +70,7 @@ class CommunityCategoryView(ListView):
 	def get_context_data(self,**kwargs):
 		context=super(CommunityCategoryView,self).get_context_data(**kwargs)
 		context["category"]=self.cat
+		context["communities_categories"]=CommunityCategory.objects.only("pk")
 		return context
 
 	def get_queryset(self):

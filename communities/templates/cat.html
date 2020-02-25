@@ -87,7 +87,7 @@
   var loaded = false;
 
   onscroll = function(){
-  //  try{
+    try{
     var communities = document.getElementById("cat_communities_container");
     if(communities.querySelectorAll('.list-group-item').length === (page-1)*30){
     var height = document.documentElement.clientHeight-1;
@@ -106,7 +106,7 @@
         }
       }
     }}
-//  }catch{return}
+  }catch{return}
 }
 });
 </script>
