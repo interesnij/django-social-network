@@ -76,7 +76,7 @@
   var loaded = false;
 
   onscroll = function(){
-//  try{
+ try{
     var follows = document.getElementById("follows-container");
     if(follows.getElementsByClassName('list-group-item').length === (page-1)*30){
     var height = document.documentElement.clientHeight-1;
@@ -95,7 +95,7 @@
         }
       }
     }}
-//  }catch{return}
+  }catch{return}
 }
 });
 </script>
