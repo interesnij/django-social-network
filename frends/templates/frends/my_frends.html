@@ -147,7 +147,7 @@
     var page = 2;
     var loaded = false;
     onscrol = function(){
-//      try{
+      try{
       var friends = document.getElementById("friends_container");
       if(friends.querySelectorAll('.list-group-item').length === (page-1)*2){
       var height = document.documentElement.clientHeight-1;
@@ -166,7 +166,7 @@
           }
         }
       }}
-//    }catch{return}
+    }catch{return}
   }
 </script>
 {% endblock %}
