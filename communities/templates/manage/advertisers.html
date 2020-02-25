@@ -29,7 +29,7 @@
               {% if object_list %}
                 <ul class="list-group" id="advertisers-container">
                     {% for object in object_list %}
-                    <li class="list-group-item li_{{object.pk }}" data-uuid="{{ object.uuid }}" data-pk="{{ community.pk }}">
+                    <li class="list-group-item li_{{object.pk }} advertisers" data-uuid="{{ object.uuid }}" data-pk="{{ community.pk }}">
                         <div class="media">
                           <a href="{% url 'user' pk=object.pk %}" class="ajax" data-html="#ajax">
                             <figure>
@@ -89,7 +89,7 @@
   onscroll = function(){
   //  try{
     var advertisers = document.getElementById("advertisers-container");
-    if(advertisers.querySelectorAll('.list-group-item').length === (page-1)*30){
+    if(advertisers.getElementsByClassName('advertisers').length === (page-1)*30){
     var height = document.documentElement.clientHeight-1;
     if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
       if (loaded){return};
@@ -101,7 +101,7 @@
         var elem = document.createElement('span');
         elem.innerHTML = link_3.responseText;
         var advertisers_list = elem.querySelector(".list-group");
-        if(advertisers_list.getElementsByClassName('list-group-item').length === 30){loaded = true;};
+        if(advertisers_list.getElementsByClassName('advertisers').length === 30){loaded = true;};
         advertisers.append(advertisers_list);
         }
       }
