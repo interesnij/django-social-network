@@ -111,4 +111,31 @@
   <div id="load_staff_window" style="margin-top:30px"></div>
 </div>
 
+<script>
+ ready(() => {
+  var page = 2;
+  var loaded = false;
+
+  onscroll = function(){
+    var members = getElementById("members-container");
+
+    var height = document.documentElement.clientHeight-1;
+    if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
+      if (loaded){return};
+      var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+      link_3.open( 'GET', '/communities/manage/members/' + '{{ community.pk }}/?page=' + page++, true );
+      link_3.send();
+      link_3.onreadystatechange = function () {
+      if ( this.readyState == 4 && this.status == 200 ) {
+        var elem = document.createElement('span');
+        elem.innerHTML = link_3.responseText;
+        var members_list = elem.querySelector(".list-group");
+        if(members_list.getElementsByClassName('list-group-item').length === 5){loaded = true;};
+        members.append(members_list);
+        }
+      }
+    }
+  }
+});
+</script>
 {% endblock %}
