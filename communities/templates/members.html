@@ -66,7 +66,7 @@
     try{
     var members = getElementById("members-container");
 
-    if(members.querySelectorAll('.member').length === (page-1)*5){
+    if(members.querySelectorAll('.list-group-item').length === (page-1)*5){
     var height = document.documentElement.clientHeight-1;
     if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
       if (loaded){return};
@@ -77,8 +77,8 @@
       if ( this.readyState == 4 && this.status == 200 ) {
         var elem = document.createElement('span');
         elem.innerHTML = link_3.responseText;
-        members_list = elem.querySelector(".list-group");
-        if(members_list.getElementsByClassName('member').length === 5){loaded = true;};
+        var members_list = elem.querySelector(".list-group");
+        if(members_list.getElementsByClassName('list-group-item').length === 5){loaded = true;};
         members.append(members_list);
         }
       }
