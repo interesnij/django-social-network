@@ -58,17 +58,17 @@ class AllCommunities(ListView):
 		return context
 
 
-class CommunityCatView(ListView):
+class CommunityCategoryView(ListView):
 	template_name="cat.html"
 	model=Community
 	paginate_by=30
 
 	def get(self,request,*args,**kwargs):
 		self.cat = CommunityCategory.objects.get(pk=self.kwargs["pk"])
-		return super(CommunityCatView,self).get(request,*args,**kwargs)
+		return super(CommunityCategoryView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context=super(CommunityCatView,self).get_context_data(**kwargs)
+		context=super(CommunityCategoryView,self).get_context_data(**kwargs)
 		context["category"]=self.cat
 		return context
 
