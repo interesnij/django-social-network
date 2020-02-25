@@ -75,7 +75,7 @@
   var loaded = false;
 
   onscroll = function(){
-  //try{
+  try{
     var blacklist = document.getElementById("blacklist-container");
     if(blacklist.getElementsByClassName('list-group-item').length === (page-1)*30){
     var height = document.documentElement.clientHeight-1;
@@ -94,7 +94,7 @@
         }
       }
     }}
-  //}catch{return}
+  }catch{return}
 }
 });
 </script>
