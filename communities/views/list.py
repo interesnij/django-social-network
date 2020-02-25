@@ -46,7 +46,7 @@ class CommunityFriendsView(ListView):
 class AllCommunities(ListView):
 	template_name="all_communities.html"
 	model=Community
-	paginate_by=15
+	paginate_by=30
 
 	def get_queryset(self):
 		groups=Community.get_trending_communities()
