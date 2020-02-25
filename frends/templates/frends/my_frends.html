@@ -144,6 +144,10 @@
     }
     });
 
+
+var page = 2;
+var loaded = false;
+
 friends_load = function(){
   var friends = document.getElementById("friends_container");
   if(friends.querySelectorAll('.list-group-item').length === (page-1)*2){
@@ -189,8 +193,6 @@ online_load = function(){
 };
 
     onscroll = function(){
-      var page = 2;
-      var loaded = false;
       friends_load();
 
 }
