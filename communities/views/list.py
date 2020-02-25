@@ -39,7 +39,7 @@ class CommunityFriendsView(ListView):
 
 	def get_queryset(self):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		friends=request.user.get_common_friends_of_community(self.community.pk)
+		friends=self.request.user.get_common_friends_of_community(self.community.pk)
 		return friends
 
 
