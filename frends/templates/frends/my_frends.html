@@ -149,6 +149,7 @@ var page = 2;
 var loaded = false;
 
 friends_load = function(){
+  try{
   var friends = document.getElementById("friends_container");
   if(friends.querySelectorAll('.list-group-item').length === (page-1)*2){
   var height = document.documentElement.clientHeight-1;
@@ -167,7 +168,7 @@ friends_load = function(){
       }
     }
   }}
-};
+}}catch{return};;
 
 online_load = function(){
   try{
