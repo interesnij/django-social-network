@@ -117,7 +117,7 @@
   var loaded = false;
 
   onscroll = function(){
-    try{
+    //try{
     var members = getElementById("members-container");
     if(members.querySelectorAll('.list-group-item').length === (page-1)*5){
     var height = document.documentElement.clientHeight-1;
@@ -136,7 +136,7 @@
         }
       }
     }}
-  }catch{return}
+  //}catch{return}
 }
 });
 </script>
