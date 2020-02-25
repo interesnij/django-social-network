@@ -47,7 +47,6 @@ class AllCommunities(ListView):
 	template_name="all_communities.html"
 	model=Community
 	paginate_by=30
-	communities_categories = CommunityCategory.objects.only("pk")
 
 	def get_queryset(self):
 		groups=Community.get_trending_communities()
@@ -55,7 +54,7 @@ class AllCommunities(ListView):
 
 	def get_context_data(self,**kwargs):
 		context=super(AllCommunities,self).get_context_data(**kwargs)
-		context["communities_categories"]=communities_categories
+		context["communities_categories"]=CommunityCategory.objects.only("pk")
 		return context
 
 
