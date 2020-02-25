@@ -194,8 +194,7 @@ online_load = function(){
 };
 
     onscroll = function(){
-      friends_load();
-      online_load();
+      try{friends_load();}catch{online_load()}
 }
 </script>
 {% endblock %}
