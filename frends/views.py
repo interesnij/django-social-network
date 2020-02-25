@@ -11,12 +11,13 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 class FrendsListView(TemplateView):
 	template_name = None
 
-	def get(self,request,*args,**kwargs):
-		self.user=User.objects.get(pk=self.kwargs["pk"])
-		self.featured_users = None
+	def get(self, request, *args, **kwargs):
+		context = {}
+		self.user=User.objects.get(uuid=self.kwargs["uuid"])
+		self.featured_users = request.user.get_possible_friends()[0:10]
 		if self.user == request.user:
 			self.template_name="frends/my_frends.html"
-			self.featured_users = request.user.get_possible_friends()[0:10]
+			friends_list=self.user.get_all_connection()
 		elif request.user != self.user and request.user.is_authenticated:
 			if request.user.is_blocked_with_user_with_id(user_id=self.user.id):
 				self.template_name = "frends/frends_block.html"
@@ -25,39 +26,16 @@ class FrendsListView(TemplateView):
 					self.template_name = "frends/close_frends.html"
 				else:
 					self.template_name = "frends/frends.html"
-					self.common_frends = self.user.get_common_friends_of_user(request.user)[0:5]
-					self.featured_users = request.user.get_possible_friends()[0:10]
+					friends_list=self.user.get_all_connection()
 			else:
 				self.template_name = "frends/frends.html"
-				self.featured_users = request.user.get_possible_friends()[0:10]
+				friends_list=self.user.get_all_connection()
 		elif request.user.is_anonymous and self.user.is_closed_profile():
 			self.template_name = "frends/close_frends.html"
 		elif request.user.is_anonymous and not self.user.is_closed_profile():
 			self.template_name = "frends/anon_frends.html"
-		return super(FrendsListView,self).get(request,*args,**kwargs)
-
-	def get_context_data(self,**kwargs):
-		context=super(FrendsListView,self).get_context_data(**kwargs)
-		context['user'] = self.user
-		context['featured_users'] = self.featured_users
-		return context
-
-
-class AllFrendsListView(View):
-	def get(self, request, *args, **kwargs):
-		context = {}
-		self.user=User.objects.get(uuid=self.kwargs["uuid"])
-		if self.user != request.user and request.user.is_authenticated:
-			check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
-			if self.user.is_closed_profile():
-				check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
 			friends_list=self.user.get_all_connection()
-		elif request.user.is_anonymous and self.user.is_closed_profile():
-			raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
-		elif request.user.is_anonymous and not self.user.is_closed_profile():
-			friends_list=self.user.get_all_connection()
-		elif self.user == request.user:
-			friends_list=self.user.get_all_connection()
+
 		current_page = Paginator(friends_list, 2)
 		context['user'] = self.user
 		page = request.GET.get('page')
@@ -67,7 +45,7 @@ class AllFrendsListView(View):
 			context['friends_list'] = current_page.page(1)
 		except EmptyPage:
 			context['friends_list'] = current_page.page(current_page.num_pages)
-		return render_to_response('frends_list.html', context)
+		return render_to_response(self.template_name, context)
 
 
 class OnlineFrendsListView(View):
