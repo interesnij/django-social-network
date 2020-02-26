@@ -61,7 +61,7 @@
   var loaded = false;
   var flex = '';
   onscroll = function(){
-    try{
+    //try{
     var photos2 = document.getElementById("album_cont");
     if(photos2.querySelectorAll(".u_album_photo_detail").length === (page-1)*3){
     var height = document.documentElement.clientHeight-1;
@@ -81,7 +81,7 @@
         }
       }
     }}
-  }catch{return}
+  //}catch{return}
   }
 </script>
 {% include 'photo_user/album/dropzone.html' %}
