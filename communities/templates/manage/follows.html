@@ -90,7 +90,7 @@
         var elem = document.createElement('span');
         elem.innerHTML = link_3.responseText;
         var follows_list = elem.querySelector(".list-group");
-        if(follows_list.getElementsByClassName('list-group-item').length === 30){loaded = true;};
+        if(follows_list.getElementsByClassName('list-group-item').length < 30){loaded = true;};
         follows.append(follows_list);
         }
       }

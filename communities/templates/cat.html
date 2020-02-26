@@ -104,7 +104,7 @@
         var elem = document.createElement('span');
         elem.innerHTML = link_3.responseText;
         var communities_list = elem.querySelector(".list-group");
-        if(communities_list.getElementsByClassName('list-group-item').length === 30){loaded = true;};
+        if(communities_list.getElementsByClassName('list-group-item').length < 30){loaded = true;};
         communities.append(communities_list);
         }
       }

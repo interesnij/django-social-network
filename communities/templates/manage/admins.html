@@ -95,7 +95,7 @@ ready(() => {
         var elem = document.createElement('span');
         elem.innerHTML = link_3.responseText;
         admins_list = elem.querySelector(".list-group");
-        if(admins_list.getElementsByClassName('list-group-item').length === 30){loaded = true;};
+        if(admins_list.getElementsByClassName('list-group-item').length < 30){loaded = true;};
         admins.append(admins_list);
         }
       }

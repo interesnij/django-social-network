@@ -89,7 +89,7 @@
         var elem = document.createElement('span');
         elem.innerHTML = link_3.responseText;
         var blacklist_list = elem.querySelector(".list-group");
-        if(blacklist_list.getElementsByClassName('list-group-item').length === 30){loaded = true;};
+        if(blacklist_list.getElementsByClassName('list-group-item').length < 30){loaded = true;};
         blacklist.append(blacklist_list);
         }
       }

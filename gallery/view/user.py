@@ -58,39 +58,43 @@ class UserGalleryView(TemplateView):
         context['user'] = self.user
         return context
 
+class UserAlbumView(ListView):
+	template_name = None
+	paginate_by = 30
 
-class UserAlbumView(TemplateView):
-    """
-    альбом для пользователя, свой альбом, альбом для анонима, плюс другие варианты
-    """
-    template_name = None
-
-    def get(self,request,*args,**kwargs):
-        self.user = User.objects.get(pk=self.kwargs["pk"])
+	def get(self,request,*args,**kwargs):
+		self.user = User.objects.get(pk=self.kwargs["pk"])
         self.album = Album.objects.get(uuid=self.kwargs["uuid"])
-        if self.user == request.user:
-            self.template_name="photo_user/album/my_album.html"
-        elif request.user != self.user and request.user.is_authenticated:
-            if request.user.is_blocked_with_user_with_id(user_id=self.user.id):
-                self.template_name = "photo_user/album/block_album.html"
-            elif self.user.is_closed_profile():
-                if not request.user.is_connected_with_user_with_id(user_id=self.user.id):
-                    self.template_name = "photo_user/album/close_album.html"
-                else:
-                    self.template_name = "photo_user/album/album.html"
-            else:
-                self.template_name = "photo_user/album/album.html"
-        elif request.user.is_anonymous and self.user.is_closed_profile():
-            self.template_name = "photo_user/album/close_album.html"
-        elif request.user.is_anonymous and not self.user.is_closed_profile():
-            self.template_name = "photo_user/album/anon_album.html"
-        return super(UserAlbumView,self).get(request,*args,**kwargs)
+		return super(UserAlbumView,self).get(request,*args,**kwargs)
 
-    def get_context_data(self,**kwargs):
-        context=super(UserAlbumView,self).get_context_data(**kwargs)
-        context['user'] = self.user
+	def get_context_data(self,**kwargs):
+		context = super(UserAlbumView,self).get_context_data(**kwargs)
+		context['user'] = self.user
         context['album'] = self.album
-        return context
+		return context
+
+	def get_queryset(self):
+		if self.user == self.request.user:
+			self.template_name="photo_user/my_album.html"
+			photo_list=self.user.get_photos_for_album(album_id=album.pk)
+		elif self.request.user != self.user and self.request.user.is_authenticated:
+			if self.request.user.is_blocked_with_user_with_id(user_id=self.user.id):
+				self.template_name = "photo_user/album_block.html"
+			elif self.user.is_closed_profile():
+				if not self.request.user.is_connected_with_user_with_id(user_id=self.user.id):
+					self.template_name = "photo_user/close_album.html"
+				else:
+					self.template_name = "photo_user/album.html"
+					photo_list=self.user.get_photos_for_album(album_id=album.pk)
+			else:
+				self.template_name = "photo_user/album.html"
+				photo_list=self.user.get_photos_for_album(album_id=album.pk)
+		elif self.request.user.is_anonymous and self.user.is_closed_profile():
+			self.template_name = "photo_user/close_album.html"
+		elif self.request.user.is_anonymous and not self.user.is_closed_profile():
+			self.template_name = "photo_user/anon_album.html"
+			photo_list=self.user.get_photos_for_album(album_id=album.pk)
+		return photo_list
 
 
 class NewAlbomView(TemplateView):
@@ -232,7 +236,7 @@ class UserPhotosList(View):
             photo_list = self.user.get_photos().order_by('-created')
         elif self.user == request.user:
             photo_list = self.user.get_my_photos().order_by('-created')
-        current_page = Paginator(photo_list, 6)
+        current_page = Paginator(photo_list, 30)
         page = request.GET.get('page')
         context['user'] = self.user
         try:

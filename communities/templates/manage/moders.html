@@ -101,7 +101,7 @@
         var elem = document.createElement('span');
         elem.innerHTML = link_3.responseText;
         var moders_list = elem.querySelector(".list-group");
-        if(moders_list.getElementsByClassName('list-group-item').length === 30){loaded = true;};
+        if(moders_list.getElementsByClassName('list-group-item').length < 30){loaded = true;};
         moders.append(moders_list);
         }
       }
