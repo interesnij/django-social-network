@@ -232,7 +232,7 @@ class UserPhotosList(View):
             photo_list = self.user.get_photos().order_by('-created')
         elif self.user == request.user:
             photo_list = self.user.get_my_photos().order_by('-created')
-        current_page = Paginator(photo_list, 6)
+        current_page = Paginator(photo_list, 30)
         page = request.GET.get('page')
         context['user'] = self.user
         try:
