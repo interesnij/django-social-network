@@ -14,8 +14,18 @@ class FrendsListView(TemplateView):
 	def get(self,request,*args,**kwargs):
 		self.user=User.objects.get(pk=self.kwargs["pk"])
 		self.featured_users = request.user.get_possible_friends()[0:10]
+		return super(FrendsListView,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(FrendsListView,self).get_context_data(**kwargs)
+		context['user'] = self.user
+		context['featured_users'] = self.featured_users
+		return context
+
+	def get_queryset(self,request,*args,**kwargs):
 		if self.user == request.user:
 			self.template_name="frends/my_frends.html"
+			friends_list=self.user.get_all_connection()
 		elif request.user != self.user and request.user.is_authenticated:
 			if request.user.is_blocked_with_user_with_id(user_id=self.user.id):
 				self.template_name = "frends/frends_block.html"
@@ -24,19 +34,16 @@ class FrendsListView(TemplateView):
 					self.template_name = "frends/close_frends.html"
 				else:
 					self.template_name = "frends/frends.html"
+					friends_list=self.user.get_all_connection()
 			else:
 				self.template_name = "frends/frends.html"
+				friends_list=self.user.get_all_connection()
 		elif request.user.is_anonymous and self.user.is_closed_profile():
 			self.template_name = "frends/close_frends.html"
 		elif request.user.is_anonymous and not self.user.is_closed_profile():
 			self.template_name = "frends/anon_frends.html"
-		return super(FrendsListView,self).get(request,*args,**kwargs)
-
-	def get_context_data(self,**kwargs):
-		context=super(FrendsListView,self).get_context_data(**kwargs)
-		context['user'] = self.user
-		context['featured_users'] = self.featured_users
-		return context
+			friends_list=self.user.get_all_connection()
+		return friends_list
 
 
 class AllFrendsListView(View):
@@ -54,7 +61,7 @@ class AllFrendsListView(View):
 			friends_list=self.user.get_all_connection()
 		elif self.user == request.user:
 			friends_list=self.user.get_all_connection()
-		current_page = Paginator(friends_list, 2)
+		current_page = Paginator(friends_list, 30)
 		context['user'] = self.user
 		page = request.GET.get('page')
 		try:

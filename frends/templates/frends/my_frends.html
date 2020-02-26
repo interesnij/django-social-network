@@ -37,7 +37,9 @@
                                       </div>
                                   </div>
 
-                                  <span id="all_frends"></span>
+                                  <ul class="list-group" id="friends_container">
+
+                                  </ul>
 
                                 </div>
                             </div>
@@ -98,27 +100,13 @@
 </div>
 
 <script>
-  ready(() => {
-    var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    link.open( 'GET', '/friends/all-list/' + '{{ user.uuid }}', true );
-    link.onreadystatechange = function () {
-      if ( link.readyState == 4 ) {
-          if ( link.status == 200 ) {
-              var all_frends = document.getElementById("all_frends");
-              all_frends.innerHTML = link.responseText;
-          }
-      }
-  };
-  link.send( null );
-  });
-
 
 var page = 2;
 var loaded = false;
     onscroll = function(){
       try{
       var friends = document.getElementById("friends_container");
-      if(friends.querySelectorAll('.list-group-item').length === (page-1)*2){
+      if(friends.querySelectorAll('.list-group-item').length === (page-1)*30){
       var height = document.documentElement.clientHeight-1;
       if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
         if (loaded){return};
@@ -130,7 +118,7 @@ var loaded = false;
           var elem = document.createElement('span');
           elem.innerHTML = link_3.responseText;
           var friends_list = elem.querySelector(".list-group");
-          if(friends_list.getElementsByClassName('list-group-item').length === 2){loaded = true;};
+          if(friends_list.getElementsByClassName('list-group-item').length === 30){loaded = true;};
           friends.append(friends_list);
           }
         }

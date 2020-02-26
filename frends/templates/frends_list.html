@@ -1,7 +1,6 @@
 {% load thumbnail %}
 
 {% if friends_list %}
-    <ul class="list-group" id="friends_container">
       {% for object in friends_list %}
       <li class="list-group-item">
             <div class="media">
@@ -23,7 +22,6 @@
             </div>
         </li>
         {% endfor %}
-    </ul>
 
 {% else %}
 <div class="card" style="align-items: center;justify-content:center;">
