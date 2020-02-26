@@ -23,15 +23,15 @@ class FrendsListView(ListView):
 		context['featured_users'] = self.featured_users
 		return context
 
-	def get_queryset(self,request,*args,**kwargs):
-		if self.user == request.user:
+	def get_queryset(self):
+		if self.user == self.request.user:
 			self.template_name="frends/my_frends.html"
 			friends_list=self.user.get_all_connection()
-		elif request.user != self.user and request.user.is_authenticated:
-			if request.user.is_blocked_with_user_with_id(user_id=self.user.id):
+		elif self.request.user != self.user and self.request.user.is_authenticated:
+			if self.request.user.is_blocked_with_user_with_id(user_id=self.user.id):
 				self.template_name = "frends/frends_block.html"
 			elif self.user.is_closed_profile():
-				if not request.user.is_connected_with_user_with_id(user_id=self.user.id):
+				if not self.request.user.is_connected_with_user_with_id(user_id=self.user.id):
 					self.template_name = "frends/close_frends.html"
 				else:
 					self.template_name = "frends/frends.html"
@@ -39,9 +39,9 @@ class FrendsListView(ListView):
 			else:
 				self.template_name = "frends/frends.html"
 				friends_list=self.user.get_all_connection()
-		elif request.user.is_anonymous and self.user.is_closed_profile():
+		elif self.request.user.is_anonymous and self.user.is_closed_profile():
 			self.template_name = "frends/close_frends.html"
-		elif request.user.is_anonymous and not self.user.is_closed_profile():
+		elif self.request.user.is_anonymous and not self.user.is_closed_profile():
 			self.template_name = "frends/anon_frends.html"
 			friends_list=self.user.get_all_connection()
 		return friends_list
