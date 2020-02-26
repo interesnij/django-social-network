@@ -37,7 +37,7 @@
         <br><br>
     </div>
     {% if object_list %}
-      <div class="photo_list row" id="album_container" data-uuid="{{ user.uuid }}" data-uuid2="{{ album.uuid }}">
+      <div class="photo_list row" id="album_cont" data-uuid="{{ user.uuid }}" data-uuid2="{{ album.uuid }}">
         {% for object in object_list %}
         <div class="col-sm-12 col-md-6 col-lg-4 u_album_photo_detail" style="cursor:pointer"  data-pk="{{ object.pk }}">
           <div class="card rounded-0 border-0 mb-4">
@@ -61,7 +61,7 @@
   var loaded = false;
   onscroll = function(){
     try{
-    var photos = document.getElementById("album_container");
+    var photos = document.getElementById("album_cont");
     if(photos.querySelectorAll(".u_album_photo_detail").length === (page-1)*3){
     var height = document.documentElement.clientHeight-1;
     if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
