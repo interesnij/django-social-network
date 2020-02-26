@@ -81,9 +81,11 @@
         </div>
         <div class="col-12 col-md-12 col-lg-4">
 
-            {% include 'detail_sections/frends_member.html' %}
+          {% include 'detail_sections/frends_member.html' %}
 
-            {% include 'detail_sections/membersheeps.html' %}
+          {% if common_friends %}
+            {% include 'detail_sections/frends_member.html' %}
+          {% endif %}
 
         </div>
 

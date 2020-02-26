@@ -21,10 +21,7 @@ class ItemsCommunity(View):
             fixed = None
 
         if request.user.is_authenticated and request.user.is_member_of_community_with_name(community.name):
-            if request.user.is_creator_of_community_with_name(community.name):
-                template_name = "detail_sections/admin_list.html"
-                item_list = community.get_posts().order_by('-created')
-            elif request.user.is_moderator_of_community_with_name(community.name):
+            if request.user.is_moderator_of_community_with_name(community.name):
                 template_name = "detail_sections/moderator_list.html"
                 item_list = community.get_posts().order_by('-created')
             elif request.user.is_administrator_of_community_with_name(community.name):
@@ -100,12 +97,13 @@ class CommunityDetail(TemplateView):
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         self.membersheeps=self.community.get_community_with_name_members(self.community.name)[0:5]
+        try:
+            self.common_friends = request.user.get_common_friends_of_community(self.community.pk)[0:5]
+        except:
+            self.common_friends = None
 
         if request.user.is_authenticated and request.user.is_member_of_community_with_name(self.community.name):
-            self.common_friends = request.user.get_common_friends_of_community(self.community.pk)[0:5]
-            if request.user.is_creator_of_community_with_name(self.community.name):
-                self.template_name = "c_detail/creator_community.html"
-            elif request.user.is_moderator_of_community_with_name(self.community.name):
+            if request.user.is_moderator_of_community_with_name(self.community.name):
                 self.template_name = "c_detail/moderator_community.html"
             elif request.user.is_administrator_of_community_with_name(self.community.name):
                 self.template_name = "c_detail/admin_community.html"
@@ -117,18 +115,14 @@ class CommunityDetail(TemplateView):
                 self.template_name = "c_detail/star_community.html"
             else:
                 self.template_name = "c_detail/member_community.html"
-                self.common_friends = request.user.get_common_friends_of_community(self.community.pk)[0:5]
         elif request.user.is_authenticated and request.user.is_follow_from_community_with_name(self.community.pk):
-            self.common_friends = request.user.get_common_friends_of_community(self.community.pk)[0:5]
             self.template_name = "c_detail/follow_community.html"
         elif request.user.is_authenticated and request.user.is_banned_from_community_with_name(self.community):
             self.template_name = "c_detail/block_community.html"
 
         elif request.user.is_authenticated and self.community.is_public():
-            self.common_friends = request.user.get_common_friends_of_community(self.community.pk)[0:5]
             self.template_name = "c_detail/public_community.html"
         elif request.user.is_authenticated and self.community.is_closed():
-            self.common_friends = request.user.get_common_friends_of_community(self.community.pk)[0:5]
             self.template_name = "c_detail/close_community.html"
         elif request.user.is_authenticated and self.community.is_private():
             self.template_name = "c_detail/private_community.html"
@@ -160,9 +154,7 @@ class CommunityDetailReload(TemplateView):
 
         if request.user.is_authenticated and request.user.is_member_of_community_with_name(self.community.name):
             self.common_friends = request.user.get_common_friends_of_community(self.community.pk)[0:5]
-            if request.user.is_creator_of_community_with_name(self.community.name):
-                self.template_name = "c_detail/creator_community.html"
-            elif request.user.is_moderator_of_community_with_name(self.community.name):
+            if request.user.is_moderator_of_community_with_name(self.community.name):
                 self.template_name = "c_detail/moderator_community.html"
             elif request.user.is_administrator_of_community_with_name(self.community.name):
                 self.template_name = "c_detail/admin_community.html"
