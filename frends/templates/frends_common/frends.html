@@ -101,52 +101,29 @@
 </div>
 
 <script>
-  ready(() => {
-    var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    link.open( 'GET', '/friends/all-list/' + '{{ user.uuid }}', true );
-    link.onreadystatechange = function () {
-      if ( link.readyState == 4 ) {
-          if ( link.status == 200 ) {
-              var all_frends = document.getElementById("all_frends");
-              all_frends.innerHTML = link.responseText;
-          }
-      }
-  };
-  link.send( null );
-  });
-
-  document.querySelector(".online").addEventListener("click", (e) => {
-      if (document.querySelector("#tabhome223-tab").classList.contains("online")) {
-      var tab = document.getElementById("tabhome223-tab"); tab.classList.remove('online');
-      var link_2 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-      link_2.open( 'GET', '/friends/online/' + '{{ user.uuid }}', true );
-      link_2.onreadystatechange = function () {
-        if ( link_2.readyState == 4 ) {
-            if ( link_2.status == 200 ) {
-                var online_frends = document.getElementById("online_frends");
-                online_frends.innerHTML = link_2.responseText;
+  var page = 2;
+  var loaded = false;
+      onscroll = function(){
+        try{
+        var friends = document.getElementById("friends_container");
+        if(friends.querySelectorAll('.list-group-item').length === (page-1)*30){
+        var height = document.documentElement.clientHeight-1;
+        if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
+          if (loaded){return};
+          var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+          link_3.open( 'GET', '/friends/common/'  + '{{ user.pk }}/?page=' + page++, true );
+          link_3.send();
+          link_3.onreadystatechange = function () {
+          if ( this.readyState == 4 && this.status == 200 ) {
+            var elem = document.createElement('span');
+            elem.innerHTML = link_3.responseText;
+            var friends_list = elem.querySelector(".list-group");
+            if(friends_list.getElementsByClassName('list-group-item').length === 30){loaded = true;};
+            friends.append(friends_list);
             }
-        }
-      };
-      link_2.send( null );
-    }
-    });
-
-    document.querySelector(".common").addEventListener("click", (e) => {
-        if (document.querySelector("#tabhome323-tab").classList.contains("common")) {
-        var tab = document.getElementById("tabhome323-tab"); tab.classList.remove('common');
-        var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-        link_3.open( 'GET', '/friends/common/' + '{{ user.uuid }}', true );
-        link_3.onreadystatechange = function () {
-          if ( link_3.readyState == 4 ) {
-              if ( link_3.status == 200 ) {
-                  var common_frends = document.getElementById("common_frends");
-                  common_frends.innerHTML = link_3.responseText;
-              }
           }
-        };
-        link_3.send( null );
-      }
-      });
+        }}
+      }catch{return}
+  }
 </script>
 {% endblock %}
