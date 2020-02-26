@@ -62,8 +62,8 @@
 
   onscroll = function(){
     try{
-    var communities = document.getElementById("all_communities_container");
-    if(communities.querySelectorAll('.list-group-item').length === (page-1)*6){
+    var photos = document.getElementById("photos_container");
+    if(photos.querySelectorAll('.list-group-item').length === (page-1)*6){
     var height = document.documentElement.clientHeight-1;
     if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
       if (loaded){return};
@@ -74,9 +74,9 @@
       if ( this.readyState == 4 && this.status == 200 ) {
         var elem = document.createElement('span');
         elem.innerHTML = link_3.responseText;
-        var communities_list = elem.querySelector(".list-group");
-        if(communities_list.getElementsByClassName('list-group-item').length === 6){loaded = true;};
-        communities.append(communities_list);
+        var photos_list = elem.querySelector(".list-group");
+        if(photos_list.getElementsByClassName('list-group-item').length === 6){loaded = true;};
+        photos.append(photos_list);
         }
       }
     }}
