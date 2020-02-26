@@ -25,8 +25,6 @@ class CommunityGalleryView(TemplateView):
 		context=super(CommunityGalleryView,self).get_context_data(**kwargs)
 		context['community'] = self.community
 		return context
-	return render_to_response('photo_community/albums.html', context)
-
 
 class CommunityPhotosList(View):
 	def get(self,request,**kwargs):
