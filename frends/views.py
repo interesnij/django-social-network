@@ -13,10 +13,9 @@ class FrendsListView(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.user=User.objects.get(pk=self.kwargs["pk"])
-		self.featured_users = None
+		self.featured_users = request.user.get_possible_friends()[0:10]
 		if self.user == request.user:
 			self.template_name="frends/my_frends.html"
-			self.featured_users = request.user.get_possible_friends()[0:10]
 		elif request.user != self.user and request.user.is_authenticated:
 			if request.user.is_blocked_with_user_with_id(user_id=self.user.id):
 				self.template_name = "frends/frends_block.html"
@@ -25,11 +24,8 @@ class FrendsListView(TemplateView):
 					self.template_name = "frends/close_frends.html"
 				else:
 					self.template_name = "frends/frends.html"
-					self.common_frends = self.user.get_common_friends_of_user(request.user)[0:5]
-					self.featured_users = request.user.get_possible_friends()[0:10]
 			else:
 				self.template_name = "frends/frends.html"
-				self.featured_users = request.user.get_possible_friends()[0:10]
 		elif request.user.is_anonymous and self.user.is_closed_profile():
 			self.template_name = "frends/close_frends.html"
 		elif request.user.is_anonymous and not self.user.is_closed_profile():

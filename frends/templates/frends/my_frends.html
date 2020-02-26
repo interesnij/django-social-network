@@ -9,12 +9,12 @@
       <div class="card-header p-0">
           <ul class="nav nav-tabs justify-content-center" role="tablist">
               <li class="nav-item">
-                  <a class="nav-link active show" id="tabhome123-tab" data-toggle="tab" href="#tabhome123" role="tab" aria-controls="tabhome123" aria-selected="true">
+                  <a class="nav-link active show">
                       Все <span class="text-hide-xs"> друзья</span>
                   </a>
               </li>
               <li class="nav-item">
-                  <a class="nav-link online" id="tabhome223-tab" data-toggle="tab" href="#tabhome223" role="tab" aria-controls="tabhome223" aria-selected="false">
+                  <a class="nav-link online">
                       Онлайн <span class="text-hide-xs"> друзья</span>
                   </a>
               </li>
@@ -38,21 +38,6 @@
                                   </div>
 
                                   <span id="all_frends"></span>
-
-                                </div>
-                                <div class="tab-pane fade" id="tabhome223" role="tabpanel" aria-labelledby="tabhome223-tab">
-                                  <div class="media-body">
-                                      <h5 class="mt-1">Мои друзья онлайн</h5>
-                                  </div>
-                                  <br>
-                                  <div class="input-group">
-                                      <input type="text" class="form-control" placeholder="Поиск по друзьям онлайн" aria-label="Recipient's username">
-                                      <div class="input-group-append">
-                                          <button class="btn btn-outline-link" type="button">Искать</button>
-                                      </div>
-                                  </div>
-
-                                  <span id="online_frends"></span>
 
                                 </div>
                             </div>
@@ -127,75 +112,30 @@
   link.send( null );
   });
 
-  document.querySelector(".online").addEventListener("click", (e) => {
-      if (document.querySelector("#tabhome223-tab").classList.contains("online")) {
-      var tab = document.getElementById("tabhome223-tab"); tab.classList.remove('online');
-      var link_2 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-      link_2.open( 'GET', '/friends/online/' + '{{ user.uuid }}', true );
-      link_2.onreadystatechange = function () {
-        if ( link_2.readyState == 4 ) {
-            if ( link_2.status == 200 ) {
-                var online_frends = document.getElementById("online_frends");
-                online_frends.innerHTML = link_2.responseText;
-            }
-        }
-      };
-      link_2.send( null );
-    }
-    });
-
 
 var page = 2;
 var loaded = false;
-
-friends_load = function(){
-  try{
-  var friends = document.getElementById("friends_container");
-  if(friends.querySelectorAll('.list-group-item').length === (page-1)*2){
-  var height = document.documentElement.clientHeight-1;
-  if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
-    if (loaded){return};
-    var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    link_3.open( 'GET', '/friends/all-list/' + '{{ user.uuid }}/?page=' + page++, true );
-    link_3.send();
-    link_3.onreadystatechange = function () {
-    if ( this.readyState == 4 && this.status == 200 ) {
-      var elem = document.createElement('span');
-      elem.innerHTML = link_3.responseText;
-      var friends_list = elem.querySelector(".list-group");
-      if(friends_list.getElementsByClassName('list-group-item').length === 2){loaded = true;};
-      friends.append(friends_list);
-      }
-    }
-  }}
-}catch{return}};
-
-online_load = function(){
-  try{
-  var online = document.getElementById("online_container");
-  if(online.querySelectorAll('.list-group-item').length === (page-1)*1){
-  var height = document.documentElement.clientHeight-1;
-  if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
-    if (loaded){return};
-    var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    link_3.open( 'GET', '/friends/online/' + '{{ user.uuid }}/?page=' + page++, true );
-    link_3.send();
-    link_3.onreadystatechange = function () {
-    if ( this.readyState == 4 && this.status == 200 ) {
-      var elem = document.createElement('span');
-      elem.innerHTML = link_3.responseText;
-      var online_list = elem.querySelector(".list-group");
-      if(online_list.getElementsByClassName('list-group-item').length === 1){loaded = true;};
-      online.append(online_list);
-      }
-    }
-  }}
-}catch{return};
-};
-
     onscroll = function(){
-      friends_load();
-      online_load();
+      try{
+      var friends = document.getElementById("friends_container");
+      if(friends.querySelectorAll('.list-group-item').length === (page-1)*2){
+      var height = document.documentElement.clientHeight-1;
+      if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
+        if (loaded){return};
+        var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+        link_3.open( 'GET', '/friends/all-list/' + '{{ user.uuid }}/?page=' + page++, true );
+        link_3.send();
+        link_3.onreadystatechange = function () {
+        if ( this.readyState == 4 && this.status == 200 ) {
+          var elem = document.createElement('span');
+          elem.innerHTML = link_3.responseText;
+          var friends_list = elem.querySelector(".list-group");
+          if(friends_list.getElementsByClassName('list-group-item').length === 2){loaded = true;};
+          friends.append(friends_list);
+          }
+        }
+      }}
+    }catch{return}
 }
 </script>
 {% endblock %}
