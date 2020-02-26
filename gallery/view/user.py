@@ -66,35 +66,35 @@ class UserAlbumView(ListView):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.album = Album.objects.get(uuid=self.kwargs["uuid"])
         return super(UserAlbumView,self).get(request,*args,**kwargs)
-        
+
     def get_context_data(self,**kwargs):
         context = super(UserAlbumView,self).get_context_data(**kwargs)
         context['user'] = self.user
         context['album'] = self.album
         return context
 
-	def get_queryset(self):
-		if self.user == self.request.user:
-			self.template_name="photo_user/my_album.html"
-			photo_list=self.user.get_photos_for_album(album_id=album.pk)
-		elif self.request.user != self.user and self.request.user.is_authenticated:
-			if self.request.user.is_blocked_with_user_with_id(user_id=self.user.id):
-				self.template_name = "photo_user/album_block.html"
-			elif self.user.is_closed_profile():
-				if not self.request.user.is_connected_with_user_with_id(user_id=self.user.id):
-					self.template_name = "photo_user/close_album.html"
-				else:
-					self.template_name = "photo_user/album.html"
-					photo_list=self.user.get_photos_for_album(album_id=album.pk)
-			else:
-				self.template_name = "photo_user/album.html"
-				photo_list=self.user.get_photos_for_album(album_id=album.pk)
-		elif self.request.user.is_anonymous and self.user.is_closed_profile():
-			self.template_name = "photo_user/close_album.html"
-		elif self.request.user.is_anonymous and not self.user.is_closed_profile():
-			self.template_name = "photo_user/anon_album.html"
-			photo_list=self.user.get_photos_for_album(album_id=album.pk)
-		return photo_list
+    def get_queryset(self):
+        if self.user == self.request.user:
+            self.template_name="photo_user/my_album.html"
+            photo_list=self.user.get_photos_for_album(album_id=album.pk)
+        elif self.request.user != self.user and self.request.user.is_authenticated:
+            if self.request.user.is_blocked_with_user_with_id(user_id=self.user.id):
+                self.template_name = "photo_user/album_block.html"
+            elif self.user.is_closed_profile():
+                if not self.request.user.is_connected_with_user_with_id(user_id=self.user.id):
+                    self.template_name = "photo_user/close_album.html"
+                else:
+                    self.template_name = "photo_user/album.html"
+                    photo_list=self.user.get_photos_for_album(album_id=album.pk)
+            else:
+                self.template_name = "photo_user/album.html"
+                photo_list=self.user.get_photos_for_album(album_id=album.pk)
+        elif self.request.user.is_anonymous and self.user.is_closed_profile():
+            self.template_name = "photo_user/close_album.html"
+        elif self.request.user.is_anonymous and not self.user.is_closed_profile():
+            self.template_name = "photo_user/anon_album.html"
+            photo_list=self.user.get_photos_for_album(album_id=album.pk)
+        return photo_list
 
 
 class NewAlbomView(TemplateView):
