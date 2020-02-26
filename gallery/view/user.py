@@ -66,9 +66,9 @@ class UserAlbumView(ListView):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.album = Album.objects.get(uuid=self.kwargs["uuid"])
         return super(UserAlbumView,self).get(request,*args,**kwargs)
-
-	def get_context_data(self,**kwargs):
-		context = super(UserAlbumView,self).get_context_data(**kwargs)
+        
+    def get_context_data(self,**kwargs):
+        context = super(UserAlbumView,self).get_context_data(**kwargs)
         context['user'] = self.user
         context['album'] = self.album
         return context
