@@ -15,7 +15,10 @@ class FrendsListView(ListView):
 
 	def get(self,request,*args,**kwargs):
 		self.user=User.objects.get(pk=self.kwargs["pk"])
-		self.featured_users = request.user.get_possible_friends()[0:10]
+		try:
+			self.featured_users = request.user.get_possible_friends()[0:10]
+		except:
+			self.featured_users = None
 		return super(FrendsListView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
