@@ -101,10 +101,7 @@ class CommonFrendsListView(ListView):
 		return context
 
 	def get_queryset(self):
-		if self.user == self.request.user:
-			self.template_name="frends_common/my_frends.html"
-			friends_list=self.user.get_common_friends_of_user(self.request.user)
-		elif self.request.user != self.user and self.request.user.is_authenticated:
+		if self.request.user != self.user and self.request.user.is_authenticated:
 			if self.request.user.is_blocked_with_user_with_id(user_id=self.user.id):
 				self.template_name = "frends_common/frends_block.html"
 			elif self.user.is_closed_profile():
@@ -116,11 +113,6 @@ class CommonFrendsListView(ListView):
 			else:
 				self.template_name = "frends_common/frends.html"
 				friends_list=self.user.get_common_friends_of_user(self.request.user)
-		elif self.request.user.is_anonymous and self.user.is_closed_profile():
-			self.template_name = "frends_common/close_frends.html"
-		elif self.request.user.is_anonymous and not self.user.is_closed_profile():
-			self.template_name = "frends_common/anon_frends.html"
-			friends_list=self.user.get_common_friends_of_user(self.request.user)
 		return friends_list
 
 
