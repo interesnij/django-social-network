@@ -11,6 +11,7 @@ from django.views.generic import ListView
 
 class FrendsListView(ListView):
 	template_name = None
+	paginate_by = 30
 
 	def get(self,request,*args,**kwargs):
 		self.user=User.objects.get(pk=self.kwargs["pk"])
