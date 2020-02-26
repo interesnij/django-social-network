@@ -10,17 +10,17 @@
       <div class="card-header p-0">
           <ul class="nav nav-tabs justify-content-center" role="tablist">
               <li class="nav-item">
-                  <a class="nav-link active show" id="tabhome123-tab" data-toggle="tab" href="#tabhome123" role="tab" aria-controls="tabhome123" aria-selected="true">
+                  <a class="nav-link active show">
                       Все <span class="text-hide-xs"> друзья</span>
                   </a>
               </li>
               <li class="nav-item">
-                  <a class="nav-link online" id="tabhome223-tab" data-toggle="tab" href="#tabhome223" role="tab" aria-controls="tabhome223" aria-selected="false">
+                  <a class="nav-link" href="{% url 'online_frends' pk=object.pk %}" class="ajax" data-html="#ajax">
                       Онлайн <span class="text-hide-xs"> друзья</span>
                   </a>
               </li>
               <li class="nav-item">
-                  <a class="nav-link common" id="tabhome323-tab" data-toggle="tab" href="#tabhome323" role="tab" aria-controls="tabhome323" aria-selected="false">
+                  <a class="nav-link" href="{% url 'common_frends' pk=object.pk %}" class="ajax" data-html="#ajax">
                       Общие <span class="text-hide-xs"> друзья</span>
                   </a>
               </li>
@@ -48,43 +48,38 @@
                                       </div>
                                   </div>
 
-                                  <span id="all_frends"></span>
-
-                                </div>
-                                <div class="tab-pane fade" id="tabhome223" role="tabpanel" aria-labelledby="tabhome223-tab">
-                                  <div class="media-body">
-                                      <h5 class="mt-1">Друзья онлайн
-                                        <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=user.pk %}" data-html="#ajax">
-                                          {{ user.first_name|gent }} {{ user.last_name|gent }}
-                                        </a>
-                                      </h5>
-                                  </div>
-                                  <br>
-                                  <div class="input-group mb-3">
-                                      <input type="text" class="form-control" placeholder="Поиск по друзьям онлайн" aria-label="Recipient's username">
-                                      <div class="input-group-append">
-                                          <button class="btn btn-outline-link" type="button">Искать</button>
-                                      </div>
-                                  </div>
-
-                                  <span id="online_frends"></span>
-
-                                </div>
-
-                                <div class="tab-pane fade" id="tabhome323" role="tabpanel" aria-labelledby="tabhome323-tab">
-                                  <div class="media-body">
-                                      <h5 class="mt-1">Общие друзья</h5>
-                                  </div>
-                                  <br>
-                                  <div class="input-group mb-3">
-                                      <input type="text" class="form-control" placeholder="Поиск по общим друзьям" aria-label="Recipient's username">
-                                      <div class="input-group-append">
-                                          <button class="btn btn-outline-link" type="button">Искать</button>
-                                      </div>
-                                  </div>
-
-                                  <span id="common_frends"></span>
-
+                                  <ul class="list-group" id="friends_container">
+                                    {% if object_list %}
+                                        {% for object in object_list %}
+                                          <li class="list-group-item">
+                                                <div class="media">
+                                                  <a href="{% url 'user' pk=object.pk %}" class="ajax" data-html="#ajax">
+                                                    <figure>
+                                                      {% if object.get_avatar %}
+                                                        <img src="{{ object.get_avatar.file|thumbnail_url:'avatar' }}" style="border-radius:50px;width:50px;" alt="image">
+                                                      {% else %}
+                                                        <svg fill="currentColor" class="svg_default svg_default_50" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+                                                      {% endif %}
+                                                    </figure>
+                                                  </a>
+                                                  <div class="media-body">
+                                                      <a href="{% url 'user' pk=object.pk %}" class="ajax" data-html="#ajax">
+                                                          <h6 class="my-0 mt-1">{{ object.get_full_name }}</h6>
+                                                      </a>
+                                                      <a href="" class="small">Написать сообщение</a>
+                                                  </div>
+                                                </div>
+                                            </li>
+                                          {% endfor %}
+                                        {% else %}
+                                          <div class="card" style="align-items: center;justify-content:center;">
+                                            <div class="card-body">
+                                              <svg fill="currentColor" class="thumb_big svg_default" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+                                            </div>
+                                            <h6 style="margin: 20px;text-align: center;"> Друзей нет...</h6>
+                                          </div>
+                                        {% endif %}
+                                  </ul>
                                 </div>
                             </div>
                         </div>
@@ -95,97 +90,36 @@
     </div>
 
     <div class="col-12 col-md-4">
-        <br><br><br>
-        {% if featured_users != "not frends" and featured_users %}
-        <div class="card">
-            <div class="card-header">
-                <div class="media">
-                    <div class="media-body">
-                        <h5 class="mt-1">Возможные друзья</h5>
-                    </div>
-                    <a class="ajax" href="{% url 'all_common_users' pk=user.pk %}" data-html="#ajax">
-                        все
-                    </a>
-                </div>
-            </div>
-            <div class="card-body px-0 py-0">
-                <ul class="list-group border-top border-bottom list-group-flush">
-                    {% for object in featured_users %}
-                    <li class="list-group-item">
-                        <div class="media">
-                          <a href="{% url 'user' pk=object.pk %}" class="ajax" data-html="#ajax">
-                            <figure>
-                              {% if object.get_avatar %}
-                                <img src="{{ object.get_avatar.file|thumbnail_url:'avatar' }}" style="border-radius:50px;width:50px;" alt="image">
-                              {% else %}
-                                <svg fill="currentColor" class="svg_default svg_default_50" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
-                              {% endif %}
-                            </figure>
-                          </a>
-                          <div class="media-body">
-                              <a href="{% url 'user' pk=object.pk %}" class="ajax" data-html="#ajax">
-                                  <h6 class="my-0 mt-1">{{ object.get_full_name }}</h6>
-                              </a>
-                              <a href="" class="small">Написать сообщение</a>
-                          </div>
-                        </div>
-                    </li>
-                    {% endfor %}
-                </ul>
-            </div>
-            <br><br>
-        </div>
-        {% endif %}
+        <br>
+        {% include 'featured_users.html' %}
     </div>
 </div>
 
 <script>
-  ready(() => {
-    var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    link.open( 'GET', '/friends/all-list/' + '{{ user.uuid }}', true );
-    link.onreadystatechange = function () {
-      if ( link.readyState == 4 ) {
-          if ( link.status == 200 ) {
-              var all_frends = document.getElementById("all_frends");
-              all_frends.innerHTML = link.responseText;
-          }
-      }
-  };
-  link.send( null );
-  });
 
-  document.querySelector(".online").addEventListener("click", (e) => {
-      if (document.querySelector("#tabhome223-tab").classList.contains("online")) {
-      var tab = document.getElementById("tabhome223-tab"); tab.classList.remove('online');
-      var link_2 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-      link_2.open( 'GET', '/friends/online/' + '{{ user.uuid }}', true );
-      link_2.onreadystatechange = function () {
-        if ( link_2.readyState == 4 ) {
-            if ( link_2.status == 200 ) {
-                var online_frends = document.getElementById("online_frends");
-                online_frends.innerHTML = link_2.responseText;
-            }
-        }
-      };
-      link_2.send( null );
-    }
-    });
-
-    document.querySelector(".common").addEventListener("click", (e) => {
-        if (document.querySelector("#tabhome323-tab").classList.contains("common")) {
-        var tab = document.getElementById("tabhome323-tab"); tab.classList.remove('common');
+var page = 2;
+var loaded = false;
+    onscroll = function(){
+      try{
+      var friends = document.getElementById("friends_container");
+      if(friends.querySelectorAll('.list-group-item').length === (page-1)*30){
+      var height = document.documentElement.clientHeight-1;
+      if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
+        if (loaded){return};
         var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-        link_3.open( 'GET', '/friends/common/' + '{{ user.uuid }}', true );
+        link_3.open( 'GET', '/friends/'  + '{{ user.pk }}/?page=' + page++, true );
+        link_3.send();
         link_3.onreadystatechange = function () {
-          if ( link_3.readyState == 4 ) {
-              if ( link_3.status == 200 ) {
-                  var common_frends = document.getElementById("common_frends");
-                  common_frends.innerHTML = link_3.responseText;
-              }
+        if ( this.readyState == 4 && this.status == 200 ) {
+          var elem = document.createElement('span');
+          elem.innerHTML = link_3.responseText;
+          var friends_list = elem.querySelector(".list-group");
+          if(friends_list.getElementsByClassName('list-group-item').length === 30){loaded = true;};
+          friends.append(friends_list);
           }
-        };
-        link_3.send( null );
-      }
-      });
+        }
+      }}
+    }catch{return}
+}
 </script>
 {% endblock %}
