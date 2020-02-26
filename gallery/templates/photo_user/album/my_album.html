@@ -59,7 +59,7 @@
 <script>
   var page = 2;
   var loaded = false;
-  var flex = '';
+  var flex = document.createElement('div');
   onscroll = function(){
     //try{
     var photos2 = document.getElementById("album_cont");
@@ -76,7 +76,7 @@
         elem.innerHTML = link_3.responseText;
         var photos_list = elem.querySelector(".photo_list");
         if(photos_list.getElementsByClassName('u_album_photo_detail').length < 3){loaded = true;};
-        flex = photos_list.innerHTML;
+        flex.innerHTML = photos_list.innerHTML;
         photos2.append(flex);
         }
       }
