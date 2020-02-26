@@ -76,24 +76,24 @@ class UserAlbumView(ListView):
 
     def get_queryset(self):
         if self.user == self.request.user:
-            self.template_name="photo_user/my_album.html"
+            self.template_name="photo_user/album/my_album.html"
             photo_list=self.user.get_photos_for_album(album_id=self.album.pk)
         elif self.request.user != self.user and self.request.user.is_authenticated:
             if self.request.user.is_blocked_with_user_with_id(user_id=self.user.id):
-                self.template_name = "photo_user/album_block.html"
+                self.template_name = "photo_user/album/album_block.html"
             elif self.user.is_closed_profile():
                 if not self.request.user.is_connected_with_user_with_id(user_id=self.user.id):
-                    self.template_name = "photo_user/close_album.html"
+                    self.template_name = "photo_user/album/close_album.html"
                 else:
-                    self.template_name = "photo_user/album.html"
+                    self.template_name = "photo_user/album/album.html"
                     photo_list=self.user.get_photos_for_album(album_id=album.pk)
             else:
-                self.template_name = "photo_user/album.html"
+                self.template_name = "photo_user/album/album.html"
                 photo_list=self.user.get_photos_for_album(album_id=album.pk)
         elif self.request.user.is_anonymous and self.user.is_closed_profile():
-            self.template_name = "photo_user/close_album.html"
+            self.template_name = "photo_user/album/close_album.html"
         elif self.request.user.is_anonymous and not self.user.is_closed_profile():
-            self.template_name = "photo_user/anon_album.html"
+            self.template_name = "photo_user/album/anon_album.html"
             photo_list=self.user.get_photos_for_album(album_id=album.pk)
         return photo_list
 
