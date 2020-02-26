@@ -85,17 +85,17 @@ class OnlineFrendsListView(ListView):
 			friends_list=self.user.get_online_connection()
 		return friends_list
 
-class OnlineFrendsListView(ListView):
+class CommonFrendsListView(ListView):
 	template_name = None
 	paginate_by = 30
 
 	def get(self,request,*args,**kwargs):
 		self.user=User.objects.get(pk=self.kwargs["pk"])
 		self.featured_users = request.user.get_possible_friends()[0:10]
-		return super(OnlineFrendsListView,self).get(request,*args,**kwargs)
+		return super(CommonFrendsListView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context = super(OnlineFrendsListView,self).get_context_data(**kwargs)
+		context = super(CommonFrendsListView,self).get_context_data(**kwargs)
 		context['user'] = self.user
 		context['featured_users'] = self.featured_users
 		return context
@@ -122,7 +122,7 @@ class OnlineFrendsListView(ListView):
 			self.template_name = "frends_common/anon_frends.html"
 			friends_list=self.user.get_common_friends_of_user(self.request.user)
 		return friends_list
-		
+
 
 class ConnectCreate(View):
 	success_url = "/"
