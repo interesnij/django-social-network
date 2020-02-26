@@ -7,14 +7,14 @@
     <div class="col-12 col-md-8">
       <br><br><br>
       <div class="card-header p-0">
-          <ul class="nav nav-tabs justify-content-center" role="tablist">
+          <ul class="nav nav-tabs justify-content-center">
             <li class="nav-item">
                 <a class="nav-link active show">
                     Все <span class="text-hide-xs"> друзья</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'online_frends' pk=user.pk %}" class="ajax" data-html="#ajax">
+                <a class="nav-link ajax" href="{% url 'online_frends' pk=user.pk %}" data-html="#ajax">
                     Онлайн <span class="text-hide-xs"> друзья</span>
                 </a>
             </li>
