@@ -76,8 +76,7 @@
       if ( this.readyState == 4 && this.status == 200 ) {
         var elem = document.createElement('span');
         elem.innerHTML = link_3.responseText;
-        var photos_list = elem.querySelector(".list-group");
-        if(photos_list.getElementsByClassName('u_photo_detail').length === 6){loaded = true;};
+        if(elem.getElementsByClassName('u_photo_detail').length === 6){loaded = true;};
         photos.append(photos_list);
         }
       }
