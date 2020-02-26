@@ -34,7 +34,7 @@ class UserGalleryView(TemplateView):
     template_name = None
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
-
+        self.albums_list = self.user.get_albums().order_by('-created')
         if self.user == request.user:
             self.template_name="photo_user/gallery/my_gallery.html"
         elif request.user != self.user and request.user.is_authenticated:
@@ -56,6 +56,7 @@ class UserGalleryView(TemplateView):
     def get_context_data(self,**kwargs):
         context=super(UserGalleryView,self).get_context_data(**kwargs)
         context['user'] = self.user
+        context['albums_list'] = self.albums_list
         return context
 
 class UserAlbumView(ListView):
