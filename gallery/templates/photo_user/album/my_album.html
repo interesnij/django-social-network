@@ -19,7 +19,7 @@
                 </div>
                 {% if not album.album_is_generic %}
                 <div class="col-12 col-md-6">
-                    <button class="u_photos_add" class="btn btn-outline-success" style="margin-bottom:15px;width:100%" type="button">
+                    <button class="u_photos_add btn btn-outline-success" class="btn btn-outline-success" style="margin-bottom:15px;width:100%" type="button">
                         Добавить фотографии
                     </button>
                 </div>
@@ -75,8 +75,7 @@
         elem.innerHTML = link_3.responseText;
         var photos_list = elem.querySelector(".photo_list");
         if(photos_list.getElementsByClassName('u_album_photo_detail').length < 3){loaded = true;};
-        elem.innerHTML = photos_list.innerHTML;
-        photos2.append(elem);
+        photos2.append(photos_list.innerHTML);
         }
       }
     }}
