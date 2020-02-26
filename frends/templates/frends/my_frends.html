@@ -38,8 +38,8 @@
                                   </div>
 
                                   <ul class="list-group" id="friends_container">
-                                    {% if friends_list %}
-                                          {% for object in friends_list %}
+                                    {% if object_list %}
+                                          {% for object in object_list %}
                                           <li class="list-group-item">
                                                 <div class="media">
                                                   <a href="{% url 'user' pk=object.pk %}" class="ajax" data-html="#ajax">
