@@ -63,15 +63,15 @@ class UserAlbumView(ListView):
 	paginate_by = 30
 
 	def get(self,request,*args,**kwargs):
-		self.user = User.objects.get(pk=self.kwargs["pk"])
+        self.user = User.objects.get(pk=self.kwargs["pk"])
         self.album = Album.objects.get(uuid=self.kwargs["uuid"])
-		return super(UserAlbumView,self).get(request,*args,**kwargs)
+        return super(UserAlbumView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		context = super(UserAlbumView,self).get_context_data(**kwargs)
-		context['user'] = self.user
+        context['user'] = self.user
         context['album'] = self.album
-		return context
+        return context
 
 	def get_queryset(self):
 		if self.user == self.request.user:
