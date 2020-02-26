@@ -77,7 +77,7 @@ class UserAlbumView(ListView):
     def get_queryset(self):
         if self.user == self.request.user:
             self.template_name="photo_user/my_album.html"
-            photo_list=self.user.get_photos_for_album(album_id=album.pk)
+            photo_list=self.user.get_photos_for_album(album_id=self.album.pk)
         elif self.request.user != self.user and self.request.user.is_authenticated:
             if self.request.user.is_blocked_with_user_with_id(user_id=self.user.id):
                 self.template_name = "photo_user/album_block.html"
