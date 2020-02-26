@@ -61,7 +61,7 @@
   link_2.send( null );
 
   onscroll = function(){
-    try{
+  //  try{
     var photos = document.getElementById("photos_container");
     if(photos.getElementsByClassName("u_photo_detail").length === (page-1)*6){
     var height = document.documentElement.clientHeight-1;
@@ -80,7 +80,7 @@
         }
       }
     }}
-  }catch{return}
+//  }catch{return}
 }
   });
 </script>
