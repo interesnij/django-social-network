@@ -61,8 +61,8 @@ class UserGalleryView(TemplateView):
 
 class UserAlbumView(ListView):
     template_name = None
-    paginate_by = 30
-
+    paginate_by = 3
+    
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.album = Album.objects.get(uuid=self.kwargs["uuid"])
