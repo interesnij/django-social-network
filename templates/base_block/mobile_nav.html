@@ -80,11 +80,6 @@
             </a>
         </li>
     </ul>
-
-    <script>
-      document.querySelector("#left-menu").addEventListener("click", (e) => {document.body.classList.toggle('sidebar-left-close');});
-      document.querySelector(".backdrop").addEventListener("click", (e) => {document.body.classList.toggle('sidebar-left-close');});
-    </script>
     {% else %}
     Нужно
     <a href="{% url 'main' %}" style="text-decoration:underline;" class="ajax" data-html="#ajax">
