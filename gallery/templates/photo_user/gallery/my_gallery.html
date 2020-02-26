@@ -47,17 +47,6 @@
 
 <script>
   ready(() => {
-    var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    link.open( 'GET', '/gallery/user/albums/' + '{{ user.uuid }}', true );
-    link.onreadystatechange = function () {
-      if ( link.readyState == 4 ) {
-          if ( link.status == 200 ) {
-              var albums_load = document.getElementById("albums_load");
-              albums_load.innerHTML = link.responseText;
-          }
-      }
-  };
-  link.send( null );
 
   var link_2 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_2.open( 'GET', '/gallery/user/photos/' + '{{ user.uuid }}', true );
@@ -70,6 +59,29 @@
     }
   };
   link_2.send( null );
+
+  onscroll = function(){
+    try{
+    var communities = document.getElementById("all_communities_container");
+    if(communities.querySelectorAll('.list-group-item').length === (page-1)*6){
+    var height = document.documentElement.clientHeight-1;
+    if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
+      if (loaded){return};
+      var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+      link_3.open( 'GET', '/gallery/user/photos/' + '{{ user.uuid }}/?page=' + page++, true );
+      link_3.send();
+      link_3.onreadystatechange = function () {
+      if ( this.readyState == 4 && this.status == 200 ) {
+        var elem = document.createElement('span');
+        elem.innerHTML = link_3.responseText;
+        var communities_list = elem.querySelector(".list-group");
+        if(communities_list.getElementsByClassName('list-group-item').length === 6){loaded = true;};
+        communities.append(communities_list);
+        }
+      }
+    }}
+  }catch{return}
+}
   });
 </script>
 
