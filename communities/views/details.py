@@ -39,7 +39,7 @@ class ItemsCommunity(View):
         elif request.user.is_anonymous and community.is_public():
             template_name = "detail_sections/anon_list.html"
             item_list = community.get_posts().order_by('-created')
-        current_page = Paginator(item_list, 15)
+        current_page = Paginator(item_list, 3)
         page = request.GET.get('page')
         context['object'] = fixed
         context["community"]=community
