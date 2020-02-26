@@ -18,7 +18,7 @@
 </div>
 
 <div class="container mt-4 main-container">
-      <div id="albums_load"></div>
+  {% include 'albums.html' %}
 </div>
 
 <div class="container-fluid" style="margin-top:30px">
@@ -40,17 +40,6 @@
 
 <script>
   ready(() => {
-    var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    link.open( 'GET', '/gallery/user/albums/' + '{{ user.uuid }}', true );
-    link.onreadystatechange = function () {
-      if ( link.readyState == 4 ) {
-          if ( link.status == 200 ) {
-              var albums_load = document.getElementById("albums_load");
-              albums_load.innerHTML = link.responseText;
-          }
-      }
-  };
-  link.send( null );
 
   var link_2 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_2.open( 'GET', '/gallery/user/photos/' + '{{ user.uuid }}', true );
@@ -63,6 +52,7 @@
     }
   };
   link_2.send( null );
+  
   });
 </script>
 {% endblock %}

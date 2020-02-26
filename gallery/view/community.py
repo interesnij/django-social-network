@@ -25,29 +25,7 @@ class CommunityGalleryView(TemplateView):
 		context=super(CommunityGalleryView,self).get_context_data(**kwargs)
 		context['community'] = self.community
 		return context
-
-class CommunityAlbumsList(View):
-	def get(self,request,**kwargs):
-		context = {}
-		self.community = User.objects.get(uuid=self.kwargs["uuid"])
-		if request.user.is_authenticated:
-			check_can_get_posts_for_community_with_name(request.user,self.community.name)
-			albums_list = self.community.get_albums().order_by('-created')
-		if request.user.is_anonymous and self.community.is_public:
-			albums_list = self.community.get_posts().order_by('-created')
-		if request.user.is_anonymous and (self.community.is_closed or self.community.is_private):
-			raise PermissionDenied('У Вас недостаточно прав для просмотра информации группы')
-
-		current_page = Paginator(albums_list, 15)
-		page = request.GET.get('page')
-		context['user'] = self.user
-		try:
-			context['albums_list'] = current_page.page(page)
-		except PageNotAnInteger:
-			context['albums_list'] = current_page.page(1)
-		except EmptyPage:
-			context['albums_list'] = current_page.page(current_page.num_pages)
-		return render_to_response('photo_community/albums.html', context)
+	return render_to_response('photo_community/albums.html', context)
 
 
 class CommunityPhotosList(View):

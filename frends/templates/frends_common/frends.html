@@ -1,6 +1,6 @@
 {% extends "base.html" %}
-{% load thumbnail liked_user %}
-{% block title %}Общие друзья {{ user.first_name|gent }} {{ user.last_name|gent }}{% endblock %}
+{% load thumbnail %}
+{% block title %}Общие друзья | {{ user.first_name }} {{ user.last_name }}{% endblock %}
 
 {% block content %}
 
@@ -34,9 +34,9 @@
                             <div class="tab-content">
                                 <div class="tab-pane fade active show" id="tabhome123" role="tabpanel" aria-labelledby="tabhome123-tab">
                                   <div class="media-body">
-                                      <h5 class="mt-1">Друзья
+                                      <h5 class="mt-1">Общие друзья |
                                         <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=user.pk %}" data-html="#ajax">
-                                          {{ user.first_name|gent }} {{ user.last_name|gent }}
+                                          {{ user.first_name }} {{ user.last_name }}
                                         </a>
                                       </h5>
                                   </div>

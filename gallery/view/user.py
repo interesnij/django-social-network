@@ -215,39 +215,6 @@ class AlbumUserCreate(TemplateView):
         return super(AlbumUserCreate,self).get(request,*args,**kwargs)
 
 
-class UserAlbomList(View):
-    """
-     СПИСОК ФОТОГРАФИЙ АЛЬБОМА ПОЛЬЗОВАТЕЛЯ С РАЗНЫМИ РАЗРЕШЕНИЯМИ
-    """
-    def get(self,request,**kwargs):
-        context = {}
-        album=Album.objects.get(uuid=self.kwargs["uuid"])
-        user=User.objects.get(pk=self.kwargs["pk"])
-        if user != request.user and request.user.is_authenticated:
-            check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
-            if user.is_closed_profile():
-                check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
-            photos = user.get_photos_for_album(album_id=album.pk).order_by('-created')
-        elif request.user.is_anonymous and user.is_closed_profile():
-            raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.',)
-        elif request.user.is_anonymous and not user.is_closed_profile():
-            photos = user.get_photos_for_album(album_id=album.pk).order_by('-created')
-        elif user == request.user:
-            photos = user.get_photos_for_my_album(album_id=album.pk).order_by('-created')
-
-        current_page = Paginator(photos, 15)
-        page = request.GET.get('page')
-        context['user'] = user
-        context['album'] = album
-        try:
-            context['photos'] = current_page.page(page)
-        except PageNotAnInteger:
-            context['photos'] = current_page.page(1)
-        except EmptyPage:
-            context['photos'] = current_page.page(current_page.num_pages)
-        return render_to_response('photo_user/album/album_list.html', context)
-
-
 class UserAlbumsList(View):
     """
     СПИСОК АЛЬБОМОВ ПОЛЬЗОВАТЕЛЯ С РАЗНЫМИ РАЗРЕШЕНИЯМИ
