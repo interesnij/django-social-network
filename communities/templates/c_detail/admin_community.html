@@ -115,10 +115,10 @@
   var page = 2;
   var loaded = false;
   onscroll = function(){
-  //  try{
+    try{
     var items = document.getElementById("community_stream");
 
-    if(items.getElementsByClassName('infinite-item').length === (page-1)*3){
+    if(items.getElementsByClassName('infinite-item').length === (page-1)*30){
     var height = document.documentElement.clientHeight-1;
     if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
       if (loaded){return};
@@ -129,12 +129,12 @@
       if ( this.readyState == 4 && this.status == 200 ) {
         var elem = document.createElement('span');
         elem.innerHTML = link_3.responseText;
-        if(elem.getElementsByClassName('infinite-item').length === 3){loaded = true;};
+        if(elem.getElementsByClassName('infinite-item').length === 30){loaded = true;};
         items.append(elem);
         }
       }
     }}
-//  }catch{return}
+  }catch{return}
   }
 });
 </script>
