@@ -75,7 +75,7 @@
         elem.innerHTML = link_3.responseText;
         var photos_list = elem.querySelector(".photo_list");
         if(photos_list.getElementsByClassName('u_album_photo_detail').length < 3){loaded = true;};
-        elem = photos_list.innerHTML;
+        elem.innerHTML = photos_list.innerHTML;
         photos.append(elem);
         }
       }
