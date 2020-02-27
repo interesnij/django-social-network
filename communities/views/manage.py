@@ -1,12 +1,13 @@
 from django.views.generic import ListView
 from communities.models import *
+from communities.model.settings import *
 from django.views.generic.base import TemplateView
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.views import View
 from communities.forms import *
 from users.models import User
 from follows.models import CommunityFollow
-from common.checkers import check_can_get_posts_for_community_with_name
+#from common.checkers import check_can_get_posts_for_community_with_name
 
 
 class CommunityGeneralChange(TemplateView):

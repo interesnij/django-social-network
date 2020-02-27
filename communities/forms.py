@@ -1,4 +1,5 @@
 from communities.models import *
+from communities.model.settings import *
 from django import forms
 
 
@@ -29,6 +30,7 @@ class CatCommunityForm(forms.ModelForm):
 		model = Community
 		fields = ['category', ]
 
+
 class CommunityNotifyForm(forms.ModelForm):
     class Meta:
         model = CommunityNotificationsSettings
@@ -43,7 +45,6 @@ class CommunityNotifyForm(forms.ModelForm):
             'user_mention_notifications',
             'repost_notifications',
         )
-
 
 class CommunityPrivateForm(forms.ModelForm):
     class Meta:

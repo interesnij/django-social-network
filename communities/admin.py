@@ -1,6 +1,7 @@
 from django.contrib import admin
-
 from communities.models import *
+from communities.model.settings import *
+
 
 class CommunityNotificationsSettingsInline(admin.TabularInline):
     model = CommunityNotificationsSettings
