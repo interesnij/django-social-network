@@ -1,7 +1,8 @@
 from django.template.loader import render_to_string
 from django.views import View
 from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
-from users.models import User, UserColorSettings
+from users.models import User
+from users.model.settings import UserColorSettings
 from django.http import HttpResponse
 
 
