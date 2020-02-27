@@ -1,8 +1,8 @@
 from django.views.generic.base import TemplateView
-from users.models import *
+from users.models import UserProfile
+from users.model.settings import *
 from users.forms import *
 from django.http import HttpResponse, HttpResponseBadRequest
-from django.views import View
 
 
 class UserGeneralChange(TemplateView):

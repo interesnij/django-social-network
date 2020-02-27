@@ -9,7 +9,6 @@ urlpatterns = [
     url(r'^load/', include('users.url.load')),
     url(r'^progs/', include('users.url.progs')),
 
-
     url(r'^(?P<pk>\d+)/$', ProfileUserView.as_view(), name='user'),
     url(r'^(?P<pk>\d+)/communities/$', UserCommunities.as_view(), name='communities'),
     url(r'^(?P<pk>\d+)/music/$', UserMusic.as_view(), name='user_music'),

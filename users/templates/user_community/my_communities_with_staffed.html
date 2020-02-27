@@ -5,7 +5,7 @@
 
 <div class="row">
         <div class="col-12 col-md-8">
-          <br><br><br>
+          <br>
           <div class="card-header p-0">
               <ul class="nav nav-tabs justify-content-center" role="tablist">
                   <li class="nav-item">
@@ -63,7 +63,7 @@
     </div>
 
     <div class="col-12 col-md-4">
-        <br><br><br>
+        <br>
           <button id="community_add" class="btn btn-outline-success" style="margin-bottom:15px;width:100%;" type="button">Создать сообщество</button>
 
           {% if popular_list %}
@@ -122,7 +122,7 @@
   };
   link.send( null );
   });
-  
+
   document.querySelector(".my_manage_communities").addEventListener("click", (e) => {
     if (document.querySelector("#tabhome223-tab").classList.contains("my_manage_communities")) {
       tab = document.getElementById("tabhome223-tab");tab.classList.remove('my_manage_communities');

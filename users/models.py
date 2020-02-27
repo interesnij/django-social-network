@@ -21,7 +21,6 @@ from django.db.models import Q, F, Count
 from common.utils import safe_json
 
 
-
 class User(AbstractUser):
     moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='users')
     is_email_verified = models.BooleanField(default=False)
@@ -649,91 +648,6 @@ class User(AbstractUser):
         return self.user_blocks.filter(blocked_user_id=user_id).exists()
 
 
-class UserBlock(models.Model):
-    blocked_user = models.ForeignKey(User, db_index=False, on_delete=models.CASCADE, related_name='blocked_by_users', verbose_name="Кого блокирует")
-    blocker = models.ForeignKey(User, db_index=False, on_delete=models.CASCADE, related_name='user_blocks', verbose_name="Кто блокирует")
-
-    @classmethod
-    def create_user_block(cls, blocker_id, blocked_user_id):
-        return cls.objects.create(blocker_id=blocker_id, blocked_user_id=blocked_user_id)
-
-    @classmethod
-    def users_are_blocked(cls, user_a_id, user_b_id):
-        return cls.objects.filter(Q(blocked_user_id=user_a_id, blocker_id=user_b_id)).exists()
-
-    class Meta:
-        unique_together = ('blocked_user', 'blocker',)
-        indexes = [models.Index(fields=['blocked_user', 'blocker']),]
-
-
-class UserNotificationsSettings(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='notifications_settings', verbose_name="Пользователь")
-    comment_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления о комментариях к записям")
-    comment_reply_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления об ответах на комментарии к записям")
-    connection_request_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления о заявках в друзья")
-    connection_confirmed_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления о приеме заявки в друзья")
-    community_invite_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления о приглашениях в сообщества")
-    comment_user_mention_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления об упоминаниях в комментариях к записям")
-    user_mention_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления об упоминаниях в записям")
-    repost_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления о репостах записей")
-
-    like_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления о лайках к записям")
-    dislike_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления о дизлайках к записям")
-    comment_like_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления о лайках на комментарии к записям")
-    comment_dislike_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления о дизлайках на комментарии к записям")
-    comment_reply_like_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления о лайках на ответы к комментариям")
-    comment_reply_dislike_notifications = models.BooleanField(default=True, verbose_name="Отправлять уведомления о дизлайках на ответы к комментариям")
-
-
-    @classmethod
-    def create_notifications_settings(cls, user):
-        return UserNotificationsSettings.objects.create(user=user)
-
-
-class UserColorSettings(models.Model):
-    COLOR = (
-        ('white', 'white'),
-        ('blue', 'blue'),
-        ('brown', 'brown'),
-        ('dark-blue', 'dark-blue'),
-        ('dark-brown', 'dark-brown'),
-        ('dark-green', 'dark-green'),
-        ('dark-grey', 'dark-grey'),
-        ('dark-maroon', 'dark-maroon'),
-        ('dark-pink', 'dark-pink'),
-        ('dark-purple', 'dark-purple'),
-        ('grey', 'grey'),
-        ('orange', 'orange'),
-        ('purple', 'purple'),
-        ('red', 'red'),
-        ('skyblue', 'skyblue'),
-        ('teal', 'teal'),
-    )
-
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='color_settings', verbose_name="Пользователь")
-    color = models.CharField(max_length=20, choices=COLOR, default='white', verbose_name="Цвет")
-
-    @classmethod
-    def create_private_settings(cls, user):
-        return UserColorSettings.objects.create(user=user)
-
-
-class UserPrivateSettings(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name="user_private", on_delete=models.CASCADE, verbose_name="Пользователь")
-    is_private = models.BooleanField(default=False, verbose_name="Закрытый профиль")
-    can_message = models.BooleanField(default=True, verbose_name="Вам могут писать сообщения все пользователи")
-    photo_visible_all = models.BooleanField(default=True, verbose_name="Ваши фото видны всем")
-    photo_visible_frends = models.BooleanField(default=True, verbose_name="Ваши фото видны Вашим друзьям")
-    can_comments = models.BooleanField(default=True, verbose_name="Могут оставлять комментарии все пользователи")
-    can_add_post = models.BooleanField(default=False, verbose_name="Вам могут писать записи на стене")
-    can_add_article = models.BooleanField(default=False, verbose_name="Вам могут писать статьи на стене")
-    can_add_good = models.BooleanField(default=False, verbose_name="Вам могут добавлять товары")
-
-    @classmethod
-    def create_private_settings(cls, user):
-        return UserPrivateSettings.objects.create(user=user)
-
-
 class UserProfile(models.Model):
     id = models.AutoField(primary_key=True, db_index=False)
     user = models.OneToOneField(User, db_index=False, related_name="profile", verbose_name="Пользователь", on_delete=models.CASCADE)
@@ -758,3 +672,20 @@ class UserProfile(models.Model):
         verbose_name = 'Профиль пользователя'
         verbose_name_plural = 'Профили пользователей'
         index_together = [('id', 'user'),]
+
+
+class UserBlock(models.Model):
+    blocked_user = models.ForeignKey(User, db_index=False, on_delete=models.CASCADE, related_name='blocked_by_users', verbose_name="Кого блокирует")
+    blocker = models.ForeignKey(User, db_index=False, on_delete=models.CASCADE, related_name='user_blocks', verbose_name="Кто блокирует")
+
+    @classmethod
+    def create_user_block(cls, blocker_id, blocked_user_id):
+        return cls.objects.create(blocker_id=blocker_id, blocked_user_id=blocked_user_id)
+
+    @classmethod
+    def users_are_blocked(cls, user_a_id, user_b_id):
+        return cls.objects.filter(Q(blocked_user_id=user_a_id, blocker_id=user_b_id)).exists()
+
+    class Meta:
+        unique_together = ('blocked_user', 'blocker',)
+        indexes = [models.Index(fields=['blocked_user', 'blocker']),]
