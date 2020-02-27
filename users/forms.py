@@ -1,7 +1,8 @@
 from django import forms
 from django.http import Http404
 from django.contrib.auth.models import User
-from .models import UserProfile, UserPrivateSettings, UserNotificationsSettings
+from users.models import UserProfile
+from users.model.settings import UserPrivateSettings, UserNotificationsSettings
 from django import forms
 from gallery.models import Photo
 
