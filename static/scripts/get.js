@@ -50,7 +50,7 @@ $('#question').on('click', function() {$('#for_question').show();});
     on('#ajax', 'click', '.item_fullscreen_hide', function() {document.querySelector(".item_fullscreen").style.display = "none";document.getElementById("item_loader").innerHTML=""});
     on('#ajax', 'click', '.community_fullscreen_hide', function() {document.querySelector(".community_fullscreen").style.display = "none";document.getElementById("community_loader").innerHTML=""});
     on('#ajax', 'click', '.community_manage_fullscreen_hide', function() {document.querySelector(".manage_window_fullscreen").style.display = "none";document.getElementById("load_staff_window").innerHTML=""});
-    on('#ajax', 'click', '.good_fullscreen_hide', function() {document.querySelector(".good_add_fullscreen").style.display = "none";document.getElementById("good_add_loader").innerHTML=""});
+    on('#ajax', 'click', '.good_fullscreen_hide', function() {document.querySelector(".good_fullscreen").style.display = "none";document.getElementById("good_loader").innerHTML=""});
 
   /*!
      comments scripts
