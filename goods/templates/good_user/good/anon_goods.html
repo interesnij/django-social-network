@@ -13,36 +13,38 @@
             </div>
         </div>
       </div>
+      <div class="col-12 col-md-4">
+        <button id="good_add" class="btn btn-outline-success" style="margin-bottom:15px;width:100%;" type="button">
+            Создать товар
+        </button>
+      </div>
     </div>
-</div>
 
-<div class="container mt-4 main-container">
-  <div class="col-12 col-md-8">
-    <div class="card mb-2">
-        <div class="card-header">
-          <div class="media">
-            <div class="media-body">
-                <h5 class="mt-1">Товары {{ user.first_name|gent }} {{ user.last_name|gent }}
-                  <small class="content-color-secondary float-right mr-2 mt-1">Всего {{ user.count_goods }}</small>
-                </h5>
+      <div class="col-12 col-md-8">
+        <div class="card mb-2">
+            <div class="card-header">
+              <div class="media">
+                <div class="media-body">
+                    <h5 class="mt-1">Товары {{ user.first_name|gent }} {{ user.last_name|gent }}
+                      <small class="content-color-secondary float-right mr-2 mt-1">Всего {{ user.count_goods }}</small>
+                    </h5>
+                </div>
+              </div>
             </div>
-          </div>
+            <div class="card-body">
+              <span id="goods_load"></span>
+            </div>
         </div>
-        <div class="card-body">
-          <span id="goods_load"></span>
-        </div>
-    </div>
-  </div>
-  <div class="col-12 col-md-4">
+      </div>
+      <div class="col-12 col-md-4">
 
-  </div>
+      </div>
 </div>
-
 
 <script>
   ready(() => {
     var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    link.open( 'GET', '/goods/user/goods/' + '{{ user.pk }}', true );
+    link.open( 'GET', '/goods/user/goods/{{ user.pk }}', true );
     link.onreadystatechange = function () {
       if ( link.readyState == 4 ) {
           if ( link.status == 200 ) {
@@ -53,6 +55,31 @@
   };
   link.send( null );
   });
+
+  var page = 2;
+  var loaded = false;
+      onscroll = function(){
+    //    try{
+        var friends = document.getElementById("goods_container");
+        if(friends.querySelectorAll('.u_good_detail').length === (page-1)*30){
+        var height = document.documentElement.clientHeight-1;
+        if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
+          if (loaded){return};
+          var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+          link_3.open( 'GET', '/goods/user/goods/{{ user.pk }}/?page=' + page++, true );
+          link_3.send();
+          link_3.onreadystatechange = function () {
+          if ( this.readyState == 4 && this.status == 200 ) {
+            var elem = document.createElement('span');
+            elem.innerHTML = link_3.responseText;
+            if(elem.getElementsByClassName('u_good_detail').length < 30){loaded = true;};
+            friends.append(elem);
+            }
+          }
+        }}
+    //  }catch{return}
+  }
 </script>
+
 
 {% endblock %}
