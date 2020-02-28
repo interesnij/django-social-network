@@ -1,7 +1,7 @@
 {% load get_key %}
 
 {% if genre_list %}
-<div class="tracks-container genre_playlist">
+<div class="genre_playlist" id="tracks_container">
     <ul data-pk="{{ genre.pk }}" class="ul_track_list" style="display: contents;">
       {% for object in genre_list %}
       <li class="list-group-item infinite-item id_{{ object.id }}" data-counter="{{ forloop.counter0 }}">
