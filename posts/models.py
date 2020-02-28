@@ -1,12 +1,7 @@
 from django.db import models
-from django.utils import timezone
-from pilkit.processors import ResizeToFill, ResizeToFit
 from django.conf import settings
-from imagekit.models import ProcessedImageField
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
-from posts.helpers import upload_to_post_image_directory, upload_to_post_directory
-from django.contrib.postgres.indexes import BrinIndex
 from main.models import Item
 from rest_framework.exceptions import ValidationError
 
@@ -16,14 +11,13 @@ class Post(Item):
 
     @classmethod
     def create_post(cls, creator, text=None, community=None, comments_enabled=None, video=None, is_draft=False, good=None, status= None, doc=None, question=None):
-
         if not text and not photo:
             raise ValidationError('Нужно ввести текст или прикрепить фото')
         else:
             post = Post.objects.create(creator=creator, text=text, community=community, comments_enabled=comments_enabled, status = status, )
             channel_layer = get_channel_layer()
             payload = {
-                    "type": "receive", 
+                    "type": "receive",
                     "key": "additional_post",
                     "actor_name": post.creator.get_full_name()
                 }
