@@ -14,7 +14,7 @@ from frends.models import Connect
 from posts.models import Post
 from common.models import ItemVotes
 from gallery.models import Photo, Album
-from gallery.model.settings import UserPrivateSettings
+from users.model.settings import UserPrivateSettings
 from music.models import *
 from moderation.models import ModeratedObject, ModerationPenalty
 from common.checkers import *
