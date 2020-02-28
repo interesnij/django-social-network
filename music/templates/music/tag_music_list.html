@@ -1,7 +1,7 @@
 {% load get_key %}
 
 {% if tag_list %}
-<div class="tracks-container tag_playlist" data-pk="{{ tag.pk }}">
+<div class="tag_playlist" data-pk="{{ tag.pk }}" id="tracks_container">
     <ul class="ul_track_list" style="display: contents;">
       {% for object in tag_list %}
       <li class="list-group-item infinite-item id_{{ object.id }}">
