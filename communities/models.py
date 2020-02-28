@@ -243,9 +243,9 @@ class Community(models.Model):
         return cls._get_trending_communities_with_query(query=trending_communities_query)
 
     @classmethod
-    from django.db.models import Count
-
     def _get_trending_communities_with_query(cls, query):
+        from django.db.models import Count
+        
         return cls.objects.annotate(Count('memberships')).filter(query).order_by('-memberships__count', '-created')
 
     @classmethod
@@ -472,7 +472,7 @@ class Community(models.Model):
 
     def _create_log(self, action_type, source_user, target_user, post=None):
         from moderation.models import CommunityModeratorUserActionLog
-        
+
         return CommunityModeratorUserActionLog.create_community_log(community=self, post=post, target_user=target_user, action_type=action_type, source_user=source_user)
 
     def __str__(self):
