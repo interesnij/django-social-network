@@ -263,6 +263,7 @@ class UserAlbumPhotosList(View):
         current_page = Paginator(photo_list, 3)
         page = request.GET.get('page')
         context['user'] = self.user
+        context['album'] = self.album
         try:
             context['photo_list'] = current_page.page(page)
         except PageNotAnInteger:
