@@ -89,7 +89,10 @@ onscroll = function(){
       elem.innerHTML = link_3.responseText;
       if(elem.getElementsByClassName('list-group-item').length < 30){loaded = true;};
       items.append(elem);
-      }
     }
+  }
+}}
+}catch{return}
+} 
 </script>
 {% endblock %}
