@@ -217,8 +217,7 @@ class UserPhotosList(View):
     """
     def get(self,request,**kwargs):
         context = {}
-        self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.album = Album.objects.get(uuid=self.kwargs["uuid"])
+        self.user = User.objects.get(uuid=self.kwargs["uuid"])
         if self.user != request.user and request.user.is_authenticated:
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
             if self.user.is_closed_profile():
