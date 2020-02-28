@@ -1,24 +1,11 @@
-from datetime import datetime, timedelta
 import uuid
 from django.utils import timezone
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.conf import settings
 from django.contrib.contenttypes.fields import GenericRelation
-#from django.db.models.signals import post_save
-#from django.dispatch import receiver
-#from communities.models import Community
-#from follows.models import Follow, CommunityFollow
-#from goods.models import Good
-#from frends.models import Connect
-#from posts.models import Post
-#from common.models import ItemVotes
-#from gallery.models import Photo, Album
-#from music.models import *
-#from moderation.models import ModeratedObject, ModerationPenalty
 from common.checkers import *
 from django.db.models import Q
-#from common.utils import safe_json
 
 
 class User(AbstractUser):

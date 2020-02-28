@@ -1,11 +1,6 @@
 from django.db import models
 import tldextract
-from django.db.models import Q, Count
-from django.utils import timezone
-from django.contrib.contenttypes.models import ContentType
-from django.contrib.contenttypes.fields import GenericForeignKey
-from django.contrib.contenttypes.fields import GenericRelation
-from django.db.models import Sum
+from django.db.models import Q
 from django.conf import settings
 
 

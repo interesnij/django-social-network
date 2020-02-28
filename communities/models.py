@@ -4,17 +4,10 @@ from django.contrib.contenttypes.fields import GenericRelation
 from django.db import models
 from django.utils import timezone
 from django.db.models import Q
-from django.db.models import Count
 from pilkit.processors import ResizeToFill, ResizeToFit
 from communities.helpers import upload_to_community_avatar_directory, upload_to_community_cover_directory
 from imagekit.models import ProcessedImageField
-from moderation.models import ModeratedObject, ModerationCategory
-from main.models import Item
-from goods.models import Good
-from common.model_loaders import get_user_model
 from notifications.model.user import *
-from gallery.models import Album, Photo
-from music.models import SoundList
 
 
 class CommunityCategory(models.Model):
@@ -137,18 +130,27 @@ class Community(models.Model):
         return cls._get_trending_communities_with_query(query=trending_communities_query)
 
     def get_posts(self):
+        from main.models import Item
+        from moderation.models import ModeratedObject
+
         posts_query = Q(community_id=self.pk, is_deleted=False, is_fixed=False, status=Item.STATUS_PUBLISHED)
         exclude_reported_and_approved_posts_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         posts_query.add(exclude_reported_and_approved_posts_query, Q.AND)
         items = Item.objects.filter(posts_query)
         return items
     def get_draft_posts(self):
+        from moderation.models import ModeratedObject
+        from main.models import Item
+
         posts_query = Q(community_id=self.pk, is_deleted=False, is_fixed=False, status=Item.STATUS_DRAFT)
         exclude_reported_and_approved_posts_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         posts_query.add(exclude_reported_and_approved_posts_query, Q.AND)
         items = Item.objects.filter(posts_query)
         return items
     def get_archive_posts(self):
+        from moderation.models import ModeratedObject
+        from main.models import Item
+
         posts_query = Q(community_id=self.pk, is_deleted=False, is_fixed=False, status=Item.STATUS_ARHIVED)
         exclude_reported_and_approved_posts_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         posts_query.add(exclude_reported_and_approved_posts_query, Q.AND)
@@ -156,12 +158,18 @@ class Community(models.Model):
         return items
 
     def get_goods(self):
+        from moderation.models import ModeratedObject
+        from goods.models import Good
+
         goods_query = Q(community_id=self.pk, is_deleted=False, status=Good.STATUS_PUBLISHED)
         exclude_reported_and_approved_goods_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         goods_query.add(exclude_reported_and_approved_goods_query, Q.AND)
         goods = Good.objects.filter(goods_query)
         return goods
     def get_admin_goods(self):
+
+        from moderation.models import ModeratedObject
+        from goods.models import Good
         goods_query = Q(community_id=self.pk, is_deleted=False)
         exclude_reported_and_approved_goods_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         goods_query.add(exclude_reported_and_approved_goods_query, Q.AND)
@@ -169,6 +177,9 @@ class Community(models.Model):
         return goods
 
     def get_photos_for_album(self, album_id):
+        from moderation.models import ModeratedObject
+        from gallery.models import Photo
+
         exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         try:
             photos_query = Q(is_deleted=False, album_2_id=album_id, is_public=True)
@@ -178,6 +189,9 @@ class Community(models.Model):
         photos = Photo.objects.filter(photos_query)
         return photos
     def get_photos_for_admin_album(self, album_id):
+        from moderation.models import ModeratedObject
+        from gallery.models import Photo
+
         exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         try:
             photos_query = Q(is_deleted=False, album_2_id=album_id)
@@ -188,12 +202,18 @@ class Community(models.Model):
         return photos
 
     def get_photos(self):
+        from moderation.models import ModeratedObject
+        from gallery.models import Photo
+
         photos_query = Q(is_deleted=False, is_public=True, community=self)
         exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         photos_query.add(exclude_reported_and_approved_photos_query, Q.AND)
         photos = Photo.objects.filter(photos_query)
         return photos
     def get_admin_photos(self):
+        from moderation.models import ModeratedObject
+        from gallery.models import Photo
+
         photos_query = Q(is_deleted=False, community=self)
         exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         photos_query.add(exclude_reported_and_approved_photos_query, Q.AND)
@@ -201,6 +221,9 @@ class Community(models.Model):
         return photos
 
     def get_avatar_photos(self):
+        from moderation.models import ModeratedObject
+        from gallery.models import Photo
+
         photos_query = Q(is_deleted=False, community=self, album_2__title="Фото со страницы", album_2__is_generic=True)
         exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         photos_query.add(exclude_reported_and_approved_photos_query, Q.AND)
@@ -220,6 +243,8 @@ class Community(models.Model):
         return cls._get_trending_communities_with_query(query=trending_communities_query)
 
     @classmethod
+    from django.db.models import Count
+
     def _get_trending_communities_with_query(cls, query):
         return cls.objects.annotate(Count('memberships')).filter(query).order_by('-memberships__count', '-created')
 
@@ -233,38 +258,44 @@ class Community(models.Model):
 
     @classmethod
     def get_community_with_name_members(cls, community_name):
+        from users.models import User
+
         community_members_query = Q(communities_memberships__community__name=community_name)
-        User = get_user_model()
         return User.objects.filter(community_members_query)
 
     @classmethod
     def get_community_with_name_administrators(cls, community_name):
+        from users.models import User
+
         community_administrators_query = Q(communities_memberships__community__name=community_name, communities_memberships__is_administrator=True)
-        User = get_user_model()
         return User.objects.filter(community_administrators_query)
 
     @classmethod
     def get_community_with_name_moderators(cls, community_name):
+        from users.models import User
+
         community_administrators_query = Q(communities_memberships__community__name=community_name, communities_memberships__is_moderator=True)
-        User = get_user_model()
         return User.objects.filter(community_administrators_query)
 
     @classmethod
     def get_community_with_name_editors(cls, community_name):
+        from users.models import User
+
         community_moderators_query = Q(communities_memberships__community__name=community_name, communities_memberships__is_editor=True)
-        User = get_user_model()
         return User.objects.filter(community_moderators_query)
 
     @classmethod
     def get_community_with_name_advertisers(cls, community_name):
+        from users.models import User
+
         community_moderators_query = Q(communities_memberships__community__name=community_name, communities_memberships__is_advertiser=True)
-        User = get_user_model()
         return User.objects.filter(community_moderators_query)
 
     @classmethod
     def get_community_with_name_follows(cls, community_name):
+        from users.models import User
+
         community_moderators_query = Q(communities_memberships__community__name=community_name, communities_memberships__is_moderator=True)
-        User = get_user_model()
         return User.objects.filter(community_moderators_query)
 
     @classmethod
@@ -275,29 +306,32 @@ class Community(models.Model):
 
     @classmethod
     def search_community_with_name_members(cls, community_name, query):
+        from users.models import User
+
         db_query = Q(communities_memberships__community__name=community_name)
         community_members_query = Q(communities_memberships__user__username__icontains=query)
         community_members_query.add(Q(communities_memberships__user__profile__name__icontains=query), Q.OR)
         db_query.add(community_members_query, Q.AND)
-        User = get_user_model()
         return User.objects.filter(db_query)
 
     @classmethod
     def search_community_with_name_moderators(cls, community_name, query):
+        from users.models import User
+
         db_query = Q(communities_memberships__community__name=community_name, communities_memberships__is_moderator=True)
         community_members_query = Q(communities_memberships__user__username__icontains=query)
         community_members_query.add(Q(communities_memberships__user__profile__name__icontains=query), Q.OR)
         db_query.add(community_members_query, Q.AND)
-        User = get_user_model()
         return User.objects.filter(db_query)
 
     @classmethod
     def search_community_with_name_administrators(cls, community_name, query):
+        from users.models import User
+
         db_query = Q(communities_memberships__community__name=community_name, communities_memberships__is_administrator=True)
         community_members_query = Q(communities_memberships__user__username__icontains=query)
         community_members_query.add(Q(communities_memberships__user__profile__name__icontains=query), Q.OR)
         db_query.add(community_members_query, Q.AND)
-        User = get_user_model()
         return User.objects.filter(db_query)
 
     @classmethod
@@ -308,9 +342,10 @@ class Community(models.Model):
         return community.banned_users.filter(community_banned_users_query)
 
     def get_staff_members(self):
+        from users.models import User
+
         staff_members_query = Q(communities_memberships__community_id=self.pk)
         staff_members_query.add(Q(communities_memberships__is_administrator=True) | Q(communities_memberships__is_moderator=True) | Q(communities_memberships__is_advertiser=True) | Q(communities_memberships__is_editor=True), Q.AND)
-        User = get_user_model()
         return User.objects.filter(staff_members_query)
 
     def is_private(self):
@@ -391,6 +426,7 @@ class Community(models.Model):
         community_notification_handler(actor=user, recipient=None, verb=UserCommunityNotification.JOIN, community=self.community, key='notification')
 
     def create_invite(self, creator, invited_user):
+        from invitations.models import CommunityInvite
 
         CommunityInvite = get_community_invite_model()
         return CommunityInvite.create_community_invite(creator=creator, invited_user=invited_user, community=self)
@@ -435,6 +471,8 @@ class Community(models.Model):
         return self._create_log(action_type='CP', post=post, source_user=source_user, target_user=target_user)
 
     def _create_log(self, action_type, source_user, target_user, post=None):
+        from moderation.models import CommunityModeratorUserActionLog
+        
         return CommunityModeratorUserActionLog.create_community_log(community=self, post=post, target_user=target_user, action_type=action_type, source_user=source_user)
 
     def __str__(self):
