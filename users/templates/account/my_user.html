@@ -85,8 +85,7 @@ onscroll = function(){
   }}
 }catch{return}
 }
-
-document.querySelector(".article_fullscreen_hide").addEventListener("click", (e) => {
+on('#ajax', 'click', '.article_fullscreen_hide', function(e) {
   document.querySelector(".article_fullscreen").style.display = "none";
   document.getElementById("article_loader").innerHTML="";
   console.log("user article closed")
