@@ -84,6 +84,7 @@
     var good = goods_container.querySelector(".u_good_detail");
     var good_id = good.getAttribute('data-id');
     var user_uuid = goods_container.getAttribute('data-uuid');
+    var link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     link_.open( 'GET', '/goods/user/good/' + good_id + '/' + user_uuid + '/', true );
     link_.send();
     link_.onreadystatechange = function () {
