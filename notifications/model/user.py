@@ -1,5 +1,4 @@
 import uuid
-from common.model_loaders import get_user_model, get_community_model
 from django.db import models
 from django.utils import timezone
 from django.conf import settings
@@ -129,7 +128,7 @@ def notification_handler(actor, recipient, verb, **kwargs):
         for user in recipient:
             UserNotification.objects.create(actor=actor,recipient=User.objects.get(username=user.username),verb=verb)
 
-    elif isinstance(recipient, get_user_model()):
+    elif isinstance(recipient):
         UserNotification.objects.create(actor=actor,recipient=recipient,verb=verb)
         user_notification_broadcast(actor, key, recipient=recipient.username)
     else:
