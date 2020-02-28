@@ -8,7 +8,6 @@ from django.views import View
 from django.shortcuts import render_to_response
 from rest_framework.exceptions import PermissionDenied
 
-
 class UserCommunitiesList(View):
 	def get(self, request, *args, **kwargs):
 		context = {}
@@ -30,7 +29,7 @@ class UserCommunitiesList(View):
 			communities_list = Community.objects.filter(memberships__user__id=self.user.pk)
 			template = 'user_community/communities_list.html'
 
-		current_page = Paginator(communities_list, 15)
+		current_page = Paginator(communities_list, 3)
 		page = request.GET.get('page')
 		context['user'] = self.user
 		try:

@@ -90,6 +90,7 @@ class UserCommunities(TemplateView):
         return context
 
 
+
 class UserMusic(TemplateView):
     template_name = None
 
