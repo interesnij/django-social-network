@@ -260,7 +260,7 @@ class UserAlbumPhotosList(View):
             photo_list = self.user.get_photos_for_album(album_id=self.album.pk)
         elif self.user == request.user:
             photo_list = self.user.get_photos_for_album(album_id=self.album.pk)
-        current_page = Paginator(photo_list, 3)
+        current_page = Paginator(photo_list, 30)
         page = request.GET.get('page')
         context['user'] = self.user
         context['album'] = self.album
