@@ -14,6 +14,7 @@ from frends.models import Connect
 from posts.models import Post
 from common.models import ItemVotes
 from gallery.models import Photo, Album
+from gallery.model.settings import UserPrivateSettings
 from music.models import *
 from moderation.models import ModeratedObject, ModerationPenalty
 from common.checkers import *
@@ -382,10 +383,7 @@ class User(AbstractUser):
         return photos
     def get_photos_for_my_album(self, album_id):
         exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
-        try:
-            photos_query = Q(album_2_id=album_id, is_deleted=False)
-        except:
-            photos_query = Q(album_id=album_id, is_deleted=False)
+        photos_query = Q(album_id=album_id, is_deleted=False)
         photos_query.add(exclude_reported_and_approved_photos_query, Q.AND)
         photos = Photo.objects.filter(photos_query)
         return photos
