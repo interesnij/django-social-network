@@ -72,9 +72,8 @@
       if ( this.readyState == 4 && this.status == 200 ) {
         var elem = document.createElement('span');
         elem.innerHTML = link_3.responseText;
-        var photos_list = elem.querySelector(".photo_list");
-        if(photos_list.getElementsByClassName('u_album_photo_detail').length < 3){loaded = true;};
-        photos2.append(photos_list);
+        if(elem.getElementsByClassName('u_album_photo_detail').length < 3){loaded = true;};
+        photos2.append(elem);
         }
       }
     }}
