@@ -83,6 +83,7 @@ class UserAlbumPhoto(TemplateView):
     def get_context_data(self,**kwargs):
         context=super(UserAlbumPhoto,self).get_context_data(**kwargs)
         context["object"]=self.photo
+        context["photos"]=self.photos
         context["user"]=self.user
         context["next"]=self.next
         context["prev"]=self.prev
