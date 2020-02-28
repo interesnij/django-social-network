@@ -65,7 +65,7 @@
   onscroll = function(){
     try{
     var photos = document.getElementById("photos_container");
-    if(photos.querySelectorAll(".u_photo_detail").length === (page-1)*30){
+    if(photos.querySelectorAll(".u_photo_detail").length === (page-1)*6){
     var height = document.documentElement.clientHeight-1;
     if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
       if (loaded){return};
@@ -76,7 +76,7 @@
       if ( this.readyState == 4 && this.status == 200 ) {
         var elem = document.createElement('span');
         elem.innerHTML = link_3.responseText;
-        if(elem.getElementsByClassName('u_photo_detail').length < 30){loaded = true;};
+        if(elem.getElementsByClassName('u_photo_detail').length < 6){loaded = true;};
         photos.append(elem);
         }
       }

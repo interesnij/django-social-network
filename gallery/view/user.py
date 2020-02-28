@@ -62,7 +62,7 @@ class UserGalleryView(TemplateView):
 class UserAlbumView(ListView):
     template_name = None
     paginate_by = 3
-    
+
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.album = Album.objects.get(uuid=self.kwargs["uuid"])
@@ -237,7 +237,7 @@ class UserPhotosList(View):
             photo_list = self.user.get_photos().order_by('-created')
         elif self.user == request.user:
             photo_list = self.user.get_my_photos().order_by('-created')
-        current_page = Paginator(photo_list, 30)
+        current_page = Paginator(photo_list, 6)
         page = request.GET.get('page')
         context['user'] = self.user
         try:
