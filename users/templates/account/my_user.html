@@ -85,10 +85,12 @@ onscroll = function(){
   }}
 }catch{return}
 }
+(function (){
 on('#ajax', 'click', '.article_fullscreen_hide', function(e) {
   document.querySelector(".article_fullscreen").style.display = "none";
   document.getElementById("article_loader").innerHTML="";
   console.log("user article closed")
+});
 });
 </script>
 
