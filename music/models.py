@@ -131,6 +131,8 @@ class SoundTags(models.Model):
         self.track_tag.filter(id=track_id).exists()
 
     def get_genres(self):
+        from django.db.models import Q
+        
         genres_list = []
         genres = self.track_tag.values('genre_id')
         genres_ids = [id['genre_id'] for id in genres]
