@@ -8,6 +8,7 @@ from django.views import View
 from django.shortcuts import render_to_response
 from rest_framework.exceptions import PermissionDenied
 
+
 class UserCommunitiesList(View):
 	def get(self, request, *args, **kwargs):
 		context = {}
@@ -29,7 +30,7 @@ class UserCommunitiesList(View):
 			communities_list = Community.objects.filter(memberships__user__id=self.user.pk)
 			template = 'user_community/communities_list.html'
 
-		current_page = Paginator(communities_list, 3)
+		current_page = Paginator(communities_list, 30)
 		page = request.GET.get('page')
 		context['user'] = self.user
 		try:
@@ -50,7 +51,7 @@ class UserManageCommunitiesList(View):
 			manage_communities_list = self.user.get_staffed_communities()
 		else:
 			manage_communities_list = ""
-		current_page = Paginator(manage_communities_list, 15)
+		current_page = Paginator(manage_communities_list, 30)
 		page = request.GET.get('page')
 		context['user'] = self.user
 		try:
@@ -81,7 +82,7 @@ class UserMusicList(View):
 		elif self.user == request.user:
 			music_list = list(reversed(self.user.get_my_music()))
 			template = 'user_music/my_music_list.html'
-		current_page = Paginator(music_list, 15)
+		current_page = Paginator(music_list, 30)
 		page = request.GET.get('page')
 		context['user'] = self.user
 		context['request_user'] = request.user
@@ -99,7 +100,7 @@ class AllPossibleUsersList(View):
 		context = {}
 		if request.user.is_authenticated:
 			possible_list = request.user.get_possible_friends()
-			current_page = Paginator(possible_list, 15)
+			current_page = Paginator(possible_list, 30)
 			page = request.GET.get('page')
 		else:
 			possible_list = None
@@ -137,7 +138,7 @@ class ItemListView(View):
 		elif user == request.user:
 			items_list = user.get_posts().order_by('-created')
 			template = 'lenta/my_item_list.html'
-		current_page = Paginator(items_list, 15)
+		current_page = Paginator(items_list, 30)
 		context['request_user'] = request.user
 		context['user'] = user
 		context['object'] = fixed

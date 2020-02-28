@@ -1,9 +1,9 @@
 {% load thumbnail %}
 {% if possible_list %}
 
-<ul class="list-group possible-container ">
+<ul class="list-group" id="possible_container">
     {% for object in possible_list %}
-    <li class="list-group-item infinite-item">
+    <li class="list-group-item">
         <div class="media">
           <a href="{% url 'user' pk=object.pk %}" class="ajax" data-html="#ajax">
             <figure>

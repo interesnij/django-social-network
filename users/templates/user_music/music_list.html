@@ -4,7 +4,7 @@
 
 {% if music_list %}
 
-<div class="tracks-container user_playlist">
+<div class="user_playlist" id="tracks-container">
     <ul style="display: contents;" data-pk="{{ user.pk }}" class="ul_track_list">
       {% for object in music_list %}
       <li class="list-group-item infinite-item id_{{ object.id }}" data-counter="{{ forloop.counter0 }}">

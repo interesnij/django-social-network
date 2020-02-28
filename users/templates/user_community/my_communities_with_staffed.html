@@ -127,7 +127,7 @@
     if (document.querySelector("#tabhome223-tab").classList.contains("my_manage_communities")) {
       tab = document.getElementById("tabhome223-tab");tab.classList.remove('my_manage_communities');
       var link_2 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-      link_2.open( 'GET', '/users/detail/manage_communities/' + '{{ user.uuid }}', true );
+      link_2.open( 'GET', '/users/detail/manage_communities/{{ user.uuid }}', true );
       link_2.onreadystatechange = function () {
         if ( link_2.readyState == 4 ) {
             if ( link_2.status == 200 ) {
@@ -146,7 +146,7 @@
       try{
       var items = document.getElementById("communities_container");
 
-      if(items.getElementsByClassName('list-group-item').length === (page-1)*3){
+      if(items.getElementsByClassName('list-group-item').length === (page-1)*30){
       var height = document.documentElement.clientHeight-1;
       if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
         if (loaded){return};
@@ -157,7 +157,7 @@
         if ( this.readyState == 4 && this.status == 200 ) {
           var elem = document.createElement('span');
           elem.innerHTML = link_3.responseText;
-          if(elem.getElementsByClassName('list-group-item').length < 3){loaded = true;};
+          if(elem.getElementsByClassName('list-group-item').length < 30){loaded = true;};
           items.append(elem);
           }
         }
