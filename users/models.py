@@ -14,7 +14,6 @@ from frends.models import Connect
 from posts.models import Post
 from common.models import ItemVotes
 from gallery.models import Photo, Album
-from users.model.settings import UserPrivateSettings
 from music.models import *
 from moderation.models import ModeratedObject, ModerationPenalty
 from common.checkers import *
@@ -208,6 +207,7 @@ class User(AbstractUser):
             return False
 
     def is_closed_profile(self):
+        from users.model.settings import UserPrivateSettings
         try:
             user_private = UserPrivateSettings.objects.get(user=self)
             return user_private.is_private
