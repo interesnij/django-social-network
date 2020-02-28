@@ -10,6 +10,7 @@ from imagekit.models import ProcessedImageField
 from notifications.model.user import *
 
 
+
 class CommunityCategory(models.Model):
     name = models.CharField(max_length=100, blank=False, null=False, verbose_name="Название")
     avatar = models.ImageField(blank=False, null=True, verbose_name="Аватар")
@@ -38,7 +39,7 @@ class CommunitySubCategory(models.Model):
 
 
 class Community(models.Model):
-    moderated_object = GenericRelation(ModeratedObject, related_query_name='communities',verbose_name="Модерация")
+    moderated_object = GenericRelation("moderation.ModeratedObject", related_query_name='communities',verbose_name="Модерация")
     category = models.ForeignKey(CommunitySubCategory, on_delete=models.CASCADE, related_name='community_sub_categories', verbose_name="Подкатегория сообщества")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='created_communities', null=False, blank=False, verbose_name="Создатель")
     name = models.CharField(max_length=100, blank=False, null=False, verbose_name="Название" )
@@ -245,7 +246,7 @@ class Community(models.Model):
     @classmethod
     def _get_trending_communities_with_query(cls, query):
         from django.db.models import Count
-        
+
         return cls.objects.annotate(Count('memberships')).filter(query).order_by('-memberships__count', '-created')
 
     @classmethod
