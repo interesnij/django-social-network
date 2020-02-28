@@ -12,7 +12,7 @@ class TagsList(View):
         context = {}
         symbol = SoundSymbol.objects.get(pk=self.kwargs["pk"])
         tags_list = SoundTags.objects.filter(symbol=symbol)
-        current_page = Paginator(tags_list, 24)
+        current_page = Paginator(tags_list, 30)
         page = request.GET.get('page')
         context['symbol'] = symbol
         context['request_user'] = request.user
@@ -33,7 +33,7 @@ class TagList(View):
         context = {}
         tag=SoundTags.objects.get(pk=self.kwargs["pk"])
         tag_list = SoundcloudParsing.objects.filter(tag__id=tag.pk)
-        current_page = Paginator(tag_list, 24)
+        current_page = Paginator(tag_list, 30)
         page = request.GET.get('page')
         context['tag'] = tag
         context['request_user'] = request.user
@@ -55,7 +55,7 @@ class GenreList(View):
         context = {}
         genre = SoundGenres.objects.get(pk=self.kwargs["pk"])
         genre_list = SoundcloudParsing.objects.filter(genre__id=genre.pk)
-        current_page = Paginator(genre_list, 24)
+        current_page = Paginator(genre_list, 30)
         page = request.GET.get('page')
         context['genre'] = genre
         context['request_user'] = request.user
