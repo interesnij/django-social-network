@@ -74,7 +74,7 @@ var page = 2;
 var loaded = false;
 onscroll = function(){
   try{
-  var items = document.getElementById("tracks_container");
+  var items = document.querySelector(".ul_track_list");
 
   if(items.getElementsByClassName('list-group-item').length === (page-1)*30){
   var height = document.documentElement.clientHeight-1;
@@ -93,6 +93,6 @@ onscroll = function(){
   }
 }}
 }catch{return}
-} 
+}
 </script>
 {% endblock %}
