@@ -37,18 +37,18 @@
         <br><br>
     </div>
 
-    <div id="photo_load" style="width: 100%;"></div>
+    <div id="album_photo_load" style="width: 100%;"></div>
 
 </div>
 <script>
   ready(() => {
 
   var link_2 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_2.open( 'GET', '/gallery/user/album/{{ user.pk }}/{{ album.uuid }}/', true );
+  link_2.open( 'GET', '/gallery/user/album_photos/{{ user.pk }}/{{ album.uuid }}/', true );
   link_2.onreadystatechange = function () {
     if ( link_2.readyState == 4 ) {
         if ( link_2.status == 200 ) {
-            var photo_load = document.getElementById("photo_load");
+            var photo_load = document.getElementById("album_photo_load");
             photo_load.innerHTML = link_2.responseText;
         }
     }
