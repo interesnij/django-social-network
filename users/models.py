@@ -1,24 +1,24 @@
 from datetime import datetime, timedelta
 import uuid
-from django.utils import six, timezone
+from django.utils import timezone
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.conf import settings
 from django.contrib.contenttypes.fields import GenericRelation
-from django.db.models.signals import post_save
-from django.dispatch import receiver
-from communities.models import Community
-from follows.models import Follow, CommunityFollow
-from goods.models import Good
-from frends.models import Connect
-from posts.models import Post
-from common.models import ItemVotes
-from gallery.models import Photo, Album
-from music.models import *
-from moderation.models import ModeratedObject, ModerationPenalty
+#from django.db.models.signals import post_save
+#from django.dispatch import receiver
+#from communities.models import Community
+#from follows.models import Follow, CommunityFollow
+#from goods.models import Good
+#from frends.models import Connect
+#from posts.models import Post
+#from common.models import ItemVotes
+#from gallery.models import Photo, Album
+#from music.models import *
+#from moderation.models import ModeratedObject, ModerationPenalty
 from common.checkers import *
 from django.db.models import Q, F, Count
-from common.utils import safe_json
+#from common.utils import safe_json
 
 
 class User(AbstractUser):
@@ -37,6 +37,8 @@ class User(AbstractUser):
         return  str(self.first_name) + " " + str(self.last_name)
 
     def get_online(self):
+        from datetime import datetime, timedelta
+
         now = datetime.now()
         onl = self.last_activity + timedelta(minutes=1)
         if now < onl:
@@ -51,6 +53,8 @@ class User(AbstractUser):
         return self.favorite_communities.all()
 
     def get_staffed_communities(self):
+        from communities.models import Community
+
         query = Q(Q(memberships__user=self, memberships__is_administrator=True) | Q(memberships__user=self, memberships__is_moderator=True) | Q(memberships__user=self, memberships__is_editor=True))
         return Community.objects.filter(query)
 
@@ -60,6 +64,8 @@ class User(AbstractUser):
         return self.follow_user_with_id(user.pk)
 
     def follow_user_with_id(self, user_id):
+        from follows.models import Follow
+
         check_can_follow_user_with_id(user_id=user_id, user=self)
         if self.pk == user_id:
             raise ValidationError('Вы не можете подписаться сами на себя',)
@@ -70,6 +76,8 @@ class User(AbstractUser):
         return self.follow_community_with_name(community_name)
 
     def follow_community_with_name(self, community_name):
+        from follows.models import CommunityFollow
+
         check_can_join_community_with_name(user=self, community_name=community_name)
         follow = CommunityFollow.create_follow(user_id=self.pk, community_name=community_name)
         return follow
@@ -78,6 +86,8 @@ class User(AbstractUser):
         return self.unfollow_community_with_name(community_name)
 
     def unfollow_community_with_name(self, community_name):
+        from follows.models import CommunityFollow
+
         check_can_join_community_with_name(user=self, community_name=community_name)
         follow = CommunityFollow.objects.get(user=self,community=community_name)
         follow.delete()
@@ -86,6 +96,9 @@ class User(AbstractUser):
         return self.frend_user_with_id(user.pk)
 
     def frend_user_with_id(self, user_id):
+        from follows.models import Follow
+        from frends.models import Connect
+
         check_can_connect_with_user_with_id(user=self, user_id=user_id)
         if self.pk == user_id:
             raise ValidationError('Вы не можете добавить сами на себя',)
@@ -98,6 +111,8 @@ class User(AbstractUser):
         return self.unfollow_user_with_id(user.pk)
 
     def unfollow_user_with_id(self, user_id):
+        from follows.models import Follow
+
         check_not_can_follow_user_with_id(user=self, user_id=user_id)
         follow = Follow.objects.get(user=self,followed_user=user_id)
         follow.delete()
@@ -106,6 +121,8 @@ class User(AbstractUser):
         return self.unfrend_user_with_id(user.pk)
 
     def unfrend_user_with_id(self, user_id):
+        from follows.models import Follow
+
         check_is_following_user_with_id(user=self, user_id=user_id)
         follow = Follow.create_follow(user_id=user_id, followed_user_id=self.pk)
         connection = self.connections.get(target_connection__user_id=user_id)
@@ -169,8 +186,7 @@ class User(AbstractUser):
         return UserBlock.users_are_blocked(user_a_id=self.pk, user_b_id=user_id)
 
     def is_connected_with_user_with_id(self, user_id):
-        return self.connections.filter(
-            target_connection__user_id=user_id).exists()
+        return self.connections.filter(target_connection__user_id=user_id).exists()
 
     def is_connected_with_user_with_username(self, username):
         return self.connections.filter(target_connection__user__username=username).exists()
@@ -186,6 +202,8 @@ class User(AbstractUser):
         return self.is_member_of_community_with_name(community_name=moderators_community_name)
 
     def is_invited_to_community_with_name(self, community_name):
+        from communities.models import Community
+
         return Community.is_user_with_username_invited_to_community_with_name(username=self.username, community_name=community_name)
 
     def is_staff_of_community_with_name(self, community_name):
@@ -201,6 +219,8 @@ class User(AbstractUser):
         return self.favorite_communities.filter(name=community_name).exists()
 
     def is_follow_from_community_with_name(self, community_pk):
+        from follows.models import CommunityFollow
+
         try:
             return CommunityFollow.objects.get(community__id=community_pk, user=self).exists()
         except:
@@ -208,6 +228,7 @@ class User(AbstractUser):
 
     def is_closed_profile(self):
         from users.model.settings import UserPrivateSettings
+
         try:
             user_private = UserPrivateSettings.objects.get(user=self)
             return user_private.is_private
@@ -246,12 +267,16 @@ class User(AbstractUser):
         return self.photo_creator.filter(creator__id=self.pk, community=None).exists()
 
     def is_suspended(self):
+        from moderation.models import ModerationPenalty
+
         return self.moderation_penalties.filter(type=ModerationPenalty.TYPE_SUSPENSION, expiration__gt=timezone.now()).exists()
 
     def is_track_exists(self, track_id):
         return self.user_playlist.filter(track__id=track_id, name="my_first_generic_playlist_number_12345678900000000").exists()
 
     def is_user_playlist(self):
+        from music.models import UserTempSoundList
+
         try:
             UserTempSoundList.objects.get(user=self, tag=None, list=None, genre=None)
             return True
@@ -259,6 +284,8 @@ class User(AbstractUser):
             return False
 
     def is_tag_playlist(self, tag):
+        from music.models import UserTempSoundList
+
         try:
             UserTempSoundList.objects.get(user=self, tag=tag, list=None, genre=None).exists()
             return True
@@ -266,6 +293,8 @@ class User(AbstractUser):
             return False
 
     def is_genre_playlist(self, genre):
+        from music.models import UserTempSoundList
+
         try:
             UserTempSoundList.objects.get(user=self, tag=None, list=None, genre=genre).exists()
             return True
@@ -298,6 +327,8 @@ class User(AbstractUser):
         return self.created_user.values('creator_id').count()
 
     def count_goods(self):
+        from goods.models import Good
+
         goods = Good.objects.filter(creator__id=self.pk,is_deleted=False).count()
         return goods
 
@@ -307,6 +338,8 @@ class User(AbstractUser):
 
     ''''' GET всякие  219-186 '''''
     def get_pop_connection(self):
+        from moderation.models import ModeratedObject
+
         my_frends = self.connections.values('target_user_id')
         my_frends_ids = [target_user['target_user_id'] for target_user in my_frends]
         connection_query = Q(id__in=my_frends_ids)
@@ -317,6 +350,8 @@ class User(AbstractUser):
         return frends[0:5]
 
     def get_all_connection(self):
+        from moderation.models import ModeratedObject
+
         my_frends = self.connections.values('target_user_id')
         my_frends_ids = [target_user['target_user_id'] for target_user in my_frends]
         connection_query = Q(id__in=my_frends_ids)
@@ -343,18 +378,27 @@ class User(AbstractUser):
         return query[0:5]
 
     def get_posts(self):
+        from main.models import Item
+        from moderation.models import ModeratedObject
+
         posts_query = Q(creator_id=self.id, is_deleted=False, is_fixed=False, status=Item.STATUS_PUBLISHED, community=None)
         exclude_reported_and_approved_posts_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         posts_query.add(exclude_reported_and_approved_posts_query, Q.AND)
         items = Item.objects.filter(posts_query)
         return items
     def get_draft_posts(self):
+        from main.models import Item
+        from moderation.models import ModeratedObject
+
         posts_query = Q(creator_id=self.id, is_deleted=False, is_fixed=False, status=Item.STATUS_DRAFT, community=None)
         exclude_reported_and_approved_posts_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         posts_query.add(exclude_reported_and_approved_posts_query, Q.AND)
         items = Item.objects.filter(posts_query)
         return items
     def get_archive_posts(self):
+        from main.models import Item
+        from moderation.models import ModeratedObject
+
         posts_query = Q(creator_id=self.id, is_deleted=False, is_fixed=False, status=Item.STATUS_ARHIVED, community=None)
         exclude_reported_and_approved_posts_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         posts_query.add(exclude_reported_and_approved_posts_query, Q.AND)
@@ -362,12 +406,18 @@ class User(AbstractUser):
         return items
 
     def get_photos(self):
+        from gallery.models import Photo
+        from moderation.models import ModeratedObject
+
         photos_query = Q(creator_id=self.id, is_deleted=False, is_public=True, community=None)
         exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         photos_query.add(exclude_reported_and_approved_photos_query, Q.AND)
         photos = Photo.objects.filter(photos_query)
         return photos
     def get_my_photos(self):
+        from gallery.models import Photo
+        from moderation.models import ModeratedObject
+
         photos_query = Q(creator_id=self.id, is_deleted=False, community=None)
         exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         photos_query.add(exclude_reported_and_approved_photos_query, Q.AND)
@@ -375,13 +425,18 @@ class User(AbstractUser):
         return photos
 
     def get_photos_for_album(self, album_id):
-        exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
+        from gallery.models import Photo
+        from moderation.models import ModeratedObject
 
+        exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         photos_query = Q(album_id=album_id, is_deleted=False, is_public=True)
         photos_query.add(exclude_reported_and_approved_photos_query, Q.AND)
         photos = Photo.objects.filter(photos_query)
         return photos
     def get_photos_for_my_album(self, album_id):
+        from gallery.models import Photo
+        from moderation.models import ModeratedObject
+
         exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         photos_query = Q(album_id=album_id, is_deleted=False)
         photos_query.add(exclude_reported_and_approved_photos_query, Q.AND)
@@ -389,6 +444,9 @@ class User(AbstractUser):
         return photos
 
     def get_avatar_photos(self):
+        from gallery.models import Photo
+        from moderation.models import ModeratedObject
+
         photos_query = Q(creator_id=self.id, is_deleted=False, community=None, album_2__title="Фото со страницы", album_2__is_generic=True)
         exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         photos_query.add(exclude_reported_and_approved_photos_query, Q.AND)
@@ -396,12 +454,18 @@ class User(AbstractUser):
         return avatar_photos
 
     def get_albums(self):
+        from gallery.models import Album
+        from moderation.models import ModeratedObject
+
         albums_query = Q(creator_id=self.id, is_deleted=False, is_public=True, community=None)
         exclude_reported_and_approved_albums_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         albums_query.add(exclude_reported_and_approved_albums_query, Q.AND)
         albums = Album.objects.filter(albums_query)
         return albums
     def get_my_albums(self):
+        from gallery.models import Album
+        from moderation.models import ModeratedObject
+
         albums_query = Q(creator_id=self.id, is_deleted=False, community=None)
         exclude_reported_and_approved_albums_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         albums_query.add(exclude_reported_and_approved_albums_query, Q.AND)
@@ -409,12 +473,18 @@ class User(AbstractUser):
         return albums
 
     def get_goods(self):
+        from goods.models import Good
+        from moderation.models import ModeratedObject
+
         goods_query = Q(creator_id=self.id, is_deleted=False, status=Good.STATUS_PUBLISHED)
         exclude_reported_and_approved_goods_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         goods_query.add(exclude_reported_and_approved_goods_query, Q.AND)
         goods = Good.objects.filter(goods_query)
         return goods
     def get_my_goods(self):
+        from goods.models import Good
+        from moderation.models import ModeratedObject
+
         goods_query = Q(creator_id=self.id, is_deleted=False)
         exclude_reported_and_approved_goods_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         goods_query.add(exclude_reported_and_approved_goods_query, Q.AND)
@@ -422,6 +492,9 @@ class User(AbstractUser):
         return goods
 
     def get_music(self):
+        from music.models import SoundList, SoundcloudParsing
+        from moderation.models import ModeratedObject
+
         exclude_reported_and_approved_music_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         list = SoundList.objects.get(creator_id=self.id, community=None, name="my_first_generic_playlist_number_12345678900000000")
         music_query = Q(players=list, is_deleted=False)
@@ -430,6 +503,9 @@ class User(AbstractUser):
         return music_list
 
     def get_my_music(self):
+        from music.models import SoundList, SoundcloudParsing
+        from moderation.models import ModeratedObject
+
         exclude_reported_and_approved_music_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         list = SoundList.objects.get(creator_id=self.id, community=None, name="my_first_generic_playlist_number_12345678900000000")
         music_query = Q(players=list, is_deleted=False)
@@ -438,6 +514,9 @@ class User(AbstractUser):
         return music_list
 
     def my_playlist(self):
+        from common.utils import safe_json
+        from music.models import SoundList, UserTempSoundList, SoundTags, SoundGenres
+
         temp_list = UserTempSoundList.objects.get(user=self)
         try:
             list = SoundList.objects.get(pk=temp_list.list.pk)
@@ -499,9 +578,11 @@ class User(AbstractUser):
         return self._get_timeline_posts()
 
     def _get_timeline_posts(self):
+        from main.models import Item
+        from moderation.models import ModeratedObject
+
         posts_select_related = ('creator', 'community')
-        items_only = ('id', 'uuid', 'created', 'creator__username', 'creator__id',
-                        'creator__profile__id', 'community__id', 'community__name')
+        items_only = ('id', 'uuid', 'created', 'creator__username', 'creator__id', 'creator__profile__id', 'community__id', 'community__name')
         reported_posts_exclusion_query = ~Q(moderated_object__reports__reporter_id=self.pk)
         own_posts_query = Q(creator=self.pk, community__isnull=True, is_deleted=False, status=Item.STATUS_PUBLISHED)
         own_posts_query.add(reported_posts_exclusion_query, Q.AND)
@@ -569,6 +650,8 @@ class User(AbstractUser):
         return connection
 
     def get_common_friends_of_community(self, community_id):
+        from communities.models import Community
+
         community = Community.objects.get(pk=community_id)
         my_frends = self.connections.values('target_user_id')
         community_frends = community.memberships.values('user_id')
@@ -580,12 +663,18 @@ class User(AbstractUser):
         return connection
 
     def unfavorite_community_with_name(self, community_name):
+        from communities.models import Community
+
         check_can_unfavorite_community_with_name(user=self, community_name=community_name)
         community_to_unfavorite = Community.objects.get(name=community_name)
         self.favorite_communities.remove(community_to_unfavorite)
         return community_to_unfavorite
 
     def join_community_with_name(self, community_name):
+        from communities.models import Community
+        from follows.models import CommunityFollow
+        from invitations.models import CommunityInvite
+
         check_can_join_community_with_name(user=self, community_name=community_name)
         community_to_join = Community.objects.get(name=community_name)
         community_to_join.add_member(self)
@@ -596,6 +685,8 @@ class User(AbstractUser):
         return community_to_join
 
     def leave_community_with_name(self, community_name):
+        from communities.models import Community
+
         check_can_leave_community_with_name(user=self, community_name=community_name)
         community_to_leave = Community.objects.get(name=community_name)
         if self.has_favorite_community_with_name(community_name):
