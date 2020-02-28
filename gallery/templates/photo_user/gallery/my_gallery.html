@@ -70,7 +70,7 @@
     if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
       if (loaded){return};
       var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-      link_3.open( 'GET', '/gallery/user/photos/' + '{{ user.uuid }}/?page=' + page++, true );
+      link_3.open( 'GET', '/gallery/user/photos/' + '{{ user.pk }}/?page=' + page++, true );
       link_3.send();
       link_3.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
