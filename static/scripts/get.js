@@ -44,13 +44,13 @@ $('#question').on('click', function() {$('#for_question').show();});
   /*!
      fullscreen close scripts
     */
-  $('.photo_fullscreen_hide').click(function() { $('.photo_fullscreen').hide(); $('#photo_loader').empty();console.log("photo closed") });
-  $('.votes_fullscreen_hide').click(function() { $('.votes_fullscreen').hide(); $('#votes_loader').empty();console.log("votes closed") });
-  $('.item_fullscreen_hide').click(function() { $('.item_fullscreen').hide(); $('#item_loader').empty(); console.log("user post closed")});
-  $('.community_fullscreen_hide').click(function() {$('.community_fullscreen').hide();$('#community_loader').empty(); console.log("community post closed")});
-  $('.community_manage_fullscreen_hide').click(function() {$('.manage_window_fullscreen').hide();$('#load_staff_window').empty();console.log("staff community closed")});
-  $('.good_fullscreen_hide').click(function() {$('.good_add_fullscreen').hide();$('#good_add_loader').empty();console.log("good closed")});
-
+    on('#ajax', 'click', '.article_fullscreen_hide', function(e) {document.querySelector(".article_fullscreen").style.display = "none";document.getElementById("article_loader").innerHTML="";});
+    on('#ajax', 'click', '.photo_fullscreen_hide', function(e) {document.querySelector(".photo_fullscreen").style.display = "none";document.getElementById("photo_loader").innerHTML="";});
+    on('#ajax', 'click', '.votes_fullscreen_hide', function(e) {document.querySelector(".votes_fullscreen").style.display = "none";document.getElementById("votes_loader").innerHTML="";});
+    on('#ajax', 'click', '.item_fullscreen_hide', function(e) {document.querySelector(".item_fullscreen").style.display = "none";document.getElementById("item_loader").innerHTML="";});
+    on('#ajax', 'click', '.community_fullscreen_hide', function(e) {document.querySelector(".community_fullscreen").style.display = "none";document.getElementById("community_loader").innerHTML="";});
+    on('#ajax', 'click', '.community_manage_fullscreen_hide', function(e) {document.querySelector(".manage_window_fullscreen").style.display = "none";document.getElementById("load_staff_window").innerHTML="";});
+    on('#ajax', 'click', '.good_fullscreen_hide', function(e) {document.querySelector(".good_add_fullscreen").style.display = "none";document.getElementById("good_add_loader").innerHTML="";});
 
   /*!
      comments scripts
