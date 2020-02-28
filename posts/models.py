@@ -40,4 +40,4 @@ class PostUserMention(models.Model):
 
 class PostDoc(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post_doc', null=True, verbose_name="Документ")
-    doc = models.FileField(upload_to=upload_to_post_directory, verbose_name="Документ")
+    doc = models.FileField(upload_to="posts/", verbose_name="Документ")
