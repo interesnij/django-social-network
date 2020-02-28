@@ -1,5 +1,4 @@
 from django.db import models
-from notifications.model.user import *
 from django.conf import settings
 
 
@@ -8,6 +7,8 @@ class Follow(models.Model):
     followed_user = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE, related_name='followers', null=False, verbose_name="На кого подписывается")
 
     def notification_follow(self, user):
+        from notifications.model.user import UserNotification
+
         notification_handler(user, self.followed_user, UserNotification.CONNECTION_REQUEST, key='notification')
 
     class Meta:
@@ -27,6 +28,8 @@ class CommunityFollow(models.Model):
     community = models.ForeignKey('communities.Community', db_index=False, on_delete=models.CASCADE, related_name='community', null=False, verbose_name="На какое сообщество подписывается")
 
     def notification_community_follow(self, user):
+        from notifications.model.user import UserCommunityNotification
+        
         community_notification_handler(actor=user, recipient=None, verb=UserCommunityNotification.CONNECTION_REQUEST, community=self.community, key='notification')
 
     class Meta:

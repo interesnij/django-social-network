@@ -1,6 +1,5 @@
 from django.db import models
 from django.conf import settings
-from notifications.model.user import *
 
 
 class Connect(models.Model):
@@ -9,6 +8,8 @@ class Connect(models.Model):
     target_connection = models.OneToOneField('self', on_delete=models.CASCADE, null=True)
 
     def notification_connect(self, user):
+        from notifications.model.user import UserNotification
+
         notification_handler(user, self.target_user, UserNotification.CONNECTION_CONFIRMED, key='notification')
 
     @classmethod
@@ -32,8 +33,7 @@ class Connect(models.Model):
 
     @classmethod
     def connection_with_id_exists_for_user_with_id(cls, connection_id, user_id):
-        count = Connect.objects.filter(id=connection_id,
-                                          user_id=user_id).count()
+        count = Connect.objects.filter(id=connection_id, user_id=user_id).count()
         if count > 0:
             return True
         return False
