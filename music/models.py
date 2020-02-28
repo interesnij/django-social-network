@@ -1,9 +1,6 @@
-import soundcloud
+#import soundcloud
 from django.conf import settings
 from django.db import models
-from common.utils import safe_json
-from django.http import HttpResponse
-from django.db.models import Q
 from django.contrib.contenttypes.fields import GenericRelation
 from django.contrib.postgres.indexes import BrinIndex
 
@@ -22,6 +19,8 @@ class SoundGenres(models.Model):
         self.track_genre.filter(id=track_id).exists()
 
     def get_json_playlist(self):
+        from common.utils import safe_json
+
         if not hasattr(self, '_cached_playlist'):
             self._cached_playlist = safe_json(self.playlist())
         return self._cached_playlist
@@ -89,6 +88,8 @@ class SoundList(models.Model):
         self.track.filter(id=track_id).exists()
 
     def get_json_playlist(self):
+        from common.utils import safe_json
+
         if not hasattr(self, '_cached_playlist'):
             self._cached_playlist = safe_json(self.playlist())
         return self._cached_playlist
@@ -142,6 +143,8 @@ class SoundTags(models.Model):
         return result
 
     def get_json_playlist(self):
+        from common.utils import safe_json
+
         if not hasattr(self, '_cached_playlist'):
             self._cached_playlist = safe_json(self.playlist())
         return self._cached_playlist
