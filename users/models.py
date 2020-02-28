@@ -17,7 +17,7 @@ from django.contrib.contenttypes.fields import GenericRelation
 #from music.models import *
 #from moderation.models import ModeratedObject, ModerationPenalty
 from common.checkers import *
-from django.db.models import Q, F, Count
+from django.db.models import Q
 #from common.utils import safe_json
 
 
