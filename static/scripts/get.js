@@ -46,7 +46,6 @@ $('#question').on('click', function() {$('#for_question').show();});
     */
   $('.photo_fullscreen_hide').click(function() { $('.photo_fullscreen').hide(); $('#photo_loader').empty();console.log("photo closed") });
   $('.votes_fullscreen_hide').click(function() { $('.votes_fullscreen').hide(); $('#votes_loader').empty();console.log("votes closed") });
-  $('.article_fullscreen_hide').click(function() {$('.article_fullscreen').hide(); $('#article_loader').empty();console.log("user article closed")});
   $('.item_fullscreen_hide').click(function() { $('.item_fullscreen').hide(); $('#item_loader').empty(); console.log("user post closed")});
   $('.community_fullscreen_hide').click(function() {$('.community_fullscreen').hide();$('#community_loader').empty(); console.log("community post closed")});
   $('.community_manage_fullscreen_hide').click(function() {$('.manage_window_fullscreen').hide();$('#load_staff_window').empty();console.log("staff community closed")});

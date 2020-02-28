@@ -85,6 +85,16 @@ onscroll = function(){
   }}
 }catch{return}
 }
+$('.article_fullscreen_hide').click(function() {
+  $('.article_fullscreen').hide();
+  $('#article_loader').empty();
+  console.log("user article closed")
+});
+document.querySelector(".article_fullscreen_hide").addEventListener("click", (e) => {
+  document.querySelector(".article_fullscreen").style.display = "none";
+  document.getElementById("article_loader").innerHTML="";
+  console.log("user article closed")
+});
 </script>
 
 {% endblock %}
