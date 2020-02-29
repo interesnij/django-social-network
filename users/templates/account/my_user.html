@@ -10,7 +10,7 @@
 {% endblock %}
 {% block content %}
 
- {% if mobile %} Вы сидите с телефона {% else %} Вы сидите с компьютера {% endif %} ||| {{ ip }}
+ {% if user.is_mobile %} Вы сидите с телефона {% else %} Вы сидите с компьютера {% endif %} ||| {{ ip }}
 
 {{ request.headers.user_agent }}
 <div class="row user_page">

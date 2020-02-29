@@ -41,11 +41,11 @@ class User(AbstractUser):
             ip = request.META.get('REMOTE_ADDR')
         return ip
 
-    def is_mobile(request):
+    def is_mobile(self):
         import re
 
         MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
-        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+        if MOBILE_AGENT_RE.match(self.request.META['HTTP_USER_AGENT']):
             return True
         else:
             return False

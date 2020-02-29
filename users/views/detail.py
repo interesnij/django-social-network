@@ -4,7 +4,6 @@ from common.checkers import check_is_not_blocked_with_user_with_id, check_is_con
 from main.models import Item
 from django.shortcuts import render_to_response
 from rest_framework.exceptions import PermissionDenied
-from communities.models import Community
 
 
 class UserItemView(TemplateView):
@@ -58,6 +57,8 @@ class UserCommunities(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
+        from communities.models import Community
+
         self.user=User.objects.get(pk=self.kwargs["pk"])
         self.popular_list = Community.get_trending_communities()[0:7]
         if self.user == request.user:
@@ -131,6 +132,8 @@ class ProfileUserView(TemplateView):
 
     def get(self,request,*args,**kwargs):
         import re
+        from communities.models import Community
+        
         self.user=User.objects.get(pk=self.kwargs["pk"])
         self.MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
         if self.MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
@@ -162,7 +165,7 @@ class ProfileUserView(TemplateView):
             self.template_name = "account/anon_open_user.html"
 
         self.online_frends = self.user.get_pop_online_connection()
-        self.communities=Community.objects.filter(memberships__user__id=self.user.pk)[0:5]
+        self.communities=Community.get_trending_communities()[0:5]
 
         return super(ProfileUserView,self).get(request,*args,**kwargs)
 
