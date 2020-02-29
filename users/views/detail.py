@@ -130,7 +130,7 @@ class ProfileUserView(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.user=User.objects.get(pk=self.kwargs["pk"])
-        if request.user.is_mobile(request):
+        if User.is_mobile(request):
             mobile = True
         self.ip = User.get_request_ip(request)
         if self.user == request.user:
