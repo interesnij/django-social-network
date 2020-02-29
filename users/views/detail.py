@@ -171,10 +171,12 @@ class ProfileUserView(TemplateView):
         return super(ProfileUserView,self).get(request,*args,**kwargs)
 
     def get_context_data(self, **kwargs):
+        from common.utils import is_mobile
+        
         context = super(ProfileUserView, self).get_context_data(**kwargs)
         context['user'] = self.user
         context['communities'] = self.communities
         context['common_frends'] = self.common_frends
         context['online_frends'] = self.online_frends
-        context['mobile'] = self.mobile
+        context['mobile'] = is_mobile(self.request)
         return context
