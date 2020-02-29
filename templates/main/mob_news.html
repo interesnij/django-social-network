@@ -36,7 +36,10 @@
 
 <script>
   ready(() => {
-    var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    if (window.XMLHttpRequest)
+    {link = new XMLHttpRequest();}
+    else
+    {link = new ActiveXObject("Microsoft.XMLHTTP");}
     link.open( 'GET', '/main/news/', true );
     link.onreadystatechange = function () {
       if ( link.readyState == 4 ) {
