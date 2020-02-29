@@ -45,7 +45,8 @@ class User(AbstractUser):
         import re
 
         MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
-        if MOBILE_AGENT_RE.match(request.META.get('HTTP_USER_AGENT')):
+        x_forwarded_for = request.META.get('HTTP_USER_AGENT')
+        if MOBILE_AGENT_RE.match(x_forwarded_for):
             return True
         else:
             return False
