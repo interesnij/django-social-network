@@ -5,7 +5,17 @@
     list-style: none;
     box-sizing: border-box;
   }
-
+  #background {
+    background: #05DBEA;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200%;
+    height: calc(100% - 50px);
+    filter: url("#goo");
+    z-index: 1;
+  }
   #phone {
     border: 2px solid rgba(0, 0, 0, .5);
     width: calc(375px / 2);
