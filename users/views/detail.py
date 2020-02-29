@@ -130,6 +130,11 @@ class ProfileUserView(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.user=User.objects.get(pk=self.kwargs["pk"])
+        self.x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+        if self.x_forwarded_for:
+            self.ip = self.x_forwarded_for.split(',')[-1].strip()
+        else:
+            self.ip = request.META.get('REMOTE_ADDR')
         if self.user == request.user:
             self.template_name = "account/my_user.html"
             self.online_frends = self.user.get_pop_online_connection()
@@ -157,14 +162,6 @@ class ProfileUserView(TemplateView):
         self.communities=Community.objects.filter(memberships__user__id=self.user.pk)[0:5]
 
         return super(ProfileUserView,self).get(request,*args,**kwargs)
-
-    def get_client_ip(request):
-        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-        if x_forwarded_for:
-            self.ip = x_forwarded_for.split(',')[-1].strip()
-        else:
-            self.ip = request.META.get('REMOTE_ADDR')
-        return self.ip
 
     def get_context_data(self, **kwargs):
         context = super(ProfileUserView, self).get_context_data(**kwargs)
