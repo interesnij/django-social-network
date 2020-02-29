@@ -106,6 +106,22 @@
   </div>
 
   <script>
+    on('#ajax', 'click', '.custom-radio', function() {
+      var span = this;
+      var color = this.getAttribute('data-color');
+      var input = span.querySelector(".custom-control-input");
+      var list = document.querySelector("list-group");
+      var link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+      link_.open( 'GET', "/users/progs/color/" + color + "/", true );
+      link_.send();
+      link_.onreadystatechange = function () {
+      if ( this.readyState == 4 && this.status == 200 ) {
+        list.querySelectorAll(".custom-control-input").prop('checked', false);
+        input.prop('checked', true);
+        function addStyleSheets (href) {$head = document.head,$link = document.createElement('link');$link.rel = 'stylesheet';$link.href = href;$head.appendChild($link);};addStyleSheets("/static/styles/color/" + color + ".css");
+      }
+    };
+    });
   $('.custom-radio').click(function() {
     div = $(this);
     color = div.data("color");
