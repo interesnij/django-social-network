@@ -126,6 +126,7 @@ class UserMusic(TemplateView):
 class ProfileUserView(TemplateView):
     template_name = None
     common_frends = None
+    ip = None
 
     def get(self,request,*args,**kwargs):
         self.user=User.objects.get(pk=self.kwargs["pk"])
@@ -171,4 +172,5 @@ class ProfileUserView(TemplateView):
         context['communities'] = self.communities
         context['common_frends'] = self.common_frends
         context['online_frends'] = self.online_frends
+        context['ip'] = self.ip
         return context
