@@ -1,14 +1,21 @@
 from django.views.generic.base import TemplateView
 from django.views.generic import ListView
+from common.utils import is_mobile
 
 
 class MainPageView(TemplateView):
 	template_name=None
 	def get(self,request,*args,**kwargs):
 		if request.user.is_authenticated:
-			self.template_name="main/news.html"
+			if is_mobile(request):
+				self.template_name="main/mob_news.html"
+			else:
+				self.template_name="main/news.html"
 		else:
-			self.template_name="main/auth.html"
+			if is_mobile(request):
+				self.template_name="main/mob_auth.html"
+			else:
+				self.template_name="main/auth.html"
 		return super(MainPageView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -18,7 +25,7 @@ class MainPageView(TemplateView):
 
 class NewsListView(ListView):
 	from main.models import Item
-	
+
 	template_name="news_list.html"
 	model=Item
 	paginate_by=30
