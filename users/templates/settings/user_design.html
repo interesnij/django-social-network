@@ -110,7 +110,7 @@
       var span = this;
       var color = this.getAttribute('data-color');
       var input = span.querySelector(".custom-control-input");
-      var list = document.querySelector(".list-group");
+      var list = document.querySelector(".theme-color");
       var link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
       link_.open( 'GET', "/users/progs/color/" + color + "/", true );
       link_.send();
