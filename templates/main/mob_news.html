@@ -38,10 +38,6 @@
   ready(() => {
     var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     link_3.open( 'GET', '/main/news/', true );
-    var params = "";
-    link_3.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    link_3.setRequestHeader("Content-length", params.length);
-    link_3.setRequestHeader("Connection", "close");
     link_3.onreadystatechange = function () {
       if ( link_3.readyState == 4 ) {
           if ( link_3.status == 200 ) {
@@ -50,7 +46,7 @@
           }
       }
   };
-  link_3.send( params );
+  link_3.send( null );
 });
 
 var page = 2;
