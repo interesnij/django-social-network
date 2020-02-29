@@ -17,6 +17,8 @@ class MainPageView(TemplateView):
 
 
 class NewsListView(ListView):
+	from main.models import Item
+	
 	template_name="news_list.html"
 	model=Item
 	paginate_by=30
