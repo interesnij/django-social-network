@@ -1,160 +1,443 @@
 <style>
-  * {
-    padding: 0;
-    margin: 0;
-    list-style: none;
+  .col-1 {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
-  }
-  #background {
-    background: #05DBEA;
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 200%;
-    height: calc(100% - 50px);
-    filter: url("#goo");
-    z-index: 1;
-  }
-  #phone {
-
-  }
-  #round {
-    height: 30px;
-    width: 30px;
-    left: calc(26.5%);
-    border-radius: 100%;
-    position: absolute;
-    bottom: -30px;
-    z-index: 2;
-    transition: left .4s cubic-bezier(0, 0, 0, 1.04);
-    background: #05DBEA;
+    width: 8.33333%;
+    float: left;
+    padding-left: 2.08333%;
+    padding-right: 2.08333%;
   }
 
-  #round.sliding {
-    animation: slide 0.35s cubic-bezier(0, 0, 0, 1.01);;
+  .col-2 {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 16.66667%;
+    float: left;
+    padding-left: 2.08333%;
+    padding-right: 2.08333%;
   }
 
-  #tab-bar {
-    position: absolute;
+  .col-3 {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 25%;
+    float: left;
+    padding-left: 2.08333%;
+    padding-right: 2.08333%;
+  }
+
+  .col-4 {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 33.33333%;
+    float: left;
+    padding-left: 2.08333%;
+    padding-right: 2.08333%;
+  }
+
+  .col-5 {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 41.66667%;
+    float: left;
+    padding-left: 2.08333%;
+    padding-right: 2.08333%;
+  }
+
+  .col-6 {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 50%;
+    float: left;
+    padding-left: 2.08333%;
+    padding-right: 2.08333%;
+  }
+
+  .col-7 {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 58.33333%;
+    float: left;
+    padding-left: 2.08333%;
+    padding-right: 2.08333%;
+  }
+
+  .col-8 {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 66.66667%;
+    float: left;
+    padding-left: 2.08333%;
+    padding-right: 2.08333%;
+  }
+
+  .col-9 {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 75%;
+    float: left;
+    padding-left: 2.08333%;
+    padding-right: 2.08333%;
+  }
+
+  .col-10 {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 83.33333%;
+    float: left;
+    padding-left: 2.08333%;
+    padding-right: 2.08333%;
+  }
+
+  .col-11 {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 91.66667%;
+    float: left;
+    padding-left: 2.08333%;
+    padding-right: 2.08333%;
+  }
+
+  .col-12 {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 100%;
+    float: left;
+    padding-left: 2.08333%;
+    padding-right: 2.08333%;
+  }
+
+  .row {
+    margin-bottom: 24px;
+    overflow: hidden;
+    *zoom: 1;
+  }
+
+  .container {
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    width: 600px;
+    margin: 0 auto;
+  }
+  .container:after {
+    content: " ";
+    display: block;
+    clear: both;
+  }
+
+  body {
+    font-family: 'proxima-nova', sans-serif;
+  }
+
+  p {
+    line-height: 24px;
+  }
+
+  h1 {
+    font-size: 72px;
+  }
+
+  h2 {
+    font-size: 48px;
+  }
+
+  h3 {
+    font-size: 36px;
+  }
+
+  h4 {
+    font-size: 24px;
+  }
+
+  h5 {
+    font-size: 18px;
+  }
+
+  h6 {
+    font-size: 14px;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    line-height: 1em;
+    font-weight: 700;
+  }
+
+  ul {
+    margin: 0 0 0 1em;
+    padding: 0;
+  }
+
+  li {
+    line-height: 24px;
+  }
+
+  .s {
+    font-size: 20px;
+    line-height: 24px;
+  }
+
+  .align-left {
+    text-align: left;
+  }
+
+  .align-right {
+    text-align: right;
+  }
+
+  .align-center {
+    text-align: center;
+  }
+
+  .pull-right {
+    float: right;
+  }
+
+  .pull-left {
+    float: left;
+  }
+
+  .remove-top {
+    margin-top: 0;
+  }
+
+  .remove-bottom {
+    margin-bottom: 0;
+  }
+
+  body {
+    color: #1B1F2B;
+    background: #FFFFFF;
+    border-color: #1B1F2B;
+  }
+
+  .dark {
+    background: #2f364a;
+    color: #e6e6e6;
+    border-color: #e6e6e6;
+  }
+
+  nav {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    position: fixed;
     bottom: 0;
     width: 100%;
-    height: 50px;
-    padding-bottom: 10px;
-    background: #FFF;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
+    padding: 0 2em;
+    text-align: center;
+    line-height: 72px;
+    font-weight: 400;
+    font-size: 14px;
   }
-
-  .icon {
-    z-index: 2;
-    position: relative;
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
-    transition: transform .25s ease-in-out;
-    user-select: none;
+  nav .title {
+    padding: 0 1.5em;
+    float: left;
   }
-
-  .icon-picture {
-    opacity: .5;
-    width: 10px;
-    height: 10px;
+  nav .name {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    width: 200px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+  }
+  nav #light-switch {
+    cursor: pointer;
+    -moz-user-select: -moz-none;
+    -ms-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    float: left;
+    line-height: 72px;
+  }
+  nav .specimen {
+    padding: 0 1.5em;
+    float: right;
   }
 
-  .icon.selected {
-    box-sizing: initial;
-    transform: translateY(-7px) scale(1.2);
-    background: #fff;
+  section {
+    padding: 48px 0;
+  }
+
+  .space-block {
+    width: 100%;
+    height: 72px;
+    border: 1px solid;
+    margin-bottom: 24px;
+  }
+
+  .icon-tab {
+    position: relative;
+    text-align: center;
+    cursor: pointer;
+  }
+  .icon-tab .s {
+    position: relative;
+    z-index: 1;
+    -moz-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+    -webkit-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+    font-size: 30px;
+    line-height: 70px;
+    margin: 0 auto;
+    color: #8d98b8;
+  }
+  .icon-tab:before {
+    position: absolute;
+    -moz-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+    -webkit-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+    content: '';
+    display: block;
+    width: 0;
+    height: 0;
+    margin: 0 auto;
+    top: 35px;
+    left: 0;
+    right: 0;
+    background: #f2f2f2;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    -moz-border-radius: 100%;
+    -webkit-border-radius: 100%;
     border-radius: 100%;
-    box-shadow: 0px 3px 6px -2px rgba(0,0,0,0.38);
+  }
+  .icon-tab .label {
+    -moz-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+    -webkit-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+    color: #b3b3b3;
+    font-size: 14px;
+    font-weight: 400;
+    margin: 0 0 1em;
+  }
+  .icon-tab:hover:before {
+    top: 7px;
+    width: 56px;
+    height: 56px;
+    line-height: 56px;
+  }
+  .icon-tab:hover .label {
+    color: #1B1F2B;
+    margin: 0.5em 0;
+  }
+  .icon-tab.active .s {
+    color: white;
+  }
+  .icon-tab.active:before {
+    top: 0;
+    width: 70px;
+    height: 70px;
+    line-height: 70px;
+    background: #56cd88;
+  }
+  .icon-tab.active .label {
+    color: #1B1F2B;
+    margin: 0.75em 0;
   }
 
-  .selected .icon-picture {
-    opacity: 1 !important;
+  .dark .icon-tab .s {
+    color: #bcc3d5;
+  }
+  .dark .icon-tab:before {
+    background: #39415a;
+  }
+  .dark .icon-tab .label {
+    color: #566389;
+  }
+  .dark .icon-tab:hover .label {
+    color: #FFFFFF;
+  }
+  .dark .icon-tab.active .s {
+    color: white;
+  }
+  .dark .icon-tab.active:before {
+    background: #56cd88;
+  }
+  .dark .icon-tab.active .label {
+    color: #FFFFFF;
   }
 
-  @keyframes slide {
-    0% {
-      bottom: -30px;
-    }
-    50% {
-      bottom: -9px;
-    }
-    100% {
-      bottom: -30px;
-    }
+  .col-3:nth-child(1) .icon-tab.active:before {
+    background: #4ddfdc;
   }
+
+  .col-3:nth-child(2) .icon-tab.active:before {
+    background: #50ecbd;
+  }
+
+  .col-3:nth-child(3) .icon-tab.active:before {
+    background: #56cd88;
+  }
+
+  .col-3:nth-child(4) .icon-tab.active:before {
+    background: #4dd85d;
+  }
+
 </style>
-<div id="phone">
-  <div id="background">
-    <div id="round">
+<section>
+    <div class='container align-center'>
+      <div class='col-3'>
+        <div class='icon-tab'>
+          <div class='s s-layout'></div>
+          <div class='label'>Modules</div>
+        </div>
+      </div>
+      <div class='col-3'>
+        <div class='icon-tab'>
+          <div class='s s-code'></div>
+          <div class='label'>Code Editor</div>
+        </div>
+      </div>
+      <div class='col-3'>
+        <div class='icon-tab'>
+          <div class='s s-image'></div>
+          <div class='label'>Assets</div>
+        </div>
+      </div>
+      <div class='col-3'>
+        <div class='icon-tab'>
+          <div class='s s-cog'></div>
+          <div class='label'>Settings</div>
+        </div>
+      </div>
     </div>
-  </div>
-  <ul id="tab-bar">
-    <li class="icon selected"><img class="icon-picture" src="https://image.flaticon.com/icons/svg/814/814173.svg" /></li>
-    <li class="icon"><img class="icon-picture" src="https://image.flaticon.com/icons/svg/151/151917.svg" /></li>
-    <li class="icon"><img class="icon-picture" src="https://image.flaticon.com/icons/svg/318/318147.svg" /></li>
-    <li class="icon"><img class="icon-picture" src="https://image.flaticon.com/icons/svg/685/685661.svg" /></li>
-    <li class="icon"><img class="icon-picture" src="https://image.flaticon.com/icons/svg/709/709579.svg" /></li>
-  </ul>
-</div>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
-  <defs>
-    <filter id="goo">
-  <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
-  <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 30 -7" result="goo" />
-  <feBlend in="SourceGraphic" in2="goo" />
-</filter>
-  </defs>
-</svg>
+  </section>
 
 <script>
-const FORMAT_KEY = '$';
-const MARGIN = 0;
-const STYLE_FORMAT = `calc(23.9% + ${FORMAT_KEY}px)`;
-const SELECTED_CLASS = 'selected';
-const SLIDING_CLASS = 'sliding';
-const ANIMATION_DELAY = 800;
+  document.addEventListener("DOMContentLoaded", function(event) {
 
-const round = document.querySelector('#round');
-const phone = document.querySelector('#phone');
+      var iconTabs = document.getElementsByClassName('icon-tab'),
+          iconTabActive;
 
-const isSelected = el => [...el.classList].find(c => c === SELECTED_CLASS);
-
-const clearRoundAnimation = () => round.classList.remove(SLIDING_CLASS);
-
-let selectedIcon = null;
-const icons = [];
-
-setTimeout(() => icons[3].click(), 1000);
-
-[...document.querySelectorAll('.icon')].map(el => {
-  if (!el) return;
-  if (isSelected(el)) selectedIcon = el;
-  icons.push(el);
-  el.addEventListener('click', function() {
-    const currentIndex = icons.indexOf(selectedIcon)
-    const elIndex = icons.indexOf(el);
-
-    if (elIndex < currentIndex -1
-    || elIndex > currentIndex + 1) {
-      // Is not a neighbour
-      round.classList.add(SLIDING_CLASS);
-      setTimeout(clearRoundAnimation, ANIMATION_DELAY);
-    }
-
-    const left = this.offsetLeft;
-
-    round.style.left = STYLE_FORMAT.replace(FORMAT_KEY, left);
-    selectedIcon.classList.remove(SELECTED_CLASS);
-    el.classList.add(SELECTED_CLASS);
-    selectedIcon = el;
+      for(var i=0;i<iconTabs.length;i++) {
+          (function(iCopy){
+              iconTabs[i].addEventListener('click', function(){
+              	if(iconTabActive) { classie.toggle(iconTabActive, 'active'); }
+                  classie.toggle(this, 'active');
+                  iconTabActive = this;
+              });
+              setTimeout(function(){
+                  iconTabs[iCopy].click();
+              }, iCopy*350);
+          }(i));
+      }
   });
-});
+
 </script>
