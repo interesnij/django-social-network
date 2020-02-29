@@ -130,6 +130,7 @@ class ProfileUserView(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.user=User.objects.get(pk=self.kwargs["pk"])
+        self.agent = request.META['HTTP_USER_AGENT']
         self.x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
         if self.x_forwarded_for:
             self.ip = self.x_forwarded_for.split(',')[-1].strip()
@@ -170,4 +171,5 @@ class ProfileUserView(TemplateView):
         context['common_frends'] = self.common_frends
         context['online_frends'] = self.online_frends
         context['ip'] = self.ip
+        context['agent'] = self.agent
         return context
