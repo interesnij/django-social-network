@@ -43,7 +43,7 @@ class User(AbstractUser):
 
     def is_mobile(self, request):
         import re
-        
+
         MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             return True
