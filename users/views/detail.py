@@ -132,7 +132,7 @@ class ProfileUserView(TemplateView):
         self.user=User.objects.get(pk=self.kwargs["pk"])
         if request.user.is_mobile(request):
             mobile = True
-        self.ip = request.user.get_request_ip(request)
+        self.ip = User.get_request_ip(request)
         if self.user == request.user:
             self.template_name = "account/my_user.html"
             self.online_frends = self.user.get_pop_online_connection()
