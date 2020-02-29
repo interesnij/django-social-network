@@ -131,8 +131,8 @@ class ProfileUserView(TemplateView):
     mobile = False
 
     def get(self,request,*args,**kwargs):
-        import re
         from communities.models import Community
+        from common.utils import is_mobile
 
         self.user=User.objects.get(pk=self.kwargs["pk"])
         self.MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
@@ -140,7 +140,7 @@ class ProfileUserView(TemplateView):
         #    self.mobile = True
         #else:
         #    self.mobile = False
-        self.mobile = User.is_mobile(request)
+        self.mobile = is_mobile(request)
         if self.user == request.user:
             self.template_name = "account/my_user.html"
             self.online_frends = self.user.get_pop_online_connection()
