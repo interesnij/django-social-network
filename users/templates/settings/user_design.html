@@ -116,7 +116,7 @@
       link_.send();
       link_.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
-        chek_on = list.querySelector('input').value = 1;
+        chek_on = list.querySelector('input').checked;
         chek_on.checked = false;
         input.checked = true;
         function addStyleSheets (href) {$head = document.head,$link = document.createElement('link');$link.rel = 'stylesheet';$link.href = href;$head.appendChild($link);};addStyleSheets("/static/styles/color/" + color + ".css");
