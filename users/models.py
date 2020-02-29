@@ -27,8 +27,23 @@ class User(AbstractUser):
         from datetime import datetime, timedelta
 
         now = datetime.now()
-        onl = self.last_activity + timedelta(minutes=1)
+        onl = self.last_activity + timedelta(minutes=3)
         if now < onl:
+            return True
+        else:
+            return False
+
+    def get_request_ip(request):
+        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+        if x_forwarded_for:
+            ip = x_forwarded_for.split(',')[-1].strip()
+        else:
+            ip = request.META.get('REMOTE_ADDR')
+        return ip
+
+    def is_mobile(self, request):
+        MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             return True
         else:
             return False

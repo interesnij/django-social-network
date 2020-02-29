@@ -126,16 +126,12 @@ class UserMusic(TemplateView):
 class ProfileUserView(TemplateView):
     template_name = None
     common_frends = None
-    ip = None
+    mobile = False
 
     def get(self,request,*args,**kwargs):
         self.user=User.objects.get(pk=self.kwargs["pk"])
-        self.agent = request.META['HTTP_USER_AGENT']
-        self.x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-        if self.x_forwarded_for:
-            self.ip = self.x_forwarded_for.split(',')[-1].strip()
-        else:
-            self.ip = request.META.get('REMOTE_ADDR')
+        if request.user.is_mobile(request):
+            mobile = True
         if self.user == request.user:
             self.template_name = "account/my_user.html"
             self.online_frends = self.user.get_pop_online_connection()
@@ -170,6 +166,5 @@ class ProfileUserView(TemplateView):
         context['communities'] = self.communities
         context['common_frends'] = self.common_frends
         context['online_frends'] = self.online_frends
-        context['ip'] = self.ip
-        context['agent'] = self.agent
+        context['mobile'] = self.mobile
         return context
