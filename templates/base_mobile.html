@@ -17,13 +17,11 @@
     <div class="wrapper jambotron-fluid">
         {% include "base_block/navbar.html" %}
 
-        {% if user.is_authenticated %}
-          {% include "base_block/mobile_nav.html" %}
-        {% endif %}
         <div id="ajax" style="padding-right:0px;padding-left:0px;">
            {% block content %}
            {% endblock %}
 
+           {% include "base_block/mobile_tab.html" %}
            {% include "base_block/fullscreens.html" %}
 				</div>
     </div>
