@@ -106,18 +106,18 @@
   </div>
 
   <script>
-    function uncheck()
-      {
-        var uncheck=document.getElementsByTagName('input');
-        for(var i=0;i<uncheck.length;i++)
+    on('#ajax', 'click', '.custom-radio', function() {
+      function uncheck()
         {
-          if(uncheck[i].type=='checkbox')
+          var uncheck=document.getElementsByTagName('input');
+          for(var i=0;i<uncheck.length;i++)
           {
-            uncheck[i].checked=false;
+            if(uncheck[i].type=='checkbox')
+            {
+              uncheck[i].checked=false;
+            }
           }
         }
-      }
-    on('#ajax', 'click', '.custom-radio', function() {
       var span = this;
       var color = this.getAttribute('data-color');
       var input = span.querySelector(".custom-control-input");
