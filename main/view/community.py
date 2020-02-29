@@ -2,7 +2,6 @@ from django.views.generic.base import TemplateView
 from users.models import User
 from communities.models import Community
 from main.models import Item, ItemComment
-from django.utils import timezone
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from main.forms import CommentForm
 from django.template.loader import render_to_string
@@ -11,7 +10,6 @@ from common.checkers import check_can_get_posts_for_community_with_name
 from rest_framework.exceptions import PermissionDenied, ValidationError
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from gallery.models import Album, Photo
-from notifications.model.item import *
 from common.utils import is_mobile
 
 

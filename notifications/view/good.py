@@ -1,11 +1,8 @@
-from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import ListView
-from django.http import HttpResponse
 from notifications.model.good import GoodNotification, GoodCommunityNotification
-from django.views.generic.base import TemplateView
 from common.utils import is_mobile
 
 

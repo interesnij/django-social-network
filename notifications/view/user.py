@@ -1,11 +1,8 @@
-from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import ListView
-from django.http import HttpResponse
 from notifications.model.user import UserNotification, UserCommunityNotification
-from django.views.generic.base import TemplateView
 from common.utils import is_mobile
 
 
@@ -50,12 +47,3 @@ def community_all_read(request):
 def get_latest_notifications(request):
     notifications = request.user.user_notifications.get_most_recent()
     return render(request, 'not_user/most_recent.html', {'notifications': notifications})
-
-
-class NotificationCleanView(TemplateView):
-    template_name = 'not_user/notification_clean.html'
-
-    def get(self,request,*args,**kwargs):
-        self.notifications = UserNotification.objects.filter(recipient=request.user)
-        self.notifications.mark_all_as_read()
-        return HttpResponse("!")

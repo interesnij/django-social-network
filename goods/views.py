@@ -3,8 +3,7 @@ from django.views.generic import TemplateView
 from goods.models import Good, GoodSubCategory, GoodCategory
 from django.views.generic import ListView
 from users.models import User
-from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
-from goods.forms import GoodForm
+from django.http import HttpResponse, HttpResponseBadRequest
 from django.template.loader import render_to_string
 from django.views.generic.detail import DetailView
 from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
@@ -56,6 +55,8 @@ class GoodUserCreate(TemplateView):
 	success_url="/"
 
 	def get(self,request,*args,**kwargs):
+        from goods.forms import GoodForm
+
 		self.user=User.objects.get(pk=self.kwargs["pk"])
 		self.form=GoodForm(initial={"creator":self.user})
 		return super(GoodUserCreate,self).get(request,*args,**kwargs)
@@ -69,6 +70,8 @@ class GoodUserCreate(TemplateView):
 		return context
 
 	def post(self,request,*args,**kwargs):
+        from goods.forms import GoodForm
+        
 		self.form=GoodForm(request.POST,request.FILES)
 		self.user=User.objects.get(pk=self.kwargs["pk"])
 		if self.form.is_valid():

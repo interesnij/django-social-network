@@ -9,5 +9,4 @@ urlpatterns = [
     url(r'^user_all_read/$', user_all_read, name='user_all_read'),
     url(r'^community_all_read/$', community_all_read, name='community_all_read'),
     url(r'^latest-notifications/$', get_latest_notifications, name='latest_notifications'),
-    url(r'^clean-notifications/$', NotificationCleanView.as_view(), name='clean_notifications'),
 ]

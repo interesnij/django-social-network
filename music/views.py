@@ -1,7 +1,5 @@
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic.base import TemplateView
 from django.views import View
-from django.shortcuts import render_to_response
 from music.models import *
 
 
