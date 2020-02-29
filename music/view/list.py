@@ -2,6 +2,7 @@ from django.views import View
 from django.shortcuts import render_to_response
 from music.models import *
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from common.utils import is_mobile
 
 
 class TagsList(View):

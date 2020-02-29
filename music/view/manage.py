@@ -3,6 +3,7 @@ from users.models import User
 from django.http import HttpResponse
 from django.views import View
 from rest_framework.exceptions import PermissionDenied
+from common.utils import is_mobile
 
 
 class TempListOn(View):

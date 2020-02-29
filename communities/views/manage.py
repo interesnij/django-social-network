@@ -8,6 +8,7 @@ from communities.forms import *
 from users.models import User
 from follows.models import CommunityFollow
 #from common.checkers import check_can_get_posts_for_community_with_name
+from common.utils import is_mobile
 
 
 class CommunityGeneralChange(TemplateView):

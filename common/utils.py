@@ -1,9 +1,11 @@
-from django.utils.safestring import mark_safe
-import json
 
 
 def safe_json(data):
+    import json
+    from django.utils.safestring import mark_safe
+
     return mark_safe(json.dumps(data))
+    
 
 def is_mobile(request):
     import re

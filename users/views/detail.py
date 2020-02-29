@@ -3,13 +3,15 @@ from users.models import User
 from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
 from django.shortcuts import render_to_response
 from rest_framework.exceptions import PermissionDenied
-from main.models import Item
+from common.utils import is_mobile
 
 
 class UserItemView(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
+        from main.models import Item
+        
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.item = Item.objects.get(uuid=self.kwargs["uuid"])
         self.item.views += 1
@@ -163,12 +165,9 @@ class ProfileUserView(TemplateView):
         return super(ProfileUserView,self).get(request,*args,**kwargs)
 
     def get_context_data(self, **kwargs):
-        from common.utils import is_mobile
-
         context = super(ProfileUserView, self).get_context_data(**kwargs)
         context['user'] = self.user
         context['communities'] = self.communities
         context['common_frends'] = self.common_frends
         context['online_frends'] = self.online_frends
-        context['mobile'] = is_mobile(self.request)
         return context

@@ -6,6 +6,7 @@ from django.views.generic import ListView
 from django.http import HttpResponse
 from notifications.model.user import UserNotification, UserCommunityNotification
 from django.views.generic.base import TemplateView
+from common.utils import is_mobile
 
 
 class UserNotificationListView(LoginRequiredMixin, ListView):

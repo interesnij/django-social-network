@@ -11,6 +11,7 @@ from common.checkers import check_can_get_posts_for_community_with_name
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render_to_response
 from rest_framework.exceptions import PermissionDenied
+from common.utils import is_mobile
 
 
 class CommunityGalleryView(TemplateView):

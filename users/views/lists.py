@@ -1,16 +1,18 @@
 from users.models import User
-from communities.models import Community
 from django.views.generic import ListView
 from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
-from main.models import Item
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views import View
 from django.shortcuts import render_to_response
 from rest_framework.exceptions import PermissionDenied
+from common.utils import is_mobile
 
 
 class UserCommunitiesList(View):
 	def get(self, request, *args, **kwargs):
+		from main.models import Item
+		from communities.models import Community
+
 		context = {}
 		template = None
 		self.user=User.objects.get(uuid=self.kwargs["uuid"])
@@ -117,6 +119,8 @@ class AllPossibleUsersList(View):
 
 class ItemListView(View):
 	def get(self, request, *args, **kwargs):
+		from main.models import Item
+		
 		context = {}
 		template = None
 		user=User.objects.get(pk=self.kwargs["pk"])

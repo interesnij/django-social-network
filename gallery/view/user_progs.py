@@ -5,6 +5,7 @@ from gallery.forms import PhotoDescriptionForm
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.views import View
 from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
+from common.utils import is_mobile
 
 
 class UserPhotoDescription(TemplateView):

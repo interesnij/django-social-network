@@ -12,6 +12,7 @@ from rest_framework.exceptions import PermissionDenied, ValidationError
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from gallery.models import Album, Photo
 from notifications.model.item import *
+from common.utils import is_mobile
 
 
 class ItemCommunityCommentList(View):

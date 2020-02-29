@@ -6,6 +6,7 @@ from communities.models import Community
 from django.shortcuts import render_to_response
 from rest_framework.exceptions import PermissionDenied
 from django.views.generic import ListView
+from common.utils import is_mobile
 
 
 class FollowsView(ListView):

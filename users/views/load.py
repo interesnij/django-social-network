@@ -1,11 +1,9 @@
 from django.views.generic.base import TemplateView
 from users.models import User
-from frends.models import Connect
-from follows.models import Follow
-from communities.models import Community
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views import View
 from django.shortcuts import render_to_response
+from common.utils import is_mobile
 
 
 class AvatarReload(TemplateView):
@@ -46,6 +44,8 @@ class ProfileReload(TemplateView):
     template_name = 'user_reload.html'
 
     def get(self,request,*args,**kwargs):
+        from communities.models import Community
+        
         self.user=User.objects.get(pk=self.kwargs["pk"])
         self.communities=Community.objects.filter(memberships__user__id=self.user.pk)[0:5]
         return super(ProfileReload,self).get(request,*args,**kwargs)
@@ -62,6 +62,9 @@ class ProfileButtonReload(TemplateView):
     is_blocked = None
 
     def get(self,request,*args,**kwargs):
+        from frends.models import Connect
+        from follows.models import Follow
+
         self.user=User.objects.get(pk=self.kwargs["pk"])
         self.template_name = "button/default_button.html"
         try:

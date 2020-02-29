@@ -2,16 +2,11 @@ from django.views.generic.base import TemplateView
 from users.models import User
 from django.template.loader import render_to_string
 from posts.models import Post
-from communities.models import Community
 from main.models import Item
-from posts.forms import PostForm, PostCommunityForm
+from posts.forms import PostCommunityForm
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.views import View
-from django.utils import timezone
 from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
-from common.checkers import check_can_get_posts_for_community_with_name
-from generic.mixins import FormMixin
-from gallery.models import Photo
 
 
 class PostsView(TemplateView):
@@ -44,6 +39,8 @@ class PostUserCreate(View):
         return context
 
     def post(self,request,*args,**kwargs):
+        from posts.forms import PostForm
+
         self.form_post=PostForm(request.POST, request.FILES)
         self.user=User.objects.get(pk=self.kwargs["pk"])
 
@@ -66,6 +63,8 @@ class PostCommunityCreate(View):
         return context
 
     def post(self,request,*args,**kwargs):
+        from communities.models import Community
+
         form_post=PostCommunityForm(request.POST, request.FILES)
         community = Community.objects.get(pk=self.kwargs["pk"])
 
@@ -80,7 +79,7 @@ class PostCommunityCreate(View):
             return HttpResponseBadRequest()
 
 
-class RepostUserUser(View, FormMixin):
+class RepostUserUser(View):
 
     def post(self, request, *args, **kwargs):
         self.item = Item.objects.get(uuid=self.kwargs["uuid"])
@@ -120,6 +119,8 @@ class RepostCommunityUser(View):
 
 class RepostCommunityCommunity(View):
     def post(self, request, *args, **kwargs):
+        from communities.models import Community
+
         self.item = Item.objects.get(uuid=self.kwargs["uuid"])
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         if self.item.parent:
@@ -132,6 +133,8 @@ class RepostCommunityCommunity(View):
 
 class RepostUserCommunity(View):
     def post(self, request, *args, **kwargs):
+        from communities.models import Community
+
         self.item = Item.objects.get(uuid=self.kwargs["uuid"])
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         if self.item.parent:
