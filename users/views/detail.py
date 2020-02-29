@@ -92,6 +92,7 @@ class UserCommunities(TemplateView):
 
 
 class UserMusic(TemplateView):
+    import re
     template_name = None
 
     def get(self,request,*args,**kwargs):
@@ -129,9 +130,13 @@ class ProfileUserView(TemplateView):
     mobile = False
 
     def get(self,request,*args,**kwargs):
+        import re
         self.user=User.objects.get(pk=self.kwargs["pk"])
-        if User.is_mobile(request):
-            mobile = True
+        self.MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
+        if self.MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+            self.mobile = True
+        else:
+            self.mobile = False
         self.ip = User.get_request_ip(request)
         if self.user == request.user:
             self.template_name = "account/my_user.html"
