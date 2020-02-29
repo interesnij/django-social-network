@@ -36,11 +36,12 @@
 
 <script>
   ready(() => {
-    if (window.XMLHttpRequest)
-    {link = new XMLHttpRequest();}
-    else
-    {link = new ActiveXObject("Microsoft.XMLHTTP");}
+    var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     link.open( 'GET', '/main/news/', true );
+    var params = "";
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    http.setRequestHeader("Content-length", params.length);
+    http.setRequestHeader("Connection", "close");
     link.onreadystatechange = function () {
       if ( link.readyState == 4 ) {
           if ( link.status == 200 ) {
@@ -49,7 +50,7 @@
           }
       }
   };
-  link.send( null );
+  link.send( params );
 });
 
 var page = 2;
