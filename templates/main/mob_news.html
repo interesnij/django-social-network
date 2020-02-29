@@ -39,18 +39,18 @@
     var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     link_3.open( 'GET', '/main/news/', true );
     var params = "";
-    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    http.setRequestHeader("Content-length", params.length);
-    http.setRequestHeader("Connection", "close");
-    link.onreadystatechange = function () {
-      if ( link.readyState == 4 ) {
-          if ( link.status == 200 ) {
+    link_3.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    link_3.setRequestHeader("Content-length", params.length);
+    link_3.setRequestHeader("Connection", "close");
+    link_3.onreadystatechange = function () {
+      if ( link_3.readyState == 4 ) {
+          if ( link_3.status == 200 ) {
               var news_load = document.getElementById("news_load");
               news_load.innerHTML = link.responseText;
           }
       }
   };
-  link.send( params );
+  link_3.send( params );
 });
 
 var page = 2;
