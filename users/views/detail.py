@@ -140,7 +140,8 @@ class ProfileUserView(TemplateView):
         #    self.mobile = True
         #else:
         #    self.mobile = False
-        self.mobile = is_mobile(request)
+        if is_mobile(request):
+            self.mobile = True
         if self.user == request.user:
             self.template_name = "account/my_user.html"
             self.online_frends = self.user.get_pop_online_connection()
