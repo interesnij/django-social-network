@@ -1,9 +1,9 @@
 from django.views.generic.base import TemplateView
 from users.models import User
 from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
-from main.models import Item
 from django.shortcuts import render_to_response
 from rest_framework.exceptions import PermissionDenied
+from main.models import Item
 
 
 class UserItemView(TemplateView):
@@ -133,14 +133,14 @@ class ProfileUserView(TemplateView):
     def get(self,request,*args,**kwargs):
         import re
         from communities.models import Community
-        
+
         self.user=User.objects.get(pk=self.kwargs["pk"])
         self.MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
-        if self.MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            self.mobile = True
-        else:
-            self.mobile = False
-        self.ip = User.get_request_ip(request)
+        #if self.MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+        #    self.mobile = True
+        #else:
+        #    self.mobile = False
+        self.mobile = User.is_mobile(request)
         if self.user == request.user:
             self.template_name = "account/my_user.html"
             self.online_frends = self.user.get_pop_online_connection()
@@ -176,5 +176,4 @@ class ProfileUserView(TemplateView):
         context['common_frends'] = self.common_frends
         context['online_frends'] = self.online_frends
         context['mobile'] = self.mobile
-        context['ip'] = self.ip
         return context
