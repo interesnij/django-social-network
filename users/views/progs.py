@@ -18,9 +18,10 @@ class UserUnbanCreate(View):
 
 
 class UserColorChange(View):
-    from users.model.settings import UserColorSettings
 
     def get(self,request,*args,**kwargs):
+        from users.model.settings import UserColorSettings
+        
         try:
             model = UserColorSettings.objects.get(user=request.user)
         except:
