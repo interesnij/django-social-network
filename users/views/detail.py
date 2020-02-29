@@ -135,7 +135,7 @@ class ProfileUserView(TemplateView):
         from common.utils import is_mobile
 
         self.user=User.objects.get(pk=self.kwargs["pk"])
-        self.MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
+        #self.MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
         #if self.MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
         #    self.mobile = True
         #else:
