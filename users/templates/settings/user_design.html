@@ -122,18 +122,6 @@
       }
     };
     });
-  $('.custom-radio').click(function() {
-    div = $(this);
-    color = div.data("color");
-    input = div.find(".custom-control-input");
-    $.ajax({
-      url: "/users/progs/color/" + color + "/",
-      success: function() {
-        $(".theme-color .custom-control-input").prop('checked', false);
-        input.prop('checked', true);
-        $('head').append("<link rel='stylesheet' href='/static/styles/color/" + color + ".css' />")
-      }
-    })
-  });
+
   </script>
 {% endblock %}
