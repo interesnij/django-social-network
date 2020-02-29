@@ -723,14 +723,6 @@ class User(AbstractUser):
     def has_blocked_user_with_id(self, user_id):
         return self.user_blocks.filter(blocked_user_id=user_id).exists()
 
-    def get_client_ip(request):
-        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-        if x_forwarded_for:
-            ip = x_forwarded_for.split(',')[-1].strip()
-        else:
-            ip = request.META.get('REMOTE_ADDR')
-        return ip
-
 
 class UserProfile(models.Model):
     id = models.AutoField(primary_key=True, db_index=False)
@@ -751,6 +743,14 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.user.last_name
+
+    def get_client_ip(request):
+        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+        if x_forwarded_for:
+            ip = x_forwarded_for.split(',')[-1].strip()
+        else:
+            ip = request.META.get('REMOTE_ADDR')
+        return ip
 
     class Meta:
         verbose_name = 'Профиль пользователя'
