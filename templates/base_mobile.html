@@ -15,9 +15,7 @@
 </head>
   <body class="fixed-header sidebar-left-close">
     <div class="wrapper">
-        <div class="desc-only">
-          {% include "base_block/navbar.html" %}
-        </div>
+        {% include "base_block/navbar.html" %}
 
         {% if user.is_authenticated %}
           {% include "base_block/mobile_nav.html" %}
@@ -33,5 +31,10 @@
     {% include "base_block/modal_community_repost.html" %}
 
     {% include "base_scripts.html" %}
+
+<script>
+    document.querySelector("#left-menu").addEventListener("click", (e) => {document.body.classList.toggle('sidebar-left-close');});
+    document.querySelector(".backdrop").addEventListener("click", (e) => {document.body.classList.toggle('sidebar-left-close');});
+</script>
   </body>
 </html>
