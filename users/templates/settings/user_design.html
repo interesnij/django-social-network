@@ -118,12 +118,7 @@
       if ( this.readyState == 4 && this.status == 200 ) {
         var uncheck=document.getElementsByTagName('input');
         for(var i=0;i<uncheck.length;i++)
-        {
-          if(uncheck[i].type=='checkbox')
-          {
-            uncheck[i].checked=false;
-          }
-        }
+        {uncheck[i].checked=false;}
         input.checked = true;
         function addStyleSheets (href) {$head = document.head,$link = document.createElement('link');$link.rel = 'stylesheet';$link.href = href;$head.appendChild($link);};addStyleSheets("/static/styles/color/" + color + ".css");
       }
