@@ -8,8 +8,8 @@ def safe_json(data):
 def is_mobile(request):
     import re
 
-    MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
-    if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-        return True
+    self.MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
+    if self.MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+        self.mobile = True
     else:
-        return False
+        self.mobile = False
