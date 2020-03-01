@@ -3,30 +3,19 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>{% block title %}{% endblock %}</title>
-    {% block meta %}{% endblock %}
+    <title>Трезвый.рус в разработке</title>
     <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" ; type="image/x-icon" />
     <link rel="icon" href="{% static 'images/favicon.ico' %}" ; type="image/x-icon" />
     <link rel="stylesheet" href="{% static 'styles/bootstrap.min.css' %}" media="all" />
     <link rel="stylesheet" href="{% static 'styles/default.css' %}" />
     <link rel="stylesheet" href="{% static 'styles/load.css' %}" media="none" onload="if(media!='all')media='all'" />
 </head>
-
-  <body class="">
-    {% load staticfiles humanize %}
+<body class="">
     {% block title %}Социальная сеть еще строится{% endblock %}
-    {% block meta %}
-    <meta property="og:url" content="http://xn--b1afgj5al1e.xn--p1acf/" />
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="" />
-    <meta property="og:image" content="http://xn--b1afgj5al1e.xn--p1acf{% static 'images/1.jpg' %}?r=qwert" />
-    {% endblock %}
-    {% block content %}
-
     <div style="padding-bottom: 43px;background: linear-gradient(45deg, #292929 25%, transparent 25%, transparent 75%, #292929 75%), linear-gradient(45deg, #292929 25%, transparent 25%, transparent 75%, #292929 75%) 0.1875em 0.1875em, radial-gradient(at 50% 0, #484847, #090909);
     background-size: 0.375em 0.375em, 0.375em 0.375em, 100% 100%;">
 
-    
+
             <div class="container main-container h-100 h-sm-auto z-index-1 text-center text-white">
                 <div class="row align-items-center h-100">
                     <div class="col-12 mx-auto text-center">
