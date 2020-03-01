@@ -128,10 +128,10 @@ button::-moz-focus-inner {
 </svg>
 </div>
 
-    <button class="icon icon--selected">
+    <button class="icon icon_v1 icon--selected">
       <svg class="svg_info svg_default" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
     </button>
-    <button class="icon">
+    <button class="icon icon_v2">
       <svg class="svg_info svg_default" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
     </button>
     <button class="icon">
@@ -156,13 +156,15 @@ button::-moz-focus-inner {
     const buttonCenter = btnElement.offsetLeft + button.width() / 2;
     tip.css({left: buttonCenter - (tipWidth / 2)})
   };
-  icon = document.querySelector(".icon");
-  document.querySelector(".icon").addEventListener("click", (e) => {
-    updateSelected(icon);
+  icon_1 = document.querySelector(".icon_v1");
+  icon_2 = document.querySelector(".icon_v2");
+  icon_1.addEventListener("click", (e) => {
+    updateSelected(icon_1);
   });
-  $('.icon').click(function() {
-  updateSelected(this);
+  icon_2.addEventListener("click", (e) => {
+    updateSelected(icon_2);
   });
+
   icon_selected = document.querySelector(".icon--selected");
   updateSelected($('.icon--selected')[0]);
 });
