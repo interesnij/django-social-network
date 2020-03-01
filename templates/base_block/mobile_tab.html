@@ -156,7 +156,6 @@ button::-moz-focus-inner {
   icon_3.addEventListener("click", (e) => {updateSelected(icon_3);});
   icon_4.addEventListener("click", (e) => {updateSelected(icon_4);});
   icon_5_hide = icon_5.querySelector(".icon_hide");
-  icon_5_show = icon_5.querySelector(".icon_show");
   icon_5_hide.addEventListener("click", (e) => {
     updateSelected(icon_5);
     sidebar =  document.querySelector(".sidebar");
@@ -164,6 +163,8 @@ button::-moz-focus-inner {
     icon_5_hide.classList.remove("icon_hide");
     icon_5_hide.classList.add("icon_show");
   });
+  try{
+  icon_5_show = icon_5.querySelector(".icon_show");
   icon_5_show.addEventListener("click", (e) => {
   //  updateSelected(icon_5);
     sidebar =  document.querySelector(".sidebar");
@@ -171,5 +172,6 @@ button::-moz-focus-inner {
     icon_5_show.classList.add("icon_hide");
     icon_5_show.classList.remove("icon_show");
   });
+}
   updateSelected(icon_1);
 </script>
