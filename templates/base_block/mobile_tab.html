@@ -155,7 +155,8 @@ button::-moz-focus-inner {
     tip = document.querySelector(".selected-tip");
     tipWidth = tip.style.width;
     icon_1.classList.add("icon--selected");
-
+    buttonCenter = icon_1.offsetLeft  + icon_1.style.width / 2;
+    tip.style.left = buttonCenter - (tipWidth / 2);
 
   function updateSelected(btnElement) {
     $('.icon').removeClass('icon--selected');
@@ -166,7 +167,6 @@ button::-moz-focus-inner {
     tip.css({left: buttonCenter - (tipWidth / 2)})
   };
   icon_1.addEventListener("click", (e) => {
-    buttonCenter = icon_1.offsetLeft  + icon_1.style.width / 2;
     tip.style.left = buttonCenter - (tipWidth / 2);
     icon_1.classList.add("icon--selected");
     icon_2.classList.remove("icon--selected");
