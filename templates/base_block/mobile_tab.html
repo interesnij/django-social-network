@@ -144,7 +144,7 @@ button::-moz-focus-inner {
     <button class="icon icon_v4">
       <svg class="svg_info svg_default" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
     </button>
-    <button class="icon icon_v5">
+    <button class="icon icon_v5 icon_hide">
       <svg fill="currentColor" class="svg_default svg_info" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
     </button>
   </nav>
@@ -155,11 +155,21 @@ button::-moz-focus-inner {
   icon_2.addEventListener("click", (e) => {updateSelected(icon_2);});
   icon_3.addEventListener("click", (e) => {updateSelected(icon_3);});
   icon_4.addEventListener("click", (e) => {updateSelected(icon_4);});
-  icon_5.addEventListener("click", (e) => {
+  icon_5_hide = icon_5.querySelector(".icon_hide");
+  icon_5_show = icon_5.querySelector(".icon_show");
+  icon_hide.addEventListener("click", (e) => {
     updateSelected(icon_5);
     sidebar =  document.querySelector(".sidebar");
-    sidebar.classList.toggle("style_hide");
-    if (icon_5.classList.contains("icon--selected")) {icon_5.classList.remove("icon--selected");}
+    sidebar.classList.remove("style_hide");
+    icon_5.classList.remove("icon_hide");
+    icon_5.classList.add("icon_show");
+  });
+  icon_show.addEventListener("click", (e) => {
+  //  updateSelected(icon_5);
+    sidebar =  document.querySelector(".sidebar");
+    sidebar.classList.add("style_hide");
+    icon_5.classList.add("icon_hide");
+    icon_5.classList.remove("icon_show");
   });
   updateSelected(icon_1);
 </script>
