@@ -158,7 +158,7 @@ button::-moz-focus-inner {
       const tipWidth = document.querySelector(".selected-tip").offsetWidth;
       const buttonCenter = this.btnElement.offsetLeft + this.btnElement.offsetWidth / 6;
       const a = buttonCenter - (tipWidth / 6);
-      document.querySelector(".selected-tip").style.left = a;
+      document.querySelector(".selected-tip").style.left = a + ".px";
       console.log(tipWidth, buttonCenter, a)
     }
 
