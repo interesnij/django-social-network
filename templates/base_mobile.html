@@ -17,6 +17,7 @@
       if (document.readyState != "loading") callback();
       else document.addEventListener("DOMContentLoaded", callback);
       }
+      function updateSelected(btnElement) {document.querySelectorAll(".icon").forEach(icon => { icon.classList.remove("icon--selected") });btnElement.classList.add('icon--selected');const tipWidth = tip.offsetWidth;const  buttonCenter = btnElement.offsetLeft + btnElement.offsetWidth / 4;const a = buttonCenter - (tipWidth / 3);tip.style.left = a + "px";}
     </script>
 </head>
   <body class="fixed-header">
