@@ -39,4 +39,4 @@ class NewsListView(ListView):
 
 
 class ComingView(TemplateView):
-	template_name="main/coming.html"
+	template_name="base_coming.html"
