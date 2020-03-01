@@ -24,7 +24,7 @@
            {% include "base_block/fullscreens.html" %}
            {% include "base_block/mobile_nav.html" %}
 				</div>
-        {% if user.is_authenticated %}
+        {% if request.user.is_authenticated %}
          {% include "base_block/mobile_tab.html" %}
         {% endif %}
     </div>
