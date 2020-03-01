@@ -3,14 +3,6 @@
 <div class="sidebar style_hide" style="position: fixed;top: 0;left: 0;width: 100%;height: 100%;padding: 5%;overflow: auto;">
   {% if request.user.is_authenticated %}
     <div class="container has-background-img">
-        <figure class="background-img pink-gradient">
-          {% if request.user.get_avatar %}
-            <img src="{{ request.user.get_avatar.file|thumbnail_url:'avatar' }}" alt="image">
-            {% else %}
-            <svg fill="currentColor" class="svg_info svg_default" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
-            {% endif %}
-        </figure>
-
         <div class="media w-100 my-3">
           <figure class="avatar-40 rounded-circle align-self-start " style="width: 100%;">
             {% if request.user.get_avatar %}
@@ -32,23 +24,6 @@
 
     <ul class="nav flex-column">
         <li class="nav-item">
-            <a href="{% url 'user' pk=request.user.pk %}" class="nav-link dropdwown-toggle ajax" data-html="#ajax">
-              <svg class="svg_info svg_default" style="margin:10px;" fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
-                <span>Моя страница</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="{% url 'main' %}" class="nav-link dropdwown-toggle ajax" data-html="#ajax">
-              <svg class="svg_info svg_default" style="margin:10px;" fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
-                <span>Новости</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="{% url 'messages_list' %}" class="nav-link dropdwown-toggle ajax" data-html="#ajax">
-              <svg class="svg_info svg_default" style="margin:10px;" fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
-                <span>Сообщения</span>
-            </a>
-        </li>
         <li class="nav-item">
             <a href="{% url 'frends' pk=request.user.pk %}" class="nav-link dropdwown-toggle ajax" data-html="#ajax">
               <svg class="svg_info svg_default" style="margin:10px;" fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
@@ -69,7 +44,8 @@
         </li>
         <li class="nav-item">
             <a class="nav-link dropdwown-toggle ajax" href="{% url 'user_music' pk=request.user.pk %}"  data-html="#ajax">
-              <svg class="svg_info svg_default" style="margin:10px;" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M20 2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 5h-3v5.5c0 1.38-1.12 2.5-2.5 2.5S10 13.88 10 12.5s1.12-2.5 2.5-2.5c.57 0 1.08.19 1.5.51V5h4v2zM4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6z"/></svg>                <span>Музыка</span>
+              <svg class="svg_info svg_default" style="margin:10px;" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M20 2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 5h-3v5.5c0 1.38-1.12 2.5-2.5 2.5S10 13.88 10 12.5s1.12-2.5 2.5-2.5c.57 0 1.08.19 1.5.51V5h4v2zM4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6z"/></svg>
+              <span>Музыка</span>
             </a>
         </li>
         <li class="nav-item">
