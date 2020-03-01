@@ -157,14 +157,14 @@ button::-moz-focus-inner {
   icon_4.addEventListener("click", (e) => {updateSelected(icon_4);});
   icon_5_hide = icon_5.querySelector(".icon_hide");
   icon_5_show = icon_5.querySelector(".icon_show");
-  icon_hide.addEventListener("click", (e) => {
+  icon_5_hide.addEventListener("click", (e) => {
     updateSelected(icon_5);
     sidebar =  document.querySelector(".sidebar");
     sidebar.classList.remove("style_hide");
     icon_5.classList.remove("icon_hide");
     icon_5.classList.add("icon_show");
   });
-  icon_show.addEventListener("click", (e) => {
+  icon_5_show.addEventListener("click", (e) => {
   //  updateSelected(icon_5);
     sidebar =  document.querySelector(".sidebar");
     sidebar.classList.add("style_hide");
