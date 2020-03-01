@@ -136,6 +136,7 @@
   </nav>
 
 <script>
+  ready(() => {
   function updateSelected(btnElement) {
     $('.icon').removeClass('icon--selected');
     const button = $(btnElement);
@@ -149,4 +150,5 @@
     updateSelected(this);
   });
   updateSelected($('.icon--selected')[0]);
+});   
 </script>
