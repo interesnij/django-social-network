@@ -156,11 +156,10 @@ button::-moz-focus-inner {
       this.btnElement = btnElement;
       document.querySelectorAll(".icon").forEach(icon => { icon.classList.remove("icon--selected") })
       this.btnElement.classList.add('icon--selected');
-      const tip_ = document.querySelector('.selected-tip');
-      const tip = document.querySelector('svg');
+      const tip = document.querySelector('.selected-tip');
       const tipWidth = tip.style.width;
       const buttonCenter = this.btnElement.offsetLeft + this.btnElement.style.width / 6;
-      tip.style.left = buttonCenter - (tipWidth / 6 );
+      tip.style.left = buttonCenter - (tipWidth / 12 );
     }
 
   icon_1.addEventListener("click", (e) => {updateSelected(icon_1);});
