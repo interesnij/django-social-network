@@ -153,9 +153,13 @@ button::-moz-focus-inner {
     icon_4 = document.querySelector(".icon_v2");
     icon_5 = document.querySelector(".icon_v1");
     tip = document.querySelector(".selected-tip");
-    
+    tipWidth = tip.style.width;
+    icon_1.classList.add("icon--selected");
+    buttonCenter = icon_1.offsetLeft  + icon_1.style.width / 2;
+    tip.style.left = buttonCenter - (tipWidth / 2);
 
   function updateSelected(btnElement) {
+    tip = document.querySelector(".selected-tip");
     $('.icon').removeClass('icon--selected');
     const button = $(btnElement);
     button.addClass('icon--selected');
