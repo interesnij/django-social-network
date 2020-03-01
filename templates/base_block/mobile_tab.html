@@ -154,7 +154,6 @@ button::-moz-focus-inner {
     icon_5 = document.querySelector(".icon_v1");
     function updateSelected(btnElement) {
       document.querySelectorAll(".icon").forEach(icon => { icon.classList.remove("icon--selected") })
-      const button = getComputedStyle(this);
       this.classList.add('icon--selected');
       const tip = $('.selected-tip');
       const tipWidth = tip.width();
