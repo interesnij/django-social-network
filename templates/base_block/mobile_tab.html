@@ -8,6 +8,7 @@
     display: flex;
     justify-content: space-around;
     background: white;
+    z-index:10;
   }
 
   .icon {
@@ -154,10 +155,12 @@ button::-moz-focus-inner {
     const tipWidth = tip.width();
     const buttonCenter = btnElement.offsetLeft + button.width() / 2;
     tip.css({left: buttonCenter - (tipWidth / 2)})
-  }
-  $('.icon').click(function() {
+  };
+  document.querySelector(".icon").addEventListener("click", (e) => {
     updateSelected(this);
   });
-  updateSelected($('.icon--selected')[0]);
+
+  icon_selected =  document.querySelector(".icon--selected");
+  updateSelected(icon_selected)[0]);
 });
 </script>
