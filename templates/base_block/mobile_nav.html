@@ -1,6 +1,6 @@
 {% load staticfiles thumbnail %}
 
-<div class="sidebar sidebar-left">
+<div class="sidebar" style="display:none">
   {% if request.user.is_authenticated %}
     <div class="container has-background-img">
 
@@ -92,4 +92,3 @@
     для полного доступа к функциям сайта
     {% endif %}
 </div>
-<div class="backdrop"></div>
