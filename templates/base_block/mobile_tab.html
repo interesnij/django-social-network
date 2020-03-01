@@ -157,7 +157,7 @@ button::-moz-focus-inner {
       btnElement.classList.add('icon--selected');
       const tip = $('.selected-tip');
       const tipWidth = tip.width();
-      const buttonCenter = btnElement.offsetLeft + btnElement.width / 2;
+      const buttonCenter = btnElement.offsetLeft + btnElement.style.width / 2;
       tip.css({left: buttonCenter - (tipWidth / 2)})
     }
 
