@@ -160,7 +160,7 @@ button::-moz-focus-inner {
       const buttonCenter = btnElement.offsetLeft + btnElement.offsetWidth / 6;
       const a = buttonCenter - (tipWidth / 6);
       left = a + ".px"
-      tip.style.left = left;
+      tip.style.left = " + left + ";
       console.log(tipWidth, buttonCenter, a, left)
     }
 
