@@ -158,14 +158,10 @@ button::-moz-focus-inner {
   };
   icon_1 = document.querySelector(".icon_v1");
   icon_2 = document.querySelector(".icon_v2");
-  icon_1.addEventListener("click", (e) => {
-    updateSelected(icon_1);
-  });
-  icon_2.addEventListener("click", (e) => {
-    updateSelected(icon_2);
-  });
+  icon_1.addEventListener("click", (e) => {updateSelected(icon_1);});
+  icon_2.addEventListener("click", (e) => {updateSelected(icon_2);});
 
   icon_selected = document.querySelector(".icon--selected");
-  updateSelected($('.icon--selected')[0]);
+  
 });
 </script>
