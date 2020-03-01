@@ -18,7 +18,7 @@
       else document.addEventListener("DOMContentLoaded", callback);
       }
       function updateSelected(btnElement) {document.querySelectorAll(".icon").forEach(icon => { icon.classList.remove("icon--selected") });btnElement.classList.add('icon--selected');const tipWidth = tip.offsetWidth;const  buttonCenter = btnElement.offsetLeft + btnElement.offsetWidth / 4;const a = buttonCenter - (tipWidth / 3);tip.style.left = a + "px";}
-      sidebar =  document.querySelector(".sidebar");icon_1 = document.querySelector(".icon_v1");icon_2 = document.querySelector(".icon_v2");icon_3 = document.querySelector(".icon_v3");icon_4 = document.querySelector(".icon_v4");icon_5 = document.querySelector(".icon_v5");tip = document.querySelector(".selected-tip");
+      icon_1 = document.querySelector(".icon_v1");icon_2 = document.querySelector(".icon_v2");icon_3 = document.querySelector(".icon_v3");icon_4 = document.querySelector(".icon_v4");icon_5 = document.querySelector(".icon_v5")
     </script>
 </head>
   <body class="fixed-header">
