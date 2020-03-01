@@ -154,10 +154,10 @@ button::-moz-focus-inner {
     icon_5 = document.querySelector(".icon_v1");
     function updateSelected(btnElement) {
       document.querySelectorAll(".icon").forEach(icon => { icon.classList.remove("icon--selected") })
-      this.classList.add('icon--selected');
+      btnElement.classList.add('icon--selected');
       const tip = $('.selected-tip');
       const tipWidth = tip.width();
-      const buttonCenter = btnElement.offsetLeft + this.width / 2;
+      const buttonCenter = btnElement.offsetLeft + btnElement.width / 2;
       tip.css({left: buttonCenter - (tipWidth / 2)})
     }
 
