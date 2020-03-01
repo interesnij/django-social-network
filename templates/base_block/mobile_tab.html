@@ -162,13 +162,11 @@ button::-moz-focus-inner {
       tip.css({left: buttonCenter - (tipWidth / 6 )})
     }
 
-  icon_1.addEventListener("click", (e) => {
-    updateSelected(icon_1);
-  });
-
-  icon_2.addEventListener("click", (e) => {
-    updateSelected(icon_2);
-  });
+  icon_1.addEventListener("click", (e) => {updateSelected(icon_1);});
+  icon_2.addEventListener("click", (e) => {updateSelected(icon_2);});
+  icon_3.addEventListener("click", (e) => {updateSelected(icon_3);});
+  icon_4.addEventListener("click", (e) => {updateSelected(icon_4);});
+  icon_5.addEventListener("click", (e) => {updateSelected(icon_5);});
   updateSelected(icon_1);
 });
 </script>
