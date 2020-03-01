@@ -152,16 +152,16 @@ button::-moz-focus-inner {
     icon_3 = document.querySelector(".icon_v1");
     icon_4 = document.querySelector(".icon_v2");
     icon_5 = document.querySelector(".icon_v1");
-
-  function updateSelected(btnElement) {
-    const tip = document.querySelector(".selected-tip");
-    $('.icon').removeClass('icon--selected');
-    const button = $(btnElement);
-    button.addClass('icon--selected');
-    const tipWidth = tip.width();
-    const buttonCenter = btnElement.offsetLeft + button.width() / 2;
-    tip.css({left: buttonCenter - (tipWidth / 2)})
-  };
+    function updateSelected(btnElement) {
+      $('.icon').removeClass('icon--selected');
+      const button = $(btnElement);
+      button.addClass('icon--selected');
+      const tip = $('.selected-tip');
+      const tipWidth = tip.width();
+      const buttonCenter = btnElement.offsetLeft + button.width() / 2;
+      tip.css({left: buttonCenter - (tipWidth / 2)})
+    }
+  
   icon_1.addEventListener("click", (e) => {
     updateSelected(icon_1);
   });
