@@ -11,11 +11,13 @@
     <link rel="stylesheet" href="{% static 'styles/default.css' %}" />
     <link rel="stylesheet" href="{% static 'styles/load.css' %}" media="none" onload="if(media!='all')media='all'" />
     <link rel="stylesheet" href="{% static 'styles/player_skin/vkontakte.css' %}" media="none" onload="if(media!='all')media='all'" />
-    <script>function on(elSelector,eventName,selector,fn) {var element = document.querySelector(elSelector);element.addEventListener(eventName, function(event) {var possibleTargets = element.querySelectorAll(selector);var target = event.target;for (var i = 0, l = possibleTargets.length; i < l; i++) {var el = target;var p = possibleTargets[i];while(el && el !== element) {if (el === p) {return fn.call(p, event);}el = el.parentNode;}}});};</script>
+    <script>
+      function on(elSelector,eventName,selector,fn) {var element = document.querySelector(elSelector);element.addEventListener(eventName, function(event) {var possibleTargets = element.querySelectorAll(selector);var target = event.target;for (var i = 0, l = possibleTargets.length; i < l; i++) {var el = target;var p = possibleTargets[i];while(el && el !== element) {if (el === p) {return fn.call(p, event);}el = el.parentNode;}}});};
+      icon_1 = document.querySelector(".icon_v1");icon_2 = document.querySelector(".icon_v2");icon_3 = document.querySelector(".icon_v3");icon_4 = document.querySelector(".icon_v4");icon_5 = document.querySelector(".icon_v5");tip = document.querySelector(".selected-tip");function updateSelected(btnElement) {document.querySelectorAll(".icon").forEach(icon => { icon.classList.remove("icon--selected") })this.btnElement.classList.add('icon--selected');const tipWidth = tip.offsetWidth;const  buttonCenter = btnElement.offsetLeft + btnElement.offsetWidth / 4;const a = buttonCenter - (tipWidth / 3);tip.style.left = a + "px";}
+    </script>
 </head>
   <body class="fixed-header">
     <div class="wrapper jambotron-fluid">
-        {% include "base_block/navbar.html" %}
 
         <div id="ajax" style="padding-right:0px;padding-left:0px;">
            {% block content %}
