@@ -118,7 +118,6 @@ button::-moz-focus-inner {
 }
 </style>
 
-<div>
   <nav style="position: fixed;width: 100%;">
     <div class="selected-tip">
       <svg viewBox="0 0 25 10" xmlns="http://www.w3.org/2000/svg">
@@ -159,7 +158,7 @@ button::-moz-focus-inner {
       const tip = document.querySelector('.selected-tip');
       const tipWidth = tip.style.width;
       const buttonCenter = this.btnElement.offsetLeft + this.btnElement.style.width / 6;
-      tip.style.left = buttonCenter - (tipWidth / 12 );
+      tip.style.left = buttonCenter - (tipWidth / 6 );
     }
 
   icon_1.addEventListener("click", (e) => {updateSelected(icon_1);});
