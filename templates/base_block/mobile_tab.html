@@ -156,19 +156,19 @@ button::-moz-focus-inner {
     updateSelected(icon_1);
   });
   icon_2.addEventListener("click", (e) => {
-    if (!sidebar.classList.contains("style_hide")){sidebar.classList.add("style_hide");}
+    if (!document.querySelector(".sidebar").classList.contains("style_hide")){sidebar.classList.add("style_hide");}
     updateSelected(icon_2);
   });
   icon_3.addEventListener("click", (e) => {
-    if (!sidebar.classList.contains("style_hide")){sidebar.classList.add("style_hide");}
+    if (!document.querySelector(".sidebar").classList.contains("style_hide")){sidebar.classList.add("style_hide");}
     updateSelected(icon_3);
   });
   icon_4.addEventListener("click", (e) => {
-    if (!sidebar.classList.contains("style_hide")){sidebar.classList.add("style_hide");}
+    if (!document.querySelector(".sidebar").classList.contains("style_hide")){sidebar.classList.add("style_hide");}
     updateSelected(icon_4);
   });
   icon_5.addEventListener("click", (e) => {
     updateSelected(icon_5);
-    sidebar.classList.toggle("style_hide");
+    document.querySelector(".sidebar").classList.toggle("style_hide");
   });
 </script>
