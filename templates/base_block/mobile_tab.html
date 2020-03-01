@@ -157,8 +157,8 @@ button::-moz-focus-inner {
       this.btnElement.classList.add('icon--selected');
       const tipWidth = document.querySelector(".selected-tip").offsetWidth;
       const buttonCenter = this.btnElement.offsetLeft + this.btnElement.offsetWidth / 6;
-      document.querySelector(".selected-tip").style.left = buttonCenter - (tipWidth / 6);
-      console.log(tipWidth, buttonCenter, document.querySelector(".selected-tip"))
+      const a = document.querySelector(".selected-tip").style.left = buttonCenter - (tipWidth / 6);
+      console.log(tipWidth, buttonCenter, a)
     }
 
   icon_1.addEventListener("click", (e) => {updateSelected(icon_1);});
