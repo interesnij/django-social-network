@@ -166,19 +166,19 @@ button::-moz-focus-inner {
   icon_1.addEventListener("click", (e) => {
     buttonCenter = icon_1.offsetLeft  + icon_1.style.width / 2;
     tip.style.left = buttonCenter - (tipWidth / 2);
-    icon_2.classlist.remove("icon--selected");
-    icon_3.classlist.remove("icon--selected");
-    icon_4.classlist.remove("icon--selected");
-    icon_5.classlist.remove("icon--selected");
+    icon_2.classList.remove("icon--selected");
+    icon_3.classList.remove("icon--selected");
+    icon_4.classList.remove("icon--selected");
+    icon_5.classList.remove("icon--selected");
   });
 
   icon_2.addEventListener("click", (e) => {
     buttonCenter = icon_2.offsetLeft  + icon_2.style.width / 2;
     tip.style.left = buttonCenter - (tipWidth / 2);
-    icon_1.classlist.remove("icon--selected");
-    icon_3.classlist.remove("icon--selected");
-    icon_4.classlist.remove("icon--selected");
-    icon_5.classlist.remove("icon--selected");
+    icon_1.classList.remove("icon--selected");
+    icon_3.classList.remove("icon--selected");
+    icon_4.classList.remove("icon--selected");
+    icon_5.classList.remove("icon--selected");
   });
 
 });
