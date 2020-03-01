@@ -1831,32 +1831,6 @@ body.dragging * {
   text-align: center;
 }
 
-
-.sidebar .nav .nav-item .nav-link:hover:after {
-  height: 100%;
-  width: 3px;
-  background: #ffffff;
-  content: "";
-  display: block;
-  top: 0;
-  right: 0;
-  position: absolute;
-  opacity: 0.6;
-}
-
-.sidebar .nav .nav-item .nav-link.active:after, .sidebar .nav .nav-item .nav-link.router-link-active:after {
-  height: 100%;
-  width: 3px;
-  background: #ffffff;
-  content: "";
-  display: block;
-  top: 0;
-  right: 0;
-  position: absolute;
-  opacity: 0.6;
-}
-
-
 .sidebar .nav .nav-item .nav-link.active.dropdwown-toggle .arrow, .sidebar .nav .nav-item .nav-link.router-link-active.dropdwown-toggle .arrow {
  transform: rotate(180deg);
 }
