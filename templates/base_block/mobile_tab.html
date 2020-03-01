@@ -1,443 +1,153 @@
 <style>
-  .col-1 {
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    width: 8.33333%;
-    float: left;
-    padding-left: 2.08333%;
-    padding-right: 2.08333%;
-  }
-
-  .col-2 {
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    width: 16.66667%;
-    float: left;
-    padding-left: 2.08333%;
-    padding-right: 2.08333%;
-  }
-
-  .col-3 {
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    width: 25%;
-    float: left;
-    padding-left: 2.08333%;
-    padding-right: 2.08333%;
-  }
-
-  .col-4 {
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    width: 33.33333%;
-    float: left;
-    padding-left: 2.08333%;
-    padding-right: 2.08333%;
-  }
-
-  .col-5 {
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    width: 41.66667%;
-    float: left;
-    padding-left: 2.08333%;
-    padding-right: 2.08333%;
-  }
-
-  .col-6 {
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    width: 50%;
-    float: left;
-    padding-left: 2.08333%;
-    padding-right: 2.08333%;
-  }
-
-  .col-7 {
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    width: 58.33333%;
-    float: left;
-    padding-left: 2.08333%;
-    padding-right: 2.08333%;
-  }
-
-  .col-8 {
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    width: 66.66667%;
-    float: left;
-    padding-left: 2.08333%;
-    padding-right: 2.08333%;
-  }
-
-  .col-9 {
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    width: 75%;
-    float: left;
-    padding-left: 2.08333%;
-    padding-right: 2.08333%;
-  }
-
-  .col-10 {
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    width: 83.33333%;
-    float: left;
-    padding-left: 2.08333%;
-    padding-right: 2.08333%;
-  }
-
-  .col-11 {
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    width: 91.66667%;
-    float: left;
-    padding-left: 2.08333%;
-    padding-right: 2.08333%;
-  }
-
-  .col-12 {
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    width: 100%;
-    float: left;
-    padding-left: 2.08333%;
-    padding-right: 2.08333%;
-  }
-
-  .row {
-    margin-bottom: 24px;
+  body {
+    background: #ff0035;
     overflow: hidden;
-    *zoom: 1;
-  }
-
-  .container {
-    max-width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-    width: 600px;
-    margin: 0 auto;
-  }
-  .container:after {
-    content: " ";
-    display: block;
-    clear: both;
-  }
-
-  body {
-    font-family: 'proxima-nova', sans-serif;
-  }
-
-  p {
-    line-height: 24px;
-  }
-
-  h1 {
-    font-size: 72px;
-  }
-
-  h2 {
-    font-size: 48px;
-  }
-
-  h3 {
-    font-size: 36px;
-  }
-
-  h4 {
-    font-size: 24px;
-  }
-
-  h5 {
-    font-size: 18px;
-  }
-
-  h6 {
-    font-size: 14px;
-  }
-
-  h1, h2, h3, h4, h5, h6 {
-    line-height: 1em;
-    font-weight: 700;
-  }
-
-  ul {
-    margin: 0 0 0 1em;
-    padding: 0;
-  }
-
-  li {
-    line-height: 24px;
-  }
-
-  .s {
-    font-size: 20px;
-    line-height: 24px;
-  }
-
-  .align-left {
-    text-align: left;
-  }
-
-  .align-right {
-    text-align: right;
-  }
-
-  .align-center {
-    text-align: center;
-  }
-
-  .pull-right {
-    float: right;
-  }
-
-  .pull-left {
-    float: left;
-  }
-
-  .remove-top {
-    margin-top: 0;
-  }
-
-  .remove-bottom {
-    margin-bottom: 0;
-  }
-
-  body {
-    color: #1B1F2B;
-    background: #FFFFFF;
-    border-color: #1B1F2B;
-  }
-
-  .dark {
-    background: #2f364a;
-    color: #e6e6e6;
-    border-color: #e6e6e6;
   }
 
   nav {
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    position: fixed;
+    position: absolute;
     bottom: 0;
-    width: 100%;
-    padding: 0 2em;
-    text-align: center;
-    line-height: 72px;
-    font-weight: 400;
-    font-size: 14px;
-  }
-  nav .title {
-    padding: 0 1.5em;
-    float: left;
-  }
-  nav .name {
-    position: absolute;
-    width: 200px;
     left: 0;
     right: 0;
-    margin: 0 auto;
+    background: white;
+    display: -webkit-box;
+    display: flex;
+    justify-content: space-around;
   }
-  nav #light-switch {
-    cursor: pointer;
-    -moz-user-select: -moz-none;
-    -ms-user-select: none;
-    -webkit-user-select: none;
-    user-select: none;
-    float: left;
-    line-height: 72px;
-  }
-  nav .specimen {
-    padding: 0 1.5em;
-    float: right;
-  }
-
-  section {
-    padding: 48px 0;
-  }
-
-  .space-block {
-    width: 100%;
-    height: 72px;
-    border: 1px solid;
-    margin-bottom: 24px;
-  }
-
-  .icon-tab {
-    position: relative;
-    text-align: center;
-    cursor: pointer;
-  }
-  .icon-tab .s {
-    position: relative;
+  nav .selected-tip {
+    width: 30%;
+    height: 70%;
+    position: absolute;
+    top: 0px;
+    -webkit-transition: left .3s;
+    transition: left .3s;
     z-index: 1;
-    -moz-transition: all 0.2s ease-in-out;
-    -o-transition: all 0.2s ease-in-out;
-    -webkit-transition: all 0.2s ease-in-out;
-    transition: all 0.2s ease-in-out;
+  }
+  nav .selected-tip svg {
+    fill: #ff0035;
+    width: 100%;
+    height: 100%;
+  }
+
+  .icon {
     font-size: 30px;
-    line-height: 70px;
-    margin: 0 auto;
-    color: #8d98b8;
+    background: none;
+    border: none;
+    color: lightgray;
+    position: relative;
+    outline: none;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    -webkit-animation: show 0.5s;
+            animation: show 0.5s;
+    padding: 20px 0;
   }
-  .icon-tab:before {
+  .icon--selected i {
     position: absolute;
-    -moz-transition: all 0.2s ease-in-out;
-    -o-transition: all 0.2s ease-in-out;
-    -webkit-transition: all 0.2s ease-in-out;
-    transition: all 0.2s ease-in-out;
-    content: '';
-    display: block;
-    width: 0;
-    height: 0;
-    margin: 0 auto;
-    top: 35px;
-    left: 0;
-    right: 0;
-    background: #f2f2f2;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    -moz-border-radius: 100%;
-    -webkit-border-radius: 100%;
-    border-radius: 100%;
-  }
-  .icon-tab .label {
-    -moz-transition: all 0.2s ease-in-out;
-    -o-transition: all 0.2s ease-in-out;
-    -webkit-transition: all 0.2s ease-in-out;
-    transition: all 0.2s ease-in-out;
-    color: #b3b3b3;
-    font-size: 14px;
-    font-weight: 400;
-    margin: 0 0 1em;
-  }
-  .icon-tab:hover:before {
-    top: 7px;
-    width: 56px;
-    height: 56px;
-    line-height: 56px;
-  }
-  .icon-tab:hover .label {
-    color: #1B1F2B;
-    margin: 0.5em 0;
-  }
-  .icon-tab.active .s {
-    color: white;
-  }
-  .icon-tab.active:before {
-    top: 0;
-    width: 70px;
-    height: 70px;
-    line-height: 70px;
-    background: #56cd88;
-  }
-  .icon-tab.active .label {
-    color: #1B1F2B;
-    margin: 0.75em 0;
+    background: white;
+    border-radius: 50%;
+    padding: 18px;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+            transform: translateX(-50%);
+    box-shadow: 1px 1px 2px 0 #ababab;
+    -webkit-animation: selected .6s forwards;
+            animation: selected .6s forwards;
+    z-index: 2;
   }
 
-  .dark .icon-tab .s {
-    color: #bcc3d5;
-  }
-  .dark .icon-tab:before {
-    background: #39415a;
-  }
-  .dark .icon-tab .label {
-    color: #566389;
-  }
-  .dark .icon-tab:hover .label {
-    color: #FFFFFF;
-  }
-  .dark .icon-tab.active .s {
-    color: white;
-  }
-  .dark .icon-tab.active:before {
-    background: #56cd88;
-  }
-  .dark .icon-tab.active .label {
-    color: #FFFFFF;
+  @-webkit-keyframes show {
+    0% {
+      opacity: 0;
+    }
+    20% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
   }
 
-  .col-3:nth-child(1) .icon-tab.active:before {
-    background: #4ddfdc;
+  @keyframes show {
+    0% {
+      opacity: 0;
+    }
+    20% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
   }
-
-  .col-3:nth-child(2) .icon-tab.active:before {
-    background: #50ecbd;
+  @-webkit-keyframes selected {
+    0% {
+      top: 50px;
+      color: white;
+    }
+    40% {
+      color: white;
+    }
+    50% {
+      top: -35px;
+    }
+    100% {
+      top: -35px;
+      color: black;
+    }
   }
-
-  .col-3:nth-child(3) .icon-tab.active:before {
-    background: #56cd88;
-  }
-
-  .col-3:nth-child(4) .icon-tab.active:before {
-    background: #4dd85d;
+  @keyframes selected {
+    0% {
+      top: 50px;
+      color: white;
+    }
+    40% {
+      color: white;
+    }
+    50% {
+      top: -35px;
+    }
+    100% {
+      top: -35px;
+      color: black;
+    }
   }
 
 </style>
-<section>
-    <div class='container align-center'>
-      <div class='col-3'>
-        <div class='icon-tab'>
-          <div class='s s-layout'></div>
-          <div class='label'>Modules</div>
-        </div>
-      </div>
-      <div class='col-3'>
-        <div class='icon-tab'>
-          <div class='s s-code'></div>
-          <div class='label'>Code Editor</div>
-        </div>
-      </div>
-      <div class='col-3'>
-        <div class='icon-tab'>
-          <div class='s s-image'></div>
-          <div class='label'>Assets</div>
-        </div>
-      </div>
-      <div class='col-3'>
-        <div class='icon-tab'>
-          <div class='s s-cog'></div>
-          <div class='label'>Settings</div>
-        </div>
-      </div>
+
+<div>
+  <nav>
+    <div class="selected-tip">
+
+<svg viewBox="0 0 25 10" xmlns="http://www.w3.org/2000/svg">
+  <path fill="none" stroke="null" stroke-width="null" stroke-opacity="null" id="svg_4" d="m7.48496,18.58474c0.04031,0 0.24202,0.06665 0.45689,0.12094c0.63199,0.15967 1.27354,0.32818 1.80069,0.40314c0.50835,0.07228 0.93325,0.0582 1.27661,0.13438c0.12446,0.02761 0.20157,0.04031 0.32251,0.04031c0.14782,0 0.40294,-0.00672 0.73909,0c0.37619,0.00752 0.86003,-0.02688 1.04816,-0.04031l0.09407,-0.02688l0.02687,-0.01344l0.04032,0"/>
+  <polyline fill="none" stroke-width="null" stroke-opacity="null" points="10.521944046020508,19.001314163208008 10.521944046020508,19.001314163208008 " id="svg_5" stroke-linecap="round" stroke="null"/>
+  <path stroke="null" stroke-width="null" stroke-opacity="null" fill-opacity="null" d="m0.1245,-0.06166l24.88006,-0.00102c-7.67785,0.81997 -2.46803,10.70528 -12.61897,9.94421c-9.199,0.7032 -4.76893,-9.11017 -12.26109,-9.9432l0,0.00001z" id="svg_9"/>
+</svg>
+
     </div>
-  </section>
+    <button class="icon icon--selected"><i class="fas fa-qrcode"></i></button>
+    <button class="icon"><i class="fas fa-list-ul"></i></button>
+    <button class="icon"><i class="fas fa-arrows-alt-h"></i></button>
+    <button class="icon"><i class="fas fa-desktop"></i></button>
+    <button class="icon"><i class="far fa-user"></i></button>
+  </nav>
+</div>
 
 <script>
-  document.addEventListener("DOMContentLoaded", function(event) {
-
-      var iconTabs = document.getElementsByClassName('icon-tab'),
-          iconTabActive;
-
-      for(var i=0;i<iconTabs.length;i++) {
-          (function(iCopy){
-              iconTabs[i].addEventListener('click', function(){
-              	if(iconTabActive) { classie.toggle(iconTabActive, 'active'); }
-                  classie.toggle(this, 'active');
-                  iconTabActive = this;
-              });
-              setTimeout(function(){
-                  iconTabs[iCopy].click();
-              }, iCopy*350);
-          }(i));
-      }
-  });
-
+  ready(() => {
+  function updateSelected(btnElement) {
+  $('.icon').removeClass('icon--selected');
+  const button = $(btnElement);
+  button.addClass('icon--selected');
+  const tip = $('.selected-tip');
+  const tipWidth = tip.width();
+  const buttonCenter = btnElement.offsetLeft + button.width() / 2;
+  tip.css({left: buttonCenter - (tipWidth / 2)})
+}
+$('.icon').click(function() {
+  updateSelected(this);
+});
+updateSelected($('.icon--selected')[0]);
+});
 </script>
