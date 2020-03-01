@@ -36,11 +36,20 @@
             animation: selected .6s forwards;
     z-index: 2;
   }
-
+  nav .selected-tip {
+    width: 30%;
+    height: 70%;
+    position: absolute;
+    top: 0px;
+    -webkit-transition: left .3s;
+    transition: left .3s;
+    z-index: 1;
+  }
 </style>
 
 <div>
   <nav>
+    <div class="selected-tip">
     <button class="icon icon--selected">
       <svg class="svg_info svg_default" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
     </button>
@@ -56,6 +65,7 @@
     <button class="icon">
       <svg class="svg_info svg_default" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
     </button>
+    <div>
   </nav>
 </div>
 
