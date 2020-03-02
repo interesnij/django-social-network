@@ -26,12 +26,34 @@
 
   {% if prev %}
     <script>
-    	$('.prev_item').on('click', function () {$('#item_loader').html('').load("{% url 'user_item' uuid=prev.uuid pk=user.pk %}");});
+      document.querySelector(".prev_item").addEventListener("click", (e) => {
+        loader = document.getElementById("item_loader");
+        var link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+        link_.open( 'GET', '{% url "user_item" uuid=prev.uuid pk=user.pk %}', true );
+        link_.send();
+        link_.onreadystatechange = function () {
+        if ( this.readyState == 4 && this.status == 200 ) {
+          var elem = document.createElement('span');
+          elem.innerHTML = link_.responseText;
+          loader.innerHTML(elem);
+        }
+    });
     </script>
    {% endif %}
 
    {% if next %}
     <script>
-      $('.next_item').on('click', function () { $('#item_loader').html('').load("{% url 'user_item' uuid=next.uuid pk=user.pk %}");});
+      document.querySelector(".prev_item").addEventListener("click", (e) => {
+        loader = document.getElementById("item_loader");
+        var link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+        link_.open( 'GET', '{% url "user_item" uuid=next.uuid pk=user.pk %}', true );
+        link_.send();
+        link_.onreadystatechange = function () {
+        if ( this.readyState == 4 && this.status == 200 ) {
+          var elem = document.createElement('span');
+          elem.innerHTML = link_.responseText;
+          loader.innerHTML(elem);
+        }
+    });
     </script>
     {% endif %}
