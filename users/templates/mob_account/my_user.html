@@ -68,7 +68,6 @@
           <div class="media-body">
               <h6 class="my-0 text-truncated">{{ user.count_connections }} {{ user.count_connections|rupluralize:"друг,друга,друзей" }}</h6>
               <p class="small">{{ online_frends.count }} онлайн</p>
-          </div>
           {% for object in user.get_pop_connection %}
             <figure style="width:50px;" class="avatar-50 staked">
               {% if object.get_avatar %}
@@ -78,6 +77,7 @@
               {% endif %}
             </figure>
           {% endfor %}
+          </div>
         </a>
       </div>
       </div>
