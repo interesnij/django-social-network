@@ -113,33 +113,6 @@ class ItemListView(ListView):
 		items_list = self.user.get_posts().order_by('-created')
 		return items_list
 
-class ItemListView2(View):
-	def get(self, request, *args, **kwargs):
-		from main.models import Item
-
-		context = {}
-		template = None
-		user=User.objects.get(pk=self.kwargs["pk"])
-		try:
-			fixed = Item.objects.get(creator__id=user.pk, is_fixed=True)
-		except:
-			fixed = None
-		template = user.get_template_list_user(folder="lenta/", template="list.html", request=request)
-		items_list = user.get_posts().order_by('-created')
-		current_page = Paginator(items_list, 30)
-		context['request_user'] = request.user
-		context['user'] = user
-		context['object'] = fixed
-		page = request.GET.get('page')
-		try:
-			context['items_list'] = current_page.page(page)
-		except PageNotAnInteger:
-			context['items_list'] = current_page.page(1)
-		except EmptyPage:
-			context['items_list'] = current_page.page(current_page.num_pages)
-
-		return render_to_response(template, context)
-
 
 class AllUsers(ListView):
 	template_name="all_users.html"
