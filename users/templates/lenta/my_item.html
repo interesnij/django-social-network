@@ -23,7 +23,7 @@
   <script>
     function load_item(link) {
       var link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-      link_.open( 'GET', link', true );
+      link_.open( 'GET', link, true );
       link_.send();
       link_.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
