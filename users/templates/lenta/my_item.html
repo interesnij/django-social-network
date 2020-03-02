@@ -18,7 +18,7 @@
 </div>
 {% endif %}
 
-{% if object.article %}
+{% if object.article %} 
 <div class="mb-4 infinite-item" item-id="{{ object.uuid }}" user-id="{{ user.pk }}">
     {% include 'item_user/my_article.html' with article=article  %}
 </div>

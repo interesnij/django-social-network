@@ -14,7 +14,7 @@
 
 {% if object.post %}
 <div class="mb-4 infinite-item" item-id="{{ object.uuid }}" user-id="{{ user.pk }}">
-  {% include 'item_user/post_detail.html' with article=article %}
+  {% include 'item_user/post_detail.html' %}
 </div>
 {% endif %}
 
