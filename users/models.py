@@ -691,7 +691,7 @@ class User(AbstractUser):
         elif self != request.user and request.user.is_authenticated:
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.id)
             template_name = folder + template
-            if self.user.is_closed_profile():
+            if self.is_closed_profile():
                 check_is_connected_with_user_with_id(user=request.user, user_id=self.id)
                 template_name = folder + "frend_" + template
         elif request.user.is_anonymous and not self.is_closed_profile():
@@ -710,7 +710,7 @@ class User(AbstractUser):
         elif self != request.user and request.user.is_authenticated:
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.id)
             template_name = folder + template
-            if self.user.is_closed_profile():
+            if self.is_closed_profile():
                 check_is_connected_with_user_with_id(user=request.user, user_id=self.id)
                 template_name = folder + template
         elif request.user.is_anonymous and not self.is_closed_profile():
