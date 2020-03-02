@@ -138,7 +138,7 @@ class ProfileUserView(TemplateView):
         self.user=User.objects.get(pk=self.kwargs["pk"])
         self.online_frends = self.user.get_pop_online_connection()
         self.communities=Community.get_trending_communities()[0:5]
-        
+
         if self.user == request.user:
             self.template_name = "my_user.html"
             self.online_frends = self.user.get_pop_online_connection()
@@ -165,7 +165,7 @@ class ProfileUserView(TemplateView):
         if is_mobile(request):
             self.template_name = "mob_account/" + self.template_name
         else:
-            self.template_name = "account/" + self.template_name
+            self.template_name = "mob_account/" + self.template_name
 
         return super(ProfileUserView,self).get(request,*args,**kwargs)
 
