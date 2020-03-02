@@ -22,7 +22,7 @@
 
 {% if prev %}
   <script>
-    on('#item_loader', 'click', '.prev_item', function() {
+    on('#ajax', 'click', '.prev_item', function() {
       var link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
       link_.open( 'GET', '{% url "user_item" uuid=prev.uuid pk=user.pk %}', true );
       link_.send();
@@ -38,7 +38,7 @@
 
  {% if next %}
   <script>
-    on('#item_loader', 'click', '.next_item', function() {
+    on('#ajax', 'click', '.next_item', function() {
       var link_2 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
       link_2.open( 'GET', '{% url "user_item" uuid=next.uuid pk=user.pk %}', true );
       link_2.send();
