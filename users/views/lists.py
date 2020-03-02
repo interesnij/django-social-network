@@ -100,7 +100,7 @@ class ItemListView(ListView):
 		except:
 			self.fixed = None
 		self.user=User.objects.get(pk=self.kwargs["pk"])
-		self.template = self.user.get_template_list_user(folder="lenta/", template="list.html", request=request)
+		self.template_name = self.user.get_template_list_user(folder="lenta/", template="list.html", request=request)
 		return super(ItemListView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
