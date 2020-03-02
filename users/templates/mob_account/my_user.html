@@ -10,7 +10,6 @@
 {% endblock %}
 {% block content %}
 
-{{ template_name }}
 <div class="container main-container">
 <div class="row user_page">
     <div class="col-sm-12">
@@ -78,7 +77,7 @@
                 {% endfor %}
                   <div class="media-body">
                     <h6 class="my-0 text-truncated">{{ user.count_connections }} {{ user.count_connections|rupluralize:"друг,друга,друзей" }}</h6>
-                    <p class="small">{{ online_frends.count }} онлайн</p>
+                    <p class="small">{{ user.get_pop_online_connection.count }} онлайн</p>
                   </div>
               </div>
           </div>

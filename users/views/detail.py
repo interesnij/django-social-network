@@ -136,10 +136,8 @@ class ProfileUserView(TemplateView):
         from communities.models import Community
 
         self.user=User.objects.get(pk=self.kwargs["pk"])
-        self.online_frends = self.user.get_pop_online_connection()
         self.communities=Community.get_trending_communities()[0:5]
         self.common_frends = self.user.get_common_friends_of_user(request.user)[0:5]
-
         self.template_name = self.user.get_template_user(folder="account/", template="user.html", request=request)
 
         return super(ProfileUserView,self).get(request,*args,**kwargs)
@@ -149,6 +147,4 @@ class ProfileUserView(TemplateView):
         context['user'] = self.user
         context['communities'] = self.communities
         context['common_frends'] = self.common_frends
-        context['online_frends'] = self.online_frends
-        context['template_name'] = self.template_name
         return context
