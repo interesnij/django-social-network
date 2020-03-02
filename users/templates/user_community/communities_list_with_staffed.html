@@ -1,10 +1,10 @@
 {% load thumbnail liked_user %}
-{% if manage_communities_list %}
+{% if object_list %}
 
 <ul class="list-group" id="communities_manage_container">
-    {% for object in manage_communities_list %}
+    {% for object in object_list %}
     <li class="list-group-item">
-        <div class="media"> 
+        <div class="media">
             <a href="{% url 'community_detail' pk=object.pk %}" class="ajax" data-html="#ajax">
                 <figure>
                   {% if object.get_avatar %}

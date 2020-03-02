@@ -8,27 +8,30 @@ from rest_framework.exceptions import PermissionDenied
 from common.utils import is_mobile
 from main.models import Item
 
+class UserCommunitiesList(ListView):
+	template_name = None
+	model = Item
+	paginate_by = 30
 
-class UserCommunitiesList(View):
-	def get(self, request, *args, **kwargs):
-		from main.models import Item
+	def get(self,request,*args,**kwargs):
 		from communities.models import Community
 
-		context = {}
 		self.user=User.objects.get(uuid=self.kwargs["uuid"])
-		popular_list = Community.get_trending_communities_for_user_with_id(user_id=self.user.pk)
-		template = self.user.get_permission_list_user(folder="user_community/", template="communities_list.html", request=request)
+		self.popular_list = Community.get_trending_communities_for_user_with_id(user_id=self.user.pk)
+		self.template_name = self.user.get_permission_list_user(folder="user_community/", template="communities_list.html", request=request)
 		communities_list = Community.objects.filter(memberships__user__id=self.user.pk)
-		current_page = Paginator(communities_list, 30)
-		page = request.GET.get('page')
+		self.user=User.objects.get(pk=self.kwargs["pk"])
+		self.template_name = self.user.get_template_list_user(folder="lenta/", template="list.html", request=request)
+		return super(UserCommunitiesList,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(UserCommunitiesList,self).get_context_data(**kwargs)
 		context['user'] = self.user
-		try:
-			context['communities_list'] = current_page.page(page)
-		except PageNotAnInteger:
-			context['communities_list'] = current_page.page(1)
-		except EmptyPage:
-			context['communities_list'] = current_page.page(current_page.num_pages)
-		return render_to_response(template, context)
+		return context
+
+	def get_queryset(self):
+		communities_list = Community.objects.filter(memberships__user__id=self.user.pk)
+		return communities_list
 
 
 class UserManageCommunitiesList(View):
