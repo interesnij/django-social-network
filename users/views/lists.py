@@ -101,6 +101,7 @@ class ItemListView(View):
 		except:
 			fixed = None
 		template = user.get_template_list_user(folder="lenta/", template="list.html", request=request)
+		items_list = user.get_posts().order_by('-created')
 		current_page = Paginator(items_list, 30)
 		context['request_user'] = request.user
 		context['user'] = user
