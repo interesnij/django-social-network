@@ -22,7 +22,7 @@
 
   {% if prev %}
     <script>
-      on('#ajax', 'click', '.prev_item', function() {
+      document.querySelector(".prev_item").addEventListener("click", (e) => {
         var link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
         link_.open( 'GET', '{% url "user_item" uuid=prev.uuid pk=user.pk %}', true );
         link_.send();
@@ -36,7 +36,7 @@
 
    {% if next %}
     <script>
-      on('#ajax', 'click', '.next_item', function() {
+      document.querySelector(".next_item").addEventListener("click", (e) => {
         loader = document.getElementById("item_loader");
         var link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
         link_.open( 'GET', '{% url "user_item" uuid=next.uuid pk=user.pk %}', true );
