@@ -9,16 +9,18 @@
 <meta property="og:image" content="{% if user.profile.avatar %}http://xn--b1afgj5al1e.xn--p1acf/{{ user.profile.avatar }}{% else %}/static/images/user.png{% endif %}"/>
 {% endblock %}
 {% block content %}
-<div class="container mt-4 main-container">
+<div class="container main-container">
 <div class="row user_page">
     <div class="col-sm-12">
       <div class="card">
+        <span style="margin:10px">
           <h3 class="mb-0">{{ user.get_full_name }}</h3>
           {% if user.get_online %}
             <i class="text-success">Онлайн</i>
           {% else %}
             <i style="color:#888888">Был(а) {{ user.last_activity|naturaltime }}</i>
           {% endif %}
+        </span>
           <div class="card-body">
               <div class="row align-items-center no-gutters">
                   <a class="col">
@@ -80,6 +82,8 @@
 </div>
 <script>
 ready(() => {
+  updateSelected(icon_5);
+
   var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link.open( 'GET', '/users/detail/list/' + '{{ user.pk }}', true );
   link.onreadystatechange = function () {
