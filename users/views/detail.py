@@ -139,10 +139,10 @@ class ProfileUserView(TemplateView):
 
     def get_context_data(self, **kwargs):
         from communities.models import Community
-        
+
         context = super(ProfileUserView, self).get_context_data(**kwargs)
         context['user'] = self.user
         context['communities'] = Community.get_trending_communities()[0:5]
         if self.request.user.is_authenticated:
-            context['common_frends'] = self.user.get_common_friends_of_user(request.user)[0:5]
+            context['common_frends'] = self.user.get_common_friends_of_user(self.request.user)[0:5]
         return context
