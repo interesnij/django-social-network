@@ -46,6 +46,10 @@
 
 <script>
   ready(() => {
+    icon_2 = document.querySelector(".icon_v2");
+    tip = document.querySelector(".selected-tip");
+    updateSelected(icon_2);
+
     var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     link.open( 'GET', '/users/detail/list/' + '{{ user.pk }}', true );
     link.onreadystatechange = function () {
