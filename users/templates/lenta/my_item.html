@@ -38,12 +38,12 @@
   <script>
     document.querySelector(".next_item").addEventListener("click", (e) => {
       loader = document.getElementById("item_loader");
-      var link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-      link_.open( 'GET', '{% url "user_item" uuid=next.uuid pk=user.pk %}', true );
-      link_.send();
-      link_.onreadystatechange = function () {
+      var link_2 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+      link_2.open( 'GET', '{% url "user_item" uuid=next.uuid pk=user.pk %}', true );
+      link_2.send();
+      link_2.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
-        document.getElementById("item_loader").innerHTML = link_.responseText;
+        document.getElementById("item_loader").innerHTML = link_2.responseText;
       }
   }});
   </script>
