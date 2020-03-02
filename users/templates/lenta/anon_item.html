@@ -40,7 +40,7 @@
 
    {% if next %}
     <script>
-      document.querySelector(".prev_item").addEventListener("click", (e) => {
+      document.querySelector(".next_item").addEventListener("click", (e) => {
         loader = document.getElementById("item_loader");
         var link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
         link_.open( 'GET', '{% url "user_item" uuid=next.uuid pk=user.pk %}', true );
