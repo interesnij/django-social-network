@@ -22,12 +22,15 @@
 
   <script>
     function load_item(link) {
-      var link_{{ user.pk }} = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-      link_{{ user.pk }}.open( 'GET', link, true );
-      link_{{ user.pk }}.send();
-      link_{{ user.pk }}.onreadystatechange = function () {
+      i = 1
+      link = "link_" + i
+      "link_" + i = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+      ("link_" + i).open( 'GET', link, true );
+      ("link_" + i).send();
+      ("link_" + i).onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
-        document.getElementById("item_loader").innerHTML = link_{{ user.pk }}.responseText;
+        document.getElementById("item_loader").innerHTML = ("link_" + i).responseText;
+        i = i + 1;
       }
     }
   };
