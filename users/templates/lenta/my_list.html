@@ -9,13 +9,13 @@
 
 
 <div id="lenta_container">
-  {% if items_list %}
+  {% if object_list %}
     <div class="stream-update">
         <a href=""><span class="new-posts"></span> Загрузить новые записи</a>
     </div>
 
     <span class="stream">
-        {% for object in items_list %}
+        {% for object in object_list %}
 
         {% if object.article %}
         {% include 'item_user/my_article.html' with article=article  %}
