@@ -57,6 +57,7 @@ class UserMusicList(View):
 		context = {}
 		self.user=User.objects.get(uuid=self.kwargs["uuid"])
 		template = self.user.get_permission_list_user(folder="user_music/", template="list.html", request=request)
+		music_list = list(reversed(self.user.get_music()))
 		current_page = Paginator(music_list, 30)
 		page = request.GET.get('page')
 		context['user'] = self.user
