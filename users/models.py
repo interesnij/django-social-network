@@ -677,7 +677,7 @@ class User(AbstractUser):
         elif request_user.is_anonymous and not self.is_closed_profile():
             template_name = "anon_" + template
         MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
-        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+        if MOBILE_AGENT_RE.match(request_user.META['HTTP_USER_AGENT']):
             template_name = "mob_" + folder + template
         else:
             template_name = folder +  template
