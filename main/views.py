@@ -3,10 +3,10 @@ from django.views.generic import ListView
 
 
 class MainPageView(TemplateView):
-	from common.utils import is_mobile
-	
 	template_name=None
 	def get(self,request,*args,**kwargs):
+		from common.utils import is_mobile
+		
 		if request.user.is_authenticated:
 			if is_mobile(request):
 				self.template_name="main/mob_news.html"
