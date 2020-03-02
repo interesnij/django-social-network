@@ -96,6 +96,42 @@
           </div>
           {% endif %}
 
+          {% if communities %}
+          <div class="card mb-4  ">
+            <a href="{% url 'communities' pk=user.pk %}" class="ajax" data-html="#ajax">
+              <div class="card-body py-2">
+                  <div class="media">
+                    {% for object in communities %}
+                      <figure style="width:50px;border-radius:50px;" class="avatar-50 staked">
+                        {% if object.get_avatar %}
+                        <img src="{{ object.get_avatar.file|thumbnail_url:'avatar' }}" style="border-radius:50px;" alt="image">
+                        {% else %}
+                        <img src="/static/images/group.png" style="border-radius:50px;" alt="image">
+                        {% endif %}
+                      </figure>
+                    {% endfor %}
+                      <div class="media-body">
+                        <h6 class="my-0 text-truncated">{{ user.count_community }} {{ user.count_community|rupluralize:"сообщество,сообщества,сообществ" }}</h6>
+                        <p class="small">особых {{ online_frends.count }}</p>
+                      </div>
+                  </div>
+              </div>
+            </a>
+              </div>
+              {% else %}
+              <div class="card mb-4">
+                  <div class="card-header">
+                      <div class="media" style="display: flex;align-items: center;justify-content: center;">
+                          <a href="{% url 'all_users' %}" class="ajax" data-html="#ajax">
+                              <div class="media-body">
+                                  <h4 class="content-color-primary mb-0">Найдите друзей </h4>
+                              </div>
+                          </a>
+                      </div>
+                  </div>
+              </div>
+              {% endif %}
+
 
       {% include 'profile/communities.html' %}
 
