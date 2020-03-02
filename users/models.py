@@ -664,18 +664,18 @@ class User(AbstractUser):
             template_name = "my_" + template
         elif request.user.pk != self.pk and request.user.is_authenticated:
             if request.user.is_blocked_with_user_with_id(user_id=self.pk):
-                template_name = "block_" + template
+                template_name = folder + "block_" + template
             elif self.is_closed_profile():
                 if not request.user.is_connected_with_user_with_id(user_id=self.pk):
-                    template_name = "close_" + template
+                    template_name = folder + "close_" + template
                 else:
-                    template_name = "frend_" + template
+                    template_name = folder + "frend_" + template
             else:
                 template_name = template
         elif request.user.is_anonymous and self.is_closed_profile():
-            template_name = "close_" + template
+            template_name = folder + "close_" + template
         elif request.user.is_anonymous and not self.is_closed_profile():
-            template_name = "anon_" + template
+            template_name = folder + "anon_" + template
 
         MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
