@@ -30,8 +30,8 @@
       if ( this.readyState == 4 && this.status == 200 ) {
         loader = document.getElementById("item_loader");
         loader.innerHTML = link_.responseText;
-      }  
-  }link_ = ""});
+      }
+  }link_ = null});
   </script>
  {% endif %}
 
@@ -46,6 +46,6 @@
         loader = document.getElementById("item_loader");
         loader.innerHTML = link_2.responseText;
       }
-  }link_2 = ""});
+  }link_2 = null});
   </script>
   {% endif %}
