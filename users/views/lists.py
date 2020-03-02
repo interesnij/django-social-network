@@ -1,10 +1,6 @@
 from users.models import User
 from django.views.generic import ListView
-from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.views import View
 from django.shortcuts import render_to_response
-from common.utils import is_mobile
 from main.models import Item
 from communities.models import Community
 
@@ -60,7 +56,6 @@ class UserManageCommunitiesList(ListView):
 
 class UserMusicList(ListView):
 	template_name = None
-	model = Community
 	paginate_by = 30
 
 	def get(self,request,*args,**kwargs):
@@ -77,25 +72,26 @@ class UserMusicList(ListView):
 		music_list = list(reversed(self.user.get_music()))
 		return music_list
 
+class AllPossibleUsersList(ListView):
+	template_name = "possible_list.html"
+	model = User
+	paginate_by = 30
 
-class AllPossibleUsersList(View):
-	def get(self, request, *args, **kwargs):
-		context = {}
-		if request.user.is_authenticated:
+	def get(self,request,*args,**kwargs):
+		self.user = User.objects.get(uuid=self.kwargs["uuid"])
+		return super(AllPossibleUsersList,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(AllPossibleUsersList,self).get_context_data(**kwargs)
+		context['user'] = self.user
+		return context
+
+	def get_queryset(self):
+		if self.request.user.is_authenticated:
 			possible_list = request.user.get_possible_friends()
-			current_page = Paginator(possible_list, 30)
-			page = request.GET.get('page')
 		else:
 			possible_list = None
-		context['request_user'] = request.user
-
-		try:
-			context['possible_list'] = current_page.page(page)
-		except PageNotAnInteger:
-			context['possible_list'] = current_page.page(1)
-		except EmptyPage:
-			context['possible_list'] = current_page.page(current_page.num_pages)
-		return render_to_response('possible_list.html', context)
+		return possible_list
 
 class ItemListView(ListView):
 	template_name = None
