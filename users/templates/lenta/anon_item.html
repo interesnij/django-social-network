@@ -27,7 +27,6 @@
   {% if prev %}
     <script>
       document.querySelector(".prev_item").addEventListener("click", (e) => {
-        loader = document.getElementById("item_loader");
         var link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
         link_.open( 'GET', '{% url "user_item" uuid=prev.uuid pk=user.pk %}', true );
         link_.send();
@@ -35,7 +34,7 @@
         if ( this.readyState == 4 && this.status == 200 ) {
           var elem = document.createElement('span');
           elem.innerHTML = link_.responseText;
-          loader.append(elem);
+          document.getElementById("item_loader").append(elem);
         }
     }});
     </script>
@@ -52,7 +51,7 @@
         if ( this.readyState == 4 && this.status == 200 ) {
           var elem = document.createElement('span');
           elem.innerHTML = link_.responseText;
-          loader.append(elem);
+          document.getElementById("item_loader").append(elem);
         }
     }});
     </script>
