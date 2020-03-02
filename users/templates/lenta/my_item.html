@@ -29,7 +29,8 @@
       link_.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
         loader = document.getElementById("item_loader");
-        loader.innerHTML = link_.responseText;
+        loader.innerHTML = "";
+        loader.innerHTML = link_.responseText
         delete link_
       }
   }});
@@ -45,6 +46,7 @@
       link_2.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
         loader = document.getElementById("item_loader");
+        loader.innerHTML = "";
         loader.innerHTML = link_2.responseText;
         delete link_2
       }
