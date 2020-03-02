@@ -92,7 +92,7 @@ class AllPossibleUsersList(View):
 class ItemListView(ListView):
 	template_name = None
 	model = Item
-	paginate_by = 2
+	paginate_by = 30
 
 	def get(self,request,*args,**kwargs):
 		try:

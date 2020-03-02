@@ -705,6 +705,8 @@ class User(AbstractUser):
         return template_name
 
     def get_permission_list_user(self, folder, template, request):
+        import re
+        
         if self.pk == request.user.pk:
             template_name = folder + "my_" + template
         elif self != request.user and request.user.is_authenticated:
