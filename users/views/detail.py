@@ -138,34 +138,9 @@ class ProfileUserView(TemplateView):
         self.user=User.objects.get(pk=self.kwargs["pk"])
         self.online_frends = self.user.get_pop_online_connection()
         self.communities=Community.get_trending_communities()[0:5]
+        self.common_frends = self.user.get_common_friends_of_user(request.user)[0:5]
 
-        if self.user == request.user:
-            self.template_name = "my_user.html"
-            self.online_frends = self.user.get_pop_online_connection()
-
-        elif request.user != self.user and request.user.is_authenticated:
-            if request.user.is_blocked_with_user_with_id(user_id=self.user.id):
-                self.template_name = "request_user_block.html"
-            elif self.user.is_closed_profile():
-                if not request.user.is_connected_with_user_with_id(user_id=self.user.id):
-                    self.template_name = "close_user.html"
-                else:
-                    self.template_name = "frend.html"
-                    self.common_frends = self.user.get_common_friends_of_user(request.user)[0:5]
-            else:
-                self.template_name = "user.html"
-                self.common_frends = self.user.get_common_friends_of_user(request.user)[0:5]
-
-        elif request.user.is_anonymous and self.user.is_closed_profile():
-            self.template_name = "close_user.html"
-
-        elif request.user.is_anonymous and not self.user.is_closed_profile():
-            self.template_name = "anon_open_user.html"
-
-        if is_mobile(request):
-            self.template_name = "mob_account/" + self.template_name
-        else:
-            self.template_name = "mob_account/" + self.template_name
+        self.template_name = self.user.get_template_user(request_user=request_user, folder=account, template="user.html", request=request)
 
         return super(ProfileUserView,self).get(request,*args,**kwargs)
 
