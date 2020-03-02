@@ -30,16 +30,11 @@
         document.getElementById("item_loader").innerHTML = link_.responseText;
       }
     }
-  }
-{% if prev %}
+  };
     document.querySelector(".prev_item").addEventListener("click", (e) => {
       load_item('/users/detail/item/' + {{ user.pk }} + '/' + '{{ prev.uuid }}' + '/')
-    })
-{% endif %}
-
-{% if next %}
+    });
   document.querySelector(".next_item").addEventListener("click", (e) => {
   load_item('/users/detail/item/' + {{ user.pk }} + '/' + '{{ next.uuid }}' + '/')
   })
-{% endif %}
   </script>
