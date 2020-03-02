@@ -150,4 +150,5 @@ class ProfileUserView(TemplateView):
         context['communities'] = self.communities
         context['common_frends'] = self.common_frends
         context['online_frends'] = self.online_frends
+        context['template_name'] = self.template_name
         return context
