@@ -110,7 +110,7 @@ class ItemListView(ListView):
 		return context
 
 	def get_queryset(self):
-		items_list = user.get_posts().order_by('-created')
+		items_list = self.user.get_posts().order_by('-created')
 		return items_list
 
 class ItemListView2(View):
