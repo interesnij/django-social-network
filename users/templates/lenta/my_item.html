@@ -33,13 +33,13 @@
   }
 {% if prev %}
     document.querySelector(".prev_item").addEventListener("click", (e) => {
-      load_item({% url "user_item" uuid=prev.uuid pk=user.pk %})
+      load_item('/users/item/' + user.pk + '/' + prev.uuid + '/')
     })
 {% endif %}
 
 {% if next %}
   document.querySelector(".next_item").addEventListener("click", (e) => {
-  load_item({% url "user_item" uuid=next.uuid pk=user.pk %})
+  load_item('/users/item/' + user.pk + '/' + next.uuid + '/')
   })
 {% endif %}
   </script>
