@@ -1,12 +1,12 @@
 
 <span class="text-hide-xs">
   {% if prev %}
-    <span id="prev_item">
+    <span class="prev_item">
       <svg class="svg_default" style="width:50px;height:50px;" fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/><path fill="none" d="M0 0h24v24H0V0z"/></svg>
     </span>
   {% endif %}
   {% if next %}
-    <span id="next_item">
+    <span class="next_item">
       <svg class="svg_default" style="width:50px;height:50px;" fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"/><path fill="none" d="M0 0h24v24H0V0z"/></svg>
     </span>
   {% endif %}
@@ -22,15 +22,13 @@
 
 {% if prev %}
   <script>
-    on('#ajax', 'click', '#prev_item', function() {
+    document.querySelector(".prev_item").addEventListener("click", (e) => {
       var link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
       link_.open( 'GET', '{% url "user_item" uuid=prev.uuid pk=user.pk %}', true );
       link_.send();
       link_.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
-        loader = document.getElementById("item_loader");
-        loader.innerHTML = "";
-        loader.innerHTML = link_.responseText
+        document.getElementById("item_loader").innerHTML = link_.responseText;
       }
   }});
   </script>
@@ -38,15 +36,14 @@
 
  {% if next %}
   <script>
-    on('#ajax', 'click', '#next_item', function() {
-      var link_2 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-      link_2.open( 'GET', '{% url "user_item" uuid=next.uuid pk=user.pk %}', true );
-      link_2.send();
-      link_2.onreadystatechange = function () {
+    document.querySelector(".next_item").addEventListener("click", (e) => {
+      loader = document.getElementById("item_loader");
+      var link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+      link_.open( 'GET', '{% url "user_item" uuid=next.uuid pk=user.pk %}', true );
+      link_.send();
+      link_.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
-        loader = document.getElementById("item_loader");
-        loader.innerHTML = "";
-        loader.innerHTML = link_2.responseText;
+        document.getElementById("item_loader").innerHTML = link_.responseText;
       }
   }});
   </script>
