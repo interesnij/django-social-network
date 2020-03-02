@@ -62,16 +62,6 @@
       </div>
       {% if user.get_pop_connection %}
       <div class="card mb-4  ">
-          <div class="card-header">
-              <div class="media">
-                  <div class="icon-circle icon-30 bg-light-danger mr-3">
-                      <i class="material-icons">notifications</i>
-                  </div>
-                  <div class="media-body">
-                      <h5 class="mt-1">Reminder</h5>
-                  </div>
-              </div>
-          </div>
           <div class="card-body py-2">
               <div class="media">
                 {% for object in user.get_pop_connection %}
