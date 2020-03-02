@@ -658,14 +658,14 @@ class User(AbstractUser):
         return connection
 
     def get_template_user(self, request_user, folder, template, request):
-        from common.utils import is_mobile
+        import re
 
         if self.pk == request_user.pk:
             template_name = "my_" + template
         elif request_user.pk != self.pk and request_user.is_authenticated:
             if request_user.is_blocked_with_user_with_id(user_id=self.pk):
                 template_name = "block_" + template
-            elif self.is_closed_profile(): 
+            elif self.is_closed_profile():
                 if not request_user.is_connected_with_user_with_id(user_id=self.pk):
                     template_name = "close_" + template
                 else:
@@ -676,12 +676,12 @@ class User(AbstractUser):
             template_name = "close_" + template
         elif request_user.is_anonymous and not self.is_closed_profile():
             template_name = "anon_" + template
-        if is_mobile(request):
+        MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             template_name = "mob_" + folder + template
         else:
             template_name = folder +  template
         return template_name
-
 
 
 
