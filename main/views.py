@@ -1,9 +1,10 @@
 from django.views.generic.base import TemplateView
 from django.views.generic import ListView
-from common.utils import is_mobile
 
 
 class MainPageView(TemplateView):
+	from common.utils import is_mobile
+	
 	template_name=None
 	def get(self,request,*args,**kwargs):
 		if request.user.is_authenticated:
