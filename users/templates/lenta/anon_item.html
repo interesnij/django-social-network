@@ -34,7 +34,7 @@
         if ( this.readyState == 4 && this.status == 200 ) {
           var elem = document.createElement('span');
           elem.innerHTML = link_.responseText;
-          document.getElementById("item_loader").append(elem);
+          document.getElementById("item_loader").innerHTML = "";document.getElementById("item_loader").append(elem);
         }
     }});
     </script>
@@ -51,7 +51,7 @@
         if ( this.readyState == 4 && this.status == 200 ) {
           var elem = document.createElement('span');
           elem.innerHTML = link_.responseText;
-          document.getElementById("item_loader").append(elem);
+          document.getElementById("item_loader").innerHTML = "";document.getElementById("item_loader").append(elem);
         }
     }});
     </script>
