@@ -39,10 +39,10 @@
            {% endblock %}
 
            {% include "base_block/fullscreens.html" %}
+           {% include "base_block/mobile_nav.html" %}
 				</div>
         {% if request.user.is_authenticated %}
          {% include "base_block/mobile_tab.html" %}
-         {% include "base_block/mobile_nav.html" %}
         {% endif %}
     </div>
     {% include "base_block/modal_user_repost.html" %}
