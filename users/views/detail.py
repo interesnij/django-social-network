@@ -79,8 +79,6 @@ class UserCommunities(TemplateView):
         context['popular_list'] = self.popular_list
         return context
 
-
-
 class UserMusic(TemplateView):
     template_name = None
 
