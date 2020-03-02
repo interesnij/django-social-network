@@ -4,9 +4,10 @@ from common.checkers import check_is_not_blocked_with_user_with_id, check_is_con
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views import View
 from django.shortcuts import render_to_response
-from rest_framework.exceptions import PermissionDenied
 from common.utils import is_mobile
 from main.models import Item
+from communities.models import Community
+
 
 class UserCommunitiesList(ListView):
 	template_name = None
@@ -14,8 +15,6 @@ class UserCommunitiesList(ListView):
 	paginate_by = 30
 
 	def get(self,request,*args,**kwargs):
-		from communities.models import Community
-
 		self.user=User.objects.get(uuid=self.kwargs["uuid"])
 		self.popular_list = Community.get_trending_communities_for_user_with_id(user_id=self.user.pk)
 		self.template_name = self.user.get_permission_list_user(folder="user_community/", template="communities_list.html", request=request)
@@ -32,7 +31,7 @@ class UserCommunitiesList(ListView):
 	def get_queryset(self):
 		communities_list = Community.objects.filter(memberships__user__id=self.user.pk)
 		return communities_list
-		
+
 
 class UserManageCommunitiesList(View):
 	def get(self, request, *args, **kwargs):
