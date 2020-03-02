@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% load liked_user %}
+{% block title %}Сообщества {{ user.first_name|gent }} {{ user.last_name|gent }}{% endblock %}
+{% block content %}
+
+<div class="row">
+    <div class="col-12 col-md-8">
+        <br>
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Поиск сообществ" aria-label="Recipient's username">
+            <div class="input-group-append">
+                <button class="btn btn-outline-link" type="button">Искать</button>
+            </div>
+        </div>
+
+        <div class="card mb-2">
+            <div class="card-header">
+                <div class="media">
+                    <div class="media-body"><h5 class="mt-1">Сообщества {{ user.first_name|gent }} {{ user.last_name|gent }}</h5></div>
+                </div>
+            </div>
+
+            <div class="card-body px-0 py-0">
+                <span id="load_cat_list"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-4">
+        <br>
+        <div class="card mb-2">
+            <div class="card-header">
+                <div class="media">
+                    <div class="media-body"><h5 class="mt-1"><a href="{% url 'all_communities' %}" data-html="#ajax" class="ajax">Все группы</a></h5></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+  ready(() => {
+    var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    link.open( 'GET', '/users/detail/communities/{{ user.uuid }}', true );
+    link.onreadystatechange = function () {
+      if ( link.readyState == 4 ) {
+          if ( link.status == 200 ) {
+              var load_cat_list = document.getElementById("load_cat_list");
+              load_cat_list.innerHTML = link.responseText;
+          }
+      }
+  };
+  link.send( null );
+  });
+
+  var page = 2;
+  var loaded = false;
+  onscroll = function(){
+    try{
+    var items = document.getElementById("communities_container");
+
+    if(items.getElementsByClassName('list-group-item').length === (page-1)*30){
+    var height = document.documentElement.clientHeight-1;
+    if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
+      if (loaded){return};
+      var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+      link_3.open( 'GET', '/users/detail/communities/{{ user.uuid }}/?page=' + page++, true );
+      link_3.send();
+      link_3.onreadystatechange = function () {
+      if ( this.readyState == 4 && this.status == 200 ) {
+        var elem = document.createElement('span');
+        elem.innerHTML = link_3.responseText;
+        if(elem.getElementsByClassName('list-group-item').length < 30){loaded = true;};
+        items.append(elem);
+        }
+      }
+    }}
+  }catch{return}
+  }
+</script>
+{% endblock %}
