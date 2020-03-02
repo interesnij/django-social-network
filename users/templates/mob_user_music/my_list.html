@@ -1,10 +1,10 @@
 {% load get_key %}
 
-{% if music_list %}
+{% if object_list %}
 
 <div class="user_playlist" id="tracks_container">
     <ul style="display: contents;" data-pk="{{ user.pk }}" class="ul_track_list">
-      {% for object in music_list %}
+      {% for object in object_list %}
       <li class="list-group-item infinite-item id_{{ object.id }}" data-counter="{{ forloop.counter0 }}">
           <div class="media">
               <figure class="track_item" style="cursor:pointer">
