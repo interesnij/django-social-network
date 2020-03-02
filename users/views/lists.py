@@ -32,6 +32,7 @@ class UserCommunitiesList(ListView):
 		communities_list = Community.objects.filter(memberships__user__id=self.user.pk)
 		return communities_list
 
+
 class UserManageCommunitiesList(ListView):
 	template_name = None
 	model = Community
@@ -57,23 +58,24 @@ class UserManageCommunitiesList(ListView):
 		return manage_communities_list
 
 
-class UserMusicList(View):
-	def get(self, request, *args, **kwargs):
-		context = {}
-		self.user=User.objects.get(uuid=self.kwargs["uuid"])
-		template = self.user.get_permission_list_user(folder="user_music/", template="list.html", request=request)
-		music_list = list(reversed(self.user.get_music()))
-		current_page = Paginator(music_list, 30)
-		page = request.GET.get('page')
+class UserMusicList(ListView):
+	template_name = None
+	model = Community
+	paginate_by = 30
+
+	def get(self,request,*args,**kwargs):
+		self.user = User.objects.get(uuid=self.kwargs["uuid"])
+		self.template_name = self.user.get_permission_list_user(folder="user_music/", template="list.html", request=request)
+		return super(UserMusicList,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(UserMusicList,self).get_context_data(**kwargs)
 		context['user'] = self.user
-		context['request_user'] = request.user
-		try:
-			context['music_list'] = current_page.page(page)
-		except PageNotAnInteger:
-			context['music_list'] = current_page.page(1)
-		except EmptyPage:
-			context['music_list'] = current_page.page(current_page.num_pages)
-		return render_to_response(template, context)
+		return context
+
+	def get_queryset(self):
+		music_list = list(reversed(self.user.get_music()))
+		return music_list
 
 
 class AllPossibleUsersList(View):
