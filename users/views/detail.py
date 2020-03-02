@@ -130,14 +130,12 @@ class UserMusic(TemplateView):
 class ProfileUserView(TemplateView):
     template_name = None
     common_frends = None
-    mobile = False
 
     def get(self,request,*args,**kwargs):
         from communities.models import Community
 
         self.user=User.objects.get(pk=self.kwargs["pk"])
         self.communities=Community.get_trending_communities()[0:5]
-        self.common_frends = self.user.get_common_friends_of_user(request.user)[0:5]
         self.template_name = self.user.get_template_user(folder="account/", template="user.html", request=request)
 
         return super(ProfileUserView,self).get(request,*args,**kwargs)
@@ -146,5 +144,6 @@ class ProfileUserView(TemplateView):
         context = super(ProfileUserView, self).get_context_data(**kwargs)
         context['user'] = self.user
         context['communities'] = self.communities
-        context['common_frends'] = self.common_frends
+        if self.request.user.is_authenticated:
+            context['common_frends'] = self.user.get_common_friends_of_user(request.user)[0:5]
         return context
