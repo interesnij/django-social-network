@@ -132,18 +132,17 @@ class ProfileUserView(TemplateView):
     common_frends = None
 
     def get(self,request,*args,**kwargs):
-        from communities.models import Community
-
         self.user=User.objects.get(pk=self.kwargs["pk"])
-        self.communities=Community.get_trending_communities()[0:5]
         self.template_name = self.user.get_template_user(folder="account/", template="user.html", request=request)
 
         return super(ProfileUserView,self).get(request,*args,**kwargs)
 
     def get_context_data(self, **kwargs):
+        from communities.models import Community
+        
         context = super(ProfileUserView, self).get_context_data(**kwargs)
         context['user'] = self.user
-        context['communities'] = self.communities
+        context['communities'] = Community.get_trending_communities()[0:5]
         if self.request.user.is_authenticated:
             context['common_frends'] = self.user.get_common_friends_of_user(request.user)[0:5]
         return context
