@@ -140,7 +140,7 @@ class ProfileUserView(TemplateView):
         self.communities=Community.get_trending_communities()[0:5]
         self.common_frends = self.user.get_common_friends_of_user(request.user)[0:5]
 
-        self.template_name = self.user.get_template_user(request_user=request.user, folder="account/", template="user.html", request=request)
+        self.template_name = self.user.get_template_user(request_user=request.user, folder="account/", template="user.html", req=request)
 
         return super(ProfileUserView,self).get(request,*args,**kwargs)
 

@@ -657,7 +657,7 @@ class User(AbstractUser):
         connection = User.objects.filter(query)
         return connection
 
-    def get_template_user(self, request_user, folder, template, request):
+    def get_template_user(self, request_user, folder, template, req):
         import re
 
         if self.pk == request_user.pk:
@@ -676,7 +676,7 @@ class User(AbstractUser):
             template_name = "close_" + template
         elif request_user.is_anonymous and not self.is_closed_profile():
             template_name = "anon_" + template
-        req = request
+
         MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
         if MOBILE_AGENT_RE.match(req.META['HTTP_USER_AGENT']):
             template_name = "mob_" + folder + template
