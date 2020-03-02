@@ -61,40 +61,49 @@
           </div>
       </div>
       {% if user.get_pop_connection %}
-      <div class="card mb-4">
-      <div class="card-body py-2">
-      <div class="media">
-        <a href="{% url 'frends' pk=user.pk %}" class="ajax" data-html="#ajax">
-          <div class="media-body">
-              <h6 class="my-0 text-truncated">{{ user.count_connections }} {{ user.count_connections|rupluralize:"друг,друга,друзей" }}</h6>
-              <p class="small">{{ online_frends.count }} онлайн</p>
-          {% for object in user.get_pop_connection %}
-            <figure style="width:50px;" class="avatar-50 staked">
-              {% if object.get_avatar %}
-              <img src="{{ object.get_avatar.file|thumbnail_url:'avatar' }}" style="border-radius:50px;" alt="image">
-              {% else %}
-              <svg fill="currentColor" class="svg_default svg_default_50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
-              {% endif %}
-            </figure>
-          {% endfor %}
-          </div>
-        </a>
-      </div>
-      </div>
-      </div>
-      {% else %}
-      <div class="card mb-4">
+      <div class="card mb-4  ">
           <div class="card-header">
-              <div class="media" style="display: flex;align-items: center;justify-content: center;">
-                  <a href="{% url 'all_users' %}" class="ajax" data-html="#ajax">
-                      <div class="media-body">
-                          <h4 class="content-color-primary mb-0">Найдите друзей </h4>
-                      </div>
-                  </a>
+              <div class="media">
+                  <div class="icon-circle icon-30 bg-light-danger mr-3">
+                      <i class="material-icons">notifications</i>
+                  </div>
+                  <div class="media-body">
+                      <h5 class="mt-1">Reminder</h5>
+                  </div>
               </div>
           </div>
-      </div>
-      {% endif %}
+          <div class="card-body py-2">
+              <div class="media">
+                {% for object in user.get_pop_connection %}
+                  <figure style="width:50px;" class="avatar-50 staked">
+                    {% if object.get_avatar %}
+                    <img src="{{ object.get_avatar.file|thumbnail_url:'avatar' }}" style="border-radius:50px;" alt="image">
+                    {% else %}
+                    <svg fill="currentColor" class="svg_default svg_default_50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+                    {% endif %}
+                  </figure>
+                {% endfor %}
+                  <div class="media-body">
+                    <h6 class="my-0 text-truncated">{{ user.count_connections }} {{ user.count_connections|rupluralize:"друг,друга,друзей" }}</h6>
+                    <p class="small">{{ online_frends.count }} онлайн</p>
+                  </div>
+              </div>
+          </div>
+          </div>
+          {% else %}
+          <div class="card mb-4">
+              <div class="card-header">
+                  <div class="media" style="display: flex;align-items: center;justify-content: center;">
+                      <a href="{% url 'all_users' %}" class="ajax" data-html="#ajax">
+                          <div class="media-body">
+                              <h4 class="content-color-primary mb-0">Найдите друзей </h4>
+                          </div>
+                      </a>
+                  </div>
+              </div>
+          </div>
+          {% endif %}
+
 
       {% include 'profile/communities.html' %}
 
