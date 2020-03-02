@@ -100,7 +100,7 @@ class ItemListView(View):
 			fixed = Item.objects.get(creator__id=user.pk, is_fixed=True)
 		except:
 			fixed = None
-		template = self.user.get_template_list_user(folder="lenta/", template="list.html", request=request)
+		template = user.get_template_list_user(folder="lenta/", template="list.html", request=request)
 		current_page = Paginator(items_list, 30)
 		context['request_user'] = request.user
 		context['user'] = user
