@@ -11,7 +11,7 @@ class UserItemView(TemplateView):
 
     def get(self,request,*args,**kwargs):
         from main.models import Item
-        
+
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.item = Item.objects.get(uuid=self.kwargs["uuid"])
         self.item.views += 1
@@ -161,6 +161,8 @@ class ProfileUserView(TemplateView):
 
         self.online_frends = self.user.get_pop_online_connection()
         self.communities=Community.get_trending_communities()[0:5]
+        if is_mobile(request):
+            self.template_name = "mob/" + self.template_name
 
         return super(ProfileUserView,self).get(request,*args,**kwargs)
 
