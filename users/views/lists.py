@@ -20,7 +20,7 @@ class UserCommunitiesList(ListView):
 		self.template_name = self.user.get_permission_list_user(folder="user_community/", template="communities_list.html", request=request)
 		communities_list = Community.objects.filter(memberships__user__id=self.user.pk)
 		self.user=User.objects.get(uuid=self.kwargs["uuid"])
-		self.template_name = self.user.get_template_list_user(folder="lenta/", template="list.html", request=request)
+		self.template_name = self.user.get_template_list_user(folder="user_community/", template="list.html", request=request)
 		return super(UserCommunitiesList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
