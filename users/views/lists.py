@@ -20,7 +20,7 @@ class UserCommunitiesList(ListView):
 		self.popular_list = Community.get_trending_communities_for_user_with_id(user_id=self.user.pk)
 		self.template_name = self.user.get_permission_list_user(folder="user_community/", template="communities_list.html", request=request)
 		communities_list = Community.objects.filter(memberships__user__id=self.user.pk)
-		self.user=User.objects.get(pk=self.kwargs["pk"])
+		self.user=User.objects.get(uuid=self.kwargs["uuid"])
 		self.template_name = self.user.get_template_list_user(folder="lenta/", template="list.html", request=request)
 		return super(UserCommunitiesList,self).get(request,*args,**kwargs)
 
@@ -32,7 +32,7 @@ class UserCommunitiesList(ListView):
 	def get_queryset(self):
 		communities_list = Community.objects.filter(memberships__user__id=self.user.pk)
 		return communities_list
-
+		
 
 class UserManageCommunitiesList(View):
 	def get(self, request, *args, **kwargs):
