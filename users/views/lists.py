@@ -11,7 +11,7 @@ from communities.models import Community
 
 class UserCommunitiesList(ListView):
 	template_name = None
-	model = Item
+	model = Community
 	paginate_by = 30
 
 	def get(self,request,*args,**kwargs):
@@ -32,26 +32,29 @@ class UserCommunitiesList(ListView):
 		communities_list = Community.objects.filter(memberships__user__id=self.user.pk)
 		return communities_list
 
+class UserManageCommunitiesList(ListView):
+	template_name = None
+	model = Community
+	paginate_by = 30
 
-class UserManageCommunitiesList(View):
-	def get(self, request, *args, **kwargs):
-		context = {}
-		template = "user_community/communities_list_with_staffed.html"
+	def get(self,request,*args,**kwargs):
 		self.user=User.objects.get(uuid=self.kwargs["uuid"])
 		if self.user ==request.user:
-			manage_communities_list = self.user.get_staffed_communities()
+			template_name = "user_community/communities_list_with_staffed.html"
 		else:
-			manage_communities_list = ""
-		current_page = Paginator(manage_communities_list, 30)
-		page = request.GET.get('page')
+			template_name = "main/auth.html"
+		communities_list = Community.objects.filter(memberships__user__id=self.user.pk)
+		self.user=User.objects.get(uuid=self.kwargs["uuid"])
+		return super(UserManageCommunitiesList,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(UserManageCommunitiesList,self).get_context_data(**kwargs)
 		context['user'] = self.user
-		try:
-			context['manage_communities_list'] = current_page.page(page)
-		except PageNotAnInteger:
-			context['manage_communities_list'] = current_page.page(1)
-		except EmptyPage:
-			context['manage_communities_list'] = current_page.page(current_page.num_pages)
-		return render_to_response(template, context)
+		return context
+
+	def get_queryset(self):
+		manage_communities_list = self.user.get_staffed_communities()
+		return manage_communities_list
 
 
 class UserMusicList(View):
