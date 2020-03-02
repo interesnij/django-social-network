@@ -30,8 +30,9 @@
       if ( this.readyState == 4 && this.status == 200 ) {
         loader = document.getElementById("item_loader");
         loader.innerHTML = link_.responseText;
+        delete link_
       }
-  }delete link_});
+  }});
   </script>
  {% endif %}
 
@@ -45,7 +46,8 @@
       if ( this.readyState == 4 && this.status == 200 ) {
         loader = document.getElementById("item_loader");
         loader.innerHTML = link_2.responseText;
+        delete link_2
       }
-  }delete link_2});
+  }});
   </script>
   {% endif %}
