@@ -39,7 +39,7 @@
 
 {% if next %}
   document.querySelector(".next_item").addEventListener("click", (e) => {
-  load_item('/users/item/' + user.pk + '/' + next.uuid + '/')
+  load_item('/users/item/' + {{ user.pk }} + '/' + '{{ next.uuid }}' + '/')
   })
 {% endif %}
   </script>
