@@ -2,7 +2,6 @@ from django.views.generic.base import TemplateView
 from users.models import User
 from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
 from django.shortcuts import render_to_response
-from rest_framework.exceptions import PermissionDenied
 from common.utils import is_mobile
 
 
@@ -11,25 +10,13 @@ class UserItemView(TemplateView):
 
     def get(self,request,*args,**kwargs):
         from main.models import Item
-
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.item = Item.objects.get(uuid=self.kwargs["uuid"])
         self.item.views += 1
         self.item.save()
-        self.template_name = "lenta/user_item.html"
 
-        if self.user != request.user and request.user.is_authenticated:
-            check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
-            if self.user.is_closed_profile():
-                check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
-            self.items = self.user.get_posts()
-        elif request.user.is_anonymous and self.user.is_closed_profile():
-            raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
-        elif self.user == request.user and request.user.is_authenticated:
-            self.template_name = "lenta/my_item.html"
-            self.items = self.user.get_posts()
-        elif not self.user.is_closed_profile() and request.user.is_anonymous:
-            self.items = self.user.get_posts()
+        self.items = self.user.get_posts()
+        self.template_name = self.user.get_template_list_user(folder="lenta/", template="item.html", request=request)
         self.next = self.items.filter(pk__gt=self.item.pk).order_by('pk').first()
         self.prev = self.items.filter(pk__lt=self.item.pk).order_by('-pk').first()
         return super(UserItemView,self).get(request,*args,**kwargs)

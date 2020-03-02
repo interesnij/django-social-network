@@ -6,6 +6,7 @@ from django.conf import settings
 from django.contrib.contenttypes.fields import GenericRelation
 from common.checkers import *
 from django.db.models import Q
+from rest_framework.exceptions import PermissionDenied
 
 
 class User(AbstractUser):
@@ -682,7 +683,45 @@ class User(AbstractUser):
             template_name = "mob_" + template_name
         return template_name
 
+    def get_template_list_user(self, folder, template, request):
+        import re
 
+        if self.pk == request.user.pk:
+            template_name = folder + "my_" + template
+        elif self != request.user and request.user.is_authenticated:
+            check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.id)
+            template_name = folder + template
+            if self.user.is_closed_profile():
+                check_is_connected_with_user_with_id(user=request.user, user_id=self.id)
+                template_name = folder + "frend_" + template
+        elif request.user.is_anonymous and not self.is_closed_profile():
+            template_name = folder + "anon_" + template
+        elif request.user.is_anonymous and self.is_closed_profile():
+            raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
+
+        MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+            template_name = "mob_" + template_name
+        return template_name
+
+    def get_permission_list_user(self, folder, template, request):
+        if self.pk == request.user.pk:
+            template_name = folder + "my_" + template
+        elif self != request.user and request.user.is_authenticated:
+            check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.id)
+            template_name = folder + template
+            if self.user.is_closed_profile():
+                check_is_connected_with_user_with_id(user=request.user, user_id=self.id)
+                template_name = folder + template
+        elif request.user.is_anonymous and not self.is_closed_profile():
+            template_name = folder + template
+        elif request.user.is_anonymous and self.is_closed_profile():
+            raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
+
+        MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+            template_name = "mob_" + template_name
+        return template_name
 
     def unfavorite_community_with_name(self, community_name):
         from communities.models import Community

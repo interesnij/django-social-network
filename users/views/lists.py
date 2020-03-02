@@ -14,24 +14,10 @@ class UserCommunitiesList(View):
 		from communities.models import Community
 
 		context = {}
-		template = None
 		self.user=User.objects.get(uuid=self.kwargs["uuid"])
 		popular_list = Community.get_trending_communities_for_user_with_id(user_id=self.user.pk)
-		if self.user != request.user and request.user.is_authenticated:
-			check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
-			if self.user.is_closed_profile():
-				check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
-			communities_list = Community.objects.filter(memberships__user__id=self.user.pk)
-			template = 'user_community/communities_list.html'
-		elif request.user.is_anonymous and self.user.is_closed_profile():
-			raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
-		elif request.user.is_anonymous and not self.user.is_closed_profile():
-			communities_list = Community.objects.filter(memberships__user__id=self.user.pk).order_by('-created')
-			template = 'user_community/communities_list.html'
-		elif self.user == request.user:
-			communities_list = Community.objects.filter(memberships__user__id=self.user.pk)
-			template = 'user_community/communities_list.html'
-
+		template = self.user.get_permission_list_user(folder="user_community/", template="communities_list.html", request=request)
+		communities_list = Community.objects.filter(memberships__user__id=self.user.pk)
 		current_page = Paginator(communities_list, 30)
 		page = request.GET.get('page')
 		context['user'] = self.user
@@ -68,22 +54,8 @@ class UserManageCommunitiesList(View):
 class UserMusicList(View):
 	def get(self, request, *args, **kwargs):
 		context = {}
-		template = None
 		self.user=User.objects.get(uuid=self.kwargs["uuid"])
-		if self.user != request.user and request.user.is_authenticated:
-			check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
-			if self.user.is_closed_profile():
-				check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
-			music_list = list(reversed(self.user.get_music()))
-			template = 'user_music/music_list.html'
-		elif request.user.is_anonymous and self.user.is_closed_profile():
-			raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
-		elif request.user.is_anonymous and not self.user.is_closed_profile():
-			music_list = list(reversed(self.user.get_music()))
-			template = 'user_music/music_list.html'
-		elif self.user == request.user:
-			music_list = list(reversed(self.user.get_my_music()))
-			template = 'user_music/my_music_list.html'
+		template = self.user.get_permission_list_user(folder="user_music/", template="list.html", request=request)
 		current_page = Paginator(music_list, 30)
 		page = request.GET.get('page')
 		context['user'] = self.user
@@ -120,7 +92,7 @@ class AllPossibleUsersList(View):
 class ItemListView(View):
 	def get(self, request, *args, **kwargs):
 		from main.models import Item
-		
+
 		context = {}
 		template = None
 		user=User.objects.get(pk=self.kwargs["pk"])
@@ -128,20 +100,7 @@ class ItemListView(View):
 			fixed = Item.objects.get(creator__id=user.pk, is_fixed=True)
 		except:
 			fixed = None
-		if user != request.user and request.user.is_authenticated:
-			check_is_not_blocked_with_user_with_id(user=request.user, user_id=user.id)
-			if user.is_closed_profile():
-				check_is_connected_with_user_with_id(user=request.user, user_id=user.id)
-			items_list = user.get_posts().order_by('-created')
-			template = 'lenta/item_list.html'
-		elif request.user.is_anonymous and user.is_closed_profile():
-			raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
-		elif request.user.is_anonymous and not user.is_closed_profile():
-			items_list = user.get_posts().order_by('-created')
-			template = 'lenta/item_list_anon.html'
-		elif user == request.user:
-			items_list = user.get_posts().order_by('-created')
-			template = 'lenta/my_item_list.html'
+		template = self.user.get_template_list_user(folder="lenta/", template="list.html", request=request)
 		current_page = Paginator(items_list, 30)
 		context['request_user'] = request.user
 		context['user'] = user
