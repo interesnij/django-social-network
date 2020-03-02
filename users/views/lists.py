@@ -6,6 +6,7 @@ from django.views import View
 from django.shortcuts import render_to_response
 from rest_framework.exceptions import PermissionDenied
 from common.utils import is_mobile
+from main.models import Item
 
 
 class UserCommunitiesList(View):
@@ -88,8 +89,31 @@ class AllPossibleUsersList(View):
 			context['possible_list'] = current_page.page(current_page.num_pages)
 		return render_to_response('possible_list.html', context)
 
+class ItemListView(ListView):
+	template_name = None
+	model = Item
+	paginate_by = 2
 
-class ItemListView(View):
+	def get(self,request,*args,**kwargs):
+		try:
+			fixed = Item.objects.get(creator__id=user.pk, is_fixed=True)
+		except:
+			fixed = None
+		user=User.objects.get(pk=self.kwargs["pk"])
+		self.template = user.get_template_list_user(folder="lenta/", template="list.html", request=request)
+		return super(ItemListView,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(ItemListView,self).get_context_data(**kwargs)
+		context['user'] = user
+		context['object'] = fixed
+		return context
+
+	def get_queryset(self):
+		items_list = user.get_posts().order_by('-created')
+		return items_list
+
+class ItemListView2(View):
 	def get(self, request, *args, **kwargs):
 		from main.models import Item
 
