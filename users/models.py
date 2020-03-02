@@ -657,7 +657,7 @@ class User(AbstractUser):
         connection = User.objects.filter(query)
         return connection
 
-    def get_template_user(self, request_user, folder, template, request):
+    def get_template_user(self, folder, template, request):
         import re
 
         if self.pk == request.user.pk:
