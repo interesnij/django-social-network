@@ -35,7 +35,7 @@
         if ( this.readyState == 4 && this.status == 200 ) {
           var elem = document.createElement('span');
           elem.innerHTML = link_.responseText;
-          loader.innerHTML(elem);
+          loader.append(elem);
         }
     }});
     </script>
@@ -52,7 +52,7 @@
         if ( this.readyState == 4 && this.status == 200 ) {
           var elem = document.createElement('span');
           elem.innerHTML = link_.responseText;
-          loader.innerHTML(elem);
+          loader.append(elem);
         }
     }});
     </script>
