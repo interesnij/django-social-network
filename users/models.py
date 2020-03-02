@@ -657,28 +657,28 @@ class User(AbstractUser):
         connection = User.objects.filter(query)
         return connection
 
-    def get_template_user(self, request_user, folder, template, req):
+    def get_template_user(self, request_user, folder, template, request):
         import re
 
-        if self.pk == request_user.pk:
+        if self.pk == request.user.pk:
             template_name = "my_" + template
-        elif request_user.pk != self.pk and request_user.is_authenticated:
-            if request_user.is_blocked_with_user_with_id(user_id=self.pk):
+        elif request.user.pk != self.pk and request.user.is_authenticated:
+            if request.user.is_blocked_with_user_with_id(user_id=self.pk):
                 template_name = "block_" + template
             elif self.is_closed_profile():
-                if not request_user.is_connected_with_user_with_id(user_id=self.pk):
+                if not request.user.is_connected_with_user_with_id(user_id=self.pk):
                     template_name = "close_" + template
                 else:
                     template_name = "frend_" + template
             else:
                 template_name = template
-        elif request_user.is_anonymous and self.is_closed_profile():
+        elif request.user.is_anonymous and self.is_closed_profile():
             template_name = "close_" + template
-        elif request_user.is_anonymous and not self.is_closed_profile():
+        elif request.user.is_anonymous and not self.is_closed_profile():
             template_name = "anon_" + template
 
         MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
-        if MOBILE_AGENT_RE.match(req.META['HTTP_USER_AGENT']):
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             template_name = "mob_" + folder + template
         else:
             template_name = folder +  template
