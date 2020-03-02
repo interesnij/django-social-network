@@ -96,17 +96,17 @@ class ItemListView(ListView):
 
 	def get(self,request,*args,**kwargs):
 		try:
-			fixed = Item.objects.get(creator__id=user.pk, is_fixed=True)
+			self.fixed = Item.objects.get(creator__id=user.pk, is_fixed=True)
 		except:
-			fixed = None
-		user=User.objects.get(pk=self.kwargs["pk"])
+			self.fixed = None
+		self.user=User.objects.get(pk=self.kwargs["pk"])
 		self.template = user.get_template_list_user(folder="lenta/", template="list.html", request=request)
 		return super(ItemListView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		context = super(ItemListView,self).get_context_data(**kwargs)
-		context['user'] = user
-		context['object'] = fixed
+		context['user'] = self.user
+		context['object'] = self.fixed
 		return context
 
 	def get_queryset(self):
