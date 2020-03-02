@@ -661,7 +661,7 @@ class User(AbstractUser):
         import re
 
         if self.pk == request.user.pk:
-            template_name = "my_" + template
+            template_name = folder + "my_" + template
         elif request.user.pk != self.pk and request.user.is_authenticated:
             if request.user.is_blocked_with_user_with_id(user_id=self.pk):
                 template_name = folder + "block_" + template
@@ -679,9 +679,7 @@ class User(AbstractUser):
 
         MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            template_name = "mob_" + folder + template
-        else:
-            template_name = folder +  template
+            template_name = "mob_" + template_name
         return template_name
 
 
