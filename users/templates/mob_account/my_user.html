@@ -70,7 +70,7 @@
               <p class="small">{{ online_frends.count }} онлайн</p>
           </div>
           {% for object in user.get_pop_connection %}
-            <figure style="width:50px;">
+            <figure style="width:50px;" class="avatar-50 staked">
               {% if object.get_avatar %}
               <img src="{{ object.get_avatar.file|thumbnail_url:'avatar' }}" style="border-radius:50px;" alt="image">
               {% else %}
