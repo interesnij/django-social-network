@@ -32,14 +32,14 @@
     }
   }
 {% if prev %}
-    document.querySelector(".next_item").addEventListener("click", (e) => {
-      load_item({% url "user_item" uuid=next.uuid pk=user.pk %})
+    document.querySelector(".prev_item").addEventListener("click", (e) => {
+      load_item({% url "user_item" uuid=prev.uuid pk=user.pk %})
     })
 {% endif %}
 
 {% if next %}
-  document.querySelector(".prev_item").addEventListener("click", (e) => {
-  load_item({% url "user_item" uuid=prev.uuid pk=user.pk %})
+  document.querySelector(".next_item").addEventListener("click", (e) => {
+  load_item({% url "user_item" uuid=next.uuid pk=user.pk %})
   })
 {% endif %}
   </script>
