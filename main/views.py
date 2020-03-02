@@ -10,7 +10,7 @@ class MainPageView(TemplateView):
 			if is_mobile(request):
 				self.template_name="main/mob_news.html"
 			else:
-				self.template_name="main/mob_news.html"
+				self.template_name="main/news.html"
 		else:
 			if is_mobile(request):
 				self.template_name="main/mob_auth.html"
