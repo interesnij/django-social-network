@@ -39,10 +39,10 @@ class UserManageCommunitiesList(ListView):
 
 	def get(self,request,*args,**kwargs):
 		self.user=User.objects.get(uuid=self.kwargs["uuid"])
-		if self.user ==request.user:
-			template_name = "user_community/communities_list_with_staffed.html"
+		if self.user == request.user:
+			self.template_name = "user_community/communities_list_with_staffed.html"
 		else:
-			template_name = "main/auth.html"
+			self.template_name = "main/auth.html"
 		communities_list = Community.objects.filter(memberships__user__id=self.user.pk)
 		self.user=User.objects.get(uuid=self.kwargs["uuid"])
 		return super(UserManageCommunitiesList,self).get(request,*args,**kwargs)
