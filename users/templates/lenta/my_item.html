@@ -42,7 +42,7 @@
   }
   {% if prev %}
     on('#ajax', 'click', '.prev_item', function() {
-      load_item('/users/detail/item/' + {{ user.pk }} + '/' + '{{ prev.uuid }}' + '/')
+      load(document.getElementById('item_loader'), "{% url 'user_item' uuid=prev.uuid pk=user.pk %}");
     });
     {% endif %}
     {% if next %}
