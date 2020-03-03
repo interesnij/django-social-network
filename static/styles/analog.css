@@ -177,6 +177,10 @@ padding: 0;
 .my-1 {
     margin-top: .25rem !important
 }
+.mt-3,
+.my-3 {
+    margin-top: 1rem !important
+}
 .mr-2,
 .mx-2 {
     margin-right: .5rem !important
