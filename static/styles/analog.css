@@ -158,3 +158,6 @@ padding: 0;
   margin-bottom: 0 !important;
   margin-top: 0;
 }
+.dropdown-menu.show {
+    display: block
+}
