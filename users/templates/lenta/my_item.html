@@ -31,6 +31,15 @@
       }
     }
   };
+  function load(target, url) {
+    var r = new XMLHttpRequest();
+    r.open("GET", url, true);
+    r.onreadystatechange = function () {
+      if (r.readyState != 4 || r.status != 200) return;
+      target.innerHTML = r.responseText;
+    };
+    r.send();
+  }
   {% if prev %}
     on('#ajax', 'click', '.prev_item', function() {
       load_item('/users/detail/item/' + {{ user.pk }} + '/' + '{{ prev.uuid }}' + '/')
@@ -38,7 +47,7 @@
     {% endif %}
     {% if next %}
     document.querySelector(".next_item").addEventListener("click", (e) => {
-      $('#item_loader').html('').load("{% url 'user_item' uuid=next.uuid pk=user.pk %}")
+      load(document.getElementById('item_loader'), '{% url 'user_item' uuid=next.uuid pk=user.pk %}');
     });
   {% endif %}
   </script>
