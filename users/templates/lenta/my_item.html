@@ -38,8 +38,10 @@
     {% endif %}
     {% if next %}
   on('#ajax', 'click', '.next_item', function() {
-    let response = fetch('/users/detail/item/' + {{ user.pk }} + '/' + '{{ next.uuid }}' + '/');
-    document.getElementById("item_loader").innerHTML = response.text();
+    fetch('/users/detail/item/' + {{ user.pk }} + '/' + '{{ next.uuid }}' + '/')
+  .then(res => res.text())
+  .then(json => console.log(json));
+    document.getElementById("item_loader").innerHTML = res.text();
   })
   {% endif %}
   </script>
