@@ -22,12 +22,12 @@
 
   <script>
     function load_item(link) {
-      link_{{ object.pk }} = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-      link_{{ object.pk }}.open( 'GET', link, false );
-      link_{{ object.pk }}.send();
-      link_{{ object.pk }}.onreadystatechange = function () {
+      link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+      link_.open( 'GET', link, false );
+      link_.send();
+      link_.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
-        document.getElementById("item_loader").innerHTML = link_{{ object.pk }}.responseText;
+        document.getElementById("item_loader").innerHTML = link_.responseText;
       }
     }
   };
@@ -38,7 +38,10 @@
     {% endif %}
     {% if next %}
   on('#ajax', 'click', '.next_item', function() {
-    load_item('/users/detail/item/' + {{ user.pk }} + '/' + '{{ next.uuid }}' + '/')
+    fetch('/users/detail/item/' + {{ user.pk }} + '/' + '{{ next.uuid }}' + '/')
+    .then(function() {document.getElementById("item_loader").innerHTML = link_.responseText;})
+    .catch(function() {console.log("errorrrr")});
+  //load_item('/users/detail/item/' + {{ user.pk }} + '/' + '{{ next.uuid }}' + '/')
   })
   {% endif %}
   </script>
