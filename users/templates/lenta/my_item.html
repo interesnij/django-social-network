@@ -43,7 +43,8 @@
   }
   {% if prev %}
     on('#ajax', 'click', '.prev_item', function() {
-      load(document.getElementById('item_loader'), "{% url 'user_item' uuid=prev.uuid pk=user.pk %}");
+    //  load(document.getElementById('item_loader'), "{% url 'user_item' uuid=prev.uuid pk=user.pk %}");
+    $('#item_loader').html('').load("{% url 'user_item' uuid=next.uuid pk=user.pk %}")
     });
     {% endif %}
     {% if next %}
