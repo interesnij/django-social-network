@@ -37,6 +37,8 @@
     });
     {% endif %}
     {% if next %}
-    $('.next_item').click(function () { $('#item_loader').html('').load("{% url 'user_item' uuid=next.uuid pk=user.pk %}");});
+    document.querySelector(".next_item").addEventListener("click", (e) => {
+      $('#item_loader').html('').load("{% url 'user_item' uuid=next.uuid pk=user.pk %}")
+    });
   {% endif %}
   </script>
