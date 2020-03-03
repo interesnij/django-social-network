@@ -39,7 +39,9 @@
     {% if next %}
   on('#ajax', 'click', '.next_item', function() {
     fetch('/users/detail/item/' + {{ user.pk }} + '/' + '{{ next.uuid }}' + '/')
-    .then(function() {document.getElementById("item_loader").innerHTML = link_.responseText;})
+    .then(function() {let text = await response.text();
+                      document.getElementById("item_loader").innerHTML = text;
+      })
     .catch(function() {console.log("errorrrr")});
   //load_item('/users/detail/item/' + {{ user.pk }} + '/' + '{{ next.uuid }}' + '/')
   })
