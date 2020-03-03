@@ -11,7 +11,7 @@
 {% block content %}
 
 <div class="container main-container">
-<div class="row user_page">
+<div class="row user_page" style="flex: 0 0 100%;max-width:100%;">
       <div class="card mb-4">
           <span style="margin:10px">
             <h3 class="mb-0">{{ user.get_full_name }}</h3>
@@ -81,7 +81,7 @@
               </div>
           </div>
         </a>
-          </div>
+        </div>
           {% else %}
           <div class="card mb-4">
               <div class="card-header">
