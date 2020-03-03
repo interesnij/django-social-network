@@ -1220,9 +1220,6 @@ body.dragging * {
 .border,
 .list-group-item,
 .table th,
-.table td {
-  border-color: rgba(255, 255, 255, 0.1) !important;
-}
 
 .main-header .border-top,
 .main-header .border-bottom,
