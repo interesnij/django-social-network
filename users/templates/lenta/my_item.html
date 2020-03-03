@@ -37,9 +37,6 @@
     });
     {% endif %}
     {% if next %}
-  on('#ajax', 'click', '.next_item', function() {
-    fetch('/users/detail/item/' + {{ user.pk }} + '/' + '{{ next.uuid }}' + '/')
-  .then(res =>document.getElementById("item_loader") = res.json());
-});
+    $('.next_item').on('click', function () { $('#item_loader').html('').load("{% url 'user_item' uuid=next.uuid pk=user.pk %}");});
   {% endif %}
   </script>
