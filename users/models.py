@@ -419,8 +419,8 @@ class User(AbstractUser):
         exclude_reported_and_approved_photos_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         photos_query.add(exclude_reported_and_approved_photos_query, Q.AND)
         photos = Photo.objects.filter(photos_query)
-        return photos[0:5]
-        
+        return photos[0:6]
+
     def get_my_photos(self):
         from gallery.models import Photo
         from moderation.models import ModeratedObject
