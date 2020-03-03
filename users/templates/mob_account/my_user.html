@@ -108,6 +108,35 @@ p {
 .row{
   display: flex;
 }
+textarea.form-control {
+    height: auto;
+}
+input, button, select, optgroup, textarea {
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+}
+.form-control {
+    display: block;
+    width: 100%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    background-clip: padding-box;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+.media-body {
+    flex: 1;
+}
+.dropdown{
+    position: relative;
+}
+.dropdown-menu[x-placement^="top"], .dropdown-menu[x-placement^="right"], .dropdown-menu[x-placement^="bottom"], .dropdown-menu[x-placement^="left"] {
+    right: auto;
+    bottom: auto;
+}
 </style>
 <div class="container">
 <div class="user_page">
