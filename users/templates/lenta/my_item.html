@@ -41,13 +41,13 @@
     r.send();
   }
   {% if prev %}
-    	$('.prev_item').on('click', function () {
+   $('#ajax').on('click', '.prev_item', function() {
         load(document.getElementById('item_loader'), "{% url 'user_item' uuid=prev.uuid pk=user.pk %}")
       });
    {% endif %}
 
    {% if next %}
-      $('.next_item').on('click', function () {
+     $('#ajax').on('click', '.next_item', function() {
         load(document.getElementById('item_loader'), "{% url 'user_item' uuid=next.uuid pk=user.pk %}")
     //    $('#item_loader').html('').load("{% url 'user_item' uuid=next.uuid pk=user.pk %}");
       });
