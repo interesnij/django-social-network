@@ -3,14 +3,14 @@
 
 <div class="card mb-4" style="">
     <div class="card-header">
+      <a href="{% url 'user_gallery' pk=user.pk %}" class="ajax" data-html="#ajax">
         <div class="media">
-          <a href="{% url 'user_gallery' pk=user.pk %}" class="ajax" data-html="#ajax">
             <div class="media-body">
                 <h4 class="content-color-primary mb-0">Фото </h4>
             </div>
             все
-          </a>
         </div>
+      </a>
     </div>
     <div class="card-body p-1">
         <div class="row no-gutters">
