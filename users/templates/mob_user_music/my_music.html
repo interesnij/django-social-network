@@ -2,11 +2,8 @@
 {% block title %}Моя музыка{% endblock %}
 
 {% block content %}
-<div class="container mt-3 main-container">
-    <div class="row">
-        <div class="col-12 col-md-12 col-lg-8">
-          <br>
-          <div class="input-group mb-3">
+<div class="container mt-3">
+          <div class="input-group mb-3" style="display:flex">
             <input type="text" class="form-control" placeholder="Поиск музыки">
             <div class="input-group-append">
               <button class="btn btn-outline-link" type="button">Искать</button>
@@ -26,22 +23,6 @@
                 <span id="user_tracks_load" class="music_script_check"></span>
               </div>
           </div>
-        </div>
-        <div class="col-12 col-md-4">
-          <br>
-          <div class="card mb-2">
-              <div class="card-header">
-                <div class="media">
-                    <div class="media-body">
-                      <h5 class="mt-1">
-                        <a href="{% url 'all_music' %}" data-html="#ajax" class="ajax">Каталог музыки</a>
-                      </h5>
-                    </div>
-                </div>
-              </div>
-          </div>
-        </div>
-    </div>
 </div>
 
 <script>
