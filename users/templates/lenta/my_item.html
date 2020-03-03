@@ -38,8 +38,8 @@
     {% endif %}
     {% if next %}
   on('#ajax', 'click', '.next_item', function() {
-    let response = await fetch('/users/detail/item/' + {{ user.pk }} + '/' + '{{ next.uuid }}' + '/');
-    let text = await response.text();
+    let response = fetch('/users/detail/item/' + {{ user.pk }} + '/' + '{{ next.uuid }}' + '/');
+    let text = response.text();
     document.getElementById("item_loader").innerHTML = text;
   })
   {% endif %}
