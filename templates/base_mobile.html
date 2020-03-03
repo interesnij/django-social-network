@@ -9,7 +9,7 @@
     <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon" />
     <link rel="stylesheet" href="{% static 'styles/analog.css' %}" media="all" />
     <link rel="stylesheet" href="{% static 'styles/default.css' %}" media="all" />
-    
+    <link rel="stylesheet" href="{% static 'styles/load.css' %}" media="none" onload="if(media!='all')media='all'" />
     <link rel="stylesheet" href="{% static 'styles/player_skin/vkontakte.css' %}" media="none" onload="if(media!='all')media='all'" />
     <style>
     .sidebar .nav .nav-item a{
@@ -45,8 +45,6 @@
          {% include "base_block/mobile_tab.html" %}
         {% endif %}
     </div>
-    {% include "base_block/modal_user_repost.html" %}
-    {% include "base_block/modal_community_repost.html" %}
 
     {% include "mobile_base_scripts.html" %}
   </body>
