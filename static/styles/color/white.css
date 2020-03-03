@@ -4,6 +4,9 @@ a:hover{
 a {
   color: rgba(0, 0, 0, 0.8) !important
 }
+.border-top {
+    border-top: 1px solid #F0F2F6 !important;
+}
 .music-dropdown{
   background: #ffffff !important;
 }
