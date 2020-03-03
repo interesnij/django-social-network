@@ -191,3 +191,6 @@ button::-moz-focus-inner {
 * {
   -webkit-tap-highlight-color: transparent;
 }
+.w-100 {
+    width: 100% !important
+}

@@ -1,5 +1,5 @@
 {% load %}
-{% if user.is_album_exists %}
+{% if user.get_profile_photos %}
 
 <div class="card mb-4" style="">
     <div class="card-header">
@@ -14,12 +14,11 @@
     </div>
     <div class="card-body p-1">
         <div class="row no-gutters">
-            <div class="col-12">
-
-                <div class=" grid swipegallery" itemscope>
-
-                </div>
+          {% for object in user.get_profile_photos %}
+            <div style="flex: 0 0 33.33333%;max-width: 33.33333%">
+              <img style="width: 100%;object-fit: cover;height: 200px;" class="lazyload" data-src="{{ object.file.url }}" alt="">
             </div>
+          {% endfor %}
         </div>
 
     </div>
