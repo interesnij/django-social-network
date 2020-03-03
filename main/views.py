@@ -6,12 +6,12 @@ class MainPageView(TemplateView):
 	template_name=None
 	def get(self,request,*args,**kwargs):
 		from common.utils import is_mobile
-		
+
 		if request.user.is_authenticated:
 			if is_mobile(request):
 				self.template_name="main/mob_news.html"
 			else:
-				self.template_name="main/news.html"
+				self.template_name="main/mob_news.html"
 		else:
 			if is_mobile(request):
 				self.template_name="main/mob_auth.html"
