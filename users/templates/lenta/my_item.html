@@ -39,7 +39,7 @@
     {% if next %}
   on('#ajax', 'click', '.next_item', function() {
     fetch('/users/detail/item/' + {{ user.pk }} + '/' + '{{ next.uuid }}' + '/')
-  .then(res =>document.getElementById("item_loader").innerHTML = res.text());
+  .then(res =>document.getElementById("item_loader").innerHTML = res.json());
 });
   {% endif %}
   </script>
