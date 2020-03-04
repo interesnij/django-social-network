@@ -371,7 +371,7 @@ class User(AbstractUser):
         for frend in frends:
             if frend.get_online():
                 query += [frend,]
-        if query:
+        if len(query) == 0:
             return query.count()
         else:
             return 0
