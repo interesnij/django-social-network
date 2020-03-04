@@ -119,10 +119,17 @@ class ItemListView(ListView):
 
 
 class AllUsers(ListView):
-	template_name="all_users.html"
-	model=User
-	paginate_by=30
+	template_name = None
+	model = User
+	paginate_by = 30
 
 	def get_queryset(self):
-		items = User.objects.only("pk")
-		return items
+		from common.utils import is_mobile
+
+		if is_mobile(self.request):
+			template_name = "mob_all_users.html"
+		else:
+			template_name = "all_users.html"
+
+		users = User.objects.only("pk")
+		return users
