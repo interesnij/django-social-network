@@ -365,6 +365,14 @@ class User(AbstractUser):
                 query += [frend,]
         return query
 
+    def get_online_connection_count(self):
+        frends = self.get_all_connection()
+        query = []
+        for frend in frends:
+            if frend.get_online():
+                query += [frend,]
+        return query.count()
+
     def get_pop_online_connection(self):
         frends = self.get_all_connection()
         query = []
