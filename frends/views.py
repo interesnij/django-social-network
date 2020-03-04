@@ -11,11 +11,13 @@ class FrendsListView(ListView):
 	def get(self,request,*args,**kwargs):
 		self.user=User.objects.get(pk=self.kwargs["pk"])
 		self.template_name = self.user.get_template_user(folder="frends/", template="frends.html", request=request)
+		self.common_users=self.user.get_common_friends_of_user(request.user)
 		return super(FrendsListView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		context = super(FrendsListView,self).get_context_data(**kwargs)
 		context['user'] = self.user
+		context['common_users'] = self.common_users
 		return context
 
 	def get_queryset(self):

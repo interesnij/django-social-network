@@ -8,18 +8,16 @@
         <div class="dropdown">
             <button type="button" class="btn btn-secondary dropdown-toggle" style="width:100%;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                 Мои друзья ({{ user.count_connections }})
-            </button>
+            </button> 
             <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; width: 100%;">
               {% if user.get_online_connection_count != 0 %}
                 <a class="dropdown-item ajax" href="{% url 'online_frends' pk=user.pk %}" data-html="#ajax">Друзья онлайн ({{ user.get_online_connection_count }})</a>
-              {% else %}
-                <a class="dropdown-item">У Вас нет друзей онлайн</a>
               {% endif %}
               {% if user.count_followers != 0 %}
                 <a class="dropdown-item ajax" href="{% url 'follows' pk=user.pk %}" data-html="#ajax">Подписчики ({{ user.count_followers }})</a>
               {% endif %}
               {% if user.count_following != 0 %}
-                <a class="dropdown-item ajax" href="{% url 'followings' pk=user.pk %}" data-html="#ajax">Ваших заявки ({{ user.count_following }})</a>
+                <a class="dropdown-item ajax" href="{% url 'followings' pk=user.pk %}" data-html="#ajax">Ваши заявки ({{ user.count_following }})</a>
               {% endif %}
                 <a class="dropdown-item ajax" href="{% url 'possible_users' pk=user.pk %}" data-html="#ajax">Возможные друзья</a>
                 <a class="dropdown-item ajax" href="{% url 'all_users' %}" data-html="#ajax">Найти друзей</a>
