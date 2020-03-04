@@ -11,7 +11,7 @@
                 Друзья {{ user.first_name|gent }} {{ user.last_name|gent }} ({{ user.count_connections }})
             </button>
             <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; width: 100%;">
-              {% if user.get_online_connection_count != "0" %}
+              {% if user.get_online_connection_count != 0 %}
                 <a class="dropdown-item" href="{% url 'online_frends' pk=user.pk %}">Друзья онлайн ({{ user.get_online_connection_count }})</a>
               {% else %}
                 <a class="dropdown-item">У {{ user.first_name|gent }} нет друзей онлайн</a>
