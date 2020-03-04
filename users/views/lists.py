@@ -84,7 +84,7 @@ class AllPossibleUsersList(ListView):
 		if is_mobile(request):
 			self.template_name = "mob_possible_list.html"
 		else:
-			self.template_name = "possible_list.html"
+			self.template_name = "mob_possible_list.html"
 		return super(AllPossibleUsersList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
