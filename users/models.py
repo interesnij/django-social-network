@@ -585,6 +585,10 @@ class User(AbstractUser):
         followers_query = self._make_followers_query()
         return User.objects.filter(followers_query)
 
+    def get_pop_followers(self):
+        followers_query = self._make_followers_query()
+        return User.objects.filter(followers_query)[0:6]
+
     def get_followings(self):
         followings_query = self._make_followings_query()
         return User.objects.filter(followings_query)
