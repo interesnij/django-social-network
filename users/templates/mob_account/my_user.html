@@ -47,19 +47,19 @@
         <a href="{% url 'frends' pk=user.pk %}" class="ajax" data-html="#ajax">
           <div class="card-body py-2">
               <div class="media">
-                {% for object in user.get_pop_connection %}
-                  <figure style="width:50px;border-radius:50px;" class="avatar-50 staked">
-                    {% if object.get_avatar %}
-                    <img src="{{ object.get_avatar.file|thumbnail_url:'avatar' }}" style="border-radius:50px;" alt="image">
-                    {% else %}
-                    <img src="/static/images/user.jpg" style="border-radius:50px;" alt="image">
-                    {% endif %}
-                  </figure>
-                {% endfor %}
                   <div class="media-body">
                     <h6 class="my-0 text-truncated">{{ user.count_connections }} {{ user.count_connections|rupluralize:"друг,друга,друзей" }}</h6>
                     <p class="small">{{ user.get_online_connection_count }} онлайн</p>
                   </div>
+                  {% for object in user.get_pop_connection %}
+                    <figure style="width:50px;border-radius:50px;" class="avatar-50 staked">
+                      {% if object.get_avatar %}
+                      <img src="{{ object.get_avatar.file|thumbnail_url:'avatar' }}" style="border-radius:50px;" alt="image">
+                      {% else %}
+                      <img src="/static/images/user.jpg" style="border-radius:50px;" alt="image">
+                      {% endif %}
+                    </figure>
+                  {% endfor %}
               </div>
           </div>
         </a>
@@ -118,19 +118,19 @@
         <a href="{% url 'communities' pk=user.pk %}" class="ajax" data-html="#ajax">
           <div class="card-body py-2">
               <div class="media">
-                {% for object in communities %}
-                  <figure style="width:50px;border-radius:50px;" class="avatar-50 staked">
-                    {% if object.get_avatar %}
-                    <img src="{{ object.get_avatar.file|thumbnail_url:'avatar' }}" style="border-radius:50px;" alt="image">
-                    {% else %}
-                    <img src="/static/images/group.jpg" style="border-radius:50px;" alt="image">
-                    {% endif %}
-                  </figure>
-                {% endfor %}
                   <div class="media-body">
                     <h6 class="my-0 text-truncated">{{ user.count_community }} {{ user.count_community|rupluralize:"сообщество,сообщества,сообществ" }}</h6>
                     <p class="small">нет осоьых</p>
                   </div>
+                  {% for object in communities %}
+                    <figure style="width:50px;border-radius:50px;" class="avatar-50 staked">
+                      {% if object.get_avatar %}
+                      <img src="{{ object.get_avatar.file|thumbnail_url:'avatar' }}" style="border-radius:50px;" alt="image">
+                      {% else %}
+                      <img src="/static/images/group.jpg" style="border-radius:50px;" alt="image">
+                      {% endif %}
+                    </figure>
+                  {% endfor %}
               </div>
           </div>
         </a>
