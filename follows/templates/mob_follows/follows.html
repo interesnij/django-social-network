@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% load thumbnail liked_user %}
+{% block title %}Подписчики {{ user.first_name|gent }} {{ user.last_name|gent }}{% endblock %}
+{% block content %}
+
+<div class="container mt-3">
+    <div class="card-header p-0">
+        <div class="dropdown">
+            <button type="button" class="btn btn-secondary" style="width:100%;">
+                Подписчики {{ user.first_name|gent }} {{ user.last_name|gent }} ({{ user.count_connections }})
+            </button>
+        </div>
+    </div>
+    <div class="card mb-2">
+        <div class="card">
+            <div class="card-body">
+                <div class="input-group mb-3" style="display:flex">
+                    <input type="text" class="form-control" placeholder="Поиск друзей">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-link" type="button">Искать</button>
+                    </div>
+                </div>
+                <ul class="list-group" id="follows_container">
+                    {% if object_list %}
+                    {% for object in object_list %}
+                    <li class="list-group-item border-top">
+                        <div class="media">
+                            <a href="{% url 'user' pk=object.pk %}" class="ajax" data-html="#ajax">
+                                <figure>
+                                    {% if object.get_avatar %}
+                                    <img src="{{ object.get_avatar.file|thumbnail_url:'avatar' }}" style="border-radius:50px;width:50px;" alt="image">
+                                    {% else %}
+                                    <svg fill="currentColor" class="svg_default svg_default_50" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                                        <path d="M0 0h24v24H0z" fill="none" /></svg>
+                                    {% endif %}
+                                </figure>
+                            </a>
+                            <div class="media-body">
+                                <a href="{% url 'user' pk=object.pk %}" class="ajax" data-html="#ajax">
+                                    <h6 class="my-0 mt-1">{{ object.get_full_name }}</h6>
+                                </a>
+                                <a href="" class="small">Написать сообщение</a>
+                            </div>
+                        </div>
+                    </li>
+                    {% endfor %}
+
+                    {% else %}
+                    <div class="card" style="align-items: center;justify-content:center;">
+                        <div class="card-body">
+                            <svg fill="currentColor" class="thumb_big svg_default" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                                <path d="M0 0h24v24H0z" fill="none" /></svg>
+                        </div>
+                        <h6 style="margin: 20px;text-align: center;"> Подписчиков нет...</h6>
+                    </div>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+  var page = 2;
+  var loaded = false;
+      onscroll = function(){
+        try{
+        var follows = document.getElementById("follows_container");
+        if(friends.querySelectorAll('.list-group-item').length === (page-1)*30){
+        var height = document.documentElement.clientHeight-1;
+        if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
+          if (loaded){return};
+          var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+          link_3.open( 'GET', '/follows/'  + '{{ user.pk }}/?page=' + page++, true );
+          link_3.send();
+          link_3.onreadystatechange = function () {
+          if ( this.readyState == 4 && this.status == 200 ) {
+            var elem = document.createElement('span');
+            elem.innerHTML = link_3.responseText;
+            var follows_list = elem.querySelector(".list-group");
+            if(follows_list.getElementsByClassName('list-group-item').length < 30){loaded = true;};
+            follows.append(follows_list);
+            }
+          }
+        }}
+      }catch{return}
+  }
+</script>
+{% endblock %}

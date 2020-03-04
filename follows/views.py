@@ -2,11 +2,7 @@ from django.views import View
 from follows.models import Follow
 from users.models import User
 from django.http import HttpResponse
-from communities.models import Community
-from django.shortcuts import render_to_response
-from rest_framework.exceptions import PermissionDenied
 from django.views.generic import ListView
-from common.utils import is_mobile
 
 
 class FollowsView(ListView):
@@ -15,6 +11,7 @@ class FollowsView(ListView):
 
 	def get(self,request,*args,**kwargs):
 		self.user=User.objects.get(pk=self.kwargs["pk"])
+		self.template_name = self.user.get_template_user(folder="follows/", template="follows.html", request=request)
 		return super(FollowsView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -23,26 +20,7 @@ class FollowsView(ListView):
 		return context
 
 	def get_queryset(self):
-		if self.user == self.request.user:
-			self.template_name="follows/my_follows.html"
-			friends_list=self.user.get_follows()
-		elif self.request.user != self.user and self.request.user.is_authenticated:
-			if self.request.user.is_blocked_with_user_with_id(user_id=self.user.id):
-				self.template_name = "follows/follows_block.html"
-			elif self.user.is_closed_profile():
-				if not self.request.user.is_connected_with_user_with_id(user_id=self.user.id):
-					self.template_name = "follows/close_follows.html"
-				else:
-					self.template_name = "follows/follows.html"
-					friends_list=self.user.get_follows()
-			else:
-				self.template_name = "follows/follows.html"
-				friends_list=self.user.get_follows()
-		elif self.request.user.is_anonymous and self.user.is_closed_profile():
-			self.template_name = "follows/close_follows.html"
-		elif self.request.user.is_anonymous and not self.user.is_closed_profile():
-			self.template_name = "follows/anon_follows.html"
-			friends_list=self.user.get_follows()
+		friends_list=self.user.get_follows()
 		return friends_list
 
 
@@ -66,6 +44,8 @@ class FollowDelete(View):
 class CommunityFollowCreate(View):
 	success_url = "/"
 	def get(self,request,*args,**kwargs):
+		from communities.models import Community
+
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.user = User.objects.get(uuid=self.kwargs["uuid"])
 		new_follow = self.user.community_follow_user(self.community)
@@ -76,6 +56,8 @@ class CommunityFollowCreate(View):
 class CommunityFollowDelete(View):
 	success_url = "/"
 	def get(self,request,*args,**kwargs):
+		from communities.models import Community
+		
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.user = User.objects.get(uuid=self.kwargs["uuid"])
 		self.user.community_unfollow_user(self.community)
