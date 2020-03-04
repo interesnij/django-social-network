@@ -123,13 +123,15 @@ class AllUsers(ListView):
 	model = User
 	paginate_by = 30
 
-	def get_queryset(self):
+	def get(self,request,*args,**kwargs):
 		from common.utils import is_mobile
 
 		if is_mobile(self.request):
 			self.template_name = "mob_all_users.html"
 		else:
 			self.template_name = "all_users.html"
+		return super(AllUsers,self).get(request,*args,**kwargs)
 
+	def get_queryset(self):
 		users = User.objects.only("pk")
 		return users
