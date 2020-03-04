@@ -62,18 +62,6 @@
           </div>
         </a>
         </div>
-        {% else %}
-        <div class="card mb-4">
-            <div class="card-header">
-                <div class="media" style="display: flex;align-items: center;justify-content: center;">
-                    <a href="{% url 'all_users' %}" class="ajax" data-html="#ajax">
-                        <div class="media-body">
-                            <h4 class="content-color-primary mb-0">Найдите друзей </h4>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
         {% endif %}
         {% if user.get_pop_followers %}
         <div class="card mb-4">
@@ -96,18 +84,6 @@
                 </div>
             </div>
           </a>
-          </div>
-          {% else %}
-          <div class="card mb-4">
-              <div class="card-header">
-                  <div class="media" style="display: flex;align-items: center;justify-content: center;">
-                      <a href="{% url 'all_users' %}" class="ajax" data-html="#ajax">
-                          <div class="media-body">
-                              <h4 class="content-color-primary mb-0">Найдите друзей </h4>
-                          </div>
-                      </a>
-                  </div>
-              </div>
           </div>
           {% endif %}
 

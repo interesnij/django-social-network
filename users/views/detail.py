@@ -95,7 +95,7 @@ class ProfileUserView(TemplateView):
 
         context = super(ProfileUserView, self).get_context_data(**kwargs)
         context['user'] = self.user
-        context['communities'] = Community.get_trending_communities()[0:5]
+        context['communities'] = Community.get_pop_communities_for_user(user_id=self.user.pk)
         if self.request.user.is_authenticated:
             context['common_frends'] = self.user.get_common_friends_of_user(self.request.user)[0:5]
         return context

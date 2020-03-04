@@ -130,6 +130,12 @@ class Community(models.Model):
         trending_communities_query.add(~Q(banned_users__id=user_id), Q.AND)
         return cls._get_trending_communities_with_query(query=trending_communities_query)
 
+    @classmethod
+    def get_pop_communities_for_user(cls, user_id, category_name=None):
+        trending_communities_query = cls._make_trending_communities_query(category_name=category_name)
+        trending_communities_query.add(~Q(banned_users__id=user_id), Q.AND)
+        return cls._get_trending_communities_with_query(query=trending_communities_query)[0:6]
+
     def get_posts(self):
         from main.models import Item
         from moderation.models import ModeratedObject
@@ -170,7 +176,7 @@ class Community(models.Model):
     def get_admin_goods(self):
         from moderation.models import ModeratedObject
         from goods.models import Good
-        
+
         goods_query = Q(community_id=self.pk, is_deleted=False)
         exclude_reported_and_approved_goods_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         goods_query.add(exclude_reported_and_approved_goods_query, Q.AND)
