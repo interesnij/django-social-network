@@ -643,6 +643,25 @@ class User(AbstractUser):
         connection = User.objects.filter(query)
         return connection
 
+    def get_possible_friends_10(self):
+        frends = self.connections.values('target_user_id')
+        if not frends:
+            return False
+        frends_ids = [target_user['target_user_id'] for target_user in frends]
+        query = Q()
+        for frend in frends_ids:
+            user = User.objects.get(pk=frend)
+            frends_frends = user.connections.values('target_user_id')
+            frend_frend_ids = [target_user['target_user_id'] for target_user in frends_frends]
+            _query = Q(id__in=frend_frend_ids)
+            blocked = ~Q(Q(blocked_by_users__blocker_id=self.pk) | Q(user_blocks__blocked_user_id=self.pk))
+            connections = ~Q(Q(connections__user_id=self.pk) | Q(targeted_connections__target_user_id=self.pk))
+            _query.add(blocked, Q.AND)
+            _query.add(connections, Q.AND)
+            query.add(_query, Q.AND)
+        connection = User.objects.filter(query)
+        return connection[0:10]
+
     def get_common_friends_of_user(self, user):
         user = User.objects.get(pk=user.pk)
         if self.pk == user.pk:

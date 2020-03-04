@@ -1,6 +1,6 @@
 {% load thumbnail %}
 
-{% if featured_users != "not frends" and featured_users %}
+{% if users.get_possible_friends_10 %}
 <div class="card">
     <div class="card-header">
         <div class="media">
@@ -14,7 +14,7 @@
     </div>
     <div class="card-body px-0 py-0">
         <ul class="list-group border-top border-bottom list-group-flush">
-          {% for object in featured_users %}
+          {% for object in users.get_possible_friends_10 %}
           <li class="list-group-item">
               <div class="media">
                 <a href="{% url 'user' pk=object.pk %}" class="ajax" data-html="#ajax">
