@@ -80,7 +80,7 @@ class AllPossibleUsersList(ListView):
 	def get(self,request,*args,**kwargs):
 		from common.utils import is_mobile
 
-		self.user = User.objects.get(uuid=self.kwargs["uuid"])
+		self.user = User.objects.get(pk=self.kwargs["pk"])
 		if is_mobile(request):
 			self.template_name = "mob_possible_list.html"
 		else:
