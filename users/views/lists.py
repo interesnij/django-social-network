@@ -93,10 +93,7 @@ class AllPossibleUsersList(ListView):
 		return context
 
 	def get_queryset(self):
-		if self.request.user.is_authenticated:
-			possible_list = request.user.get_possible_friends()
-		else:
-			possible_list = None
+		possible_list = self.request.user.get_possible_friends()
 		return possible_list
 
 class ItemListView(ListView):
