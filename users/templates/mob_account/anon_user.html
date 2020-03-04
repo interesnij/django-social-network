@@ -10,37 +10,149 @@
 {% endblock %}
 {% block content %}
 
-<div class="row user_page">
-    <div class="col-lg-4 col-md-5 col-sm-12 order-1">
-
-        {% include 'profile/card_profile.html' %}
-
-        {% include 'profile/online_frends.html' %}
-
-        {% include 'profile/frends.html' %}
-
-        {% include 'profile/communities.html' %}
-
-        {% include 'profile/gallery.html' %}
-
-    </div>
-    <div class="col-lg-8 col-md-7 col-sm-12 order-2 ">
-        <div class="card mb-4" style="padding:10px">
+<div class="container">
+<div class="user_page">
+      <div class="card mb-4">
+          <span style="margin:25px;line-height: 1.3;">
             <h3 class="mb-0">{{ user.get_full_name }}</h3>
             {% if user.get_online %}
               <i class="text-success">Онлайн</i>
             {% else %}
               <i style="color:#888888">Был(а) {{ user.last_activity|naturaltime }}</i>
             {% endif %}
-            <br><br>
+          </span>
+          <div class="card-body">
+              <div class="align-items-center no-gutters">
+                  <a class="col">
+                      <figure class="mx-auto mb-3" id="avatar_reload">
+                        {% if user.get_avatar %}
+                          <img src="{{ user.get_avatar.file.url }}" class="avatar_detail" style="cursor:pointer" data-uuid="{{ user.uuid }}" data-id="{{ user.get_avatar.id }}">
+                        {% else %}
+                          <svg fill="currentColor" class="svg_default" style="width:100%;height: auto;"xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+                        {% endif %}
+                      </figure>
+                  </a>
+              </div>
+
+              <span style="display: flex;align-items:center;justify-content:center;">
+                <a class="btn ajax pt-2" href="{% url 'user_general_form' request.user.pk %}" data-html="#ajax" style="width:100%">Редактировать</a>
+              </span>
+          </div>
+      </div>
+
+      {% if user.get_pop_connection %}
+      <div class="card mb-4">
+        <a href="{% url 'frends' pk=user.pk %}" class="ajax" data-html="#ajax">
+          <div class="card-body py-2">
+              <div class="media">
+                  <div class="media-body">
+                    <h6 class="my-0 text-truncated">{{ user.count_connections }} {{ user.count_connections|rupluralize:"друг,друга,друзей" }}</h6>
+                    <p class="small">{{ user.get_online_connection_count }} онлайн</p>
+                  </div>
+                  {% for object in user.get_pop_connection %}
+                    <figure style="width:50px;border-radius:50px;" class="avatar-50 staked">
+                      {% if object.get_avatar %}
+                      <img src="{{ object.get_avatar.file|thumbnail_url:'avatar' }}" style="border-radius:50px;" alt="image">
+                      {% else %}
+                      <img src="/static/images/user.jpg" style="border-radius:50px;" alt="image">
+                      {% endif %}
+                    </figure>
+                  {% endfor %}
+              </div>
+          </div>
+        </a>
         </div>
-
-          <div id="stat_load"></div>
-
-          <div id="lenta_load"></div>
-
+        {% else %}
+        <div class="card mb-4">
+            <div class="card-header">
+                <div class="media" style="display: flex;align-items: center;justify-content: center;">
+                    <a href="{% url 'all_users' %}" class="ajax" data-html="#ajax">
+                        <div class="media-body">
+                            <h4 class="content-color-primary mb-0">Найдите друзей </h4>
+                        </div>
+                    </a>
+                </div>
+            </div>
         </div>
-    </div>
+        {% endif %}
+        {% if user.get_pop_followers %}
+        <div class="card mb-4">
+          <a href="{% url 'frends' pk=user.pk %}" class="ajax" data-html="#ajax">
+            <div class="card-body py-2">
+                <div class="media">
+                    <div class="media-body">
+                      <h6 class="my-0 text-truncated">{{ user.count_followers }} {{ user.count_followers|rupluralize:"подписчик,подписчика,подписчиков" }}</h6>
+                      <p class="small">{{ user.count_followers }} онлайн</p>
+                    </div>
+                    {% for object in user.get_pop_followers %}
+                      <figure style="width:50px;border-radius:50px;" class="avatar-50 staked">
+                        {% if object.get_avatar %}
+                        <img src="{{ object.get_avatar.file|thumbnail_url:'avatar' }}" style="border-radius:50px;" alt="image">
+                        {% else %}
+                        <img src="/static/images/user.jpg" style="border-radius:50px;" alt="image">
+                        {% endif %}
+                      </figure>
+                    {% endfor %}
+                </div>
+            </div>
+          </a>
+          </div>
+          {% else %}
+          <div class="card mb-4">
+              <div class="card-header">
+                  <div class="media" style="display: flex;align-items: center;justify-content: center;">
+                      <a href="{% url 'all_users' %}" class="ajax" data-html="#ajax">
+                          <div class="media-body">
+                              <h4 class="content-color-primary mb-0">Найдите друзей </h4>
+                          </div>
+                      </a>
+                  </div>
+              </div>
+          </div>
+          {% endif %}
+
+      {% if communities %}
+      <div class="card mb-4  ">
+        <a href="{% url 'communities' pk=user.pk %}" class="ajax" data-html="#ajax">
+          <div class="card-body py-2">
+              <div class="media">
+                  <div class="media-body">
+                    <h6 class="my-0 text-truncated">{{ user.count_community }} {{ user.count_community|rupluralize:"сообщество,сообщества,сообществ" }}</h6>
+                    <p class="small">нет осоьых</p>
+                  </div>
+                  {% for object in communities %}
+                    <figure style="width:50px;border-radius:50px;" class="avatar-50 staked">
+                      {% if object.get_avatar %}
+                      <img src="{{ object.get_avatar.file|thumbnail_url:'avatar' }}" style="border-radius:50px;" alt="image">
+                      {% else %}
+                      <img src="/static/images/group.jpg" style="border-radius:50px;" alt="image">
+                      {% endif %}
+                    </figure>
+                  {% endfor %}
+              </div>
+          </div>
+        </a>
+          </div>
+          {% else %}
+          <div class="card mb-4">
+              <div class="card-header">
+                  <div class="media" style="display: flex;align-items: center;justify-content: center;">
+                      <a href="{% url 'all_users' %}" class="ajax" data-html="#ajax">
+                          <div class="media-body">
+                              <h4 class="content-color-primary mb-0">Найдите друзей </h4>
+                          </div>
+                      </a>
+                  </div>
+              </div>
+          </div>
+          {% endif %}
+
+      {% include 'profile/gallery.html' %}
+
+        <div id="stat_load"></div>
+
+</div>
+</div>
 
 <script>
   ready(() => {
