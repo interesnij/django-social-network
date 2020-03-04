@@ -213,7 +213,7 @@ def count_followers(self):
     return Follow.objects.filter(followed_user__id=self.pk).count()
 
 def count_following(self):
-    return self.follows.count()
+    return Follow.objects.filter(user__id=self.pk).count()
 
 def count_connections(self):
     return self.connections.count()
