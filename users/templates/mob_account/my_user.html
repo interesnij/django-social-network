@@ -92,8 +92,8 @@
                     </figure>
                   {% endfor %}
                     <div class="media-body">
-                      <h6 class="my-0 text-truncated">{{ user.count_connections }} {{ user.count_connections|rupluralize:"друг,друга,друзей" }}</h6>
-                      <p class="small">{{ user.get_online_connection_count }} онлайн</p>
+                      <h6 class="my-0 text-truncated">{{ user.count_followers }} {{ user.count_followers|rupluralize:"подписчик,подписчика,подписчиков" }}</h6>
+                      <p class="small">{{ user.count_followers }} онлайн</p>
                     </div>
                 </div>
             </div>
