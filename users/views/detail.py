@@ -35,10 +35,13 @@ class AllPossibleUsers(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        if request.user.is_authenticated:
-            self.template_name = "all_possible_users.html"
-        else:
-            self.template_name = "main/auth.html"
+        from common.utils import is_mobile
+
+		self.user = User.objects.get(uuid=self.kwargs["uuid"])
+		if is_mobile(request):
+			self.template_name = "mob_possible_list.html"
+		else:
+			self.template_name = "possible_list.html"
         return super(AllPossibleUsers,self).get(request,*args,**kwargs)
 
 
