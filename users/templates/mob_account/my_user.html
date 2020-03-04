@@ -82,19 +82,19 @@
           <a href="{% url 'frends' pk=user.pk %}" class="ajax" data-html="#ajax">
             <div class="card-body py-2">
                 <div class="media">
-                  {% for object in user.get_pop_followers %}
-                    <figure style="width:50px;border-radius:50px;" class="avatar-50 staked">
-                      {% if object.get_avatar %}
-                      <img src="{{ object.get_avatar.file|thumbnail_url:'avatar' }}" style="border-radius:50px;" alt="image">
-                      {% else %}
-                      <img src="/static/images/user.jpg" style="border-radius:50px;" alt="image">
-                      {% endif %}
-                    </figure>
-                  {% endfor %}
                     <div class="media-body">
                       <h6 class="my-0 text-truncated">{{ user.count_followers }} {{ user.count_followers|rupluralize:"подписчик,подписчика,подписчиков" }}</h6>
                       <p class="small">{{ user.count_followers }} онлайн</p>
                     </div>
+                    {% for object in user.get_pop_followers %}
+                      <figure style="width:50px;border-radius:50px;" class="avatar-50 staked">
+                        {% if object.get_avatar %}
+                        <img src="{{ object.get_avatar.file|thumbnail_url:'avatar' }}" style="border-radius:50px;" alt="image">
+                        {% else %}
+                        <img src="/static/images/user.jpg" style="border-radius:50px;" alt="image">
+                        {% endif %}
+                      </figure>
+                    {% endfor %}
                 </div>
             </div>
           </a>
