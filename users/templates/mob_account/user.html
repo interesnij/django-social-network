@@ -87,7 +87,7 @@
           </div>
           {% endif %}
 
-      {% if get_pop_communities %}
+      {% if user.get_pop_communities %}
       <div class="card mb-4  ">
         <a href="{% url 'communities' pk=user.pk %}" class="ajax" data-html="#ajax">
           <div class="card-body py-2">
@@ -96,7 +96,7 @@
                     <h6 class="my-0 text-truncated">{{ user.count_community }} {{ user.count_community|rupluralize:"сообщество,сообщества,сообществ" }}</h6>
                     <p class="small">нет осоьых</p>
                   </div>
-                  {% for object in get_pop_communities %}
+                  {% for object in user.get_pop_communities %}
                     <figure style="width:50px;border-radius:50px;" class="avatar-50 staked">
                       {% if object.get_avatar %}
                       <img src="{{ object.get_avatar.file|thumbnail_url:'avatar' }}" style="border-radius:50px;" alt="image">
