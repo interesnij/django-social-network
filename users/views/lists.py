@@ -73,7 +73,7 @@ class UserMusicList(ListView):
 		return music_list
 
 class AllPossibleUsersList(ListView):
-	template_name = "possible_list.html"
+	template_name = None
 	model = User
 	paginate_by = 30
 
