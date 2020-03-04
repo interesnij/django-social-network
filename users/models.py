@@ -371,7 +371,7 @@ class User(AbstractUser):
         for frend in frends:
             if frend.get_online():
                 query += [frend,]
-        query_count = query.count()
+        query_count = len(query)
         return query_count
 
     def get_pop_online_connection(self):
