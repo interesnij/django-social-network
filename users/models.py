@@ -368,7 +368,7 @@ class User(AbstractUser):
     def get_pop_communities(self):
         from communities.models import Community
 
-        query = Q(memberships_pk=self.pk)
+        query = Q(memberships_id=self.pk)
         communities = Community.objects.filter(query)
         return communities[0:6]
 
