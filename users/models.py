@@ -368,7 +368,7 @@ class User(AbstractUser):
     def get_pop_communities(self):
         from communities.models import Community
 
-        query = Community.objects.filter(communities_memberships__pk=self.pk)
+        query = Community.objects.filter(memberships__pk=self.pk)
         return query[0:6]
 
     def get_online_connection_count(self):
