@@ -10,7 +10,11 @@
                 Мои друзья ({{ user.count_connections }})
             </button>
             <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; width: 100%;">
+              {% if user.get_online_connection_count != "0" }}
                 <a class="dropdown-item" href="{% url 'online_frends' pk=user.pk %}">Друзья онлайн ({{ user.get_online_connection_count }})</a>
+              {% else %}
+                <a class="dropdown-item">У Вас нет друзей онлайн</a>
+              {% endif %}
                 <a class="dropdown-item" href="{% url 'all_common_users' pk=user.pk %}">Возможные друзья</a>
                 <a class="dropdown-item" href="{% url 'all_users' %}">Найти друзей</a>
             </div>
@@ -20,7 +24,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="input-group mb-3" style="display:flex">
-                    <input type="text" class="form-control" placeholder="Поиск музыки">
+                    <input type="text" class="form-control" placeholder="Поиск друзей">
                     <div class="input-group-append">
                         <button class="btn btn-outline-link" type="button">Искать</button>
                     </div>
