@@ -80,7 +80,7 @@ class AllPossibleUsersList(ListView):
 	def get(self,request,*args,**kwargs):
 		from common.utils import is_mobile
 
-		self.user = User.objects.get(pk=self.kwargs["pk"])
+		self.user = request.user
 		if is_mobile(request):
 			self.template_name = "mob_possible_list.html"
 		else:
@@ -93,7 +93,7 @@ class AllPossibleUsersList(ListView):
 		return context
 
 	def get_queryset(self):
-		possible_list = self.request.user.get_possible_friends()
+		possible_list = self.user.get_possible_friends()
 		return possible_list
 
 class ItemListView(ListView):

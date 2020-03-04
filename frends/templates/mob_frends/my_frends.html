@@ -17,13 +17,9 @@
               {% endif %}
               {% if user.count_followers != 0 %}
                 <a class="dropdown-item ajax" href="{% url 'follows' pk=user.pk %}" data-html="#ajax">Подписчики ({{ user.count_followers }})</a>
-              {% else %}
-                <a class="dropdown-item">У Вас нет подписчиков</a>
               {% endif %}
               {% if user.count_following != 0 %}
-                <a class="dropdown-item ajax" href="{% url 'follows' pk=user.pk %}" data-html="#ajax">Заявки в друзья ({{ user.count_following }})</a>
-              {% else %}
-                <a class="dropdown-item">У Вас нет подписок</a>
+                <a class="dropdown-item ajax" href="{% url 'followings' pk=user.pk %}" data-html="#ajax">Ваших заявки ({{ user.count_following }})</a>
               {% endif %}
                 <a class="dropdown-item ajax" href="{% url 'possible_users' pk=user.pk %}" data-html="#ajax">Возможные друзья</a>
                 <a class="dropdown-item ajax" href="{% url 'all_users' %}" data-html="#ajax">Найти друзей</a>
