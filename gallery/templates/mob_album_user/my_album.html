@@ -1,0 +1,84 @@
+{% extends "base_mobile.html" %}
+{% block title %}{{ album.title }} - мой альбом{% endblock %}
+{% block content %}
+
+<link rel="stylesheet" href="/static/styles/dropzone.css" />
+
+<div class="container-fluid" style="margin-top:30px">
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <h5 class="mt-1">{{ album.title }}</h5>
+            Фото: {{ album.count_photo }}
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="row">
+                <div class="col-12 col-md-6">
+                    <a href="{% url 'user_gallery' pk=user.pk %}" class="btn btn-outline-success ajax" style="margin-bottom:15px;width:100%" type="button">
+                        Моя галерея
+                    </a>
+                </div>
+                {% if not album.album_is_generic %}
+                <div class="col-12 col-md-6">
+                    <button class="u_photos_add btn btn-outline-success" class="btn btn-outline-success" style="margin-bottom:15px;width:100%" type="button">
+                        Добавить фотографии
+                    </button>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-4 main-container">
+    <div id="photos_add_window" style="display:none">
+        <form method="post" action="{% url 'photo_album_add_user' album.pk user.uuid %}" class="dropzone">
+            {% csrf_token %}
+        </form>
+        <br><br>
+    </div>
+
+    <div id="album_photo_load" style="width: 100%;"></div>
+
+</div>
+<script>
+  ready(() => {
+
+  var link_2 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_2.open( 'GET', '/gallery/user/album_photos/{{ user.pk }}/{{ album.uuid }}/', true );
+  link_2.onreadystatechange = function () {
+    if ( link_2.readyState == 4 ) {
+        if ( link_2.status == 200 ) {
+            var photo_load = document.getElementById("album_photo_load");
+            photo_load.innerHTML = link_2.responseText;
+        }
+    }
+  };
+  link_2.send( null );
+
+
+  var page = 2;
+  var loaded = false;
+  onscroll = function(){
+  //  try{
+    var photos2 = document.getElementById("photos_container");
+    if(photos2.querySelectorAll(".u_album_photo_detail").length === (page-1)*30){
+    var height = document.documentElement.clientHeight-1;
+    if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
+      if (loaded){return};
+      var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+      link_3.open( 'GET', '/gallery/user/album_photos/{{ user.pk }}/{{ album.uuid }}/?page=' + page++, true );
+      link_3.send();
+      link_3.onreadystatechange = function () {
+      if ( this.readyState == 4 && this.status == 200 ) {
+        var elem = document.createElement('span');
+        elem.innerHTML = link_3.responseText;
+        if(elem.getElementsByClassName('u_album_photo_detail').length < 30){loaded = true;};
+        photos2.append(elem);
+        }
+      }
+    }}
+//  }catch{return}
+  }
+});
+</script>
+{% endblock %}
