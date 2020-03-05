@@ -20,6 +20,7 @@ class UserPhoto(TemplateView):
     def get(self,request,*args,**kwargs):
         self.user=User.objects.get(uuid=self.kwargs["uuid"])
         self.photo = Photo.objects.get(pk=self.kwargs["pk"])
+        self.photos = self.user.get_photos()
         self.template_name = self.user.get_permission_list_user(folder="photo_user/", template="photo.html", request=request)
         self.form_image = PhotoDescriptionForm(instance=self.photo)
         self.avatar = self.photo.is_avatar(request.user)
@@ -50,6 +51,7 @@ class UserAlbumPhoto(TemplateView):
         self.photo = Photo.objects.get(pk=self.kwargs["pk"])
         self.form_image = PhotoDescriptionForm(instance=self.photo)
         self.avatar = self.photo.is_avatar(request.user)
+        self.photos = self.user.get_photos_for_my_album(album_id=self.album.pk)
         self.template_name = self.user.get_permission_list_user(folder="photo_user/", template="photo.html", request=request)
         self.next = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
         self.prev = self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
@@ -96,6 +98,7 @@ class UserDetailAvatar(TemplateView):
         self.user = User.objects.get(uuid=self.kwargs["uuid"])
         self.photo = Photo.objects.get(pk=self.kwargs["pk"])
         self.form_image = PhotoDescriptionForm(request.POST,instance=self.photo)
+        self.avatar_photos = self.user.get_avatar_photos()
         self.template_name = self.user.get_permission_list_user(folder="photo_user/", template="photo.html", request=request)
         self.next = self.avatar_photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
         self.prev = self.avatar_photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
