@@ -28,11 +28,9 @@
 </style>
 
 {% if albums_list %}
-<div class="row" style="margin-left: 0;margin-right: 0;">
+<div style="margin-left: 0;margin-right: 0;">
     {% for object in albums_list %}
-    <div class="col-sm-12 col-md-6 col-lg-4 cover_block infinite-item">
-
-        <div class="card rounded-0 border-0 mb-4">
+        <div class="card rounded-0 border-0 mb-4" style="flex: 0 0 50%;max-width:50%;padding:5px;">
             <div class="card-header">
                 <div class="media">
                     <div class="media-body" style="white-space:nowrap;overflow:hidden;">
@@ -70,7 +68,6 @@
               </a>
             </div>
         </div>
-    </div>
     {% endfor %}
-</div>
+  </div>
 {% endif %}
