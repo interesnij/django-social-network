@@ -62,7 +62,7 @@ class UserAlbumPhoto(TemplateView):
         context["object"]=self.photo
         context["photos"]=self.photos
         context["user"]=self.user
-        context["next"]=self.next
+        context["next"]=self.next 
         context["prev"]=self.prev
         context["avatar"]=self.avatar
         context["form_image"]=self.form_image
