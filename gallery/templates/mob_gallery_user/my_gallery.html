@@ -3,7 +3,7 @@
 {% block content %}
 
 <div class="container mt-3">
-  <div class="card-header p-0">
+  <div class="card-header p-0" style="margin-bottom:30px">
     <div class="dropdown">
         <button type="button" class="btn btn-secondary dropdown-toggle" style="width:100%;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
             Моя галерея
@@ -17,7 +17,7 @@
 
 {% include 'mob_gallery_user/albums.html' %}
 
-<h5 class="mt-1">Мои фото</h5> 
+<h5 class="mt-1">Мои фото</h5>
   Фото: {{ user.count_photos }}
 
 <div id="photo_load" style="width: 100%;"></div>
