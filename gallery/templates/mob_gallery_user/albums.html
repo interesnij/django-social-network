@@ -28,7 +28,7 @@
 </style>
 
 {% if albums_list %}
-<div style="margin-left: 0;margin-right: 0;">
+<div style="margin-left: 0;margin-right: 0;display: flex;flex-wrap: wrap;">
     {% for object in albums_list %}
         <div class="card rounded-0 border-0 mb-4" style="flex: 0 0 50%;max-width:50%;padding:5px;">
             <div class="card-header">
@@ -53,13 +53,13 @@
               <a href="{% url 'user_album' pk=user.pk uuid=object.uuid %}" class="ajax" data-html="#ajax">
                 {% if object.pk == avatars_album.pk %}
                   {% if object.get_cover_photo_for_avatars %}
-                    <img style="width: 100%;object-fit: cover;height: 200px;" src="{{ object.get_cover_photo_for_avatars.file.url }}" />
+                    <img style="width: 100%;object-fit: cover;height: 100px;" src="{{ object.get_cover_photo_for_avatars.file.url }}" />
                   {% else %}
                     <svg class="svg_default" style="width:100%;height:auto" fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
                   {% endif %}
                 {% else %}
                   {% if object.get_cover_photo %}
-                    <img style="width: 100%;object-fit: cover;height: 200px;" src="{{ object.get_cover_photo.file.url }}" />
+                    <img style="width: 100%;object-fit: cover;height: 100px;" src="{{ object.get_cover_photo.file.url }}" />
                   {% else %}
                     <svg class="svg_default" style="width:100%;height:auto" fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
                   {% endif %}
