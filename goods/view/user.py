@@ -1,7 +1,8 @@
 from django.views.generic import TemplateView
-from goods.models import Good, GoodSubCategory, GoodCategory
+from django.views.generic import ListView
+from goods.models import Good
 from users.models import User
-from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
+from django.http import HttpResponse, HttpResponseBadRequest
 from goods.forms import GoodForm
 from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
 from django.shortcuts import render_to_response
@@ -40,42 +41,30 @@ class UserGoodsList(ListView):
         goods_list = self.user.get_goods().order_by('-created')
         return goods_list
 
-
 class UserGood(TemplateView):
-    template_name="good_user/good.html"
+    template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.user=User.objects.get(uuid=self.kwargs["uuid"])
+        self.user = User.objects.get(uuid=self.kwargs["uuid"])
         self.good = Good.objects.get(pk=self.kwargs["pk"])
-        if self.user != request.user and request.user.is_authenticated:
-            check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
-            if self.user.is_closed_profile():
-                check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
-            self.goods = self.user.get_goods()
-        elif self.user == request.user and request.user.is_authenticated:
-            self.goods = self.user.get_my_goods()
-        elif self.user.is_closed_profile() and request.user.is_anonymous:
-            raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
-        elif not self.user.is_closed_profile() and request.user.is_anonymous:
-            self.goods = self.user.get_goods()
+        self.goods = self.user.get_goods()
+        self.template_name = self.user.get_permission_list_user(folder="good_user/", template="good.html", request=request)
         self.next = self.goods.filter(pk__gt=self.good.pk).order_by('pk').first()
         self.prev = self.goods.filter(pk__lt=self.good.pk).order_by('-pk').first()
         return super(UserGood,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context=super(UserGood,self).get_context_data(**kwargs)
-        context["object"]=self.good
-        context["user"]=self.user
-        context["next"]=self.next
-        context["prev"]=self.prev
+        context["object"] = self.good
+        context["user"] = self.user
+        context["next"] = self.next
+        context["prev"] = self.prev
         return context
 
 
 class GoodUserCreate(TemplateView):
 	template_name="good_user/add.html"
 	form=None
-	sub_categories = GoodSubCategory.objects.only("id")
-	categories = GoodCategory.objects.only("id")
 	success_url="/"
 
 	def get(self,request,*args,**kwargs):
@@ -84,10 +73,12 @@ class GoodUserCreate(TemplateView):
 		return super(GoodUserCreate,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
+        from goods.models import GoodSubCategory, GoodCategory
+
 		context=super(GoodUserCreate,self).get_context_data(**kwargs)
 		context["form"]=self.form
-		context["sub_categories"]=self.sub_categories
-		context["categories"]=self.categories
+		context["sub_categories"]=GoodSubCategory.objects.only("id")
+		context["categories"]=GoodCategory.objects.only("id")
 		context["user"]=self.user
 		return context
 
