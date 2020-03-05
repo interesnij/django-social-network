@@ -22,23 +22,23 @@ class UserGoods(TemplateView):
         return context
 
 class UserGoodsList(ListView):
-	template_name = None
+    template_name = None
     model = Good
-	paginate_by = 30
+    paginate_by = 30
 
-	def get(self,request,*args,**kwargs):
-		self.user = User.objects.get(uuid=self.kwargs["uuid"])
-		self.template_name = self.user.get_permission_list_user(folder="good_user/", template="list.html", request=request)
-		return super(UserGoodsList,self).get(request,*args,**kwargs)
+    def get(self,request,*args,**kwargs):
+        self.user = User.objects.get(uuid=self.kwargs["uuid"])
+        self.template_name = self.user.get_permission_list_user(folder="good_user/", template="list.html", request=request)
+        return super(UserGoodsList,self).get(request,*args,**kwargs)
 
-	def get_context_data(self,**kwargs):
-		context = super(UserGoodsList,self).get_context_data(**kwargs)
-		context['user'] = self.user
-		return context
+    def get_context_data(self,**kwargs):
+        context = super(UserGoodsList,self).get_context_data(**kwargs)
+        context['user'] = self.user
+        return context
 
-	def get_queryset(self):
-		goods_list = self.user.get_goods().order_by('-created')
-		return goods_list
+    def get_queryset(self):
+        goods_list = self.user.get_goods().order_by('-created')
+        return goods_list
 
 
 class UserGood(TemplateView):
