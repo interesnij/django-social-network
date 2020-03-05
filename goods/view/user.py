@@ -89,7 +89,7 @@ class GoodUserCreate(TemplateView):
             new_good=self.form.save(commit=False)
             new_good.creator=self.user
             new_good=self.form.save()
-			html = render_to_string('good_user/good.html',{'object': new_good,'request': request})
+            html = render_to_string('good_user/good.html',{'object': new_good,'request': request})
             return HttpResponse(html)
         else:
             return HttpResponseBadRequest()
