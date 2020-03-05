@@ -3,79 +3,64 @@
 {% block title %}Фотографии {{ user.first_name|gent }} {{ user.last_name|gent }}{% endblock %}
 {% block content %}
 
-<link rel="stylesheet" href="/static/styles/dropzone.css" />
-
-<div class="container-fluid" style="margin-top:30px">
-    <div class="row">
-        <div class="col-12">
-            <h5 class="mt-1">Альбомы
-                <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=user.pk %}" data-html="#ajax">
-                  {{ user.first_name|gent }} {{ user.last_name|gent }} {% if not user.is_album_exists %}- альбомов нет{% endif %}
-                </a>
-            </h5>
-        </div>
+<div class="container mt-3">
+  <div class="card-header p-0" style="margin-bottom:30px">
+    <div class="dropdown">
+        <button type="button" class="btn btn-secondary" style="width:100%;">
+            Галерея {{ user.first_name|gent }} {{ user.last_name|gent }}
+        </button>
     </div>
-</div>
-
-<div class="container mt-4">
-  {% include 'mob_gallery_user/albums.html' %}
-</div>
-
-  <div class="container-fluid" style="margin-top:30px">
-      <div class="row">
-          <div class="col-12">
-              <h5 class="mt-1">Фотографии
-                  <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=user.pk %}" data-html="#ajax">
-                    {{ user.first_name|gent }} {{ user.last_name|gent }}
-                  </a>
-              </h5>
-              Фото: {{ user.count_photos }}
-          </div>
-      </div>
   </div>
 
-  <div class="container mt-4">
-        <div id="photo_load" style="width: 100%;"></div>
-  </div>
+{% include 'mob_gallery_user/albums.html' %}
 
+<div class="media mt-3" style="display:flex;align-items: flex-start">
+  <h5 class="mt-1" style="flex: 1;">Мои фото</h5>
+  <span>Фото: {{ user.count_photos }}</span>
+</div>
+
+<div id="photo_load" style="width: 100%;"></div>
+
+</div>
 <script>
-    ready(() => {
+  ready(() => {
 
-    var link_2 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    link_2.open( 'GET', '/gallery/user/photos/' + '{{ user.uuid }}', true );
-    link_2.onreadystatechange = function () {
-      if ( link_2.readyState == 4 ) {
-          if ( link_2.status == 200 ) {
-              var photo_load = document.getElementById("photo_load");
-              photo_load.innerHTML = link_2.responseText;
-          }
-      }
-    };
-    link_2.send( null );
-
-    var page = 2;
-    var loaded = false;
-    onscroll = function(){
-      try{
-      var photos = document.getElementById("photos_container");
-      if(photos.querySelectorAll(".u_photo_detail").length === (page-1)*30){
-      var height = document.documentElement.clientHeight-1;
-      if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
-        if (loaded){return};
-        var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-        link_3.open( 'GET', '/gallery/user/photos/' + '{{ user.uuid }}/?page=' + page++, true );
-        link_3.send();
-        link_3.onreadystatechange = function () {
-        if ( this.readyState == 4 && this.status == 200 ) {
-          var elem = document.createElement('span');
-          elem.innerHTML = link_3.responseText;
-          if(elem.getElementsByClassName('u_photo_detail').length < 30){loaded = true;};
-          photos.append(elem);
-          }
+  var link_2 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_2.open( 'GET', '/gallery/user/photos/' + '{{ user.uuid }}', true );
+  link_2.onreadystatechange = function () {
+    if ( link_2.readyState == 4 ) {
+        if ( link_2.status == 200 ) {
+            var photo_load = document.getElementById("photo_load");
+            photo_load.innerHTML = link_2.responseText;
         }
-      }}
-    }catch{return}
-  }
-});
+    }
+  };
+  link_2.send( null );
+
+  var page = 2;
+  var loaded = false;
+  onscroll = function(){
+    try{
+    var photos = document.getElementById("photos_container");
+    if(photos.querySelectorAll(".u_photo_detail").length === (page-1)*30){
+    var height = document.documentElement.clientHeight-1;
+    if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
+      if (loaded){return};
+      var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+      link_3.open( 'GET', '/gallery/user/photos/' + '{{ user.uuid }}/?page=' + page++, true );
+      link_3.send();
+      link_3.onreadystatechange = function () {
+      if ( this.readyState == 4 && this.status == 200 ) {
+        var elem = document.createElement('span');
+        elem.innerHTML = link_3.responseText;
+        if(elem.getElementsByClassName('u_photo_detail').length < 30){loaded = true;};
+        photos.append(elem);
+        }
+      }
+    }}
+  }catch{return}
+}
+  });
 </script>
+
 {% endblock %}

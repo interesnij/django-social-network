@@ -3,39 +3,23 @@
 {% block title %}Фотографии {{ user.first_name|gent }} {{ user.last_name|gent }}{% endblock %}
 {% block content %}
 
-<link rel="stylesheet" href="/static/styles/dropzone.css" />
-
-<div class="container-fluid" style="margin-top:30px">
-    <div class="row">
-        <div class="col-12">
-            <h5 class="mt-1">Альбомы
-                <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=user.pk %}" data-html="#ajax">
-                  {{ user.first_name|gent }} {{ user.last_name|gent }} {% if not user.is_album_exists %}- альбомов нет{% endif %}
-                </a>
-            </h5>
-        </div>
+<div class="container mt-3">
+  <div class="card-header p-0" style="margin-bottom:30px">
+    <div class="dropdown">
+        <button type="button" class="btn btn-secondary" style="width:100%;">
+            Галерея {{ user.first_name|gent }} {{ user.last_name|gent }}
+        </button>
     </div>
+  </div>
+
+{% include 'mob_gallery_user/albums.html' %}
+
+<div class="media mt-3" style="display:flex;align-items: flex-start">
+  <h5 class="mt-1" style="flex: 1;">Мои фото</h5>
+  <span>Фото: {{ user.count_photos }}</span>
 </div>
 
-<div class="container mt-4 main-container">
-  {% include 'mob_gallery_user/albums.html' %}
-</div>
-
-<div class="container-fluid" style="margin-top:30px">
-    <div class="row">
-        <div class="col-12">
-            <h5 class="mt-1">Фотографии
-                <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=user.pk %}" data-html="#ajax">
-                  {{ user.first_name|gent }} {{ user.last_name|gent }}
-                </a>
-            </h5>
-            Фото: {{ user.count_photos }}
-        </div>
-    </div>
-</div>
-
-<div class="container mt-4 main-container">
-      <div id="photo_load" style="width: 100%;"></div>
+<div id="photo_load" style="width: 100%;"></div>
 </div>
 
 <script>
@@ -78,4 +62,5 @@
 }
   });
 </script>
+
 {% endblock %}
