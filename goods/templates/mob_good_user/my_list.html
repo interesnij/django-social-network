@@ -1,8 +1,8 @@
 {% load liked_user %}
 
 <div id="goods_container" data-uuid="{{ user.uuid }}" style="margin-left: 0;margin-right: 0;">
-{% if goods_list %}
-{% for object in goods_list %}
+{% if object_list %}
+{% for object in object_list %}
 <div class="u_good_detail" data-id="{{ object.id }}" style="cursor:pointer;flex: 0 0 50%;max-width:50%;padding:5px;">
 
             <div class="align-items-center no-gutters">
@@ -12,7 +12,7 @@
                           {% if object.image %}
                             <img style="width:100%" src="{{ object.image.url }}" alt="">
                           {% else %}
-                            <svg class="svg_default" style="width:100%;height:auto" fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                            <svg class="svg_default" style="width:100%;height:auto" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
                           {% endif %}
                         </div>
                     </div>
