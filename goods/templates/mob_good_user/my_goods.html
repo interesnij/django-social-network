@@ -27,7 +27,7 @@
 <script>
   ready(() => {
     var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    link.open( 'GET', '/goods/user/goods/{{ user.pk }}', true );
+    link.open( 'GET', '/goods/user/goods/{{ user.uuid }}', true );
     link.onreadystatechange = function () {
       if ( link.readyState == 4 ) {
           if ( link.status == 200 ) {
@@ -49,7 +49,7 @@
         if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
           if (loaded){return};
           var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-          link_3.open( 'GET', '/goods/user/goods/{{ user.pk }}/?page=' + page++, true );
+          link_3.open( 'GET', '/goods/user/goods/{{ user.uuid }}/?page=' + page++, true );
           link_3.send();
           link_3.onreadystatechange = function () {
           if ( this.readyState == 4 && this.status == 200 ) {
