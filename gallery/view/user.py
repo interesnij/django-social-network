@@ -6,10 +6,7 @@ from django.views.generic import ListView
 from gallery.forms import AlbumForm, AvatarUserForm
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.views import View
-from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render_to_response
-from rest_framework.exceptions import PermissionDenied
 from common.utils import is_mobile
 
 
@@ -36,22 +33,7 @@ class UserGalleryView(TemplateView):
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.albums_list = self.user.get_albums().order_by('-created')
-        if self.user == request.user:
-            self.template_name="photo_user/gallery/my_gallery.html"
-        elif request.user != self.user and request.user.is_authenticated:
-            if request.user.is_blocked_with_user_with_id(user_id=self.user.id):
-                self.template_name = "photo_user/gallery/block_gallery.html"
-            elif self.user.is_closed_profile():
-                if not request.user.is_connected_with_user_with_id(user_id=self.user.id):
-                    self.template_name = "photo_user/gallery/close_gallery.html"
-                else:
-                    self.template_name = "photo_user/gallery/gallery.html"
-            else:
-                self.template_name = "photo_user/gallery/gallery.html"
-        elif request.user.is_anonymous and self.user.is_closed_profile():
-            self.template_name = "photo_user/gallery/close_gallery.html"
-        elif request.user.is_anonymous and not self.user.is_closed_profile():
-            self.template_name = "photo_user/gallery/anon_gallery.html"
+        self.template_name = self.user.get_template_user(folder="gallery_user/", template="gallery.html", request=request)
         return super(UserGalleryView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -66,22 +48,7 @@ class UserAlbumView(TemplateView):
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.album = Album.objects.get(uuid=self.kwargs["uuid"])
-        if self.user == request.user:
-            self.template_name="photo_user/album/my_album.html"
-        elif request.user != self.user and request.user.is_authenticated:
-            if request.user.is_blocked_with_user_with_id(user_id=self.user.id):
-                self.template_name = "photo_user/album/block_album.html"
-            elif self.user.is_closed_profile():
-                if not request.user.is_connected_with_user_with_id(user_id=self.user.id):
-                    self.template_name = "photo_user/album/close_album.html"
-                else:
-                    self.template_name = "photo_user/album/album.html"
-            else:
-                self.template_name = "photo_user/album/album.html"
-        elif request.user.is_anonymous and self.user.is_closed_profile():
-            self.template_name = "photo_user/album/close_album.html"
-        elif request.user.is_anonymous and not self.user.is_closed_profile():
-            self.template_name = "photo_user/album/anon_album.html"
+        self.template_name = self.user.get_template_user(folder="album_user/", template="gallery.html", request=request)
         return super(UserAlbumView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -212,63 +179,42 @@ class AlbumUserCreate(TemplateView):
             return HttpResponseBadRequest()
         return super(AlbumUserCreate,self).get(request,*args,**kwargs)
 
-class UserPhotosList(View):
-    """
-    СПИСОК ВСЕХ ФОТОГРАФИЙ ПОЛЬЗОВАТЕЛЯ С РАЗНЫМИ РАЗРЕШЕНИЯМИ
-    """
-    def get(self,request,**kwargs):
-        context = {}
+
+class UserPhotosList(ListView):
+    template_name = None
+    model = Photo
+    paginate_by = 30
+
+    def get(self,request,*args,**kwargs):
         self.user = User.objects.get(uuid=self.kwargs["uuid"])
-        if self.user != request.user and request.user.is_authenticated:
-            check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
-            if self.user.is_closed_profile():
-                check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
-            photo_list = self.user.get_photos().order_by('-created')
-        elif request.user.is_anonymous and self.user.is_closed_profile():
-            raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.',)
-        elif request.user.is_anonymous and not self.user.is_closed_profile():
-            photo_list = self.user.get_photos().order_by('-created')
-        elif self.user == request.user:
-            photo_list = self.user.get_my_photos().order_by('-created')
-        current_page = Paginator(photo_list, 30)
-        page = request.GET.get('page')
+        self.template_name = self.user.get_permission_list_user(folder="gallery_user/", template="list.html", request=request)
+        return super(UserPhotosList,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(UserPhotosList,self).get_context_data(**kwargs)
         context['user'] = self.user
-        try:
-            context['photo_list'] = current_page.page(page)
-        except PageNotAnInteger:
-            context['photo_list'] = current_page.page(1)
-        except EmptyPage:
-            context['photo_list'] = current_page.page(current_page.num_pages)
-        return render_to_response('photo_user/photos.html', context)
+        return context
 
+    def get_queryset(self):
+        photo_list = self.user.get_photos().order_by('-created')
+        return photo_list
 
-class UserAlbumPhotosList(View):
-    """
-    СПИСОК ВСЕХ ФОТОГРАФИЙ АЛЬБОМА ПОЛЬЗОВАТЕЛЯ С РАЗНЫМИ РАЗРЕШЕНИЯМИ
-    """
-    def get(self,request,**kwargs):
-        context = {}
-        self.user = User.objects.get(pk=self.kwargs["pk"])
+class UserAlbumPhotosList(ListView):
+    template_name = None
+    model = Photo
+    paginate_by = 30
+
+    def get(self,request,*args,**kwargs):
+        self.user = User.objects.get(uuid=self.kwargs["uuid"])
         self.album = Album.objects.get(uuid=self.kwargs["uuid"])
-        if self.user != request.user and request.user.is_authenticated:
-            check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
-            if self.user.is_closed_profile():
-                check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
-            photo_list = self.user.get_photos_for_album(album_id=self.album.pk)
-        elif request.user.is_anonymous and self.user.is_closed_profile():
-            raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.',)
-        elif request.user.is_anonymous and not self.user.is_closed_profile():
-            photo_list = self.user.get_photos_for_album(album_id=self.album.pk)
-        elif self.user == request.user:
-            photo_list = self.user.get_photos_for_album(album_id=self.album.pk)
-        current_page = Paginator(photo_list, 30)
-        page = request.GET.get('page')
+        self.template_name = self.user.get_permission_list_user(folder="album_user/", template="list.html", request=request)
+        return super(UserAlbumPhotosList,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(UserAlbumPhotosList,self).get_context_data(**kwargs)
         context['user'] = self.user
-        context['album'] = self.album
-        try:
-            context['photo_list'] = current_page.page(page)
-        except PageNotAnInteger:
-            context['photo_list'] = current_page.page(1)
-        except EmptyPage:
-            context['photo_list'] = current_page.page(current_page.num_pages)
-        return render_to_response('photo_user/album_photos.html', context)
+        return context
+
+    def get_queryset(self):
+        photo_list = self.user.get_photos().order_by('-created')
+        return photo_list
