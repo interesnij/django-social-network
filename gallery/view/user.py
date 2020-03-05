@@ -201,11 +201,10 @@ class UserPhotosList(ListView):
 
 class UserAlbumPhotosList(ListView):
     template_name = None
-    model = Photo
     paginate_by = 30
 
     def get(self,request,*args,**kwargs):
-        self.user = User.objects.get(pk=self.kwargs["pk"]) 
+        self.user = User.objects.get(pk=self.kwargs["pk"])
         self.album = Album.objects.get(uuid=self.kwargs["uuid"])
         self.template_name = self.user.get_permission_list_user(folder="album_user/", template="list.html", request=request)
         return super(UserAlbumPhotosList,self).get(request,*args,**kwargs)
@@ -216,5 +215,5 @@ class UserAlbumPhotosList(ListView):
         return context
 
     def get_queryset(self):
-        photo_list = self.user.get_photos().order_by('-created')
+        photo_list = self.user.get_photos_for_album(album_id=self.album.pk).order_by('-created')
         return photo_list
