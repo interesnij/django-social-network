@@ -17,9 +17,9 @@
 
 {% include 'mob_gallery_user/albums.html' %}
 
-<div class="">
+<div style="display:flex;">
   <h5 class="mt-1">Мои фото</h5>
-  Фото: {{ user.count_photos }}
+  <span>Фото: {{ user.count_photos }}</span>
 </div>
 
 <div id="photo_load" style="width: 100%;"></div>
