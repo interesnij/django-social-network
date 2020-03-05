@@ -104,7 +104,7 @@
   <script>
     {% if prev %}
     $('.prev_item').on('click', function () {uuid = "{{ user.uuid }}";pk = "{{ prev.pk }}";$('#photo_loader').html('').load("/gallery/load/u_photo/" + pk + "/" + uuid + "/");});
-    {% endif %}
+    {% endif %} 
     {% if next %}
      $('.next_item').on('click', function () {uuid = "{{ user.uuid }}";pk = "{{ next.pk }}";$('#photo_loader').html('').load("/gallery/load/u_photo/" + pk + "/" + uuid + "/");});
    {% endif %}

@@ -103,9 +103,9 @@
 
   <script>
     {% if prev %}
-    $('.prev_item').on('click', function () {uuid = "{{ user.uuid }}"; album_uuid = "{{ album.uuid }}"; pk = "{{ prev.pk }}";$('#photo_loader').html('').load("/gallery/load/u_photo/" + pk + "/" + uuid + "/" + album_uuid + "/");});
+    $('.prev_item').on('click', function () {uuid = "{{ user.uuid }}"; album_uuid = "{{ album.uuid }}"; pk = "{{ prev.pk }}";$('#photo_loader').html('').load("/gallery/load/u_album_photo/" + pk + "/" + uuid + "/" + album_uuid + "/");});
     {% endif %}
     {% if next %}
-     $('.next_item').on('click', function () {uuid = "{{ user.uuid }}"; album_uuid = "{{ album.uuid }}"; pk = "{{ next.pk }}";$('#photo_loader').html('').load("/gallery/load/u_photo/" + pk + "/" + uuid + "/" + album_uuid + "/");});
+     $('.next_item').on('click', function () {uuid = "{{ user.uuid }}"; album_uuid = "{{ album.uuid }}"; pk = "{{ next.pk }}";$('#photo_loader').html('').load("/gallery/load/u_album_photo/" + pk + "/" + uuid + "/" + album_uuid + "/");});
    {% endif %}
   </script>
