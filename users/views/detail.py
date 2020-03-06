@@ -44,6 +44,20 @@ class UserCommunities(TemplateView):
         context['user'] = self.user
         return context
 
+class UserMobStaffed(TemplateView):
+    template_name = None
+
+    def get(self,request,*args,**kwargs):
+        self.user=User.objects.get(pk=self.kwargs["pk"])
+        if self.user == request.user:
+            self.template_name = "mob_user_community/staffed.html"
+        return super(UserMobStaffed,self).get(request,*args,**kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(UserMobStaffed, self).get_context_data(**kwargs)
+        context['user'] = self.user
+        return context
+
 class UserMusic(TemplateView):
     template_name = None
 
