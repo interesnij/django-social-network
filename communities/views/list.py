@@ -5,17 +5,17 @@ from common.utils import is_mobile
 
 
 class CommunityMembersView(ListView):
-	template_name="members.html"
-	model=Community
-	paginate_by=30
+	template_name = None
+	model = Community
+	paginate_by = 30
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		return super(CommunityMembersView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context=super(CommunityMembersView,self).get_context_data(**kwargs)
-		context["community"]=self.community
+		context = super(CommunityMembersView,self).get_context_data(**kwargs)
+		context["community"] = self.community
 		return context
 
 	def get_queryset(self):
@@ -26,11 +26,11 @@ class CommunityMembersView(ListView):
 			membersheeps = None
 			self.template_name = "c_detail/private_community.html"
 		else:
-			membersheeps=self.community.get_community_with_name_members(self.community.name)
-			self.template_name="mob_" + self.template_name
-		MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
+			membersheeps = self.community.get_community_with_name_members(self.community.name)
+			self.template_name = "c_detail/members.html"
+		MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 		if MOBILE_AGENT_RE.match(self.request.META['HTTP_USER_AGENT']):
-			self.template_name = self.template_name
+			self.template_name = "mob_" + self.template_name
 		return membersheeps
 
 
