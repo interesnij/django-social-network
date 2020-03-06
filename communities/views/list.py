@@ -31,6 +31,7 @@ class CommunityMembersView(ListView):
 		MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 		if MOBILE_AGENT_RE.match(self.request.META['HTTP_USER_AGENT']):
 			self.template_name = "mob_" + self.template_name
+		self.template_name = "mob_" + self.template_name
 		return membersheeps
 
 
