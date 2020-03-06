@@ -21,9 +21,14 @@
     transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   }
   .btn-secondary {
-      color: #fff;
+      color: #fff !important;
       background-color: #6c757d;
       border-color: #6c757d;
+  }
+  .btn-secondary:hover {
+      color: #fff !important;
+      background-color: #5a6268;
+      border-color: #545b62;
   }
 .card {
   position: relative;
