@@ -27,9 +27,8 @@
                 {% endif %}
                 <br><br>
                 <span>
-                  Нужно <a href="{% url 'main' %}" style="text-decoration:underline;" class="ajax" data-html="#ajax"> войти </a> или
-                  <a href="{% url 'main' %}" style="text-decoration:underline;" class="ajax" data-html="#ajax">
-                    создать аккаунт</a> для вступления в сообщество
+                  Нужно <a href="{% url 'main' %}" style="text-decoration:underline;" class="ajax" data-html="#ajax">войти</a> или
+                  <a href="{% url 'main' %}" style="text-decoration:underline;" class="ajax" data-html="#ajax">создать аккаунт</a> для вступления в сообщество
                 </span>
 
                 <ul class="list-group w-100 mt-3">
@@ -58,7 +57,7 @@
                 </ul>
             </div>
           </div>
-          <div class="card">
+          <div class="card" style="margin-bottom:30px">
             <a href="{% url 'community_members' pk=community.pk %}" class="ajax" data-html="#ajax">
               <div class="card-body py-2">
                   <div class="media">
