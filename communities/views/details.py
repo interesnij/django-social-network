@@ -24,7 +24,7 @@ class ItemsCommunity(ListView):
 	def get_context_data(self,**kwargs):
 		context = super(ItemsCommunity,self).get_context_data(**kwargs)
 		context['object'] = fixed
-        context["community"]=community
+		context["community"]=community
 		return context
 
 	def get_queryset(self):
