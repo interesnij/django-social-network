@@ -27,11 +27,11 @@
                 {% endif %}
                 <br><br>
                 <span style="display:flex;flex-wrap: wrap">
-                  <span style="flex: 0 0 50%;max-width:50%;padding:5px;">
-                    <a class="btn btn-sm btn-secondary ajax" href="{% url 'community_general_form' pk=community.pk %}" data-html="#ajax">Управление</a>
+                  <span style="flex: 0 0 50%;max-width:50%;padding:5px;display: flex;justify-content: center;">
+                    <a class="btn btn-secondary ajax" href="{% url 'community_general_form' pk=community.pk %}" data-html="#ajax">Управление</a>
                   </span>
-                  <span style="flex: 0 0 50%;max-width:50%;padding:5px;">
-                    <a class="btn btn-sm btn-secondary member_delete" style="cursor:pointer" data-id="{{ community.pk }}">Отписаться</a>
+                  <span style="flex: 0 0 50%;max-width:50%;padding:5px;display: flex;justify-content: center;">
+                    <a class="btn btn-secondary member_delete" style="cursor:pointer" data-id="{{ community.pk }}">Отписаться</a>
                   </span>
                 </span>
 
@@ -42,14 +42,14 @@
                               <svg class="svg_info svg_default" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
                             </div>
                             <div class="media-body">
-                              <h6 class="my-0 content-color-primary" style="margin-right:10px">Описание</h6>
+                              <h6 class="my-0 content-color-primary">Описание</h6>
                                 <p>{% if community.description %}{{ community.description }}{% else %}Добавьте описание сообщества{% endif %}</p>
                             </div>
                         </div>
                     </li>
                     <li class="list-group-item px-0">
                         <div class="media experience">
-                            <div class="icon-circle icon-40 bg-light-secondary mr-3">
+                            <div class="icon-circle icon-40 bg-light-secondary" style="margin-right:10px">
                               <svg class="svg_info svg_default" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
                             </div>
                             <div class="media-body">
