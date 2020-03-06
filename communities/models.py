@@ -275,8 +275,8 @@ class Community(models.Model):
 
         MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            template_name = template_name
-        return "mob_" + template_name
+            template_name = "mob_" + template_name
+        return template_name
 
     @classmethod
     def get_trending_communities(cls, category_name=None):
