@@ -3,40 +3,29 @@
 {% block title %}Сообщества {{ user.first_name|gent }} {{ user.last_name|gent }}{% endblock %}
 {% block content %}
 
-<div class="row">
-    <div class="col-12 col-md-8">
-        <br>
-        <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Поиск сообществ" aria-label="Recipient's username">
-            <div class="input-group-append">
-                <button class="btn btn-outline-link" type="button">Искать</button>
-            </div>
-        </div>
-
-        <div class="card mb-2">
-            <div class="card-header">
-                <div class="media">
-                    <div class="media-body"><h5 class="mt-1">Сообщества {{ user.first_name|gent }} {{ user.last_name|gent }}</h5></div>
+<div class="container mt-3">
+    <div class="card-header p-0">
+      <div class="dropdown">
+          <button type="button" class="btn btn-secondary" style="width:100%;">
+            Сообщества {{ user.first_name|gent }} {{ user.last_name|gent }} ({{ user.count_community }})
+          </button>
+      </div>
+    </div>
+    <div class="card mb-2">
+        <div class="card">
+            <div class="card-body">
+                <div class="input-group mb-3" style="display:flex">
+                    <input type="text" class="form-control" placeholder="Поиск сообществ">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-link" type="button">Искать</button>
+                    </div>
                 </div>
-            </div>
-
-            <div class="card-body px-0 py-0">
                 <span id="load_cat_list"></span>
             </div>
         </div>
     </div>
-
-    <div class="col-12 col-md-4">
-        <br>
-        <div class="card mb-2">
-            <div class="card-header">
-                <div class="media">
-                    <div class="media-body"><h5 class="mt-1"><a href="{% url 'all_communities' %}" data-html="#ajax" class="ajax">Все группы</a></h5></div>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
+
 <script>
   ready(() => {
     var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
