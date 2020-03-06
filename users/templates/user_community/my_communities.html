@@ -3,7 +3,7 @@
 {% load thumbnail liked_user %}
 {% block content %}
 
-{% if user.get_staffed_communities %}
+{% if user.is_staffed_user %}
 <div class="row">
         <div class="col-12 col-md-8">
           <br>
@@ -166,7 +166,9 @@
     }catch{return}
     }
 </script>
+
 {% else %}
+
 <div class="row">
     <div class="col-12 col-md-8">
         <br>
@@ -275,5 +277,6 @@
   }catch{return}
   }
 </script>
+
 {% endif %}
 {% endblock %}
