@@ -27,10 +27,10 @@ class CommunityMembersView(ListView):
 			self.template_name = "c_detail/private_community.html"
 		else:
 			membersheeps=self.community.get_community_with_name_members(self.community.name)
-			self.template_name="c_detail/members.html"
+			self.template_name="mob_" + self.template_name
 		MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 		if MOBILE_AGENT_RE.match(self.request.META['HTTP_USER_AGENT']):
-			self.template_name = "mob_" + self.template_name
+			self.template_name = self.template_name
 		return membersheeps
 
 
