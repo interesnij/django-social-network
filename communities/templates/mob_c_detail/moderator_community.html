@@ -1,5 +1,6 @@
 {% extends "base_mobile.html" %}
 {% block title %}{{ community.name }} - Вы модератор{% endblock %}
+{% load liked_user thumbnail %}
 {% block content %}
 
 {% if community.cover %}
