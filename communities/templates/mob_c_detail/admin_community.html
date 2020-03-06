@@ -60,7 +60,8 @@
                     </li>
                 </ul>
             </div>
-
+          </div>
+          <div class="card mb-4">
             <a href="{% url 'community_members' pk=community.pk %}" class="ajax" data-html="#ajax">
               <div class="card-body py-2">
                   <div class="media">
@@ -80,7 +81,7 @@
                   </div>
               </div>
             </a>
-        </div>
+          </div>
 </div>
 
       {% include 'detail_sections/new_post.html' %}
