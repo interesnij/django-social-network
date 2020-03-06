@@ -38,7 +38,7 @@ class UserCommunities(TemplateView):
         self.user=User.objects.get(pk=self.kwargs["pk"])
         self.template_name = self.user.get_template_user(folder="user_community/", template="communities.html", request=request)
         if request.user.get_staffed_communities():
-            self.template_name = "my_communities_with_staffed.html"
+            self.template_name = "user_community/my_communities_with_staffed.html"
         return super(UserCommunities,self).get(request,*args,**kwargs)
 
     def get_context_data(self, **kwargs):
