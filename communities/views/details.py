@@ -1,57 +1,35 @@
-from django.views.generic.detail import DetailView
 from django.views.generic.base import TemplateView
 from main.models import Item
 from communities.models import Community, CommunityMembership
 from follows.models import CommunityFollow
 from common.checkers import check_can_get_posts_for_community_with_name
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.views import View
-from django.shortcuts import render_to_response
+from django.views.generic import ListView
 from rest_framework.exceptions import PermissionDenied
 from common.utils import is_mobile
 
 
-class ItemsCommunity(View):
-    def get(self,request,*args,**kwargs):
-        context = {}
-        template_name = None
-        community=Community.objects.get(pk=self.kwargs["pk"])
+class ItemsCommunity(ListView):
+	template_name = None
+	paginate_by = 30
+
+	def get(self,request,*args,**kwargs):
+		self.community=Community.objects.get(pk=self.kwargs["pk"])
+		self.template_name = self.community.get_template_list(folder="c_lenta/", template="list.html", request=request)
         try:
             fixed = Item.objects.get(community=community, is_fixed=True)
         except:
             fixed = None
+		return super(ItemsCommunity,self).get(request,*args,**kwargs)
 
-        if request.user.is_authenticated and request.user.is_member_of_community_with_name(community.name):
-            if request.user.is_moderator_of_community_with_name(community.name):
-                template_name = "detail_sections/moderator_list.html"
-                item_list = community.get_posts().order_by('-created')
-            elif request.user.is_administrator_of_community_with_name(community.name):
-                template_name = "detail_sections/admin_list.html"
-                item_list = community.get_posts().order_by('-created')
-            elif request.user.is_editor_of_community_with_name(community.name):
-                template_name = "detail_sections/editor_list.html"
-                item_list = community.get_posts().order_by('-created')
-            else:
-                template_name = "detail_sections/list.html"
-                item_list = community.get_posts().order_by('-created')
-        elif request.user.is_authenticated and community.is_public():
-            template_name = "detail_sections/list.html"
-            item_list = community.get_posts().order_by('-created')
-        elif request.user.is_anonymous and community.is_public():
-            template_name = "detail_sections/anon_list.html"
-            item_list = community.get_posts().order_by('-created')
-        current_page = Paginator(item_list, 30)
-        page = request.GET.get('page')
-        context['object'] = fixed
+	def get_context_data(self,**kwargs):
+		context = super(ItemsCommunity,self).get_context_data(**kwargs)
+		context['object'] = fixed
         context["community"]=community
-        context['request_user'] = request.user
-        try:
-            context['items_list'] = current_page.page(page)
-        except PageNotAnInteger:
-            context['items_list'] = current_page.page(1)
-        except EmptyPage:
-            context['items_list'] = current_page.page(current_page.num_pages)
-        return render_to_response(template_name, context)
+		return context
+
+	def get_queryset(self):
+		item_list=self.community.get_posts().order_by('-created')
+		return item_list
 
 
 class ItemCommunity(TemplateView):

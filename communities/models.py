@@ -278,6 +278,27 @@ class Community(models.Model):
             template_name = "mob_" + template_name
         return template_name
 
+    def get_template_list(self, folder, template, request):
+        import re
+
+        if request.user.is_authenticated and request.user.is_member_of_community_with_name(self.name):
+            if request.user.is_moderator_of_community_with_name(self.name):
+                template_name = folder + "moderator_" + template
+            elif request.user.is_administrator_of_community_with_name(self.name):
+                template_name = folder + "admin_" + template
+            elif request.user.is_editor_of_community_with_name(self.name):
+                template_name = folder + "editor_" + template
+            else:
+                template_name = folder + template
+        elif request.user.is_authenticated and self.is_public():
+            template_name = folder + template
+        elif request.user.is_anonymous and self.is_public():
+            template_name = folder + "anon_" + template
+        MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+            template_name = "mob_" + template_name
+        return template_name
+
     @classmethod
     def get_trending_communities(cls, category_name=None):
         trending_communities_query = cls._make_trending_communities_query(category_name=category_name)
