@@ -686,9 +686,6 @@ body.dragging * {
 }
 
 @media screen and (max-width: 640px) {
-  .experience {
-    display: block;
-  }
   .experience .icon-40 {
     margin-bottom: 15px;
   }
