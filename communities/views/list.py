@@ -19,8 +19,18 @@ class CommunityMembersView(ListView):
 		return context
 
 	def get_queryset(self):
+		import re
+
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		membersheeps=self.community.get_community_with_name_members(self.community.name)
+		if self.community.is_private() and not self.request.user.is_member_of_community_with_name(self.name):
+			membersheeps = None
+			self.template_name = "c_detail/private_community.html"
+		else:
+			membersheeps=self.community.get_community_with_name_members(self.community.name)
+			self.template_name="c_detail/members.html"
+		MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+            self.template_name = "mob_" + self.template_name
 		return membersheeps
 
 
