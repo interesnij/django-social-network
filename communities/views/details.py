@@ -102,7 +102,6 @@ class CommunityDetail(TemplateView):
             self.common_friends = request.user.get_common_friends_of_community(self.community.pk)[0:6]
         except:
             self.common_friends = None
-
         self.template_name = self.community.get_template(folder="c_detail/", template="community.html", request=request)
         return super(CommunityDetail,self).get(request,*args,**kwargs)
 

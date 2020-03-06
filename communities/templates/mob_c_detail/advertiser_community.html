@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base_mobile.html" %}
 {% block title %}{{ community.name }} - Вы рекламодатель{% endblock %}
 {% block content %}
 
@@ -62,7 +62,7 @@
                             Вы подписаны
                         </button>
                         <div class="dropdown-menu" x-placement="bottom-start">
-                            <span style="cursor:pointer" data-id="{{ community.pk }}" class="dropdown-item member_delete" href="">Отписаться</span>
+                            <span style="cursor:pointer" data-id="{{ community.pk }}" class="dropdown-item member_delete">Отписаться</span>
                         </div>
                     </div>
 
