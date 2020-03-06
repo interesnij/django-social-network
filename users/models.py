@@ -236,7 +236,7 @@ class User(AbstractUser):
         return self.created_communities.filter(name=community_name).exists()
 
     def is_staffed_user(self):
-        return self.communities_memberships.filter(Q(memberships__user=self, memberships__is_administrator=True) | Q(memberships__user=self, memberships__is_moderator=True) | Q(memberships__user=self, memberships__is_editor=True)).exists()
+        return self.communities_memberships.filter(Q(is_administrator=True) | Q(is_moderator=True) | Q(is_editor=True)).exists()
 
     def is_staff_of_community_with_name(self, community_name):
         return self.is_administrator_of_community_with_name(community_name=community_name) or self.is_moderator_of_community_with_name(community_name=community_name) or self.is_editor_of_community_with_name(community_name=community_name) or self.is_advertiser_of_community_with_name(community_name=community_name)
