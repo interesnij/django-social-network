@@ -19,7 +19,7 @@
                 <h3 class="mb-2">{{ community.name }}</h3>
                 {% if community.status %}<p class="">{{ community.status }}</p>{% else %}<p class="">Добавьте статус сообщества</p>{% endif %}
                 <br>
-                Вы админ сообщества
+
                 {% if community.get_avatar %}
                   <img src="{{ community.get_avatar.file.url }}" alt="" style="width:100%" class="rounded box-shadow-large">
                 {% else %}
