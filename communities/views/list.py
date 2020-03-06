@@ -35,23 +35,33 @@ class CommunityMembersView(ListView):
 
 
 class CommunityFriendsView(ListView):
-	template_name="friends.html"
-	model=Community
-	paginate_by=30
+	template_name = None
+	model = Community
+	paginate_by = 30
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		return super(CommunityFriendsView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context=super(CommunityFriendsView,self).get_context_data(**kwargs)
-		context["community"]=self.community
+		context = super(CommunityFriendsView,self).get_context_data(**kwargs)
+		context["community"] = self.community
 		return context
 
 	def get_queryset(self):
+		import re
+
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		friends=self.request.user.get_common_friends_of_community(self.community.pk)
-		return friends
+		if self.community.is_private() and not self.request.user.is_member_of_community_with_name(self.name):
+			frends = None
+			self.template_name = "c_detail/private_community.html"
+		else:
+			frends = self.community.get_common_frends_of_community(self.community.name)
+			self.template_name = "c_detail/frends.html"
+		MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
+		if MOBILE_AGENT_RE.match(self.request.META['HTTP_USER_AGENT']):
+			self.template_name = "mob_" + self.template_name
+		return frends
 
 
 class AllCommunities(ListView):

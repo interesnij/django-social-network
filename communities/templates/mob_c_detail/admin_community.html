@@ -69,7 +69,7 @@
                         <h6 class="my-0 text-truncated">{{ community.count_members }} {{ community.count_members|rupluralize:"подписчик,подписчика,подписчиков" }}</h6>
                         <p class="small">0 друзей</p>
                       </div>
-                      {% for object in membersheeps %} 
+                      {% for object in membersheeps %}
                         <figure style="width:50px;border-radius:50px;" class="avatar-50 staked">
                           {% if object.get_avatar %}
                           <img src="{{ object.get_avatar.file|thumbnail_url:'avatar' }}" style="border-radius:50px;" alt="image">
