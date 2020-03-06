@@ -13,7 +13,6 @@ class UserCommunitiesList(ListView):
 	def get(self,request,*args,**kwargs):
 		self.user=User.objects.get(uuid=self.kwargs["uuid"])
 		self.popular_list = Community.get_trending_communities_for_user_with_id(user_id=self.user.pk)
-		self.template_name = self.user.get_permission_list_user(folder="user_community/", template="communities_list.html", request=request)
 		communities_list = Community.objects.filter(memberships__user__id=self.user.pk)
 		self.user=User.objects.get(uuid=self.kwargs["uuid"])
 		self.template_name = self.user.get_template_list_user(folder="user_community/", template="list.html", request=request)
