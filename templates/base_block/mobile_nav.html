@@ -63,17 +63,5 @@
             </a>
         </li>
     </ul>
-
-
-    {% else %}
-    Нужно
-    <a href="{% url 'main' %}" style="text-decoration:underline;" class="ajax" data-html="#ajax">
-      войти
-    </a>
-    или
-    <a href="{% url 'main' %}" style="text-decoration:underline;" class="ajax" data-html="#ajax">
-      зарегистрироваться
-    </a>
-    для полного доступа к функциям сайта
-    {% endif %}
+{% endif %}
 </div>
