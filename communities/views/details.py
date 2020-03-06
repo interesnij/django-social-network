@@ -15,10 +15,10 @@ class ItemsCommunity(ListView):
 	def get(self,request,*args,**kwargs):
 		self.community=Community.objects.get(pk=self.kwargs["pk"])
 		self.template_name = self.community.get_template_list(folder="c_lenta/", template="list.html", request=request)
-        try:
-            fixed = Item.objects.get(community=community, is_fixed=True)
-        except:
-            fixed = None
+		try:
+			fixed = Item.objects.get(community=community, is_fixed=True)
+		except:
+			fixed = None
 		return super(ItemsCommunity,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
