@@ -238,6 +238,46 @@ class Community(models.Model):
             avatar = None
         return avatar
 
+    def get_template(self, folder, template, request):
+        import re
+
+        if request.user.is_authenticated and request.user.is_member_of_community_with_name(self.name):
+            if request.user.is_moderator_of_community_with_name(self.name):
+                template_name = folder + "moderator_" + template
+            elif request.user.is_administrator_of_community_with_name(self.name):
+                template_name = folder + "admin_" + template
+            elif request.user.is_editor_of_community_with_name(self.name):
+                template_name = folder + "editor_" + template
+            elif request.user.is_advertiser_of_community_with_name(self.name):
+                template_name = folder + "advertiser_" + template
+            elif request.user.is_star_from_community_with_name(self.name):
+                template_name = folder + "star_" + template
+            else:
+                template_name = folder + "member_" + template
+        elif request.user.is_authenticated and request.user.is_follow_from_community_with_name(self.pk):
+            template_name = folder + "follow_" + template
+        elif request.user.is_authenticated and request.user.is_banned_from_community_with_name(self.name):
+            template_name = folder + "block_" + template
+
+        elif request.user.is_authenticated and self.is_public():
+            template_name = folder + "public_" + template
+        elif request.user.is_authenticated and self.is_closed():
+            template_name = folder + "close_" + template
+        elif request.user.is_authenticated and self.is_private():
+            template_name = folder + "private_" + template
+
+        elif request.user.is_anonymous and self.is_public():
+            template_name = folder + "anon_public_" + template
+        elif self.is_closed and request.user.is_anonymous():
+            template_name = folder + "anon_close_" + template
+        elif request.user.is_anonymous and self.is_private():
+            template_name = folder + "anon_private_" + template
+
+        MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+            template_name = "mob_" + template_name
+        return template_name
+
     @classmethod
     def get_trending_communities(cls, category_name=None):
         trending_communities_query = cls._make_trending_communities_query(category_name=category_name)

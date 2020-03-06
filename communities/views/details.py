@@ -97,43 +97,13 @@ class CommunityDetail(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.membersheeps=self.community.get_community_with_name_members(self.community.name)[0:5]
+        self.membersheeps=self.community.get_community_with_name_members(self.community.name)[0:6]
         try:
-            self.common_friends = request.user.get_common_friends_of_community(self.community.pk)[0:5]
+            self.common_friends = request.user.get_common_friends_of_community(self.community.pk)[0:6]
         except:
             self.common_friends = None
 
-        if request.user.is_authenticated and request.user.is_member_of_community_with_name(self.community.name):
-            if request.user.is_moderator_of_community_with_name(self.community.name):
-                self.template_name = "c_detail/moderator_community.html"
-            elif request.user.is_administrator_of_community_with_name(self.community.name):
-                self.template_name = "c_detail/admin_community.html"
-            elif request.user.is_editor_of_community_with_name(self.community):
-                self.template_name = "c_detail/editor_community.html"
-            elif request.user.is_advertiser_of_community_with_name(self.community.name):
-                self.template_name = "c_detail/advertiser_community.html"
-            elif request.user.is_star_from_community_with_name(self.community.name):
-                self.template_name = "c_detail/star_community.html"
-            else:
-                self.template_name = "c_detail/member_community.html"
-        elif request.user.is_authenticated and request.user.is_follow_from_community_with_name(self.community.pk):
-            self.template_name = "c_detail/follow_community.html"
-        elif request.user.is_authenticated and request.user.is_banned_from_community_with_name(self.community):
-            self.template_name = "c_detail/block_community.html"
-
-        elif request.user.is_authenticated and self.community.is_public():
-            self.template_name = "c_detail/public_community.html"
-        elif request.user.is_authenticated and self.community.is_closed():
-            self.template_name = "c_detail/close_community.html"
-        elif request.user.is_authenticated and self.community.is_private():
-            self.template_name = "c_detail/private_community.html"
-
-        elif request.user.is_anonymous and self.community.is_public():
-            self.template_name = "c_detail/anon_public_community.html"
-        elif self.community.is_closed and request.user.is_anonymous():
-            self.template_name = "c_detail/anon_close_community.html"
-        elif request.user.is_anonymous and self.community.is_private():
-            self.template_name = "c_detail/private_community.html"
+        self.template_name = self.community.get_template(folder="c_detail/", template="community.html", request=request)
         return super(CommunityDetail,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
