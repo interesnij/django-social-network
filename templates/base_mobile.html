@@ -39,11 +39,13 @@
            {% endblock %}
 
            {% include "base_block/fullscreens.html" %}
-           {% include "base_block/mobile_nav.html" %}
+           {% if request.user.is_authenticated %}
+            {% include "base_block/mobile_nav.html" %}
+           {% endif %}
 				</div>
-        {% if request.user.is_authenticated %}
-         {% include "base_block/mobile_tab.html" %}
-        {% endif %}
+          {% if request.user.is_authenticated %}
+            {% include "base_block/mobile_tab.html" %}
+          {% endif %}
     </div>
 
     {% include "mobile_base_scripts.html" %}
