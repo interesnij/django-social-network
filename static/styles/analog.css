@@ -20,6 +20,9 @@
     border-radius: 0.25rem;
     transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   }
+  .btn-sm, .btn-group-sm > .btn {
+      font-size: 0.875em;
+  }
   .btn-secondary {
       color: #fff !important;
       background-color: #6c757d;

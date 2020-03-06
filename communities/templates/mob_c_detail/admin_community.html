@@ -28,17 +28,17 @@
                 <br><br>
                 <span style="display:flex;flex-wrap: wrap">
                   <span style="flex: 0 0 50%;max-width:50%;padding:5px;display: flex;justify-content: center;">
-                    <a class="btn btn-secondary ajax" href="{% url 'community_general_form' pk=community.pk %}" data-html="#ajax">Управление</a>
+                    <a class="btn btn-sm btn-secondary ajax" href="{% url 'community_general_form' pk=community.pk %}" data-html="#ajax">Управление</a>
                   </span>
                   <span style="flex: 0 0 50%;max-width:50%;padding:5px;display: flex;justify-content: center;">
-                    <a class="btn btn-secondary member_delete" style="cursor:pointer" data-id="{{ community.pk }}">Отписаться</a>
+                    <a class="btn btn-sm btn-secondary member_delete" style="cursor:pointer" data-id="{{ community.pk }}">Отписаться</a>
                   </span>
                 </span>
 
                 <ul class="list-group w-100 mt-3">
                     <li class="list-group-item">
                         <div class="media experience">
-                            <div class="icon-circle icon-40" style="margin-right:10px">
+                            <div class="icon-circle icon-40 bg-light-secondary" style="margin-right:10px">
                               <svg class="svg_info svg_default" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
                             </div>
                             <div class="media-body">
@@ -85,7 +85,7 @@
 
       {% include 'detail_sections/new_post.html' %}
 
-      <div id="lenta_load"></div>
+      <div id="lenta_load" class='mt-3'></div>
 
 </div>
 
