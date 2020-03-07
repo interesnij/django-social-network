@@ -2,7 +2,7 @@
 
 <div class="sidebar style_hide" style="position: fixed;top: 0;left: 0;width: 100%;height: 100%;padding: 5%;overflow: auto;">
     <div class="media w-100 my-3">
-        <a href="{% url 'user' pk=user.pk %}" class="ajax" data-html="#ajax">
+        <a href="{% url 'user' pk=request.user.pk %}" class="ajax" data-html="#ajax">
           <figure class="rounded-circle align-self-start">
             {% if request.user.get_avatar %}
               <img src="{{ request.user.get_avatar.file|thumbnail_url:'avatar' }}" alt="image" style="border-radius:50px;width:100%;">
@@ -12,7 +12,7 @@
           </figure>
         </a>
         <div class="media-body mx-70">
-          <a href="{% url 'user' pk=user.pk %}" class="ajax" data-html="#ajax">
+          <a href="{% url 'user' pk=request.user.pk %}" class="ajax" data-html="#ajax">
             <h4 class="time-title mb-0">{{ user.get_full_name }}</h4>
           </a>
             {% if request.user.profile.status %}

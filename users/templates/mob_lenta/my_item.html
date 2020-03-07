@@ -12,16 +12,12 @@
   {% endif %}
 </span>
 
-{% if object.post %}
-<div class="mb-4 infinite-item" item-id="{{ object.uuid }}" user-id="{{ user.pk }}">
+{% if object.post %
   {% include 'item_user/my_post_detail.html' %}
-</div>
 {% endif %}
 
 {% if object.article %}
-<div class="mb-4 infinite-item" item-id="{{ object.uuid }}" user-id="{{ user.pk }}">
     {% include 'item_user/my_article.html' with article=article  %}
-</div>
 {% endif %}
 
   {% if prev %}
