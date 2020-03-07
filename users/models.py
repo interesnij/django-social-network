@@ -780,7 +780,7 @@ class User(AbstractUser):
     def get_settings_template(self, folder, template, request):
         import re
 
-        if request.user.pk = self.pk:
+        if request.user.pk == self.pk:
             template_name = folder + template
         else:
             raise PermissionDenied('Ошибка доступа.')
