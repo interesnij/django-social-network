@@ -8,7 +8,7 @@ from pilkit.processors import ResizeToFill, ResizeToFit
 from communities.helpers import upload_to_community_avatar_directory, upload_to_community_cover_directory
 from imagekit.models import ProcessedImageField
 from notifications.model.user import *
-
+from rest_framework.exceptions import PermissionDenied
 
 
 class CommunityCategory(models.Model):
@@ -297,7 +297,7 @@ class Community(models.Model):
             template_name = folder + template
         else:
             raise PermissionDenied('Ошибка доступа.')
-        MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
+        MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             template_name = "mob_" + template_name
         return template_name
@@ -318,7 +318,7 @@ class Community(models.Model):
             template_name = folder + template
         elif request.user.is_anonymous and self.is_public():
             template_name = folder + "anon_" + template
-        MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
+        MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             template_name = "mob_" + template_name
         return template_name
