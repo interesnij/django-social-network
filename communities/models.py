@@ -278,6 +278,30 @@ class Community(models.Model):
             template_name = "mob_" + template_name
         return template_name
 
+    def get_manage_template(self, folder, template, request):
+        import re
+
+        if request.user.is_administrator_of_community_with_name(self.name):
+            template_name = folder + template
+        else:
+            raise PermissionDenied('Ошибка доступа.')
+        MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+            template_name = "mob_" + template_name
+        return template_name
+
+    def get_moders_template(self, folder, template, request):
+        import re
+
+        if request.user.is_administrator_of_community_with_name(self.name) or request.user.is_moderator_of_community_with_name(self.name):
+            template_name = folder + template
+        else:
+            raise PermissionDenied('Ошибка доступа.')
+        MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+            template_name = "mob_" + template_name
+        return template_name
+
     def get_template_list(self, folder, template, request):
         import re
 

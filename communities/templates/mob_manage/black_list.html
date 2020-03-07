@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+{% block title %}Черный список - {{ community.name }}{% endblock %}
+{% block content %}
+
+<div class="container mt-4 main-container">
+<div class="row">
+    <div class="col-lg-7 col-md-8 col-sm-12 order-1">
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Поиск по черному списку" aria-label="Recipient's username">
+            <div class="input-group-append">
+                <button class="btn btn-outline-link" type="button">Искать</button>
+            </div>
+        </div>
+        <div class="card mb-2">
+            <div class="card-header">
+                <div class="media">
+                    <div class="media-body">
+                        <h5 class="mt-1">Черный список сообщества -
+                            <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=community.pk %}" data-html="#ajax">
+                                {{ community.name }}
+                            </a>
+                        </h5>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body px-0 py-0">
+              {% if object_list %}
+                <ul class="list-group" id="blacklist-container">
+                    {% for object in object_list %}
+                    <li class="list-group-item">
+                        <div class="media">
+                          <a href="{% url 'user' pk=object.pk %}" class="ajax" data-html="#ajax">
+                            <figure>
+                              {% if object.get_avatar %}
+                                <img src="{{ object.get_avatar.file|thumbnail_url:'avatar' }}" style="border-radius:50px;width:50px;" alt="image">
+                              {% else %}
+                                <svg fill="currentColor" class="svg_default svg_default_50" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+                              {% endif %}
+                            </figure>
+                          </a>
+                          <div class="media-body">
+                              <a href="{% url 'user' pk=object.pk %}" class="ajax" data-html="#ajax">
+                                  <h6 class="my-0 mt-1">{{ object.get_full_name }}</h6>
+                              </a>
+                              <a href="" class="small">Разбанить</a>
+                          </div>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <div class="col-12">
+                  <div class="card" style="align-items: center;justify-content:center;">
+                    <div class="card-body">
+                      <svg fill="currentColor" class="thumb_big svg_default" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+                    </div>
+                    <h6 style="margin: 20px;text-align: center;">В черном списке никого нет</h6>
+                  </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+
+    {% include 'manage/menu_members.html' %}
+</div>
+</div>
+
+<script>
+ ready(() => {
+  var page = 2;
+  var loaded = false;
+
+  onscroll = function(){
+  try{
+    var blacklist = document.getElementById("blacklist-container");
+    if(blacklist.getElementsByClassName('list-group-item').length === (page-1)*30){
+    var height = document.documentElement.clientHeight-1;
+    if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
+      if (loaded){return};
+      var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+      link_3.open( 'GET', '/communities/manage/black_list/' + '{{ community.pk }}/?page=' + page++, true );
+      link_3.send();
+      link_3.onreadystatechange = function () {
+      if ( this.readyState == 4 && this.status == 200 ) {
+        var elem = document.createElement('span');
+        elem.innerHTML = link_3.responseText;
+        var blacklist_list = elem.querySelector(".list-group");
+        if(blacklist_list.getElementsByClassName('list-group-item').length < 30){loaded = true;};
+        blacklist.append(blacklist_list);
+        }
+      }
+    }}
+  }catch{return}
+}
+});
+</script>
+{% endblock %}

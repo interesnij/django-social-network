@@ -7,17 +7,17 @@ from django.views import View
 from communities.forms import *
 from users.models import User
 from follows.models import CommunityFollow
-#from common.checkers import check_can_get_posts_for_community_with_name
 from common.utils import is_mobile
 
 
 class CommunityGeneralChange(TemplateView):
-	template_name = "manage/general.html"
+	template_name = None
 	form=None
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.form=GeneralCommunityForm(instance=self.community)
+		self.template_name = self.community.get_manage_template(folder="manage/", template="general.html", request=request)
 		return super(CommunityGeneralChange,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -38,12 +38,13 @@ class CommunityGeneralChange(TemplateView):
 
 
 class CommunityAvatarChange(TemplateView):
-	template_name = "manage/avatar.html"
+	template_name = None
 	form=None
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.form=AvatarCommunityForm()
+		self.template_name = self.community.get_manage_template(folder="manage/", template="avatar.html", request=request)
 		return super(CommunityAvatarChange,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -64,12 +65,13 @@ class CommunityAvatarChange(TemplateView):
 
 
 class CommunityCoverChange(TemplateView):
-	template_name = "manage/cover.html"
+	template_name = None
 	form=None
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.form=CoverCommunityForm()
+		self.template_name = self.community.get_manage_template(folder="manage/", template="cover.html", request=request)
 		return super(CommunityCoverChange,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -116,13 +118,14 @@ class CommunityCatChange(TemplateView):
 
 
 class CommunityNotifyView(TemplateView):
-	template_name = "manage/notifications_settings.html"
+	template_name = None
 	form=None
 	notify_settings=None
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.form=CommunityNotifyForm()
+		self.template_name = self.community.get_manage_template(folder="manage/", template="notifications_settings.html", request=request)
 		try:
 			self.notify_settings=CommunityNotificationsSettings.objects.get(community=self.community)
 		except:
@@ -148,14 +151,18 @@ class CommunityNotifyView(TemplateView):
 
 
 class CommunityPrivateView(TemplateView):
-	template_name = "manage/private_settings.html"
+	template_name = None
 	form=None
 	private_settings=None
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.form=CommunityPrivateForm()
-		self.private_settings=CommunityPrivateSettings.objects.get(community=self.community)
+		self.template_name = self.community.get_manage_template(folder="manage/", template="private_settings.html", request=request)
+		try:
+			self.private_settings=CommunityPrivateSettings.objects.get(community=self.community)
+		except:
+			self.private_settings=CommunityPrivateSettings.objects.create(community=self.community)
 		return super(CommunityPrivateView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -167,10 +174,6 @@ class CommunityPrivateView(TemplateView):
 
 	def post(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		try:
-			self.private_settings=CommunityPrivateSettings.objects.get(community=self.community)
-		except:
-			self.private_settings=CommunityPrivateSettings.objects.create(community=self.community)
 		self.form=CommunityPrivateForm(request.POST,instance=self.private_settings)
 		if self.form.is_valid() and request.user.is_administrator_of_community_with_name(self.community.name):
 			self.form.save()
@@ -186,6 +189,7 @@ class CommunityAdminView(ListView):
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
+		self.template_name = self.community.get_manage_template(folder="manage/", template="admins.html", request=request)
 		return super(CommunityAdminView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -194,13 +198,7 @@ class CommunityAdminView(ListView):
 		return context
 
 	def get_queryset(self):
-		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		if self.request.user.is_authenticated and self.community.is_user_with_username_administrator_of_community_with_name(self.request.user.pk, self.community.name):
-			admins = self.community.get_community_with_name_administrators(self.community.name)
-			self.template_name="manage/admins.html"
-		else:
-			admins = ""
-			self.template_name="generic/fake/admins.html"
+		admins = self.community.get_community_with_name_administrators(self.community.name)
 		return admins
 
 
@@ -211,6 +209,7 @@ class CommunityEditorsView(ListView):
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
+		self.template_name = self.community.get_manage_template(folder="manage/", template="editors.html", request=request)
 		return super(CommunityEditorsView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -219,13 +218,7 @@ class CommunityEditorsView(ListView):
 		return context
 
 	def get_queryset(self):
-		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		if self.request.user.is_authenticated and self.community.is_user_with_username_administrator_of_community_with_name(self.request.user.pk, self.community.name):
-			admins = self.community.get_community_with_name_editors(self.community.name)
-			self.template_name="manage/editors.html"
-		else:
-			admins = ""
-			self.template_name="generic/fake/admins.html"
+		admins = self.community.get_community_with_name_editors(self.community.name)
 		return admins
 
 
@@ -236,6 +229,7 @@ class CommunityAdvertisersView(ListView):
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
+		self.template_name = self.community.get_manage_template(folder="manage/", template="advertisers.html", request=request)
 		return super(CommunityAdvertisersView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -244,14 +238,8 @@ class CommunityAdvertisersView(ListView):
 		return context
 
 	def get_queryset(self):
-		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		if self.request.user.is_authenticated and self.community.is_user_with_username_administrator_of_community_with_name(self.request.user.pk, self.community.name):
-			admins = self.community.get_community_with_name_advertisers(self.community.name)
-			self.template_name="manage/advertisers.html"
-		else:
-			admins = ""
-			self.template_name="generic/fake/admins.html"
-		return admins
+		advertisers = self.community.get_community_with_name_advertisers(self.community.name)
+		return advertisers
 
 
 class CommunityModersView(ListView):
@@ -261,6 +249,7 @@ class CommunityModersView(ListView):
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
+		self.template_name = self.community.get_manage_template(folder="manage/", template="moders.html", request=request)
 		return super(CommunityModersView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -269,11 +258,7 @@ class CommunityModersView(ListView):
 		return context
 
 	def get_queryset(self):
-		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		if self.request.user.is_authenticated and self.community.is_user_with_username_administrator_of_community_with_name(self.request.user.pk, self.community.name):
-			moders=self.community.get_community_with_name_moderators(self.community.name)
-		else:
-			moders = ""
+		moders=self.community.get_community_with_name_moderators(self.community.name)
 		return moders
 
 
@@ -284,6 +269,7 @@ class CommunityBlackListView(ListView):
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
+		self.template_name = self.community.get_moders_template(folder="manage/", template="moders.html", request=request)
 		return super(CommunityBlackListView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -292,41 +278,34 @@ class CommunityBlackListView(ListView):
 		return context
 
 	def get_queryset(self):
-		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		if self.request.user.is_authenticated and self.community.is_user_with_username_administrator_of_community_with_name(self.request.user.pk, self.community.name):
-			black_list=self.community.get_community_with_name_banned_users(self.community.name)
-		else:
-			black_list = ""
+		black_list=self.community.get_community_with_name_banned_users(self.community.name)
 		return black_list
 
 
 class CommunityFollowsView(ListView):
-	template_name="manage/follows.html"
-	model=CommunityFollow
-	paginate_by=30
+	template_name = None
+	model = CommunityFollow
+	paginate_by = 30
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
+		self.template_name = self.community.get_manage_template(folder="manage/", template="follows.html", request=request)
 		return super(CommunityFollowsView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context=super(CommunityFollowsView,self).get_context_data(**kwargs)
-		context["community"]=self.community
+		context = super(CommunityFollowsView,self).get_context_data(**kwargs)
+		context["community"] = self.community
 		return context
 
 	def get_queryset(self):
-		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		if self.request.user.is_authenticated and self.community.is_user_with_username_administrator_of_community_with_name(self.request.user.pk, self.community.name):
-			follows=CommunityFollow.get_community_with_name_follows(self.community.name)
-		else:
-			follows = ""
+		follows = CommunityFollow.get_community_with_name_follows(self.community.name)
 		return follows
 
 
 class CommunityMemberManageView(ListView):
-	template_name="manage/members.html"
-	model=Community
-	paginate_by=30
+	template_name = None
+	model = Community
+	paginate_by = 30
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
@@ -334,25 +313,25 @@ class CommunityMemberManageView(ListView):
 		self.moderators = Community.get_community_with_name_moderators(self.community)
 		self.editors = Community.get_community_with_name_editors(self.community)
 		self.advertisers = Community.get_community_with_name_advertisers(self.community)
+		self.template_name = self.community.get_manage_template(folder="manage/", template="members.html", request=request)
 		return super(CommunityMemberManageView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context=super(CommunityMemberManageView,self).get_context_data(**kwargs)
-		context["community"]=self.community
-		context["administrators"]=self.administrators
-		context["moderators"]=self.moderators
-		context["editors"]=self.editors
-		context["advertisers"]=self.advertisers
+		context = super(CommunityMemberManageView,self).get_context_data(**kwargs)
+		context["community"] = self.community
+		context["administrators"] = self.administrators
+		context["moderators"] = self.moderators
+		context["editors"] = self.editors
+		context["advertisers"] = self.advertisers
 		return context
 
 	def get_queryset(self):
-		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		membersheeps=self.community.get_community_with_name_members(self.community.name)
+		membersheeps = self.community.get_community_with_name_members(self.community.name)
 		return membersheeps
 
 
 class CommunityStaffWindow(TemplateView):
-	template_name="manage/staff_window.html"
+	template_name = None
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
@@ -361,14 +340,15 @@ class CommunityStaffWindow(TemplateView):
 		self.moderator = self.user.is_moderator_of_community_with_name(self.community)
 		self.editor = self.user.is_editor_of_community_with_name(self.community)
 		self.advertiser = self.user.is_advertiser_of_community_with_name(self.community)
+		self.template_name = self.community.get_manage_template(folder="manage/", template="staff_window.html", request=request)
 		return super(CommunityStaffWindow,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context=super(CommunityStaffWindow,self).get_context_data(**kwargs)
-		context["community"]=self.community
-		context["user"]=self.user
-		context["administrator"]=self.administrator
-		context["moderator"]=self.moderator
-		context["editor"]=self.editor
-		context["advertiser"]=self.advertiser
+		context = super(CommunityStaffWindow,self).get_context_data(**kwargs)
+		context["community"] = self.community
+		context["user"] = self.user
+		context["administrator"] = self.administrator
+		context["moderator"] = self.moderator
+		context["editor"] = self.editor
+		context["advertiser"] = self.advertiser
 		return context

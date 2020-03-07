@@ -1,0 +1,117 @@
+{% load staticfiles thumbnail %}
+
+<div class="row justify-content-center">
+  <div class="card">
+    <div class="card-header border-bottom">
+        <h5 class="content-color-primary mb-0">Назначение руководителя</h5>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-lg-3 col-md-4">
+              <a href="{% url 'user' pk=user.pk %}" class="ajax" data-html="#ajax">
+                {% if user.get_avatar %}
+                  <img style="width:100%;height:auto" src="{{ user.get_avatar.file.url }}" alt="">
+                {% else %}
+                  <svg fill="currentColor" class="svg_default" style="width:100%;height:auto" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+                {% endif %}
+              </a>
+            </div>
+            <div class="col-lg-9 col-md-8">
+              <a href="{% url 'user' pk=user.pk %}" class="ajax" data-html="#ajax">
+                  <h6 class="my-0 mt-1">{{ user.get_full_name }}</h6>
+              </a>
+              <p style="padding-top:10px;">Вы собираетесь назначить этого подписчика руководителем сообщества.</p>
+            </div>
+        </div>
+        <br><br><hr>
+        <div class="form-group ">
+            <div class="custom-control custom-radio">
+                <input type="radio" name="radiogroup-1" {% if moderator %} checked="checked"{% endif %} class="custom-control-input" id="user_moderator">
+                <label class="custom-control-label" for="user_moderator"><h6>Модератор</h6></label>
+                <p style="padding-top:10px;font-size:15px">Может удалять добавленные пользователями материалы, управлять чёрным списком сообщества</p>
+            </div>
+            <hr>
+            <div class="custom-control custom-radio">
+                <input type="radio" name="radiogroup-1" {% if editor %} checked="checked"{% endif %} class="custom-control-input" id="user_editor">
+                <label class="custom-control-label" for="user_editor"><h6>Редактор</h6>
+                  <p style="padding-top:10px;font-size:15px">Может писать от имени сообщества, добавлять, удалять и редактировать контент, обновлять основную фотографию</p>
+            </div>
+            <hr>
+            <div class="custom-control custom-radio">
+                <input type="radio" name="radiogroup-1"{% if administrator %} checked="checked"{% endif %} class="custom-control-input" id="user_administrator">
+                <label class="custom-control-label" for="user_administrator"><h6>Администратор</h6></label>
+                <p style="padding-top:10px;font-size:15px">Может назначать и снимать администраторов, изменять название и адрес сообщества</p>
+            </div>
+            <hr>
+            <div class="custom-control custom-radio">
+                <input type="radio" name="radiogroup-1"{% if advertiser %} checked="checked"{% endif %} class="custom-control-input" id="user_advertiser">
+                <label class="custom-control-label" for="user_advertiser"><h6>Рекламодатель</h6></label>
+                <p style="padding-top:10px;font-size:15px">Может размещать рекламные записи от имени сообщества</p>
+            </div>
+        </div>
+        <br><hr>
+
+    </div>
+    <div class="card-footer">
+        <button class="btn btn-success float-right add_staff_options">Назначить</button>
+    </div>
+  </div>
+</div>
+
+<script>
+document.querySelector(".add_staff_options").addEventListener("click", (e) => {
+    var uuid = '{{ user.uuid }}';
+    var pk = {{ community.pk }};
+    if (document.getElementById('user_moderator').checked) {
+    {% if not moderator %}
+      fetch("/communities/progs/add_moderator/" + pk + "/" + uuid + "/").then(data => {
+      document.querySelector(".manage_window_fullscreen").style.display = "none";
+      document.getElementById('load_staff_window').innerHTML = "";
+      li = document.querySelector(".li_{{user.pk }}");
+      staff_btn = li.querySelector(".staff_btn");
+      staff_btn.innerHTML = "<span class='staff_btn'>Модератор<br><span class='small'><span class='show_staff_window' style='cursor:pointer'>Редактировать</span> | <span class='remove_moderator' style='cursor:pointer'>Разжаловать</span></span><br></span>";
+    }).catch(error => {console.log("Все не ОК")});
+    {% else %}
+    document.querySelector(".manage_window_fullscreen").style.display = "none";
+    document.getElementById('load_staff_window').innerHTML = "";
+    {% endif %}
+  }else if(document.getElementById('user_editor').checked){
+    {% if not editor %}
+    fetch("/communities/progs/add_editor/" + pk + "/" + uuid + "/").then(data => {
+    document.querySelector(".manage_window_fullscreen").style.display = "none";
+    document.getElementById('load_staff_window').innerHTML = "";
+    li = document.querySelector(".li_{{user.pk }}");
+    staff_btn = li.querySelector(".staff_btn");
+    staff_btn.innerHTML = "<span class='staff_btn'>Редактор<br><span class='small'><span class='show_staff_window' style='cursor:pointer'>Редактировать</span> | <span class='remove_editor' style='cursor:pointer'>Разжаловать</span></span><br></span>";
+    }).catch(error => {console.log("Все не ОК")});
+    {% else %}
+    document.querySelector(".manage_window_fullscreen").style.display = "none";
+    document.getElementById('load_staff_window').innerHTML = "";
+    {% endif %}}else if(document.getElementById('user_administrator').checked){
+    {% if not administrator %}
+    fetch("/communities/progs/add_admin/" + pk + "/" + uuid + "/").then(data => {
+    document.querySelector(".manage_window_fullscreen").style.display = "none";
+    document.getElementById('load_staff_window').innerHTML = "";
+    li = document.querySelector(".li_{{user.pk }}");
+    staff_btn = li.querySelector(".staff_btn");
+    staff_btn.innerHTML = "<span class='staff_btn'>Администратор<br><span class='small'><span class='show_staff_window' style='cursor:pointer'>Редактировать</span> | <span class='remove_admin' style='cursor:pointer'>Разжаловать</span></span><br></span>";
+    }).catch(error => {console.log("Все не ОК")});
+    {% else %}
+    document.querySelector(".manage_window_fullscreen").style.display = "none";
+    document.getElementById('load_staff_window').innerHTML = "";
+    {% endif %}}else if(document.getElementById('user_advertiser').checked){
+    {% if not advertiser %}
+    fetch("/communities/progs/add_advertiser/" + pk + "/" + uuid + "/").then(data => {
+    document.querySelector(".manage_window_fullscreen").style.display = "none";
+    document.getElementById('load_staff_window').innerHTML = "";
+    li = document.querySelector(".li_{{user.pk }}");
+    staff_btn = li.querySelector(".staff_btn");
+    staff_btn.innerHTML = "<span class='staff_btn'>Рекламодатель<br><span class='small'><span class='show_staff_window' style='cursor:pointer'>Редактировать</span> | <span class='remove_advertiser' style='cursor:pointer'>Разжаловать</span></span><br></span>";
+    }).catch(error => {console.log("Все не ОК")});
+    {% else %}
+    document.querySelector(".manage_window_fullscreen").style.display = "none";
+    document.getElementById('load_staff_window').innerHTML = "";
+    {% endif %}
+  };
+});
+</script>
