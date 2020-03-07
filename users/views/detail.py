@@ -12,9 +12,6 @@ class UserItemView(TemplateView):
         from main.models import Item
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.item = Item.objects.get(uuid=self.kwargs["uuid"])
-        self.item.views += 1
-        self.item.save()
-
         self.items = self.user.get_posts()
         self.template_name = self.user.get_template_list_user(folder="lenta/", template="item.html", request=request)
         self.next = self.items.filter(pk__gt=self.item.pk).order_by('pk').first()
@@ -27,7 +24,6 @@ class UserItemView(TemplateView):
         context["user"] = self.user
         context["next"] = self.next
         context["prev"] = self.prev
-        context["request_user"]=self.request.user
         return context
 
 
