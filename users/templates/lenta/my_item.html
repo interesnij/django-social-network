@@ -13,7 +13,7 @@
 </span>
 
 {% if object.post %}
-  {% include 'item_user/my_post_detail.html' %}
+  {% include 'item_user/my_post_detail.html' with post=post %}
 {% endif %}
 
 {% if object.article %}
