@@ -1,7 +1,11 @@
 {% extends "base_mobile.html" %}
 {% block title %}Приватность - {{ community.name }}{% endblock %}
 {% block content %}
-
+<style>
+  #notify_form p{
+    line-height: 18px;
+  }
+</style>
 <div class="container mt-3">
   <div class="card mb-2">
     <div class="card-header p-0" style="display: flex;flex-wrap: wrap;">
@@ -75,7 +79,6 @@
                         </h5>
                     </div>
                     <div class="card-body">
-
                         <p class="content-color-primary page-sub-title-small mt-2">
                             Фото открыты всем
                             <input type="checkbox" {% if private_settings.photo_visible_all %} checked {% endif %} name="photo_visible_all" id="id_photo_visible_all" class="switch switch-sm">
