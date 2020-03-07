@@ -7,10 +7,10 @@ class UserProfileInline(admin.TabularInline):
     model = UserProfile
 
 class UserNotificationsSettingsInline(admin.TabularInline):
-    model = UserNotificationsSettings
+    model = UserItemNotifications
 
 class UserPrivateSettingsInline(admin.TabularInline):
-    model = UserPrivateSettings
+    model = UserItemPrivate
 
 class UserColorSettingsInline(admin.TabularInline):
     model = UserColorSettings

@@ -83,9 +83,9 @@ class SettingsNotifyView(TemplateView):
 
 	def post(self,request,*args,**kwargs):
 		try:
-			self.notify_settings = UserNotificationsSettings.objects.get(user=request.user)
+			self.notify_settings = UserItemNotifications.objects.get(user=request.user)
 		except:
-			self.notify_settings = UserNotificationsSettings.objects.create(user=request.user)
+			self.notify_settings = UserItemNotifications.objects.create(user=request.user)
 		self.form = SettingsNotifyForm(request.POST,instance=self.notify_settings)
 		if self.form.is_valid():
 			self.result = self.form.save()
@@ -111,9 +111,9 @@ class SettingsPrivateView(TemplateView):
 
 	def post(self,request,*args,**kwargs):
 		try:
-			self.private_settings = UserPrivateSettings.objects.get(user=request.user)
+			self.private_settings = UserItemPrivate.objects.get(user=request.user)
 		except:
-			self.private_settings = UserPrivateSettings.objects.create(user=request.user)
+			self.private_settings = UserItemPrivate.objects.create(user=request.user)
 		self.form = SettingsPrivateForm(request.POST, instance=self.private_settings)
 		if self.form.is_valid():
 			self.form.save()
