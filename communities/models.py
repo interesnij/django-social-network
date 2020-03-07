@@ -287,8 +287,8 @@ class Community(models.Model):
             raise PermissionDenied('Ошибка доступа.')
         MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            template_name = "mob_" + template_name
-        return template_name
+            template_name = template_name
+        return "mob_" + template_name
 
     def get_moders_template(self, folder, template, request):
         import re
