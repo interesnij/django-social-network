@@ -1,10 +1,6 @@
 from django import forms
-from django.http import Http404
-from django.contrib.auth.models import User
 from users.models import UserProfile
-from users.model.settings import UserPrivateSettings, UserNotificationsSettings
-from django import forms
-from gallery.models import Photo
+from users.model.settings import *
 
 
 class GeneralUserForm(forms.ModelForm):
@@ -13,26 +9,14 @@ class GeneralUserForm(forms.ModelForm):
 
     class Meta:
         model = UserProfile
-        fields = (
-            'first_name',
-            'last_name',
-            'sity',
-            'vk_url',
-            'youtube_url',
-            'facebook_url',
-            'instagram_url',
-            'twitter_url',
-            'phone',
-        )
+        fields = ('first_name','last_name','sity','vk_url','youtube_url','facebook_url','instagram_url','twitter_url','phone',)
 
 
 class AboutUserForm(forms.ModelForm):
 
     class Meta:
         model = UserProfile
-        fields = (
-            'bio',
-        )
+        fields = ('bio',)
 
 
 class SettingsPrivateForm(forms.ModelForm):
@@ -57,13 +41,9 @@ class SettingsNotifyForm(forms.ModelForm):
         fields = (
             'comment_notifications',
             'comment_reply_notifications',
-            'connection_request_notifications',
-            'connection_confirmed_notifications',
-            'community_invite_notifications',
             'comment_user_mention_notifications',
             'user_mention_notifications',
             'repost_notifications',
-
             'like_notifications',
             'dislike_notifications',
             'comment_like_notifications',
