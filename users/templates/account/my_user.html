@@ -80,6 +80,7 @@ $("body").on('click', '.u_like', function() {
   //    dislike.next().html('').load("/window/u_dislike_window/" + uuid + "/" + pk + "/")}});
       return false;
     });
+});
 $("body").on('click', '.u_dislike', function() {
   dislike = $(this);
   item = dislike.parents('.infinite-item');
@@ -91,12 +92,12 @@ $("body").on('click', '.u_dislike', function() {
     type: 'POST',
     data: {'obj': pk},
     success: function(json) {
-      like.find("[data-count='like']").text(json.like_count);
+      like_count = like.find("[data-count='like']").text(json.like_count);
       like.removeClass('btn_success').addClass("btn_default");
-      like.next().html('').load("/window/u_like_window/" + uuid + "/" + pk + "/");
-      dislike.find("[data-count='dislike']").text(json.dislike_count);
+    //  like.next().html('').load("/window/u_like_window/" + uuid + "/" + pk + "/");
+      dislike_count = dislike.find("[data-count='dislike']").text(json.dislike_count);
       dislike.toggleClass('btn_danger btn_default');
-      dislike.next().html('').load("/window/u_dislike_window/" + uuid + "/" + pk + "/")}
+    //  dislike.next().html('').load("/window/u_dislike_window/" + uuid + "/" + pk + "/")}
     });
     return false;
   });
