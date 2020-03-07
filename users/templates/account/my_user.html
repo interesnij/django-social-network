@@ -71,12 +71,13 @@ $("body").on('click', '.u_like', function() {
     type: 'POST',
     data: {'obj': pk},
     success: function(json){
-      like.find("[data-count='like']").text(json.like_count);
+      count = like.find("[data-count='like']").text(json.like_count);
+      like.parent().find("[data-count='like']").text(json.like_count);
       like.toggleClass('btn_success btn_default');
-      like.next().html('').load("/window/u_like_window/" + uuid + "/" + pk + "/");
+  //    like.next().html('').load("/window/u_like_window/" + uuid + "/" + pk + "/");
       dislike.find("[data-count='dislike']").text(json.dislike_count);
       dislike.removeClass('btn_danger').addClass("btn_default");
-      dislike.next().html('').load("/window/u_dislike_window/" + uuid + "/" + pk + "/")}});
+  //    dislike.next().html('').load("/window/u_dislike_window/" + uuid + "/" + pk + "/")}});
       return false;
     });
 $("body").on('click', '.u_dislike', function() {
