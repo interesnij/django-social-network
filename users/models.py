@@ -777,6 +777,18 @@ class User(AbstractUser):
             template_name = "mob_" + template_name
         return template_name
 
+    def get_settings_template(self, folder, template, request):
+        import re
+
+        if request.user.pk = self.pk:
+            template_name = folder + template
+        else:
+            raise PermissionDenied('Ошибка доступа.')
+        MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+            template_name = "mob_" + template_name
+        return template_name
+
     def unfavorite_community_with_name(self, community_name):
         from communities.models import Community
 
