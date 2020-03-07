@@ -37,12 +37,11 @@
         <div id="ajax" style="padding-right:0px;padding-left:0px;">
            {% block content %}
            {% endblock %}
-
-           {% include "base_block/fullscreens.html" %}
            {% if request.user.is_authenticated %}
             {% include "base_block/mobile_nav.html" %}
            {% endif %}
 				</div>
+        {% include "base_block/fullscreens.html" %}
           {% if request.user.is_authenticated %}
             {% include "base_block/mobile_tab.html" %}
           {% endif %}

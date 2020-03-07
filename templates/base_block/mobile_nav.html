@@ -13,7 +13,7 @@
         </a>
         <div class="media-body mx-70">
           <a href="{% url 'user' pk=request.user.pk %}" class="ajax" data-html="#ajax">
-            <h4 class="time-title mb-0">{{ user.get_full_name }}</h4>
+            <h4 class="time-title mb-0">{{ request.user.get_full_name }}</h4>
           </a>
             {% if request.user.profile.status %}
               <p class="mb-0 text-truncate">{{ request.user.profile.status }}</p>
