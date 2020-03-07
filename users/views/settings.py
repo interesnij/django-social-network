@@ -12,8 +12,7 @@ class UserGeneralChange(TemplateView):
 	profile = None
 
 	def get(self,request,*args,**kwargs):
-		self.form=GeneralUserForm(instance=request.user)
-		self.template_name = self.community.get_settings_template(folder="settings/", template="info.html", request=request)
+		self.template_name = request.user.get_settings_template(folder="settings/", template="info.html", request=request)
 		return super(UserGeneralChange,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -45,7 +44,7 @@ class UserAboutChange(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.form = AboutUserForm(instance=request.user)
-		self.template_name = self.community.get_settings_template(folder="settings/", template="about.html", request=request)
+		self.template_name = request.user.get_settings_template(folder="settings/", template="about.html", request=request)
 		return super(UserAboutChange,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -73,7 +72,7 @@ class SettingsNotifyView(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.form = SettingsNotifyForm()
-		self.template_name = self.community.get_settings_template(folder="settings/", template="notifications.html", request=request)
+		self.template_name = request.user.get_settings_template(folder="settings/", template="notifications.html", request=request)
 		return super(SettingsNotifyView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -101,7 +100,7 @@ class SettingsPrivateView(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.form = SettingsPrivateForm(instance=request.user)
-		self.template_name = self.community.get_settings_template(folder="settings/", template="private.html", request=request)
+		self.template_name = request.user.get_settings_template(folder="settings/", template="private.html", request=request)
 		return super(SettingsPrivateView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -126,5 +125,5 @@ class UserDesign(TemplateView):
 	template_name = None
 
 	def get(self,request,*args,**kwargs):
-		self.template_name = self.community.get_settings_template(folder="settings/", template="design.html", request=request)
+		self.template_name = request.user.get_settings_template(folder="settings/", template="design.html", request=request)
 		return super(SettingsPrivateView,self).get(request,*args,**kwargs)
