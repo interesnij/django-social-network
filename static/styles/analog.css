@@ -122,9 +122,6 @@ a {
 svg {
   vertical-align: middle;
 }
-*, ::before, ::after {
-  box-sizing: border-box;
-}
 img {
   vertical-align: middle;
   border-style: none;
