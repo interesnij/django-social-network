@@ -22,7 +22,7 @@ class AboutUserForm(forms.ModelForm):
 class SettingsPrivateForm(forms.ModelForm):
 
     class Meta:
-        model = UserPrivateSettings
+        model = UserItemPrivate
         fields = (
             'is_private',
             'can_message',
@@ -37,7 +37,7 @@ class SettingsPrivateForm(forms.ModelForm):
 class SettingsNotifyForm(forms.ModelForm):
 
     class Meta:
-        model = UserNotificationsSettings
+        model = UserItemNotifications
         fields = (
             'comment_notifications',
             'comment_reply_notifications',
