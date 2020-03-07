@@ -126,4 +126,4 @@ class UserDesign(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.template_name = request.user.get_settings_template(folder="settings/", template="design.html", request=request)
-		return super(SettingsPrivateView,self).get(request,*args,**kwargs)
+		return super(UserDesign,self).get(request,*args,**kwargs)
