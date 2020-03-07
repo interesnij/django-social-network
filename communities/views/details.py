@@ -33,38 +33,26 @@ class ItemsCommunity(ListView):
 
 
 class ItemCommunity(TemplateView):
-    model=Item
-    template_name="detail_sections/item.html"
+    model = Item
+    template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.community=Community.objects.get(pk=self.kwargs["pk"])
+        self.community = Community.objects.get(pk=self.kwargs["pk"])
         self.item = Item.objects.get(uuid=self.kwargs["uuid"])
-        self.item.views += 1
         self.item.save()
         self.items = self.community.get_posts()
         self.next = self.items.filter(pk__gt=self.item.pk).order_by('pk').first()
         self.prev = self.items.filter(pk__lt=self.item.pk).order_by('-pk').first()
-
-        if request.user.is_authenticated and request.user.is_member_of_community_with_name(self.community.name):
-            if request.user.is_moderator_of_community_with_name(self.community.name):
-                self.template_name = "detail_sections/moderator_item.html"
-            elif request.user.is_administrator_of_community_with_name(self.community.name):
-                self.template_name = "detail_sections/admin_item.html"
-            else:
-                self.template_name = "detail_sections/item.html"
-        elif request.user.is_authenticated and self.community.is_public():
-            self.template_name = "detail_sections/item.html"
-        elif request.user.is_anonymous and self.community.is_public():
-            self.template_name = "detail_sections/item.html"
+        self.template_name = self.community.get_template_list(folder="c_lenta/", template="item.html", request=request)
         return super(ItemCommunity,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context=super(ItemCommunity,self).get_context_data(**kwargs)
-        context["object"]=self.item
-        context["community"]=self.community
-        context["next"]=self.next
-        context["prev"]=self.prev
-        context["request_user"]=self.request.user
+        context = super(ItemCommunity,self).get_context_data(**kwargs)
+        context["object"] = self.item
+        context["community"] = self.community
+        context["next"] = self.next
+        context["prev"] = self.prev
+        context["request_user"] = self.request.user
         return context
 
 
