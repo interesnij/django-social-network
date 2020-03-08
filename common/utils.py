@@ -36,6 +36,7 @@ def get_location(request):
     try:
         olds_ip = request.user.user_ip
     except:
+        from users.model.profile import IPUser
         olds_ip = IPUser.objects.create(user=request.user)
 
     if not olds_ip.ip_1:
@@ -43,6 +44,7 @@ def get_location(request):
         try:
             loc = request.user.user_location
         except:
+            from users.model.profile import OneUserLocation
             loc = OneUserLocation.objects.create(user=request.user)
         sity = data['city']
         region = data['region']
@@ -62,6 +64,7 @@ def get_location(request):
         try:
             loc = request.user.user_location_2
         except:
+            from users.model.profile import TwoUserLocation
             loc = TwoUserLocation.objects.create(user=self.user)
         sity = data['city']
         region = data['region']
@@ -81,6 +84,7 @@ def get_location(request):
         try:
             loc = request.user.user_location_3
         except:
+            from users.model.profile import ThreeUserLocation
             loc = ThreeUserLocation.objects.create(user=self.user)
         sity = data['city']
         region = data['region']
