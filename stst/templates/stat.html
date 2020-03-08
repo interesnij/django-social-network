@@ -10,7 +10,7 @@
 {% endblock %}
 {% block content %}
 
-{{ ip }} | {{ data }}
+{{ request.user.get_last_location }}
 <script>
 
 </script>

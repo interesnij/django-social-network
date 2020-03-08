@@ -862,3 +862,15 @@ class User(AbstractUser):
 
     def has_blocked_user_with_id(self, user_id):
         return self.user_blocks.filter(blocked_user_id=user_id).exists()
+
+    def get_last_location(self):
+        if self.user_location_3:
+            from users.model.profile import ThreeUserLocation
+            loc = ThreeUserLocation.objects.get(user=self)
+        elif self.user_location_2:
+            from users.model.profile import TwoUserLocation
+            loc = TwoUserLocation.objects.get(user=self)
+        elif self.user_location_1:
+            from users.model.profile import OneUserLocation
+            loc = OneUserLocation.objects.get(user=self)
+        return loc
