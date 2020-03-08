@@ -9,7 +9,7 @@ class StatView(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.ip = get_client_ip(request)
-        self.response = requests.get(url= "http://api.sypexgeo.net/8Dbm8/json/" + ip)
+        self.response = requests.get(url= "http://api.sypexgeo.net/8Dbm8/json/" + self.ip)
         self.data = self.response.json()
 
         return super(StatView,self).get(request,*args,**kwargs)
