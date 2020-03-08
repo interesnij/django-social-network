@@ -712,6 +712,7 @@ class User(AbstractUser):
 
     def get_template_user(self, folder, template, request):
         import re
+        from stst.models import UserNumbers
 
         if self.pk == request.user.pk:
             template_name = folder + "my_" + template
@@ -725,6 +726,7 @@ class User(AbstractUser):
                     template_name = folder + "frend_" + template
             else:
                 template_name = folder + template
+            UserNumbers.objects.create(visitor=request.user.pk, target=self.pk)
         elif request.user.is_anonymous and self.is_closed_profile():
             template_name = folder + "close_" + template
         elif request.user.is_anonymous and not self.is_closed_profile():
