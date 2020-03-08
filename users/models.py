@@ -869,7 +869,7 @@ class User(AbstractUser):
         if self.user_ip.ip_3:
             loc = ThreeUserLocation.objects.get(user=self)
         elif self.user_ip.ip_2:
-            loc = TwoUserLocation.objects.get(user=self)
+            loc = self.user_location_2
         elif self.user_ip.ip_1:
             loc = OneUserLocation.objects.get(user=self)
         return loc
