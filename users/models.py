@@ -887,6 +887,6 @@ class User(AbstractUser):
 
         v_s = UserNumbers.objects.filter(target=self.pk).values('visitor')
         #visitors_ids = [visito['visitor'] for visito in v_s]
-        query = Q(id__in=visitors_ids)
+        query = Q(id__in=v_s)
         visitors = User.objects.filter(query)
         return visitors
