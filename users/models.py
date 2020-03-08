@@ -866,10 +866,10 @@ class User(AbstractUser):
     def get_last_location(self):
         from users.model.profile import ThreeUserLocation, TwoUserLocation, OneUserLocation
 
-        if ThreeUserLocation.objects.get(user=self):
-            return 3
-        elif TwoUserLocation.objects.get(user=self):
-            return 2
-        elif OneUserLocation.objects.get(user=self):
-            return 3
-        return 4
+        if self.user_ip.ip_3:
+            loc = ThreeUserLocation.objects.get(user=self)
+        elif self.user_ip.ip_2:
+            loc = TwoUserLocation.objects.get(user=self)
+        elif self.user_ip.ip_1:
+            loc = OneUserLocation.objects.get(user=self)
+        return loc
