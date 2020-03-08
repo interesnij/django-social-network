@@ -878,7 +878,7 @@ class User(AbstractUser):
     def get_visited_for_user(self):
         from stst.models import UserNumbers
 
-        visitors_ids = UserNumbers.objects.filter(target__pk=self.pk)
+        visitors_ids = UserNumbers.objects.filter(target=self.pk)
         query = Q(id__in=visitors_ids)
         visitors = User.objects.filter(query)
         return visitors
