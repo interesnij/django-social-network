@@ -41,10 +41,8 @@ class OneUserLocation(models.Model):
     region_en = models.CharField(max_length=100, blank=True, verbose_name="Регион по-английски")
     country_ru = models.CharField(max_length=100, blank=True, verbose_name="Страна по-русски")
     country_en = models.CharField(max_length=100, blank=True, verbose_name="Страна по-английски")
-    created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создано")
 
     class Meta:
-        indexes = (BrinIndex(fields=['created']),)
         verbose_name="Местоположение и ip пользователя"
         verbose_name_plural="Местоположения и ip пользователей"
 
@@ -56,10 +54,8 @@ class TwoUserLocation(models.Model):
     region_en = models.CharField(max_length=100, blank=True, verbose_name="Регион по-английски")
     country_ru = models.CharField(max_length=100, blank=True, verbose_name="Страна по-русски")
     country_en = models.CharField(max_length=100, blank=True, verbose_name="Страна по-английски")
-    created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создано")
 
     class Meta:
-        indexes = (BrinIndex(fields=['created']),)
         verbose_name="Местоположение пользователя"
         verbose_name_plural="Местоположения пользователей"
 
@@ -71,10 +67,8 @@ class ThreeUserLocation(models.Model):
     region_en = models.CharField(max_length=100, blank=True, verbose_name="Регион по-английски")
     country_ru = models.CharField(max_length=100, blank=True, verbose_name="Страна по-русски")
     country_en = models.CharField(max_length=100, blank=True, verbose_name="Страна по-английски")
-    created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создано")
 
     class Meta:
-        indexes = (BrinIndex(fields=['created']),)
         verbose_name="Местоположение пользователя"
         verbose_name_plural="Местоположения пользователей"
 

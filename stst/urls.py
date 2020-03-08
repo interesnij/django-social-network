@@ -3,5 +3,5 @@ from stst.views import StatView
 
 
 urlpatterns = [
-    url(r'^$', StatView.as_view(), name='stat'),
+    url(r'^(?P<pk>\d+)/$', StatView.as_view(), name='stat'),
 ]
