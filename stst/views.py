@@ -2,7 +2,6 @@ import json, requests
 from django.views.generic.base import TemplateView
 from users.model.profile import *
 from common.utils import get_client_ip
-from common.location import data
 from users.models import User
 
 class StatView(TemplateView):
@@ -12,13 +11,12 @@ class StatView(TemplateView):
         self.ip = get_client_ip(request)
         self.user = User.objects.get(pk=self.kwargs["pk"])
         try:
-            self.olds_ip = IPUser.objects.get(user=self.user)
+            self.olds_ip = self.user.user_ip
         except:
             self.olds_ip = IPUser.objects.create(user=self.user)
 
         if not self.olds_ip.ip_1:
             self.data = requests.get(url= "http://api.sypexgeo.net/8Dbm8/json/" + self.ip)
-            #self.data = data
             try:
                 self.loc = OneUserLocation.objects.get(user=self.user)
             except:
