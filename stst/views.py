@@ -15,7 +15,7 @@ class StatView(TemplateView):
         except:
             self.olds_ip = IPUser.objects.create(user=self.user)
 
-        if not olds_ip.ip_1:
+        if not self.olds_ip.ip_1:
             self.response = requests.get(url= "http://api.sypexgeo.net/8Dbm8/json/" + self.ip)
             self.data = self.response.json()
             try:
@@ -29,7 +29,7 @@ class StatView(TemplateView):
             self.loc.country_ru = self.data.sity.country_ru
             self.loc.country_en = self.data.sity.country_en
             self.loc.save()
-        elif not olds_ip.ip_2 and self.olds_ip.ip_3 != self.ip and self.olds_ip.ip_2 != self.ip and self.olds_ip.ip_1 != self.ip:
+        elif not self.olds_ip.ip_2 and self.olds_ip.ip_3 != self.ip and self.olds_ip.ip_2 != self.ip and self.olds_ip.ip_1 != self.ip:
             self.response = requests.get(url= "http://api.sypexgeo.net/8Dbm8/json/" + self.ip)
             self.data = self.response.json()
             try:
@@ -43,7 +43,7 @@ class StatView(TemplateView):
             self.loc.country_ru = self.data.sity.country_ru
             self.loc.country_en = self.data.sity.country_en
             self.loc.save()
-        elif not olds_ip.ip_3 and self.olds_ip.ip_3 != self.ip and self.olds_ip.ip_2 != self.ip and self.olds_ip.ip_1 != self.ip:
+        elif not self.olds_ip.ip_3 and self.olds_ip.ip_3 != self.ip and self.olds_ip.ip_2 != self.ip and self.olds_ip.ip_1 != self.ip:
             self.response = requests.get(url= "http://api.sypexgeo.net/8Dbm8/json/" + self.ip)
             self.data = self.response.json()
             try:
@@ -57,7 +57,7 @@ class StatView(TemplateView):
             self.loc.country_ru = self.data.sity.country_ru
             self.loc.country_en = self.data.sity.country_en
             self.loc.save()
-        elif olds_ip.ip_3 and self.olds_ip.ip_3 != self.ip and self.olds_ip.ip_2 != self.ip and self.olds_ip.ip_1 != self.ip:
+        elif self.olds_ip.ip_3 and self.olds_ip.ip_3 != self.ip and self.olds_ip.ip_2 != self.ip and self.olds_ip.ip_1 != self.ip:
             self.response = requests.get(url= "http://api.sypexgeo.net/8Dbm8/json/" + self.ip)
             self.data = self.response.json()
             try:
