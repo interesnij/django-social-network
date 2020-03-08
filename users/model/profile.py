@@ -43,8 +43,8 @@ class OneUserLocation(models.Model):
     country_en = models.CharField(max_length=100, blank=True, verbose_name="Страна по-английски")
 
     class Meta:
-        verbose_name="Местоположение и ip пользователя"
-        verbose_name_plural="Местоположения и ip пользователей"
+        verbose_name="Местоположение 1"
+        verbose_name_plural="Местоположения 2"
 
 class TwoUserLocation(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name="user_location_2", verbose_name="Пользователь", on_delete=models.CASCADE)
@@ -56,8 +56,8 @@ class TwoUserLocation(models.Model):
     country_en = models.CharField(max_length=100, blank=True, verbose_name="Страна по-английски")
 
     class Meta:
-        verbose_name="Местоположение пользователя"
-        verbose_name_plural="Местоположения пользователей"
+        verbose_name="Местоположение 2"
+        verbose_name_plural="Местоположения 2"
 
 class ThreeUserLocation(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name="user_location_3", verbose_name="Пользователь", on_delete=models.CASCADE)
@@ -69,8 +69,8 @@ class ThreeUserLocation(models.Model):
     country_en = models.CharField(max_length=100, blank=True, verbose_name="Страна по-английски")
 
     class Meta:
-        verbose_name="Местоположение пользователя"
-        verbose_name_plural="Местоположения пользователей"
+        verbose_name="Местоположение 3"
+        verbose_name_plural="Местоположения 3"
 
 class IPUser(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name="user_ip", verbose_name="Пользователь", on_delete=models.CASCADE)
