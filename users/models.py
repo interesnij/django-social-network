@@ -874,5 +874,5 @@ class User(AbstractUser):
             from users.model.profile import OneUserLocation
             loc = OneUserLocation.objects.get(user=self)
         else:
-            loc = 1
+            loc = None
         return loc
