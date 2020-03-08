@@ -4,9 +4,8 @@ from main.models import Item, ItemComment
 from communities.models import Community
 from django.http import HttpResponse
 from django.views import View
-from common.models import ItemVotes, ItemCommentVotes
-from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
-from common.checkers import check_can_get_posts_for_community_with_name
+from common.model.votes import ItemVotes, ItemCommentVotes
+from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id, check_can_get_posts_for_community_with_name
 from rest_framework.exceptions import PermissionDenied
 
 

@@ -1,24 +1,9 @@
-from common.models import ProxyBlacklistedDomain
 from rest_framework.exceptions import ValidationError, PermissionDenied, NotFound, AuthenticationFailed
 from communities.models import Community
 from invitations.models import UserInvite
 from main.models import Item, ItemComment
 import jwt
 from django.conf import settings
-
-''''' common '''''
-
-def check_url_can_be_proxied(url):
-    urls = extract_urls_from_string(url)
-
-    if not urls:
-        raise PermissionDenied(
-            'Не указан действительный URL-адрес',
-        )
-    if ProxyBlacklistDomain.is_url_domain_blacklisted(url):
-        raise PermissionDenied(
-            'Url-адрес занесен в черный список',
-        )
 
 
 ''''' communities '''''
@@ -337,7 +322,7 @@ def check_not_can_follow_user_with_id(user, user_id):
 
 
 def check_is_not_blocked_with_user_with_id(user, user_id):
-    if user.is_blocked_with_user_with_id(user_id=user_id): 
+    if user.is_blocked_with_user_with_id(user_id=user_id):
         raise PermissionDenied('Вы в черном списке у этого пользователя.')
 
 
