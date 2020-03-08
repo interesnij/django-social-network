@@ -99,5 +99,4 @@ class StatView(TemplateView):
     def get_context_data(self,**kwargs):
         context=super(StatView,self).get_context_data(**kwargs)
         context["ip"]=self.ip
-        context["data"]=self.loc
         return context
