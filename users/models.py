@@ -867,12 +867,13 @@ class User(AbstractUser):
         if self.user_location_3:
             from users.model.profile import ThreeUserLocation
             loc = ThreeUserLocation.objects.get(user=self)
+            loc2 = loc.country
         elif self.user_location_2:
             from users.model.profile import TwoUserLocation
             loc = TwoUserLocation.objects.get(user=self)
+            loc2 = loc.country
         elif self.user_location_1:
             from users.model.profile import OneUserLocation
             loc = OneUserLocation.objects.get(user=self)
-        else:
-            loc = None
-        return loc
+            loc2 = loc.country
+        return loc2
