@@ -179,6 +179,7 @@ class User(AbstractUser):
         return self.is_connected_with_user_with_id(user.pk)
 
     def is_blocked_with_user_with_id(self, user_id):
+        from users.model.list import UserBlock
         return UserBlock.users_are_blocked(user_a_id=self.pk, user_b_id=user_id)
 
     def is_connected_with_user_with_id(self, user_id):
