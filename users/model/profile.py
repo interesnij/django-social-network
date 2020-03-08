@@ -48,6 +48,9 @@ class OneUserLocation(models.Model):
         verbose_name_plural="Местоположения 1"
         index_together = [('id', 'user'),]
 
+    def __str__(self):
+        return '{} - {}, {}, {}'.format(self.user.get_full_name, self.country_ru, self.region_ru, self.city_ru)
+
 class TwoUserLocation(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name="user_location_2", verbose_name="Пользователь", on_delete=models.CASCADE)
     city_ru = models.CharField(max_length=100, blank=True, verbose_name="Город по-русски")
@@ -61,6 +64,9 @@ class TwoUserLocation(models.Model):
         verbose_name="Местоположение 2"
         verbose_name_plural="Местоположения 2"
         index_together = [('id', 'user'),]
+
+    def __str__(self):
+        return '{} - {}, {}, {}'.format(self.user.get_full_name, self.country_ru, self.region_ru, self.city_ru)
 
 class ThreeUserLocation(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name="user_location_3", verbose_name="Пользователь", on_delete=models.CASCADE)
@@ -76,6 +82,9 @@ class ThreeUserLocation(models.Model):
         verbose_name_plural="Местоположения 3"
         index_together = [('id', 'user'),]
 
+    def __str__(self):
+        return '{} - {}, {}, {}'.format(self.user.get_full_name, self.country_ru, self.region_ru, self.city_ru)
+
 class IPUser(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name="user_ip", verbose_name="Пользователь", on_delete=models.CASCADE)
     ip_1 = models.GenericIPAddressField(protocol='both', null=True, blank=True, verbose_name="ip 1")
@@ -86,3 +95,6 @@ class IPUser(models.Model):
         verbose_name="ip пользователя"
         verbose_name_plural="ip пользователей"
         index_together = [('id', 'user'),]
+
+    def __str__(self):
+        return '{} - {}, {}, {}'.format(self.user.get_full_name, self.ip_1, self.ip_2, self.ip_3)
