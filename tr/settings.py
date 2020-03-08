@@ -12,7 +12,7 @@ ALLOWED_HOSTS = ['*']
 
 SITE_ID = 1
 
-INSTALLED_APPS = [
+DJANGO_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -33,6 +33,11 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.vk',
     'rest_auth',
     'django_extensions',
+    'ckeditor',
+    'ckeditor_uploader',
+]
+
+MY_APPS = [
     'goods',
     'users',
     'communities',
@@ -42,8 +47,6 @@ INSTALLED_APPS = [
     'moderation',
     'notifications',
     'main',
-    'ckeditor',
-    'ckeditor_uploader',
     'frends',
     'chat',
     'gallery',
@@ -51,8 +54,10 @@ INSTALLED_APPS = [
     'common',
     'music',
     'video',
+    'stat',
 ]
 
+INSTALLED_APPS = DJANGO_APPS + MY_APPS
 
 CKEDITOR_CONFIGS = {
        'default': {
