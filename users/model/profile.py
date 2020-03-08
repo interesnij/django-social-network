@@ -79,6 +79,7 @@ class ThreeUserLocation(models.Model):
         verbose_name_plural="Местоположения пользователей"
 
 class IPUser(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name="user_ip", verbose_name="Пользователь", on_delete=models.CASCADE)
     ip_1 = models.GenericIPAddressField(protocol='both', null=True, blank=True, verbose_name="ip 1")
     ip_2 = models.GenericIPAddressField(protocol='both', null=True, blank=True, verbose_name="ip 2")
     ip_3 = models.GenericIPAddressField(protocol='both', null=True, blank=True, verbose_name="ip 3")
