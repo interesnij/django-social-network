@@ -23,7 +23,7 @@ class StatView(TemplateView):
                 self.loc = OneUserLocation.objects.get(user=self.user)
             except:
                 self.loc = OneUserLocation.objects.create(user=self.user)
-            self.loc.sity_ru = self.data.sity.sity_ru
+            self.loc.sity_ru = self.data.get('sity_ru', None)
             self.loc.sity_en = self.data.get('sity_en', None)
             self.loc.region_ru = self.data.get('region_ru', None)
             self.loc.region_en = self.data.get('region_en', None)
