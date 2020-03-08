@@ -27,11 +27,11 @@ class StatView(TemplateView):
             self.region = self.data['region']
             self.country = self.data['country']
             self.loc.city_ru = self.sity['city_ru']
-            self.loc.city_en = self.sity.['city_en']
-            self.loc.region_ru = self.region.['region_ru']
-            self.loc.region_en = self.region.['region_en']
-            self.loc.country_ru = self.country.['country_ru']
-            self.loc.country_en = self.country.['country_en']
+            self.loc.city_en = self.sity['city_en']
+            self.loc.region_ru = self.region['region_ru']
+            self.loc.region_en = self.region['region_en']
+            self.loc.country_ru = self.country['country_ru']
+            self.loc.country_en = self.country['country_en']
             self.loc.save()
         elif not self.olds_ip.ip_2 and self.olds_ip.ip_3 != self.ip and self.olds_ip.ip_2 != self.ip and self.olds_ip.ip_1 != self.ip:
             self.response = requests.get(url= "http://api.sypexgeo.net/8Dbm8/json/" + self.ip)
