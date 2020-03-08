@@ -864,16 +864,16 @@ class User(AbstractUser):
         return self.user_blocks.filter(blocked_user_id=user_id).exists()
 
     def get_last_location(self):
-        if self.user_location_3:
+        if self.user_location_3.country_ru:
             from users.model.profile import ThreeUserLocation
             loc = ThreeUserLocation.objects.get(user=self)
-            loc2 = loc.country
-        elif self.user_location_2:
+            loc2 = loc.country_ru
+        elif self.user_location_2.country_ru:
             from users.model.profile import TwoUserLocation
             loc = TwoUserLocation.objects.get(user=self)
-            loc2 = loc.country
-        elif self.user_location_1:
+            loc2 = loc.country_ru
+        elif self.user_location_1.country_ru:
             from users.model.profile import OneUserLocation
             loc = OneUserLocation.objects.get(user=self)
-            loc2 = loc.country
+            loc2 = loc.country_ru
         return loc2
