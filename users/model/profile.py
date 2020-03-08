@@ -32,3 +32,51 @@ class UserProfile(models.Model):
         verbose_name = 'Профиль пользователя'
         verbose_name_plural = 'Профили пользователей'
         index_together = [('id', 'user'),]
+
+class OneUserLocation(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name="user_location", verbose_name="Пользователь", on_delete=models.CASCADE)
+    ip = models.GenericIPAddressField(protocol='both', null=True, blank=True, verbose_name="ip 1")
+    sity_ru = models.CharField(max_length=100, blank=True, verbose_name="Город по-русски")
+    sity_en = models.CharField(max_length=100, blank=True, verbose_name="Город по-английски")
+    region_ru = models.CharField(max_length=100, blank=True, verbose_name="Регион по-русски")
+    region_en = models.CharField(max_length=100, blank=True, verbose_name="Регион по-английски")
+    country_ru = models.CharField(max_length=100, blank=True, verbose_name="Страна по-русски")
+    country_en = models.CharField(max_length=100, blank=True, verbose_name="Страна по-английски")
+    created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создано")
+
+    class Meta:
+        indexes = (BrinIndex(fields=['created']),)
+        verbose_name="Местоположение и ip пользователя"
+        verbose_name_plural="Местоположения и ip пользователей"
+
+class TwoUserLocation(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name="user_location_2", verbose_name="Пользователь", on_delete=models.CASCADE)
+    ip = models.GenericIPAddressField(protocol='both', null=True, blank=True, verbose_name="ip 1")
+    sity_ru = models.CharField(max_length=100, blank=True, verbose_name="Город по-русски")
+    sity_en = models.CharField(max_length=100, blank=True, verbose_name="Город по-английски")
+    region_ru = models.CharField(max_length=100, blank=True, verbose_name="Регион по-русски")
+    region_en = models.CharField(max_length=100, blank=True, verbose_name="Регион по-английски")
+    country_ru = models.CharField(max_length=100, blank=True, verbose_name="Страна по-русски")
+    country_en = models.CharField(max_length=100, blank=True, verbose_name="Страна по-английски")
+    created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создано")
+
+    class Meta:
+        indexes = (BrinIndex(fields=['created']),)
+        verbose_name="Местоположение и ip пользователя"
+        verbose_name_plural="Местоположения и ip пользователей"
+
+class ThreeUserLocation(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name="user_location_3", verbose_name="Пользователь", on_delete=models.CASCADE)
+    ip = models.GenericIPAddressField(protocol='both', null=True, blank=True, verbose_name="ip 1")
+    sity_ru = models.CharField(max_length=100, blank=True, verbose_name="Город по-русски")
+    sity_en = models.CharField(max_length=100, blank=True, verbose_name="Город по-английски")
+    region_ru = models.CharField(max_length=100, blank=True, verbose_name="Регион по-русски")
+    region_en = models.CharField(max_length=100, blank=True, verbose_name="Регион по-английски")
+    country_ru = models.CharField(max_length=100, blank=True, verbose_name="Страна по-русски")
+    country_en = models.CharField(max_length=100, blank=True, verbose_name="Страна по-английски")
+    created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создано")
+
+    class Meta:
+        indexes = (BrinIndex(fields=['created']),)
+        verbose_name="Местоположение и ip пользователя"
+        verbose_name_plural="Местоположения и ip пользователей"
