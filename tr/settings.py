@@ -108,6 +108,14 @@ DATABASES = {
         'PASSWORD': 'DuhVremeni3',
         'HOST': 'localhost',
         'PORT': '5432',
+    },
+    'numbers': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'tr_numbers',
+        'USER': 'tr',
+        'PASSWORD': 'DuhVremeni3',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
