@@ -9,7 +9,6 @@ from django.core import serializers
 from django.contrib.postgres.indexes import BrinIndex
 
 
-
 class UserNotificationQS(models.query.QuerySet):
     def unread(self):
         return self.filter(unread=True)

@@ -1,5 +1,4 @@
 import uuid
-from common.model_loaders import get_user_model, get_community_model
 from django.db import models
 from django.utils import timezone
 from django.conf import settings
@@ -147,6 +146,8 @@ class GoodCommunityNotification(models.Model):
 
 
 def good_notification_handler(actor, recipient, verb, good, **kwargs):
+    from users.models import User
+    
     key = kwargs.pop('key', 'notification')
 
     if recipient == 'global':
@@ -181,7 +182,7 @@ def good_notification_handler(actor, recipient, verb, good, **kwargs):
 
     else:
         pass
-        
+
 def good_community_notification_handler(actor, community, recipient, good, verb, comment, **kwargs):
     key = kwargs.pop('key', 'notification')
     persons = community.get_staff_members()

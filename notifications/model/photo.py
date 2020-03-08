@@ -1,5 +1,4 @@
 import uuid
-from common.model_loaders import get_user_model, get_community_model
 from django.db import models
 from django.utils import timezone
 from django.conf import settings
@@ -147,6 +146,8 @@ class PhotoCommunityNotification(models.Model):
 
 
 def photo_notification_handler(actor, recipient, verb, photo,**kwargs):
+    from users.models import User
+    
     key = kwargs.pop('key', 'notification')
 
     if recipient == 'global':
