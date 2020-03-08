@@ -1,7 +1,7 @@
 from django.views.generic.base import TemplateView
 from users.model.profile import *
 from common.utils import get_client_ip
-import json
+import json, requests
 
 
 class StatView(TemplateView):
@@ -9,7 +9,7 @@ class StatView(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.ip = get_client_ip(request)
-        self.response = request.get(url= "http://api.sypexgeo.net/8Dbm8/json/" + ip)
+        self.response = requests.get(url= "http://api.sypexgeo.net/8Dbm8/json/" + ip)
         self.data = self.response.json()
 
         return super(StatView,self).get(request,*args,**kwargs)
