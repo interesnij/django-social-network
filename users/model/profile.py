@@ -33,6 +33,7 @@ class UserProfile(models.Model):
         verbose_name_plural = 'Профили пользователей'
         index_together = [('id', 'user'),]
 
+
 class OneUserLocation(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name="user_location", verbose_name="Пользователь", on_delete=models.CASCADE)
     city_ru = models.CharField(max_length=100, blank=True, verbose_name="Город по-русски")
@@ -44,7 +45,8 @@ class OneUserLocation(models.Model):
 
     class Meta:
         verbose_name="Местоположение 1"
-        verbose_name_plural="Местоположения 2"
+        verbose_name_plural="Местоположения 1"
+        index_together = [('id', 'user'),]
 
 class TwoUserLocation(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name="user_location_2", verbose_name="Пользователь", on_delete=models.CASCADE)
@@ -58,6 +60,7 @@ class TwoUserLocation(models.Model):
     class Meta:
         verbose_name="Местоположение 2"
         verbose_name_plural="Местоположения 2"
+        index_together = [('id', 'user'),]
 
 class ThreeUserLocation(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name="user_location_3", verbose_name="Пользователь", on_delete=models.CASCADE)
@@ -71,6 +74,7 @@ class ThreeUserLocation(models.Model):
     class Meta:
         verbose_name="Местоположение 3"
         verbose_name_plural="Местоположения 3"
+        index_together = [('id', 'user'),]
 
 class IPUser(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name="user_ip", verbose_name="Пользователь", on_delete=models.CASCADE)
@@ -81,3 +85,4 @@ class IPUser(models.Model):
     class Meta:
         verbose_name="ip пользователя"
         verbose_name_plural="ip пользователей"
+        index_together = [('id', 'user'),]
