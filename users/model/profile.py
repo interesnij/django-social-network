@@ -35,8 +35,8 @@ class UserProfile(models.Model):
 
 class OneUserLocation(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name="user_location", verbose_name="Пользователь", on_delete=models.CASCADE)
-    sity_ru = models.CharField(max_length=100, blank=True, verbose_name="Город по-русски")
-    sity_en = models.CharField(max_length=100, blank=True, verbose_name="Город по-английски")
+    city_ru = models.CharField(max_length=100, blank=True, verbose_name="Город по-русски")
+    city_en = models.CharField(max_length=100, blank=True, verbose_name="Город по-английски")
     region_ru = models.CharField(max_length=100, blank=True, verbose_name="Регион по-русски")
     region_en = models.CharField(max_length=100, blank=True, verbose_name="Регион по-английски")
     country_ru = models.CharField(max_length=100, blank=True, verbose_name="Страна по-русски")
@@ -48,8 +48,8 @@ class OneUserLocation(models.Model):
 
 class TwoUserLocation(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name="user_location_2", verbose_name="Пользователь", on_delete=models.CASCADE)
-    sity_ru = models.CharField(max_length=100, blank=True, verbose_name="Город по-русски")
-    sity_en = models.CharField(max_length=100, blank=True, verbose_name="Город по-английски")
+    city_ru = models.CharField(max_length=100, blank=True, verbose_name="Город по-русски")
+    city_en = models.CharField(max_length=100, blank=True, verbose_name="Город по-английски")
     region_ru = models.CharField(max_length=100, blank=True, verbose_name="Регион по-русски")
     region_en = models.CharField(max_length=100, blank=True, verbose_name="Регион по-английски")
     country_ru = models.CharField(max_length=100, blank=True, verbose_name="Страна по-русски")
@@ -61,8 +61,8 @@ class TwoUserLocation(models.Model):
 
 class ThreeUserLocation(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name="user_location_3", verbose_name="Пользователь", on_delete=models.CASCADE)
-    sity_ru = models.CharField(max_length=100, blank=True, verbose_name="Город по-русски")
-    sity_en = models.CharField(max_length=100, blank=True, verbose_name="Город по-английски")
+    city_ru = models.CharField(max_length=100, blank=True, verbose_name="Город по-русски")
+    city_en = models.CharField(max_length=100, blank=True, verbose_name="Город по-английски")
     region_ru = models.CharField(max_length=100, blank=True, verbose_name="Регион по-русски")
     region_en = models.CharField(max_length=100, blank=True, verbose_name="Регион по-английски")
     country_ru = models.CharField(max_length=100, blank=True, verbose_name="Страна по-русски")

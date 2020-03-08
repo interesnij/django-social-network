@@ -23,9 +23,9 @@ class StatView(TemplateView):
                 self.loc = OneUserLocation.objects.get(user=self.user)
             except:
                 self.loc = OneUserLocation.objects.create(user=self.user)
-            self.sity = self.data['sity']
-            self.loc.sity_ru = self.sity['sity_ru']
-            self.loc.sity_en = self.data.get('sity_en', None)
+            self.sity = self.data['city']
+            self.loc.city_ru = self.sity['city_ru']
+            self.loc.city_en = self.data.get('sity_en', None)
             self.loc.region_ru = self.data.get('region_ru', None)
             self.loc.region_en = self.data.get('region_en', None)
             self.loc.country_ru = self.data.get('country_ru', None)
