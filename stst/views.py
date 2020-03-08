@@ -17,17 +17,17 @@ class StatView(TemplateView):
 
         if not self.olds_ip.ip_1:
             self.response = requests.get(url= "http://api.sypexgeo.net/8Dbm8/json/" + self.ip)
-            self.data = self.response.json()
+            self.data = json.loads(self.response)
             try:
                 self.loc = OneUserLocation.objects.get(user=self.user)
             except:
                 self.loc = OneUserLocation.objects.create(user=self.user)
-            self.loc.sity_ru = self.data.sity.name_ru
-            self.loc.sity_en = self.data.sity.name_en
-            self.loc.region_ru = self.data.region.name_ru
-            self.loc.region_en = self.data.region.name_en
-            self.loc.country_ru = self.data.sity.country_ru
-            self.loc.country_en = self.data.sity.country_en
+            self.loc.sity_ru = self.data.get('sity_ru', None)
+            self.loc.sity_en = self.data.get('sity_en', None)
+            self.loc.region_ru = self.data.get('region_ru', None)
+            self.loc.region_en = self.data.get('region_en', None)
+            self.loc.country_ru = self.data.get('country_ru', None)
+            self.loc.country_en = self.data.get('country_en', None)
             self.loc.save()
         elif not self.olds_ip.ip_2 and self.olds_ip.ip_3 != self.ip and self.olds_ip.ip_2 != self.ip and self.olds_ip.ip_1 != self.ip:
             self.response = requests.get(url= "http://api.sypexgeo.net/8Dbm8/json/" + self.ip)
