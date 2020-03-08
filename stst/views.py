@@ -1,5 +1,5 @@
 from django.views.generic.base import TemplateView
-from common.utils import get_location
+from common.utils import get_client_ip, get_location
 
 
 class StatView(TemplateView):
