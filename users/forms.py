@@ -1,6 +1,6 @@
 from django import forms
-from users.models import UserProfile
-from users.model.settings import *
+from users.model.profile import UserProfile
+from users.model.settings import UserItemPrivate, UserItemNotifications
 
 
 class GeneralUserForm(forms.ModelForm):

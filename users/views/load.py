@@ -3,7 +3,6 @@ from users.models import User
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views import View
 from django.shortcuts import render_to_response
-from common.utils import is_mobile
 
 
 class AvatarReload(TemplateView):

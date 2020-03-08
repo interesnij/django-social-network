@@ -1,8 +1,6 @@
 from django.views.generic.base import TemplateView
 from users.models import User
-from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
 from django.shortcuts import render_to_response
-from common.utils import is_mobile
 
 
 class UserItemView(TemplateView):

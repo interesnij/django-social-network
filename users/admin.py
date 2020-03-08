@@ -1,6 +1,7 @@
 from django.contrib import admin
-from users.models import *
-from users.model.settings import *
+from users.model.profile import UserProfile
+from users.model.settings import UserItemNotifications, UserItemPrivate, UserColorSettings
+from users.model.list import UserBlock
 
 
 class UserProfileInline(admin.TabularInline):
