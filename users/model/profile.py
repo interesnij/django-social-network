@@ -60,8 +60,8 @@ class TwoUserLocation(models.Model):
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
-        verbose_name="Местоположение и ip пользователя"
-        verbose_name_plural="Местоположения и ip пользователей"
+        verbose_name="Местоположение пользователя"
+        verbose_name_plural="Местоположения пользователей"
 
 class ThreeUserLocation(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name="user_location_3", verbose_name="Пользователь", on_delete=models.CASCADE)
@@ -75,10 +75,14 @@ class ThreeUserLocation(models.Model):
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
-        verbose_name="Местоположение и ip пользователя"
-        verbose_name_plural="Местоположения и ip пользователей"
+        verbose_name="Местоположение пользователя"
+        verbose_name_plural="Местоположения пользователей"
 
 class IPUser(models.Model):
     ip_1 = models.GenericIPAddressField(protocol='both', null=True, blank=True, verbose_name="ip 1")
     ip_2 = models.GenericIPAddressField(protocol='both', null=True, blank=True, verbose_name="ip 2")
     ip_3 = models.GenericIPAddressField(protocol='both', null=True, blank=True, verbose_name="ip 3")
+
+    class Meta:
+        verbose_name="ip пользователя"
+        verbose_name_plural="ip пользователей"

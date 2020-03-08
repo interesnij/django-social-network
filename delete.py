@@ -8,11 +8,8 @@ sys.path.append(project_dir)
 
 os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
 
-import django
+import django, json, requests
 
 django.setup()
 
 from django.conf import settings
-from users.models import UserColorSettings
-
-UserColorSettings.objects.all().delete()
