@@ -17,13 +17,13 @@ class StatView(TemplateView):
 
         if not self.olds_ip.ip_1:
             self.response = requests.get(url= "http://api.sypexgeo.net/8Dbm8/json/" + self.ip)
-            self.data = json.dumps(self.response)
+            #self.data = json.dumps(self.response)
             self.data = self.response
             try:
                 self.loc = OneUserLocation.objects.get(user=self.user)
             except:
                 self.loc = OneUserLocation.objects.create(user=self.user)
-            self.loc.sity_ru = self.data.get('sity_ru', None)
+            self.loc.sity_ru = self.data.sity.sity_ru
             self.loc.sity_en = self.data.get('sity_en', None)
             self.loc.region_ru = self.data.get('region_ru', None)
             self.loc.region_en = self.data.get('region_en', None)
