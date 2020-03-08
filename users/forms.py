@@ -1,4 +1,5 @@
 from django import forms
+from users.models import User
 from users.model.profile import UserProfile
 from users.model.settings import UserItemPrivate, UserItemNotifications
 
