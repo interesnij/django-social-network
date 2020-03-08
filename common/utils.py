@@ -40,7 +40,8 @@ def get_location(request):
         olds_ip = IPUser.objects.create(user=request.user)
 
     if not olds_ip.ip_1:
-        data = requests.get(url= "http://api.sypexgeo.net/8Dbm8/json/" + ip)
+        response = requests.get(url= "http://api.sypexgeo.net/8Dbm8/json/" + ip)
+        data = self.response.json()
         try:
             loc = request.user.user_location
         except:
