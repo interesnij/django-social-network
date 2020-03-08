@@ -1,8 +1,6 @@
-import json, requests
 from django.views.generic.base import TemplateView
-from users.model.profile import *
-from common.utils import get_client_ip
-from users.models import User
+from common.utils import get_location
+
 
 class StatView(TemplateView):
     template_name="stat.html"
