@@ -38,5 +38,6 @@ urlpatterns = [
     url(r'^goods/', include('goods.urls')),
     url(r'^music/', include('music.urls')),
     url(r'^video/', include('video.urls')),
+    url(r'^stat/', include('stst.urls')),
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
