@@ -51,7 +51,7 @@ class OneUserLocation(models.Model):
         verbose_name_plural="Местоположения и ip пользователей"
 
 class TwoUserLocation(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name="user_location", verbose_name="Пользователь", on_delete=models.CASCADE)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name="user_location_2", verbose_name="Пользователь", on_delete=models.CASCADE)
     ip = models.GenericIPAddressField(protocol='both', null=True, blank=True, verbose_name="ip 1")
     sity_ru = models.CharField(max_length=100, blank=True, verbose_name="Город по-русски")
     sity_en = models.CharField(max_length=100, blank=True, verbose_name="Город по-английски")
@@ -67,7 +67,7 @@ class TwoUserLocation(models.Model):
         verbose_name_plural="Местоположения и ip пользователей"
 
 class ThreeUserLocation(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name="user_location", verbose_name="Пользователь", on_delete=models.CASCADE)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name="user_location_3", verbose_name="Пользователь", on_delete=models.CASCADE)
     ip = models.GenericIPAddressField(protocol='both', null=True, blank=True, verbose_name="ip 1")
     sity_ru = models.CharField(max_length=100, blank=True, verbose_name="Город по-русски")
     sity_en = models.CharField(max_length=100, blank=True, verbose_name="Город по-английски")
