@@ -17,8 +17,8 @@ class StatView(TemplateView):
             self.olds_ip = IPUser.objects.create(user=self.user)
 
         if not self.olds_ip.ip_1:
-            #self.data = requests.get(url= "http://api.sypexgeo.net/8Dbm8/json/" + self.ip)
-            self.data = data
+            self.data = requests.get(url= "http://api.sypexgeo.net/8Dbm8/json/" + self.ip)
+            #self.data = data
             try:
                 self.loc = OneUserLocation.objects.get(user=self.user)
             except:
