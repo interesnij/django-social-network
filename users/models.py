@@ -874,3 +874,11 @@ class User(AbstractUser):
         elif self.user_ip.ip_1:
             loc = self.user_location
         return loc
+
+    def get_visited_for_user(self):
+        from stst.models import UserNumbers
+
+        visitors_ids = UserNumbers.filter(target__pk=self.pk)
+        query = Q(id__in=visitors_ids)
+        visitors = User.objects.filter(query)
+        return visitors
