@@ -89,7 +89,7 @@ class UserColorSettings(models.Model):
     color = models.CharField(max_length=20, choices=COLOR, default='white', verbose_name="Цвет")
 
 
-class UserItemPrivate(models.Model):
+class UserPrivate(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name="user_private", on_delete=models.CASCADE, verbose_name="Пользователь")
     is_private = models.BooleanField(default=False, verbose_name="Закрытый профиль")
     can_message = models.BooleanField(default=True, verbose_name="Вам могут писать сообщения все пользователи")

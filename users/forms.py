@@ -1,6 +1,6 @@
 from django import forms
 from users.model.profile import UserProfile
-from users.model.settings import UserItemPrivate, UserItemNotifications
+from users.model.settings import UserPrivate, UserItemNotifications
 
 
 class GeneralUserForm(forms.ModelForm):
@@ -22,7 +22,7 @@ class AboutUserForm(forms.ModelForm):
 class SettingsPrivateForm(forms.ModelForm):
 
     class Meta:
-        model = UserItemPrivate
+        model = UserPrivate
         fields = (
             'is_private',
             'can_message',

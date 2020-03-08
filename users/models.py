@@ -224,13 +224,13 @@ class User(AbstractUser):
             return False
 
     def is_closed_profile(self):
-        from users.model.settings import UserPrivateSettings
+        from users.model.settings import UserPrivate
 
         try:
-            user_private = UserPrivateSettings.objects.get(user=self)
+            user_private = UserPrivate.objects.get(user=self)
             return user_private.is_private
         except:
-            user_private = UserPrivateSettings.objects.create(user=self)
+            user_private = UserPrivate.objects.create(user=self)
             return False
 
     def is_creator_of_community_with_name(self, community_name):
