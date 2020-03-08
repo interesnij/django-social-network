@@ -1,11 +1,6 @@
 from django.contrib import admin
-from common.models import *
+from common.model.votes import *
 
-
-class ProxyBlacklistDomainAdmin(admin.ModelAdmin):
-    list_display = (
-        'domain',
-    )
 
 class ItemVotesAdmin(admin.ModelAdmin):
     list_display = (
@@ -14,6 +9,4 @@ class ItemVotesAdmin(admin.ModelAdmin):
         #'parent',
     )
 
-
-admin.site.register(ProxyBlacklistedDomain, ProxyBlacklistDomainAdmin)
 admin.site.register(ItemVotes, ItemVotesAdmin)
