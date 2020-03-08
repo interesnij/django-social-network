@@ -31,3 +31,7 @@ class UserAdmin(admin.ModelAdmin):
 admin.site.register(User, UserAdmin)
 
 admin.site.register(UserBlock)
+admin.site.register(OneUserLocation)
+admin.site.register(TwoUserLocation)
+admin.site.register(ThreeUserLocation)
+admin.site.register(IPUser)

@@ -35,7 +35,6 @@ class UserProfile(models.Model):
 
 class OneUserLocation(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name="user_location", verbose_name="Пользователь", on_delete=models.CASCADE)
-    ip = models.GenericIPAddressField(protocol='both', null=True, blank=True, verbose_name="ip 1")
     sity_ru = models.CharField(max_length=100, blank=True, verbose_name="Город по-русски")
     sity_en = models.CharField(max_length=100, blank=True, verbose_name="Город по-английски")
     region_ru = models.CharField(max_length=100, blank=True, verbose_name="Регион по-русски")
@@ -51,7 +50,6 @@ class OneUserLocation(models.Model):
 
 class TwoUserLocation(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name="user_location_2", verbose_name="Пользователь", on_delete=models.CASCADE)
-    ip = models.GenericIPAddressField(protocol='both', null=True, blank=True, verbose_name="ip 1")
     sity_ru = models.CharField(max_length=100, blank=True, verbose_name="Город по-русски")
     sity_en = models.CharField(max_length=100, blank=True, verbose_name="Город по-английски")
     region_ru = models.CharField(max_length=100, blank=True, verbose_name="Регион по-русски")
@@ -67,7 +65,6 @@ class TwoUserLocation(models.Model):
 
 class ThreeUserLocation(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name="user_location_3", verbose_name="Пользователь", on_delete=models.CASCADE)
-    ip = models.GenericIPAddressField(protocol='both', null=True, blank=True, verbose_name="ip 1")
     sity_ru = models.CharField(max_length=100, blank=True, verbose_name="Город по-русски")
     sity_en = models.CharField(max_length=100, blank=True, verbose_name="Город по-английски")
     region_ru = models.CharField(max_length=100, blank=True, verbose_name="Регион по-русски")
@@ -80,3 +77,8 @@ class ThreeUserLocation(models.Model):
         indexes = (BrinIndex(fields=['created']),)
         verbose_name="Местоположение и ip пользователя"
         verbose_name_plural="Местоположения и ip пользователей"
+
+class IPUser(models.Model):
+    ip_1 = models.GenericIPAddressField(protocol='both', null=True, blank=True, verbose_name="ip 1")
+    ip_2 = models.GenericIPAddressField(protocol='both', null=True, blank=True, verbose_name="ip 2")
+    ip_3 = models.GenericIPAddressField(protocol='both', null=True, blank=True, verbose_name="ip 3")
