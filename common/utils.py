@@ -66,7 +66,7 @@ def get_location(request):
             loc = request.user.user_location_2
         except:
             from users.model.profile import TwoUserLocation
-            loc = TwoUserLocation.objects.create(user=self.user)
+            loc = TwoUserLocation.objects.create(user=request.user)
         sity = data['city']
         region = data['region']
         country = data['country']
@@ -86,7 +86,7 @@ def get_location(request):
             loc = request.user.user_location_3
         except:
             from users.model.profile import ThreeUserLocation
-            loc = ThreeUserLocation.objects.create(user=self.user)
+            loc = ThreeUserLocation.objects.create(user=request.user)
         sity = data['city']
         region = data['region']
         country = data['country']
