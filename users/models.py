@@ -873,4 +873,6 @@ class User(AbstractUser):
         elif self.user_location_1:
             from users.model.profile import OneUserLocation
             loc = OneUserLocation.objects.get(user=self)
+        else:
+            loc = 1
         return loc
