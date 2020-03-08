@@ -888,4 +888,4 @@ class User(AbstractUser):
         visitors_ids = UserNumbers.objects.filter(target=self.pk)
         query = Q(id__in=visitors_ids)
         visitors = User.objects.filter(query)
-        return visitors
+        return visitors_ids
