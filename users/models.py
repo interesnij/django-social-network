@@ -869,5 +869,5 @@ class User(AbstractUser):
         elif self.user_ip.ip_2:
             loc = self.user_location_2
         elif self.user_ip.ip_1:
-            loc = self.user_location_1
+            loc = self.user_location
         return loc
