@@ -1,6 +1,6 @@
 from django.contrib import admin
 from users.models import User
-from users.model.profile import UserProfile
+from users.model.profile import *
 from users.model.settings import UserItemNotifications, UserItemPrivate, UserColorSettings
 from users.model.list import UserBlock
 
