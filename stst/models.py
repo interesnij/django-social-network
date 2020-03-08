@@ -5,6 +5,7 @@ from django.contrib.postgres.indexes import BrinIndex
 class UserNumbers(models.Model):
     visitor = models.PositiveIntegerField(default=0, verbose_name="Кто заходит")
     target = models.PositiveIntegerField(default=0, verbose_name="К кому заходит")
+    count = models.PositiveIntegerField(default=0, verbose_name="Кол-во визитов")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создано")
 
     class Meta:
