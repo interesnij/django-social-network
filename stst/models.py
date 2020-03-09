@@ -10,7 +10,7 @@ class UserNumbers(models.Model):
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создано")
 
     class Meta:
-        indexes = (BrinIndex(fields=['created']),[models.Index(fields=['visitor', 'target']),])
+        indexes = (BrinIndex(fields=['created']))
         unique_together = ('visitor', 'target',)
         verbose_name="Кто к кому заходил"
         verbose_name_plural="Кто к кому заходил"
