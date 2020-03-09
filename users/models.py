@@ -732,7 +732,7 @@ class User(AbstractUser):
                 obj.count = obj.count + 1
                 obj.save(update_fields=['count'])
             except:
-                obj = UserNumbers.objects.create(visitor__id=request.user.pk, target__id=self.pk)
+                obj = UserNumbers.objects.create(visitor_user__id=request.user.pk, target_user__id=self.pk)
                 obj.count = obj.count + 1
                 obj.save(update_fields=['count'])
         elif request.user.is_anonymous and self.is_closed_profile():
