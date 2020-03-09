@@ -5,8 +5,8 @@ register=template.Library()
 @register.filter
 def count_visitor_for_user(user, user_id, arg="дурак,дурака"):
     count = user.get_count_visitor_for_user(user_id)
-    a = value % 10
-    b = value % 100
+    a = count % 10
+    b = count % 100
     res = None
     if (a == 1) and (b != 11):
         res = args[0]
