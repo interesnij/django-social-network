@@ -894,9 +894,8 @@ class User(AbstractUser):
         v_s = UserNumbers.objects.filter(target=self).values('visitor_id')
         v_s_ids = [user['visitor_id'] for user in v_s]
         users = Q(id__in=v_s_ids)
-        visitors = User.objects.filter(users)
-        #return cls.get_user_visiter_order_by(query=visitors)
-        return visitors
+        #visitors = User.objects.filter(users)
+        return cls.get_user_visiter_order_by(query=visitors)
 
 
     def get_count_visitor_for_user(self, target):
