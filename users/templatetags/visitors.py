@@ -5,12 +5,7 @@ register=template.Library()
 @register.filter
 def count_visitor_for_user(user, user_id):
     count = user.get_count_visitor_for_user(user_id)
-    a = count % 10
-    b = count % 100
-    if (a == 1) and (b != 11):
-        res = " раз"
-    elif (a >= 2) and (a <= 4) and ((b < 10) or (b >= 20)):
-        res = " раза"
+    
     return count
 
 @register.filter
