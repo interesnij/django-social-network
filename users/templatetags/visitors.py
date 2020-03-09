@@ -5,12 +5,12 @@ register=template.Library()
 @register.filter
 def count_visitor_for_user(user, user_id):
     return user.get_count_visitor_for_user(user_id)
-    
+
 @register.filter
 def count_visitor_pluralize(value, arg="дурак,дурака"):
     args = arg.split(",")
-    a = number % 10
-    b = number % 100
+    a = value % 10
+    b = value % 100
 
     if (a == 1) and (b != 11):
         return args[0]
