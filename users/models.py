@@ -895,7 +895,7 @@ class User(AbstractUser):
         query = Q()
         for id in v_s:
             query.add(id, Q.AND)
-        ids = [user['visitor'] for user in query]
+        ids = [user['visitor'] for user in v_s]
         visitors = User.objects.filter(id__in=ids)
         return visitors
 
