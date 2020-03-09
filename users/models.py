@@ -886,7 +886,7 @@ class User(AbstractUser):
     def get_user_visiter_order_by(cls, query):
         from django.db.models import Count
 
-        return cls.objects.annotate(Count('targett_user')).filter(query).order_by('-count')
+        return cls.objects.filter(query).order_by('-visitor_id__count')
 
     @classmethod
     def get_visited_for_user(cls, self):
