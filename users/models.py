@@ -895,7 +895,6 @@ class User(AbstractUser):
         query = Q()
         #visitors = User.objects.filter(id__in=v_s)
         for id in v_s:
-            User.objects.get(id=id)
             query = Q(id=id, Q.AND)
         return query
 
