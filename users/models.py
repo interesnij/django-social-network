@@ -906,8 +906,10 @@ class User(AbstractUser):
         from django.db.models import F
         try:
             v_s = UserNumbers.objects.filter(target=self.pk).values('count')
-            sum = v_s.objects.annotate(total = F('count'))
-            return sum
+            total = 0
+            for sum in v_s:
+                total += sum.count
+            return total
         except:
             pass
 
