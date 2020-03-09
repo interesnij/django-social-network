@@ -901,7 +901,7 @@ class User(AbstractUser):
             pass
 
 
-    def get_count_visitor_for_user(self, user_id):
+    def get_count_visitor_for_user(self, target):
         from stst.models import UserNumbers
-        link = UserNumbers.objects.get(visitor__pk=self.pk, target__pk=user_id)
+        link = UserNumbers.objects.get(visitor=self, target=target)
         return link.count
