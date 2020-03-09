@@ -882,13 +882,22 @@ class User(AbstractUser):
             loc = self.user_location
         return loc
 
-    def get_visited_for_user(self):
+    @classmethod
+    def get_user_visiter_order_by(cls, query):
+        from django.db.models import Count
+
+        return cls.objects.annotate(Count('target_user')).filter(query).order_by('-target_user__count', '-created')
+
+    @classmethod
+    def get_visited_for_user(cls, self):
         from stst.models import UserNumbers
-        v_s = UserNumbers.objects.filter(target=self.pk).values('visitor')
-        count = UserNumbers.objects.filter(target=self.pk).values('count')
-        query = Q(id__in=v_s)
-        visitors = User.objects.filter(query)
-        return visitors.order_by(count)
+        try:
+            v_s = UserNumbers.objects.filter(target=self.pk).values('visitor')
+            users = Q(id__in=v_s)
+            visitors = User.objects.filter(users)
+            return cls.get_user_visiter_order_by(query=visitors)
+        except:
+            pass
 
 
     def get_count_visitor_for_user(self, user_id):
