@@ -893,6 +893,7 @@ class User(AbstractUser):
 
         v_s = UserNumbers.objects.filter(target=self.pk).values('visitor').order_by("count")
         ids = [user['visitor'] for user in v_s]
+        query = []
         for user in ids:
             query = query + [User.objects.get(id=user), ]
         visitors = User.objects.filter(id__in=ids)
