@@ -891,15 +891,12 @@ class User(AbstractUser):
     @classmethod
     def get_visited_for_user(cls, self):
         from stst.models import UserNumbers
-        try:
-            v_s = UserNumbers.objects.filter(target=self).values('visitor_id')
-            v_s_ids = [user['visitor_id'] for user in v_s]
-            users = Q(id__in=v_s_ids)
-            visitors = User.objects.filter(users)
-            #return cls.get_user_visiter_order_by(query=visitors)
-            return visitors
-        except:
-            pass
+        v_s = UserNumbers.objects.filter(target=self).values('visitor_id')
+        v_s_ids = [user['visitor_id'] for user in v_s]
+        users = Q(id__in=v_s_ids)
+        visitors = User.objects.filter(users)
+        #return cls.get_user_visiter_order_by(query=visitors)
+        return visitors
 
 
     def get_count_visitor_for_user(self, target):
