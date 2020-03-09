@@ -886,19 +886,20 @@ class User(AbstractUser):
     def get_user_visiter_order_by(cls, query):
         from django.db.models import Count
 
-        return cls.objects.filter(query).order_by('-visitor_id__count')
+        return cls.objects.filter(query).order_by('visitor_user__count')
 
-    @classmethod
-    def get_visited_for_user(cls, self):
+    def get_visited_for_user(self):
         from stst.models import UserNumbers
-        v_s = UserNumbers.objects.filter(target=self).values('visitor_id')
-        v_s_ids = [user['visitor_id'] for user in v_s]
-        users = Q(id__in=v_s_ids)
-        #visitors = User.objects.filter(users)
-        return cls.get_user_visiter_order_by(query=users)
 
+        v_s = UserNumbers.objects.filter(target=self.pk).values('visitor').order_by("count")
+        query = Q(id__in=v_s)
+        visitors = User.objects.filter(query)
+        return visitors
 
-    def get_count_visitor_for_user(self, target):
+    def get_count_visitor_for_user(self,user_id):
         from stst.models import UserNumbers
-        link = UserNumbers.objects.get(visitor=self, target=target)
-        return link.count
+        try:
+            link = UserNumbers.objects.get(visitor=self.pk, target=user_id)
+            return link.count
+        except:
+            pass

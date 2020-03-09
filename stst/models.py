@@ -4,8 +4,8 @@ from django.contrib.postgres.indexes import BrinIndex
 
 
 class UserNumbers(models.Model):
-    visitor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='visitor_user', verbose_name="Кто заходит")
-    target = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='target_user', verbose_name="К кому заходит")
+    visitor = models.PositiveIntegerField(default=0, verbose_name="Кто заходит")
+    target = models.PositiveIntegerField(default=0, verbose_name="К кому заходит")
     count = models.PositiveIntegerField(default=0, verbose_name="Кол-во визитов")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создано")
 
