@@ -892,9 +892,12 @@ class User(AbstractUser):
         from stst.models import UserNumbers
 
         v_s = UserNumbers.objects.filter(target=self.pk).values('visitor').order_by("count")
-        #query = Q(id__in=v_s)
-        visitors = User.objects.filter(id__in=v_s)
-        return visitors
+        query = Q()
+        #visitors = User.objects.filter(id__in=v_s)
+        for id in v_s:
+            User.objects.get(id=id)
+            query = Q(id=id, Q.AND)
+        return query
 
     def get_unical_visited_for_user(self):
         from stst.models import UserNumbers
