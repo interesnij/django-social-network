@@ -881,8 +881,7 @@ class User(AbstractUser):
         elif self.user_ip.ip_1:
             loc = self.user_location
         else:
-            #loc = "Местоположение не найдено"
-            loc = 124
+            loc = "Местоположение не найдено"
         return loc
 
     def get_visiter_users(self):
