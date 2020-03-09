@@ -895,7 +895,8 @@ class User(AbstractUser):
         query = Q()
         for id in v_s:
             query.add(id, Q.AND)
-        visitors = User.objects.filter(id__in=query[0])
+        ids = [user['visitor'] for user in query]
+        visitors = User.objects.filter(id__in=ids)
         return visitors
 
     def get_unical_visited_for_user(self):
