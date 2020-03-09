@@ -101,15 +101,17 @@
                 </div>
             </div>
             <br><br>
-            <div class="media">
+            <div class="card-header">
+              <div class="media">
+                  <div class="media-body">
+                      <h5 class="mt-1">Мои уникальные просмотры {{ request.user.all_unical_target_count_user }} </h5>
+                  </div>
+              </div>
+              <div class="media">
                 <div class="media-body">
-                    <h5 class="mt-1">Мои уникальные просмотры {{ request.user.all_unical_target_count_user }} </h5>
+                  <h5 class="mt-1">Всего я посмотрел {{ request.user.all_target_user_count }} </h5>
                 </div>
-            </div>
-            <div class="media">
-                <div class="media-body">
-                    <h5 class="mt-1">Всего я посмотрел {{ request.user.all_target_user_count }} </h5>
-                </div>
+              </div>
             </div>
         </div>
     </div>
