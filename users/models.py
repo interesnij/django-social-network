@@ -728,11 +728,11 @@ class User(AbstractUser):
             else:
                 template_name = folder + template
             try:
-                obj = UserNumbers.objects.get(visitor__uuid=request.user.pk, target__uuid=self.pk)
+                obj = UserNumbers.objects.get(visitor=request.user, target=self)
                 obj.count = obj.count + 1
                 obj.save(update_fields=['count'])
             except:
-                obj = UserNumbers.objects.create(visitor__uuid=request.user.pk, target__uuid=self.pk)
+                obj = UserNumbers.objects.create(visitor=request.user, target=self)
                 obj.count = obj.count + 1
                 obj.save(update_fields=['count'])
         elif request.user.is_anonymous and self.is_closed_profile():
@@ -892,8 +892,9 @@ class User(AbstractUser):
     def get_visited_for_user(cls, self):
         from stst.models import UserNumbers
         try:
-            v_s = UserNumbers.objects.filter(target=self.pk).values('visitor')
-            users = Q(id__in=v_s)
+            v_s = UserNumbers.objects.filter(target=self).values('visitor_id')
+            v_s_ids = [user['visitor_id'] for user in v_s]
+            users = Q(id__in=v_s_ids)
             visitors = User.objects.filter(users)
             return cls.get_user_visiter_order_by(query=visitors)
         except:
