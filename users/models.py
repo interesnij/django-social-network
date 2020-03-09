@@ -893,7 +893,7 @@ class User(AbstractUser):
     def get_count_visitor_for_user(self,user_id):
         from stst.models import UserNumbers
         try:
-            link = UserNumbers.objects.get(visitor=self.pk, target=user_id)
+            link = UserNumbers.objects.get(target=self.pk, visitor=user_id)
             return link.count
         except:
             pass
