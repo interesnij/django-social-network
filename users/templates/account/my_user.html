@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load staticfiles humanize %}
+{% load staticfiles humanize get_count_visitors %}
 
 {% block title %}{{ user.get_full_name }}{% endblock %}
 {% block meta %}
@@ -10,7 +10,7 @@
 {% endblock %}
 {% block content %}
 {% for object in request.user.get_visited_for_user %}
-  {{ object.get_full_name }}
+  {{ object.get_full_name|get_count_visitors:object.pk }}
 {% endfor %}
 | {{ request.user.get_visited_for_user }}
 <div class="row user_page">
