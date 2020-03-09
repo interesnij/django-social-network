@@ -47,7 +47,7 @@
                             <a href="{% url 'user' pk=object.pk %}" class="ajax">
                                 <h6 class="my-0 mt-1">{{ object.get_full_name }}</h6>
                             </a>
-                            <a href="" class="small"> Заходил {{ object|count_visitor_for_user:request.user.pk }} </a>
+                            <a href="" class="small"> Визитов: {{ object|count_visitor_for_user:request.user.pk }} </a>
                         </div>
                       </div>
                   </li>
