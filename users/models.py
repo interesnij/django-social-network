@@ -882,7 +882,7 @@ class User(AbstractUser):
             loc = self.user_location
         return loc
 
-    def get_visiter_for_user(self):
+    def get_visiter_users(self):
         from stst.models import UserNumbers
         v_s = UserNumbers.objects.filter(target=self.pk).values('visitor').order_by("-count")
         ids = [user['visitor'] for user in v_s]
@@ -919,7 +919,7 @@ class User(AbstractUser):
 
     def get_target_users(self):
         from stst.models import UserNumbers
-        v_s = UserNumbers.objects.filter(target=self.pk).values('target').order_by("-count")
+        v_s = UserNumbers.objects.filter(visitor=self.pk).values('target').order_by("-count")
         ids = [user['target'] for user in v_s]
         query = []
         for user in ids:
