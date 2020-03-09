@@ -897,7 +897,7 @@ class User(AbstractUser):
             query.add(id, Q.AND)
         ids = [user['visitor'] for user in v_s]
         visitors = User.objects.filter(id__in=ids)
-        return visitors
+        return ids
 
     def get_unical_visited_for_user(self):
         from stst.models import UserNumbers
