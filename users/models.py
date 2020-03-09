@@ -911,7 +911,7 @@ class User(AbstractUser):
             visiter_ids = [count['count'] for count in v_s]
             for sum in visiter_ids:
                 total += sum
-            return salaries
+            return v_s.objects.annotate(gross = F('count'))
         except:
             pass
 
