@@ -888,22 +888,22 @@ class User(AbstractUser):
 
         return cls.objects.filter(query).order_by('visitor_user__count')
 
-    def get_visited_for_user(self):
+    def get_visiter_for_user(self):
         from stst.models import UserNumbers
 
-        v_s = UserNumbers.objects.filter(target=self__pk).values('visitor').order_by("-count")
+        v_s = UserNumbers.objects.filter(target=self.pk).values('visitor').order_by("-count")
         ids = [user['visitor'] for user in v_s]
         query = []
         for user in ids:
             query = query + [User.objects.get(id=user), ]
         return query
 
-    def get_unical_visited_for_user(self):
+    def all_user_unical_visits_count(self):
         from stst.models import UserNumbers
 
         return UserNumbers.objects.filter(target=self.pk).values('pk').count()
 
-    def get_all_visited_for_user(self):
+    def all_user_visits_count(self):
         from stst.models import UserNumbers
 
         try:
@@ -916,7 +916,7 @@ class User(AbstractUser):
         except:
             pass
 
-    def get_count_visitor_for_user(self,user_id):
+    def count_user_visits(self,user_id):
         from stst.models import UserNumbers
         try:
             link = UserNumbers.objects.get(visitor=self.pk, target=user_id)

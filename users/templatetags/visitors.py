@@ -4,8 +4,8 @@ register=template.Library()
 
 @register.filter
 def count_visitor_for_user(user, user_id):
-    count = user.get_count_visitor_for_user(user_id)
-    
+    count = user.count_user_visits(user_id)
+
     return count
 
 @register.filter

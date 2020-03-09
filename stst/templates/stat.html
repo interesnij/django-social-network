@@ -27,7 +27,7 @@
             </div>
             <div class="card-body px-0 py-0">
               <ul class="list-group" id="follows_container">
-                    {% for object in request.user.get_visited_for_user %}
+                    {% for object in request.user.get_visiter_for_user %}
                     <li class="list-group-item">
                         <div class="media">
                           <a href="{% url 'user' pk=object.pk %}" class="ajax">
@@ -58,8 +58,8 @@
                   </div>
               </div>
               <div class="card-body px-0 py-0">
-                Уникальных посетителей  {{ request.user.get_unical_visited_for_user }}<br>
-                Всего посещений  {{ request.user.get_all_visited_for_user }}<br>
+                Уникальных посетителей  {{ request.user.all_user_unical_visits_count }}<br>
+                Всего посещений  {{ request.user.all_user_visits_count }}<br>
               </div>
             </div>
     </div>
