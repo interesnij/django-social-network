@@ -907,10 +907,11 @@ class User(AbstractUser):
         try:
             v_s = UserNumbers.objects.filter(target=self.pk).values('count')
             total = 0
+            salaries = v_s.objects.annotate(gross = F('count'))
             visiter_ids = [count['count'] for count in v_s]
             for sum in visiter_ids:
                 total += sum
-            return total
+            return salaries
         except:
             pass
 
