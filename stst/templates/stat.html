@@ -54,7 +54,7 @@
           <div class="card">
               <div class="card-header">
                   <div class="media">
-                      <div class="media-body"><h5 class="mt-1">Мои просмотры пользователей</h5></div>
+                      <div class="media-body"><h5 class="mt-1">я смотрел</h5></div>
                   </div>
               </div>
 
@@ -76,7 +76,7 @@
                                 <a href="{% url 'user' pk=object.pk %}" class="ajax">
                                     <h6 class="my-0 mt-1">{{ object.get_full_name }}</h6>
                                 </a>
-                                <a href="" class="small"> Визитов: {{ request.user|count_views_user:object.pk }} </a>
+                                <a href="" class="small"> всего: {{ request.user|count_views_user:object.pk }} </a>
                             </div>
                           </div>
                       </li>
@@ -101,16 +101,16 @@
                     </div>
                 </div>
             </div>
-            <div class="card-header">
+            <div class="card-body">
                 <div class="media">
                     <div class="media-body">
-                        <h5 class="mt-1">Уникальных просмотров {{ request.user.all_unical_target_count_user }} </h5>
+                        <h5 class="mt-1">Мои уникальные просмотры {{ request.user.all_unical_target_count_user }} </h5>
                     </div>
                 </div>
                 <br><br>
                 <div class="media">
                     <div class="media-body">
-                        <h5 class="mt-1">Всего просмотров {{ request.user.get_target_users }} </h5>
+                        <h5 class="mt-1">Всего я посмотрел {{ request.user.all_target_user_count }} </h5>
                     </div>
                 </div>
             </div>
