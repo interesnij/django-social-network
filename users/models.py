@@ -881,8 +881,8 @@ class User(AbstractUser):
         elif self.user_ip.ip_1:
             loc = self.user_location
         else:
-            loc == "Местоположение не найдено"
-        return loc
+            loc = "Местоположение не найдено"
+        return loc or None
 
     def get_visiter_users(self):
         from stst.models import UserNumbers

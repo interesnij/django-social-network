@@ -45,7 +45,7 @@
                               <a href="{% url 'user' pk=object.pk %}" class="ajax">
                                   <h6 class="my-0 mt-1">{{ object.get_full_name }} ({{ object|count_viseter_count:request.user.pk }})</h6>
                               </a>
-                              <a href="" class="small"> {% if object.get_last_location %}{{ object.get_last_location }}{% else %}Местоположение не указано{% endif %} </a>
+                              <a href="" class="small">{{ object.get_last_location }}</a>
                           </div>
                         </div>
                     </li>
