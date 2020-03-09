@@ -894,7 +894,13 @@ class User(AbstractUser):
         v_s = UserNumbers.objects.filter(target=self.pk).values('visitor').order_by("-count")
         query = Q(id__in=v_s)
         visitors = User.objects.filter(query)
-        return visitors 
+        return visitors
+
+    def get_unical_visited_for_user(self):
+        from stst.models import UserNumbers
+
+        return UserNumbers.objects.filter(target=self.pk).values('pk').count()
+
 
     def get_count_visitor_for_user(self,user_id):
         from stst.models import UserNumbers
