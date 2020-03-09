@@ -52,6 +52,8 @@ def get_location(request):
         country = data['country']
         loc.city_ru = sity['name_ru']
         loc.city_en = sity['name_en']
+        loc.city_lat = sity['lat']
+        loc.city_lon = sity['lon']
         loc.region_ru = region['name_ru']
         loc.region_en = region['name_en']
         loc.country_ru = country['name_ru']
@@ -72,6 +74,8 @@ def get_location(request):
         country = data['country']
         loc.city_ru = sity['name_ru']
         loc.city_en = sity['name_en']
+        loc.city_lat = sity['lat']
+        loc.city_lon = sity['lon']
         loc.region_ru = region['name_ru']
         loc.region_en = region['name_en']
         loc.country_ru = country['name_ru']
@@ -92,6 +96,8 @@ def get_location(request):
         country = data['country']
         loc.city_ru = sity['name_ru']
         loc.city_en = sity['name_en']
+        loc.city_lat = sity['lat']
+        loc.city_lon = sity['lon']
         loc.region_ru = region['name_ru']
         loc.region_en = region['name_en']
         loc.country_ru = country['name_ru']
@@ -114,5 +120,6 @@ def get_location(request):
         olds_ip.ip_1 = ip
         olds_ip.save()
         loc.save()
+        
     else:
         pass
