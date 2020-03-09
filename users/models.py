@@ -728,11 +728,11 @@ class User(AbstractUser):
             else:
                 template_name = folder + template
             try:
-                obj = UserNumbers.objects.get(visitor_id=request.user.pk, target_id=self.pk)
+                obj = UserNumbers.objects.get(visitor.id=request.user.pk, target.id=self.pk)
                 obj.count = obj.count + 1
                 obj.save(update_fields=['count'])
             except:
-                obj = UserNumbers.objects.create(visitor_user__id=request.user.pk, target_user__id=self.pk)
+                obj = UserNumbers.objects.create(visitor.id=request.user.pk, target.id=self.pk)
                 obj.count = obj.count + 1
                 obj.save(update_fields=['count'])
         elif request.user.is_anonymous and self.is_closed_profile():
