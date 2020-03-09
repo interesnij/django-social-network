@@ -22,7 +22,7 @@
         <div class="card">
             <div class="card-header">
                 <div class="media">
-                    <div class="media-body"><h5 class="mt-1">Мои подписчики</h5></div>
+                    <div class="media-body"><h5 class="mt-1">Мои гости</h5></div>
                 </div>
             </div>
             <br><br>
@@ -47,7 +47,7 @@
                             <a href="{% url 'user' pk=object.pk %}" class="ajax">
                                 <h6 class="my-0 mt-1">{{ object.get_full_name }}</h6>
                             </a>
-                            <a href="" class="small"> Заходил {{ object|count_visitor_for_user:request.user }} </a>
+                            <a href="" class="small"> Заходил {{ object|count_visitor_for_user:request.user.pk }} </a>
                         </div>
                       </div>
                   </li>
