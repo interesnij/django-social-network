@@ -732,7 +732,7 @@ class User(AbstractUser):
                 obj.count = obj.count + 1
                 obj.save(update_fields=['count'])
             except:
-                obj = UserNumbers.objects.create(visitor=request.user.pk, target=self.pk)
+                obj = UserNumbers.objects.create(visitor__id=request.user.pk, target__id=self.pk)
                 obj.count = obj.count + 1
                 obj.save(update_fields=['count'])
         elif request.user.is_anonymous and self.is_closed_profile():
@@ -902,5 +902,5 @@ class User(AbstractUser):
 
     def get_count_visitor_for_user(self, user_id):
         from stst.models import UserNumbers
-        link = UserNumbers.objects.get(visitor=self.pk, target=user_id)
+        link = UserNumbers.objects.get(visitor__id=self.pk, target__id=user_id)
         return link.count
