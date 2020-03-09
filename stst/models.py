@@ -12,7 +12,7 @@ class UserNumbers(models.Model):
         indexes = (BrinIndex(fields=['created']),)
         verbose_name="Кто к кому заходил"
         verbose_name_plural="Кто к кому заходил"
-        ordering = ["count"]
+        ordering = ["-count"]
 
 
 class CommuityNumbers(models.Model):
