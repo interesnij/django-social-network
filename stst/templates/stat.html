@@ -25,9 +25,7 @@
                     <div class="media-body"><h5 class="mt-1">Мои гости</h5></div>
                 </div>
             </div>
-            <br><br>
             <div class="card-body px-0 py-0">
-
               <ul class="list-group" id="follows_container">
                   {% for object in request.user.get_visited_for_user %}
                   <li class="list-group-item">
@@ -51,10 +49,19 @@
                   </li>
                   {% endfor %}
               </ul>
-Уникальных посетителей  {{ request.user.get_unical_visited_for_user }}<br>
-Всего посещений  {{ request.user.get_all_visited_for_user }}<br>
             </div>
-        </div>
+          </div>
+          <div class="card">
+              <div class="card-header">
+                  <div class="media">
+                      <div class="media-body"><h5 class="mt-1">Общая статистика</h5></div>
+                  </div>
+              </div>
+              <div class="card-body px-0 py-0">
+                Уникальных посетителей  {{ request.user.get_unical_visited_for_user }}<br>
+                Всего посещений  {{ request.user.get_all_visited_for_user }}<br>
+              </div>
+            </div>
     </div>
 
     <div class="col-12 col-md-4">
