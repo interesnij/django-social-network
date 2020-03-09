@@ -896,7 +896,8 @@ class User(AbstractUser):
             v_s_ids = [user['visitor_id'] for user in v_s]
             users = Q(id__in=v_s_ids)
             visitors = User.objects.filter(users)
-            return cls.get_user_visiter_order_by(query=visitors)
+            #return cls.get_user_visiter_order_by(query=visitors)
+            return visitors
         except:
             pass
 
