@@ -3,16 +3,16 @@ register=template.Library()
 
 
 @register.filter
-def count_visitor_for_user(user, user_id, arg="дурак,дурака"):
+def count_visitor_for_user(user, user_id):
     count = user.get_count_visitor_for_user(user_id)
     a = count % 10
     b = count % 100
     res = None
     if (a == 1) and (b != 11):
-        res = args[0]
+        res = " раз"
     elif (a >= 2) and (a <= 4) and ((b < 10) or (b >= 20)):
-        res = args[1]
-    return count + " " + res
+        res = " раза"
+    return count + res
 
 @register.filter
 def count_visitor_pluralize(value, arg="дурак,дурака"):
