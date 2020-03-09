@@ -901,6 +901,15 @@ class User(AbstractUser):
 
         return UserNumbers.objects.filter(target=self.pk).values('pk').count()
 
+    def get_all_visited_for_user(self):
+        from stst.models import UserNumbers
+        from django.db.models import F
+        try:
+            v_s = UserNumbers.objects.filter(target=self.pk).values('count')
+            sum = v_s.objects.annotate(total = F('count'))
+            return sum
+        except:
+            pass
 
     def get_count_visitor_for_user(self,user_id):
         from stst.models import UserNumbers
