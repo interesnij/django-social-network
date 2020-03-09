@@ -907,9 +907,8 @@ class User(AbstractUser):
         try:
             v_s = UserNumbers.objects.filter(target=self.pk).values('count')
             total = 0
-            for sum in v_s:
-                total += sum.count
-            return total
+            visiter_ids = [count['count'] for count in v_s]
+            return visiter_ids
         except:
             pass
 
