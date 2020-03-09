@@ -10,7 +10,7 @@
 {% endblock %}
 {% block content %}
 {% for object in request.user.get_visited_for_user %}
-  {{ object|count_visitor_for_user:object.pk }}
+  {{ object }}
 {% endfor %}
 | {{ request.user.get_visited_for_user }}
 <div class="row user_page">
