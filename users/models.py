@@ -893,7 +893,7 @@ class User(AbstractUser):
 
         v_s = UserNumbers.objects.filter(target=self.pk).values('visitor')
         query = Q(id__in=v_s)
-        visitors = User.objects.filter(query)
+        visitors = User.objects.filter(query).order_by("v_s__count")
         return visitors
 
     def get_unical_visited_for_user(self):
