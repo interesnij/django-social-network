@@ -894,8 +894,8 @@ class User(AbstractUser):
         v_s = UserNumbers.objects.filter(target=self.pk).values('visitor').order_by("-count")
         query = []
         ids = [user['visitor'] for user in v_s]
-        for user in ids:
-            query = query + [User.objects.get(id=user), ]
+        for user in v_s:
+            query = query + [User.objects.get(id=user[['visitor']]), ]
         visitors = User.objects.filter(id__in=ids)
         return visitors
 
