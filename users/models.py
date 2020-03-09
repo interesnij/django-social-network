@@ -887,8 +887,8 @@ class User(AbstractUser):
         v_s = UserNumbers.objects.filter(target=self.pk).values('visitor')
         count = UserNumbers.objects.filter(target=self.pk).values('count')
         query = Q(id__in=v_s)
-        visitors = User.objects.filter(query).order_by(count)
-        return visitors
+        visitors = User.objects.filter(query)
+        return visitors.order_by(count)
 
 
     def get_count_visitor_for_user(self, user_id):
