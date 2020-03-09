@@ -882,15 +882,8 @@ class User(AbstractUser):
             loc = self.user_location
         return loc
 
-    @classmethod
-    def get_user_visiter_order_by(cls, query):
-        from django.db.models import Count
-
-        return cls.objects.filter(query).order_by('visitor_user__count')
-
     def get_visiter_for_user(self):
         from stst.models import UserNumbers
-
         v_s = UserNumbers.objects.filter(target=self.pk).values('visitor').order_by("-count")
         ids = [user['visitor'] for user in v_s]
         query = []
@@ -898,14 +891,8 @@ class User(AbstractUser):
             query = query + [User.objects.get(id=user), ]
         return query
 
-    def all_user_unical_visits_count(self):
-        from stst.models import UserNumbers
-
-        return UserNumbers.objects.filter(target=self.pk).values('pk').count()
-
     def all_user_visits_count(self):
         from stst.models import UserNumbers
-
         try:
             v_s = UserNumbers.objects.filter(target=self.pk).values('count')
             total = 0
@@ -916,10 +903,41 @@ class User(AbstractUser):
         except:
             pass
 
+    def all_user_unical_visits_count(self):
+        from stst.models import UserNumbers
+        return UserNumbers.objects.filter(target=self.pk).values('pk').count()
+
+
+
     def count_user_visits(self,user_id):
         from stst.models import UserNumbers
         try:
             link = UserNumbers.objects.get(visitor=self.pk, target=user_id)
             return link.count
+        except:
+            pass
+
+    def get_target_users(self):
+        from stst.models import UserNumbers
+        v_s = UserNumbers.objects.filter(target=self.pk).values('target').order_by("-count")
+        ids = [user['target'] for user in v_s]
+        query = []
+        for user in ids:
+            query = query + [User.objects.get(id=user), ]
+        return query
+
+    def all_unical_target_count_user(self):
+        from stst.models import UserNumbers
+        return UserNumbers.objects.filter(visitor=self.pk).values('pk').count()
+
+    def all_target_user_count(self):
+        from stst.models import UserNumbers
+        try:
+            v_s = UserNumbers.objects.filter(visitor=self.pk).values('count')
+            total = 0
+            target_ids = [count['count'] for count in v_s]
+            for sum in target_ids:
+                total += sum
+            return total
         except:
             pass
