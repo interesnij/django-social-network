@@ -933,7 +933,7 @@ class User(AbstractUser):
     def all_target_user_count(self):
         from stst.models import UserNumbers
         try:
-            v_s = UserNumbers.objects.filter(visitor=self.pk).values('count')
+            v_s = UserNumbers.objects.filter(target=self.pk).values('count')
             total = 0
             target_ids = [count['count'] for count in v_s]
             for sum in target_ids:
