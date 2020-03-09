@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load humanize get_count_visitors liked_user thumbnail %} 
+{% load humanize get_count_visitors liked_user thumbnail %}
 
 {% block title %}{{ request.user.get_full_name }}{% endblock %}
 {% block meta %}
@@ -47,7 +47,7 @@
                             <a href="{% url 'user' pk=object.pk %}" class="ajax">
                                 <h6 class="my-0 mt-1">{{ object.get_full_name }}</h6>
                             </a>
-                            <a href="" class="small"> Заходил {{ object|count_visitor_for_user:request.user }} {{ object|count_visitor_for_user:request.user||rupluralize:"раз,раза,раз" }}</a>
+                            <a href="" class="small"> Заходил {{ object|count_visitor_for_user:request.user }} {{ object|count_visitor_for_user:request.user|rupluralize:"раз,раза,раз" }}</a>
                         </div>
                       </div>
                   </li>
