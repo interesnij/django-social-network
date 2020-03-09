@@ -894,6 +894,6 @@ class User(AbstractUser):
         from stst.models import UserNumbers
         try:
             link = UserNumbers.objects.get(visitor=self.pk, target=user_id)
-            return link.count
+            return link
         except:
             pass
