@@ -12,7 +12,7 @@ def count_visitor_for_user(user, user_id):
         res = " раз"
     elif (a >= 2) and (a <= 4) and ((b < 10) or (b >= 20)):
         res = " раза"
-    return count + res
+    return str(count) + res
 
 @register.filter
 def count_visitor_pluralize(value, arg="дурак,дурака"):
