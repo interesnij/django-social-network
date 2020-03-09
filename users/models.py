@@ -880,7 +880,8 @@ class User(AbstractUser):
             loc = self.user_location_2
         elif self.user_ip.ip_1:
             loc = self.user_location
-        elif loc == "Местоположение не найдено"
+        else:
+            loc == "Местоположение не найдено"
         return loc
 
     def get_visiter_users(self):
