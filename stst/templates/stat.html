@@ -19,7 +19,8 @@
                 <button class="btn btn-outline-link" type="button">Искать</button>
             </div>
         </div>
-        <div class="card">
+        <div class="col-12 col-md-6">
+          <div class="card">
             <div class="card-header">
                 <div class="media">
                     <div class="media-body"><h5 class="mt-1">Мои гости</h5></div>
@@ -51,6 +52,8 @@
                 </ul>
             </div>
           </div>
+          </div>
+          <div class="col-12 col-md-6">
           <div class="card">
               <div class="card-header">
                   <div class="media">
@@ -84,34 +87,35 @@
                   </ul>
               </div>
             </div>
+          </div>
     </div>
 
     <div class="col-12 col-md-4">
         <div class="card mb-2">
-            <div class="card-header">
-                <div class="media">
-                    <div class="media-body">
-                        <h5 class="mt-1">Уникальных посетителей {{ request.user.all_user_unical_visits_count }} </h5>
-                    </div>
-                </div>
-                <div class="media">
-                    <div class="media-body">
-                        <h5 class="mt-1">Всего посещений {{ request.user.all_user_visits_count }} </h5>
-                    </div>
-                </div>
-            </div>
-            <div class="card-header">
+          <div class="card-header">
               <div class="media">
                   <div class="media-body">
-                      <h5 class="mt-1">Мои уникальные просмотры {{ request.user.all_unical_target_count_user }} </h5>
+                      <h5 class="mt-1">Уникальных посетителей {{ request.user.all_user_unical_visits_count }} </h5>
                   </div>
               </div>
               <div class="media">
+                  <div class="media-body">
+                      <h5 class="mt-1">Всего посещений {{ request.user.all_user_visits_count }} </h5>
+                  </div>
+              </div>
+          </div>
+          <div class="card-header">
+            <div class="media">
                 <div class="media-body">
-                  <h5 class="mt-1">Всего я посмотрел {{ request.user.all_target_user_count }} </h5>
+                    <h5 class="mt-1">Мои уникальные просмотры {{ request.user.all_unical_target_count_user }} </h5>
                 </div>
+            </div>
+            <div class="media">
+              <div class="media-body">
+                <h5 class="mt-1">Всего я посмотрел {{ request.user.all_target_user_count }} </h5>
               </div>
             </div>
+          </div>
         </div>
     </div>
 </div>
