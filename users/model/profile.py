@@ -51,7 +51,7 @@ class OneUserLocation(models.Model):
         index_together = [('id', 'user'),]
 
     def __str__(self):
-        return '{} - {}, {}, {}'.format(self.user.get_full_name(), self.country_ru, self.region_ru, self.city_ru)
+        return '{}, {}, {}'.format(self.country_ru, self.region_ru, self.city_ru)
 
 class TwoUserLocation(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name="user_location_2", verbose_name="Пользователь", on_delete=models.CASCADE)
@@ -70,7 +70,7 @@ class TwoUserLocation(models.Model):
         index_together = [('id', 'user'),]
 
     def __str__(self):
-        return '{} - {}, {}, {}'.format(self.user.get_full_name(), self.country_ru, self.region_ru, self.city_ru)
+        return '{}, {}, {}'.format(self.country_ru, self.region_ru, self.city_ru)
 
 class ThreeUserLocation(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name="user_location_3", verbose_name="Пользователь", on_delete=models.CASCADE)
@@ -89,7 +89,7 @@ class ThreeUserLocation(models.Model):
         index_together = [('id', 'user'),]
 
     def __str__(self):
-        return '{} - {}, {}, {}'.format(self.user.get_full_name(), self.country_ru, self.region_ru, self.city_ru)
+        return '{}, {}, {}'.format(self.country_ru, self.region_ru, self.city_ru)
 
 class IPUser(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name="user_ip", verbose_name="Пользователь", on_delete=models.CASCADE)
