@@ -10,15 +10,7 @@
 {% endblock %}
 {% block content %}
 <script>
-  function elementInViewport(el){
-      var bounds = el.getBoundingClientRect();
-      return (
-          (bounds.top + bounds.height > 0) && // Елемент ниже верхней границы
-          (window.innerHeight - bounds.top > 0) && // Выше нижней
-          (bounds.left + bounds.width > 0) && // Правее левой
-          (window.innerWidth - bounds.left > 0)// Левее правой
-      );
-  }
+
 </script>
 <div class="row user_page">
     <div class="col-lg-4 col-md-5 order-1">
@@ -223,6 +215,16 @@ link.send( null );
 
 });
 
+function elementInViewport(el){
+    var bounds = el.getBoundingClientRect();
+    return (
+        (bounds.top + bounds.height > 0) && // Елемент ниже верхней границы
+        (window.innerHeight - bounds.top > 0) && // Выше нижней
+        (bounds.left + bounds.width > 0) && // Правее левой
+        (window.innerWidth - bounds.left > 0)// Левее правой
+    );
+}
+
 var page = 2;
 var loaded = false;
 onscroll = function(){
@@ -230,9 +232,9 @@ onscroll = function(){
   for (var i = 0; i < box.length; i++) {
     box[i].style.background = 'red';
 
-    console.log(box[i].getAttribute('item-id'))
+    console.log(box[i].getAttribute('item-id'));
+    inViewport = elementInViewport(box[i]);
   }
-  inViewport = elementInViewport(box[i]);
   console.log(inViewport ? "Елемент в поле зрения" : "Елемент не в поле зрения");
 
   try{
