@@ -2,8 +2,8 @@
    item post scripts for user
   */
 $('.user_page').on('click', '#form_post_btn', function() {
+  pk = $(this).data('pk');
   form_post = $('#form_post');
-  pk = form_post.data('pk');
   stream = form_post.parent().next();
   $.ajax({type: form_post.attr('method'),
   url: "/posts/add_post/" + pk + "/",
