@@ -226,6 +226,13 @@ link.send( null );
 var page = 2;
 var loaded = false;
 onscroll = function(){
+  var box = document.querySelectorAll('.infinite-item');
+  for (var i = 0; i < box.length; i++) {
+    box[i].style.background = 'red';
+  }
+  inViewport = elementInViewport(this.previousElementSibling);
+  console.log(inViewport ? "Елемент в поле зрения" : "Елемент не в поле зрения");
+
   try{
 
   if(items.getElementsByClassName('infinite-item').length === (page-1)*30){
