@@ -227,7 +227,10 @@ function elementInViewport(el){
 function stop_elementInViewport(i){
   return elementInViewport(i);
 }
-document.addEventListener("scroll", (e) => {
+
+var page = 2;
+var loaded = false;
+onscroll = function(){
   var box = document.querySelectorAll('.infinite-item');
   for (var i = 0; i < box.length; i++) {
     box[i].style.background = 'red';
@@ -236,13 +239,7 @@ document.addEventListener("scroll", (e) => {
     inViewport = elementInViewport(box[i]);
     console.log(inViewport ? "Елемент в поле зрения" : "Елемент не в поле зрения");
     if(inViewport){seee = true};
-}})
-
-
-var page = 2;
-var loaded = false;
-onscroll = function(){
-
+}
   try{
 
   if(items.getElementsByClassName('infinite-item').length === (page-1)*30){
