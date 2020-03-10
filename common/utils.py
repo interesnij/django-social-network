@@ -120,6 +120,17 @@ def get_location(request):
         olds_ip.ip_1 = ip
         olds_ip.save()
         loc.save()
-        
+
     else:
         pass
+
+def community_views_plus(user_pk, community_pk):
+
+    try:
+        obj = CommunityNumbers.objects.get(user=user_pk, community=community_pk)
+        obj.count = obj.count + 1
+        obj.save(update_fields=['count'])
+    except:
+        obj = CommunityNumbers.objects.create(user=user_pk, community=community_pk)
+        obj.count = obj.count + 1
+        obj.save(update_fields=['count'])

@@ -3,7 +3,7 @@ register=template.Library()
 
 
 @register.filter
-def count_viseter_count(user, user_id):
+def count_viseter_user(user, user_id):
     count = user.count_user_visits(user_id)
     return count
 

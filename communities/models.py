@@ -240,6 +240,7 @@ class Community(models.Model):
 
     def get_template(self, folder, template, request):
         import re
+        from common.utils import community_views_plus
 
         if request.user.is_authenticated and request.user.is_member_of_community_with_name(self.name):
             if request.user.is_moderator_of_community_with_name(self.name):
@@ -254,6 +255,7 @@ class Community(models.Model):
                 template_name = folder + "star_" + template
             else:
                 template_name = folder + "member_" + template
+            community_views_plus(user_pk=request.user.pk, community_pk=self.pk)
         elif request.user.is_authenticated and request.user.is_follow_from_community_with_name(self.pk):
             template_name = folder + "follow_" + template
         elif request.user.is_authenticated and request.user.is_banned_from_community_with_name(self.name):
@@ -261,6 +263,7 @@ class Community(models.Model):
 
         elif request.user.is_authenticated and self.is_public():
             template_name = folder + "public_" + template
+            community_views_plus(user_pk=request.user.pk, community_pk=self.pk)
         elif request.user.is_authenticated and self.is_closed():
             template_name = folder + "close_" + template
         elif request.user.is_authenticated and self.is_private():
@@ -566,6 +569,39 @@ class Community(models.Model):
 
     def count_members(self):
         return self.memberships.count()
+
+    def get_visiter_users(self):
+        from stst.models import CommuityNumbers
+        v_s = CommuityNumbers.objects.filter(community=self.pk).values('user').order_by("-count")
+        ids = [use['user'] for use in v_s]
+        query = []
+        for i in ids:
+            query = query + [User.objects.get(id=i), ]
+        return query
+
+    def all_user_visits_count(self):
+        from stst.models import CommuityNumbers
+        try:
+            v_s = CommuityNumbers.objects.filter(community=self.pk).values('count')
+            total = 0
+            visiter_ids = [count['count'] for count in v_s]
+            for sum in visiter_ids:
+                total += sum
+            return total
+        except:
+            pass
+
+    def all_user_unical_visits_count(self):
+        from stst.models import CommuityNumbers
+        return CommuityNumbers.objects.filter(community=self.pk).values('pk').count()
+
+    def count_user_visits(self,user_id):
+        from stst.models import CommuityNumbers
+        try:
+            link = CommuityNumbers.objects.get(community=self.pk, user=user_id)
+            return link.count
+        except:
+            pass
 
 
 class CommunityMembership(models.Model):
