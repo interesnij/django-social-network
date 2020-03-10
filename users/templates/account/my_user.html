@@ -235,6 +235,7 @@ onscroll = function(){
     box[i].style.background = 'red';
     console.log(i);
     inViewport = elementInViewport(box[i]);
+    if(inViewport){box[i].style.background = 'red';};
     //console.log(inViewport ? "Елемент в поле зрения" : "Елемент не в поле зрения");
 }
   try{
