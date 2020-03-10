@@ -231,7 +231,7 @@ document.addEventListener("scroll", (e) => {
   var box = document.querySelectorAll('.infinite-item');
   for (var i = 0; i < box.length; i++) {
     box[i].style.background = 'red';
-
+    seee = true;
     console.log(box[i].getAttribute('item-id'));
     inViewport = elementInViewport(box[i]);
     console.log(inViewport ? "Елемент в поле зрения" : "Елемент не в поле зрения");
