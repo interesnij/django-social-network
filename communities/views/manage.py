@@ -354,7 +354,7 @@ class CommunityStaffWindow(TemplateView):
 		return context
 
 
-class CommunityStateCoverView(ListView):
+class CommunityStateCoverView(TemplateView): 
 	template_name = None
 
 	def get(self,request,*args,**kwargs):
