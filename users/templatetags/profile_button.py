@@ -19,16 +19,14 @@ def is_frend_user(request_user, user_id):
 
 @register.filter
 def is_request_follow(request_user, user_id):
-    try:
-        request_user.is_authenticated and request_user.is_following_user_with_id(user_id)
+    if request_user.is_authenticated and request_user.is_following_user_with_id(user_id):
         return True
-    except:
+    else:
         return False
 
 @register.filter
 def is_user_follow(request_user, user_id):
-    try:
-        request_user.is_authenticated and request_user.is_followers_user_with_id(user_id)
+    if request_user.is_authenticated and request_user.is_followers_user_with_id(user_id):
         return True
-    except:
+    else:
         return False
