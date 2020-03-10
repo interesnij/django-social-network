@@ -19,6 +19,7 @@ class UserNumbers(models.Model):
 class CommuityNumbers(models.Model):
     user = models.PositiveIntegerField(default=0, verbose_name="Кто заходит")
     community = models.PositiveIntegerField(default=0, verbose_name="В какое сообщество заходил")
+    count = models.PositiveIntegerField(default=0, verbose_name="Кол-во визитов")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создано")
 
     class Meta:
@@ -30,6 +31,7 @@ class CommuityNumbers(models.Model):
 class GoodNumbers(models.Model):
     user = models.PositiveIntegerField(default=0, verbose_name="Кто смотрит")
     good = models.PositiveIntegerField(default=0, verbose_name="Какой товар смотрит")
+    count = models.PositiveIntegerField(default=0, verbose_name="Кол-во визитов")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создано")
 
     class Meta:
@@ -41,6 +43,7 @@ class GoodNumbers(models.Model):
 class VideoNumbers(models.Model):
     user = models.PositiveIntegerField(default=0, verbose_name="Кто смотрит")
     video = models.PositiveIntegerField(default=0, verbose_name="Какой ролик смотрит")
+    count = models.PositiveIntegerField(default=0, verbose_name="Кол-во просмотров")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создано")
 
     class Meta:
@@ -52,6 +55,7 @@ class VideoNumbers(models.Model):
 class MusicNumbers(models.Model):
     user = models.PositiveIntegerField(default=0, verbose_name="Кто слушает")
     music = models.PositiveIntegerField(default=0, verbose_name="Какой трек слушает")
+    count = models.PositiveIntegerField(default=0, verbose_name="Кол-во прослушиваний")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создано")
 
     class Meta:
@@ -62,7 +66,8 @@ class MusicNumbers(models.Model):
 
 class ItemNumbers(models.Model):
     user = models.PositiveIntegerField(default=0, verbose_name="Кто смотрит")
-    music = models.PositiveIntegerField(default=0, verbose_name="Какую запись смотрит")
+    item = models.PositiveIntegerField(default=0, verbose_name="Какую запись смотрит")
+    count = models.PositiveIntegerField(default=0, verbose_name="Кол-во просмотров")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создано")
 
     class Meta:
