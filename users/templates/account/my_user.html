@@ -227,15 +227,18 @@ function elementInViewport(el){
 function stop_elementInViewport(i){
   return elementInViewport(i);
 }
-var box = document.querySelectorAll('.infinite-item');
-for (var i = 0; i < box.length; i++) {
-  box[i].style.background = 'red';
+document.addEventListener("scroll", (e) => {
+  var box = document.querySelectorAll('.infinite-item');
+  for (var i = 0; i < box.length; i++) {
+    box[i].style.background = 'red';
 
-  console.log(box[i].getAttribute('item-id'));
-  inViewport = elementInViewport(box[i]);
-  console.log(inViewport ? "Елемент в поле зрения" : "Елемент не в поле зрения");
-  if(inViewport){seee = true};
-}
+    console.log(box[i].getAttribute('item-id'));
+    inViewport = elementInViewport(box[i]);
+    console.log(inViewport ? "Елемент в поле зрения" : "Елемент не в поле зрения");
+    if(inViewport){seee = true};
+    document.querySelector("#status").innerText = inViewport ? "Елемент в поле зрения" : "Елемент не в поле зрения";
+}})
+
 
 var page = 2;
 var loaded = false;
