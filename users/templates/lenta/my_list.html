@@ -25,7 +25,7 @@
         {% include 'item_user/my_post.html' with post=post  %}
         {% endif %}
         <script>
-          inViewport = elementInViewport(i);
+          inViewport = elementInViewport(this.previousElementSibling);
           console.log(inViewport ? "Елемент в поле зрения" : "Елемент не в поле зрения");
         </script>
         {% endfor %}
