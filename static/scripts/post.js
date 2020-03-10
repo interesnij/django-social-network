@@ -9,7 +9,7 @@ $('.user_page').on('click', '#form_post_btn', function() {
   url: "/posts/add_post/" + pk + "/",
   data: form_post.serialize(),
   success: function(data) {
-    stream.find(".lenta-container").prepend(data);
+    stream.find(".lenta_container").prepend(data);
     stream.find(".post_empty").hide();
     $(".id_text").val("");
     $(".add_board #for_images_upload").hide();
