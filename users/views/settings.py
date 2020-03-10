@@ -127,3 +127,11 @@ class UserDesign(TemplateView):
 	def get(self,request,*args,**kwargs):
 		self.template_name = request.user.get_settings_template(folder="settings/", template="design.html", request=request)
 		return super(UserDesign,self).get(request,*args,**kwargs)
+
+
+class StateCoverView(TemplateView):
+	template_name = None
+
+	def get(self,request,*args,**kwargs):
+		self.template_name = request.user.get_settings_template(folder="settings/", template="stat_cover.html", request=request)
+		return super(StateCoverView,self).get(request,*args,**kwargs)

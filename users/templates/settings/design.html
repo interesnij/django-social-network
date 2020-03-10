@@ -5,7 +5,7 @@
 {% block content %}
 <div class="container mt-4 main-container">
   <div class="row">
-        <div class="col-lg-7 col-md-8 col-sm-12 order-1">
+        <div class="col-md-8">
           <div class="card mb-4">
                 <div class="card-header border-bottom">
                     <h5 class="content-color-primary mb-0">Внешний вид</h5>
@@ -94,12 +94,59 @@
             </div>
           </div>
         </div>
-        <div class="col-lg-5 col-md-4 col-sm-12 order-2">
-          <ul style="list-style-type:none">
-            <li style="margin-bottom:8px;"><a href="{% url 'user_general_form' user.pk %}" class="ajax" data-html="#ajax">Мои контакты</a></li>
-            <li style="margin-bottom:8px;"><a href="{% url 'user_about_form' user.pk %}" class="ajax" data-html="#ajax">Обо мне</a></li>
-            <li style="margin-bottom:8px;"><a href="{% url 'user_design' user.id %}" class="ajax" data-html="#ajax">Внешний вид</a></li>
-          </ul>
+
+        <div class="col-md-4">
+          <button class="mb-2 box-shadow mr-2 btn btn-link text-light text-dark collapsed" style="display: block" type="button" data-toggle="collapse" data-target="#userSettings" aria-expanded="false" aria-controls="collapseExample">
+              Общее
+          </button>
+          <div class="collapse show" id="userSettings">
+            <div class="card card-body" style="display: contents;">
+              <ul style="list-style-type:none">
+                <li style="margin-bottom:8px;"><a href="{% url 'user_general_form' request.user.pk %}" class="ajax" data-html="#ajax">Информации</a></li>
+                <li style="margin-bottom:8px;"><a href="{% url 'user_about_form' request.user.pk %}" class="ajax" data-html="#ajax">Обо мне</a></li>
+                <li style="margin-bottom:8px;"><a href="{% url 'user_design' request.user.id %}" class="ajax" data-html="#ajax">Внешний вид</a></li>
+              </ul>
+            </div>
+          </div>
+          <button class="mb-2 box-shadow mr-2 btn btn-link text-light text-dark collapsed" style="display: block;margin-top: 20px;" type="button" data-toggle="collapse" data-target="#userPrivate" aria-expanded="false" aria-controls="collapseExample">
+              Приватность
+          </button>
+          <div class="collapse" id="userPrivate">
+            <div class="card card-body" style="display: contents;">
+              <ul style="list-style-type:none">
+                <li style="margin-bottom:8px;"><a href="{% url 'user_settings_private' request.user.pk %}" class="ajax" data-html="#ajax">Записи</a></li>
+                <li style="margin-bottom:8px;"><a href="" class="ajax" data-html="#ajax">Фотографии</a></li>
+                <li style="margin-bottom:8px;"><a href="" class="ajax" data-html="#ajax">Товары</a></li>
+                <li style="margin-bottom:8px;"><a href="" class="ajax" data-html="#ajax">Музыка</a></li>
+                <li style="margin-bottom:8px;"><a href="" class="ajax" data-html="#ajax">Видео</a></li>
+              </ul>
+            </div>
+          </div>
+          <button class="mb-2 box-shadow mr-2 btn btn-link text-light text-dark collapsed" style="display: block;margin-top: 20px;" type="button" data-toggle="collapse" data-target="#userNotify" aria-expanded="false" aria-controls="collapseExample">
+              Уведомления
+          </button>
+          <div class="collapse" id="userNotify">
+            <div class="card card-body" style="display: contents;">
+              <ul style="list-style-type:none">
+                <li style="margin-bottom:8px;"><a href="{% url 'user_settings_notify' request.user.pk %}" class="ajax" data-html="#ajax">Записи</a></li>
+                <li style="margin-bottom:8px;"><a href="" class="ajax" data-html="#ajax">Фотографии</a></li>
+                <li style="margin-bottom:8px;"><a href="" class="ajax" data-html="#ajax">Товары</a></li>
+                <li style="margin-bottom:8px;"><a href="" class="ajax" data-html="#ajax">Музыка</a></li>
+                <li style="margin-bottom:8px;"><a href="" class="ajax" data-html="#ajax">Видео</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <button class="mb-2 box-shadow mr-2 btn btn-link text-light text-dark collapsed" style="display: block;margin-top: 20px;" type="button" data-toggle="collapse" data-target="#userNotify" aria-expanded="false" aria-controls="collapseExample">
+              Статистика
+          </button>
+          <div class="collapse" id="userNotify">
+            <div class="card card-body" style="display: contents;">
+              <ul style="list-style-type:none">
+                <li style="margin-bottom:8px;"><a href="{% url 'user_stat_coverage' request.user.pk %}" class="ajax" data-html="#ajax">Общая</a></li>
+              </ul>
+            </div>
+          </div>
         </div>
 
       </div>
