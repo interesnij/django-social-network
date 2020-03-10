@@ -232,7 +232,7 @@ onscroll = function(){
 
     console.log(box[i].getAttribute('item-id'))
   }
-  inViewport = elementInViewport(this.previousElementSibling);
+  inViewport = elementInViewport(box[i]);
   console.log(inViewport ? "Елемент в поле зрения" : "Елемент не в поле зрения");
 
   try{
