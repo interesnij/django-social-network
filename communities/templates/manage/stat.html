@@ -34,7 +34,7 @@
                         </a>
                         <div class="media-body">
                             <a href="{% url 'user' pk=object.pk %}" class="ajax">
-                                <h6 class="my-0 mt-1">{{ object.get_full_name }} ({{ object|count_views_user:community.pk }})</h6>
+                                <h6 class="my-0 mt-1">{{ object.get_full_name }} ({{ community|count_views_user:object.pk }})</h6>
                             </a>
                             <a href="" class="small">{{ object.get_last_location }}</a>
                         </div>
