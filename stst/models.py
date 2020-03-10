@@ -16,7 +16,7 @@ class UserNumbers(models.Model):
         verbose_name_plural="Кто к кому заходил"
 
 
-class CommuityNumbers(models.Model):
+class CommunityNumbers(models.Model):
     user = models.PositiveIntegerField(default=0, verbose_name="Кто заходит")
     community = models.PositiveIntegerField(default=0, verbose_name="В какое сообщество заходил")
     count = models.PositiveIntegerField(default=0, verbose_name="Кол-во визитов")
