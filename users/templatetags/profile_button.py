@@ -5,7 +5,7 @@ register=template.Library()
 @register.filter
 def is_blocked_user(user, request_user):
     try:
-        user.is_authenticated and request_user.has_blocked_user_with_id(request_user)
+        request_user.is_authenticated and request_user.has_blocked_user_with_id(user)
         return True
     except:
         return False

@@ -27,7 +27,7 @@
                   </a>
               </div>
 
-              {% if request.user|is_blocked_user:user %}
+              {% if user|is_blocked_user:request.user %} 
               <span style="display: flex;align-items: center;justify-content: center;margin-bottom: 10px;">
                 <div class="btn-group">
                     <button type="button" class="btn btn-sm btn-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
