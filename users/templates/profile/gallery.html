@@ -23,7 +23,7 @@
 
     </div>
 </div>
-{% else %}
+{% empty %}
 {% if user == request.user and not user.is_photo_exists %}
 <div class="card mb-4" style="">
     <div class="card-header">
@@ -36,5 +36,4 @@
         </div>
     </div>
 </div>
-{% endif %}
 {% endif %}

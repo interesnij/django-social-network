@@ -37,7 +37,7 @@
     </div>
     {% endfor %}
 </div>
-{% else %}
+{% empty %}
 {% if user == request.user %}
 <div class="card mb-4" style="">
     <div class="card-header">
@@ -50,5 +50,4 @@
         </div>
     </div>
 </div>
-{% endif %}
 {% endif %}
