@@ -55,7 +55,77 @@
             </form>
         </div>
 
-        {% include 'manage/menu_general.html' %}
+        <div class="col-lg-5 col-md-4 col-sm-12 order-2">
+            <button class="mb-2 box-shadow mr-2 btn btn-link text-light text-dark collapsed" style="display: block" type="button" data-toggle="collapse" data-target="#communitySettings" aria-expanded="false" aria-controls="collapseExample">
+                Настройки <span class="text-hide-xs">сообщества</span>
+            </button>
+            <div class="collapse" id="communitySettings">
+              <div class="card card-body" style="display: contents;">
+                <ul>
+                  <li><a href="{% url 'community_general_form' pk=community.pk %}" class="ajax" data-html="#ajax">Информации</a></li>
+                </ul>
+              </div>
+            </div>
+
+            <button class="mb-2 box-shadow mr-2 btn btn-link text-light text-dark collapsed" style="display: block;margin-top: 20px;" type="button" data-toggle="collapse" data-target="#communityMembership" aria-expanded="false" aria-controls="collapseExample">
+                Участники <span class="text-hide-xs">сообщества</span>
+            </button>
+            <div class="collapse" id="communityMembership">
+              <div class="card card-body" style="display: contents;">
+                <ul>
+                  <li><a href="{% url 'community_member_manage' pk=community.pk %}" class="ajax" data-html="#ajax">Подписчики</a></li>
+                  {% if community.is_closed %}
+                    <li style="margin-bottom:8px;"><a href="{% url 'community_follows' pk=community.pk %}" class="ajax" data-html="#ajax">Заявки на членство</a></li>
+                  {% endif %}
+                  <li><a href="{% url 'community_moders' pk=community.pk %}" class="ajax" data-html="#ajax">Модераторы</a></li>
+                  <li><a href="{% url 'community_editors' pk=community.pk %}" class="ajax" data-html="#ajax">Редакторы</a></li>
+                  <li><a href="{% url 'community_advertisers' pk=community.pk %}" class="ajax" data-html="#ajax">Рекламодатели</a></li>
+                  <li><a href="{% url 'community_admins' pk=community.pk %}" class="ajax" data-html="#ajax">Администраторы</a></li>
+                  <li><a href="{% url 'community_black_list' pk=community.pk %}" class="ajax" data-html="#ajax">Черный список</a></li>
+                </ul>
+              </div>
+            </div>
+
+            <button class="mb-2 box-shadow mr-2 btn btn-link text-light text-dark collapsed" style="display: block;margin-top: 20px;" type="button" data-toggle="collapse" data-target="#userPrivate" aria-expanded="false" aria-controls="collapseExample">
+                Приватность
+            </button>
+            <div class="collapse show" id="userPrivate">
+              <div class="card card-body" style="display: contents;">
+                <ul>
+                  <li><a href="{% url 'community_private' community.pk %}" class="ajax" data-html="#ajax">Записи</a></li>
+                  <li><a href="" class="ajax" data-html="#ajax">Фотографии</a></li>
+                  <li><a href="" class="ajax" data-html="#ajax">Товары</a></li>
+                  <li><a href="" class="ajax" data-html="#ajax">Музыка</a></li>
+                  <li><a href="" class="ajax" data-html="#ajax">Видео</a></li>
+                </ul>
+              </div>
+            </div>
+            <button class="mb-2 box-shadow mr-2 btn btn-link text-light text-dark collapsed" style="display: block;margin-top: 20px;" type="button" data-toggle="collapse" data-target="#userNotify" aria-expanded="false" aria-controls="collapseExample">
+                Уведомления
+            </button>
+            <div class="collapse" id="userNotify">
+              <div class="card card-body" style="display: contents;">
+                <ul>
+                  <li><a href="{% url 'community_notify' community.pk %}" class="ajax" data-html="#ajax">Записи</a></li>
+                  <li><a href="" class="ajax" data-html="#ajax">Фотографии</a></li>
+                  <li><a href="" class="ajax" data-html="#ajax">Товары</a></li>
+                  <li><a href="" class="ajax" data-html="#ajax">Музыка</a></li>
+                  <li><a href="" class="ajax" data-html="#ajax">Видео</a></li>
+                </ul>
+              </div>
+            </div>
+
+            <button class="mb-2 box-shadow mr-2 btn btn-link text-light text-dark collapsed" style="display: block;margin-top: 20px;" type="button" data-toggle="collapse" data-target="#userStat" aria-expanded="false" aria-controls="collapseExample">
+                Статистика
+            </button>
+            <div class="collapse" id="userStat">
+              <div class="card card-body" style="display: contents;">
+                <ul style="list-style-type:none">
+                  <li style="margin-bottom:8px;"><a href="{% url 'community_stat_coverage' request.user.pk %}" class="ajax" data-html="#ajax">Общая</a></li>
+                </ul>
+              </div>
+            </div>
+        </div>
 
     </div>
 </div>
