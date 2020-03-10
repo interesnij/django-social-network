@@ -24,6 +24,7 @@ class CommunityNumbers(models.Model):
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
+        unique_together = ('user', 'community',)
         verbose_name="Посещение сообщества"
         verbose_name_plural="Посещения сообщества"
 
