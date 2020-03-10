@@ -233,9 +233,9 @@ onscroll = function(){
   var box = document.querySelectorAll('.infinite-item');
   for (var i = 0; i < box.length; i++) {
     box[i].style.background = 'red';
-    console.log(box[i]);
+    console.log(i);
     inViewport = elementInViewport(box[i]);
-    console.log(inViewport ? "Елемент в поле зрения" : "Елемент не в поле зрения");
+    //console.log(inViewport ? "Елемент в поле зрения" : "Елемент не в поле зрения");
 }
   try{
 
