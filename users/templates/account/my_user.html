@@ -229,7 +229,7 @@ onscroll = function(){
   try{
   var items = document.getElementById("lenta_container");
   var list = itemsgetElementsByClassName('infinite-item');
-  var inViewport = elementInViewport(list);
+  var inViewport = document.querySelectorAll('.infinite-item');
   console.log(inViewport ? "Елемент в поле зрения" : "Елемент не в поле зрения");
 
   if(items.getElementsByClassName('infinite-item').length === (page-1)*30){
