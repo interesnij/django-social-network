@@ -725,6 +725,8 @@ class User(AbstractUser):
                     template_name = folder + "close_" + template
                 else:
                     template_name = folder + "frend_" + template
+            elif request.user.is_connected_with_user_with_id(user_id=self.pk):
+                template_name = folder + "frend_" + template
             else:
                 template_name = folder + template
             try:
