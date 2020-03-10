@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load staticfiles humanize %}
+{% load staticfiles humanize profile_button %}
 
 {% block title %}{{ user.get_full_name }}{% endblock %}
 {% block meta %}
@@ -27,7 +27,60 @@
                   </a>
               </div>
 
-              <span id="button_load"></span>
+              {% if request.user|is_blocked_user:user %}
+              <span style="display: flex;align-items: center;justify-content: center;margin-bottom: 10px;">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-sm btn-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Заблокирован
+                    </button>
+                    <div class="dropdown-menu" data-pk="{{ user.pk }}" x-placement="bottom-start">
+                        <a class="dropdown-item user_unblock" href="#">Разлокировать</a>
+                        <a class="dropdown-item" href="#">Пожаловаться</a>
+                    </div>
+                </div>
+              </span>
+
+              {% elif request.user|is_request_follow:user %}
+              <span style="display: flex;align-items: center;justify-content: center;margin-bottom: 10px;">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-sm btn-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Вы подписаны
+                    </button>
+                    <div class="dropdown-menu" x-placement="bottom-start" data-pk="{{ user.pk }}">
+                        <a class="dropdown-item follow_delete" href="#" >Отменить подписку</a>
+                        <a class="dropdown-item user_block" href="#">Заблокировать</a>
+                        <a class="dropdown-item" href="#">Пожаловаться</a>
+                    </div>
+                </div>
+              </span>
+
+              {% elif request.user|is_user_follow:user %}
+              <span style="display: flex;align-items: center;justify-content: center;margin-bottom: 10px;">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-sm btn-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Ваш подписчик
+                    </button>
+                    <div class="dropdown-menu" x-placement="bottom-start" data-pk="{{ user.pk }}">
+                        <a class="dropdown-item connect_create" href="#">Добавить в друзья</a>
+                        <a class="dropdown-item user_block" href="#">Заблокировать</a>
+                        <a class="dropdown-item" href="#">Пожаловаться</a>
+                    </div>
+                </div>
+              </span>
+
+              {% else %}
+              <span style="display: flex;align-items: center;justify-content: center;margin-bottom: 10px;">
+                <a href="#" class="btn btn-sm btn-success success-gradient follow_create" data-pk="{{ user.pk }}">Добавить в друзья</a>
+                <button style="margin-left:5px;" type="button" class="btn btn-sm btn-success success-gradient" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <svg style="width: 17px;height: 17px; "fill="#FFFFF8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+                </button>
+                <div class="dropdown-menu" x-placement="bottom-start" data-pk="{{ user.pk }}">
+                  <a class="dropdown-item user_block" href="#">Заблокировать</a>
+                  <a class="dropdown-item" href="#">Пожаловаться</a>
+                </div>
+              </span>
+              {% endif %}
+
 
               <span style="display: flex;align-items: center;justify-content: center;">
                 <a data-js="new_message" href="#" class="btn btn-sm btn-warning warning-gradient ml-2">Написать сообщение</a>
