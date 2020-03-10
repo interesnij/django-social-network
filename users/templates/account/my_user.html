@@ -227,9 +227,12 @@ var page = 2;
 var loaded = false;
 onscroll = function(){
   try{
-  
-  var inViewport = elementInViewport(document.querySelectorAll('.infinite-item'));
+
+  var list = elementInViewport(document.querySelectorAll('.infinite-item'));
+  for (i in list){
+  var inViewport = elementInViewport(i);
   console.log(inViewport ? "Елемент в поле зрения" : "Елемент не в поле зрения");
+}
 
   if(items.getElementsByClassName('infinite-item').length === (page-1)*30){
   var height = document.documentElement.clientHeight-1;
