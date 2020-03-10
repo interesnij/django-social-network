@@ -257,8 +257,8 @@ class User(AbstractUser):
     def is_following_user_with_id(self, user_id):
         return self.follows.filter(followed_user__id=user_id).exists()
 
-    def is_following_user_with_username(self, user_username):
-        return self.follows.filter(followed_user__username=user_username).exists()
+    def is_followers_user_with_id(self, user_id):
+        return self.follows.filter(user__id=user_id).exists()
 
     def is_album_exists(self):
         return self.created_user.filter(creator__id=self.pk, is_generic=False, community=None).exists()
@@ -725,8 +725,6 @@ class User(AbstractUser):
                     template_name = folder + "close_" + template
                 else:
                     template_name = folder + "frend_" + template
-            elif request.user.is_connected_with_user_with_id(user_id=self.pk):
-                template_name = folder + "frend_" + template
             else:
                 template_name = folder + template
             try:

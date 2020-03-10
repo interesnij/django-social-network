@@ -27,7 +27,7 @@
                   </a>
               </div>
 
-              {% if user|is_blocked_user:request.user %} 
+              {% if request.user|is_blocked_user:user.pk %}
               <span style="display: flex;align-items: center;justify-content: center;margin-bottom: 10px;">
                 <div class="btn-group">
                     <button type="button" class="btn btn-sm btn-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -40,7 +40,7 @@
                 </div>
               </span>
 
-              {% elif request.user|is_request_follow:user %}
+              {% elif request.user|is_request_follow:user.pk %}
               <span style="display: flex;align-items: center;justify-content: center;margin-bottom: 10px;">
                 <div class="btn-group">
                     <button type="button" class="btn btn-sm btn-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -54,7 +54,7 @@
                 </div>
               </span>
 
-              {% elif request.user|is_user_follow:user %}
+              {% elif request.user|is_user_follow:userr.pk %}
               <span style="display: flex;align-items: center;justify-content: center;margin-bottom: 10px;">
                 <div class="btn-group">
                     <button type="button" class="btn btn-sm btn-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

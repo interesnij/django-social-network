@@ -3,25 +3,33 @@ register=template.Library()
 
 
 @register.filter
-def is_blocked_user(user, request_user):
+def is_blocked_user(request_user, user_id):
     try:
-        request_user.is_authenticated and request_user.has_blocked_user_with_id(user)
+        request_user.is_authenticated and request_user.has_blocked_user_with_id(user_id)
         return True
     except:
         return False
 
 @register.filter
-def is_request_follow(user, request_user):
+def is_frend_user(request_user, user_id):
     try:
-        Follow.objects.get(followed_user=user,user=request_user)
+        request_user.is_authenticated and request_user.is_connected_with_user_with_id(user_id)
         return True
     except:
         return False
 
 @register.filter
-def is_user_follow(user, request_user):
+def is_request_follow(request_user, user_id):
     try:
-        Follow.objects.get(followed_user=request_user,user=user)
+        request_user.is_authenticated and request_user.is_following_user_with_id(user_id)
+        return True
+    except:
+        return False
+
+@register.filter
+def is_user_follow(request_user, user_id):
+    try:
+        request_user.is_authenticated and request_user.is_followers_user_with_id(user_id)
         return True
     except:
         return False
