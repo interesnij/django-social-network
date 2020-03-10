@@ -213,11 +213,23 @@ link.send( null );
 
 });
 
+function elementInViewport(el){
+    var bounds = el.getBoundingClientRect();
+    return (
+        (bounds.top + bounds.height > 0) && // Елемент ниже верхней границы
+        (window.innerHeight - bounds.top > 0) && // Выше нижней
+        (bounds.left + bounds.width > 0) && // Правее левой
+        (window.innerWidth - bounds.left > 0)// Левее правой
+    );
+}
+
 var page = 2;
 var loaded = false;
 onscroll = function(){
   try{
   var items = document.getElementById("lenta_container");
+  var inViewport = elementInViewport(items);
+  console.log(inViewport ? "Елемент в поле зрения" : "Елемент не в поле зрения");
 
   if(items.getElementsByClassName('infinite-item').length === (page-1)*30){
   var height = document.documentElement.clientHeight-1;

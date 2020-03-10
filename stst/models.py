@@ -68,7 +68,7 @@ class MusicNumbers(models.Model):
         verbose_name_plural="Прослушивания трека"
 
 
-class ItemNumbers(models.Model):
+class ItemNumbers(models.Model): 
     user = models.PositiveIntegerField(default=0, verbose_name="Кто смотрит")
     item = models.PositiveIntegerField(default=0, verbose_name="Какую запись смотрит")
     count = models.PositiveIntegerField(default=0, verbose_name="Кол-во просмотров")
