@@ -3,12 +3,12 @@
 {% block title %}Общая статистика{% endblock %}
 {% block content %}
 <style>
-   ul{
+  .left_menu ul{
      list-style-type:none
    }
-   ul li {
+  .left_menu ul li {
      margin-bottom: 8px;
-     margin-left: 8px;
+     margin-left: 10px;
    }
 </style>
 <div class="container mt-4 main-container">
@@ -93,7 +93,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4 left_menu">
           <button class="mb-2 box-shadow mr-2 btn btn-link text-light text-dark collapsed" style="display: block" type="button" data-toggle="collapse" data-target="#userSettings" aria-expanded="false" aria-controls="collapseExample">
               Общее
           </button>
