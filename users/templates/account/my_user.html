@@ -224,6 +224,9 @@ function elementInViewport(el){
         (window.innerWidth - bounds.left > 0)// Левее правой
     );
 }
+function stop_elementInViewport(i){
+  return elementInViewport(i);
+}
 
 var page = 2;
 var loaded = false;
@@ -235,6 +238,7 @@ onscroll = function(){
     console.log(box[i].getAttribute('item-id'));
     inViewport = elementInViewport(box[i]);
     console.log(inViewport ? "Елемент в поле зрения" : "Елемент не в поле зрения");
+    if(inViewport){stop_elementInViewport(i)};
   }
 
   try{
