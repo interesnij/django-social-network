@@ -10,7 +10,7 @@ a {
  }
 .left_menu ul li {
    margin-bottom: 8px;
-   margin-left: 10px;
+   margin-left: -25px;
  }
 @media screen and (min-width: 621px) {
    .activefullscreen{
