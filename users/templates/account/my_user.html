@@ -234,7 +234,7 @@ onscroll = function(){
   for (var i = 0; i < box.length; i++) {
     if(box[i].style.background != 'red'){
       inViewport = elementInViewport(box[i]);
-      box[i].style.background = 'red';
+      if(inViewport){box[i].style.background = 'red'};
       console.log(i + "стал красным");
     }
   };
