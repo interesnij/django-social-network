@@ -24,7 +24,10 @@
         {% if object.post %}
         {% include 'item_user/my_post.html' with post=post  %}
         {% endif %}
-
+        <script>
+          inViewport = elementInViewport(i);
+          console.log(inViewport ? "Елемент в поле зрения" : "Елемент не в поле зрения");
+        </script>
         {% endfor %}
     </span>
     {% endif %}

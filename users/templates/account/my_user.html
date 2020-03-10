@@ -9,7 +9,17 @@
 <meta property="og:image" content="{% if user.profile.avatar %}http://xn--b1afgj5al1e.xn--p1acf/{{ user.profile.avatar }}{% else %}/static/images/user.png{% endif %}"/>
 {% endblock %}
 {% block content %}
-
+<script>
+  function elementInViewport(el){
+      var bounds = el.getBoundingClientRect();
+      return (
+          (bounds.top + bounds.height > 0) && // Елемент ниже верхней границы
+          (window.innerHeight - bounds.top > 0) && // Выше нижней
+          (bounds.left + bounds.width > 0) && // Правее левой
+          (window.innerWidth - bounds.left > 0)// Левее правой
+      );
+  }
+</script>
 <div class="row user_page">
     <div class="col-lg-4 col-md-5 order-1">
 
@@ -213,26 +223,10 @@ link.send( null );
 
 });
 
-function elementInViewport(el){
-    var bounds = el.getBoundingClientRect();
-    return (
-        (bounds.top + bounds.height > 0) && // Елемент ниже верхней границы
-        (window.innerHeight - bounds.top > 0) && // Выше нижней
-        (bounds.left + bounds.width > 0) && // Правее левой
-        (window.innerWidth - bounds.left > 0)// Левее правой
-    );
-}
-
 var page = 2;
 var loaded = false;
 onscroll = function(){
   try{
-
-  var list = elementInViewport(document.querySelectorAll('.infinite-item'));
-  for (i in list){
-  inViewport = elementInViewport(i);
-  console.log(inViewport ? "Елемент в поле зрения" : "Елемент не в поле зрения");
-}
 
   if(items.getElementsByClassName('infinite-item').length === (page-1)*30){
   var height = document.documentElement.clientHeight-1;
