@@ -99,10 +99,10 @@
           </button>
           <div class="collapse" id="userSettings">
             <div class="card card-body" style="display: contents;">
-              <ul style="list-style-type:none">
-                <li style="margin-bottom:8px;"><a href="{% url 'user_general_form' request.user.pk %}" class="ajax" data-html="#ajax">Информации</a></li>
-                <li style="margin-bottom:8px;"><a href="{% url 'user_about_form' request.user.pk %}" class="ajax" data-html="#ajax">Обо мне</a></li>
-                <li style="margin-bottom:8px;"><a href="{% url 'user_design' request.user.id %}" class="ajax" data-html="#ajax">Внешний вид</a></li>
+              <ul>
+                <li><a href="{% url 'user_general_form' request.user.pk %}" class="ajax" data-html="#ajax">Информации</a></li>
+                <li><a href="{% url 'user_about_form' request.user.pk %}" class="ajax" data-html="#ajax">Обо мне</a></li>
+                <li><a href="{% url 'user_design' request.user.id %}" class="ajax" data-html="#ajax">Внешний вид</a></li>
               </ul>
             </div>
           </div>
@@ -111,12 +111,12 @@
           </button>
           <div class="collapse" id="userPrivate">
             <div class="card card-body" style="display: contents;">
-              <ul style="list-style-type:none">
-                <li style="margin-bottom:8px;"><a href="{% url 'user_settings_private' request.user.pk %}" class="ajax" data-html="#ajax">Записи</a></li>
-                <li style="margin-bottom:8px;"><a href="" class="ajax" data-html="#ajax">Фотографии</a></li>
-                <li style="margin-bottom:8px;"><a href="" class="ajax" data-html="#ajax">Товары</a></li>
-                <li style="margin-bottom:8px;"><a href="" class="ajax" data-html="#ajax">Музыка</a></li>
-                <li style="margin-bottom:8px;"><a href="" class="ajax" data-html="#ajax">Видео</a></li>
+              <ul>
+                <li><a href="{% url 'user_settings_private' request.user.pk %}" class="ajax" data-html="#ajax">Записи</a></li>
+                <li><a href="" class="ajax" data-html="#ajax">Фотографии</a></li>
+                <li><a href="" class="ajax" data-html="#ajax">Товары</a></li>
+                <li><a href="" class="ajax" data-html="#ajax">Музыка</a></li>
+                <li><a href="" class="ajax" data-html="#ajax">Видео</a></li>
               </ul>
             </div>
           </div>
@@ -125,12 +125,12 @@
           </button>
           <div class="collapse show" id="userNotify">
             <div class="card card-body" style="display: contents;">
-              <ul style="list-style-type:none">
-                <li style="margin-bottom:8px;"><a href="{% url 'user_settings_notify' request.user.pk %}" class="ajax" data-html="#ajax">Записи</a></li>
-                <li style="margin-bottom:8px;"><a href="" class="ajax" data-html="#ajax">Фотографии</a></li>
-                <li style="margin-bottom:8px;"><a href="" class="ajax" data-html="#ajax">Товары</a></li>
-                <li style="margin-bottom:8px;"><a href="" class="ajax" data-html="#ajax">Музыка</a></li>
-                <li style="margin-bottom:8px;"><a href="" class="ajax" data-html="#ajax">Видео</a></li>
+              <ul>
+                <li><a href="{% url 'user_settings_notify' request.user.pk %}" class="ajax" data-html="#ajax">Записи</a></li>
+                <li><a href="" class="ajax" data-html="#ajax">Фотографии</a></li>
+                <li><a href="" class="ajax" data-html="#ajax">Товары</a></li>
+                <li><a href="" class="ajax" data-html="#ajax">Музыка</a></li>
+                <li><a href="" class="ajax" data-html="#ajax">Видео</a></li>
               </ul>
             </div>
           </div>
@@ -140,8 +140,8 @@
           </button>
           <div class="collapse" id="userStat">
             <div class="card card-body" style="display: contents;">
-              <ul style="list-style-type:none">
-                <li style="margin-bottom:8px;"><a href="{% url 'user_stat_coverage' request.user.pk %}" class="ajax" data-html="#ajax">Общая</a></li>
+              <ul>
+                <li><a href="{% url 'user_stat_coverage' request.user.pk %}" class="ajax" data-html="#ajax">Общая</a></li>
               </ul>
             </div>
           </div>

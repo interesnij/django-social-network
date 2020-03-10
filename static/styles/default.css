@@ -5,6 +5,13 @@ html {
 a {
   color: inherit;
 }
+.left_menu ul{
+   list-style-type:none
+ }
+.left_menu ul li {
+   margin-bottom: 8px;
+   margin-left: 10px;
+ }
 @media screen and (min-width: 621px) {
    .activefullscreen{
      left: 20%;
