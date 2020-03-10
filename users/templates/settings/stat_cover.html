@@ -96,6 +96,7 @@
               </ul>
             </div>
           </div>
+
           <button class="mb-2 box-shadow mr-2 btn btn-link text-light text-dark collapsed" style="display: block;margin-top: 20px;" type="button" data-toggle="collapse" data-target="#userPrivate" aria-expanded="false" aria-controls="collapseExample">
               Приватность
           </button>
@@ -110,6 +111,7 @@
               </ul>
             </div>
           </div>
+
           <button class="mb-2 box-shadow mr-2 btn btn-link text-light text-dark collapsed" style="display: block;margin-top: 20px;" type="button" data-toggle="collapse" data-target="#userNotify" aria-expanded="false" aria-controls="collapseExample">
               Уведомления
           </button>
@@ -125,10 +127,10 @@
             </div>
           </div>
 
-          <button class="mb-2 box-shadow mr-2 btn btn-link text-light text-dark collapsed" style="display: block;margin-top: 20px;" type="button" data-toggle="collapse" data-target="#userNotify" aria-expanded="false" aria-controls="collapseExample">
+          <button class="mb-2 box-shadow mr-2 btn btn-link text-light text-dark collapsed" style="display: block;margin-top: 20px;" type="button" data-toggle="collapse" data-target="#userStat" aria-expanded="false" aria-controls="collapseExample">
               Статистика
           </button>
-          <div class="collapse show" id="userNotify">
+          <div class="collapse show" id="userStat">
             <div class="card card-body" style="display: contents;">
               <ul style="list-style-type:none">
                 <li style="margin-bottom:8px;"><a href="{% url 'user_stat_coverage' request.user.pk %}" class="ajax" data-html="#ajax">Общая</a></li>
