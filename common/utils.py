@@ -125,7 +125,7 @@ def get_location(request):
         pass
 
 def community_views_plus(user_pk, community_pk):
-
+    from stst.models import CommunityNumbers
     try:
         obj = CommunityNumbers.objects.get(user=user_pk, community=community_pk)
         obj.count = obj.count + 1
