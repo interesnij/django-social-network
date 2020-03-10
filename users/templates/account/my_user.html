@@ -216,13 +216,12 @@ link.send( null );
 });
 function elementInViewport(el){
     var bounds = el.getBoundingClientRect();
-    if (!seee){
     return (
         (bounds.top + bounds.height > 0) && // Елемент ниже верхней границы
         (window.innerHeight - bounds.top > 0) && // Выше нижней
         (bounds.left + bounds.width > 0) && // Правее левой
         (window.innerWidth - bounds.left > 0)// Левее правой
-    )};
+    );
 }
 function stop_elementInViewport(i){
   return elementInViewport(i);
@@ -234,11 +233,9 @@ onscroll = function(){
   var box = document.querySelectorAll('.infinite-item');
   for (var i = 0; i < box.length; i++) {
     box[i].style.background = 'red';
-    seee = true;
     console.log(box[i].getAttribute('item-id'));
     inViewport = elementInViewport(box[i]);
     console.log(inViewport ? "Елемент в поле зрения" : "Елемент не в поле зрения");
-    if(inViewport){seee = true};
 }
   try{
 
