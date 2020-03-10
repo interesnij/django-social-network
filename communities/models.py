@@ -571,8 +571,8 @@ class Community(models.Model):
         return self.memberships.count()
 
     def get_visiter_users(self):
-        from stst.models import CommuityNumbers 
-        v_s = CommuityNumbers.objects.filter(community=self.pk).values('user').order_by("-count")
+        from stst.models import CommunityNumbers 
+        v_s = CommunityNumbers.objects.filter(community=self.pk).values('user').order_by("-count")
         ids = [use['user'] for use in v_s]
         query = []
         for i in ids:
@@ -580,9 +580,9 @@ class Community(models.Model):
         return query
 
     def all_user_visits_count(self):
-        from stst.models import CommuityNumbers
+        from stst.models import CommunityNumbers
         try:
-            v_s = CommuityNumbers.objects.filter(community=self.pk).values('count')
+            v_s = CommunityNumbers.objects.filter(community=self.pk).values('count')
             total = 0
             visiter_ids = [count['count'] for count in v_s]
             for sum in visiter_ids:
@@ -592,13 +592,13 @@ class Community(models.Model):
             pass
 
     def all_user_unical_visits_count(self):
-        from stst.models import CommuityNumbers
-        return CommuityNumbers.objects.filter(community=self.pk).values('pk').count()
+        from stst.models import CommunityNumbers
+        return CommunityNumbers.objects.filter(community=self.pk).values('pk').count()
 
     def count_user_visits(self,user_id):
-        from stst.models import CommuityNumbers
+        from stst.models import CommunityNumbers
         try:
-            link = CommuityNumbers.objects.get(community=self.pk, user=user_id)
+            link = CommunityNumbers.objects.get(community=self.pk, user=user_id)
             return link.count
         except:
             pass
