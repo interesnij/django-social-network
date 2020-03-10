@@ -571,7 +571,8 @@ class Community(models.Model):
         return self.memberships.count()
 
     def get_visiter_users(self):
-        from stst.models import CommunityNumbers 
+        from stst.models import CommunityNumbers
+        from users.models import User
         v_s = CommunityNumbers.objects.filter(community=self.pk).values('user').order_by("-count")
         ids = [use['user'] for use in v_s]
         query = []
