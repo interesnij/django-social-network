@@ -352,3 +352,17 @@ class CommunityStaffWindow(TemplateView):
 		context["editor"] = self.editor
 		context["advertiser"] = self.advertiser
 		return context
+
+
+class CommunityStateCoverView(ListView):
+	template_name = None
+
+	def get(self,request,*args,**kwargs):
+		self.community = Community.objects.get(pk=self.kwargs["pk"])
+		self.template_name = self.community.get_manage_template(folder="manage/", template="stat.html", request=request)
+		return super(CommunityStateCoverView,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(CommunityStateCoverView,self).get_context_data(**kwargs)
+		context["community"] = self.community
+		return context
