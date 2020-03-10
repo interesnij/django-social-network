@@ -37,7 +37,7 @@
                             </a>
                             <div class="media-body">
                                 <a href="{% url 'user' pk=object.pk %}" class="ajax">
-                                    <h6 class="my-0 mt-1">{{ object.get_full_name }} ({{ object|count_viseter_user:request.user.pk }})</h6>
+                                    <h6 class="my-0 mt-1">{{ object.get_full_name }} ({{ object|count_views_user:request.user.pk }})</h6>
                                 </a>
                                 <a href="" class="small">{{ object.get_last_location }}</a>
                             </div>
@@ -85,7 +85,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-4 left_menu">
+        <div class="col-md-4">
           <button class="mb-2 box-shadow mr-2 btn btn-link text-light text-dark collapsed" style="display: block" type="button" data-toggle="collapse" data-target="#userSettings" aria-expanded="false" aria-controls="collapseExample">
               Общее
           </button>
