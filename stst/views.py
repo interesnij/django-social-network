@@ -23,7 +23,7 @@ class StatItemView(TemplateView):
         from main.models import Item
 
         self.item=Item.objects.get(uuid=self.kwargs["uuid"])
-        self.user=User.objects.get(uuid=self.kwargs["pk"])
+        self.user=User.objects.get(pk=self.kwargs["pk"])
         return super(StatItemView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
