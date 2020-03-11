@@ -8,7 +8,7 @@ from communities.models import Community
 class UserCommunitiesList(ListView):
 	template_name = None
 	model = Community
-	paginate_by = 30
+	paginate_by = 3
 
 	def get(self,request,*args,**kwargs):
 		self.user=User.objects.get(uuid=self.kwargs["uuid"])

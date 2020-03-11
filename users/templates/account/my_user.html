@@ -242,7 +242,7 @@ onscroll = function(){
 
   try{
 
-  if(items.getElementsByClassName('infinite-item').length === (page-1)*30){
+  if(items.getElementsByClassName('infinite-item').length === (page-1)*3){
   var height = document.documentElement.clientHeight-1;
   if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
     if (loaded){return};
@@ -254,7 +254,7 @@ onscroll = function(){
       var elem = document.createElement('span');
       elem.innerHTML = link_3.responseText;
       items_list = elem.querySelector(".stream");
-      if(items_list.getElementsByClassName('infinite-item').length === 30){loaded = true;};
+      if(items_list.getElementsByClassName('infinite-item').length === 3){loaded = true;};
       items.append(items_list);
       }
     }
