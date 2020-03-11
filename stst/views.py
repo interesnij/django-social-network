@@ -22,7 +22,7 @@ class StatItemView(TemplateView):
     def get(self,request,*args,**kwargs):
         from main.models import Item
 
-        self.item=Item.objects.get(uuid=self.kwargs["pk"])
+        self.item=Item.objects.get(uuid=self.kwargs["uuid"])
         self.user=User.objects.get(uuid=self.kwargs["pk"])
         return super(StatItemView,self).get(request,*args,**kwargs)
 
