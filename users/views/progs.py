@@ -42,7 +42,7 @@ class UserItemView(View):
         pk = self.kwargs["pk"]
         try:
             obj = ItemNumbers.objects.get(user=request.user.pk, item=pk)
-            pass
+            return HttpResponse('')
         except:
             obj = ItemNumbers.objects.create(user=request.user.pk, item=pk)
-            pass
+            return HttpResponse('')
