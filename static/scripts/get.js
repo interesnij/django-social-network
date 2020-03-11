@@ -46,7 +46,7 @@ $('#ajax').on('click', '.item_stat_f', function() {
   item = $(this).parents(".infinite-item");
   pk = item.attr("user-id");
   uuid = item.attr("item-id");
-  $('#stat_loader').html('').load("/stst/item/" + uuid + "/" + pk + "/");
+  $('#stat_loader').html('').load("/stat/item/" + uuid + "/" + pk + "/");
   $('.stat_fullscreen').show()
 });
 
