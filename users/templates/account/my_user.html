@@ -229,7 +229,7 @@ var loaded = false;
 onscroll = function(){
   var box = document.querySelectorAll('.infinite-item');
   for (var i = 0; i < box.length; i++) {
-    if(box[i].classList.contains("showed")){
+    if(!box[i].classList.contains("showed")){
       inViewport = elementInViewport(box[i]);
       if(inViewport){
         box[i].classList.add("showed");
