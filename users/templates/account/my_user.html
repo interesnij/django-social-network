@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load humanize thumbnail liked_user item_view_plus %}
+{% load humanize thumbnail liked_user %}
 
 {% block title %}{{ user.get_full_name }}{% endblock %}
 {% block meta %}
@@ -234,12 +234,14 @@ onscroll = function(){
       if(inViewport){
         box[i].style.background = 'red';
         console.log(i + "стал красным");
-        pk = good.getAttribute('item-pk');
-        {{ user.pk|item_view_plus:pk}}
+        pk = box[i].getAttribute('item-pk');
+        fetch('/users/progs/item_view/' + pk + "/", options).then(data => {
+          console.log("Все ОК")
+        }).catch(error => {console.log("Все не ОК")})
       }
     }
   };
-    //console.log(inViewport ? "Елемент в поле зрения" : "Елемент не в поле зрения");
+
   try{
 
   if(items.getElementsByClassName('infinite-item').length === (page-1)*30){

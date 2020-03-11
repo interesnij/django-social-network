@@ -21,7 +21,7 @@ class UserColorChange(View):
 
     def get(self,request,*args,**kwargs):
         from users.model.settings import UserColorSettings
-        
+
         try:
             model = UserColorSettings.objects.get(user=request.user)
         except:
@@ -33,3 +33,20 @@ class UserColorChange(View):
             model.color = color
             model.save(update_fields=['color'])
             return HttpResponse('Цвет выбран')
+
+
+class UserItemView(View):
+    def get(self,request,*args,**kwargs):
+        from stst.models import ItemNumbers
+        
+        pk = self.kwargs["pk"]
+        try:
+            obj = ItemNumbers.objects.get(user=request.user.pk, item=pk)
+            obj.count = obj.count + 1
+            obj.save(update_fields=['count'])
+        except:
+            obj = ItemNumbers.objects.create(user=request.user.pk, item=pk)
+            obj.count = obj.count + 1
+            obj.save(update_fields=['count'])
+        request.user.block_user_with_pk(self.user.pk)
+        return HttpResponse('Пользователь заблокирован')
