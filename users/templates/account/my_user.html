@@ -234,8 +234,8 @@ onscroll = function(){
       if(inViewport){
         box[i].style.background = 'red';
         console.log(i + "стал красным");
-        uuid = good.getAttribute('item-id');
-        {{ user.pk|item_view_plus:'uuid'}}
+        pk = good.getAttribute('item-pk');
+        {{ user.pk|item_view_plus:pk}}
       }
     }
   };
