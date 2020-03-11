@@ -42,10 +42,7 @@ class UserItemView(View):
         pk = self.kwargs["pk"]
         try:
             obj = ItemNumbers.objects.get(user=request.user.pk, item=pk)
-            obj.count = obj.count + 1
-            obj.save(update_fields=['count'])
+            pass
         except:
             obj = ItemNumbers.objects.create(user=request.user.pk, item=pk)
-            obj.count = obj.count + 1
-            obj.save(update_fields=['count'])
-        return HttpResponse('!')
+            pass
