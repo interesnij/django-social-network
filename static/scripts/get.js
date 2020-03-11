@@ -24,6 +24,32 @@ on('#ajax', 'click', '.u_good_detail', function() {
   }
 };
 });
+on('#ajax', 'click', '.item_stat_f', function() {
+  var lenta_container = document.getElementById("lenta_container");
+  var item = this;
+  var item_id = item.getAttribute('data-id');
+  var user_uuid = item.getAttribute('data-uuid');
+  var link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'GET', '/goods/user/good/' + good_id + '/' + user_uuid + '/', true );
+  link_.send();
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    var elem = document.createElement('span');
+    elem.innerHTML = link_.responseText;
+    good_loader = document.getElementById("good_loader");
+    document.querySelector(".good_fullscreen").style.display = "block";
+    good_loader.append(elem);
+  }
+};
+});
+$('#ajax').on('click', '.item_stat_f', function() {
+  item = $(this).parents(".infinite-item");
+  pk = item.attr("user-id");
+  uuid = item.attr("item-id");
+  $('#stat_loader').html('').load("/stst/item/" + uuid + "/" + pk + "/");
+  $('.stat_fullscreen').show()
+});
+
 $('#ajax').on('click', '.u_all_likes', function() {var btn = $(this); item = $(this).parents('.infinite-item');pk = item.attr("user-id");uuid = item.attr("item-id");$('#votes_loader').html('').load("/window/all_user_like/" + uuid + "/" + pk + "/"); $('.votes_fullscreen').show();console.log("likes user open")});
 $('#ajax').on('click', '.u_all_dislikes', function() {var btn = $(this); item = $(this).parents('.infinite-item');pk = item.attr("user-id");uuid = item.attr("item-id");$('#votes_loader').html('').load("/window/all_user_dislike/" + uuid + "/" + pk + "/"); $('.votes_fullscreen').show();console.log("dislikes user open")});
 $('#ajax').on('click', '.u_all_reposts', function() {var btn = $(this); item = $(this).parents('.infinite-item');pk = item.attr("user-id");uuid = item.attr("item-id");$('#votes_loader').html('').load("/window/all_user_reposts/" + uuid + "/" + pk + "/"); $('.votes_fullscreen').show();console.log("reposts user open")});
@@ -66,6 +92,7 @@ $('#question').on('click', function() {$('#for_question').show();});
     on('#ajax', 'click', '.community_fullscreen_hide', function() {document.querySelector(".community_fullscreen").style.display = "none";document.getElementById("community_loader").innerHTML=""});
     on('#ajax', 'click', '.community_manage_fullscreen_hide', function() {document.querySelector(".manage_window_fullscreen").style.display = "none";document.getElementById("load_staff_window").innerHTML=""});
     on('#ajax', 'click', '.good_fullscreen_hide', function() {document.querySelector(".good_fullscreen").style.display = "none";document.getElementById("good_loader").innerHTML=""});
+    on('#ajax', 'click', '.stat_fullscreen_hide', function() {document.querySelector(".stat_fullscreen").style.display = "none";document.getElementById("stat_loader").innerHTML=""});
 
   /*!
      comments scripts

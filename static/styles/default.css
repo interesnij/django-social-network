@@ -4086,6 +4086,7 @@ cursor: pointer;
 .item_fullscreen_hide,
 .article_fullscreen_hide,
 .good_fullscreen_hide,
+.stat_fullscreen_hide,
 .votes_fullscreen_hide {cursor: pointer;float: right;}
 
 .prev_item { position: absolute; right: -10%; top: 160px; cursor: pointer; }

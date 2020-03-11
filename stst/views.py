@@ -14,3 +14,17 @@ class StatView(TemplateView):
         context=super(StatView,self).get_context_data(**kwargs)
         context["ip"]=self.ip
         return context
+
+class StatItemView(TemplateView):
+    template_name="item_stat.html"
+
+    def get(self,request,*args,**kwargs):
+        from main.models import Item
+
+        self.item=Item.objects.get(pk=self.kwargs["pk"])
+        return super(StatItemView,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context=super(StatItemView,self).get_context_data(**kwargs)
+        context["item"]=self.item
+        return context

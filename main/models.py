@@ -175,36 +175,17 @@ class Item(models.Model):
     def get_visiter_users(self):
         from stst.models import ItemNumbers
         from users.models import User
-        v_s = ItemNumbers.objects.filter(item=self.pk).values('user').order_by("-count")
+        v_s = ItemNumbers.objects.filter(item=self.pk).values('user').order_by("-created")
         ids = [use['user'] for use in v_s]
         query = []
         for i in ids:
             query = query + [User.objects.get(id=i), ]
         return query
 
-    def all_user_visits_count(self):
+    def all_visits_count(self):
         from stst.models import ItemNumbers
-        try:
-            v_s = ItemNumbers.objects.filter(item=self.pk).values('count')
-            total = 0
-            visiter_ids = [count['count'] for count in v_s]
-            for sum in visiter_ids:
-                total += sum
-            return total
-        except:
-            pass
 
-    def views_count(self): 
-        from stst.models import ItemNumbers
         return ItemNumbers.objects.filter(item=self.pk).values('pk').count()
-
-    def count_user_visits(self,user_id):
-        from stst.models import ItemNumbers
-        try:
-            link = ItemNumbers.objects.get(item=self.pk, user=user_id)
-            return link.count
-        except:
-            pass
 
 
 class ItemComment(models.Model):
