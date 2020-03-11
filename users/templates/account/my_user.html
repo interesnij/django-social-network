@@ -229,11 +229,11 @@ var loaded = false;
 onscroll = function(){
   var box = document.querySelectorAll('.infinite-item');
   for (var i = 0; i < box.length; i++) {
-    if(box[i].style.background != 'red'){
+    if(box[i].classList.contains("showed")){
       inViewport = elementInViewport(box[i]);
       if(inViewport){
-        box[i].style.background = 'red';
-        console.log(i + "стал красным");
+        box[i].classList.add("showed");
+        console.log(i + "получил класс showed");
         pk = box[i].getAttribute('item-pk');
         fetch('/users/progs/item_view/' + pk + "/").then(data => {
           console.log("Все ОК")
