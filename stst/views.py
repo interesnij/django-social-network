@@ -1,5 +1,6 @@
 from django.views.generic.base import TemplateView
 from common.utils import get_client_ip, get_location
+from users.models import User
 
 
 class StatView(TemplateView):
@@ -21,7 +22,8 @@ class StatItemView(TemplateView):
     def get(self,request,*args,**kwargs):
         from main.models import Item
 
-        self.item=Item.objects.get(pk=self.kwargs["pk"])
+        self.item=Item.objects.get(uuid=self.kwargs["pk"])
+        self.user=User.objects.get(uuid=self.kwargs["pk"])
         return super(StatItemView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
