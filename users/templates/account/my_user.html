@@ -254,7 +254,7 @@ onscroll = function(){
       var elem = document.createElement('span');
       elem.innerHTML = link_3.responseText;
       items_list = elem.querySelector(".stream");
-      if(items_list.getElementsByClassName('infinite-item').length < 3){loaded = true;};
+      if(items_list.getElementsByClassName('infinite-item').length != 3){loaded = true;};
       items.append(items_list);
       }
     }
