@@ -230,7 +230,8 @@ onscroll = function(){
   var box = document.querySelectorAll('.infinite-item');
   for (var i = 0; i < box.length; i++) {
     if(!box[i].classList.contains("showed")){
-      inViewport = elementInViewport(box[i]);
+      inViewport = elementInViewport(box[i])
+      setTimeout(elementInViewport(box[i]), 5000);
       if(inViewport){
         box[i].classList.add("showed");
         console.log(i + "получил класс showed");
