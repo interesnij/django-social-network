@@ -7,5 +7,5 @@ register=template.Library()
 def item_view_plus(user_id, item_id):
     from common.utils import item_views_plus
 
-    view = user.item_views_plus(user_id, item_id)
+    item_views_plus(user_id, item_id)
     return HttpResponse('Программа сработала!')
