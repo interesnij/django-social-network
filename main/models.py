@@ -22,12 +22,10 @@ class Item(models.Model):
     community = models.ForeignKey('communities.Community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, related_name='items', on_delete=models.CASCADE, verbose_name="Создатель")
-    is_edited = models.BooleanField(default=False, verbose_name="Изменено")
     is_closed = models.BooleanField(default=False, verbose_name="Закрыто")
     is_deleted = models.BooleanField(default=False, verbose_name="Удалено")
     is_fixed = models.BooleanField(default=False, verbose_name="Закреплено")
     is_repost = models.BooleanField(verbose_name="Это репост", default=False)
-    views=models.IntegerField(default=0, verbose_name="Просмотры")
     moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='items')
     parent = models.ForeignKey("self", blank=True, null=True, on_delete=models.CASCADE, related_name="thread")
     STATUS_DRAFT = 'D'
@@ -196,7 +194,7 @@ class Item(models.Model):
         except:
             pass
 
-    def all_user_unical_visits_count(self):
+    def views_count(self): 
         from stst.models import ItemNumbers
         return ItemNumbers.objects.filter(item=self.pk).values('pk').count()
 

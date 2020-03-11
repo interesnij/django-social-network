@@ -51,7 +51,6 @@ class Good(models.Model):
 	created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
 	creator = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE, verbose_name="Создатель")
 	is_deleted = models.BooleanField(default=False, verbose_name="Удалено")
-	views=models.IntegerField(default=0, verbose_name="Просмотры")
 	moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='goods')
 
 	image = ProcessedImageField(verbose_name='Главное изображение', format='JPEG',options={'quality': 80}, processors=[ResizeToFit(512,512)],upload_to="goods/%Y/%m/%d")
