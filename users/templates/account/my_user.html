@@ -230,7 +230,8 @@ onscroll = function(){
   var box = document.querySelectorAll('.infinite-item');
   for (var i = 0; i < box.length; i++) {
     if(!box[i].classList.contains("showed")){
-      setTimeout(inViewport =elementInViewport(box[i]), 5000);
+      setTimeout(
+      inViewport = elementInViewport(box[i]);
       if(inViewport){
         box[i].classList.add("showed");
         console.log(i + "получил класс showed");
@@ -238,8 +239,7 @@ onscroll = function(){
         fetch('/users/progs/item_view/' + pk + "/").then(data => {
           console.log("Все ОК")
         }).catch(error => {console.log("Все не ОК")})
-      }
-    }
+      }, 5000);}
   };
 
   try{
