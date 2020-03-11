@@ -241,6 +241,7 @@ onscroll = function(){
   }}};
 
   try{
+    if (loaded){return};
   var items = document.getElementById("lenta_container");
   if(items.getElementsByClassName('infinite-item').length === (page-1)*3){
   var height = document.documentElement.clientHeight-1;
