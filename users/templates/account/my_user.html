@@ -242,7 +242,7 @@ onscroll = function(){
 
   try{
 
-  if(items.getElementsByClassName('infinite-item').length === (page-1)*3){
+  if(document.getElementsByClassName('infinite-item').length === (page-1)*3){
   var height = document.documentElement.clientHeight-1;
   if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
     if (loaded){return};
