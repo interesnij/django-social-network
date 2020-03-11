@@ -239,7 +239,7 @@ onscroll = function(){
           console.log("Все ОК")
         }).catch(error => {console.log("Все не ОК")})
   }}};
-  if (loaded){return};
+
   try{
 
   var items = document.getElementById("lenta_container");
@@ -255,7 +255,7 @@ onscroll = function(){
       var elem = document.createElement('span');
       elem.innerHTML = link_3.responseText;
       items_list = elem.querySelector(".stream");
-      if(items_list.getElementsByClassName('infinite-item').length != 3){loaded = true;};
+      if(items_list.getElementsByClassName('infinite-item').length != 3){loaded = false;};
       items.append(items_list);
       }
     }
