@@ -24,24 +24,7 @@ on('#ajax', 'click', '.u_good_detail', function() {
   }
 };
 });
-on('#ajax', 'click', '.item_stat_f', function() {
-  var lenta_container = document.getElementById("lenta_container");
-  var item = this;
-  var item_id = item.getAttribute('data-id');
-  var user_uuid = item.getAttribute('data-uuid');
-  var link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'GET', '/goods/user/good/' + good_id + '/' + user_uuid + '/', true );
-  link_.send();
-  link_.onreadystatechange = function () {
-  if ( this.readyState == 4 && this.status == 200 ) {
-    var elem = document.createElement('span');
-    elem.innerHTML = link_.responseText;
-    good_loader = document.getElementById("good_loader");
-    document.querySelector(".good_fullscreen").style.display = "block";
-    good_loader.append(elem);
-  }
-};
-});
+
 $('#ajax').on('click', '.item_stat_f', function() {
   item = $(this).parents(".infinite-item");
   pk = item.attr("user-id");
