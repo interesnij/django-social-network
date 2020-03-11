@@ -239,9 +239,9 @@ onscroll = function(){
           console.log("Все ОК")
         }).catch(error => {console.log("Все не ОК")})
   }}};
-
+  if (loaded){return};
   try{
-    if (loaded){return};
+
   var items = document.getElementById("lenta_container");
   if(items.getElementsByClassName('infinite-item').length === (page-1)*3){
   var height = document.documentElement.clientHeight-1;
