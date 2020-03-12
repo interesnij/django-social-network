@@ -82,9 +82,9 @@ function addStyleSheets (href) {$head = document.head,$link = document.createEle
           var ajax = elem_.querySelector(".reload_block");
           rtr.innerHTML = '';
           rtr.append(ajax);
+          Index.initLink();
           window.history.pushState({route: path}, "EVILEG", path);
           console.log(ajax);
-          Index.initLink();
           }
         }
     }
