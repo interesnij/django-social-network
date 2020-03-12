@@ -271,7 +271,7 @@ class Index {
   static push_url(event){
       event.preventDefault();
     //  var path = event.target.href;
-      var url = "{% url 'frends' pk=user.pk %}".replace (pk, pk);
+      var path = "{% url 'frends' pk=user.pk %}".replace (pk, pk);
       var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
       link.open( 'GET', path, true );
       link.send();
