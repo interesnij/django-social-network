@@ -226,6 +226,8 @@ class Index {
           jQuery.ajax({
               url: "{% url 'main %}",
               type: 'GET',
+              data: {'fdfrgtrgrtgh5'},
+
               success : function (data) {
                   window.history.pushState({route: path}, "EVILEG", path); // устанавливаем URL в строку браузера
                   jQuery("#ajax").replaceWith(data); // Заменяем div со списком статей на новый
