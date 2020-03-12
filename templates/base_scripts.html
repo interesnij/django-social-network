@@ -83,7 +83,7 @@ function addStyleSheets (href) {$head = document.head,$link = document.createEle
       }else{link.open( 'GET', path, true )};
         console.log(event.target.href,event);
         link.send();
-        document.title = $(path).filter("title").text()
+
         link.onreadystatechange = function () {
           if ( this.readyState == 4 && this.status == 200 ) {
             var rtr = document.getElementById('ajax');
@@ -91,6 +91,7 @@ function addStyleSheets (href) {$head = document.head,$link = document.createEle
             elem_.innerHTML = link.responseText;
             var ajax = elem_.querySelector(".reload_block");
             rtr.innerHTML = '';
+            document.title = $(elem_).filter("title").text()
             rtr.append(ajax);
             Index.initLink();
             window.history.pushState({route: path}, "EVILEG", path);
