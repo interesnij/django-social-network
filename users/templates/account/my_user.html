@@ -224,7 +224,7 @@ class Index {
       event.preventDefault();
       let path = event.target.href; // забираем путь
           jQuery.ajax({
-              url: "users/all-users/",
+              url: "/users/all-users/",
               type: 'GET',
 
               success : function (data) {
