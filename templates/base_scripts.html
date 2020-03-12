@@ -62,7 +62,9 @@ function addStyleSheets (href) {$head = document.head,$link = document.createEle
     myPlaylist.pause(track_id);
   };
   });
-
+  function generete_some_url(id){
+      return "{% url some_url itemid=112233 %}".replace("112233", id);
+  };
   class Index {
 
     static initLink() {
@@ -73,29 +75,27 @@ function addStyleSheets (href) {$head = document.head,$link = document.createEle
     static push_url(event){
         event.preventDefault();
         var path = event.target.href;
-        $('#ajax').html('').load(path);
+      var pk = event.target.href.getAttribute('data-pk');
+      var href = event.target.href.getAttribute('data-link');
+      var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+      if (pk){
+        link.open( 'GET', path, true );
+      }else{link.open( 'GET', path, true )};
+        console.log(event.target.href,event);
+        link.send();
         console.log(path);
-      //  var pk = event.getAttribute('data-pk');
-      //  var href = event.getAttribute('data-link');
-    //    var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    //    if (pk){
-    //      link.open( 'GET', path, true );
-    //    }else{link.open( 'GET', path, true )};
-    //    console.log(event.target.href,event);
-    //    link.send();
-    //    console.log(path);
-    //    link.onreadystatechange = function () {
-      //  if ( this.readyState == 4 && this.status == 200 ) {
-      //    var rtr = document.getElementById('ajax');
-      //    var elem_ = document.createElement('span');
-      //    elem_.innerHTML = link.responseText;
-      //    var ajax = elem_.querySelector(".reload_block");
-      //    rtr.innerHTML = '';
-      //    rtr.append(ajax);
-      //    Index.initLink();
-      //    window.history.pushState({route: path}, "EVILEG", path);
-      //    }
-      //  }
+        link.onreadystatechange = function () {
+          if ( this.readyState == 4 && this.status == 200 ) {
+            var rtr = document.getElementById('ajax');
+            var elem_ = document.createElement('span');
+            elem_.innerHTML = link.responseText;
+            var ajax = elem_.querySelector(".reload_block");
+            rtr.innerHTML = '';
+            rtr.append(ajax);
+            Index.initLink();
+            window.history.pushState({route: path}, "EVILEG", path);
+          }
+        }
     }
   }
 Index.initLink();
