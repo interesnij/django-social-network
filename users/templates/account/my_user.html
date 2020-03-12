@@ -222,20 +222,20 @@ class Index {
 
   static push_url(event){
       event.preventDefault();
-      let path = event.target.href; // забираем путь
-          jQuery.ajax({
-              url: "/users/all-users/",
-              type: 'GET',
-
-              success : function (data) {
-                  window.history.pushState({route: this.url}, "EVILEG", path);
-                  var ajax = $(data.responseText).filter('#ajax').html();
-                  jQuery("#ajax").replaceWith(ajax); // Заменяем div со списком статей на новый
-                  Index.initLink(); // Переинициализируем пагинатор
-                  jQuery(window).scrollTop(0); // Скроллим страницу в начало
-                  console.log("Успех", ajax);
-              }
-          });
+      var path = event.target.href; // забираем путь
+      var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+      link.open( 'GET', path, true );
+      link.send();
+      link.onreadystatechange = function () {
+      if ( this.readyState == 4 && this.status == 200 ) {
+        var rtr = document.getElementById('ajax');
+        var elem_ = document.createElement('span');
+        elem_.innerHTML = link.responseText;
+        ajax = elem_.getElementById("ajax");
+        rtr.append(ajax);
+        window.history.pushState({route: this.url}, "EVILEG", path);
+        }
+      }
   }
 }
 Index.initLink();
