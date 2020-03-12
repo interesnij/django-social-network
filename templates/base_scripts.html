@@ -73,12 +73,12 @@ function addStyleSheets (href) {$head = document.head,$link = document.createEle
     static push_url(event){
         event.preventDefault();
         var path = event.target.href;
-        var pk = event.getAttribute('data-pk');
+      //  var pk = event.getAttribute('data-pk');
       //  var href = event.getAttribute('data-link');
         var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-        if (pk){
+    //    if (pk){
           link.open( 'GET', href + pk, true );
-        }else{link.open( 'GET', path, true )};
+    //    }else{link.open( 'GET', path, true )};
         console.log(event.target,event);
         link.send();
         console.log(path);
