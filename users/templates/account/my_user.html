@@ -229,7 +229,7 @@ class Index {
 
               success : function (data) {
                   window.history.pushState({route: this.url}, "EVILEG", path);
-                  jQuery("#ajax").replaceWith("#ajax"); // Заменяем div со списком статей на новый
+                  jQuery("#ajax").replaceWith(data); // Заменяем div со списком статей на новый
                   Index.initLink(); // Переинициализируем пагинатор
                   jQuery(window).scrollTop(0); // Скроллим страницу в начало
                   console.log("Успех", data);
