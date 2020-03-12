@@ -231,7 +231,7 @@ class Index {
         var rtr = document.getElementById('ajax');
         var elem_ = document.createElement('span');
         elem_.innerHTML = link.responseText;
-        ajax = elem_.querySelector(".ajax_block");
+      //  ajax = elem_.querySelector(".ajax_block");
         rtr.append(elem_);
         window.history.pushState({route: path}, "EVILEG", path);
         }
