@@ -80,7 +80,7 @@ function addStyleSheets (href) {$head = document.head,$link = document.createEle
       var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
       if (pk){
         link.open( 'GET', href + pk, true );
-      }else{link.open( 'GET', this.getAttributeNS('href'), true )};
+      }else{link.open( 'GET', this.getAttribute('href'), true )};
         link.send();
 
         link.onreadystatechange = function () {
