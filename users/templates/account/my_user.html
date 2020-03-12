@@ -265,13 +265,12 @@ class Index {
 
   static initLink() {
       document.body.querySelectorAll('a')
-              .forEach( link => link.addEventListener('click', Index.push_url) );
+              .forEach( lin => lin.addEventListener('click', Index.push_url) );
   }
 
   static push_url(event){
       event.preventDefault();
-    //  var path = event.target.href;
-      var path = "{% url 'frends' pk=user.pk %}".replace (pk, pk);
+      // var path = event.target.href;
       var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
       link.open( 'GET', path, true );
       link.send();
