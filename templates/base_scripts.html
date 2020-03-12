@@ -61,35 +61,7 @@ function addStyleSheets (href) {$head = document.head,$link = document.createEle
     myPlaylist.pause(track_id);
   };
   });
-  class Index {
-
-    static initLink() {
-        document.body.querySelectorAll('a')
-                .forEach( link => link.addEventListener('click', Index.push_url) );
-    }
-
-    static push_url(event){
-        event.preventDefault();
-        var path = event.target.href; // забираем путь
-        var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-        link.open( 'GET', path, true );
-        link.send();
-        link.onreadystatechange = function () {
-        if ( this.readyState == 4 && this.status == 200 ) {
-          var rtr = document.getElementById('ajax');
-          var elem_ = document.createElement('span');
-          elem_.innerHTML = link.responseText;
-          var ajax = elem_.querySelector(".reload_block");
-          rtr.innerHTML = '';
-          rtr.append(ajax);
-          Index.initLink();
-          window.history.pushState({route: path}, "EVILEG", path);
-          console.log(ajax);
-          }
-        }
-    }
-  }
-  Index.initLink();
+  
 
 
 //  $('body').on('click', '.playlist_pause .track_item', function() {track = $(this); li = track.parents('.infinite-item'); track_id = li.data('counter');my_playlist_play(track_id); li.removeClass("playlist_pause")});
