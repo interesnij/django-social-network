@@ -193,12 +193,12 @@
         <br>
           <button id="community_add" class="btn btn-outline-success" style="margin-bottom:15px;width:100%;" type="button">Создать сообщество</button>
 
-          {% if popular_list %}
+          {% if user.get_visited_communities %}
           <div class="card mb-2">
               <div class="card-header">
                   <div class="media">
                       <div class="media-body">
-                          <h5 class="mt-1">Популярные группы</h5>
+                          <h5 class="mt-1">Посещенные ообщества</h5>
                       </div>
                       <a class="ajax" href="{% url 'all_communities' %}" data-html="#ajax">
                           все
@@ -207,7 +207,7 @@
               </div>
               <div class="card-body px-0 py-0">
                   <ul class="list-group border-top border-bottom list-group-flush">
-                      {% for object in popular_list %}
+                      {% for object in user.get_visited_communities %}
                       <li class="list-group-item">
                           <div class="media">
                             <a href="{% url 'community_detail' pk=object.pk %}" class="ajax" data-html="#ajax">

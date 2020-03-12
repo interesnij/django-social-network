@@ -807,6 +807,26 @@ class User(AbstractUser):
         self.favorite_communities.remove(community_to_unfavorite)
         return community_to_unfavorite
 
+    def get_target_users(self):
+        from stst.models import UserNumbers
+        v_s = UserNumbers.objects.filter(visitor=self.pk).values('target').order_by("-count")
+        ids = [user['target'] for user in v_s]
+        query = []
+        for user in ids:
+            query = query + [User.objects.get(id=user), ]
+        return query
+
+    def get_visited_communities(self):
+        from stst.models import CommunityNumbers
+        from communities.models import Community
+        v_s = CommunityNumbers.objects.filter(user=self.pk).values('community').order_by("-created")
+        ids = [use['user'] for use in v_s]
+        query = []
+        for i in ids:
+            query = query + [Community.objects.get(id=i), ]
+        return query
+
+
     def join_community_with_name(self, community_name):
         from communities.models import Community
         from follows.models import CommunityFollow
