@@ -225,7 +225,7 @@ class Index {
       var path = event.target.href; // забираем путь
       var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
       link.open( 'GET', path, true );
-      url = link.send();
+      link.send();
       link.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
         var rtr = document.getElementById('ajax');
@@ -233,7 +233,7 @@ class Index {
         elem_.innerHTML = link.responseText;
         ajax = elem_.document.querySelector(".ajax_block");
         rtr.append(ajax);
-        window.history.pushState({route: url}, "EVILEG", path);
+        window.history.pushState({route: path}, "EVILEG", path);
         }
       }
   }
