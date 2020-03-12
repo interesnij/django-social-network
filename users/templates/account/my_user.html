@@ -270,9 +270,9 @@ class Index {
 
   static push_url(event){
       event.preventDefault();
-      var path = JSON.parse(event.target.href);
+      //var path = event.target.href;
       var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-      link.open( 'GET', path, true );
+      link.open( 'GET', '/frends/1', true );
       link.send();
       console.log(path);
       link.onreadystatechange = function () {
