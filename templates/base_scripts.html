@@ -92,7 +92,7 @@ function addStyleSheets (href) {$head = document.head,$link = document.createEle
             rtr.innerHTML = '';
             document.title = $(elem_).filter("title").text()
             rtr.append(ajax);
-            //Index.initLink();
+            Index.initLink();
             window.history.pushState({route: path}, "EVILEG", path);
           }
         }
