@@ -31,11 +31,11 @@ class UserVisitCommunities(ListView):
 	template_name = None
 
 	def get(self,request,*args,**kwargs):
-		self.template_name = self.request.user.get_settings_template(folder="user_community/", template="visits.html", request=request)
+		self.template_name = request.user.get_settings_template(folder="user_community/", template="visits.html", request=request)
 		return super(UserVisitCommunities,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
-		communities = request.user.get_visited_communities()
+		communities = self.request.user.get_visited_communities()
 		return communities
 
 
