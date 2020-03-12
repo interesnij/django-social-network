@@ -83,7 +83,7 @@ function addStyleSheets (href) {$head = document.head,$link = document.createEle
       }else{link.open( 'GET', path, true )};
         console.log(event.target.href,event);
         link.send();
-        console.log(path);
+        document.title = $(path).filter("title").text()
         link.onreadystatechange = function () {
           if ( this.readyState == 4 && this.status == 200 ) {
             var rtr = document.getElementById('ajax');
