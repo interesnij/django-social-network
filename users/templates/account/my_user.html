@@ -228,7 +228,7 @@ class Index {
               type: 'GET',
 
               success : function (data) {
-                  window.history.pushState({route: this.url}, "EVILEG", path)
+                  window.history.pushState({route: this.url}, "EVILEG", path);
                   block = document.body.getElementById("ajax");
                   jQuery("#ajax").replaceWith(block); // Заменяем div со списком статей на новый
                   Index.initLink(); // Переинициализируем пагинатор
