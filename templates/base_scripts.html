@@ -79,7 +79,7 @@ function addStyleSheets (href) {$head = document.head,$link = document.createEle
           var rtr = document.getElementById('ajax');
           var elem_ = document.createElement('span');
           elem_.innerHTML = link.responseText;
-          var ajax = elem_.querySelector(".col-md-7");
+          var ajax = elem_.querySelector(".reload_block");
           rtr.innerHTML = '';
           rtr.append(ajax);
           window.history.pushState({route: path}, "EVILEG", path);
