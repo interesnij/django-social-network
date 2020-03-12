@@ -72,25 +72,11 @@ function addStyleSheets (href) {$head = document.head,$link = document.createEle
     static push_url(event){
         event.preventDefault();
         var path = event.target.href; // забираем путь
-      //  var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-      //  link.open( 'GET', path, true );
-      //  link.send();
-      //  link.onreadystatechange = function () {
-      //  if ( this.readyState == 4 && this.status == 200 ) {
-      //    var rtr = document.getElementById('ajax');
-      //    var elem_ = document.createElement('span');
-      //    elem_.innerHTML = link.responseText;
-      //    var ajax = elem_.querySelector(".reload_block");
-      //    rtr.innerHTML = '';
-      //    rtr.append(ajax);
-      //    Index.initLink();
-      //    window.history.pushState({route: path}, "EVILEG", path);
-      //    console.log(path);
-      //    }
-      //  }
-
-fetch(path).
-        then(data => {
+        var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+        link.open( 'GET', path, true );
+        link.send();
+        link.onreadystatechange = function () {
+        if ( this.readyState == 4 && this.status == 200 ) {
           var rtr = document.getElementById('ajax');
           var elem_ = document.createElement('span');
           elem_.innerHTML = link.responseText;
@@ -100,8 +86,8 @@ fetch(path).
           Index.initLink();
           window.history.pushState({route: path}, "EVILEG", path);
           console.log(path);
-        })
-        .catch(error => {console.log("Все не ОК")})
+          }
+        }
     }
   }
   Index.initLink();
