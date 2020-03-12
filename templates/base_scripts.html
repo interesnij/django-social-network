@@ -73,9 +73,9 @@ function addStyleSheets (href) {$head = document.head,$link = document.createEle
     static push_url(event){
         event.preventDefault();
         var path = event.target.href;
-        var data-href = getValueByAttr(path);
+        var data_href = getValueByAttr(path);
         var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-        link.open( 'GET', data-href, true );
+        link.open( 'GET', data_href, true );
         link.send();
         console.log(path);
         link.onreadystatechange = function () {
@@ -87,7 +87,7 @@ function addStyleSheets (href) {$head = document.head,$link = document.createEle
           rtr.innerHTML = '';
           rtr.append(ajax);
           Index.initLink();
-          window.history.pushState({route: data-href}, "EVILEG", data-href);
+          window.history.pushState({route: data_href}, "EVILEG", data_href);
           }
         }
     }
