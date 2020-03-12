@@ -226,11 +226,10 @@ class Index {
           jQuery.ajax({
               url: "/chat/",
               type: 'GET',
-              data: data,
 
               success : function (data) {
                   window.history.pushState({route: this.url}, "EVILEG", path)
-                  block = this.data.find("#ajax");
+                  block = data.getElementById("ajax");
                   jQuery("#ajax").replaceWith(block); // Заменяем div со списком статей на новый
                   Index.initLink(); // Переинициализируем пагинатор
                   jQuery(window).scrollTop(0); // Скроллим страницу в начало
