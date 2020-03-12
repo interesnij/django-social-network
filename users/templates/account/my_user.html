@@ -270,9 +270,9 @@ class Index {
 
   static push_url(event){
       event.preventDefault();
-      var path = event.target.href;
+      var path = event.target.href.replace(/&quot;/g,"\"");
       var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-      link.open( 'GET', path.replace(/&quot;/g,"\""), true );
+      link.open( 'GET', path, true );
       link.send();
       console.log(path);
       link.onreadystatechange = function () {
