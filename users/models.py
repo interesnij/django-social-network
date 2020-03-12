@@ -820,7 +820,7 @@ class User(AbstractUser):
         from stst.models import CommunityNumbers
         from communities.models import Community
         v_s = CommunityNumbers.objects.filter(user=self.pk).values('community').order_by("-created")
-        ids = [use['user'] for use in v_s]
+        ids = [use['community'] for use in v_s]
         query = []
         for i in ids:
             query = query + [Community.objects.get(id=i), ]
