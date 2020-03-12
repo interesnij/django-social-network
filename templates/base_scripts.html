@@ -77,7 +77,7 @@ function addStyleSheets (href) {$head = document.head,$link = document.createEle
           url: path,
           success: function(data) {
             console.log("успехъ");
-            $('#ajax').html('').load(path);
+            $('#ajax').html('').load(url);
           }
         });
       //  var pk = event.getAttribute('data-pk');
