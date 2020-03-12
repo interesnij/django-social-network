@@ -12,7 +12,7 @@
 <script>
 
 </script>
-<div class="row user_page">
+<div class="row user_page ajax_block">
     <div class="col-lg-4 col-md-5 order-1">
 
       <div class="card mb-4">
@@ -231,7 +231,7 @@ class Index {
         var rtr = document.getElementById('ajax');
         var elem_ = document.createElement('span');
         elem_.innerHTML = link.responseText;
-        ajax = elem_.getElementById("ajax");
+        ajax = elem_.querySelector(".ajax_block");
         rtr.append(ajax);
         window.history.pushState({route: this.url}, "EVILEG", path);
         }
