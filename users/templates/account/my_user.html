@@ -56,7 +56,7 @@
             <div class="card border-top border-bottom">
                 <div class="card-body">
                     <div class="media">
-                      <a href="/users/{{object.pk}}/" class="ajax" data-html="#ajax">
+                      <a href="/users/{{object.pk}}/" class="ajax" link="/users/" pk="{{ object.pk }}" data-html="#ajax">
                         <figure style="width:50px;">
                           {% if object.get_avatar %}
                             <img src="{{ object.get_avatar.file|thumbnail_url:'avatar' }}" style="border-radius:50px;" alt="image">
