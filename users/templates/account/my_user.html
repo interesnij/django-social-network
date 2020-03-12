@@ -232,7 +232,7 @@ class Index {
         var elem_ = document.createElement('span');
         elem_.innerHTML = link.responseText;
         ajax = elem_.document.querySelector(".ajax_block");
-        rtr.append(ajax);
+        rtr.append(elem_);
         window.history.pushState({route: path}, "EVILEG", path);
         }
       }
