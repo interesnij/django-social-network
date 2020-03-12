@@ -62,11 +62,8 @@ function addStyleSheets (href) {$head = document.head,$link = document.createEle
     myPlaylist.pause(track_id);
   };
   });
-//  function generete_some_url(id){
-//      return 0
-//  };
-  class Index {
 
+  class Index {
     static initLink() {
         document.body.querySelectorAll('a')
                 .forEach( lin => lin.addEventListener('click', Index.push_url) );
@@ -75,12 +72,9 @@ function addStyleSheets (href) {$head = document.head,$link = document.createEle
     static push_url(event){
         event.preventDefault();
         var path = event.target.href;
-      var pk = this.getAttribute('data-pk');
-      var href = this.getAttribute('data-link');
       var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-      if (pk){
-        link.open( 'GET', href + pk, true );
-      }else{link.open( 'GET', this.getAttribute('href'), true )};
+
+      link.open( 'GET', this.getAttribute('href'), true );
         link.send();
 
         link.onreadystatechange = function () {
