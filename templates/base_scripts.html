@@ -74,7 +74,7 @@ function addStyleSheets (href) {$head = document.head,$link = document.createEle
         event.preventDefault();
         var path = event.target.href;
         $('#ajax').html('').load(path);
-
+        console.log(path);
       //  var pk = event.getAttribute('data-pk');
       //  var href = event.getAttribute('data-link');
     //    var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
