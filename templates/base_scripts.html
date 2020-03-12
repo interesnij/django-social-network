@@ -75,6 +75,7 @@ function addStyleSheets (href) {$head = document.head,$link = document.createEle
         var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
         link.open( 'GET', path, true );
         link.send();
+        console.log(path);
         link.onreadystatechange = function () {
         if ( this.readyState == 4 && this.status == 200 ) {
           var rtr = document.getElementById('ajax');
@@ -85,7 +86,6 @@ function addStyleSheets (href) {$head = document.head,$link = document.createEle
           rtr.append(ajax);
           Index.initLink();
           window.history.pushState({route: path}, "EVILEG", path);
-          console.log(path);
           }
         }
     }
