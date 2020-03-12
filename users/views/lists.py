@@ -27,6 +27,17 @@ class UserCommunitiesList(ListView):
 		communities_list = Community.objects.filter(memberships__user__id=self.user.pk)
 		return communities_list
 
+class UserVisitCommunities(ListView):
+	template_name = None
+
+	def get(self,request,*args,**kwargs):
+		self.template_name = request.user.get_settings_template(folder="user_community/", template="visits.html", request=request)
+		return super(UserDesign,self).get(request,*args,**kwargs)
+
+	def get_queryset(self):
+		communities = request.user.get_visited_communities()
+		return communities
+
 
 class UserManageCommunitiesList(ListView):
 	template_name = None
@@ -35,7 +46,7 @@ class UserManageCommunitiesList(ListView):
 
 	def get(self,request,*args,**kwargs):
 		self.user=User.objects.get(uuid=self.kwargs["uuid"])
-		if self.user == request.user:
+		if self.user == request.user: 
 			self.template_name = "user_community/communities_list_with_staffed.html"
 		else:
 			self.template_name = "main/auth.html"
@@ -98,7 +109,7 @@ class AllPossibleUsersList(ListView):
 class ItemListView(ListView):
 	template_name = None
 	model = Item
-	paginate_by = 3
+	paginate_by = 30
 
 	def get(self,request,*args,**kwargs):
 		try:
