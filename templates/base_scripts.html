@@ -77,7 +77,8 @@ function addStyleSheets (href) {$head = document.head,$link = document.createEle
         var href = event.target.getAttribute('link');
         var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
         if (pk){
-          link.open( 'GET', href + pk, true )
+          link.open( 'GET', href + pk, true );
+          console.log(pk,href);
         }else{link.open( 'GET', path, true )};
 
         link.send();
