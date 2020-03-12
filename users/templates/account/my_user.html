@@ -213,6 +213,30 @@ ready(() => {
 };
 link.send( null );
 
+class Index {
+
+  static initLink() {
+      document.body.querySelectorAll('a')
+              .forEach( link => link.addEventListener('click', Index.push_url) );
+  }
+
+  static push_url(event){
+      event.preventDefault();
+      let path = event.target.href; // забираем путь
+          jQuery.ajax({
+              url: "{% url 'messages_list %}",
+              type: 'GET',
+              success : function (data) {
+                  window.history.pushState({route: path}, "EVILEG", path); // устанавливаем URL в строку браузера
+                  jQuery("#ajax").replaceWith(data); // Заменяем div со списком статей на новый
+                  Index.initLink(); // Переинициализируем пагинатор
+                  jQuery(window).scrollTop(0); // Скроллим страницу в начало
+              }
+          });
+  }
+}
+Index.initLink();
+
 });
 function elementInViewport(el){
     var bounds = el.getBoundingClientRect();
