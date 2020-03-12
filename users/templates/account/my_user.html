@@ -270,7 +270,7 @@ class Index {
 
   static push_url(event){
       event.preventDefault();
-      // var path = event.target.href;
+      var path = event.target.href;
       var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
       link.open( 'GET', path, true );
       link.send();
