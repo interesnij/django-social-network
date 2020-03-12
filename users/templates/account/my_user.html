@@ -228,7 +228,7 @@ class Index {
               type: 'GET',
 
               success : function (data) {
-                  window.history.pushState({route: url}); // устанавливаем URL в строку браузера
+                  window.history.pushState({route: "/users/all-users/"}); // устанавливаем URL в строку браузера
                   jQuery("#ajax").replaceWith(data); // Заменяем div со списком статей на новый
                   Index.initLink(); // Переинициализируем пагинатор
                   jQuery(window).scrollTop(0); // Скроллим страницу в начало
