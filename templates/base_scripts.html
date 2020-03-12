@@ -79,7 +79,7 @@ function addStyleSheets (href) {$head = document.head,$link = document.createEle
     //    if (pk){
           link.open( 'GET', path, true );
     //    }else{link.open( 'GET', path, true )};
-        console.log(event.target,event);
+        console.log(event.target.href,event);
         link.send();
         console.log(path);
         link.onreadystatechange = function () {
