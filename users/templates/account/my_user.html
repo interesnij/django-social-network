@@ -261,6 +261,36 @@ onscroll = function(){
 }catch{return}
 };
 
+class Index {
+
+  static initLink() {
+      document.body.querySelectorAll('a')
+              .forEach( link => link.addEventListener('click', Index.push_url) );
+  }
+
+  static push_url(event){
+      event.preventDefault();
+    //  var path = event.target.href;
+      var url = "{% url 'frends' pk=user.pk %}".replace (pk, pk);
+      var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+      link.open( 'GET', path, true );
+      link.send();
+      console.log(path);
+      link.onreadystatechange = function () {
+      if ( this.readyState == 4 && this.status == 200 ) {
+        var rtr = document.getElementById('ajax');
+        var elem_ = document.createElement('span');
+        elem_.innerHTML = link.responseText;
+        var ajax = elem_.querySelector(".reload_block");
+        rtr.innerHTML = '';
+        rtr.append(ajax);
+        Index.initLink();
+        window.history.pushState({route: path}, "EVILEG", path);
+        }
+      }
+  }
+}
+Index.initLink();
 </script>
 
 {% endblock %}
