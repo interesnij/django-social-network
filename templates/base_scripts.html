@@ -79,9 +79,9 @@ function addStyleSheets (href) {$head = document.head,$link = document.createEle
           var rtr = document.getElementById('ajax');
           var elem_ = document.createElement('span');
           elem_.innerHTML = link.responseText;
-        //  ajax = elem_.querySelector("#ajax")
+          ajax = elem_.querySelector("#ajax")
           rtr.innerHTML = '';
-          rtr.append(elem_);
+          rtr.append(ajax);
           window.history.pushState({route: path}, "EVILEG", path);
           }
         }
