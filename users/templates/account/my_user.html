@@ -91,7 +91,7 @@
         </div>
         {% endif %}
 
-        {% if user.get_pop_communities %}
+        {% if communities %}
         <div class="card mb-4" style="">
             <div class="card-header">
                 <div class="media">
@@ -104,7 +104,7 @@
                 </div>
             </div>
 
-            {% for object in user.get_pop_communities %}
+            {% for object in communities %}
             <div class="card border-top border-bottom">
                 <div class="card-body">
                     <div class="media">

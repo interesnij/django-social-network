@@ -71,12 +71,14 @@ class ProfileUserView(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.user=User.objects.get(pk=self.kwargs["pk"])
+        self.communities=self.user.get_pop_communities()
         self.template_name = self.user.get_template_user(folder="account/", template="user.html", request=request)
         return super(ProfileUserView,self).get(request,*args,**kwargs)
 
     def get_context_data(self, **kwargs):
         context = super(ProfileUserView, self).get_context_data(**kwargs)
         context['user'] = self.user
+        context['communities'] = self.communities
         if self.request.user.is_authenticated:
             context['common_frends'] = self.user.get_common_friends_of_user(self.request.user)[0:5]
         return context
