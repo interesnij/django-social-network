@@ -1,23 +1,18 @@
 {% load liked_user %}
-<link rel="stylesheet" href="/static/styles/swiper.min.css" />
 
 {% if object %}
 <div class="mb-4 infinite-item" style="position: relative;" item-id="{{ object.uuid }}">
-  <span class="good_fullscreen_hide">
-      <svg class="svg_default svg_default_30" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
-  </span>
-    <span class="text-hide-xs">
-        {% if prev %}
-        <span class="prev_item">
-          <svg class="svg_default" style="width:50px;height:50px;" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/><path fill="none" d="M0 0h24v24H0V0z"/></svg>
-        </span>
-        {% endif %}
-        {% if next %}
-        <span class="next_item">
-          <svg class="svg_default" style="width:50px;height:50px;" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"/><path fill="none" d="M0 0h24v24H0V0z"/></svg>
-        </span>
-        {% endif %}
-    </span>
+
+    {% if prev %}
+      <a class="prev_item" href="{% url 'user_good' pk=prev.pk uuid=user.uuid %}">
+        <svg class="svg_default" style="width:50px;height:50px;" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/><path fill="none" d="M0 0h24v24H0V0z"/></svg>
+      </a>
+    {% endif %}
+    {% if next %}
+      <a class="next_item" href="{% url 'user_good' pk=next.pk uuid=user.uuid %}">
+        <svg class="svg_default" style="width:50px;height:50px;" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"/><path fill="none" d="M0 0h24v24H0V0z"/></svg>
+      </a>
+    {% endif %}
 
     <div class="card mb-4">
         <div class="card-body py-0">
@@ -106,25 +101,47 @@
 </div>
 
 {% endif %}
-
-<div>
-{% if prev %}
-  <script>$('.prev_item').on('click', function() {$('#good_loader').html('').load("{% url 'user_good' pk=prev.pk uuid=user.uuid %}");});</script>
-{% endif %}
-{% if next %}
-  <script>$('.next_item').on('click', function() {$('#good_loader').html('').load("{% url 'user_good' pk=next.pk uuid=user.uuid %}");});</script>
-{% endif %}
-</div>
-
-<script src="/static/scripts/swiper.min.js" type="text/javascript"></script>
 <script>
-    'use strict';
-    var mySwiper = new Swiper('.swiper-product', {
-        slidesPerView: 1,
-        spaceBetween: 0,
-        pagination: {
-            el: '.swiper-pagination',
-            clickable: true,
+  class Listen {
+    static prevLink() {document.body.querySelectorAll('.prev_item').forEach( prev => prev.addEventListener('click', Listen.push_prev) );}
+    static nextLink() {document.body.querySelectorAll('.next_item').forEach( next => next.addEventListener('click', Listen.push_next) );}
+
+    static push_prev(e){
+        e.preventDefault();
+        var url = this.getAttribute('href')
+        var prev_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+        prev_link.open( 'GET', this.getAttribute('href'), true );
+        prev_link.send();
+        prev_link.onreadystatechange = function () {
+          if ( this.readyState == 4 && this.status == 200 ) {
+            var loader = document.getElementById('good_loader');
+            var elem_ = document.createElement('span');
+            elem_.innerHTML = prev_link.responseText;
+            loader.innerHTML = '';
+            loader.append(elem_);
+            Listen.prevLink();Listen.nextLink();
+            window.history.pushState({route: url}, "network", url);
+          }
         }
-    });
+    };
+    static push_next(er){
+        er.preventDefault();
+        var url = this.getAttribute('href')
+        var prev_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+        prev_link.open( 'GET', url, true );
+        prev_link.send();
+        prev_link.onreadystatechange = function () {
+          if ( this.readyState == 4 && this.status == 200 ) {
+            var loader = document.getElementById('good_loader');
+            var elem_ = document.createElement('span');
+            elem_.innerHTML = prev_link.responseText;
+            loader.innerHTML = '';
+            loader.append(elem_);
+            Listen.prevLink();Listen.nextLink();
+            window.history.pushState({route: url}, "network", url);
+          }
+        }
+    }
+  }
+  Listen.prevLink();Listen.nextLink();
 </script>
