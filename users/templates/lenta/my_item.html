@@ -22,11 +22,10 @@
 
 <script>
   class Listen {
-    static prevLink() {document.body.querySelectorAll('.prev_item').forEach( prev => prev.addEventListener('click', Index.prev_url) );}
-    static nextLink() {document.body.querySelectorAll('.next_item').forEach( prev => prev.addEventListener('click', Index.next_url) );}
+    static prevLink() {document.body.querySelectorAll('.prev_item').forEach( prev => prev.addEventListener('click', Listen.push_prev) );}
+    static nextLink() {document.body.querySelectorAll('.next_item').forEach( prev => prev.addEventListener('click', Listen.push_next) );}
 
-    static prevLink(event){
-
+    static push_prev(event){
         var url = this.getAttribute('href')
         var prev_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
         prev_link.open( 'GET', this.getAttribute('href'), true );
@@ -43,8 +42,7 @@
           }
         }
     };
-    static nextLink(e){
-
+    static push_next(e){
         var url = this.getAttribute('href')
         var prev_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
         prev_link.open( 'GET', this.getAttribute('href'), true );
