@@ -76,7 +76,7 @@ class Index {
     event.preventDefault();
     var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     var url = this.getAttribute('href')
-    ajax_link.open( 'GET', url, true );
+    ajax_link.open( 'GET', url, false );
       ajax_link.send();
       ajax_link.onreadystatechange = function () {
         if ( this.readyState == 4 && this.status == 200 ) {
