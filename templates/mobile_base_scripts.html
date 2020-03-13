@@ -43,10 +43,9 @@ class Index {
 
   static push_url(event){
       event.preventDefault();
-    //  var ajax_path = event.target.href;
-    var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+      var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
 
-    ajax_link.open( 'GET', this.getAttribute('href'), true );
+      ajax_link.open( 'GET', this.getAttribute('href'), true );
       ajax_link.send();
 
       ajax_link.onreadystatechange = function () {
