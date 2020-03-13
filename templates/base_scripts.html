@@ -108,7 +108,7 @@ function addStyleSheets (href) {$head = document.head,$link = document.createEle
         }
     };
     static nextLink(e){
-        
+
         var url = this.getAttribute('href')
         var prev_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
         prev_link.open( 'GET', this.getAttribute('href'), true );
@@ -127,7 +127,7 @@ function addStyleSheets (href) {$head = document.head,$link = document.createEle
     }
   }
 
-Index.initLink();Index.prevLink();Index.nextLink();
+Index.initLink();
 
 //  $('body').on('click', '.playlist_pause .track_item', function() {track = $(this); li = track.parents('.infinite-item'); track_id = li.data('counter');my_playlist_play(track_id); li.removeClass("playlist_pause")});
 
