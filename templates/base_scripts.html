@@ -67,8 +67,7 @@ function addStyleSheets (href) {$head = document.head,$link = document.createEle
     static initLink() {document.body.querySelectorAll('.ajax').forEach( lin => lin.addEventListener('click', Index.push_url) );}
 
     static push_url(event){
-        event.preventDefault();
-        var path = event.target.href;
+      event.preventDefault();
       var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
       var url = this.getAttribute('href')
       ajax_link.open( 'GET', url, true );
