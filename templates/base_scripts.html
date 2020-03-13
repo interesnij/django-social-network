@@ -90,7 +90,7 @@ function addStyleSheets (href) {$head = document.head,$link = document.createEle
         }
     };
     static prevLink(event){
-        event.preventDefault();
+
         var url = this.getAttribute('href')
         var prev_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
         prev_link.open( 'GET', this.getAttribute('href'), true );
@@ -108,7 +108,7 @@ function addStyleSheets (href) {$head = document.head,$link = document.createEle
         }
     };
     static nextLink(e){
-        e.preventDefault();
+        
         var url = this.getAttribute('href')
         var prev_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
         prev_link.open( 'GET', this.getAttribute('href'), true );
