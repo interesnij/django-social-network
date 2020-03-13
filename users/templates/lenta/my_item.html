@@ -43,8 +43,8 @@
           }
         }
     };
-    static push_next(e){
-        e.preventDefault();
+    static push_next(er){
+        er.preventDefault();
         var url = this.getAttribute('href')
         var prev_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
         prev_link.open( 'GET', url, true );
