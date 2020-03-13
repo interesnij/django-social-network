@@ -65,8 +65,6 @@ function addStyleSheets (href) {$head = document.head,$link = document.createEle
 
   class Index {
     static initLink() {document.body.querySelectorAll('.ajax').forEach( lin => lin.addEventListener('click', Index.push_url) );}
-    static prevLink() {document.body.querySelectorAll('.prev_item').forEach( prev => prev.addEventListener('click', Index.prev_url) );}
-    static nextLink() {document.body.querySelectorAll('.next_item').forEach( prev => prev.addEventListener('click', Index.next_url) );}
 
     static push_url(event){
         event.preventDefault();
@@ -89,42 +87,6 @@ function addStyleSheets (href) {$head = document.head,$link = document.createEle
           }
         }
     };
-    static prevLink(event){
-
-        var url = this.getAttribute('href')
-        var prev_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-        prev_link.open( 'GET', this.getAttribute('href'), true );
-        prev_link.send();
-        prev_link.onreadystatechange = function () {
-          if ( this.readyState == 4 && this.status == 200 ) {
-            var loader = document.getElementById('item_loader');
-            var elem_ = document.createElement('span');
-            elem_.innerHTML = prev_link.responseText;
-            loader.innerHTML = '';
-            loader.append(elem_);
-            Previous.prevLink();
-            window.history.pushState({route: url}, "network", url);
-          }
-        }
-    };
-    static nextLink(e){
-
-        var url = this.getAttribute('href')
-        var prev_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-        prev_link.open( 'GET', this.getAttribute('href'), true );
-        prev_link.send();
-        prev_link.onreadystatechange = function () {
-          if ( this.readyState == 4 && this.status == 200 ) {
-            var loader = document.getElementById('item_loader');
-            var elem_ = document.createElement('span');
-            elem_.innerHTML = prev_link.responseText;
-            loader.innerHTML = '';
-            loader.append(elem_);
-            Previous.nextLink();
-            window.history.pushState({route: url}, "network", url);
-          }
-        }
-    }
   }
 
 Index.initLink();
