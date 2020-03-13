@@ -26,6 +26,7 @@
     static nextLink() {document.body.querySelectorAll('.next_item').forEach( prev => prev.addEventListener('click', Listen.push_next) );}
 
     static push_prev(event){
+        event.preventDefault();
         var url = this.getAttribute('href')
         var prev_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
         prev_link.open( 'GET', this.getAttribute('href'), true );
@@ -43,9 +44,10 @@
         }
     };
     static push_next(e){
+        e.preventDefault();
         var url = this.getAttribute('href')
         var prev_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-        prev_link.open( 'GET', this.getAttribute('href'), true );
+        prev_link.open( 'GET', url, true );
         prev_link.send();
         prev_link.onreadystatechange = function () {
           if ( this.readyState == 4 && this.status == 200 ) {
