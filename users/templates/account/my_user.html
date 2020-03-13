@@ -200,7 +200,7 @@
     </div>
 
 <script type="text/javascript">
-
+  function load_list() {
   var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link.open( 'GET', '/users/detail/list/' + '{{ user.pk }}', true );
   link.onreadystatechange = function () {
@@ -213,8 +213,8 @@
 };
 link.send( null );
 console.log(lenta_load, link);
-
-
+};
+load_list();
 var page = 2;
 var loaded = false;
 onscroll = function(){
