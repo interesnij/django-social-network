@@ -200,7 +200,7 @@
     </div>
 
 <script>
-on('.reload_block', 'onload', function() {
+
   var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link.open( 'GET', '/users/detail/list/' + '{{ user.pk }}', true );
   link.onreadystatechange = function () {
@@ -212,8 +212,8 @@ on('.reload_block', 'onload', function() {
     }
 };
 link.send( null );
-console.log(lenta_load, link)
-});
+console.log(lenta_load, link);
+
 
 var page = 2;
 var loaded = false;
