@@ -17,7 +17,7 @@
                 <div class="media">
                     <div class="media-body">
                         <h5 class="mt-1">
-                          <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=user.pk %}" data-html="#ajax">
+                          <a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=user.pk %}">
                             {{ user.first_name|gent }} {{ user.last_name|gent }}
                           </a>
                         </h5>
@@ -56,7 +56,7 @@
               {% else %}
               <div class="card" style="align-items: center;justify-content:center;">
                 <div class="card-body">
-                <svg fill="currentColor" class="thumb_big svg_default" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+                <svg fill="currentColor" class="thumb_big svg_default" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
                 </div>
                 <h6 style="margin: 20px;text-align: center;"> Подписчиков нет...</h6>
               </div>

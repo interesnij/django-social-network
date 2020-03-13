@@ -35,8 +35,10 @@
     <div class="jambotron-fluid">
 
         <div id="ajax" style="padding-right:0px;padding-left:0px;">
+          <span class="reload_block">
            {% block content %}
            {% endblock %}
+          </span>
            {% if request.user.is_authenticated %}
             {% include "base_block/mobile_nav.html" %}
            {% endif %}

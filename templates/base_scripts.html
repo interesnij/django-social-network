@@ -65,7 +65,7 @@ function addStyleSheets (href) {$head = document.head,$link = document.createEle
 
   class Index {
     static initLink() {
-        document.body.querySelectorAll('a')
+        document.body.querySelectorAll('.ajax')
                 .forEach( lin => lin.addEventListener('click', Index.push_url) );
     }
 

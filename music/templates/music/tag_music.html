@@ -36,7 +36,7 @@
                 <div class="media">
                     <div class="media-body">
                       <h5 class="mt-1">
-                        <a href="{% url 'tags_music' pk=tag.symbol.pk %}" data-html="#ajax" class="ajax">Вернуться к списку тегов буквы {{ tag.symbol.name }}</a>
+                        <a href="{% url 'tags_music' pk=tag.symbol.pk %}" class="ajax">Вернуться к списку тегов буквы {{ tag.symbol.name }}</a>
                       </h5>
                     </div>
                 </div>
@@ -47,7 +47,7 @@
                 <div class="media">
                     <div class="media-body">
                       <h5 class="mt-1">
-                        <a href="{% url 'all_music' %}" data-html="#ajax" class="ajax">Вернуться в каталог музыки</a>
+                        <a href="{% url 'all_music' %}" class="ajax">Вернуться в каталог музыки</a>
                       </h5>
                     </div>
                 </div>

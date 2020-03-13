@@ -28,7 +28,7 @@
                 <br><br>
                 <span style="display:flex;flex-wrap: wrap">
                   <span style="flex: 0 0 50%;max-width:50%;padding:5px;display: flex;justify-content: center;">
-                    <a class="btn btn-sm btn-secondary ajax" href="{% url 'community_general_form' pk=community.pk %}" data-html="#ajax">Управление</a>
+                    <a class="btn btn-sm btn-secondary ajax" href="{% url 'community_general_form' pk=community.pk %}">Управление</a>
                   </span>
                   <span style="flex: 0 0 50%;max-width:50%;padding:5px;display: flex;justify-content: center;">
                     <a class="btn btn-sm btn-secondary member_delete" style="cursor:pointer" data-id="{{ community.pk }}">Отписаться</a>
@@ -62,7 +62,7 @@
             </div>
           </div>
           <div class="card">
-            <a href="{% url 'community_members' pk=community.pk %}" class="ajax" data-html="#ajax">
+            <a href="{% url 'community_members' pk=community.pk %}" class="ajax">
               <div class="card-body py-2">
                   <div class="media">
                       <div class="media-body">

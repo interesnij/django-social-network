@@ -28,10 +28,10 @@
                 <br><br>
                 <span style="display:flex;flex-wrap: wrap">
                   <span style="flex: 0 0 50%;max-width:50%;padding:5px;display: flex;justify-content: center;">
-                    <a class="btn btn-sm btn-secondary">Написать</a>
+                    <span class="btn btn-sm btn-secondary">Написать</span>
                   </span>
                   <span style="flex: 0 0 50%;max-width:50%;padding:5px;display: flex;justify-content: center;">
-                    <a class="btn btn-sm btn-secondary member_delete" style="cursor:pointer" data-id="{{ community.pk }}">Отписаться</a>
+                    <span class="btn btn-sm btn-secondary member_delete" style="cursor:pointer" data-id="{{ community.pk }}">Отписаться</span>
                   </span>
                 </span>
 
@@ -62,7 +62,7 @@
             </div>
           </div>
           <div class="card">
-            <a href="{% url 'community_members' pk=community.pk %}" class="ajax" data-html="#ajax">
+            <a href="{% url 'community_members' pk=community.pk %}" class="ajax">
               <div class="card-body py-2">
                   <div class="media">
                       <div class="media-body">

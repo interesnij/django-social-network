@@ -22,11 +22,11 @@
             <div class="card-header">
                 <div class="media">
                     <div class="media-body"><h5 class="mt-1">Возможные друзья</h5></div>
-                    <a class="ajax" href="{% url 'all_common_users' pk=user.pk %}" class="">все</a>
+                    <a class="ajax" href="{% url 'all_common_users' pk=user.pk %}">все</a>
                 </div>
             </div>
             <div class="card-body px-0 py-0">
-                <ul class="list-group border-top border-bottom list-group-flush">
+                <ul class="list-group border-top">
                     {% for object in user.get_possible_friends %}
                     <li class="list-group-item">
                         <div class="media">
@@ -35,7 +35,7 @@
                               {% if object.get_avatar %}
                                 <img src="{{ object.get_avatar.file|thumbnail_url:'avatar' }}" style="border-radius:50px;width:50px;" alt="image">
                               {% else %}
-                                <svg fill="currentColor" class="svg_default svg_default_50" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+                                <svg fill="currentColor" class="svg_default svg_default_50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
                               {% endif %}
                             </figure>
                           </a>

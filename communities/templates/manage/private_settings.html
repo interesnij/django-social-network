@@ -62,7 +62,7 @@
             <div class="collapse" id="communitySettings">
               <div class="card card-body" style="display: contents;">
                 <ul>
-                  <li><a href="{% url 'community_general_form' pk=community.pk %}" class="ajax" data-html="#ajax">Информации</a></li>
+                  <li><a href="{% url 'community_general_form' pk=community.pk %}" class="ajax">Информации</a></li>
                 </ul>
               </div>
             </div>
@@ -73,15 +73,15 @@
             <div class="collapse" id="communityMembership">
               <div class="card card-body" style="display: contents;">
                 <ul>
-                  <li><a href="{% url 'community_member_manage' pk=community.pk %}" class="ajax" data-html="#ajax">Подписчики</a></li>
+                  <li><a href="{% url 'community_member_manage' pk=community.pk %}" class="ajax">Подписчики</a></li>
                   {% if community.is_closed %}
-                    <li style="margin-bottom:8px;"><a href="{% url 'community_follows' pk=community.pk %}" class="ajax" data-html="#ajax">Заявки на членство</a></li>
+                    <li style="margin-bottom:8px;"><a href="{% url 'community_follows' pk=community.pk %}" class="ajax">Заявки на членство</a></li>
                   {% endif %}
-                  <li><a href="{% url 'community_moders' pk=community.pk %}" class="ajax" data-html="#ajax">Модераторы</a></li>
-                  <li><a href="{% url 'community_editors' pk=community.pk %}" class="ajax" data-html="#ajax">Редакторы</a></li>
-                  <li><a href="{% url 'community_advertisers' pk=community.pk %}" class="ajax" data-html="#ajax">Рекламодатели</a></li>
-                  <li><a href="{% url 'community_admins' pk=community.pk %}" class="ajax" data-html="#ajax">Администраторы</a></li>
-                  <li><a href="{% url 'community_black_list' pk=community.pk %}" class="ajax" data-html="#ajax">Черный список</a></li>
+                  <li><a href="{% url 'community_moders' pk=community.pk %}" class="ajax">Модераторы</a></li>
+                  <li><a href="{% url 'community_editors' pk=community.pk %}" class="ajax">Редакторы</a></li>
+                  <li><a href="{% url 'community_advertisers' pk=community.pk %}" class="ajax">Рекламодатели</a></li>
+                  <li><a href="{% url 'community_admins' pk=community.pk %}" class="ajax">Администраторы</a></li>
+                  <li><a href="{% url 'community_black_list' pk=community.pk %}" class="ajax">Черный список</a></li>
                 </ul>
               </div>
             </div>
@@ -92,11 +92,11 @@
             <div class="collapse show" id="userPrivate">
               <div class="card card-body" style="display: contents;">
                 <ul>
-                  <li><a href="{% url 'community_private' community.pk %}" class="ajax" data-html="#ajax">Записи</a></li>
-                  <li><a href="" class="ajax" data-html="#ajax">Фотографии</a></li>
-                  <li><a href="" class="ajax" data-html="#ajax">Товары</a></li>
-                  <li><a href="" class="ajax" data-html="#ajax">Музыка</a></li>
-                  <li><a href="" class="ajax" data-html="#ajax">Видео</a></li>
+                  <li><a href="{% url 'community_private' community.pk %}" class="ajax">Записи</a></li>
+                  <li><a href="" class="ajax">Фотографии</a></li>
+                  <li><a href="" class="ajax">Товары</a></li>
+                  <li><a href="" class="ajax">Музыка</a></li>
+                  <li><a href="" class="ajax">Видео</a></li>
                 </ul>
               </div>
             </div>
@@ -106,11 +106,11 @@
             <div class="collapse" id="userNotify">
               <div class="card card-body" style="display: contents;">
                 <ul>
-                  <li><a href="{% url 'community_notify' community.pk %}" class="ajax" data-html="#ajax">Записи</a></li>
-                  <li><a href="" class="ajax" data-html="#ajax">Фотографии</a></li>
-                  <li><a href="" class="ajax" data-html="#ajax">Товары</a></li>
-                  <li><a href="" class="ajax" data-html="#ajax">Музыка</a></li>
-                  <li><a href="" class="ajax" data-html="#ajax">Видео</a></li>
+                  <li><a href="{% url 'community_notify' community.pk %}" class="ajax">Записи</a></li>
+                  <li><a href="" class="ajax">Фотографии</a></li>
+                  <li><a href="" class="ajax">Товары</a></li>
+                  <li><a href="" class="ajax">Музыка</a></li>
+                  <li><a href="" class="ajax">Видео</a></li>
                 </ul>
               </div>
             </div>
@@ -121,7 +121,7 @@
             <div class="collapse" id="userStat">
               <div class="card card-body" style="display: contents;">
                 <ul style="list-style-type:none">
-                  <li style="margin-bottom:8px;"><a href="{% url 'community_stat_coverage' community.pk %}" class="ajax" data-html="#ajax">Общая</a></li>
+                  <li style="margin-bottom:8px;"><a href="{% url 'community_stat_coverage' community.pk %}" class="ajax">Общая</a></li>
                 </ul>
               </div>
             </div>
