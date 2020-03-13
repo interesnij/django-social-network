@@ -39,24 +39,21 @@ icon_5.addEventListener("click", (e) => {
 });
 
 class Index {
-  static initLink() {
-      document.body.querySelectorAll('.ajax')
-              .forEach( lin => lin.addEventListener('click', Index.push_url) );
-  }
+  static initLink() {document.body.querySelectorAll('.ajax').forEach( lin => lin.addEventListener('click', Index.push_url) );}
 
   static push_url(event){
       event.preventDefault();
-      var path = event.target.href;
-    var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    //  var ajax_path = event.target.href;
+    var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
 
-    link.open( 'GET', this.getAttribute('href'), true );
-      link.send();
+    ajax_link.open( 'GET', this.getAttribute('href'), true );
+      ajax_link.send();
 
-      link.onreadystatechange = function () {
+      ajax_link.onreadystatechange = function () {
         if ( this.readyState == 4 && this.status == 200 ) {
           var rtr = document.getElementById('ajax');
           var elem_ = document.createElement('span');
-          elem_.innerHTML = link.responseText;
+          elem_.innerHTML = ajax_link.responseText;
           var ajax = elem_.querySelector(".reload_block");
           rtr.innerHTML = '';
           document.title = $(elem_).filter("title").text()
