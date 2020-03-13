@@ -234,7 +234,7 @@ onscroll = function(){
       if(inViewport){
         box[i].classList.add("showed");
         console.log(i + " получил класс showed");
-        pk = box[i].getAttribute('item-id');
+        pk = box[i].getAttribute('item');
         fetch('/users/progs/item_view/' + pk + "/")
   }}};
 

@@ -6,10 +6,10 @@ from django.shortcuts import render_to_response
 class UserItemView(TemplateView):
     template_name = None
 
-    def get(self,request,*args,**kwargs): 
+    def get(self,request,*args,**kwargs):
         from main.models import Item
-        self.user = User.objects.get(uuid=self.kwargs["uuid"])
-        self.item = Item.objects.get(pk=self.kwargs["pk"])
+        self.user = User.objects.get(pk=self.kwargs["pk"])
+        self.item = Item.objects.get(uuid=self.kwargs["uuid"])
         self.items = self.user.get_posts()
         self.template_name = self.user.get_template_list_user(folder="lenta/", template="item.html", request=request)
         self.next = self.items.filter(pk__gt=self.item.pk).order_by('pk').first()
