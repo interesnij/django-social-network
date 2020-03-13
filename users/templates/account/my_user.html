@@ -218,7 +218,7 @@ function elementInViewport(el){
     var bounds = el.getBoundingClientRect();
     return (
         (bounds.top + bounds.height > 0) && // Елемент ниже верхней границы
-        (window.innerHeight - bounds.top > 0) && // Выше нижней
+        (window.innerHeight - bounds.top > 0)  // Выше нижней
     //    (bounds.left + bounds.width > 0) && // Правее левой
     //    (window.innerWidth - bounds.left > 0)// Левее правой
     );}
