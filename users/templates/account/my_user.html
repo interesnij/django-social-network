@@ -200,7 +200,7 @@
     </div>
 
 <script>
-on('#ajax', 'onload', '.reload_block', function() {
+on('#.reload_block', 'onload', function() {
   var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link.open( 'GET', '/users/detail/list/' + '{{ user.pk }}', true );
   link.onreadystatechange = function () {
