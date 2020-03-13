@@ -21,6 +21,7 @@ on('#ajax', 'click', '.u_good_detail', function() {
     good_loader = document.getElementById("good_loader");
     document.querySelector(".good_fullscreen").style.display = "block";
     good_loader.append(elem);
+    console.log(elem)
   }
 };
 });
