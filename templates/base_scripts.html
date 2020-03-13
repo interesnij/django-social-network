@@ -78,7 +78,7 @@ function addStyleSheets (href) {$head = document.head,$link = document.createEle
             var elem_ = document.createElement('span');
             elem_.innerHTML = ajax_link.responseText;
             var ajax = elem_.querySelector(".reload_block");
-          //  rtr.innerHTML = '';
+            rtr.innerHTML = '';
             document.title = elem_.querySelector('title').innerHTML;
             rtr.append(ajax);
             Index.initLink();
