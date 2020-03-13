@@ -17,7 +17,7 @@ on('#ajax', 'click', '.u_good_detail', function() {
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
     var elem = document.createElement('span');
-    elem.innerHTML = link_.responseText;
+    elem.text() = link_.responseText;
     good_loader = document.getElementById("good_loader");
     document.querySelector(".good_fullscreen").style.display = "block";
     good_loader.append(elem);
