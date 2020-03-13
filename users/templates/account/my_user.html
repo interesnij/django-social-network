@@ -202,7 +202,7 @@
 <script>
 ready(() => {
   var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', '/users/detail/list/' + 1, true );
+  link.open( 'GET', '/users/detail/list/' + {{ user.uuid }}, true );
   link.onreadystatechange = function () {
     if ( link.readyState == 4 ) {
         if ( link.status == 200 ) {
@@ -219,10 +219,9 @@ function elementInViewport(el){
     return (
         (bounds.top + bounds.height > 0) && // Елемент ниже верхней границы
         (window.innerHeight - bounds.top > 0) && // Выше нижней
-        (bounds.left + bounds.width > 0) && // Правее левой
-        (window.innerWidth - bounds.left > 0)// Левее правой
-    );
-}
+    //    (bounds.left + bounds.width > 0) && // Правее левой
+    //    (window.innerWidth - bounds.left > 0)// Левее правой
+    );}
 
 var page = 2;
 var loaded = false;
