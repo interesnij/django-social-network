@@ -200,7 +200,7 @@
     </div>
 
 <script>
-//ready(() => {
+ready(() => {
   var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link.open( 'GET', '/users/detail/list/' + '{{ user.pk }}', true );
   link.onreadystatechange = function () {
@@ -213,7 +213,7 @@
 };
 link.send( null );
 console.log(lenta_load, link)
-//});
+});
 
 var page = 2;
 var loaded = false;
