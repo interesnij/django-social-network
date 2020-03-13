@@ -72,8 +72,8 @@ function addStyleSheets (href) {$head = document.head,$link = document.createEle
         event.preventDefault();
         var path = event.target.href;
       var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-
-      ajax_link.open( 'GET', this.getAttribute('href'), true );
+      var url = this.getAttribute('href')
+      ajax_link.open( 'GET', url, true );
         ajax_link.send();
         ajax_link.onreadystatechange = function () {
           if ( this.readyState == 4 && this.status == 200 ) {
@@ -85,12 +85,13 @@ function addStyleSheets (href) {$head = document.head,$link = document.createEle
             document.title = elem_.querySelector('title').innerHTML;
             rtr.append(ajax);
             Index.initLink();
-            window.history.pushState({route: path}, "network", path);
+            window.history.pushState({route: url}, "network", url);
           }
         }
     };
-    static prevLink(e){
-        e.preventDefault();
+    static prevLink(event){
+        event.preventDefault();
+        var url = this.getAttribute('href')
         var prev_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
         prev_link.open( 'GET', this.getAttribute('href'), true );
         prev_link.send();
@@ -102,12 +103,13 @@ function addStyleSheets (href) {$head = document.head,$link = document.createEle
             loader.innerHTML = '';
             loader.append(elem_);
             Previous.prevLink();
-            window.history.pushState({route: path}, "network", path);
+            window.history.pushState({route: url}, "network", url);
           }
         }
     };
     static nextLink(e){
         e.preventDefault();
+        var url = this.getAttribute('href')
         var prev_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
         prev_link.open( 'GET', this.getAttribute('href'), true );
         prev_link.send();
@@ -119,7 +121,7 @@ function addStyleSheets (href) {$head = document.head,$link = document.createEle
             loader.innerHTML = '';
             loader.append(elem_);
             Previous.nextLink();
-            window.history.pushState({route: path}, "network", path);
+            window.history.pushState({route: url}, "network", url);
           }
         }
     }
