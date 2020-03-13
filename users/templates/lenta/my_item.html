@@ -25,8 +25,8 @@
     static prevLink() {document.body.querySelectorAll('.prev_item').forEach( prev => prev.addEventListener('click', Listen.push_prev) );}
     static nextLink() {document.body.querySelectorAll('.next_item').forEach( prev => prev.addEventListener('click', Listen.push_next) );}
 
-    static push_prev(event){
-        event.preventDefault();
+    static push_prev(e){
+        e.preventDefault();
         var url = this.getAttribute('href')
         var prev_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
         prev_link.open( 'GET', this.getAttribute('href'), true );
