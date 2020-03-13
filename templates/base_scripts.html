@@ -83,7 +83,7 @@ class Index {
           var rtr = document.getElementById('ajax');
           var elem_ = document.createElement('span');
           elem_.innerHTML = ajax_link.responseText;
-          var ajax = elem_.querySelector(".reload_block");
+          var ajax = elem_.getElementById("reload_block");
           rtr.innerHTML = '';
           document.title = elem_.querySelector('title').innerHTML;
           rtr.append(ajax);
