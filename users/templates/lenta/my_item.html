@@ -20,6 +20,7 @@
     {% include 'item_user/my_article.html' with article=article  %}
 {% endif %}
 
+<!--
 {% if prev %}
   <script>
     $('.prev_item').on('click', function () {$('#item_loader').html('').load("{% url 'user_item' uuid=prev.uuid pk=user.pk %}");});
@@ -31,3 +32,4 @@
     $('.next_item').on('click', function () { $('#item_loader').html('').load("{% url 'user_item' uuid=next.uuid pk=user.pk %}");});
   </script>
   {% endif %}
+-->
