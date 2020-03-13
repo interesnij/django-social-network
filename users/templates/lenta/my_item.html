@@ -23,7 +23,7 @@
 <script>
   class Listen {
     static prevLink() {document.body.querySelectorAll('.prev_item').forEach( prev => prev.addEventListener('click', Listen.push_prev) );}
-    static nextLink() {document.body.querySelectorAll('.next_item').forEach( prev => prev.addEventListener('click', Listen.push_next) );}
+    static nextLink() {document.body.querySelectorAll('.next_item').forEach( next => next.addEventListener('click', Listen.push_next) );}
 
     static push_prev(e){
         e.preventDefault();
