@@ -206,7 +206,7 @@
   user_lenta_link.open( 'GET', '/users/detail/list/' + '{{ user.pk }}', true );
   lenta_load = document.querySelector("#lenta_load");
   user_lenta_link.onreadystatechange = function () {
-    if ( user_lenta_link.readyState == 4 && link.status == 200 && lenta_load){
+    if ( user_lenta_link.readyState == 4 && user_lenta_link.status == 200 && lenta_load){
       lenta_load.innerHTML = user_lenta_link.responseText;
     }
   };
