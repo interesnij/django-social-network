@@ -201,19 +201,14 @@
 
 <script type="text/javascript">
   function load_list() {
+    try{
   var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link.open( 'GET', '/users/detail/list/' + '{{ user.pk }}', true );
   link.onreadystatechange = function () {
-    if ( link.readyState == 4 ) {
-        if ( link.status == 200 ) {
-            var lenta_load = document.getElementById("lenta_load");
-            lenta_load.innerHTML = link.responseText;
-        }
-    }
-};
-link.send( null );
-console.log(lenta_load, link);
-};
+    if ( link.readyState == 4 ) { if ( link.status == 200 ) { var lenta_load = document.getElementById("lenta_load"); lenta_load.innerHTML = link.responseText; }
+    }};
+  link.send( null )}catch{return}};
+
 load_list();
 
 var page = 2;

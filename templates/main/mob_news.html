@@ -26,27 +26,55 @@
           <a class="dropdown-item" href="#">Фотографии</a>
       </div>
     </div>
-    <div id="news_load" style="margin-top:50px"></div>
+    <span class="stream" id="stream">
+
+      {% for object in request.user.get_timeline_posts %}
+
+        {% if object.community %}
+
+          {% if object.article %}
+            {% if object.is_repost %} Сообщество {{ object.community.name }} поделилось статьей {% endif %}
+            {% if object.community in request.user.get_staffed_communities %}
+              {% include 'item_community/moderator_article.html' with article=article %}
+            {% else %}
+              {% include 'item_community/article.html' with article=article %}
+            {% endif %}
+          {% endif %}
+          {% if object.post %}
+            {% if object.is_repost %} Сообщество {{ object.community.name }} поделилось записью {% endif %}
+            {% if object.community in request.user.get_staffed_communities %}
+              {% include 'item_community/moderator_post.html' with post=post %}
+            {% else %}
+              {% include 'item_community/post.html' with post=post %}
+            {% endif %}
+          {% endif %}
+
+        {% else %}
+
+          {% if object.article %}
+            {% if object.is_repost %} {{ object.creator }} поделился статьей {% endif %}
+            {% if object.creator == request.user %}
+              {% include 'item_user/my_article.html' with article=article %}
+            {% else %}
+              {% include 'item_user/article.html' with article=article %}
+            {% endif %}
+          {% endif %}
+          {% if object.post %}
+            {% if object.is_repost %} {{ object.creator }} поделился записью {% endif %}
+            {% if object.creator == request.user %}
+              {% include 'item_user/my_post.html' with post=post %}
+            {% else %}
+              {% include 'item_user/post.html' with post=post %}
+            {% endif %}
+          {% endif %}
+
+        {% endif %}
+
+      {% endfor %}
+    </span>
 </div>
 
 <script>
-  ready(() => {
-    icon_1 = document.querySelector(".icon_v1");
-    tip = document.querySelector(".selected-tip");
-    updateSelected(icon_1);
-
-    var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    link_3.open( 'GET', '/main/news/', true );
-    link_3.onreadystatechange = function () {
-      if ( link_3.readyState == 4 ) {
-          if ( link_3.status == 200 ) {
-              var news_load = document.getElementById("news_load");
-              news_load.innerHTML = link_3.responseText;
-          }
-      }
-  };
-  link_3.send( null );
-});
 
 var page = 2;
 var loaded = false;

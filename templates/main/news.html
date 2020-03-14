@@ -16,7 +16,52 @@
           <div class="stream-update">
             <a href=""><span class="new-posts"></span> Загрузить новые записи</a>
           </div>
-          <div id="lenta_load"></div>
+          <span class="stream" id="stream">
+
+            {% for object in request.user.get_timeline_posts %}
+
+              {% if object.community %}
+
+                {% if object.article %}
+                  {% if object.is_repost %} Сообщество {{ object.community.name }} поделилось статьей {% endif %}
+                  {% if object.community in request.user.get_staffed_communities %}
+                    {% include 'item_community/moderator_article.html' with article=article %}
+                  {% else %}
+                    {% include 'item_community/article.html' with article=article %}
+                  {% endif %}
+                {% endif %}
+                {% if object.post %}
+                  {% if object.is_repost %} Сообщество {{ object.community.name }} поделилось записью {% endif %}
+                  {% if object.community in request.user.get_staffed_communities %}
+                    {% include 'item_community/moderator_post.html' with post=post %}
+                  {% else %}
+                    {% include 'item_community/post.html' with post=post %}
+                  {% endif %}
+                {% endif %}
+
+              {% else %}
+
+                {% if object.article %}
+                  {% if object.is_repost %} {{ object.creator }} поделился статьей {% endif %}
+                  {% if object.creator == request.user %}
+                    {% include 'item_user/my_article.html' with article=article %}
+                  {% else %}
+                    {% include 'item_user/article.html' with article=article %}
+                  {% endif %}
+                {% endif %}
+                {% if object.post %}
+                  {% if object.is_repost %} {{ object.creator }} поделился записью {% endif %}
+                  {% if object.creator == request.user %}
+                    {% include 'item_user/my_post.html' with post=post %}
+                  {% else %}
+                    {% include 'item_user/post.html' with post=post %}
+                  {% endif %}
+                {% endif %}
+
+              {% endif %}
+
+            {% endfor %}
+          </span>
         </div>
         <div class="col-12 col-md-4 col-lg-4">
           <div class="card">
@@ -35,20 +80,6 @@
 </div>
 
 <script>
-  function load_list() {
-    var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    link.open( 'GET', '/main/news/', true );
-    link.onreadystatechange = function () {
-      if ( link.readyState == 4 ) {
-          if ( link.status == 200 ) {
-              var news_load = document.getElementById("lenta_load");
-              news_load.innerHTML = link.responseText;
-          }
-      }
-  };
-  link.send( null );
-};
-load_list();
 var page = 2;
 var loaded = false;
 onscroll = function(){
