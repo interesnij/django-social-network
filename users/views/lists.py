@@ -16,31 +16,6 @@ class UserVisitCommunities(ListView):
 		return communities
 
 
-class UserManageCommunitiesList(ListView):
-	template_name = None
-	model = Community
-	paginate_by = 30
-
-	def get(self,request,*args,**kwargs):
-		self.user=User.objects.get(uuid=self.kwargs["uuid"])
-		if self.user == request.user:
-			self.template_name = "user_community/communities_list_with_staffed.html"
-		else:
-			self.template_name = "main/auth.html"
-		communities_list = Community.objects.filter(memberships__user__id=self.user.pk)
-		self.user=User.objects.get(uuid=self.kwargs["uuid"])
-		return super(UserManageCommunitiesList,self).get(request,*args,**kwargs)
-
-	def get_context_data(self,**kwargs):
-		context = super(UserManageCommunitiesList,self).get_context_data(**kwargs)
-		context['user'] = self.user
-		return context
-
-	def get_queryset(self):
-		manage_communities_list = self.user.get_staffed_communities()
-		return manage_communities_list
-
-
 class AllPossibleUsersList(ListView):
 	template_name = None
 	model = User
