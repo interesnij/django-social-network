@@ -35,7 +35,7 @@
 </div>
 
 <script>
-  ready(() => {
+  function load_list() {
     var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     link.open( 'GET', '/main/news/', true );
     link.onreadystatechange = function () {
@@ -47,7 +47,8 @@
       }
   };
   link.send( null );
-
+};
+load_list();
 var page = 2;
 var loaded = false;
 onscroll = function(){
@@ -75,7 +76,6 @@ onscroll = function(){
 }catch{return}
 }
 
-});
 </script>
 
 
