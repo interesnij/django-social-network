@@ -16,7 +16,7 @@
           <div class="stream-update">
             <a href=""><span class="new-posts"></span> Загрузить новые записи</a>
           </div>
-          <div id="news_load"></div>
+          <div id="lenta_load"></div>
         </div>
         <div class="col-12 col-md-4 col-lg-4">
           <div class="card">
@@ -35,20 +35,20 @@
 </div>
 
 <script>
-  function news_list() {
+  function load_list() {
     var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     link.open( 'GET', '/main/news/', true );
     link.onreadystatechange = function () {
       if ( link.readyState == 4 ) {
           if ( link.status == 200 ) {
-              var news_load = document.getElementById("news_load");
+              var news_load = document.getElementById("lenta_load");
               news_load.innerHTML = link.responseText;
           }
       }
   };
   link.send( null );
 };
-news_list();
+load_list();
 var page = 2;
 var loaded = false;
 onscroll = function(){
