@@ -86,7 +86,7 @@ class Index {
           var ajax = elem_.querySelector("#reload_block");
           rtr.innerHTML = '';
           document.title = elem_.querySelector('title').innerHTML;
-          script = ajax.getElementById('script');
+          script = ajax.querySelector('#script');
           rtr.append(ajax, script);
           Index.initLink();
 
