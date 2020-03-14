@@ -54,7 +54,7 @@ class UserStaffCommunities(ListView):
     def get(self,request,*args,**kwargs):
         self.user=User.objects.get(pk=self.kwargs["pk"])
         if self.user.is_staffed_user() and self.user == request.user:
-            self.template_name = "my_staffed_communities.html"
+            self.template_name = "user_community/my_staffed_communities.html"
         return super(UserStaffCommunities,self).get(request,*args,**kwargs)
 
     def get_context_data(self, **kwargs):
