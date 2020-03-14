@@ -57,9 +57,6 @@
           }
       }
   };
-  link.onload = function() {
-    callback(link.response);
-  }
   link.send( null );
 
   {% if user.is_user_playlist %}
