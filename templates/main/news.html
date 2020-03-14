@@ -36,7 +36,7 @@
 
 <script>
   function load_list() {
-    try{
+  //  try{
     var news_load = document.getElementById("news_load");
     var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     link_3.open( 'GET', '/main/news/', true );
@@ -45,7 +45,8 @@
         news_load.innerHTML = link_3.responseText;
       }
   };
-  link_3.send( null )}catch{return}};
+  link_3.send( null )
+//}catch{return}};
 
 load_list();
 
