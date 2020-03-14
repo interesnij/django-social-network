@@ -45,9 +45,9 @@ class UserCommunities(ListView):
         context['user'] = self.user
         return context
 
-	def get_queryset(self):
-		communities_list = Community.objects.filter(memberships__user__id=self.user.pk)
-		return communities_list
+    def get_queryset(self):
+        communities_list = Community.objects.filter(memberships__user__id=self.user.pk)
+        return communities_list
 
 
 class UserMobStaffed(TemplateView):
