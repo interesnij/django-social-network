@@ -9,12 +9,12 @@
           <div class="card-header p-0">
               <ul class="nav nav-tabs justify-content-center">
                   <li class="nav-item">
-                      <a class="nav-link active show">
+                      <a class="nav-link ajax" href="{% url 'communities' pk=request.user.pk %}">
                           Мои сообщества
                       </a>
                   </li>
                   <li class="nav-item">
-                      <a class="nav-link ajax" href="{% url 'staff_communities' pk=request.user.pk %}">
+                      <a class="nav-link active show">
                           Управление
                       </a>
                   </li>
@@ -27,7 +27,7 @@
                                 <div class="tab-content">
                                     <div class="tab-pane fade active show">
                                       <div class="media-body">
-                                          <h5 class="mt-1">Мои сообщества</h5>
+                                          <h5 class="mt-1">Управление</h5>
                                       </div>
                                       <br>
                                       <div class="input-group mb-3">
@@ -43,7 +43,7 @@
                                           {% for object in object_list %}
                                           <li class="list-group-item">
                                               <div class="media">
-                                                  <a href="{% url 'community_detail' pk=object.pk %}" class="ajax">
+                                                  <a href="{% url 'community_detail' pk=object.pk %}" class="ajax" data-html="#ajax">
                                                       <figure>
                                                         {% if object.get_avatar %}
                                                           <img src="{{ object.get_avatar|thumbnail_url:'avatar' }}" style="border-radius:50px;width:50px;" alt="image">
@@ -128,23 +128,6 @@
 
 <script>
 
-  document.querySelector(".my_manage_communities").addEventListener("click", (e) => {
-    if (document.querySelector("#tabhome223-tab").classList.contains("my_manage_communities")) {
-      tab = document.getElementById("tabhome223-tab");tab.classList.remove('my_manage_communities');
-      var link_2 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-      link_2.open( 'GET', '/users/detail/manage_communities/{{ user.uuid }}', true );
-      link_2.onreadystatechange = function () {
-        if ( link_2.readyState == 4 ) {
-            if ( link_2.status == 200 ) {
-                var load_manage_cat_list = document.getElementById("load_manage_cat_list");
-                load_manage_cat_list.innerHTML = link_2.responseText;
-            }
-        }
-      };
-      link_2.send( null );
-    }
-    });
-
     var page = 2;
     var loaded = false;
     onscroll = function(){
@@ -156,7 +139,7 @@
       if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
         if (loaded){return};
         var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-        link_3.open( 'GET', '/users/{{ user.pk }}/communities/?page=' + page++, true );
+        link_3.open( 'GET', '/users/{{ user.pk }}/staff_communities/?page=' + page++, true );
         link_3.send();
         link_3.onreadystatechange = function () {
         if ( this.readyState == 4 && this.status == 200 ) {
