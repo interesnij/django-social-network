@@ -52,7 +52,7 @@
     link.onreadystatechange = function () {
       if ( link.readyState == 4 ) {
           if ( link.status == 200 ) {
-              var user_tracks_load = document.querySelector(".user_tracks_load");
+              var user_tracks_load = document.querySelector("#user_tracks_load");
               user_tracks_load.innerHTML = link.responseText;
           }
       }
