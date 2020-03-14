@@ -28,6 +28,10 @@ class MainPageView(ListView):
 		context=super(ListView,self).get_context_data(**kwargs)
 		return context
 
+	def get_queryset(self):
+		news_list = self.request.user.get_timeline_posts().order_by("created")
+		return news_list
+
 
 class ComingView(TemplateView):
 	template_name="base_coming.html"

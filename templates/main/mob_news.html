@@ -28,7 +28,7 @@
     </div>
     <span class="stream" id="stream">
 
-      {% for object in request.user.get_timeline_posts %}
+      {% for object in object_list %}
 
         {% if object.community %}
 
