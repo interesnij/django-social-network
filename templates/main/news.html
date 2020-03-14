@@ -35,20 +35,19 @@
 </div>
 
 <script>
-  ready(() => {
-
+  function load_list() {
+    try{
+    var news_load = document.getElementById("news_load");
     var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     link_3.open( 'GET', '/main/news/', true );
     link_3.onreadystatechange = function () {
-      if ( link_3.readyState == 4 ) {
-          if ( link_3.status == 200 ) {
-              var news_load = document.getElementById("news_load");
-              news_load.innerHTML = link_3.responseText;
-          }
+      if ( user_lenta_link.readyState == 4 && user_lenta_link.status == 200 && news_load ) {
+        news_load.innerHTML = link_3.responseText;
       }
   };
-  link_3.send( null );
-});
+  link_3.send( null )}catch{return}};
+
+load_list();
 
 var page = 2;
 var loaded = false;
