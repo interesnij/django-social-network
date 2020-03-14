@@ -45,7 +45,7 @@
 </div>
 
 <script>
-  ready(() => {
+
     var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     link.open( 'GET', '/users/detail/music_list/' + '{{ user.uuid }}', true );
     link.onreadystatechange = function () {
@@ -57,7 +57,7 @@
       }
   };
   link.send( null );
-  });
+
   {% if user.is_user_playlist %}
     playlist_block = document.querySelector('.music-dropdown');
     playlist_block.classList.remove('user_{{ user.pk }}');
