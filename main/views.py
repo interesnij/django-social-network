@@ -19,10 +19,10 @@ class MainPageView(TemplateView):
 				self.template_name="main/mob_auth.html"
 			else:
 				self.template_name="main/auth.html"
-		return super(ListView,self).get(request,*args,**kwargs)
+		return super(MainPageView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context=super(ListView,self).get_context_data(**kwargs)
+		context=super(MainPageView,self).get_context_data(**kwargs)
 		return context
 
 
