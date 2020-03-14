@@ -64,24 +64,6 @@ class UserManageCommunitiesList(ListView):
 		return manage_communities_list
 
 
-class UserMusicList(ListView):
-	template_name = None
-	paginate_by = 30
-
-	def get(self,request,*args,**kwargs):
-		self.user = User.objects.get(uuid=self.kwargs["uuid"])
-		self.template_name = self.user.get_permission_list_user(folder="user_music/", template="list.html", request=request)
-		return super(UserMusicList,self).get(request,*args,**kwargs)
-
-	def get_context_data(self,**kwargs):
-		context = super(UserMusicList,self).get_context_data(**kwargs)
-		context['user'] = self.user
-		return context
-
-	def get_queryset(self):
-		music_list = list(reversed(self.user.get_music()))
-		return music_list
-
 class AllPossibleUsersList(ListView):
 	template_name = None
 	model = User
