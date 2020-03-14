@@ -3,14 +3,11 @@ from django.views.generic import ListView
 from main.models import Item
 
 
-class MainPageView(ListView):
+class MainPageView(TemplateView):
 	template_name=None
 
 	def get(self,request,*args,**kwargs):
 		from common.utils import is_mobile
-
-		model=Item
-		paginate_by=30
 
 		if request.user.is_authenticated:
 			if is_mobile(request):
@@ -28,9 +25,20 @@ class MainPageView(ListView):
 		context=super(ListView,self).get_context_data(**kwargs)
 		return context
 
+
+class NewsListView(ListView):
+	from main.models import Item
+
+	template_name="news_list.html"
+	model=Item
+	paginate_by=30
+
 	def get_queryset(self):
-		news_list = self.request.user.get_timeline_posts().order_by("created")
-		return news_list
+		if self.request.user.is_authenticated:
+			items = self.request.user.get_timeline_posts().order_by('-created')
+		else:
+			items=None
+		return items
 
 
 class ComingView(TemplateView):
