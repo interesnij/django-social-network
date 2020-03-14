@@ -43,9 +43,9 @@
         </div>
     </div>
 </div>
-<div id="load_block">user_tracks_load</div>
-<div id="load_link">/users/detail/music_list/{{ user.uuid }}</div>
 <script id="pt">
+  window.onload = function () {
+
 console.log("Привет, это музыка");
     var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     link.responseType = 'text';
@@ -59,7 +59,8 @@ console.log("Привет, это музыка");
       }
   };
   link.send( null );
-  list_load(document.querySelector("#user_tracks_load"), '/users/detail/music_list/{{ user.uuid }}')
+};
+
   {% if user.is_user_playlist %}
     playlist_block = document.querySelector('.music-dropdown');
     playlist_block.classList.remove('user_{{ user.pk }}');
