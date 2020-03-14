@@ -89,8 +89,8 @@ class Index {
           rtr.append(ajax);
           Index.initLink();
           window.history.pushState({route: url}, "network", url);
-          var block = elem_.querySelector("#block");
-          var link = elem_.querySelector("#link");
+          var block = rtr.querySelector("#block");
+          var link = rtr.querySelector("#link");
           console.log(block, link)
         }
       }
