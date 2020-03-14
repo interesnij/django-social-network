@@ -95,10 +95,8 @@
         </div>
     </div>
 </div>
-<div id="load_block">user_tracks_load</div>
-<div id="load_link">/users/detail/music_list/{{ user.uuid }}</div>
-<script>
 
+<script>
   {% if user.is_user_playlist %}
     playlist_block = document.querySelector('.music-dropdown');
     playlist_block.classList.remove('user_{{ user.pk }}');

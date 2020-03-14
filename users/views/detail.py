@@ -2,6 +2,8 @@ from django.views.generic.base import TemplateView
 from users.models import User
 from django.shortcuts import render_to_response
 from django.views.generic import ListView
+from music.models import SoundcloudParsing
+from communities.models import Community
 
 
 class UserItemView(TemplateView):
@@ -26,18 +28,27 @@ class UserItemView(TemplateView):
         return context
 
 
-class UserCommunities(TemplateView):
+class UserCommunities(ListView):
     template_name = None
+	model = Community
+	paginate_by = 30
 
     def get(self,request,*args,**kwargs):
         self.user=User.objects.get(pk=self.kwargs["pk"])
         self.template_name = self.user.get_template_user(folder="user_community/", template="communities.html", request=request)
+        if self.user.is_staffed_user() and self.user == request.user:
+            self.template_name = "my_staffed_communities.html"
         return super(UserCommunities,self).get(request,*args,**kwargs)
 
     def get_context_data(self, **kwargs):
         context = super(UserCommunities, self).get_context_data(**kwargs)
         context['user'] = self.user
         return context
+
+	def get_queryset(self):
+		communities_list = Community.objects.filter(memberships__user__id=self.user.pk)
+		return communities_list
+
 
 class UserMobStaffed(TemplateView):
     template_name = None
@@ -57,6 +68,7 @@ class UserMobStaffed(TemplateView):
 class UserMusic(ListView):
 	template_name = None
 	paginate_by = 30
+
 
 	def get(self,request,*args,**kwargs):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
