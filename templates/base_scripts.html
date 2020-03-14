@@ -89,8 +89,8 @@ class Index {
           rtr.append(ajax);
           Index.initLink();
           window.history.pushState({route: url}, "network", url);
-          if(rtr.querySelector('.news_load')){
-            link = rtr.querySelector('.news_load').getAttribute("data-link");
+          if(rtr.querySelector('#news_load')){
+            link = rtr.getElementById('news_load').getAttribute("data-link");
             list_load(rtr.getElementById("news_load"), link);
           }
         }
