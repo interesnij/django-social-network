@@ -35,7 +35,7 @@
 </div>
 
 <script>
-  function load_list() {
+  onscroll = function(){
   //  try{
     var lenta_load = document.getElementById("news_load");
     var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -46,11 +46,9 @@
       }
   };
   link_3.send( null );
-  lenta_load = null;
 //}catch{return}
 };
 
-load_list();
 
 var page = 2;
 var loaded = false;
