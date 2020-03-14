@@ -89,7 +89,9 @@ class Index {
           rtr.append(ajax);
           Index.initLink();
           window.history.pushState({route: url}, "network", url);
-
+          var block = elem_.querySelector("#block").innerHTML;
+          var link = elem_.querySelector("#link").innerHTML;
+          list_load(block, link)
         }
       }
   };
