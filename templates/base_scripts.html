@@ -89,7 +89,7 @@ class Index {
           rtr.append(ajax);
           Index.initLink();
           window.history.pushState({route: url}, "network", url);
-          try{load_list()}catch{console.log("lenta-list not defined")}
+          try{load_list()}catch{console.log("lenta_load not defined")};
         }
       }
   };
