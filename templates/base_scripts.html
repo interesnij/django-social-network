@@ -87,7 +87,7 @@ class Index {
           rtr.innerHTML = '';
           document.title = elem_.querySelector('title').innerHTML;
           rtr.append(ajax);
-          
+          Index.initLink();
 
           window.history.pushState({route: url}, "network", url);
          var block = rtr.querySelector("#load_block").innerHTML;
