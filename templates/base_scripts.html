@@ -86,14 +86,13 @@ class Index {
           var ajax = elem_.querySelector("#reload_block");
           rtr.innerHTML = '';
           document.title = elem_.querySelector('title').innerHTML;
-          var script = ajax.querySelector('#script');
-          rtr.append(ajax);rtr.append(script);
+          rtr.append(ajax);
           Index.initLink();
 
           window.history.pushState({route: url}, "network", url);
-      //    var block = rtr.querySelector("#load_block").innerHTML;
-      //    var link = rtr.querySelector("#load_link").innerHTML;
-      //    list_load(block, link)
+         var block = rtr.querySelector("#load_block").innerHTML;
+         var link = rtr.querySelector("#load_link").innerHTML;
+         rtr.append(list_load(block, link);
         }
       }
   };
