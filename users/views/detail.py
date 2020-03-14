@@ -30,8 +30,8 @@ class UserItemView(TemplateView):
 
 class UserCommunities(ListView):
     template_name = None
-	model = Community
-	paginate_by = 30
+    model = Community
+    paginate_by = 30
 
     def get(self,request,*args,**kwargs):
         self.user=User.objects.get(pk=self.kwargs["pk"])
