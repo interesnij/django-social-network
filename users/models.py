@@ -612,7 +612,7 @@ class User(AbstractUser):
         from moderation.models import ModeratedObject
 
         posts_select_related = ('creator', 'community')
-        items_only = ('id', 'uuid', 'created', 'creator__username', 'creator__id', 'community__id', 'community__name')
+        items_only = ('id', 'uuid', 'created', 'creator__id', 'community__id', 'community__name')
         reported_posts_exclusion_query = ~Q(moderated_object__reports__reporter_id=self.pk)
         own_posts_query = Q(creator=self.pk, community__isnull=True, is_deleted=False, status=Item.STATUS_PUBLISHED)
         own_posts_query.add(reported_posts_exclusion_query, Q.AND)
