@@ -1,6 +1,7 @@
 from django.views.generic.base import TemplateView
 from users.models import User
 from django.shortcuts import render_to_response
+from django.views.generic import ListView
 
 
 class UserItemView(TemplateView):
@@ -52,7 +53,7 @@ class UserMobStaffed(TemplateView):
         context['user'] = self.user
         return context
 
-        
+
 class UserMusic(ListView):
 	template_name = None
 	paginate_by = 30
