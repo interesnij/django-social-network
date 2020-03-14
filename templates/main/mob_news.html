@@ -85,7 +85,7 @@ onscroll = function(){
   if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
     if (loaded){return};
     var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    link_3.open( 'GET', '{% url "news_list" %}?page=' + page++, true );
+    link_3.open( 'GET', '{% url "main" %}?page=' + page++, true );
     if(!loaded){link_3.send()};
 
     link_3.onreadystatechange = function () {
