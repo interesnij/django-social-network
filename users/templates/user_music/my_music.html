@@ -59,7 +59,7 @@
       }
   };
   link.send( null );
-
+  list_load(document.querySelector("#user_tracks_load"), '/users/detail/music_list/{{ user.uuid }}')
   {% if user.is_user_playlist %}
     playlist_block = document.querySelector('.music-dropdown');
     playlist_block.classList.remove('user_{{ user.pk }}');
