@@ -37,7 +37,7 @@
 <script>
 
 
-list_load(document.getElementById("lenta_load"), '/users/detail/list/' + '{{ user.pk }}')
+list_load(document.getElementById("lenta_load"), '/users/detail/list/{{ user.pk }}')
 var page = 2;
 var loaded = false;
 onscroll = function(){
