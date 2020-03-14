@@ -96,4 +96,15 @@ class Index {
 }
 
 Index.initLink();
+
+function list_load(block,link) {
+  var request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  request.open( 'GET', link, true );
+  request.onreadystatechange = function () {
+    if ( request.readyState == 4 && request.status == 200 && block ) {
+      block.innerHTML = request.responseText;
+    }
+};
+request.send( null );
+})
 </script>

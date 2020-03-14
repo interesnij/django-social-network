@@ -35,20 +35,8 @@
 </div>
 
 <script>
-  onscroll = function(){
-  //  try{
-    var lenta_load = document.getElementById("news_load");
-    var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    link_3.open( 'GET', '/main/news/', true );
-    link_3.onreadystatechange = function () {
-      if ( link_3.readyState == 4 && link_3.status == 200 && lenta_load ) {
-        lenta_load.innerHTML = link_3.responseText;
-      }
-  };
-  link_3.send( null );
-//}catch{return}
-};
 
+list_load(document.getElementById("news_load"), '/main/news/')
 
 var page = 2;
 var loaded = false;
