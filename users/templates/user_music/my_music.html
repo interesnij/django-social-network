@@ -47,7 +47,7 @@
 <script type="text/javascript">
 
     var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    link.responseType = 'document';
+    link.responseType = 'text';
     link.open( 'GET', '/users/detail/music_list/' + '{{ user.uuid }}', true );
     link.onreadystatechange = function () {
       if ( link.readyState == 4 ) {
@@ -57,6 +57,9 @@
           }
       }
   };
+  xhr.onload = function() {
+    callback(link.response);
+  }
   link.send( null );
 
   {% if user.is_user_playlist %}
