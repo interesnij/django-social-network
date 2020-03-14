@@ -200,19 +200,8 @@
     </div>
 
 <script type="text/javascript">
-  function load_list() {
-    try{
-  user_lenta_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  user_lenta_link.open( 'GET', '/users/detail/list/' + '{{ user.pk }}', true );
-  lenta_load = document.querySelector("#lenta_load");
-  user_lenta_link.onreadystatechange = function () {
-    if ( user_lenta_link.readyState == 4 && user_lenta_link.status == 200 && lenta_load){
-      lenta_load.innerHTML = user_lenta_link.responseText;
-    }
-  };
-  user_lenta_link.send( null )}catch{return}};
-  lenta_load = null;
-load_list();
+
+list_load(document.getElementById("lenta_load"), '/users/detail/list/' + '{{ user.pk }}')
 
 var page = 2;
 var loaded = false;
