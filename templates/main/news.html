@@ -41,7 +41,7 @@
     var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     link_3.open( 'GET', '/main/news/', true );
     link_3.onreadystatechange = function () {
-      if ( user_lenta_link.readyState == 4 && link_3.status == 200 && news_load ) {
+      if ( link_3.readyState == 4 && link_3.status == 200 && news_load ) {
         news_load.innerHTML = link_3.responseText;
       }
   };
