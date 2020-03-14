@@ -16,7 +16,7 @@
           <div class="stream-update">
             <a href=""><span class="new-posts"></span> Загрузить новые записи</a>
           </div>
-          <div id="news_load" style="margin-top:50px"></div>
+          <div id="news_load" style="margin-top:50px" data-link="/main/news/"></div>
         </div>
         <div class="col-12 col-md-4 col-lg-4">
           <div class="card">
@@ -37,7 +37,7 @@
 <script>
 
 
-list_load(document.getElementById("news_load"), '/main/news/')
+list_load(document.getElementById("news_load"), '/main/news/');
 var page = 2;
 var loaded = false;
 onscroll = function(){
