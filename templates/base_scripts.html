@@ -90,7 +90,7 @@ class Index {
           Index.initLink();
           window.history.pushState({route: url}, "network", url);
           if(rtr.querySelector('#news_load')){
-            news_load = rtr.querySelector('#news_load');link = news_load.getAttribute("data-link");
+            var news_load = rtr.querySelector('#news_load');var link = news_load.getAttribute("data-link");
             list_load(rtr.querySelector("#news_load"), link);
           }
         }
