@@ -17,7 +17,7 @@ on('#ajax', 'click', '.c_comment.comments_close', function() {
   request.open( 'GET', url, true );
   request.onreadystatechange = function () {
     if ( request.readyState == 4 && request.status == 200 ) {
-      container.innerHTML = JSON.parse(request.responseText);
+      container.innerHTML = request.responseText;
     }
 };
 request.send( null );
