@@ -78,7 +78,6 @@ class Item(models.Model):
     def get_comments(self):
         comments_query = Q(item_id=self.pk)
         comments_query.add(Q(parent_comment__isnull=True), Q.AND)
-        comments_query.add(~Q(moderated_object__reports__reporter_id=user.pk), Q.AND)
         comments_query.add(Q(is_deleted=False), Q.AND)
         return ItemComment.objects.filter(comments_query)
 
