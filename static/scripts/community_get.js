@@ -23,5 +23,5 @@ on('#ajax', 'click', '.c_article_detail', function() {
   loader = document.getElementById("article_loader");
   url = "/article/read/" + pk + "/" + uuid + "/"
   list_load(loader, url);
-  loader.style.display = "block";
+  loader.parentElement.style.display = "block";
 });
