@@ -15,10 +15,9 @@ on('#ajax', 'click', '.c_comment.comments_close', function() {
 
   var request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   request.open( 'GET', url, true );
-  request.responseType = "json";
   request.onreadystatechange = function () {
     if ( request.readyState == 4 && request.status == 200 ) {
-      container.innerHTML = request.responseText;
+      container.innerHTML = JSON.parse(request.responseText);
     }
 };
 request.send( null );
