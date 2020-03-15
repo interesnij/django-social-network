@@ -32,68 +32,68 @@ class AllMusicView(TemplateView):
 
 
 class AllTagsMusicView(ListView):
-	template_name="music/tags_music.html"
-	paginate_by = 30
+    template_name="music/tags_music.html"
+    paginate_by = 30
     model = SoundTags
 
-	def get(self,request,*args,**kwargs):
+    def get(self,request,*args,**kwargs):
         self.symbol=SoundSymbol.objects.get(pk=self.kwargs["pk"])
         self.tags=SoundTags.objects.filter(symbol=self.symbol)
-		return super(AllTagsMusicView,self).get(request,*args,**kwargs)
+        return super(AllTagsMusicView,self).get(request,*args,**kwargs)
 
-	def get_context_data(self,**kwargs):
-		context = super(AllTagsMusicView,self).get_context_data(**kwargs)
-		context["symbol"] = self.symbol
+    def get_context_data(self,**kwargs):
+        context = super(AllTagsMusicView,self).get_context_data(**kwargs)
+        context["symbol"] = self.symbol
         context["tags"] = self.tags
-		return context
+        return context
 
-	def get_queryset(self):
-		tags_list = SoundTags.objects.filter(symbol=self.symbol)
-		return tags_list
+    def get_queryset(self):
+        tags_list = SoundTags.objects.filter(symbol=self.symbol)
+        return tags_list
 
 
 class AllTagMusicView(ListView):
-	template_name="music/tag_music.html"
-	paginate_by = 30
+    template_name="music/tag_music.html"
+    paginate_by = 30
     model = SoundcloudParsing
 
-	def get(self,request,*args,**kwargs):
+    def get(self,request,*args,**kwargs):
         self.tag = SoundTags.objects.get(pk=self.kwargs["pk"])
         if request.user.is_authenticated:
             self.is_tag_playlist = request.user.is_tag_playlist(self.tag)
-		return super(AllTagMusicView,self).get(request,*args,**kwargs)
+        return super(AllTagMusicView,self).get(request,*args,**kwargs)
 
-	def get_context_data(self,**kwargs):
-		context = super(AllTagMusicView,self).get_context_data(**kwargs)
-		context["tag"] = self.tag
+    def get_context_data(self,**kwargs):
+        context = super(AllTagMusicView,self).get_context_data(**kwargs)
+        context["tag"] = self.tag
         context["is_tag_playlist"] = self.is_tag_playlist
-		return context
+        return context
 
-	def get_queryset(self):
-		tag_list = SoundcloudParsing.objects.filter(tag__id=tag.pk)
-		return tag_list
+    def get_queryset(self):
+        tag_list = SoundcloudParsing.objects.filter(tag__id=tag.pk)
+        return tag_list
 
 
 class GenreMusicView(ListView):
-	template_name="music/genre_music.html"
-	paginate_by = 30
+    template_name="music/genre_music.html"
+    paginate_by = 30
     model = SoundcloudParsing
 
-	def get(self,request,*args,**kwargs):
+    def get(self,request,*args,**kwargs):
         self.genre = SoundGenres.objects.get(pk=self.kwargs["pk"])
         if request.user.is_authenticated:
             self.is_genre_playlist = request.user.is_genre_playlist(self.genre)
-		return super(GenreMusicView,self).get(request,*args,**kwargs)
+        return super(GenreMusicView,self).get(request,*args,**kwargs)
 
-	def get_context_data(self,**kwargs):
-		context = super(GenreMusicView,self).get_context_data(**kwargs)
-		context["tag"] = self.tag
+    def get_context_data(self,**kwargs):
+        context = super(GenreMusicView,self).get_context_data(**kwargs)
+        context["tag"] = self.tag
         context["is_genre_playlist"] = self.is_genre_playlist
-		return context
+        return context
 
-	def get_queryset(self):
-		genre_list = SoundcloudParsing.objects.filter(genre__id=genre.pk)
-		return genre_list
+    def get_queryset(self):
+        genre_list = SoundcloudParsing.objects.filter(genre__id=genre.pk)
+        return genre_list
 
 
 class AllSearchMusicView(View):
