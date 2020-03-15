@@ -4,13 +4,14 @@ $('#ajax').on('click', '#community_article_add', function() {btn = $(this);pk = 
 
 
 on('#ajax', 'click', '.c_comments_close', function() {
-  //this.classList.add("c_comments_open");
-  this.classList.remove("c_comments_close");
   parent = this.parentElement.parentElement.parentElement.parentElement;
   container = parent.querySelector(".load_comments");
   pk = parent.parentElement.getAttribute("community-id");
   uuid = parent.getAttribute("item-id");
   container = parent.querySelector(".load_comments");
+  _this = parent.querySelector("c_comments_close");
+  _this.classList.add("c_comments_open");
+  _this.classList.remove("c_comments_close");
   url = "/community/comment/" + uuid + "/" + pk + "/";
   list_load(container, url);
 
