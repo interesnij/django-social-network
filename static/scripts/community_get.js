@@ -4,7 +4,7 @@ $('#ajax').on('click', '#community_article_add', function() {btn = $(this);pk = 
 
 
 on('#ajax', 'click', '.c_comments_close', function() {
-  this.classList.add("c_comments_open");
+  //this.classList.add("c_comments_open");
   this.classList.remove("c_comments_close");
   parent = this.parentElement.parentElement.parentElement.parentElement;
   container = parent.querySelector(".load_comments");
