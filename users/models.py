@@ -138,6 +138,7 @@ class User(AbstractUser):
         return self.block_user_with_id(user_id=user.pk)
 
     def block_user_with_id(self, user_id):
+        from users.model.list import UserBlock
         check_can_block_user_with_id(user=self, user_id=user_id)
 
         if self.is_connected_with_user_with_id(user_id=user_id):
