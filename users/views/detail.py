@@ -88,7 +88,6 @@ class UserMusic(ListView):
 	template_name = None
 	paginate_by = 30
 
-
 	def get(self,request,*args,**kwargs):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
 		self.template_name = self.user.get_template_user(folder="user_music/", template="music.html", request=request)

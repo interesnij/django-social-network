@@ -24,7 +24,30 @@
                 </div>
               </div>
               <div class="card-body">
-                <span id="tags_list_load"></span>
+                {% if object_list %}
+
+                <div class="" id="tags_container">
+                {% for object in object_list %}
+                <div class="col-12 infinite-item">
+                  <div class="card mb-4">
+                      <div class="card-body">
+                          <div class="media">
+                              <div class="media-body">
+                                  <p class="mb-0">{% for genre in object.get_genres %}{{ genre.name }}{% if not forloop.last%}, {% endif %}&nbsp;{% endfor %}</p>
+                                  <h4 class="mb-0">
+                                    <a class="ajax" href="{% url 'tag_all_music' pk=object.pk %}">
+                                       {{ object.name }}
+                                    </a>
+                                  </h4>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                </div>
+                {% endfor %}
+
+                </div>
+                {% endif %}
               </div>
           </div>
 
@@ -47,20 +70,6 @@
 </div>
 
 <script>
-ready(() => {
-var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-link.open( 'GET', '/music/list/tag_list/' + '{{ symbol.pk }}', true );
-link.onreadystatechange = function () {
-  if ( link.readyState == 4 ) {
-      if ( link.status == 200 ) {
-          var tags_list_load = document.getElementById("tags_list_load");
-          tags_list_load.innerHTML = link.responseText;
-      }
-  }
-};
-link.send( null );
-
-});
 
 var page = 2;
 var loaded = false;
@@ -73,7 +82,7 @@ onscroll = function(){
   if(window.scrollY+1 >= document.documentElement.scrollHeight-height){
     if (loaded){return};
     var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    link_3.open( 'GET', '/music/list/tag_list/{{ symbol.pk }}/?page=' + page++, true );
+    link_3.open( 'GET', '/music/tags/{{ symbol.pk }}/?page=' + page++, true );
     link_3.send();
     link_3.onreadystatechange = function () {
     if ( this.readyState == 4 && this.status == 200 ) {

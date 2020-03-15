@@ -1,6 +1,5 @@
 from django.conf.urls import url, include
-from music.views import *
-from django.contrib.auth.decorators import login_required
+from music.views import AllMusicView, AllSearchMusicView, AllTagsMusicView, AllTagMusicView, GenreMusicView
 
 
 urlpatterns = [
@@ -10,6 +9,5 @@ urlpatterns = [
     url(r'^tag/(?P<pk>\d+)/$', AllTagMusicView.as_view(), name='tag_all_music'),
     url(r'^genre/(?P<pk>\d+)/$', GenreMusicView.as_view(), name='genre_music'),
 
-    url(r'^list/', include('music.url.list')),
     url(r'^manage/', include('music.url.manage')),
 ]

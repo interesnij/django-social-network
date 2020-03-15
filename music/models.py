@@ -42,7 +42,7 @@ class SoundGenres(models.Model):
             else:
                 data['is_my_track'] = None
             playlist.append(data)
-        return playlist
+        return playlist[:300]
 
     class Meta:
         verbose_name="жанр"
