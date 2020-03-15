@@ -8,6 +8,7 @@ from django.views import View
 from common.checkers import check_can_get_posts_for_community_with_name
 from rest_framework.exceptions import PermissionDenied, ValidationError
 from gallery.models import Album, Photo
+from django.shortcuts import render_to_response
 
 
 class ItemCommunityCommentList(ListView):
