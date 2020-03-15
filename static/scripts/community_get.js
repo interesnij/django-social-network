@@ -14,8 +14,8 @@ on('#ajax', 'click', '.c_comments.comments_close', function() {
   _this.classList.remove("comments_close");
   url = "/community/comment/" + uuid + "/" + pk + "/";
   list_load(container, url);
-
 });
+
 on('#ajax', 'click', 'c_comments.comments_open', function() {
   parent = this.parentElement.parentElement.parentElement;
   container = parent.querySelector(".load_comments");

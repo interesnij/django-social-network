@@ -81,14 +81,6 @@ class Item(models.Model):
         comments_query.add(Q(is_deleted=False), Q.AND)
         return ItemComment.objects.filter(comments_query)
 
-    def get_comment_replies(self, post_comment_id):
-        post_comment = ItemComment.objects.get(pk=post_comment_id)
-        return self.get_comment_replies_for_comment_with_post(post_comment=post_comment)
-
-    def get_comment_replies_for_comment_with_post(self, post_comment):
-        comment_replies_query = self._make_get_comments_for_post_query(self, post_comment_parent_id=post_comment.pk)
-        return ItemComment.objects.filter(comment_replies_query)
-
     def _make_get_comments_for_post_query(self, user, post_comment_parent_id=None):
         comments_query = Q(item_id=self.pk)
         if post_comment_parent_id is None:
@@ -103,7 +95,7 @@ class Item(models.Model):
                 blocked_users_query_staff_members.add(Q(commenter__communities_memberships__is_administrator=True) | Q(commenter__communities_memberships__is_moderator=True), Q.AND)
                 blocked_users_query.add(~blocked_users_query_staff_members, Q.AND)
                 comments_query.add(blocked_users_query, Q.AND)
-                #comments_query.add(~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED), Q.AND)
+                comments_query.add(~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED), Q.AND)
         else:
             blocked_users_query = ~Q(Q(commenter__blocked_by_users__blocker_id=user.pk) | Q(commenter__user_blocks__blocked_user_id=user.pk))
             comments_query.add(blocked_users_query, Q.AND)
