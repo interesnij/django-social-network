@@ -20,8 +20,9 @@ on('#ajax', 'click', 'c_comments.comments_open', function() {
   parent = this.parentElement.parentElement.parentElement;
   container = parent.querySelector(".load_comments");
   container.innerHTML="";
-  this.classList.add("c_comments_close");
-  this.classList.remove("c_comments_open");
+  _this = parent.querySelector(".c_comments");
+  _this.classList.add("comments_close");
+  _this.classList.remove("comments_open");
 });
 on('#ajax', 'click', '.c_all_likes', function() {
   parent = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
