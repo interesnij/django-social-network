@@ -77,7 +77,7 @@
     <div class="row">
         <div class="col-12 col-md-12 col-lg-8">
 
-            <div id="lenta_load"></div>
+          <div id="lenta_community" data-link="/communities/list/{{ community.pk }}/"></div>
 
         </div>
         <div class="col-12 col-md-12 col-lg-4">
@@ -92,18 +92,7 @@
 </div>
 
 <script>
-  ready(() => {
-    var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    link.open( 'GET', '/communities/list/' + '{{ community.pk }}', true );
-    link.onreadystatechange = function () {
-      if ( link.readyState == 4 ) {
-          if ( link.status == 200 ) {
-              var lenta_load = document.getElementById("lenta_load");
-              lenta_load.innerHTML = link.responseText;
-          }
-      }
-  };
-  link.send( null );
+  list_load(document.getElementById("lenta_community"), '/communities/list/{{ community.pk }}/');
 
   var page = 2;
   var loaded = false;
@@ -129,6 +118,6 @@
     }}
   }catch{return}
   }
-});
+
 </script>
 {% endblock %}
