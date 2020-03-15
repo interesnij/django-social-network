@@ -90,18 +90,6 @@
 </div>
 
 <script>
-  ready(() => {
-    var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    link.open( 'GET', '/communities/list/' + '{{ community.pk }}', true );
-    link.onreadystatechange = function () {
-      if ( link.readyState == 4 ) {
-          if ( link.status == 200 ) {
-              var lenta_load = document.getElementById("lenta_load");
-              lenta_load.innerHTML = link.responseText;
-          }
-      }
-  };
-  link.send( null );
 
   var page = 2;
   var loaded = false;
@@ -127,6 +115,6 @@
     }}
   }catch{return}
   }
-});
+
 </script>
 {% endblock %}
