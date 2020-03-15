@@ -17,6 +17,7 @@ on('#ajax', 'click', '.c_comments.comments_close', function() {
 });
 
 on('#ajax', 'click', 'c_comments.comments_open', function() {
+  console.log("click!");
   parent = this.parentElement.parentElement.parentElement;
   container = parent.querySelector(".load_comments");
   container.innerHTML="";
