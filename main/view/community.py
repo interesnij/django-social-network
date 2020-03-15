@@ -1,41 +1,37 @@
 from django.views.generic.base import TemplateView
-from users.models import User
+from django.views.generic import ListView
 from communities.models import Community
 from main.models import Item, ItemComment
-from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
+from django.http import HttpResponse, HttpResponseBadRequest
 from main.forms import CommentForm
-from django.template.loader import render_to_string
 from django.views import View
 from common.checkers import check_can_get_posts_for_community_with_name
 from rest_framework.exceptions import PermissionDenied, ValidationError
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from gallery.models import Album, Photo
-from common.utils import is_mobile
 
 
-class ItemCommunityCommentList(View):
+class ItemCommunityCommentList(ListView):
+    template_name = None
+    model = ItemComment
+    paginate_by = 30
 
-	def get(self,request,*args,**kwargs):
-		item = Item.objects.get(uuid=self.kwargs["uuid"])
+    def get(self,request,*args,**kwargs):
+        self.item = Item.objects.get(uuid=self.kwargs["uuid"])
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		if request.user.is_authenticated:
-			check_can_get_posts_for_community_with_name(request.user,self.community.name)
-			comments = item.get_comments(request.user)
-		if request.user.is_anonymous and self.community.is_public:
-			comments = item.get_comments(request.user)
-		if request.user.is_anonymous and (self.community.is_closed or self.community.is_private):
-			raise PermissionDenied('У Вас недостаточно прав для просмотра информации группы')
-		page = request.GET.get('page')
-		current_page = Paginator(comments, 15)
-		try:
-			comment_list = current_page.page(page)
-		except PageNotAnInteger:
-			comment_list = current_page.page(1)
-		except EmptyPage:
-			comment_list = current_page.page(current_page.num_pages)
-		comments_html = render_to_string("item_community/comments.html", {"comments": comment_list, "request_user": request.user, "parent": item, "form_comment": CommentForm(), "form_reply": CommentForm(), "community": self.community})
+        self.template_name = self.community.get_template_list(folder="c_item_comment/", template="comments.html", request=request)
+        return super(ItemCommunityCommentList,self).get(request,*args,**kwargs)
 
-		return comments_html
+    def get_context_data(self, **kwargs):
+        context = super(ItemCommunityCommentList, self).get_context_data(**kwargs)
+        context['parent'] = self.item
+		context['form_comment'] = CommentForm()
+		context['form_reply'] = CommentForm()
+		context['community'] = self.community
+        return context
+
+    def get_queryset(self):
+        comments = item.get_comments(request.user)
+        return comments
 
 
 class ItemCommunityCommentCreate(View):

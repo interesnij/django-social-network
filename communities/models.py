@@ -314,7 +314,7 @@ class Community(models.Model):
             elif request.user.is_administrator_of_community_with_name(self.name):
                 template_name = folder + "admin_" + template
             elif request.user.is_editor_of_community_with_name(self.name):
-                template_name = folder + "editor_" + template
+                template_name = folder + "admin_" + template
             else:
                 template_name = folder + template
         elif request.user.is_authenticated and self.is_public():

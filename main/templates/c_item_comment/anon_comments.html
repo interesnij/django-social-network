@@ -1,0 +1,6 @@
+
+<span class="stream_comments">
+    {% for comment in comments %}
+    {% include 'c_item_comment/anon_parent.html' with comment=comment  %}
+    {% endfor %}
+</span>
