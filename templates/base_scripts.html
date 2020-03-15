@@ -107,14 +107,15 @@ class Index {
 
 Index.initLink();
 
-if(rtr.querySelector('#news_load')){
-  var news_load = rtr.querySelector('#news_load');var link = news_load.getAttribute("data-link");
+rrr = document.getElementById('ajax');
+if(rrr.querySelector('#news_load')){
+  var news_load = rrr.querySelector('#news_load');var link = news_load.getAttribute("data-link");
   list_load(rtr.querySelector("#news_load"), link);
-}else if(rtr.querySelector('#lenta_load')){
-  var lenta_load = rtr.querySelector('#lenta_load');var link = lenta_load.getAttribute("data-link");
+}else if(rrr.querySelector('#lenta_load')){
+  var lenta_load = rrr.querySelector('#lenta_load');var link = lenta_load.getAttribute("data-link");
   list_load(rtr.querySelector("#lenta_load"), link);
-}else if(rtr.querySelector('#lenta_community')){
-  var lenta_community = rtr.querySelector('#lenta_community');var link = lenta_community.getAttribute("data-link");
+}else if(rrr.querySelector('#lenta_community')){
+  var lenta_community = rrr.querySelector('#lenta_community');var link = lenta_community.getAttribute("data-link");
   list_load(rtr.querySelector("#lenta_community"), link);
 }
 </script>
