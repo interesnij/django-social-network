@@ -16,20 +16,12 @@ $('body').on('click', '.c_comment.comments_close', function() {var btn = $(this)
 $('body').on('click', '.c_comment.comments_open', function() {var btn = $(this); var item = btn.closest(".infinite-item"); var container = item.find(".load_comments");container.empty(); btn.removeClass('comments_open').addClass("comments_close");console.log("hide comments community")});
 
 
-$('#ajax').on('click', '.c_article_detail', function() {
-  item = $(this).parent();
-  pk = item.attr("community-id");
-  uuid = item.attr("item-id");
-  $('#article_loader').html('').load("/article/read/" + pk + "/" + uuid + "/");
-  $('.article_fullscreen').show();
-});
-
 on('#ajax', 'click', '.c_article_detail', function(e) {
-  parent = e.parentElement;
-  pk = parent.attr("community-id");
+  parent = e.parentElement; parent2 = parent.parentElement;
+  pk = parent2.attr("community-id");
   uuid = e.attr("item-id");
   loader = document.getElementById("article_loader");
-  url = '/goods/user/good/' + good_id + '/' + user_uuid + '/';
+  url = "/article/read/" + pk + "/" + uuid + "/"
   list_load(loader, url);
   loader.style.display = "block";
 });
