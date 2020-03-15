@@ -17,16 +17,16 @@ class ItemCommunityCommentList(ListView):
 
     def get(self,request,*args,**kwargs):
         self.item = Item.objects.get(uuid=self.kwargs["uuid"])
-		self.community = Community.objects.get(pk=self.kwargs["pk"])
+        self.community = Community.objects.get(pk=self.kwargs["pk"])
         self.template_name = self.community.get_template_list(folder="c_item_comment/", template="comments.html", request=request)
         return super(ItemCommunityCommentList,self).get(request,*args,**kwargs)
 
     def get_context_data(self, **kwargs):
         context = super(ItemCommunityCommentList, self).get_context_data(**kwargs)
         context['parent'] = self.item
-		context['form_comment'] = CommentForm()
-		context['form_reply'] = CommentForm()
-		context['community'] = self.community
+        context['form_comment'] = CommentForm()
+        context['form_reply'] = CommentForm()
+        context['community'] = self.community
         return context
 
     def get_queryset(self):
