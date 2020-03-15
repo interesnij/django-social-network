@@ -4,15 +4,16 @@ $('#ajax').on('click', '#community_article_add', function() {btn = $(this);pk = 
 
 
 on('#ajax', 'click', '.c_comment .comments_close', function() {
+  this.classList.add("comments_open");
+  this.classList.remove("comments_close");
   parent = this.parentElement.parentElement.parentElement.parentElement;
   container = parent.querySelector(".load_comments");
   pk = parent.parentElement.getAttribute("community-id");
   uuid = parent.getAttribute("item-id");
   container = parent.querySelector(".load_comments");
   url = "/community/comment/" + uuid + "/" + pk + "/";
-  this.classList.add("comments_open");
-  this.classList.remove("comments_close");
   list_load(container, url);
+
 });
 on('#ajax', 'click', '.c_comment .comments_open', function() {
   parent = this.parentElement.parentElement.parentElement;
