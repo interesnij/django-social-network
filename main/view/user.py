@@ -22,7 +22,7 @@ class ItemUserCommentList(ListView):
         self.template_name = self.user.get_template_list(folder="u_item_comment/", template="comments.html", request=request)
         return super(ItemUserCommentList,self).get(request,*args,**kwargs)
 
-    def get_context_data(self, **kwargs):
+    def get_context_data(self, **kwargs): 
         context = super(ItemUserCommentList, self).get_context_data(**kwargs)
         context['parent'] = self.item
         context['form_comment'] = CommentForm()
