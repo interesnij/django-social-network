@@ -70,7 +70,7 @@ class AllTagMusicView(ListView):
         return context
 
     def get_queryset(self):
-        tag_list = SoundcloudParsing.objects.filter(tag__id=tag.pk)
+        tag_list = SoundcloudParsing.objects.filter(tag__id=self.tag.pk)
         return tag_list
 
 
@@ -92,7 +92,7 @@ class GenreMusicView(ListView):
         return context
 
     def get_queryset(self):
-        genre_list = SoundcloudParsing.objects.filter(genre__id=genre.pk)
+        genre_list = SoundcloudParsing.objects.filter(genre__id=self.genre.pk)
         return genre_list
 
 
