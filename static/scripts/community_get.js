@@ -12,16 +12,16 @@ $('body').on('click', '.c_comment.comments_open', function() {var btn = $(this);
 on('#ajax', 'click', '.community_fullscreen_hide', function() {document.querySelector(".community_fullscreen").style.display = "none";document.getElementById("community_loader").innerHTML=""});
 on('#ajax', 'click', '.community_manage_fullscreen_hide', function() {document.querySelector(".manage_window_fullscreen").style.display = "none";document.getElementById("load_staff_window").innerHTML=""});
 
-on('#ajax', 'click', '.c_all_reposts', function() {
+on('.like_window', 'click', '.c_all_likes', function() {
   parent = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   pk = parent.parentElement.getAttribute("community-id");
   uuid = parent.getAttribute("item-id");
   loader = document.getElementById("votes_loader");
-  url = "/window/all_community_reposts/" + uuid + "/" + pk + "/";
+  url = "/window/all_community_like/" + uuid + "/" + pk + "/";
   list_load(loader, url);
   loader.parentElement.style.display = "block";
 });
-on('#ajax', 'click', '.c_all_dislikes', function() {
+on('.dislike_window', 'click', '.c_all_dislikes', function() {
   parent = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   pk = parent.parentElement.getAttribute("community-id");
   uuid = parent.getAttribute("item-id");
@@ -30,12 +30,12 @@ on('#ajax', 'click', '.c_all_dislikes', function() {
   list_load(loader, url);
   loader.parentElement.style.display = "block";
 });
-on('#ajax', 'click', '.c_all_likes', function() {
+on('.repost_window', 'click', '.c_all_reposts', function() {
   parent = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   pk = parent.parentElement.getAttribute("community-id");
   uuid = parent.getAttribute("item-id");
   loader = document.getElementById("votes_loader");
-  url = "/window/all_community_like/" + uuid + "/" + pk + "/";
+  url = "/window/all_community_reposts/" + uuid + "/" + pk + "/";
   list_load(loader, url);
   loader.parentElement.style.display = "block";
 });
