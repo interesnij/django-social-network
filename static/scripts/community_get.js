@@ -1,4 +1,3 @@
-$('#ajax').on('click', '.c_fullscreen', function() {item = $(this).parent();pk = item.attr("community-id");uuid = item.attr("item-id");$('#item_loader').html('').load("/communities/item/" + pk + "/" + uuid + "/"); $('.item_fullscreen').show();console.log("item community open")});
 
 $('#ajax').on('click', '.show_staff_window', function() {btn = $(this).parents(".list-group-item");pk = btn.data("pk");uuid = btn.data("uuid");$('#load_staff_window').html('').load("/communities/manage/staff_window/" + pk + "/" + uuid + "/");$('.manage_window_fullscreen').show();console.log("community staff open");});
 
@@ -15,6 +14,16 @@ $('body').on('click', '.c_comment.comments_close', function() {var btn = $(this)
 
 $('body').on('click', '.c_comment.comments_open', function() {var btn = $(this); var item = btn.closest(".infinite-item"); var container = item.find(".load_comments");container.empty(); btn.removeClass('comments_open').addClass("comments_close");console.log("hide comments community")});
 
+
+on('#ajax', 'click', '.c_fullscreen', function() {
+  parent = this.parentElement; parent2 = parent.parentElement;
+  pk = parent2.getAttribute("community-id");
+  uuid = parent.getAttribute("item-id");
+  loader = document.getElementById("item_loader");
+  url = "/communities/item/" + pk + "/" + uuid + "/";
+  list_load(loader, url);
+  loader.parentElement.style.display = "block";
+});
 
 on('#ajax', 'click', '.c_article_detail', function() {
   parent = this.parentElement; parent2 = parent.parentElement;
