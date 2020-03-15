@@ -13,11 +13,11 @@
 </span>
 
 {% if object.post %}
-  {% include 'item_user/moderator_post_detail.html' with post=post %}
+  {% include 'item_community/moderator_post_detail.html' with post=post %}
 {% endif %}
 
 {% if object.article %}
-    {% include 'item_user/moderator_article.html' with article=article  %}
+    {% include 'item_community/moderator_article.html' with article=article  %}
 {% endif %}
 
 
