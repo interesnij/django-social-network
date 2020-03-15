@@ -1,44 +1,38 @@
 from django.views.generic.base import TemplateView
+from django.views.generic import ListView
 from users.models import User
 from main.models import Item, ItemComment
-from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
+from django.http import HttpResponse, HttpResponseBadRequest
 from main.forms import CommentForm
 from django.template.loader import render_to_string
 from django.views import View
 from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
 from rest_framework.exceptions import PermissionDenied, ValidationError
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from gallery.models import Album, Photo
-from common.utils import is_mobile
 
 
-class ItemUserCommentList(View):
+class ItemUserCommentList(ListView):
+    template_name = None
+    model = ItemComment
+    paginate_by = 30
 
-	def get(self,request,*args,**kwargs):
-		item = Item.objects.get(uuid=self.kwargs["uuid"])
-		self.user = User.objects.get(pk=self.kwargs["pk"])
-		if self.user != request.user and request.user.is_authenticated:
-			check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
-			if self.user.is_closed_profile():
-				check_is_connected_with_user_with_id(user=request.user, user_id=self.user.id)
-			comments = item.get_comments(request.user)
-		elif self.user == request.user:
-			comments = item.get_comments(request.user)
-		elif request.user.is_anonymous and self.user.is_closed_profile():
-			raise PermissionDenied('Это закрытый профиль. Только его друзья могут видеть его информацию.')
-		elif request.user.is_anonymous and not self.user.is_closed_profile():
-			comments = item.get_comments(request.user)
-		page = request.GET.get('page')
-		current_page = Paginator(comments, 15)
-		try:
-			comment_list = current_page.page(page)
-		except PageNotAnInteger:
-			comment_list = current_page.page(1)
-		except EmptyPage:
-			comment_list = current_page.page(current_page.num_pages)
-		comments_html = render_to_string("item_user/comments.html", {"comment_list": comment_list, "request_user": request.user, "parent": item, "form_comment": CommentForm(), "form_reply": CommentForm(), "user": self.user})
+    def get(self,request,*args,**kwargs):
+        self.item = Item.objects.get(uuid=self.kwargs["uuid"])
+        self.user = User.objects.get(pk=self.kwargs["pk"])
+        self.template_name = self.community.get_template_list(folder="u_item_comment/", template="comments.html", request=request)
+        return super(ItemUserCommentList,self).get(request,*args,**kwargs)
 
-		return JsonResponse({ "comments": comments_html, })
+    def get_context_data(self, **kwargs):
+        context = super(ItemUserCommentList, self).get_context_data(**kwargs)
+        context['parent'] = self.item
+        context['form_comment'] = CommentForm()
+        context['form_reply'] = CommentForm()
+        context['user'] = self.user
+        return context
+
+    def get_queryset(self):
+        comments = self.item.get_comments()
+        return comments
 
 
 class ItemCommentUserCreate(View):
