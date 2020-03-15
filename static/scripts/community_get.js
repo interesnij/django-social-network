@@ -9,7 +9,7 @@ on('#ajax', 'click', '.c_comments.comments_close', function() {
   pk = parent.parentElement.getAttribute("community-id");
   uuid = parent.getAttribute("item-id");
   container = parent.querySelector(".load_comments");
-  _this = parent.querySelector(".c_comments_close");
+  _this = parent.querySelector(".c_comments");
   _this.classList.add("comments_open");
   _this.classList.remove("comments_close");
   url = "/community/comment/" + uuid + "/" + pk + "/";
