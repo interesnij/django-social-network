@@ -70,13 +70,6 @@ on('#ajax', 'click', '.show_staff_window', function() {
   list_load(loader, url);
   loader.parentElement.style.display = "block";
 });
-$('#ajax').on('click', '.item_stat_f', function() {
-  item = $(this).parents(".infinite-item");
-  pk = item.attr("user-id");
-  uuid = item.attr("item-id");
-  $('#stat_loader').html('').load("/stat/item/" + uuid + "/" + pk + "/");
-  $('.stat_fullscreen').show()
-});
 
 on('#ajax', 'click', '.item_stat_f', function() {
   parent = this.parentElement.parentElement.parentElement.parentElement.parentElement;
