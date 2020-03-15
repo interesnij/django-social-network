@@ -12,7 +12,7 @@ on('#ajax', 'click', '.c_comment.comments_close', function() {
   url = "/community/comment/" + uuid + "/" + pk + "/";
   this.classList.add("comments_open");
   this.classList.remove("comments_close");
-  list_load(container, url);
+  list_load(container, url); 
 });
 on('#ajax', 'click', '.c_comment.comments_open', function() {
   parent = this.parentElement.parentElement.parentElement;
