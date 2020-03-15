@@ -21,8 +21,6 @@ class ArticleNewView(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.article = Article.objects.get(uuid=self.kwargs["uuid"])
-        self.article.views += 1
-        self.article.save()
         return super(ArticleNewView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -36,8 +34,6 @@ class ArticleUserDetailView(TemplateView):
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.item = Item.objects.get(uuid=self.kwargs["uuid"])
-        self.item.views += 1
-        self.item.save()
         if self.user != request.user and request.user.is_authenticated:
             check_is_not_blocked_with_user_with_id(user=request.user, user_id=self.user.id)
             if self.user.is_closed_profile():
@@ -65,8 +61,6 @@ class ArticleCommunityDetailView(TemplateView):
     def get(self,request,*args,**kwargs):
         self.community=Community.objects.get(pk=self.kwargs["pk"])
         self.item = Item.objects.get(uuid=self.kwargs["uuid"])
-        self.item.views += 1
-        self.item.save()
         if request.user.is_authenticated and request.user.is_member_of_community_with_name(self.community.name):
             if request.user.is_staff_of_community_with_name(self.community.name):
                 self.template_name = "admin_article.html"
