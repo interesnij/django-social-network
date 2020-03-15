@@ -3,9 +3,9 @@ $('#ajax').on('click', '#community_add', function() {$('#community_loader').html
 $('#ajax').on('click', '#community_article_add', function() {btn = $(this);pk = btn.data('pk');$('#article_loader').html('').load("/article/add_community/" + pk + "/");$('.article_fullscreen').show();console.log("add community article open")})
 
 
-on('#ajax', 'click', '.c_comment .comments_close', function() {
-  this.classList.add("comments_open");
-  this.classList.remove("comments_close");
+on('#ajax', 'click', '.c_comments_close', function() {
+  this.classList.add("c_comments_open");
+  this.classList.remove("c_comments_close");
   parent = this.parentElement.parentElement.parentElement.parentElement;
   container = parent.querySelector(".load_comments");
   pk = parent.parentElement.getAttribute("community-id");
@@ -15,12 +15,12 @@ on('#ajax', 'click', '.c_comment .comments_close', function() {
   list_load(container, url);
 
 });
-on('#ajax', 'click', '.c_comment .comments_open', function() {
+on('#ajax', 'click', '.c_comments_open', function() {
   parent = this.parentElement.parentElement.parentElement;
   container = parent.querySelector(".load_comments");
   container.innerHTML="";
-  this.classList.add("comments_close");
-  this.classList.remove("comments_open");
+  this.classList.add("c_comments_close");
+  this.classList.remove("c_comments_open");
 });
 on('#ajax', 'click', '.c_all_likes', function() {
   parent = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
