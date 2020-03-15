@@ -644,25 +644,25 @@ class User(AbstractUser):
         reported_posts_exclusion_query = ~Q(moderated_object__reports__reporter_id=self.pk)
         own_posts_query = Q(creator=self.pk, community__isnull=True, is_deleted=False, status=Item.STATUS_PUBLISHED)
         own_posts_query.add(reported_posts_exclusion_query, Q.AND)
-        own_posts_queryset = self.items.only('id').filter(own_posts_query)
+        own_posts_queryset = self.items.only('created').filter(own_posts_query)
 
         community_posts_query = Q(community__memberships__user__id=self.pk, is_closed=False, is_deleted=False, status=Item.STATUS_PUBLISHED)
         community_posts_query.add(~Q(Q(creator__blocked_by_users__blocker_id=self.pk) | Q(creator__user_blocks__blocked_user_id=self.pk)), Q.AND)
         community_posts_query.add(~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED), Q.AND)
         community_posts_query.add(reported_posts_exclusion_query, Q.AND)
-        community_posts_queryset = Item.objects.only('id').filter(community_posts_query)
+        community_posts_queryset = Item.objects.only('created').filter(community_posts_query)
 
         followed_users = self.follows.values('followed_user_id')
         followed_users_ids = [followed_user['followed_user_id'] for followed_user in followed_users]
         followed_users_query = Q(creator__in=followed_users_ids, creator__user_private__is_private=False, is_deleted=False, status=Item.STATUS_PUBLISHED)
         followed_users_query.add(reported_posts_exclusion_query, Q.AND)
-        followed_users_queryset = Item.objects.only('id').filter(followed_users_query)
+        followed_users_queryset = Item.objects.only('created').filter(followed_users_query)
 
         frends = self.connections.values('target_user_id')
         frends_ids = [target_user['target_user_id'] for target_user in frends]
         frends_query = Q(creator__in=frends_ids, is_deleted=False, status=Item.STATUS_PUBLISHED)
         frends_query.add(reported_posts_exclusion_query, Q.AND)
-        frends_queryset = Item.objects.only('id').filter(frends_query)
+        frends_queryset = Item.objects.only('created').filter(frends_query)
         final_queryset = own_posts_queryset.union(community_posts_queryset, followed_users_queryset, frends_queryset)
         return final_queryset
 
