@@ -75,8 +75,11 @@ class Item(models.Model):
     def notification_community_dislike(self, user):
         item_community_notification_handler(actor=user, recipient=None, verb=ItemCommunityNotification.DISLIKE, key='social_update', community=self.community, item=self, comment=None)
 
-    def get_comments(self, user):
-        comments_query = self._make_get_comments_for_post_query(user=user)
+    def get_comments(self):
+        comments_query = Q(item_id=self.pk)
+        comments_query.add(Q(parent_comment__isnull=True), Q.AND)
+        comments_query.add(~Q(moderated_object__reports__reporter_id=user.pk), Q.AND)
+        comments_query.add(Q(is_deleted=False), Q.AND)
         return ItemComment.objects.filter(comments_query)
 
     def get_comment_replies(self, post_comment_id):
