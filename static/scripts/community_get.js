@@ -18,6 +18,7 @@ $('body').on('click', '.c_comment.comments_open', function() {var btn = $(this);
 
 on('#ajax', 'click', '.c_article_detail', function() {
   parent = this.parentElement; parent2 = parent.parentElement;
+  console.log(parent2);
   pk = parent2.attr("community-id");
   uuid = e.attr("item-id");
   loader = document.getElementById("article_loader");
