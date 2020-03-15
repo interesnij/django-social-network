@@ -89,7 +89,6 @@
                         ответить
                     </span>
 
-                    {% if request_user.is_authenticated %}
                     <div class="border-top" style="margin-top:10px;display:none">
                         <form action="" method="post" class="replyComment_form">
                             {% csrf_token %}
@@ -120,7 +119,6 @@
                             </div>
                         </form>
                     </div>
-                    {% endif %}
 
                     <span style="cursor:pointer;display: flex; margin-top: 15px;" class="show_replies content-color-primary mb-0">
                       {% if comment.count_replies %}
