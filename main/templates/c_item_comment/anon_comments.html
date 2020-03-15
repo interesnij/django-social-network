@@ -1,6 +1,6 @@
 
 <span class="stream_comments">
-    {% for comment in comments %}
+    {% for comment in object_list %}
     {% include 'c_item_comment/anon_parent.html' with comment=comment  %}
     {% endfor %}
 </span>
