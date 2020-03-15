@@ -24,7 +24,7 @@ request.send( null );
 //  list_load(container, url);
 });
 on('#ajax', 'click', '.c_comment.comments_open', function() {
-  parent = this.parentElement.parentElement;
+  parent = this.parentElement.parentElement.parentElement;
   container = parent.querySelector(".load_comments");
   container.innerHTML="";
   this.classList.add("comments_close");
