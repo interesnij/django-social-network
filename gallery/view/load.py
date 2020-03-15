@@ -77,7 +77,7 @@ class UserCommentPhoto(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.user=User.objects.get(pk=self.kwargs["pk"])
-        self.photo = Photo.objects.get(pk=self.kwargs["pk"])
+        self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         self.form_image = PhotoDescriptionForm(request.POST,instance=self.photo)
         self.template_name = self.user.get_permission_list_user(folder="photo_user/", template="photo.html", request=request)
         return super(UserCommentPhoto,self).get(request,*args,**kwargs)
