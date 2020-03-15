@@ -19,7 +19,7 @@ $('body').on('click', '.c_comment.comments_open', function() {var btn = $(this);
 on('#ajax', 'click', '.c_article_detail', function() {
   parent = this.parentElement; parent2 = parent.parentElement;
   pk = parent2.getAttribute("community-id");
-  uuid = this.getAttribute("item-id");
+  uuid = parent.getAttribute("item-id");
   loader = document.getElementById("article_loader");
   url = "/article/read/" + pk + "/" + uuid + "/"
   list_load(loader, url);
