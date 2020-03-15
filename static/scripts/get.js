@@ -26,14 +26,6 @@ on('#ajax', 'click', '.u_good_detail', function() {
 };
 });
 
-$('#ajax').on('click', '.item_stat_f', function() {
-  item = $(this).parents(".infinite-item");
-  pk = item.attr("user-id");
-  uuid = item.attr("item-id");
-  $('#stat_loader').html('').load("/stat/item/" + uuid + "/" + pk + "/");
-  $('.stat_fullscreen').show()
-});
-
 $('#ajax').on('click', '.u_all_likes', function() {var btn = $(this); item = $(this).parents('.infinite-item');pk = item.attr("user-id");uuid = item.attr("item-id");$('#votes_loader').html('').load("/window/all_user_like/" + uuid + "/" + pk + "/"); $('.votes_fullscreen').show();console.log("likes user open")});
 $('#ajax').on('click', '.u_all_dislikes', function() {var btn = $(this); item = $(this).parents('.infinite-item');pk = item.attr("user-id");uuid = item.attr("item-id");$('#votes_loader').html('').load("/window/all_user_dislike/" + uuid + "/" + pk + "/"); $('.votes_fullscreen').show();console.log("dislikes user open")});
 $('#ajax').on('click', '.u_all_reposts', function() {var btn = $(this); item = $(this).parents('.infinite-item');pk = item.attr("user-id");uuid = item.attr("item-id");$('#votes_loader').html('').load("/window/all_user_reposts/" + uuid + "/" + pk + "/"); $('.votes_fullscreen').show();console.log("reposts user open")});
