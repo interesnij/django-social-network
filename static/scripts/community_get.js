@@ -18,9 +18,8 @@ $('body').on('click', '.c_comment.comments_open', function() {var btn = $(this);
 
 on('#ajax', 'click', '.c_article_detail', function() {
   parent = this.parentElement; parent2 = parent.parentElement;
-  console.log(parent2);
-  pk = parent2.attr("community-id");
-  uuid = e.attr("item-id");
+  pk = parent2.getAttribute("community-id");
+  uuid = this.getAttribute("item-id");
   loader = document.getElementById("article_loader");
   url = "/article/read/" + pk + "/" + uuid + "/"
   list_load(loader, url);
