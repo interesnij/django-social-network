@@ -49,17 +49,8 @@ $('#question').on('click', function() {$('#for_question').show();});
 /*!
    fullscreen open scripts for community
   */
-  $('#ajax').on('click', '.c_article_detail', function() {item = $(this).parent();pk = item.attr("community-id");uuid = item.attr("item-id"); $('#article_loader').html('').load("/article/read/" + pk + "/" + uuid + "/"); $('.article_fullscreen').show();console.log("article community open")});
-  $('#ajax').on('click', '.c_fullscreen', function() {item = $(this).parent();pk = item.attr("community-id");uuid = item.attr("item-id");$('#item_loader').html('').load("/communities/item/" + pk + "/" + uuid + "/"); $('.item_fullscreen').show();console.log("item community open")});
 
-  $('#ajax').on('click', '.show_staff_window', function() {btn = $(this).parents(".list-group-item");pk = btn.data("pk");uuid = btn.data("uuid");$('#load_staff_window').html('').load("/communities/manage/staff_window/" + pk + "/" + uuid + "/");$('.manage_window_fullscreen').show();console.log("community staff open");});
-
-  $('body').on('click', '.c_all_likes', function() {var btn = $(this); item = $(this).parents('.infinite-item');pk = item.attr("community-id");uuid = item.attr("item-id");$('#votes_loader').html('').load("/window/all_community_like/" + uuid + "/" + pk + "/"); $('.votes_fullscreen').show();console.log("likes community open")});
-  $('body').on('click', '.c_all_dislikes', function() {var btn = $(this); item = $(this).parents('.infinite-item');pk = item.attr("community-id");uuid = item.attr("item-id");$('#votes_loader').html('').load("/window/all_community_dislike/" + uuid + "/" + pk + "/"); $('.votes_fullscreen').show();console.log("dislikes community open")});
-  $('body').on('click', '.c_all_reposts', function() {var btn = $(this); item = $(this).parents('.infinite-item');pk = item.attr("community-id");uuid = item.attr("item-id");$('#votes_loader').html('').load("/window/all_community_reposts/" + uuid + "/" + pk + "/"); $('.votes_fullscreen').show();console.log("reposts community open")});
   $('#ajax').on('click', '#good_add', function() {$('#good_add_loader').html('').load("{% url 'good_add_community' pk=user.pk %}");$('.good_add_fullscreen').show();})
-  $('#ajax').on('click', '#community_add', function() {$('#community_loader').html('').load("/communities/progs/add/");$('.community_fullscreen').show();console.log("add community open")})
-  $('#ajax').on('click', '#community_article_add', function() {btn = $(this);pk = btn.data('pk');$('#article_loader').html('').load("/article/add_community/" + pk + "/");$('.article_fullscreen').show();console.log("add community article open")})
   $('#ajax').on('click', '#article_add', function() {$('#article_loader').html('').load("{% url 'article_add_user' pk=user.pk %}"); $('.article_fullscreen').show();})
   $('#ajax').on('click', '.u_photos_add', function() { $('#photos_add_window').show();console.log("user photos add open")})
   $('#ajax').on('click', '.u_albums_add', function() {user = $(this);user_id = user.data("uuid"); $('#photo_add_loader').html('').load("/gallery/user/add_album/" + user_id + "/"); $('.photofullscreen').show();console.log("user album photos add open")})
@@ -73,8 +64,7 @@ $('#question').on('click', function() {$('#for_question').show();});
     on('#ajax', 'click', '.photo_fullscreen_hide', function() {document.querySelector(".photo_fullscreen").style.display = "none";document.getElementById("photo_loader").innerHTML=""});
     on('#ajax', 'click', '.votes_fullscreen_hide', function() {document.querySelector(".votes_fullscreen").style.display = "none";document.getElementById("votes_loader").innerHTML=""});
     on('#ajax', 'click', '.item_fullscreen_hide', function() {document.querySelector(".item_fullscreen").style.display = "none";document.getElementById("item_loader").innerHTML=""});
-    on('#ajax', 'click', '.community_fullscreen_hide', function() {document.querySelector(".community_fullscreen").style.display = "none";document.getElementById("community_loader").innerHTML=""});
-    on('#ajax', 'click', '.community_manage_fullscreen_hide', function() {document.querySelector(".manage_window_fullscreen").style.display = "none";document.getElementById("load_staff_window").innerHTML=""});
+
     on('#ajax', 'click', '.good_fullscreen_hide', function() {document.querySelector(".good_fullscreen").style.display = "none";document.getElementById("good_loader").innerHTML=""});
     on('#ajax', 'click', '.stat_fullscreen_hide', function() {document.querySelector(".stat_fullscreen").style.display = "none";document.getElementById("stat_loader").innerHTML=""});
 
@@ -105,9 +95,6 @@ $('body').on('click', '.c_item_repost', function() {item = $(this).parents('.inf
 /*!
    community comments scripts
   */
-  $('body').on('click', '.c_comment.comments_close', function() {var btn = $(this); var item = btn.closest(".infinite-item"); var uuid = item.attr("item-id"); var pk = item.attr("community-id"); var container = item.find(".load_comments");$.ajax({url: "/community/comment/" + uuid + "/" + pk + "/", data: {'uuid': uuid}, cache: false,beforeSend: function() {item.find(".load_comments").html("<span style='display:flex;justify-content: center;'><img src='/static/images/loading.gif'></span>");},success:function(data){container.html(data.comments);btn.addClass("comments_open").removeClass("comments_close");console.log("show comments community")}}); return false;});
-
-  $('body').on('click', '.c_comment.comments_open', function() {var btn = $(this); var item = btn.closest(".infinite-item"); var container = item.find(".load_comments");container.empty(); btn.removeClass('comments_open').addClass("comments_close");console.log("hide comments community")});
 
 
 /*!
