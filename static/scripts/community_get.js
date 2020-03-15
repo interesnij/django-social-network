@@ -3,20 +3,20 @@ $('#ajax').on('click', '#community_add', function() {$('#community_loader').html
 $('#ajax').on('click', '#community_article_add', function() {btn = $(this);pk = btn.data('pk');$('#article_loader').html('').load("/article/add_community/" + pk + "/");$('.article_fullscreen').show();console.log("add community article open")})
 
 
-on('#ajax', 'click', '.c_comments_close', function() {
+on('#ajax', 'click', '.c_comments.comments_close', function() {
   parent = this.parentElement.parentElement.parentElement.parentElement;
   container = parent.querySelector(".load_comments");
   pk = parent.parentElement.getAttribute("community-id");
   uuid = parent.getAttribute("item-id");
   container = parent.querySelector(".load_comments");
-  _this = parent.querySelector("c_comments_close");
-  _this.classList.add("c_comments_open");
-  _this.classList.remove("c_comments_close");
+  _this = parent.querySelector(".c_comments_close");
+  _this.classList.add("comments_open");
+  _this.classList.remove("comments_close");
   url = "/community/comment/" + uuid + "/" + pk + "/";
   list_load(container, url);
 
 });
-on('#ajax', 'click', '.c_comments_open', function() {
+on('#ajax', 'click', 'c_comments.comments_open', function() {
   parent = this.parentElement.parentElement.parentElement;
   container = parent.querySelector(".load_comments");
   container.innerHTML="";
