@@ -31,7 +31,7 @@ class ItemCommunityCommentList(ListView):
         return context
 
     def get_queryset(self):
-        comments = self.item.get_comments(self.request.user)
+        comments = self.item.get_comments()
         return comments
 
 
