@@ -10,9 +10,19 @@ on('#ajax', 'click', '.c_comment.comments_close', function() {
   uuid = parent.getAttribute("item-id");
   container = parent.querySelector(".load_comments");
   url = "/community/comment/" + uuid + "/" + pk + "/";
-  list_load(container, url);
   this.classList.add("comments_open");
   this.classList.remove("comments_close");
+
+  var request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  request.open( 'GET', url, true );
+  request.responseType = "json";
+  request.onreadystatechange = function () {
+    if ( request.readyState == 4 && request.status == 200 ) {
+      container.innerHTML = request.responseText;
+    }
+};
+request.send( null );
+//  list_load(container, url);
 });
 on('#ajax', 'click', '.c_comment.comments_open', function() {
   parent = this.parentElement.parentElement;
