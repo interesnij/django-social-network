@@ -1,8 +1,11 @@
 
-$('#ajax').on('click', '#community_add', function() {$('#community_loader').html('').load("/communities/progs/add/");$('.community_fullscreen').show();console.log("add community open")})
-$('#ajax').on('click', '#community_article_add', function() {btn = $(this);pk = btn.data('pk');$('#article_loader').html('').load("/article/add_community/" + pk + "/");$('.article_fullscreen').show();console.log("add community article open")})
-
-
+on('#ajax', 'click', '#community_article_add', function() {
+  pk = this.getAttribute('data-pk');
+  loader = document.getElementById("community_loader");
+  url = "/article/add_community/" + pk + "/"
+  list_load(loader, url);
+  document.querySelector(".article_fullscreen").style.display = "block";
+});
 on('#ajax', 'click', '.c_comments.comments_close', function() {
   parent = this.parentElement.parentElement.parentElement.parentElement;
   container = parent.querySelector(".load_comments");
@@ -33,6 +36,12 @@ on('#ajax', 'click', '.c_all_likes', function() {
   url = "/window/all_community_like/" + uuid + "/" + pk + "/";
   list_load(loader, url);
   loader.parentElement.style.display = "block";
+});
+on('#ajax', 'click', '#community_add', function() {
+  loader = document.getElementById("community_loader");
+  url = "/communities/progs/add/";
+  list_load(loader, url);
+  document.querySelector(".community_fullscreen").style.display = "block";
 });
 on('#ajax', 'click', '.c_all_dislikes', function() {
   parent = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
