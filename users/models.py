@@ -933,13 +933,13 @@ class User(AbstractUser):
         return self.user_blocks.filter(blocked_user_id=user_id).exists()
 
     def get_last_location(self):
-        if self.user_ip.ip_3:
+        if self.user_location_3:
             loc = self.user_location_3
-        elif self.user_ip.ip_2:
+        elif self.user_location_2:
             loc = self.user_location_2
-        elif self.user_ip.ip_1:
+        elif self.user_location:
             loc = self.user_location
-        elif not self.user_ip:
+        else: 
             return self
         return loc
 
