@@ -53,10 +53,6 @@ class OneUserLocation(models.Model):
     def __str__(self):
         return '{}, {}, {}'.format(self.country_ru, self.region_ru, self.city_ru)
 
-    def get_sity_and_count(self):
-        sity = self.city_ru
-        return sity
-
 
 class TwoUserLocation(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name="user_location_2", verbose_name="Пользователь", on_delete=models.CASCADE)

@@ -176,13 +176,11 @@ class Item(models.Model):
         sities = OneUserLocation.objects.filter(user_id__in=ids).distinct('city_ru')
         return sities
 
-    def count_user_visits(self,user_id):
-        from stst.models import ItemNumbers
-        try:
-            link = OneUserLocation.objects.get(user__pk=user_id, target=user_id)
-            return link.count
-        except:
-            pass
+    def get_sity_count(self, sity):
+        v_s = ItemNumbers.objects.filter(item=self.pk).values('user')
+        ids = [use['user'] for use in v_s]
+        count = OneUserLocation.objects.filter(user_id__in=ids, city_ru=sity).count()
+        return count
 
     def all_visits_count(self):
         from stst.models import ItemNumbers
