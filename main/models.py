@@ -173,7 +173,7 @@ class Item(models.Model):
 
         v_s = ItemNumbers.objects.filter(item=self.pk).values('user')
         ids = [use['user'] for use in v_s]
-        sities = OneUserLocation.objects.filter(user_id__in=ids).distinct()
+        sities = OneUserLocation.objects.filter(user_id__in=ids).values('city_ru').distinct()
         return sities
 
     def all_visits_count(self):
