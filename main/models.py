@@ -176,11 +176,8 @@ class Item(models.Model):
         return sities
 
     def get_sity_count(self, sity):
-        from stst.models import ItemNumbers
-        
-        v_s = ItemNumbers.objects.filter(item=self.pk).values('user')
-        ids = [use['user'] for use in v_s]
-        count = OneUserLocation.objects.filter(user_id__in=ids, city_ru=sity).count()
+
+        count = self.get_visiter_users.filter(city_ru=sity).count()
         return count
 
     def all_visits_count(self):
