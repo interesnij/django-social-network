@@ -8,12 +8,10 @@
           </div>
           <br><br>
           <div class="card-body px-0 py-0">
-            <ul class="list-group" id="follows_container">
+            <ul class="list-group" id="">
                 {% for object in item.get_visiter_users %}
                 <li class="list-group-item">
-                    <div class="media">
-                      {{ object.get_last_location }}
-                    </div>
+                  {{ object.get_last_location }}
                 </li>
                 {% endfor %}
             </ul>
