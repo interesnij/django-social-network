@@ -176,8 +176,8 @@ class Item(models.Model):
         return sities
 
     def get_sity_count(self, sity):
-
-        count = self.get_visiter_users.filter(city_ru=sity).count()
+        visiters = self.get_visiter_users()
+        count = visiters.filter(city_ru=sity).count()
         return count
 
     def all_visits_count(self):
