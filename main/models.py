@@ -174,7 +174,7 @@ class Item(models.Model):
         v_s = ItemNumbers.objects.filter(item=self.pk).values('user')
         ids = [use['user'] for use in v_s]
         query = Q(id__in=ids)
-        sities = OneUserLocation.objects.filter(query).values('city_ru')
+        sities = OneUserLocation.objects.filter(query)
         return sities
 
     def all_visits_count(self):
