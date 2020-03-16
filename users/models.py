@@ -736,7 +736,7 @@ class User(AbstractUser):
         my_frends_ids = [target_user['target_user_id'] for target_user in my_frends]
         community_frends_ids = [user_id['user_id'] for user_id in community_frends]
         result=list(set(my_frends_ids) & set(community_frends_ids))
-        query = Q(id__in=result)
+        query = Q(user_location_id__in=result)
         connection = User.objects.filter(query)
         return connection
 
