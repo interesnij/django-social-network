@@ -169,12 +169,14 @@ class Item(models.Model):
     def get_visiter_users(self):
         from stst.models import ItemNumbers
         from users.models import User
-        v_s = ItemNumbers.objects.filter(item=self.pk).values('user').order_by("-created")
+        from users.model.profile import OneUserLocation
+
+        query = Q(item_id=comment.pk)
+        v_s = ItemNumbers.objects.filter(item=self.pk).values('user')
         ids = [use['user'] for use in v_s]
-        query = []
-        for i in ids:
-            query = query + [User.objects.get(id=i), ]
-        return query
+        query = Q(user_location__id__in=ids)
+        sities = OneUserLocation.objects.filter(query).values('city_ru')
+        return sities
 
     def all_visits_count(self):
         from stst.models import ItemNumbers
