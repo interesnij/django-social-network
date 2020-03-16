@@ -171,7 +171,6 @@ class Item(models.Model):
         from users.models import User
         from users.model.profile import OneUserLocation
 
-        query = Q(item_id=comment.pk)
         v_s = ItemNumbers.objects.filter(item=self.pk).values('user')
         ids = [use['user'] for use in v_s]
         query = Q(user_location__id__in=ids)
