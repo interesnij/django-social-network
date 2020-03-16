@@ -175,7 +175,7 @@ class Item(models.Model):
         ids = [use['user'] for use in v_s]
         sities = OneUserLocation.objects.filter(user_id__in=ids).values('city_ru').distinct()
         sities_ids = [sity['city_ru'] for sity in sities]
-        return sities
+        return sities_ids
 
     def all_visits_count(self):
         from stst.models import ItemNumbers
