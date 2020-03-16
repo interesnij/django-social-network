@@ -934,14 +934,13 @@ class User(AbstractUser):
 
     def get_last_location(self):
         if self.user_location_3:
-            loc = self.user_location_3
+            return self.user_location_3
         elif self.user_location_2:
-            loc = self.user_location_2
+            return self.user_location_2
         elif self.user_location:
-            loc = self.user_location
-        else: 
-            return self
-        return loc
+            return self.user_location
+        else:
+            return "Нет местоположения"
 
     def get_visiter_users(self):
         from stst.models import UserNumbers
