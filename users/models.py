@@ -933,14 +933,14 @@ class User(AbstractUser):
         return self.user_blocks.filter(blocked_user_id=user_id).exists()
 
     def get_last_location(self):
-        if self.user_location_3:
+        if self.user_ip.ip_3:
             return self.user_location_3
-        elif self.user_location_2:
+        elif self.user_ip.ip_2:
             return self.user_location_2
-        elif self.user_location:
+        elif self.user_ip.ip_1:
             return self.user_location
-        else:
-            return "Нет местоположения"
+        elif not self.user_ip.ip_1:
+            return "Местоположение не указано"
 
     def get_visiter_users(self):
         from stst.models import UserNumbers
