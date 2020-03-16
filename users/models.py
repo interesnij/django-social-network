@@ -939,7 +939,7 @@ class User(AbstractUser):
             loc = self.user_location_2
         elif self.user_ip.ip_1:
             loc = self.user_location
-        elif not self.user_ip.ip_1::
+        elif not self.user_ip.ip_1:
             return self
         return loc
 
