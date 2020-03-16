@@ -87,7 +87,7 @@ class GenreMusicView(ListView):
 
     def get_context_data(self,**kwargs):
         context = super(GenreMusicView,self).get_context_data(**kwargs)
-        context["tag"] = self.tag
+        context["genre"] = self.genre
         context["is_genre_playlist"] = self.is_genre_playlist
         return context
 
