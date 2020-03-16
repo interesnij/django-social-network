@@ -12,7 +12,7 @@
             <ul class="list-group" id="">
                 {% for object in item.get_visiter_users %}
                 <li class="list-group-item">
-                  {{ object }}
+                  {{ object.get_sity_and_count }}
                 </li>
                 {% endfor %}
             </ul>
