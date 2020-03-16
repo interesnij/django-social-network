@@ -939,7 +939,7 @@ class User(AbstractUser):
             return self.user_location_2
         elif self.user_ip.ip_1:
             return self.user_location
-        elif not self.user_ip.ip_1:
+        else:
             return "Местоположение не указано"
 
     def get_visiter_users(self):
