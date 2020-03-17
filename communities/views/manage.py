@@ -359,7 +359,6 @@ class CommunityStateCobertura(TemplateView):
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.template_name = self.community.get_manage_template(folder="manage/", template="stat_cobertura.html", request=request)
-		self.visiters_users = self.community.get_visiters_users(year=None, month=None, week=None, day=None)
 		self.unical_users_count = self.community.get_unical_users_count(year=None, month=None, week=None, day=None)
 		self.platform_count = self.community.get_platform_count(year=None, month=None, week=None, day=None)
 		return super(CommunityStateCobertura,self).get(request,*args,**kwargs)
@@ -367,7 +366,6 @@ class CommunityStateCobertura(TemplateView):
 	def get_context_data(self,**kwargs):
 		context = super(CommunityStateCobertura,self).get_context_data(**kwargs)
 		context["community"] = self.community
-		context["visiters_users"] = self.visiters_users
 		context["unical_users_count"] = self.unical_users_count
-		context["platform_count"] = self.platform_count
+		context["percent ratio"] = self.platform_count
 		return context
