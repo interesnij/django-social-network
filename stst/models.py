@@ -11,7 +11,6 @@ class UserNumbers(models.Model):
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
-        unique_together = ('visitor', 'target',)
         verbose_name="Кто к кому заходил"
         verbose_name_plural="Кто к кому заходил"
 
@@ -24,7 +23,6 @@ class CommunityNumbers(models.Model):
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
-        unique_together = ('user', 'community',)
         verbose_name="Посещение сообщества"
         verbose_name_plural="Посещения сообщества"
 
@@ -74,6 +72,5 @@ class ItemNumbers(models.Model):
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
-        unique_together = ('user', 'item',)
         verbose_name="Просмотр записи"
         verbose_name_plural="Просмотры записи"
