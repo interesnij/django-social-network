@@ -364,10 +364,15 @@ class CommunityStateCobertura(TemplateView):
 
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.template_name = self.community.get_manage_template(folder="manage/", template="stat_cobertura.html", request=request)
-		self.months = [i.month for i in CommunityNumbers.objects.values_list('created', flat=True)][0]
+		self.months = [i.month for i in CommunityNumbers.objects.values_list('created', flat=True)]
+		cur_month = self.months[0]
+		prev_month = self.months[1]
+		prev2_month = self.months[2]
+		prev3_month = self.months[3]
+		prev4_month = self.months[4]
 		self.today = datetime.now()
-		self.today_query = CommunityNumbers.objects.filter(community=self.community.pk, created__month=self.months).distinct().values('platform')
-		self.today_count = len(self.today_query)
+		self.today_query = CommunityNumbers.objects.filter(community=self.community.pk, created__month=self.months).distinct().values('platform').count()
+
 		if self.today_count:
 			self.phone_count = self.today_query.filter(platform=1)
 			self.comp_count = self.today_query.filter(platform=0)
