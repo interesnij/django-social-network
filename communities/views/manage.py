@@ -380,7 +380,7 @@ class CommunityStateCoberturaMonth(TemplateView):
 			self.prev3_month = self.months[3]
 			self.prev3_count = CommunityNumbers.objects.filter(community=self.community.pk, created__month=self.months[3]).distinct().values('platform').count()
 		except:
-			self.prev3_query = None
+			self.prev3_count = None
 			self.prev3_month = None
 		try:
 			self.prev4_month = self.months[4]
