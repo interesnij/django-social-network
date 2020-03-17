@@ -255,7 +255,6 @@ class Community(models.Model):
                 template_name = folder + "star_" + template
             else:
                 template_name = folder + "member_" + template
-            community_views_plus(user_pk=request.user.pk, community_pk=self.pk)
         elif request.user.is_authenticated and request.user.is_follow_from_community_with_name(self.pk):
             template_name = folder + "follow_" + template
         elif request.user.is_authenticated and request.user.is_banned_from_community_with_name(self.name):
@@ -573,39 +572,102 @@ class Community(models.Model):
     def count_members(self):
         return self.memberships.count()
 
-    def get_visiter_users(self):
+    def get_visiters_users(self, year, month, week, day):
         from stst.models import CommunityNumbers
         from users.models import User
-        v_s = CommunityNumbers.objects.filter(community=self.pk).values('user').order_by("-count")
+        if year:
+            v_s = CommunityNumbers.objects.filter(community=self.pk, created__year=year).values('user')
+        elif month:
+            v_s = CommunityNumbers.objects.filter(community=self.pk, created__month=month).values('user')
+        elif week:
+            v_s = CommunityNumbers.objects.filter(community=self.pk, created__week=week).values('user')
+        elif day:
+            v_s = CommunityNumbers.objects.filter(community=self.pk, created__day=day).values('user')
+        else:
+            v_s = CommunityNumbers.objects.filter(community=self.pk).values('user')
         ids = [use['user'] for use in v_s]
-        query = []
-        for i in ids:
-            query = query + [User.objects.get(id=i), ]
+        query = User.objects.filter(id__in=ids)
         return query
 
-    def all_user_visits_count(self):
+    def get_unical_visiters_users(self, year, month, week, day):
         from stst.models import CommunityNumbers
-        try:
-            v_s = CommunityNumbers.objects.filter(community=self.pk).values('count')
-            total = 0
-            visiter_ids = [count['count'] for count in v_s]
-            for sum in visiter_ids:
-                total += sum
-            return total
-        except:
-            pass
+        from users.models import User
 
-    def all_user_unical_visits_count(self):
-        from stst.models import CommunityNumbers
-        return CommunityNumbers.objects.filter(community=self.pk).values('pk').count()
+        if year:
+            v_s = CommunityNumbers.objects.filter(community=self.pk, created__year=year).values('user').distinct()
+        elif month:
+            v_s = CommunityNumbers.objects.filter(community=self.pk, created__month=month).values('user').distinct()
+        elif week:
+            v_s = CommunityNumbers.objects.filter(community=self.pk, created__week=week).values('user').distinct()
+        elif day:
+            v_s = CommunityNumbers.objects.filter(community=self.pk, created__day=day).values('user').distinct()
+        else:
+            v_s = CommunityNumbers.objects.filter(community=self.pk).values('user').distinct()
+        ids = [use['user'] for use in v_s]
+        query = User.objects.filter(id__in=ids)
+        return query
 
-    def count_user_visits(self,user_id):
+    def get_mobile_visiters_count(self, year, month, week, day):
         from stst.models import CommunityNumbers
-        try:
-            link = CommunityNumbers.objects.get(community=self.pk, user=user_id)
-            return link.count
-        except:
-            pass
+
+        if year:
+            count = CommunityNumbers.objects.filter(community=self.pk, platform=1, created__year=year).values('user').count()
+        elif month:
+            count = CommunityNumbers.objects.filter(community=self.pk, platform=1, created__month=month).values('user').count()
+        elif week:
+            count = CommunityNumbers.objects.filter(community=self.pk, platform=1, created__week=week).values('user').count()
+        elif day:
+            count = CommunityNumbers.objects.filter(community=self.pk, platform=1, created__day=day).values('user').count()
+        else:
+            count = CommunityNumbers.objects.filter(community=self.pk, platform=1).values('user').count()
+
+        count = CommunityNumbers.objects.filter(community=self.pk, platform=1).values('user').count()
+        return count
+
+    def get_unical_mobile_visiters_count(self, year, month, week, day):
+        from stst.models import CommunityNumbers
+
+        if year:
+            count = CommunityNumbers.objects.filter(community=self.pk, platform=1, created__year=year).values('user').distinct().count()
+        elif month:
+            count = CommunityNumbers.objects.filter(community=self.pk, platform=1, created__month=month).values('user').distinct().count()
+        elif week:
+            count = CommunityNumbers.objects.filter(community=self.pk, platform=1, created__week=week).values('user').distinct().count()
+        elif day:
+            count = CommunityNumbers.objects.filter(community=self.pk, platform=1, created__day=day).values('user').distinct().count()
+        else:
+            count = CommunityNumbers.objects.filter(community=self.pk, platform=1).values('user').distinct().count()
+        return count
+
+    def get_comp_visiters_count(self, year, month, week, day):
+        from stst.models import CommunityNumbers
+
+        if year:
+            count = CommunityNumbers.objects.filter(community=self.pk, platform=0, created__year=year).values('user').count()
+        elif month:
+            count = CommunityNumbers.objects.filter(community=self.pk, platform=0, created__month=month).values('user').count()
+        elif week:
+            count = CommunityNumbers.objects.filter(community=self.pk, platform=0, created__week=week).values('user').count()
+        elif day:
+            count = CommunityNumbers.objects.filter(community=self.pk, platform=0, created__day=day).values('user').count()
+        else:
+            count = CommunityNumbers.objects.filter(community=self.pk, platform=0).values('user').count()
+        return count
+
+    def get_unical_comp_visiters_count(self, year, month, week, day):
+        from stst.models import CommunityNumbers
+
+        if year:
+            count = CommunityNumbers.objects.filter(community=self.pk, platform=0, created__year=year).values('user').distinct().count()
+        elif month:
+            count = CommunityNumbers.objects.filter(community=self.pk, platform=0, created__month=month).values('user').distinct().count()
+        elif week:
+            count = CommunityNumbers.objects.filter(community=self.pk, platform=0, created__week=week).values('user').distinct().count()
+        elif day:
+            count = CommunityNumbers.objects.filter(community=self.pk, platform=0, created__day=day).values('user').distinct().count()
+        else:
+            count = CommunityNumbers.objects.filter(community=self.pk, platform=0).values('user').distinct().count()
+        return count
 
 
 class CommunityMembership(models.Model):
