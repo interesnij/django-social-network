@@ -362,7 +362,7 @@ class CommunityStateCobertura(TemplateView):
 		self.query = self.community.get_unical_visiter_query(year=None, month=None, week=None, day=None)
 		self.unical_users_count = self.query.count()
 		self.phone = len(self.query.filter(platform=1))/len(query)*100
-        self.comp = len(self.query.filter(platform=0))/len(query)*100
+		self.comp = len(self.query.filter(platform=0))/len(query)*100
 		return super(CommunityStateCobertura,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
