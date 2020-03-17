@@ -573,6 +573,9 @@ class Community(models.Model):
         return self.memberships.count()
 
     def get_visiters_users(self, year, month, week, day):
+        """
+        все просмотры сообщества, с выходом на человека, с фильтрацией по времени. Наверное нужно только для подсчета.
+        """
         from stst.models import CommunityNumbers
         from users.models import User
         if year:
@@ -592,6 +595,9 @@ class Community(models.Model):
         return query
 
     def get_unical_visiters_users(self, year, month, week, day):
+        """
+        все уникальные просмотры сообщества, с выходом на человека, с фильтрацией по времени.
+        """
         from stst.models import CommunityNumbers
         from users.models import User
 
@@ -609,7 +615,28 @@ class Community(models.Model):
         query = User.objects.filter(id__in=ids)
         return query
 
+    def get_unical_users_count(self, year, month, week, day):
+        """
+        подсчет просмотров сообщества с компа и телефона в общем, с фильтрацией по времени.
+        """
+        from stst.models import CommunityNumbers
+
+        if year:
+            count = CommunityNumbers.objects.filter(community=self.pk, created__year=year).values('user').count()
+        elif month:
+            count = CommunityNumbers.objects.filter(community=self.pk, created__month=month).values('user').count()
+        elif week:
+            count = CommunityNumbers.objects.filter(community=self.pk, created__week=week).values('user').count()
+        elif day:
+            count = CommunityNumbers.objects.filter(community=self.pk, created__day=day).values('user').count()
+        else:
+            count = CommunityNumbers.objects.filter(community=self.pk).values('user').count()
+        return count
+
     def get_mobile_visiters_count(self, year, month, week, day):
+        """
+        подсчет просмотров сообщества с телефона, с фильтрацией по времени.
+        """
         from stst.models import CommunityNumbers
 
         if year:
@@ -627,6 +654,9 @@ class Community(models.Model):
         return count
 
     def get_unical_mobile_visiters_count(self, year, month, week, day):
+        """
+        подсчет уникальных просмотров сообщества с телефона, с фильтрацией по времени.
+        """
         from stst.models import CommunityNumbers
 
         if year:
@@ -642,6 +672,9 @@ class Community(models.Model):
         return count
 
     def get_comp_visiters_count(self, year, month, week, day):
+        """
+        подсчет просмотров сообщества с компа, с фильтрацией по времени.
+        """
         from stst.models import CommunityNumbers
 
         if year:
@@ -657,6 +690,9 @@ class Community(models.Model):
         return count
 
     def get_unical_comp_visiters_count(self, year, month, week, day):
+        """
+        подсчет уникальных просмотров сообщества с компа, с фильтрацией по времени.
+        """
         from stst.models import CommunityNumbers
 
         if year:

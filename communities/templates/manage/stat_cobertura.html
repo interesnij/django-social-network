@@ -15,10 +15,13 @@
         <div class="card">
           <div class="card-header">
               <div class="media">
-                  <div class="media-body"><h5 class="mt-1">Гости сообщества </h5></div>
+                  <div class="media-body"><h5 class="mt-1">Гости сообщества</h5></div>
               </div>
           </div>
           <div class="card-body px-0 py-0">
+            охват общий в количестве: {{ unical_users_count }}
+            с телефона зашли: {{ unical_mobile_count }}
+            с компьютера зашли: {{ unical_comp_count }}
             <ul class="list-group" id="follows_container">
                   {% for object in visiters_users %}
                   <li class="list-group-item">
