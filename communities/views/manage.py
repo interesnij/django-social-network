@@ -354,37 +354,46 @@ class CommunityStaffWindow(TemplateView):
 		return context
 
 
-class CommunityStateCobertura(TemplateView):
+class CommunityStateCoberturaMonth(TemplateView):
 	template_name = None
-	phone = None
-	comp = None
 
 	def get(self,request,*args,**kwargs):
 		from stst.models import CommunityNumbers
 
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		self.template_name = self.community.get_manage_template(folder="manage/", template="stat_cobertura.html", request=request)
+		self.template_name = self.community.get_manage_template(folder="manage/", template="stat_cobertura_month.html", request=request)
 		self.months = [i.month for i in CommunityNumbers.objects.values_list('created', flat=True)]
-		self.cur_month = self.months[0]
-		self.prev_month = self.months[1]
-		self.prev2_month = self.months[2]
-		self.prev3_month = self.months[3]
-		self.prev4_month = self.months[4]
-		self.today = datetime.now()
-		self.today_query = CommunityNumbers.objects.filter(community=self.community.pk, created__month=self.cur_month).distinct().values('platform').count()
+		self.today_query = CommunityNumbers.objects.filter(community=self.community.pk, created__month=self.months[0]).distinct().values('platform')
+		if self.months[1]:
+			self.prev_query = CommunityNumbers.objects.filter(community=self.community.pk, created__month=self.months[1]).distinct().values('platform')
+		if self.months[2]:
+			self.prev2_query = CommunityNumbers.objects.filter(community=self.community.pk, created__month=self.months[2]).distinct().values('platform')
+		if self.months[3]:
+			self.prev3_query = CommunityNumbers.objects.filter(community=self.community.pk, created__month=self.months[3]).distinct().values('platform')
+		if self.months[4]:
+			self.prev4_query = CommunityNumbers.objects.filter(community=self.community.pk, created__month=self.months[4]).distinct().values('platform')
 
-		if self.today_count:
+		if self.today_query:
 			self.phone_count = self.today_query.filter(platform=1)
 			self.comp_count = self.today_query.filter(platform=0)
 			self.phone = len(self.phone_count)/len(self.today_query)*100
 			self.comp = len(self.comp_count)/len(self.today_query)*100
-		return super(CommunityStateCobertura,self).get(request,*args,**kwargs)
+		return super(CommunityStateCoberturaMonth,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context = super(CommunityStateCobertura,self).get_context_data(**kwargs)
+		context = super(CommunityStateCoberturaMonth,self).get_context_data(**kwargs)
 		context["community"] = self.community
-		context["today_count"] = self.today_count
-		context["phone"] = self.phone
-		context["comp"] = self.comp
-		context["month"] = self.months
+		context["today_count"] = len(self.today_query)
+		context["phone"] = self.phone or None
+		context["comp"] = self.comp or None
+		context["month"] = self.months[0] or None
+		context["prev_month"] = self.months[1] or None
+		context["prev2_month"] = self.months[2] or None
+		context["prev3_month"] = self.months[3] or None
+		context["prev4_month"] = self.months[4] or None
+		context["today_count"] =  len(self.today_query) or None
+		context["prev_month"] =  len(self.prev_query[1]) or None
+		context["prev2_month"] =  len(self.prev_query[2]) or None
+		context["prev3_month"] =  len(self.prev_query[3]) or None
+		context["prev4_month"] =  len(self.prev_query[4]) or None
 		return context

@@ -18,11 +18,14 @@
                   <div class="media-body"><h5 class="mt-1">Общий охват</h5></div>
               </div>
           </div>
-          {{ month }}
           <div class="card-body px-0 py-0">
-            этот месяц - {{ month }}: {{ today_count }}<br>
-            {% if phone %}С телефона {{ phone }}%{% endif %}<br>
-            {% if comp %}С компьютера {{ comp }}%{% endif %}<br>
+            {{ month }}: {{ today_count }}<br>
+            {{ prev_month }}: {{ prev_month }}<br>
+            {{ prev2_month }}: {{ prev2_month }}<br>
+            {{ prev3_month }}: {{ prev3_month }}<br>
+            {{ prev4_month }}: {{ prev4_month }}<br>
+            <br><br>
+            (Телефон {{ phone }}% / Компьютер {{ comp }}%)
           </div>
         </div>
     </div>
