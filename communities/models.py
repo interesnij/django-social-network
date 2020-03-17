@@ -639,15 +639,15 @@ class Community(models.Model):
         from stst.models import CommunityNumbers
 
         if year:
-            query = CommunityNumbers.objects.filter(community=self.pk, created__year=year).values('platform')
+            query = CommunityNumbers.objects.filter(community=self.pk, created__year=year).distinct().values('platform')
         elif month:
-            query = CommunityNumbers.objects.filter(community=self.pk, created__month=month).values('platform')
+            query = CommunityNumbers.objects.filter(community=self.pk, created__month=month).distinct().values('platform')
         elif week:
-            query = CommunityNumbers.objects.filter(community=self.pk, created__week=week).values('platform')
+            query = CommunityNumbers.objects.filter(community=self.pk, created__week=week).distinct().values('platform')
         elif day:
-            query = CommunityNumbers.objects.filter(community=self.pk, created__day=day).values('platform')
+            query = CommunityNumbers.objects.filter(community=self.pk, created__day=day).distinct().values('platform')
         else:
-            query = CommunityNumbers.objects.filter(community=self.pk).values('platform')
+            query = CommunityNumbers.objects.filter(community=self.pk).distinct().values('platform')
 
         comp_query = query.filter(platform=0).count()
         phone_query = query.filter(platform=1).count()
