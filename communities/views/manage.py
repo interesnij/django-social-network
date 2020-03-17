@@ -359,7 +359,7 @@ class CommunityStateCoverView(TemplateView):
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.template_name = self.community.get_manage_template(folder="manage/", template="stat.html", request=request)
-		self.visiters_users = self.community.get_visiters_users()
+		self.visiters_users = self.community.get_visiters_users(year=None, month=None, week=None, day=None)
 		return super(CommunityStateCoverView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
