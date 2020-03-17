@@ -364,8 +364,7 @@ class CommunityStateCoberturaMonth(TemplateView):
 		self.template_name = self.community.get_manage_template(folder="manage/", template="stat_cobertura_month.html", request=request)
 		self.months = [i.month for i in CommunityNumbers.objects.values_list('created', flat=True)]
 		self.today_query = CommunityNumbers.objects.filter(community=self.community.pk, created__month=self.months[0]).distinct().values('platform')
-		if self.months[1]:
-			self.prev_query = CommunityNumbers.objects.filter(community=self.community.pk, created__month=self.months[1]).distinct().values('platform')
+		self.prev_query = CommunityNumbers.objects.filter(community=self.community.pk, created__month=self.months[1]).distinct().values('platform') or None
 		if self.months[2]:
 			self.prev2_query = CommunityNumbers.objects.filter(community=self.community.pk, created__month=self.months[2]).distinct().values('platform')
 		if self.months[3]:
