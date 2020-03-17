@@ -651,9 +651,7 @@ class Community(models.Model):
 
         comp_query = query.filter(platform=0).count()
         phone_query = query.filter(platform=1).count()
-        comp_procent = comp_query
-        phone_procent = phone_query
-        return '{} с компьютера, {} с телефона'.format(comp_procent, phone_procent)
+        return '{} с компьютера, {} с телефона'.format(comp_query, phone_query)
 
     def get_unical_mobile_visiters_count(self, year, month, week, day):
         """
