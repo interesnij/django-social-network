@@ -19,7 +19,7 @@ urlpatterns = [
     url(r'^editors/(?P<pk>[0-9]+)/$', login_required(CommunityEditorsView.as_view()), name='community_editors'),
     url(r'^rekl/(?P<pk>[0-9]+)/$', login_required(CommunityAdvertisersView.as_view()), name='community_advertisers'),
 
-    url(r'^statistics/(?P<pk>[0-9]+)/$', CommunityStateCoverView.as_view(), name='community_stat_coverage'),
+    url(r'^cuberture_statistics/(?P<pk>[0-9]+)/$', CommunityStateCobertura.as_view(), name='community_stat_coverage'),
 
     url(r'^staff_window/(?P<pk>[0-9]+)/(?P<uuid>[0-9a-f-]+)/$', login_required(CommunityStaffWindow.as_view())),
 ]

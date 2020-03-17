@@ -586,7 +586,9 @@ class Community(models.Model):
         else:
             v_s = CommunityNumbers.objects.filter(community=self.pk).values('user')
         ids = [use['user'] for use in v_s]
-        query = User.objects.filter(id__in=ids)
+        query = []
+        for user in ids:
+            query = query + [User.objects.get(id=user), ]
         return query
 
     def get_unical_visiters_users(self, year, month, week, day):
