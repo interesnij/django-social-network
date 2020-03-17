@@ -372,8 +372,8 @@ class CommunityStateCobertura(TemplateView):
 		if self.today_count:
 			self.phone_count = self.today_query.filter(platform=1)
 			self.comp_count = self.today_query.filter(platform=0)
-			self.phone = len(self.phone_count)/len(self.query)*100
-			self.comp = len(self.comp_count)/len(self.query)*100
+			self.phone = len(self.phone_count)/len(self.today_query)*100
+			self.comp = len(self.comp_count)/len(self.today_query)*100
 		return super(CommunityStateCobertura,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
