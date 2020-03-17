@@ -20,8 +20,7 @@
           </div>
           <div class="card-body px-0 py-0">
             охват общий в количестве: {{ unical_users_count }}<br>
-            с телефона зашли: {{ unical_mobile_count }}<br>
-            с компьютера зашли: {{ unical_comp_count }}<br>
+            {{ platform_count }}<br>
             <ul class="list-group" id="follows_container">
                   {% for object in visiters_users %}
                   <li class="list-group-item">

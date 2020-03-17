@@ -632,7 +632,7 @@ class Community(models.Model):
             count = CommunityNumbers.objects.filter(community=self.pk).values('user').distinct().count()
         return count
 
-    def get_mobile_visiters_count(self, year, month, week, day):
+    def get_platform_count(self, year, month, week, day):
         """
         подсчет просмотров сообщества с телефона, с фильтрацией по времени.
         """
@@ -649,8 +649,10 @@ class Community(models.Model):
         else:
             count = CommunityNumbers.objects.filter(community=self.pk, platform=1).values('user').count()
 
-        count = CommunityNumbers.objects.filter(community=self.pk, platform=1).values('user').count()
-        return count
+        query = CommunityNumbers.objects.filter(community=self.pk).values('platform')
+        comp_query = query.filter(platform=0)
+        phone_query = query.filter(platform=1)
+        return '{} с компьютера, {} с телефона'.format(comp_query, phone_query)
 
     def get_unical_mobile_visiters_count(self, year, month, week, day):
         """
