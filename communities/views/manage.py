@@ -382,5 +382,4 @@ class CommunityStateCobertura(TemplateView):
 		context["phone"] = self.phone
 		context["comp"] = self.comp
 		context["month"] = self.today.month
-		context["year"] = self.today.year
 		return context

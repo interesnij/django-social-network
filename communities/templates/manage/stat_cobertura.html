@@ -7,7 +7,7 @@
 <div class="row">
     <div class="col-md-8 order-1">
         <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Поиск по фигурантам" aria-label="Recipient's username">
+            <input type="text" class="form-control" placeholder="Поиск по фигурантам">
             <div class="input-group-append">
                 <button class="btn btn-outline-link" type="button">Искать</button>
             </div>
@@ -19,7 +19,7 @@
               </div>
           </div>
           <div class="card-body px-0 py-0">
-            охват общий - {{ month }}.{{ year }}: {{ today_count }}<br>
+            этот месяц - {{ month|date:"j" }}: {{ today_count }}<br>
             {% if phone %}С телефона {{ phone }}%{% endif %}<br>
             {% if comp %}С компьютера {{ comp }}%{% endif %}<br>
           </div>
