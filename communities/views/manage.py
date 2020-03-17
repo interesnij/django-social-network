@@ -362,7 +362,7 @@ class CommunityStateCobertura(TemplateView):
 		self.template_name = self.community.get_manage_template(folder="manage/", template="stat_cobertura.html", request=request)
 
 		self.today = datetime.now()
-		self.query = self.community.get_unical_visiter_query(year=None, month=None, week=self.today.week, day=None)
+		self.query = self.community.get_unical_visiter_query(year=None, month=self.today.month, week=None, day=None)
 		self.unical_users_count = len(self.query)
 		self.phone_count = self.query.filter(platform=1)
 		self.comp_count = self.query.filter(platform=0)
