@@ -370,6 +370,7 @@ class CommunityStateCobertura(TemplateView):
 	def get_context_data(self,**kwargs):
 		context = super(CommunityStateCobertura,self).get_context_data(**kwargs)
 		context["community"] = self.community
+		context["unical_users_count"] = self.unical_users_count
 		context["phone"] = self.phone
 		context["comp"] = self.comp
 		return context
