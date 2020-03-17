@@ -622,15 +622,15 @@ class Community(models.Model):
         from stst.models import CommunityNumbers
 
         if year:
-            count = CommunityNumbers.objects.filter(community=self.pk, created__year=year).values('user').count()
+            count = CommunityNumbers.objects.filter(community=self.pk, created__year=year).values('user').distinct().count()
         elif month:
-            count = CommunityNumbers.objects.filter(community=self.pk, created__month=month).values('user').count()
+            count = CommunityNumbers.objects.filter(community=self.pk, created__month=month).values('user').distinct().count()
         elif week:
-            count = CommunityNumbers.objects.filter(community=self.pk, created__week=week).values('user').count()
+            count = CommunityNumbers.objects.filter(community=self.pk, created__week=week).values('user').distinct().count()
         elif day:
-            count = CommunityNumbers.objects.filter(community=self.pk, created__day=day).values('user').count()
+            count = CommunityNumbers.objects.filter(community=self.pk, created__day=day).values('user').distinct().count()
         else:
-            count = CommunityNumbers.objects.filter(community=self.pk).values('user').count()
+            count = CommunityNumbers.objects.filter(community=self.pk).values('user').distinct().count()
         return count
 
     def get_mobile_visiters_count(self, year, month, week, day):
