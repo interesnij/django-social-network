@@ -262,7 +262,6 @@ class Community(models.Model):
 
         elif request.user.is_authenticated and self.is_public():
             template_name = folder + "public_" + template
-            community_views_plus(user_pk=request.user.pk, community_pk=self.pk)
         elif request.user.is_authenticated and self.is_closed():
             template_name = folder + "close_" + template
         elif request.user.is_authenticated and self.is_private():
