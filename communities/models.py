@@ -639,19 +639,18 @@ class Community(models.Model):
         from stst.models import CommunityNumbers
 
         if year:
-            count = CommunityNumbers.objects.filter(community=self.pk, platform=1, created__year=year).values('user').count()
+            count = CommunityNumbers.objects.filter(community=self.pk, platform=1, created__year=year).values('platform')
         elif month:
-            count = CommunityNumbers.objects.filter(community=self.pk, platform=1, created__month=month).values('user').count()
+            count = CommunityNumbers.objects.filter(community=self.pk, platform=1, created__month=month).values('platform')
         elif week:
-            count = CommunityNumbers.objects.filter(community=self.pk, platform=1, created__week=week).values('user').count()
+            count = CommunityNumbers.objects.filter(community=self.pk, platform=1, created__week=week).values('platform')
         elif day:
-            count = CommunityNumbers.objects.filter(community=self.pk, platform=1, created__day=day).values('user').count()
+            count = CommunityNumbers.objects.filter(community=self.pk, platform=1, created__day=day).values('platform')
         else:
-            count = CommunityNumbers.objects.filter(community=self.pk, platform=1).values('user').count()
+            count = CommunityNumbers.objects.filter(community=self.pk, platform=1).values('platform')
 
-        query = CommunityNumbers.objects.filter(community=self.pk).values('platform')
-        comp_query = query.filter(platform=0)
-        phone_query = query.filter(platform=1)
+        comp_query = query.filter(platform=0).count()
+        phone_query = query.filter(platform=1).count()
         return '{} с компьютера, {} с телефона'.format(comp_query, phone_query)
 
     def get_unical_mobile_visiters_count(self, year, month, week, day):
