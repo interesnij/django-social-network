@@ -19,9 +19,9 @@
               </div>
           </div>
           <div class="card-body px-0 py-0">
-            охват общий - {{ month }}: {{ unical_users_count }}<br>
-            С телефона {{ phone }}%<br>
-            С компьютера {{ comp }}%<br>
+            охват общий - {{ month }}.{{ year }}: {{ unical_users_count }}<br>
+            {% if phone %}С телефона {{ phone }}%{% endif %}<br>
+            {% if comp %}С компьютера {{ comp }}%{% endif %}<br>
           </div>
         </div>
     </div>
