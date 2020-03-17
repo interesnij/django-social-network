@@ -410,5 +410,5 @@ class CommunityStateCoberturaMonth(TemplateView):
 		context["prev_count"] =  self.prev_count
 		context["prev2_count"] =  self.prev2_count
 		context["prev3_count"] =  self.prev3_count
-		context["prev4_count"] =  lself.prev4_count
+		context["prev4_count"] =  self.prev4_count
 		return context
