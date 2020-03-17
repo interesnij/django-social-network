@@ -648,12 +648,7 @@ class Community(models.Model):
             query = CommunityNumbers.objects.filter(community=self.pk, created__day=day).distinct().values('platform')
         else:
             query = CommunityNumbers.objects.filter(community=self.pk).distinct().values('platform')
-
-        comp_query = query.filter(platform=0).count()
-        phone_query = query.filter(platform=1).count()
-        phone = phone_query/len(query)*100
-        comp = comp_query/len(query)*100
-        return '{}% с компьютера, {}% с телефона'.format(comp, phone)
+        return query
 
     def get_unical_mobile_visiters_count(self, year, month, week, day):
         """
