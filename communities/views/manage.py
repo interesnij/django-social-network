@@ -365,18 +365,22 @@ class CommunityStateCoberturaMonth(TemplateView):
 		self.months = [i.month for i in CommunityNumbers.objects.values_list('created', flat=True)]
 		self.today_query = CommunityNumbers.objects.filter(community=self.community.pk, created__month=self.months[0]).distinct().values('platform')
 		try:
+			self.prev_month = self.months[1]
 			self.prev_query = CommunityNumbers.objects.filter(community=self.community.pk, created__month=self.months[1]).distinct().values('platform')
 		except:
 			self.prev_query = None
 		try:
+			self.prev2_month = self.months[2]
 			self.prev2_query = CommunityNumbers.objects.filter(community=self.community.pk, created__month=self.months[2]).distinct().values('platform')
 		except:
 			self.prev2_query = None
 		try:
+			self.prev3_month = self.months[3]
 			self.prev3_query = CommunityNumbers.objects.filter(community=self.community.pk, created__month=self.months[3]).distinct().values('platform')
 		except:
 			self.prev3_query = None
 		try:
+			self.prev4_month = self.months[4]
 			self.prev4_query = CommunityNumbers.objects.filter(community=self.community.pk, created__month=self.months[4]).distinct().values('platform')
 		except:
 			self.prev4_query = None
@@ -391,17 +395,16 @@ class CommunityStateCoberturaMonth(TemplateView):
 	def get_context_data(self,**kwargs):
 		context = super(CommunityStateCoberturaMonth,self).get_context_data(**kwargs)
 		context["community"] = self.community
-		context["today_count"] = len(self.today_query)
 		context["phone"] = self.phone or None
 		context["comp"] = self.comp or None
-		context["month"] = self.months[0] or None
-		context["prev_month"] = self.months[1] or None
-		context["prev2_month"] = self.months[2] or None
-		context["prev3_month"] = self.months[3] or None
-		context["prev4_month"] = self.months[4] or None
+		context["month"] = self.months[0]
+		context["prev_month"] = self.prev_month
+		context["prev2_month"] = self.prev2_month
+		context["prev3_month"] = self.prev3_month
+		context["prev4_month"] = self.prev4_month
 		context["today_count"] =  len(self.today_query) or None
-		context["prev_month"] =  len(self.prev_query[1]) or None
-		context["prev2_month"] =  len(self.prev_query[2]) or None
-		context["prev3_month"] =  len(self.prev_query[3]) or None
-		context["prev4_month"] =  len(self.prev_query[4]) or None
+		context["prev_count"] =  len(self.prev_query[1]) or None
+		context["prev2_count"] =  len(self.prev_query[2]) or None
+		context["prev3_count"] =  len(self.prev_query[3]) or None
+		context["prev4_count"] =  len(self.prev_query[4]) or None
 		return context
