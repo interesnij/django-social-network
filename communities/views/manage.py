@@ -360,15 +360,17 @@ class CommunityStateCobertura(TemplateView):
 	comp = None
 
 	def get(self,request,*args,**kwargs):
+		from stst.models import CommunityNumbers
+
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.template_name = self.community.get_manage_template(folder="manage/", template="stat_cobertura.html", request=request)
 
 		self.today = datetime.now()
-		self.today_query = self.community.get_unical_visiter_query(year=None, month=self.today.month, week=None, day=None)
-		self.today_count = len(self.query)
+		self.today_query = CommunityNumbers.objects.filter(community=self.pk, created__month=self.today.month).distinct().values('platform')
+		self.today_count = len(self.today_query)
 		if self.unical_users_count:
-			self.phone_count = self.query.filter(platform=1)
-			self.comp_count = self.query.filter(platform=0)
+			self.phone_count = self.today_query.filter(platform=1)
+			self.comp_count = self.today_query.filter(platform=0)
 			self.phone = len(self.phone_count)/len(self.query)*100
 			self.comp = len(self.comp_count)/len(self.query)*100
 		return super(CommunityStateCobertura,self).get(request,*args,**kwargs)
