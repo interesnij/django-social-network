@@ -368,6 +368,7 @@ class CommunityStateCobertura(TemplateView):
 		self.today = datetime.now()
 		self.today_query = CommunityNumbers.objects.filter(community=self.community.pk, created__month=self.today.month).distinct().values('platform')
 		self.today_count = len(self.today_query)
+		self.month_list = CommunityNumbers.objects.dates('DateField', 'month')
 		if self.today_count:
 			self.phone_count = self.today_query.filter(platform=1)
 			self.comp_count = self.today_query.filter(platform=0)
@@ -382,4 +383,5 @@ class CommunityStateCobertura(TemplateView):
 		context["phone"] = self.phone
 		context["comp"] = self.comp
 		context["month"] = self.today.month
+		context["month_list"] = self.month_list
 		return context
