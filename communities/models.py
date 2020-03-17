@@ -654,7 +654,7 @@ class Community(models.Model):
         query_count = query.count()
         comp_procent = comp_query / query_count
         phone_procent = phone_query / query_count
-        return '{}% с компьютера, {}% с телефона'.format(comp_procent, phone_procent)
+        return '{} с компьютера, {} с телефона'.format(comp_procent, phone_procent)
 
     def get_unical_mobile_visiters_count(self, year, month, week, day):
         """
