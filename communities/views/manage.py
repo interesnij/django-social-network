@@ -361,8 +361,10 @@ class CommunityStateCobertura(TemplateView):
 		self.template_name = self.community.get_manage_template(folder="manage/", template="stat_cobertura.html", request=request)
 		self.query = self.community.get_unical_visiter_query(year=None, month=None, week=None, day=None)
 		self.unical_users_count = len(self.query)
-		self.phone = self.query.filter(platform=1).count()/len(self.query)*100
-		self.comp = self.query.filter(platform=0).count()/len(self.query)*100
+		self.phone_count = self.query.filter(platform=1)
+		self.comp_count = self.query.filter(platform=0)
+		self.phone = len(self.phone_count)/len(self.query)*100
+		self.comp = len(self.comp_count)/len(self.query)*100
 		return super(CommunityStateCobertura,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
