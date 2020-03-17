@@ -368,7 +368,7 @@ class CommunityStateCobertura(TemplateView):
 		self.today = datetime.now()
 		self.today_query = CommunityNumbers.objects.filter(community=self.community.pk, created__month=self.today.month).distinct().values('platform')
 		self.today_count = len(self.today_query)
-		if self.unical_users_count:
+		if self.today_count:
 			self.phone_count = self.today_query.filter(platform=1)
 			self.comp_count = self.today_query.filter(platform=0)
 			self.phone = len(self.phone_count)/len(self.query)*100
