@@ -376,4 +376,5 @@ class CommunityStateCobertura(TemplateView):
 		context["unical_users_count"] = self.unical_users_count
 		context["phone"] = self.phone
 		context["comp"] = self.comp
+		context["month"] = self.today.month
 		return context
