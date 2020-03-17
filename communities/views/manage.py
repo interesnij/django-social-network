@@ -7,7 +7,6 @@ from django.views import View
 from communities.forms import *
 from users.models import User
 from follows.models import CommunityFollow
-from common.utils import is_mobile
 
 
 class CommunityGeneralChange(TemplateView):
@@ -354,15 +353,17 @@ class CommunityStaffWindow(TemplateView):
 		return context
 
 
-class CommunityStateCoverView(TemplateView): 
+class CommunityStateCoverView(TemplateView):
 	template_name = None
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.template_name = self.community.get_manage_template(folder="manage/", template="stat.html", request=request)
+		self.visiters_users = self.community.get_visiters_users()
 		return super(CommunityStateCoverView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		context = super(CommunityStateCoverView,self).get_context_data(**kwargs)
 		context["community"] = self.community
+		context["visiters_users"] = self.visiters_users
 		return context

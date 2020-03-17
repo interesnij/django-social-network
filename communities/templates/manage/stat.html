@@ -20,7 +20,7 @@
           </div>
           <div class="card-body px-0 py-0">
             <ul class="list-group" id="follows_container">
-                  {% for object in community.get_visiters_users %}
+                  {% for object in visiters_users %}
                   <li class="list-group-item">
                       <div class="media">
                         <a href="{% url 'user' pk=object.pk %}" class="ajax">
