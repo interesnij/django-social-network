@@ -364,13 +364,22 @@ class CommunityStateCoberturaMonth(TemplateView):
 		self.template_name = self.community.get_manage_template(folder="manage/", template="stat_cobertura_month.html", request=request)
 		self.months = [i.month for i in CommunityNumbers.objects.values_list('created', flat=True)]
 		self.today_query = CommunityNumbers.objects.filter(community=self.community.pk, created__month=self.months[0]).distinct().values('platform')
-		self.prev_query = CommunityNumbers.objects.filter(community=self.community.pk, created__month=self.months[1]).distinct().values('platform') or None
-		if self.months[2]:
+		try:
+			self.prev_query = CommunityNumbers.objects.filter(community=self.community.pk, created__month=self.months[1]).distinct().values('platform')
+		except:
+			self.prev_query = None
+		try:
 			self.prev2_query = CommunityNumbers.objects.filter(community=self.community.pk, created__month=self.months[2]).distinct().values('platform')
-		if self.months[3]:
+		except:
+			self.prev2_query = None
+		try:
 			self.prev3_query = CommunityNumbers.objects.filter(community=self.community.pk, created__month=self.months[3]).distinct().values('platform')
-		if self.months[4]:
+		except:
+			self.prev3_query = None
+		try:
 			self.prev4_query = CommunityNumbers.objects.filter(community=self.community.pk, created__month=self.months[4]).distinct().values('platform')
+		except:
+			self.prev4_query = None
 
 		if self.today_query:
 			self.phone_count = self.today_query.filter(platform=1)
