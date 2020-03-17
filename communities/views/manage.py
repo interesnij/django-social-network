@@ -362,7 +362,7 @@ class CommunityStateCobertura(TemplateView):
 		self.visiters_users = self.community.get_visiters_users(year=None, month=None, week=None, day=None)
 		self.unical_users_count = self.community.get_unical_users_count(year=None, month=None, week=None, day=None)
 		self.unical_mobile_count = self.community.get_unical_mobile_visiters_count(year=None, month=None, week=None, day=None)
-		self.unical_comp_count = self.community.get_unical_users_count(year=None, month=None, week=None, day=None)
+		self.unical_comp_count = self.community.get_unical_comp_visiters_count(year=None, month=None, week=None, day=None)
 		return super(CommunityStateCobertura,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
