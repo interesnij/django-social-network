@@ -240,7 +240,7 @@ class Community(models.Model):
 
     def get_template(self, folder, template, request):
         import re
-        from common.utils import community_views_plus
+        from stst.models import CommunityNumbers
 
         if request.user.is_authenticated and request.user.is_member_of_community_with_name(self.name):
             if request.user.is_moderator_of_community_with_name(self.name):
@@ -279,6 +279,9 @@ class Community(models.Model):
         MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             template_name = "mob_" + template_name
+            CommunityNumbers.objects.create(visitor=request.user.pk, target=self.pk, platform=1)
+        else:
+            CommunityNumbers.objects.create(visitor=request.user.pk, target=self.pk, platform=0)
         return template_name
 
     def get_manage_template(self, folder, template, request):

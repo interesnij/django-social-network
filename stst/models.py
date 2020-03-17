@@ -19,6 +19,7 @@ class UserNumbers(models.Model):
 class CommunityNumbers(models.Model):
     user = models.PositiveIntegerField(default=0, verbose_name="Кто заходит")
     community = models.PositiveIntegerField(default=0, verbose_name="В какое сообщество заходил")
+    platform = models.PositiveIntegerField(default=0, verbose_name="0 Комп, 1 Телефон")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создано")
 
     class Meta:
@@ -31,6 +32,7 @@ class CommunityNumbers(models.Model):
 class GoodNumbers(models.Model):
     user = models.PositiveIntegerField(default=0, verbose_name="Кто смотрит")
     good = models.PositiveIntegerField(default=0, verbose_name="Какой товар смотрит")
+    platform = models.PositiveIntegerField(default=0, verbose_name="0 Комп, 1 Телефон")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создано")
 
     class Meta:
@@ -43,6 +45,7 @@ class GoodNumbers(models.Model):
 class VideoNumbers(models.Model):
     user = models.PositiveIntegerField(default=0, verbose_name="Кто смотрит")
     video = models.PositiveIntegerField(default=0, verbose_name="Какой ролик смотрит")
+    platform = models.PositiveIntegerField(default=0, verbose_name="0 Комп, 1 Телефон")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создано")
 
     class Meta:
