@@ -7,7 +7,7 @@ class UserNumbers(models.Model):
     visitor = models.PositiveIntegerField(default=0, verbose_name="Кто заходит")
     target = models.PositiveIntegerField(default=0, verbose_name="К кому заходит")
     platform = models.PositiveIntegerField(default=0, verbose_name="0 Комп, 1 Телефон")
-    created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создано")
+    created = models.DateField(auto_now_add=True, auto_now=False, verbose_name="Создано")
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
@@ -19,7 +19,7 @@ class CommunityNumbers(models.Model):
     user = models.PositiveIntegerField(default=0, verbose_name="Кто заходит")
     community = models.PositiveIntegerField(default=0, verbose_name="В какое сообщество заходил")
     platform = models.PositiveIntegerField(default=0, verbose_name="0 Комп, 1 Телефон")
-    created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создано")
+    created = models.DateField(auto_now_add=True, auto_now=False, verbose_name="Создано")
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
@@ -31,7 +31,7 @@ class GoodNumbers(models.Model):
     user = models.PositiveIntegerField(default=0, verbose_name="Кто смотрит")
     good = models.PositiveIntegerField(default=0, verbose_name="Какой товар смотрит")
     platform = models.PositiveIntegerField(default=0, verbose_name="0 Комп, 1 Телефон")
-    created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создано")
+    created = models.DateField(auto_now_add=True, auto_now=False, verbose_name="Создано")
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
@@ -44,7 +44,7 @@ class VideoNumbers(models.Model):
     user = models.PositiveIntegerField(default=0, verbose_name="Кто смотрит")
     video = models.PositiveIntegerField(default=0, verbose_name="Какой ролик смотрит")
     platform = models.PositiveIntegerField(default=0, verbose_name="0 Комп, 1 Телефон")
-    created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создано")
+    created = models.DateField(auto_now_add=True, auto_now=False, verbose_name="Создано")
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
@@ -56,7 +56,7 @@ class VideoNumbers(models.Model):
 class MusicNumbers(models.Model):
     user = models.PositiveIntegerField(default=0, verbose_name="Кто слушает")
     music = models.PositiveIntegerField(default=0, verbose_name="Какой трек слушает")
-    created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создано")
+    created = models.DateField(auto_now_add=True, auto_now=False, verbose_name="Создано")
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
@@ -68,7 +68,7 @@ class MusicNumbers(models.Model):
 class ItemNumbers(models.Model):
     user = models.PositiveIntegerField(default=0, verbose_name="Кто смотрит")
     item = models.PositiveIntegerField(default=0, verbose_name="Какую запись смотрит")
-    created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создано")
+    created = models.DateField(auto_now_add=True, auto_now=False, verbose_name="Создано")
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
