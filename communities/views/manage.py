@@ -360,8 +360,8 @@ class CommunityStateCobertura(TemplateView):
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.template_name = self.community.get_manage_template(folder="manage/", template="stat_cobertura.html", request=request)
-		
-		self.today = datetime.datetime.now()
+
+		self.today = datetime.now()
 		self.query = self.community.get_unical_visiter_query(year=None, month=None, week=self.today.week, day=None)
 		self.unical_users_count = len(self.query)
 		self.phone_count = self.query.filter(platform=1)
