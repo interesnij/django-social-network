@@ -367,5 +367,5 @@ class CommunityStateCobertura(TemplateView):
 		context = super(CommunityStateCobertura,self).get_context_data(**kwargs)
 		context["community"] = self.community
 		context["unical_users_count"] = self.unical_users_count
-		context["percent ratio"] = self.platform_count
+		context["percen_ratio"] = self.platform_count
 		return context
