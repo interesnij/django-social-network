@@ -225,7 +225,7 @@ window.chartColors = {
 		var config = {
 			type: 'line',
 			data: {
-				labels:{{ months }}.reverse(),
+				labels:[{% for object in months %} {{ object }}, {% endfor %}],
 				datasets: [{
 					label: 'Общий охват',
 					backgroundColor: window.chartColors.red,
