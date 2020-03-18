@@ -41,10 +41,10 @@ class CommunityCoberturaDay(TemplateView):
 		self.comp_count = self.days_query.filter(platform=0)
 		self.phone = len(self.phone_count)/len(self.days_query)*100
 		self.comp = len(self.comp_count)/len(self.days_query)*100
-		return super(CommunityCoberturaMonth,self).get(request,*args,**kwargs)
+		return super(CommunityCoberturaDay,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context = super(CommunityCoberturaMonth,self).get_context_data(**kwargs)
+		context = super(CommunityCoberturaDay,self).get_context_data(**kwargs)
 		context["community"] = self.community
 		context["phone"] = round(self.phone)
 		context["comp"] = round(self.comp)
