@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load get_unical_visit_of_month_for_community %}
+{% load get_month_name %}
 {% block title %}Статистика сообщества{% endblock %}
 {% block content %}
 
@@ -225,7 +225,7 @@ window.chartColors = {
 		var config = {
 			type: 'line',
 			data: {
-				labels:{{ months }}.reverse(),
+				labels:{{ months|get_month_name }}.reverse(),
 				datasets: [{
 					label: 'Общий охват',
 					backgroundColor: window.chartColors.red,
@@ -252,7 +252,7 @@ window.chartColors = {
 				responsive: true,
 				title: {
 					display: true,
-					text: 'Общий охват'
+					text: 'Общий охват по месяцам'
 				},
 				tooltips: {
 					mode: 'index',
