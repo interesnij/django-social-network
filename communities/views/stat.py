@@ -48,5 +48,5 @@ class CommunityCoberturaDay(TemplateView):
 		context["community"] = self.community
 		context["phone"] = round(self.phone)
 		context["comp"] = round(self.comp)
-		context["days"] = self.days[:5 ]
+		context["days"] = self.days[:5 ].order_by()
 		return context
