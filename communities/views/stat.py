@@ -13,8 +13,8 @@ class CommunityCoberturaMonth(TemplateView):
 		self.month_query = CommunityNumbers.objects.filter(community=self.community.pk, created__month=self.months[0]).distinct().values('platform')
 		self.phone_count = self.month_query.filter(platform=1)
 		self.comp_count = self.month_query.filter(platform=0)
-		self.phone = len(self.phone_count)/len(self.month_query)*100
-		self.comp = len(self.comp_count)/len(self.month_query)*100
+		self.phone = len(self.phone_count)/len(self.month_query)*100.round(1.5)
+		self.comp = len(self.comp_count)/len(self.month_query)*100.round(1.5)
 		return super(CommunityCoberturaMonth,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
