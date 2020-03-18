@@ -19,7 +19,9 @@
               </div>
           </div>
           {% for object in months %}
+          {%  if not forloop.first %}
             {{ object }} {{ object|get_views:community.pk }}<br>
+          {% endif %}
           {% endfor %}
           <div class="card-body px-0 py-0">
             {{ current }}: {{ month_views }}<br>
