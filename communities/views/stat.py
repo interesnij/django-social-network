@@ -9,16 +9,13 @@ class CommunityCoberturaMonth(TemplateView):
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.template_name = self.community.get_manage_template(folder="community_stat/", template="cobertura_month.html", request=request)
-		try:
-			_months = [i.month for i in CommunityNumbers.objects.values_list('created', flat=True)]
-			months = _months.distinct()[0:5]
-			self.month_query = CommunityNumbers.objects.filter(community=self.community.pk, created__month=self.months[0]).distinct().values('platform')
-			self.phone_count = self.month_query.filter(platform=1)
-			self.comp_count = self.month_query.filter(platform=0)
-			self.phone = len(self.phone_count)/len(self.month_query)*100
-			self.comp = len(self.comp_count)/len(self.month_query)*100
-		except:
-			pass
+		_months = [i.month for i in CommunityNumbers.objects.values_list('created', flat=True)]
+		months = _months.distinct()[0:5]
+		self.month_query = CommunityNumbers.objects.filter(community=self.community.pk, created__month=self.months[0]).distinct().values('platform')
+		self.phone_count = self.month_query.filter(platform=1)
+		self.comp_count = self.month_query.filter(platform=0)
+		self.phone = len(self.phone_count)/len(self.month_query)*100
+		self.comp = len(self.comp_count)/len(self.month_query)*100
 		return super(CommunityCoberturaMonth,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
