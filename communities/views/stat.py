@@ -49,6 +49,4 @@ class CommunityCoberturaDay(TemplateView):
 		context["phone"] = round(self.phone)
 		context["comp"] = round(self.comp)
 		context["days"] = self.days[:5 ]
-		context["day"] = self.days[0]
-		context["day_views"] = len(self.days_query)
 		return context
