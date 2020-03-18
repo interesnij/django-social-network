@@ -23,7 +23,7 @@ class CommunityCoberturaMonth(TemplateView):
 		context["community"] = self.community
 		context["phone"] = round(self.phone)
 		context["comp"] = round(self.comp)
-		context["months"] = self.months
+		context["months"] = self.months[:5]
 		context["current"] = self.months[0]
 		context["month_views"] = len(self.month_query)
 		return context
