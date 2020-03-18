@@ -30,8 +30,11 @@
               </div>
           </div>
           {% for object in months %}
-            {{ object }} {{ object|get_views:community.pk }}
+          {% if not forloop.first %}
+            {{ object }} {{ object|get_views:community.pk }}<br>
+          {% endif %}
           {% endfor %}
+          <br><br>
           <div class="card-body px-0 py-0">
             {{ month }}: {{ month_views }}<br>
 

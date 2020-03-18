@@ -30,10 +30,13 @@
               </div>
           </div>
           {% for object in days %}
+          {% if not forloop.first %}
             {{ object }} {{ object|get_views:community.pk }}<br>
+          {% endif %}
           {% endfor %}
+          <br><br>
           <div class="card-body px-0 py-0">
-            {{ day }}: {{ day_views }}<br>
+            Сегодня: {{ day_views }}<br>
 
             <br><br>
             (Телефон {{ phone }}% / Компьютер {{ comp }}%)
