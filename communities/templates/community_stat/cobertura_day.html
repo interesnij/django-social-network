@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load get_unical_visit_of_month_for_community %}
+{% load get_unical_visit_of_day_for_community %}
 {% block title %}Статистика сообщества{% endblock %}
 {% block content %}
 
@@ -18,22 +18,22 @@
                   <div class="media-body"><h5 class="mt-1">Общий охват</h5></div>
                   <div class="dropdown">
                 <button class="btn btn-primary dropdown-toggle mb-2" type="button" id="timeButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Месяц
+                    День
                 </button>
                 <div class="dropdown-menu" aria-labelledby="timeButton" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;">
-                    <a class="dropdown-item ajax" href="{% url 'community_cuberture_month' community.pk %}">День</a>
                     <a class="dropdown-item" href="#">Неделя</a>
+                    <a class="dropdown-item ajax" href="{% url 'community_cuberture_month' community.pk %}">Месяц</a>
                     <a class="dropdown-item" href="#">Год</a>
                     <a class="dropdown-item" href="#">Весь период</a>
                 </div>
             </div>
               </div>
           </div>
-          {% for object in months %}
+          {% for object in days %}
             {{ object }} {{ object|get_views:community.pk }}
           {% endfor %}
           <div class="card-body px-0 py-0">
-            {{ month }}: {{ month_views }}<br>
+            {{ day }}: {{ day_views }}<br>
 
             <br><br>
             (Телефон {{ phone }}% / Компьютер {{ comp }}%)
