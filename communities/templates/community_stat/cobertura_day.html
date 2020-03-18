@@ -261,7 +261,7 @@ window.chartColors = {
 		var config = {
 			type: 'line',
 			data: {
-				labels:{{ days }},
+				labels:{{ days }}.reverse(),
 				datasets: [{
 					label: 'Общий охват',
 					backgroundColor: window.chartColors.red,
