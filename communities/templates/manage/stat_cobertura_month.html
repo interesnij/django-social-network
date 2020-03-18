@@ -18,8 +18,8 @@
                   <div class="media-body"><h5 class="mt-1">Общий охват</h5></div>
               </div>
           </div>
-          {% for month in months %}
-          {{ month|get_views:community.pk }}
+          {% for object in months %}
+            {{ object|get_views:community.pk }}
           {% endfor %}
           <div class="card-body px-0 py-0">
             {{ month }}: {{ month_views }}<br>
