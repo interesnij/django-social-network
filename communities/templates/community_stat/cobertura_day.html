@@ -30,7 +30,7 @@
               </div>
           </div>
           {% for object in days %}
-            {{ object }} {{ object|get_views:community.pk }}
+            {{ object }} {{ object|get_views:community.pk }}<br>
           {% endfor %}
           <div class="card-body px-0 py-0">
             {{ day }}: {{ day_views }}<br>
