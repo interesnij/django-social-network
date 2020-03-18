@@ -44,7 +44,6 @@
               {{ object }} {{ object|get_views:community.pk }}<br>
             {% endfor %}
             <br><br>
-            {{ days }}| {{ wiews }}
           </div>
         </div>
     </div>
@@ -267,7 +266,7 @@ window.chartColors = {
 					label: 'Общий охват',
 					backgroundColor: window.chartColors.red,
 					borderColor: window.chartColors.red,
-          data: {{ wiews }},
+          data: {{ views }},
 					fill: false,
 				}, {
 					label: 'Еще вариант охвата',
