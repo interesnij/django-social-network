@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load thumbnail %}
+{% load get_unical_visit_of_month_for_community %}
 {% block title %}Статистика сообщества{% endblock %}
 {% block content %}
 
@@ -18,12 +18,12 @@
                   <div class="media-body"><h5 class="mt-1">Общий охват</h5></div>
               </div>
           </div>
+          {% for month in months %}
+          {{ month|get_views }}
+          {% endfor %}
           <div class="card-body px-0 py-0">
-            {{ month }}: {{ today_count }}<br>
-            {{ prev_month }}: {{ prev_month }}<br>
-            {{ prev2_month }}: {{ prev2_month }}<br>
-            {{ prev3_month }}: {{ prev3_month }}<br>
-            {{ prev4_month }}: {{ prev4_month }}<br>
+            {{ month }}: {{ month_views }}<br>
+
             <br><br>
             (Телефон {{ phone }}% / Компьютер {{ comp }}%)
           </div>
