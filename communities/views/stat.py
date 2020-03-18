@@ -3,7 +3,7 @@ from communities.models import Community
 from stst.models import CommunityNumbers
 
 
-class CommunityStateCoberturaMonth(TemplateView):
+class CommunityCoberturaMonth(TemplateView):
 	template_name = None
 
 	def get(self,request,*args,**kwargs):
@@ -18,10 +18,10 @@ class CommunityStateCoberturaMonth(TemplateView):
 			self.comp = len(self.comp_count)/len(self.today_query)*100
 		except:
 			pass
-		return super(CommunityStateCoberturaMonth,self).get(request,*args,**kwargs)
+		return super(CommunityCoberturaMonth,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context = super(CommunityStateCoberturaMonth,self).get_context_data(**kwargs)
+		context = super(CommunityCoberturaMonth,self).get_context_data(**kwargs)
 		context["community"] = self.community
 		context["phone"] = self.phone or 0
 		context["comp"] = self.comp or 0
