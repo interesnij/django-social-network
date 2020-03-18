@@ -38,7 +38,7 @@ class CommunityCoberturaDay(TemplateView):
 		self.days = [i['created__day'] for i in self._days]
 		self.views = []
 		for i in self.days:
-			view = CommunityNumbers.objects.filter(community=self.community.pk, created__day=i).distinct("user").values('platform')
+			view = CommunityNumbers.objects.filter(created__day=i, community=self.community.pk).distinct("user").count()
 			self.views += [view,]
 		return super(CommunityCoberturaDay,self).get(request,*args,**kwargs)
 
