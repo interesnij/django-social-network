@@ -9,8 +9,14 @@
         <div class="card">
           <div class="card-header">
               <div class="media">
-                  <div class="media-body"><h5 class="mt-1">Общий охват</h5></div>
-                  <div class="dropdown">
+                <div class="media-body">
+                  <h5 class="mt-1">Общий охват -
+                    <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=community.pk %}">
+                        {{ community.name }}
+                    </a>
+                  </h5>
+                </div>
+              <div class="dropdown">
                 <button class="btn btn-primary dropdown-toggle mb-2" type="button" id="timeButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Месяц
                 </button>
@@ -20,8 +26,8 @@
                     <a class="dropdown-item" href="#">Год</a>
                     <a class="dropdown-item" href="#">Весь период</a>
                 </div>
-            </div>
               </div>
+            </div>
           </div>
           <div class="card-body px-0 py-0">
             		<canvas id="canvas"></canvas>
@@ -237,7 +243,7 @@ window.chartColors = {
 					fill: false,
 					backgroundColor: window.chartColors.blue,
 					borderColor: window.chartColors.blue,
-					data: [0,], 
+					data: [0,],
 				}]
 			},
 			options: {

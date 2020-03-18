@@ -15,7 +15,13 @@
         <div class="card">
           <div class="card-header">
               <div class="media">
-                  <div class="media-body"><h5 class="mt-1">Общий охват</h5></div>
+                  <div class="media-body">
+										<h5 class="mt-1">Общий охват -
+											<a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=community.pk %}">
+													{{ community.name }}
+											</a>
+										</h5>
+									</div>
                   <div class="dropdown">
                 <button class="btn btn-primary dropdown-toggle mb-2" type="button" id="timeButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     День
