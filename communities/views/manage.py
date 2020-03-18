@@ -381,5 +381,5 @@ class CommunityStateCoberturaMonth(TemplateView):
 		context["comp"] = self.comp or 0
 		context["months"] = self.months or None
 		context["month"] = self.months[0] or None
-		context["month_views"] = len(today_query) or None
+		context["month_views"] = len(self.today_query) or None
 		return context
