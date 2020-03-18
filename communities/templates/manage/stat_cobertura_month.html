@@ -19,7 +19,7 @@
               </div>
           </div>
           {% for month in months %}
-          {{ month|get_views }}
+          {{ month|get_views:community.pk }}
           {% endfor %}
           <div class="card-body px-0 py-0">
             {{ month }}: {{ month_views }}<br>
