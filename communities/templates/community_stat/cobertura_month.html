@@ -17,12 +17,12 @@
               <div class="media">
                   <div class="media-body"><h5 class="mt-1">Общий охват</h5></div>
               </div>
-          </div>
+          </div>{{ months }}
           {% for object in months %}
             {{ object }} {{ object|get_views:community.pk }}<br>
           {% endfor %}
           <div class="card-body px-0 py-0">
-            {{ month }}: {{ month_views }}<br>
+            {{ current }}: {{ month_views }}<br>
 
             <br><br>
             (Телефон {{ phone }}% / Компьютер {{ comp }}%)

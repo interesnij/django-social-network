@@ -11,11 +11,11 @@ class CommunityCoberturaMonth(TemplateView):
 		self.template_name = self.community.get_manage_template(folder="community_stat/", template="cobertura_month.html", request=request)
 		try:
 			self.months = [i.month for i in CommunityNumbers.objects.values_list('created', flat=True)][0:5]
-			self.today_query = CommunityNumbers.objects.filter(community=self.community.pk, created__month=self.months[0]).distinct().values('platform')
-			self.phone_count = self.today_query.filter(platform=1)
-			self.comp_count = self.today_query.filter(platform=0)
-			self.phone = len(self.phone_count)/len(self.today_query)*100
-			self.comp = len(self.comp_count)/len(self.today_query)*100
+			self.month_query = CommunityNumbers.objects.filter(community=self.community.pk, created__month=self.months[0]).distinct().values('platform')
+			self.phone_count = self.month_query.filter(platform=1)
+			self.comp_count = self.month_query.filter(platform=0)
+			self.phone = len(self.phone_count)/len(self.month_query)*100
+			self.comp = len(self.comp_count)/len(self.month_query)*100
 		except:
 			pass
 		return super(CommunityCoberturaMonth,self).get(request,*args,**kwargs)
@@ -26,6 +26,6 @@ class CommunityCoberturaMonth(TemplateView):
 		context["phone"] = self.phone or 0
 		context["comp"] = self.comp or 0
 		context["months"] = self.months or None
-		context["month"] = self.months[0] or None
-		context["month_views"] = len(self.today_query) or None
+		context["current"] = self.months[0] or None
+		context["month_views"] = len(self.month_query) or None
 		return context
