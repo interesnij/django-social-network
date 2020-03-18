@@ -36,12 +36,13 @@
             </div>
               </div>
           </div>
-          {% for object in days %}
-            {{ object }} {{ object|get_views:community.pk }}<br>
-          {% endfor %}
-          <br><br>
+
           <div class="card-body px-0 py-0">
             		<canvas id="canvas"></canvas>
+            <br><br>
+            {% for object in days %}
+              {{ object }} {{ object|get_views:community.pk }}<br>
+            {% endfor %}
             <br><br>
             (Телефон {{ phone }}% / Компьютер {{ comp }}%)
           </div>
