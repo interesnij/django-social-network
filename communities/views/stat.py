@@ -45,6 +45,6 @@ class CommunityCoberturaDay(TemplateView):
 	def get_context_data(self,**kwargs):
 		context = super(CommunityCoberturaDay,self).get_context_data(**kwargs)
 		context["community"] = self.community
-		context["days"] = self.days.reverse()
+		context["days"] = self.days
 		context["views"] = self.views
 		return context
