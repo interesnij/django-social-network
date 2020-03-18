@@ -362,32 +362,8 @@ class CommunityStateCoberturaMonth(TemplateView):
 
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.template_name = self.community.get_manage_template(folder="manage/", template="stat_cobertura_month.html", request=request)
-		self.months = [i.month for i in CommunityNumbers.objects.values_list('created', flat=True)]
+		self.months = [i.month for i in CommunityNumbers.objects.values_list('created', flat=True)][1:5]
 		self.today_query = CommunityNumbers.objects.filter(community=self.community.pk, created__month=self.months[0]).distinct().values('platform')
-		try:
-			self.prev_month = self.months[1]
-			self.prev_count = CommunityNumbers.objects.filter(community=self.community.pk, created__month=self.months[1]).distinct().values('platform').count()
-		except:
-			self.prev_month = None
-			self.prev_count = None
-		try:
-			self.prev2_month = self.months[2]
-			self.prev2_count = CommunityNumbers.objects.filter(community=self.community.pk, created__month=self.months[2]).distinct().values('platform').count()
-		except:
-			self.prev2_month = None
-			self.prev2_count = None
-		try:
-			self.prev3_month = self.months[3]
-			self.prev3_count = CommunityNumbers.objects.filter(community=self.community.pk, created__month=self.months[3]).distinct().values('platform').count()
-		except:
-			self.prev3_count = None
-			self.prev3_month = None
-		try:
-			self.prev4_month = self.months[4]
-			self.prev4_count = CommunityNumbers.objects.filter(community=self.community.pk, created__month=self.months[4]).distinct().values('platform').count()
-		except:
-			self.prev4_count = None
-			self.prev4_month = None
 
 		if self.today_query:
 			self.phone_count = self.today_query.filter(platform=1)
@@ -399,16 +375,7 @@ class CommunityStateCoberturaMonth(TemplateView):
 	def get_context_data(self,**kwargs):
 		context = super(CommunityStateCoberturaMonth,self).get_context_data(**kwargs)
 		context["community"] = self.community
-		context["phone"] = self.phone or None
-		context["comp"] = self.comp or None
-		context["month"] = self.months[0]
-		context["prev_month"] = self.prev_month
-		context["prev2_month"] = self.prev2_month
-		context["prev3_month"] = self.prev3_month
-		context["prev4_month"] = self.prev4_month
-		context["today_count"] =  len(self.today_query)
-		context["prev_count"] =  self.prev_count
-		context["prev2_count"] =  self.prev2_count
-		context["prev3_count"] =  self.prev3_count
-		context["prev4_count"] =  self.prev4_count
+		context["phone"] = self.phone or 0
+		context["comp"] = self.comp or 0
+		context["months"] = self.months[0]
 		return context
