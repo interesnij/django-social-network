@@ -267,7 +267,7 @@ window.chartColors = {
 					label: 'Общий охват',
 					backgroundColor: window.chartColors.red,
 					borderColor: window.chartColors.red,
-          data: [{% for object in days %}{{ object|get_views:community.pk }},{% endfor %}],
+          data: {{ wiews }},
 					fill: false,
 				}, {
 					label: 'Еще вариант охвата',

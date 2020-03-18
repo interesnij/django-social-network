@@ -35,19 +35,16 @@ class CommunityCoberturaDay(TemplateView):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.template_name = self.community.get_manage_template(folder="community_stat/", template="cobertura_day.html", request=request)
 		self._days = CommunityNumbers.objects.values('created__day').distinct()[0:10]
-		self.__days = [i['created__day'] for i in self._days]
-		self.days = [a for CommunityNumbers.objects.filter(community=community_id, created__day=i).distinct("user").values('platform').count() in self.__days]
-		self.days_query = CommunityNumbers.objects.filter(community=self.community.pk, created__day=self.days[0]).distinct("user").values('platform')
-		self.phone_count = self.days_query.filter(platform=1)
-		self.comp_count = self.days_query.filter(platform=0)
-		self.phone = len(self.phone_count)/len(self.days_query)*100
-		self.comp = len(self.comp_count)/len(self.days_query)*100
+		self.days = [i['created__day'] for i in self._days]
+		self.views = []
+		for i in days:
+			view = CommunityNumbers.objects.filter(community=community_id, created__day=i).distinct("user").values('platform')
+			self.views += [view,]
 		return super(CommunityCoberturaDay,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		context = super(CommunityCoberturaDay,self).get_context_data(**kwargs)
 		context["community"] = self.community
-		context["phone"] = round(self.phone)
-		context["comp"] = round(self.comp)
-		context["days"] = self.days
+		context["days"] = self.days.reverse()
+		context["views"] = self.views
 		return context
