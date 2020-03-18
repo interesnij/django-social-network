@@ -10,7 +10,7 @@ class CommunityCoberturaMonth(TemplateView):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.template_name = self.community.get_manage_template(folder="community_stat/", template="cobertura_month.html", request=request)
 		self.months = [i.month for i in CommunityNumbers.objects.values_list('created', flat=True).distinct("created__month")]
-		self.months_v2 = CommunityNumbers.objects.only("created__month").distinct()
+		self.months_v2 = CommunityNumbers.objects.only("created__month")
 		self.month_query = CommunityNumbers.objects.filter(community=self.community.pk, created__month=self.months[0]).distinct().values('platform')
 		self.phone_count = self.month_query.filter(platform=1)
 		self.comp_count = self.month_query.filter(platform=0)
