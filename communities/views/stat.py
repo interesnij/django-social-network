@@ -34,7 +34,7 @@ class CommunityCoberturaDay(TemplateView):
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.template_name = self.community.get_manage_template(folder="community_stat/", template="cobertura_day.html", request=request)
-		self._days = CommunityNumbers.objects.values('created__day').distinct().order_by()
+		self._days = CommunityNumbers.objects.values('created__day').distinct()[0:10]
 		self.days = [i['created__day'] for i in self._days]
 		self.days_query = CommunityNumbers.objects.filter(community=self.community.pk, created__day=self.days[0]).distinct("user").values('platform')
 		self.phone_count = self.days_query.filter(platform=1)
@@ -48,5 +48,5 @@ class CommunityCoberturaDay(TemplateView):
 		context["community"] = self.community
 		context["phone"] = round(self.phone)
 		context["comp"] = round(self.comp)
-		context["days"] = self.days[:5 ]
+		context["days"] = self.days
 		return context
