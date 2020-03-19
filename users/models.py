@@ -928,12 +928,13 @@ class User(AbstractUser):
         return self.user_blocks.filter(blocked_user_id=user_id).exists()
 
     def get_last_location(self):
+        from users.model.profile import OneUserLocation, TwoUserLocation, ThreeUserLocation
         if self.user_ip.ip_3:
-            return self.user_location_3
+            return ThreeUserLocation.objects.get(user=self)
         elif self.user_ip.ip_2:
-            return self.user_location_2
+            return TwoUserLocation.objects.get(user=self)
         elif self.user_ip.ip_1:
-            return self.user_location
+            return OneUserLocation.objects.get(user=self)
         else:
             return "Местоположение не указано"
 
