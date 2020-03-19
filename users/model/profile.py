@@ -14,7 +14,7 @@ class UserProfile(models.Model):
     facebook_url = models.URLField(blank=True, verbose_name="Ссылка на facebook")
     instagram_url = models.URLField(blank=True, verbose_name="Ссылка на instagram")
     twitter_url = models.URLField(blank=True, verbose_name="Ссылка на twitter")
-    phone = models.CharField(max_length=15,unique=True, verbose_name="Телефон")
+    phone = models.CharField(max_length=15,verbose_name="Телефон")
 
 
     def __str__(self):
