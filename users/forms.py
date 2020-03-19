@@ -9,7 +9,7 @@ class GeneralUserForm(forms.ModelForm):
 
     class Meta:
         model = UserProfile
-        fields = ('first_name','last_name','sity','vk_url','youtube_url','facebook_url','instagram_url','twitter_url','phone',)
+        fields = ('first_name','last_name','sity','vk_url','youtube_url','facebook_url','instagram_url','twitter_url')
 
 
 class AboutUserForm(forms.ModelForm):
