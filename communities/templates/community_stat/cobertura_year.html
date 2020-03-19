@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block title %}Охват по годам{% endblock %}
+{% load item_count %}
 {% block content %}
 <style>
 	canvas{
@@ -35,10 +36,7 @@
               </div>
           </div>
 					{% for object in sities %}
-					{{ object }}<br>
-					{% endfor %}
-					{% for object in sity_count %}
-					{{ object }}<br>
+					{{ object }} ({{ community|sity_count:object.city_ru}})<br>
 					{% endfor %}
           <div class="card-body px-0 py-0">
             		<canvas id="canvas"></canvas>

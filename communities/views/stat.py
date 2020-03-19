@@ -13,7 +13,6 @@ class CommunityCoberturaYear(TemplateView):
 		self.years = CommunityNumbers.objects.dates('created', 'year')[0:10]
 		self.views = []
 		self.sities = []
-		self.sity_count = []
 		for i in self.years:
 			view = CommunityNumbers.objects.filter(created__year=i.year, community=self.community.pk).distinct("user").count()
 			self.views += [view,]
@@ -23,9 +22,7 @@ class CommunityCoberturaYear(TemplateView):
 		for user in self.users:
 			try:
 				sity = user.get_last_location().city_ru
-				count = user.get_last_location().filter(user_id=user.pk, city_ru=sity).count()
 				self.sities += [sity,]
-				self.sity_count += [count,]
 			except:
 				self.sities += ["Местоположение не указано",]
 
@@ -37,7 +34,6 @@ class CommunityCoberturaYear(TemplateView):
 		context["years"] = self.years
 		context["views"] = self.views
 		context["sities"] = set(self.sities)
-		context["sity_count"] = self.sity_count
 		return context
 
 
