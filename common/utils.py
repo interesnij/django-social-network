@@ -6,15 +6,6 @@ def safe_json(data):
 
     return mark_safe(json.dumps(data))
 
-def get_last_5_month(data):
-    from datetime import datetime, timedelta
-    month_list = []
-    today = datetime.now()
-    last_month = today.month - 1 if today.month>1 else 12
-    last_month_year = today.year if today.month > last_month else today.year - 1
-
-    return mark_safe(json.dumps(data))
-
 
 def is_mobile(request):
     import re

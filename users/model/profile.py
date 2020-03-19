@@ -52,6 +52,8 @@ class OneUserLocation(models.Model):
 
     def __str__(self):
         return '{}, {}, {}'.format(self.country_ru, self.region_ru, self.city_ru)
+    def get_sity(self):
+        return self.city_ru
 
 
 class TwoUserLocation(models.Model):

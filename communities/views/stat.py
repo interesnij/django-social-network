@@ -1,6 +1,7 @@
 from django.views.generic.base import TemplateView
 from communities.models import Community
 from stst.models import CommunityNumbers
+from users.models import User
 
 
 class CommunityCoberturaYear(TemplateView):
@@ -11,9 +12,17 @@ class CommunityCoberturaYear(TemplateView):
 		self.template_name = self.community.get_manage_template(folder="community_stat/", template="cobertura_year.html", request=request)
 		self.years = CommunityNumbers.objects.dates('created', 'year')[0:10]
 		self.views = []
+		self.sities = []
 		for i in self.years:
 			view = CommunityNumbers.objects.filter(created__year=i.year, community=self.community.pk).distinct("user").count()
 			self.views += [view,]
+		self.current_views = CommunityNumbers.objects.filter(created__year=years[0].year, community=self.community.pk).values('user').distinct()
+		self.user_ids = [use['user'] for use in self.current_views]
+		self.users = User.objects.filter(id__in=self.user_ids)
+		for user in self.users:
+			sity = user.get_last_location().get_sity()
+			self.sities += [sity,]
+
 		return super(CommunityCoberturaYear,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -21,6 +30,7 @@ class CommunityCoberturaYear(TemplateView):
 		context["community"] = self.community
 		context["years"] = self.years
 		context["views"] = self.views
+		context["sities"] = self.sities.distinct()
 		return context
 
 
