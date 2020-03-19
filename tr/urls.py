@@ -11,7 +11,7 @@ from ckeditor_uploader import views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'', include ('main.urls')),
-    url(r'^login/', auth_views.login, name='f_login'),
+    url(r'^login/', auth_views.LoginView.as_view(template_name=template_name), name='f_login'),
     url(r'^logout/$', auth_views.LogoutView.as_view(template_name="account/logout.html"), name='logout'),
     url(r'^signup/$', TemplateView.as_view(template_name="main/auth.html"), name='signup'),
     url(r'^email-verification/$', TemplateView.as_view(template_name="account/email_verification.html"), name='email-verification'),
