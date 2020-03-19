@@ -56,7 +56,7 @@ class CommunityTrafficMonth(TemplateView):
 		self.months = CommunityNumbers.objects.dates('created', 'month')[0:10]
 		self.views = []
 		for i in self.months:
-			view = CommunityNumbers.objects.filter(created__month=i, community=self.community.pk).count()
+			view = CommunityNumbers.objects.filter(created__month=i[2], community=self.community.pk).count()
 			self.views += [view,]
 		self.un_views = self.views.distinct("user")
 		return super(CommunityTrafficMonth,self).get(request,*args,**kwargs)
@@ -83,5 +83,5 @@ class CommunityTrafficDay(TemplateView):
 		context = super(CommunityTrafficDay,self).get_context_data(**kwargs)
 		context["community"] = self.community
 		context["days"] = self.days
-		
+
 		return context
