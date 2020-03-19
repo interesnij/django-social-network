@@ -240,7 +240,7 @@ window.chartColors = {
 		var config = {
 			type: 'line',
 			data: {
-				labels:[{% for object in days %} "{{ object }}", {% endfor %}].reverse(),
+				labels:[{% for object in days %} "{{ object }}", {% endfor %}],
 				datasets: [{
 					label: 'Уникальные просмотры',
 					backgroundColor: window.chartColors.red,
