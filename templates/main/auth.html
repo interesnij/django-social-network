@@ -44,7 +44,7 @@
                 <h1 class="font-weight-light mb-3 mt-4 content-color-secondary text-left">Вход</h1>
                 <div class="card mb-2">
                     <div class="card-body p-0">
-                        <input type="text" name="username" class="form-control form-control-lg border-0" placeholder="Телефон">
+                        <input type="text" name="phone" id="id_phone" class="form-control form-control-lg border-0" placeholder="Телефон">
                         <hr class="my-0">
                         <input type="password" name="password" class="form-control form-control-lg border-0" placeholder="Ваш пароль">
                     </div>
@@ -98,5 +98,65 @@
 </div>
 
 
+<!--
+<script type="text/javascript">
+  var ready = (callback) => {
+  if (document.readyState != "loading") callback();
+  else document.addEventListener("DOMContentLoaded", callback);
+  }
 
+    var error_response2 = function(data) {
+        $('.reg-response').html("Что-то пошло не так... ");
+    }
+    var susccess_response2 = function(data) {
+
+    }
+ready(() => {
+        $('#register_ajax').click(function() {
+            var form2 = $('#signup');
+            $.post(form2.attr('action'), form2.serialize())
+                .fail(function(data) {
+                    error_response2(data);
+                })
+                .done(function(data) {
+                    susccess_response(data);
+                });
+            return false;
+        });
+    });
+</script>
+
+<script>
+  var ready = (callback) => {
+  if (document.readyState != "loading") callback();
+  else document.addEventListener("DOMContentLoaded", callback);
+  }
+    var error_response = function(data) {
+        document.querySelector(".login-response").innerHTML("ошибка");
+    }
+    var susccess_response = function(data) {
+        window.location = "{% url 'main' %}";
+    }
+    var error_response = function(data) {
+          $('.login-response').html("ошибка");
+      }
+      var susccess_response = function(data) {
+          window.location = "{% url 'main' %}";
+      }
+    ready(() => {
+          $('#logg').click(function() {
+              var form3 = $('#login_form');
+              $.post(form3.attr('action'), form3.serialize())
+                  .fail(function(data) {
+                      error_response(data);
+                      console.log(data);
+                  })
+                  .done(function(data) {
+                      susccess_response(data);
+                  });
+              return false;
+      });
+    });
+</script>
+-->
 {% endblock %}
