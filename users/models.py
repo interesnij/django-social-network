@@ -17,7 +17,7 @@ class User(AbstractUser):
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, verbose_name="uuid")
     last_activity= models.DateTimeField(default=timezone.now, blank=True, verbose_name='Активность')
     phone = models.CharField(blank=True, max_length=40)
-    #USERNAME_FIELD = 'phone'
+    USERNAME_FIELD = 'phone'
 
     class Meta:
         verbose_name = 'пользователь'
