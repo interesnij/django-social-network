@@ -24,7 +24,7 @@ class CommunityCoberturaYear(TemplateView):
 				sity = user.get_last_location().city_ru
 				self.sities += [sity,]
 			except:
-				pass
+				self.sities += ["Местоположение не указано",]
 
 		return super(CommunityCoberturaYear,self).get(request,*args,**kwargs)
 
@@ -33,7 +33,7 @@ class CommunityCoberturaYear(TemplateView):
 		context["community"] = self.community
 		context["years"] = self.years
 		context["views"] = self.views
-		context["sities"] = self.sities.distinct()
+		context["sities"] = self.sities
 		return context
 
 
