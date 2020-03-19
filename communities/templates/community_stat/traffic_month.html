@@ -229,7 +229,7 @@ window.chartColors = {
 		var config = {
 			type: 'line',
 			data: {
-				labels:{{ months }}.reverse(),
+				labels:[{% for object in months %} "{{ object }}", {% endfor %}], 
 				datasets: [{
 					label: 'Уникальные просмотры',
 					backgroundColor: window.chartColors.red,

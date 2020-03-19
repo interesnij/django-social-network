@@ -239,7 +239,7 @@ window.chartColors = {
 		var config = {
 			type: 'line',
 			data: {
-				labels:{{ weeks }}.reverse(),
+				labels:[{% for object in weeks %} "{{ object }}", {% endfor %}],
 				datasets: [{
 					label: 'Общий охват',
 					backgroundColor: window.chartColors.red,
