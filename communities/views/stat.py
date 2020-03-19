@@ -20,8 +20,11 @@ class CommunityCoberturaYear(TemplateView):
 		self.user_ids = [use['user'] for use in self.current_views]
 		self.users = User.objects.filter(id__in=self.user_ids)
 		for user in self.users:
-			sity = user.get_last_location().city_ru
-			self.sities += [sity,]
+			try:
+				sity = user.get_last_location().city_ru
+				self.sities += [sity,]
+			except:
+				pass
 
 		return super(CommunityCoberturaYear,self).get(request,*args,**kwargs)
 
