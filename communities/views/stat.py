@@ -77,7 +77,7 @@ class CommunityTrafficDay(TemplateView):
 		self.template_name = self.community.get_manage_template(folder="community_stat/", template="traffic_day.html", request=request)
 		self.days = CommunityNumbers.objects.dates('created', 'day')[0:10]
 		self.views = []
-		for i in self.months:
+		for i in self.days:
 			view = CommunityNumbers.objects.filter(created__month=i.day, community=self.community.pk).count()
 			self.views += [view,]
 		self.un_views = self.views.distinct("user")
