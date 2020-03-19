@@ -38,7 +38,7 @@
     </div>
 
     <div class="col-md-5 h-md-100  h-sm-auto order-md-2">
-        <form action="" class="row align-items-center h-sm-auto">
+        <form action="{% url 'rest_login' %}" id="login_form" class="row align-items-center h-sm-auto">
             <div class="col-12">
                 <h1 class="font-weight-light mb-3 mt-4 content-color-secondary text-left">Вход</h1>
                 <div class="card mb-2">
@@ -121,37 +121,6 @@ ready(() => {
         });
     });
 </script>
-<script>
-  var ready = (callback) => {
-  if (document.readyState != "loading") callback();
-  else document.addEventListener("DOMContentLoaded", callback);
-  }
-    var error_response = function(data) {
-        document.querySelector(".login-response").innerHTML("ошибка");
-    }
-    var susccess_response = function(data) {
-        window.location = "{% url 'main' %}";
-    }
-    var error_response = function(data) {
-          $('.login-response').html("ошибка");
-      }
-      var susccess_response = function(data) {
-          window.location = "{% url 'main' %}";
-      }
-    ready(() => {
-          $('#logg').click(function() {
-              var form3 = $('#login_form');
-              $.post(form3.attr('action'), form3.serialize())
-                  .fail(function(data) {
-                      error_response(data);
-                      console.log(data);
-                  })
-                  .done(function(data) {
-                      susccess_response(data);
-                  });
-              return false;
-      });
-    });
-</script>
+
 
 {% endblock %}
