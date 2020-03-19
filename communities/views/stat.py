@@ -18,7 +18,7 @@ class CommunityCoberturaYear(TemplateView):
 			self.views += [view,]
 		self.current_views = CommunityNumbers.objects.filter(created__year=self.years[0].year, community=self.community.pk).values('user').distinct()
 		self.user_ids = [use['user'] for use in self.current_views]
-		self.users = User.objects.filter(id__in=self.user_ids)
+		self.users = User.objects.filter(id__in=self.user_ids).distinct()
 		for user in self.users:
 			try:
 				sity = user.get_last_location().city_ru
