@@ -5,9 +5,6 @@ from users.model.settings import UserItemNotifications, UserPrivate, UserColorSe
 from users.model.list import UserBlock
 
 
-class UserProfileInline(admin.TabularInline):
-    model = UserProfile
-
 class UserNotificationsSettingsInline(admin.TabularInline):
     model = UserItemNotifications
 
@@ -19,7 +16,6 @@ class UserColorSettingsInline(admin.TabularInline):
 
 class UserAdmin(admin.ModelAdmin):
     inlines = [
-        UserProfileInline,
         UserNotificationsSettingsInline,
         UserPrivateSettingsInline,
         UserColorSettingsInline,
@@ -35,3 +31,4 @@ admin.site.register(OneUserLocation)
 admin.site.register(TwoUserLocation)
 admin.site.register(ThreeUserLocation)
 admin.site.register(IPUser)
+admin.site.register(UserProfile)
