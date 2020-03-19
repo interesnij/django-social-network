@@ -38,7 +38,7 @@
     </div>
 
     <div class="col-md-5 h-md-100  h-sm-auto order-md-2">
-        <form action="{% url 'f_login' %}" id="login_form" class="row align-items-center h-sm-auto">
+        <form action="" id="login_form" class="row align-items-center h-sm-auto">
             <div class="col-12">
                 <h1 class="font-weight-light mb-3 mt-4 content-color-secondary text-left">Вход</h1>
                 <div class="card mb-2">
@@ -51,6 +51,7 @@
                 <small class="form-text text-muted login-response"></small>
                 <div class="text-left mb-4">
                     <button type="submit" id="logg" class=" btn btn-primary pink-gradient">Войти</button>
+                    <input type="hidden" name="next" value="{{ next }}">
                     <a href="" class="ajax" style="float:right;padding-top: 9px;">Забыли пароль?</a>
                 </div>
             </div>
