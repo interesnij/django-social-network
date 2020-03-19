@@ -16,7 +16,7 @@ class CommunityCoberturaYear(TemplateView):
 		for i in self.years:
 			view = CommunityNumbers.objects.filter(created__year=i.year, community=self.community.pk).distinct("user").count()
 			self.views += [view,]
-		self.current_views = CommunityNumbers.objects.filter(created__year=years[0].year, community=self.community.pk).values('user').distinct()
+		self.current_views = CommunityNumbers.objects.filter(created__year=self.years[0].year, community=self.community.pk).values('user').distinct()
 		self.user_ids = [use['user'] for use in self.current_views]
 		self.users = User.objects.filter(id__in=self.user_ids)
 		for user in self.users:

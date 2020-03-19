@@ -24,12 +24,12 @@
 									</div>
                   <div class="dropdown">
                 <button class="btn btn-primary dropdown-toggle mb-2" type="button" id="timeButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Неделя
+                    Год
                 </button>
                 <div class="dropdown-menu" aria-labelledby="timeButton" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;">
                     <a class="dropdown-item ajax" href="{% url 'community_traffic_day' community.pk %}">День</a>
                     <a class="dropdown-item ajax" href="{% url 'community_traffic_month' community.pk %}">Месяц</a>
-                    <a class="dropdown-item ajax" href="{% url 'community_traffic_year' community.pk %}">Год</a>
+                    <a class="dropdown-item ajax" href="{% url 'community_traffic_week' community.pk %}">Неделя</a>
                 </div>
             </div>
               </div>
