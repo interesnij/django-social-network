@@ -116,7 +116,7 @@
     </div>
 </div>
 </div>
-{% for object in days %} {{ object }} {% endfor %}
+
 <script defer src="/static/scripts/Chart.min.js" type="text/javascript"></script>
 <script>
   'use strict';
@@ -240,7 +240,7 @@ window.chartColors = {
 		var config = {
 			type: 'line',
 			data: {
-				labels:{{ days }}.reverse(),
+				labels:[{% for object in days %} {{ object }}, {% endfor %}].reverse(),
 				datasets: [{
 					label: 'Уникальные просмотры',
 					backgroundColor: window.chartColors.red,
