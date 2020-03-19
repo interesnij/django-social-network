@@ -24,7 +24,7 @@ class UserAdmin(admin.ModelAdmin):
         UserPrivateSettingsInline,
         UserColorSettingsInline,
     ]
-    search_fields = ('last_name','first_name')
+    search_fields = ('last_name','first_name', 'phone')
 
 
 
