@@ -53,7 +53,7 @@ class CommunityTrafficMonth(TemplateView):
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.template_name = self.community.get_manage_template(folder="community_stat/", template="traffic_month.html", request=request)
-		self.months = CommunityNumbers.objects.dates('DateField', 'month')[0:10]
+		self.months = CommunityNumbers.objects.dates('created', 'month')[0:10]
 		self.views = []
 		for i in self.months:
 			view = CommunityNumbers.objects.filter(created__month=i, community=self.community.pk).count()
@@ -75,7 +75,7 @@ class CommunityTrafficDay(TemplateView):
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.template_name = self.community.get_manage_template(folder="community_stat/", template="traffic_day.html", request=request)
-		self.days = CommunityNumbers.objects.dates('DateField', 'day')[0:10]
+		self.days = CommunityNumbers.objects.dates('created', 'day')[0:10]
 		self.views = []
 		for i in self.days:
 			view = CommunityNumbers.objects.filter(created__day=i, community=self.community.pk).count()
