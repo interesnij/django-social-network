@@ -134,7 +134,7 @@ class CommunityTrafficMonth(TemplateView):
 		for i in self.months:
 			view = CommunityNumbers.objects.filter(created__month=i.month, community=self.community.pk).count()
 			self.views += [view,]
-		for i in self.days:
+		for i in self.months:
 			view = CommunityNumbers.objects.filter(created__month=i.month, community=self.community.pk).distinct("user").count()
 			self.un_views += [view,]
 		return super(CommunityTrafficMonth,self).get(request,*args,**kwargs)

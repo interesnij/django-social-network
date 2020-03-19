@@ -171,7 +171,7 @@ class Item(models.Model):
         from users.model.profile import OneUserLocation
 
         v_s = ItemNumbers.objects.filter(item=self.pk).values('user')
-        ids = [use['user'] for use in v_s]
+        ids = [use['user'] for use in v_s] 
         sities = OneUserLocation.objects.filter(user_id__in=ids).distinct('city_ru')
         return sities
 
