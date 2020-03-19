@@ -34,7 +34,9 @@
             </div>
               </div>
           </div>
-					{{ sities }}
+					{% for object in sities %}
+					{{ object }}<br>
+					{% endfor %}
           <div class="card-body px-0 py-0">
             		<canvas id="canvas"></canvas>
             <br><br>
