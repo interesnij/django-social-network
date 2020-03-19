@@ -11,8 +11,8 @@ class CommunityCoberturaYear(TemplateView):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.template_name = self.community.get_manage_template(folder="community_stat/", template="cobertura_year.html", request=request)
 		self.years = CommunityNumbers.objects.dates('created', 'year')[0:10]
-		self.views = []
-		self.sities = []
+		#self.views = []
+		#self.sities = []
 		for i in self.years:
 			view = CommunityNumbers.objects.filter(created__year=i.year, community=self.community.pk).distinct("user").count()
 			self.views += [view,]
