@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load get_month_name %}
-{% block title %}Статистика сообщества{% endblock %}
+{% block title %}Охват по месяцам{% endblock %}
 {% block content %}
 
 <div class="container mt-4 main-container">
@@ -10,7 +10,7 @@
           <div class="card-header">
               <div class="media">
                 <div class="media-body">
-                  <h5 class="mt-1">Общий охват -
+                  <h5 class="mt-1">Охват по месяцам -
                     <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=community.pk %}">
                         {{ community.name }}
                     </a>
@@ -21,10 +21,9 @@
                     Месяц
                 </button>
                 <div class="dropdown-menu" aria-labelledby="timeButton" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;">
-                    <a class="dropdown-item ajax" href="{% url 'community_cuberture_day' community.pk %}">День</a>
-                    <a class="dropdown-item" href="#">Неделя</a>
-                    <a class="dropdown-item" href="#">Год</a>
-                    <a class="dropdown-item" href="#">Весь период</a>
+                  <a class="dropdown-item ajax" href="{% url 'community_cuberture_year' community.pk %}">Год</a>
+                  <a class="dropdown-item ajax" href="{% url 'community_cuberture_week' community.pk %}">Неделя</a>
+                  <a class="dropdown-item ajax" href="{% url 'community_cuberture_day' community.pk %}">День</a>
                 </div>
               </div>
             </div>

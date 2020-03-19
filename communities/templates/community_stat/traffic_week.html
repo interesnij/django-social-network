@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Посещаемость по дням{% endblock %}
+{% block title %}Посещаемость по неделям{% endblock %}
 {% block content %}
 <style>
 	canvas{
@@ -16,7 +16,7 @@
           <div class="card-header">
               <div class="media">
                   <div class="media-body">
-										<h5 class="mt-1">Посещаемость по дням -
+										<h5 class="mt-1">Посещаемость по неделям -
 											<a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=community.pk %}">
 													{{ community.name }}
 											</a>
@@ -24,10 +24,10 @@
 									</div>
                   <div class="dropdown">
                 <button class="btn btn-primary dropdown-toggle mb-2" type="button" id="timeButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    День
+                    Неделя
                 </button>
                 <div class="dropdown-menu" aria-labelledby="timeButton" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;">
-                    <a class="dropdown-item ajax" href="{% url 'community_traffic_week' community.pk %}">Неделя</a>
+                    <a class="dropdown-item ajax" href="{% url 'community_traffic_day' community.pk %}">День</a>
                     <a class="dropdown-item ajax" href="{% url 'community_traffic_month' community.pk %}">Месяц</a>
                     <a class="dropdown-item ajax" href="{% url 'community_traffic_year' community.pk %}">Год</a>
                 </div>
@@ -239,7 +239,7 @@ window.chartColors = {
 		var config = {
 			type: 'line',
 			data: {
-				labels:[{% for object in days %} "{{ object }}", {% endfor %}],
+				labels:[{% for object in weeks %} "{{ object }}", {% endfor %}],
 				datasets: [{
 					label: 'Уникальные просмотры',
 					backgroundColor: window.chartColors.red,
@@ -258,7 +258,7 @@ window.chartColors = {
 				responsive: true,
 				title: {
 					display: true,
-					text: 'Посещаемость по дням'
+					text: 'Посещаемость по неделям'
 				},
 				tooltips: {
 					mode: 'index',
@@ -273,7 +273,7 @@ window.chartColors = {
 						display: true,
 						scaleLabel: {
 							display: true,
-							labelString: 'Посещаемость по дням'
+							labelString: 'Посещаемость по неделям'
 						}
 					}],
 					yAxes: [{

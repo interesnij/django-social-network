@@ -3,17 +3,37 @@ from communities.models import Community
 from stst.models import CommunityNumbers
 
 
+class CommunityCoberturaYear(TemplateView):
+	template_name = None
+
+	def get(self,request,*args,**kwargs):
+		self.community = Community.objects.get(pk=self.kwargs["pk"])
+		self.template_name = self.community.get_manage_template(folder="community_stat/", template="cobertura_year.html", request=request)
+		self.years = CommunityNumbers.objects.dates('created', 'year')[0:10]
+		self.views = []
+		for i in self.years:
+			view = CommunityNumbers.objects.filter(created__year=i.year, community=self.community.pk).distinct("user").count()
+			self.views += [view,]
+		return super(CommunityCoberturaYear,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(CommunityCoberturaYear,self).get_context_data(**kwargs)
+		context["community"] = self.community
+		context["years"] = self.years
+		context["views"] = self.views
+		return context
+
+
 class CommunityCoberturaMonth(TemplateView):
 	template_name = None
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.template_name = self.community.get_manage_template(folder="community_stat/", template="cobertura_month.html", request=request)
-		self._months = CommunityNumbers.objects.values('created__month').distinct()[0:10]
-		self.months = [i['created__month'] for i in self._months]
+		self.months = CommunityNumbers.objects.dates('created', 'month')[0:10]
 		self.views = []
 		for i in self.months:
-			view = CommunityNumbers.objects.filter(created__month=i, community=self.community.pk).distinct("user").count()
+			view = CommunityNumbers.objects.filter(created__month=i.month, community=self.community.pk).distinct("user").count()
 			self.views += [view,]
 		return super(CommunityCoberturaMonth,self).get(request,*args,**kwargs)
 
@@ -24,17 +44,37 @@ class CommunityCoberturaMonth(TemplateView):
 		context["views"] = self.views
 		return context
 
+
+class CommunityCoberturaWeek(TemplateView):
+	template_name = None
+
+	def get(self,request,*args,**kwargs):
+		self.community = Community.objects.get(pk=self.kwargs["pk"])
+		self.template_name = self.community.get_manage_template(folder="community_stat/", template="cobertura_week.html", request=request)
+		self.weeks = CommunityNumbers.objects.dates('created', 'week')[0:10]
+		self.views = []
+		for i in self.weeks:
+			view = CommunityNumbers.objects.filter(created__week=i.week, community=self.community.pk).distinct("user").count()
+			self.views += [view,]
+		return super(CommunityCoberturaWeek,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(CommunityCoberturaWeek,self).get_context_data(**kwargs)
+		context["community"] = self.community
+		context["weeks"] = self.weeks
+		context["views"] = self.views
+		return context
+
 class CommunityCoberturaDay(TemplateView):
 	template_name = None
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.template_name = self.community.get_manage_template(folder="community_stat/", template="cobertura_day.html", request=request)
-		self._days = CommunityNumbers.objects.values('created__day').distinct()[0:10]
-		self.days = [i['created__day'] for i in self._days]
+		self.days = CommunityNumbers.objects.dates('created', 'day')[0:10]
 		self.views = []
 		for i in self.days:
-			view = CommunityNumbers.objects.filter(created__day=i, community=self.community.pk).distinct("user").count()
+			view = CommunityNumbers.objects.filter(created__day=i.day, community=self.community.pk).distinct("user").count()
 			self.views += [view,]
 		return super(CommunityCoberturaDay,self).get(request,*args,**kwargs)
 
@@ -46,6 +86,31 @@ class CommunityCoberturaDay(TemplateView):
 		return context
 
 
+class CommunityTrafficYear(TemplateView):
+	template_name = None
+
+	def get(self,request,*args,**kwargs):
+		self.community = Community.objects.get(pk=self.kwargs["pk"])
+		self.template_name = self.community.get_manage_template(folder="community_stat/", template="traffic_year.html", request=request)
+		self.years = CommunityNumbers.objects.dates('created', 'year')[0:10]
+		self.views = []
+		self.un_views = []
+		for i in self.years:
+			view = CommunityNumbers.objects.filter(created__year=i.year, community=self.community.pk).count()
+			self.views += [view,]
+		for i in self.years:
+			view = CommunityNumbers.objects.filter(created__year=i.year, community=self.community.pk).distinct("user").count()
+			self.un_views += [view,]
+		return super(CommunityTrafficYear,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(CommunityTrafficYear,self).get_context_data(**kwargs)
+		context["community"] = self.community
+		context["years"] = self.years
+		context["un_views"] = self.un_views
+		context["views"] = self.views
+		return context
+
 
 class CommunityTrafficMonth(TemplateView):
 	template_name = None
@@ -55,10 +120,13 @@ class CommunityTrafficMonth(TemplateView):
 		self.template_name = self.community.get_manage_template(folder="community_stat/", template="traffic_month.html", request=request)
 		self.months = CommunityNumbers.objects.dates('created', 'month')[0:10]
 		self.views = []
+		self.un_views = []
 		for i in self.months:
-			view = CommunityNumbers.objects.filter(created__month=i[2], community=self.community.pk).count()
+			view = CommunityNumbers.objects.filter(created__month=i.month, community=self.community.pk).count()
 			self.views += [view,]
-		self.un_views = self.views.distinct("user")
+		for i in self.days:
+			view = CommunityNumbers.objects.filter(created__month=i.month, community=self.community.pk).distinct("user").count()
+			self.un_views += [view,]
 		return super(CommunityTrafficMonth,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -68,6 +136,33 @@ class CommunityTrafficMonth(TemplateView):
 		context["un_views"] = self.un_views
 		context["views"] = self.views
 		return context
+
+
+class CommunityTrafficWeek(TemplateView):
+	template_name = None
+
+	def get(self,request,*args,**kwargs):
+		self.community = Community.objects.get(pk=self.kwargs["pk"])
+		self.template_name = self.community.get_manage_template(folder="community_stat/", template="traffic_week.html", request=request)
+		self.weeks = CommunityNumbers.objects.dates('created', 'week')[0:10]
+		self.views = []
+		self.un_views = []
+		for i in self.weeks:
+			view = CommunityNumbers.objects.filter(created__week=i.week, community=self.community.pk).count()
+			self.views += [view,]
+		for i in self.weeks:
+			view = CommunityNumbers.objects.filter(created__week=i.week, community=self.community.pk).distinct("user").count()
+			self.un_views += [view,]
+		return super(CommunityTrafficWeek,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(CommunityTrafficWeek,self).get_context_data(**kwargs)
+		context["community"] = self.community
+		context["weeks"] = self.weeks
+		context["un_views"] = self.un_views
+		context["views"] = self.views
+		return context
+
 
 class CommunityTrafficDay(TemplateView):
 	template_name = None
