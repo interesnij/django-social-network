@@ -48,14 +48,14 @@ class UserItemView(View):
             return HttpResponse('')
 
 
-class UserItemView(View):
+class PhoneVerify(View):
     def get(self,request,*args,**kwargs):
         from common.model.other import PhoneCodes
         from users.models import User
         from django.shortcuts import redirect
 
         code = self.kwargs["code"]
-        phone = self.kwargs["phone"] 
+        phone = self.kwargs["phone"]
         try:
             obj = PhoneCodes.objects.get(code=code, phone=phone)
             user = User.objects.get(phone=obj.phone)
