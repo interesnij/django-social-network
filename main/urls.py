@@ -1,11 +1,11 @@
 from django.conf.urls import url, include
-from main.views import MainPageView, ComingView, NewsListView, MainPhoneVerify
+from main.views import MainPageView, ComingView, NewsListView, MainPhoneSend
 
 
 urlpatterns = [
 	url(r'^$', ComingView.as_view(), name="coming"),
 	url(r'^main/$', MainPageView.as_view(), name="main"),
-	url(r'^phone_verify/$', MainPhoneVerify.as_view(), name="phone_verify"),
+	url(r'^phone_verify/$', MainPhoneSend.as_view(), name="phone_send"),
 	url(r'^main/news/$', NewsListView.as_view(), name="news_list"),
 
 	url(r'^user/', include('main.url.user')),

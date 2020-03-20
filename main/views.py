@@ -45,7 +45,7 @@ class ComingView(TemplateView):
 	template_name="base_coming.html"
 
 
-class MainPhoneVerify(TemplateView):
+class MainPhoneSend(TemplateView):
 	template_name="phone_verification.html"
 
 	def get(self,request,*args,**kwargs):
