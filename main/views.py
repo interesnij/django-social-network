@@ -58,6 +58,6 @@ class MainPhoneSend(TemplateView):
 		self.data = self.response.json()
 		if self.data['status'] == 'true' and self.data['phone'] == self.phone:
 			PhoneCodes.objects.create(phone=self.data['phone'], code=self.data['code'])
-			return HttpResponse("")
+			return HttpResponse(self.phone)
 		else:
 			return HttpResponseBadRequest()
