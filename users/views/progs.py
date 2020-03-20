@@ -58,9 +58,10 @@ class PhoneVerify(View):
         phone = self.kwargs["phone"]
         try:
             obj = PhoneCodes.objects.get(code=code, phone=phone)
-            user = User.objects.get(phone=obj.phone)
+            user = User.objects.get(pk=request.user.pk)
             user.is_phone_verified=True
-            user.save(update_fields=['is_phone_verified'])
+            user.phone=obj.phone
+            user.save()
             obj.delete()
             return redirect('users', pk=user.pk)
         except:
