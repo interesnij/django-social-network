@@ -83,5 +83,5 @@ class PhoneSend(View):
             phone = request.user.get_last_location().phone + _phone
             response = requests.get(url="https://api.ucaller.ru/v1.0/initCall?service_id=12203&key=GhfrKn0XKAmA1oVnyEzOnMI5uBnFN4ck&phone=" + phone)
             data = self.response.json()
-            PhoneCodes.objects.create(phone=phone, code=data['code])
+            PhoneCodes.objects.create(phone=phone, code=data['code'])
             return HttpResponse("")
