@@ -56,7 +56,7 @@ class MainPhoneSend(TemplateView):
 		self.phone = self.kwargs["phone"]
 		self.response = requests.get(url="https://api.ucaller.ru/v1.0/initCall?service_id=12203&key=GhfrKn0XKAmA1oVnyEzOnMI5uBnFN4ck&phone=" + self.phone)
 		self.data = self.response.json()
-		if self.data['status'] == 'true' and self.data['phone'] == self.phone:
+		if self.data['status'] == 'true':
 			PhoneCodes.objects.create(phone=self.data['phone'], code=self.data['code'])
 			return HttpResponse(self.phone)
 		else:
