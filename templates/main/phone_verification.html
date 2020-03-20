@@ -48,7 +48,7 @@
 
      <script type="text/javascript">
        document.getElementById("phone_send").addEventListener("click", (e) => {
-       var phone = document.getElementById('phone');
+       var phone = document.getElementById('phone').value;
        //var params = 'orem=ipsum&name=binny';
        var request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
        request.open( 'GET', "/main/phone_send/" + phone, true );
