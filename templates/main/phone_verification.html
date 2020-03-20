@@ -25,6 +25,7 @@
           <div class="col-md-7" id="ajax" style="padding-right:0px;padding-left:0px;">
 
             <form action="" id="phone_form"class="row align-items-center h-sm-auto">
+              {% csrf_token %}
                 <div class="col-12">
                     <h1 class="font-weight-light mb-3 mt-4 content-color-secondary text-left">Уважаемый {{ request.user.get_full_name }}!</h1>
                     <p>Для усиление информационной безопасности Вам нужно подтвердить с помощью телефона свою личность, и в будущем использовать номер телефона в качестве логина к профилю соцсети трезвый.рус</p>
