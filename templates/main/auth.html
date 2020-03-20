@@ -38,12 +38,12 @@
     </div>
 
     <div class="col-md-5 h-md-100  h-sm-auto order-md-2">
-        <form type="post" action="{% url 'rest_login' %}" class="row align-items-center h-sm-auto">
+        <form action="{% url 'rest_login' %}" class="row align-items-center h-sm-auto">
             <div class="col-12">
                 <h1 class="font-weight-light mb-3 mt-4 content-color-secondary text-left">Вход</h1>
                 <div class="card mb-2">
                     <div class="card-body p-0">
-                        <input type="text" name="username" id="id_username" class="form-control form-control-lg border-0" placeholder="Телефон">
+                        <input type="text" name="username" class="form-control form-control-lg border-0" placeholder="Телефон">
                         <hr class="my-0">
                         <input type="password" name="password" class="form-control form-control-lg border-0" placeholder="Ваш пароль">
                     </div>

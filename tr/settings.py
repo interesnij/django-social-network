@@ -130,7 +130,6 @@ AUTH_PASSWORD_VALIDATORS = [{'NAME': 'django.contrib.auth.password_validation.Us
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
-    #'tr.account.backends.EmailOrPhoneModelBackend',
 )
 
 LANGUAGE_CODE = 'ru-RU'
@@ -152,7 +151,7 @@ REST_AUTH_REGISTER_SERIALIZERS = {
         'REGISTER_SERIALIZER': 'tr.serializers.RegisterSerializer',
 }
 
-ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
+ACCOUNT_AUTHENTICATION_METHOD = 'username'
 ACCOUNT_EMAIL_REQUIRED = False
 AUTH_USER_MODEL = 'users.User'
 #ACCOUNT_EMAIL_VERIFICATION = 'none'
