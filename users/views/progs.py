@@ -52,11 +52,11 @@ class PhoneVerify(View):
     def get(self,request,*args,**kwargs):
         from common.model.other import PhoneCodes
         from users.models import User
-        from django.shortcuts import redirect
 
         code = self.kwargs["code"]
-        phone = self.kwargs["phone"]
+        _phone = self.kwargs["phone"]
         try:
+            phone = request.user.get_last_location().phone + _phone
             obj = PhoneCodes.objects.get(code=code, phone=phone)
             user = User.objects.get(pk=request.user.pk)
             user.is_phone_verified=True
@@ -66,3 +66,22 @@ class PhoneVerify(View):
             return HttpResponse('')
         except:
             return HttpResponse('Возникла проблема в получении Вашего номера')
+
+
+class PhoneSend(View):
+    def get(self,request,*args,**kwargs):
+        import json, requests
+        from common.model.other import PhoneCodes
+        from users.models import User
+        from common.utils import get_location
+
+        if request.user.is_phone_verified:
+            return HttpResponse("")
+        else:
+            get_location(request)
+            _phone = self.kwargs["phone"]
+            phone = request.user.get_last_location().phone + _phone
+            response = requests.get(url="https://api.ucaller.ru/v1.0/initCall?service_id=12203&key=GhfrKn0XKAmA1oVnyEzOnMI5uBnFN4ck&phone=" + phone)
+            data = self.response.json()
+            PhoneCodes.objects.create(phone=phone, code=data['code])
+            return HttpResponse("")

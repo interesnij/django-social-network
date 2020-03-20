@@ -43,6 +43,7 @@ class OneUserLocation(models.Model):
     region_en = models.CharField(max_length=100, blank=True, verbose_name="Регион по-английски")
     country_ru = models.CharField(max_length=100, blank=True, verbose_name="Страна по-русски")
     country_en = models.CharField(max_length=100, blank=True, verbose_name="Страна по-английски")
+    phone = models.CharField(max_length=5, blank=True, verbose_name="Начало номера")
 
     class Meta:
         verbose_name="Местоположение 1"
@@ -65,6 +66,7 @@ class TwoUserLocation(models.Model):
     region_en = models.CharField(max_length=100, blank=True, verbose_name="Регион по-английски")
     country_ru = models.CharField(max_length=100, blank=True, verbose_name="Страна по-русски")
     country_en = models.CharField(max_length=100, blank=True, verbose_name="Страна по-английски")
+    phone = models.CharField(max_length=5, blank=True, verbose_name="Начало номера")
 
     class Meta:
         verbose_name="Местоположение 2"
@@ -84,6 +86,7 @@ class ThreeUserLocation(models.Model):
     region_en = models.CharField(max_length=100, blank=True, verbose_name="Регион по-английски")
     country_ru = models.CharField(max_length=100, blank=True, verbose_name="Страна по-русски")
     country_en = models.CharField(max_length=100, blank=True, verbose_name="Страна по-английски")
+    phone = models.CharField(max_length=5, blank=True, verbose_name="Начало номера")
 
     class Meta:
         verbose_name="Местоположение 3"

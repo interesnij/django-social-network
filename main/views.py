@@ -47,14 +47,3 @@ class ComingView(TemplateView):
 
 class MainPhoneSend(TemplateView):
 	template_name="phone_verification.html"
-
-	def get(self,request,*args,**kwargs):
-		import json, requests
-		from django.http import HttpResponse, HttpResponseBadRequest
-		from common.model.other import PhoneCodes
-		
-		self.phone = self.kwargs["phone"]
-		self.response = requests.get(url="https://api.ucaller.ru/v1.0/initCall?service_id=12203&key=GhfrKn0XKAmA1oVnyEzOnMI5uBnFN4ck&phone=" + self.phone)
-		self.data = self.response.json()
-		PhoneCodes.objects.create(phone=self.phone, code=self.data['code'])
-		return HttpResponse(self.phone)

@@ -58,6 +58,7 @@ def get_location(request):
         loc.region_en = region['name_en']
         loc.country_ru = country['name_ru']
         loc.country_en = country['name_en']
+        loc.phone = country['phone']
         olds_ip.ip_1 = ip
         olds_ip.save()
         loc.save()
@@ -80,6 +81,7 @@ def get_location(request):
         loc.region_en = region['name_en']
         loc.country_ru = country['name_ru']
         loc.country_en = country['name_en']
+        loc.phone = country['phone']
         olds_ip.ip_2 = ip
         olds_ip.save()
         loc.save()
@@ -102,6 +104,7 @@ def get_location(request):
         loc.region_en = region['name_en']
         loc.country_ru = country['name_ru']
         loc.country_en = country['name_en']
+        loc.phone = country['phone']
         olds_ip.ip_3 = ip
         olds_ip.save()
         loc.save()
@@ -117,6 +120,7 @@ def get_location(request):
         loc.region_en = region['name_en']
         loc.country_ru = country['name_ru']
         loc.country_en = country['name_en']
+        loc.phone = country['phone']
         olds_ip.ip_1 = ip
         olds_ip.save()
         loc.save()
