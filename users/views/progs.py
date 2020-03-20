@@ -46,3 +46,22 @@ class UserItemView(View):
         except:
             obj = ItemNumbers.objects.create(user=request.user.pk, item=pk)
             return HttpResponse('')
+
+
+class UserItemView(View):
+    def get(self,request,*args,**kwargs):
+        from common.model.other import PhoneCodes
+        from users.models import User
+        from django.shortcuts import redirect
+
+        code = self.kwargs["code"]
+        phone = self.kwargs["phone"] 
+        try:
+            obj = PhoneCodes.objects.get(code=code, phone=phone)
+            user = User.objects.get(phone=obj.phone)
+            user.is_phone_verified=True
+            user.save(update_fields=['is_phone_verified'])
+            obj.delete()
+            return redirect('users', pk=user.pk)
+        except:
+            return HttpResponse('Возникла проблема в получении Вашего номера')
