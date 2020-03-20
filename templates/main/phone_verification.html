@@ -57,15 +57,7 @@
            console.log("ok");
          }
        };
-       request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
        request.send( null );
-
-       $service_id = 12203;
-   		 $secret_key = "GhfrKn0XKAmA1oVnyEzOnMI5uBnFN4ck";
-   		 $client_phone  = phone;
-
-       $request = file_get_contents('https://api.ucaller.ru/v1.0/initCall?service_id=12203&key=GhfrKn0XKAmA1oVnyEzOnMI5uBnFN4ck&phone=' + phone);
-       $request = json_decode($request, true);
      });
      </script>
    </body>
