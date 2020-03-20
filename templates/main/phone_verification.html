@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>{% block title %}{% endblock %}</title>
+    <title>Верификация пользователя</title>
     {% block meta %}{% endblock %}
     <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon" />
     <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon" />
@@ -24,9 +24,11 @@
           <div class="col-md-1"></div>
 					<div class="col-md-2"></div>
           <div class="col-md-7" id="ajax" style="padding-right:0px;padding-left:0px;">
+
             <form action="{% url 'rest_login' %}" id="login_form"class="row align-items-center h-sm-auto">
                 <div class="col-12">
-                    <h1 class="font-weight-light mb-3 mt-4 content-color-secondary text-left">Вход</h1>
+                    <h1 class="font-weight-light mb-3 mt-4 content-color-secondary text-left">Уважаемый {{ request.user.get_full_name }}!</h1>
+                    <p>Для усиление информационной безопасности Вам нужно подтвердить с помощью телефона свою личность, и в будущем использовать номер телефона в качестве логина к профилю соцсети трезвый.рус</p>
                     <div class="card mb-2">
                         <div class="card-body p-0">
                             <input type="text" name="phone" class="form-control form-control-lg border-0" placeholder="Телефон">
@@ -46,6 +48,3 @@
 
    </body>
   </html>
-
-
-{% endblock %}
