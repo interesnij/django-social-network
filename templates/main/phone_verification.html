@@ -47,6 +47,9 @@
      </div>
 
      <script type="text/javascript">
+       document.getElementById("phone_send").addEventListener("click", (e) => {
+       var form10 = document.getElementById('phone_form');
+       //var params = 'orem=ipsum&name=binny';
        var request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
        request.open( 'POST', {% url "phone_send" %}, true );
        request.onreadystatechange = function () {
@@ -54,8 +57,9 @@
            console.log("ok");
          }
        };
+       request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
        request.send( null );
-
+     });
      </script>
    </body>
   </html>
