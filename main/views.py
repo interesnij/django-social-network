@@ -43,3 +43,21 @@ class NewsListView(ListView):
 
 class ComingView(TemplateView):
 	template_name="base_coming.html"
+
+
+class MainPhoneVerify(TemplateView):
+	template_name="phone_verification.html"
+
+	def get(self,request,*args,**kwargs):
+		import json, requests
+		from django.http import HttpResponse, HttpResponseBadRequest
+		from common.model.other import PhoneCodes
+
+		self.phone = request.POST.get('phone').replace("+","")
+		self.response = self.requests.get(url= "https://api.ucaller.ru/v1.0/initCall?service_id=12203&key=GhfrKn0XKAmA1oVnyEzOnMI5uBnFN4ck&phone=" + self.phone)
+		self.data = self.response.json()
+		if self.data['status'] == 'true' and self.data['phone'] == self.phone:
+			PhoneCodes.objects.create(phone=self.data['phone'], code=self.data['code'])
+			return HttpResponse("")
+		else:
+			return HttpResponseBadRequest()

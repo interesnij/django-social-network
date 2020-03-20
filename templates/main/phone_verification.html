@@ -1,14 +1,51 @@
-{% extends "base.html" %}
-{% load humanize %}
+{% load staticfiles %}
+<!doctype html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>{% block title %}{% endblock %}</title>
+    {% block meta %}{% endblock %}
+    <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon" />
+    <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon" />
+    <link rel="stylesheet" href="{% static 'styles/bootstrap.min.css' %}" media="all" />
+    <link rel="stylesheet" href="{% static 'styles/default.css' %}" />
+    <link rel="stylesheet" href="{% static 'styles/load.css' %}" media="none" onload="if(media!='all')media='all'" />
+    <link rel="stylesheet" href="{% static 'styles/player_skin/vkontakte.css' %}" media="none" onload="if(media!='all')media='all'" />
+    <script>
+    function on(elSelector,eventName,selector,fn) {var element = document.querySelector(elSelector);element.addEventListener(eventName, function(event) {var possibleTargets = element.querySelectorAll(selector);var target = event.target;for (var i = 0, l = possibleTargets.length; i < l; i++) {var el = target;var p = possibleTargets[i];while(el && el !== element) {if (el === p) {return fn.call(p, event);}el = el.parentNode;}}});};
+    var ready = (callback) => {if (document.readyState != "loading") callback();else document.addEventListener("DOMContentLoaded", callback);}
+    function elementInViewport(el){var bounds = el.getBoundingClientRect();return ((bounds.top + bounds.height > 0) && (window.innerHeight - bounds.top > 0));}
+  </script>
+</head>
+  <body class="fixed-header sidebar-left-close">
+    <div class="wrapper">
 
-{% block title %}Верификация пользователя - {{ request.user.get_full_name }}{% endblock %}
-{% block meta %}
-<meta property="og:url" content="dvizhenie.tv" />
-<meta property="og:type" content="website" />
-<meta property="og:title" content="" />
-<meta property="og:image" content="{% if user.profile.avatar %}http://xn--b1afgj5al1e.xn--p1acf/{{ user.profile.avatar }}{% else %}/static/images/user.png{% endif %}"/>
-{% endblock %}
-{% block content %}
+				<span class="col-xs-12 col-md-12 jambotron-fluid" style="display:flex !important;flex-wrap: wrap;padding-right:0px;padding-left:0px;">
+          <div class="col-md-1"></div>
+					<div class="col-md-2"></div>
+          <div class="col-md-7" id="ajax" style="padding-right:0px;padding-left:0px;">
+            <form action="{% url 'rest_login' %}" id="login_form"class="row align-items-center h-sm-auto">
+                <div class="col-12">
+                    <h1 class="font-weight-light mb-3 mt-4 content-color-secondary text-left">Вход</h1>
+                    <div class="card mb-2">
+                        <div class="card-body p-0">
+                            <input type="text" name="phone" class="form-control form-control-lg border-0" placeholder="Телефон">
+                            <hr class="my-0">
+                        </div>
+                    </div>
+                    <small class="form-text text-muted login-response"></small>
+                    <div class="text-left mb-4">
+                        <button type="button" class="btn btn-primary pink-gradient">Получить код</button>
+                    </div>
+                </div>
+            </form>
+          </div>
+           <div class="col-md-2"></div>
+         </span>
+     </div>
+
+   </body>
+  </html>
 
 
 {% endblock %}
