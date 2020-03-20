@@ -747,7 +747,10 @@ class User(AbstractUser):
         from stst.models import UserNumbers
 
         if self.pk == request.user.pk:
-            template_name = folder + "my_" + template
+            if not request.user.is_phone_verified:
+                template_name = "main/phone_verification.html"
+            else:
+                template_name = folder + "my_" + template
         elif request.user.pk != self.pk and request.user.is_authenticated:
             if not request.user.is_phone_verified:
                 template_name = "main/phone_verification.html"
