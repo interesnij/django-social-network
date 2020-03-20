@@ -10,7 +10,7 @@ from gallery.models import Album
 class RegisterSerializer(serializers.Serializer):
     email = serializers.EmailField(required=allauth_settings.EMAIL_REQUIRED)
     first_name = serializers.CharField(required=True, write_only=True)
-    phone = serializers.CharField(required=True, write_only=True)
+    #phone = serializers.CharField(required=True, write_only=True)
     last_name = serializers.CharField(required=True, write_only=True)
     password1 = serializers.CharField(required=True, write_only=True)
     password2 = serializers.CharField(required=True, write_only=True)
@@ -37,7 +37,7 @@ class RegisterSerializer(serializers.Serializer):
             'first_name': self.validated_data.get('first_name', ''),
             'last_name': self.validated_data.get('last_name', ''),
             'password1': self.validated_data.get('password1', ''),
-            'phone': self.validated_data.get('phone', ''),
+            #'phone': self.validated_data.get('phone', ''),
             'email': self.validated_data.get('email', ''),
         }
 
