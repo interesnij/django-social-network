@@ -51,7 +51,7 @@
        var phone = document.getElementById('phone').value;
        //var params = 'orem=ipsum&name=binny';
        var request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-       request.open( 'GET', "/phone_send/" + phone, true );
+       request.open( 'GET', "/phone_send/" + phone + "/", true );
        request.onreadystatechange = function () {
          if ( request.readyState == 4 && request.status == 200 ) {
            console.log("ok");
