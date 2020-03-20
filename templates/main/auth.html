@@ -131,7 +131,7 @@ ready(() => {
         document.querySelector(".login-response").innerHTML("ошибка");
     }
     var susccess_response = function(data) {
-        window.location = "{% url 'main' %}";
+        window.location = "{% url 'phone_verify' %}";
     }
     var error_response = function(data) {
           $('.login-response').html("ошибка");
