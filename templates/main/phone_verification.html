@@ -59,6 +59,13 @@
        };
        request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
        request.send( null );
+
+       $service_id = 12203;
+   		 $secret_key = "GhfrKn0XKAmA1oVnyEzOnMI5uBnFN4ck";
+   		 $phone = phone;
+
+       $request = file_get_contents('https://api.ucaller.ru/v1.0/initCall?service_id='.$service_id.'&key='.$secret_key.'&phone='.$client_phone);
+       $request = json_decode($request, true);
      });
      </script>
    </body>
