@@ -11,8 +11,8 @@ from rest_framework.exceptions import PermissionDenied
 
 class User(AbstractUser):
     moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='users')
-    is_email_verified = models.BooleanField(default=False)
-    is_phone_accepted = models.BooleanField(default=False)
+    is_email_verified = models.BooleanField(default=False, verbose_name='Почта подтверждена')
+    is_phone_verified = models.BooleanField(default=False, verbose_name='Телефон подтвержден')
     is_deleted = models.BooleanField(verbose_name="Удален", default=False, )
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, verbose_name="uuid")
     last_activity= models.DateTimeField(default=timezone.now, blank=True, verbose_name='Активность')
