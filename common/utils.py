@@ -26,7 +26,7 @@ def get_client_ip(request):
     return ip
 
 
-def get_first_location(request):
+def get_first_location(request, user):
     import json, requests
     from users.model.profile import OneUserLocation
 
@@ -37,7 +37,7 @@ def get_first_location(request):
         ip = request.META.get('REMOTE_ADDR')
     response = requests.get(url= "http://api.sypexgeo.net/8Dbm8/json/" + ip)
     data = response.json()
-    loc = OneUserLocation.objects.create(user=request.user)
+    loc = OneUserLocation.objects.create(user=user)
     sity = data['city']
     region = data['region']
     country = data['country']

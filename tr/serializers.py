@@ -47,5 +47,5 @@ class RegisterSerializer(serializers.Serializer):
         adapter.save_user(request, user, self)
         setup_user_email(request, user, [])
         user.save()
-        get_first_location(request)
+        get_first_location(request, user)
         return user
