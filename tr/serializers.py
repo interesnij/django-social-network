@@ -5,7 +5,7 @@ from allauth.account.utils import setup_user_email
 from rest_framework import serializers
 from rest_framework.response import Response
 from users.models import User
-from common.utils import get_location
+from common.utils import get_first_location
 
 
 class RegisterSerializer(serializers.Serializer):
@@ -47,5 +47,5 @@ class RegisterSerializer(serializers.Serializer):
         adapter.save_user(request, user, self)
         setup_user_email(request, user, [])
         user.save()
-        get_location(request)
+        get_first_location(request)
         return user

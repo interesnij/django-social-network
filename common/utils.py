@@ -25,6 +25,36 @@ def get_client_ip(request):
         ip = request.META.get('REMOTE_ADDR')
     return ip
 
+
+def get_first_location(request):
+    import json, requests
+    from users.model.profile import OneUserLocation
+
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[-1].strip()
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    response = requests.get(url= "http://api.sypexgeo.net/8Dbm8/json/" + ip)
+    data = response.json()
+    loc = OneUserLocation.objects.create(user=request.user)
+    sity = data['city']
+    region = data['region']
+    country = data['country']
+    loc.city_ru = sity['name_ru']
+    loc.city_en = sity['name_en']
+    loc.city_lat = sity['lat']
+    loc.city_lon = sity['lon']
+    loc.region_ru = region['name_ru']
+    loc.region_en = region['name_en']
+    loc.country_ru = country['name_ru']
+    loc.country_en = country['name_en']
+    loc.phone = country['phone']
+    olds_ip.ip_1 = ip
+    olds_ip.save()
+    loc.save()
+
+
 def get_location(request):
     import json, requests
 
