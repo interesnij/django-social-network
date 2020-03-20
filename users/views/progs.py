@@ -63,6 +63,6 @@ class PhoneVerify(View):
             user.phone=obj.phone
             user.save()
             obj.delete()
-            return redirect('users', pk=user.pk)
+            return HttpResponse('')
         except:
             return HttpResponse('Возникла проблема в получении Вашего номера')
