@@ -73,12 +73,10 @@ class PhoneSend(View):
         import json, requests
         from common.model.other import PhoneCodes
         from users.models import User
-        from common.utils import get_location
 
         if request.user.is_phone_verified:
             return HttpResponse("")
         else:
-            get_location(request)
             _phone = self.kwargs["phone"]
             phone = request.user.get_last_location().phone + _phone
             response = requests.get(url="https://api.ucaller.ru/v1.0/initCall?service_id=12203&key=GhfrKn0XKAmA1oVnyEzOnMI5uBnFN4ck&phone=" + phone)
