@@ -130,9 +130,7 @@ ready(() => {
     var error_response = function(data) {
         document.querySelector(".login-response").innerHTML("ошибка");
     }
-    var susccess_response = function(data) {
-        window.location = "{% url 'phone_send' %}"; 
-    }
+
     var error_response = function(data) {
           $('.login-response').html("ошибка");
       }
@@ -148,7 +146,7 @@ ready(() => {
                       console.log(data);
                   })
                   .done(function(data) {
-                      susccess_response(data);
+                    window.location = "{% url 'phone_send' %}";
                   });
               return false;
       });
