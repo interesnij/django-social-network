@@ -68,7 +68,7 @@
          if ( request.readyState == 4 && request.status == 200) {
            var div = document.getElementById('jsondata');
            div.innerHTML = request.responseText;
-           phone.setAttribute("disabled", "true");
+           document.getElementById("phone").setAttribute("disabled", "true");
            document.getElementById("phone_send").setAttribute("disabled", "true");
          }
        };
