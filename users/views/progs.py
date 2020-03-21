@@ -68,7 +68,9 @@ class PhoneVerify(View):
             user.phone=obj.phone
             user.save()
             obj.delete()
-            return redirect(reverse("user",kwargs={"pk":request.user.pk}))
+            data = 'ok'
+            response = render(request,'generic/response/phone.html',{'response_text':data})
+            return response
         else:
             data = 'Код подтверждения неверный. Проверьте, пожалуйста, номер, с которого мы Вам звонили. Последние 4 цифры этого номера и есть код подтверждения, который нужно ввести с поле "Последние 4 цифры". Если не можете найти номер, нажмите на кнопку "Перезвонить повторно".'
             response = render(request,'generic/response/phone.html',{'response_text':data})
