@@ -65,10 +65,10 @@
        request.onreadystatechange = function () {
          if ( request.readyState == 4 && request.status == 200 && phone.length > 8) {
            document.querySelector(".block_verify").style.display = "block";
-           var div = document.getElementById('jsondata');
          }
        };
        request.send( null );
+       var div = document.getElementById('jsondata');
        div.innerHTML = request.data;
      });
 
