@@ -82,7 +82,7 @@
      request.open( 'GET', "/users/progs/phone_verify/" + phone + "/" + code + "/", true );
      request.onreadystatechange = function () {
        if ( request.readyState == 4 && request.status == 200 ) {
-         window.location = "{% url 'user' pk=request.user.pk %}";
+         console.log("okkkk")
        }
      };
      request.send( null );
