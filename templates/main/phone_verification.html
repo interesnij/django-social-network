@@ -69,7 +69,7 @@
          var div = document.getElementById('jsondata2');
          div.innerHTML = request.responseText;
          console.log(request.responseText);
-         if (request.responseText.length === 2){window.location.href = "{% url 'user' pk=request.user.pk %}";}
+         if (request.responseText === "ok"){window.location.href = "{% url 'user' pk=request.user.pk %}";}
        }
      };
      request.send( null );
