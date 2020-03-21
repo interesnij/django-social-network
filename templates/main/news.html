@@ -234,12 +234,6 @@ class ToastManager {
 						return toast.id === newToastObject.id;
 					});
 				}
-          } = '10';
-					clearInterval(newToastObject.timer);
-					this.toasts = this.toasts.filter((toast) => {
-						return toast.id === newToastObject.id;
-					});
-				}
 			}, 10)
 		}
 
