@@ -1,6 +1,6 @@
 from django.views import View
 from users.models import User
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 
 
 class UserBanCreate(View):
@@ -87,4 +87,4 @@ class PhoneSend(View):
                 return HttpResponse("")
             else:
                 data = {text:'Введите, пожалуйста, корректное количество цифр Вашего телефона'}
-                return HttpResponse(data)
+                return JsonResponse(data)
