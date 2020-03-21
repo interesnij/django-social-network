@@ -68,7 +68,7 @@
        if ( request.readyState == 4 && request.status == 200 ) {
          var div = document.getElementById('jsondata2');
          div.innerHTML = request.responseText;
-         if (request.responseText === "ok"){window.location = "{% url 'user' pk=request.user.pk %}";}
+         if (request.responseText == "ok"){window.location = "{% url 'user' pk=request.user.pk %}";}
          console.log(request.responseText)
        }
      };
