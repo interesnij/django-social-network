@@ -9,16 +9,14 @@ class MainPageView(TemplateView):
 	def get(self,request,*args,**kwargs):
 		from common.utils import is_mobile
 
-		if request.user.is_authenticated:
-			if is_mobile(request):
-				self.template_name="main/mob_news.html"
-			else:
-				self.template_name="main/news.html"
+		if request.user.is_authenticated and not request.user.is_phone_verified:
+			self.template_name="main/phone_verification.html"
+		elif request.user.is_authenticated and request.user.is_phone_verified:
+			self.template_name="main/news.html"
 		else:
-			if is_mobile(request):
-				self.template_name="main/mob_auth.html"
-			else:
-				self.template_name="main/auth.html"
+			self.template_name="main/auth.html"
+		if is_mobile(request):
+			self.template_name += "mob_"
 		return super(MainPageView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
