@@ -49,7 +49,7 @@ class UserItemView(View):
                 obj = ItemNumbers.objects.create(user=request.user.pk, item=pk)
                 return HttpResponse('')
         else:
-            pass
+            return HttpResponse('')
 
 
 class PhoneVerify(View):
