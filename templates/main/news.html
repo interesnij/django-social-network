@@ -173,10 +173,10 @@ class ToastManager {
 		this.id = 0;
 		this.toasts = [];
 		this.icons = {
-			'SUCCESS': "<svg xmlns='http://www.w3.org/2000/svg' height='24' viewBox='0 0 24 24' width='24'><path d='M0 0h24v24H0z' fill='none'><path d='M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z'></svg>",
-			'ERROR': 'fa-exclamation-circle',
-			'INFO': 'fa-info-circle',
-			'WARNING': 'fa-exclamation-triangle',
+			'SUCCESS': "",
+			'ERROR': '',
+			'INFO': '',
+			'WARNING': '',
 		};
 
 		var body = document.querySelector('body');
@@ -212,8 +212,7 @@ class ToastManager {
 		newToast.classList.add('toast');
 		newToast.innerHTML = `
 			<progress max="100" value="0"></progress>
-			<h3> <span>${this.icons[toastType]}</span> ${message} </h3>
-		`;
+			<h3> <span>${this.icons[toastType]}</span> ${message} </h3>`;
 
 
 		var newToastObject = {
