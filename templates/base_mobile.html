@@ -39,12 +39,10 @@
            {% block content %}
            {% endblock %}
           </span>
-           {% if request.user.is_authenticated %}
             {% include "base_block/mobile_nav.html" %}
-           {% endif %}
            {% include "base_block/fullscreens.html" %}
 				</div>
-          {% if request.user.is_authenticated %}
+          {% if request.user.is_authenticated and request.user.is_phone_verified %}
             {% include "base_block/mobile_tab.html" %}
           {% endif %}
     </div>
