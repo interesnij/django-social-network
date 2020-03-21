@@ -62,9 +62,9 @@ class PhoneVerify(View):
             obj = PhoneCodes.objects.get(code=code, phone=phone)
         except:
             obj = None
-        if not obj:
+        if obj:
             request.user.is_phone_verified=True
-            request.user.phone=obj.phone
+            request.user.phone=phone
             request.user.save()
             obj.delete()
             return redirect(reverse('user'), kwargs={'pk': request.user.pk})
