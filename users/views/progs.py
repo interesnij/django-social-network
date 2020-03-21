@@ -1,6 +1,7 @@
 from django.views import View
 from users.models import User
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse
+from django.shortcuts import render
 
 
 class UserBanCreate(View):
@@ -87,4 +88,4 @@ class PhoneSend(View):
                 return HttpResponse("")
             else:
                 data = 'Введите, пожалуйста, корректное количество цифр Вашего телефона'
-                return HttpResponse(data)
+                render(request,'/main/phone_verification.html',data)
