@@ -31,11 +31,11 @@
                       <div class="input-group-prepend">
                         <span class="input-group-text">{{ request.user.get_last_location.phone }}</span>
                       </div>
-                      <input type="number" id="phone" class="form-control border-0" placeholder="Телефон">
+                      <input type="number" id="phone" onkeyup="check();" class="form-control border-0" placeholder="Телефон">
                       <hr class="my-0">
                     </div>
                     <div class="col-md-4" style="margin-top: 12px;">
-                      <button type="button" id="phone_send" class="btn btn-primary pink-gradient">Получить код</button>
+                      <button type="button" disabled="disabled" id="phone_send" class="btn btn-primary pink-gradient">Получить код</button>
                     </div>
                     <div class="col-md-2"></div>
                 </div>
@@ -57,6 +57,13 @@
      </div>
 
      <script type="text/javascript">
+
+     function check() {
+      if (document.getElementById('phone').value != '')
+        document.getElementById("phone_send").removeAttribute('disabled');
+      else
+        document.getElementById("phone_send").addAttribute('disabled','disable');
+      }
 
        document.getElementById("phone_send").addEventListener("click", (e) => {
        var phone = document.getElementById('phone').value;
