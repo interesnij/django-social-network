@@ -212,7 +212,7 @@ class ToastManager {
 		newToast.classList.add('toast');
 		newToast.innerHTML = `
 			<progress max="100" value="0"></progress>
-			<h3> <span>${this.icons[toastType]}</span> ${message} </h3>`;
+			<h3> ${message} </h3>`;
 
 
 		var newToastObject = {
