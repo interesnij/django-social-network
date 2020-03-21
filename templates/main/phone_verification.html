@@ -40,17 +40,7 @@
                     <div class="col-md-2"></div>
                 </div>
                 <div id='jsondata' style="margin-top:50px"></div>
-                <div class="row block_verify" style="display:none;margin-top:50px">
-                  <div class="col-md-2"></div>
-                    <div class="col-md-4">
-                        <input type="number" id="code" onkeyup="code_check();" class="form-control border-0" placeholder="Последние 4 цифры">
-                        <hr class="my-0">
-                    </div>
-                    <div class="mb-4 col-md-4">
-                      <button type="button" disabled="disabled" id="code_send" class="btn btn-primary pink-gradient">Подтвердить</button>
-                    </div>
-                    <div class="col-md-2"></div>
-                </div>
+                
           </div>
            <div class="col-md-3"></div>
          </span>
@@ -79,6 +69,8 @@
            if(phone.length > 8){document.querySelector(".block_verify").style.display = "flex"};
            var div = document.getElementById('jsondata');
            div.innerHTML = request.responseText;
+           phone.setAttribute("disabled", "true");
+           document.getElementById("phone_send").setAttribute("disabled", "true");
          }
        };
        request.send( null );
