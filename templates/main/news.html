@@ -226,12 +226,14 @@ class ToastManager {
 			timer: setInterval(() => {
 				newToastObject.counter += 1000 / newToastObject.timeout;
 				newToastObject.progressElement.value = newToastObject.counter.toString();
-				if(newToastObject.counter >= 100) {
+        if(newToastObject.counter >= 100) {
 					newToast.style.display = 'none';
-          newToast.style.classList.add("z_index"); {
-            constructor() {
-
-            }
+          newToast.classList.add("z_index");
+					clearInterval(newToastObject.timer);
+					this.toasts = this.toasts.filter((toast) => {
+						return toast.id === newToastObject.id;
+					});
+				}
           } = '10';
 					clearInterval(newToastObject.timer);
 					this.toasts = this.toasts.filter((toast) => {
