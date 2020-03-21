@@ -19,7 +19,6 @@
 
 .toast {
   width: 100%;
-  margin-top: 50px;
   padding: 10px;
   position: relative;
   background-color: white;
@@ -179,7 +178,7 @@ class ToastManager {
 			'WARNING': '',
 		};
 
-		var body = document.querySelector('body');
+		var bosy = document.querySelector('#ajax');
 
 		this.toastsContainer = document.createElement('div');
 		this.toastsContainer.classList.add('toasts');
