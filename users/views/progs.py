@@ -58,7 +58,10 @@ class PhoneVerify(View):
         code = self.kwargs["code"]
         _phone = self.kwargs["phone"]
         phone = request.user.get_last_location().phone + _phone
-        obj = PhoneCodes.objects.get(code=code, phone=phone)
+        try:
+            obj = PhoneCodes.objects.get(code=code, phone=phone)
+        except:
+            obj = None
         if obj:
             request.user.is_phone_verified=True
             request.user.phone=obj.phone
