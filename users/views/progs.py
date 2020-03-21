@@ -88,4 +88,4 @@ class PhoneSend(View):
                 return HttpResponse("")
             else:
                 data = 'Введите, пожалуйста, корректное количество цифр Вашего телефона'
-                render(request,'/main/phone_verification.html',data)
+                render(request,'main/phone_verification.html',data)
