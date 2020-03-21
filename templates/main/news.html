@@ -19,7 +19,7 @@
 
 .toast {
   width: 100%;
-  margin: 10px 0;
+  margin-top: 50px;
   padding: 10px;
   position: relative;
   background-color: white;
@@ -164,57 +164,37 @@ onscroll = function(){
 }
 
 class ToastManager {
-
-	/*
-		title, message, icon?
-	*/
-
-	constructor(){
+constructor(){
 		this.id = 0;
 		this.toasts = [];
 		this.icons = {
-			'SUCCESS': 'fa-check',
+			'SUCCESS': '<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>',
 			'ERROR': 'fa-exclamation-circle',
 			'INFO': 'fa-info-circle',
 			'WARNING': 'fa-exclamation-triangle',
 		};
 
 		var body = document.querySelector('body');
-
 		this.toastsContainer = document.createElement('div');
 		this.toastsContainer.classList.add('toasts');
 
 		body.appendChild(this.toastsContainer);
 	}
 
-	showSuccess(message) {
-		return this._showToast(message, 'SUCCESS');
-	}
-
-	showError(message) {
-		return this._showToast(message, 'ERROR');
-	}
-
-	showInfo(message) {
-		return this._showToast(message, 'INFO');
-	}
-
-	showWarning(message) {
-		return this._showToast(message, 'WARNING');
-	}
+	showSuccess(message) {return this._showToast(message, 'SUCCESS');}
+	showError(message) {return this._showToast(message, 'ERROR');}
+	showInfo(message) {return this._showToast(message, 'INFO');}
+	showWarning(message) {return this._showToast(message, 'WARNING');}
 
 	_showToast(message, toastType) {
 		var newId = this.id + 1;
-
 		var newToast = document.createElement('div');
 		newToast.style.display = 'inline-block';
 		newToast.classList.add(toastType.toLowerCase());
 		newToast.classList.add('toast');
 		newToast.innerHTML = `
 			<progress max="100" value="0"></progress>
-			<h3> <span> <i class="fas ${this.icons[toastType]}"></i> </span> ${message} </h3>
-		`;
-
+			<h3> <span> <i class="fas ${this.icons[toastType]}"></i> </span> ${message} </h3>`;
 
 		var newToastObject = {
 			id: newId,
@@ -245,27 +225,20 @@ class ToastManager {
 		});
 
 		this.toasts.push(newToastObject);
-
 		this.toastsContainer.appendChild(newToast);
-
 		return this.id++;
 	}
-
 }
 
 var toasts = new ToastManager();
-
 var successBtn = document.querySelector('#success-btn');
 var errorBtn = document.querySelector('#error-btn');
 var infoBtn = document.querySelector('#info-btn');
 var warningBtn = document.querySelector('#warning-btn');
 
 successBtn.addEventListener('click', () => {toasts.showSuccess('Успех!');});
-
 errorBtn.addEventListener('click', () => {toasts.showError('Ошибка!');});
-
 infoBtn.addEventListener('click', () => {toasts.showInfo('Информационное сообщение!');});
-
 warningBtn.addEventListener('click', () => {toasts.showWarning('Предупреждение!');});
 
 </script>
