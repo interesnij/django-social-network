@@ -29,7 +29,7 @@
 
 				<span class="main-container col-xs-12 col-md-12 text-hide-xs jambotron-fluid" style="display:flex !important;flex-wrap: wrap;padding-right:0px;padding-left:0px;">
           <div class="col-md-1"></div>
-					<div class="{% if request.user.is_anonymous %}col-md-2{% endif %}">
+					<div class="col-md-2">
             {% if request.user.is_phone_verified %}
  					    {% include 'base_block/desctop_nav.html' %}
             {% endif %}
