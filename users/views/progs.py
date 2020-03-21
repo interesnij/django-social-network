@@ -78,8 +78,11 @@ class PhoneSend(View):
             return HttpResponse("")
         else:
             _phone = self.kwargs["phone"]
-            phone = request.user.get_last_location().phone + _phone
-            response = requests.get(url="https://api.ucaller.ru/v1.0/initCall?service_id=12203&key=GhfrKn0XKAmA1oVnyEzOnMI5uBnFN4ck&phone=" + phone)
-            data = self.response.json()
-            PhoneCodes.objects.create(phone=phone, code=data['code'])
-            return HttpResponse("")
+            if _phone.count() < 8:
+                phone = request.user.get_last_location().phone + _phone
+                response = requests.get(url="https://api.ucaller.ru/v1.0/initCall?service_id=12203&key=GhfrKn0XKAmA1oVnyEzOnMI5uBnFN4ck&phone=" + phone)
+                data = response.json()
+                PhoneCodes.objects.create(phone=phone, code=data['code'])
+                return HttpResponse("")
+            else:
+                return HttpResponse("Вы ввели недостаочно цифр")
