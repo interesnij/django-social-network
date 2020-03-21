@@ -59,7 +59,7 @@
      <script type="text/javascript">
 
      function check() {
-      if (document.getElementById('phone').value != '')
+      if (document.getElementById('phone').value < 6)
         document.getElementById("phone_send").removeAttribute('disabled');
       else
         document.getElementById("phone_send").setAttribute("disabled", "true");
