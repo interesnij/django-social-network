@@ -86,4 +86,4 @@ class PhoneSend(View):
                 return HttpResponse("")
             else:
                 data = {text:'Введите, пожалуйста, корректное количество цифр Вашего телефона'}
-                return HttpResponse(text)
+                return HttpResponse(data)
