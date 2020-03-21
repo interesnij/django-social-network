@@ -180,7 +180,7 @@ constructor(){
 		body.appendChild(this.toastsContainer);
 	}
 
-	showSuccess(message) {return this._showToast(message + '<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none" ><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"></svg>');}
+	showSuccess(message) {return this._showToast(message);}
 	showError(message) {return this._showToast(message, 'ERROR');}
 	showInfo(message) {return this._showToast(message, 'INFO');}
 	showWarning(message) {return this._showToast(message, 'WARNING');}
@@ -193,7 +193,7 @@ constructor(){
 		newToast.classList.add('toast');
 		newToast.innerHTML = `
 			<progress max="100" value="0"></progress>
-			<h3> <span> <i class="fas ${this.icons[toastType]}"></i> </span> ${message} </h3>`;
+			<h3><span><svg xmlns='http://www.w3.org/2000/svg' height='24' viewBox='0 0 24 24' width='24'><path d='M0 0h24v24H0z' fill='none'><path d='M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z'></svg></span> ${message} </h3>`;
 
 		var newToastObject = {
 			id: newId,
