@@ -59,7 +59,7 @@
      <script type="text/javascript">
      var phone = document.getElementById('phone').value;
      function check() {
-      if (phone.length < 6)
+      if (phone.length > 6)
         document.getElementById("phone_send").removeAttribute('disabled');
       else
         document.getElementById("phone_send").setAttribute("disabled", "true");
