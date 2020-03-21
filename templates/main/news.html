@@ -16,9 +16,7 @@
   top: 0;
   right: 40px;
 }
-.z_index{
-  z-index:10;
-}
+
 .toast {
   width: 100%;
   padding: 10px;
@@ -210,7 +208,7 @@ class ToastManager {
 		var newToast = document.createElement('div');
 		newToast.style.display = 'inline-block';
 		newToast.classList.add(toastType.toLowerCase());
-		newToast.classList.add('toast', 'z_index');
+		newToast.classList.add('toast');
 		newToast.innerHTML = `
 			<progress max="100" value="0"></progress>
 			<h3> ${message} </h3>`;
