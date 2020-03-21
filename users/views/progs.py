@@ -1,7 +1,8 @@
 from django.views import View
 from users.models import User
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.core.urlresolvers import reverse
 
 
 class UserBanCreate(View):
@@ -64,9 +65,11 @@ class PhoneVerify(View):
             user.phone=obj.phone
             user.save()
             obj.delete()
-            return HttpResponse('')
+            return redirect(reverse('user'), kwargs={'pk': request.user.pk})
         except:
-            return HttpResponse('Возникла проблема в получении Вашего номера')
+            data = 'Код подтверждения неверный. Проверьте, пожалуйста, номер, с которого мы Вам звонили. Последние 4 цифры этого номера и есть код подтверждения, который нужно ввести с поле "Последние 4 цифры". Если не можете найти номер, нажмите на кнопку "Перезвонить повторно".'
+            response = render(request,'generic/response/phone.html',{'response_text':data})
+            return response
 
 
 class PhoneSend(View):
@@ -82,10 +85,18 @@ class PhoneSend(View):
             _phone = self.kwargs["phone"]
             if len(_phone) > 8:
                 phone = request.user.get_last_location().phone + _phone
-                response = requests.get(url="https://api.ucaller.ru/v1.0/initCall?service_id=12203&key=GhfrKn0XKAmA1oVnyEzOnMI5uBnFN4ck&phone=" + phone)
-                data = response.json()
-                PhoneCodes.objects.create(phone=phone, code=data['code'])
-                return HttpResponse("")
+                try:
+                    User.objects.filter(phone=phone).exists()
+                    data = 'Пользователь с таким номером уже зарегистрирован. Используйте другой номер или напишите в службу поддержки, если этот номер Вы не использовали ранее.'
+                    response = render(request,'generic/response/phone.html',{'response_text':data})
+                    return response
+                except:
+                    response = requests.get(url="https://api.ucaller.ru/v1.0/initCall?service_id=12203&key=GhfrKn0XKAmA1oVnyEzOnMI5uBnFN4ck&phone=" + phone)
+                    data = response.json()
+                    PhoneCodes.objects.create(phone=phone, code=data['code'])
+                    data = 'Мы Вам звоним. Последние 4 цифры нашего номера - код подтверждения, который нужно ввести в поле "Последние 4 цифры" и нажать "Подтвердить"'
+                    response = render(request,'generic/response/phone.html',{'response_text':data})
+                    return response
             else:
                 data = 'Введите, пожалуйста, корректное количество цифр Вашего телефона'
                 response = render(request,'generic/response/phone.html',{'response_text':data})
