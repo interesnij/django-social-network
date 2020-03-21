@@ -13,6 +13,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='phonecodes',
             name='phone',
-            field=models.PositiveIntegerField(default=0, verbose_name='Телефон'),
+            field=models.CharField(max_length=15, verbose_name="Телефон"),
         ),
     ]
