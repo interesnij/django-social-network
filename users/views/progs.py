@@ -86,7 +86,7 @@ class PhoneSend(View):
             if len(_phone) > 8:
                 phone = request.user.get_last_location().phone + _phone
                 try:
-                    User.objects.filter(phone=phone).exists()
+                    user = User.objects.get(phone=phone)
                     data = 'Пользователь с таким номером уже зарегистрирован. Используйте другой номер или напишите в службу поддержки, если этот номер Вы не использовали ранее.'
                     response = render(request,'generic/response/phone.html',{'response_text':data})
                     return response
