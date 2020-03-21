@@ -40,14 +40,16 @@ class UserColorChange(View):
 class UserItemView(View):
     def get(self,request,*args,**kwargs):
         from stst.models import ItemNumbers
-
-        pk = self.kwargs["pk"]
-        try:
-            obj = ItemNumbers.objects.get(user=request.user.pk, item=pk)
-            return HttpResponse('')
-        except:
-            obj = ItemNumbers.objects.create(user=request.user.pk, item=pk)
-            return HttpResponse('')
+        if request.user.is_authenticated:
+            pk = self.kwargs["pk"]
+            try:
+                obj = ItemNumbers.objects.get(user=request.user.pk, item=pk)
+                return HttpResponse('')
+            except:
+                obj = ItemNumbers.objects.create(user=request.user.pk, item=pk)
+                return HttpResponse('')
+        else:
+            pass
 
 
 class PhoneVerify(View):
