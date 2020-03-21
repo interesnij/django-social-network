@@ -66,10 +66,10 @@
          if ( request.readyState == 4 && request.status == 200 && phone.length > 8) {
            document.querySelector(".block_verify").style.display = "block";
            var div = document.getElementById('jsondata');
-           div.innerHTML = request;
          }
        };
        request.send( null );
+       div.innerHTML = request;
      });
 
      document.getElementById("code_send").addEventListener("click", (e) => {
