@@ -85,4 +85,4 @@ class PhoneSend(View):
                 PhoneCodes.objects.create(phone=phone, code=data['code'])
                 return HttpResponse("")
             else:
-                return HttpResponse("Вы ввели недостаочно цифр")
+                return "Вы ввели недостаочно цифр"
