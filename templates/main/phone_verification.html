@@ -75,18 +75,7 @@
        request.send( null );
      });
 
-     on('.block_verify', 'click', '#code_send', function(e) {
-     var phone = document.getElementById('phone').value;
-     var code = document.getElementById('code').value;
-     var request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-     request.open( 'GET', "/users/progs/phone_verify/" + phone + "/" + code + "/", true );
-     request.onreadystatechange = function () {
-       if ( request.readyState == 4 && request.status == 200 ) {
-         window.location = "{% url 'user' pk=request.user.pk %}";
-       }
-     };
-     request.send( null );
-   });
+    
      </script>
    </body>
   </html>
