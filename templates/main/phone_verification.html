@@ -72,7 +72,7 @@
        }
      };
      request.send( null );
-     if (request.responseText == "ok"){window.location = "{% url 'user' pk=request.user.pk %}";}
+     if (request.responseText == "ok"){window.location.href = "{% url 'user' pk=request.user.pk %}";}
      });
      </script>
 
