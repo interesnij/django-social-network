@@ -16,7 +16,9 @@
   top: 0;
   right: 40px;
 }
-
+.z_index{
+  z_index:10;
+}
 .toast {
   width: 100%;
   padding: 10px;
@@ -226,7 +228,11 @@ class ToastManager {
 				newToastObject.progressElement.value = newToastObject.counter.toString();
 				if(newToastObject.counter >= 100) {
 					newToast.style.display = 'none';
-          newToast.style.z-index = '10';
+          newToast.style.classList.add("z_index") {
+            constructor() {
+
+            }
+          } = '10';
 					clearInterval(newToastObject.timer);
 					this.toasts = this.toasts.filter((toast) => {
 						return toast.id === newToastObject.id;
