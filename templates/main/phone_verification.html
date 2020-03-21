@@ -39,7 +39,7 @@
                     </div>
                     <div class="col-md-2"></div>
                 </div>
-
+                <div id='jsondata'></div>
                 <div class="row block_verify" style="display:none">
                   <div class="col-md-2"></div>
                     <div class="col-md-4">
@@ -65,6 +65,8 @@
        request.onreadystatechange = function () {
          if ( request.readyState == 4 && request.status == 200 && phone.length > 8) {
            document.querySelector(".block_verify").style.display = "block";
+           var div = document.getElementById('jsondata');
+           div.innerHTML = data.text;
          }
        };
        request.send( null );
