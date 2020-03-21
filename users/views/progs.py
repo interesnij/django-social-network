@@ -57,16 +57,15 @@ class PhoneVerify(View):
 
         code = self.kwargs["code"]
         _phone = self.kwargs["phone"]
-        try:
-            phone = request.user.get_last_location().phone + _phone
-            obj = PhoneCodes.objects.get(code=code, phone=phone)
-            user = User.objects.get(pk=request.user.pk)
-            user.is_phone_verified=True
-            user.phone=obj.phone
-            user.save()
+        phone = request.user.get_last_location().phone + _phone
+        obj = PhoneCodes.objects.get(code=code, phone=phone)
+        if obj:
+            request.user.is_phone_verified=True
+            request.user.phone=obj.phone
+            request.user.save()
             obj.delete()
             return redirect(reverse('user'), kwargs={'pk': request.user.pk})
-        except:
+        else:
             data = 'Код подтверждения неверный. Проверьте, пожалуйста, номер, с которого мы Вам звонили. Последние 4 цифры этого номера и есть код подтверждения, который нужно ввести с поле "Последние 4 цифры". Если не можете найти номер, нажмите на кнопку "Перезвонить повторно".'
             response = render(request,'generic/response/phone.html',{'response_text':data})
             return response
