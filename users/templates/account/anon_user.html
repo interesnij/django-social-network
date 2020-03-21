@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base_anon.html" %}
 {% load humanize %}
 
 {% block title %}{{ user.get_full_name }}{% endblock %}
@@ -71,7 +71,7 @@
           pk = box[i].getAttribute('item-pk');
           fetch('/users/progs/item_view/' + pk + "/")
     }}};
-    
+
     try{
     var items = document.getElementById("lenta_container");
 

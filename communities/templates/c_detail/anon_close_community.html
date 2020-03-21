@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base_anon.html" %}
 {% block title %}{{ community.name }}{% endblock %}
 {% block content %}
 
@@ -77,7 +77,7 @@
           {% if common_friends %}
             {% include 'detail_sections/frends_member.html' %}
           {% endif %}
-          
+
           {% include 'detail_sections/membersheeps.html' %}
 
         </div>
