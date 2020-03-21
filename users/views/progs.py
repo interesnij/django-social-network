@@ -74,6 +74,7 @@ class PhoneSend(View):
         from common.model.other import PhoneCodes
         from users.models import User
 
+        text = ""
         if request.user.is_phone_verified:
             return HttpResponse("")
         else:
