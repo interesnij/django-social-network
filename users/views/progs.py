@@ -87,5 +87,5 @@ class PhoneSend(View):
                 PhoneCodes.objects.create(phone=phone, code=data['code'])
                 return HttpResponse("")
             else:
-                data = 'Введите, пожалуйста, корректное количество цифр Вашего телефона'
+                data = {text:'Введите, пожалуйста, корректное количество цифр Вашего телефона'}
                 render(request,'main/phone_verification.html',data)
