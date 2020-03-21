@@ -62,7 +62,7 @@ class PhoneVerify(View):
             obj = PhoneCodes.objects.get(code=code, phone=phone)
         except:
             obj = None
-        if obj:
+        if not obj:
             request.user.is_phone_verified=True
             request.user.phone=obj.phone
             request.user.save()
