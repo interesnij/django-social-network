@@ -62,7 +62,7 @@
       if (document.getElementById('phone').value != '')
         document.getElementById("phone_send").removeAttribute('disabled');
       else
-        document.getElementById("phone_send").addAttribute('disabled','disable');
+        document.getElementById("phone_send").setAttribute("disabled", "true");
       }
 
        document.getElementById("phone_send").addEventListener("click", (e) => {
