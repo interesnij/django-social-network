@@ -166,9 +166,13 @@ class CommunityTrafficWeek(TemplateView):
 		self.weeks = CommunityNumbers.objects.dates('created', 'week')[0:10]
 		self.views = []
 		self.un_views = []
+		self.range = []
 		for i in self.weeks:
-			view = CommunityNumbers.objects.filter(created__week=i.week, community=self.community.pk).count()
-			self.views += [view,]
+			days = [i.day, i.day + 1, i.day + 2, i.day + 3, i.day + 4, i.day + 5, i.day + 6]
+			view = CommunityNumbers.objects.filter(created__day__in=days, community=self.community.pk).count()
+			i6 = i + datetime.timedelta(days=7)
+			self.range += [str(i.strftime('%d.%m.%Y')) + " - " + str(i6.strftime('%d.%m.%Y'))]
+			self.views += [view ,]
 		for i in self.weeks:
 			view = CommunityNumbers.objects.filter(created__week=i.week, community=self.community.pk).distinct("user").count()
 			self.un_views += [view,]
@@ -180,6 +184,7 @@ class CommunityTrafficWeek(TemplateView):
 		context["weeks"] = self.weeks
 		context["un_views"] = self.un_views
 		context["views"] = self.views
+		context["range"] = self.range
 		return context
 
 

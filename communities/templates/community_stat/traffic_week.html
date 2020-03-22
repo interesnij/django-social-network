@@ -50,7 +50,7 @@
 		var config = {
 			type: 'line',
 			data: {
-				labels:[{% for object in weeks %} "{{ object }}", {% endfor %}],
+				labels:[{% for object in range %} "{{ object }}", {% endfor %}],
 				datasets: [{
 					label: 'Уникальные просмотры',
 					backgroundColor: 'rgb(255, 99, 132)',
