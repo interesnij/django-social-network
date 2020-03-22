@@ -2,7 +2,19 @@
 {% load thumbnail %}
 {% block title %}Администраторы - {{ community.name }}{% endblock %}
 {% block content %}
-
+<style>
+  .drop_window{
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    bottom: 25px;
+    margin-bottom: 10px;
+  }
+  .drop:hover~.drop_window{ 
+    z-index: 10;
+    opacity: 1;
+    visibility: visible;}
+</style>
 <div class="container mt-4 main-container">
 <div class="row">
     <div class="col-md-8 order-1">
@@ -123,10 +135,10 @@
           </div>
         </div>
 
-        <button class="mb-2 box-shadow mr-2 btn btn-link text-light text-dark u_like" style="display: block;margin-top: 20px;">
+        <button class="mb-2 box-shadow mr-2 btn btn-link text-light text-dark drop" style="display: block;margin-top: 20px;">
             Статистика
         </button>
-        <div class="collapse like_window">
+        <div class="collapse drop_window">
           <div class="card card-body" style="display: contents;">
             <ul style="list-style-type:none">
               <li style="margin-bottom:8px;"><a href="{% url 'community_cuberture_month' community.pk %}" class="ajax">Общая</a></li>
