@@ -97,13 +97,13 @@ class CommunityCoberturaDay(TemplateView):
 			view = CommunityNumbers.objects.filter(created__day=i.day, community=self.community.pk).distinct("user").count()
 			self.views += [view,]
 		days_ids = [day.strftime('%d.%m.%Y') for day in self.days]
-		json.dumps(days_ids) 
+		json.dumps(days_ids)
 		return super(CommunityCoberturaDay,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		context = super(CommunityCoberturaDay,self).get_context_data(**kwargs)
 		context["community"] = self.community
-		context["days"] = self.days
+		context["days"] = self.days_ids
 		context["views"] = self.views
 		return context
 
