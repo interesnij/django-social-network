@@ -176,7 +176,7 @@ class CommunityTrafficWeek(TemplateView):
 			self.views += [view ,]
 		for i in self.weeks:
 			days = [i.day, i.day + 1, i.day + 2, i.day + 3, i.day + 4, i.day + 5, i.day + 6]
-			view = CommunityNumbers.objects.filter(created__week=days, community=self.community.pk).distinct("user").count()
+			view = CommunityNumbers.objects.filter(created__week__in=days, community=self.community.pk).distinct("user").count()
 			self.un_views += [view,]
 		return super(CommunityTrafficWeek,self).get(request,*args,**kwargs)
 
