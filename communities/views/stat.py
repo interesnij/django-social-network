@@ -71,7 +71,7 @@ class CommunityCoberturaWeek(TemplateView):
 			days = [i.day, i.day +1, i.day +2, i.day +3, i.day +4, i.day +5, i.day +6, i.day +7]
 			view = CommunityNumbers.objects.filter(created__day__in=days, community=self.community.pk).distinct("user").count()
 			self.views += [view,]
-			self.range += [i.day + " - " + i.day ,]
+			self.range += [str(i.day) + " - " + str(i.day + 7) ,]
 		return super(CommunityCoberturaWeek,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
