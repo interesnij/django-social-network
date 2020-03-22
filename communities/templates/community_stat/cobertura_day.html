@@ -48,7 +48,8 @@
 
 <script>
 	window.onload = function() {
-		load_chart([{% for day in days %}"{{ day }}",{% endfor %}] , 'Общий охват', 'Рекламный охват', [{% for view in days %}"{{ views }}",{% endfor %}] , [0,1,2])
+		load_chart([{% for day in days %}"{{ day }}",{% endfor %}] , 'Общий охват', 'Рекламный охват', [{% for view in days %}"{{ views }}",{% endfor %}] , [0,1,2]);
+		var ctx = document.getElementById('canvas').getContext('2d');window.myLine = new Chart(ctx, config);
 	}
 </script>
 {% endblock %}
