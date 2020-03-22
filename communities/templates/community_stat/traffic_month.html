@@ -56,6 +56,37 @@
 					borderColor: 'rgb(54, 162, 235)',
 					data: {{ views }}.reverse(),
 				}]
+			},
+			options: {
+				responsive: true,
+				title: {
+					display: true,
+					text: ''
+				},
+				tooltips: {
+					mode: 'index',
+					intersect: false,
+				},
+				hover: {
+					mode: 'nearest',
+					intersect: true
+				},
+				scales: {
+					xAxes: [{
+						display: true,
+						scaleLabel: {
+							display: true,
+							labelString: ''
+						}
+					}],
+					yAxes: [{
+						display: true,
+						scaleLabel: {
+							display: true,
+							labelString: ''
+						}
+					}]
+				}
 			}
 		};
 
