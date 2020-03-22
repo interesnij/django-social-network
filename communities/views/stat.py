@@ -66,9 +66,7 @@ class CommunityCoberturaWeek(TemplateView):
 		self.template_name = self.community.get_manage_template(folder="community_stat/", template="cobertura_week.html", request=request)
 		self.weeks = CommunityNumbers.objects.dates('created', 'week')[0:10]
 		self.views = []
-		for i in self.weeks:
-			view = CommunityNumbers.objects.filter(created__week=i.weekday, community=self.community.pk).distinct("user").count()
-			self.views += [view,]
+		
 		return super(CommunityCoberturaWeek,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
