@@ -7,7 +7,7 @@
     opacity: 0;
     visibility: hidden;
   }
-  .drop:hover~.drop_window{
+  .drop:hover.drop_window{
     z-index: 10;
     opacity: 1;
     visibility: visible;
@@ -124,7 +124,8 @@
             <li><a href="" class="ajax">Видео</a></li>
           </ul>
         </div>
-        <button class="mb-2 box-shadow mr-2 btn btn-link text-light text-dark drop">
+        <span class="drop">
+        <button class="mb-2 box-shadow mr-2 btn btn-link text-light text-dark">
             Статистика
         </button>
         <div class="drop_window">
@@ -134,6 +135,7 @@
             </ul>
           </div>
         </div>
+        </span>
     </div>
 </div>
 </div>
