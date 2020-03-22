@@ -114,20 +114,6 @@ class Index {
 Index.initLink();
 
 
-rrr = document.getElementById('ajax');
-if(rrr.querySelector('#news_load')){
-  var news_load = rrr.querySelector('#news_load');var link = news_load.getAttribute("data-link");
-  list_load(rrr.querySelector("#news_load"), link);
-}else if(rrr.querySelector('#lenta_load')){
-  var lenta_load = rrr.querySelector('#lenta_load');var link = lenta_load.getAttribute("data-link");
-  list_load(rrr.querySelector("#lenta_load"), link);
-}else if(rrr.querySelector('#lenta_community')){
-  var lenta_community = rrr.querySelector('#lenta_community');var link = lenta_community.getAttribute("data-link");
-  list_load(rrr.querySelector("#lenta_community"), link);
-}
-</script>
-
-<script>
   'use strict';
 window.chartColors = {
 	red: 'rgb(255, 99, 132)',
@@ -284,4 +270,17 @@ var config = {
 
 ctx.getContext('2d');window.myLine = new Chart(ctx, config);
 }
+
+rrr = document.getElementById('ajax');
+if(rrr.querySelector('#news_load')){
+  var news_load = rrr.querySelector('#news_load');var link = news_load.getAttribute("data-link");
+  list_load(rrr.querySelector("#news_load"), link);
+}else if(rrr.querySelector('#lenta_load')){
+  var lenta_load = rrr.querySelector('#lenta_load');var link = lenta_load.getAttribute("data-link");
+  list_load(rrr.querySelector("#lenta_load"), link);
+}else if(rrr.querySelector('#lenta_community')){
+  var lenta_community = rrr.querySelector('#lenta_community');var link = lenta_community.getAttribute("data-link");
+  list_load(rrr.querySelector("#lenta_community"), link);
+}
+load_chart()
 </script>
