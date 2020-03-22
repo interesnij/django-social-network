@@ -47,6 +47,6 @@
 </div>
 
 <script>
-		load_chart({{ days }} , 'Общий охват', 'Рекламный охват', {{ views }} , [0,1,2])
+		load_chart([{% for day in days %}{{ day }},{% endfor %}] , 'Общий охват', 'Рекламный охват', [{% for view in days %}{{ views }},{% endfor %}] , [0,1,2])
 </script>
 {% endblock %}
