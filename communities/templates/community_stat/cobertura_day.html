@@ -49,10 +49,10 @@
 <script>
 	ready(() => {
 		load_chart(
-		"{{ days }}" ,
+		[{% for day in days %}"{{ day }}",{% endfor %}] ,
 		'Общий охват',
 		'Рекламный охват',
-		"{{ views }}" ,
+		[{% for view in days %}"{{ views }}",{% endfor %}],
 		[0,1,2]
 		);
 	})
