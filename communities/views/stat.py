@@ -72,7 +72,7 @@ class CommunityCoberturaWeek(TemplateView):
 			days = [i.day, i.day + 1, i.day + 2, i.day + 3, i.day + 4, i.day + 5, i.day + 6]
 			view = CommunityNumbers.objects.filter(created__day__in=days, community=self.community.pk).distinct("user").count()
 			i6 = i + datetime.timedelta(days=7)
-			self.range += [str(i.strftime('%d %M / %Y')) + " - " + str(i6.strftime('%d.%m'))]
+			self.range += [str(i.strftime('%d %b / %Y')) + " - " + str(i6.strftime('%d.%m'))]
 			self.views += [view ,]
 		return super(CommunityCoberturaWeek,self).get(request,*args,**kwargs)
 
