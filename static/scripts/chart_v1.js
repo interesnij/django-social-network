@@ -115,7 +115,7 @@ Samples.utils.srand(Date.now());
 }(this));
 
 function load_chart() {
-  if(document.querySelector('#canvas')) {
+  if(document.getElementById('canvas')) {
 var ctx = document.getElementById('canvas');
 var dates = ctx.getAttribute('data-dates');
 var data_1 = ctx.getAttribute('data-data_1');
