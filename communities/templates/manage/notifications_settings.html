@@ -72,10 +72,10 @@
             </form>
         </div>
         <div class="col-md-4 order-2 left_menu">
-            <button class="mb-2 box-shadow mr-2 btn btn-link text-light text-dark collapsed" style="display: block" type="button" data-toggle="collapse" data-target="#communitySettings" aria-expanded="false" aria-controls="collapseExample">
+            <button class="mb-2 box-shadow mr-2 btn btn-link text-light text-dark collapsed drop" style="display: block">
                 Настройки <span class="text-hide-xs">сообщества</span>
             </button>
-            <div class="collapse" id="communitySettings">
+            <div class="collapse">
               <div class="card card-body" style="display: contents;">
                 <ul>
                   <li><a href="{% url 'community_general_form' pk=community.pk %}" class="ajax">Информации</a></li>
@@ -83,10 +83,10 @@
               </div>
             </div>
 
-            <button class="mb-2 box-shadow mr-2 btn btn-link text-light text-dark collapsed" style="display: block;margin-top: 20px;" type="button" data-toggle="collapse" data-target="#communityMembership" aria-expanded="false" aria-controls="collapseExample">
+            <button class="mb-2 box-shadow mr-2 btn btn-link text-light text-dark collapsed drop" style="display: block;margin-top: 20px;">
                 Участники <span class="text-hide-xs">сообщества</span>
             </button>
-            <div class="collapse" id="communityMembership">
+            <div class="collapse">
               <div class="card card-body" style="display: contents;">
                 <ul>
                   <li><a href="{% url 'community_member_manage' pk=community.pk %}" class="ajax">Подписчики</a></li>
@@ -102,10 +102,10 @@
               </div>
             </div>
 
-            <button class="mb-2 box-shadow mr-2 btn btn-link text-light text-dark collapsed" style="display: block;margin-top: 20px;" type="button" data-toggle="collapse" data-target="#userPrivate" aria-expanded="false" aria-controls="collapseExample">
+            <button class="mb-2 box-shadow mr-2 btn btn-link text-light text-dark collapsed drop" style="display: block;margin-top: 20px;">
                 Приватность
             </button>
-            <div class="collapse" id="userPrivate">
+            <div class="collapse">
               <div class="card card-body" style="display: contents;">
                 <ul>
                   <li><a href="{% url 'community_private' community.pk %}" class="ajax">Записи</a></li>
@@ -116,10 +116,10 @@
                 </ul>
               </div>
             </div>
-            <button class="mb-2 box-shadow mr-2 btn btn-link text-light text-dark collapsed" style="display: block;margin-top: 20px;" type="button" data-toggle="collapse" data-target="#userNotify" aria-expanded="false" aria-controls="collapseExample">
+            <button class="mb-2 box-shadow mr-2 btn btn-link text-light text-dark collapsed drop" style="display: block;margin-top: 20px;">
                 Уведомления
             </button>
-            <div class="collapse show" id="userNotify">
+            <div class="collapse show">
               <div class="card card-body" style="display: contents;">
                 <ul>
                   <li><a href="{% url 'community_notify' community.pk %}" class="ajax">Записи</a></li>
@@ -131,13 +131,14 @@
               </div>
             </div>
 
-            <button class="mb-2 box-shadow mr-2 btn btn-link text-light text-dark collapsed" style="display: block;margin-top: 20px;" type="button" data-toggle="collapse" data-target="#userStat" aria-expanded="false" aria-controls="collapseExample">
+            <button class="mb-2 box-shadow mr-2 btn btn-link text-light text-dark collapsed drop" style="display: block;margin-top: 20px;">
                 Статистика
             </button>
-            <div class="collapse" id="userStat">
+            <div class="collapse">
               <div class="card card-body" style="display: contents;">
                 <ul style="list-style-type:none">
-                  <li style="margin-bottom:8px;"><a href="{% url 'community_cuberture_month' community.pk %}" class="ajax">Общая</a></li>
+                  <li style="margin-bottom:8px;"><a href="{% url 'community_cuberture_day' community.pk %}" class="ajax">Обший охват</a></li>
+                  <li style="margin-bottom:8px;"><a href="{% url 'community_traffic_day' community.pk %}" class="ajax">Посещаемость</a></li>
                 </ul>
               </div>
             </div>
