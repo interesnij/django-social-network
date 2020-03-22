@@ -181,7 +181,6 @@ class CommunityTrafficWeek(TemplateView):
 	def get_context_data(self,**kwargs):
 		context = super(CommunityTrafficWeek,self).get_context_data(**kwargs)
 		context["community"] = self.community
-		context["weeks"] = self.weeks
 		context["un_views"] = self.un_views
 		context["views"] = self.views
 		context["range"] = self.range
