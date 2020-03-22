@@ -6,14 +6,12 @@
   .drop_window{
     opacity: 0;
     visibility: hidden;
-    position: absolute;
-    bottom: 25px;
-    margin-bottom: 10px;
   }
   .drop:hover~.drop_window{
     z-index: 10;
     opacity: 1;
-    visibility: visible;}
+    visibility: visible;
+  }
 </style>
 <div class="container mt-4 main-container">
 <div class="row">
@@ -134,7 +132,7 @@
             </ul>
           </div>
         </div>
-
+        <span>
         <button class="mb-2 box-shadow mr-2 btn btn-link text-light text-dark drop" style="display: block;margin-top: 20px;">
             Статистика
         </button>
@@ -145,6 +143,7 @@
             </ul>
           </div>
         </div>
+        </span>
     </div>
 </div>
 </div>
