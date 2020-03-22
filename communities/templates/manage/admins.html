@@ -88,7 +88,7 @@
         <button class="mb-2 box-shadow mr-2 btn btn-link text-light text-dark collapsed" style="display: block;margin-top: 20px;" type="button" data-toggle="collapse" data-target="#communityMembership" aria-expanded="false" aria-controls="collapseExample">
             Участники <span class="text-hide-xs">сообщества</span>
         </button>
-        <div class="collapse show" id="communityMembership">
+        <div class="collapse" id="communityMembership">
           <div class="card card-body" style="display: contents;">
             <ul>
               <li><a href="{% url 'community_member_manage' pk=community.pk %}" class="ajax">Подписчики</a></li>
@@ -133,7 +133,7 @@
           </div>
         </div>
 
-        <button class="mb-2 box-shadow mr-2 btn btn-link text-light text-dark collapsed" style="display: block;margin-top: 20px;" type="button" data-toggle="collapse" data-target="#userStat" aria-expanded="false" aria-controls="collapseExample">
+        <button class="mb-2 box-shadow mr-2 btn btn-link text-light text-dark collapsed drop" style="display: block;margin-top: 20px;" type="button" data-toggle="collapse" data-target="#userStat" aria-expanded="false" aria-controls="collapseExample">
             Статистика
         </button>
         <div class="collapse" id="userStat">
@@ -183,5 +183,10 @@ ready(() => {
   }catch{return}
   }
 });
+
+document.body.querySelectorAll('.drop').forEach( lin => lin.addEventListener('click', function(){
+  var block = this.nextElementSibling;
+  block.classList.toggle("show");
+}))
 </script>
 {% endblock %}
