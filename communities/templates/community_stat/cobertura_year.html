@@ -53,7 +53,7 @@
 		var config = {
 			type: 'line',
 			data: {
-				labels:[{% for object in years %} "{{ object|date:'Y' }}", {% endfor %}],
+				labels:[{% for object in years %} "{{ object|date:'Y' }}" г., {% endfor %}],
 				datasets: [{
 					label: 'Общий охват',
 					backgroundColor: 'rgb(255, 99, 132)',
