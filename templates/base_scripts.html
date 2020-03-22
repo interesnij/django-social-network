@@ -71,14 +71,13 @@ function addStyleSheets (href) {$head = document.head,$link = document.createEle
 //  $('body').on('click', '.user_playlist .track_item', function() {track = $(this);track_id = track.parents('.infinite-item').data('counter');playlist_block = $('body').find('.music-dropdown');user_pk = track.parents('.ul_track_list').data('pk');if (!playlist_block.hasClass('user_' + user_pk)){$.ajax({url: "/music/manage/my_list/" + user_pk + "/",success: function(data) {load_playlist(playlist_block);playlist_block.removeClass().addClass('dropdown-menu music-dropdown user_' + user_pk);setTimeout(function(){ my_playlist_play(track_id)},2000);}});}else{my_playlist_play(track_id);};});
 });
 
-document.body.querySelectorAll('.drop').forEach( lin => lin.addEventListener('click', function(){
-  var block = this.nextElementSibling;
-  block.classList.toggle("show");
-}))
-
 class Index {
   static initLink() {document.body.querySelectorAll('.ajax').forEach( lin => lin.addEventListener('click', Index.push_url) );}
-
+  static initDrop() {document.body.querySelectorAll('.drop').forEach( lin => lin.addEventListener('click', Index.drop_it) );}
+  static drop_it(event){
+    var block = this.nextElementSibling;
+    block.classList.toggle("show");
+  }
   static push_url(event){
     event.preventDefault();
     var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -94,7 +93,7 @@ class Index {
           rtr.innerHTML = '';
           document.title = elem_.querySelector('title').innerHTML;
           rtr.append(ajax);
-          Index.initLink();
+          Index.initLink(); Index.initDrop();
           window.history.pushState({route: url}, "network", url);
           if(rtr.querySelector('#news_load')){
             var news_load = rtr.querySelector('#news_load');var link = news_load.getAttribute("data-link");
@@ -112,7 +111,7 @@ class Index {
   };
 }
 
-Index.initLink();
+Index.initLink(); Index.initDrop();
 
 rrr = document.getElementById('ajax');
 if(rrr.querySelector('#news_load')){
