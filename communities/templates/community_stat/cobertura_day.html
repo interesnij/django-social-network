@@ -124,15 +124,15 @@
 				labels:[{% for object in days %} "{{ object }}", {% endfor %}],
 				datasets: [{
 					label: 'Общий охват',
-					backgroundColor: window.chartColors.red,
-					borderColor: window.chartColors.red,
+					backgroundColor: 'rgb(255, 99, 132'),
+					borderColor: 'rgb(255, 99, 132'),
           data: {{ views }}.reverse(),
 					fill: false,
 				}, {
 					label: 'Рекламный охват',
 					fill: false,
-					backgroundColor: window.chartColors.blue,
-					borderColor: window.chartColors.blue,
+					backgroundColor: 'rgb(54, 162, 235)',
+					borderColor: 'rgb(54, 162, 235)',
 					data: [0,0],
 				}]
 			}

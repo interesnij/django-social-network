@@ -125,15 +125,15 @@
 				labels:[{% for object in years %} "{{ object }}", {% endfor %}],
 				datasets: [{
 					label: 'Уникальные просмотры',
-					backgroundColor: window.chartColors.red,
-					borderColor: window.chartColors.red,
+					backgroundColor: 'rgb(255, 99, 132'),
+					borderColor: 'rgb(255, 99, 132'),
           data: {{ un_views }}.reverse(),
 					fill: false,
 				}, {
 					label: 'Все просмотры',
 					fill: false,
-					backgroundColor: window.chartColors.blue,
-					borderColor: window.chartColors.blue,
+					backgroundColor: 'rgb(54, 162, 235)',
+					borderColor: 'rgb(54, 162, 235)',
 					data: {{ views }}.reverse(),
 				}]
 			}
