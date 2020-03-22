@@ -72,9 +72,9 @@
             </form>
         </div>
         <div class="col-md-4 order-2 left_menu">
-            <button class="mb-2 box-shadow mr-2 btn btn-link text-light text-dark collapsed drop" style="display: block">
-                Настройки <span class="text-hide-xs">сообщества</span>
-            </button>
+            <a class="mb-2 box-shadow mr-2 btn btn-link drop" type="button">
+                Настройки сообщества
+            </a>
             <div class="collapse">
               <div class="card card-body" style="display: contents;">
                 <ul>
@@ -83,15 +83,15 @@
               </div>
             </div>
 
-            <button class="mb-2 box-shadow mr-2 btn btn-link text-light text-dark collapsed drop" style="display: block;margin-top: 20px;">
-                Участники <span class="text-hide-xs">сообщества</span>
-            </button>
+            <a class="mb-2 box-shadow mr-2 btn btn-link drop" style="margin-top: 20px;">
+                Участники сообщества
+            </a>
             <div class="collapse">
               <div class="card card-body" style="display: contents;">
                 <ul>
                   <li><a href="{% url 'community_member_manage' pk=community.pk %}" class="ajax">Подписчики</a></li>
                   {% if community.is_closed %}
-                    <li style="margin-bottom:8px;"><a href="{% url 'community_follows' pk=community.pk %}" class="ajax">Заявки на членство</a></li>
+                    <li style="margin-bottom:8px;"><a href="{% url 'community_follows' pk=community.pk %}" class="ajax" data-html="#ajax">Заявки на членство</a></li>
                   {% endif %}
                   <li><a href="{% url 'community_moders' pk=community.pk %}" class="ajax">Модераторы</a></li>
                   <li><a href="{% url 'community_editors' pk=community.pk %}" class="ajax">Редакторы</a></li>
@@ -102,23 +102,23 @@
               </div>
             </div>
 
-            <button class="mb-2 box-shadow mr-2 btn btn-link text-light text-dark collapsed drop" style="display: block;margin-top: 20px;">
-                Приватность
-            </button>
+            <a class="mb-2 box-shadow mr-2 btn btn-link drop" style="margin-top: 20px;">
+                Натройки приватности
+            </a>
             <div class="collapse">
               <div class="card card-body" style="display: contents;">
                 <ul>
                   <li><a href="{% url 'community_private' community.pk %}" class="ajax">Записи</a></li>
-                  <li><a href="" class="ajax">Фотографии</a></li>
-                  <li><a href="" class="ajax">Товары</a></li>
-                  <li><a href="" class="ajax">Музыка</a></li>
-                  <li><a href="" class="ajax">Видео</a></li>
+                  <li><a href="" class="ajax" data-html="#ajax">Фотографии</a></li>
+                  <li><a href="" class="ajax" data-html="#ajax">Товары</a></li>
+                  <li><a href="" class="ajax" data-html="#ajax">Музыка</a></li>
+                  <li><a href="" class="ajax" data-html="#ajax">Видео</a></li>
                 </ul>
               </div>
             </div>
-            <button class="mb-2 box-shadow mr-2 btn btn-link text-light text-dark collapsed drop" style="display: block;margin-top: 20px;">
-                Уведомления
-            </button>
+            <a class="mb-2 box-shadow mr-2 btn btn-link drop" style="margin-top: 20px;">
+                Натройки уведомлений
+            </a>
             <div class="collapse show">
               <div class="card card-body" style="display: contents;">
                 <ul>
@@ -131,9 +131,9 @@
               </div>
             </div>
 
-            <button class="mb-2 box-shadow mr-2 btn btn-link text-light text-dark collapsed drop" style="display: block;margin-top: 20px;">
+            <a class="mb-2 box-shadow mr-2 btn btn-link drop" style="margin-top: 20px;">
                 Статистика
-            </button>
+            </a>
             <div class="collapse">
               <div class="card card-body" style="display: contents;">
                 <ul style="list-style-type:none">
