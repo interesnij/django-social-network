@@ -109,7 +109,6 @@
 
     Index.initLink();
 
-
     rrr = document.getElementById('ajax');
     if(rrr.querySelector('#news_load')){
       var news_load = rrr.querySelector('#news_load');var link = news_load.getAttribute("data-link");
@@ -122,6 +121,11 @@
       list_load(rrr.querySelector("#lenta_community"), link);
     }
   });
+
+  document.body.querySelectorAll('.drop').forEach( lin => lin.addEventListener('click', function(){
+    var block = this.nextElementSibling;
+    block.classList.toggle("show");
+  }))
     </script>
 
   </body>

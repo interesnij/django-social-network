@@ -64,4 +64,9 @@ class Index {
   }
 }
 Index.initLink();
+
+document.body.querySelectorAll('.drop').forEach( lin => lin.addEventListener('click', function(){
+  var block = this.nextElementSibling;
+  block.classList.toggle("show");
+}))
 </script>

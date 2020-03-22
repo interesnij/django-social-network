@@ -2,17 +2,7 @@
 {% load thumbnail %}
 {% block title %}Администраторы - {{ community.name }}{% endblock %}
 {% block content %}
-<style>
-  .drop_window{
-    opacity: 0;
-    visibility: hidden;
-  }
-  .drop:hover.drop_window{
-    z-index: 10;
-    opacity: 1;
-    visibility: visible;
-  }
-</style>
+
 <div class="container mt-4 main-container">
 <div class="row">
     <div class="col-md-8 order-1">
@@ -139,7 +129,8 @@
         <div class="collapse">
           <div class="card card-body" style="display: contents;">
             <ul style="list-style-type:none">
-              <li style="margin-bottom:8px;"><a href="{% url 'community_cuberture_month' community.pk %}" class="ajax">Общая</a></li>
+              <li style="margin-bottom:8px;"><a href="{% url 'community_cuberture_day' community.pk %}" class="ajax">Обший охват</a></li>
+              <li style="margin-bottom:8px;"><a href="{% url 'community_traffic_day' community.pk %}" class="ajax">Посещаемость</a></li>
             </ul>
           </div>
         </div>
