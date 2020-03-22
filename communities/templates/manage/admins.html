@@ -10,7 +10,7 @@
     bottom: 25px;
     margin-bottom: 10px;
   }
-  .drop:hover~.drop_window{ 
+  .drop:hover~.drop_window{
     z-index: 10;
     opacity: 1;
     visibility: visible;}
@@ -138,7 +138,7 @@
         <button class="mb-2 box-shadow mr-2 btn btn-link text-light text-dark drop" style="display: block;margin-top: 20px;">
             Статистика
         </button>
-        <div class="collapse drop_window">
+        <div class="drop_window">
           <div class="card card-body" style="display: contents;">
             <ul style="list-style-type:none">
               <li style="margin-bottom:8px;"><a href="{% url 'community_cuberture_month' community.pk %}" class="ajax">Общая</a></li>
