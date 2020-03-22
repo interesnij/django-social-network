@@ -117,7 +117,7 @@ Samples.utils.srand(Date.now());
 function load_chart() {
   try{
 var ctx = document.getElementById('canvas');
-var dates = ctx.getAttribute('data-dates');
+var dates = ctx.getAttribute('data-datew');
 var data_1 = ctx.getAttribute('data-data_1');
 var data_2 = ctx.getAttribute('data-data_2');
 var label_1 = ctx.getAttribute('data-label_1');
