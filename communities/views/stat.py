@@ -68,9 +68,10 @@ class CommunityCoberturaWeek(TemplateView):
 		self.range = []
 		self.views = []
 		for i in self.weeks:
-			days = [i.day, i.day +1, i.day +2, i.day +3, i.day +4, i.day +5, i.day +6]
+			days = [i.day, i.day + 1, i.day + 2, i.day + 3, i.day + 4, i.day + 5, i.day + 6]
 			view = CommunityNumbers.objects.filter(created__day__in=days, community=self.community.pk).distinct("user").count()
-			self.range += [str(i.strftime('%d/%m')) + " - " + str(days[6].strftime('%d/%m'))]
+			i6 = i.day + 6
+			self.range += [str(i.strftime('%d/%m')) + " - " + str(i6.strftime('%d/%m'))]
 			self.views += [view ,]
 		return super(CommunityCoberturaWeek,self).get(request,*args,**kwargs)
 
