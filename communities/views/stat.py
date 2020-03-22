@@ -66,7 +66,7 @@ class CommunityCoberturaWeek(TemplateView):
 		self.template_name = self.community.get_manage_template(folder="community_stat/", template="cobertura_week.html", request=request)
 		self.weeks = CommunityNumbers.objects.dates('created', 'week')[0:10]
 		self.views = []
-		for i in self.views:
+		for i in self.weeks:
 			days = [i.day, i.day +1, i.day +2, i.day +3, i.day +4, i.day +5, i.day +6, i.day +7]
 			view = CommunityNumbers.objects.filter(created__day__in=days, community=self.community.pk).distinct("user").count()
 			self.views += [view,]
