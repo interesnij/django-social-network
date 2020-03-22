@@ -74,19 +74,19 @@
     </div>
 
     <div class="col-md-4 order-2 left_menu">
-        <button class="mb-2 box-shadow mr-2 btn btn-link text-light text-dark drop" style="display: block">
-            Настройки >сообщества
+        <button class="mb-2 box-shadow mr-2 btn btn-link text-light text-dark drop">
+            Настройки сообщества
         </button>
-        <div class="card card-body drop_window" style="display: contents;">
+        <div class="drop_window" style="display: contents;">
           <ul>
             <li><a href="{% url 'community_general_form' pk=community.pk %}" class="ajax">Информации</a></li>
           </ul>
         </div>
 
-        <button class="mb-2 box-shadow mr-2 btn btn-link text-light text-dark drop" style="display: block;margin-top: 20px;">
+        <button class="mb-2 box-shadow mr-2 btn btn-link text-light text-dark drop" style="margin-top: 20px;">
             Участники <span class="text-hide-xs">сообщества</span>
         </button>
-        <div class="card card-body drop_window" style="display: contents;">
+        <div class="drop_window" style="display: contents;">
           <ul>
             <li><a href="{% url 'community_member_manage' pk=community.pk %}" class="ajax">Подписчики</a></li>
             {% if community.is_closed %}
@@ -100,10 +100,10 @@
           </ul>
         </div>
 
-        <button class="mb-2 box-shadow mr-2 btn btn-link text-light text-dark drop" style="display: block;margin-top: 20px;">
+        <button class="mb-2 box-shadow mr-2 btn btn-link text-light text-dark drop" style="margin-top: 20px;">
             Приватность
         </button>
-        <div class="card card-body drop_window" style="display: contents;">
+        <div class="drop_window" style="display: contents;">
           <ul>
             <li><a href="{% url 'community_private' community.pk %}" class="ajax">Записи</a></li>
             <li><a href="" class="ajax">Фотографии</a></li>
@@ -112,10 +112,10 @@
             <li><a href="" class="ajax">Видео</a></li>
           </ul>
         </div>
-        <button class="mb-2 box-shadow mr-2 btn btn-link text-light text-dark drop" style="display: block;margin-top: 20px;">
+        <button class="mb-2 box-shadow mr-2 btn btn-link text-light text-dark drop" style="margin-top: 20px;">
             Уведомления
         </button>
-        <div class="card card-body drop_window" style="display: contents;">
+        <div class="drop_window" style="display: contents;">
           <ul>
             <li><a href="{% url 'community_notify' community.pk %}" class="ajax">Записи</a></li>
             <li><a href="" class="ajax"">Фотографии</a></li>
@@ -124,11 +124,11 @@
             <li><a href="" class="ajax">Видео</a></li>
           </ul>
         </div>
-        <button class="mb-2 box-shadow mr-2 btn btn-link text-light text-dark drop" style="display: block;margin-top: 20px;">
+        <button class="mb-2 box-shadow mr-2 btn btn-link text-light text-dark drop" style="margin-top: 20px;">
             Статистика
         </button>
         <div class="drop_window">
-          <div class="card card-body" style="display: contents;">
+          <div style="display: contents;">
             <ul style="list-style-type:none">
               <li style="margin-bottom:8px;"><a href="{% url 'community_cuberture_month' community.pk %}" class="ajax">Общая</a></li>
             </ul>
