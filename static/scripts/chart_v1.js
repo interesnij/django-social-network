@@ -156,4 +156,4 @@ options: {
 ctx.getContext('2d');window.myLine = new Chart(ctx, config);
 
 load_chart()
-}catch(return)
+}catch{return}
