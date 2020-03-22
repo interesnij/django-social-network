@@ -62,6 +62,7 @@ class CommunityCoberturaWeek(TemplateView):
 	template_name = None
 
 	def get(self,request,*args,**kwargs):
+		import datetime
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.template_name = self.community.get_manage_template(folder="community_stat/", template="cobertura_week.html", request=request)
 		self.weeks = CommunityNumbers.objects.dates('created', 'week')[0:10]
