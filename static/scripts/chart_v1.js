@@ -118,9 +118,8 @@ function load_chart() {
 //  try{
 var ctx = document.getElementById('canvas');
 var dates = ctx.getAttribute('data-datew').split(",");
-var data_1 = ctx.getAttribute('data-data_1');
-for (var i in dates){console.log(i.value)};
-var data_2 = ctx.getAttribute('data-data_2');
+var data_1 = ctx.getAttribute('data-data_1').split(",");
+var data_2 = ctx.getAttribute('data-data_2').split(",");
 var label_1 = ctx.getAttribute('data-label_1');
 var label_2 = ctx.getAttribute('data-label_2');
 console.log(dates);
