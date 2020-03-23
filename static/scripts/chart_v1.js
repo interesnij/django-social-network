@@ -119,7 +119,7 @@ function load_chart() {
 var ctx = document.getElementById('canvas');
 //var dates = ctx.getAttribute('data-datew');
 var dates = ctx.nextElementSibling;
-dates = dates.apply(this, args);
+//dates = dates.apply(this, args);
 var data_1 = ctx.getAttribute('data-data_1');
 var data_2 = ctx.getAttribute('data-data_2');
 var label_1 = ctx.getAttribute('data-label_1');
@@ -132,7 +132,7 @@ console.log(label_1);
 var config = {
 type: 'line',
 data: {
-  labels: dates,
+  labels: "[" + dates  "]",
   datasets: [{
     label: label_1,
     backgroundColor: 'rgb(255, 99, 132)',
