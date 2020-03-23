@@ -1,5 +1,6 @@
-{% extends "base.html" %}
+{% extends "base_mobile.html" %}
 {% block title %}Охват по месяцам{% endblock %}
+{% load item_count %}
 {% block content %}
 
 <div class="container mt-4 main-container">
@@ -16,10 +17,10 @@
                   </h5>
                 </div>
               <div class="dropdown">
-                <button class="btn btn-primary dropdown-toggle mb-2" type="button" id="timeButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button class="btn btn-primary dropdown-toggle mb-2 drop">
                     Месяц
                 </button>
-                <div class="dropdown-menu" aria-labelledby="timeButton" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;">
+                <div class="dropdown-menu" style="position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;">
                   <a class="dropdown-item ajax" href="{% url 'community_cuberture_year' community.pk %}">Год</a>
                   <a class="dropdown-item ajax" href="{% url 'community_cuberture_week' community.pk %}">Неделя</a>
                   <a class="dropdown-item ajax" href="{% url 'community_cuberture_day' community.pk %}">День</a>
@@ -28,258 +29,35 @@
             </div>
           </div>
           <div class="card-body px-0 py-0">
-            		<canvas id="canvas"></canvas>
-            <br><br>
+            <canvas id="canvas"
+                    data-dates='{% for object in months %} {{ object|date:"F, Y" }}{% if not forloop.last %},{% endif %}{% endfor %}'
+                    data-label_1="Общий охват"
+                    data-label_2="Рекламный охват"
+                    data-data_1="{% for view in views %}{{ view }}{% if not forloop.last %},{% endif %}{% endfor %}"
+                    data-data_2="0"></canvas>
+                    <br><br>
+
+        						<h5 class="mt-1" style="margin:10px">География за этот месяц</h5>
+
+                    <div class="row">
+                        <div class="col-md-6 order-1">
+                		        {% for object in sities %}
+                		          <div class="stat_city">
+                			          <span class="city">{{ object }}</span>
+                			          <span class="count"><svg fill="currentColor" class="svg_default" style="width:20px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+                				         {{ community|c_sity_count:object }}
+                			          </span>
+                		           </div>
+                		         {% endfor %}
+                        </div>
+                        <div class="col-md-6 order-2"></div>
+                    </div>
           </div>
           </div>
     </div>
 
-    <div class="col-md-4 order-2 left_menu">
-        <button class="mb-2 box-shadow mr-2 btn btn-link text-light text-dark collapsed drop" style="display: block">
-            Настройки <span class="text-hide-xs">сообщества</span>
-        </button>
-        <div class="collapse">
-          <div class="card card-body" style="display: contents;">
-            <ul>
-              <li><a href="{% url 'community_general_form' pk=community.pk %}" class="ajax">Информации</a></li>
-            </ul>
-          </div>
-        </div>
-
-        <button class="mb-2 box-shadow mr-2 btn btn-link text-light text-dark collapsed drop" style="display: block;margin-top: 20px;">
-            Участники <span class="text-hide-xs">сообщества</span>
-        </button>
-        <div class="collapse">
-          <div class="card card-body" style="display: contents;">
-            <ul>
-              <li><a href="{% url 'community_member_manage' pk=community.pk %}" class="ajax">Подписчики</a></li>
-              {% if community.is_closed %}
-                <li style="margin-bottom:8px;"><a href="{% url 'community_follows' pk=community.pk %}" class="ajax">Заявки на членство</a></li>
-              {% endif %}
-              <li><a href="{% url 'community_moders' pk=community.pk %}" class="ajax">Модераторы</a></li>
-              <li><a href="{% url 'community_editors' pk=community.pk %}" class="ajax">Редакторы</a></li>
-              <li><a href="{% url 'community_advertisers' pk=community.pk %}" class="ajax">Рекламодатели</a></li>
-              <li><a href="{% url 'community_admins' pk=community.pk %}" class="ajax">Администраторы</a></li>
-              <li><a href="{% url 'community_black_list' pk=community.pk %}" class="ajax">Черный список</a></li>
-            </ul>
-          </div>
-        </div>
-
-        <button class="mb-2 box-shadow mr-2 btn btn-link text-light text-dark collapsed drop" style="display: block;margin-top: 20px;">
-            Приватность
-        </button>
-        <div class="collapse">
-          <div class="card card-body" style="display: contents;">
-            <ul>
-              <li><a href="{% url 'community_private' community.pk %}" class="ajax">Записи</a></li>
-              <li><a href="" class="ajax">Фотографии</a></li>
-              <li><a href="" class="ajax">Товары</a></li>
-              <li><a href="" class="ajax">Музыка</a></li>
-              <li><a href="" class="ajax">Видео</a></li>
-            </ul>
-          </div>
-        </div>
-        <button class="mb-2 box-shadow mr-2 btn btn-link text-light text-dark collapsed drop" style="display: block;margin-top: 20px;">
-            Уведомления
-        </button>
-        <div class="collapse">
-          <div class="card card-body" style="display: contents;">
-            <ul>
-              <li><a href="{% url 'community_notify' community.pk %}" class="ajax">Записи</a></li>
-              <li><a href="" class="ajax">Фотографии</a></li>
-              <li><a href="" class="ajax">Товары</a></li>
-              <li><a href="" class="ajax">Музыка</a></li>
-              <li><a href="" class="ajax">Видео</a></li>
-            </ul>
-          </div>
-        </div>
-
-        <button class="mb-2 box-shadow mr-2 btn btn-link text-light text-dark collapsed drop" style="display: block;margin-top: 20px;">
-            Статистика
-        </button>
-        <div class="collapse show">
-          <div class="card card-body" style="display: contents;">
-            <ul style="list-style-type:none">
-              <li style="margin-bottom:8px;"><a href="{% url 'community_cuberture_day' community.pk %}" class="ajax">Обший охват</a></li>
-              <li style="margin-bottom:8px;"><a href="{% url 'community_traffic_day' community.pk %}" class="ajax">Посещаемость</a></li>
-            </ul>
-          </div>
-        </div>
-    </div>
+    {% include 'community_stat/menu.html' %}
 </div>
-<script>
-  'use strict';
-window.chartColors = {
-	red: 'rgb(255, 99, 132)',
-	orange: 'rgb(255, 159, 64)',
-	yellow: 'rgb(255, 205, 86)',
-	green: 'rgb(75, 192, 192)',
-	blue: 'rgb(54, 162, 235)',
-	purple: 'rgb(153, 102, 255)',
-	grey: 'rgb(201, 203, 207)'
-};
+</div>
 
-(function(global) {
-
-	var COLORS = [
-		'#4dc9f6',
-		'#f67019',
-		'#f53794',
-		'#537bc4',
-		'#acc236',
-		'#166a8f',
-		'#00a950',
-		'#58595b',
-		'#8549ba'
-	];
-
-	var Samples = global.Samples || (global.Samples = {});
-	var Color = global.Color;
-
-	Samples.utils = {
-		srand: function(seed) {
-			this._seed = seed;
-		},
-
-		rand: function(min, max) {
-			var seed = this._seed;
-			min = min === undefined ? 0 : min;
-			max = max === undefined ? 1 : max;
-			this._seed = (seed * 9301 + 49297) % 233280;
-			return min + (this._seed / 233280) * (max - min);
-		},
-
-		numbers: function(config) {
-			var cfg = config || {};
-			var min = cfg.min || 0;
-			var max = cfg.max || 1;
-			var from = cfg.from || [];
-			var count = cfg.count || 8;
-			var decimals = cfg.decimals || 8;
-			var continuity = cfg.continuity || 1;
-			var dfactor = Math.pow(10, decimals) || 0;
-			var data = [];
-			var i, value;
-
-			for (i = 0; i < count; ++i) {
-				value = (from[i] || 0) + this.rand(min, max);
-				if (this.rand() <= continuity) {
-					data.push(Math.round(dfactor * value) / dfactor);
-				} else {
-					data.push(null);
-				}
-			}
-
-			return data;
-		},
-
-		labels: function(config) {
-			var cfg = config || {};
-			var min = cfg.min || 0;
-			var max = cfg.max || 100;
-			var count = cfg.count || 8;
-			var step = (max - min) / count;
-			var decimals = cfg.decimals || 8;
-			var dfactor = Math.pow(10, decimals) || 0;
-			var prefix = cfg.prefix || '';
-			var values = [];
-			var i;
-
-			for (i = min; i < max; i += step) {
-				values.push(prefix + Math.round(dfactor * i) / dfactor);
-			}
-
-			return values;
-		},
-
-		months: function(config) {
-			var cfg = config || {};
-			var count = cfg.count || 12;
-			var section = cfg.section;
-			var values = [];
-			var i, value;
-
-			for (i = 0; i < count; ++i) {
-				value = MONTHS[Math.ceil(i) % 12];
-				values.push(value.substring(0, section));
-			}
-
-			return values;
-		},
-
-		color: function(index) {
-			return COLORS[index % COLORS.length];
-		},
-
-		transparentize: function(color, opacity) {
-			var alpha = opacity === undefined ? 0.5 : 1 - opacity;
-			return Color(color).alpha(alpha).rgbString();
-		}
-	};
-
-	window.randomScalingFactor = function() {
-		return Math.round(Samples.utils.rand(-100, 100));
-	};
-
-	Samples.utils.srand(Date.now());
-}(this));
-</script>
-
-<script>
-		var config = {
-			type: 'line',
-			data: {
-				labels:[{% for object in months %} "{{ object|get_month_name }}", {% endfor %}].reverse(),
-				datasets: [{
-					label: 'Общий охват',
-					backgroundColor: window.chartColors.red,
-					borderColor: window.chartColors.red,
-          data: {{ views }}.reverse(),
-					fill: false,
-				}, {
-					label: 'Рекламный охват',
-					fill: false,
-					backgroundColor: window.chartColors.blue,
-					borderColor: window.chartColors.blue,
-					data: [0,],
-				}]
-			},
-			options: {
-				responsive: true,
-				title: {
-					display: true,
-					text: 'Общий охват по месяцам'
-				},
-				tooltips: {
-					mode: 'index',
-					intersect: false,
-				},
-				hover: {
-					mode: 'nearest',
-					intersect: true
-				},
-				scales: {
-					xAxes: [{
-						display: true,
-						scaleLabel: {
-							display: true,
-							labelString: 'Охват пользователей по месяцам'
-						}
-					}],
-					yAxes: [{
-						display: true,
-						scaleLabel: {
-							display: true,
-							labelString: ''
-						}
-					}]
-				}
-			}
-		};
-
-		window.onload = function() {
-			var ctx = document.getElementById('canvas').getContext('2d');
-			window.myLine = new Chart(ctx, config);
-		};
-	</script>
 {% endblock %}

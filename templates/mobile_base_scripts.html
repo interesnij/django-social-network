@@ -37,6 +37,11 @@ icon_5.addEventListener("click", (e) => {
 });
 });
 
+on('body', 'click', '.drop', function() {
+  var block = this.nextElementSibling;
+  block.classList.toggle("show");
+});
+
 class Index {
   static initLink() {document.body.querySelectorAll('.ajax').forEach( lin => lin.addEventListener('click', Index.push_url) );}
 
