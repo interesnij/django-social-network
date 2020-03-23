@@ -853,9 +853,11 @@ class User(AbstractUser):
         from stst.models import CommunityNumbers
         from communities.models import Community
         v_s = CommunityNumbers.objects.filter(user=self.pk).values('community')
-        ids = [use['community'] for use in v_s].distinct()[0:8]
+        ids = [use['community'] for use in v_s]
+        result = list()
+        map(lambda x: not x in result and result.append(x), ids)
         query = []
-        for i in ids:
+        for i in result:
             query = query + [Community.objects.get(id=i), ]
         return query
 
@@ -863,7 +865,7 @@ class User(AbstractUser):
         from stst.models import CommunityNumbers
         from communities.models import Community
         v_s = CommunityNumbers.objects.filter(user=self.pk).values("community")
-        ids = [use['community'] for use in v_s].distinct()[0:8]
+        ids = [use['community'] for use in v_s]
         query = []
         for i in ids:
             query = query + [Community.objects.get(id=i), ]
