@@ -64,7 +64,7 @@ function addStyleSheets (href) {$head = document.head,$link = document.createEle
     myPlaylist.pause(track_id);
   };
   });
-on('#ajax', 'click', '.reload_block', function() { 
+on('#ajax', 'click', '.ajax', function() {
   var block = this.nextElementSibling;
   block.classList.toggle("show");
 });
@@ -96,7 +96,8 @@ class Index {
           rtr.innerHTML = '';
           document.title = elem_.querySelector('title').innerHTML;
           rtr.append(ajax);
-          Index.initLink(); Index.initDrop();
+          Index.initLink();
+          //Index.initDrop();
           window.history.pushState({route: url}, "network", url);
           if(rtr.querySelector('#news_load')){
             var news_load = rtr.querySelector('#news_load');var link = news_load.getAttribute("data-link");
