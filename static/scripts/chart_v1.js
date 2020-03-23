@@ -130,7 +130,7 @@ console.log(label_1);
 var config = {
 type: 'line',
 data: {
-  labels: dates,
+  labels: dates.apply(this, args);,
   datasets: [{
     label: label_1,
     backgroundColor: 'rgb(255, 99, 132)',
