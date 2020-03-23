@@ -852,7 +852,7 @@ class User(AbstractUser):
     def get_last_visited_communities(self):
         from stst.models import CommunityNumbers
         from communities.models import Community
-        v_s = CommunityNumbers.objects.filter(user=self.pk).values('community').order_by("-created")[0:8]
+        v_s = CommunityNumbers.objects.filter(user=self.pk).values('community').distinct()[0:8]
         ids = [use['community'] for use in v_s]
         query = []
         for i in ids:
@@ -867,7 +867,7 @@ class User(AbstractUser):
         query = []
         for i in ids:
             query = query + [Community.objects.get(id=i), ]
-        return query.distinct()
+        return query
 
 
     def join_community_with_name(self, community_name):
