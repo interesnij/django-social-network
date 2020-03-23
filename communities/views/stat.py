@@ -50,7 +50,7 @@ class CommunityCoberturaMonth(TemplateView):
 			view = CommunityNumbers.objects.filter(created__month=i.month, community=self.community.pk).distinct("user").count()
 			self.views += [view]
 
-		current_views = CommunityNumbers.objects.filter(created__month=self.months[0], community=self.community.pk).values('user').distinct()
+		current_views = CommunityNumbers.objects.filter(created__month=self.months[0].month, community=self.community.pk).values('user').distinct()
 		user_ids = [use['user'] for use in current_views]
 		users = User.objects.filter(id__in=user_ids)
 		for user in users:
