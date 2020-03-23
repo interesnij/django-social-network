@@ -16,7 +16,7 @@ class MainPageView(TemplateView):
 		else:
 			self.template_name="main/auth.html"
 		if is_mobile(request):
-			self.template_name += "mob_"
+			"mob_" + self.template_name 
 		return super(MainPageView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
