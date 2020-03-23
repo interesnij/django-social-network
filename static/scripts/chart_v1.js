@@ -115,7 +115,7 @@ Samples.utils.srand(Date.now());
 }(this));
 
 function load_chart() {
-  try{
+//  try{
 var ctx = document.getElementById('canvas');
 var valuess = []
 var dates = ctx.getAttribute('data-datew');
@@ -161,6 +161,6 @@ options: {
 };
 
 ctx.getContext('2d');window.myLine = new Chart(ctx, config);
-}catch{return}
+//}catch{return}
 }
 load_chart()
