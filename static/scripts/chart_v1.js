@@ -118,7 +118,7 @@ function load_chart() {
   try{
 var ctx = document.getElementById('canvas');
 //var dates = ctx.getAttribute('data-datew');
-var dates = ctx.nextElementSibling;
+var dates = ctx.nextElementSibling.innerHTML;
 //dates = dates.apply(this, args);
 var data_1 = ctx.getAttribute('data-data_1');
 var data_2 = ctx.getAttribute('data-data_2');
