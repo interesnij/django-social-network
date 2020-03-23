@@ -123,7 +123,7 @@ for (var i in dates){console.log(i.value)};
 var data_2 = ctx.getAttribute('data-data_2');
 var label_1 = ctx.getAttribute('data-label_1');
 var label_2 = ctx.getAttribute('data-label_2');
-console.log(valuess);
+console.log(dates);
 console.log(data_1);
 console.log(data_2);
 console.log(label_1);
