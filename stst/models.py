@@ -11,6 +11,7 @@ class UserNumbers(models.Model):
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
+        ordering = ['-created']
         verbose_name="Кто к кому заходил"
         verbose_name_plural="Кто к кому заходил"
 
@@ -23,6 +24,7 @@ class CommunityNumbers(models.Model):
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
+        ordering = ['-created']
         verbose_name="Посещение сообщества"
         verbose_name_plural="Посещения сообщества"
 
@@ -35,7 +37,7 @@ class GoodNumbers(models.Model):
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
-        unique_together = ('user', 'good',)
+        ordering = ['-created']
         verbose_name="Посещение товара"
         verbose_name_plural="Посещения товара"
 
@@ -48,7 +50,7 @@ class VideoNumbers(models.Model):
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
-        unique_together = ('user', 'video',)
+        ordering = ['-created']
         verbose_name="Просмотр ролика"
         verbose_name_plural="Просмотры ролика"
 
@@ -60,7 +62,7 @@ class MusicNumbers(models.Model):
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
-        unique_together = ('user', 'music',)
+        ordering = ['-created']
         verbose_name="Прослушивание трека"
         verbose_name_plural="Прослушивания трека"
 
@@ -72,5 +74,6 @@ class ItemNumbers(models.Model):
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
+        ordering = ['-created']
         verbose_name="Просмотр записи"
         verbose_name_plural="Просмотры записи"
