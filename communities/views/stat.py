@@ -119,7 +119,7 @@ class CommunityCoberturaDay(TemplateView):
 			view = CommunityNumbers.objects.filter(created__day=i.day, community=self.community.pk).distinct("user").count()
 			self.views += [view]
 		self.current_views = CommunityNumbers.objects.filter(created__day=self.days[0].day, community=self.community.pk).values('user').distinct()
-		self.user_ids = [use['user'] for use in current_views]
+		self.user_ids = [use['user'] for use in self.current_views]
 		self.users = User.objects.filter(id__in=self.user_ids)
 		for user in self.users:
 			try:
