@@ -30,9 +30,14 @@
           </div>
 
           <div class="card-body px-0 py-0">
-            		<canvas id="canvas"></canvas>
+            <canvas id="canvas"
+                    data-dates='{% for week in range %}{{ week }}{% if not forloop.last %},{% endif %}{% endfor %}'
+                    data-label_1="Уникальные просмотры"
+                    data-label_2="Все просмотры"
+                    data-data_1="{% for view in un_views %}{{ view }}{% if not forloop.last %},{% endif %}{% endfor %}"
+                    data-data_2="{% for view in views %}{{ view }}{% if not forloop.last %},{% endif %}{% endfor %}"></canvas>
             <br><br>
-            <h5 class="mt-1" style="margin:10px">География за этот год</h5>
+            <h5 class="mt-1" style="margin:10px">География за эту неделю</h5>
 
             <div class="row">
                 <div class="col-md-6 order-1">
@@ -55,61 +60,4 @@
 </div>
 </div>
 
-<script>
-		var config = {
-			type: 'line',
-			data: {
-				labels:[{% for object in range %} "{{ object }}", {% endfor %}],
-				datasets: [{
-					label: 'Уникальные просмотры',
-					backgroundColor: 'rgb(255, 99, 132)',
-					borderColor: 'rgb(255, 99, 132)',
-          data: {{ un_views }},
-					fill: false,
-				}, {
-					label: 'Все просмотры',
-					fill: false,
-					backgroundColor: 'rgb(54, 162, 235)',
-					borderColor: 'rgb(54, 162, 235)',
-					data: {{ views }},
-				}]
-			},
-			options: {
-				responsive: true,
-				title: {
-					display: true,
-					text: ''
-				},
-				tooltips: {
-					mode: 'index',
-					intersect: false,
-				},
-				hover: {
-					mode: 'nearest',
-					intersect: true
-				},
-				scales: {
-					xAxes: [{
-						display: true,
-						scaleLabel: {
-							display: true,
-							labelString: ''
-						}
-					}],
-					yAxes: [{
-						display: true,
-						scaleLabel: {
-							display: true,
-							labelString: ''
-						}
-					}]
-				}
-			}
-		};
-
-		window.onload = function() {
-			var ctx = document.getElementById('canvas').getContext('2d');
-			window.myLine = new Chart(ctx, config);
-		};
-	</script>
 {% endblock %}
