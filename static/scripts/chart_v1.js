@@ -115,7 +115,7 @@ Samples.utils.srand(Date.now());
 }(this));
 
 function load_chart() {
-//  try{
+  try{
 var ctx = document.getElementById('canvas');
 var dates = ctx.getAttribute('data-dates').split(",");
 var data_1 = ctx.getAttribute('data-data_1').split(",");
@@ -154,6 +154,6 @@ options: {
 };
 
 ctx.getContext('2d');window.myLine = new Chart(ctx, config);
-//}catch{return}
+}catch{return}
 }
 load_chart()
