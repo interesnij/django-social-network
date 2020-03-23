@@ -64,7 +64,7 @@ function addStyleSheets (href) {$head = document.head,$link = document.createEle
     myPlaylist.pause(track_id);
   };
   });
-on('body, 'click', '.drop', function() {
+on('body', 'click', '.drop', function() {
   var block = this.nextElementSibling;
   block.classList.toggle("show");
 });
