@@ -117,6 +117,7 @@ rrr = document.getElementById('ajax');
 if(rrr.querySelector('#news_load')){
   var news_load = rrr.querySelector('#news_load');var link = news_load.getAttribute("data-link");
   list_load(rrr.querySelector("#news_load"), link);
+  Index.initDrop()
 }else if(rrr.querySelector('#lenta_load')){
   var lenta_load = rrr.querySelector('#lenta_load');var link = lenta_load.getAttribute("data-link");
   list_load(rrr.querySelector("#lenta_load"), link);
