@@ -66,6 +66,7 @@ class CommunityCoberturaMonth(TemplateView):
 		context["community"] = self.community
 		context["months"] = self.months
 		context["views"] = self.views
+		context["sities"] = set(self.sities)
 		return context
 
 
@@ -104,6 +105,7 @@ class CommunityCoberturaWeek(TemplateView):
 		context["weeks"] = self.weeks
 		context["range"] = self.range
 		context["views"] = self.views
+		context["sities"] = set(self.sities)
 		return context
 
 class CommunityCoberturaDay(TemplateView):
@@ -134,6 +136,7 @@ class CommunityCoberturaDay(TemplateView):
 		context["community"] = self.community
 		context["days"] = self.days
 		context["views"] = self.views
+		context["sities"] = set(self.sities)
 		return context
 
 
