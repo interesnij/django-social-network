@@ -852,7 +852,7 @@ class User(AbstractUser):
     def get_last_visited_communities(self):
         from stst.models import CommunityNumbers
         from communities.models import Community
-        v_s = CommunityNumbers.objects.filter(user=self.pk).values('community')
+        v_s = CommunityNumbers.objects.filter(user=self.pk).values('community').distinct()
         ids = [use['community'] for use in v_s]
         result = list()
         map(lambda x: not x in result and result.append(x), ids)
@@ -864,10 +864,12 @@ class User(AbstractUser):
     def get_visited_communities(self):
         from stst.models import CommunityNumbers
         from communities.models import Community
-        v_s = CommunityNumbers.objects.filter(user=self.pk).values("community")
+        v_s = CommunityNumbers.objects.filter(user=self.pk).values("community").distinct()
         ids = [use['community'] for use in v_s]
+        result = list()
+        map(lambda x: not x in result and result.append(x), ids)
         query = []
-        for i in ids:
+        for i in result:
             query = query + [Community.objects.get(id=i), ]
         return query
 
