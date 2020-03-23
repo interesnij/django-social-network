@@ -5,11 +5,11 @@
         <div class="align-items-center noclose" style="display:flex;flex-wrap:wrap;">
 
             <!-- ПЛЕЕР-->
-            <div class="dropdown text-hide-xs d-inline-block noclose">
-                <a class="btn header-color-secondary dropdown-toggle music_header_btn" style="display:none" href="#" role="button" id="dropdownMusicLink" data-toggle="dropdown">
+            <div class="dropdown d-inline-block noclose">
+                <a class="btn header-color-secondary drop music_header_btn" style="display:none">
                   музыка
                 </a>
-                <div class="dropdown-menu music-dropdown" style="width: 700px;left:20rem" aria-labelledby="dropdownMusicLink" data-toggle="collapse" aria-haspopup="true" aria-expanded="false">
+                <div class="dropdown-menu music-dropdown" style="width: 700px;left:20rem">
 
                   {% include 'base_block/player.html' %}
 
@@ -24,12 +24,12 @@
                 </button>
 
                 <div class="dropdown text-hide-lg d-inline-block">
-                    <a class="btn header-color-secondary btn-icon dropdown-toggle caret-none" href="#" role="button" id="notification" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="btn header-color-secondary btn-icon drop" id="notification">
                       <svg fill="currentColor" class="svg_default" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z"/></svg>
                        <span class="status-number bg-danger text-white">9+</span>
                     </a>
 
-                    <div class="dropdown-menu notification-dropdown" aria-labelledby="notification" style="position: absolute;transform: translate3d(-189px, 44px, 0px);top: 0px;left: 0px;will-change: transform;">
+                    <div class="dropdown-menu notification-dropdown">
                       {% if notifications %}
                         <a href="#" class="media pink-gradient-active">
                             <figure>
@@ -54,7 +54,7 @@
 
                 </div>
                 <div class="dropdown text-hide-xs d-inline-block">
-                    <a class="btn header-color-secondary dropdown-toggle username" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="btn header-color-secondary username drop">
                        <figure class="userpic">
                          {% if request.user.get_avatar %}
                            <img src="{{ request.user.get_avatar.file.url }}" alt="">
@@ -64,7 +64,7 @@
                        </figure>
                        <h5 class="text-hide-xs"><span class="header-color-primary">Мой профиль</span></h5>
                     </a>
-                    <div class="dropdown-menu dropdown-menu-right profile-dropdown" aria-labelledby="dropdownMenuLink">
+                    <div class="dropdown-menu dropdown-menu-right profile-dropdown">
 
                         <a class="dropdown-item ajax" href="{% url 'user' pk=request.user.pk %}">
                             <div class="row align-items-center">
