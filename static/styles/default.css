@@ -2,6 +2,18 @@ body,
 html {
   height: 100%;
 }
+canvas{
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+.stat_city{
+  margin: 10px;
+}
+.stat_city .count{
+  float: right;
+  margin-right: 10rem;
+}
 a {
   color: inherit;
 }
