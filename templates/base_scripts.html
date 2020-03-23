@@ -76,11 +76,6 @@ on('#ajax', 'click', '.drop', function() {
 
 class Index {
   static initLink() {document.body.querySelectorAll('.ajax').forEach( lin => lin.addEventListener('click', Index.push_url) );}
-  static initDrop() {document.body.querySelectorAll('.drop').forEach( lin => lin.addEventListener('click', Index.drop_it) );}
-  static drop_it(event){
-    var block = this.nextElementSibling;
-    block.classList.toggle("show");
-  }
   static push_url(event){
     event.preventDefault();
     var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -97,7 +92,6 @@ class Index {
           document.title = elem_.querySelector('title').innerHTML;
           rtr.append(ajax);
           Index.initLink();
-          //Index.initDrop();
           window.history.pushState({route: url}, "network", url);
           if(rtr.querySelector('#news_load')){
             var news_load = rtr.querySelector('#news_load');var link = news_load.getAttribute("data-link");
@@ -116,7 +110,6 @@ class Index {
 }
 
 Index.initLink();
-//Index.initDrop();
 
 rrr = document.getElementById('ajax');
 if(rrr.querySelector('#news_load')){
