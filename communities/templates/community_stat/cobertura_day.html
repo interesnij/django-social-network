@@ -37,11 +37,12 @@
 
           <div class="card-body px-0 py-0">
             		<canvas id="canvas"
-								        data-datew='[{% for day in days %}"{{ day }}",{% endfor %}]' 
+								        data-datew='[{% for day in days %}"{{ day }}",{% endfor %}]'
 												data-label_1="Общий охват"
 												data-label_2="Рекламный охват"
 												data-data_1="[{% for view in views %}{{ view }},{% endfor %}]"
 												data-data_2="[0,1,2]"></canvas>
+								<span>{% for day in days %}"{{ day }}",{% endfor %}</span>
             <br><br>
           </div>
         </div>
