@@ -29,7 +29,7 @@
           </div>
           <div class="card-body px-0 py-0">
             <canvas id="canvas"
-                    data-dates='{% for object in months %} {{ object }}{% if not forloop.last %},{% endif %}{% endfor %}'
+                    data-dates='{% for object in months %} {{ object|date:"F, Y" }}{% if not forloop.last %},{% endif %}{% endfor %}'
                     data-label_1="Общий охват"
                     data-label_2="Рекламный охват"
                     data-data_1="{% for view in views %}{{ view }}{% if not forloop.last %},{% endif %}{% endfor %}"
