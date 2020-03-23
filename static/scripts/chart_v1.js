@@ -117,10 +117,11 @@ Samples.utils.srand(Date.now());
 function load_chart() {
   try{
 var ctx = document.getElementById('canvas');
-//var dates = ctx.getAttribute('data-datew');
-var dates = ctx.nextElementSibling.innerHTML;
+var valuess = []
+var dates = ctx.getAttribute('data-datew');
 //dates = dates.apply(this, args);
 var data_1 = ctx.getAttribute('data-data_1');
+for (i in dates){valuess += i}
 var data_2 = ctx.getAttribute('data-data_2');
 var label_1 = ctx.getAttribute('data-label_1');
 var label_2 = ctx.getAttribute('data-label_2');
@@ -132,7 +133,7 @@ console.log(label_1);
 var config = {
 type: 'line',
 data: {
-  labels: "[" + dates + "]",
+  labels: valuess,
   datasets: [{
     label: label_1,
     backgroundColor: 'rgb(255, 99, 132)',
