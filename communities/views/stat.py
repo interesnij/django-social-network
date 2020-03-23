@@ -51,7 +51,7 @@ class CommunityCoberturaMonth(TemplateView):
 			self.views += [view]
 
 		self.current_views = CommunityNumbers.objects.filter(created__monht=self.monhts[0], community=self.community.pk).values('user').distinct()
-		self.user_ids = [use['user'] for use in current_views]
+		self.user_ids = [use['user'] for use in self.current_views]
 		self.users = User.objects.filter(id__in=self.user_ids)
 		for user in self.users:
 			try:
@@ -88,7 +88,7 @@ class CommunityCoberturaWeek(TemplateView):
 			self.views += [view ]
 		self.dss = [self.weeks[0].day, self.weeks[0].day + 1, self.weeks[0].day + 2, self.weeks[0].day + 3, self.weeks[0].day + 4, self.weeks[0].day + 5, self.weeks[0].day + 6]
 		self.current_views = CommunityNumbers.objects.filter(created__day__in=self.dss, community=self.community.pk).values('user').distinct()
-		self.user_ids = [use['user'] for use in current_views]
+		self.user_ids = [use['user'] for use in self.current_views]
 		self.users = User.objects.filter(id__in=self.user_ids)
 		for user in self.users:
 			try:
@@ -118,10 +118,10 @@ class CommunityCoberturaDay(TemplateView):
 		for i in self.days:
 			view = CommunityNumbers.objects.filter(created__day=i.day, community=self.community.pk).distinct("user").count()
 			self.views += [view]
-		self.current_views = CommunityNumbers.objects.filter(created__day=self.days[0].day, community=self.community.pk).values('user').distinct()
-		self.user_ids = [use['user'] for use in self.current_views]
-		self.users = User.objects.filter(id__in=self.user_ids)
-		for user in self.users:
+		current_views = CommunityNumbers.objects.filter(created__day=self.days[0].day, community=self.community.pk).values('user').distinct()
+		user_ids = [use['user'] for use in current_views]
+		users = User.objects.filter(id__in=user_ids)
+		for user in users:
 			try:
 				sity = user.get_last_location().city_ru
 				self.sities += [sity]
