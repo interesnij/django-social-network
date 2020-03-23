@@ -121,7 +121,7 @@ var valuess = []
 var dates = ctx.getAttribute('data-datew');
 //dates = dates.apply(this, args);
 var data_1 = ctx.getAttribute('data-data_1');
-for (i in dates){console.log("i")};
+for (var i in dates){console.log("i")};
 var data_2 = ctx.getAttribute('data-data_2');
 var label_1 = ctx.getAttribute('data-label_1');
 var label_2 = ctx.getAttribute('data-label_2');
