@@ -37,7 +37,7 @@
 
           <div class="card-body px-0 py-0">
 						<canvas id="canvas"
-										data-datew='[{% for object in range %}{{ object }}, {% endfor %}]'
+										data-datew='{% for object in range %}[{{ object }},] {% endfor %}'
 										data-label_1="Общий охват"
 										data-label_2="Рекламный охват"
 										data-data_1="{{ views }}"
