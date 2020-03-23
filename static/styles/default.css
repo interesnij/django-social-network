@@ -12,7 +12,6 @@ canvas{
 }
 .stat_city .count{
   float: right;
-  margin-right: 10rem;
 }
 a {
   color: inherit;
