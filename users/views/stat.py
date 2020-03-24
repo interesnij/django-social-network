@@ -194,7 +194,7 @@ class UserTrafficMonth(TemplateView):
 			view = UserNumbers.objects.filter(created__month=i.month, target=self.user.pk).distinct("target").count()
 			self.un_views += [view]
 
-		current_views = UserNumbers.objects.filter(created__month=self.months[0].month, target=self.user.pk).values('user').distinct()
+		current_views = UserNumbers.objects.filter(created__month=self.months[0].month, target=self.user.pk).values('target').distinct()
 		user_ids = [use['target'] for use in current_views]
 		users = User.objects.filter(id__in=user_ids)
 		for user in users:
