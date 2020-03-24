@@ -11,6 +11,8 @@
 <script defer src="{% static 'scripts/chart_v1.js' %}" type="text/javascript"></script>
 
 <script>
+function list_load(block,link) {var request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );request.open( 'GET', link, true );request.onreadystatechange = function () {if ( request.readyState == 4 && request.status == 200 ) {block.innerHTML = request.responseText;}};request.send( null );}
+
 ready(() => {
 function addStyleSheets (href) {$head = document.head,$link = document.createElement('link');$link.rel = 'stylesheet';$link.href = href;$head.appendChild($link);};addStyleSheets("/static/styles/color/" + "{% if request.user.color_settings.color %}{{ request.user.color_settings.color }}{% else %}white{% endif %}" + ".css");
 
