@@ -951,62 +951,11 @@ class User(AbstractUser):
         else:
             return "Местоположение не указано"
 
-    def get_visiter_users(self):
+    def get_sity_count(self, sity):
         from stst.models import UserNumbers
-        v_s = UserNumbers.objects.filter(target=self.pk).values('visitor').order_by("-count")
-        ids = [user['visitor'] for user in v_s]
-        query = []
-        for user in ids:
-            query = query + [User.objects.get(id=user), ]
-        return query
+        from users.model.profile import OneUserLocation
 
-    def all_user_visits_count(self):
-        from stst.models import UserNumbers
-        try:
-            v_s = UserNumbers.objects.filter(target=self.pk).values('count')
-            total = 0
-            visiter_ids = [count['count'] for count in v_s]
-            for sum in visiter_ids:
-                total += sum
-            return total
-        except:
-            pass
-
-    def all_user_unical_visits_count(self):
-        from stst.models import UserNumbers
-        return UserNumbers.objects.filter(target=self.pk).values('pk').count()
-
-
-
-    def count_user_visits(self,user_id):
-        from stst.models import UserNumbers
-        try:
-            link = UserNumbers.objects.get(visitor=self.pk, target=user_id)
-            return link.count
-        except:
-            pass
-
-    def get_target_users(self):
-        from stst.models import UserNumbers
-        v_s = UserNumbers.objects.filter(visitor=self.pk).values('target').order_by("-count")
-        ids = [user['target'] for user in v_s]
-        query = []
-        for user in ids:
-            query = query + [User.objects.get(id=user), ]
-        return query
-
-    def all_unical_target_count_user(self):
-        from stst.models import UserNumbers
-        return UserNumbers.objects.filter(visitor=self.pk).values('pk').count()
-
-    def all_target_user_count(self):
-        from stst.models import UserNumbers
-        try:
-            v_s = UserNumbers.objects.filter(visitor=self.pk).values('count')
-            total = 0
-            target_ids = [count['count'] for count in v_s]
-            for sum in target_ids:
-                total += sum
-            return total
-        except:
-            pass
+        v_s = UserNumbers.objects.filter(community=self.pk).values('user')
+        ids = [use['user'] for use in v_s]
+        count = OneUserLocation.objects.filter(user_id__in=ids, city_ru=sity).count()
+        return count

@@ -8,6 +8,7 @@ urlpatterns = [
     url(r'^settings/', include('users.url.settings')),
     url(r'^load/', include('users.url.load')),
     url(r'^progs/', include('users.url.progs')),
+    url(r'^stat/', include('users.url.stat')),
 
     url(r'^(?P<pk>\d+)/$', ProfileUserView.as_view(), name='user'),
     url(r'^(?P<pk>\d+)/communities/$', UserCommunities.as_view(), name='communities'),

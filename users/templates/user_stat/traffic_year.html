@@ -1,0 +1,62 @@
+{% extends "base_mobile.html" %}
+{% block title %}Посещаемость по годам - {{ user.get_full_name }}{% endblock %}
+{% load item_count %}
+{% block content %}
+
+<div class="container mt-4 main-container">
+<div class="row">
+    <div class="col-md-8 order-1">
+        <div class="card">
+          <div class="card-header">
+              <div class="media">
+                  <div class="media-body">
+										<h5 class="mt-1">Посещаемость по годам -
+											<a style="text-decoration:underline;" class="ajax" href="{% url 'user' pk=user.pk %}">
+													{{ user.get_full_name }}
+											</a>
+										</h5>
+									</div>
+                  <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle mb-2 drop">
+                    Год
+                </button>
+                <div class="dropdown-menu" style="position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;">
+                    <a class="dropdown-item ajax" href="{% url 'user_traffic_day' user.pk %}">День</a>
+                    <a class="dropdown-item ajax" href="{% url 'user_traffic_month' user.pk %}">Месяц</a>
+                    <a class="dropdown-item ajax" href="{% url 'user_traffic_week' user.pk %}">Неделя</a>
+                </div>
+            </div>
+              </div>
+          </div>
+
+          <div class="card-body px-0 py-0">
+            <canvas id="canvas"
+                    data-dates='{% for year in years %}{{ year|date:"Y" }}{% if not forloop.last %},{% endif %}{% endfor %}'
+                    data-label_1="Уникальные просмотры"
+                    data-label_2="Все просмотры"
+                    data-data_1="{% for view in un_views %}{{ view }}{% if not forloop.last %},{% endif %}{% endfor %}"
+                    data-data_2="{% for view in views %}{{ view }}{% if not forloop.last %},{% endif %}{% endfor %}"></canvas>
+            <br><br>
+            <h5 class="mt-1" style="margin:10px">География за этот год</h5>
+
+            <div class="row">
+                <div class="col-md-6 order-1">
+        		        {% for object in sities %}
+        		          <div class="stat_city">
+        			          <span class="city">{{ object }}</span>
+        			          <span class="count"><svg fill="currentColor" class="svg_default" style="width:20px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+        				         {{ user|u_sity_count:object }}
+        			          </span>
+        		           </div>
+        		         {% endfor %}
+                </div>
+                <div class="col-md-6 order-2"></div>
+            </div>
+          </div>
+        </div>
+    </div>
+{% include 'user_stat/menu.html' %}
+</div>
+</div>
+
+{% endblock %}
