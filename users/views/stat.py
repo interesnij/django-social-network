@@ -41,7 +41,7 @@ class UserCoberturaMonth(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
-		self.template_name = self.user.get_manage_template(folder="user_stat/", template="cobertura_month.html", request=request)
+		self.template_name = self.user.get_settings_template(folder="user_stat/", template="cobertura_month.html", request=request)
 		self.months = UserNumbers.objects.dates('created', 'month')[0:10]
 		self.views = []
 		self.sities = []
@@ -75,7 +75,7 @@ class UserCoberturaWeek(TemplateView):
 	def get(self,request,*args,**kwargs):
 		import datetime
 		self.user = User.objects.get(pk=self.kwargs["pk"])
-		self.template_name = self.user.get_manage_template(folder="user_stat/", template="cobertura_week.html", request=request)
+		self.template_name = self.user.get_settings_template(folder="user_stat/", template="cobertura_week.html", request=request)
 		self.weeks = UserNumbers.objects.dates('created', 'week')[0:10]
 		self.range = []
 		self.views = []
@@ -112,7 +112,7 @@ class UserCoberturaDay(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
-		self.template_name = self.user.get_manage_template(folder="user_stat/", template="cobertura_day.html", request=request)
+		self.template_name = self.user.get_settings_template(folder="user_stat/", template="cobertura_day.html", request=request)
 		self.days = UserNumbers.objects.dates('created', 'day')[0:10]
 		self.views = []
 		self.sities = []
@@ -144,7 +144,7 @@ class UserTrafficYear(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
-		self.template_name = self.user.get_manage_template(folder="user_stat/", template="traffic_year.html", request=request)
+		self.template_name = self.user.get_settings_template(folder="user_stat/", template="traffic_year.html", request=request)
 		self.years = UserNumbers.objects.dates('created', 'year')[0:10]
 		self.views = []
 		self.un_views = []
@@ -182,7 +182,7 @@ class UserTrafficMonth(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
-		self.template_name = self.user.get_manage_template(folder="user_stat/", template="traffic_month.html", request=request)
+		self.template_name = self.user.get_settings_template(folder="user_stat/", template="traffic_month.html", request=request)
 		self.months = UserNumbers.objects.dates('created', 'month')[0:10]
 		self.views = []
 		self.un_views = []
@@ -221,7 +221,7 @@ class UserTrafficWeek(TemplateView):
 	def get(self,request,*args,**kwargs):
 		import datetime
 		self.user = User.objects.get(pk=self.kwargs["pk"])
-		self.template_name = self.user.get_manage_template(folder="user_stat/", template="traffic_week.html", request=request)
+		self.template_name = self.user.get_settings_template(folder="user_stat/", template="traffic_week.html", request=request)
 		self.weeks = UserNumbers.objects.dates('created', 'week')[0:10]
 		self.views = []
 		self.un_views = []
@@ -265,7 +265,7 @@ class UserTrafficDay(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
-		self.template_name = self.user.get_manage_template(folder="user_stat/", template="traffic_day.html", request=request)
+		self.template_name = self.user.get_settings_template(folder="user_stat/", template="traffic_day.html", request=request)
 		self.days = UserNumbers.objects.dates('created', 'day')[0:10]
 		self.views = []
 		self.un_views = []
