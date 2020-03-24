@@ -7,7 +7,7 @@ class MainPageView(TemplateView):
 	template_name=None
 
 	def get(self,request,*args,**kwargs):
-		
+
 		self.template_name = request.user.get_settings_template(folder="main/", template="news.html", request=request)
 		return super(MainPageView,self).get(request,*args,**kwargs)
 
