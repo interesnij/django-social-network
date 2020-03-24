@@ -42,9 +42,7 @@
             {% include "base_block/mobile_nav.html" %}
            {% include "base_block/fullscreens.html" %}
 				</div>
-          {% if request.user.is_authenticated %}
-            {% include "base_block/mobile_tab.html" %}
-          {% endif %}
+          {% include "base_block/mobile_tab.html" %}
     </div>
 
     {% include "mobile_base_scripts.html" %}
