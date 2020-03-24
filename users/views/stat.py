@@ -50,7 +50,7 @@ class UserCoberturaMonth(TemplateView):
 			self.views += [view]
 
 		current_views = UserNumbers.objects.filter(created__month=self.months[0].month, target=self.user.pk).values('target').distinct()
-		user_ids = [use['user'] for use in current_views]
+		user_ids = [use['target'] for use in current_views]
 		users = User.objects.filter(id__in=user_ids)
 		for user in users:
 			try:
@@ -88,7 +88,7 @@ class UserCoberturaWeek(TemplateView):
 			self.views += [view ]
 		dss = [self.weeks[0].day, self.weeks[0].day + 1, self.weeks[0].day + 2, self.weeks[0].day + 3, self.weeks[0].day + 4, self.weeks[0].day + 5, self.weeks[0].day + 6]
 		current_views = UserNumbers.objects.filter(created__day__in=dss, target=self.user.pk).values('target').distinct()
-		user_ids = [use['user'] for use in current_views]
+		user_ids = [use['target'] for use in current_views]
 		users = User.objects.filter(id__in=user_ids)
 		for user in users:
 			try:
@@ -120,7 +120,7 @@ class UserCoberturaDay(TemplateView):
 			view = UserNumbers.objects.filter(created__day=i.day, target=self.user.pk).distinct("target").count()
 			self.views += [view]
 		current_views = UserNumbers.objects.filter(created__day=self.days[0].day, target=self.user.pk).values('target').distinct()
-		user_ids = [use['user'] for use in current_views]
+		user_ids = [use['target'] for use in current_views]
 		users = User.objects.filter(id__in=user_ids)
 		for user in users:
 			try:
@@ -157,7 +157,7 @@ class UserTrafficYear(TemplateView):
 			self.un_views += [view]
 
 		current_views = UserNumbers.objects.filter(created__year=self.years[0].year, target=self.user.pk).values('target').distinct()
-		user_ids = [use['user'] for use in current_views]
+		user_ids = [use['target'] for use in current_views]
 		users = User.objects.filter(id__in=user_ids)
 		for user in users:
 			try:
@@ -195,7 +195,7 @@ class UserTrafficMonth(TemplateView):
 			self.un_views += [view]
 
 		current_views = UserNumbers.objects.filter(created__month=self.months[0].month, target=self.user.pk).values('user').distinct()
-		user_ids = [use['user'] for use in current_views]
+		user_ids = [use['target'] for use in current_views]
 		users = User.objects.filter(id__in=user_ids)
 		for user in users:
 			try:
@@ -240,7 +240,7 @@ class UserTrafficWeek(TemplateView):
 
 		dss = [self.weeks[0].day, self.weeks[0].day + 1, self.weeks[0].day + 2, self.weeks[0].day + 3, self.weeks[0].day + 4, self.weeks[0].day + 5, self.weeks[0].day + 6]
 		current_views = UserNumbers.objects.filter(created__day__in=dss, target=self.user.pk).values('target').distinct()
-		user_ids = [use['user'] for use in current_views]
+		user_ids = [use['target'] for use in current_views]
 		users = User.objects.filter(id__in=user_ids)
 		for user in users:
 			try:
@@ -278,7 +278,7 @@ class UserTrafficDay(TemplateView):
 			self.un_views += [view]
 
 		current_views = UserNumbers.objects.filter(created__day=self.days[0].day, target=self.user.pk).values('target').distinct()
-		user_ids = [use['user'] for use in current_views]
+		user_ids = [use['target'] for use in current_views]
 		users = User.objects.filter(id__in=user_ids)
 		for user in users:
 			try:
