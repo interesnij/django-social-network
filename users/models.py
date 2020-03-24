@@ -770,13 +770,13 @@ class User(AbstractUser):
 
         MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-            template_name = template_name
+            template_name = "mob_" + template_name
             if request.user.is_authenticated:
                 UserNumbers.objects.create(visitor=request.user.pk, target=self.pk, platform=1)
         else:
             if request.user.is_authenticated:
                 UserNumbers.objects.create(visitor=request.user.pk, target=self.pk, platform=0)
-        return "mob_" + template_name
+        return template_name
 
     def get_template_list_user(self, folder, template, request):
         import re

@@ -7,17 +7,8 @@ class MainPageView(TemplateView):
 	template_name=None
 
 	def get(self,request,*args,**kwargs):
-		import re
-
-		if request.user.is_authenticated and not request.user.is_phone_verified:
-			self.template_name="main/phone_verification.html"
-		elif request.user.is_authenticated and request.user.is_phone_verified:
-			self.template_name="main/news.html"
-		else:
-			self.template_name="main/auth.html"
-		MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
-		if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-			"mob_" + self.template_name
+		
+		self.template_name = request.user.get_settings_template(folder="main/", template="news.html", request=request)
 		return super(MainPageView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
