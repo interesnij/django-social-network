@@ -7,6 +7,7 @@ class MainPageView(TemplateView):
 	template_name=None
 
 	def get(self,request,*args,**kwargs):
+		import re
 
 		if request.user.is_authenticated and not request.user.is_phone_verified:
 			self.template_name="main/phone_verification.html"
