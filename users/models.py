@@ -955,7 +955,7 @@ class User(AbstractUser):
         from stst.models import UserNumbers
         from users.model.profile import OneUserLocation
 
-        v_s = UserNumbers.objects.filter(community=self.pk).values('user')
-        ids = [use['user'] for use in v_s]
+        v_s = UserNumbers.objects.filter(target=self.pk).values('target')
+        ids = [use['target'] for use in v_s]
         count = OneUserLocation.objects.filter(user_id__in=ids, city_ru=sity).count()
         return count
