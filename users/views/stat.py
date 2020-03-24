@@ -8,7 +8,7 @@ class UserCoberturaYear(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
-		self.template_name = self.community.get_settings_template(folder="user_stat/", template="cobertura_year.html", request=request)
+		self.template_name = self.user.get_settings_template(folder="user_stat/", template="cobertura_year.html", request=request)
 		self.years = UserNumbers.objects.dates('created', 'year')[0:10]
 		self.views = []
 		self.sities = []
