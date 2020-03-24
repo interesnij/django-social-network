@@ -1,4 +1,4 @@
-{% extends "base_mobile.html" %}
+{% extends "base_anon_mobile.html" %}
 {% load liked_user humanize thumbnail %}
 
 {% block title %}{{ user.get_full_name }}{% endblock %}
@@ -131,7 +131,7 @@
           pk = box[i].getAttribute('item-pk');
           fetch('/users/progs/item_view/' + pk + "/")
     }}};
-    
+
     try{
     var items = document.getElementById("lenta_container");
 
