@@ -6,12 +6,14 @@
 .dropdown-menu{
 	border:none;
   transform: scale(1)!important;
-	transition: all .3s;
+  transition: ease-out 0.3s;
 }
 .dropdown:hover .dropdown-menu{
 	display: block;
 	top: 100%;
 	height: inherit;
+  transform: scale(0);
+  transition: ease-out 0.3s;
 }
 </style>
 <div class="card-header">
@@ -39,7 +41,7 @@
             <a style="cursor:pointer" class="btn_default drop">
               <svg class="svg_info" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
             </a>
-            <div class="dropdown-menu dropdown-menu1" style="position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; right: 0px;">
+            <div class="dropdown-menu" style="position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; right: 0px;">
                 <span class="dropdown-item item_user_remove">Удалить запись</span>
                 <span class="dropdown-item">Редактировать</span>
                 <span>
