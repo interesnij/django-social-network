@@ -14,7 +14,6 @@
 function list_load(block,link) {var request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );request.open( 'GET', link, true );request.onreadystatechange = function () {if ( request.readyState == 4 && request.status == 200 ) {block.innerHTML = request.responseText;}};request.send( null );}
 
 ready(() => {
-function addStyleSheets (href) {$head = document.head,$link = document.createElement('link');$link.rel = 'stylesheet';$link.href = href;$head.appendChild($link);};addStyleSheets("/static/styles/color/" + "{% if request.user.color_settings.color %}{{ request.user.color_settings.color }}{% else %}white{% endif %}" + ".css");
 
 sidebar =  document.querySelector(".sidebar");icon_1 = document.querySelector(".icon_v1");icon_2 = document.querySelector(".icon_v2");icon_3 = document.querySelector(".icon_v3");icon_4 = document.querySelector(".icon_v4");icon_5 = document.querySelector(".icon_v5");tip = document.querySelector(".selected-tip");
 icon_1.addEventListener("click", (e) => {
@@ -72,8 +71,14 @@ class Index {
           }else if(rtr.querySelector('#lenta_community')){
             var lenta_community = rtr.querySelector('#lenta_community');var link = lenta_community.getAttribute("data-link");
             list_load(rtr.querySelector("#lenta_community"), link);
+          }else if(rtr.querySelector('#photo_load')){
+            var photo_load = rtr.querySelector('#photo_load');var link = photo_load.getAttribute("data-link");
+            list_load(rtr.querySelector("#photo_load"), link);
+          }else if(rtr.querySelector('#album_photo_load')){
+            var album_photo_load = rtr.querySelector('#album_photo_load');var link = album_photo_load.getAttribute("data-link");
+            list_load(rtr.querySelector("#album_photo_load"), link);
           };
-          load_chart() 
+          load_chart()
         }
       }
   };
@@ -91,7 +96,13 @@ if(rrr.querySelector('#news_load')){
 }else if(rrr.querySelector('#lenta_community')){
   var lenta_community = rrr.querySelector('#lenta_community');var link = lenta_community.getAttribute("data-link");
   list_load(rrr.querySelector("#lenta_community"), link);
-}
+}else if(rrr.querySelector('#photo_load')){
+  var photo_load = rrr.querySelector('#photo_load');var link = photo_load.getAttribute("data-link");
+  list_load(rrr.querySelector("#photo_load"), link);
+}else if(rrr.querySelector('#album_photo_load')){
+  var album_photo_load = rrr.querySelector('#album_photo_load');var link = album_photo_load.getAttribute("data-link");
+  list_load(rrr.querySelector("#album_photo_load"), link);
+};
 
 on('#ajax', 'click', '.custom-radio', function() {
   var span = this;
