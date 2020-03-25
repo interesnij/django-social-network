@@ -56,7 +56,7 @@ class CommunityFriendsView(ListView):
 			frends = None
 			self.template_name = "c_detail/private_community.html"
 		else:
-			frends = self.community.get_common_frends_of_community(self.community.name)
+			frends = request.user.get_common_frends_of_community(self.community.pk)
 			self.template_name = "c_detail/frends.html"
 		MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 		if MOBILE_AGENT_RE.match(self.request.META['HTTP_USER_AGENT']):
