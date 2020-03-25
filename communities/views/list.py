@@ -51,12 +51,11 @@ class CommunityFriendsView(ListView):
 	def get_queryset(self):
 		import re
 
-		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		if self.community.is_private() and not self.request.user.is_member_of_community_with_name(self.name):
 			frends = None
 			self.template_name = "c_detail/private_community.html"
 		else:
-			frends = request.user.get_common_frends_of_community(self.community.pk)
+			frends = self.request.user.get_common_frends_of_community(self.community.pk)
 			self.template_name = "c_detail/frends.html"
 		MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 		if MOBILE_AGENT_RE.match(self.request.META['HTTP_USER_AGENT']):
