@@ -1,4 +1,4 @@
-{% load is_avatar humanize %}
+{% load is_avatar humanize thumbnail %}
 <span class="text-hide-xs">
   {% if prev %}
     <a class="prev_item" href="{% url 'user_album_photo' uuid=user.uuid pk=prev.pk album_uuid=album.uuid %}">
