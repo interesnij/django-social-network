@@ -4,8 +4,9 @@
 {% block content %}
 
 <div class="container mt-4 main-container">
-<div class="row">
-    <div class="col-md-8 order-1">
+
+  {% include 'mob_manage/menu.html' %}
+  
         <div class="card">
           <div class="card-header">
               <div class="media">
@@ -16,16 +17,6 @@
 											</a>
 										</h5>
 									</div>
-                  <div class="dropdown">
-                <button class="btn btn-primary dropdown-toggle mb-2 drop">
-                    Неделя
-                </button>
-                <div class="dropdown-menu" style="position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;">
-									<a class="dropdown-item ajax" href="{% url 'community_cuberture_year' community.pk %}">Год</a>
-                  <a class="dropdown-item ajax" href="{% url 'community_cuberture_month' community.pk %}">Месяц</a>
-                  <a class="dropdown-item ajax" href="{% url 'community_cuberture_day' community.pk %}">День</a>
-                </div>
-            </div>
               </div>
           </div>
 
@@ -39,25 +30,15 @@
             <br><br>
 
         		<h5 class="mt-1" style="margin:10px">География за эту неделю</h5>
-            <div class="row">
-                <div class="col-md-6 order-1">
-        		        {% for object in sities %}
-        		          <div class="stat_city">
-        			          <span class="city">{{ object }}</span>
-        			          <span class="count"><svg fill="currentColor" class="svg_default" style="width:20px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
-        				         {{ community|c_sity_count:object }}
-        			          </span>
-        		           </div>
-        		         {% endfor %}
-                </div>
-                <div class="col-md-6 order-2"></div>
-            </div>
+        		  {% for object in sities %}
+        		    <div class="stat_city">
+        			    <span class="city">{{ object }}</span>
+        			    <span class="count"><svg fill="currentColor" class="svg_default" style="width:20px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+        		     {{ community|c_sity_count:object }}
+        			    </span>
+        		     </div>
+        		   {% endfor %}
           </div>
         </div>
-    </div>
-
-		{% include 'community_stat/menu.html' %}
-</div>
-</div>
 
 {% endblock %}

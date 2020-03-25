@@ -65,15 +65,6 @@
       </div>
 
     </div>
-    <div class="card-body" style="padding-bottom: 0em;">
-      <div class="media">
-          <h5 class="mt-1">Администраторы -
-              <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=community.pk %}">
-                  {{ community.name }}
-              </a>
-          </h5>
-      </div>
-    </div>
   </div>
         <div class="card mb-2">
             <div class="card-header" style="padding-bottom: 0em;">
@@ -86,6 +77,13 @@
             </div>
 
             <div class="card-body px-0 py-0">
+                <div class="media">
+                    <h5 class="mt-1">Администраторы -
+                        <a style="text-decoration:underline;" class="ajax" href="{% url 'community_detail' pk=community.pk %}">
+                            {{ community.name }}
+                        </a>
+                    </h5>
+                </div>
                 <ul class="list-group" id="admins-container">
                     {% for object in object_list %}
                     <li class="list-group-item li_{{object.pk }}" data-uuid="{{ object.uuid }}" data-pk="{{ community.pk }}">
