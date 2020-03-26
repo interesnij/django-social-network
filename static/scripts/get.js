@@ -186,6 +186,6 @@ function my_playlist_play(track_id) {
   player.play(track_id);
 };
 function my_playlist_pause(track_id) {
-  player = document.querySelector(".jp-jplayer");
-  player.jPlayer("play");
+  player = document.querySelector("#jquery_jplayer_1");
+  player.jPlayer("play", track_id);
 };
