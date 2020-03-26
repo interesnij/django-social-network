@@ -33,6 +33,7 @@ ready(() => {
         load_playlist(playlist_block, '{{ request.user.uuid}}');
         playlist_block.className = "";
         playlist_block.classList.add("dropdown-menu", "music-dropdown", "tag_" + tag_pk);
+        playlist_init({{ request.user.my_playlist }});
         setTimeout(function(){ my_playlist_pause(track_id);},2000);
         }
       };
