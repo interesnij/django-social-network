@@ -30,7 +30,7 @@
                       {% for object in object_list %}
                       <li class="list-group-item infinite-item id_{{ object.id }}">
                           <div class="media">
-                              <figure class="tag_track" style="cursor:pointer" data-counter="{{ forloop.counter0 }}">
+                              <figure class="tag_track track_item" style="cursor:pointer" data-counter="{{ forloop.counter0 }}">
                                 <a>
                                   {% if object.artwork_url %}
                                     <img style="width:50px;heigth:auto" src="{{ object.artwork_url }}" />
@@ -40,7 +40,7 @@
                                 </a>
                               </figure>
                               <div class="media-body">
-                                  <h6 class="my-0 mt-1 tag_track" style="cursor:pointer">{{ object.title }}</h6>
+                                  <h6 class="my-0 mt-1 tag_track track_item" style="cursor:pointer">{{ object.title }}</h6>
                                   <p class="small">{{ object.tag }}
                                     <span class='span_btn' style="float:right;" data-pk="{{ object.pk }}">
                                       <span style="cursor:pointer">
