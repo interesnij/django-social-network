@@ -36,16 +36,15 @@ ready(() => {
         list_load(playlist_block, '/users/load/playlist/' + '{{ request.user.uuid}}');
         playlist_block.className = "";
         playlist_block.classList.add("dropdown-menu", "music-dropdown", "tag_" + tag_pk);
-        cssSelector = {jPlayer: "#jquery_jplayer_1",cssSelectorAncestor: ".main-header"};
-    //  options = { swfPath: "/static/jquery.jplayer.swf", supplied: "oga, mp3", wmode: "window", smoothPlayBar: false, keyEnabled: true};
-        playlist = {{ request.user.my_playlist }};
-        myPlaylist = new jPlayerPlaylist(cssSelector, playlist);
-        setTimeout(function(){ myPlaylist.play(track_id);},2000);
         }
       };
       playlist_link.send( null );
+      var cssSelecto = {jPlayer: "#jquery_jplayer_1",cssSelectorAncestor: ".main-header"};
+      var playlis = {{ request.user.my_playlist }};
+      var myPlaylis = new jPlayerPlaylist(cssSelecto, playlis);
+      setTimeout(function(){ myPlaylis.play(track_id);},2000);
       }else{
-        myPlaylist.play(track_id);
+        myPlaylis.play(track_id);
       };
     });
 });
