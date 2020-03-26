@@ -290,7 +290,7 @@ class User(AbstractUser):
         from music.models import UserTempSoundList
 
         try:
-            UserTempSoundList.objects.get(user=self, tag=tag, list=None, genre=None).exists()
+            UserTempSoundList.objects.get(user=self, tag=tag, list=None, genre=None)
             return True
         except:
             return False
