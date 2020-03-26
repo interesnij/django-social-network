@@ -90,9 +90,9 @@
 </div>
 
 <script>
-{% if user.is_genre_playlist %}
+{% if is_genre_playlist %}
   playlist_block = document.querySelector(".music-dropdown");
-  playlist_block.classList.add('genre_{{ genre.pk }}');
+  playlist_block.classList.add('genre_' + {{ genre.pk }});
 {% endif %}
 
 var page = 2;
