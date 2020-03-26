@@ -17,7 +17,10 @@
 
 ready(() => {
   {% if request.user.my_playlist %}
-  playlist_init({{ request.user.my_playlist }});
+  var cssSelector = {jPlayer: "#jquery_jplayer_1",cssSelectorAncestor: ".main-header"};
+  var options = { swfPath: "/static/jquery.jplayer.swf", supplied: "oga, mp3", wmode: "window", smoothPlayBar: false, keyEnabled: true};
+  var playlist = {{ request.user.my_playlist }};
+  var myPlaylist = new jPlayerPlaylist(cssSelector, playlist, options);
   document.querySelector(".music_header_btn").style.display = "block";
   {% endif %}
 });
@@ -32,7 +35,7 @@ ready(() => {
     playlist_link.onreadystatechange = function () {
       if ( playlist_link.readyState == 4 && playlist_link.status == 200 ) {
         list_load(playlist_block, '/users/load/playlist/' + '{{ request.user.uuid}}')
-        playlist_block.className = ""; 
+        playlist_block.className = "";
         playlist_block.classList.add("dropdown-menu", "music-dropdown", "tag_" + tag_pk);
         var cssSelector = {jPlayer: "#jquery_jplayer_1",cssSelectorAncestor: ".main-header"};
         var options = { swfPath: "/static/jquery.jplayer.swf", supplied: "oga, mp3", wmode: "window", smoothPlayBar: false, keyEnabled: true};
