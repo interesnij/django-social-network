@@ -41,7 +41,8 @@ ready(() => {
         playlist_block.classList.add("dropdown-menu", "music-dropdown", "tag_" + tag_pk);
         setTimeout(function(){ my_playlist_pause(track_id);},2000);
         }
-        }playlist_link.send( null );
+      };
+      playlist_link.send( null );
       }else{my_playlist_pause(track_id);};
     });
 
