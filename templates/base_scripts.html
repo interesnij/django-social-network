@@ -36,7 +36,8 @@ ready(() => {
       //  list_load(playlist_block, '/users/load/playlist/' + '{{ request.user.uuid}}');
         playlist_block.className = "";
         playlist_block.classList.add("dropdown-menu", "music-dropdown", "tag_" + tag_pk);
-        myPlaylist.setPlaylist({{ tag.get_json_playlist }});
+        new_playlist = document.querySelector("#export_playlist").getAttribute('data-list');
+        myPlaylist.setPlaylist(new_playlist);
         myPlaylist.play(track_id);
         }
       };
