@@ -29,12 +29,12 @@ ready(() => {
   on('.tag_playlist', 'click', '.track_item', function(e) {
   var track_id = this.getAttribute('data-counter');
   var playlist_block = document.querySelector(".music-dropdown");
-  var tag_pk = this.getAttribute('data-pk');
+  var tag_pk = document.querySelector(".tag_playlist").getAttribute('data-pk');
   if (!playlist_block.classList.contains('tag_' + tag_pk)){
     var playlist_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     playlist_link.open( 'GET', '/music/manage/temp_tag/' + tag_pk, true );
     playlist_link.onreadystatechange = function () {
-      if ( request.readyState == 4 && request.status == 200 ) {
+      if ( playlist_link.readyState == 4 && playlist_link.status == 200 ) {
         load_playlist(playlist_block, '{{ request.user.uuid}}');
         playlist_block.className = "";
         playlist_block.classList.add("dropdown-menu", "music-dropdown", "tag_" + tag_pk);
