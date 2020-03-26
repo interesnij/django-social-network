@@ -14,10 +14,7 @@
 <script defer src="{% static 'scripts/jplayer.playlist.min.js' %}" type="text/javascript"></script>
 
 <script>
-  function my_playlist_play(track_id) {myPlaylist.play(track_id);};
-  function my_playlist_pause(track_id) {myPlaylist.pause(track_id);};
-  function my_playlist_stop(track_id) {myPlaylist.pause(track_id);};
-  
+
 ready(() => {
   {% if request.user.my_playlist %}
   playlist_init({{ request.user.my_playlist }});
@@ -42,7 +39,9 @@ ready(() => {
         }
       };
       playlist_link.send( null );
-      }else{my_playlist_pause(track_id)};
+      }else{
+        my_playlist_pause(track_id)
+      };
     });
 
 //  $('body').on('click', '.playlist_pause .track_item', function() {track = $(this); li = track.parents('.infinite-item'); track_id = li.data('counter');my_playlist_play(track_id); li.removeClass("playlist_pause")});
