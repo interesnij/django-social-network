@@ -187,5 +187,5 @@ function my_playlist_play(track_id) {
 };
 function my_playlist_pause(track_id) {
   player = document.querySelector(".jp-jplayer");
-  player.pause(track_id);
+  player.play(track_id);
 };
