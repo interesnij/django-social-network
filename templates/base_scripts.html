@@ -24,7 +24,7 @@ ready(() => {
   document.querySelector(".music_header_btn").style.display = "block";
   {% endif %}
 
-  on('#ajax', 'click', '.track_item', function(e) {
+  on('#ajax.tag_playlist', 'click', '.track_item', function(e) {
   var track_id = this.getAttribute('data-counter');
   var playlist_block = document.querySelector(".music-dropdown");
   var tag_pk = document.querySelector(".tag_playlist").getAttribute('data-pk');
