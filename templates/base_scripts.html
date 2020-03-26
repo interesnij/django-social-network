@@ -1,7 +1,6 @@
 {% load staticfiles %}
 
 <script defer src="{% static 'scripts/jquery.js' %}" type="text/javascript"></script>
-
 <script defer src="{% static 'scripts/cockie.js' %}" type="text/javascript"></script>
 <script defer src="{% static 'scripts/websocketbridge.js' %}" type="text/javascript"></script>
 <script defer src="{% static 'scripts/lazysizes.min.js' %}" type="text/javascript"></script>
@@ -15,40 +14,11 @@
 
 <script>
 
-ready(() => {
-  {% if request.user.my_playlist %}
-  var cssSelector = {jPlayer: "#jquery_jplayer_1",cssSelectorAncestor: ".main-header"};
-  //var options = { swfPath: "/static/jquery.jplayer.swf", supplied: "oga, mp3", wmode: "window", smoothPlayBar: false, keyEnabled: true};
-  var playlist = {{ request.user.my_playlist }};
-  var myPlaylist = new jPlayerPlaylist(cssSelector, playlist);
-  document.querySelector(".music_header_btn").style.display = "block";
-  {% endif %}
-  on('#ajax', 'click', '.track_item', function(e) {
-  var track_id = this.getAttribute('data-counter');
-  var playlist_block = document.querySelector(".music-dropdown");
-  var tag_pk = document.querySelector(".tag_playlist").getAttribute('data-pk');
-  if (!playlist_block.classList.contains('tag_' + tag_pk) && tag_pk){
-    var playlist_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    playlist_link.open( 'GET', '/music/manage/temp_tag/' + tag_pk, true );
-    playlist_link.onreadystatechange = function () {
-      if ( playlist_link.readyState == 4 && playlist_link.status == 200 ) {
-        playlist_block.className = "";
-        playlist_block.classList.add("dropdown-menu", "music-dropdown", "tag_" + tag_pk);
-        new_playlist = document.querySelector("#export_playlist").getAttribute('data-list');
-        pllll = JSON.parse(new_playlist);
-        myPlaylist.setPlaylist(pllll);
-        setTimeout(function(){ myPlaylist.play(track_id);},2000);
-        }
-      };
-      playlist_link.send( null );
-      }else{
-        myPlaylist.play(track_id);
-      };
-    });
-});
 //  $('body').on('click', '.playlist_pause .track_item', function() {track = $(this); li = track.parents('.infinite-item'); track_id = li.data('counter');my_playlist_play(track_id); li.removeClass("playlist_pause")});
 
 //  $('body').on('click', '.genre_playlist .track_item', function() {track = $(this);track_id = track.parents('.infinite-item').data('counter');playlist_block = $('body').find('.music-dropdown');genre_pk = track.parents('.ul_track_list').data('pk');if (!playlist_block.hasClass('genre_' + genre_pk)){$.ajax({url: "/music/manage/temp_genre/" + genre_pk + "/",success: function(data) {load_playlist(playlist_block);playlist_block.removeClass().addClass('dropdown-menu music-dropdown user_' + genre_pk);setTimeout(function(){ my_playlist_play(track_id)},2000);}});}else{my_playlist_play(track_id);};});
 //  $('body').on('click', '.user_playlist .track_item', function() {track = $(this);track_id = track.parents('.infinite-item').data('counter');playlist_block = $('body').find('.music-dropdown');user_pk = track.parents('.ul_track_list').data('pk');if (!playlist_block.hasClass('user_' + user_pk)){$.ajax({url: "/music/manage/my_list/" + user_pk + "/",success: function(data) {load_playlist(playlist_block);playlist_block.removeClass().addClass('dropdown-menu music-dropdown user_' + user_pk);setTimeout(function(){ my_playlist_play(track_id)},2000);}});}else{my_playlist_play(track_id);};});
 
 </script>
+
+<span id="user_playlist" data-list='{{ request.user.my_playlist }}'></span>
