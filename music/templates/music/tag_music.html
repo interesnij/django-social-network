@@ -101,9 +101,9 @@
 </div>
 
 <script>
-{% if request.user.is_tag_playlist %} 
+{% if request.user.is_tag_playlist %}
 playlist_block = document.querySelector(".music-dropdown");
-playlist_block.classList.add('user_{{ user.pk }}');
+playlist_block.classList.add('user_' + {{ user.pk }});
 {% endif %}
 
 var page = 2;
