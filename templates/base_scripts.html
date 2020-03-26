@@ -16,7 +16,7 @@
 <script>
 ready(() => {
   {% if request.user.my_playlist %}
-  playlist_init('{{ request.user.my_playlist }}');
+  playlist_init({{ request.user.my_playlist }});
   document.querySelector(".music_header_btn").style.display = "block";
   {% endif %}
 });
