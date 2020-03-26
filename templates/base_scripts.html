@@ -35,12 +35,12 @@ ready(() => {
         playlist_block.className = "";
         playlist_block.classList.add("dropdown-menu", "music-dropdown", "tag_" + tag_pk);
         playlist_init({{ request.user.my_playlist }});
-        setTimeout(function(){ my_playlist_play(track_id)},2000);
+        setTimeout(function(){ $("#jquery_jplayer_1").jPlayer("pause", track_id);},2000);
         }
       };
       playlist_link.send( null );
       }else{
-        my_playlist_play(track_id)
+        $("#jquery_jplayer_1").jPlayer("pause", track_id);
       };
     });
 
