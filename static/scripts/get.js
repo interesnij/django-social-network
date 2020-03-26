@@ -182,10 +182,10 @@ function playlist_init(_playlist) {
   var myPlaylist = new jPlayerPlaylist(cssSelector, playlist, options);
 }
 function my_playlist_play(track_id) {
-  player = document.querySelector(".jp-jplayer");
+  var player = document.querySelector(".jp-jplayer");
   player.play(track_id);
 };
 function my_playlist_pause(track_id) {
-  player = document.querySelector("#jquery_jplayer_1");
+  var player = document.querySelector("#jquery_jplayer_1");
   player.jPlayer("play", track_id);
 };
