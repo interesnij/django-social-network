@@ -38,7 +38,7 @@ ready(() => {
         new_playlist = document.querySelector("#export_playlist").getAttribute('data-list');
         pllll = JSON.parse(new_playlist);
         myPlaylist.setPlaylist(pllll);
-        myPlaylist.play(track_id);
+        setTimeout(function(){ myPlaylist.play(track_id);},2000);
         }
       };
       playlist_link.send( null );
