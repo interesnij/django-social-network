@@ -16,13 +16,8 @@
 <script>
 ready(() => {
   {% if request.user.my_playlist %}
-
-    var cssSelector = {jPlayer: "#jquery_jplayer_1",cssSelectorAncestor: ".main-header"};
-    var playlist = {{ request.user.my_playlist }};
-    var options = { swfPath: "/static/jquery.jplayer.swf", supplied: "oga, mp3", wmode: "window", smoothPlayBar: false, keyEnabled: true};
-    var myPlaylist = new jPlayerPlaylist(cssSelector, playlist, options);
-
-    document.querySelector(".music_header_btn").style.display = "block";
+  playlist_init('{{ request.user.my_playlist }}');
+  document.querySelector(".music_header_btn").style.display = "block";
   {% endif %}
 });
 
