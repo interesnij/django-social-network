@@ -172,11 +172,8 @@ if(rrr.querySelector('#news_load')){
 on('body', 'click', '.menu_drop', function() {var block = this.nextElementSibling;block.classList.toggle("show");});
 
 function load_playlist(playlist_block, uuid) {list_load(playlist_block, '/users/load/playlist/' + uuid)};
-function my_playlist_play(track_id) {myPlaylist.play(track_id);};
-function my_playlist_pause(track_id) {myPlaylist.pause(track_id);};
-function my_playlist_stop(track_id) {myPlaylist.pause(track_id);};
+
 document.querySelector(".music-dropdown").addEventListener("click", (e) => {e.stopPropagation()});
-function my_playlist_stop(track_id) {myPlaylist.pause(track_id);};
 
 function playlist_init(_playlist) {
   var cssSelector = {jPlayer: "#jquery_jplayer_1",cssSelectorAncestor: ".main-header"};
