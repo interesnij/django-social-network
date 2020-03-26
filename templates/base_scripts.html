@@ -40,7 +40,7 @@ ready(() => {
         var options = { swfPath: "/static/jquery.jplayer.swf", supplied: "oga, mp3", wmode: "window", smoothPlayBar: false, keyEnabled: true};
         var playlist = {{ request.user.my_playlist }};
         var myPlaylist = new jPlayerPlaylist(cssSelector, playlist, options);
-        setTimeout(function(){ myPlaylist.pause(track_id);},2000);
+        setTimeout(function(){ myPlaylist.play(track_id);},2000);
         }
       };
       playlist_link.send( null );
