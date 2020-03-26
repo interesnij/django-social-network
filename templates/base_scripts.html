@@ -27,8 +27,7 @@ ready(() => {
 });
 
   on('.tag_playlist', 'click', '.track_item', function(e) {
-  var track = this.querySelector(".track_item");
-  var track_id = track.getAttribute('data-counter');
+  var track_id = this.getAttribute('data-counter');
   var playlist_block = document.querySelector(".music-dropdown");
   var tag_pk = this.getAttribute('data-pk');
   if (!playlist_block.classList.contains('tag_' + tag_pk)){
