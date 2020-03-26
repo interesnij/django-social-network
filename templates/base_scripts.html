@@ -16,52 +16,34 @@
 <script>
 ready(() => {
   {% if request.user.my_playlist %}
-  document.querySelector(".music-dropdown").addEventListener("click", (e) => {
-    e.stopPropagation()
-  });
-  function load_playlist(playlist_block, callback) {
-    var link_playlist = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    link_playlist.open( 'GET', '/users/load/playlist/' + '{{ request.user.uuid }}', true );
-    link_playlist.onreadystatechange = function () {
-      if ( link_playlist.readyState == 4 ) {
-          if ( link_playlist.status == 200 ) {
-              playlist_block.innerHTML = link_playlist.responseText;
-          }
-      }
-  };
-  link_playlist.send( null );
-  };
 
     var cssSelector = {jPlayer: "#jquery_jplayer_1",cssSelectorAncestor: ".main-header"};
     var playlist = {{ request.user.my_playlist }};
     var options = { swfPath: "/static/jquery.jplayer.swf", supplied: "oga, mp3", wmode: "window", smoothPlayBar: false, keyEnabled: true};
     var myPlaylist = new jPlayerPlaylist(cssSelector, playlist, options);
-    function my_playlist_play(track_id) {myPlaylist.play(track_id);};
+
     document.querySelector(".music_header_btn").style.display = "block";
-    function my_playlist_stop(track_id) {myPlaylist.pause(track_id);};
   {% endif %}
 });
 
-  on('#ajax', 'click', '.track_item', function(e) {
-  var tag_playlist = document.querySelector(".tag_playlist");
-  var track = tag_playlist.querySelector(".track_item");
+  on('.tag_playlist', 'click', '.track_item', function(e) {
+  var track = this.querySelector(".track_item");
   var track_id = track.getAttribute('data-counter');
   var playlist_block = document.querySelector(".music-dropdown");
-  var tag_pk = tag_playlist.getAttribute('data-pk');
+  var tag_pk = this.getAttribute('data-pk');
   if (!playlist_block.classList.contains('tag_' + tag_pk)){
-    $.ajax({
-      url: "/music/manage/temp_tag/" + tag_pk + "/",
-      success: function(data) {
-        load_playlist(playlist_block);
+    var playlist_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    playlist_link.open( 'GET', '/music/manage/temp_tag/' + tag_pk, true );
+    playlist_link.onreadystatechange = function () {
+      if ( request.readyState == 4 && request.status == 200 ) {
+        load_playlist(playlist_block, '{{ request.user.uuid}}');
         playlist_block.className = "";
         playlist_block.classList.add("dropdown-menu", "music-dropdown", "tag_" + tag_pk);
-        setTimeout(function(){ myPlaylist.pause(track_id);},2000);
-      }
+        setTimeout(function(){ my_playlist_pause(track_id);},2000);
+        }
+        }playlist_link.send( null );
+      }else{my_playlist_pause(track_id);};
     });
-  }else{
-    myPlaylist.pause(track_id);
-  };
-  });
 
 //  $('body').on('click', '.playlist_pause .track_item', function() {track = $(this); li = track.parents('.infinite-item'); track_id = li.data('counter');my_playlist_play(track_id); li.removeClass("playlist_pause")});
 
