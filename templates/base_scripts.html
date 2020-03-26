@@ -33,10 +33,11 @@ ready(() => {
     playlist_link.open( 'GET', '/music/manage/temp_tag/' + tag_pk, true );
     playlist_link.onreadystatechange = function () {
       if ( playlist_link.readyState == 4 && playlist_link.status == 200 ) {
-        myPlaylist.setPlaylist({{ request.user.my_playlist }});
+        console.log("tag change")
         }
       };
       playlist_link.send( null );
+      myPlaylist.setPlaylist({{ request.user.my_playlist }});
       }else{
         myPlaylist.play(track_id);
       };
