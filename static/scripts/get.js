@@ -178,9 +178,9 @@ function my_playlist_stop(track_id) {myPlaylist.pause(track_id);};
 document.querySelector(".music-dropdown").addEventListener("click", (e) => {e.stopPropagation()});
 function my_playlist_stop(track_id) {myPlaylist.pause(track_id);};
 
-function playlist_init(playlist) {
+function playlist_init(_playlist) {
   var cssSelector = {jPlayer: "#jquery_jplayer_1",cssSelectorAncestor: ".main-header"};
   var options = { swfPath: "/static/jquery.jplayer.swf", supplied: "oga, mp3", wmode: "window", smoothPlayBar: false, keyEnabled: true};
-  var playlist = playlist;
+  var playlist = _playlist;
   var myPlaylist = new jPlayerPlaylist(cssSelector, playlist, options);
 }
