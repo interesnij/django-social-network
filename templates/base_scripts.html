@@ -39,7 +39,7 @@ ready(() => {
         new_playlist = document.querySelector("#export_playlist").getAttribute('data-list');
         pllll = JSON.parse(new_playlist);
         myPlaylist.setPlaylist(pllll);
-        myPlaylist.play(track_id);
+        myPlaylist.pause(track_id);
         }
       };
       playlist_link.send( null );
