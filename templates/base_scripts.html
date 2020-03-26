@@ -33,10 +33,10 @@ ready(() => {
     playlist_link.open( 'GET', '/music/manage/temp_tag/' + tag_pk, true );
     playlist_link.onreadystatechange = function () {
       if ( playlist_link.readyState == 4 && playlist_link.status == 200 ) {
-        list_load(playlist_block, '/users/load/playlist/' + '{{ request.user.uuid}}');
+      //  list_load(playlist_block, '/users/load/playlist/' + '{{ request.user.uuid}}');
         playlist_block.className = "";
         playlist_block.classList.add("dropdown-menu", "music-dropdown", "tag_" + tag_pk);
-        myPlaylist.setPlaylist({{ request.user.my_playlist }});
+        myPlaylist.setPlaylist({{ tag.get_json_playlist }});
         }
       };
       playlist_link.send( null );
