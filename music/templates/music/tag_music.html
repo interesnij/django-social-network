@@ -101,7 +101,7 @@
 </div>
 
 <script>
-{% if is_tag_playlist %}
+{% if is_tag_playlist %} 
 playlist_block = document.querySelector(".music-dropdown");
 playlist_block.classList.add('tag_' + {{ tag.pk }});
 {% endif %}
