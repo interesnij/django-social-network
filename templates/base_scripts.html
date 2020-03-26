@@ -37,7 +37,7 @@ ready(() => {
         playlist_block.className = "";
         playlist_block.classList.add("dropdown-menu", "music-dropdown", "tag_" + tag_pk);
         new_playlist = document.querySelector("#export_playlist").getAttribute('data-list');
-        myPlaylist.setPlaylist(new_playlist);
+        myPlaylist.setPlaylist(new_playlist|json_encode());
         myPlaylist.play(track_id);
         }
       };
