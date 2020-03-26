@@ -14,8 +14,6 @@
 <script defer src="{% static 'scripts/jplayer.playlist.min.js' %}" type="text/javascript"></script>
 
 <script>
-function list_load(block,link) {var request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );request.open( 'GET', link, true );request.onreadystatechange = function () {if ( request.readyState == 4 && request.status == 200 ) {block.innerHTML = request.responseText;}};request.send( null );}
-
 ready(() => {
   {% if request.user.my_playlist %}
   document.querySelector(".music-dropdown").addEventListener("click", (e) => {
@@ -64,90 +62,10 @@ ready(() => {
     myPlaylist.pause(track_id);
   };
   });
-  on('body', 'click', '.menu_drop', function() {var block = this.nextElementSibling;block.classList.toggle("show");});
 
 //  $('body').on('click', '.playlist_pause .track_item', function() {track = $(this); li = track.parents('.infinite-item'); track_id = li.data('counter');my_playlist_play(track_id); li.removeClass("playlist_pause")});
 
 //  $('body').on('click', '.genre_playlist .track_item', function() {track = $(this);track_id = track.parents('.infinite-item').data('counter');playlist_block = $('body').find('.music-dropdown');genre_pk = track.parents('.ul_track_list').data('pk');if (!playlist_block.hasClass('genre_' + genre_pk)){$.ajax({url: "/music/manage/temp_genre/" + genre_pk + "/",success: function(data) {load_playlist(playlist_block);playlist_block.removeClass().addClass('dropdown-menu music-dropdown user_' + genre_pk);setTimeout(function(){ my_playlist_play(track_id)},2000);}});}else{my_playlist_play(track_id);};});
 //  $('body').on('click', '.user_playlist .track_item', function() {track = $(this);track_id = track.parents('.infinite-item').data('counter');playlist_block = $('body').find('.music-dropdown');user_pk = track.parents('.ul_track_list').data('pk');if (!playlist_block.hasClass('user_' + user_pk)){$.ajax({url: "/music/manage/my_list/" + user_pk + "/",success: function(data) {load_playlist(playlist_block);playlist_block.removeClass().addClass('dropdown-menu music-dropdown user_' + user_pk);setTimeout(function(){ my_playlist_play(track_id)},2000);}});}else{my_playlist_play(track_id);};});
 
-class Index {
-  static initLink() {document.body.querySelectorAll('.ajax').forEach( lin => lin.addEventListener('click', Index.push_url) );}
-  static push_url(event){
-    event.preventDefault();
-    var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    var url = this.getAttribute('href')
-    ajax_link.open( 'GET', url, true );
-      ajax_link.send();
-      ajax_link.onreadystatechange = function () {
-        if ( this.readyState == 4 && this.status == 200 ) {
-          var rtr = document.getElementById('ajax');
-          var elem_ = document.createElement('span');
-          elem_.innerHTML = ajax_link.responseText;
-          var ajax = elem_.querySelector("#reload_block");
-          rtr.innerHTML = '';
-          document.title = elem_.querySelector('title').innerHTML;
-          rtr.append(ajax);
-          Index.initLink();
-          window.history.pushState({route: url}, "network", url);
-          if(rtr.querySelector('#news_load')){
-            var news_load = rtr.querySelector('#news_load');var link = news_load.getAttribute("data-link");
-            list_load(rtr.querySelector("#news_load"), link);
-          }else if(rtr.querySelector('#lenta_load')){
-            var lenta_load = rtr.querySelector('#lenta_load');var link = lenta_load.getAttribute("data-link");
-            list_load(rtr.querySelector("#lenta_load"), link);
-          }else if(rtr.querySelector('#lenta_community')){
-            var lenta_community = rtr.querySelector('#lenta_community');var link = lenta_community.getAttribute("data-link");
-            list_load(rtr.querySelector("#lenta_community"), link);
-          }else if(rtr.querySelector('#photo_load')){
-            var photo_load = rtr.querySelector('#photo_load');var link = photo_load.getAttribute("data-link");
-            list_load(rtr.querySelector("#photo_load"), link);
-          }else if(rtr.querySelector('#album_photo_load')){
-            var album_photo_load = rtr.querySelector('#album_photo_load');var link = album_photo_load.getAttribute("data-link");
-            list_load(rtr.querySelector("#album_photo_load"), link);
-          };
-          load_chart()
-        }
-      }
-  };
-}
-
-Index.initLink();
-
-rrr = document.getElementById('ajax');
-if(rrr.querySelector('#news_load')){
-  var news_load = rrr.querySelector('#news_load');var link = news_load.getAttribute("data-link");
-  list_load(rrr.querySelector("#news_load"), link);
-}else if(rrr.querySelector('#lenta_load')){
-  var lenta_load = rrr.querySelector('#lenta_load');var link = lenta_load.getAttribute("data-link");
-  list_load(rrr.querySelector("#lenta_load"), link);
-}else if(rrr.querySelector('#lenta_community')){
-  var lenta_community = rrr.querySelector('#lenta_community');var link = lenta_community.getAttribute("data-link");
-  list_load(rrr.querySelector("#lenta_community"), link);
-}else if(rrr.querySelector('#photo_load')){
-  var photo_load = rrr.querySelector('#photo_load');var link = photo_load.getAttribute("data-link");
-  list_load(rrr.querySelector("#photo_load"), link);
-}else if(rrr.querySelector('#album_photo_load')){
-  var album_photo_load = rrr.querySelector('#album_photo_load');var link = album_photo_load.getAttribute("data-link");
-  list_load(rrr.querySelector("#album_photo_load"), link);
-};
-
-on('#ajax', 'click', '.custom-radio', function() {
-  var span = this;
-  var color = this.getAttribute('data-color');
-  var input = span.querySelector(".custom-control-input");
-  var list = document.querySelector(".theme-color");
-  var link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'GET', "/users/progs/color/" + color + "/", true );
-  link_.send();
-  link_.onreadystatechange = function () {
-  if ( this.readyState == 4 && this.status == 200 ) {
-    var uncheck=document.getElementsByTagName('input');
-    for(var i=0;i<uncheck.length;i++)
-    {uncheck[i].checked=false;}
-    input.checked = true;
-    function addStyleSheets (href) {$head = document.head,$link = document.createElement('link');$link.rel = 'stylesheet';$link.href = href;$head.appendChild($link);};addStyleSheets("/static/styles/color/" + color + ".css");
-  }
-};
-});
 </script>

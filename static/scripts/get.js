@@ -99,3 +99,74 @@ $('body').on('click', '.c_item_repost', function() {item = $(this).parents('.inf
        music scripts for user
     */
 $('body').on('click', '.jp-playlist-current .track_item', function() {track = $(this); li = track.parents('.infinite-item'); track_id = li.data('counter');my_playlist_stop(track_id); li.addClass("playlist_pause");});
+
+
+
+/*!
+     подгрузка лент и блоков
+  */
+
+function list_load(block,link) {var request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );request.open( 'GET', link, true );request.onreadystatechange = function () {if ( request.readyState == 4 && request.status == 200 ) {block.innerHTML = request.responseText;}};request.send( null );}
+
+class Index {
+  static initLink() {document.body.querySelectorAll('.ajax').forEach( lin => lin.addEventListener('click', Index.push_url) );}
+  static push_url(event){
+    event.preventDefault();
+    var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    var url = this.getAttribute('href')
+    ajax_link.open( 'GET', url, true );
+      ajax_link.send();
+      ajax_link.onreadystatechange = function () {
+        if ( this.readyState == 4 && this.status == 200 ) {
+          var rtr = document.getElementById('ajax');
+          var elem_ = document.createElement('span');
+          elem_.innerHTML = ajax_link.responseText;
+          var ajax = elem_.querySelector("#reload_block");
+          rtr.innerHTML = '';
+          document.title = elem_.querySelector('title').innerHTML;
+          rtr.append(ajax);
+          Index.initLink();
+          window.history.pushState({route: url}, "network", url);
+          if(rtr.querySelector('#news_load')){
+            var news_load = rtr.querySelector('#news_load');var link = news_load.getAttribute("data-link");
+            list_load(rtr.querySelector("#news_load"), link);
+          }else if(rtr.querySelector('#lenta_load')){
+            var lenta_load = rtr.querySelector('#lenta_load');var link = lenta_load.getAttribute("data-link");
+            list_load(rtr.querySelector("#lenta_load"), link);
+          }else if(rtr.querySelector('#lenta_community')){
+            var lenta_community = rtr.querySelector('#lenta_community');var link = lenta_community.getAttribute("data-link");
+            list_load(rtr.querySelector("#lenta_community"), link);
+          }else if(rtr.querySelector('#photo_load')){
+            var photo_load = rtr.querySelector('#photo_load');var link = photo_load.getAttribute("data-link");
+            list_load(rtr.querySelector("#photo_load"), link);
+          }else if(rtr.querySelector('#album_photo_load')){
+            var album_photo_load = rtr.querySelector('#album_photo_load');var link = album_photo_load.getAttribute("data-link");
+            list_load(rtr.querySelector("#album_photo_load"), link);
+          };
+          load_chart()
+        }
+      }
+  };
+}
+
+Index.initLink();
+
+rrr = document.getElementById('ajax');
+if(rrr.querySelector('#news_load')){
+  var news_load = rrr.querySelector('#news_load');var link = news_load.getAttribute("data-link");
+  list_load(rrr.querySelector("#news_load"), link);
+}else if(rrr.querySelector('#lenta_load')){
+  var lenta_load = rrr.querySelector('#lenta_load');var link = lenta_load.getAttribute("data-link");
+  list_load(rrr.querySelector("#lenta_load"), link);
+}else if(rrr.querySelector('#lenta_community')){
+  var lenta_community = rrr.querySelector('#lenta_community');var link = lenta_community.getAttribute("data-link");
+  list_load(rrr.querySelector("#lenta_community"), link);
+}else if(rrr.querySelector('#photo_load')){
+  var photo_load = rrr.querySelector('#photo_load');var link = photo_load.getAttribute("data-link");
+  list_load(rrr.querySelector("#photo_load"), link);
+}else if(rrr.querySelector('#album_photo_load')){
+  var album_photo_load = rrr.querySelector('#album_photo_load');var link = album_photo_load.getAttribute("data-link");
+  list_load(rrr.querySelector("#album_photo_load"), link);
+};
+
+on('body', 'click', '.menu_drop', function() {var block = this.nextElementSibling;block.classList.toggle("show");});
