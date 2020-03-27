@@ -221,7 +221,7 @@ class SoundcloudParsing(models.Model):
         from common.utils import safe_json
 
         url = self.uri + '/stream?client_id=' + 'dce5652caa1b66331903493735ddd64d'
-        return safe_json(url)
+        return url
 
     class Meta:
         verbose_name="спарсенные треки"
