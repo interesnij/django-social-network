@@ -4982,7 +4982,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             var n = e.li;
             for (var r = 0; r < n.length; r++) {
                 t = {};
-                t.source = n[r]["@attributes"]["data-path".replace("?","?").replace("=","=")];
+                t.source = n[r]["@attributes"]["data-path"]; console.log(t.source);
                 var i = encodeURI(t.source.substr(0, t.source.lastIndexOf("/") + 1));
                 var s = t.source.substr(t.source.lastIndexOf("/") + 1);
                 if (s.indexOf(";.mp3") != -1) {
@@ -5021,7 +5021,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             var r = 0;
             for (var i = 0; i < n.length; i++) {
                 t = {};
-                t.source = n[i]["@attributes"]["data-path".replace("?","?").replace("=","=")];
+                t.source = n[i]["@attributes"]["data-path"]; console.log(t.source);
                 var s = encodeURI(t.source.substr(0, t.source.lastIndexOf("/") + 1));
                 var o = encodeURIComponent(t.source.substr(t.source.lastIndexOf("/") + 1));
                 t.source = s + o;
@@ -5087,7 +5087,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             for (var s = 0; s < r; s++) {
                 var o = {};
                 i = n[s];
-                if (!FWDMSPUtils.hasAttribute(i, "data-path".replace("?","?").replace("=","="))) {
+                if (!FWDMSPUtils.hasAttribute(i, "data-path")) {
                     self.isPlaylistDispatchingError_bl = true;
                     showLoadPlaylistErrorId_to = setTimeout(function() {
                         self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, {
@@ -5097,7 +5097,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                     return
                 }
                 if (s > self.maxPlaylistItems - 1) break;
-                o.source = FWDMSPUtils.getAttributeValue(i, "data-path".replace("?","?").replace("=","="));
+                o.source = FWDMSPUtils.getAttributeValue(i, "data-path"); console.log(o.source);
                 var u = encodeURI(o.source.substr(0, o.source.lastIndexOf("/") + 1));
                 var a = o.source.substr(o.source.lastIndexOf("/") + 1);
                 if (a.indexOf(";.mp3") != -1) {
