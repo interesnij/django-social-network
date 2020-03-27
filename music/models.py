@@ -191,15 +191,15 @@ class UserTempSoundList(models.Model):
 class SoundcloudParsing(models.Model):
     moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='music')
     id = models.IntegerField(primary_key=True)
-    artwork_url = models.URLField(max_length=255, blank=True, null=True)
-    created_at = models.DateTimeField(max_length=255, blank=True, null=True)
+    artwork_url = models.URLField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True, auto_now=False)
     duration = models.CharField(max_length=255, blank=True, null=True)
     description = models.CharField(max_length=500, blank=True, null=True)
     genre = models.ForeignKey(SoundGenres, related_name='track_genre', on_delete=models.CASCADE, verbose_name="Жанр трека")
     tag = models.ForeignKey(SoundTags, related_name='track_tag', on_delete=models.CASCADE, verbose_name="Буква")
     title = models.CharField(max_length=255, blank=True, null=True)
     uri = models.CharField(max_length=255, blank=True, null=True)
-    release_year = models.CharField(max_length=255, blank=True, null=True)
+    release_year = models.CharField(max_length=10, blank=True, null=True)
     is_deleted = models.BooleanField(verbose_name="Удален",default=False )
 
     def __str__(self):
