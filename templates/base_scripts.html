@@ -3,7 +3,7 @@
 {{ request.user.my_playlist }}
 </script>
 
-<!--<script defer src="{% static 'scripts/jquery.js' %}" type="text/javascript"></script>-->
+<script defer src="{% static 'scripts/jquery.js' %}" type="text/javascript"></script>
 <script defer src="{% static 'scripts/cockie.js' %}" type="text/javascript"></script>
 <script defer src="{% static 'scripts/websocketbridge.js' %}" type="text/javascript"></script>
 <script defer src="{% static 'scripts/lazysizes.min.js' %}" type="text/javascript"></script>
@@ -13,17 +13,250 @@
 <script defer src="/static/scripts/Chart.min.js" type="text/javascript"></script>
 <script defer src="{% static 'scripts/chart_v1.js' %}" type="text/javascript"></script>
 <!--<script defer src="{% static 'scripts/jquery.jplayer.min.js' %}" type="text/javascript"></script>
-<script defer src="{% static 'scripts/jplayer.playlist.min.js' %}" type="text/javascript"></script>-->
-<script defer src="{% static 'scripts/playerjs.js' %}" type="text/javascript"></script>
-<script defer src="{% static 'scripts/music.js' %}" type="text/javascript"></script>
-<script>
-
-//  $('body').on('click', '.playlist_pause .track_item', function() {track = $(this); li = track.parents('.infinite-item'); track_id = li.data('counter');my_playlist_play(track_id); li.removeClass("playlist_pause")});
-
- ready(() => {
-var player = new Playerjs({
-   id:"player",
-   file:{{ request.user.my_playlist }}
-});
-});
+<script defer src="{% static 'scripts/jplayer.playlist.min.js' %}" type="text/javascript"></script>
+<script defer src="{% static 'scripts/music.js' %}" type="text/javascript"></script>-->
+<script defer src="{% static 'scripts/test.js' %}" type="text/javascript"></script>
+<script type="text/javascript">
+    FWDMSPUtils.onReady(function(){
+        new FWDMSP({
+            //main settings
+            instanceName:"player1",
+            playlistsId:"playlists",
+            mainFolderPath:"/static/images/",
+            skinPath:"pleer",
+						facebookAppId:"721664704888270",
+            showSoundCloudUserNameInTitle:"yes",
+            position:"bottom",
+            rightClickContextMenu:"developer",
+            showButtonsToolTips:"yes",
+            animate:"yes",
+            autoPlay:"no",
+            loop:"no",
+            shuffle:"no",
+            maxWidth:850,
+            volume:.8,
+            toolTipsButtonsHideDelay:1.5,
+            toolTipsButtonFontColor:"#888888",
+            //controller settings
+            showControllerByDefault:"yes",
+            showThumbnail:"yes",
+            showSoundAnimation:"yes",
+            showLoopButton:"yes",
+            showShuffleButton:"yes",
+            showDownloadMp3Button:"yes",
+            showBuyButton:"yes",
+            expandBackground:"no",
+            titleColor:"#FFFFFF",
+            timeColor:"#888888",
+            //controller align and size settings (described in detail in the documentation!)
+            controllerHeight:76,
+            startSpaceBetweenButtons:9,
+            spaceBetweenButtons:8,
+            separatorOffsetOutSpace:5,
+            separatorOffsetInSpace:9,
+            lastButtonsOffsetTop:14,
+            allButtonsOffsetTopAndBottom:14,
+            titleBarOffsetTop:13,
+            mainScrubberOffsetTop:47,
+            spaceBetweenMainScrubberAndTime:10,
+            startTimeSpace:10,
+            scrubbersOffsetWidth:2,
+            scrubbersOffestTotalWidth:0,
+            volumeButtonAndScrubberOffsetTop:47,
+            spaceBetweenVolumeButtonAndScrubber:6,
+            volumeScrubberOffestWidth:4,
+            scrubberOffsetBottom:10,
+            equlizerOffsetLeft:1,
+            //playlists window settings
+            showPlaylistsButtonAndPlaylists:"yes",
+            showPlaylistsByDefault:"no",
+            thumbnailSelectedType:"opacity",
+            startAtPlaylist:0,
+            startAtTrack:0,
+            buttonsMargins:0,
+            thumbnailMaxWidth:330,
+            thumbnailMaxHeight:330,
+            horizontalSpaceBetweenThumbnails:40,
+            verticalSpaceBetweenThumbnails:40,
+            //playlist settings
+            showPlayListButtonAndPlaylist:"yes",
+            showPlayListOnAndroid:"no",
+            showPlayListByDefault:"no",
+            showPlaylistItemPlayButton:"yes",
+            showPlaylistItemDownloadButton:"yes",
+            showPlaylistItemBuyButton:"yes",
+            forceDisableDownloadButtonForPodcast:"yes",
+            forceDisableDownloadButtonForOfficialFM:"yes",
+            forceDisableDownloadButtonForFolder:"yes",
+            addScrollBarMouseWheelSupport:"yes",
+            showTracksNumbers:"yes",
+            playlistBackgroundColor:"#000000",
+            trackTitleNormalColor:"#888888",
+            trackTitleSelectedColor:"#FFFFFF",
+            trackDurationColor:"#888888",
+            maxPlaylistItems:100,
+            nrOfVisiblePlaylistItems:12,
+            trackTitleOffsetLeft:0,
+            playPauseButtonOffsetLeftAndRight:11,
+            durationOffsetRight:9,
+            downloadButtonOffsetRight:11,
+            scrollbarOffestWidth:7,
+            //search bar settings
+            //showSearchBar:"yes",
+            //showSortButtons:"yes",
+            searchInputColor:"#999999",
+            searchBarHeight:38,
+            //opener settings
+            openerAlignment:"right",
+            showOpener:"yes",
+            showOpenerPlayPauseButton:"yes",
+            openerEqulizerOffsetLeft:3,
+            openerEqulizerOffsetTop:-1,
+            //popup settings
+            showPopupButton:"yes",
+            popupWindowBackgroundColor:"#878787",
+            popupWindowWidth:850,
+            popupWindowHeight:354
+        });
+    });
 </script>
+
+<ul id="playlists" style="display:none;">
+		<li data-source="playlist1"  data-thumbnail-path="{% static 'images/pleer/large17.jpg' %}">
+			<p class="minimalDarkCategoriesTitle"><span class="bold">Название: </span>Техно-микс</p>
+			<p class="minimalDarkCategoriesType"><span class="bold">Тип: </span><span class="minimalDarkCategoriesTypeIn">Сборка</span></p>
+			<p class="minimalDarkCategoriesDescription"><span class="bold">Описание: </span>Убойные хиты!</p>
+		</li>
+</ul>
+
+<ul id="playlist1" style="display:none;">
+  <li data-path="http://music70-80.narod.ru/mp/Grup/shkolnica.mp3" data-thumbpath="{% static 'images/pleer/scool.jpg' %}"  data-downloadable="yes" data-duration="03:31">
+			<p><span style="font-weight:bold;">"Арамис"</span> - Школьница</p>
+		</li>
+		<li data-path="http://music70-80.narod.ru/mp/school/proshcajte_golubi.mp3" data-thumbpath="{% static 'images/pleer/scool.jpg' %}"  data-downloadable="yes" data-duration="04:29">
+			<p><span style="font-weight:bold;">В. Толкунова и О. Ухналёв</span> - Прощайте, голуби</p>
+		</li>
+		<li data-path="http://music70-80.narod.ru/mp/school/shkolnaja_pora.mp3" data-thumbpath="{% static 'images/pleer/scool.jpg' %}"  data-downloadable="yes" data-duration="03:28">
+			<p><span style="font-weight:bold;">"Веселые ребята" ВИА</span> - Школьная пора</p>
+		</li>
+		<li data-path="http://music70-80.narod.ru/mp/school/shkolnye_tovarishci.mp3" data-thumbpath="{% static 'images/pleer/scool.jpg' %}"  data-downloadable="yes" data-duration="03:34">
+			<p><span style="font-weight:bold;">Г. Бовина и В. Лыньковский</span> - Школьные товарищи</p>
+		</li>
+		<li data-path="http://music70-80.narod.ru/mp/VIA/pro_vals.mp3" data-thumbpath="{% static 'images/pleer/scool.jpg' %}"  data-downloadable="yes" data-duration="03:03">
+			<p><span style="font-weight:bold;">"Добры молодцы" ВИА</span> - Журавлиная песня</p>
+		</li>
+		<li data-path="http://music70-80.narod.ru/mp/school/zhuravlinaja_pesnja.mp3" data-thumbpath="{% static 'images/pleer/scool.jpg' %}"  data-downloadable="yes" data-duration="02:52">
+			<p><span style="font-weight:bold;">Детский хор</span> - Прощальный вальс</p>
+		</li>
+		<li data-path="http://music70-80.narod.ru/mp/school/zvonok.mp3" data-thumbpath="{% static 'images/pleer/scool.jpg' %}"  data-downloadable="yes" data-duration="02:29">
+			<p><span style="font-weight:bold;">Детский хор</span> - Звонок</p>
+		</li>
+		<li data-path="http://music70-80.narod.ru/mp/school/nasha_shkolnaja_strana.mp3" data-thumbpath="{% static 'images/pleer/scool.jpg' %}"  data-downloadable="yes" data-duration="02:53">
+			<p><span style="font-weight:bold;">Детский хор</span> - Наша школьная страна</p>
+		</li>
+		<li data-path="http://music70-80.narod.ru/mp/school/spasibo_uchiteljam.mp3" data-thumbpath="{% static 'images/pleer/scool.jpg' %}"  data-downloadable="yes" data-duration="03:18">
+			<p><span style="font-weight:bold;">Детский хор</span> - Спасибо учителям</p>
+		</li>
+		<li data-path="http://music70-80.narod.ru/mp/school/utro_shkolnoe_zdravstvuj.mp3" data-thumbpath="{% static 'images/pleer/scool.jpg' %}"  data-downloadable="yes" data-duration="02:22">
+			<p><span style="font-weight:bold;">Детский хор</span> - Утро школьное, здравствуй</p>
+		</li>
+		<li data-path="http://music70-80.narod.ru/mp/school/uchitelnica.mp3" data-thumbpath="{% static 'images/pleer/scool.jpg' %}"  data-downloadable="yes" data-duration="02:04">
+			<p><span style="font-weight:bold;">Детский хор</span> - Учительница</p>
+		</li>
+		<li data-path="http://music70-80.narod.ru/mp/school/shkolnyj_korabl.mp3" data-thumbpath="{% static 'images/pleer/scool.jpg' %}"  data-downloadable="yes" data-duration="02:14">
+			<p><span style="font-weight:bold;">Детский хор</span> - Школьный корабль</p>
+		</li>
+		<li data-path="http://music70-80.narod.ru/mp/Isp/petya_chizhikov_letaet.mp3" data-thumbpath="{% static 'images/pleer/scool.jpg' %}"  data-downloadable="yes" data-duration="03:05">
+			<p><span style="font-weight:bold;">Е. Семенова</span> - Петя Чижиков летает</p>
+		</li>
+		<li data-path="http://music70-80.narod.ru/mp/Isp/shkolnica.mp3" data-thumbpath="{% static 'images/pleer/scool.jpg' %}"  data-downloadable="yes" data-duration="04:58">
+			<p><span style="font-weight:bold;">Е. Семенова</span> - Школьница</p>
+		</li>
+		<li data-path="http://music70-80.narod.ru/mp/Isp/9klass.mp3" data-thumbpath="{% static 'images/pleer/scool.jpg' %}"  data-downloadable="yes" data-duration="02:32">
+			<p><span style="font-weight:bold;">М. Михайлов</span> - Девятый класс</p>
+		</li>
+		<li data-path="http://music70-80.narod.ru/mp/school/school_vals.mp3" data-thumbpath="{% static 'images/pleer/scool.jpg' %}"  data-downloadable="yes" data-duration="03:20">
+			<p><span style="font-weight:bold;">М. Пахоменко</span> - Школьный вальс</p>
+		</li>
+		<li data-path="http://music70-80.narod.ru/mp/Isp/pervoklassnik.mp3" data-thumbpath="{% static 'images/pleer/scool.jpg' %}"  data-downloadable="yes" data-duration="02:27">
+			<p><span style="font-weight:bold;">А. Пугачева</span> - Песенка первоклассника</p>
+		</li>
+		<li data-path="http://music70-80.narod.ru/mp/school/devchonka_45.mp3" data-thumbpath="{% static 'images/pleer/scool.jpg' %}"  data-downloadable="yes" data-duration="02:58">
+			<p><span style="font-weight:bold;">Н. Гнатюк</span> - Девчонка из квартиры 45</p>
+		</li>
+		<li data-path="http://music70-80.narod.ru/mp/school/nekogda_staret_uchitelyam.mp3" data-thumbpath="{% static 'images/pleer/scool.jpg' %}"  data-downloadable="yes" data-duration="02:48">
+			<p><span style="font-weight:bold;">Н. Гнатюк</span> - Некогда стареть учителям</p>
+		</li>
+		<li data-path="http://music70-80.narod.ru/mp/school/shturm-shkolnyj_roman.mp3" data-thumbpath="{% static 'images/pleer/scool.jpg' %}"  data-downloadable="yes" data-duration="03:38">
+			<p><span style="font-weight:bold;">Н. Штурм</span> - Школьный роман</p>
+		</li>
+		<li data-path="http://music70-80.narod.ru/mp/school/plamja-detstva_posledniy_zvonok.mp3" data-thumbpath="{% static 'images/pleer/scool.jpg' %}"  data-downloadable="yes" data-duration="03:50">
+			<p><span style="font-weight:bold;">"Пламя" ВИА</span> - Детства последний звонок</p>
+		</li>
+		<li data-path="http://music70-80.narod.ru/mp/school/plamja-do_shestnadcati_let.mp3" data-thumbpath="{% static 'images/pleer/scool.jpg' %}"  data-downloadable="yes" data-duration="03:35">
+			<p><span style="font-weight:bold;">"Пламя" ВИА</span> - До шестнадцати лет</p>
+		</li>
+		<li data-path="http://music70-80.narod.ru/mp/school/plamja-ne_povtoryaetsya_takoe.mp3" data-thumbpath="{% static 'images/pleer/scool.jpg' %}"  data-downloadable="yes" data-duration="03:46">
+			<p><span style="font-weight:bold;">"Пламя" ВИА</span> - Не повторяется такое никогда</p>
+		</li>
+		<li data-path="http://music70-80.narod.ru/mp/VIA/shkolnij_bal.mp3" data-thumbpath="{% static 'images/pleer/scool.jpg' %}"  data-downloadable="yes" data-duration="04:24">
+			<p><span style="font-weight:bold;">"Самоцветы" ВИА</span> - Школьный бал</p>
+		</li>
+		<li data-path="http://music70-80.narod.ru/mp/VIA/Desjatyj_klass.mp3" data-thumbpath="{% static 'images/pleer/scool.jpg' %}"  data-downloadable="yes" data-duration="04:25">
+			<p><span style="font-weight:bold;">"Чаривны гитары" ВИА</span> - Десятый класс</p>
+		</li>
+		<li data-path="http://music70-80.narod.ru/mp/school/uchat_v_shkole.mp3" data-thumbpath="{% static 'images/pleer/scool.jpg' %}"  data-downloadable="yes" data-duration="01:49">
+			<p><span style="font-weight:bold;">Э. Хиль</span> - Учат в школе</p>
+		</li>
+		<li data-path="http://music70-80.narod.ru/mp/school/Veselyj_barabanchik.mp3" data-thumbpath="{% static 'images/pleer/scool.jpg' %}"  data-downloadable="yes" data-duration="01:36">
+			<p><span style="font-weight:bold;">Большой детский хор</span> - Веселый барабанщик</p>
+		</li>
+		<li data-path="http://music70-80.narod.ru/mp/school/iz_chego_ge.mp3" data-thumbpath="{% static 'images/pleer/scool.jpg' %}"  data-downloadable="yes" data-duration="02:13">
+			<p><span style="font-weight:bold;">Большой детский хор</span> - Из чего же</p>
+		</li>
+		<li data-path="http://music70-80.narod.ru/mp/school/devchonki.mp3" data-thumbpath="{% static 'images/pleer/scool.jpg' %}"  data-downloadable="yes" data-duration="02:21">
+			<p><span style="font-weight:bold;">Большой детский хор</span> - Ровесницы, ровесники</p>
+		</li>
+		<li data-path="http://music70-80.narod.ru/mp/school/pesny_o_vstrechnom.mp3" data-thumbpath="{% static 'images/pleer/scool.jpg' %}"  data-downloadable="yes" data-duration="02:14">
+			<p><span style="font-weight:bold;">Большой детский хор</span> - Песня о встречном</p>
+		</li>
+		<li data-path="http://music70-80.narod.ru/mp/school/vzveites_kostrami.mp3" data-thumbpath="{% static 'images/pleer/scool.jpg' %}"  data-downloadable="yes" data-duration="01:49">
+			<p><span style="font-weight:bold;">Большой детский хор</span> - Марш юных пионеров</p>
+		</li>
+		<li data-path="http://music70-80.narod.ru/mp/school/Morskie_wolki.mp3" data-thumbpath="{% static 'images/pleer/scool.jpg' %}"  data-downloadable="yes" data-duration="02:42">
+			<p><span style="font-weight:bold;">Большой детский хор</span> - Морские волки</p>
+		</li>
+		<li data-path="http://music70-80.narod.ru/mp/school/ex_xorosho.mp3" data-thumbpath="{% static 'images/pleer/scool.jpg' %}"  data-downloadable="yes" data-duration="02:12">
+			<p><span style="font-weight:bold;">Большой детский хор</span> - Эх, хорошо</p>
+		</li>
+		<li data-path="http://music70-80.narod.ru/mp/VIA/Y_u_babushki.mp3" data-thumbpath="{% static 'images/pleer/scool.jpg' %}"  data-downloadable="yes" data-duration="03:55">
+			<p><span style="font-weight:bold;">"Верасы" ВИА</span> - Я у бабушки живу</p>
+		</li>
+		<li data-path="http://music70-80.narod.ru/mp/school/Chetyre_tarakana.mp3" data-thumbpath="{% static 'images/pleer/scool.jpg' %}"  data-downloadable="yes" data-duration="02:16">
+			<p><span style="font-weight:bold;">В. Макаров</span> - Четыре таракана и сверчок</p>
+		</li>
+		<li data-path="http://music70-80.narod.ru/mp/Isp/Volshebnik-nedouchka.mp3" data-thumbpath="{% static 'images/pleer/scool.jpg' %}"  data-downloadable="yes" data-duration="03:19">
+			<p><span style="font-weight:bold;">А. Пугачева</span> - Волшебник - недоучка</p>
+		</li>
+		<li data-path="http://music70-80.narod.ru/mp/Isp/Kuda_uhodit_detstvo.mp3" data-thumbpath="{% static 'images/pleer/scool.jpg' %}"  data-downloadable="yes" data-duration="04:44">
+			<p><span style="font-weight:bold;">А. Пугачева</span> - Куда уходит детство</p>
+		</li>
+		<li data-path="http://music70-80.narod.ru/mp/school/oranzhevay_pesny.mp3" data-thumbpath="{% static 'images/pleer/scool.jpg' %}"  data-downloadable="yes" data-duration="02:58">
+			<p><span style="font-weight:bold;">И. Сохадзе</span> - Оранжевая песенка</p>
+		</li>
+		<li data-path="http://music70-80.narod.ru/mp/Retro/Top-top.mp3" data-thumbpath="{% static 'images/pleer/scool.jpg' %}"  data-downloadable="yes" data-duration="02:26">
+			<p><span style="font-weight:bold;">М. Кристалинская</span> - Топ-топ</p>
+		</li>
+		<li data-path="http://music70-80.narod.ru/mp/VIA/Konopataya_devchenka.mp3" data-thumbpath="{% static 'images/pleer/scool.jpg' %}"  data-downloadable="yes" data-duration="03:56">
+			<p><span style="font-weight:bold;">"Лейся, песня" ВИА</span> - Конопатая девчонка</p>
+		</li>
+		<li data-path="http://music70-80.narod.ru/mp/school/S_chego_nachinaetsy_rodina.mp3" data-thumbpath="{% static 'images/pleer/scool.jpg' %}"  data-downloadable="yes" data-duration="02:33">
+			<p><span style="font-weight:bold;">М. Бернес</span> - С чего начинается Родина</p>
+		</li>
+		<li data-path="http://music70-80.narod.ru/mp/school/sinjaja_ptica-detstvo.mp3" data-thumbpath="{% static 'images/pleer/scool.jpg' %}"  data-downloadable="yes" data-duration="03:11">
+			<p><span style="font-weight:bold;">"Синяя птица" ВИА</span> - Детство</p>
+		</li>
+		<li data-path="http://music70-80.narod.ru/mp/school/pust_vsegda.mp3" data-thumbpath="{% static 'images/pleer/scool.jpg' %}"  data-downloadable="yes" data-duration="03:24">
+			<p><span style="font-weight:bold;">Т. Миансарова</span> - Солнечный круг</p>
+		</li>
+	</ul>
