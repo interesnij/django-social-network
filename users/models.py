@@ -584,7 +584,7 @@ class User(AbstractUser):
                 playlist.append(data)
             if playlist:
                 cached_playlist = safe_json(playlist)
-                return cached_playlist
+                return playlist
             else:
                 playlist = False
 
