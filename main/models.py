@@ -81,28 +81,6 @@ class Item(models.Model):
         comments_query.add(Q(is_deleted=False), Q.AND)
         return ItemComment.objects.filter(comments_query)
 
-    def _make_get_comments_for_post_query(self, user, post_comment_parent_id=None):
-        comments_query = Q(item_id=self.pk)
-        if post_comment_parent_id is None:
-            comments_query.add(Q(parent_comment__isnull=True), Q.AND)
-        else:
-            comments_query.add(Q(parent_comment__id=post_comment_parent_id), Q.AND)
-        post_community = self.community
-        if post_community:
-            if not user.is_staff_of_community_with_name(community_name=post_community.name):
-                blocked_users_query = ~Q(Q(commenter__blocked_by_users__blocker_id=user.pk) | Q(commenter__user_blocks__blocked_user_id=user.pk))
-                blocked_users_query_staff_members = Q(commenter__communities_memberships__community_id=post_community.pk)
-                blocked_users_query_staff_members.add(Q(commenter__communities_memberships__is_administrator=True) | Q(commenter__communities_memberships__is_moderator=True), Q.AND)
-                blocked_users_query.add(~blocked_users_query_staff_members, Q.AND)
-                comments_query.add(blocked_users_query, Q.AND)
-                comments_query.add(~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED), Q.AND)
-        else:
-            blocked_users_query = ~Q(Q(commenter__blocked_by_users__blocker_id=user.pk) | Q(commenter__user_blocks__blocked_user_id=user.pk))
-            comments_query.add(blocked_users_query, Q.AND)
-        comments_query.add(~Q(moderated_object__reports__reporter_id=user.pk), Q.AND)
-        comments_query.add(Q(is_deleted=False), Q.AND)
-        return comments_query
-
     def likes(self):
         likes = ItemVotes.objects.filter(parent=self, vote__gt=0)
         return likes
@@ -171,7 +149,7 @@ class Item(models.Model):
         from users.model.profile import OneUserLocation
 
         v_s = ItemNumbers.objects.filter(item=self.pk).values('user')
-        ids = [use['user'] for use in v_s] 
+        ids = [use['user'] for use in v_s]
         sities = OneUserLocation.objects.filter(user_id__in=ids).distinct('city_ru')
         return sities
 

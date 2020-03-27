@@ -1,8 +1,8 @@
-#import soundcloud
 from django.conf import settings
 from django.db import models
 from django.contrib.contenttypes.fields import GenericRelation
 from django.contrib.postgres.indexes import BrinIndex
+from django.utils import timezone
 
 
 class SoundGenres(models.Model):
@@ -192,7 +192,7 @@ class SoundcloudParsing(models.Model):
     moderated_object = GenericRelation('moderation.ModeratedObject', related_query_name='music')
     id = models.IntegerField(primary_key=True)
     artwork_url = models.URLField(blank=True, null=True)
-    created_at = models.DateTimeField(auto_now_add=True, auto_now=False)
+    created_at = models.DateTimeField(default=timezone.now(), auto_now_add=True, auto_now=False)
     duration = models.CharField(max_length=255, blank=True, null=True)
     description = models.CharField(max_length=500, blank=True, null=True)
     genre = models.ForeignKey(SoundGenres, related_name='track_genre', on_delete=models.CASCADE, verbose_name="Жанр трека")
