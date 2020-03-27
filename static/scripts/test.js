@@ -5093,8 +5093,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                     a = o.source + '/stream?client_id=3ddce5652caa1b66331903493735ddd64d'
                 } else{
                     a = encodeURIComponent(o.source.substr(o.source.lastIndexOf("/") + 1))
+                    o.source = u + a;
                 }
-                o.source = u + a;
                 o.downloadPath = o.source;
                 if (FWDMSPUtils.hasAttribute(i, "data-thumbpath")) {
                     o.thumbPath = FWDMSPUtils.getAttributeValue(i, "data-thumbpath")
