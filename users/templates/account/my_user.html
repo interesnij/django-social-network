@@ -204,7 +204,7 @@
 var page = 2;
 var loaded = false;
 onscroll = function(){
-  var box = document.querySelectorAll('.infinite-item');
+  var box = document.querySelectorAll('.item');
   for (var i = 0; i < box.length; i++) {
     if(!box[i].classList.contains("showed")){
       inViewport = elementInViewport(box[i]);

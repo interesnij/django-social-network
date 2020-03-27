@@ -9,13 +9,6 @@ class AvatarReload(TemplateView):
     template_name="profile/avatar_reload.html"
 
 
-class UserPlaylistLoad(TemplateView):
-    template_name="profile/user_playlist_load.html"
-    def get(self,request,*args,**kwargs):
-        self.user=User.objects.get(uuid=self.kwargs["uuid"])
-        return super(UserPlaylistLoad,self).get(request,*args,**kwargs)
-
-
 class UserImagesLoad(View):
     def get(self,request,**kwargs):
         context = {}
