@@ -218,9 +218,9 @@ class SoundcloudParsing(models.Model):
         return self.title
 
     def get_mp3(self):
-        ff = '/'
+        ff = '='
         dd = '?'
-        url = self.uri + '/stream' + dd + 'client_id=' + 'dce5652caa1b66331903493735ddd64d'
+        url = self.uri + '/stream' + str(dd) + 'client_id' + str(ff) + 'dce5652caa1b66331903493735ddd64d'
         return url
 
     class Meta:
