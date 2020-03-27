@@ -4,7 +4,6 @@ var playlist = document.querySelector("#user_playlist").innerHTML;
 console.log(playlist);
 _playlist = JSON.parse(playlist);
 var myPlaylist = new jPlayerPlaylist(cssSelector, _playlist);
-document.querySelector(".music_header_btn").style.display = "block";
 
 on('#ajax', 'click', '.tag_track', function(e) {
 var track_id = this.getAttribute('data-counter');
