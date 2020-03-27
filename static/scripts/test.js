@@ -5084,13 +5084,14 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 }
                 if (s > self.maxPlaylistItems - 1) break;
                 o.source = FWDMSPUtils.getAttributeValue(i, "data-path"); console.log(o.source);
-                //var u = encodeURI(o.source.substr(0, o.source.lastIndexOf("/") + 1));
-                //var a = o.source.substr(o.source.lastIndexOf("/") + 1);
-                var u = o.source
-                var a = o.source
+                var u = encodeURI(o.source.substr(0, o.source.lastIndexOf("/") + 1));
+                var a = o.source.substr(o.source.lastIndexOf("/") + 1);
                 if (a.indexOf(";.mp3") != -1) {
                     a = o.source.substr(o.source.lastIndexOf("/") + 1)
-                } else {
+                }
+                else if (a.indexOf("soundcloud") != -1) {
+                    a = o.source + '/stream?client_id=3ddce5652caa1b66331903493735ddd64d'
+                } else if{
                     a = encodeURIComponent(o.source.substr(o.source.lastIndexOf("/") + 1))
                 }
                 o.source = u + a;
