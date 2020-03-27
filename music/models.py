@@ -218,9 +218,10 @@ class SoundcloudParsing(models.Model):
         return self.title
 
     def get_mp3(self):
-        from common.utils import safe_json
 
         url = self.uri + '/stream?client_id=3ddce5652caa1b66331903493735ddd64d'
+        url.replace("\\?", "%3f")
+        url.replace("=", "%3d")
         return url
 
     class Meta:
