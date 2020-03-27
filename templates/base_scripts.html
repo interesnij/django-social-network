@@ -1,4 +1,5 @@
 {% load staticfiles %}
+<span id="user_playlist" data-list='{{ request.user.my_playlist }}'></span>
 
 <script defer src="{% static 'scripts/jquery.js' %}" type="text/javascript"></script>
 <script defer src="{% static 'scripts/cockie.js' %}" type="text/javascript"></script>
@@ -17,5 +18,3 @@
 //  $('body').on('click', '.playlist_pause .track_item', function() {track = $(this); li = track.parents('.infinite-item'); track_id = li.data('counter');my_playlist_play(track_id); li.removeClass("playlist_pause")});
 
 </script>
-
-<span id="user_playlist" data-list='{{ request.user.my_playlist }}'></span>
