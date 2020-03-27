@@ -3377,10 +3377,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 self.loadID3IfPlaylistDisabled()
             }
         };
-        this.setupFacebook = function() {
-            if (document.location.protocol == "file:") return;
-            self.facebookShare = new FWDMSPFacebookShare(self.data.facebookAppId_str)
-        };
+
         this.showPlayer = function() {
             if (!self.isAPIReady_bl) return;
             self.controller_do.isShowed_bl = true;
@@ -3914,7 +3911,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.trackDurationColor_str = null;
         this.categoriesId_str = null;
         this.thumbnailSelectedType_str = null;
-        this.facebookAppId_str = null;
         this.openerAlignment_str = null;
         this.toolTipsButtonFontColor_str = null;
         this.prevId = -1;
@@ -4094,7 +4090,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }
             self.playlistBackgroundColor_str = self.props_obj.playlistBackgroundColor || "transparent";
             self.searchInputColor_str = self.props_obj.searchInputColor || "#FF0000";
-            self.facebookAppId_str = self.props_obj.facebookAppId || undefined;
             self.openerAlignment_str = self.props_obj.openerAlignment || "right";
             if (self.openerAlignment_str != "right" && self.openerAlignment_str != "left") self.openerAlignment_str = "right";
             self.toolTipsButtonFontColor_str = self.props_obj.toolTipsButtonFontColor || "#FF0000";
@@ -4219,15 +4214,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             self.showOpener_bl = self.showOpener_bl == "no" ? false : true;
             self.showTracksNumbers_bl = self.props_obj.showTracksNumbers;
             self.showTracksNumbers_bl = self.showTracksNumbers_bl == "yes" ? true : false;
-            if (self.showFacebookButton_bl && !self.facebookAppId_str) {
-                setTimeout(function() {
-                    if (self == null) return;
-                    self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, {
-                        text: "Parameter <font color='#FFFFFF'>facebookAppId</font> is requiredin the constructor, this represents the facebook app id, for more info read the documetation"
-                    })
-                }, 50);
-                return
-            }
+            
             self.animate_bl = self.props_obj.animate;
             self.animate_bl = self.animate_bl == "yes" ? true : false;
             self.showControllerByDefault_bl = self.props_obj.showControllerByDefault;
