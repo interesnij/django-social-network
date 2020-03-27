@@ -44,6 +44,10 @@ class SoundGenres(models.Model):
             playlist.append(data)
         return playlist[:300]
 
+    def playlist_too(self):
+        queryset = self.track_genre.all()
+        return queryset[:300]
+
     class Meta:
         verbose_name="жанр"
         verbose_name_plural="жанры"
@@ -113,6 +117,10 @@ class SoundList(models.Model):
             playlist.append(data)
         return playlist
 
+    def playlist_too(self):
+        queryset = self.track.all()
+        return queryset
+
     class Meta:
         verbose_name="список: весь, человека или сообщества"
         verbose_name_plural="списки: весь, человека или сообщества"
@@ -169,6 +177,10 @@ class SoundTags(models.Model):
                 data['is_my_track'] = None
             playlist.append(data)
         return playlist
+
+    def playlist_too(self):
+        queryset = self.track_tag.all()
+        return queryset
 
     def get_tracks_count(self):
         return self.track_tag.count()

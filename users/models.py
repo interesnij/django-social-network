@@ -588,6 +588,32 @@ class User(AbstractUser):
             else:
                 playlist = False
 
+    def my_playlist_too(self):
+        from music.models import SoundList, UserTempSoundList, SoundTags, SoundGenres
+
+        temp_list = UserTempSoundList.objects.get(user=self)
+        try:
+            list = SoundList.objects.get(pk=temp_list.list.pk)
+        except:
+            list = None
+        try:
+            tag_music = SoundTags.objects.get(pk=temp_list.tag.pk)
+        except:
+            tag_music = None
+        try:
+            genre_music = SoundGenres.objects.get(pk=temp_list.genre.pk)
+        except:
+            genre_music = None
+        if list:
+            return list.playlist_too()
+        elif tag_music:
+            return tag_music.playlist_too()
+        elif genre_music:
+            return genre_music.playlist_too()
+        else:
+            queryset = reversed(self.get_my_music())
+            return queryset
+
     def get_avatar(self):
         try:
             avatar = self.get_avatar_photos().order_by('-id')[0]
