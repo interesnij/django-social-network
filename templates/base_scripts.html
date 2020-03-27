@@ -164,7 +164,7 @@
 	</ul>
 <ul id="playlist2" style="display:none;">
   {% for track in request.user.my_playlist_too %}
-  <li data-path="{{ track.get_mp3|safe }}"
+  <li data-path="{{ track.get_mp3 }}"
       data-thumbpath="{{ track.artwork_url }}"
       data-downloadable="no" data-duration="{{ track.duration }}">
     <p><span style="font-weight:bold;">{{ track.title }}</p>
