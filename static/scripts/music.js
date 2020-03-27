@@ -17,7 +17,7 @@ if (!playlist_block.classList.contains('tag_' + tag_pk)){
     if ( playlist_link.readyState == 4 && playlist_link.status == 200 ) {
       playlist_block.className = "";
       playlist_block.classList.add("dropdown-menu", "music-dropdown", "tag_" + tag_pk);
-      new_playlist = document.querySelector("#tag_playlist").getAttribute('data-list');
+      new_playlist = document.querySelector("#tag_playlist").innerHTML;
       pllll = JSON.parse(new_playlist);
       myPlaylist.setPlaylist(pllll);
       setTimeout(function(){ myPlaylist.play(track_id);},2000);
@@ -40,7 +40,7 @@ if (!playlist_block.classList.contains('genre_' + genre_pk)){
     if ( playlist_link.readyState == 4 && playlist_link.status == 200 ) {
       playlist_block.className = "";
       playlist_block.classList.add("dropdown-menu", "music-dropdown", "genre_" + genre_pk);
-      new_playlist = document.querySelector("#genre_playlist").getAttribute('data-list');
+      new_playlist = document.querySelector("#genre_playlist").innerHTML;
       pllll = JSON.parse(new_playlist);
       myPlaylist.setPlaylist(pllll);
       setTimeout(function(){ myPlaylist.play(track_id);},2000);

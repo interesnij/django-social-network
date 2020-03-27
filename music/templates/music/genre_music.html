@@ -120,6 +120,5 @@ onscroll = function(){
 }catch{return}
 }
 </script>
-
-<span id="genre_playlist" data-list='{{ genre.get_json_playlist }}'></span>
+<script id="genre_playlist">{{ genre.get_json_playlist }}</script>
 {% endblock %}
