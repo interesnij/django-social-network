@@ -2620,7 +2620,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             if (self.data.showPlaylistsButtonAndPlaylists_bl) self.setupCategories();
             if (self.data.showPlayListButtonAndPlaylist_bl) self.setupPlaylist();
             self.setupController();
-            if (self.data.showFacebookButton_bl) self.setupFacebook();
             self.setupOpener();
             self.controller_do.resizeAndPosition()
         };
@@ -4214,7 +4213,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             self.showOpener_bl = self.showOpener_bl == "no" ? false : true;
             self.showTracksNumbers_bl = self.props_obj.showTracksNumbers;
             self.showTracksNumbers_bl = self.showTracksNumbers_bl == "yes" ? true : false;
-            
+
             self.animate_bl = self.props_obj.animate;
             self.animate_bl = self.animate_bl == "yes" ? true : false;
             self.showControllerByDefault_bl = self.props_obj.showControllerByDefault;
