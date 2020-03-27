@@ -4982,7 +4982,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             var n = e.li;
             for (var r = 0; r < n.length; r++) {
                 t = {};
-                t.source = n[r]["@attributes"]["data-path"];
+                t.source = n[r]["@attributes"]["data-path".replace("%3F","?").replace("%3D3d","=")]; 
                 var i = encodeURI(t.source.substr(0, t.source.lastIndexOf("/") + 1));
                 var s = t.source.substr(t.source.lastIndexOf("/") + 1);
                 if (s.indexOf(";.mp3") != -1) {
