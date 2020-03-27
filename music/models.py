@@ -217,6 +217,9 @@ class SoundcloudParsing(models.Model):
     def __str__(self):
         return self.title
 
+    def get_mp3(self):
+        return self.uri + '/stream?client_id=' + 'dce5652caa1b66331903493735ddd64d'
+
     class Meta:
         verbose_name="спарсенные треки"
         verbose_name_plural="спарсенные треки"
