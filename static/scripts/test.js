@@ -5084,8 +5084,10 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 }
                 if (s > self.maxPlaylistItems - 1) break;
                 o.source = FWDMSPUtils.getAttributeValue(i, "data-path"); console.log(o.source);
-                var u = encodeURI(o.source.substr(0, o.source.lastIndexOf("/") + 1));
-                var a = o.source.substr(o.source.lastIndexOf("/") + 1);
+                //var u = encodeURI(o.source.substr(0, o.source.lastIndexOf("/") + 1));
+                //var a = o.source.substr(o.source.lastIndexOf("/") + 1);
+                var u = o.source
+                var a = o.source
                 if (a.indexOf(";.mp3") != -1) {
                     a = o.source.substr(o.source.lastIndexOf("/") + 1)
                 } else {
