@@ -5091,7 +5091,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 }
                 else if (a.indexOf("soundcloud") != -1) {
                     a = o.source + '/stream?client_id=3ddce5652caa1b66331903493735ddd64d'
-                } else if{
+                } else{
                     a = encodeURIComponent(o.source.substr(o.source.lastIndexOf("/") + 1))
                 }
                 o.source = u + a;
