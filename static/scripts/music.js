@@ -1,7 +1,7 @@
 var cssSelector = {jPlayer: "#jquery_jplayer_1",cssSelectorAncestor: ".main-header"};
 //var options = { swfPath: "/static/jquery.jplayer.swf", supplied: "oga, mp3", wmode: "window", smoothPlayBar: false, keyEnabled: true};
 var playlist = document.querySelector("#user_playlist").getAttribute('data-list');
-console.log("playlist");
+console.log(playlist);
 _playlist = JSON.parse(playlist);
 var myPlaylist = new jPlayerPlaylist(cssSelector, _playlist);
 document.querySelector(".music_header_btn").style.display = "block";
