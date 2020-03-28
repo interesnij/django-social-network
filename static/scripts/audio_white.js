@@ -6,7 +6,7 @@
 				skinPath:"audio_white",
 				showSoundCloudUserNameInTitle:"no",
 				showMainBackground:"yes",
-				verticalPosition:"bottom",
+				position:"bottom",
 				useDeepLinking:"yes",
 				useYoutube:"no",
 				useVideo:"no",
