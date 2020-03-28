@@ -34,8 +34,8 @@
 				showShareButton:"yes",
 				showMainScrubberAndVolumeScrubberToolTipLabel:"yes",
 				expandBackground:"no",
-				titleColor:"#FFFFFF",
-				timeColor:"#888888",
+				titleColor:"#000000",
+				timeColor:"#919191",
 				scrubbersToolTipLabelBackgroundColor:"#FFFFFF",
 				scrubbersToolTipLabelFontColor:"#5a5a5a",
 				//controller align and size settings (described in detail in the documentation!)
