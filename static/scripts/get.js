@@ -184,7 +184,7 @@ function my_playlist_pause(track_id) {
     new FWDMSP({
         //main settings
         instanceName:"player1",
-        playlistsId:"playlists",
+        playlistsId:"audio_playlists",
         mainFolderPath:"/static/images/",
         skinPath:"pleer",
         showSoundCloudUserNameInTitle:"no",
