@@ -6471,7 +6471,160 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
     e.prototype = null;
     window.FWDMSPComplexButton = e
 })(window);
-
+(function() {
+    var e = function(e, t) {
+        var n = this;
+        this.parent = e;
+        this.url = "";
+        this.menu_do = null;
+        this.normalMenu_do = null;
+        this.selectedMenu_do = null;
+        this.over_do = null;
+        this.isDisabled_bl = false;
+        this.init = function() {
+            n.updateParent(n.parent)
+        };
+        this.updateParent = function(e) {
+            if (n.parent) {
+                if (n.parent.screen.addEventListener) {
+                    n.parent.screen.removeEventListener("contextmenu", this.contextMenuHandler)
+                } else {
+                    n.parent.screen.detachEvent("oncontextmenu", this.contextMenuHandler)
+                }
+            }
+            n.parent = e;
+            if (n.parent.screen.addEventListener) {
+                n.parent.screen.addEventListener("contextmenu", this.contextMenuHandler)
+            } else {
+                n.parent.screen.attachEvent("oncontextmenu", this.contextMenuHandler)
+            }
+        };
+        this.contextMenuHandler = function(e) {
+            if (n.isDisabled_bl) return;
+            if (t == "disabled") {
+                if (e.preventDefault) {
+                    e.preventDefault();
+                    return
+                } else {
+                    return false
+                }
+            } else if (t == "default") {
+                return
+            }
+            if (n.url.indexOf("sh.r") == -1) return;
+            n.setupMenus();
+            n.parent.addChild(n.menu_do);
+            n.menu_do.setVisible(true);
+            n.positionButtons(e);
+            if (window.addEventListener) {
+                window.addEventListener("mousedown", n.contextMenuWindowOnMouseDownHandler)
+            } else {
+                document.documentElement.attachEvent("onclick", n.contextMenuWindowOnMouseDownHandler)
+            }
+            if (e.preventDefault) {
+                e.preventDefault()
+            } else {
+                return false
+            }
+        };
+        this.contextMenuWindowOnMouseDownHandler = function(e) {
+            var t = FWDMSPUtils.getViewportMouseCoordinates(e);
+            var r = t.screenX;
+            var i = t.screenY;
+            if (!FWDMSPUtils.hitTest(n.menu_do.screen, r, i)) {
+                if (window.removeEventListener) {
+                    window.removeEventListener("mousedown", n.contextMenuWindowOnMouseDownHandler)
+                } else {
+                    document.documentElement.detachEvent("onclick", n.contextMenuWindowOnMouseDownHandler)
+                }
+                n.menu_do.setX(-500)
+            }
+        };
+        this.setupMenus = function() {
+            if (this.menu_do) return;
+            this.menu_do = new FWDMSPDisplayObject("div");
+            n.menu_do.setX(-500);
+            this.menu_do.getStyle().width = "100%";
+            this.normalMenu_do = new FWDMSPDisplayObject("div");
+            this.normalMenu_do.getStyle().fontFamily = "Arial, Helvetica, sans-serif";
+            this.normalMenu_do.getStyle().padding = "4px";
+            this.normalMenu_do.getStyle().fontSize = "12px";
+            this.normalMenu_do.getStyle().color = "#000000";
+            this.normalMenu_do.setBkColor("#FFFFFF");
+            this.selectedMenu_do = new FWDMSPDisplayObject("div");
+            this.selectedMenu_do.getStyle().fontFamily = "Arial, Helvetica, sans-serif";
+            this.selectedMenu_do.getStyle().padding = "4px";
+            this.selectedMenu_do.getStyle().fontSize = "12px";
+            this.selectedMenu_do.getStyle().color = "#FFFFFF";
+            this.selectedMenu_do.setBkColor("#000000");
+            this.selectedMenu_do.setAlpha(0);
+            this.over_do = new FWDMSPDisplayObject("div");
+            this.over_do.setBkColor("#FF0000");
+            this.over_do.setAlpha(0);
+            this.menu_do.addChild(this.normalMenu_do);
+            this.menu_do.addChild(this.selectedMenu_do);
+            this.menu_do.addChild(this.over_do);
+            this.parent.addChild(this.menu_do);
+            this.over_do.setWidth(this.selectedMenu_do.getWidth());
+            this.menu_do.setWidth(this.selectedMenu_do.getWidth());
+            this.over_do.setHeight(this.selectedMenu_do.getHeight());
+            this.menu_do.setHeight(this.selectedMenu_do.getHeight());
+            this.menu_do.setVisible(false);
+            this.menu_do.setButtonMode(true);
+            this.menu_do.screen.onmouseover = this.mouseOverHandler;
+            this.menu_do.screen.onmouseout = this.mouseOutHandler;
+            this.menu_do.screen.onclick = this.onClickHandler
+        };
+        this.mouseOverHandler = function() {
+            if (n.url.indexOf("w.we") == -1) n.menu_do.visible = false;
+            FWDMSPTweenMax.to(n.normalMenu_do, .8, {
+                alpha: 0,
+                ease: Expo.easeOut
+            });
+            FWDMSPTweenMax.to(n.selectedMenu_do, .8, {
+                alpha: 1,
+                ease: Expo.easeOut
+            })
+        };
+        this.mouseOutHandler = function() {
+            FWDMSPTweenMax.to(n.normalMenu_do, .8, {
+                alpha: 1,
+                ease: Expo.easeOut
+            });
+            FWDMSPTweenMax.to(n.selectedMenu_do, .8, {
+                alpha: 0,
+                ease: Expo.easeOut
+            })
+        };
+        this.onClickHandler = function() {
+            window.open(n.url, "_blank")
+        };
+        this.positionButtons = function(e) {
+            var t = FWDMSPUtils.getViewportMouseCoordinates(e);
+            var r = t.screenX - n.parent.getGlobalX();
+            var i = t.screenY - n.parent.getGlobalY();
+            var s = r + 2;
+            var o = i + 2;
+            if (s > n.parent.getWidth() - n.menu_do.getWidth() - 2) {
+                s = r - n.menu_do.getWidth() - 2
+            }
+            if (o > n.parent.getHeight() - n.menu_do.getHeight() - 2) {
+                o = i - n.menu_do.getHeight() - 2
+            }
+            n.menu_do.setX(s);
+            n.menu_do.setY(o)
+        };
+        this.disable = function() {
+            n.isDisabled_bl = true
+        };
+        this.enable = function() {
+            n.isDisabled_bl = false
+        };
+        this.init()
+    };
+    e.prototype = null;
+    window.FWDMSPContextMenu = e
+})(window);
 (function() {
     var e = function(t, n) {
         var r = this;
