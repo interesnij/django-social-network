@@ -7,18 +7,6 @@
 					<p class="fwduvp-categories-description"><span class="fwduvp-header">Description: </span>Created using <strong>HTML markup</strong>, all format are supported and it can have mixed video formats.</p>
 				</li>
 
-				<li data-source="video_vimeoPlaylist" data-playlist-name="VIMEO PLAYLIST" data-thumbnail-path="/static/images/demo_video/p-vimeo.jpg">
-					<p class="fwduvp-categories-title"><span class="fwduvp-header">Title: </span><span class="fwduvp-title">MY VIMEO PLAYLIST 1</span></p>
-					<p class="fwduvp-categories-type"><span class="fwduvp-header">Type: </span>VIMEO</p>
-					<p class="fwduvp-categories-description"><span class="fwduvp-header">Description: </span>Created using <strong>HTML markup</strong>, video are loaded and played from Vimeo.</p>
-				</li>
-
-				<li data-source="list=PLxKHVMqMZqUQFbRO0VWaHMaWuQagIgpJe"  data-playlist-name="MY YOUTUBE PLAYLIST 2" data-thumbnail-path="/static/images/demo_video/p-youtube.jpg">
-					<p class="fwduvp-categories-title"><span class="fwduvp-header">Title: </span><span class="fwduvp-title">My Youtube playlist 2</span></p>
-					<p class="fwduvp-categories-type"><span class="fwduvp-header">Type: </span>YOUTUBE</p>
-					<p class="fwduvp-categories-description"><span class="fwduvp-header">Description: </span>Created by loading a Youtube playlist, video are loaded and played from Youtube.</p>
-				</li>
-
 				<li data-source="video_mixedPlaylist" data-playlist-name="MY MIXED PLAYLIST 2" data-thumbnail-path="/static/images/demo_video/p-mixed.jpg">
 					<p class="fwduvp-categories-title"><span class="fwduvp-header">Title: </span><span class="fwduvp-title">My mixed playlist 2</span></p>
 					<p class="fwduvp-categories-type"><span class="fwduvp-header">Type: </span>MIXED</p>
@@ -30,18 +18,20 @@
 					<p class="fwduvp-categories-type"><span class="fwduvp-header">Type: </span>XML</p>
 					<p class="fwduvp-categories-description"><span class="fwduvp-header">Description: </span>Created using a XML file, videos are played self or external hosted. or Youtube.</p>
 				</li>
-
-				<li data-source="folder=videos" data-playlist-name="MY FOLDER PLAYLIST 2" data-thumbnail-path="/static/images/demo_video/p-folder.jpg">
-					<p class="fwduvp-categories-title"><span class="fwduvp-header">Title: </span><span class="fwduvp-title">My folder playlist 2</span></p>
-					<p class="fwduvp-categories-type"><span class="fwduvp-header">Type: </span>FOLDER</p>
-					<p class="fwduvp-categories-description"><span class="fwduvp-header">Description: </span>Created using a folder with mp4 files, all format are supported and it can have mixed video formats.</p>
-				</li>
 			</ul>
 
 			<!--  HTML playlist -->
 			<ul id="video_playlist1" style="display:none;">
 
-				<li data-thumb-source="/static/images/demo_video/small-fwd.jpg" data-video-source="[{source:'http://трезвый.рус/static/images/demo_video/fwd-1080p.mp4', label:'small version'}, {source:'http://трезвый.рус/static/images/demo_video/fwd-1080p.mp4', label:'hd720'},{source:'http://трезвый.рус/static/images/demo_video/fwd-1080p.mp4', label:'hd1080'}]" data-start-at-video="2" data-poster-source="/static/images/demo_video/mp4-poster.jpg" data-subtitle-soruce="[{source:'content/subtitles/english_subtitle.vtt', label:'English'}, {source:'content/subtitles/romanian_subtitle.vtt', label:'Romanian'},{source:'content/subtitles/spanish_subtitle.vtt', label:'Spanish'}]"  data-start-at-subtitle="1" data-downloadable="yes">
+				<li data-thumb-source="/static/images/demo_video/small-fwd.jpg"
+				    data-video-source="[{source:'http://трезвый.рус/static/images/demo_video/fwd-1080p.mp4', label:'small version'}, {source:'http://трезвый.рус/static/images/demo_video/fwd-1080p.mp4', label:'hd720'},{source:'http://трезвый.рус/static/images/demo_video/fwd-1080p.mp4', label:'hd1080'}]"
+						data-start-at-video="2"
+						data-poster-source="/static/images/demo_video/mp4-poster.jpg"
+						data-subtitle-soruce="[{source:'content/subtitles/english_subtitle.vtt', label:'English'}, {source:'content/subtitles/romanian_subtitle.vtt', label:'Romanian'},{source:'content/subtitles/spanish_subtitle.vtt', label:'Spanish'}]"
+						data-start-at-subtitle="1"
+						data-downloadable="yes"
+						data-is-private="yes"
+						data-private-video-password="ulihos46">
 				<div data-video-short-description="">
 						<div>
 							<p class="fwduvp-thumbnail-title">Multiple Subtitles & Video Quality</p>
@@ -164,7 +154,6 @@
 				</li>
 			</ul>
 
-			<!--  HTML mixed playlist -->
 			<ul id="video_mixedPlaylist" style="display:none;">
 				<li data-thumb-source="content/thumbnails/small-fwd.jpg" data-video-source="[{source:'static/images/demo_video/fwd-480p.mp4', label:'small version'}, {source:'content/videos2/fwd-720p.mp4', label:'hd720'},{source:'content/videos2/fwd-1080p.mp4', label:'hd1080'}]" data-start-at-video="2" data-poster-source="content/posters/mp4-poster.jpg,content/posters/mp4-poster-mobile.jpg" data-subtitle-soruce="[{source:'content/subtitles/english_subtitle.vtt', label:'English'}, {source:'content/subtitles/romanian_subtitle.vtt', label:'Romanian'},{source:'content/subtitles/spanish_subtitle.vtt', label:'Spanish'}]"  data-start-at-subtitle="1" data-downloadable="no">
 					<div data-video-short-description="">
@@ -214,22 +203,6 @@
 					</div>
 				</li>
 
-				<li data-thumb-source="content/thumbnails/audio-thumbnail.jpg" data-video-source="content/mp3/01.mp3" data-poster-source="content/posters/audio-poster.jpg" data-downloadable="no">
-					<div data-video-short-description="">
-						<div>
-							<p class="fwduvp-thumbnail-title">Mp3 Audio</p>
-							<p class="fwduvp-thumbnail-description">UVP can play mp3 files and visualize it in real time.</p>
-						</div>
-					</div>
-					<div data-video-long-description="">
-						<div>
-							<p class="fwduvp-video-title">Mp3 Audio</p>
-							<p class="fwduvp-video-main-description">Each video can contain a detailed description, the description can be formatted with CSS as you like. The description window and description button can be disabled individually for each video or globally for all video.</p>
-							<p class="fwduvp-link">For more information about this please follow <a href="http://www.webdesign-flash.ro/p/megazoom/" target="_blank">this link</a></p>
-						</div>
-					</div>
-				</li>
-
 				<li data-thumb-source="content/thumbnails/hls-small.jpg" data-video-source="https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8" data-poster-source="content/posters/hls-poster.jpg" data-downloadable="yes">
 					<div data-video-short-description="">
 						<div>
@@ -258,185 +231,6 @@
 							<p class="fwduvp-video-title">360 Degree & VR</p>
 							<p class="fwduvp-video-main-description">Each video can contain a detailed description, the description can be formatted with CSS as you like. The description window and description button can be disabled individually for each video or globally for all video.</p>
 							<p class="fwduvp-link">For more information about this please follow <a href="http://www.webdesign-flash.ro/p/360viewer/" target="_blank">this link</a></p>
-						</div>
-					</div>
-				</li>
-
-				<li data-thumb-source="content/thumbnails/fwd-thumbnail.jpg" data-video-source="[{source:'content/videos2/fwd-480p.mp4', label:'small version'}, {source:'content/videos2/fwd-720p.mp4', label:'hd720'},{source:'content/videos2/fwd-1080p.mp4', label:'hd1080'}]" data-start-at-video="2" data-poster-source="content/posters/mp4-poster.jpg,content/posters/mp4-poster-mobile.jpg" data-subtitle-soruce="[{source:'content/subtitles/english_subtitle.vtt', label:'English'}, {source:'content/subtitles/romanian_subtitle.vtt', label:'Romanian'},{source:'content/subtitles/spanish_subtitle.vtt', label:'Spanish'}]"  data-start-at-subtitle="1" data-downloadable="no">
-					<div data-video-short-description="">
-						<div>
-							<p class="fwduvp-thumbnail-title">MP4 video support</p>
-							<p class="fwduvp-thumbnail-description">Support for self-hosted or external mp4 video files.</p>
-						</div>
-					</div>
-					<div data-video-long-description="">
-						<div>
-							<p class="fwduvp-video-title">MP4 video support</p>
-							<p class="fwduvp-video-main-description">Each video can contain a detailed description, the description can be formatted with CSS as you like. The description window and description button can be disabled individually for each video or globally for all video.</p>
-							<p class="fwduvp-link">For more information about this please follow <a href="http://www.webdesign-flash.ro/" target="_blank">this link</a></p>
-						</div>
-					</div>
-				</li>
-
-				<li data-thumb-source="content/thumbnails/small-lora2.jpg" data-video-source="https://www.youtube.com/watch?v=IDZTCLNOfqU" data-poster-source="content/posters/Youtube-poster.jpg,content/posters/Youtube-poster-mobile.jpg" data-downloadable="no">
-					<div data-video-short-description="">
-						<div>
-							<p class="fwduvp-thumbnail-title">Youtube video</p>
-							<p class="fwduvp-thumbnail-description">Support for Youtube videos, this video is not part of a Youtube playlist.</p>
-						</div>
-					</div>
-					<div data-video-long-description="">
-						<div>
-							<p class="fwduvp-video-title">Youtube single videos</p>
-							<p class="fwduvp-video-main-description">Each video can contain a detailed description, the description can be formatted with CSS as you like. The description window and description button can be disabled individually for each video or globally for all video.</p>
-							<p class="fwduvp-link">For more information about this please follow <a href="http://www.webdesign-flash.ro/" target="_blank">this link</a></p>
-						</div>
-					</div>
-				</li>
-
-				<li data-thumb-source="content/thumbnails/small2-vimeo.jpg" data-video-source="https://vimeo.com/channels/top/62092214" data-poster-source="content/posters/vimeo-poster.jpg,content/posters/vimeo-poster-mobile.jpg">
-					<div data-video-short-description="">
-						<div>
-							<p class="fwduvp-thumbnail-title">Vimeo video</p>
-							<p class="fwduvp-thumbnail-description">Support for Vimeo videos, this video is not part of a Vimeo playlist.</p>
-						</div>
-					</div>
-					<div data-video-long-description="">
-						<div>
-							<p class="fwduvp-video-title">Vimeo video</p>
-							<p class="fwduvp-video-main-description">Each video can contain a detailed description, the description can be formatted with CSS as you like. The description window and description button can be disabled individually for each video or globally for all video.</p>
-							<p class="fwduvp-link">For more information about this please follow <a href="http://www.webdesign-flash.ro/" target="_blank">this link</a></p>
-						</div>
-					</div>
-				</li>
-
-				<li data-thumb-source="content/thumbnails/audio2-thumbnail.jpg" data-video-source="content/mp3/01.mp3" data-poster-source="content/posters/audio-poster.jpg" data-downloadable="no">
-					<div data-video-short-description="">
-						<div>
-							<p class="fwduvp-thumbnail-title">Mp3 Audio</p>
-							<p class="fwduvp-thumbnail-description">UVP can play mp3 files and visualize it in real time.</p>
-						</div>
-					</div>
-					<div data-video-long-description="">
-						<div>
-							<p class="fwduvp-video-title">Mp3 Audio</p>
-							<p class="fwduvp-video-main-description">Each video can contain a detailed description, the description can be formatted with CSS as you like. The description window and description button can be disabled individually for each video or globally for all video.</p>
-							<p class="fwduvp-link">For more information about this please follow <a href="http://www.webdesign-flash.ro/p/megazoom/" target="_blank">this link</a></p>
-						</div>
-					</div>
-				</li>
-			</ul>
-
-			<!--  HTML vimeo playlist or album -->
-			<ul id="video_vimeoPlaylist" style="display:none;">
-				<li data-thumb-source="content/thumbnails/v1.jpg" data-video-source="https://vimeo.com/channels/top/62092214" data-poster-source="/static/images/video_player/vimeo-poster.jpg,content/posters/vimeo-poster-mobile.jpg">
-					<div data-video-short-description="">
-						<div>
-							<p class="fwduvp-thumbnail-title">Bitting Elbows</p>
-							<p class="fwduvp-thumbnail-description">Support 'Hardcore' - the spiritual sequel to Bad Motherfucker on Indiegogo.</p>
-						</div>
-					</div>
-					<div data-video-long-description="">
-						<div>
-							<p class="fwduvp-video-title">Bitting Elbows</p>
-							<p class="fwduvp-video-main-description">Each video can contain a detailed description, the description can be formatted with CSS as you like. The description window and description button can be disabled individually for each video or globally for all video.</p>
-							<p class="fwduvp-link">For more information about this please follow <a href="http://www.webdesign-flash.ro/" target="_blank">this link</a></p>
-						</div>
-					</div>
-				</li>
-
-				<li data-thumb-source="content/thumbnails/v2.jpg" data-video-source="https://vimeo.com/channels/top/22439234" data-poster-source="/static/images/video_player/vimeo-poster.jpg,content/posters/vimeo-poster-mobile.jpg">
-					<div data-video-short-description="">
-						<div>
-							<p class="fwduvp-thumbnail-title">The Mountain</p>
-							<p class="fwduvp-thumbnail-description">This was filmed between 4th and 11th April 2011. I had the pleasure of visiting El Teide.</p>
-						</div>
-					</div>
-					<div data-video-long-description="">
-						<div>
-							<p class="fwduvp-video-title">The Mountain</p>
-							<p class="fwduvp-video-main-description">Each video can contain a detailed description, the description can be formatted with CSS as you like. The description window and description button can be disabled individually for each video or globally for all video.</p>
-							<p class="fwduvp-link">For more information about this please follow <a href="http://www.webdesign-flash.ro/" target="_blank">this link</a></p>
-						</div>
-					</div>
-				</li>
-
-				<li data-thumb-source="content/thumbnails/v3.jpg" data-video-source="https://vimeo.com/channels/top/23237102" data-poster-source="/static/images/video_player/vimeo-poster.jpg,content/posters/vimeo-poster-mobile.jpg">
-					<div data-video-short-description="">
-						<div>
-							<p class="fwduvp-thumbnail-title">The City Limits</p>
-							<p class="fwduvp-thumbnail-description">As of today, it is estimated that there are more than 7 billion humans living on Earth.</p>
-						</div>
-					</div>
-					<div data-video-long-description="">
-						<div>
-							<p class="fwduvp-video-title">The City Limits</p>
-							<p class="fwduvp-video-main-description">Each video can contain a detailed description, the description can be formatted with CSS as you like. The description window and description button can be disabled individually for each video or globally for all video.</p>
-							<p class="fwduvp-link">For more information about this please follow <a href="http://www.webdesign-flash.ro/p/horizontal-gridfolio-pro/" target="_blank">this link</a>.</p>
-						</div>
-					</div>
-				</li>
-
-				<li data-thumb-source="content/thumbnails/v4.jpg" data-video-source="https://vimeo.com/channels/top/29950141" data-poster-source="/static/images/video_player/vimeo-poster.jpg,content/posters/vimeo-poster-mobile.jpg">
-					<div data-video-short-description="">
-						<div>
-							<p class="fwduvp-thumbnail-title">Landscapes Volume Two</p>
-							<p class="fwduvp-thumbnail-description">Each video can have one or more subtitles (txt or srt).</p>
-						</div>
-					</div>
-					<div data-video-long-description="">
-						<div>
-							<p class="fwduvp-video-title">Landscapes Volume Two</p>
-							<p class="fwduvp-video-main-description">Each video can contain a detailed description, the description can be formatted with CSS as you like. The description window and description button can be disabled individually for each video or globally for all video.</p>
-							<p class="fwduvp-link">For more information about this please follow <a href="http://www.webdesign-flash.ro/" target="_blank">this link</a></p>
-						</div>
-					</div>
-				</li>
-
-				<li data-thumb-source="content/thumbnails/v5.jpg" data-video-source="https://vimeo.com/channels/top/31005812" data-poster-source="/static/images/video_player/vimeo-poster.jpg,content/posters/vimeo-poster-mobile.jpg">
-					<div data-video-short-description="">
-						<div>
-							<p class="fwduvp-thumbnail-title">Webcam</p>
-							<p class="fwduvp-thumbnail-description">"Webcam" is based on actual events and was shot entirely on a computer's webcam.</p>
-						</div>
-					</div>
-					<div data-video-long-description="">
-						<div>
-							<p class="fwduvp-video-title">Webcam</p>
-							<p class="fwduvp-video-main-description">Each video can contain a detailed description, the description can be formatted with CSS as you like. The description window and description button can be disabled individually for each video or globally for all video.</p>
-							<p class="fwduvp-link">For more information about this please follow <a href="http://www.webdesign-flash.ro/p/royal-3d-coverflow/" target="_blank">this link</a></p>
-						</div>
-					</div>
-				</li>
-
-				<li data-thumb-source="content/thumbnails/v6.jpg" data-video-source="https://vimeo.com/channels/top/6428069" data-poster-source="/static/images/video_player/vimeo-poster.jpg,content/posters/vimeo-poster-mobile.jpg">
-					<div data-video-short-description="">
-						<div>
-							<p class="fwduvp-thumbnail-title">Birds On The Wires</p>
-							<p class="fwduvp-thumbnail-description">Reading a newspaper, I saw a picture of birds on the electric wires.</p>
-						</div>
-					</div>
-					<div data-video-long-description="">
-						<div>
-							<p class="fwduvp-video-title">Birds On The Wires</p>
-							<p class="fwduvp-video-main-description">Each video can contain a detailed description, the description can be formatted with CSS as you like. The description window and description button can be disabled individually for each video or globally for all video.</p>
-							<p class="fwduvp-link">For more information about this please follow <a href="http://www.webdesign-flash.ro/" target="_blank">this link</a></p>
-						</div>
-					</div>
-				</li>
-
-				<li data-thumb-source="content/thumbnails/v7.jpg" data-video-source="https://vimeo.com/channels/top/4749536" data-poster-source="/static/images/video_player/vimeo-poster.jpg,content/posters/vimeo-poster-mobile.jpg">
-					<div data-video-short-description="">
-						<div>
-							<p class="fwduvp-thumbnail-title">Almna</p>
-							<p class="fwduvp-thumbnail-description">Each video can have one or more subtitles (txt or srt).</p>
-						</div>
-					</div>
-					<div data-video-long-description="" >
-						<div>
-							<p class="fwduvp-video-title">Alma</p>
-							<p class="fwduvp-video-main-description">Each video can contain a detailed description, the description can be formatted with CSS as you like. The description window and description button can be disabled individually for each video or globally for all video.</p>
-							<p class="fwduvp-link">For more information about this please follow <a href="http://www.webdesign-flash.ro/" target="_blank">this link</a></p>
 						</div>
 					</div>
 				</li>
