@@ -7192,37 +7192,37 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         };
         this.setupToolTips = function() {
             FWDMSPToolTip.setPrototype();
-            r.prevButtonToolTip_do = new FWDMSPToolTip(r.prevButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "previous track", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
+            r.prevButtonToolTip_do = new FWDMSPToolTip(r.prevButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "предыдущий трек", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
             document.documentElement.appendChild(r.prevButtonToolTip_do.screen);
             FWDMSPToolTip.setPrototype();
-            r.playPauseToolTip_do = new FWDMSPToolTip(r.playPauseButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "play / pause", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
+            r.playPauseToolTip_do = new FWDMSPToolTip(r.playPauseButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "играть / остановить", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
             document.documentElement.appendChild(r.playPauseToolTip_do.screen);
             FWDMSPToolTip.setPrototype();
-            r.nextButtonToolTip_do = new FWDMSPToolTip(r.nextButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "next track", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
+            r.nextButtonToolTip_do = new FWDMSPToolTip(r.nextButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "следующий трек", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
             document.documentElement.appendChild(r.nextButtonToolTip_do.screen);
             if (r.showPlaylistsButtonAndPlaylists_bl) {
                 FWDMSPToolTip.setPrototype();
-                r.playlistsButtonToolTip_do = new FWDMSPToolTip(r.categoriesButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "show playlists", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
+                r.playlistsButtonToolTip_do = new FWDMSPToolTip(r.categoriesButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "Открыть мои плейлисты", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
                 document.documentElement.appendChild(r.playlistsButtonToolTip_do.screen)
             }
             if (r.showPlayListButtonAndPlaylist_bl) {
                 FWDMSPToolTip.setPrototype();
-                r.playlistButtonToolTip_do = new FWDMSPToolTip(r.playlistButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "show / hide playlist", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
+                r.playlistButtonToolTip_do = new FWDMSPToolTip(r.playlistButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "показать / скрыть плейлист", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
                 document.documentElement.appendChild(r.playlistButtonToolTip_do.screen)
             }
             if (r.showLoopButton_bl) {
                 FWDMSPToolTip.setPrototype();
-                r.loopButtonToolTip_do = new FWDMSPToolTip(r.loopButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "loop", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
+                r.loopButtonToolTip_do = new FWDMSPToolTip(r.loopButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "повтороять", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
                 document.documentElement.appendChild(r.loopButtonToolTip_do.screen)
             }
             if (r.showShuffleButton_bl) {
                 FWDMSPToolTip.setPrototype();
-                r.shuffleButtonToolTip_do = new FWDMSPToolTip(r.shuffleButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "shuffle", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
+                r.shuffleButtonToolTip_do = new FWDMSPToolTip(r.shuffleButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "перемешать", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
                 document.documentElement.appendChild(r.shuffleButtonToolTip_do.screen)
             }
             if (r.showFacebookButton_bl) {
                 FWDMSPToolTip.setPrototype();
-                r.facebookButtonToolTip_do = new FWDMSPToolTip(r.facebookButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "share on facebook", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
+                r.facebookButtonToolTip_do = new FWDMSPToolTip(r.facebookButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "пригодится кнопка", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
                 document.documentElement.appendChild(r.facebookButtonToolTip_do.screen)
             }
             if (r.showDownloadMp3Button_bl) {
@@ -7241,7 +7241,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 document.documentElement.appendChild(r.populButtonToolTip_do.screen)
             }
             FWDMSPToolTip.setPrototype();
-            r.volumeButtonToolTip_do = new FWDMSPToolTip(r.volumeButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "mute / unmute", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
+            r.volumeButtonToolTip_do = new FWDMSPToolTip(r.volumeButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "тишина / включить звук", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
             document.documentElement.appendChild(r.volumeButtonToolTip_do.screen)
         };
         this.showToolTip = function(e, t, n) {
