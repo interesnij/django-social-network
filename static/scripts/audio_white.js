@@ -75,7 +75,7 @@
 				mainSelectorBackgroundSelectedColor:"#FFFFFF",
 				mainSelectorTextNormalColor:"#FFFFFF",
 				mainSelectorTextSelectedColor:"#000000",
-				mainButtonTextNormalColor:"#888888",
+				mainButtonTextNormalColor:"#7C7C7C",
 				mainButtonTextSelectedColor:"#FFFFFF",
 				//playlist settings
 				playTrackAfterPlaylistLoad:"no",
