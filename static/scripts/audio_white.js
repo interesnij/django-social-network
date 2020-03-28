@@ -4,22 +4,22 @@
 				playlistsId:"audio_playlists",
 				mainFolderPath:"/static/images/",
 				skinPath:"audio_white",
-				showSoundCloudUserNameInTitle:"no",
-				showMainBackground:"yes",
-				position:"bottom",
-				useDeepLinking:"yes",
-				useYoutube:"no",
-				useVideo:"no",
-				rightClickContextMenu:"default",
-				showButtonsToolTips:"yes",
-				addKeyboardSupport:"yes",
-				animate:"yes",
-				autoPlay:"no",
-				loop:"no",
-				shuffle:"no",
-				maxWidth:850,
-				volume:.8,
-				toolTipsButtonsHideDelay:1.5,
+				showSoundCloudUserNameInTitle:"no",   // показывать имя пользователя soundcloud
+				showMainBackground:"yes",  						// показать общий фон
+				position:"bottom",         						// расположение плеера
+				useDeepLinking:"yes",									// использовать глубокие ссылки - защита от перехвата
+				useYoutube:"no",											// использовать youtube файлы
+				useVideo:"no",												// использовать видео файлы
+				rightClickContextMenu:"no",           // показ контекстног меню по щелчку правой кнопкой мыши
+				showButtonsToolTips:"no",             // показать всплывающие подсказки кнопок
+				addKeyboardSupport:"yes",             // добавить поддержку клавиатуры
+				animate:"yes",												// фнимация
+				autoPlay:"no",												// автостарт плеера
+				loop:"no",														// повтор песни
+				shuffle:"no",													// перемешивание треков
+				maxWidth:850,                         // максимальная ширина
+				volume:.8,														// громкость по умолчанию 80%
+				// toolTipsButtonsHideDelay:1.5,         // задержка всплывающих подсказок для кнопок
 				toolTipsButtonFontColor:"#888888",
 				//controller settings
 				showControllerByDefault:"yes",
