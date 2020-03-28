@@ -43,7 +43,7 @@ displayType:"responsive",
 					posterBackgroundColor:"#000000",
 					buttonsToolTipFontColor:"#FFFFFF",
 					//logo settings
-					showLogo:"yes",
+					showLogo:"no",
 					hideLogoWithController:"yes",
 					logoPosition:"topRight",
 					logoLink:"http://www.webdesign-flash.ro/",
