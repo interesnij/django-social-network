@@ -7212,7 +7212,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }
             if (r.showLoopButton_bl) {
                 FWDMSPToolTip.setPrototype();
-                r.loopButtonToolTip_do = new FWDMSPToolTip(r.loopButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "повтороять", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
+                r.loopButtonToolTip_do = new FWDMSPToolTip(r.loopButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "повторять", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
                 document.documentElement.appendChild(r.loopButtonToolTip_do.screen)
             }
             if (r.showShuffleButton_bl) {
@@ -7237,7 +7237,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }
             if (r.showPopupButton_bl) {
                 FWDMSPToolTip.setPrototype();
-                r.populButtonToolTip_do = new FWDMSPToolTip(r.popupButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "popup", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
+                r.populButtonToolTip_do = new FWDMSPToolTip(r.popupButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "превратить в окно", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
                 document.documentElement.appendChild(r.populButtonToolTip_do.screen)
             }
             FWDMSPToolTip.setPrototype();
