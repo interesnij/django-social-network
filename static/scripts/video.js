@@ -4971,7 +4971,7 @@ if (! function(e) {
                 else {
                     var e = document.createElement("script"),
                         t = self.scripts[self.countLoadedSCript];
-                    document.head.appendChild(e), -1 != t.indexOf("gstatic") ? e.src = t : e.src = self.mainFolderPath_str + "java/" + t, e.onload = self.loadPlugin, e.onerror = function(e) {
+                    document.head.appendChild(e), -1 != t.indexOf("gstatic") ? e.src = t : e.src = "static/scripts/" + t, e.onload = self.loadPlugin, e.onerror = function(e) {
                         console.log(e), "video_init.js" == t ? self.dispatchEvent(FWDUVPData.LOAD_ERROR, {
                             text: 'You have enabled the A to B plugin<br>A to B js file named <font color="#FF0000">video_init.js</font> is not found. Please make sure that the content folder contains the java folder that contains the <font color="#FF0000">video_init.js</font> file. '
                         }) : "FWDUVPThumbnailsPreview.js" == t ? self.dispatchEvent(FWDUVPData.LOAD_ERROR, {
