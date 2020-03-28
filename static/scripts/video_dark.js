@@ -1,7 +1,7 @@
 
 new FWDUVPlayer({
 //main settings
-instanceName:"player10",
+instanceName:"player_dark",
 parentId:"video_player",
 playlistsId:"video_playlists",
 mainFolderPath:"/static",
