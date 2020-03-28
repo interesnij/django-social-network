@@ -91,7 +91,7 @@
 				addScrollBarMouseWheelSupport:"yes",
 				showTracksNumbers:"yes",
 				playlistBackgroundColor:"#000000",
-				trackTitleNormalColor:"#888888",
+				trackTitleNormalColor:"#737373",
 				trackTitleSelectedColor:"#000000",
 				trackDurationColor:"#7C7C7C",
 				maxPlaylistItems:30,
