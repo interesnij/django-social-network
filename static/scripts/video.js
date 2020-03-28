@@ -4965,15 +4965,15 @@ if (! function(e) {
                     }))
                 }, 50)
             }, this.onPreloaderLoadHandler = function() {
-                self.countLoadedSCript = 0, self.scripts = [], self.useAToB && self.scripts.push("FWDUVPATB.js"), self.thumbnailsPreview && self.scripts.push("FWDUVPThumbnailsPreview.js"), self.showChromecastButton_bl && (self.scripts.push("https://www.gstatic.com/cv/js/sender/v1/cast_sender.js?loadCastFramework=1"), self.scripts.push("FWDUVPCC.js")), self.totalScripts = self.scripts.length, self.dispatchEvent(FWDUVPData.PRELOADER_LOAD_DONE), self.loadPlugin()
+                self.countLoadedSCript = 0, self.scripts = [], self.useAToB && self.scripts.push("video_init.js"), self.thumbnailsPreview && self.scripts.push("FWDUVPThumbnailsPreview.js"), self.showChromecastButton_bl && (self.scripts.push("https://www.gstatic.com/cv/js/sender/v1/cast_sender.js?loadCastFramework=1"), self.scripts.push("FWDUVPCC.js")), self.totalScripts = self.scripts.length, self.dispatchEvent(FWDUVPData.PRELOADER_LOAD_DONE), self.loadPlugin()
             }, self.loadPlugin = function() {
                 if (self.countLoadedSCript == self.totalScripts) self.loadSkin();
                 else {
                     var e = document.createElement("script"),
                         t = self.scripts[self.countLoadedSCript];
                     document.head.appendChild(e), -1 != t.indexOf("gstatic") ? e.src = t : e.src = self.mainFolderPath_str + "java/" + t, e.onload = self.loadPlugin, e.onerror = function(e) {
-                        console.log(e), "FWDUVPATB.js" == t ? self.dispatchEvent(FWDUVPData.LOAD_ERROR, {
-                            text: 'You have enabled the A to B plugin<br>A to B js file named <font color="#FF0000">FWDUVPATB.js</font> is not found. Please make sure that the content folder contains the java folder that contains the <font color="#FF0000">FWDUVPATB.js</font> file. '
+                        console.log(e), "video_init.js" == t ? self.dispatchEvent(FWDUVPData.LOAD_ERROR, {
+                            text: 'You have enabled the A to B plugin<br>A to B js file named <font color="#FF0000">video_init.js</font> is not found. Please make sure that the content folder contains the java folder that contains the <font color="#FF0000">video_init.js</font> file. '
                         }) : "FWDUVPThumbnailsPreview.js" == t ? self.dispatchEvent(FWDUVPData.LOAD_ERROR, {
                             text: 'You have enabled the thumbnal preview plugin<br>thumbnail preview js file named <font color="#FF0000">FWDUVPThumbnailsPreview.js</font> is not found. Please make sure that the content folder contains the java folder that contains the <font color="#FF0000">FWDUVPThumbnailsPreview.js</font> file. '
                         }) : "FWDUVPCC.js" == t ? self.dispatchEvent(FWDUVPData.LOAD_ERROR, {
