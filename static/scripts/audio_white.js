@@ -73,7 +73,7 @@
 				horizontalSpaceBetweenThumbnails:40,
 				verticalSpaceBetweenThumbnails:40,
 				mainSelectorBackgroundSelectedColor:"#FFFFFF",
-				mainSelectorTextNormalColor:"#7C7C7C",
+				mainSelectorTextNormalColor:"#737373",
 				mainSelectorTextSelectedColor:"#000000",
 				mainButtonTextNormalColor:"#7C7C7C",
 				mainButtonTextSelectedColor:"#FFFFFF",
