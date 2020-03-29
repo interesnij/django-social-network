@@ -763,15 +763,7 @@ var FWDAddress = new function() {
             }
         }
     };
-    var _bodyClick = function(e) {
-        if (_popup.length > 0) {
-            var popup = window.open(_popup[0], _popup[1], eval(_popup[2]));
-            if (typeof _popup[3] != UNDEFINED) {
-                eval(_popup[3])
-            }
-        }
-        _popup = []
-    };
+
     var _swfChange = function() {
         for (var e = 0, t, n, r = FWDAddress.getValue(), i = "setFWDAddressValue"; t = _ids[e]; e++) {
             n = document.getElementById(t);
@@ -935,7 +927,6 @@ var FWDAddress = new function() {
         _ref = this,
         _stack = [],
         _ids = [],
-        _popup = [],
         _listeners = {},
         _value = _getHash(),
         _opts = {
@@ -1018,15 +1009,6 @@ var FWDAddress = new function() {
                 }
             }
         }
-    };
-    this.popup = function(url, name, options, handler) {
-        try {
-            var popup = window.open(url, name, eval(options));
-            if (typeof handler != UNDEFINED) {
-                eval(handler)
-            }
-        } catch (ex) {}
-        _popup = arguments
     };
     this.getIds = function() {
         return _ids
@@ -2203,7 +2185,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             this.listeners = {
                 events_ar: []
             };
-            this.popupWindow;
             this.ws = null;
             this.so = null;
             this.data = null;
@@ -2220,7 +2201,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             this.flash_do = null;
             this.flashObject = null;
             this.flashObjectMarkup_str = null;
-            this.popupWindowBackgroundColor = this.props_obj.popupWindowBackgroundColor || "#000000";
             this.prevCatId = -1;
             this.catId = -1;
             this.id = -1;
@@ -2232,9 +2212,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             this.maxHeight = 0;
             this.prevAddToHeight = -1;
             this.lastPercentPlayed = 0;
-            this.popupWindowWidth = self.props_obj.popupWindowWidth || 500;
-            this.popupWindowHeight = self.props_obj.popupWindowHeight || 400;
-            if (FWDMSPUtils.isIE) this.popupWindowHeight -= 3;
             this.resizeHandlerId_to;
             this.resizeHandler2Id_to;
             this.hidePreloaderId_to;
@@ -2249,18 +2226,14 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             this.orintationChangeComplete_bl = true;
             this.animate_bl = false;
             this.isFirstPlaylistLoaded_bl = false;
-            this.scrubbedFirstTimeInPopup_bl = false;
             this.showedFirstTime_bl = false;
             self.isPlaylistShowed_bl = false;
             this.useDeepLinking_bl = self.props_obj.useDeepLinking;
             this.useDeepLinking_bl = self.useDeepLinking_bl == "yes" ? true : false;
-            this.openInPopup_bl = false;
             this.isMobile_bl = FWDMSPUtils.isMobile;
             this.hasPointerEvent_bl = FWDMSPUtils.hasPointerEvent;
             try {
                 if (window.opener && window.opener[this.instanceName_str] && window.opener[this.instanceName_str].instanceName_str == this.instanceName_str) {
-                    this.openInPopup_bl = true;
-                    this.popupWindow = window.opener[this.instanceName_str];
                     window.opener[this.instanceName_str].removeAndDisablePlayer();
                     if (!self.isMobile_bl) {
                         document.cookie = "FWDMSP=" + self.instanceName_str + "; path=/";
@@ -2276,30 +2249,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             this.setupData();
             FWDMSP.instaces_ar.push(this)
         };
-        this.popup = function() {
-            if (self.popupWindow && !self.popupWindow.closed) return;
-            var e;
-            var t = screen.width / 2 - self.popupWindowWidth / 2;
-            var n = screen.height / 2 - self.popupWindowHeight / 2;
-            var r = "no";
-            if (FWDMSPUtils.isSafari) r = "yes";
-            try {
-                if (FWDMSPUtils.isMobile) {
-                    self.popupWindow = window.open(location.href, self.instanceName_str)
-                } else {
-                    self.popupWindow = window.open(location.href, self.instanceName_str, "location=" + r + ", width=" + self.popupWindowWidth + ", height=" + self.popupWindowHeight + ", top=" + n + ", left=" + t)
-                }
-                if (self.popupWindow) {
-                    self.stageContainer.style.display = "none";
-                    if (self.preloader_do) self.preloader_do.hide(false);
-                    self.data.closeData();
-                    self.stop();
-                    self.isAPIReady_bl = false
-                }
-                self.stopResizeHandler();
-                self.dispatchEvent(FWDMSP.POPUP)
-            } catch (i) {}
-        };
         this.removeAndDisablePlayer = function() {
             self.stageContainer.style.display = "none"
         };
@@ -2311,26 +2260,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             self.main_do.getStyle().webkitTapHighlightColor = "rgba(0, 0, 0, 0)";
             self.main_do.setBackfaceVisibility();
             if (!FWDMSPUtils.isMobile || FWDMSPUtils.isMobile && FWDMSPUtils.hasPointerEvent) self.main_do.setSelectable(false);
-            if (self.openInPopup_bl) {
-                document.documentElement.appendChild(self.main_do.screen);
-                self.stageContainer.style.position = "absolute";
-                document.documentElement.style.overflow = "hidden";
-                document.documentElement.style.backgroundColor = self.popupWindowBackgroundColor;
-                self.main_do.setBkColor(self.popupWindowBackgroundColor);
-                if (FWDMSPUtils.isIEAndLessThen9) {
-                    this.main_do.getStyle().zIndex = "2147483631"
-                } else {
-                    this.main_do.getStyle().zIndex = "99999999991"
-                }
-                if (FWDMSPUtils.isIE) {
-                    document.getElementsByTagName("body")[0].appendChild(self.main_do.screen)
-                } else {
-                    document.getElementsByTagName("body")[0].style.display = "none"
-                }
-                self.main_do.setHeight(3e3)
-            } else {
-                self.stageContainer.appendChild(self.background_do.screen);
-                self.stageContainer.appendChild(self.main_do.screen)
+            self.stageContainer.appendChild(self.background_do.screen);
+            self.stageContainer.appendChild(self.main_do.screen)
             }
         };
         self.setupInfo = function() {
@@ -2385,9 +2316,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             self.stageWidth = document.documentElement.offsetWidth;
             self.stageContainer.style.width = "100%";
             self.stageContainer.style.left = "0px";
-            if (self.stageWidth > self.maxWidth && !self.openInPopup_bl) {
-                self.stageWidth = self.maxWidth
-            }
             if (self.controller_do) self.maxHeight = self.controller_do.h;
             self.stageHeight = self.maxHeight;
             self.main_do.setX(parseInt((self.ws.w - self.stageWidth) / 2));
@@ -2401,36 +2329,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.setStageContainerFinalHeightAndPosition = function(e) {
             if (!self.ws) self.ws = FWDMSPUtils.getViewportSize();
             if (!self.controller_do || !self.allowToResizeAndPosition_bl) return;
-            if (self.openInPopup_bl) {
-                self.main_do.setX(0);
-                self.main_do.setY(0);
-                self.main_do.getStyle().width = "100%";
-                self.main_do.setHeight(self.ws.h);
-                self.controller_do.setX(0);
-                FWDMSPTweenMax.killTweensOf(self.controller_do);
-                if (e) {
-                    if (self.controller_do.y != 0) FWDMSPTweenMax.to(self.controller_do, .8, {
-                        y: 0,
-                        ease: Expo.easeInOut
-                    })
-                } else {
-                    self.controller_do.setY(0)
-                }
-                if (self.playlist_do) {
-                    FWDMSPTweenMax.killTweensOf(self.playlist_do);
-                    self.playlist_do.setX(0);
-                    if (e) {
-                        FWDMSPTweenMax.to(self.playlist_do, .8, {
-                            y: self.controller_do.h,
-                            delay: .4,
-                            ease: Expo.easeInOut
-                        })
-                    } else {
-                        self.playlist_do.setY(self.controller_do.h)
-                    }
-                }
-                return
-            }
             clearTimeout(self.showPlaylistWithDelayId_to);
             if (self.playlist_do && self.playlist_do.isShowed_bl) addToHeight = self.playlist_do.h;
             if (self.position_str == FWDMSP.POSITION_TOP) {
@@ -2637,7 +2535,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             if (!self.isMobile_bl && self.data.showContextMenu_bl) self.setupContextMenu();
             self.resizeHandler();
             self.main_do.setHeight(self.stageHeight);
-            if (self.openInPopup_bl) self.main_do.setHeight(3e3)
         };
         self.dataLoadError = function(e) {
             self.maxHeight = 120;
@@ -2660,18 +2557,13 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         };
         self.dataSkinLoadComplete = function() {
             self.animate_bl = self.data.animate_bl;
-            if (self.openInPopup_bl) self.data.showPopupButton_bl = false;
             if (self.useDeepLinking_bl) {
                 setTimeout(function() {
                     self.setupDL()
                 }, 200)
             } else {
-                if (self.openInPopup_bl) {
-                    self.catId = self.popupWindow.catId;
-                    self.id = self.popupWindow.id
-                } else {
-                    self.catId = self.data.startAtPlaylist;
-                    self.id = self.data.startAtTrack
+                self.catId = self.data.startAtPlaylist;
+                self.id = self.data.startAtTrack
                 }
                 self.loadInternalPlaylist()
             }
@@ -2704,31 +2596,10 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 self.playlist_do.updatePlaylist(self.data.playlist_ar);
                 self.playlist_do.resizeAndPosition()
             }
-            if (self.openInPopup_bl && self.popupWindow.audioScreen_do) self.lastPercentPlayed = self.popupWindow.audioScreen_do.lastPercentPlayed;
             self.setSource();
             if (self.data.autoPlay_bl) self.play();
             self.setStageContainerFinalHeightAndPosition(false);
-            if (self.openInPopup_bl && !self.showedFirstTime_bl) {
-                self.controller_do.setY(-self.controller_do.h);
-                if (self.playlist_do) self.playlist_do.setY(-self.playlist_do.h)
-            } else {
-                if (self.playlist_do) self.playlist_do.setY(-self.playlist_do.h + self.controller_do.h)
-            }
-            if (self.openInPopup_bl) {
-                clearTimeout(self.showPlaylistWithDelayId_to);
-                if (!self.showedFirstTime_bl) {
-                    self.showPlaylistWithDelayId_to = setTimeout(function() {
-                        self.setStageContainerFinalHeightAndPosition(true)
-                    }, 900)
-                } else {
-                    self.showPlaylistWithDelayId_to = setTimeout(function() {
-                        self.setStageContainerFinalHeightAndPosition(true)
-                    }, 100)
-                }
-                self.showedFirstTime_bl = true;
-                self.allowToResizeAndPosition_bl = true;
-                return
-            }
+            if (self.playlist_do) self.playlist_do.setY(-self.playlist_do.h + self.controller_do.h)
             self.allowToResizeAndPosition_bl = true;
             if (self.position_str == FWDMSP.POSITION_TOP) {
                 if (self.playlist_do && self.controller_do.isShowed_bl) {
@@ -2861,13 +2732,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         };
         this.positionPreloader = function() {
             self.preloader_do.setX(parseInt((self.ws.w - self.preloader_do.w) / 2));
-            if (self.openInPopup_bl) {
-                if (self.controller_do) {
-                    self.preloader_do.setY(parseInt((self.controller_do.h - self.preloader_do.h) / 2))
-                } else {
-                    self.preloader_do.setY(0)
-                }
-            } else if (self.position_str == FWDMSP.POSITION_TOP) {
+            if (self.position_str == FWDMSP.POSITION_TOP) {
                 if (self.controller_do && !self.controller_do.isShowed_bl) {
                     self.preloader_do.setY(-200)
                 } else if (self.controller_do) {
@@ -3004,7 +2869,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.setupController = function() {
             FWDMSPController.setPrototype();
             self.controller_do = new FWDMSPController(self.data, self);
-            self.controller_do.addListener(FWDMSPController.POPUP, self.controllerOnPopupHandler);
             self.controller_do.addListener(FWDMSPController.PLAY, self.controllerOnPlayHandler);
             self.controller_do.addListener(FWDMSPController.PLAY_NEXT, self.controllerPlayNextHandler);
             self.controller_do.addListener(FWDMSPController.PLAY_PREV, self.controllerPlayPrevHandler);
@@ -3026,13 +2890,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             self.controller_do.addListener(FWDMSPController.DISABLE_SHUFFLE, self.disableShuffleHandler);
             self.controller_do.addListener(FWDMSPController.BUY, self.controllerButtonBuyHandler);
             self.main_do.addChild(self.controller_do);
-            if (self.openInPopup_bl && self.data.showPlaylistsButtonAndPlaylists_bl) {
-                self.controller_do.setPlaylistButtonState("selected");
-                if (self.controller_do.playlistButton_do) self.controller_do.playlistButton_do.disableForGood()
-            }
-        };
-        this.controllerOnPopupHandler = function() {
-            self.popup()
         };
         this.controllerOnPlayHandler = function(e) {
             if (FWDMSP.hasHTML5Audio) {
@@ -3199,12 +3056,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }
             if (self.opener_do) self.opener_do.showPauseButton();
             if (self.playlist_do) self.playlist_do.setCurItemPauseState();
-            if (self.openInPopup_bl) {
-                setTimeout(function() {
-                    if (!self.scrubbedFirstTimeInPopup_bl) self.scrub(self.lastPercentPlayed);
-                    self.scrubbedFirstTimeInPopup_bl = true
-                }, 600)
-            }
             self.dispatchEvent(FWDMSP.PLAY)
         };
         this.audioScreenPauseHandler = function() {
@@ -3744,7 +3595,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         return n
     }();
     FWDMSP.instaces_ar = [];
-    FWDMSP.POPUP = "popup";
     FWDMSP.POSITION_TOP = "positionTop";
     FWDMSP.POSITION_BOTTOM = "positionBottom";
     FWDMSP.READY = "ready";
@@ -3778,7 +3628,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.playN_img = null;
         this.pauseN_img = null;
         this.nextN_img = null;
-        this.popupN_img = null;
         this.downloaderN_img = null;
         this.toopTipBk_str = null;
         this.toopTipPointer_str = null;
@@ -3938,7 +3787,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.showPlaylistsButtonAndPlaylists_bl = false;
         this.showPlaylistsByDefault_bl = false;
         this.showPlayListButtonAndPlaylist_bl = false;
-        this.showPopupButton_bl = false;
         this.animate_bl = false;
         this.showControllerByDefault_bl = false;
         this.showPlayListByDefault_bl = false;
@@ -4169,8 +4017,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             self.showDownloadMp3Button_bl = self.showDownloadMp3Button_bl == "no" ? false : true;
             self.showBuyButton_bl = self.props_obj.showBuyButton;
             self.showBuyButton_bl = self.showBuyButton_bl == "no" ? false : true;
-            self.showPopupButton_bl = self.props_obj.showPopupButton;
-            self.showPopupButton_bl = self.showPopupButton_bl == "no" ? false : true;
             self.showOpenerPlayPauseButton_bl = self.props_obj.showOpenerPlayPauseButton;
             self.showOpenerPlayPauseButton_bl = self.showOpenerPlayPauseButton_bl == "no" ? false : true;
             self.showPlaylistItemBuyButton_bl = self.props_obj.showPlaylistItemBuyButton;
@@ -4233,9 +4079,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }, {
                 img: self.nextN_img = new Image,
                 src: self.skinPath_str + "next-button.png"
-            }, {
-                img: self.popupN_img = new Image,
-                src: self.skinPath_str + "popup-button.png"
             }, {
                 img: self.downloaderN_img = new Image,
                 src: self.skinPath_str + "download-button.png"
@@ -4310,7 +4153,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             self.playSPath_str = self.skinPath_str + "play-button-over.png";
             self.pauseSPath_str = self.skinPath_str + "pause-button-over.png";
             self.nextSPath_str = self.skinPath_str + "next-button-over.png";
-            self.popupSPath_str = self.skinPath_str + "popup-button-over.png";
             self.downloaderSPath_str = self.skinPath_str + "download-button-over.png";
             self.controllerBkPath_str = self.skinPath_str + "controller-background.png";
             self.thumbnailBkPath_str = self.skinPath_str + "thumbnail-background.png";
@@ -6622,7 +6464,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.shuffleN_img = t.shuffleN_img;
         this.downloaderN_img = t.downloaderN_img;
         this.repost_img = t.repost_img;
-        this.popupN_img = t.popupN_img;
         this.titlebarAnimBkPath_img = t.titlebarAnimBkPath_img;
         this.titlebarLeftPath_img = t.titlebarLeftPath_img;
         this.titlebarRightPath_img = t.titlebarRightPath_img;
@@ -6671,7 +6512,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.shuffleButton_do = null;
         this.downloadButton_do = null;
         this.buyButton_do = null;
-        this.popupButton_do = null;
         this.simpleText_do = null;
         this.animText1_do = null;
         this.animText2_do = null;
@@ -6756,7 +6596,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.showDownloadMp3Button_bl = t.showDownloadMp3Button_bl;
         this.showShuffleButton_bl = t.showShuffleButton_bl;
         this.showPlayListButtonAndPlaylist_bl = t.showPlayListButtonAndPlaylist_bl;
-        this.showPopupButton_bl = t.showPopupButton_bl;
         this.animateOnIntro_bl = t.animateOnIntro_bl;
         this.showSoundAnimation_bl = t.showSoundAnimation_bl;
         this.isMainScrubberScrubbing_bl = false;
@@ -6797,7 +6636,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             if (r.showShuffleButton_bl) r.setupShuffleButton();
             if (r.showDownloadMp3Button_bl) r.setupDownloadButton();
             if (r.showBuyButton_bl) r.setupBuyButton();
-            if (r.showPopupButton_bl) r.setupPopupButton();
             if (r.showButtonsToolTips_bl) r.setupToolTips();
             if (!r.isMobile_bl) r.setupDisable();
             r.mainHolder_do.setBkColor("#FFFF00");
@@ -7166,11 +7004,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 FWDMSPToolTip.setPrototype();
                 r.buyButtonToolTip_do = new FWDMSPToolTip(r.buyButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "buy track", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
                 document.documentElement.appendChild(r.buyButtonToolTip_do.screen)
-            }
-            if (r.showPopupButton_bl) {
-                FWDMSPToolTip.setPrototype();
-                r.populButtonToolTip_do = new FWDMSPToolTip(r.popupButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "превратить в окно", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
-                document.documentElement.appendChild(r.populButtonToolTip_do.screen)
             }
             FWDMSPToolTip.setPrototype();
             r.volumeButtonToolTip_do = new FWDMSPToolTip(r.volumeButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "тишина / включить звук", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
@@ -8057,22 +7890,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 r.shuffleButton_do.setUnselected()
             }
         };
-        this.setupPopupButton = function() {
-            FWDMSPSimpleButton.setPrototype();
-            r.popupButton_do = new FWDMSPSimpleButton(r.popupN_img, t.popupSPath_str);
-            r.popupButton_do.addListener(FWDMSPSimpleButton.SHOW_TOOLTIP, r.popupButtonShowToolTipHandler);
-            r.popupButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, r.popupButtonOnMouseUpHandler);
-            r.popupButton_do.setY(parseInt((r.stageHeight - r.popupButton_do.h) / 2));
-            r.buttons_ar.push(r.popupButton_do);
-            r.mainHolder_do.addChild(r.popupButton_do)
-        };
-        this.popupButtonShowToolTipHandler = function(e) {
-            r.showToolTip(r.popupButton_do, r.populButtonToolTip_do, e.e)
-        };
-        this.popupButtonOnMouseUpHandler = function() {
-            if (r.populButtonToolTip_do) r.populButtonToolTip_do.hide();
-            r.dispatchEvent(e.POPUP)
-        };
         this.disableControllerWhileLoadingPlaylist = function() {
             r.prevButton_do.disable();
             r.playPauseButton_do.disable();
@@ -8100,7 +7917,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
     e.PLAY_PREV = "playPrev";
     e.PLAY = "play";
     e.PAUSE = "pause";
-    e.POPUP = "popup";
     e.VOLUME_START_TO_SCRUB = "volumeStartToScrub";
     e.VOLUME_STOP_TO_SCRUB = "volumeStopToScrub";
     e.START_TO_SCRUB = "startToScrub";
@@ -8624,7 +8440,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.positionAndResize = function() {
             if (e.main_do) {
                 n.stageWidth = e.main_do.w;
-                if (e.isPlaylistShowed_bl || e.openInPopup_bl) {
+                if (e.isPlaylistShowed_bl) {
                     n.stageHeight = e.main_do.h
                 } else {
                     if (e.controller_do) {
