@@ -387,9 +387,9 @@ new FWDUVPlayer({
 		contextMenuItemDisabledColor:"#BBB"
 });
 
-on('#ajax', 'click', '.video_stopped', function(e) {
+on('#ajax', 'click', '#video_stopped', function(e) {
 	FWDUVPlayer.stop();
 })
-on('#ajax', 'click', '.audio_stopped', function(e) {
+on('#ajax', 'click', '#audio_stopped', function(e) {
 	FWDMSP.stop();
 })
