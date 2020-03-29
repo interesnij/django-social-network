@@ -3510,10 +3510,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                     break
                 }
             }
-          }
-  };
-  self.init()
-};
+          };
+          self.init()
+        };
     FWDMSP.setPrototype = function() {
         FWDMSP.prototype = new FWDMSPEventDispatcher
     };
