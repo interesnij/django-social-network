@@ -2566,7 +2566,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 self.id = self.data.startAtTrack
                 }
                 self.loadInternalPlaylist()
-            }
         };
         this.dataPlayListLoadComplete = function() {
             if (!self.isAPIReady_bl) self.dispatchEvent(FWDMSP.READY);
