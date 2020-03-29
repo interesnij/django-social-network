@@ -386,3 +386,10 @@ new FWDUVPlayer({
 		contextMenuItemSelectedColor:"#000",
 		contextMenuItemDisabledColor:"#BBB"
 });
+
+on('#ajax', 'click', '.video_stopped', function(e) {
+	FWDUVPlayer.stop();
+})
+on('#ajax', 'click', '.audio_stopped', function(e) {
+	FWDMSP.stop();
+})
