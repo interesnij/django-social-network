@@ -10350,7 +10350,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             O.playPause_do = new MUSICDisplayObject("div");
             O.playPause_do.setWidth(O.playPauseButtonWidth);
             O.playPause_do.setHeight(O.playPauseButtonHeight);
-            O.playN_do = new FMUSICDisplayObject("div");
+            O.playN_do = new MUSICDisplayObject("div");
             O.playN_do.getStyle().background = "url('" + O.playlistPlayButtonN_str + "') no-repeat";
             O.playN_do.setWidth(O.playPauseButtonWidth);
             O.playN_do.setHeight(O.playPauseButtonHeight);
