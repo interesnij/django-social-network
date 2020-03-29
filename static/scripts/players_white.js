@@ -1,6 +1,6 @@
 
 
-new FWDMSP({
+audio_player = new FWDMSP({
 		//main settings
 		instanceName:"player1",
 		playlistsId:"audio_playlists",
@@ -146,7 +146,7 @@ new FWDMSP({
 	});
 
 
-new FWDUVPlayer({
+video_player = new FWDUVPlayer({
 		//main settings
 		instanceName:"player_white",
 		parentId:"video_player",
@@ -388,8 +388,8 @@ new FWDUVPlayer({
 });
 
 on('#ajax', 'click', '#video_stopped', function(e) {
-	FWDUVPlayer.pause;
+	video_player.pause;
 })
 on('#ajax', 'click', '#audio_stopped', function(e) {
-	FWDMSP.pause;
+	audio_player.pause;
 })
