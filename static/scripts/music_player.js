@@ -4386,7 +4386,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.loadPlaylist = function(e) {
             if (self.isPlaylistDispatchingError_bl) return;
             clearTimeout(self.dispatchPlaylistLoadCompleteWidthDelayId_to);
-            var t = self.cats_ar[e].source;
+            var t = null;
             if (!t) {
                 self.isPlaylistDispatchingError_bl = true;
                 showLoadPlaylistErrorId_to = setTimeout(function() {
