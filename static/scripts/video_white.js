@@ -59,162 +59,175 @@ new FWDUVPlayer({
 
 		//playlist settings
 		showPlaylistButtonAndPlaylist:"yes",      // показывать кнопку выбора плейлистов и сами плейлисты сверху
-		playlistPosition:"right",
-		showPlaylistByDefault:"yes",
-		showPlaylistName:"yes",
-		showSearchInput:"yes",
-		showLoopButton:"yes",
-		showShuffleButton:"yes",
-		showPlaylistOnFullScreen:"no",
-		showNextAndPrevButtons:"yes",
-		showThumbnail:"yes",
-		forceDisableDownloadButtonForFolder:"yes",
-		addMouseWheelSupport:"yes",
-		startAtRandomVideo:"no",
-		stopAfterLastVideoHasPlayed:"no",
-		addScrollOnMouseMove:"no",
-		randomizePlaylist:'no',
-		folderVideoLabel:"VIDEO ",
-		playlistRightWidth:320,
-		playlistBottomHeight:380,
-		startAtVideo:0,
-		maxPlaylistItems:50,
-		thumbnailWidth:71,
-		thumbnailHeight:71,
-		spaceBetweenControllerAndPlaylist:1,
-		spaceBetweenThumbnails:1,
-		scrollbarOffestWidth:8,
-		scollbarSpeedSensitivity:.5,
-		playlistBackgroundColor:"#eeeeee",
-		playlistNameColor:"#000000",
-		thumbnailNormalBackgroundColor:"#ffffff",
-		thumbnailHoverBackgroundColor:"#eeeeee",
-		thumbnailDisabledBackgroundColor:"#eeeeee",
-		searchInputBackgroundColor:"#F3F3F3",
-		searchInputColor:"#888888",
-		youtubeAndFolderVideoTitleColor:"#000000",
-		folderAudioSecondTitleColor:"#999999",
-		youtubeOwnerColor:"#919191",
-		youtubeDescriptionColor:"#919191",
-		mainSelectorBackgroundSelectedColor:"#000000",
-		mainSelectorTextNormalColor:"#000000",
-		mainSelectorTextSelectedColor:"#FFFFFFF",
-		mainButtonBackgroundNormalColor:"#FFFFFF",
-		mainButtonBackgroundSelectedColor:"#000000",
-		mainButtonTextNormalColor:"#000000",
-		mainButtonTextSelectedColor:"#FFFFFF",
+		playlistPosition:"right",                 // расположение плейлиста
+		showPlaylistByDefault:"yes",              // показать плейлист по умолчанию
+		showPlaylistName:"yes",                   // показывать название плейлиста
+		showSearchInput:"yes",                    // показывать поле поиска
+		showLoopButton:"yes",                     // показывать кнопку повтора
+		showShuffleButton:"yes",                  // показывать кнопку перемешивания
+		showPlaylistOnFullScreen:"no",            // показывать плейлист в режиме полного экрана
+		showNextAndPrevButtons:"yes",             // показывать кнопки пред/след видео
+		showThumbnail:"yes",                      // показывать миниатюры
+		forceDisableDownloadButtonForFolder:"yes",// принудительно скрывать кнопку загрузки видео из локальных папок
+		addMouseWheelSupport:"yes",               // поддержка управления мыши
+		startAtRandomVideo:"no",                  // начинать воспроиведение со случайного видео ролика
+		stopAfterLastVideoHasPlayed:"no",         // останавливать воспроизведение после последнего ролика
+		addScrollOnMouseMove:"no",                // перемотка движениями мыши
+		randomizePlaylist:'no',                   // случайные плейлисты
+		folderVideoLabel:"VIDEO ",                // название папки видео
+		playlistRightWidth:320,                   // ширина плейлиста справа
+		playlistBottomHeight:380,                 // высота плейлиста снизу
+		startAtVideo:0,                           // начинать с ролика номер ...
+		maxPlaylistItems:50,                      // максимальное количество роликов в плейлисте
+		thumbnailWidth:71,                        // ширина миниатюры
+		thumbnailHeight:71,                       // высота миниатюры
+		spaceBetweenControllerAndPlaylist:1,      // расстояние между контроллером и плейлистом
+		spaceBetweenThumbnails:1,                 // расстояние между миниатюрами
+		scrollbarOffestWidth:8,                   // отступ ширины скроллбара
+		scollbarSpeedSensitivity:.5,              // скорость отклика скроллбара
+		playlistBackgroundColor:"#eeeeee",        // цвет фона плейлиста
+		playlistNameColor:"#000000",              // цвет названия плейлиста
+		thumbnailNormalBackgroundColor:"#ffffff", // цвет фона миниатюры
+		thumbnailHoverBackgroundColor:"#eeeeee",  // цвет фона активной миниатюры
+		thumbnailDisabledBackgroundColor:"#eeeeee", // цвет фона disabled миниатюры
+		searchInputBackgroundColor:"#F3F3F3",     // цвет фона поля поиска
+		searchInputColor:"#888888",               // цвет фона текста поиска
+		youtubeAndFolderVideoTitleColor:"#000000",// цвет плейлиста роликов с папок и ютуба
+		youtubeOwnerColor:"#919191",              // цвет названия ролика я ютуба
+		youtubeDescriptionColor:"#919191",        // цвет описания ролика я ютуба
+		mainSelectorBackgroundSelectedColor:"#000000", // цвет фона плейлиста при наведении
+		mainSelectorTextNormalColor:"#000000",    // цвет текста плейлиста
+		mainSelectorTextSelectedColor:"#FFFFFFF", // цвет текста плейлиста при наведении
+		mainButtonBackgroundNormalColor:"#FFFFFF",// цвет фона кнопок
+		mainButtonBackgroundSelectedColor:"#000000",// цвет фона нажатой кнопки
+		mainButtonTextNormalColor:"#000000",      // цвет текста кнопок
+		mainButtonTextSelectedColor:"#FFFFFF",    // цвет текста нажатой кнопки
+
 		//controller settings
-		showController:"yes",
-		showControllerWhenVideoIsStopped:"yes",
-		showNextAndPrevButtonsInController:"no",
-		showRewindButton:"yes",
-		showPlaybackRateButton:"yes",
-		showVolumeButton:"yes",
-		showTime:"yes",
-		showQualityButton:"yes",
-		showInfoButton:"yes",
-		showDownloadButton:"no",
-		showShareButton:"no",
-		showEmbedButton:"yes",
-		showChromecastButton:"no",
-		showFullScreenButton:"yes",
-		disableVideoScrubber:"no",
-		showScrubberWhenControllerIsHidden:"yes",
-		showMainScrubberToolTipLabel:"yes",
-		showDefaultControllerForVimeo:"no",
-		repeatBackground:"yes",
-		controllerHeight:42,
-		controllerHideDelay:3,
-		startSpaceBetweenButtons:7,
-		spaceBetweenButtons:8,
-		scrubbersOffsetWidth:2,
-		mainScrubberOffestTop:14,
-		timeOffsetLeftWidth:5,
-		timeOffsetRightWidth:3,
-		timeOffsetTop:0,
-		volumeScrubberHeight:80,
-		volumeScrubberOfsetHeight:12,
-		timeColor:"#919191",
-		youtubeQualityButtonNormalColor:"#919191",
-		youtubeQualityButtonSelectedColor:"#000000",
-		scrubbersToolTipLabelBackgroundColor:"#000000",
-		scrubbersToolTipLabelFontColor:"#FFFFFF",
+		showController:"yes",                     // показывать контроллер
+		showControllerWhenVideoIsStopped:"yes",   // показывать контроллер при остановке проигрывания
+		showNextAndPrevButtonsInController:"no",  // показывать кнопки пред / след на контроллере
+		showRewindButton:"yes",                   // показать кнопку перемотки назад
+		showPlaybackRateButton:"yes",             // показать кнопку выбора скорости воспроизведения
+		showVolumeButton:"yes",                   // показать кнопку громкости
+		showTime:"yes",                           // показать время воспроизведения
+		showQualityButton:"yes",                  // показать время выбора качества видео
+		showInfoButton:"yes",                     // показывать кнопку информации ролика
+		showDownloadButton:"no",                  // показывать кнопку загрузки ролика
+		showShareButton:"no",                     // показывать кнопку расшаривания ролика
+		showEmbedButton:"yes",                    // показывать кнопку получения ссылки ролика и фрейма для вставки на другие сайты
+		showChromecastButton:"no",                // показывать кнопку подкастов
+		showFullScreenButton:"yes",               // показывать кнопку полноэкранного режима
+		disableVideoScrubber:"no",                // выключить ползунок переключения времени видео
+		showScrubberWhenControllerIsHidden:"yes", // показывать ползунок времени воспроизведенного ролика при скрытом контроллере
+		showMainScrubberToolTipLabel:"yes",       // показывать пояснительное окно с временем воспроизведения над ползунком
+		showDefaultControllerForVimeo:"no",       // показывать контроллер vimeo
+		repeatBackground:"yes",                   // повтор бекгроунда
+		controllerHeight:42,                      // высота контроллера
+		controllerHideDelay:3,                    // время, через которое скроется контроллер
+		startSpaceBetweenButtons:7,               // начальное расстояние между кнопками
+		spaceBetweenButtons:8,                    // расстояние между кнопками
+		scrubbersOffsetWidth:2,                   // ширина отступа скруббера
+		mainScrubberOffestTop:14,                 // отступ скруббера всерху
+		timeOffsetLeftWidth:5,                    // ширина отступа времени воспроизведения слева
+		timeOffsetRightWidth:3,                   // ширина отступа времени воспроизведения справа
+		timeOffsetTop:0,                          // отступ времени воспроизведения сверху
+		volumeScrubberHeight:80,                  // высота скруббера громкости
+		volumeScrubberOfsetHeight:12,             // отступскруббера громкости по высоте
+		timeColor:"#919191",                      // цвет времени воспроизведения
+		youtubeQualityButtonNormalColor:"#919191",// кнопка выбора качества плейлитса ютуба
+		youtubeQualityButtonSelectedColor:"#000000",// нажатая кнопка выбора качества плейлитса ютуба
+		scrubbersToolTipLabelBackgroundColor:"#000000",// цвет фона окна пояснения скруббера
+		scrubbersToolTipLabelFontColor:"#FFFFFF", // цвет текста окна пояснения скруббера
+
 		//advertisement on pause window
-		aopwTitle:"Advertisement",
-		aopwWidth:400,
-		aopwHeight:240,
-		aopwBorderSize:6,
-		aopwTitleColor:"#000000",
+		aopwTitle:"Advertisement",                // название рекламной вставки
+		aopwWidth:400,                            // ширина вставки
+		aopwHeight:240,                           // высота вставки
+		aopwBorderSize:6,                         // размер рамки вставки
+		aopwTitleColor:"#000000",                 // цветназвания вставки
+
 		//subtitle
-		subtitlesOffLabel:"Субтитры откл.",
+		subtitlesOffLabel:"Субтитры откл.",       // надпись, когда субтитры отключены
+
 		//popup add windows
-		showPopupAdsCloseButton:"yes",
-		//embed window and info window
-		embedAndInfoWindowCloseButtonMargins:15,
-		borderColor:"#CDCDCD",
-		mainLabelsColor:"#000000",
-		secondaryLabelsColor:"#444444",
-		shareAndEmbedTextColor:"#777777",
-		inputBackgroundColor:"#c0c0c0",
-		inputColor:"#333333",
+		showPopupAdsCloseButton:"yes",            // показать кнопку закрытия окна подставки
+
+		//окно размещения и информации
+		embedAndInfoWindowCloseButtonMargins:15,  // отступ кнопки закрытия
+		borderColor:"#CDCDCD",                    // цвет рамки
+		mainLabelsColor:"#000000",                // цвет названия
+		secondaryLabelsColor:"#444444",           // вторичный цвет названия
+		shareAndEmbedTextColor:"#777777",         // цвет тектса овна расшаривания и вставки
+		inputBackgroundColor:"#c0c0c0",           // цвет фона поля ввода
+		inputColor:"#333333",                     // цвет фона текста ввода
+
 		//loggin
 		isLoggedIn:"no",
 		playVideoOnlyWhenLoggedIn:"no",
 		loggedInMessage:"Please login to view this video.",
+
 		//audio visualizer
-		audioVisualizerLinesColor:"#ff9f00",
-		audioVisualizerCircleColor:"#FFFFFF",
+		audioVisualizerLinesColor:"#ff9f00",      // цвет линий аудио визуализатора
+		audioVisualizerCircleColor:"#FFFFFF",     // цвет кругов аудио визуализатора
+
 		//lightbox settings
-		lightBoxBackgroundOpacity:.6,
-		lightBoxBackgroundColor:"#000000",
+		lightBoxBackgroundOpacity:.6,             // прозрачность
+		lightBoxBackgroundColor:"#000000",        // цвет фона
+
 		//sticky on scroll
-		stickyOnScroll:"no",
-		stickyOnScrollShowOpener:"yes",
-		stickyOnScrollWidth:"700",
-		stickyOnScrollHeight:"394",
-		//sticky display settings
-		showOpener:"yes",
-		showOpenerPlayPauseButton:"yes",
-		verticalPosition:"bottom",
-		horizontalPosition:"center",
-		showPlayerByDefault:"yes",
-		animatePlayer:"yes",
-		openerAlignment:"right",
-		mainBackgroundImagePath:"main-background.png",
-		openerEqulizerOffsetTop:-1,
-		openerEqulizerOffsetLeft:3,
-		offsetX:0,
-		offsetY:0,
-		//playback rate / speed
-		defaultPlaybackRate:1, //0.25, 0.5, 1, 1.25, 1.2, 2
+		stickyOnScroll:"no",                      // липкое листание
+		stickyOnScrollShowOpener:"yes",           // показывать эффект
+		stickyOnScrollWidth:"700",                // ширина
+		stickyOnScrollHeight:"394",               // высота
+
+		//настройки липкого дисплея
+		showOpener:"yes",                         // показывать вставки
+		showOpenerPlayPauseButton:"yes",          // показывать кнопку плей при паузе
+		verticalPosition:"bottom",                // позиция по вертикали
+		horizontalPosition:"center",              // позиция по горизонтали
+		showPlayerByDefault:"yes",                // показывать плеер по умолчанию
+		animatePlayer:"yes",                      // анимировать плеер
+		openerAlignment:"right",                  // выравнивание вставки
+		mainBackgroundImagePath:"main-background.png", // путь до изображения фона
+		openerEqulizerOffsetTop:-1,               // отступ эквалайзера сверху
+		openerEqulizerOffsetLeft:3,               // отступ эквалайзера слева
+		offsetX:0,                                // отступ по оси X
+		offsetY:0,																// отступ по оси Y
+
+		//скорость воспроизведения
+		defaultPlaybackRate:1,                   //0.25, 0.5, 1, 1.25, 1.2, 2
 		//cuepoints
-		executeCuepointsOnlyOnce:"no",
+		executeCuepointsOnlyOnce:"no",           // выполнение ключевых точек только один раз
 		//annotations
-		showAnnotationsPositionTool:"no",
+		showAnnotationsPositionTool:"no",        // показывать координаты аннотаций на экране
+
 		//ads
-		openNewPageAtTheEndOfTheAds:"no",
-		adsButtonsPosition:"left",
-		skipToVideoText:"Закрыть через: ",
-		skipToVideoButtonText:"Закрыть",
-		adsTextNormalColor:"#888888",
-		adsTextSelectedColor:"#000000",
-		adsBorderNormalColor:"#AAAAAA",
-		adsBorderSelectedColor:"#000000",
+		openNewPageAtTheEndOfTheAds:"no",        // открыть новую страницу в конце объявления
+		adsButtonsPosition:"left",               // позиция окна рекламы
+		skipToVideoText:"Закрыть через: ",       // текст окна рекламы
+		skipToVideoButtonText:"Закрыть",         // текст кнопки закрытия рекламного окна
+		adsTextNormalColor:"#888888",            // цвет рекламного текста
+		adsTextSelectedColor:"#000000",          // цвет выбранного текста
+		adsBorderNormalColor:"#AAAAAA",          // цвет рамки рекламного окна
+		adsBorderSelectedColor:"#000000",        // цвет выбраной рамки рекламного окна
+
 		//a to b loop
-		useAToB:"no",
-		atbTimeBackgroundColor:"transparent",
-		atbTimeTextColorNormal:"#888888",
+		useAToB:"no",                            // использование повтора от...до
+		atbTimeBackgroundColor:"transparent",    // время фона от...до
+		atbTimeTextColorNormal:"#888888",        // время текста от...до
 		atbTimeTextColorSelected:"#FFFFFF",
 		atbButtonTextNormalColor:"#888888",
 		atbButtonTextSelectedColor:"#FFFFFF",
 		atbButtonBackgroundNormalColor:"#FFFFFF",
 		atbButtonBackgroundSelectedColor:"#000000",
+
 		//thumbnails preview
-		thumbnailsPreviewWidth:196,
-		thumbnailsPreviewHeight:110,
-		thumbnailsPreviewBackgroundColor:"#000000",
-		thumbnailsPreviewBorderColor:"#666",
-		thumbnailsPreviewLabelBackgroundColor:"#666",
+		thumbnailsPreviewWidth:196,              // ширина предпросмотра миниатюры
+		thumbnailsPreviewHeight:110,             // высота предпросмотра миниатюры
+		thumbnailsPreviewBackgroundColor:"#000000",// цвет фона  миниатюры
+		thumbnailsPreviewBorderColor:"#666",     // цвет названия миниатюры
+		thumbnailsPreviewLabelBackgroundColor:"#666", // цвет фона названия минатюры
 		thumbnailsPreviewLabelFontColor:"#FFF",
 		// context menu
 		showContextmenu:'yes',
