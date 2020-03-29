@@ -763,15 +763,6 @@ var FWDAddress = new function() {
             }
         }
     };
-    var _bodyClick = function(e) {
-        if (_popup.length > 0) {
-            var popup = window.open(_popup[0], _popup[1], eval(_popup[2]));
-            if (typeof _popup[3] != UNDEFINED) {
-                eval(_popup[3])
-            }
-        }
-        _popup = []
-    };
     var _swfChange = function() {
         for (var e = 0, t, n, r = FWDAddress.getValue(), i = "setFWDAddressValue"; t = _ids[e]; e++) {
             n = document.getElementById(t);
@@ -935,7 +926,6 @@ var FWDAddress = new function() {
         _ref = this,
         _stack = [],
         _ids = [],
-        _popup = [],
         _listeners = {},
         _value = _getHash(),
         _opts = {
@@ -1018,15 +1008,6 @@ var FWDAddress = new function() {
                 }
             }
         }
-    };
-    this.popup = function(url, name, options, handler) {
-        try {
-            var popup = window.open(url, name, eval(options));
-            if (typeof handler != UNDEFINED) {
-                eval(handler)
-            }
-        } catch (ex) {}
-        _popup = arguments
     };
     this.getIds = function() {
         return _ids
@@ -2203,7 +2184,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             this.listeners = {
                 events_ar: []
             };
-            this.popupWindow;
             this.ws = null;
             this.so = null;
             this.data = null;
@@ -2220,7 +2200,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             this.flash_do = null;
             this.flashObject = null;
             this.flashObjectMarkup_str = null;
-            this.popupWindowBackgroundColor = this.props_obj.popupWindowBackgroundColor || "#000000";
             this.prevCatId = -1;
             this.catId = -1;
             this.id = -1;
@@ -2232,9 +2211,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             this.maxHeight = 0;
             this.prevAddToHeight = -1;
             this.lastPercentPlayed = 0;
-            this.popupWindowWidth = self.props_obj.popupWindowWidth || 500;
-            this.popupWindowHeight = self.props_obj.popupWindowHeight || 400;
-            if (FWDMSPUtils.isIE) this.popupWindowHeight -= 3;
             this.resizeHandlerId_to;
             this.resizeHandler2Id_to;
             this.hidePreloaderId_to;
@@ -2249,56 +2225,17 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             this.orintationChangeComplete_bl = true;
             this.animate_bl = false;
             this.isFirstPlaylistLoaded_bl = false;
-            this.scrubbedFirstTimeInPopup_bl = false;
             this.showedFirstTime_bl = false;
             self.isPlaylistShowed_bl = false;
             this.useDeepLinking_bl = self.props_obj.useDeepLinking;
             this.useDeepLinking_bl = self.useDeepLinking_bl == "yes" ? true : false;
-            this.openInPopup_bl = false;
             this.isMobile_bl = FWDMSPUtils.isMobile;
             this.hasPointerEvent_bl = FWDMSPUtils.hasPointerEvent;
-            try {
-                if (window.opener && window.opener[this.instanceName_str] && window.opener[this.instanceName_str].instanceName_str == this.instanceName_str) {
-                    this.openInPopup_bl = true;
-                    this.popupWindow = window.opener[this.instanceName_str];
-                    window.opener[this.instanceName_str].removeAndDisablePlayer();
-                    if (!self.isMobile_bl) {
-                        document.cookie = "FWDMSP=" + self.instanceName_str + "; path=/";
-                        window.onbeforeunload = function(e) {
-                            document.cookie = "FWDMSP=; expires=Thu, 01-Jan-70 00:00:01 GMT; path=/"
-                        }
-                    }
-                }
-            } catch (e) {}
             this.setupMainDo();
             this.startResizeHandler();
             this.setupInfo();
             this.setupData();
             FWDMSP.instaces_ar.push(this)
-        };
-        this.popup = function() {
-            if (self.popupWindow && !self.popupWindow.closed) return;
-            var e;
-            var t = screen.width / 2 - self.popupWindowWidth / 2;
-            var n = screen.height / 2 - self.popupWindowHeight / 2;
-            var r = "no";
-            if (FWDMSPUtils.isSafari) r = "yes";
-            try {
-                if (FWDMSPUtils.isMobile) {
-                    self.popupWindow = window.open(location.href, self.instanceName_str)
-                } else {
-                    self.popupWindow = window.open(location.href, self.instanceName_str, "location=" + r + ", width=" + self.popupWindowWidth + ", height=" + self.popupWindowHeight + ", top=" + n + ", left=" + t)
-                }
-                if (self.popupWindow) {
-                    self.stageContainer.style.display = "none";
-                    if (self.preloader_do) self.preloader_do.hide(false);
-                    self.data.closeData();
-                    self.stop();
-                    self.isAPIReady_bl = false
-                }
-                self.stopResizeHandler();
-                self.dispatchEvent(FWDMSP.POPUP)
-            } catch (i) {}
         };
         this.removeAndDisablePlayer = function() {
             self.stageContainer.style.display = "none"
@@ -2311,27 +2248,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             self.main_do.getStyle().webkitTapHighlightColor = "rgba(0, 0, 0, 0)";
             self.main_do.setBackfaceVisibility();
             if (!FWDMSPUtils.isMobile || FWDMSPUtils.isMobile && FWDMSPUtils.hasPointerEvent) self.main_do.setSelectable(false);
-            if (self.openInPopup_bl) {
-                document.documentElement.appendChild(self.main_do.screen);
-                self.stageContainer.style.position = "absolute";
-                document.documentElement.style.overflow = "hidden";
-                document.documentElement.style.backgroundColor = self.popupWindowBackgroundColor;
-                self.main_do.setBkColor(self.popupWindowBackgroundColor);
-                if (FWDMSPUtils.isIEAndLessThen9) {
-                    this.main_do.getStyle().zIndex = "2147483631"
-                } else {
-                    this.main_do.getStyle().zIndex = "99999999991"
-                }
-                if (FWDMSPUtils.isIE) {
-                    document.getElementsByTagName("body")[0].appendChild(self.main_do.screen)
-                } else {
-                    document.getElementsByTagName("body")[0].style.display = "none"
-                }
-                self.main_do.setHeight(3e3)
-            } else {
-                self.stageContainer.appendChild(self.background_do.screen);
-                self.stageContainer.appendChild(self.main_do.screen)
-            }
+            self.stageContainer.appendChild(self.background_do.screen);
+            self.stageContainer.appendChild(self.main_do.screen)
         };
         self.setupInfo = function() {
             FWDMSPInfo.setPrototype();
@@ -2385,7 +2303,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             self.stageWidth = document.documentElement.offsetWidth;
             self.stageContainer.style.width = "100%";
             self.stageContainer.style.left = "0px";
-            if (self.stageWidth > self.maxWidth && !self.openInPopup_bl) {
+            if (self.stageWidth > self.maxWidth) {
                 self.stageWidth = self.maxWidth
             }
             if (self.controller_do) self.maxHeight = self.controller_do.h;
@@ -2401,36 +2319,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.setStageContainerFinalHeightAndPosition = function(e) {
             if (!self.ws) self.ws = FWDMSPUtils.getViewportSize();
             if (!self.controller_do || !self.allowToResizeAndPosition_bl) return;
-            if (self.openInPopup_bl) {
-                self.main_do.setX(0);
-                self.main_do.setY(0);
-                self.main_do.getStyle().width = "100%";
-                self.main_do.setHeight(self.ws.h);
-                self.controller_do.setX(0);
-                FWDMSPTweenMax.killTweensOf(self.controller_do);
-                if (e) {
-                    if (self.controller_do.y != 0) FWDMSPTweenMax.to(self.controller_do, .8, {
-                        y: 0,
-                        ease: Expo.easeInOut
-                    })
-                } else {
-                    self.controller_do.setY(0)
-                }
-                if (self.playlist_do) {
-                    FWDMSPTweenMax.killTweensOf(self.playlist_do);
-                    self.playlist_do.setX(0);
-                    if (e) {
-                        FWDMSPTweenMax.to(self.playlist_do, .8, {
-                            y: self.controller_do.h,
-                            delay: .4,
-                            ease: Expo.easeInOut
-                        })
-                    } else {
-                        self.playlist_do.setY(self.controller_do.h)
-                    }
-                }
-                return
-            }
             clearTimeout(self.showPlaylistWithDelayId_to);
             if (self.playlist_do && self.playlist_do.isShowed_bl) addToHeight = self.playlist_do.h;
             if (self.position_str == FWDMSP.POSITION_TOP) {
@@ -2636,8 +2524,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             self.setupPreloader();
             if (!self.isMobile_bl && self.data.showContextMenu_bl) self.setupContextMenu();
             self.resizeHandler();
-            self.main_do.setHeight(self.stageHeight);
-            if (self.openInPopup_bl) self.main_do.setHeight(3e3)
+            self.main_do.setHeight(self.stageHeight)
         };
         self.dataLoadError = function(e) {
             self.maxHeight = 120;
@@ -2660,19 +2547,12 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         };
         self.dataSkinLoadComplete = function() {
             self.animate_bl = self.data.animate_bl;
-            if (self.openInPopup_bl) self.data.showPopupButton_bl = false;
             if (self.useDeepLinking_bl) {
                 setTimeout(function() {
                     self.setupDL()
                 }, 200)
             } else {
-                if (self.openInPopup_bl) {
-                    self.catId = self.popupWindow.catId;
-                    self.id = self.popupWindow.id
-                } else {
-                    self.catId = self.data.startAtPlaylist;
-                    self.id = self.data.startAtTrack
-                }
+                self.id = self.data.startAtTrack;
                 self.loadInternalPlaylist()
             }
         };
@@ -2704,30 +2584,14 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 self.playlist_do.updatePlaylist(self.data.playlist_ar);
                 self.playlist_do.resizeAndPosition()
             }
-            if (self.openInPopup_bl && self.popupWindow.audioScreen_do) self.lastPercentPlayed = self.popupWindow.audioScreen_do.lastPercentPlayed;
             self.setSource();
             if (self.data.autoPlay_bl) self.play();
             self.setStageContainerFinalHeightAndPosition(false);
-            if (self.openInPopup_bl && !self.showedFirstTime_bl) {
+            if (!self.showedFirstTime_bl) {
                 self.controller_do.setY(-self.controller_do.h);
                 if (self.playlist_do) self.playlist_do.setY(-self.playlist_do.h)
             } else {
                 if (self.playlist_do) self.playlist_do.setY(-self.playlist_do.h + self.controller_do.h)
-            }
-            if (self.openInPopup_bl) {
-                clearTimeout(self.showPlaylistWithDelayId_to);
-                if (!self.showedFirstTime_bl) {
-                    self.showPlaylistWithDelayId_to = setTimeout(function() {
-                        self.setStageContainerFinalHeightAndPosition(true)
-                    }, 900)
-                } else {
-                    self.showPlaylistWithDelayId_to = setTimeout(function() {
-                        self.setStageContainerFinalHeightAndPosition(true)
-                    }, 100)
-                }
-                self.showedFirstTime_bl = true;
-                self.allowToResizeAndPosition_bl = true;
-                return
             }
             self.allowToResizeAndPosition_bl = true;
             if (self.position_str == FWDMSP.POSITION_TOP) {
