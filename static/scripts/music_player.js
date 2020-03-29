@@ -763,15 +763,6 @@ var FWDAddress = new function() {
             }
         }
     };
-    var _bodyClick = function(e) {
-        if (_popup.length > 0) {
-            var popup = window.open(_popup[0], _popup[1], eval(_popup[2]));
-            if (typeof _popup[3] != UNDEFINED) {
-                eval(_popup[3])
-            }
-        }
-        _popup = []
-    };
     var _swfChange = function() {
         for (var e = 0, t, n, r = FWDAddress.getValue(), i = "setFWDAddressValue"; t = _ids[e]; e++) {
             n = document.getElementById(t);
