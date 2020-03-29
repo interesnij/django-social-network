@@ -391,6 +391,6 @@ on('#ajax', 'click', '#video_stopped', function(e) {
 	video_player.pause();
 })
 
-on('#ajax', 'click', '#audio_stopped', function(e) {
+on('#ajax', 'click', '#video_player', function(e) {
 	audio_player.pause();
 })
