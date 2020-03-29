@@ -388,8 +388,8 @@ video_player = new FWDUVPlayer({
 });
 
 on('#ajax', 'click', '#video_stopped', function(e) {
-	video_player.pause;
+	video_player.pause();
 })
 on('#ajax', 'click', '#audio_stopped', function(e) {
-	audio_player.pause;
+	audio_player.pause();
 })
