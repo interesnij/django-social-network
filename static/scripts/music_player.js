@@ -1,4 +1,3 @@
-
 function A(e, t, n) {
     var r = t || 0,
         i = 0;
@@ -6767,11 +6766,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             if (r.showDownloadMp3Button_bl && t.playlist_ar[n.id]) {
                 if (t.playlist_ar[n.id].downloadable && n.isPlaylistLoaded_bl) {
                     if (FWDMSPUtils.indexOfArray(r.buttons_ar, r.downloadButton_do) == -1) {
-                        if (r.showBuyButton_bl && t.playlist_ar[n.id].buy) {
-                            r.buttons_ar.splice(FWDMSPUtils.indexOfArray(r.buttons_ar, r.buyButton_do), 0, r.downloadButton_do)
-                        } else {
-                            r.buttons_ar.splice(r.buttons_ar.length, 0, r.downloadButton_do)
-                        }
+                        r.buttons_ar.splice(r.buttons_ar.length, 0, r.downloadButton_do)
                         r.downloadButton_do.setVisible(true)
                     }
                 } else {
@@ -9176,8 +9171,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 var o = r.playlist_ar[u].downloadable;
                 if (!r.showPlaylistItemDownloadButton_bl) o = false;
                 FWDMSPPlaylistItem.setPrototype();
-                var a = "";
-                e = new FWDMSPPlaylistItem(r.playlist_ar[u].title, r.playlist_ar[u].titleText, r.playlistDownloadButtonN_img, t.playlistDownloadButtonS_str, t.playlistItemGrad1_img, t.playlistItemGrad2_img, t.playlistItemProgress1_img, t.playlistItemProgress2_img, t.playlistPlayButtonN_img, t.playlistItemBk1_img.src, t.playlistItemBk2_img.src, r.playlistPlayButtonN_str, r.playlistPlayButtonS_str, r.playlistPauseButtonN_str, r.playlistPauseButtonS_str, t.trackTitleNormalColor_str, t.trackTitleSelected_str, t.trackDurationColor_str, u, t.playPauseButtonOffsetLeftAndRight, r.trackTitleOffsetLeft, r.durationOffsetRight, r.downloadButtonOffsetRight, r.showPlaylistItemPlayButton_bl, o, a, n);
+                e = new FWDMSPPlaylistItem(r.playlist_ar[u].title, r.playlist_ar[u].titleText, r.playlistDownloadButtonN_img, t.playlistDownloadButtonS_str, t.playlistItemGrad1_img, t.playlistItemGrad2_img, t.playlistItemProgress1_img, t.playlistItemProgress2_img, t.playlistPlayButtonN_img, t.playlistItemBk1_img.src, t.playlistItemBk2_img.src, r.playlistPlayButtonN_str, r.playlistPlayButtonS_str, r.playlistPauseButtonN_str, r.playlistPauseButtonS_str, t.trackTitleNormalColor_str, t.trackTitleSelected_str, t.trackDurationColor_str, u, t.playPauseButtonOffsetLeftAndRight, r.trackTitleOffsetLeft, r.durationOffsetRight, r.downloadButtonOffsetRight, r.showPlaylistItemPlayButton_bl, o, n);
                 e.addListener(FWDMSPPlaylistItem.MOUSE_UP, r.itemOnUpHandler);
                 e.addListener(FWDMSPPlaylistItem.DOWNLOAD, r.downloadHandler);
                 r.items_ar[u] = e;
@@ -10123,36 +10117,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 }
                 O.downloadButton_do.setX(n - O.downloadButton_do.w - O.downloadButtonOffsetRight + 3);
                 O.downloadButton_do.setY(parseInt((t - O.downloadButton_do.h) / 2));
-                if (O.titleText_do.x + O.titleWidth + O.downloadButton_do.w + O.downloadButtonOffsetRight + 4 > n) {
-                    O.grad_do.setX(O.downloadButtonOffsetRight + 2)
-                } else {
-                    O.grad_do.setX(-300)
-                }
-            } else if (O.downloadButton_do) {
-                if (O.durationText_do) {
-                    O.durationText_do.setX(e - O.durationWidth - O.durationOffsetRight + 1);
-                    O.durationText_do.setY(r);
-                    n = O.durationText_do.x
-                } else {
-                    n = e
-                }
-                O.downloadButton_do.setX(n - O.downloadButton_do.w - O.downloadButtonOffsetRight + 3);
-                O.downloadButton_do.setY(parseInt((t - O.downloadButton_do.h) / 2));
                 if (O.titleText_do.x + O.titleWidth + O.downloadButton_do.w + O.downloadButtonOffsetRight > n) {
                     O.grad_do.setX(O.downloadButton_do.x - O.downloadButtonOffsetRight + 2)
-                } else {
-                    O.grad_do.setX(-300)
-                }
-            } else if (O.buyButton_do) {
-                if (O.durationText_do) {
-                    O.durationText_do.setX(e - O.durationWidth - O.durationOffsetRight + 1);
-                    O.durationText_do.setY(r);
-                    n = O.durationText_do.x
-                } else {
-                    n = e
-                }
-                if (O.titleText_do.x + O.titleWidth + O.downloadButtonOffsetRight > n) {
-                    O.grad_do.setX(O.downloadButtonOffsetRight + 2)
                 } else {
                     O.grad_do.setX(-300)
                 }
