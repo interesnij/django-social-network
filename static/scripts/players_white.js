@@ -387,9 +387,5 @@ video_player = new FWDUVPlayer({
 		contextMenuItemDisabledColor:"#BBB"
 });
 
-if (audio_player.play()){
-	video_player.pause();
-})
-if (video_player.play()){
-	audio_player.pause();
-})
+if (audio_player.play()){video_player.pause();}
+if (video_player.play()){audio_player.pause();}
