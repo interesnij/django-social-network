@@ -388,8 +388,8 @@ new FWDUVPlayer({
 });
 
 on('#ajax', 'click', '#video_stopped', function(e) {
-	FWDUVPlayer.PAUSE;
+	FWDUVPlayer.pause;
 })
 on('#ajax', 'click', '#audio_stopped', function(e) {
-	FWDMSP.PAUSE;
+	FWDMSP.pause;
 })
