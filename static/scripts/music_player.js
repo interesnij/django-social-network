@@ -7884,7 +7884,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             r.volumeScrubberDrag_do.setWidth(t);
             if (t < 1 && r.isVolumeScrubberLineVisible_bl) {
                 r.isVolumeScrubberLineVisible_bl = false;
-                FMUSICTweenMax.to(r.volumeScrubberBarLine_do, .5, {
+                MUSICTweenMax.to(r.volumeScrubberBarLine_do, .5, {
                     alpha: 0
                 })
             } else if (t > 1 && !r.isVolumeScrubberLineVisible_bl) {
@@ -8846,11 +8846,11 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             if (i.isMobile_bl && !i.hasPointerEvent_bl) return;
             MUSICTweenMax.killTweensOf(i.openS_do);
             MUSICTweenMax.killTweensOf(i.closeS_do);
-            FMUSICTweenMax.to(i.openS_do, .5, {
+            MUSICTweenMax.to(i.openS_do, .5, {
                 alpha: 0,
                 ease: Expo.easeOut
             });
-            FMUSICTweenMax.to(i.closeS_do, .5, {
+            MUSICTweenMax.to(i.closeS_do, .5, {
                 alpha: 0,
                 ease: Expo.easeOut
             })
@@ -9812,7 +9812,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             r.isDragging_bl = true;
             r.yPositionOnPress = r.scrHandler_do.y;
             r.lastPresedY = t.screenY;
-            FMUSICTweenMax.killTweensOf(r.scrHandler_do);
+            MUSICTweenMax.killTweensOf(r.scrHandler_do);
             r.showDisable();
             if (window.addEventListener) {
                 window.addEventListener("mousemove", r.scrollBarHandlerMoveHandler);
@@ -9938,7 +9938,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             if (r.lastListY != r.playListFinalY) {
                 MUSICTweenMax.killTweensOf(r.itemsHolder_do);
                 if (e) {
-                    FMUSICTweenMax.to(r.itemsHolder_do, .5, {
+                    MUSICTweenMax.to(r.itemsHolder_do, .5, {
                         y: r.playListFinalY,
                         ease: Quart.easeOut
                     })
@@ -10461,7 +10461,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                     ease: Expo.easeOut
                 });
                 if (O.durationText_do) {
-                    FMUSICTweenMax.to(O.durationText_do.screen, .8, {
+                    MUSICTweenMax.to(O.durationText_do.screen, .8, {
                         css: {
                             color: O.durationColor_str
                         },
@@ -10484,7 +10484,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 if (O.durationText_do) O.durationText_do.getStyle().color = O.durationColor_str;
                 if (O.playPause_do) {
                     MUSICTweenMax.killTweensOf(O.pauseS_do);
-                    FMUSICTweenMax.killTweensOf(O.playS_do);
+                    MUSICTweenMax.killTweensOf(O.playS_do);
                     O.pauseS_do.setAlpha(0);
                     O.playS_do.setAlpha(0)
                 }
