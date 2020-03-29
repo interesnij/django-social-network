@@ -3510,6 +3510,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                     break
                 }
             }
+          }
   };
   self.init()
 };
