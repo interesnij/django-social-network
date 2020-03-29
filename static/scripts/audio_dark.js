@@ -91,9 +91,4 @@ new FWDMSP({
     showOpenerPlayPauseButton:"yes",
     openerEqulizerOffsetLeft:3,
     openerEqulizerOffsetTop:-1,
-    //popup settings
-    showPopupButton:"no",
-    popupWindowBackgroundColor:"#878787",
-    popupWindowWidth:850,
-    popupWindowHeight:354
 });

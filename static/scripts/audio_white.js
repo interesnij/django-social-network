@@ -135,12 +135,6 @@
 				openerEqulizerOffsetLeft:3,           // сдвигание эквалайзера слева
 				openerEqulizerOffsetTop:-1,           // сдвигание эквалайзера сверху
 
-				//popup settings
-				showPopupButton:"no",                // показать всплывающую кнопку
-				popupWindowBackgroundColor:"#878787", // фон окна всплывающего окна
-				popupWindowWidth:850,                 // ширина окна всплывающего окна
-				popupWindowHeight:423,                // высота окна всплывающего окна
-
 				//a to b loop
 				atbTimeBackgroundColor:"transparent", // цвет фона "от / до"
 				atbTimeTextColorNormal:"#888888",     // цвет текста "от / до"
