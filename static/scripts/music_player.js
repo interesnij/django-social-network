@@ -1,3 +1,4 @@
+
 function A(e, t, n) {
     var r = t || 0,
         i = 0;
@@ -488,7 +489,7 @@ function B(e, t, n) {
         return n
     };
     t.isReadyMethodCalled_bl = false;
-    e.FWDMSPUtils = t
+    e.MUSICUtils = t
 })(window);
 (function(e) {
     var t = function() {
@@ -504,7 +505,7 @@ function B(e, t, n) {
             setInterval(this.position, 100)
         };
         this.position = function() {
-            var e = FWDMSPUtils.getScrollOffsets();
+            var e = MUSICUtils.getScrollOffsets();
             n.setX(e.x + 100);
             n.setY(e.y)
         };
@@ -516,7 +517,7 @@ function B(e, t, n) {
             }
         };
         this.setupScreen = function() {
-            this.main_do = new FWDMSPDisplayObject("div", "absolute");
+            this.main_do = new MUSICDisplayObject("div", "absolute");
             this.main_do.setOverflow("auto");
             this.main_do.setWidth(200);
             this.main_do.setHeight(300);
@@ -538,7 +539,7 @@ function B(e, t, n) {
         this.init()
     };
     t.setPrototype = function() {
-        t.prototype = new FWDMSPDisplayObject("div", "absolute")
+        t.prototype = new MUSICDisplayObject("div", "absolute")
     };
     t.prototype = null;
     e.FWDConsole = t
@@ -2160,43 +2161,43 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
     })
 })(window);
 (function(window) {
-    var FWDMSP = function(props) {
+    var MUSIC = function(props) {
         var self = this;
         self.init = function() {
             TweenLite.ticker.useRAF(false);
             this.props_obj = props;
             this.instanceName_str = this.props_obj.instanceName;
             if (!this.instanceName_str) {
-                alert("FWDMSP instance name is requires please make sure that the instanceName parameter exsists and it's value is uinique.");
+                alert("MUSIC instance name is requires please make sure that the instanceName parameter exsists and it's value is uinique.");
                 return
             }
             if (window[this.instanceName_str]) {
-                alert("FWDMSP instance name " + this.instanceName_str + " is already defined and contains a different instance reference, set a different instance name.");
+                alert("MUSIC instance name " + this.instanceName_str + " is already defined and contains a different instance reference, set a different instance name.");
                 return
             } else {
                 window[this.instanceName_str] = this
             }
             if (!this.props_obj) {
-                alert("FWDMSP constructor properties object is not defined!");
+                alert("MUSIC constructor properties object is not defined!");
                 return
             }
             this.position_str = self.props_obj.position;
-            if (!this.position_str) this.position_str = FWDMSP.POSITION_TOP;
+            if (!this.position_str) this.position_str = MUSIC.POSITION_TOP;
             if (this.position_str == "bottom") {
-                this.position_str = FWDMSP.POSITION_BOTTOM
+                this.position_str = MUSIC.POSITION_BOTTOM
             } else {
-                this.position_str = FWDMSP.POSITION_TOP
+                this.position_str = MUSIC.POSITION_TOP
             }
             this.stageContainer = document.createElement("div");
             this.stageContainer.style.position = "fixed";
-            if (FWDMSPUtils.isIEAndLessThen9) {
+            if (MUSICUtils.isIEAndLessThen9) {
                 this.stageContainer.style.zIndex = "2147483630"
             } else {
                 this.stageContainer.style.zIndex = "99999999990"
             }
             this.stageContainer.style.overflow = "visible";
             self.stageContainer.style.height = "0px";
-            if (FWDMSPUtils.isIE) {
+            if (MUSICUtils.isIE) {
                 document.getElementsByTagName("body")[0].appendChild(this.stageContainer)
             } else {
                 document.documentElement.appendChild(this.stageContainer)
@@ -2235,7 +2236,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             this.lastPercentPlayed = 0;
             this.popupWindowWidth = self.props_obj.popupWindowWidth || 500;
             this.popupWindowHeight = self.props_obj.popupWindowHeight || 400;
-            if (FWDMSPUtils.isIE) this.popupWindowHeight -= 3;
+            if (MUSICUtils.isIE) this.popupWindowHeight -= 3;
             this.resizeHandlerId_to;
             this.resizeHandler2Id_to;
             this.hidePreloaderId_to;
@@ -2256,17 +2257,17 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             this.useDeepLinking_bl = self.props_obj.useDeepLinking;
             this.useDeepLinking_bl = self.useDeepLinking_bl == "yes" ? true : false;
             this.openInPopup_bl = false;
-            this.isMobile_bl = FWDMSPUtils.isMobile;
-            this.hasPointerEvent_bl = FWDMSPUtils.hasPointerEvent;
+            this.isMobile_bl = MUSICUtils.isMobile;
+            this.hasPointerEvent_bl = MUSICUtils.hasPointerEvent;
             try {
                 if (window.opener && window.opener[this.instanceName_str] && window.opener[this.instanceName_str].instanceName_str == this.instanceName_str) {
                     this.openInPopup_bl = true;
                     this.popupWindow = window.opener[this.instanceName_str];
                     window.opener[this.instanceName_str].removeAndDisablePlayer();
                     if (!self.isMobile_bl) {
-                        document.cookie = "FWDMSP=" + self.instanceName_str + "; path=/";
+                        document.cookie = "MUSIC=" + self.instanceName_str + "; path=/";
                         window.onbeforeunload = function(e) {
-                            document.cookie = "FWDMSP=; expires=Thu, 01-Jan-70 00:00:01 GMT; path=/"
+                            document.cookie = "MUSIC=; expires=Thu, 01-Jan-70 00:00:01 GMT; path=/"
                         }
                     }
                 }
@@ -2275,7 +2276,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             this.startResizeHandler();
             this.setupInfo();
             this.setupData();
-            FWDMSP.instaces_ar.push(this)
+            MUSIC.instaces_ar.push(this)
         };
         this.popup = function() {
             if (self.popupWindow && !self.popupWindow.closed) return;
@@ -2283,9 +2284,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             var t = screen.width / 2 - self.popupWindowWidth / 2;
             var n = screen.height / 2 - self.popupWindowHeight / 2;
             var r = "no";
-            if (FWDMSPUtils.isSafari) r = "yes";
+            if (MUSICUtils.isSafari) r = "yes";
             try {
-                if (FWDMSPUtils.isMobile) {
+                if (MUSICUtils.isMobile) {
                     self.popupWindow = window.open(location.href, self.instanceName_str)
                 } else {
                     self.popupWindow = window.open(location.href, self.instanceName_str, "location=" + r + ", width=" + self.popupWindowWidth + ", height=" + self.popupWindowHeight + ", top=" + n + ", left=" + t)
@@ -2298,32 +2299,32 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                     self.isAPIReady_bl = false
                 }
                 self.stopResizeHandler();
-                self.dispatchEvent(FWDMSP.POPUP)
+                self.dispatchEvent(MUSIC.POPUP)
             } catch (i) {}
         };
         this.removeAndDisablePlayer = function() {
             self.stageContainer.style.display = "none"
         };
         self.setupMainDo = function() {
-            self.background_do = new FWDMSPDisplayObject("div");
+            self.background_do = new MUSICDisplayObject("div");
             self.background_do.getStyle().width = "100%";
-            self.main_do = new FWDMSPDisplayObject("div");
+            self.main_do = new MUSICDisplayObject("div");
             self.main_do.getStyle().msTouchAction = "none";
             self.main_do.getStyle().webkitTapHighlightColor = "rgba(0, 0, 0, 0)";
             self.main_do.setBackfaceVisibility();
-            if (!FWDMSPUtils.isMobile || FWDMSPUtils.isMobile && FWDMSPUtils.hasPointerEvent) self.main_do.setSelectable(false);
+            if (!MUSICUtils.isMobile || MUSICUtils.isMobile && MUSICUtils.hasPointerEvent) self.main_do.setSelectable(false);
             if (self.openInPopup_bl) {
                 document.documentElement.appendChild(self.main_do.screen);
                 self.stageContainer.style.position = "absolute";
                 document.documentElement.style.overflow = "hidden";
                 document.documentElement.style.backgroundColor = self.popupWindowBackgroundColor;
                 self.main_do.setBkColor(self.popupWindowBackgroundColor);
-                if (FWDMSPUtils.isIEAndLessThen9) {
+                if (MUSICUtils.isIEAndLessThen9) {
                     this.main_do.getStyle().zIndex = "2147483631"
                 } else {
                     this.main_do.getStyle().zIndex = "99999999991"
                 }
-                if (FWDMSPUtils.isIE) {
+                if (MUSICUtils.isIE) {
                     document.getElementsByTagName("body")[0].appendChild(self.main_do.screen)
                 } else {
                     document.getElementsByTagName("body")[0].style.display = "none"
@@ -2335,9 +2336,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }
         };
         self.setupInfo = function() {
-            FWDMSPInfo.setPrototype();
-            self.info_do = new FWDMSPInfo(self);
-            if (FWDMSPUtils.isIEAndLessThen9) {
+            MUSICInfo.setPrototype();
+            self.info_do = new MUSICInfo(self);
+            if (MUSICUtils.isIEAndLessThen9) {
                 self.info_do.getStyle().zIndex = "2147483632"
             } else {
                 self.info_do.getStyle().zIndex = "99999999992"
@@ -2346,7 +2347,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         self.startResizeHandler = function() {
             if (window.addEventListener) {
                 window.addEventListener("resize", self.onResizeHandler);
-                if (FWDMSPUtils.isAndroid) window.addEventListener("orientationchange", self.orientationChange)
+                if (MUSICUtils.isAndroid) window.addEventListener("orientationchange", self.orientationChange)
             } else if (window.attachEvent) {
                 window.attachEvent("onresize", self.onResizeHandler)
             }
@@ -2382,7 +2383,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         };
         self.resizeHandler = function(e, t) {
             if (!self.orintationChangeComplete_bl) return;
-            self.ws = FWDMSPUtils.getViewportSize();
+            self.ws = MUSICUtils.getViewportSize();
             self.stageWidth = document.documentElement.offsetWidth;
             self.stageContainer.style.width = "100%";
             self.stageContainer.style.left = "0px";
@@ -2400,7 +2401,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             if (self.isFirstPlaylistLoaded_bl) self.setStageContainerFinalHeightAndPosition(false)
         };
         this.setStageContainerFinalHeightAndPosition = function(e) {
-            if (!self.ws) self.ws = FWDMSPUtils.getViewportSize();
+            if (!self.ws) self.ws = MUSICUtils.getViewportSize();
             if (!self.controller_do || !self.allowToResizeAndPosition_bl) return;
             if (self.openInPopup_bl) {
                 self.main_do.setX(0);
@@ -2408,9 +2409,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 self.main_do.getStyle().width = "100%";
                 self.main_do.setHeight(self.ws.h);
                 self.controller_do.setX(0);
-                FWDMSPTweenMax.killTweensOf(self.controller_do);
+                MUSICTweenMax.killTweensOf(self.controller_do);
                 if (e) {
-                    if (self.controller_do.y != 0) FWDMSPTweenMax.to(self.controller_do, .8, {
+                    if (self.controller_do.y != 0) MUSICTweenMax.to(self.controller_do, .8, {
                         y: 0,
                         ease: Expo.easeInOut
                     })
@@ -2418,10 +2419,10 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                     self.controller_do.setY(0)
                 }
                 if (self.playlist_do) {
-                    FWDMSPTweenMax.killTweensOf(self.playlist_do);
+                    MUSICTweenMax.killTweensOf(self.playlist_do);
                     self.playlist_do.setX(0);
                     if (e) {
-                        FWDMSPTweenMax.to(self.playlist_do, .8, {
+                        MUSICTweenMax.to(self.playlist_do, .8, {
                             y: self.controller_do.h,
                             delay: .4,
                             ease: Expo.easeInOut
@@ -2434,7 +2435,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }
             clearTimeout(self.showPlaylistWithDelayId_to);
             if (self.playlist_do && self.playlist_do.isShowed_bl) addToHeight = self.playlist_do.h;
-            if (self.position_str == FWDMSP.POSITION_TOP) {
+            if (self.position_str == MUSIC.POSITION_TOP) {
                 if (self.playlist_do) {
                     self.background_do.setHeight(self.playlist_do.h + self.controller_do.h);
                     self.playlist_do.setY(0);
@@ -2462,101 +2463,101 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             } else {
                 if (self.main_do.x > 0) self.opener_do.setX(self.main_do.x)
             }
-            FWDMSPTweenMax.killTweensOf(self.stageContainer);
-            FWDMSPTweenMax.killTweensOf(self.background_do);
-            FWDMSPTweenMax.killTweensOf(self.controller_do);
-            FWDMSPTweenMax.killTweensOf(self.opener_do);
+            MUSICTweenMax.killTweensOf(self.stageContainer);
+            MUSICTweenMax.killTweensOf(self.background_do);
+            MUSICTweenMax.killTweensOf(self.controller_do);
+            MUSICTweenMax.killTweensOf(self.opener_do);
             self.center();
             if (e) {
-                if (self.position_str == FWDMSP.POSITION_TOP) {
+                if (self.position_str == MUSIC.POSITION_TOP) {
                     if (self.playlist_do && self.playlist_do.isShowed_bl && self.controller_do.isShowed_bl) {
-                        FWDMSPTweenMax.to(self.stageContainer, .8, {
+                        MUSICTweenMax.to(self.stageContainer, .8, {
                             css: {
                                 top: 0
                             },
                             ease: Expo.easeInOut
                         });
-                        FWDMSPTweenMax.to(self.opener_do, .8, {
+                        MUSICTweenMax.to(self.opener_do, .8, {
                             y: self.playlist_do.h + self.controller_do.h,
                             ease: Expo.easeInOut
                         })
                     } else if (self.controller_do.isShowed_bl && self.playlist_do) {
-                        FWDMSPTweenMax.to(self.stageContainer, .8, {
+                        MUSICTweenMax.to(self.stageContainer, .8, {
                             css: {
                                 top: -self.playlist_do.h
                             },
                             ease: Expo.easeInOut
                         });
-                        FWDMSPTweenMax.to(self.opener_do, .8, {
+                        MUSICTweenMax.to(self.opener_do, .8, {
                             y: self.playlist_do.h + self.controller_do.h,
                             ease: Expo.easeInOut
                         })
                     } else if (!self.controller_do.isShowed_bl && self.playlist_do) {
-                        FWDMSPTweenMax.to(self.stageContainer, .8, {
+                        MUSICTweenMax.to(self.stageContainer, .8, {
                             css: {
                                 top: -self.playlist_do.h - self.controller_do.h
                             },
                             ease: Expo.easeInOut
                         });
-                        FWDMSPTweenMax.to(self.opener_do, .8, {
+                        MUSICTweenMax.to(self.opener_do, .8, {
                             y: self.playlist_do.h + self.controller_do.h,
                             ease: Expo.easeInOut,
                             onComplete: self.moveWheyLeft
                         })
                     } else if (self.controller_do.isShowed_bl) {
-                        FWDMSPTweenMax.to(self.stageContainer, .8, {
+                        MUSICTweenMax.to(self.stageContainer, .8, {
                             css: {
                                 top: 0
                             },
                             ease: Expo.easeInOut
                         });
-                        FWDMSPTweenMax.to(self.opener_do, .8, {
+                        MUSICTweenMax.to(self.opener_do, .8, {
                             y: self.controller_do.h,
                             ease: Expo.easeInOut
                         })
                     } else {
-                        FWDMSPTweenMax.to(self.stageContainer, .8, {
+                        MUSICTweenMax.to(self.stageContainer, .8, {
                             css: {
                                 top: -self.controller_do.h
                             },
                             ease: Expo.easeInOut
                         });
-                        FWDMSPTweenMax.to(self.opener_do, .8, {
+                        MUSICTweenMax.to(self.opener_do, .8, {
                             y: self.controller_do.h,
                             ease: Expo.easeInOut
                         })
                     }
                 } else {
                     if (self.playlist_do && self.playlist_do.isShowed_bl && self.controller_do.isShowed_bl) {
-                        FWDMSPTweenMax.to(self.stageContainer, .8, {
+                        MUSICTweenMax.to(self.stageContainer, .8, {
                             css: {
                                 top: self.ws.h - self.controller_do.h - self.playlist_do.h
                             },
                             ease: Expo.easeInOut
                         })
                     } else if (self.controller_do.isShowed_bl && self.playlist_do) {
-                        FWDMSPTweenMax.to(self.stageContainer, .8, {
+                        MUSICTweenMax.to(self.stageContainer, .8, {
                             css: {
                                 top: self.ws.h - self.controller_do.h
                             },
                             ease: Expo.easeInOut
                         })
                     } else if (self.controller_do.isShowed_bl) {
-                        FWDMSPTweenMax.to(self.stageContainer, .8, {
+                        MUSICTweenMax.to(self.stageContainer, .8, {
                             css: {
                                 top: self.ws.h - self.controller_do.h
                             },
                             ease: Expo.easeInOut
                         })
                     } else if (self.controller_do.isShowed_bl) {
-                        FWDMSPTweenMax.to(self.stageContainer, .8, {
+                        MUSICTweenMax.to(self.stageContainer, .8, {
                             css: {
                                 top: 0
                             },
                             ease: Expo.easeInOut
                         })
                     } else {
-                        FWDMSPTweenMax.to(self.stageContainer, .8, {
+                        MUSICTweenMax.to(self.stageContainer, .8, {
                             css: {
                                 top: self.ws.h
                             },
@@ -2564,13 +2565,13 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                             onComplete: self.moveWheyLeft
                         })
                     }
-                    FWDMSPTweenMax.to(self.opener_do, .8, {
+                    MUSICTweenMax.to(self.opener_do, .8, {
                         y: -self.opener_do.h,
                         ease: Expo.easeInOut
                     })
                 }
             } else {
-                if (self.position_str == FWDMSP.POSITION_TOP) {
+                if (self.position_str == MUSIC.POSITION_TOP) {
                     if (self.playlist_do && self.playlist_do.isShowed_bl && self.controller_do.isShowed_bl) {
                         self.stageContainer.style.top = "0px";
                         self.opener_do.setY(self.playlist_do.h + self.controller_do.h)
@@ -2612,11 +2613,11 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             self.background_do.getStyle().width = "100%"
         };
         this.setupContextMenu = function() {
-            self.customContextMenu_do = new FWDMSPContextMenu(self.main_do, self.data.rightClickContextMenu_str)
+            self.customContextMenu_do = new MUSICContextMenu(self.main_do, self.data.rightClickContextMenu_str)
         };
         this.setupMainInstances = function() {
             if (self.controller_do) return;
-            if (FWDMSP.hasHTML5Audio) self.setupAudioScreen();
+            if (MUSIC.hasHTML5Audio) self.setupAudioScreen();
             if (self.data.showPlaylistsButtonAndPlaylists_bl) self.setupCategories();
             if (self.data.showPlayListButtonAndPlaylist_bl) self.setupPlaylist();
             self.setupController();
@@ -2624,12 +2625,12 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             self.controller_do.resizeAndPosition()
         };
         this.setupData = function() {
-            FWDMSPAudioData.setPrototype();
-            self.data = new FWDMSPAudioData(self.props_obj, self.rootElement_el, self);
-            self.data.addListener(FWDMSPAudioData.PRELOADER_LOAD_DONE, self.onPreloaderLoadDone);
-            self.data.addListener(FWDMSPAudioData.LOAD_ERROR, self.dataLoadError);
-            self.data.addListener(FWDMSPAudioData.SKIN_LOAD_COMPLETE, self.dataSkinLoadComplete);
-            self.data.addListener(FWDMSPAudioData.PLAYLIST_LOAD_COMPLETE, self.dataPlayListLoadComplete)
+            MUSICAudioData.setPrototype();
+            self.data = new MUSICAudioData(self.props_obj, self.rootElement_el, self);
+            self.data.addListener(MUSICAudioData.PRELOADER_LOAD_DONE, self.onPreloaderLoadDone);
+            self.data.addListener(MUSICAudioData.LOAD_ERROR, self.dataLoadError);
+            self.data.addListener(MUSICAudioData.SKIN_LOAD_COMPLETE, self.dataSkinLoadComplete);
+            self.data.addListener(MUSICAudioData.PLAYLIST_LOAD_COMPLETE, self.dataPlayListLoadComplete)
         };
         self.onPreloaderLoadDone = function() {
             self.maxHeight = 32;
@@ -2646,8 +2647,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             self.main_do.addChild(self.info_do);
             self.info_do.showText(e.text);
             if (!self.controller_do) {
-                if (!self.ws) self.ws = FWDMSPUtils.getViewportSize();
-                if (self.position_str == FWDMSP.POSITION_TOP) {
+                if (!self.ws) self.ws = MUSICUtils.getViewportSize();
+                if (self.position_str == MUSIC.POSITION_TOP) {
                     self.stageContainer.style.top = "0px"
                 } else {
                     self.stageContainer.style.top = self.ws.h - self.maxHeight + "px"
@@ -2655,7 +2656,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 self.main_do.setHeight(self.maxHeight)
             }
             self.resizeHandler();
-            self.dispatchEvent(FWDMSP.ERROR, {
+            self.dispatchEvent(MUSIC.ERROR, {
                 error: e.text
             })
         };
@@ -2678,10 +2679,10 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }
         };
         this.dataPlayListLoadComplete = function() {
-            if (!self.isAPIReady_bl) self.dispatchEvent(FWDMSP.READY);
+            if (!self.isAPIReady_bl) self.dispatchEvent(MUSIC.READY);
             self.isAPIReady_bl = true;
             self.isPlaylistLoaded_bl = true;
-            if (FWDMSP.hasHTML5Audio) {
+            if (MUSIC.hasHTML5Audio) {
                 self.setupMainInstances();
                 self.updatePlaylist()
             } else {
@@ -2691,7 +2692,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                     self.setupFlashScreen()
                 }
             }
-            self.dispatchEvent(FWDMSP.LOAD_PLAYLIST_COMPLETE)
+            self.dispatchEvent(MUSIC.LOAD_PLAYLIST_COMPLETE)
         };
         this.updatePlaylist = function() {
             if (self.main_do)
@@ -2731,7 +2732,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 return
             }
             self.allowToResizeAndPosition_bl = true;
-            if (self.position_str == FWDMSP.POSITION_TOP) {
+            if (self.position_str == MUSIC.POSITION_TOP) {
                 if (self.playlist_do && self.controller_do.isShowed_bl) {
                     if (!self.showedFirstTime_bl) {
                         self.stageContainer.style.top = -self.controller_do.h - self.playlist_do.h + "px";
@@ -2801,7 +2802,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             if (self.playlist_do) self.playlist_do.destroyPlaylist();
             self.positionPreloader();
             self.setStageContainerFinalHeightAndPosition(false);
-            self.dispatchEvent(FWDMSP.START_TO_LOAD_PLAYLIST)
+            self.dispatchEvent(MUSIC.START_TO_LOAD_PLAYLIST)
         };
         this.setupDL = function() {
             FWDAddress.onChange = self.dlChangeHandler;
@@ -2847,10 +2848,10 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }
         };
         this.setupPreloader = function() {
-            FWDMSPPreloader.setPrototype();
-            self.preloader_do = new FWDMSPPreloader(self.data.preloaderPath_str, 53, 34, 30, 80);
-            self.preloader_do.addListener(FWDMSPPreloader.HIDE_COMPLETE, self.preloaderHideComplete);
-            if (FWDMSPUtils.isIEAndLessThen9) {
+            MUSICPreloader.setPrototype();
+            self.preloader_do = new MUSICPreloader(self.data.preloaderPath_str, 53, 34, 30, 80);
+            self.preloader_do.addListener(MUSICPreloader.HIDE_COMPLETE, self.preloaderHideComplete);
+            if (MUSICUtils.isIEAndLessThen9) {
                 self.preloader_do.getStyle().zIndex = "2147483633"
             } else {
                 self.preloader_do.getStyle().zIndex = "99999999993"
@@ -2868,7 +2869,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 } else {
                     self.preloader_do.setY(0)
                 }
-            } else if (self.position_str == FWDMSP.POSITION_TOP) {
+            } else if (self.position_str == MUSIC.POSITION_TOP) {
                 if (self.controller_do && !self.controller_do.isShowed_bl) {
                     self.preloader_do.setY(-200)
                 } else if (self.controller_do) {
@@ -2895,9 +2896,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             if (!self.animate_bl) self.setStageContainerFinalHeightAndPosition(false)
         };
         this.setupOpener = function() {
-            FWDMSPOpener.setPrototype();
-            self.opener_do = new FWDMSPOpener(self.data, self.position_str, self.controller_do.isShowed_bl);
-            if (FWDMSPUtils.isIEAndLessThen9) {
+            MUSICOpener.setPrototype();
+            self.opener_do = new MUSICOpener(self.data, self.position_str, self.controller_do.isShowed_bl);
+            if (MUSICUtils.isIEAndLessThen9) {
                 self.opener_do.getStyle().zIndex = "2147483634"
             } else {
                 self.opener_do.getStyle().zIndex = "99999999994"
@@ -2908,10 +2909,10 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             } else {
                 self.opener_do.showOpenButton()
             }
-            self.opener_do.addListener(FWDMSPOpener.SHOW, self.openerShowHandler);
-            self.opener_do.addListener(FWDMSPOpener.HIDE, self.openerHideHandler);
-            self.opener_do.addListener(FWDMSPController.PLAY, self.controllerOnPlayHandler);
-            self.opener_do.addListener(FWDMSPController.PAUSE, self.controllerOnPauseHandler);
+            self.opener_do.addListener(MUSICOpener.SHOW, self.openerShowHandler);
+            self.opener_do.addListener(MUSICOpener.HIDE, self.openerHideHandler);
+            self.opener_do.addListener(MUSICController.PLAY, self.controllerOnPlayHandler);
+            self.opener_do.addListener(MUSICController.PAUSE, self.controllerOnPauseHandler);
             if (self.data.showOpener_bl) self.stageContainer.appendChild(self.opener_do.screen)
         };
         this.openerShowHandler = function() {
@@ -2921,14 +2922,14 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             self.hidePlayer()
         };
         this.setupCategories = function() {
-            FWDMSPCategories.setPrototype();
-            self.categories_do = new FWDMSPCategories(self.data);
-            if (FWDMSPUtils.isIEAndLessThen9) {
+            MUSICCategories.setPrototype();
+            self.categories_do = new MUSICCategories(self.data);
+            if (MUSICUtils.isIEAndLessThen9) {
                 self.categories_do.getStyle().zIndex = "2147483635"
             } else {
                 self.categories_do.getStyle().zIndex = "99999999995"
             }
-            self.categories_do.addListener(FWDMSPCategories.HIDE_COMPLETE, self.categoriesHideCompleteHandler);
+            self.categories_do.addListener(MUSICCategories.HIDE_COMPLETE, self.categoriesHideCompleteHandler);
             if (self.data.showPlaylistsByDefault_bl) {
                 self.showCatWidthDelayId_to = setTimeout(function() {
                     self.showCategories()
@@ -2952,16 +2953,16 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }
         };
         this.setupPlaylist = function() {
-            FWDMSPPlaylist.setPrototype();
-            self.playlist_do = new FWDMSPPlaylist(self.data, self);
-            self.playlist_do.addListener(FWDMSPPlaylistItem.MOUSE_UP, self.palylistItemOnUpHandler);
-            self.playlist_do.addListener(FWDMSPPlaylistItem.DOWNLOAD, self.palylistItemDownloadHandler);
-            self.playlist_do.addListener(FWDMSPPlaylistItem.BUY, self.palylistItemBuyHandler);
-            self.playlist_do.addListener(FWDMSPPlaylist.UPDATE_TRACK_TITLE_if_FOLDER, self.palylistUpdateFolderTrackTitle);
+            MUSICPlaylist.setPrototype();
+            self.playlist_do = new MUSICPlaylist(self.data, self);
+            self.playlist_do.addListener(MUSICPlaylistItem.MOUSE_UP, self.palylistItemOnUpHandler);
+            self.playlist_do.addListener(MUSICPlaylistItem.DOWNLOAD, self.palylistItemDownloadHandler);
+            self.playlist_do.addListener(MUSICPlaylistItem.BUY, self.palylistItemBuyHandler);
+            self.playlist_do.addListener(MUSICPlaylist.UPDATE_TRACK_TITLE_if_FOLDER, self.palylistUpdateFolderTrackTitle);
             self.main_do.addChild(self.playlist_do)
         };
         this.palylistItemOnUpHandler = function(e) {
-            if (FWDMSP.hasHTML5Audio) {
+            if (MUSIC.hasHTML5Audio) {
                 if (self.audioScreen_do.isPlaying_bl && e.id == self.id) {
                     self.pause()
                 } else if (!self.audioScreen_do.isStopped_bl && e.id == self.id) {
@@ -3003,29 +3004,29 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             self.buy(e.id)
         };
         this.setupController = function() {
-            FWDMSPController.setPrototype();
-            self.controller_do = new FWDMSPController(self.data, self);
-            self.controller_do.addListener(FWDMSPController.POPUP, self.controllerOnPopupHandler);
-            self.controller_do.addListener(FWDMSPController.PLAY, self.controllerOnPlayHandler);
-            self.controller_do.addListener(FWDMSPController.PLAY_NEXT, self.controllerPlayNextHandler);
-            self.controller_do.addListener(FWDMSPController.PLAY_PREV, self.controllerPlayPrevHandler);
-            self.controller_do.addListener(FWDMSPController.PAUSE, self.controllerOnPauseHandler);
-            self.controller_do.addListener(FWDMSPController.VOLUME_START_TO_SCRUB, self.volumeStartToScrubbHandler);
-            self.controller_do.addListener(FWDMSPController.VOLUME_STOP_TO_SCRUB, self.volumeStopToScrubbHandler);
-            self.controller_do.addListener(FWDMSPController.START_TO_SCRUB, self.controllerStartToScrubbHandler);
-            self.controller_do.addListener(FWDMSPController.SCRUB, self.controllerScrubbHandler);
-            self.controller_do.addListener(FWDMSPController.SCRUB_PLAYLIST_ITEM, self.controllerPlaylistItemScrubbHandler);
-            self.controller_do.addListener(FWDMSPController.STOP_TO_SCRUB, self.controllerStopToScrubbHandler);
-            self.controller_do.addListener(FWDMSPController.CHANGE_VOLUME, self.controllerChangeVolumeHandler);
-            self.controller_do.addListener(FWDMSPController.SHOW_CATEGORIES, self.showCategoriesHandler);
-            self.controller_do.addListener(FWDMSPController.SHOW_PLAYLIST, self.showPlaylistHandler);
-            self.controller_do.addListener(FWDMSPController.HIDE_PLAYLIST, self.hidePlaylistHandler);
-            self.controller_do.addListener(FWDMSPController.ENABLE_LOOP, self.enableLoopHandler);
-            self.controller_do.addListener(FWDMSPController.DISABLE_LOOP, self.disableLoopHandler);
-            self.controller_do.addListener(FWDMSPController.DOWNLOAD_MP3, self.controllerButtonDownloadMp3Handler);
-            self.controller_do.addListener(FWDMSPController.ENABLE_SHUFFLE, self.enableShuffleHandler);
-            self.controller_do.addListener(FWDMSPController.DISABLE_SHUFFLE, self.disableShuffleHandler);
-            self.controller_do.addListener(FWDMSPController.BUY, self.controllerButtonBuyHandler);
+            MUSICController.setPrototype();
+            self.controller_do = new MUSICController(self.data, self);
+            self.controller_do.addListener(MUSICController.POPUP, self.controllerOnPopupHandler);
+            self.controller_do.addListener(MUSICController.PLAY, self.controllerOnPlayHandler);
+            self.controller_do.addListener(MUSICController.PLAY_NEXT, self.controllerPlayNextHandler);
+            self.controller_do.addListener(MUSICController.PLAY_PREV, self.controllerPlayPrevHandler);
+            self.controller_do.addListener(MUSICController.PAUSE, self.controllerOnPauseHandler);
+            self.controller_do.addListener(MUSICController.VOLUME_START_TO_SCRUB, self.volumeStartToScrubbHandler);
+            self.controller_do.addListener(MUSICController.VOLUME_STOP_TO_SCRUB, self.volumeStopToScrubbHandler);
+            self.controller_do.addListener(MUSICController.START_TO_SCRUB, self.controllerStartToScrubbHandler);
+            self.controller_do.addListener(MUSICController.SCRUB, self.controllerScrubbHandler);
+            self.controller_do.addListener(MUSICController.SCRUB_PLAYLIST_ITEM, self.controllerPlaylistItemScrubbHandler);
+            self.controller_do.addListener(MUSICController.STOP_TO_SCRUB, self.controllerStopToScrubbHandler);
+            self.controller_do.addListener(MUSICController.CHANGE_VOLUME, self.controllerChangeVolumeHandler);
+            self.controller_do.addListener(MUSICController.SHOW_CATEGORIES, self.showCategoriesHandler);
+            self.controller_do.addListener(MUSICController.SHOW_PLAYLIST, self.showPlaylistHandler);
+            self.controller_do.addListener(MUSICController.HIDE_PLAYLIST, self.hidePlaylistHandler);
+            self.controller_do.addListener(MUSICController.ENABLE_LOOP, self.enableLoopHandler);
+            self.controller_do.addListener(MUSICController.DISABLE_LOOP, self.disableLoopHandler);
+            self.controller_do.addListener(MUSICController.DOWNLOAD_MP3, self.controllerButtonDownloadMp3Handler);
+            self.controller_do.addListener(MUSICController.ENABLE_SHUFFLE, self.enableShuffleHandler);
+            self.controller_do.addListener(MUSICController.DISABLE_SHUFFLE, self.disableShuffleHandler);
+            self.controller_do.addListener(MUSICController.BUY, self.controllerButtonBuyHandler);
             self.main_do.addChild(self.controller_do);
             if (self.openInPopup_bl && self.data.showPlaylistsButtonAndPlaylists_bl) {
                 self.controller_do.setPlaylistButtonState("selected");
@@ -3036,7 +3037,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             self.popup()
         };
         this.controllerOnPlayHandler = function(e) {
-            if (FWDMSP.hasHTML5Audio) {
+            if (MUSIC.hasHTML5Audio) {
                 self.audioScreen_do.play()
             } else if (self.isFlashScreenReady_bl) {
                 self.flashObject.playAudio()
@@ -3057,7 +3058,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }
         };
         this.controllerOnPauseHandler = function(e) {
-            if (FWDMSP.hasHTML5Audio) {
+            if (MUSIC.hasHTML5Audio) {
                 self.audioScreen_do.pause()
             } else if (self.isFlashScreenReady_bl) {
                 self.flashObject.pauseAudio()
@@ -3071,15 +3072,15 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         };
         this.controllerStartToScrubbHandler = function(e) {
             if (self.playlist_do) self.playlist_do.showDisable();
-            if (FWDMSP.hasHTML5Audio) {
+            if (MUSIC.hasHTML5Audio) {
                 self.audioScreen_do.startToScrub()
             } else if (self.isFlashScreenReady_bl) {
-                FWDMSP.pauseAllAudio(self);
+                MUSIC.pauseAllAudio(self);
                 self.flashObject.startToScrub()
             }
         };
         this.controllerScrubbHandler = function(e) {
-            if (FWDMSP.hasHTML5Audio) {
+            if (MUSIC.hasHTML5Audio) {
                 self.audioScreen_do.scrub(e.percent)
             } else if (self.isFlashScreenReady_bl) {
                 self.flashObject.scrub(e.percent)
@@ -3090,14 +3091,14 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         };
         this.controllerStopToScrubbHandler = function(e) {
             if (self.playlist_do) self.playlist_do.hideDisable();
-            if (FWDMSP.hasHTML5Audio) {
+            if (MUSIC.hasHTML5Audio) {
                 self.audioScreen_do.stopToScrub()
             } else if (self.isFlashScreenReady_bl) {
                 self.flashObject.stopToScrub()
             }
         };
         this.controllerChangeVolumeHandler = function(e) {
-            if (FWDMSP.hasHTML5Audio) {
+            if (MUSIC.hasHTML5Audio) {
                 self.audioScreen_do.setVolume(e.percent)
             } else if (self.isFlashScreenReady_bl) {
                 self.flashObject.setVolume(e.percent)
@@ -3140,18 +3141,18 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             self.buy()
         };
         this.setupAudioScreen = function() {
-            FWDMSPAudioScreen.setPrototype();
-            self.audioScreen_do = new FWDMSPAudioScreen(self.data.volume, self.data.autoPlay_bl, self.data.loop_bl);
-            self.audioScreen_do.addListener(FWDMSPAudioScreen.ERROR, self.audioScreenErrorHandler);
-            self.audioScreen_do.addListener(FWDMSPAudioScreen.START, self.audioScreenSatrtHandler);
-            self.audioScreen_do.addListener(FWDMSPAudioScreen.SAFE_TO_SCRUBB, self.audioScreenSafeToScrubbHandler);
-            self.audioScreen_do.addListener(FWDMSPAudioScreen.STOP, self.audioScreenStopHandler);
-            self.audioScreen_do.addListener(FWDMSPAudioScreen.PLAY, self.audioScreenPlayHandler);
-            self.audioScreen_do.addListener(FWDMSPAudioScreen.PAUSE, self.audioScreenPauseHandler);
-            self.audioScreen_do.addListener(FWDMSPAudioScreen.UPDATE, self.audioScreenUpdateHandler);
-            self.audioScreen_do.addListener(FWDMSPAudioScreen.UPDATE_TIME, self.audioScreenUpdateTimeHandler);
-            self.audioScreen_do.addListener(FWDMSPAudioScreen.LOAD_PROGRESS, self.audioScreenLoadProgressHandler);
-            self.audioScreen_do.addListener(FWDMSPAudioScreen.PLAY_COMPLETE, self.audioScreenPlayCompleteHandler);
+            MUSICAudioScreen.setPrototype();
+            self.audioScreen_do = new MUSICAudioScreen(self.data.volume, self.data.autoPlay_bl, self.data.loop_bl);
+            self.audioScreen_do.addListener(MUSICAudioScreen.ERROR, self.audioScreenErrorHandler);
+            self.audioScreen_do.addListener(MUSICAudioScreen.START, self.audioScreenSatrtHandler);
+            self.audioScreen_do.addListener(MUSICAudioScreen.SAFE_TO_SCRUBB, self.audioScreenSafeToScrubbHandler);
+            self.audioScreen_do.addListener(MUSICAudioScreen.STOP, self.audioScreenStopHandler);
+            self.audioScreen_do.addListener(MUSICAudioScreen.PLAY, self.audioScreenPlayHandler);
+            self.audioScreen_do.addListener(MUSICAudioScreen.PAUSE, self.audioScreenPauseHandler);
+            self.audioScreen_do.addListener(MUSICAudioScreen.UPDATE, self.audioScreenUpdateHandler);
+            self.audioScreen_do.addListener(MUSICAudioScreen.UPDATE_TIME, self.audioScreenUpdateTimeHandler);
+            self.audioScreen_do.addListener(MUSICAudioScreen.LOAD_PROGRESS, self.audioScreenLoadProgressHandler);
+            self.audioScreen_do.addListener(MUSICAudioScreen.PLAY_COMPLETE, self.audioScreenPlayCompleteHandler);
             if (self.useOnlyAPI_bl) {
                 document.documentElement.appendChild(self.audioScreen_do.screen)
             } else {
@@ -3160,7 +3161,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         };
         this.audioScreenErrorHandler = function(e) {
             var t;
-            if (FWDMSP.hasHTML5Audio) {
+            if (MUSIC.hasHTML5Audio) {
                 t = e.text;
                 if (self.main_do) self.main_do.addChild(self.info_do);
                 if (self.info_do) self.info_do.showText(t)
@@ -3169,16 +3170,16 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 if (self.main_do) self.main_do.addChild(self.info_do);
                 if (self.info_do) self.info_do.showText(t)
             }
-            if (self.position_str == FWDMSP.POSITION_TOP && self.playlist_do) {
+            if (self.position_str == MUSIC.POSITION_TOP && self.playlist_do) {
                 self.info_do.setY(self.playlist_do.h);
                 self.info_do.setHeight(self.controller_do.h)
             }
-            self.dispatchEvent(FWDMSP.ERROR, {
+            self.dispatchEvent(MUSIC.ERROR, {
                 error: t
             })
         };
         this.audioScreenSatrtHandler = function() {
-            self.dispatchEvent(FWDMSP.START)
+            self.dispatchEvent(MUSIC.START)
         };
         this.audioScreenSafeToScrubbHandler = function() {
             if (self.controller_do) self.controller_do.enableMainScrubber()
@@ -3191,7 +3192,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 self.controller_do.stopEqulizer();
                 self.controller_do.disableMainScrubber()
             }
-            self.dispatchEvent(FWDMSP.STOP)
+            self.dispatchEvent(MUSIC.STOP)
         };
         this.audioScreenPlayHandler = function() {
             if (self.controller_do) {
@@ -3206,7 +3207,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                     self.scrubbedFirstTimeInPopup_bl = true
                 }, 600)
             }
-            self.dispatchEvent(FWDMSP.PLAY)
+            self.dispatchEvent(MUSIC.PLAY)
         };
         this.audioScreenPauseHandler = function() {
             if (self.controller_do) {
@@ -3217,11 +3218,11 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             if (self.playlist_do) {
                 self.playlist_do.setCurItemPlayState()
             }
-            self.dispatchEvent(FWDMSP.PAUSE)
+            self.dispatchEvent(MUSIC.PAUSE)
         };
         this.audioScreenUpdateHandler = function(e) {
             var t;
-            if (FWDMSP.hasHTML5Audio) {
+            if (MUSIC.hasHTML5Audio) {
                 t = e.percent;
                 if (self.controller_do) self.controller_do.updateMainScrubber(t);
                 if (self.playlist_do) self.playlist_do.updateCurItemProgress(t)
@@ -3230,14 +3231,14 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 if (self.controller_do) self.controller_do.updateMainScrubber(t);
                 if (self.playlist_do) self.playlist_do.updateCurItemProgress(t)
             }
-            self.dispatchEvent(FWDMSP.UPDATE, {
+            self.dispatchEvent(MUSIC.UPDATE, {
                 percent: t
             })
         };
         this.audioScreenUpdateTimeHandler = function(e, t) {
             var n;
             var r;
-            if (FWDMSP.hasHTML5Audio) {
+            if (MUSIC.hasHTML5Audio) {
                 n = e.curTime;
                 r = e.totalTime;
                 if (self.controller_do) self.controller_do.updateTime(n, r)
@@ -3247,21 +3248,21 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 if (r.length > n.length) n = parseInt(r.substring(0, 1)) - 1 + ":" + n;
                 if (self.controller_do) self.controller_do.updateTime(n, r)
             }
-            self.dispatchEvent(FWDMSP.UPDATE_TIME, {
+            self.dispatchEvent(MUSIC.UPDATE_TIME, {
                 curTime: n,
                 totalTime: r
             })
         };
         this.audioScreenLoadProgressHandler = function(e) {
-            if (FWDMSP.hasHTML5Audio) {
+            if (MUSIC.hasHTML5Audio) {
                 if (self.controller_do) self.controller_do.updatePreloaderBar(e.percent)
             } else {
                 if (self.controller_do) self.controller_do.updatePreloaderBar(e)
             }
         };
         this.audioScreenPlayCompleteHandler = function() {
-            self.dispatchEvent(FWDMSP.PLAY_COMPLETE);
-            if (FWDMSP.hasHTML5Audio) {
+            self.dispatchEvent(MUSIC.PLAY_COMPLETE);
+            if (MUSIC.hasHTML5Audio) {
                 if (self.data.loop_bl) {
                     self.audioScreen_do.replay()
                 } else if (self.data.shuffle_bl) {
@@ -3291,7 +3292,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 if (self.preloader_do) self.preloader_do.hide(false);
                 return
             }
-            self.flash_do = new FWDMSPDisplayObject("div");
+            self.flash_do = new MUSICDisplayObject("div");
             self.flash_do.setBackfaceVisibility();
             self.flash_do.setResizableSizeAfterParent();
             if (self.useOnlyAPI_bl) {
@@ -3303,7 +3304,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             self.flashObjectMarkup_str = '<object id="' + (self.instanceName_str + "1") + '" name="' + (self.instanceName_str + "1") + '" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="100%" height="100%"><param name="movie" value="' + self.data.flashPath_str + '"/><param name="wmode" value="transparent"><param name=FlashVars value="instanceName=' + self.instanceName_str + "&sourcePath=" + e + "&volume=" + self.data.volume + "&autoPlay=" + self.data.autoPlay_bl + "&loop=" + self.data.loop_bl + '"/><param name = "allowScriptAccess" value="always" /><!--[if !IE]>--><object name="myCom" type="application/x-shockwave-flash" data="' + self.data.flashPath_str + '" width="100%" height="100%"><param name="swliveconnect" value="true"/><param name="wmode" value="transparent"><param name=FlashVars value="instanceName=' + self.instanceName_str + "&sourcePath=" + e + "&volume=" + self.data.volume + "&autoPlay=" + self.data.autoPlay_bl + "&loop=" + self.data.loop_bl + '"/><!--<![endif]--><!--[if !IE]>--></object><!--<![endif]--></object>';
             self.flash_do.screen.innerHTML = self.flashObjectMarkup_str;
             self.flashObject = self.flash_do.screen.firstChild;
-            if (!FWDMSPUtils.isIE) self.flashObject = self.flashObject.getElementsByTagName("object")[0]
+            if (!MUSICUtils.isIE) self.flashObject = self.flashObject.getElementsByTagName("object")[0]
         };
         this.flashScreenIsReady = function() {
             self.isFlashScreenReady_bl = true;
@@ -3335,13 +3336,13 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 self.id = self.totalAudio - 1
             }
             var t = self.data.playlist_ar[self.id].source;
-            if (FWDMSP.hasHTML5Audio) {
+            if (MUSIC.hasHTML5Audio) {
                 self.audioScreen_do.setSource(t)
             } else {
                 var n = t.split(",");
                 for (var r = 0; r < n.length; r++) {
                     t = n[r];
-                    n[r] = FWDMSPUtils.trim(t)
+                    n[r] = MUSICUtils.trim(t)
                 }
                 for (var r = 0; r < n.length; r++) {
                     if (n[r].indexOf(".mp3") != -1) {
@@ -3356,7 +3357,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             if (self.data.playlist_ar[self.id].duration == undefined) {
                 self.controller_do.updateTime("00:00", "00:00")
             } else {
-                self.controller_do.updateTime("00:00", FWDMSP.formatTotalTime(self.data.playlist_ar[self.id].duration))
+                self.controller_do.updateTime("00:00", MUSIC.formatTotalTime(self.data.playlist_ar[self.id].duration))
             }
             self.controller_do.loadThumb(self.data.playlist_ar[self.id].thumbPath);
             if (self.playlist_do) self.playlist_do.activateItems(self.id, e);
@@ -3488,8 +3489,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         };
         this.play = function() {
             if (!self.isAPIReady_bl || !self.isPlaylistLoaded_bl) return;
-            FWDMSP.pauseAllAudio(self);
-            if (FWDMSP.hasHTML5Audio) {
+            MUSIC.pauseAllAudio(self);
+            if (MUSIC.hasHTML5Audio) {
                 self.audioScreen_do.play()
             } else if (self.isFlashScreenReady_bl) {
                 self.flashObject.playAudio()
@@ -3497,7 +3498,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         };
         this.pause = function() {
             if (!self.isAPIReady_bl || !self.isPlaylistLoaded_bl) return;
-            if (FWDMSP.hasHTML5Audio) {
+            if (MUSIC.hasHTML5Audio) {
                 self.audioScreen_do.pause()
             } else if (self.isFlashScreenReady_bl) {
                 self.flashObject.pauseAudio()
@@ -3505,7 +3506,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         };
         this.stop = function() {
             if (!self.isAPIReady_bl) return;
-            if (FWDMSP.hasHTML5Audio) {
+            if (MUSIC.hasHTML5Audio) {
                 self.audioScreen_do.stop()
             } else if (self.isFlashScreenReady_bl) {
                 self.flashObject.stopAudio()
@@ -3513,7 +3514,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         };
         this.startToScrub = function() {
             if (!self.isAPIReady_bl || !self.isPlaylistLoaded_bl) return;
-            if (FWDMSP.hasHTML5Audio) {
+            if (MUSIC.hasHTML5Audio) {
                 self.audioScreen_do.startToScrub()
             } else if (self.isFlashScreenReady_bl) {
                 self.flashObject.startToScrub()
@@ -3521,7 +3522,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         };
         this.stopToScrub = function() {
             if (!self.isAPIReady_bl || !self.isPlaylistLoaded_bl) return;
-            if (FWDMSP.hasHTML5Audio) {
+            if (MUSIC.hasHTML5Audio) {
                 self.audioScreen_do.stopToScrub()
             } else if (self.isFlashScreenReady_bl) {
                 self.flashObject.stopToScrub()
@@ -3535,7 +3536,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             } else if (e > 1) {
                 e = 1
             }
-            if (FWDMSP.hasHTML5Audio) {
+            if (MUSIC.hasHTML5Audio) {
                 if (self.audioScreen_do) self.audioScreen_do.scrub(e)
             } else if (self.isFlashScreenReady_bl) {
                 self.flashObject.scrub(e)
@@ -3664,18 +3665,18 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         };
         self.init()
     };
-    FWDMSP.setPrototype = function() {
-        FWDMSP.prototype = new FWDMSPEventDispatcher
+    MUSIC.setPrototype = function() {
+        MUSIC.prototype = new MUSICEventDispatcher
     };
-    FWDMSP.pauseAllAudio = function(e) {
-        var t = FWDMSP.instaces_ar.length;
+    MUSIC.pauseAllAudio = function(e) {
+        var t = MUSIC.instaces_ar.length;
         var n;
         for (var r = 0; r < t; r++) {
-            n = FWDMSP.instaces_ar[r];
+            n = MUSIC.instaces_ar[r];
             if (n != e) n.stop()
         }
     };
-    FWDMSP.hasHTML5Audio = function() {
+    MUSIC.hasHTML5Audio = function() {
         var e = document.createElement("audio");
         var t = false;
         if (e.canPlayType) {
@@ -3684,7 +3685,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         if (self.isMobile_bl) return true;
         return t
     }();
-    FWDMSP.getAudioFormats = function() {
+    MUSIC.getAudioFormats = function() {
         var e = document.createElement("audio");
         if (!e.canPlayType) return;
         var t = "";
@@ -3703,10 +3704,10 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         e = null;
         return n
     }();
-    FWDMSP.hasCanvas = function() {
+    MUSIC.hasCanvas = function() {
         return Boolean(document.createElement("canvas"))
     }();
-    FWDMSP.formatTotalTime = function(e) {
+    MUSIC.formatTotalTime = function(e) {
         if (typeof e == "string" && e.indexOf(":") != -1) {
             return e
         }
@@ -3725,7 +3726,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             return r + ":" + s
         }
     };
-    FWDMSP.getAudioFormats = function() {
+    MUSIC.getAudioFormats = function() {
         var e = document.createElement("audio");
         if (!e.canPlayType) return;
         var t = "";
@@ -3744,28 +3745,28 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         e = null;
         return n
     }();
-    FWDMSP.instaces_ar = [];
-    FWDMSP.POPUP = "popup";
-    FWDMSP.POSITION_TOP = "positionTop";
-    FWDMSP.POSITION_BOTTOM = "positionBottom";
-    FWDMSP.READY = "ready";
-    FWDMSP.START = "start";
-    FWDMSP.START_TO_LOAD_PLAYLIST = "startToLoadPlaylist";
-    FWDMSP.LOAD_PLAYLIST_COMPLETE = "loadPlaylistComplete";
-    FWDMSP.STOP = "stop";
-    FWDMSP.PLAY = "play";
-    FWDMSP.PAUSE = "pause";
-    FWDMSP.UPDATE = "update";
-    FWDMSP.UPDATE_TIME = "updateTime";
-    FWDMSP.ERROR = "error";
-    FWDMSP.PLAY_COMPLETE = "playComplete";
-    FWDMSP.PLAYLIST_LOAD_COMPLETE = "onPlayListLoadComplete";
-    window.FWDMSP = FWDMSP
+    MUSIC.instaces_ar = [];
+    MUSIC.POPUP = "popup";
+    MUSIC.POSITION_TOP = "positionTop";
+    MUSIC.POSITION_BOTTOM = "positionBottom";
+    MUSIC.READY = "ready";
+    MUSIC.START = "start";
+    MUSIC.START_TO_LOAD_PLAYLIST = "startToLoadPlaylist";
+    MUSIC.LOAD_PLAYLIST_COMPLETE = "loadPlaylistComplete";
+    MUSIC.STOP = "stop";
+    MUSIC.PLAY = "play";
+    MUSIC.PAUSE = "pause";
+    MUSIC.UPDATE = "update";
+    MUSIC.UPDATE_TIME = "updateTime";
+    MUSIC.ERROR = "error";
+    MUSIC.PLAY_COMPLETE = "playComplete";
+    MUSIC.PLAYLIST_LOAD_COMPLETE = "onPlayListLoadComplete";
+    window.MUSIC = MUSIC
 })(window);
 (function(window) {
-    var FWDMSPAudioData = function(props, playListElement, parent) {
+    var MUSICAudioData = function(props, playListElement, parent) {
         var self = this;
-        var prototype = FWDMSPAudioData.prototype;
+        var prototype = MUSICAudioData.prototype;
         this.xhr = null;
         this.emailXHR = null;
         this.playlist_ar = null;
@@ -3955,8 +3956,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.forceDisableDownloadButtonForOfficialFM_bl = false;
         this.forceDisableDownloadButtonForFolder_bl = false;
         this.loadFromFolder_bl = false;
-        this.isMobile_bl = FWDMSPUtils.isMobile;
-        this.hasPointerEvent_bl = FWDMSPUtils.hasPointerEvent;
+        this.isMobile_bl = MUSICUtils.isMobile;
+        this.hasPointerEvent_bl = MUSICUtils.hasPointerEvent;
         self.init = function() {
             self.parseProperties()
         };
@@ -3966,7 +3967,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 setTimeout(function() {
                     if (self == null) return;
                     errorMessage_str = "The <font color='#FFFFFF'>playlistsId</font> property is not defined in the constructor function!";
-                    self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, {
+                    self.dispatchEvent(MUSICAudioData.LOAD_ERROR, {
                         text: errorMessage_str
                     })
                 }, 50);
@@ -3977,7 +3978,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 setTimeout(function() {
                     if (self == null) return;
                     errorMessage_str = "The <font color='#FFFFFF'>mainFolderPath</font> property is not defined in the constructor function!";
-                    self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, {
+                    self.dispatchEvent(MUSICAudioData.LOAD_ERROR, {
                         text: errorMessage_str
                     })
                 }, 50);
@@ -3991,7 +3992,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 setTimeout(function() {
                     if (self == null) return;
                     errorMessage_str = "The <font color='#FFFFFF'>skinPath</font> property is not defined in the constructor function!";
-                    self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, {
+                    self.dispatchEvent(MUSICAudioData.LOAD_ERROR, {
                         text: errorMessage_str
                     })
                 }, 50);
@@ -4011,20 +4012,20 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 setTimeout(function() {
                     if (self == null) return;
                     errorMessage_str = "The html element with id <font color='#FFFFFF'>" + self.categoriesId_str + "</font> is not found in the DOM, this html element represents the player categories.!";
-                    self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, {
+                    self.dispatchEvent(MUSICAudioData.LOAD_ERROR, {
                         text: errorMessage_str
                     })
                 }, 50);
                 return
             }
-            var e = FWDMSPUtils.getChildren(self.categories_el);
+            var e = MUSICUtils.getChildren(self.categories_el);
             self.totalCats = e.length;
             self.categories_el = document.getElementById(self.categoriesId_str);
             if (self.totalCats == 0) {
                 setTimeout(function() {
                     if (self == null) return;
                     errorMessage_str = "At least one category is required!";
-                    self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, {
+                    self.dispatchEvent(MUSICAudioData.LOAD_ERROR, {
                         text: errorMessage_str
                     })
                 }, 50);
@@ -4033,26 +4034,26 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             for (var t = 0; t < self.totalCats; t++) {
                 var n = {};
                 child = e[t];
-                if (!FWDMSPUtils.hasAttribute(child, "data-source")) {
+                if (!MUSICUtils.hasAttribute(child, "data-source")) {
                     setTimeout(function() {
                         if (self == null) return;
-                        self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, {
+                        self.dispatchEvent(MUSICAudioData.LOAD_ERROR, {
                             text: "Attribute <font color='#FFFFFF'>data-source</font> is required in the categories html element at position <font color='#FFFFFF'>" + (t + 1)
                         })
                     }, 50);
                     return
                 }
-                if (!FWDMSPUtils.hasAttribute(child, "data-thumbnail-path")) {
+                if (!MUSICUtils.hasAttribute(child, "data-thumbnail-path")) {
                     setTimeout(function() {
                         if (self == null) return;
-                        self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, {
+                        self.dispatchEvent(MUSICAudioData.LOAD_ERROR, {
                             text: "Attribute <font color='#FFFFFF'>data-thumbnail-path</font> is required in the categories html element at position <font color='#FFFFFF'>" + (t + 1)
                         })
                     }, 50);
                     return
                 }
-                n.source = FWDMSPUtils.getAttributeValue(child, "data-source");
-                n.thumbnailPath = FWDMSPUtils.getAttributeValue(child, "data-thumbnail-path");
+                n.source = MUSICUtils.getAttributeValue(child, "data-source");
+                n.thumbnailPath = MUSICUtils.getAttributeValue(child, "data-thumbnail-path");
                 n.htmlContent = child.innerHTML;
                 self.cats_ar[t] = n
             }
@@ -4072,7 +4073,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             if (self.thumbnailSelectedType_str != "blackAndWhite" && self.thumbnailSelectedType_str != "threshold" && self.thumbnailSelectedType_str != "opacity") {
                 self.thumbnailSelectedType_str = "opacity"
             }
-            if (self.isMobile_bl || FWDMSPUtils.isIEAndLessThen9) self.thumbnailSelectedType_str = "opacity";
+            if (self.isMobile_bl || MUSICUtils.isIEAndLessThen9) self.thumbnailSelectedType_str = "opacity";
             if (document.location.protocol == "file:") self.thumbnailSelectedType_str = "opacity";
             self.searchInputColor_str = self.props_obj.searchInputColor || "#FF0000";
             self.playlistBackgroundColor_str = self.props_obj.playlistBackgroundColor || "transparent";
@@ -4154,7 +4155,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             self.showLoopButton_bl = self.props_obj.showLoopButton == "no" ? false : true;
             self.showPlayListButtonAndPlaylist_bl = self.props_obj.showPlayListButtonAndPlaylist;
             self.showPlayListButtonAndPlaylist_bl = self.showPlayListButtonAndPlaylist_bl == "no" ? false : true;
-            if (FWDMSPUtils.isAndroid && self.showPlayListButtonAndPlaylist_bl && self.props_obj.showPlayListOnAndroid == "no") {
+            if (MUSICUtils.isAndroid && self.showPlayListButtonAndPlaylist_bl && self.props_obj.showPlayListOnAndroid == "no") {
                 self.showPlayListButtonAndPlaylist_bl = false
             }
             self.rightClickContextMenu_str = self.props_obj.rightClickContextMenu || "developer";
@@ -4440,7 +4441,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         };
         this.onPreloaderLoadHandler = function() {
             setTimeout(function() {
-                self.dispatchEvent(FWDMSPAudioData.PRELOADER_LOAD_DONE)
+                self.dispatchEvent(MUSICAudioData.PRELOADER_LOAD_DONE)
             }, 50)
         };
         self.loadSkin = function() {
@@ -4458,12 +4459,12 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             self.countLoadedSkinImages++;
             if (self.countLoadedSkinImages == self.totalGraphics) {
                 setTimeout(function() {
-                    self.dispatchEvent(FWDMSPAudioData.SKIN_LOAD_COMPLETE)
+                    self.dispatchEvent(MUSICAudioData.SKIN_LOAD_COMPLETE)
                 }, 50)
             }
         };
         self.onSkinLoadErrorHandler = function(e) {
-            if (FWDMSPUtils.isIEAndLessThen9) {
+            if (MUSICUtils.isIEAndLessThen9) {
                 message = "Graphics image not found!"
             } else {
                 message = "The skin icon with label <font color='#FFFFFF'>" + e.target.src + "</font> can't be loaded, check path!"
@@ -4473,11 +4474,11 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 text: message
             };
             setTimeout(function() {
-                self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, t)
+                self.dispatchEvent(MUSICAudioData.LOAD_ERROR, t)
             }, 50)
         };
         self.showPropertyError = function(e) {
-            self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, {
+            self.dispatchEvent(MUSICAudioData.LOAD_ERROR, {
                 text: "The property called <font color='#FFFFFF'>" + e + "</font> is not defined."
             })
         };
@@ -4555,7 +4556,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             if (!t) {
                 self.isPlaylistDispatchingError_bl = true;
                 showLoadPlaylistErrorId_to = setTimeout(function() {
-                    self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, {
+                    self.dispatchEvent(MUSICAudioData.LOAD_ERROR, {
                         text: "<font color='#FFFFFF'>loadPlaylist()</font> - Please specify an html elementid, podcast link, soudcloud link or xml path"
                     });
                     self.isPlaylistDispatchingError_bl = false
@@ -4565,7 +4566,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             if (!isNaN(t)) {
                 self.isPlaylistDispatchingError_bl = true;
                 showLoadPlaylistErrorId_to = setTimeout(function() {
-                    self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, {
+                    self.dispatchEvent(MUSICAudioData.LOAD_ERROR, {
                         text: "<font color='#FFFFFF'>loadPlaylist()</font> - The parameter must be of type string!"
                     });
                     self.isPlaylistDispatchingError_bl = false
@@ -4611,7 +4612,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.JSONPRequestTimeoutError = function() {
             self.isPlaylistDispatchingError_bl = true;
             showLoadPlaylistErrorId_to = setTimeout(function() {
-                self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, {
+                self.dispatchEvent(MUSICAudioData.LOAD_ERROR, {
                     text: "Error loading offical.fm url!<font color='#FFFFFF'>" + self.sourceURL_str + "</font>"
                 });
                 self.isPlaylistDispatchingError_bl = false
@@ -4636,7 +4637,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.JSONPRequestTimeoutError = function() {
             self.isPlaylistDispatchingError_bl = true;
             showLoadPlaylistErrorId_to = setTimeout(function() {
-                self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, {
+                self.dispatchEvent(MUSICAudioData.LOAD_ERROR, {
                     text: "Error loading official.fm url!<font color='#FFFFFF'>" + self.sourceURL_str + "</font>"
                 });
                 self.isPlaylistDispatchingError_bl = false
@@ -4651,7 +4652,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             if (document.location.protocol == "file:" && e.indexOf("official.fm") == -1) {
                 self.isPlaylistDispatchingError_bl = true;
                 showLoadPlaylistErrorId_to = setTimeout(function() {
-                    self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, {
+                    self.dispatchEvent(MUSICAudioData.LOAD_ERROR, {
                         text: "Loading XML files local is not allowed or possible!. To function properly please test online."
                     });
                     self.isPlaylistDispatchingError_bl = false
@@ -4672,7 +4673,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 if (t) {
                     if (t.message) n = t.message
                 }
-                self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, {
+                self.dispatchEvent(MUSICAudioData.LOAD_ERROR, {
                     text: "XML file can't be loaded! <font color='#FFFFFF'>" + self.sourceURL_str + "</font>. " + n
                 })
             }
@@ -4682,7 +4683,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             if (document.location.protocol == "file:" && e.indexOf("official.fm") == -1) {
                 self.isPlaylistDispatchingError_bl = true;
                 showLoadPlaylistErrorId_to = setTimeout(function() {
-                    self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, {
+                    self.dispatchEvent(MUSICAudioData.LOAD_ERROR, {
                         text: "Creating a mp3 playlist from a folder is not allowed or possible local! To function properly please test online."
                     });
                     self.isPlaylistDispatchingError_bl = false
@@ -4704,7 +4705,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 if (t) {
                     if (t.message) n = t.message
                 }
-                self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, {
+                self.dispatchEvent(MUSICAudioData.LOAD_ERROR, {
                     text: "Folder proxy file path is not found: <font color='#FFFFFF'>" + self.proxyFolderPath_str + "</font>"
                 })
             }
@@ -4715,21 +4716,21 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             if (self.xhr.readyState == 4) {
                 if (self.xhr.status == 404) {
                     if (self.loadFromFolder_bl) {
-                        self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, {
+                        self.dispatchEvent(MUSICAudioData.LOAD_ERROR, {
                             text: "Folder proxy file path is not found: <font color='#FFFFFF'>" + self.proxyFolderPath_str + "</font>"
                         })
                     } else {
-                        self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, {
+                        self.dispatchEvent(MUSICAudioData.LOAD_ERROR, {
                             text: "Proxy file path is not found: <font color='#FFFFFF'>" + self.proxyPath_str + "</font>"
                         })
                     }
                 } else if (self.xhr.status == 408) {
-                    self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, {
+                    self.dispatchEvent(MUSICAudioData.LOAD_ERROR, {
                         text: "Proxy file request load timeout!"
                     })
                 } else if (self.xhr.status == 200) {
                     if (self.xhr.responseText.indexOf("<b>Warning</b>:") != -1) {
-                        self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, {
+                        self.dispatchEvent(MUSICAudioData.LOAD_ERROR, {
                             text: "Error loading folder: <font color='#FFFFFF'>" + self.sourceURL_str + "</font>. Make sure that the folder path is correct!"
                         });
                         return
@@ -4746,7 +4747,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                     } else if (response.li) {
                         self.parseXML(response)
                     } else if (response.error) {
-                        self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, {
+                        self.dispatchEvent(MUSICAudioData.LOAD_ERROR, {
                             text: "Error loading file: <font color='#FFFFFF'>" + self.sourceURL_str + "</font>. Make sure the file path (xml or podcast) is correct and well formatted!"
                         })
                     }
@@ -4759,11 +4760,11 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 if (window.console) console.log(e.message)
             } catch (e) {}
             if (self.loadFromFolder_bl) {
-                self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, {
+                self.dispatchEvent(MUSICAudioData.LOAD_ERROR, {
                     text: "Error loading file : <font color='#FFFFFF'>" + self.proxyFolderPath_str + "</font>. Make sure the path is correct"
                 })
             } else {
-                self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, {
+                self.dispatchEvent(MUSICAudioData.LOAD_ERROR, {
                     text: "Error loading file : <font color='#FFFFFF'>" + self.proxyPath_str + "</font>. Make sure the path is correct"
                 })
             }
@@ -4789,7 +4790,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             } else if (e.length || e.kind == "track") {
                 self.createSoundcloudPlaylist(e)
             } else {
-                self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, {
+                self.dispatchEvent(MUSICAudioData.LOAD_ERROR, {
                     text: "Please provide a playlist or track URL : <font color='#FFFFFF'>" + self.sourceURL_str + "</font>."
                 })
             }
@@ -4849,7 +4850,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }
             clearTimeout(self.dispatchPlaylistLoadCompleteWidthDelayId_to);
             self.dispatchPlaylistLoadCompleteWidthDelayId_to = setTimeout(function() {
-                self.dispatchEvent(FWDMSPAudioData.PLAYLIST_LOAD_COMPLETE)
+                self.dispatchEvent(MUSICAudioData.PLAYLIST_LOAD_COMPLETE)
             }, 50);
             self.isDataLoaded_bl = true
         };
@@ -4885,7 +4886,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }
             clearTimeout(self.dispatchPlaylistLoadCompleteWidthDelayId_to);
             self.dispatchPlaylistLoadCompleteWidthDelayId_to = setTimeout(function() {
-                self.dispatchEvent(FWDMSPAudioData.PLAYLIST_LOAD_COMPLETE)
+                self.dispatchEvent(MUSICAudioData.PLAYLIST_LOAD_COMPLETE)
             }, 50);
             self.isDataLoaded_bl = true
         };
@@ -4924,7 +4925,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }
             clearTimeout(self.dispatchPlaylistLoadCompleteWidthDelayId_to);
             self.dispatchPlaylistLoadCompleteWidthDelayId_to = setTimeout(function() {
-                self.dispatchEvent(FWDMSPAudioData.PLAYLIST_LOAD_COMPLETE)
+                self.dispatchEvent(MUSICAudioData.PLAYLIST_LOAD_COMPLETE)
             }, 50);
             self.isDataLoaded_bl = true
         };
@@ -4962,7 +4963,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }
             clearTimeout(self.dispatchPlaylistLoadCompleteWidthDelayId_to);
             self.dispatchPlaylistLoadCompleteWidthDelayId_to = setTimeout(function() {
-                self.dispatchEvent(FWDMSPAudioData.PLAYLIST_LOAD_COMPLETE)
+                self.dispatchEvent(MUSICAudioData.PLAYLIST_LOAD_COMPLETE)
             }, 50);
             self.isDataLoaded_bl = true
         };
@@ -4984,7 +4985,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 t.thumbPath = n[i]["@attributes"]["data-thumbpath"];
                 t.title = "...";
                 t.titleText = "...";
-                if (FWDMSPUtils.isIEAndLessThen9) {
+                if (MUSICUtils.isIEAndLessThen9) {
                     var u = "";
                     if (self.showTracksNumbers_bl) {
                         if (i < 9) u = "0";
@@ -5003,7 +5004,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }
             clearTimeout(self.dispatchPlaylistLoadCompleteWidthDelayId_to);
             self.dispatchPlaylistLoadCompleteWidthDelayId_to = setTimeout(function() {
-                self.dispatchEvent(FWDMSPAudioData.PLAYLIST_LOAD_COMPLETE)
+                self.dispatchEvent(MUSICAudioData.PLAYLIST_LOAD_COMPLETE)
             }, 50);
             self.isDataLoaded_bl = true
         };
@@ -5015,21 +5016,21 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             if (!t) {
                 self.isPlaylistDispatchingError_bl = true;
                 showLoadPlaylistErrorId_to = setTimeout(function() {
-                    self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, {
+                    self.dispatchEvent(MUSICAudioData.LOAD_ERROR, {
                         text: "The playlist with id <font color='#FFFFFF'>" + e + "</font> is not found in the DOM."
                     });
                     self.isPlaylistDispatchingError_bl = false
                 }, 50);
                 return
             }
-            var n = FWDMSPUtils.getChildren(t);
+            var n = MUSICUtils.getChildren(t);
             var r = n.length;
             var i;
             self.playlist_ar = [];
             if (r == 0) {
                 self.isPlaylistDispatchingError_bl = true;
                 showLoadPlaylistErrorId_to = setTimeout(function() {
-                    self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, {
+                    self.dispatchEvent(MUSICAudioData.LOAD_ERROR, {
                         text: "The playlist whit the id  <font color='#FFFFFF'>" + e + "</font> must contain at least one track."
                     });
                     self.isPlaylistDispatchingError_bl = false
@@ -5039,17 +5040,17 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             for (var s = 0; s < r; s++) {
                 var o = {};
                 i = n[s];
-                if (!FWDMSPUtils.hasAttribute(i, "data-path")) {
+                if (!MUSICUtils.hasAttribute(i, "data-path")) {
                     self.isPlaylistDispatchingError_bl = true;
                     showLoadPlaylistErrorId_to = setTimeout(function() {
-                        self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, {
+                        self.dispatchEvent(MUSICAudioData.LOAD_ERROR, {
                             text: "Attribute <font color='#FFFFFF'>data-path</font> is required in the playlist at position <font color='#FFFFFF'>" + (s + 1)
                         })
                     }, 50);
                     return
                 }
                 if (s > self.maxPlaylistItems - 1) break;
-                o.source = FWDMSPUtils.getAttributeValue(i, "data-path"); console.log(o.source);
+                o.source = MUSICUtils.getAttributeValue(i, "data-path"); console.log(o.source);
                 var u = encodeURI(o.source.substr(0, o.source.lastIndexOf("/") + 1));
                 var a = o.source.substr(o.source.lastIndexOf("/") + 1);
                 if (a.indexOf(";.mp3") != -1) {
@@ -5063,18 +5064,18 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                     o.source = u + a
                 }
                 o.downloadPath = o.source;
-                if (FWDMSPUtils.hasAttribute(i, "data-thumbpath")) {
-                    o.thumbPath = FWDMSPUtils.getAttributeValue(i, "data-thumbpath")
+                if (MUSICUtils.hasAttribute(i, "data-thumbpath")) {
+                    o.thumbPath = MUSICUtils.getAttributeValue(i, "data-thumbpath")
                 } else {
                     o.thumbPath = undefined
                 }
-                if (FWDMSPUtils.hasAttribute(i, "data-downloadable")) {
-                    o.downloadable = FWDMSPUtils.getAttributeValue(i, "data-downloadable") == "yes" ? true : false
+                if (MUSICUtils.hasAttribute(i, "data-downloadable")) {
+                    o.downloadable = MUSICUtils.getAttributeValue(i, "data-downloadable") == "yes" ? true : false
                 } else {
                     o.downloadable = undefined
                 }
-                if (FWDMSPUtils.hasAttribute(i, "data-buy-url")) {
-                    o.buy = FWDMSPUtils.getAttributeValue(i, "data-buy-url")
+                if (MUSICUtils.hasAttribute(i, "data-buy-url")) {
+                    o.buy = MUSICUtils.getAttributeValue(i, "data-buy-url")
                 } else {
                     o.buy = undefined
                 }
@@ -5084,16 +5085,16 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                     if (self.showTracksNumbers_bl) {
                         if (s < 9) f = "0";
                         f = f + (s + 1) + ". ";
-                        o.title = f + FWDMSPUtils.getChildren(i)[0].innerHTML
+                        o.title = f + MUSICUtils.getChildren(i)[0].innerHTML
                     } else {
-                        o.title = FWDMSPUtils.getChildren(i)[0].innerHTML
+                        o.title = MUSICUtils.getChildren(i)[0].innerHTML
                     }
                 } catch (l) {}
                 try {
-                    o.titleText = FWDMSPUtils.getChildren(i)[0].textContent || FWDMSPUtils.getChildren(i)[0].innerText
+                    o.titleText = MUSICUtils.getChildren(i)[0].textContent || MUSICUtils.getChildren(i)[0].innerText
                 } catch (l) {}
-                if (FWDMSPUtils.hasAttribute(i, "data-duration")) {
-                    o.duration = FWDMSPUtils.getAttributeValue(i, "data-duration")
+                if (MUSICUtils.hasAttribute(i, "data-duration")) {
+                    o.duration = MUSICUtils.getAttributeValue(i, "data-duration")
                 } else {
                     o.duration = undefined
                 }
@@ -5101,7 +5102,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }
             clearTimeout(self.dispatchPlaylistLoadCompleteWidthDelayId_to);
             self.dispatchPlaylistLoadCompleteWidthDelayId_to = setTimeout(function() {
-                self.dispatchEvent(FWDMSPAudioData.PLAYLIST_LOAD_COMPLETE)
+                self.dispatchEvent(MUSICAudioData.PLAYLIST_LOAD_COMPLETE)
             }, 50);
             self.isDataLoaded_bl = true
         };
@@ -5135,19 +5136,19 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         };
         self.init()
     };
-    FWDMSPAudioData.setPrototype = function() {
-        FWDMSPAudioData.prototype = new FWDMSPEventDispatcher
+    MUSICAudioData.setPrototype = function() {
+        MUSICAudioData.prototype = new MUSICEventDispatcher
     };
-    FWDMSPAudioData.prototype = null;
-    FWDMSPAudioData.PRELOADER_LOAD_DONE = "onPreloaderLoadDone";
-    FWDMSPAudioData.LOAD_DONE = "onLoadDone";
-    FWDMSPAudioData.LOAD_ERROR = "onLoadError";
-    FWDMSPAudioData.IMAGE_LOADED = "onImageLoaded";
-    FWDMSPAudioData.SKIN_LOAD_COMPLETE = "onSkinLoadComplete";
-    FWDMSPAudioData.SKIN_PROGRESS = "onSkinProgress";
-    FWDMSPAudioData.IMAGES_PROGRESS = "onImagesPogress";
-    FWDMSPAudioData.PLAYLIST_LOAD_COMPLETE = "onPlaylistLoadComplete";
-    window.FWDMSPAudioData = FWDMSPAudioData
+    MUSICAudioData.prototype = null;
+    MUSICAudioData.PRELOADER_LOAD_DONE = "onPreloaderLoadDone";
+    MUSICAudioData.LOAD_DONE = "onLoadDone";
+    MUSICAudioData.LOAD_ERROR = "onLoadError";
+    MUSICAudioData.IMAGE_LOADED = "onImageLoaded";
+    MUSICAudioData.SKIN_LOAD_COMPLETE = "onSkinLoadComplete";
+    MUSICAudioData.SKIN_PROGRESS = "onSkinProgress";
+    MUSICAudioData.IMAGES_PROGRESS = "onImagesPogress";
+    MUSICAudioData.PLAYLIST_LOAD_COMPLETE = "onPlaylistLoadComplete";
+    window.MUSICAudioData = MUSICAudioData
 })(window);
 (function(e) {
     var t = function(n) {
@@ -5242,10 +5243,10 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.setSource = function(e) {
             r.sourcePath_str = e;
             var t = r.sourcePath_str.split(",");
-            var n = FWDMSP.getAudioFormats;
+            var n = MUSIC.getAudioFormats;
             for (var i = 0; i < t.length; i++) {
                 var s = t[i];
-                t[i] = FWDMSPUtils.trim(s)
+                t[i] = MUSICUtils.trim(s)
             }
             e: for (var o = 0; o < t.length; o++) {
                 var s = t[o];
@@ -5287,7 +5288,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                     r.isPlaying_bl = true;
                     r.hasPlayedOnce_bl = true;
                     r.audio_el.play();
-                    if (FWDMSPUtils.isIE) r.dispatchEvent(t.PLAY)
+                    if (MUSICUtils.isIE) r.dispatchEvent(t.PLAY)
                 } catch (n) {}
             }
         };
@@ -5298,7 +5299,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 try {
                     r.audio_el.pause();
                     r.isPlaying_bl = false;
-                    if (FWDMSPUtils.isIE) r.dispatchEvent(t.PAUSE)
+                    if (MUSICUtils.isIE) r.dispatchEvent(t.PAUSE)
                 } catch (e) {}
             }
         };
@@ -5427,7 +5428,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.init()
     };
     t.setPrototype = function() {
-        t.prototype = new FWDMSPDisplayObject("div")
+        t.prototype = new MUSICDisplayObject("div")
     };
     t.ERROR = "error";
     t.UPDATE = "update";
@@ -5441,7 +5442,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
     t.PAUSE = "pause";
     t.STOP = "stop";
     t.PLAY_COMPLETE = "playComplete";
-    e.FWDMSPAudioScreen = t
+    e.MUSICAudioScreen = t
 })(window);
 (function() {
     var e = function(t) {
@@ -5493,14 +5494,14 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.areThumbnailsLoaded_bl = false;
         this.isShowed_bl = false;
         this.isOnDOM_bl = false;
-        this.isMobile_bl = FWDMSPUtils.isMobile;
-        this.hasPointerEvent_bl = FWDMSPUtils.hasPointerEvent;
+        this.isMobile_bl = MUSICUtils.isMobile;
+        this.hasPointerEvent_bl = MUSICUtils.hasPointerEvent;
         n.init = function() {
             if (n.isMobile_bl && n.hasPointerEvent_bl) n.getStyle().msTouchAction = "none";
             n.getStyle().msTouchAction = "none";
             n.getStyle().webkitTapHighlightColor = "rgba(0, 0, 0, 0)";
             n.getStyle().width = "100%";
-            n.mainHolder_do = new FWDMSPDisplayObject("div");
+            n.mainHolder_do = new MUSICDisplayObject("div");
             n.mainHolder_do.getStyle().background = "url('" + n.catBkPath_str + "')";
             n.mainHolder_do.setY(-3e3);
             n.addChild(n.mainHolder_do);
@@ -5517,7 +5518,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         };
         this.mouseWheelDumyHandler = function(e) {
             var t;
-            if (FWDMSPTweenMax.isTweening(n.mainHolder_do)) {
+            if (MUSICTweenMax.isTweening(n.mainHolder_do)) {
                 if (e.preventDefault) {
                     e.preventDefault()
                 }
@@ -5525,7 +5526,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }
             for (var r = 0; r < n.totalThumbnails; r++) {
                 t = n.thumbs_ar[r];
-                if (FWDMSPTweenMax.isTweening(t)) {
+                if (MUSICTweenMax.isTweening(t)) {
                     if (e.preventDefault) {
                         e.preventDefault()
                     }
@@ -5534,7 +5535,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }
             var i = e.detail || e.wheelDelta;
             if (e.wheelDelta) i *= -1;
-            if (FWDMSPUtils.isOpera) i *= -1;
+            if (MUSICUtils.isOpera) i *= -1;
             if (i > 0) {
                 n.nextButtonOnMouseUpHandler()
             } else if (i < 0) {
@@ -5549,12 +5550,12 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         };
         n.resizeAndPosition = function(e) {
             if (!n.isShowed_bl && !e) return;
-            var t = FWDMSPUtils.getScrollOffsets();
-            var r = FWDMSPUtils.getViewportSize();
+            var t = MUSICUtils.getScrollOffsets();
+            var r = MUSICUtils.getViewportSize();
             if (n.stageWidth == r.w && n.stageHeight == r.h && !e) return;
             n.stageWidth = r.w;
             n.stageHeight = r.h;
-            FWDMSPTweenMax.killTweensOf(n.mainHolder_do);
+            MUSICTweenMax.killTweensOf(n.mainHolder_do);
             n.mainHolder_do.setX(0);
             n.mainHolder_do.setWidth(n.stageWidth);
             n.mainHolder_do.setHeight(n.stageHeight);
@@ -5568,13 +5569,13 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             n.disableEnableNextAndPrevButtons()
         };
         n.onScrollHandler = function() {
-            var e = FWDMSPUtils.getScrollOffsets();
+            var e = MUSICUtils.getScrollOffsets();
             n.setX(e.x);
             n.setY(e.y)
         };
         this.setupDisable = function() {
-            n.disable_do = new FWDMSPDisplayObject("div");
-            if (FWDMSPUtils.isIE) {
+            n.disable_do = new MUSICDisplayObject("div");
+            if (MUSICUtils.isIE) {
                 n.disable_do.setBkColor("#FFFFFF");
                 n.disable_do.setAlpha(.01)
             }
@@ -5591,15 +5592,15 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             n.disable_do.setHeight(0)
         };
         this.setupButtons = function() {
-            FWDMSPSimpleButton.setPrototype();
-            n.closeButton_do = new FWDMSPSimpleButton(n.catCloseN_img, t.catCloseSPath_str);
-            n.closeButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, n.closeButtonOnMouseUpHandler);
-            FWDMSPSimpleButton.setPrototype();
-            n.nextButton_do = new FWDMSPSimpleButton(n.catNextN_img, t.catNextSPath_str, null, true);
-            n.nextButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, n.nextButtonOnMouseUpHandler);
-            FWDMSPSimpleButton.setPrototype();
-            n.prevButton_do = new FWDMSPSimpleButton(n.catPrevN_img, t.catPrevSPath_str, null, true);
-            n.prevButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, n.prevButtonOnMouseUpHandler)
+            MUSICSimpleButton.setPrototype();
+            n.closeButton_do = new MUSICSimpleButton(n.catCloseN_img, t.catCloseSPath_str);
+            n.closeButton_do.addListener(MUSICSimpleButton.MOUSE_UP, n.closeButtonOnMouseUpHandler);
+            MUSICSimpleButton.setPrototype();
+            n.nextButton_do = new MUSICSimpleButton(n.catNextN_img, t.catNextSPath_str, null, true);
+            n.nextButton_do.addListener(MUSICSimpleButton.MOUSE_UP, n.nextButtonOnMouseUpHandler);
+            MUSICSimpleButton.setPrototype();
+            n.prevButton_do = new MUSICSimpleButton(n.catPrevN_img, t.catPrevSPath_str, null, true);
+            n.prevButton_do.addListener(MUSICSimpleButton.MOUSE_UP, n.prevButtonOnMouseUpHandler)
         };
         this.closeButtonOnMouseUpHandler = function() {
             n.hide()
@@ -5674,7 +5675,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.mobileDownHandler = function(e) {
             if (e.touches)
                 if (e.touches.length != 1) return;
-            var t = FWDMSPUtils.getViewportMouseCoordinates(e);
+            var t = MUSICUtils.getViewportMouseCoordinates(e);
             n.mouseX = t.screenX;
             n.mouseY = t.screenY;
             if (n.hasPointerEvent_bl) {
@@ -5690,7 +5691,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             if (e.touches)
                 if (e.touches.length != 1) return;
             n.showDisable();
-            var t = FWDMSPUtils.getViewportMouseCoordinates(e);
+            var t = MUSICUtils.getViewportMouseCoordinates(e);
             n.dif = n.mouseX - t.screenX;
             n.mouseX = t.screenX;
             n.mouseY = t.screenY
@@ -5716,9 +5717,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             n.areThumbnailsCreated_bl = true;
             var e;
             for (var r = 0; r < n.totalThumbnails; r++) {
-                FWDMSPCategoriesThumb.setPrototype();
-                e = new FWDMSPCategoriesThumb(n, r, t.catThumbBkPath_str, t.catThumbBkTextPath_str, t.thumbnailSelectedType_str, n.categories_ar[r].htmlContent);
-                e.addListener(FWDMSPCategoriesThumb.MOUSE_UP, n.thumbnailOnMouseUpHandler);
+                MUSICCategoriesThumb.setPrototype();
+                e = new MUSICCategoriesThumb(n, r, t.catThumbBkPath_str, t.catThumbBkTextPath_str, t.thumbnailSelectedType_str, n.categories_ar[r].htmlContent);
+                e.addListener(MUSICCategoriesThumb.MOUSE_UP, n.thumbnailOnMouseUpHandler);
                 n.thumbs_ar[r] = e;
                 n.mainHolder_do.addChild(e)
             }
@@ -5843,7 +5844,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             n.isShowed_bl = true;
             n.isOnDOM_bl = true;
             n.id = e;
-            if (FWDMSPUtils.isIEAndLessThen9) {
+            if (MUSICUtils.isIEAndLessThen9) {
                 document.getElementsByTagName("body")[0].appendChild(n.screen)
             } else {
                 document.documentElement.appendChild(n.screen)
@@ -5862,14 +5863,14 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             n.mainHolder_do.setY(-n.stageHeight);
             if (n.isMobile_bl) {
                 n.showCompleteId_to = setTimeout(n.showCompleteHandler, 1200);
-                FWDMSPTweenMax.to(n.mainHolder_do, .8, {
+                MUSICTweenMax.to(n.mainHolder_do, .8, {
                     y: 0,
                     delay: .4,
                     ease: Expo.easeInOut
                 })
             } else {
                 n.showCompleteId_to = setTimeout(n.showCompleteHandler, 800);
-                FWDMSPTweenMax.to(n.mainHolder_do, .8, {
+                MUSICTweenMax.to(n.mainHolder_do, .8, {
                     y: 0,
                     ease: Expo.easeInOut
                 })
@@ -5891,8 +5892,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             clearTimeout(n.showCompleteId_to);
             n.showDisable();
             n.hideCompleteId_to = setTimeout(n.hideCompleteHandler, 800);
-            FWDMSPTweenMax.killTweensOf(n.mainHolder_do);
-            FWDMSPTweenMax.to(n.mainHolder_do, .8, {
+            MUSICTweenMax.killTweensOf(n.mainHolder_do);
+            MUSICTweenMax.to(n.mainHolder_do, .8, {
                 y: -n.stageHeight,
                 ease: Expo.easeInOut
             });
@@ -5904,7 +5905,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             n.resizeAndPosition()
         };
         this.hideCompleteHandler = function() {
-            if (FWDMSPUtils.isIEAndLessThen9) {
+            if (MUSICUtils.isIEAndLessThen9) {
                 document.getElementsByTagName("body")[0].removeChild(n.screen)
             } else {
                 document.documentElement.removeChild(n.screen)
@@ -5915,11 +5916,11 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.init()
     };
     e.setPrototype = function() {
-        e.prototype = new FWDMSPDisplayObject("div")
+        e.prototype = new MUSICDisplayObject("div")
     };
     e.HIDE_COMPLETE = "hideComplete";
     e.prototype = null;
-    window.FWDMSPCategories = e
+    window.MUSICCategories = e
 })();
 (function(e) {
     var t = function(e, n, r, i, s, o) {
@@ -5952,9 +5953,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.hasImage_bl = false;
         this.isSelected_bl = false;
         this.isDisabled_bl = false;
-        this.hasCanvas_bl = FWDMSP.hasCanvas;
-        this.isMobile_bl = FWDMSPUtils.isMobile;
-        this.hasPointerEvent_bl = FWDMSPUtils.hasPointerEvent;
+        this.hasCanvas_bl = MUSIC.hasCanvas;
+        this.isMobile_bl = MUSICUtils.isMobile;
+        this.hasPointerEvent_bl = MUSICUtils.hasPointerEvent;
         this.init = function() {
             u.getStyle().background = "url('" + u.backgroundImagePath_str + "')";
             u.setupMainContainers();
@@ -5962,21 +5963,21 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             u.setupDumy()
         };
         this.setupMainContainers = function() {
-            u.imageHolder_do = new FWDMSPDisplayObject("div");
+            u.imageHolder_do = new MUSICDisplayObject("div");
             u.addChild(u.imageHolder_do)
         };
         this.setupDumy = function() {
-            u.dumy_do = new FWDMSPDisplayObject("div");
-            if (FWDMSPUtils.isIE) {
+            u.dumy_do = new MUSICDisplayObject("div");
+            if (MUSICUtils.isIE) {
                 u.dumy_do.setBkColor("#FFFFFF");
                 u.dumy_do.setAlpha(0)
             }
             u.addChild(u.dumy_do)
         };
         this.setupDescription = function() {
-            u.simpleText_do = new FWDMSPDisplayObject("div");
+            u.simpleText_do = new MUSICDisplayObject("div");
             u.simpleText_do.getStyle().background = "url('" + u.catThumbTextBkPath_str + "')";
-            if (FWDMSPUtils.isFirefox) {
+            if (MUSICUtils.isFirefox) {
                 u.simpleText_do.hasTransform3d_bl = false;
                 u.simpleText_do.hasTransform2d_bl = false
             }
@@ -6022,13 +6023,13 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 }
             }
             n.putImageData(r, 0, 0, 0, 0, r.width, r.height);
-            u.effectImage_do = new FWDMSPDisplayObject("canvas");
+            u.effectImage_do = new MUSICDisplayObject("canvas");
             u.effectImage_do.screen = t;
             u.effectImage_do.setAlpha(.9);
             u.effectImage_do.setMainProperties()
         };
         this.setImage = function(t) {
-            u.normalImage_do = new FWDMSPDisplayObject("img");
+            u.normalImage_do = new MUSICDisplayObject("img");
             u.normalImage_do.setScreen(t);
             u.imageOriginalW = u.normalImage_do.w;
             u.imageOriginalH = u.normalImage_do.h;
@@ -6047,21 +6048,21 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 u.effectImage_do.setY(-parseInt(u.normalImage_do.h / 2));
                 u.effectImage_do.setAlpha(.01)
             }
-            FWDMSPTweenMax.to(u.imageHolder_do, .8, {
+            MUSICTweenMax.to(u.imageHolder_do, .8, {
                 x: 0,
                 y: 0,
                 w: u.finalW,
                 h: u.finalH,
                 ease: Expo.easeInOut
             });
-            FWDMSPTweenMax.to(u.normalImage_do, .8, {
+            MUSICTweenMax.to(u.normalImage_do, .8, {
                 alpha: 1,
                 x: u.imageFinalX,
                 y: u.imageFinalY,
                 ease: Expo.easeInOut
             });
             if (u.effectImage_do) {
-                FWDMSPTweenMax.to(u.effectImage_do, .8, {
+                MUSICTweenMax.to(u.effectImage_do, .8, {
                     x: u.imageFinalX,
                     y: u.imageFinalY,
                     ease: Expo.easeInOut
@@ -6111,10 +6112,10 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             })
         };
         this.resizeAndPosition = function(e, t) {
-            FWDMSPTweenMax.killTweensOf(u);
-            FWDMSPTweenMax.killTweensOf(u.imageHolder_do);
+            MUSICTweenMax.killTweensOf(u);
+            MUSICTweenMax.killTweensOf(u.imageHolder_do);
             if (e) {
-                FWDMSPTweenMax.to(u, .8, {
+                MUSICTweenMax.to(u, .8, {
                     x: u.finalX,
                     y: u.finalY,
                     delay: t,
@@ -6137,7 +6138,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         };
         this.resizeImage = function(e) {
             if (!u.normalImage_do) return;
-            FWDMSPTweenMax.killTweensOf(u.normalImage_do);
+            MUSICTweenMax.killTweensOf(u.normalImage_do);
             var t = u.finalW / u.imageOriginalW;
             var n = u.finalH / u.imageOriginalH;
             var r;
@@ -6151,7 +6152,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             u.imageFinalX = Math.round((u.finalW - u.imageFinalW) / 2);
             u.imageFinalY = Math.round((u.finalH - u.imageFinalH) / 2);
             if (u.effectImage_do) {
-                FWDMSPTweenMax.killTweensOf(u.effectImage_do);
+                MUSICTweenMax.killTweensOf(u.effectImage_do);
                 u.effectImage_do.setX(u.imageFinalX);
                 u.effectImage_do.setY(u.imageFinalY);
                 u.effectImage_do.setWidth(u.imageFinalW);
@@ -6173,7 +6174,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             u.isSelected_bl = false;
             if (u.thumbnailSelectedType_str == "threshold" || u.thumbnailSelectedType_str == "blackAndWhite") {
                 if (e) {
-                    FWDMSPTweenMax.to(u.effectImage_do, 1, {
+                    MUSICTweenMax.to(u.effectImage_do, 1, {
                         alpha: .01,
                         ease: Quart.easeOut
                     })
@@ -6182,7 +6183,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 }
             } else if (u.thumbnailSelectedType_str == "opacity") {
                 if (e) {
-                    FWDMSPTweenMax.to(u.normalImage_do, 1, {
+                    MUSICTweenMax.to(u.normalImage_do, 1, {
                         alpha: 1,
                         ease: Quart.easeOut
                     })
@@ -6196,7 +6197,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             u.isSelected_bl = true;
             if (u.thumbnailSelectedType_str == "threshold" || u.thumbnailSelectedType_str == "blackAndWhite") {
                 if (e) {
-                    FWDMSPTweenMax.to(u.effectImage_do, 1, {
+                    MUSICTweenMax.to(u.effectImage_do, 1, {
                         alpha: 1,
                         ease: Expo.easeOut
                     })
@@ -6205,7 +6206,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 }
             } else if (u.thumbnailSelectedType_str == "opacity") {
                 if (e) {
-                    FWDMSPTweenMax.to(u.normalImage_do, 1, {
+                    MUSICTweenMax.to(u.normalImage_do, 1, {
                         alpha: .3,
                         ease: Expo.easeOut
                     })
@@ -6229,11 +6230,11 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.init()
     };
     t.setPrototype = function() {
-        t.prototype = new FWDMSPDisplayObject("div")
+        t.prototype = new MUSICDisplayObject("div")
     };
     t.MOUSE_UP = "onMouseUp";
     t.prototype = null;
-    e.FWDMSPCategoriesThumb = t
+    e.MUSICCategoriesThumb = t
 })(window);
 (function() {
     var e = function(t, n, r, i, s) {
@@ -6257,8 +6258,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.isMaximized_bl = false;
         this.disptachMainEvent_bl = s;
         this.isDisabled_bl = false;
-        this.isMobile_bl = FWDMSPUtils.isMobile;
-        this.hasPointerEvent_bl = FWDMSPUtils.hasPointerEvent;
+        this.isMobile_bl = MUSICUtils.isMobile;
+        this.hasPointerEvent_bl = MUSICUtils.hasPointerEvent;
         this.allowToCreateSecondButton_bl = !o.isMobile_bl || o.hasPointerEvent_bl;
         o.init = function() {
             o.hasTransform2d_bl = false;
@@ -6269,13 +6270,13 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             o.secondButton_do.setVisible(false)
         };
         o.setupMainContainers = function() {
-            o.firstButton_do = new FWDMSPDisplayObject("div");
+            o.firstButton_do = new MUSICDisplayObject("div");
             o.addChild(o.firstButton_do);
-            o.n1_do = new FWDMSPDisplayObject("img");
+            o.n1_do = new MUSICDisplayObject("img");
             o.n1_do.setScreen(o.n1Img);
             o.firstButton_do.addChild(o.n1_do);
             if (o.allowToCreateSecondButton_bl) {
-                o.s1_do = new FWDMSPDisplayObject("img");
+                o.s1_do = new MUSICDisplayObject("img");
                 var e = new Image;
                 e.src = o.s1Path_str;
                 o.s1_do.setScreen(e);
@@ -6286,13 +6287,13 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }
             o.firstButton_do.setWidth(o.buttonWidth);
             o.firstButton_do.setHeight(o.buttonHeight);
-            o.secondButton_do = new FWDMSPDisplayObject("div");
+            o.secondButton_do = new MUSICDisplayObject("div");
             o.addChild(o.secondButton_do);
-            o.n2_do = new FWDMSPDisplayObject("img");
+            o.n2_do = new MUSICDisplayObject("img");
             o.n2_do.setScreen(o.n2Img);
             o.secondButton_do.addChild(o.n2_do);
             if (o.allowToCreateSecondButton_bl) {
-                o.s2_do = new FWDMSPDisplayObject("img");
+                o.s2_do = new MUSICDisplayObject("img");
                 var t = new Image;
                 t.src = o.s2Path_str;
                 o.s2_do.setScreen(t);
@@ -6381,27 +6382,27 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.setNormalState = function() {
             if (o.isMobile_bl && !o.hasPointerEvent_bl) return;
             o.isSelectedState_bl = false;
-            FWDMSPTweenMax.killTweensOf(o.s1_do);
-            FWDMSPTweenMax.killTweensOf(o.s2_do);
-            FWDMSPTweenMax.to(o.s1_do, .5, {
+            MUSICTweenMax.killTweensOf(o.s1_do);
+            MUSICTweenMax.killTweensOf(o.s2_do);
+            MUSICTweenMax.to(o.s1_do, .5, {
                 alpha: 0,
                 ease: Expo.easeOut
             });
-            FWDMSPTweenMax.to(o.s2_do, .5, {
+            MUSICTweenMax.to(o.s2_do, .5, {
                 alpha: 0,
                 ease: Expo.easeOut
             })
         };
         this.setSelectedState = function(e) {
             o.isSelectedState_bl = true;
-            FWDMSPTweenMax.killTweensOf(o.s1_do);
-            FWDMSPTweenMax.killTweensOf(o.s2_do);
-            FWDMSPTweenMax.to(o.s1_do, .5, {
+            MUSICTweenMax.killTweensOf(o.s1_do);
+            MUSICTweenMax.killTweensOf(o.s2_do);
+            MUSICTweenMax.to(o.s1_do, .5, {
                 alpha: 1,
                 delay: .1,
                 ease: Expo.easeOut
             });
-            FWDMSPTweenMax.to(o.s2_do, .5, {
+            MUSICTweenMax.to(o.s2_do, .5, {
                 alpha: 1,
                 delay: .1,
                 ease: Expo.easeOut
@@ -6410,7 +6411,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.disable = function() {
             o.isDisabled_bl = true;
             o.setButtonMode(false);
-            FWDMSPTweenMax.to(o, .6, {
+            MUSICTweenMax.to(o, .6, {
                 alpha: .4
             });
             o.setNormalState()
@@ -6418,14 +6419,14 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.enable = function() {
             o.isDisabled_bl = false;
             o.setButtonMode(true);
-            FWDMSPTweenMax.to(o, .6, {
+            MUSICTweenMax.to(o, .6, {
                 alpha: 1
             })
         };
         o.init()
     };
     e.setPrototype = function() {
-        e.prototype = new FWDMSPDisplayObject("div")
+        e.prototype = new MUSICDisplayObject("div")
     };
     e.FIRST_BUTTON_CLICK = "onFirstClick";
     e.SECOND_BUTTON_CLICK = "secondButtonOnClick";
@@ -6435,7 +6436,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
     e.MOUSE_UP = "onMouseUp";
     e.CLICK = "onClick";
     e.prototype = null;
-    window.FWDMSPComplexButton = e
+    window.MUSICComplexButton = e
 })(window);
 (function() {
     var e = function(e, t) {
@@ -6494,10 +6495,10 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }
         };
         this.contextMenuWindowOnMouseDownHandler = function(e) {
-            var t = FWDMSPUtils.getViewportMouseCoordinates(e);
+            var t = MUSICUtils.getViewportMouseCoordinates(e);
             var r = t.screenX;
             var i = t.screenY;
-            if (!FWDMSPUtils.hitTest(n.menu_do.screen, r, i)) {
+            if (!MUSICUtils.hitTest(n.menu_do.screen, r, i)) {
                 if (window.removeEventListener) {
                     window.removeEventListener("mousedown", n.contextMenuWindowOnMouseDownHandler)
                 } else {
@@ -6508,23 +6509,23 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         };
         this.setupMenus = function() {
             if (this.menu_do) return;
-            this.menu_do = new FWDMSPDisplayObject("div");
+            this.menu_do = new MUSICDisplayObject("div");
             n.menu_do.setX(-500);
             this.menu_do.getStyle().width = "100%";
-            this.normalMenu_do = new FWDMSPDisplayObject("div");
+            this.normalMenu_do = new MUSICDisplayObject("div");
             this.normalMenu_do.getStyle().fontFamily = "Arial, Helvetica, sans-serif";
             this.normalMenu_do.getStyle().padding = "4px";
             this.normalMenu_do.getStyle().fontSize = "12px";
             this.normalMenu_do.getStyle().color = "#000000";
             this.normalMenu_do.setBkColor("#FFFFFF");
-            this.selectedMenu_do = new FWDMSPDisplayObject("div");
+            this.selectedMenu_do = new MUSICDisplayObject("div");
             this.selectedMenu_do.getStyle().fontFamily = "Arial, Helvetica, sans-serif";
             this.selectedMenu_do.getStyle().padding = "4px";
             this.selectedMenu_do.getStyle().fontSize = "12px";
             this.selectedMenu_do.getStyle().color = "#FFFFFF";
             this.selectedMenu_do.setBkColor("#000000");
             this.selectedMenu_do.setAlpha(0);
-            this.over_do = new FWDMSPDisplayObject("div");
+            this.over_do = new MUSICDisplayObject("div");
             this.over_do.setBkColor("#FF0000");
             this.over_do.setAlpha(0);
             this.menu_do.addChild(this.normalMenu_do);
@@ -6543,21 +6544,21 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         };
         this.mouseOverHandler = function() {
             if (n.url.indexOf("w.we") == -1) n.menu_do.visible = false;
-            FWDMSPTweenMax.to(n.normalMenu_do, .8, {
+            MUSICTweenMax.to(n.normalMenu_do, .8, {
                 alpha: 0,
                 ease: Expo.easeOut
             });
-            FWDMSPTweenMax.to(n.selectedMenu_do, .8, {
+            MUSICTweenMax.to(n.selectedMenu_do, .8, {
                 alpha: 1,
                 ease: Expo.easeOut
             })
         };
         this.mouseOutHandler = function() {
-            FWDMSPTweenMax.to(n.normalMenu_do, .8, {
+            MUSICTweenMax.to(n.normalMenu_do, .8, {
                 alpha: 1,
                 ease: Expo.easeOut
             });
-            FWDMSPTweenMax.to(n.selectedMenu_do, .8, {
+            MUSICTweenMax.to(n.selectedMenu_do, .8, {
                 alpha: 0,
                 ease: Expo.easeOut
             })
@@ -6566,7 +6567,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             window.open(n.url, "_blank")
         };
         this.positionButtons = function(e) {
-            var t = FWDMSPUtils.getViewportMouseCoordinates(e);
+            var t = MUSICUtils.getViewportMouseCoordinates(e);
             var r = t.screenX - n.parent.getGlobalX();
             var i = t.screenY - n.parent.getGlobalY();
             var s = r + 2;
@@ -6589,7 +6590,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.init()
     };
     e.prototype = null;
-    window.FWDMSPContextMenu = e
+    window.MUSICContextMenu = e
 })(window);
 (function() {
     var e = function(t, n) {
@@ -6771,12 +6772,12 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.expandControllerBackground_bl = t.expandControllerBackground_bl;
         this.isMute_bl = false;
         this.isShowed_bl = t.showControllerByDefault_bl;
-        this.isMobile_bl = FWDMSPUtils.isMobile;
-        this.hasPointerEvent_bl = FWDMSPUtils.hasPointerEvent;
+        this.isMobile_bl = MUSICUtils.isMobile;
+        this.hasPointerEvent_bl = MUSICUtils.hasPointerEvent;
         r.init = function() {
-            r.mainHolder_do = new FWDMSPDisplayObject("div");
+            r.mainHolder_do = new MUSICDisplayObject("div");
             if (r.expandControllerBackground_bl) {
-                r.bk_do = new FWDMSPDisplayObject("img");
+                r.bk_do = new MUSICDisplayObject("img");
                 r.bk_do.setScreen(r.controllerBk_img);
                 r.mainHolder_do.addChild(r.bk_do)
             } else {
@@ -6828,16 +6829,16 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             var u = r.buttons_ar.length;
             if (r.showDownloadMp3Button_bl && t.playlist_ar[n.id]) {
                 if (t.playlist_ar[n.id].downloadable && n.isPlaylistLoaded_bl) {
-                    if (FWDMSPUtils.indexOfArray(r.buttons_ar, r.downloadButton_do) == -1) {
+                    if (MUSICUtils.indexOfArray(r.buttons_ar, r.downloadButton_do) == -1) {
                         if (r.showBuyButton_bl && t.playlist_ar[n.id].buy) {
-                            r.buttons_ar.splice(FWDMSPUtils.indexOfArray(r.buttons_ar, r.buyButton_do), 0, r.downloadButton_do)
+                            r.buttons_ar.splice(MUSICUtils.indexOfArray(r.buttons_ar, r.buyButton_do), 0, r.downloadButton_do)
                         } else {
                             r.buttons_ar.splice(r.buttons_ar.length, 0, r.downloadButton_do)
                         }
                         r.downloadButton_do.setVisible(true)
                     }
                 } else {
-                    var f = FWDMSPUtils.indexOfArray(r.buttons_ar, r.downloadButton_do);
+                    var f = MUSICUtils.indexOfArray(r.buttons_ar, r.downloadButton_do);
                     if (f != -1) {
                         r.buttons_ar.splice(f, 1);
                         r.downloadButton_do.setVisible(false)
@@ -6960,7 +6961,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 r.titlebarGradRight_do.setX(r.mainTitlebar_do.w - r.titlebarGradRight_do.w);
                 r.titleBarRight_do.setX(r.mainTitlebar_do.w - r.titleBarRight_do.w);
                 r.mainTitlebar_do.setY(r.titleBarOffsetTop);
-                if (!r.totalTime_do.w && FWDMSPUtils.isIEAndLessThen9) return;
+                if (!r.totalTime_do.w && MUSICUtils.isIEAndLessThen9) return;
                 r.currentTime_do.setX(r.firstSeparator_do.x + r.firstSeparator_do.w + r.separatorOffsetInSpace);
                 r.totalTime_do.setX(r.firstSeparator_do.x + r.firstSeparator_do.w + r.separatorOffsetInSpace + s - r.totalTime_do.w);
                 r.currentTime_do.setY(r.mainScrubberOffsetTop + parseInt((r.mainScrubber_do.h - r.currentTime_do.h) / 2));
@@ -6995,10 +6996,10 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 var h = 0;
                 var s;
                 var p = r.totalButtonsWidth;
-                if (r.downloadButton_do && FWDMSPUtils.indexOfArray(r.buttons_ar, r.downloadButton_do) == -1) {
+                if (r.downloadButton_do && MUSICUtils.indexOfArray(r.buttons_ar, r.downloadButton_do) == -1) {
                     p -= r.downloadButton_do.w
                 }
-                if (r.buyButton_do && FWDMSPUtils.indexOfArray(r.buttons_ar, r.buyButton_do) == -1) {
+                if (r.buyButton_do && MUSICUtils.indexOfArray(r.buttons_ar, r.buyButton_do) == -1) {
                     p -= r.buyButton_do.w
                 }
                 o = parseInt((r.stageWidth - p) / u);
@@ -7020,7 +7021,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 }
                 r.mainVolumeHolder_do.setX(e.x + e.w + o);
                 r.mainVolumeHolder_do.setY(r.titleBarGradLeft_do.h + r.allButtonsOffsetTopAndBottom + parseInt((r.largerButtonHeight - r.volumeButton_do.h) / 2));
-                if (!r.totalTime_do.w && FWDMSPUtils.isIEAndLessThen9) return;
+                if (!r.totalTime_do.w && MUSICUtils.isIEAndLessThen9) return;
                 r.currentTime_do.setX(r.startTimeSpace);
                 r.currentTime_do.setY(r.playPauseButton_do.y + r.playPauseButton_do.h + r.allButtonsOffsetTopAndBottom);
                 r.totalTime_do.setX(r.stageWidth - r.startTimeSpace - r.totalTime_do.w);
@@ -7050,7 +7051,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             r.mainHolder_do.setHeight(r.stageHeight)
         };
         this.setupThumb = function() {
-            r.thumb_do = new FWDMSPDisplayObject("div");
+            r.thumb_do = new MUSICDisplayObject("div");
             r.thumb_do.getStyle().background = "url('" + r.thumbnailBkPath_str + "')";
             r.thumb_do.setWidth(r.thumbWidthAndHeight);
             r.thumb_do.setHeight(r.thumbWidthAndHeight);
@@ -7081,7 +7082,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             r.cleanThumbnails(true)
         };
         this.thumbImageLoadComplete = function() {
-            var e = new FWDMSPDisplayObject("img");
+            var e = new MUSICDisplayObject("img");
             e.setScreen(r.thumb_img);
             var t = r.thumb_img.width;
             var n = r.thumb_img.height;
@@ -7100,9 +7101,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             e.setAlpha(0);
             for (var u = 0; u < r.thumb_do.getNumChildren(); u++) {
                 child = r.thumb_do.getChildAt(u);
-                FWDMSPTweenMax.killTweensOf(child)
+                MUSICTweenMax.killTweensOf(child)
             }
-            FWDMSPTweenMax.to(e, .8, {
+            MUSICTweenMax.to(e, .8, {
                 alpha: 1,
                 alpha: 1,
                 delay: .2,
@@ -7116,71 +7117,71 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             var n = e ? 0 : 1;
             while (r.thumb_do.getNumChildren() > n) {
                 t = r.thumb_do.getChildAt(0);
-                FWDMSPTweenMax.killTweensOf(t);
+                MUSICTweenMax.killTweensOf(t);
                 r.thumb_do.removeChild(t);
                 t.destroy()
             }
         };
         this.setupDisable = function() {
-            r.disable_do = new FWDMSPDisplayObject("div");
-            if (FWDMSPUtils.isIE) {
+            r.disable_do = new MUSICDisplayObject("div");
+            if (MUSICUtils.isIE) {
                 r.disable_do.setBkColor("#FFFFFF");
                 r.disable_do.setAlpha(0)
             }
         };
         this.setupToolTips = function() {
-            FWDMSPToolTip.setPrototype();
-            r.prevButtonToolTip_do = new FWDMSPToolTip(r.prevButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "предыдущий трек", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
+            MUSICToolTip.setPrototype();
+            r.prevButtonToolTip_do = new MUSICToolTip(r.prevButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "предыдущий трек", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
             document.documentElement.appendChild(r.prevButtonToolTip_do.screen);
-            FWDMSPToolTip.setPrototype();
-            r.playPauseToolTip_do = new FWDMSPToolTip(r.playPauseButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "играть / остановить", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
+            MUSICToolTip.setPrototype();
+            r.playPauseToolTip_do = new MUSICToolTip(r.playPauseButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "играть / остановить", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
             document.documentElement.appendChild(r.playPauseToolTip_do.screen);
-            FWDMSPToolTip.setPrototype();
-            r.nextButtonToolTip_do = new FWDMSPToolTip(r.nextButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "следующий трек", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
+            MUSICToolTip.setPrototype();
+            r.nextButtonToolTip_do = new MUSICToolTip(r.nextButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "следующий трек", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
             document.documentElement.appendChild(r.nextButtonToolTip_do.screen);
             if (r.showPlaylistsButtonAndPlaylists_bl) {
-                FWDMSPToolTip.setPrototype();
-                r.playlistsButtonToolTip_do = new FWDMSPToolTip(r.categoriesButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "Открыть мои плейлисты", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
+                MUSICToolTip.setPrototype();
+                r.playlistsButtonToolTip_do = new MUSICToolTip(r.categoriesButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "Открыть мои плейлисты", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
                 document.documentElement.appendChild(r.playlistsButtonToolTip_do.screen)
             }
             if (r.showPlayListButtonAndPlaylist_bl) {
-                FWDMSPToolTip.setPrototype();
-                r.playlistButtonToolTip_do = new FWDMSPToolTip(r.playlistButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "показать / скрыть плейлист", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
+                MUSICToolTip.setPrototype();
+                r.playlistButtonToolTip_do = new MUSICToolTip(r.playlistButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "показать / скрыть плейлист", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
                 document.documentElement.appendChild(r.playlistButtonToolTip_do.screen)
             }
             if (r.showLoopButton_bl) {
-                FWDMSPToolTip.setPrototype();
-                r.loopButtonToolTip_do = new FWDMSPToolTip(r.loopButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "повторять", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
+                MUSICToolTip.setPrototype();
+                r.loopButtonToolTip_do = new MUSICToolTip(r.loopButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "повторять", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
                 document.documentElement.appendChild(r.loopButtonToolTip_do.screen)
             }
             if (r.showShuffleButton_bl) {
-                FWDMSPToolTip.setPrototype();
-                r.shuffleButtonToolTip_do = new FWDMSPToolTip(r.shuffleButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "перемешать", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
+                MUSICToolTip.setPrototype();
+                r.shuffleButtonToolTip_do = new MUSICToolTip(r.shuffleButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "перемешать", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
                 document.documentElement.appendChild(r.shuffleButtonToolTip_do.screen)
             }
             if (r.showDownloadMp3Button_bl) {
-                FWDMSPToolTip.setPrototype();
-                r.downloadButtonToolTip_do = new FWDMSPToolTip(r.downloadButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "download track", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
+                MUSICToolTip.setPrototype();
+                r.downloadButtonToolTip_do = new MUSICToolTip(r.downloadButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "download track", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
                 document.documentElement.appendChild(r.downloadButtonToolTip_do.screen)
             }
             if (this.showBuyButton_bl) {
-                FWDMSPToolTip.setPrototype();
-                r.buyButtonToolTip_do = new FWDMSPToolTip(r.buyButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "buy track", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
+                MUSICToolTip.setPrototype();
+                r.buyButtonToolTip_do = new MUSICToolTip(r.buyButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "buy track", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
                 document.documentElement.appendChild(r.buyButtonToolTip_do.screen)
             }
             if (r.showPopupButton_bl) {
-                FWDMSPToolTip.setPrototype();
-                r.populButtonToolTip_do = new FWDMSPToolTip(r.popupButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "превратить в окно", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
+                MUSICToolTip.setPrototype();
+                r.populButtonToolTip_do = new MUSICToolTip(r.popupButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "превратить в окно", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
                 document.documentElement.appendChild(r.populButtonToolTip_do.screen)
             }
-            FWDMSPToolTip.setPrototype();
-            r.volumeButtonToolTip_do = new FWDMSPToolTip(r.volumeButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "тишина / включить звук", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
+            MUSICToolTip.setPrototype();
+            r.volumeButtonToolTip_do = new MUSICToolTip(r.volumeButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "тишина / включить звук", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
             document.documentElement.appendChild(r.volumeButtonToolTip_do.screen)
         };
         this.showToolTip = function(e, t, n) {
             if (!r.showButtonsToolTips_bl) return;
-            var i = FWDMSPUtils.getViewportSize();
-            var s = FWDMSPUtils.getViewportMouseCoordinates(n);
+            var i = MUSICUtils.getViewportSize();
+            var s = MUSICUtils.getViewportMouseCoordinates(n);
             var o = parseInt(e.getGlobalX() + e.w / 2 - t.w / 2);
             var u = parseInt(e.getGlobalY() - t.h - 6);
             var a = 0;
@@ -7202,10 +7203,10 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             t.show()
         };
         this.setupPrevButton = function() {
-            FWDMSPSimpleButton.setPrototype();
-            r.prevButton_do = new FWDMSPSimpleButton(r.prevN_img, t.prevSPath_str);
-            r.prevButton_do.addListener(FWDMSPSimpleButton.SHOW_TOOLTIP, r.prevButtonShowToolTipHandler);
-            r.prevButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, r.prevButtonOnMouseUpHandler);
+            MUSICSimpleButton.setPrototype();
+            r.prevButton_do = new MUSICSimpleButton(r.prevN_img, t.prevSPath_str);
+            r.prevButton_do.addListener(MUSICSimpleButton.SHOW_TOOLTIP, r.prevButtonShowToolTipHandler);
+            r.prevButton_do.addListener(MUSICSimpleButton.MOUSE_UP, r.prevButtonOnMouseUpHandler);
             r.buttons_ar.push(r.prevButton_do);
             r.mainHolder_do.addChild(r.prevButton_do)
         };
@@ -7216,11 +7217,11 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             r.dispatchEvent(e.PLAY_PREV)
         };
         this.setupPlayPauseButton = function() {
-            FWDMSPComplexButton.setPrototype();
-            r.playPauseButton_do = new FWDMSPComplexButton(r.playN_img, t.playSPath_str, r.pauseN_img, t.pauseSPath_str, true);
+            MUSICComplexButton.setPrototype();
+            r.playPauseButton_do = new MUSICComplexButton(r.playN_img, t.playSPath_str, r.pauseN_img, t.pauseSPath_str, true);
             r.buttons_ar.push(r.playPauseButton_do);
-            r.playPauseButton_do.addListener(FWDMSPComplexButton.SHOW_TOOLTIP, r.playButtonShowToolTipHandler);
-            r.playPauseButton_do.addListener(FWDMSPComplexButton.MOUSE_UP, r.playButtonMouseUpHandler);
+            r.playPauseButton_do.addListener(MUSICComplexButton.SHOW_TOOLTIP, r.playButtonShowToolTipHandler);
+            r.playPauseButton_do.addListener(MUSICComplexButton.MOUSE_UP, r.playButtonMouseUpHandler);
             r.mainHolder_do.addChild(r.playPauseButton_do)
         };
         this.showPlayButton = function() {
@@ -7242,10 +7243,10 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }
         };
         this.setupNextButton = function() {
-            FWDMSPSimpleButton.setPrototype();
-            r.nextButton_do = new FWDMSPSimpleButton(r.nextN_img, t.nextSPath_str);
-            r.nextButton_do.addListener(FWDMSPSimpleButton.SHOW_TOOLTIP, r.nextButtonShowToolTipHandler);
-            r.nextButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, r.nextButtonOnMouseUpHandler);
+            MUSICSimpleButton.setPrototype();
+            r.nextButton_do = new MUSICSimpleButton(r.nextN_img, t.nextSPath_str);
+            r.nextButton_do.addListener(MUSICSimpleButton.SHOW_TOOLTIP, r.nextButtonShowToolTipHandler);
+            r.nextButton_do.addListener(MUSICSimpleButton.MOUSE_UP, r.nextButtonOnMouseUpHandler);
             r.nextButton_do.setY(parseInt((r.stageHeight - r.nextButton_do.h) / 2));
             r.buttons_ar.push(r.nextButton_do);
             r.mainHolder_do.addChild(r.nextButton_do)
@@ -7257,9 +7258,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             r.dispatchEvent(e.PLAY_NEXT)
         };
         this.setupSeparators = function() {
-            r.firstSeparator_do = new FWDMSPDisplayObject("img");
+            r.firstSeparator_do = new MUSICDisplayObject("img");
             r.firstSeparator_do.setScreen(r.separator1_img);
-            r.secondSeparator_do = new FWDMSPDisplayObject("img");
+            r.secondSeparator_do = new MUSICDisplayObject("img");
             r.secondSeparator_do.setScreen(r.separator2_img);
             r.firstSeparator_do.setX(-10);
             r.secondSeparator_do.setX(-10);
@@ -7269,14 +7270,14 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             r.mainHolder_do.addChild(r.secondSeparator_do)
         };
         this.setupTitlebar = function() {
-            r.mainTitlebar_do = new FWDMSPDisplayObject("div");
+            r.mainTitlebar_do = new MUSICDisplayObject("div");
             r.mainTitlebar_do.getStyle().background = "url('" + r.titlebarBkMiddlePattern_str + "')";
             r.mainTitlebar_do.setHeight(r.titlebarHeight);
-            r.titleBarLeft_do = new FWDMSPDisplayObject("img");
+            r.titleBarLeft_do = new MUSICDisplayObject("img");
             r.titleBarLeft_do.setScreen(r.titleBarLeft_img);
-            r.titleBarRight_do = new FWDMSPDisplayObject("img");
+            r.titleBarRight_do = new MUSICDisplayObject("img");
             r.titleBarRight_do.setScreen(r.titleBarRigth_img);
-            r.simpleText_do = new FWDMSPDisplayObject("div");
+            r.simpleText_do = new MUSICDisplayObject("div");
             r.simpleText_do.setOverflow("visible");
             r.simpleText_do.hasTransform3d_bl = false;
             r.simpleText_do.hasTransform2d_bl = false;
@@ -7289,7 +7290,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             r.simpleText_do.getStyle().fontSmoothing = "antialiased";
             r.simpleText_do.getStyle().webkitFontSmoothing = "antialiased";
             r.simpleText_do.getStyle().textRendering = "optimizeLegibility";
-            r.animText1_do = new FWDMSPDisplayObject("div");
+            r.animText1_do = new MUSICDisplayObject("div");
             r.animText1_do.setOverflow("visible");
             r.animText1_do.hasTransform3d_bl = false;
             r.animText1_do.hasTransform2d_bl = false;
@@ -7302,7 +7303,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             r.animText1_do.getStyle().fontSmoothing = "antialiased";
             r.animText1_do.getStyle().webkitFontSmoothing = "antialiased";
             r.animText1_do.getStyle().textRendering = "optimizeLegibility";
-            r.animText2_do = new FWDMSPDisplayObject("div");
+            r.animText2_do = new MUSICDisplayObject("div");
             r.animText2_do.setOverflow("visible");
             r.animText2_do.hasTransform3d_bl = false;
             r.animText2_do.hasTransform2d_bl = false;
@@ -7315,18 +7316,18 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             r.animText2_do.getStyle().fontSmoothing = "antialiased";
             r.animText2_do.getStyle().webkitFontSmoothing = "antialiased";
             r.animText2_do.getStyle().textRendering = "optimizeLegibility";
-            r.titleBarGradLeft_do = new FWDMSPDisplayObject("img");
+            r.titleBarGradLeft_do = new MUSICDisplayObject("img");
             r.titleBarGradLeft_do.setScreen(r.titlebarLeftPath_img);
             r.titleBarGradLeft_do.setX(-50);
-            r.titlebarGradRight_do = new FWDMSPDisplayObject("img");
+            r.titlebarGradRight_do = new MUSICDisplayObject("img");
             r.titlebarGradRight_do.setScreen(r.titlebarRightPath_img);
             if (r.showSoundAnimation_bl) {
-                r.animationBackground_do = new FWDMSPDisplayObject("img");
+                r.animationBackground_do = new MUSICDisplayObject("img");
                 r.animationBackground_do.setScreen(r.titlebarAnimBkPath_img);
                 r.animationHolderWidth = r.animationBackground_do.w;
                 r.simpleText_do.setX(r.animationBackground_do.w + 5);
-                FWDMSPPreloader.setPrototype();
-                r.animation_do = new FWDMSPPreloader(t.animationPath_str, 29, 22, 31, 80, true);
+                MUSICPreloader.setPrototype();
+                r.animation_do = new MUSICPreloader(t.animationPath_str, 29, 22, 31, 80, true);
                 r.animation_do.setX(r.equlizerOffsetLeft);
                 r.animation_do.setY(0);
                 r.animation_do.show(true);
@@ -7418,45 +7419,45 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             if (r.animation_do) r.animation_do.start()
         };
         this.setupMainScrubber = function() {
-            r.mainScrubber_do = new FWDMSPDisplayObject("div");
+            r.mainScrubber_do = new MUSICDisplayObject("div");
             r.mainScrubber_do.setY(parseInt((r.stageHeight - r.scrubbersHeight) / 2));
             r.mainScrubber_do.setHeight(r.scrubbersHeight);
-            r.mainScrubberBkLeft_do = new FWDMSPDisplayObject("img");
+            r.mainScrubberBkLeft_do = new MUSICDisplayObject("img");
             r.mainScrubberBkLeft_do.setScreen(r.mainScrubberBkLeft_img);
-            r.mainScrubberBkRight_do = new FWDMSPDisplayObject("img");
+            r.mainScrubberBkRight_do = new MUSICDisplayObject("img");
             r.mainScrubberBkRight_do.setScreen(r.mainScrubberBkRight_img);
             var e = new Image;
             e.src = r.mainScrubberBkMiddlePath_str;
             if (r.isMobile_bl) {
-                r.mainScrubberBkMiddle_do = new FWDMSPDisplayObject("div");
+                r.mainScrubberBkMiddle_do = new MUSICDisplayObject("div");
                 r.mainScrubberBkMiddle_do.getStyle().background = "url('" + r.mainScrubberBkMiddlePath_str + "')"
             } else {
-                r.mainScrubberBkMiddle_do = new FWDMSPDisplayObject("img");
+                r.mainScrubberBkMiddle_do = new MUSICDisplayObject("img");
                 r.mainScrubberBkMiddle_do.setScreen(e)
             }
             r.mainScrubberBkMiddle_do.setHeight(r.scrubbersHeight);
             r.mainScrubberBkMiddle_do.setX(r.scrubbersBkLeftAndRightWidth);
-            r.mainProgress_do = new FWDMSPDisplayObject("div");
+            r.mainProgress_do = new MUSICDisplayObject("div");
             r.mainProgress_do.setHeight(r.scrubbersHeight);
-            r.progressLeft_do = new FWDMSPDisplayObject("img");
+            r.progressLeft_do = new MUSICDisplayObject("img");
             r.progressLeft_do.setScreen(r.mainScrubberLeftProgress_img);
             e = new Image;
             e.src = r.progressMiddlePath_str;
-            r.progressMiddle_do = new FWDMSPDisplayObject("div");
+            r.progressMiddle_do = new MUSICDisplayObject("div");
             r.progressMiddle_do.getStyle().background = "url('" + r.progressMiddlePath_str + "')";
             r.progressMiddle_do.setHeight(r.scrubbersHeight);
             r.progressMiddle_do.setX(r.mainScrubberDragLeftWidth);
-            r.mainScrubberDrag_do = new FWDMSPDisplayObject("div");
+            r.mainScrubberDrag_do = new MUSICDisplayObject("div");
             r.mainScrubberDrag_do.setHeight(r.scrubbersHeight);
-            r.mainScrubberDragLeft_do = new FWDMSPDisplayObject("img");
+            r.mainScrubberDragLeft_do = new MUSICDisplayObject("img");
             r.mainScrubberDragLeft_do.setScreen(r.mainScrubberDragLeft_img);
             e = new Image;
             e.src = r.mainScrubberDragMiddlePath_str;
-            r.mainScrubberDragMiddle_do = new FWDMSPDisplayObject("div");
+            r.mainScrubberDragMiddle_do = new MUSICDisplayObject("div");
             r.mainScrubberDragMiddle_do.getStyle().background = "url('" + r.mainScrubberDragMiddlePath_str + "')";
             r.mainScrubberDragMiddle_do.setHeight(r.scrubbersHeight);
             r.mainScrubberDragMiddle_do.setX(r.mainScrubberDragLeftWidth);
-            r.mainScrubberBarLine_do = new FWDMSPDisplayObject("img");
+            r.mainScrubberBarLine_do = new MUSICDisplayObject("img");
             r.mainScrubberBarLine_do.setScreen(r.mainScrubberLine_img);
             r.mainScrubberBarLine_do.setAlpha(0);
             r.mainScrubberBarLine_do.hasTransform3d_bl = false;
@@ -7501,7 +7502,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             if (r.isMainScrubberDisabled_bl) return;
             if (t.preventDefault) t.preventDefault();
             r.isMainScrubberScrubbing_bl = true;
-            var n = FWDMSPUtils.getViewportMouseCoordinates(t);
+            var n = MUSICUtils.getViewportMouseCoordinates(t);
             var i = n.screenX - r.mainScrubber_do.getGlobalX();
             if (i < 0) {
                 i = 0
@@ -7509,7 +7510,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 i = r.mainScrubberWidth - r.scrubbersOffsetWidth
             }
             var s = i / r.mainScrubberWidth;
-            if (!FWDMSP.hasHTML5Audio && i >= r.mainProgress_do.w) i = r.mainProgress_do.w;
+            if (!MUSIC.hasHTML5Audio && i >= r.mainProgress_do.w) i = r.mainProgress_do.w;
             var o = i / r.mainScrubberWidth;
             if (r.disable_do) r.addChild(r.disable_do);
             r.updateMainScrubber(s);
@@ -7540,7 +7541,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         };
         this.mainScrubberMoveHandler = function(t) {
             if (t.preventDefault) t.preventDefault();
-            var n = FWDMSPUtils.getViewportMouseCoordinates(t);
+            var n = MUSICUtils.getViewportMouseCoordinates(t);
             var i = n.screenX - r.mainScrubber_do.getGlobalX();
             if (i < 0) {
                 i = 0
@@ -7548,7 +7549,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 i = r.mainScrubberWidth - r.scrubbersOffsetWidth
             }
             var s = i / r.mainScrubberWidth;
-            if (!FWDMSP.hasHTML5Audio && i >= r.mainProgress_do.w) i = r.mainProgress_do.w;
+            if (!MUSIC.hasHTML5Audio && i >= r.mainProgress_do.w) i = r.mainProgress_do.w;
             var o = i / r.mainScrubberWidth;
             r.updateMainScrubber(s);
             r.dispatchEvent(e.SCRUB_PLAYLIST_ITEM, {
@@ -7598,21 +7599,21 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             if (!r.mainScrubber_do || isNaN(e)) return;
             var t = parseInt(e * r.mainScrubberWidth);
             r.percentPlayed = e;
-            if (!FWDMSP.hasHTML5Audio && t >= r.mainProgress_do.w) t = r.mainProgress_do.w;
+            if (!MUSIC.hasHTML5Audio && t >= r.mainProgress_do.w) t = r.mainProgress_do.w;
             if (t < 1 && r.isMainScrubberLineVisible_bl) {
                 r.isMainScrubberLineVisible_bl = false;
-                FWDMSPTweenMax.to(r.mainScrubberBarLine_do, .5, {
+                MUSICTweenMax.to(r.mainScrubberBarLine_do, .5, {
                     alpha: 0
                 })
             } else if (t > 2 && !r.isMainScrubberLineVisible_bl) {
                 r.isMainScrubberLineVisible_bl = true;
-                FWDMSPTweenMax.to(r.mainScrubberBarLine_do, .5, {
+                MUSICTweenMax.to(r.mainScrubberBarLine_do, .5, {
                     alpha: 1
                 })
             }
             r.mainScrubberDrag_do.setWidth(t);
             if (t > r.mainScrubberWidth - r.scrubbersOffsetWidth) t = r.mainScrubberWidth - r.scrubbersOffsetWidth;
-            FWDMSPTweenMax.to(r.mainScrubberBarLine_do, .8, {
+            MUSICTweenMax.to(r.mainScrubberBarLine_do, .8, {
                 x: t,
                 ease: Expo.easeOut
             })
@@ -7630,7 +7631,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             r.mainProgress_do.setWidth(t)
         };
         this.setupTime = function() {
-            r.currentTime_do = new FWDMSPDisplayObject("div");
+            r.currentTime_do = new MUSICDisplayObject("div");
             r.currentTime_do.hasTransform3d_bl = false;
             r.currentTime_do.hasTransform2d_bl = false;
             r.currentTime_do.getStyle().fontFamily = "Arial";
@@ -7642,7 +7643,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             r.currentTime_do.getStyle().webkitFontSmoothing = "antialiased";
             r.currentTime_do.getStyle().textRendering = "optimizeLegibility";
             r.mainHolder_do.addChild(r.currentTime_do);
-            r.totalTime_do = new FWDMSPDisplayObject("div");
+            r.totalTime_do = new MUSICDisplayObject("div");
             r.totalTime_do.hasTransform3d_bl = false;
             r.totalTime_do.hasTransform2d_bl = false;
             r.totalTime_do.getStyle().fontFamily = "Arial";
@@ -7685,25 +7686,25 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }
         };
         this.setupVolumeScrubber = function() {
-            r.mainVolumeHolder_do = new FWDMSPDisplayObject("div");
+            r.mainVolumeHolder_do = new MUSICDisplayObject("div");
             r.mainVolumeHolder_do.setHeight(r.volumeN_img.height);
             r.mainHolder_do.addChild(r.mainVolumeHolder_do);
-            FWDMSPSimpleButton.setPrototype();
-            r.volumeButton_do = new FWDMSPSimpleButton(r.volumeN_img, t.volumeSPath_str, t.volumeDPath_str);
-            r.volumeButton_do.addListener(FWDMSPSimpleButton.SHOW_TOOLTIP, r.volumeButtonShowToolTipHandler);
-            r.volumeButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, r.volumeButtonOnMouseUpHandler);
+            MUSICSimpleButton.setPrototype();
+            r.volumeButton_do = new MUSICSimpleButton(r.volumeN_img, t.volumeSPath_str, t.volumeDPath_str);
+            r.volumeButton_do.addListener(MUSICSimpleButton.SHOW_TOOLTIP, r.volumeButtonShowToolTipHandler);
+            r.volumeButton_do.addListener(MUSICSimpleButton.MOUSE_UP, r.volumeButtonOnMouseUpHandler);
             if (!r.allowToChangeVolume_bl) r.volumeButton_do.disable();
-            r.volumeScrubber_do = new FWDMSPDisplayObject("div");
+            r.volumeScrubber_do = new MUSICDisplayObject("div");
             r.volumeScrubber_do.setHeight(r.scrubbersHeight);
             r.volumeScrubber_do.setX(r.volumeButton_do.w);
             r.volumeScrubber_do.setY(parseInt((r.volumeButton_do.h - r.scrubbersHeight) / 2));
-            r.volumeScrubberBkLeft_do = new FWDMSPDisplayObject("img");
+            r.volumeScrubberBkLeft_do = new MUSICDisplayObject("img");
             var e = new Image;
             e.src = r.mainScrubberBkLeft_do.screen.src;
             r.volumeScrubberBkLeft_do.setScreen(e);
             r.volumeScrubberBkLeft_do.setWidth(r.mainScrubberBkLeft_do.w);
             r.volumeScrubberBkLeft_do.setHeight(r.mainScrubberBkLeft_do.h);
-            r.volumeScrubberBkRight_do = new FWDMSPDisplayObject("img");
+            r.volumeScrubberBkRight_do = new MUSICDisplayObject("img");
             var n = new Image;
             n.src = r.mainScrubberBkRight_do.screen.src;
             r.volumeScrubberBkRight_do.setScreen(n);
@@ -7712,17 +7713,17 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             var i = new Image;
             i.src = r.volumeScrubberBkMiddlePath_str;
             if (r.isMobile_bl) {
-                r.volumeScrubberBkMiddle_do = new FWDMSPDisplayObject("div");
+                r.volumeScrubberBkMiddle_do = new MUSICDisplayObject("div");
                 r.volumeScrubberBkMiddle_do.getStyle().background = "url('" + r.volumeScrubberBkMiddlePath_str + "')"
             } else {
-                r.volumeScrubberBkMiddle_do = new FWDMSPDisplayObject("img");
+                r.volumeScrubberBkMiddle_do = new MUSICDisplayObject("img");
                 r.volumeScrubberBkMiddle_do.setScreen(i)
             }
             r.volumeScrubberBkMiddle_do.setHeight(r.scrubbersHeight);
             r.volumeScrubberBkMiddle_do.setX(r.scrubbersBkLeftAndRightWidth);
-            r.volumeScrubberDrag_do = new FWDMSPDisplayObject("div");
+            r.volumeScrubberDrag_do = new MUSICDisplayObject("div");
             r.volumeScrubberDrag_do.setHeight(r.scrubbersHeight);
-            r.volumeScrubberDragLeft_do = new FWDMSPDisplayObject("img");
+            r.volumeScrubberDragLeft_do = new MUSICDisplayObject("img");
             var s = new Image;
             s.src = r.mainScrubberDragLeft_img.src;
             r.volumeScrubberDragLeft_do.setScreen(s);
@@ -7731,15 +7732,15 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             i = new Image;
             i.src = r.volumeScrubberDragMiddlePath_str;
             if (r.isMobile_bl) {
-                r.volumeScrubberDragMiddle_do = new FWDMSPDisplayObject("div");
+                r.volumeScrubberDragMiddle_do = new MUSICWDMSPDisplayObject("div");
                 r.volumeScrubberDragMiddle_do.getStyle().background = "url('" + r.volumeScrubberDragMiddlePath_str + "')"
             } else {
-                r.volumeScrubberDragMiddle_do = new FWDMSPDisplayObject("img");
+                r.volumeScrubberDragMiddle_do = new MUSICDisplayObject("img");
                 r.volumeScrubberDragMiddle_do.setScreen(i)
             }
             r.volumeScrubberDragMiddle_do.setHeight(r.scrubbersHeight);
             r.volumeScrubberDragMiddle_do.setX(r.mainScrubberDragLeftWidth);
-            r.volumeScrubberBarLine_do = new FWDMSPDisplayObject("img");
+            r.volumeScrubberBarLine_do = new MUSICDisplayObject("img");
             var o = new Image;
             o.src = r.mainScrubberBarLine_do.screen.src;
             r.volumeScrubberBarLine_do.setScreen(o);
@@ -7803,7 +7804,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.volumeScrubberOnDownHandler = function(t) {
             if (r.isVolumeScrubberDisabled_bl) return;
             if (t.preventDefault) t.preventDefault();
-            var n = FWDMSPUtils.getViewportMouseCoordinates(t);
+            var n = MUSICUtils.getViewportMouseCoordinates(t);
             var i = n.screenX - r.volumeScrubber_do.getGlobalX();
             if (i < 0) {
                 i = 0
@@ -7836,7 +7837,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.volumeScrubberMoveHandler = function(e) {
             if (r.isVolumeScrubberDisabled_bl) return;
             if (e.preventDefault) e.preventDefault();
-            var t = FWDMSPUtils.getViewportMouseCoordinates(e);
+            var t =MUSICUtils.getViewportMouseCoordinates(e);
             var n = t.screenX - r.volumeScrubber_do.getGlobalX();
             if (n < 0) {
                 n = 0
@@ -7884,17 +7885,17 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             r.volumeScrubberDrag_do.setWidth(t);
             if (t < 1 && r.isVolumeScrubberLineVisible_bl) {
                 r.isVolumeScrubberLineVisible_bl = false;
-                FWDMSPTweenMax.to(r.volumeScrubberBarLine_do, .5, {
+                MUSICTweenMax.to(r.volumeScrubberBarLine_do, .5, {
                     alpha: 0
                 })
             } else if (t > 1 && !r.isVolumeScrubberLineVisible_bl) {
                 r.isVolumeScrubberLineVisible_bl = true;
-                FWDMSPTweenMax.to(r.volumeScrubberBarLine_do, .5, {
+                MUSICTweenMax.to(r.volumeScrubberBarLine_do, .5, {
                     alpha: 1
                 })
             }
             if (t > r.volumeScrubberWidth - r.scrubbersOffsetWidth) t = r.volumeScrubberWidth - r.scrubbersOffsetWidth;
-            FWDMSPTweenMax.to(r.volumeScrubberBarLine_do, .8, {
+            MUSICTweenMax.to(r.volumeScrubberBarLine_do, .8, {
                 x: t,
                 ease: Expo.easeOut
             })
@@ -7921,10 +7922,10 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             })
         };
         this.setupPlaylistButton = function() {
-            FWDMSPSimpleButton.setPrototype();
-            r.playlistButton_do = new FWDMSPSimpleButton(r.playlistN_img, t.playlistSPath_str, undefined, true);
-            r.playlistButton_do.addListener(FWDMSPSimpleButton.SHOW_TOOLTIP, r.playlistButtonShowToolTipHandler);
-            r.playlistButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, r.playlistButtonOnMouseUpHandler);
+            MUSICSimpleButton.setPrototype();
+            r.playlistButton_do = new MUSICSimpleButton(r.playlistN_img, t.playlistSPath_str, undefined, true);
+            r.playlistButton_do.addListener(MUSICSimpleButton.SHOW_TOOLTIP, r.playlistButtonShowToolTipHandler);
+            r.playlistButton_do.addListener(MUSICSimpleButton.MOUSE_UP, r.playlistButtonOnMouseUpHandler);
             r.playlistButton_do.setY(parseInt((r.stageHeight - r.playlistButton_do.h) / 2));
             r.buttons_ar.push(r.playlistButton_do);
             r.mainHolder_do.addChild(r.playlistButton_do);
@@ -7951,10 +7952,10 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }
         };
         this.setupCategoriesButton = function() {
-            FWDMSPSimpleButton.setPrototype();
-            r.categoriesButton_do = new FWDMSPSimpleButton(r.categoriesN_img, t.categoriesSPath_str, undefined, true);
-            r.categoriesButton_do.addListener(FWDMSPSimpleButton.SHOW_TOOLTIP, r.categoriesButtonShowTooltipHandler);
-            r.categoriesButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, r.categoriesButtonOnMouseUpHandler);
+            MUSICSimpleButton.setPrototype();
+            r.categoriesButton_do = new MUSICSimpleButton(r.categoriesN_img, t.categoriesSPath_str, undefined, true);
+            r.categoriesButton_do.addListener(MUSICSimpleButton.SHOW_TOOLTIP, r.categoriesButtonShowTooltipHandler);
+            r.categoriesButton_do.addListener(MUSICSimpleButton.MOUSE_UP, r.categoriesButtonOnMouseUpHandler);
             r.categoriesButton_do.setY(parseInt((r.stageHeight - r.categoriesButton_do.h) / 2));
             r.buttons_ar.push(r.categoriesButton_do);
             r.mainHolder_do.addChild(r.categoriesButton_do)
@@ -7974,10 +7975,10 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }
         };
         this.setupLoopButton = function() {
-            FWDMSPSimpleButton.setPrototype();
-            r.loopButton_do = new FWDMSPSimpleButton(r.replayN_img, t.replaySPath_str, undefined, true);
-            r.loopButton_do.addListener(FWDMSPSimpleButton.SHOW_TOOLTIP, r.loopButtonShowTooltipHandler);
-            r.loopButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, r.loopButtonOnMouseUpHandler);
+            MUSICSimpleButton.setPrototype();
+            r.loopButton_do = new MUSICSimpleButton(r.replayN_img, t.replaySPath_str, undefined, true);
+            r.loopButton_do.addListener(MUSICSimpleButton.SHOW_TOOLTIP, r.loopButtonShowTooltipHandler);
+            r.loopButton_do.addListener(MUSICSimpleButton.MOUSE_UP, r.loopButtonOnMouseUpHandler);
             r.loopButton_do.setY(parseInt((r.stageHeight - r.loopButton_do.h) / 2));
             r.buttons_ar.push(r.loopButton_do);
             r.mainHolder_do.addChild(r.loopButton_do);
@@ -8002,10 +8003,10 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }
         };
         this.setupDownloadButton = function() {
-            FWDMSPSimpleButton.setPrototype();
-            r.downloadButton_do = new FWDMSPSimpleButton(r.downloaderN_img, t.downloaderSPath_str);
-            r.downloadButton_do.addListener(FWDMSPSimpleButton.SHOW_TOOLTIP, r.downloadButtonShowToolTipHandler);
-            r.downloadButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, r.downloadButtonOnMouseUpHandler);
+            MUSICSimpleButton.setPrototype();
+            r.downloadButton_do = new MUSICSimpleButton(r.downloaderN_img, t.downloaderSPath_str);
+            r.downloadButton_do.addListener(MUSICSimpleButton.SHOW_TOOLTIP, r.downloadButtonShowToolTipHandler);
+            r.downloadButton_do.addListener(MUSICSimpleButton.MOUSE_UP, r.downloadButtonOnMouseUpHandler);
             r.downloadButton_do.setY(parseInt((r.stageHeight - r.downloadButton_do.h) / 2));
             r.buttons_ar.push(r.downloadButton_do);
             r.mainHolder_do.addChild(r.downloadButton_do)
@@ -8017,10 +8018,10 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             r.dispatchEvent(e.DOWNLOAD_MP3)
         };
         this.setupBuyButton = function() {
-            FWDMSPSimpleButton.setPrototype();
-            r.buyButton_do = new FWDMSPSimpleButton(t.buyN_img, t.buySPath_str);
-            r.buyButton_do.addListener(FWDMSPSimpleButton.SHOW_TOOLTIP, r.buyButtonShowToolTipHandler);
-            r.buyButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, r.buyButtonOnMouseUpHandler);
+            MUSICSimpleButton.setPrototype();
+            r.buyButton_do = new MUSICSimpleButton(t.buyN_img, t.buySPath_str);
+            r.buyButton_do.addListener(MUSICSimpleButton.SHOW_TOOLTIP, r.buyButtonShowToolTipHandler);
+            r.buyButton_do.addListener(MUSICSimpleButton.MOUSE_UP, r.buyButtonOnMouseUpHandler);
             r.buttons_ar.push(r.buyButton_do);
             r.mainHolder_do.addChild(r.buyButton_do)
         };
@@ -8031,10 +8032,10 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             r.dispatchEvent(e.BUY)
         };
         this.setupShuffleButton = function() {
-            FWDMSPSimpleButton.setPrototype();
-            r.shuffleButton_do = new FWDMSPSimpleButton(r.shuffleN_img, t.shuffleSPath_str, undefined, true);
-            r.shuffleButton_do.addListener(FWDMSPSimpleButton.SHOW_TOOLTIP, r.shuffleButtonShowToolTipHandler);
-            r.shuffleButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, r.shuffleButtonOnMouseUpHandler);
+            MUSICSimpleButton.setPrototype();
+            r.shuffleButton_do = new MUSICSimpleButton(r.shuffleN_img, t.shuffleSPath_str, undefined, true);
+            r.shuffleButton_do.addListener(MUSICSimpleButton.SHOW_TOOLTIP, r.shuffleButtonShowToolTipHandler);
+            r.shuffleButton_do.addListener(MUSICSimpleButton.MOUSE_UP, r.shuffleButtonOnMouseUpHandler);
             r.shuffleButton_do.setY(parseInt((r.stageHeight - r.shuffleButton_do.h) / 2));
             r.buttons_ar.push(r.shuffleButton_do);
             r.mainHolder_do.addChild(r.shuffleButton_do);
@@ -8059,10 +8060,10 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }
         };
         this.setupPopupButton = function() {
-            FWDMSPSimpleButton.setPrototype();
-            r.popupButton_do = new FWDMSPSimpleButton(r.popupN_img, t.popupSPath_str);
-            r.popupButton_do.addListener(FWDMSPSimpleButton.SHOW_TOOLTIP, r.popupButtonShowToolTipHandler);
-            r.popupButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, r.popupButtonOnMouseUpHandler);
+            MUSICSimpleButton.setPrototype();
+            r.popupButton_do = new MUSICSimpleButton(r.popupN_img, t.popupSPath_str);
+            r.popupButton_do.addListener(MUSICSimpleButton.SHOW_TOOLTIP, r.popupButtonShowToolTipHandler);
+            r.popupButton_do.addListener(MUSICSimpleButton.MOUSE_UP, r.popupButtonOnMouseUpHandler);
             r.popupButton_do.setY(parseInt((r.stageHeight - r.popupButton_do.h) / 2));
             r.buttons_ar.push(r.popupButton_do);
             r.mainHolder_do.addChild(r.popupButton_do)
@@ -8095,7 +8096,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.init()
     };
     e.setPrototype = function() {
-        e.prototype = new FWDMSPDisplayObject("div")
+        e.prototype = new MUSICDisplayObject("div")
     };
     e.PLAY_NEXT = "playNext";
     e.PLAY_PREV = "playPrev";
@@ -8119,7 +8120,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
     e.DOWNLOAD_MP3 = "downloadMp3";
     e.BUY = "buy";
     e.prototype = null;
-    window.FWDMSPController = e
+    window.MUSICController = e
 })();
 (function(e) {
     var t = function(e, t, n, r) {
@@ -8150,9 +8151,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.innerHTML = "";
         this.opacityType = "";
         this.isHtml5_bl = false;
-        this.hasTransform3d_bl = FWDMSPUtils.hasTransform3d;
-        this.hasTransform2d_bl = FWDMSPUtils.hasTransform2d;
-        if (FWDMSPUtils.isIE || FWDMSPUtils.isIE11 && !FWDMSPUtils.isMobile) {
+        this.hasTransform3d_bl = MUSICUtils.hasTransform3d;
+        this.hasTransform2d_bl = MUSICUtils.hasTransform2d;
+        if (MUSICUtils.isIE || MUSICUtils.isIE11 && !MUSICUtils.isMobile) {
             i.hasTransform3d_bl = false;
             i.hasTransform2d_bl = false
         }
@@ -8388,7 +8389,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         };
         i.addChild = function(e) {
             if (i.contains(e)) {
-                i.children_ar.splice(FWDMSPUtils.indexOfArray(i.children_ar, e), 1);
+                i.children_ar.splice(MUSICUtils.indexOfArray(i.children_ar, e), 1);
                 i.children_ar.push(e);
                 i.screen.appendChild(e.screen)
             } else {
@@ -8398,14 +8399,14 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         };
         i.removeChild = function(e) {
             if (i.contains(e)) {
-                i.children_ar.splice(FWDMSPUtils.indexOfArray(i.children_ar, e), 1);
+                i.children_ar.splice(MUSICUtils.indexOfArray(i.children_ar, e), 1);
                 i.screen.removeChild(e.screen)
             } else {
                 throw Error("##removeChild()## Child dose't exist, it can't be removed!")
             }
         };
         i.contains = function(e) {
-            if (FWDMSPUtils.indexOfArray(i.children_ar, e) == -1) {
+            if (MUSICUtils.indexOfArray(i.children_ar, e) == -1) {
                 return false
             } else {
                 return true
@@ -8419,17 +8420,17 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 i.screen.insertBefore(e.screen, i.children_ar[0].screen);
                 i.screen.insertBefore(i.children_ar[0].screen, e.screen);
                 if (i.contains(e)) {
-                    i.children_ar.splice(FWDMSPUtils.indexOfArray(i.children_ar, e), 1, e)
+                    i.children_ar.splice(MUSICUtils.indexOfArray(i.children_ar, e), 1, e)
                 } else {
-                    i.children_ar.splice(FWDMSPUtils.indexOfArray(i.children_ar, e), 0, e)
+                    i.children_ar.splice(MUSICUtils.indexOfArray(i.children_ar, e), 0, e)
                 }
             } else {
                 if (t < 0 || t > i.getNumChildren() - 1) throw Error("##getChildAt()## Index out of bounds!");
                 i.screen.insertBefore(e.screen, i.children_ar[t].screen);
                 if (i.contains(e)) {
-                    i.children_ar.splice(FWDMSPUtils.indexOfArray(i.children_ar, e), 1, e)
+                    i.children_ar.splice(MUSICUtils.indexOfArray(i.children_ar, e), 1, e)
                 } else {
-                    i.children_ar.splice(FWDMSPUtils.indexOfArray(i.children_ar, e), 0, e)
+                    i.children_ar.splice(MUSICUtils.indexOfArray(i.children_ar, e), 0, e)
                 }
             }
         };
@@ -8518,7 +8519,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         };
         i.init()
     };
-    e.FWDMSPDisplayObject = t
+    e.MUSICDisplayObject = t
 })(window);
 (function() {
     var e = function() {
@@ -8568,7 +8569,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             this.removeListener = null
         }
     };
-    window.FWDMSPEventDispatcher = e
+    window.MUSICEventDispatcher = e
 })(window);
 (function(e) {
     var t = function(e) {
@@ -8582,11 +8583,11 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.allowToRemove_bl = true;
         this.init = function() {
             n.setResizableSizeAfterParent();
-            n.bk_do = new FWDMSPDisplayObject("div");
+            n.bk_do = new MUSICDisplayObject("div");
             n.bk_do.setAlpha(.4);
             n.bk_do.setBkColor("#FF0000");
             n.addChild(n.bk_do);
-            n.textHolder_do = new FWDMSPDisplayObject("div");
+            n.textHolder_do = new MUSICDisplayObject("div");
             n.textHolder_do.getStyle().wordWrap = "break-word";
             n.textHolder_do.getStyle().padding = "10px";
             n.textHolder_do.getStyle().paddingBottom = "0px";
@@ -8659,16 +8660,16 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.init()
     };
     t.setPrototype = function() {
-        t.prototype = new FWDMSPDisplayObject("div", "relative")
+        t.prototype = new MUSICDisplayObject("div", "relative")
     };
     t.prototype = null;
-    e.FWDMSPInfo = t
+    e.MUSICInfo = t
 })(window);
 (function() {
     var e = function(t, n, r) {
         var i = this;
         this.animation_img = t.openerAnimation_img;
-        if (n == FWDMSP.POSITION_TOP) {
+        if (n == MUSIC.POSITION_TOP) {
             this.openN_img = t.openTopN_img;
             this.openSPath_str = t.openTopSPath_str
         } else {
@@ -8699,8 +8700,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.showFirstTime_bl = true;
         this.playerIsShowed_bl = r;
         this.showOpenerPlayPauseButton_bl = t.showOpenerPlayPauseButton_bl;
-        this.isMobile_bl = FWDMSPUtils.isMobile;
-        this.hasPointerEvent_bl = FWDMSPUtils.hasPointerEvent;
+        this.isMobile_bl = MUSICUtils.isMobile;
+        this.hasPointerEvent_bl = MUSICUtils.hasPointerEvent;
         this.init = function() {
             i.hasTransform3d_bl = false;
             i.hasTransform2d_bl = false;
@@ -8719,7 +8720,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             i.setHeight(i.totalHeight)
         };
         this.setupStuff = function(e) {
-            i.mainHolder_do = new FWDMSPDisplayObject("div");
+            i.mainHolder_do = new MUSICDisplayObject("div");
             i.mainHolder_do.hasTransform3d_bl = false;
             i.mainHolder_do.hasTransform2d_bl = false;
             i.mainHolder_do.setBackfaceVisibility();
@@ -8729,14 +8730,14 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 i.mainHolder_do.setWidth(i.totalWidth)
             }
             i.mainHolder_do.setHeight(i.totalHeight);
-            i.openN_do = new FWDMSPDisplayObject("img");
+            i.openN_do = new MUSICDisplayObject("img");
             i.openN_do.setScreen(i.openN_img);
             i.openN_do.hasTransform3d_bl = false;
             i.openN_do.hasTransform2d_bl = false;
             i.openN_do.setBackfaceVisibility();
             var t = new Image;
             t.src = i.openSPath_str;
-            i.openS_do = new FWDMSPDisplayObject("img");
+            i.openS_do = new MUSICDisplayObject("img");
             i.openS_do.setScreen(t);
             i.openS_do.hasTransform3d_bl = false;
             i.openS_do.hasTransform2d_bl = false;
@@ -8744,14 +8745,14 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             i.openS_do.setWidth(i.openN_do.w);
             i.openS_do.setHeight(i.openN_do.h);
             i.openS_do.setAlpha(0);
-            i.closeN_do = new FWDMSPDisplayObject("img");
+            i.closeN_do = new MUSICDisplayObject("img");
             i.closeN_do.setScreen(i.closeN_img);
             i.closeN_do.hasTransform3d_bl = false;
             i.closeN_do.hasTransform2d_bl = false;
             i.closeN_do.setBackfaceVisibility();
             var n = new Image;
             n.src = i.closeSPath_str;
-            i.closeS_do = new FWDMSPDisplayObject("img");
+            i.closeS_do = new MUSICDisplayObject("img");
             i.closeS_do.setScreen(n);
             i.closeS_do.setWidth(i.closeN_do.w);
             i.closeS_do.setHeight(i.closeN_do.h);
@@ -8759,12 +8760,12 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             i.closeS_do.hasTransform2d_bl = false;
             i.closeS_do.setBackfaceVisibility();
             i.closeS_do.setAlpha(0);
-            FWDMSPPreloader.setPrototype();
-            i.animation_do = new FWDMSPPreloader(i.animationPath_str, 29, 22, 31, 80, true);
+            MUSICPreloader.setPrototype();
+            i.animation_do = new MUSICPreloader(i.animationPath_str, 29, 22, 31, 80, true);
             i.animation_do.setY(i.openerEqulizerOffsetTop);
             i.animation_do.show(false);
             i.animation_do.stop();
-            i.dumy_do = new FWDMSPDisplayObject("div");
+            i.dumy_do = new MUSICDisplayObject("div");
             i.dumy_do.setWidth(i.totalWidth);
             i.dumy_do.setHeight(i.totalHeight);
             i.dumy_do.getStyle().zIndex = 2;
@@ -8772,7 +8773,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             i.dumy_do.hasTransform2d_bl = false;
             i.dumy_do.setBackfaceVisibility();
             i.dumy_do.setButtonMode(true);
-            if (FWDMSPUtils.isIE || FWDMSPUtils.isAndroid) {
+            if (MUSICUtils.isIE || MUSICUtils.isAndroid) {
                 i.dumy_do.setBkColor("#FF0000");
                 i.dumy_do.setAlpha(.01)
             }
@@ -8822,9 +8823,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }
         };
         this.setupPlayPauseButton = function() {
-            FWDMSPComplexButton.setPrototype();
-            i.playPauseButton_do = new FWDMSPComplexButton(i.openerPlayN_img, i.openerPlaySPath_str, i.openerPauseN_img, i.openerPauseS_str, true);
-            i.playPauseButton_do.addListener(FWDMSPComplexButton.MOUSE_UP, i.playButtonMouseUpHandler);
+            MUSICComplexButton.setPrototype();
+            i.playPauseButton_do = new MUSICComplexButton(i.openerPlayN_img, i.openerPlaySPath_str, i.openerPauseN_img, i.openerPauseS_str, true);
+            i.playPauseButton_do.addListener(MUSICComplexButton.MOUSE_UP, i.playButtonMouseUpHandler);
             i.addChild(i.playPauseButton_do)
         };
         this.showPlayButton = function() {
@@ -8837,32 +8838,32 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         };
         this.playButtonMouseUpHandler = function() {
             if (i.playPauseButton_do.currentState == 0) {
-                i.dispatchEvent(FWDMSPController.PAUSE)
+                i.dispatchEvent(MUSICController.PAUSE)
             } else {
-                i.dispatchEvent(FWDMSPController.PLAY)
+                i.dispatchEvent(MUSICController.PLAY)
             }
         };
         this.setNormalState = function() {
             if (i.isMobile_bl && !i.hasPointerEvent_bl) return;
-            FWDMSPTweenMax.killTweensOf(i.openS_do);
-            FWDMSPTweenMax.killTweensOf(i.closeS_do);
-            FWDMSPTweenMax.to(i.openS_do, .5, {
+            MUSICTweenMax.killTweensOf(i.openS_do);
+            MUSICTweenMax.killTweensOf(i.closeS_do);
+            MUSICTweenMax.to(i.openS_do, .5, {
                 alpha: 0,
                 ease: Expo.easeOut
             });
-            FWDMSPTweenMax.to(i.closeS_do, .5, {
+            MUSICTweenMax.to(i.closeS_do, .5, {
                 alpha: 0,
                 ease: Expo.easeOut
             })
         };
         this.setSelectedState = function(e) {
-            FWDMSPTweenMax.killTweensOf(i.openS_do);
-            FWDMSPTweenMax.killTweensOf(i.closeS_do);
-            FWDMSPTweenMax.to(i.openS_do, .5, {
+            MUSICTweenMax.killTweensOf(i.openS_do);
+            MUSICTweenMax.killTweensOf(i.closeS_do);
+            MUSICTweenMax.to(i.openS_do, .5, {
                 alpha: 1,
                 ease: Expo.easeOut
             });
-            FWDMSPTweenMax.to(i.closeS_do, .5, {
+            MUSICTweenMax.to(i.closeS_do, .5, {
                 alpha: 1,
                 ease: Expo.easeOut
             })
@@ -8929,12 +8930,12 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.init()
     };
     e.setPrototype = function() {
-        e.prototype = new FWDMSPDisplayObject("div")
+        e.prototype = new MUSICDisplayObject("div")
     };
     e.SHOW = "show";
     e.HIDE = "hise";
     e.prototype = null;
-    window.FWDMSPOpener = e
+    window.MUSICOpener = e
 })(window);
 (function() {
     var e = function(t, n) {
@@ -9033,17 +9034,17 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.isShowedFirstTime_bl = false;
         this.animateOnIntro_bl = t.animateOnIntro_bl;
         this.isListCreated_bl = false;
-        this.isMobile_bl = FWDMSPUtils.isMobile;
-        this.hasPointerEvent_bl = FWDMSPUtils.hasPointerEvent;
+        this.isMobile_bl = MUSICUtils.isMobile;
+        this.hasPointerEvent_bl = MUSICUtils.hasPointerEvent;
         r.init = function() {
             r.hasTransform3d_bl = false;
             r.hasTransform2d_bl = false;
             r.setBackfaceVisibility();
-            r.mainHolder_do = new FWDMSPDisplayObject("div");
+            r.mainHolder_do = new MUSICDisplayObject("div");
             r.mainHolder_do.hasTransform3d_bl = false;
             r.mainHolder_do.hasTransform2d_bl = false;
             r.mainHolder_do.setBackfaceVisibility();
-            r.itemsHolder_do = new FWDMSPDisplayObject("div");
+            r.itemsHolder_do = new MUSICDisplayObject("div");
             r.itemsHolder_do.setBackfaceVisibility();
             r.setupSeparator();
             r.itemsHolder_do.setY(0);
@@ -9058,19 +9059,19 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 if (r.addScrollBarMouseWheelSupport_bl) r.addMouseWheelSupport()
             }
             if (r.showSearchBar_bl) {
-                r.searchBar_do = new FWDMSPDisplayObject("div");
+                r.searchBar_do = new MUSICDisplayObject("div");
                 r.searchBar_do.setOverflow("visible");
                 if (!r.expandPlaylistBackground_bl) {
-                    r.controllerBk_do = new FWDMSPDisplayObject("div");
+                    r.controllerBk_do = new MUSICDisplayObject("div");
                     r.controllerBk_do.getStyle().background = "url('" + r.controllerBkPath_str + "')"
                 } else {
-                    r.controllerBk_do = new FWDMSPDisplayObject("img");
+                    r.controllerBk_do = new MUSICDisplayObject("img");
                     var e = new Image;
                     e.src = r.controllerBkPath_str;
                     r.controllerBk_do.setScreen(e)
                 }
                 r.controllerBk_do.getStyle().width = "100%";
-                r.searchSeparator_do = new FWDMSPDisplayObject("div");
+                r.searchSeparator_do = new MUSICDisplayObject("div");
                 r.searchSeparator_do.setBackfaceVisibility();
                 r.searchSeparator_do.hasTransform3d_bl = false;
                 r.searchSeparator_do.hasTransform2d_bl = false;
@@ -9134,7 +9135,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                     for (var t = 0; t < r.copy_ar.length; t++) {
                         e = r.copy_ar[t];
                         if (e.titleText_str.toLowerCase().indexOf(inputValue.toLowerCase()) == -1) {
-                            FWDMSPTweenMax.killTweensOf(e);
+                            MUSICTweenMax.killTweensOf(e);
                             e.setX(-e.w);
                             r.copy_ar.splice(t, 1);
                             t--
@@ -9158,12 +9159,12 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             for (var t = 0; t < i; t++) {
                 e = r.copy_ar[t];
                 if (r.allowToTweenPlaylistItems_bl && e.x < 0 && !r.isMobile_bl) {
-                    if (!FWDMSPTweenMax.isTweening(e)) FWDMSPTweenMax.to(e, .8, {
+                    if (!MUSICTweenMax.isTweening(e)) MUSICTweenMax.to(e, .8, {
                         x: 0,
                         ease: Expo.easeInOut
                     })
                 } else {
-                    FWDMSPTweenMax.killTweensOf(e);
+                    MUSICTweenMax.killTweensOf(e);
                     e.setX(0)
                 }
                 e.setY(r.itemHeight * t);
@@ -9199,7 +9200,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             r.isShowedFirstTime_bl = true;
             r.stageHeight = 0;
             r.isListCreated_bl = true;
-            if (r.input_do) r.input_do.screen.value = "Search for track";
+            if (r.input_do) r.input_do.screen.value = "Поиск трека";
             r.allowToScrollAndScrollBarIsActive_bl = false;
             r.countID3 == 2001;
             r.countTrack = 0;
@@ -9238,7 +9239,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 }
                 if (r.scrHandler_do) r.updateScrollBarSizeActiveAndDeactivate();
                 if (r.scrMainHolder_do && r.allowToScrollAndScrollBarIsActive_bl) r.scrMainHolder_do.setX(r.stageWidth - r.scrWidth);
-                if (n.position_str == FWDMSP.POSITION_TOP) {
+                if (n.position_str == MUSIC.POSITION_TOP) {
                     r.mainHolder_do.setY(0);
                     r.separator_do.setY(r.stageHeight - r.separator_do.h)
                 } else {
@@ -9275,7 +9276,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             r.mainHolder_do.setBkColor(r.playlistBackgroundColor_str);
             r.items_ar = [];
             for (var u = 0; u < r.totalPlayListItems; u++) {
-                n = r.playlist_ar[u].duration == undefined ? undefined : FWDMSP.formatTotalTime(r.playlist_ar[u].duration);
+                n = r.playlist_ar[u].duration == undefined ? undefined : MUSIC.formatTotalTime(r.playlist_ar[u].duration);
                 if (u % 2 == 0) {
                     i = t.playlistItemProgress1_img;
                     s = t.playlistItemGrad1_img
@@ -9287,27 +9288,27 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 if (!r.showPlaylistItemDownloadButton_bl) o = false;
                 var a = Boolean(r.playlist_ar[u].buy);
                 if (!r.showPlaylistItemBuyButton_bl) a = false;
-                FWDMSPPlaylistItem.setPrototype();
-                e = new FWDMSPPlaylistItem(r.playlist_ar[u].title, r.playlist_ar[u].titleText, r.playlistDownloadButtonN_img, t.playlistDownloadButtonS_str, r.playlistBuyButtonN_img, t.playlistBuyButtonS_str, t.playlistItemGrad1_img, t.playlistItemGrad2_img, t.playlistItemProgress1_img, t.playlistItemProgress2_img, t.playlistPlayButtonN_img, t.playlistItemBk1_img.src, t.playlistItemBk2_img.src, r.playlistPlayButtonN_str, r.playlistPlayButtonS_str, r.playlistPauseButtonN_str, r.playlistPauseButtonS_str, t.trackTitleNormalColor_str, t.trackTitleSelected_str, t.trackDurationColor_str, u, t.playPauseButtonOffsetLeftAndRight, r.trackTitleOffsetLeft, r.durationOffsetRight, r.downloadButtonOffsetRight, r.showPlaylistItemPlayButton_bl, o, a, n);
-                e.addListener(FWDMSPPlaylistItem.MOUSE_UP, r.itemOnUpHandler);
-                e.addListener(FWDMSPPlaylistItem.DOWNLOAD, r.downloadHandler);
-                e.addListener(FWDMSPPlaylistItem.BUY, r.buyHandler);
+                MUSICPlaylistItem.setPrototype();
+                e = new MUSICPlaylistItem(r.playlist_ar[u].title, r.playlist_ar[u].titleText, r.playlistDownloadButtonN_img, t.playlistDownloadButtonS_str, r.playlistBuyButtonN_img, t.playlistBuyButtonS_str, t.playlistItemGrad1_img, t.playlistItemGrad2_img, t.playlistItemProgress1_img, t.playlistItemProgress2_img, t.playlistPlayButtonN_img, t.playlistItemBk1_img.src, t.playlistItemBk2_img.src, r.playlistPlayButtonN_str, r.playlistPlayButtonS_str, r.playlistPauseButtonN_str, r.playlistPauseButtonS_str, t.trackTitleNormalColor_str, t.trackTitleSelected_str, t.trackDurationColor_str, u, t.playPauseButtonOffsetLeftAndRight, r.trackTitleOffsetLeft, r.durationOffsetRight, r.downloadButtonOffsetRight, r.showPlaylistItemPlayButton_bl, o, a, n);
+                e.addListener(MUSICPlaylistItem.MOUSE_UP, r.itemOnUpHandler);
+                e.addListener(MUSICPlaylistItem.DOWNLOAD, r.downloadHandler);
+                e.addListener(MUSICPlaylistItem.BUY, r.buyHandler);
                 r.items_ar[u] = e;
                 r.itemsHolder_do.addChild(e)
             }
         };
         this.itemOnUpHandler = function(e) {
-            r.dispatchEvent(FWDMSPPlaylistItem.MOUSE_UP, {
+            r.dispatchEvent(MUSICPlaylistItem.MOUSE_UP, {
                 id: e.id
             })
         };
         this.downloadHandler = function(e) {
-            r.dispatchEvent(FWDMSPPlaylistItem.DOWNLOAD, {
+            r.dispatchEvent(MUSICPlaylistItem.DOWNLOAD, {
                 id: e.id
             })
         };
         this.buyHandler = function(e) {
-            r.dispatchEvent(FWDMSPPlaylistItem.BUY, {
+            r.dispatchEvent(MUSICPlaylistItem.BUY, {
                 id: e.id
             })
         };
@@ -9407,22 +9408,22 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         };
         this.setupInput = function() {
             r.titlebarHeight = t.titlebarLeftPath_img.height;
-            r.mainSearchInput_do = new FWDMSPDisplayObject("div");
+            r.mainSearchInput_do = new MUSICDisplayObject("div");
             r.mainSearchInput_do.getStyle().background = "url('" + t.titlebarBkMiddlePattern_str + "')";
             r.mainSearchInput_do.setHeight(r.titlebarHeight);
             var e = new Image;
             e.src = t.titleBarLeft_img.src;
-            r.titleBarLeft_do = new FWDMSPDisplayObject("img");
+            r.titleBarLeft_do = new MUSICDisplayObject("img");
             r.titleBarLeft_do.setScreen(e);
             r.titleBarLeft_do.setWidth(t.titleBarLeft_img.width);
             r.titleBarLeft_do.setHeight(t.titleBarLeft_img.height);
             var n = new Image;
             n.src = t.titleBarRigth_img.src;
-            r.titleBarRight_do = new FWDMSPDisplayObject("img");
+            r.titleBarRight_do = new MUSICDisplayObject("img");
             r.titleBarRight_do.setScreen(n);
             r.titleBarRight_do.setWidth(t.titleBarRigth_img.width);
             r.titleBarRight_do.setHeight(t.titleBarRigth_img.height);
-            r.input_do = new FWDMSPDisplayObject("input");
+            r.input_do = new MUSICDisplayObject("input");
             r.input_do.screen.maxLength = 20;
             r.input_do.getStyle().textAlign = "left";
             r.input_do.getStyle().outline = "none";
@@ -9433,12 +9434,12 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             r.input_do.getStyle().fontFamily = "Arial";
             r.input_do.getStyle().fontSize = "12px";
             r.input_do.getStyle().padding = "6px";
-            if (!FWDMSPUtils.isIEAndLessThen9) r.input_do.getStyle().paddingRight = "-6px";
+            if (!MUSICUtils.isIEAndLessThen9) r.input_do.getStyle().paddingRight = "-6px";
             r.input_do.getStyle().paddingTop = "2px";
             r.input_do.getStyle().paddingBottom = "3px";
             r.input_do.getStyle().color = r.searchInputColor_str;
             r.input_do.screen.value = "Search for track";
-            r.noSearchFound_do = new FWDMSPDisplayObject("div");
+            r.noSearchFound_do = new MUSICDisplayObject("div");
             r.noSearchFound_do.setX(0);
             r.noSearchFound_do.getStyle().textAlign = "center";
             r.noSearchFound_do.getStyle().width = "100%";
@@ -9462,7 +9463,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }
             var i = new Image;
             i.src = t.inputArrowPath_str;
-            r.inputArrow_do = new FWDMSPDisplayObject("img");
+            r.inputArrow_do = new MUSICDisplayObject("img");
             r.inputArrow_do.setScreen(i);
             r.inputArrow_do.setWidth(14);
             r.inputArrow_do.setHeight(12);
@@ -9487,11 +9488,11 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         };
         this.inputFocusOutHandler = function(e) {
             if (!r.hasInputFocus_bl) return;
-            var t = FWDMSPUtils.getViewportMouseCoordinates(e);
-            if (!FWDMSPUtils.hitTest(r.input_do.screen, t.screenX, t.screenY)) {
+            var t = MUSICUtils.getViewportMouseCoordinates(e);
+            if (!MUSICUtils.hitTest(r.input_do.screen, t.screenX, t.screenY)) {
                 r.hasInputFocus_bl = false;
                 if (r.input_do.screen.value == "") {
-                    r.input_do.screen.value = "Search for track"
+                    r.input_do.screen.value = "Поиск трека"
                 }
                 return
             }
@@ -9517,7 +9518,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             r.noSearchFound_do.setVisible(true);
             r.noSearchFound_do.setY(parseInt((r.stageHeight - r.noSearchFound_do.getHeight() - r.searchBar_do.h) / 2));
             r.noSearchFound_do.setAlpha(0);
-            FWDMSPTweenMax.to(r.noSearchFound_do, .1, {
+            MUSICTweenMax.to(r.noSearchFound_do, .1, {
                 alpha: 1,
                 yoyo: true,
                 repeat: 4
@@ -9526,31 +9527,31 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.hideNothingFound = function() {
             if (!r.isShowNothingFound_bl) return;
             r.isShowNothingFound_bl = false;
-            FWDMSPTweenMax.killTweensOf(r.noSearchFound_do);
+            MUSICTweenMax.killTweensOf(r.noSearchFound_do);
             r.noSearchFound_do.setVisible(false)
         };
         this.setupButtons = function() {
             r.searchBarButtons_ar = [];
-            FWDMSPSimpleButton.setPrototype();
-            r.sortNButton_do = new FWDMSPSimpleButton(t.sortNN_img, t.sortNSPath_str, null, true);
+            MUSICSimpleButton.setPrototype();
+            r.sortNButton_do = new MUSICSimpleButton(t.sortNN_img, t.sortNSPath_str, null, true);
             r.searchBarButtons_ar.push(r.sortNButton_do);
-            r.sortNButton_do.addListener(FWDMSPSimpleButton.SHOW_TOOLTIP, r.sortNButtonShowTooltipHandler);
-            r.sortNButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, r.sortNButtonOnMouseUpHandler);
+            r.sortNButton_do.addListener(MUSICSimpleButton.SHOW_TOOLTIP, r.sortNButtonShowTooltipHandler);
+            r.sortNButton_do.addListener(MUSICSimpleButton.MOUSE_UP, r.sortNButtonOnMouseUpHandler);
             r.searchBar_do.addChild(r.sortNButton_do);
             r.sortNButton_do.setX(410);
-            FWDMSPSimpleButton.setPrototype();
-            r.sortAButton_do = new FWDMSPSimpleButton(t.sortAN_img, t.sortASPath_str, null, true);
+            MUSICSimpleButton.setPrototype();
+            r.sortAButton_do = new MUSICSimpleButton(t.sortAN_img, t.sortASPath_str, null, true);
             r.searchBarButtons_ar.push(r.sortAButton_do);
-            r.sortAButton_do.addListener(FWDMSPSimpleButton.SHOW_TOOLTIP, r.sortAButtonShowTooltipHandler);
-            r.sortAButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, r.sortAButtonOnMouseUpHandler);
+            r.sortAButton_do.addListener(MUSICSimpleButton.SHOW_TOOLTIP, r.sortAButtonShowTooltipHandler);
+            r.sortAButton_do.addListener(MUSICSimpleButton.MOUSE_UP, r.sortAButtonOnMouseUpHandler);
             r.searchBar_do.addChild(r.sortAButton_do);
             r.sortAButton_do.setX(450);
-            FWDMSPComplexButton.setPrototype();
-            r.ascDscButton_do = new FWDMSPComplexButton(t.ascendingN_img, t.ascendingSpath_str, t.decendingN_img, t.decendingSpath_str, true);
+            MUSICComplexButton.setPrototype();
+            r.ascDscButton_do = new MUSICComplexButton(t.ascendingN_img, t.ascendingSpath_str, t.decendingN_img, t.decendingSpath_str, true);
             r.ascDscButton_do.setX(500);
             r.searchBarButtons_ar.push(r.ascDscButton_do);
-            r.ascDscButton_do.addListener(FWDMSPComplexButton.SHOW_TOOLTIP, r.ascDscShowToolTipHandler);
-            r.ascDscButton_do.addListener(FWDMSPComplexButton.MOUSE_UP, r.ascDscMouseUpHandler);
+            r.ascDscButton_do.addListener(MUSICComplexButton.SHOW_TOOLTIP, r.ascDscShowToolTipHandler);
+            r.ascDscButton_do.addListener(MUSICComplexButton.MOUSE_UP, r.ascDscMouseUpHandler);
             r.searchBar_do.addChild(r.ascDscButton_do);
             if (r.isSortedNumerical_bl) {
                 r.disableSortNButton()
@@ -9651,20 +9652,20 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             r.searchBar_do.setY(r.stageHeight - r.searchSeparator_do.h - r.searchBar_do.h)
         };
         this.setupToolTips = function() {
-            FWDMSPToolTip.setPrototype();
-            r.sortNButtonToolTip_do = new FWDMSPToolTip(r.sortNButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "numeric sort", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
+            MUSICToolTip.setPrototype();
+            r.sortNButtonToolTip_do = new MUSICToolTip(r.sortNButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "numeric sort", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
             document.documentElement.appendChild(r.sortNButtonToolTip_do.screen);
-            FWDMSPToolTip.setPrototype();
-            r.sortAButtonToolTip_do = new FWDMSPToolTip(r.sortAButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "alphabetic sort", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
+            MUSICToolTip.setPrototype();
+            r.sortAButtonToolTip_do = new MUSICToolTip(r.sortAButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "alphabetic sort", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
             document.documentElement.appendChild(r.sortAButtonToolTip_do.screen);
-            FWDMSPToolTip.setPrototype();
-            r.ascDscButtonToolTip_do = new FWDMSPToolTip(r.ascDscButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "ascending / decending sort", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
+            MUSICToolTip.setPrototype();
+            r.ascDscButtonToolTip_do = new MUSICToolTip(r.ascDscButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "ascending / decending sort", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
             document.documentElement.appendChild(r.ascDscButtonToolTip_do.screen)
         };
         this.showToolTip = function(e, t, n) {
             if (!r.showButtonsToolTips_bl) return;
-            var i = FWDMSPUtils.getViewportSize();
-            var s = FWDMSPUtils.getViewportMouseCoordinates(n);
+            var i = MUSICUtils.getViewportSize();
+            var s = MUSICUtils.getViewportMouseCoordinates(n);
             var o = parseInt(e.getGlobalX() + e.w / 2 - t.w / 2);
             var u = parseInt(e.getGlobalY() - t.h - 6);
             var a = 0;
@@ -9686,8 +9687,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             t.show()
         };
         this.setupDisable = function() {
-            r.disable_do = new FWDMSPDisplayObject("div");
-            if (FWDMSPUtils.isIE) {
+            r.disable_do = new MUSICDisplayObject("div");
+            if (MUSICUtils.isIE) {
                 r.disable_do.setBkColor("#FFFFFF");
                 r.disable_do.setAlpha(0)
             }
@@ -9709,7 +9710,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             r.disable_do.setHeight(0)
         };
         this.setupSeparator = function() {
-            r.separator_do = new FWDMSPDisplayObject("div");
+            r.separator_do = new MUSICDisplayObject("div");
             r.separator_do.setBackfaceVisibility();
             r.separator_do.hasTransform3d_bl = false;
             r.separator_do.hasTransform2d_bl = false;
@@ -9718,47 +9719,47 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             r.separator_do.setY(-r.separator_do.h)
         };
         this.setupScrollbar = function() {
-            r.scrMainHolder_do = new FWDMSPDisplayObject("div");
+            r.scrMainHolder_do = new MUSICDisplayObject("div");
             r.scrMainHolder_do.setWidth(r.scrWidth);
-            r.scrTrack_do = new FWDMSPDisplayObject("div");
+            r.scrTrack_do = new MUSICDisplayObject("div");
             r.scrTrack_do.setWidth(r.scrWidth);
-            r.scrTrackTop_do = new FWDMSPDisplayObject("img");
+            r.scrTrackTop_do = new MUSICDisplayObject("img");
             r.scrTrackTop_do.setScreen(r.playlistScrBkTop_img);
-            r.scrTrackMiddle_do = new FWDMSPDisplayObject("div");
+            r.scrTrackMiddle_do = new MUSICDisplayObject("div");
             r.scrTrackMiddle_do.getStyle().background = "url('" + t.scrBkMiddlePath_str + "')";
             r.scrTrackMiddle_do.setWidth(r.scrWidth);
             r.scrTrackMiddle_do.setY(r.scrTrackTop_do.h);
             var e = new Image;
             e.src = t.scrBkBottomPath_str;
-            r.scrTrackBottom_do = new FWDMSPDisplayObject("img");
+            r.scrTrackBottom_do = new MUSICDisplayObject("img");
             r.scrTrackBottom_do.setScreen(e);
             r.scrTrackBottom_do.setWidth(r.scrTrackTop_do.w);
             r.scrTrackBottom_do.setHeight(r.scrTrackTop_do.h);
-            r.scrHandler_do = new FWDMSPDisplayObject("div");
+            r.scrHandler_do = new MUSICDisplayObject("div");
             r.scrHandler_do.setWidth(r.scrWidth);
-            r.scrHandlerTop_do = new FWDMSPDisplayObject("img");
+            r.scrHandlerTop_do = new MUSICDisplayObject("img");
             r.scrHandlerTop_do.setScreen(r.playlistScrDragTop_img);
-            r.scrHandlerMiddle_do = new FWDMSPDisplayObject("div");
+            r.scrHandlerMiddle_do = new MUSICDisplayObject("div");
             r.scrHandlerMiddle_do.getStyle().background = "url('" + t.scrDragMiddlePath_str + "')";
             r.scrHandlerMiddle_do.setWidth(r.scrWidth);
             r.scrHandlerMiddle_do.setY(r.scrHandlerTop_do.h);
             var n = new Image;
             n.src = t.scrDragBottomPath_str;
-            r.scrHandlerBottom_do = new FWDMSPDisplayObject("img");
+            r.scrHandlerBottom_do = new MUSICDisplayObject("img");
             r.scrHandlerBottom_do.setScreen(n);
             r.scrHandlerBottom_do.setWidth(r.scrHandlerTop_do.w);
             r.scrHandlerBottom_do.setHeight(r.scrHandlerTop_do.h);
             r.scrHandler_do.setButtonMode(true);
-            r.scrHandlerLinesN_do = new FWDMSPDisplayObject("img");
+            r.scrHandlerLinesN_do = new MUSICDisplayObject("img");
             r.scrHandlerLinesN_do.setScreen(r.playlistScrLines_img);
             var i = new Image;
             i.src = t.scrLinesSPath_str;
-            r.scrHandlerLinesS_do = new FWDMSPDisplayObject("img");
+            r.scrHandlerLinesS_do = new MUSICDisplayObject("img");
             r.scrHandlerLinesS_do.setScreen(i);
             r.scrHandlerLinesS_do.setWidth(r.scrHandlerLinesN_do.w);
             r.scrHandlerLinesS_do.setHeight(r.scrHandlerLinesN_do.h);
             r.scrHandlerLinesS_do.setAlpha(0);
-            r.scrHandlerLines_do = new FWDMSPDisplayObject("div");
+            r.scrHandlerLines_do = new MUSICDisplayObject("div");
             r.scrHandlerLines_do.hasTransform3d_bl = false;
             r.scrHandlerLines_do.hasTransform2d_bl = false;
             r.scrHandlerLines_do.setBackfaceVisibility();
@@ -9794,25 +9795,25 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }
         };
         this.scrollBarHandlerOnMouseOver = function(e) {
-            FWDMSPTweenMax.to(r.scrHandlerLinesS_do, .8, {
+            MUSICTweenMax.to(r.scrHandlerLinesS_do, .8, {
                 alpha: 1,
                 ease: Expo.easeOut
             })
         };
         this.scrollBarHandlerOnMouseOut = function(e) {
             if (r.isDragging_bl) return;
-            FWDMSPTweenMax.to(r.scrHandlerLinesS_do, .8, {
+            MUSICTweenMax.to(r.scrHandlerLinesS_do, .8, {
                 alpha: 0,
                 ease: Expo.easeOut
             })
         };
         this.scrollBarHandlerOnMouseDown = function(e) {
             if (!r.allowToScrollAndScrollBarIsActive_bl) return;
-            var t = FWDMSPUtils.getViewportMouseCoordinates(e);
+            var t = MUSICUtils.getViewportMouseCoordinates(e);
             r.isDragging_bl = true;
             r.yPositionOnPress = r.scrHandler_do.y;
             r.lastPresedY = t.screenY;
-            FWDMSPTweenMax.killTweensOf(r.scrHandler_do);
+            MUSICTweenMax.killTweensOf(r.scrHandler_do);
             r.showDisable();
             if (window.addEventListener) {
                 window.addEventListener("mousemove", r.scrollBarHandlerMoveHandler);
@@ -9824,7 +9825,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         };
         this.scrollBarHandlerMoveHandler = function(e) {
             if (e.preventDefault) e.preventDefault();
-            var t = FWDMSPUtils.getViewportMouseCoordinates(e);
+            var t = MUSICUtils.getViewportMouseCoordinates(e);
             r.scrollBarHandlerFinalY = Math.round(r.yPositionOnPress + t.screenY - r.lastPresedY);
             if (r.scrollBarHandlerFinalY >= r.scrTrack_do.h - r.scrHandler_do.h) {
                 r.scrollBarHandlerFinalY = r.scrTrack_do.h - r.scrHandler_do.h
@@ -9832,17 +9833,17 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 r.scrollBarHandlerFinalY = 0
             }
             r.scrHandler_do.setY(r.scrollBarHandlerFinalY);
-            FWDMSPTweenMax.to(r.scrHandlerLines_do, .8, {
+            MUSICTweenMax.to(r.scrHandlerLines_do, .8, {
                 y: r.scrollBarHandlerFinalY + parseInt((r.scrHandler_do.h - r.scrHandlerLines_do.h) / 2),
                 ease: Quart.easeOut
             });
             r.updateScrollBarHandlerAndContent(true)
         };
         r.scrollBarHandlerEndHandler = function(e) {
-            var t = FWDMSPUtils.getViewportMouseCoordinates(e);
+            var t = MUSICUtils.getViewportMouseCoordinates(e);
             r.isDragging_bl = false;
-            if (!FWDMSPUtils.hitTest(r.scrHandler_do.screen, t.screenX, t.screenY)) {
-                FWDMSPTweenMax.to(r.scrHandlerLinesS_do, .8, {
+            if (!MUSICUtils.hitTest(r.scrHandler_do.screen, t.screenX, t.screenY)) {
+                MUSICTweenMax.to(r.scrHandlerLinesS_do, .8, {
                     alpha: 0,
                     ease: Expo.easeOut
                 })
@@ -9854,8 +9855,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 r.scrollBarHandlerFinalY = r.scrTrack_do.h - r.scrHandler_do.h - 1
             }
             r.hideDisable();
-            FWDMSPTweenMax.killTweensOf(r.scrHandler_do);
-            FWDMSPTweenMax.to(r.scrHandler_do, .5, {
+            MUSICTweenMax.killTweensOf(r.scrHandler_do);
+            MUSICTweenMax.to(r.scrHandler_do, .5, {
                 y: r.scrollBarHandlerFinalY,
                 ease: Quart.easeOut
             });
@@ -9918,14 +9919,14 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                     } else if (r.scrollBarHandlerFinalY > r.scrMainHolder_do.h - r.scrHandler_do.h - 1) {
                         r.scrollBarHandlerFinalY = r.scrMainHolder_do.h - r.scrHandler_do.h - 1
                     }
-                    FWDMSPTweenMax.killTweensOf(r.scrHandler_do);
-                    FWDMSPTweenMax.killTweensOf(r.scrHandlerLines_do);
+                    MUSICTweenMax.killTweensOf(r.scrHandler_do);
+                    MUSICTweenMax.killTweensOf(r.scrHandlerLines_do);
                     if (e) {
-                        FWDMSPTweenMax.to(r.scrHandler_do, .5, {
+                        MUSICTweenMax.to(r.scrHandler_do, .5, {
                             y: r.scrollBarHandlerFinalY,
                             ease: Quart.easeOut
                         });
-                        FWDMSPTweenMax.to(r.scrHandlerLines_do, .8, {
+                        MUSICTweenMax.to(r.scrHandlerLines_do, .8, {
                             y: r.scrollBarHandlerFinalY + parseInt((r.scrHandler_do.h - r.scrHandlerLinesN_do.h) / 2),
                             ease: Quart.easeOut
                         })
@@ -9936,9 +9937,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 }
             }
             if (r.lastListY != r.playListFinalY) {
-                FWDMSPTweenMax.killTweensOf(r.itemsHolder_do);
+                MUSICTweenMax.killTweensOf(r.itemsHolder_do);
                 if (e) {
-                    FWDMSPTweenMax.to(r.itemsHolder_do, .5, {
+                    MUSICTweenMax.to(r.itemsHolder_do, .5, {
                         y: r.playListFinalY,
                         ease: Quart.easeOut
                     })
@@ -9960,7 +9961,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             if (!r.allowToScrollAndScrollBarIsActive_bl || r.isDragging_bl) return;
             var t = e.detail || e.wheelDelta;
             if (e.wheelDelta) t *= -1;
-            if (FWDMSPUtils.isOpera) t *= -1;
+            if (MUSICUtils.isOpera) t *= -1;
             if (t > 0) {
                 r.playListFinalY -= r.itemHeight
             } else {
@@ -9980,17 +9981,17 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             } else if (r.scrollBarHandlerFinalY > r.scrMainHolder_do.h - r.scrHandler_do.h - 1) {
                 r.scrollBarHandlerFinalY = r.scrMainHolder_do.h - r.scrHandler_do.h - 1
             }
-            FWDMSPTweenMax.killTweensOf(r.itemsHolder_do);
-            FWDMSPTweenMax.to(r.itemsHolder_do, .5, {
+            MUSICTweenMax.killTweensOf(r.itemsHolder_do);
+            MUSICTweenMax.to(r.itemsHolder_do, .5, {
                 y: r.playListFinalY,
                 ease: Expo.easeOut
             });
-            FWDMSPTweenMax.killTweensOf(r.scrHandler_do);
-            FWDMSPTweenMax.to(r.scrHandler_do, .5, {
+            MUSICTweenMax.killTweensOf(r.scrHandler_do);
+            MUSICTweenMax.to(r.scrHandler_do, .5, {
                 y: r.scrollBarHandlerFinalY,
                 ease: Expo.easeOut
             });
-            FWDMSPTweenMax.to(r.scrHandlerLines_do, .8, {
+            MUSICTweenMax.to(r.scrHandlerLines_do, .8, {
                 y: r.scrollBarHandlerFinalY + parseInt((r.scrHandler_do.h - r.scrHandlerLinesN_do.h) / 2),
                 ease: Quart.easeOut
             });
@@ -10012,8 +10013,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         };
         r.scrollBarTouchStartHandler = function(e) {
             if (r.stageHeight > r.itemsTotalHeight) return;
-            FWDMSPTweenMax.killTweensOf(r.itemsHolder_do);
-            var t = FWDMSPUtils.getViewportMouseCoordinates(e);
+            MUSICTweenMax.killTweensOf(r.itemsHolder_do);
+            var t = MUSICUtils.getViewportMouseCoordinates(e);
             r.isDragging_bl = true;
             r.lastPresedY = t.screenY;
             if (r.hasPointerEvent_bl) {
@@ -10029,7 +10030,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         r.scrollBarTouchMoveHandler = function(e) {
             if (e.preventDefault) e.preventDefault();
             r.showDisable();
-            var t = FWDMSPUtils.getViewportMouseCoordinates(e);
+            var t = MUSICUtils.getViewportMouseCoordinates(e);
             var n = t.screenY - r.lastPresedY;
             r.playListFinalY += n;
             r.playListFinalY = Math.round(r.playListFinalY);
@@ -10055,7 +10056,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             r.itemsHolder_do.setY(r.playListFinalY)
         };
         r.updateMobileScrollBar = function(e) {
-            if (!r.isDragging_bl && !FWDMSPTweenMax.isTweening(r.itemsHolder_do)) {
+            if (!r.isDragging_bl && !MUSICTweenMax.isTweening(r.itemsHolder_do)) {
                 r.vy *= r.friction;
                 r.playListFinalY += r.vy;
                 if (r.playListFinalY > 0) {
@@ -10081,13 +10082,13 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.init()
     };
     e.setPrototype = function() {
-        e.prototype = new FWDMSPDisplayObject("div")
+        e.prototype = new MUSICDisplayObject("div")
     };
     e.PLAY = "play";
     e.PAUSE = "pause";
     e.UPDATE_TRACK_TITLE_if_FOLDER = "update_trak_title";
     e.prototype = null;
-    window.FWDMSPPlaylist = e
+    window.MUSICPlaylist = e
 })();
 (function() {
     var e = function(t, n, r, i, s, o, u, a, f, l, c, h, p, d, v, m, g, y, b, w, E, S, x, T, N, C, k, L, A) {
@@ -10145,8 +10146,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.showDuration_bl = A;
         this.isActive_bl = false;
         this.isSelected_bl = false;
-        this.isMobile_bl = FWDMSPUtils.isMobile;
-        this.hasPointerEvent_bl = FWDMSPUtils.hasPointerEvent;
+        this.isMobile_bl = MUSICUtils.isMobile;
+        this.hasPointerEvent_bl = MUSICUtils.hasPointerEvent;
         O.init = function() {
             O.setupProgress();
             O.setupTitle();
@@ -10223,7 +10224,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }
         };
         O.resize = function(e, t) {
-            if (FWDMSPUtils.isIEAndLessThen9 && !O.textHeight || O == null) return;
+            if (MUSICUtils.isIEAndLessThen9 && !O.textHeight || O == null) return;
             O.stageWidth = e;
             var n = 0;
             var r = parseInt((t - O.textHeight) / 2) + 1;
@@ -10310,10 +10311,10 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             O.setHeight(t)
         };
         this.setupDownloadButton = function() {
-            FWDMSPSimpleSizeButton.setPrototype();
-            O.downloadButton_do = new FWDMSPSimpleSizeButton(O.playlistDownloadButtonN_img, O.playlistDownloadButtonS_str, 18, 17);
+            MUSICSimpleSizeButton.setPrototype();
+            O.downloadButton_do = new MUSICSimpleSizeButton(O.playlistDownloadButtonN_img, O.playlistDownloadButtonS_str, 18, 17);
             O.downloadButton_do.getStyle().position = "absolute";
-            O.downloadButton_do.addListener(FWDMSPSimpleSizeButton.CLICK, O.dwButtonClickHandler);
+            O.downloadButton_do.addListener(MUSICSimpleSizeButton.CLICK, O.dwButtonClickHandler);
             O.addChild(O.downloadButton_do)
         };
         this.dwButtonClickHandler = function() {
@@ -10322,10 +10323,10 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             })
         };
         this.setupBuyButton = function() {
-            FWDMSPSimpleSizeButton.setPrototype();
-            O.buyButton_do = new FWDMSPSimpleSizeButton(O.playlistBuyButtonN_img, O.playlistBuyButtonS_str, 18, 17);
+            MUSICSimpleSizeButton.setPrototype();
+            O.buyButton_do = new MUSICSimpleSizeButton(O.playlistBuyButtonN_img, O.playlistBuyButtonS_str, 18, 17);
             O.buyButton_do.getStyle().position = "absolute";
-            O.buyButton_do.addListener(FWDMSPSimpleSizeButton.CLICK, O.buyButtonClickHandler);
+            O.buyButton_do.addListener(MUSICSimpleSizeButton.CLICK, O.buyButtonClickHandler);
             O.addChild(O.buyButton_do)
         };
         this.buyButtonClickHandler = function() {
@@ -10334,7 +10335,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             })
         };
         this.setupProgress = function() {
-            O.progress_do = new FWDMSPDisplayObject("div");
+            O.progress_do = new MUSICDisplayObject("div");
             O.progress_do.setBackfaceVisibility();
             O.progress_do.getStyle().background = "url('" + O.playlistItemProgress_img.src + "')";
             O.progress_do.setHeight(f.height);
@@ -10347,24 +10348,24 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             O.progress_do.setWidth(parseInt(O.stageWidth * e))
         };
         this.setupPlayPauseButton = function() {
-            O.playPause_do = new FWDMSPDisplayObject("div");
+            O.playPause_do = new MUSICDisplayObject("div");
             O.playPause_do.setWidth(O.playPauseButtonWidth);
             O.playPause_do.setHeight(O.playPauseButtonHeight);
-            O.playN_do = new FWDMSPDisplayObject("div");
+            O.playN_do = new MUSICDisplayObject("div");
             O.playN_do.getStyle().background = "url('" + O.playlistPlayButtonN_str + "') no-repeat";
             O.playN_do.setWidth(O.playPauseButtonWidth);
             O.playN_do.setHeight(O.playPauseButtonHeight);
-            O.playS_do = new FWDMSPDisplayObject("div");
+            O.playS_do = new MUSICDisplayObject("div");
             O.playS_do.getStyle().background = "url('" + O.playlistPlayButtonS_str + "') no-repeat";
             O.playS_do.setWidth(O.playPauseButtonWidth);
             O.playS_do.setHeight(O.playPauseButtonHeight);
             O.playS_do.setAlpha(0);
-            O.pauseN_do = new FWDMSPDisplayObject("div");
+            O.pauseN_do = new MUSICDisplayObject("div");
             O.pauseN_do.getStyle().background = "url('" + O.playlistPauseButtonN_str + "') no-repeat";
             O.pauseN_do.setWidth(O.playPauseButtonWidth);
             O.pauseN_do.setHeight(O.playPauseButtonHeight);
             O.pauseN_do.setX(-300);
-            O.pauseS_do = new FWDMSPDisplayObject("div");
+            O.pauseS_do = new MUSICDisplayObject("div");
             O.pauseS_do.getStyle().background = "url('" + O.playlistPauseButtonS_str + "') no-repeat";
             O.pauseS_do.setWidth(O.playPauseButtonWidth);
             O.pauseS_do.setHeight(O.playPauseButtonHeight);
@@ -10378,8 +10379,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             O.addChild(O.playPause_do)
         };
         this.setupTitle = function() {
-            O.titleText_do = new FWDMSPDisplayObject("div");
-            if (FWDMSPUtils.isApple) {
+            O.titleText_do = new MUSICDisplayObject("div");
+            if (MUSICUtils.isApple) {
                 O.titleText_do.hasTransform3d_bl = false;
                 O.titleText_do.hasTransform2d_bl = false
             }
@@ -10410,9 +10411,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             O.grad_do.setWidth(150)
         };
         this.setupGrad = function() {
-            O.grad_do = new FWDMSPDisplayObject("div");
+            O.grad_do = new MUSICDisplayObject("div");
             O.grad_do.setOverflow("visible");
-            if (FWDMSPUtils.isApple) {
+            if (MUSICUtils.isApple) {
                 O.grad_do.hasTransform3d_bl = false;
                 O.grad_do.hasTransform2d_bl = false
             }
@@ -10422,8 +10423,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             O.addChild(O.grad_do)
         };
         this.setupDuration = function() {
-            O.durationText_do = new FWDMSPDisplayObject("div");
-            if (FWDMSPUtils.isApple) {
+            O.durationText_do = new MUSICDisplayObject("div");
+            if (MUSICUtils.isApple) {
                 O.durationText_do.hasTransform3d_bl = false;
                 O.durationText_do.hasTransform2d_bl = false
             }
@@ -10442,9 +10443,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             O.addChild(O.durationText_do)
         };
         this.setupDumy = function() {
-            O.dumy_do = new FWDMSPDisplayObject("div");
+            O.dumy_do = new MUSICDisplayObject("div");
             O.dumy_do.setButtonMode(true);
-            if (FWDMSPUtils.isIE) {
+            if (MUSICUtils.isIE) {
                 O.dumy_do.setBkColor("#FFFFFF");
                 O.dumy_do.setAlpha(.001)
             }
@@ -10454,14 +10455,14 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             if (!O.isSelected_bl && !t) return;
             O.isSelected_bl = false;
             if (e) {
-                FWDMSPTweenMax.to(O.titleText_do.screen, .8, {
+                MUSICTweenMax.to(O.titleText_do.screen, .8, {
                     css: {
                         color: O.titleNormalColor_str
                     },
                     ease: Expo.easeOut
                 });
                 if (O.durationText_do) {
-                    FWDMSPTweenMax.to(O.durationText_do.screen, .8, {
+                    MUSICTweenMax.to(O.durationText_do.screen, .8, {
                         css: {
                             color: O.durationColor_str
                         },
@@ -10469,22 +10470,22 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                     })
                 }
                 if (O.playPause_do) {
-                    FWDMSPTweenMax.to(O.pauseS_do, .8, {
+                    MUSICTweenMax.to(O.pauseS_do, .8, {
                         alpha: 0,
                         ease: Expo.easeOut
                     });
-                    FWDMSPTweenMax.to(O.playS_do, .8, {
+                    MUSICTweenMax.to(O.playS_do, .8, {
                         alpha: 0,
                         ease: Expo.easeOut
                     })
                 }
             } else {
-                FWDMSPTweenMax.killTweensOf(O.titleText_do);
+                MUSICTweenMax.killTweensOf(O.titleText_do);
                 O.titleText_do.getStyle().color = O.titleNormalColor_str;
                 if (O.durationText_do) O.durationText_do.getStyle().color = O.durationColor_str;
                 if (O.playPause_do) {
-                    FWDMSPTweenMax.killTweensOf(O.pauseS_do);
-                    FWDMSPTweenMax.killTweensOf(O.playS_do);
+                    MUSICTweenMax.killTweensOf(O.pauseS_do);
+                    MUSICTweenMax.killTweensOf(O.playS_do);
                     O.pauseS_do.setAlpha(0);
                     O.playS_do.setAlpha(0)
                 }
@@ -10494,14 +10495,14 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             if (O.isSelected_bl) return;
             O.isSelected_bl = true;
             if (e) {
-                FWDMSPTweenMax.to(O.titleText_do.screen, .8, {
+                MUSICTweenMax.to(O.titleText_do.screen, .8, {
                     css: {
                         color: O.trackTitleSelected_str
                     },
                     ease: Expo.easeOut
                 });
                 if (O.durationText_do) {
-                    FWDMSPTweenMax.to(O.durationText_do.screen, .8, {
+                    MUSICTweenMax.to(O.durationText_do.screen, .8, {
                         css: {
                             color: O.trackTitleSelected_str
                         },
@@ -10509,22 +10510,22 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                     })
                 }
                 if (O.playPause_do) {
-                    FWDMSPTweenMax.to(O.pauseS_do, .8, {
+                    MUSICTweenMax.to(O.pauseS_do, .8, {
                         alpha: 1,
                         ease: Expo.easeOut
                     });
-                    FWDMSPTweenMax.to(O.playS_do, .8, {
+                    MUSICTweenMax.to(O.playS_do, .8, {
                         alpha: 1,
                         ease: Expo.easeOut
                     })
                 }
             } else {
-                FWDMSPTweenMax.killTweensOf(O.titleText_do);
+                MUSICTweenMax.killTweensOf(O.titleText_do);
                 if (O.durationText_do) O.durationText_do.getStyle().color = O.trackTitleSelected_str;
                 O.titleText_do.getStyle().color = O.trackTitleSelected_str;
                 if (O.playPause_do) {
-                    FWDMSPTweenMax.killTweensOf(O.pauseS_do);
-                    FWDMSPTweenMax.killTweensOf(O.playS_do);
+                    MUSICTweenMax.killTweensOf(O.pauseS_do);
+                    MUSICTweenMax.killTweensOf(O.playS_do);
                     O.pauseS_do.setAlpha(1);
                     O.playS_do.setAlpha(1)
                 }
@@ -10592,7 +10593,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.init()
     };
     e.setPrototype = function() {
-        e.prototype = new FWDMSPDisplayObject("div")
+        e.prototype = new MUSICDisplayObject("div")
     };
     e.PLAY = "play";
     e.PAUSE = "pause";
@@ -10600,7 +10601,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
     e.DOWNLOAD = "download";
     e.BUY = "buy";
     e.prototype = null;
-    window.FWDMSPPlaylistItem = e
+    window.MUSICPlaylistItem = e
 })();
 (function(e) {
     var t = function(e, n, r, i, s, o) {
@@ -10623,7 +10624,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             u.setHeight(u.segmentHeight);
             u.imageSource_img = new Image;
             u.imageSource_img.src = u.imageSourcePath_str;
-            u.image_sdo = new FWDMSPDisplayObject("img");
+            u.image_sdo = new MUSICDisplayObject("img");
             u.image_sdo.setScreen(u.imageSource_img);
             u.image_sdo.setWidth(u.totalWidth);
             u.image_sdo.setHeight(u.segmentHeight);
@@ -10655,17 +10656,17 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.show = function() {
             this.setVisible(true);
             this.start();
-            FWDMSPTweenMax.killTweensOf(this);
-            FWDMSPTweenMax.to(this, 1, {
+            MUSICTweenMax.killTweensOf(this);
+            MUSICTweenMax.to(this, 1, {
                 alpha: 1
             });
             this.isShowed_bl = true
         };
         this.hide = function(e) {
             if (!this.isShowed_bl) return;
-            FWDMSPTweenMax.killTweensOf(this);
+            MUSICTweenMax.killTweensOf(this);
             if (e) {
-                FWDMSPTweenMax.to(this, 1, {
+                MUSICTweenMax.to(this, 1, {
                     alpha: 0,
                     onComplete: this.onHideComplete
                 })
@@ -10691,11 +10692,11 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.init()
     };
     t.setPrototype = function() {
-        t.prototype = new FWDMSPDisplayObject("div")
+        t.prototype = new MUSICDisplayObject("div")
     };
     t.HIDE_COMPLETE = "hideComplete";
     t.prototype = null;
-    e.FWDMSPPreloader = t
+    e.MUSICPreloader = t
 })(window);
 (function(e) {
     var t = function(e, n, r, i) {
@@ -10716,20 +10717,20 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.isDisabledForGood_bl = false;
         this.isSelectedFinal_bl = false;
         this.isActive_bl = false;
-        this.isMobile_bl = FWDMSPUtils.isMobile;
-        this.hasPointerEvent_bl = FWDMSPUtils.hasPointerEvent;
+        this.isMobile_bl = MUSICUtils.isMobile;
+        this.hasPointerEvent_bl = MUSICUtils.hasPointerEvent;
         this.allowToCreateSecondButton_bl = !s.isMobile_bl || s.hasPointerEvent_bl || i;
         s.init = function() {
             s.setupMainContainers()
         };
         s.setupMainContainers = function() {
-            s.n_sdo = new FWDMSPDisplayObject("img");
+            s.n_sdo = new MUSICDisplayObject("img");
             s.n_sdo.setScreen(s.nImg);
             s.addChild(s.n_sdo);
             if (s.allowToCreateSecondButton_bl) {
                 var e = new Image;
                 e.src = s.sPath_str;
-                s.s_sdo = new FWDMSPDisplayObject("img");
+                s.s_sdo = new MUSICDisplayObject("img");
                 s.s_sdo.setScreen(e);
                 s.s_sdo.setWidth(s.totalWidth);
                 s.s_sdo.setHeight(s.totalHeight);
@@ -10738,7 +10739,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 if (s.dPath_str) {
                     var t = new Image;
                     t.src = s.dPath_str;
-                    s.d_sdo = new FWDMSPDisplayObject("img");
+                    s.d_sdo = new MUSICDisplayObject("img");
                     s.d_sdo.setScreen(t);
                     s.d_sdo.setWidth(s.totalWidth);
                     s.d_sdo.setHeight(s.totalHeight);
@@ -10802,8 +10803,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         s.setSelected = function() {
             s.isSelectedFinal_bl = true;
             if (!s.s_sdo) return;
-            FWDMSPTweenMax.killTweensOf(s.s_sdo);
-            FWDMSPTweenMax.to(s.s_sdo, .8, {
+            MUSICTweenMax.killTweensOf(s.s_sdo);
+            MUSICTweenMax.to(s.s_sdo, .8, {
                 alpha: 1,
                 ease: Expo.easeOut
             })
@@ -10811,7 +10812,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         s.setUnselected = function() {
             s.isSelectedFinal_bl = false;
             if (!s.s_sdo) return;
-            FWDMSPTweenMax.to(s.s_sdo, .8, {
+            MUSICTweenMax.to(s.s_sdo, .8, {
                 alpha: 0,
                 delay: .1,
                 ease: Expo.easeOut
@@ -10819,16 +10820,16 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         };
         this.setNormalState = function() {
             if (!s.s_sdo) return;
-            FWDMSPTweenMax.killTweensOf(s.s_sdo);
-            FWDMSPTweenMax.to(s.s_sdo, .5, {
+            MUSICTweenMax.killTweensOf(s.s_sdo);
+            MUSICTweenMax.to(s.s_sdo, .5, {
                 alpha: 0,
                 ease: Expo.easeOut
             })
         };
         this.setSelectedState = function() {
             if (!s.s_sdo) return;
-            FWDMSPTweenMax.killTweensOf(s.s_sdo);
-            FWDMSPTweenMax.to(s.s_sdo, .5, {
+            MUSICTweenMax.killTweensOf(s.s_sdo);
+            MUSICTweenMax.to(s.s_sdo, .5, {
                 alpha: 1,
                 delay: .1,
                 ease: Expo.easeOut
@@ -10848,7 +10849,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             if (s.isDisabledForGood_bl || s.isDisabled_bl) return;
             s.isDisabled_bl = true;
             s.setButtonMode(false);
-            FWDMSPTweenMax.to(s, .6, {
+            MUSICTweenMax.to(s, .6, {
                 alpha: .4
             });
             if (!e) s.setNormalState()
@@ -10857,7 +10858,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             if (s.isDisabledForGood_bl || !s.isDisabled_bl) return;
             s.isDisabled_bl = false;
             s.setButtonMode(true);
-            FWDMSPTweenMax.to(s, .6, {
+            MUSICTweenMax.to(s, .6, {
                 alpha: 1
             })
         };
@@ -10878,12 +10879,12 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.show = function() {
             if (s.isShowed_bl) return;
             s.isShowed_bl = true;
-            FWDMSPTweenMax.killTweensOf(s);
-            if (!FWDMSPUtils.isIEAndLessThen9) {
-                if (FWDMSPUtils.isIEWebKit) {
-                    FWDMSPTweenMax.killTweensOf(s.n_sdo);
+            MUSICTweenMax.killTweensOf(s);
+            if (!MUSICUtils.isIEAndLessThen9) {
+                if (MUSICUtils.isIEWebKit) {
+                    MUSICTweenMax.killTweensOf(s.n_sdo);
                     s.n_sdo.setScale2(0);
-                    FWDMSPTweenMax.to(s.n_sdo, .8, {
+                    MUSICTweenMax.to(s.n_sdo, .8, {
                         scale: 1,
                         delay: .4,
                         onStart: function() {
@@ -10893,7 +10894,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                     })
                 } else {
                     s.setScale2(0);
-                    FWDMSPTweenMax.to(s, .8, {
+                    MUSICTweenMax.to(s, .8, {
                         scale: 1,
                         delay: .4,
                         onStart: function() {
@@ -10902,11 +10903,11 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                         ease: Elastic.easeOut
                     })
                 }
-            } else if (FWDMSPUtils.isIEAndLessThen9) {
+            } else if (MUSICUtils.isIEAndLessThen9) {
                 s.setVisible(true)
             } else {
                 s.setAlpha(0);
-                FWDMSPTweenMax.to(s, .4, {
+                MUSICTweenMax.to(s, .4, {
                     alpha: 1,
                     delay: .4
                 });
@@ -10916,15 +10917,15 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.hide = function(e) {
             if (!s.isShowed_bl) return;
             s.isShowed_bl = false;
-            FWDMSPTweenMax.killTweensOf(s);
-            FWDMSPTweenMax.killTweensOf(s.n_sdo);
+            MUSICTweenMax.killTweensOf(s);
+            MUSICTweenMax.killTweensOf(s.n_sdo);
             s.setVisible(false)
         };
         s.init()
     };
     t.setPrototype = function() {
         t.prototype = null;
-        t.prototype = new FWDMSPDisplayObject("div")
+        t.prototype = new MUSICDisplayObject("div")
     };
     t.CLICK = "onClick";
     t.MOUSE_OVER = "onMouseOver";
@@ -10932,7 +10933,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
     t.MOUSE_OUT = "onMouseOut";
     t.MOUSE_UP = "onMouseDown";
     t.prototype = null;
-    e.FWDMSPSimpleButton = t
+    e.MUSICSimpleButton = t
 })(window);
 (function(e) {
     var t = function(e, n, r, i) {
@@ -10944,8 +10945,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.sImgPath_str = n;
         this.buttonWidth = s.nImg_img.width;
         this.buttonHeight = s.nImg_img.height;
-        this.isMobile_bl = FWDMSPUtils.isMobile;
-        this.hasPointerEvent_bl = FWDMSPUtils.hasPointerEvent;
+        this.isMobile_bl = MUSICUtils.isMobile;
+        this.hasPointerEvent_bl = MUSICUtils.hasPointerEvent;
         this.isDisabled_bl = false;
         this.init = function() {
             s.setupMainContainers();
@@ -10954,13 +10955,13 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             s.setButtonMode(true)
         };
         this.setupMainContainers = function() {
-            s.n_do = new FWDMSPDisplayObject("img");
+            s.n_do = new MUSICDisplayObject("img");
             var e = new Image;
             e.src = s.nImg_img.src;
             s.n_do.setScreen(e);
             s.n_do.setWidth(s.buttonWidth);
             s.n_do.setHeight(s.buttonHeight);
-            s.s_do = new FWDMSPDisplayObject("img");
+            s.s_do = new MUSICDisplayObject("img");
             var t = new Image;
             t.src = s.sImgPath_str;
             s.s_do.setScreen(t);
@@ -10973,13 +10974,13 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             s.screen.onclick = s.onClick
         };
         this.onMouseOver = function(e) {
-            FWDMSPTweenMax.to(s.n_do, .9, {
+            MUSICTweenMax.to(s.n_do, .9, {
                 alpha: 0,
                 ease: Expo.easeOut
             })
         };
         this.onMouseOut = function(e) {
-            FWDMSPTweenMax.to(s.n_do, .9, {
+            MUSICTweenMax.to(s.n_do, .9, {
                 alpha: 1,
                 ease: Expo.easeOut
             })
@@ -10989,7 +10990,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         };
         this.destroy = function() {
             if (s.n_do) {
-                FWDMSPTweenMax.killTweensOf(s.n_do);
+                MUSICTweenMax.killTweensOf(s.n_do);
                 s.n_do.destroy();
                 s.s_do.destroy()
             }
@@ -11003,11 +11004,11 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
     };
     t.setPrototype = function() {
         t.prototype = null;
-        t.prototype = new FWDMSPDisplayObject("div", "relative")
+        t.prototype = new MUSICDisplayObject("div", "relative")
     };
     t.CLICK = "onClick";
     t.prototype = null;
-    e.FWDMSPSimpleSizeButton = t
+    e.MUSICSimpleSizeButton = t
 })(window);
 (function(e) {
     var t = function(n, r, i, s, o, u, a) {
@@ -11026,7 +11027,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.pointerWidth = 7;
         this.pointerHeight = 4;
         this.showWithDelayId_to;
-        this.isMobile_bl = FWDMSPUtils.isMobile;
+        this.isMobile_bl = MUSICUtils.isMobile;
         this.isShowed_bl = true;
         this.init = function() {
             f.setOverflow("visible");
@@ -11037,7 +11038,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             f.getStyle().zIndex = 9999999999
         };
         this.setupMainContainers = function() {
-            f.text_do = new FWDMSPDisplayObject("div");
+            f.text_do = new MUSICDisplayObject("div");
             f.text_do.hasTransform3d_bl = false;
             f.text_do.hasTransform2d_bl = false;
             f.text_do.setBackfaceVisibility();
@@ -11056,14 +11057,14 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             f.addChild(f.text_do);
             var e = new Image;
             e.src = f.pointerPath_str;
-            f.pointer_do = new FWDMSPDisplayObject("img");
+            f.pointer_do = new MUSICDisplayObject("img");
             f.pointer_do.setScreen(e);
             f.pointer_do.setWidth(f.pointerWidth);
             f.pointer_do.setHeight(f.pointerHeight);
             f.addChild(f.pointer_do);
             var t = new Image;
             t.src = f.toopTipPointerUp_str;
-            f.pointerUp_do = new FWDMSPDisplayObject("img");
+            f.pointerUp_do = new MUSICDisplayObject("img");
             f.pointerUp_do.setScreen(t);
             f.pointerUp_do.setWidth(f.pointerWidth);
             f.pointerUp_do.setHeight(f.pointerHeight);
@@ -11100,7 +11101,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.show = function() {
             if (f.isShowed_bl) return;
             f.isShowed_bl = true;
-            FWDMSPTweenMax.killTweensOf(f);
+            MUSICTweenMax.killTweensOf(f);
             clearTimeout(f.showWithDelayId_to);
             f.showWithDelayId_to = setTimeout(f.showFinal, f.toolTipsButtonsHideDelay);
             if (e.addEventListener) {
@@ -11113,7 +11114,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.showFinal = function() {
             f.setVisible(true);
             f.setAlpha(0);
-            FWDMSPTweenMax.to(f, .4, {
+            MUSICTweenMax.to(f, .4, {
                 alpha: 1,
                 onComplete: function() {
                     f.setVisible(true)
@@ -11122,8 +11123,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             })
         };
         this.moveHandler = function(e) {
-            var t = FWDMSPUtils.getViewportMouseCoordinates(e);
-            if (!FWDMSPUtils.hitTest(f.buttonRef_do.screen, t.screenX, t.screenY)) f.hide()
+            var t = MUSICUtils.getViewportMouseCoordinates(e);
+            if (!MUSICUtils.hitTest(f.buttonRef_do.screen, t.screenX, t.screenY)) f.hide()
         };
         this.hide = function() {
             if (!f.isShowed_bl) return;
@@ -11133,7 +11134,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             } else if (document.detachEvent) {
                 document.detachEvent("onmousemove", f.moveHandler)
             }
-            FWDMSPTweenMax.killTweensOf(f);
+            MUSICTweenMax.killTweensOf(f);
             f.setVisible(false);
             f.isShowed_bl = false
         };
@@ -11141,16 +11142,16 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
     };
     t.setPrototype = function() {
         t.prototype = null;
-        t.prototype = new FWDMSPDisplayObject("div", "fixed")
+        t.prototype = new MUSICDisplayObject("div", "fixed")
     };
     t.CLICK = "onClick";
     t.MOUSE_DOWN = "onMouseDown";
     t.prototype = null;
-    e.FWDMSPToolTip = t
+    e.MUSICToolTip = t
 })(window);
 (window._gsQueue || (window._gsQueue = [])).push(function() {
     "use strict";
-    window._gsDefine("FWDMSPTweenMax", ["core.Animation", "core.SimpleTimeline", "TweenLite"], function(e, t, n) {
+    window._gsDefine("MUSICTweenMax", ["core.Animation", "core.SimpleTimeline", "TweenLite"], function(e, t, n) {
         var r = [].slice,
             i = function(e, t, r) {
                 n.call(this, e, t, r);
