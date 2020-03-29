@@ -16832,6 +16832,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }
         }
     };
+    
     a.setRatio = function(e) {
         var t = this._firstPT,
             n = 1e-6,
