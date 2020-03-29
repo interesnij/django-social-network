@@ -136,7 +136,7 @@
 				openerEqulizerOffsetTop:-1,           // сдвигание эквалайзера сверху
 
 				//popup settings
-				showPopupButton:"yes",                // показать всплывающую кнопку
+				showPopupButton:"no",                // показать всплывающую кнопку
 				popupWindowBackgroundColor:"#878787", // фон окна всплывающего окна
 				popupWindowWidth:850,                 // ширина окна всплывающего окна
 				popupWindowHeight:423,                // высота окна всплывающего окна
