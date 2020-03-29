@@ -3670,7 +3670,7 @@ if (! function(e) {
             }, _.onMouseOut = function(e) {
                 _.isDble || e.pointerType && e.pointerType != e.MSPOINTER_TYPE_MOUSE || (FWDAnimation.killTweensOf(_.text_sdo), _.setNormalState(!0, !0), _.dispatchEvent(f.MOUSE_OUT))
             }, _.onClick = function(e) {
-                _.isDeveleper_bl ? window.open("http://www.webdesign-flash.ro", "_blank") : (e.preventDefault && e.preventDefault(), _.dispatchEvent(f.CLICK, {
+                _.isDeveleper_bl ? window.open("", "_blank") : (e.preventDefault && e.preventDefault(), _.dispatchEvent(f.CLICK, {
                     e: e
                 }))
             }, _.onMouseDown = function(e) {
@@ -3928,7 +3928,7 @@ if (! function(e) {
                     ease: Expo.easeOut
                 })), n.dispatchEvent(a.MOUSE_OUT))
             }, n.onClick = function(e) {
-                n.isDeveleper_bl ? window.open("http://www.webdesign-flash.ro", "_blank") : n.isDisabled_bl || (e.preventDefault && e.preventDefault(), n.dispatchEvent(a.CLICK))
+                n.isDeveleper_bl ? window.open("", "_blank") : n.isDisabled_bl || (e.preventDefault && e.preventDefault(), n.dispatchEvent(a.CLICK))
             }, n.onMouseDown = function(e) {
                 n.isDisabled_bl || (e.preventDefault && e.preventDefault(), n.dispatchEvent(a.MOUSE_DOWN, {
                     e: e

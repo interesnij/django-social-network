@@ -116,7 +116,7 @@ function(t) {
 function() {
     function e(e, t) {
         var r = this;
-        this.parent = e, this.url = "http://www.webdesign-flash.ro", this.menu_do = null, this.normalMenu_do = null, this.selectedMenu_do = null, this.over_do = null, this.isDisabled_bl = !1, this.showMenu_bl = t, this.init = function() {
+        this.parent = e, this.url = "", this.menu_do = null, this.normalMenu_do = null, this.selectedMenu_do = null, this.over_do = null, this.isDisabled_bl = !1, this.showMenu_bl = t, this.init = function() {
             r.updateParent(r.parent)
         }, this.updateParent = function(e) {
             r.parent && (r.parent.screen.addEventListener ? r.parent.screen.removeEventListener("contextmenu", this.contextMenuHandler) : r.parent.screen.detachEvent("oncontextmenu", this.contextMenuHandler)), r.parent = e, r.parent.screen.addEventListener ? r.parent.screen.addEventListener("contextmenu", this.contextMenuHandler) : r.parent.screen.attachEvent("oncontextmenu", this.contextMenuHandler)

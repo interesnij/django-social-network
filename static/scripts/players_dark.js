@@ -129,7 +129,7 @@ displayType:"responsive",
 					showLogo:"yes",
 					hideLogoWithController:"yes",
 					logoPosition:"topRight",
-					logoLink:"http://www.webdesign-flash.ro/",
+					logoLink:"",
 					logoMargins:10,
 					//playlists/categories settings
 					usePlaylistsSelectBox:"yes",
