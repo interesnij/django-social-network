@@ -9200,7 +9200,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             r.isShowedFirstTime_bl = true;
             r.stageHeight = 0;
             r.isListCreated_bl = true;
-            if (r.input_do) r.input_do.screen.value = "Поиск трека";
+            if (r.input_do) r.input_do.screen.value = "";
             r.allowToScrollAndScrollBarIsActive_bl = false;
             r.countID3 == 2001;
             r.countTrack = 0;
@@ -9492,7 +9492,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             if (!MUSICUtils.hitTest(r.input_do.screen, t.screenX, t.screenY)) {
                 r.hasInputFocus_bl = false;
                 if (r.input_do.screen.value == "") {
-                    r.input_do.screen.value = "Поиск трека"
+                    r.input_do.screen.value = ""
                 }
                 return
             }
