@@ -796,9 +796,6 @@ var FWDAddress = new function() {
         }
     };
     var _jsInit = function() {
-        if (_util.Browser.isSafari()) {
-            _d.body.addEventListener("click", _bodyClick)
-        }
         _jsDispatch.call(this, "init")
     };
     var _jsChange = function() {
