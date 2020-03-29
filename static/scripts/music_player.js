@@ -3882,7 +3882,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.categoriesId_str = null;
         this.thumbnailSelectedType_str = null;
         this.openerAlignment_str = null;
-        this.toolTipsButtonFontColor_str = null;
         this.prevId = -1;
         this.totalCats = 0;
         this.countLoadedSkinImages = 0;
@@ -3921,7 +3920,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.verticalSpaceBetweenThumbnails = 0;
         this.openerEqulizerOffsetLeft = 0, this.openerEqulizerOffsetTop = 0;
         this.countID3 = 0;
-        this.toolTipsButtonsHideDelay = 0;
         this.JSONPRequestTimeoutId_to;
         this.showLoadPlaylistErrorId_to;
         this.dispatchPlaylistLoadCompleteWidthDelayId_to;
@@ -3930,7 +3928,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.isPlaylistDispatchingError_bl = false;
         this.allowToChangeVolume_bl = true;
         this.showContextMenu_bl = false;
-        this.showButtonsToolTips_bl = false;
         this.autoPlay_bl = false;
         this.loop_bl = false;
         this.shuffle_bl = false;
@@ -4060,7 +4057,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             self.playlistBackgroundColor_str = self.props_obj.playlistBackgroundColor || "transparent";
             self.openerAlignment_str = self.props_obj.openerAlignment || "right";
             if (self.openerAlignment_str != "right" && self.openerAlignment_str != "left") self.openerAlignment_str = "right";
-            self.toolTipsButtonFontColor_str = self.props_obj.toolTipsButtonFontColor || "#FF0000";
             self.totalCategories = self.cats_ar.length;
             self.playlistIdOrPath_str = self.props_obj.playlistIdOrPath || undefined;
             self.timeColor_str = self.props_obj.timeColor || "#FF0000";
@@ -4100,7 +4096,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             if (self.verticalSpaceBetweenThumbnails == undefined) self.verticalSpaceBetweenThumbnails = 40;
             self.openerEqulizerOffsetLeft = self.props_obj.openerEqulizerOffsetLeft || 0;
             self.openerEqulizerOffsetTop = self.props_obj.openerEqulizerOffsetTop || 0;
-            self.toolTipsButtonsHideDelay = self.props_obj.toolTipsButtonsHideDelay || 1.5;
             self.startSpaceBetweenButtons = self.props_obj.startSpaceBetweenButtons || 0;
             self.spaceBetweenButtons = self.props_obj.spaceBetweenButtons || 0;
             self.mainScrubberOffsetTop = self.props_obj.mainScrubberOffsetTop || 100;
@@ -4131,9 +4126,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             if (self.isMobile_bl) self.allowToChangeVolume_bl = false;
             self.showContextMenu_bl = self.props_obj.showContextMenu;
             self.showContextMenu_bl = self.showContextMenu_bl == "no" ? false : true;
-            self.showButtonsToolTips_bl = self.props_obj.showButtonsToolTips;
-            self.showButtonsToolTips_bl = self.showButtonsToolTips_bl == "no" ? false : true;
-            if (self.isMobile_bl) self.showButtonsToolTips_bl = false;
             self.autoPlay_bl = self.props_obj.autoPlay;
             self.autoPlay_bl = self.autoPlay_bl == "yes" ? true : false;
             self.loop_bl = self.props_obj.loop;
@@ -4401,9 +4393,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }
             self.categoriesSPath_str = self.skinPath_str + "categories-button-over.png";
             self.replaySPath_str = self.skinPath_str + "replay-button-over.png";
-            self.toopTipBk_str = self.skinPath_str + "tooltip-background.png";
-            self.toopTipPointer_str = self.skinPath_str + "tooltip-pointer-down.png";
-            self.toopTipPointerUp_str = self.skinPath_str + "tooltip-pointer-up.png";
             var r = self.skinPath_str + "playlist-button.png";
             self.playlistSPath_str = self.skinPath_str + "playlist-button-over.png";
             self.shuffleSPath_str = self.skinPath_str + "shuffle-button-over.png";
@@ -6299,9 +6288,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }
         };
         o.onMouseOver = function(t, n) {
-            o.dispatchEvent(e.SHOW_TOOLTIP, {
-                e: t
-            });
             if (o.isDisabled_bl || o.isSelectedState_bl) return;
             if (!t.pointerType || t.pointerType == "mouse") {
                 o.dispatchEvent(e.MOUSE_OVER, {
@@ -6403,7 +6389,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
     };
     e.FIRST_BUTTON_CLICK = "onFirstClick";
     e.SECOND_BUTTON_CLICK = "secondButtonOnClick";
-    e.SHOW_TOOLTIP = "showToolTip";
     e.MOUSE_OVER = "onMouseOver";
     e.MOUSE_OUT = "onMouseOut";
     e.MOUSE_UP = "onMouseUp";
@@ -6651,17 +6636,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.animText1_do = null;
         this.animText2_do = null;
         this.bk_do = null;
-        this.prevButtonToolTip_do = null;
-        this.playPauseToolTip_do = null;
-        this.nextButtonToolTip_do = null;
-        this.playlistsButtonToolTip_do = null;
-        this.playlistButtonToolTip_do = null;
-        this.loopButtonToolTip_do = null;
-        this.shuffleButtonToolTip_do = null;
-        this.downloadButtonToolTip_do = null;
-        this.buyButtonToolTip_do = null;
-        this.populButtonToolTip_do = null;
-        this.volumeButtonToolTip_do = null;
         this.controllerBkPath_str = t.controllerBkPath_str;
         this.thumbnailBkPath_str = t.thumbnailBkPath_str;
         this.mainScrubberBkMiddlePath_str = t.mainScrubberBkMiddlePath_str;
@@ -6673,7 +6647,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.progressMiddlePath_str = t.progressMiddlePath_str;
         this.titlebarBkMiddlePattern_str = t.titlebarBkMiddlePattern_str;
         this.thumbPath_str = null;
-        this.toolTipsButtonFontColor_str = t.toolTipsButtonFontColor_str;
         this.controllerHeight = t.controllerHeight;
         this.minLeftWidth = 150;
         this.thumbWidthAndHeight = r.controllerHeight;
@@ -6685,7 +6658,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.minVolumeBarWidth = 60;
         this.volumeScrubberWidth = 0;
         this.spaceBetweenVolumeButtonAndScrubber = t.spaceBetweenVolumeButtonAndScrubber;
-        this.toolTipsButtonsHideDelay = t.toolTipsButtonsHideDelay;
         this.mainScrubberOffsetTop = t.mainScrubberOffsetTop;
         this.spaceBetweenMainScrubberAndTime = t.spaceBetweenMainScrubberAndTime;
         this.startTimeSpace = t.startTimeSpace;
@@ -6721,7 +6693,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.setTimeSizeId_to;
         this.animateTextId_int;
         this.showBuyButton_bl = t.showBuyButton_bl;
-        this.showButtonsToolTips_bl = t.showButtonsToolTips_bl;
         this.showPlaylistsButtonAndPlaylists_bl = t.showPlaylistsButtonAndPlaylists_bl;
         this.loop_bl = t.loop_bl;
         this.shuffle_bl = t.shuffle_bl;
@@ -6773,7 +6744,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             if (r.showDownloadMp3Button_bl) r.setupDownloadButton();
             if (r.showBuyButton_bl) r.setupBuyButton();
             if (r.showPopupButton_bl) r.setupPopupButton();
-            if (r.showButtonsToolTips_bl) r.setupToolTips();
             if (!r.isMobile_bl) r.setupDisable();
             r.mainHolder_do.setBkColor("#FFFF00");
             r.mainHolder_do.setY(-500);
@@ -7102,89 +7072,12 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 r.disable_do.setAlpha(0)
             }
         };
-        this.setupToolTips = function() {
-            MUSICToolTip.setPrototype();
-            r.prevButtonToolTip_do = new MUSICToolTip(r.prevButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "предыдущий трек", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
-            document.documentElement.appendChild(r.prevButtonToolTip_do.screen);
-            MUSICToolTip.setPrototype();
-            r.playPauseToolTip_do = new MUSICToolTip(r.playPauseButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "играть / остановить", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
-            document.documentElement.appendChild(r.playPauseToolTip_do.screen);
-            MUSICToolTip.setPrototype();
-            r.nextButtonToolTip_do = new MUSICToolTip(r.nextButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "следующий трек", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
-            document.documentElement.appendChild(r.nextButtonToolTip_do.screen);
-            if (r.showPlaylistsButtonAndPlaylists_bl) {
-                MUSICToolTip.setPrototype();
-                r.playlistsButtonToolTip_do = new MUSICToolTip(r.categoriesButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "Открыть мои плейлисты", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
-                document.documentElement.appendChild(r.playlistsButtonToolTip_do.screen)
-            }
-            if (r.showPlayListButtonAndPlaylist_bl) {
-                MUSICToolTip.setPrototype();
-                r.playlistButtonToolTip_do = new MUSICToolTip(r.playlistButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "показать / скрыть плейлист", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
-                document.documentElement.appendChild(r.playlistButtonToolTip_do.screen)
-            }
-            if (r.showLoopButton_bl) {
-                MUSICToolTip.setPrototype();
-                r.loopButtonToolTip_do = new MUSICToolTip(r.loopButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "повторять", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
-                document.documentElement.appendChild(r.loopButtonToolTip_do.screen)
-            }
-            if (r.showShuffleButton_bl) {
-                MUSICToolTip.setPrototype();
-                r.shuffleButtonToolTip_do = new MUSICToolTip(r.shuffleButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "перемешать", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
-                document.documentElement.appendChild(r.shuffleButtonToolTip_do.screen)
-            }
-            if (r.showDownloadMp3Button_bl) {
-                MUSICToolTip.setPrototype();
-                r.downloadButtonToolTip_do = new MUSICToolTip(r.downloadButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "download track", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
-                document.documentElement.appendChild(r.downloadButtonToolTip_do.screen)
-            }
-            if (this.showBuyButton_bl) {
-                MUSICToolTip.setPrototype();
-                r.buyButtonToolTip_do = new MUSICToolTip(r.buyButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "buy track", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
-                document.documentElement.appendChild(r.buyButtonToolTip_do.screen)
-            }
-            if (r.showPopupButton_bl) {
-                MUSICToolTip.setPrototype();
-                r.populButtonToolTip_do = new MUSICToolTip(r.popupButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "превратить в окно", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
-                document.documentElement.appendChild(r.populButtonToolTip_do.screen)
-            }
-            MUSICToolTip.setPrototype();
-            r.volumeButtonToolTip_do = new MUSICToolTip(r.volumeButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "тишина / включить звук", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
-            document.documentElement.appendChild(r.volumeButtonToolTip_do.screen)
-        };
-        this.showToolTip = function(e, t, n) {
-            if (!r.showButtonsToolTips_bl) return;
-            var i = MUSICUtils.getViewportSize();
-            var s = MUSICUtils.getViewportMouseCoordinates(n);
-            var o = parseInt(e.getGlobalX() + e.w / 2 - t.w / 2);
-            var u = parseInt(e.getGlobalY() - t.h - 6);
-            var a = 0;
-            if (o < 0) {
-                a = o;
-                o = 0
-            } else if (o + t.w > i.w) {
-                a = (i.w - (o + t.w)) * -1;
-                o = o + a * -1
-            }
-            if (u < 0) {
-                u += e.h + t.h + 12;
-                t.positionPointer(a, true)
-            } else {
-                t.positionPointer(a, false)
-            }
-            t.setX(o);
-            t.setY(u);
-            t.show()
-        };
         this.setupPrevButton = function() {
             MUSICSimpleButton.setPrototype();
             r.prevButton_do = new MUSICSimpleButton(r.prevN_img, t.prevSPath_str);
-            r.prevButton_do.addListener(MUSICSimpleButton.SHOW_TOOLTIP, r.prevButtonShowToolTipHandler);
             r.prevButton_do.addListener(MUSICSimpleButton.MOUSE_UP, r.prevButtonOnMouseUpHandler);
             r.buttons_ar.push(r.prevButton_do);
             r.mainHolder_do.addChild(r.prevButton_do)
-        };
-        this.prevButtonShowToolTipHandler = function(e) {
-            r.showToolTip(r.prevButton_do, r.prevButtonToolTip_do, e.e)
         };
         this.prevButtonOnMouseUpHandler = function() {
             r.dispatchEvent(e.PLAY_PREV)
@@ -7193,7 +7086,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             MUSICComplexButton.setPrototype();
             r.playPauseButton_do = new MUSICComplexButton(r.playN_img, t.playSPath_str, r.pauseN_img, t.pauseSPath_str, true);
             r.buttons_ar.push(r.playPauseButton_do);
-            r.playPauseButton_do.addListener(MUSICComplexButton.SHOW_TOOLTIP, r.playButtonShowToolTipHandler);
             r.playPauseButton_do.addListener(MUSICComplexButton.MOUSE_UP, r.playButtonMouseUpHandler);
             r.mainHolder_do.addChild(r.playPauseButton_do)
         };
@@ -7205,9 +7097,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             if (!r.playPauseButton_do) return;
             r.playPauseButton_do.setButtonState(0)
         };
-        this.playButtonShowToolTipHandler = function(e) {
-            r.showToolTip(r.playPauseButton_do, r.playPauseToolTip_do, e.e)
-        };
         this.playButtonMouseUpHandler = function() {
             if (r.playPauseButton_do.currentState == 0) {
                 r.dispatchEvent(e.PAUSE)
@@ -7218,14 +7107,10 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.setupNextButton = function() {
             MUSICSimpleButton.setPrototype();
             r.nextButton_do = new MUSICSimpleButton(r.nextN_img, t.nextSPath_str);
-            r.nextButton_do.addListener(MUSICSimpleButton.SHOW_TOOLTIP, r.nextButtonShowToolTipHandler);
             r.nextButton_do.addListener(MUSICSimpleButton.MOUSE_UP, r.nextButtonOnMouseUpHandler);
             r.nextButton_do.setY(parseInt((r.stageHeight - r.nextButton_do.h) / 2));
             r.buttons_ar.push(r.nextButton_do);
             r.mainHolder_do.addChild(r.nextButton_do)
-        };
-        this.nextButtonShowToolTipHandler = function(e) {
-            r.showToolTip(r.nextButton_do, r.nextButtonToolTip_do, e.e)
         };
         this.nextButtonOnMouseUpHandler = function() {
             r.dispatchEvent(e.PLAY_NEXT)
@@ -7664,7 +7549,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             r.mainHolder_do.addChild(r.mainVolumeHolder_do);
             MUSICSimpleButton.setPrototype();
             r.volumeButton_do = new MUSICSimpleButton(r.volumeN_img, t.volumeSPath_str, t.volumeDPath_str);
-            r.volumeButton_do.addListener(MUSICSimpleButton.SHOW_TOOLTIP, r.volumeButtonShowToolTipHandler);
             r.volumeButton_do.addListener(MUSICSimpleButton.MOUSE_UP, r.volumeButtonOnMouseUpHandler);
             if (!r.allowToChangeVolume_bl) r.volumeButton_do.disable();
             r.volumeScrubber_do = new MUSICDisplayObject("div");
@@ -7764,9 +7648,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 r.isMute_bl = true
             }
             r.updateVolume(e)
-        };
-        this.volumeButtonShowToolTipHandler = function(e) {
-            r.showToolTip(r.volumeButton_do, r.volumeButtonToolTip_do, e)
         };
         this.volumeScrubberOnOverHandler = function(e) {
             if (r.isVolumeScrubberDisabled_bl) return
@@ -7897,7 +7778,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.setupPlaylistButton = function() {
             MUSICSimpleButton.setPrototype();
             r.playlistButton_do = new MUSICSimpleButton(r.playlistN_img, t.playlistSPath_str, undefined, true);
-            r.playlistButton_do.addListener(MUSICSimpleButton.SHOW_TOOLTIP, r.playlistButtonShowToolTipHandler);
             r.playlistButton_do.addListener(MUSICSimpleButton.MOUSE_UP, r.playlistButtonOnMouseUpHandler);
             r.playlistButton_do.setY(parseInt((r.stageHeight - r.playlistButton_do.h) / 2));
             r.buttons_ar.push(r.playlistButton_do);
@@ -7905,9 +7785,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             if (r.showPlayListByDefault_bl) {
                 r.setPlaylistButtonState("selected")
             }
-        };
-        this.playlistButtonShowToolTipHandler = function(e) {
-            r.showToolTip(r.playlistButton_do, r.playlistButtonToolTip_do, e.e)
         };
         this.playlistButtonOnMouseUpHandler = function() {
             if (r.playlistButton_do.isSelectedFinal_bl) {
@@ -7927,14 +7804,10 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.setupCategoriesButton = function() {
             MUSICSimpleButton.setPrototype();
             r.categoriesButton_do = new MUSICSimpleButton(r.categoriesN_img, t.categoriesSPath_str, undefined, true);
-            r.categoriesButton_do.addListener(MUSICSimpleButton.SHOW_TOOLTIP, r.categoriesButtonShowTooltipHandler);
             r.categoriesButton_do.addListener(MUSICSimpleButton.MOUSE_UP, r.categoriesButtonOnMouseUpHandler);
             r.categoriesButton_do.setY(parseInt((r.stageHeight - r.categoriesButton_do.h) / 2));
             r.buttons_ar.push(r.categoriesButton_do);
             r.mainHolder_do.addChild(r.categoriesButton_do)
-        };
-        this.categoriesButtonShowTooltipHandler = function(e) {
-            r.showToolTip(r.categoriesButton_do, r.playlistsButtonToolTip_do, e.e)
         };
         this.categoriesButtonOnMouseUpHandler = function() {
             r.dispatchEvent(e.SHOW_CATEGORIES)
@@ -7950,15 +7823,11 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.setupLoopButton = function() {
             MUSICSimpleButton.setPrototype();
             r.loopButton_do = new MUSICSimpleButton(r.replayN_img, t.replaySPath_str, undefined, true);
-            r.loopButton_do.addListener(MUSICSimpleButton.SHOW_TOOLTIP, r.loopButtonShowTooltipHandler);
             r.loopButton_do.addListener(MUSICSimpleButton.MOUSE_UP, r.loopButtonOnMouseUpHandler);
             r.loopButton_do.setY(parseInt((r.stageHeight - r.loopButton_do.h) / 2));
             r.buttons_ar.push(r.loopButton_do);
             r.mainHolder_do.addChild(r.loopButton_do);
             if (r.loop_bl) r.setLoopStateButton("selected")
-        };
-        this.loopButtonShowTooltipHandler = function(e) {
-            r.showToolTip(r.loopButton_do, r.loopButtonToolTip_do, e.e)
         };
         this.loopButtonOnMouseUpHandler = function() {
             if (r.loopButton_do.isSelectedFinal_bl) {
@@ -7978,14 +7847,10 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.setupDownloadButton = function() {
             MUSICSimpleButton.setPrototype();
             r.downloadButton_do = new MUSICSimpleButton(r.downloaderN_img, t.downloaderSPath_str);
-            r.downloadButton_do.addListener(MUSICSimpleButton.SHOW_TOOLTIP, r.downloadButtonShowToolTipHandler);
             r.downloadButton_do.addListener(MUSICSimpleButton.MOUSE_UP, r.downloadButtonOnMouseUpHandler);
             r.downloadButton_do.setY(parseInt((r.stageHeight - r.downloadButton_do.h) / 2));
             r.buttons_ar.push(r.downloadButton_do);
             r.mainHolder_do.addChild(r.downloadButton_do)
-        };
-        this.downloadButtonShowToolTipHandler = function(e) {
-            r.showToolTip(r.downloadButton_do, r.downloadButtonToolTip_do, e.e)
         };
         this.downloadButtonOnMouseUpHandler = function() {
             r.dispatchEvent(e.DOWNLOAD_MP3)
@@ -7993,13 +7858,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.setupBuyButton = function() {
             MUSICSimpleButton.setPrototype();
             r.buyButton_do = new MUSICSimpleButton(t.buyN_img, t.buySPath_str);
-            r.buyButton_do.addListener(MUSICSimpleButton.SHOW_TOOLTIP, r.buyButtonShowToolTipHandler);
             r.buyButton_do.addListener(MUSICSimpleButton.MOUSE_UP, r.buyButtonOnMouseUpHandler);
             r.buttons_ar.push(r.buyButton_do);
             r.mainHolder_do.addChild(r.buyButton_do)
-        };
-        this.buyButtonShowToolTipHandler = function(e) {
-            r.showToolTip(r.buyButton_do, r.buyButtonToolTip_do, e.e)
         };
         this.buyButtonOnMouseUpHandler = function() {
             r.dispatchEvent(e.BUY)
@@ -8007,15 +7868,11 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.setupShuffleButton = function() {
             MUSICSimpleButton.setPrototype();
             r.shuffleButton_do = new MUSICSimpleButton(r.shuffleN_img, t.shuffleSPath_str, undefined, true);
-            r.shuffleButton_do.addListener(MUSICSimpleButton.SHOW_TOOLTIP, r.shuffleButtonShowToolTipHandler);
             r.shuffleButton_do.addListener(MUSICSimpleButton.MOUSE_UP, r.shuffleButtonOnMouseUpHandler);
             r.shuffleButton_do.setY(parseInt((r.stageHeight - r.shuffleButton_do.h) / 2));
             r.buttons_ar.push(r.shuffleButton_do);
             r.mainHolder_do.addChild(r.shuffleButton_do);
             if (!r.loop_bl && r.shuffle_bl) r.setShuffleButtonState("selected")
-        };
-        this.shuffleButtonShowToolTipHandler = function(e) {
-            r.showToolTip(r.shuffleButton_do, r.shuffleButtonToolTip_do, e.e)
         };
         this.shuffleButtonOnMouseUpHandler = function() {
             if (r.shuffleButton_do.isSelectedFinal_bl) {
@@ -8035,18 +7892,10 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.setupPopupButton = function() {
             MUSICSimpleButton.setPrototype();
             r.popupButton_do = new MUSICSimpleButton(r.popupN_img, t.popupSPath_str);
-            r.popupButton_do.addListener(MUSICSimpleButton.SHOW_TOOLTIP, r.popupButtonShowToolTipHandler);
             r.popupButton_do.addListener(MUSICSimpleButton.MOUSE_UP, r.popupButtonOnMouseUpHandler);
             r.popupButton_do.setY(parseInt((r.stageHeight - r.popupButton_do.h) / 2));
             r.buttons_ar.push(r.popupButton_do);
             r.mainHolder_do.addChild(r.popupButton_do)
-        };
-        this.popupButtonShowToolTipHandler = function(e) {
-            r.showToolTip(r.popupButton_do, r.populButtonToolTip_do, e.e)
-        };
-        this.popupButtonOnMouseUpHandler = function() {
-            if (r.populButtonToolTip_do) r.populButtonToolTip_do.hide();
-            r.dispatchEvent(e.POPUP)
         };
         this.disableControllerWhileLoadingPlaylist = function() {
             r.prevButton_do.disable();
@@ -8952,7 +8801,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.playlistPauseButtonS_str = t.playlistPauseButtonS_str;
         this.controllerBkPath_str = t.controllerBkPath_str;
         this.playlistBackgroundColor_str = t.playlistBackgroundColor_str;
-        this.toolTipsButtonFontColor_str = t.toolTipsButtonFontColor_str;
         this.countTrack = 0;
         this.startSpaceBetweenButtons = t.startSpaceBetweenButtons;
         this.spaceBetweenButtons = t.spaceBetweenButtons;
@@ -8971,7 +8819,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.playPuaseIconHeight = r.playlistPlayButtonN_img.height;
         this.nrOfVisiblePlaylistItems = t.nrOfVisiblePlaylistItems;
         this.durationOffsetRight = t.durationOffsetRight;
-        this.toolTipsButtonsHideDelay = t.toolTipsButtonsHideDelay;
         this.totalPlayListItems = 0;
         this.visibleNrOfItems = 0;
         this.yPositionOnPress = 0;
@@ -8987,7 +8834,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.updateMoveMobileScrollbarId_int;
         this.disableOnMoveId_to;
         this.updateMobileScrollbarOnPlaylistLoadId_to;
-        this.showButtonsToolTips_bl = t.showButtonsToolTips_bl;
         this.allowToTweenPlaylistItems_bl = false;
         this.expandPlaylistBackground_bl = t.expandControllerBackground_bl;
         this.isSortedNumerical_bl = true;
@@ -9374,27 +9220,21 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.setupButtons = function() {
             MUSICSimpleButton.setPrototype();
             r.sortNButton_do = new MUSICSimpleButton(t.sortNN_img, t.sortNSPath_str, null, true);
-            r.sortNButton_do.addListener(MUSICSimpleButton.SHOW_TOOLTIP, r.sortNButtonShowTooltipHandler);
             r.sortNButton_do.addListener(MUSICSimpleButton.MOUSE_UP, r.sortNButtonOnMouseUpHandler);
             r.sortNButton_do.setX(410);
             MUSICSimpleButton.setPrototype();
             r.sortAButton_do = new MUSICSimpleButton(t.sortAN_img, t.sortASPath_str, null, true);
-            r.sortAButton_do.addListener(MUSICSimpleButton.SHOW_TOOLTIP, r.sortAButtonShowTooltipHandler);
             r.sortAButton_do.addListener(MUSICSimpleButton.MOUSE_UP, r.sortAButtonOnMouseUpHandler);
             r.sortAButton_do.setX(450);
             MUSICComplexButton.setPrototype();
             r.ascDscButton_do = new MUSICComplexButton(t.ascendingN_img, t.ascendingSpath_str, t.decendingN_img, t.decendingSpath_str, true);
             r.ascDscButton_do.setX(500);
-            r.ascDscButton_do.addListener(MUSICComplexButton.SHOW_TOOLTIP, r.ascDscShowToolTipHandler);
             r.ascDscButton_do.addListener(MUSICComplexButton.MOUSE_UP, r.ascDscMouseUpHandler);
             if (r.isSortedNumerical_bl) {
                 r.disableSortNButton()
             } else {
                 r.disableSortAButton()
             }
-        };
-        this.ascDscShowToolTipHandler = function(e) {
-            r.showToolTip(r.ascDscButton_do, r.ascDscButtonToolTip_do, e.e)
         };
         this.ascDscMouseUpHandler = function() {
             if (r.srotAscending_bl) {
@@ -9406,15 +9246,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }
             r.sortList()
         };
-        this.sortAButtonShowTooltipHandler = function(e) {
-            r.showToolTip(r.sortAButton_do, r.sortAButtonToolTip_do, e.e)
-        };
         this.sortAButtonOnMouseUpHandler = function() {
             r.disableSortAButton();
             r.sortList()
-        };
-        this.sortNButtonShowTooltipHandler = function(e) {
-            r.showToolTip(r.sortNButton_do, r.sortNButtonToolTip_do, e.e)
         };
         this.sortNButtonOnMouseUpHandler = function() {
             r.disableSortNButton();
@@ -9454,41 +9288,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }
             r.positionList();
             r.updateScrollBarHandlerAndContent(false)
-        };
-        this.setupToolTips = function() {
-            MUSICToolTip.setPrototype();
-            r.sortNButtonToolTip_do = new MUSICToolTip(r.sortNButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "numeric sort", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
-            document.documentElement.appendChild(r.sortNButtonToolTip_do.screen);
-            MUSICToolTip.setPrototype();
-            r.sortAButtonToolTip_do = new MUSICToolTip(r.sortAButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "alphabetic sort", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
-            document.documentElement.appendChild(r.sortAButtonToolTip_do.screen);
-            MUSICToolTip.setPrototype();
-            r.ascDscButtonToolTip_do = new MUSICToolTip(r.ascDscButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "ascending / decending sort", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
-            document.documentElement.appendChild(r.ascDscButtonToolTip_do.screen)
-        };
-        this.showToolTip = function(e, t, n) {
-            if (!r.showButtonsToolTips_bl) return;
-            var i = MUSICUtils.getViewportSize();
-            var s = MUSICUtils.getViewportMouseCoordinates(n);
-            var o = parseInt(e.getGlobalX() + e.w / 2 - t.w / 2);
-            var u = parseInt(e.getGlobalY() - t.h - 6);
-            var a = 0;
-            if (o < 0) {
-                a = o;
-                o = 0
-            } else if (o + t.w > i.w) {
-                a = (i.w - (o + t.w)) * -1;
-                o = o + a * -1
-            }
-            if (u < 0) {
-                u += e.h + t.h + 12;
-                t.positionPointer(a, true)
-            } else {
-                t.positionPointer(a, false)
-            }
-            t.setX(o);
-            t.setY(u);
-            t.show()
         };
         this.setupDisable = function() {
             r.disable_do = new MUSICDisplayObject("div");
@@ -10509,7 +10308,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.n_sdo;
         this.s_sdo;
         this.d_sdo;
-        this.toolTipLabel_str;
         this.totalWidth = this.nImg.width;
         this.totalHeight = this.nImg.height;
         this.isShowed_bl = true;
@@ -10571,9 +10369,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }
         };
         s.onMouseOver = function(e) {
-            s.dispatchEvent(t.SHOW_TOOLTIP, {
-                e: e
-            });
             if (s.isDisabledForGood_bl) return;
             if (!e.pointerType || e.pointerType == "mouse") {
                 if (s.isDisabled_bl || s.isSelectedFinal_bl) return;
@@ -10730,7 +10525,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
     };
     t.CLICK = "onClick";
     t.MOUSE_OVER = "onMouseOver";
-    t.SHOW_TOOLTIP = "showTooltip";
     t.MOUSE_OUT = "onMouseOut";
     t.MOUSE_UP = "onMouseDown";
     t.prototype = null;
@@ -10822,9 +10616,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.pointer_do = null;
         this.pointerUp_do = null;
         this.fontColor_str = u;
-        this.toolTipLabel_str = o;
         this.toopTipPointerUp_str = s;
-        this.toolTipsButtonsHideDelay = a * 1e3;
         this.pointerWidth = 7;
         this.pointerHeight = 4;
         this.showWithDelayId_to;
@@ -10833,7 +10625,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.init = function() {
             f.setOverflow("visible");
             f.setupMainContainers();
-            f.setLabel(f.toolTipLabel_str);
             f.hide();
             f.getStyle().background = "url('" + f.bkPath_str + "')";
             f.getStyle().zIndex = 9999999999
@@ -10904,7 +10695,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             f.isShowed_bl = true;
             MUSICTweenMax.killTweensOf(f);
             clearTimeout(f.showWithDelayId_to);
-            f.showWithDelayId_to = setTimeout(f.showFinal, f.toolTipsButtonsHideDelay);
             if (e.addEventListener) {
                 e.addEventListener("mousemove", f.moveHandler)
             } else if (document.attachEvent) {
@@ -10948,7 +10738,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
     t.CLICK = "onClick";
     t.MOUSE_DOWN = "onMouseDown";
     t.prototype = null;
-    e.MUSICToolTip = t
 })(window);
 (window._gsQueue || (window._gsQueue = [])).push(function() {
     "use strict";
