@@ -165,17 +165,15 @@ on('body', 'click', '.menu_drop', function() {var block = this.nextElementSiblin
 
 function load_playlist(playlist_block, uuid) {list_load(playlist_block, '/users/load/playlist/' + uuid)};
 
-document.querySelector(".music-dropdown").addEventListener("click", (e) => {e.stopPropagation()});
-
-function playlist_init(_playlist) {
-  var cssSelector = {jPlayer: "#jquery_jplayer_1",cssSelectorAncestor: ".main-header"};
-  var options = { swfPath: "/static/jquery.jplayer.swf", supplied: "oga, mp3", wmode: "window", smoothPlayBar: false, keyEnabled: true};
-  var playlist = _playlist;
-  var myPlaylist = new jPlayerPlaylist(cssSelector, playlist, options);
-}
-function my_playlist_play(track_id) {
-  $("#jquery_jplayer_1").jPlayer("play", track_id);
-};
-function my_playlist_pause(track_id) {
-  $("#jquery_jplayer_1").jPlayer("pause", track_id);
-};
+//function playlist_init(_playlist) {
+//  var cssSelector = {jPlayer: "#jquery_jplayer_1",cssSelectorAncestor: ".main-header"};
+//  var options = { swfPath: "/static/jquery.jplayer.swf", supplied: "oga, mp3", wmode: "window", smoothPlayBar: false, keyEnabled: true};
+//  var playlist = _playlist;
+//  var myPlaylist = new jPlayerPlaylist(cssSelector, playlist, options);
+//}
+//function my_playlist_play(track_id) {
+//  $("#jquery_jplayer_1").jPlayer("play", track_id);
+//};
+//function my_playlist_pause(track_id) {
+//  $("#jquery_jplayer_1").jPlayer("pause", track_id);
+//};
