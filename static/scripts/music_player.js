@@ -4058,7 +4058,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 self.cats_ar[t] = n
             }
             self.playlistBackgroundColor_str = self.props_obj.playlistBackgroundColor || "transparent";
-            self.searchInputColor_str = self.props_obj.searchInputColor || "#FF0000";
             self.openerAlignment_str = self.props_obj.openerAlignment || "right";
             if (self.openerAlignment_str != "right" && self.openerAlignment_str != "left") self.openerAlignment_str = "right";
             self.toolTipsButtonFontColor_str = self.props_obj.toolTipsButtonFontColor || "#FF0000";
@@ -4075,7 +4074,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }
             if (self.isMobile_bl || MUSICUtils.isIEAndLessThen9) self.thumbnailSelectedType_str = "opacity";
             if (document.location.protocol == "file:") self.thumbnailSelectedType_str = "opacity";
-            self.searchInputColor_str = self.props_obj.searchInputColor || "#FF0000";
             self.playlistBackgroundColor_str = self.props_obj.playlistBackgroundColor || "transparent";
             self.startAtPlaylist = self.props_obj.startAtPlaylist || 0;
             if (isNaN(self.startAtPlaylist)) self.startAtPlaylist = 0;
@@ -4093,7 +4091,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             } else if (self.volume < 0) {
                 self.volume = 0
             }
-            self.searchBarHeight = self.props_obj.searchBarHeight || 50;
             self.buttonsMargins = self.props_obj.buttonsMargins || 0;
             self.thumbnailMaxWidth = self.props_obj.thumbnailMaxWidth || 330;
             self.thumbnailMaxHeight = self.props_obj.thumbnailMaxHeight || 330;
@@ -4104,8 +4101,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             self.openerEqulizerOffsetLeft = self.props_obj.openerEqulizerOffsetLeft || 0;
             self.openerEqulizerOffsetTop = self.props_obj.openerEqulizerOffsetTop || 0;
             self.toolTipsButtonsHideDelay = self.props_obj.toolTipsButtonsHideDelay || 1.5;
-            self.inputSearchTextOffsetTop = self.props_obj.inputSearchTextOffsetTop;
-            self.inputSearchOffsetLeft = self.props_obj.inputSearchOffsetLeft;
             self.startSpaceBetweenButtons = self.props_obj.startSpaceBetweenButtons || 0;
             self.spaceBetweenButtons = self.props_obj.spaceBetweenButtons || 0;
             self.mainScrubberOffsetTop = self.props_obj.mainScrubberOffsetTop || 100;
@@ -4204,8 +4199,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             self.forceDisableDownloadButtonForFolder_bl = self.forceDisableDownloadButtonForFolder_bl == "yes" ? true : false;
             self.addScrollBarMouseWheelSupport_bl = self.props_obj.addScrollBarMouseWheelSupport;
             self.addScrollBarMouseWheelSupport_bl = self.addScrollBarMouseWheelSupport_bl == "no" ? false : true;
-            self.showSearchBar_bl = self.props_obj.showSearchBar;
-            self.showSearchBar_bl = self.showSearchBar_bl == "no" ? false : true;
             self.showSortButtons_bl = self.props_obj.showSortButtons;
             self.showSortButtons_bl = self.showSortButtons_bl == "no" ? false : true;
             self.preloaderPath_str = self.skinPath_str + "preloader.png";
@@ -4405,26 +4398,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 self.catPrevSPath_str = self.skinPath_str + "categories-prev-button-over.png";
                 self.catPrevDPath_str = self.skinPath_str + "categories-prev-button-disabled.png";
                 self.catCloseSPath_str = self.skinPath_str + "categories-close-button-over.png"
-            }
-            if (self.showSearchBar_bl) {
-                self.skinPaths_ar.push({
-                    img: self.sortAN_img = new Image,
-                    src: self.skinPath_str + "sort-alphabetical-button.png"
-                }, {
-                    img: self.sortNN_img = new Image,
-                    src: self.skinPath_str + "sort-numerical-button.png"
-                }, {
-                    img: self.ascendingN_img = new Image,
-                    src: self.skinPath_str + "ascending-button.png"
-                }, {
-                    img: self.decendingN_img = new Image,
-                    src: self.skinPath_str + "descending-button.png"
-                });
-                self.sortASPath_str = self.skinPath_str + "sort-alphabetical-button-over.png";
-                self.sortNSPath_str = self.skinPath_str + "sort-numerical-button-over.png";
-                self.ascendingSpath_str = self.skinPath_str + "ascending-button-over.png";
-                self.decendingSpath_str = self.skinPath_str + "descending-button-over.png";
-                self.inputArrowPath_str = self.skinPath_str + "input-arrow.png"
             }
             self.categoriesSPath_str = self.skinPath_str + "categories-button-over.png";
             self.replaySPath_str = self.skinPath_str + "replay-button-over.png";
@@ -8979,15 +8952,11 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.playlistPauseButtonS_str = t.playlistPauseButtonS_str;
         this.controllerBkPath_str = t.controllerBkPath_str;
         this.playlistBackgroundColor_str = t.playlistBackgroundColor_str;
-        this.searchInputColor_str = t.searchInputColor_str;
         this.toolTipsButtonFontColor_str = t.toolTipsButtonFontColor_str;
         this.countTrack = 0;
-        this.inputSearchTextOffsetTop = t.inputSearchTextOffsetTop;
-        this.inputSearchOffsetLeft = t.inputSearchOffsetLeft;
         this.startSpaceBetweenButtons = t.startSpaceBetweenButtons;
         this.spaceBetweenButtons = t.spaceBetweenButtons;
         if (this.spaceBetweenButtons > 15) this.spaceBetweenButtons = 10;
-        this.searchBarHeight = t.searchBarHeight;
         this.countID3 = 0;
         this.id = 0;
         this.stageWidth = 0;
@@ -9023,7 +8992,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.expandPlaylistBackground_bl = t.expandControllerBackground_bl;
         this.isSortedNumerical_bl = true;
         this.showSortButtons_bl = t.showSortButtons_bl;
-        this.showSearchBar_bl = t.showSearchBar_bl;
         this.showPlaylistItemBuyButton_bl = t.showPlaylistItemBuyButton_bl;
         this.addScrollBarMouseWheelSupport_bl = t.addScrollBarMouseWheelSupport_bl;
         this.allowToScrollAndScrollBarIsActive_bl = false;
@@ -9058,61 +9026,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 r.setupScrollbar();
                 if (r.addScrollBarMouseWheelSupport_bl) r.addMouseWheelSupport()
             }
-            if (r.showSearchBar_bl) {
-                r.searchBar_do = new MUSICDisplayObject("div");
-                r.searchBar_do.setOverflow("visible");
-                if (!r.expandPlaylistBackground_bl) {
-                    r.controllerBk_do = new MUSICDisplayObject("div");
-                    r.controllerBk_do.getStyle().background = "url('" + r.controllerBkPath_str + "')"
-                } else {
-                    r.controllerBk_do = new MUSICDisplayObject("img");
-                    var e = new Image;
-                    e.src = r.controllerBkPath_str;
-                    r.controllerBk_do.setScreen(e)
-                }
-                r.controllerBk_do.getStyle().width = "100%";
-                r.searchSeparator_do = new MUSICDisplayObject("div");
-                r.searchSeparator_do.setBackfaceVisibility();
-                r.searchSeparator_do.hasTransform3d_bl = false;
-                r.searchSeparator_do.hasTransform2d_bl = false;
-                r.searchSeparator_do.getStyle().background = "url('" + r.playlistSeparator_img.src + "')";
-                r.searchSeparator_do.setHeight(r.playlistSeparator_img.height);
-                r.searchBar_do.setHeight(r.searchBarHeight + r.searchSeparator_do.h);
-                r.controllerBk_do.setHeight(r.searchBar_do.h + 1);
-                r.searchBar_do.addChild(r.controllerBk_do);
-                r.searchBar_do.addChild(r.searchSeparator_do);
-                r.setupInput();
-                if (r.showSortButtons_bl) {
-                    r.setupButtons();
-                    if (r.showButtonsToolTips_bl) r.setupToolTips()
-                }
-                r.mainHolder_do.addChild(r.searchBar_do)
-            }
             r.addChild(r.separator_do);
             r.mainHolder_do.setWidth(500);
             r.mainHolder_do.setHeight(500)
-        };
-        r.disableSearchBar = function() {
-            if (r.isSearchBarDisabled_bl) return;
-            r.isSearchBarDisabled_bl = true;
-            r.input_do.screen.value = "Search will be available when all tracks data is loaded!";
-            r.input_do.screen.disabled = true;
-            if (r.sortNButton_do) {
-                r.sortNButton_do.disable();
-                r.sortAButton_do.disable();
-                r.ascDscButton_do.disable()
-            }
-        };
-        r.enableSearchBar = function() {
-            if (!r.isSearchBarDisabled_bl) return;
-            r.isSearchBarDisabled_bl = false;
-            r.input_do.screen.value = "Search for track";
-            r.input_do.screen.disabled = false;
-            if (r.sortNButton_do) {
-                r.sortNButton_do.enable();
-                r.sortAButton_do.enable();
-                r.ascDscButton_do.enable()
-            }
         };
         r.resizeAndPosition = function(e) {
             if (n.stageWidth == r.stageWidth && n.stageHeight == r.stageHeight && !e) return;
@@ -9120,36 +9036,18 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             r.stageWidth = n.stageWidth;
             r.stageWidth = n.stageWidth;
             r.positionList();
-            if (r.searchBar_do) r.positionSearchBar();
             if (r.scrMainHolder_do && r.allowToScrollAndScrollBarIsActive_bl) r.scrMainHolder_do.setX(r.stageWidth - r.scrWidth)
         };
         r.positionList = function() {
             if (!r.isListCreated_bl && r.stageWidth == 0) return;
             var e;
             r.copy_ar = [].concat(r.items_ar);
-            r.isSearched_bl = false;
-            if (r.input_do) {
-                inputValue = r.input_do.screen.value;
-                if (inputValue != "Search for track" && !r.isSearchBarDisabled_bl) {
-                    inputValue = r.input_do.screen.value.toLowerCase();
-                    for (var t = 0; t < r.copy_ar.length; t++) {
-                        e = r.copy_ar[t];
-                        if (e.titleText_str.toLowerCase().indexOf(inputValue.toLowerCase()) == -1) {
-                            MUSICTweenMax.killTweensOf(e);
-                            e.setX(-e.w);
-                            r.copy_ar.splice(t, 1);
-                            t--
-                        }
-                    }
-                }
-            }
             var n = 0;
             for (var t = 0; t < r.copy_ar.length; t++) {
                 e = r.copy_ar[t];
                 e.changeSource(t % 2)
             }
             var i = r.copy_ar.length;
-            r.totalSearchedItems = i;
             r.itemsTotalHeight = i * r.itemHeight;
             if (r.visibleNrOfItems >= i) {
                 r.allowToScrollAndScrollBarIsActive_bl = false
@@ -9210,7 +9108,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 r.visibleNrOfItems = r.totalPlayListItems
             }
             r.stageHeight = r.visibleNrOfItems * r.itemHeight + r.separator_do.h;
-            if (r.searchBar_do) r.stageHeight += r.separator_do.h + r.searchBarHeight;
             r.itemsTotalHeight = r.totalPlayListItems * r.itemHeight;
             r.mainHolder_do.setY(-r.stageHeight);
             r.itemsHolder_do.setY(0);
@@ -9219,7 +9116,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 r.ascDscButton_do.setButtonState(1);
                 r.srotAscending_bl = true
             }
-            if (r.showSearchBar_bl) r.enableSearchBar();
             r.createPlayList();
             r.loadId3();
             var i = r.items_ar.length;
@@ -9321,16 +9217,11 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                     return
                 }
             }
-            if (r.showSearchBar_bl) r.disableSearchBar();
             r.countID3 = 0;
             r.loadID3AndPopulate()
         };
         this.loadID3AndPopulate = function() {
             if (!r.items_ar) return;
-            if (!r.playlist_ar[r.countID3]) {
-                if (r.showSearchBar_bl) r.enableSearchBar();
-                return
-            }
             var n = "";
             var i = r.items_ar[r.countID3];
             var s = r.playlist_ar[r.countID3].source + "?rand=" + parseInt(Math.random() * 99999999);
@@ -9408,9 +9299,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         };
         this.setupInput = function() {
             r.titlebarHeight = t.titlebarLeftPath_img.height;
-            r.mainSearchInput_do = new MUSICDisplayObject("div");
-            r.mainSearchInput_do.getStyle().background = "url('" + t.titlebarBkMiddlePattern_str + "')";
-            r.mainSearchInput_do.setHeight(r.titlebarHeight);
             var e = new Image;
             e.src = t.titleBarLeft_img.src;
             r.titleBarLeft_do = new MUSICDisplayObject("img");
@@ -9437,21 +9325,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             if (!MUSICUtils.isIEAndLessThen9) r.input_do.getStyle().paddingRight = "-6px";
             r.input_do.getStyle().paddingTop = "2px";
             r.input_do.getStyle().paddingBottom = "3px";
-            r.input_do.getStyle().color = r.searchInputColor_str;
-            r.input_do.screen.value = "Search for track";
-            r.noSearchFound_do = new MUSICDisplayObject("div");
-            r.noSearchFound_do.setX(0);
-            r.noSearchFound_do.getStyle().textAlign = "center";
-            r.noSearchFound_do.getStyle().width = "100%";
-            r.noSearchFound_do.getStyle().fontSmoothing = "antialiased";
-            r.noSearchFound_do.getStyle().webkitFontSmoothing = "antialiased";
-            r.noSearchFound_do.getStyle().textRendering = "optimizeLegibility";
-            r.noSearchFound_do.getStyle().fontFamily = "Arial";
-            r.noSearchFound_do.getStyle().fontSize = "12px";
-            r.noSearchFound_do.getStyle().color = r.searchInputColor_str;
-            r.noSearchFound_do.setInnerHTML("NOTHING FOUND!");
-            r.noSearchFound_do.setVisible(false);
-            r.mainHolder_do.addChild(r.noSearchFound_do);
             if (r.input_do.screen.addEventListener) {
                 r.input_do.screen.addEventListener("focus", r.inputFocusInHandler);
                 r.input_do.screen.addEventListener("blur", r.inputFocusOutHandler);
@@ -9467,24 +9340,10 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             r.inputArrow_do.setScreen(i);
             r.inputArrow_do.setWidth(14);
             r.inputArrow_do.setHeight(12);
-            setTimeout(function() {
-                var e = 1;
-                r.input_do.setY(parseInt((r.titlebarHeight - r.input_do.getHeight()) / 2) + r.inputSearchTextOffsetTop)
-            }, 50);
-            r.mainSearchInput_do.addChild(r.titleBarLeft_do);
-            r.mainSearchInput_do.addChild(r.titleBarRight_do);
-            r.mainSearchInput_do.addChild(r.input_do);
-            r.searchBar_do.addChild(r.inputArrow_do);
-            r.searchBar_do.addChild(r.mainSearchInput_do)
         };
         this.inputFocusInHandler = function() {
             if (r.hasInputFocus_bl) return;
             r.hasInputFocus_bl = true;
-            if (r.isSearchBarDisabled_bl) {
-                r.input_do.screen.value == "Search will be available when all tracks data is loaded!"
-            } else if (r.input_do.screen.value == "Search for track") {
-                r.input_do.screen.value = ""
-            }
         };
         this.inputFocusOutHandler = function(e) {
             if (!r.hasInputFocus_bl) return;
@@ -9512,47 +9371,22 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 r.updateScrollBarHandlerAndContent(false)
             }
         };
-        this.showNothingFound = function() {
-            if (r.isShowNothingFound_bl) return;
-            r.isShowNothingFound_bl = true;
-            r.noSearchFound_do.setVisible(true);
-            r.noSearchFound_do.setY(parseInt((r.stageHeight - r.noSearchFound_do.getHeight() - r.searchBar_do.h) / 2));
-            r.noSearchFound_do.setAlpha(0);
-            MUSICTweenMax.to(r.noSearchFound_do, .1, {
-                alpha: 1,
-                yoyo: true,
-                repeat: 4
-            })
-        };
-        this.hideNothingFound = function() {
-            if (!r.isShowNothingFound_bl) return;
-            r.isShowNothingFound_bl = false;
-            MUSICTweenMax.killTweensOf(r.noSearchFound_do);
-            r.noSearchFound_do.setVisible(false)
-        };
         this.setupButtons = function() {
-            r.searchBarButtons_ar = [];
             MUSICSimpleButton.setPrototype();
             r.sortNButton_do = new MUSICSimpleButton(t.sortNN_img, t.sortNSPath_str, null, true);
-            r.searchBarButtons_ar.push(r.sortNButton_do);
             r.sortNButton_do.addListener(MUSICSimpleButton.SHOW_TOOLTIP, r.sortNButtonShowTooltipHandler);
             r.sortNButton_do.addListener(MUSICSimpleButton.MOUSE_UP, r.sortNButtonOnMouseUpHandler);
-            r.searchBar_do.addChild(r.sortNButton_do);
             r.sortNButton_do.setX(410);
             MUSICSimpleButton.setPrototype();
             r.sortAButton_do = new MUSICSimpleButton(t.sortAN_img, t.sortASPath_str, null, true);
-            r.searchBarButtons_ar.push(r.sortAButton_do);
             r.sortAButton_do.addListener(MUSICSimpleButton.SHOW_TOOLTIP, r.sortAButtonShowTooltipHandler);
             r.sortAButton_do.addListener(MUSICSimpleButton.MOUSE_UP, r.sortAButtonOnMouseUpHandler);
-            r.searchBar_do.addChild(r.sortAButton_do);
             r.sortAButton_do.setX(450);
             MUSICComplexButton.setPrototype();
             r.ascDscButton_do = new MUSICComplexButton(t.ascendingN_img, t.ascendingSpath_str, t.decendingN_img, t.decendingSpath_str, true);
             r.ascDscButton_do.setX(500);
-            r.searchBarButtons_ar.push(r.ascDscButton_do);
             r.ascDscButton_do.addListener(MUSICComplexButton.SHOW_TOOLTIP, r.ascDscShowToolTipHandler);
             r.ascDscButton_do.addListener(MUSICComplexButton.MOUSE_UP, r.ascDscMouseUpHandler);
-            r.searchBar_do.addChild(r.ascDscButton_do);
             if (r.isSortedNumerical_bl) {
                 r.disableSortNButton()
             } else {
@@ -9620,36 +9454,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }
             r.positionList();
             r.updateScrollBarHandlerAndContent(false)
-        };
-        r.positionSearchBar = function() {
-            var e = 0;
-            var t;
-            inputWidth = r.stageWidth - r.startSpaceBetweenButtons * 2 - r.inputArrow_do.w - 12;
-            if (inputWidth > 430) inputWidth = 430;
-            if (r.showSortButtons_bl) {
-                for (var n = r.searchBarButtons_ar.length - 1; n >= 0; n--) {
-                    t = r.searchBarButtons_ar[n];
-                    if (n == r.searchBarButtons_ar.length - 1) {
-                        t.setX(r.stageWidth - t.w - r.startSpaceBetweenButtons)
-                    } else {
-                        t.setX(r.searchBarButtons_ar[n + 1].x - t.w - r.spaceBetweenButtons)
-                    }
-                    t.setY(r.searchSeparator_do.h + parseInt((r.searchBar_do.h - r.searchSeparator_do.h - t.h) / 2));
-                    e += t.w + r.spaceBetweenButtons
-                }
-            }
-            e += r.startSpaceBetweenButtons;
-            inputWidth -= e;
-            r.mainSearchInput_do.setWidth(inputWidth);
-            r.input_do.setWidth(inputWidth);
-            r.mainSearchInput_do.setX(r.startSpaceBetweenButtons + r.inputSearchOffsetLeft);
-            r.mainSearchInput_do.setY(parseInt(r.searchSeparator_do.h + parseInt((r.searchBar_do.h - r.searchSeparator_do.h - r.mainSearchInput_do.h) / 2)));
-            r.titleBarRight_do.setX(r.mainSearchInput_do.w - r.titleBarRight_do.w);
-            r.inputArrow_do.setX(parseInt(r.mainSearchInput_do.x + inputWidth) + 4);
-            r.inputArrow_do.setY(r.searchSeparator_do.h + parseInt((r.searchBar_do.h - r.searchSeparator_do.h - r.inputArrow_do.h) / 2));
-            r.searchSeparator_do.setWidth(r.stageWidth);
-            r.searchBar_do.setWidth(r.stageWidth);
-            r.searchBar_do.setY(r.stageHeight - r.searchSeparator_do.h - r.searchBar_do.h)
         };
         this.setupToolTips = function() {
             MUSICToolTip.setPrototype();
@@ -9872,9 +9676,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             if (r.allowToScrollAndScrollBarIsActive_bl) {
                 var e = 0;
                 r.allowToScrollAndScrollBarIsActive_bl = true;
-                if (r.searchBar_do) {
-                    e = r.searchBar_do.h
-                }
                 r.scrMainHolder_do.setHeight(r.stageHeight - r.separator_do.h - e);
                 r.scrTrack_do.setHeight(r.stageHeight - r.separator_do.h - e);
                 r.scrTrackMiddle_do.setHeight(r.scrTrack_do.h - r.scrTrackTop_do.h * 2);
@@ -10063,8 +9864,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                     r.vy2 = (0 - r.playListFinalY) * .3;
                     r.vy *= r.friction;
                     r.playListFinalY += r.vy2
-                } else if (r.playListFinalY < r.stageHeight - r.separator_do.h - r.itemsTotalHeight - r.searchBar_do.h) {
-                    r.vy2 = (r.stageHeight - r.separator_do.h - r.itemsTotalHeight - r.searchBar_do.h - r.playListFinalY) * .3;
+                } else if (r.playListFinalY < r.stageHeight - r.separator_do.h - r.itemsTotalHeight) {
+                    r.vy2 = (r.stageHeight - r.separator_do.h - r.itemsTotalHeight - r.playListFinalY) * .3;
                     r.vy *= r.friction;
                     r.playListFinalY += r.vy2
                 }
