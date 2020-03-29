@@ -1,5 +1,5 @@
 
-new FWDMSP({
+new MUSIC({
     //main settings
     instanceName:"player1",
     playlistsId:"audio_playlists",
