@@ -387,5 +387,10 @@ video_player = new FWDUVPlayer({
 		contextMenuItemDisabledColor:"#BBB"
 });
 
-if (audio_player.play()){video_player.pause();}
-if (video_player.play()){audio_player.pause();}
+on('#ajax', 'click', '#video_stopped', function(e) {
+	video_player.pause();
+})
+
+on('#ajax', 'click', '#audio_stopped', function(e) {
+	audio_player.pause();
+})
