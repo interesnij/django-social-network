@@ -2956,7 +2956,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             self.playlist_do = new MUSICPlaylist(self.data, self);
             self.playlist_do.addListener(MUSICPlaylistItem.MOUSE_UP, self.palylistItemOnUpHandler);
             self.playlist_do.addListener(MUSICPlaylistItem.DOWNLOAD, self.palylistItemDownloadHandler);
-            self.playlist_do.addListener(FMUSICPlaylistItem.BUY, self.palylistItemBuyHandler);
+            self.playlist_do.addListener(MUSICPlaylistItem.BUY, self.palylistItemBuyHandler);
             self.playlist_do.addListener(MUSICPlaylist.UPDATE_TRACK_TITLE_if_FOLDER, self.palylistUpdateFolderTrackTitle);
             self.main_do.addChild(self.playlist_do)
         };
