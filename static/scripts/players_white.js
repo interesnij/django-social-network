@@ -386,7 +386,9 @@ video_player = new FWDUVPlayer({
 		contextMenuItemSelectedColor:"#000",
 		contextMenuItemDisabledColor:"#BBB"
 });
-
+if(audio_player.play()){
+	audio_player.parentElement.classList.add("audio_is_played")
+}
 on('#ajax', 'click', '#video_stopped', function(e) {
 	video_player.pause();
 })
