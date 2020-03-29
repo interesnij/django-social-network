@@ -32,7 +32,6 @@
 				showLoopButton:"yes",                 // показывать кнопку повтора треков
 				showShuffleButton:"yes",              // показывать кнопку перемешивания треков
 				showDownloadMp3Button:"yes",          // показывать кнопку скачивания mp3
-				showBuyButton:"yes",                  // показывать кнопку покупки треков
 				showShareButton:"no",									// показывать кнопку расшаривания треков
 				showMainScrubberAndVolumeScrubberToolTipLabel:"no",  // показывать всплывающее окно громкости и сам скруббер
 				expandBackground:"no",              	// развернуть фон
@@ -89,7 +88,6 @@
 				showPlayListByDefault:"no",          // показывть плейлист по умолчанию
 				showPlaylistItemPlayButton:"yes",    // показать кнопку воспроизведения элемента плейлиста
 				showPlaylistItemDownloadButton:"yes",// показать кнопку загрузки элемента плейлиста
-				showPlaylistItemBuyButton:"yes",     // показать кнопку покупки элемента плейлиста
 				forceDisableDownloadButtonForPodcast:"yes", // принудительно отключить кнопку загрузки для подкаста
 				forceDisableDownloadButtonForOfficialFM:"yes", // принудительно отключить кнопку загрузки для радио передачи
 				forceDisableDownloadButtonForFolder:"yes", // принудительно отключить кнопку загрузки для попки
