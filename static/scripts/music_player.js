@@ -4310,7 +4310,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             self.playSPath_str = self.skinPath_str + "play-button-over.png";
             self.pauseSPath_str = self.skinPath_str + "pause-button-over.png";
             self.nextSPath_str = self.skinPath_str + "next-button-over.png";
-            self.popupSPath_str = self.skinPath_str + "popup-button-over.png";
             self.downloaderSPath_str = self.skinPath_str + "download-button-over.png";
             self.controllerBkPath_str = self.skinPath_str + "controller-background.png";
             self.thumbnailBkPath_str = self.skinPath_str + "thumbnail-background.png";
