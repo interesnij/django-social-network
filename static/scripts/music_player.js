@@ -4234,9 +4234,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 img: self.nextN_img = new Image,
                 src: self.skinPath_str + "next-button.png"
             }, {
-                img: self.popupN_img = new Image,
-                src: self.skinPath_str + "popup-button.png"
-            }, {
                 img: self.downloaderN_img = new Image,
                 src: self.skinPath_str + "download-button.png"
             }, {
