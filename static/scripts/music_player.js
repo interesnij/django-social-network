@@ -2662,7 +2662,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         };
         self.dataSkinLoadComplete = function() {
             self.animate_bl = self.data.animate_bl;
-            if (self.openInPopup_bl) self.data.showPopupButton_bl = false;
             if (self.useDeepLinking_bl) {
                 setTimeout(function() {
                     self.setupDL()
@@ -3940,7 +3939,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.showPlaylistsButtonAndPlaylists_bl = false;
         this.showPlaylistsByDefault_bl = false;
         this.showPlayListButtonAndPlaylist_bl = false;
-        this.showPopupButton_bl = false;
         this.animate_bl = false;
         this.showControllerByDefault_bl = false;
         this.showPlayListByDefault_bl = false;
@@ -4166,8 +4164,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             self.showDownloadMp3Button_bl = self.showDownloadMp3Button_bl == "no" ? false : true;
             self.showBuyButton_bl = self.props_obj.showBuyButton;
             self.showBuyButton_bl = self.showBuyButton_bl == "no" ? false : true;
-            self.showPopupButton_bl = self.props_obj.showPopupButton;
-            self.showPopupButton_bl = self.showPopupButton_bl == "no" ? false : true;
             self.showOpenerPlayPauseButton_bl = self.props_obj.showOpenerPlayPauseButton;
             self.showOpenerPlayPauseButton_bl = self.showOpenerPlayPauseButton_bl == "no" ? false : true;
             self.showPlaylistItemBuyButton_bl = self.props_obj.showPlaylistItemBuyButton;
@@ -6646,7 +6642,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.shuffleButton_do = null;
         this.downloadButton_do = null;
         this.buyButton_do = null;
-        this.popupButton_do = null;
         this.simpleText_do = null;
         this.animText1_do = null;
         this.animText2_do = null;
@@ -6731,7 +6726,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.showDownloadMp3Button_bl = t.showDownloadMp3Button_bl;
         this.showShuffleButton_bl = t.showShuffleButton_bl;
         this.showPlayListButtonAndPlaylist_bl = t.showPlayListButtonAndPlaylist_bl;
-        this.showPopupButton_bl = t.showPopupButton_bl;
         this.animateOnIntro_bl = t.animateOnIntro_bl;
         this.showSoundAnimation_bl = t.showSoundAnimation_bl;
         this.isMainScrubberScrubbing_bl = false;
@@ -6772,7 +6766,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             if (r.showShuffleButton_bl) r.setupShuffleButton();
             if (r.showDownloadMp3Button_bl) r.setupDownloadButton();
             if (r.showBuyButton_bl) r.setupBuyButton();
-            if (r.showPopupButton_bl) r.setupPopupButton();
             if (r.showButtonsToolTips_bl) r.setupToolTips();
             if (!r.isMobile_bl) r.setupDisable();
             r.mainHolder_do.setBkColor("#FFFF00");
@@ -7141,11 +7134,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 MUSICToolTip.setPrototype();
                 r.buyButtonToolTip_do = new MUSICToolTip(r.buyButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "buy track", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
                 document.documentElement.appendChild(r.buyButtonToolTip_do.screen)
-            }
-            if (r.showPopupButton_bl) {
-                MUSICToolTip.setPrototype();
-                r.populButtonToolTip_do = new MUSICToolTip(r.popupButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "превратить в окно", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
-                document.documentElement.appendChild(r.populButtonToolTip_do.screen)
             }
             MUSICToolTip.setPrototype();
             r.volumeButtonToolTip_do = new MUSICToolTip(r.volumeButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "тишина / включить звук", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
@@ -8031,22 +8019,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             } else if (e == "unselected") {
                 r.shuffleButton_do.setUnselected()
             }
-        };
-        this.setupPopupButton = function() {
-            MUSICSimpleButton.setPrototype();
-            r.popupButton_do = new MUSICSimpleButton(r.popupN_img, t.popupSPath_str);
-            r.popupButton_do.addListener(MUSICSimpleButton.SHOW_TOOLTIP, r.popupButtonShowToolTipHandler);
-            r.popupButton_do.addListener(MUSICSimpleButton.MOUSE_UP, r.popupButtonOnMouseUpHandler);
-            r.popupButton_do.setY(parseInt((r.stageHeight - r.popupButton_do.h) / 2));
-            r.buttons_ar.push(r.popupButton_do);
-            r.mainHolder_do.addChild(r.popupButton_do)
-        };
-        this.popupButtonShowToolTipHandler = function(e) {
-            r.showToolTip(r.popupButton_do, r.populButtonToolTip_do, e.e)
-        };
-        this.popupButtonOnMouseUpHandler = function() {
-            if (r.populButtonToolTip_do) r.populButtonToolTip_do.hide();
-            r.dispatchEvent(e.POPUP)
         };
         this.disableControllerWhileLoadingPlaylist = function() {
             r.prevButton_do.disable();
