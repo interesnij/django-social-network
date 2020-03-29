@@ -2219,7 +2219,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             this.audioScreen_do = null;
             this.flash_do = null;
             this.flashObject = null;
-            this.facebookShare = null;
             this.flashObjectMarkup_str = null;
             this.popupWindowBackgroundColor = this.props_obj.popupWindowBackgroundColor || "#000000";
             this.prevCatId = -1;
@@ -3026,7 +3025,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             self.controller_do.addListener(FWDMSPController.ENABLE_SHUFFLE, self.enableShuffleHandler);
             self.controller_do.addListener(FWDMSPController.DISABLE_SHUFFLE, self.disableShuffleHandler);
             self.controller_do.addListener(FWDMSPController.BUY, self.controllerButtonBuyHandler);
-            self.controller_do.addListener(FWDMSPController.FACEBOOK_SHARE, self.facebookShareHandler);
             self.main_do.addChild(self.controller_do);
             if (self.openInPopup_bl && self.data.showPlaylistsButtonAndPlaylists_bl) {
                 self.controller_do.setPlaylistButtonState("selected");
@@ -3136,15 +3134,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.disableShuffleHandler = function(e) {
             self.data.shuffle_bl = false;
             self.controller_do.setShuffleButtonState("unselected")
-        };
-        this.facebookShareHandler = function(e) {
-            if (document.location.protocol == "file:") {
-                var t = "Facebook is not allowing sharing local, please test online.";
-                self.main_do.addChild(self.info_do);
-                self.info_do.showText(t);
-                return
-            }
-            self.share()
         };
         this.controllerButtonBuyHandler = function() {
             self.buy()
@@ -3594,26 +3583,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 self.setStageContainerFinalHeightAndPosition(self.animate_bl)
             }
         };
-        this.share = function() {
-            if (!self.isAPIReady_bl) return;
-            if (document.location.protocol == "file:") return;
-            if (self.facebookShare) {
-                if (self.useDeepLinking_bl) {
-                    var e = self.data.playlist_ar[self.id];
-                    var t;
-                    if (e.thumbPath && e.thumbPath.indexOf("//") != -1) {
-                        t = e.thumbPath
-                    } else {
-                        var n = location.pathname;
-                        n = location.protocol + "//" + location.host + n.substring(0, n.lastIndexOf("/") + 1);
-                        t = n + e.thumbPath
-                    }
-                    self.facebookShare.share(location.href, e.titleText, t)
-                } else {
-                    self.facebookShare.share(location.href)
-                }
-            }
-        };
         this.getIsAPIReady = function() {
             return self.isAPIReady_bl
         };
@@ -3842,7 +3811,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.replayN_img = null;
         this.playlistN_img = null;
         this.shuffleN_img = null;
-        this.facebookN_img = null;
+        this.repost_img = null;
         this.titlebarAnimBkPath_img = null;
         this.titlebarLeftPath_img = null;
         this.titlebarRightPath_img = null;
@@ -3969,7 +3938,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.showPlaylistsButtonAndPlaylists_bl = false;
         this.showPlaylistsByDefault_bl = false;
         this.showPlayListButtonAndPlaylist_bl = false;
-        this.showFacebookButton_bl = false;
         this.showPopupButton_bl = false;
         this.animate_bl = false;
         this.showControllerByDefault_bl = false;
@@ -4201,8 +4169,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             self.showDownloadMp3Button_bl = self.showDownloadMp3Button_bl == "no" ? false : true;
             self.showBuyButton_bl = self.props_obj.showBuyButton;
             self.showBuyButton_bl = self.showBuyButton_bl == "no" ? false : true;
-            self.showFacebookButton_bl = self.props_obj.showFacebookButton;
-            self.showFacebookButton_bl = self.showFacebookButton_bl == "no" ? false : true;
             self.showPopupButton_bl = self.props_obj.showPopupButton;
             self.showPopupButton_bl = self.showPopupButton_bl == "no" ? false : true;
             self.showOpenerPlayPauseButton_bl = self.props_obj.showOpenerPlayPauseButton;
@@ -4322,8 +4288,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 img: self.shuffleN_img = new Image,
                 src: self.skinPath_str + "shuffle-button.png"
             }, {
-                img: self.facebookN_img = new Image,
-                src: self.skinPath_str + "facebook-button.png"
+                img: self.repost_img = new Image,
+                src: self.skinPath_str + "repost.png"
             }, {
                 img: self.titlebarAnimBkPath_img = new Image,
                 src: self.skinPath_str + "titlebar-equlizer-background.png"
@@ -4466,7 +4432,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             var r = self.skinPath_str + "playlist-button.png";
             self.playlistSPath_str = self.skinPath_str + "playlist-button-over.png";
             self.shuffleSPath_str = self.skinPath_str + "shuffle-button-over.png";
-            self.facebookSPath_str = self.skinPath_str + "facebook-button-over.png";
             self.animationPath_str = self.skinPath_str + "equalizer.png";
             self.titlebarBkMiddlePattern_str = self.skinPath_str + "titlebar-middle-pattern.png";
             self.totalGraphics = self.skinPaths_ar.length;
@@ -6656,7 +6621,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.playlistN_img = t.playlistN_img;
         this.shuffleN_img = t.shuffleN_img;
         this.downloaderN_img = t.downloaderN_img;
-        this.facebookN_img = t.facebookN_img;
+        this.repost_img = t.repost_img;
         this.popupN_img = t.popupN_img;
         this.titlebarAnimBkPath_img = t.titlebarAnimBkPath_img;
         this.titlebarLeftPath_img = t.titlebarLeftPath_img;
@@ -6706,7 +6671,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.shuffleButton_do = null;
         this.downloadButton_do = null;
         this.buyButton_do = null;
-        this.facebookButton_do = null;
         this.popupButton_do = null;
         this.simpleText_do = null;
         this.animText1_do = null;
@@ -6719,7 +6683,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.playlistButtonToolTip_do = null;
         this.loopButtonToolTip_do = null;
         this.shuffleButtonToolTip_do = null;
-        this.facebookButtonToolTip_do = null;
         this.downloadButtonToolTip_do = null;
         this.buyButtonToolTip_do = null;
         this.populButtonToolTip_do = null;
@@ -6793,7 +6756,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.showDownloadMp3Button_bl = t.showDownloadMp3Button_bl;
         this.showShuffleButton_bl = t.showShuffleButton_bl;
         this.showPlayListButtonAndPlaylist_bl = t.showPlayListButtonAndPlaylist_bl;
-        this.showFacebookButton_bl = t.showFacebookButton_bl;
         this.showPopupButton_bl = t.showPopupButton_bl;
         this.animateOnIntro_bl = t.animateOnIntro_bl;
         this.showSoundAnimation_bl = t.showSoundAnimation_bl;
@@ -6835,7 +6797,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             if (r.showShuffleButton_bl) r.setupShuffleButton();
             if (r.showDownloadMp3Button_bl) r.setupDownloadButton();
             if (r.showBuyButton_bl) r.setupBuyButton();
-            if (r.showFacebookButton_bl) r.setupFacebookButton();
             if (r.showPopupButton_bl) r.setupPopupButton();
             if (r.showButtonsToolTips_bl) r.setupToolTips();
             if (!r.isMobile_bl) r.setupDisable();
@@ -6864,35 +6825,11 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             var s = 0;
             var o = 0;
             var u = r.buttons_ar.length;
-            if (r.showBuyButton_bl && t.playlist_ar[n.id]) {
-                if (t.playlist_ar[n.id].buy && n.isPlaylistLoaded_bl) {
-                    if (FWDMSPUtils.indexOfArray(r.buttons_ar, r.buyButton_do) == -1) {
-                        if (r.showFacebookButton_bl && r.showPopupButton_bl) {
-                            r.buttons_ar.splice(r.buttons_ar.length - 2, 0, r.buyButton_do)
-                        } else if (r.showFacebookButton_bl || r.showPopupButton_bl) {
-                            r.buttons_ar.splice(r.buttons_ar.length - 1, 0, r.buyButton_do)
-                        } else {
-                            r.buttons_ar.splice(r.buttons_ar.length, 0, r.buyButton_do)
-                        }
-                        r.buyButton_do.setVisible(true)
-                    }
-                } else {
-                    var a = FWDMSPUtils.indexOfArray(r.buttons_ar, r.buyButton_do);
-                    if (a != -1) {
-                        r.buttons_ar.splice(a, 1);
-                        r.buyButton_do.setVisible(false)
-                    }
-                }
-            }
             if (r.showDownloadMp3Button_bl && t.playlist_ar[n.id]) {
                 if (t.playlist_ar[n.id].downloadable && n.isPlaylistLoaded_bl) {
                     if (FWDMSPUtils.indexOfArray(r.buttons_ar, r.downloadButton_do) == -1) {
                         if (r.showBuyButton_bl && t.playlist_ar[n.id].buy) {
                             r.buttons_ar.splice(FWDMSPUtils.indexOfArray(r.buttons_ar, r.buyButton_do), 0, r.downloadButton_do)
-                        } else if (r.showFacebookButton_bl && r.showPopupButton_bl) {
-                            r.buttons_ar.splice(r.buttons_ar.length - 2, 0, r.downloadButton_do)
-                        } else if (r.showFacebookButton_bl || r.showPopupButton_bl) {
-                            r.buttons_ar.splice(r.buttons_ar.length - 1, 0, r.downloadButton_do)
                         } else {
                             r.buttons_ar.splice(r.buttons_ar.length, 0, r.downloadButton_do)
                         }
@@ -7219,11 +7156,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 FWDMSPToolTip.setPrototype();
                 r.shuffleButtonToolTip_do = new FWDMSPToolTip(r.shuffleButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "перемешать", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
                 document.documentElement.appendChild(r.shuffleButtonToolTip_do.screen)
-            }
-            if (r.showFacebookButton_bl) {
-                FWDMSPToolTip.setPrototype();
-                r.facebookButtonToolTip_do = new FWDMSPToolTip(r.facebookButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "пригодится кнопка", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
-                document.documentElement.appendChild(r.facebookButtonToolTip_do.screen)
             }
             if (r.showDownloadMp3Button_bl) {
                 FWDMSPToolTip.setPrototype();
@@ -8125,21 +8057,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 r.shuffleButton_do.setUnselected()
             }
         };
-        this.setupFacebookButton = function() {
-            FWDMSPSimpleButton.setPrototype();
-            r.facebookButton_do = new FWDMSPSimpleButton(r.facebookN_img, t.facebookSPath_str);
-            r.facebookButton_do.addListener(FWDMSPSimpleButton.SHOW_TOOLTIP, r.facebookButtonShowToolTipHandler);
-            r.facebookButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, r.faceboolButtonOnMouseUpHandler);
-            r.facebookButton_do.setY(parseInt((r.stageHeight - r.facebookButton_do.h) / 2));
-            r.buttons_ar.push(r.facebookButton_do);
-            r.mainHolder_do.addChild(r.facebookButton_do)
-        };
-        this.facebookButtonShowToolTipHandler = function(e) {
-            r.showToolTip(r.facebookButton_do, r.facebookButtonToolTip_do, e.e)
-        };
-        this.faceboolButtonOnMouseUpHandler = function() {
-            r.dispatchEvent(e.FACEBOOK_SHARE)
-        };
         this.setupPopupButton = function() {
             FWDMSPSimpleButton.setPrototype();
             r.popupButton_do = new FWDMSPSimpleButton(r.popupN_img, t.popupSPath_str);
@@ -8163,7 +8080,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             if (r.downloadButton_do) r.downloadButton_do.disable();
             if (r.buyButton_do) r.buyButton_do.disable();
             if (r.playlistButton_do) r.playlistButton_do.disable(true);
-            if (r.facebookButton_do) r.facebookButton_do.disable();
             r.updateTime("...", "...");
             r.setTitle("...")
         };
@@ -8174,14 +8090,12 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             if (r.downloadButton_do) r.downloadButton_do.enable();
             if (r.buyButton_do) r.buyButton_do.enable();
             if (r.playlistButton_do) r.playlistButton_do.enable();
-            if (r.facebookButton_do) r.facebookButton_do.enable()
         };
         this.init()
     };
     e.setPrototype = function() {
         e.prototype = new FWDMSPDisplayObject("div")
     };
-    e.FACEBOOK_SHARE = "facebookShare";
     e.PLAY_NEXT = "playNext";
     e.PLAY_PREV = "playPrev";
     e.PLAY = "play";
@@ -8654,77 +8568,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         }
     };
     window.FWDMSPEventDispatcher = e
-})(window);
-(function(e) {
-    var t = function(n) {
-        var r = this;
-        var i = t.prototype;
-        this.appId = parseInt(n);
-        var s = false;
-        r.init = function() {
-            r.checkFBRoot();
-            if (!e.fbAsyncInit) r.connect()
-        };
-        this.checkFBRoot = function() {
-            var e = Boolean(document.getElementById("fb-root"));
-            if (!e) {
-                e = document.createElement("div");
-                e.id = "fb-root";
-                document.getElementsByTagName("body")[0].appendChild(e)
-            }
-        };
-        this.connect = function() {
-            if (r.hasStartedToConnect_bl) return;
-            r.hasStartedToConnect_bl = true;
-            e.fbAsyncInit = function() {
-                FB.init({
-                    appId: r.appId,
-                    status: true,
-                    cookie: true,
-                    xfbml: true,
-                    oauth: true
-                });
-                FB.Event.subscribe("auth.authResponseChange", function(e) {
-                    if (e.status === "connected") {} else {
-                        FB.login()
-                    }
-                })
-            };
-            (function(e) {
-                var t, n = "facebook-jssdk";
-                if (e.getElementById(n)) {
-                    return
-                }
-                t = e.createElement("script");
-                t.id = n;
-                t.async = true;
-                t.src = "//connect.facebook.net/en_US/all.js";
-                e.getElementsByTagName("body")[0].appendChild(t)
-            })(document)
-        };
-        this.share = function(e, t, n) {
-            if (String(n).indexOf("undefined") == -1) {
-                FB.ui({
-                    method: "feed",
-                    link: e,
-                    caption: t,
-                    picture: n
-                }, function(e) {})
-            } else {
-                FB.ui({
-                    method: "feed",
-                    link: e,
-                    caption: t
-                }, function(e) {})
-            }
-        };
-        r.init()
-    };
-    t.setPrototype = function() {
-        t.prototype = new FWDMSPEventDispatcher
-    };
-    t.prototype = null;
-    e.FWDMSPFacebookShare = t
 })(window);
 (function(e) {
     var t = function(e) {

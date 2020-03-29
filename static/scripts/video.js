@@ -4813,7 +4813,7 @@ if (! function(e) {
                                             src: self.sknPth + "share.png"
                                         }, {
                                             img: self.facebookN_img = new Image,
-                                            src: self.sknPth + "facebook.png"
+                                            src: self.sknPth + "repost.png"
                                         }, {
                                             img: self.infoN_img = new Image,
                                             src: self.sknPth + "info-button.png"
