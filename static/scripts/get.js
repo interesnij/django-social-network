@@ -163,7 +163,7 @@ if(rrr.querySelector('#news_load')){
 
 on('body', 'click', '.menu_drop', function() {var block = this.nextElementSibling;block.classList.toggle("show");});
 
-function load_playlist(playlist_block, uuid) {list_load(playlist_block, '/users/load/playlist/' + uuid)};
+//function load_playlist(playlist_block, uuid) {list_load(playlist_block, '/users/load/playlist/' + uuid)};
 
 //function playlist_init(_playlist) {
 //  var cssSelector = {jPlayer: "#jquery_jplayer_1",cssSelectorAncestor: ".main-header"};
