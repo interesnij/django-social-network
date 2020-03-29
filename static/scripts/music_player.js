@@ -10444,7 +10444,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.setupDumy = function() {
             O.dumy_do = new MUSICDisplayObject("div");
             O.dumy_do.setButtonMode(true);
-            if (FMUSICUtils.isIE) {
+            if (MUSICUtils.isIE) {
                 O.dumy_do.setBkColor("#FFFFFF");
                 O.dumy_do.setAlpha(.001)
             }
