@@ -8,7 +8,7 @@
 				showMainBackground:"yes",  						// показать общий фон
 				position:"bottom",                    // расположение плеера
 				rightClickContextMenu:"developer",
-				useDeepLinking:"yes",									// использовать глубокие ссылки - защита от перехвата
+				useDeepLinking:"no",									// использовать глубокие ссылки - защита от перехвата
 				useYoutube:"no",											// использовать youtube файлы
 				useVideo:"no",												// использовать видео файлы
 				rightClickContextMenu:"no",           // показ контекстног меню по щелчку правой кнопкой мыши
