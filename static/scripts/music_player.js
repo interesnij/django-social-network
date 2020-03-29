@@ -499,6 +499,7 @@ function B(e, t, n) {
             this.setupScreen();
             e.onerror = this.showError;
             this.screen.style.zIndex = 100000009;
+            this.screen.classList.add("screeeen");
             setTimeout(this.addConsoleToDom, 100);
             setInterval(this.position, 100)
         };
