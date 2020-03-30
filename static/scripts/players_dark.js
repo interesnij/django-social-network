@@ -363,8 +363,8 @@ if (!document.body.classList.contains(category)){
           all_music_playlists.append(list);
           audio_playlists.append(cat);
           console.log(category, category_new);
-
-          music_player.playSpecificTrack(category, track_id);
+          music_player = null;
+          //music_player.playSpecificTrack(category, track_id);
       }};
       tag_link.send( null );
   }};
