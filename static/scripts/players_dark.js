@@ -317,6 +317,7 @@ FWDUVPUtils.onReady(function(){
 MUSICUtils.onReady(function(){
         music_player.addListener(MUSIC.READY, music_onReady);
         music_player.addListener(MUSIC.PLAY, music_onPlay);
+        music_player.addListener(FWDMSP.UPDATE, music_update);
     });
 
 function music_onReady(){console.log("Аудио плеер готов");}
@@ -363,7 +364,7 @@ if (!document.body.classList.contains(category)){
           all_music_playlists.innerHTML = "";
           all_music_playlists.prepend(list);
           audio_playlists.prepend(cat);
-          music_player.update();
+          music_update();
           music_player.playSpecificTrack(category, track_id);
       }};
       tag_link.send( null );
