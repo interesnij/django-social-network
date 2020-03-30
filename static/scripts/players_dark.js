@@ -329,7 +329,5 @@ function video_onPlay(){
 function music_onPlay(){
     console.log("Воспроизводится трек № : " + music_player.getTrackId());
     document.title = music_player.getTrackTitle().innerText;
-    try{
-    video_player.pause();
-    catch{var a=0}
+    try{video_player.pause();}catch{var a=0}
 }
