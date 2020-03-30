@@ -15,5 +15,5 @@ class TagMusicGet(TemplateView):
     def get_context_data(self,**kwargs):
         context = super(TagMusicGet,self).get_context_data(**kwargs)
         context["tag"] = self.tag
-        context["list"] = self.parse_list
+        context["list"] = self.list
         return context
