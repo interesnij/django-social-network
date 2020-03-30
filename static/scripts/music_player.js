@@ -2956,6 +2956,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             self.playlist_do = new MUSICPlaylist(self.data, self);
             self.playlist_do.addListener(MUSICPlaylistItem.MOUSE_UP, self.palylistItemOnUpHandler);
             self.playlist_do.addListener(MUSICPlaylistItem.DOWNLOAD, self.palylistItemDownloadHandler);
+            self.playlist_do.addListener(MUSICPlaylistItem.ADDTRACK, self.palylistItemAddTrackHandler);
+            self.playlist_do.addListener(MUSICPlaylistItem.REMOVETRACK, self.palylistItemRemoveTrackKHandler);
             self.playlist_do.addListener(MUSICPlaylistItem.BUY, self.palylistItemBuyHandler);
             self.playlist_do.addListener(MUSICPlaylist.UPDATE_TRACK_TITLE_if_FOLDER, self.palylistUpdateFolderTrackTitle);
             self.main_do.addChild(self.playlist_do)
@@ -2993,8 +2995,11 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 }
             }
         };
-        this.palylistItemDownloadHandler = function(e) {
-            self.downloadMP3(e.id)
+        this.palylistItemAddTrackHandler = function(e) {
+            self.add_track(e.id)
+        };
+        this.palylistItemRemoveTrackHandler = function(e) {
+            self.remove_track(e.id)
         };
         this.palylistUpdateFolderTrackTitle = function(e) {
             self.controller_do.setTitle(e.title)
@@ -3131,6 +3136,12 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         };
         this.controllerButtonDownloadMp3Handler = function(e) {
             self.downloadMP3()
+        };
+        this.controllerButtonAddTrackHandler = function(e) {
+            self.add_TRACK()
+        };
+        this.controllerButtonRemoveTrackMp3Handler = function(e) {
+            self.remove_TRACK()
         };
         this.disableShuffleHandler = function(e) {
             self.data.shuffle_bl = false;
@@ -3609,6 +3620,16 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             var r = self.data.playlist_ar[e].titleText;
             self.data.downloadMp3(n, r)
         };
+        this.add_TRACK = function(e) {
+            e = self.id;
+            var id = self.id;
+            self.data.add_track(id || e)
+        };
+        this.remove_TRACK = function(e) {
+            e = self.id;
+            var id = self.id;
+            self.data.remove_track(id || e)
+        };
         this.buy = function(pId) {
             if (!self.isAPIReady_bl) return;
             if (document.location.protocol == "file:") {
@@ -3781,9 +3802,10 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.nextN_img = null;
         this.popupN_img = null;
         this.downloaderN_img = null;
-        this.toopTipBk_str = null;
-        this.toopTipPointer_str = null;
-        this.toopTipPointerUp_str = null;
+        this.addN_img = null;
+        this.removeN_img = null;
+        this.addN_img = null;
+        this.removeN_img = null;
         this.mainScrubberBkLeft_img = null;
         this.mainScrubberBkRight_img = null;
         this.mainScrubberDragLeft_img = null;
@@ -3836,6 +3858,14 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.playlistItemProgress2_img = null;
         this.playlistDownloadButtonN_img = null;
         this.playlistDownloadButtonS_img = null;
+        this.playlistAddButtonN_img = null;
+        this.playlistAddButtonS_img = null;
+        this.playlistRemoveButtonN_img = null;
+        this.playlistRemoveButtonS_img = null;
+        this.playlistAddButtonN_img = null;
+        this.playlistRemoveButtonN_img = null;
+        this.playlistAddButtonS_img = null;
+        this.playlistRemoveButtonS_img = null;
         this.catThumbBk_img = null;
         this.catThumbTextBk_img = null;
         this.catNextN_img = null;
@@ -3907,6 +3937,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.playPauseButtonOffsetLeftAndRight = 0;
         this.durationOffsetRight = 0;
         this.downloadButtonOffsetRight = 0;
+        this.addButtonOffsetRight = 0;
+        this.removeButtonOffsetRight = 0;
         this.scrollbarOffestWidth = 0;
         this.resetLoadIndex = -1;
         this.startAtPlaylist = 0;
@@ -3933,6 +3965,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.showLoopButton_bl = false;
         this.showShuffleButton_bl = false;
         this.showDownloadMp3Button_bl = false;
+        this.showAddButton_bl = false;
+        this.showRemoveButton_bl = false;
         this.showPlaylistsButtonAndPlaylists_bl = false;
         this.showPlaylistsByDefault_bl = false;
         this.showPlayListButtonAndPlaylist_bl = false;
@@ -3947,6 +3981,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.expandControllerBackground_bl = false;
         this.showPlaylistItemPlayButton_bl = false;
         this.showPlaylistItemDownloadButton_bl = false;
+        this.showPlaylistItemAddButton_bl = false;
+        this.showPlaylistItemRemoveButton_bl = false;
         this.forceDisableDownloadButtonForPodcast_bl = false;
         this.forceDisableDownloadButtonForOfficialFM_bl = false;
         this.forceDisableDownloadButtonForFolder_bl = false;
@@ -4002,6 +4038,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             self.proxyFolderPath_str = self.mainFolderPath_str + "proxyFolder.php";
             self.mailPath_str = self.mainFolderPath_str + "sendMail.php";
             self.mp3DownloaderPath_str = self.mainFolderPath_str + "downloader.php";
+            self.addPath_str = self.mainFolderPath_str + "downloader.php";
+            self.removePath_str = self.mainFolderPath_str + "downloader.php";
             self.categories_el = document.getElementById(self.categoriesId_str);
             if (!self.categories_el) {
                 setTimeout(function() {
@@ -4111,6 +4149,10 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             self.playPauseButtonOffsetLeftAndRight = self.props_obj.playPauseButtonOffsetLeftAndRight || 0;
             self.durationOffsetRight = self.props_obj.durationOffsetRight || 0;
             self.downloadButtonOffsetRight = self.props_obj.downloadButtonOffsetRight || 0;
+            self.addButtonOffsetRight = self.props_obj.addButtonOffsetRight || 0;
+            self.removeButtonOffsetRight = self.props_obj.removeButtonOffsetRight || 0;
+            self.addButtonOffsetRight = self.props_obj.addButtonOffsetRight || 0;
+            self.removeButtonOffsetRight = self.props_obj.removeButtonOffsetRight || 0;
             self.scrollbarOffestWidth = self.props_obj.scrollbarOffestWidth || 0;
             self.maxPlaylistItems = self.props_obj.maxPlaylistItems || 200;
             self.controllerHeight = self.props_obj.controllerHeight || 200;
@@ -4154,6 +4196,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             self.showShuffleButton_bl = self.showShuffleButton_bl == "no" ? false : true;
             self.showDownloadMp3Button_bl = self.props_obj.showDownloadMp3Button;
             self.showDownloadMp3Button_bl = self.showDownloadMp3Button_bl == "no" ? false : true;
+            self.showAddButton_bl = true;
+            self.showRemoveButton_bl = true;
+            self.showRemoveButton_bl = self.props_obj.showRemoveButton;
             self.showOpenerPlayPauseButton_bl = self.props_obj.showOpenerPlayPauseButton;
             self.showOpenerPlayPauseButton_bl = self.showOpenerPlayPauseButton_bl == "no" ? false : true;
             self.showOpener_bl = self.props_obj.showOpener;
@@ -4175,6 +4220,10 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             self.showPlaylistItemPlayButton_bl = self.showPlaylistItemPlayButton_bl == "no" ? false : true;
             self.showPlaylistItemDownloadButton_bl = self.props_obj.showPlaylistItemDownloadButton;
             self.showPlaylistItemDownloadButton_bl = self.showPlaylistItemDownloadButton_bl == "no" ? false : true;
+            self.showPlaylistItemAddButton_bl = self.props_obj.showPlaylistItemAddButton;
+            self.showPlaylistItemRemoveButton_bl = self.props_obj.showPlaylistItemRemoveButton;
+            self.showPlaylistItemAddButton_bl = true;
+            self.showPlaylistItemRemoveButton_bl = true;
             self.forceDisableDownloadButtonForPodcast_bl = self.props_obj.forceDisableDownloadButtonForPodcast;
             self.forceDisableDownloadButtonForPodcast_bl = self.forceDisableDownloadButtonForPodcast_bl == "yes" ? true : false;
             self.forceDisableDownloadButtonForOfficialFM_bl = self.props_obj.forceDisableDownloadButtonForOfficialFM;
@@ -4216,9 +4265,15 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 img: self.popupN_img = new Image,
                 src: self.skinPath_str + "popup-button.png"
             }, {
+                img: self.addN_img = new Image,
+                src: self.skinPath_str + "download-button.png"
+            },{
+                img: self.removeN_img = new Image,
+                src: self.skinPath_str + "download-button.png"
+            },{
                 img: self.downloaderN_img = new Image,
                 src: self.skinPath_str + "download-button.png"
-            }, {
+            },{
                 img: self.buyN_img = new Image,
                 src: self.skinPath_str + "buy-button.png"
             }, {
@@ -4291,6 +4346,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             self.nextSPath_str = self.skinPath_str + "next-button-over.png";
             self.popupSPath_str = self.skinPath_str + "popup-button-over.png";
             self.downloaderSPath_str = self.skinPath_str + "download-button-over.png";
+            self.addSPath_str = self.skinPath_str + "download-button-over.png";
+            self.removeSPath_str = self.skinPath_str + "download-button-over.png";
             self.controllerBkPath_str = self.skinPath_str + "controller-background.png";
             self.thumbnailBkPath_str = self.skinPath_str + "thumbnail-background.png";
             self.mainScrubberBkMiddlePath_str = self.skinPath_str + "scrubber-middle-background.png";
@@ -4344,8 +4401,16 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 }, {
                     img: self.playlistDownloadButtonN_img = new Image,
                     src: self.skinPath_str + "playlist-download-button.png"
+                },{
+                    img: self.playlistAddButtonN_img = new Image,
+                    src: self.skinPath_str + "playlist-download-button.png"
+                },{
+                    img: self.playlistRemoveButtonN_img = new Image,
+                    src: self.skinPath_str + "playlist-download-button.png"
                 });
                 self.playlistDownloadButtonS_str = self.skinPath_str + "playlist-download-button-over.png";
+                self.playlistAddButtonS_str = self.skinPath_str + "playlist-download-button-over.png";
+                self.playlistRemoveButtonS_str = self.skinPath_str + "playlist-download-button-over.png";
                 self.scrBkMiddlePath_str = self.skinPath_str + "playlist-scrollbar-background-middle.png";
                 self.scrBkBottomPath_str = self.skinPath_str + "playlist-scrollbar-background-bottom.png";
                 self.scrDragMiddlePath_str = self.skinPath_str + "playlist-scrollbar-drag-middle.png";
