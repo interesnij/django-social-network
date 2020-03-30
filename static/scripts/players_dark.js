@@ -309,7 +309,7 @@ displayType:"responsive",
 					contextMenuItemDisabledColor:"#444"
 })
 }
-MUSICPUtils.onReady(function()
+MUSICUtils.onReady(function()
     {
         music_player.addListener(FWDMSP.READY, onReady);
         music_player.addListener(FWDMSP.PLAY, onPlay);
