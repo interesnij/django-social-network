@@ -352,7 +352,7 @@ if (!document.body.classList.contains(category)){
       all_music_playlists = body.querySelector("#all_music_playlists");
       new_playlist = document.querySelector(".ul_track_list").innerHTML;
       audio_playlists.prepend(new_playlist);
-      music_player.loadPlaylist(0);
+      music_player.loadPlaylist(1);
       music_player.playSpecificTrack(category, track_id);
       }
     };
