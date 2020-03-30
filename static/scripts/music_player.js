@@ -5161,7 +5161,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 }
             }
             clearTimeout(r.testShoutCastId_to);
-            if (r.sourcePath_str.indexOf(";") != -1) {
+            if (r.sourcePath_str != -1) {
                 r.isShoutcast_bl = true;
                 r.countShoutCastErrors = 0
             } else {
