@@ -5144,7 +5144,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         };
         this.setSource = function(e) {
             r.sourcePath_str = e;
-            var t = r.sourcePath_str.split(",");
+            var t = r.sourcePath_str;
             var n = MUSIC.getAudioFormats;
             for (var i = 0; i < t.length; i++) {
                 var s = t[i];
