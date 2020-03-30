@@ -4433,62 +4433,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             })
         };
         this.downloadMp3 = function(e, t) {
-            if (!t) return;
-            if (e.indexOf("api.soundcloud") == -1) {
-                t = t.replace(/[^A-Z0-9\-\_\.]+/ig, "_");
-                if (!/\.(mp3)$/i.test(t)) t += ".mp3";
-                if (e.indexOf("http:") == -1) {
-                    e = e.substr(e.indexOf("/") + 1);
-                    e = encodeURIComponent(e)
-                }
-            }
-            var n = self.mp3DownloaderPath_str;
-            if (!self.dlIframe) {
-                self.dlIframe = document.createElement("IFRAME");
-                self.dlIframe.style.display = "none";
-                document.documentElement.appendChild(self.dlIframe)
-            }
-            if (self.isMobile_bl) {
-                var r = self.getValidEmail();
-                if (!r) return;
-                if (self.emailXHR != null) {
-                    try {
-                        self.emailXHR.abort()
-                    } catch (i) {}
-                    self.emailXHR.onreadystatechange = null;
-                    self.emailXHR.onerror = null;
-                    self.emailXHR = null
-                }
-                self.emailXHR = new XMLHttpRequest;
-                self.emailXHR.onreadystatechange = function(e) {
-                    if (self.emailXHR.readyState == 4) {
-                        if (self.emailXHR.status == 200) {
-                            if (self.emailXHR.responseText == "sent") {
-                                alert("Email sent.")
-                            } else {
-                                alert("Error sending email, this is a server side error, the php file can't send the email!")
-                            }
-                        } else {
-                            alert("Error sending email: " + self.emailXHR.status + ": " + self.emailXHR.statusText)
-                        }
-                    }
-                };
-                self.emailXHR.onerror = function(e) {
-                    try {
-                        if (window.console) console.log(e);
-                        if (window.console) console.log(e.message)
-                    } catch (e) {}
-                    alert("Error sending email: " + e.message)
-                };
-                self.emailXHR.open("get", self.mailPath_str + "?mail=" + r + "&name=" + t + "&path=" + e, true);
-                self.emailXHR.send();
-                return
-            }
-            if (e.indexOf("soundcloud.com") != -1) {
-                self.dlIframe.src = e
-            } else {
-                self.dlIframe.src = n + "?path=" + e + "&name=" + t
-            }
+          console.log("Downloading start")
         };
         this.getValidEmail = function() {
             var e = prompt("Please enter your email address where the mp3 download link will be sent:");
