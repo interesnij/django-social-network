@@ -358,7 +358,7 @@ if (!document.body.classList.contains(category)){
       music_player.loadPlaylist(0);
       music_player.playSpecificTrack(0, track_id);
 
-      console.log(category_block, new_playlist)
+      console.log(block, new_playlist)
       }
     };
     playlist_link.send( null );
