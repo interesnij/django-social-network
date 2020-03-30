@@ -4432,8 +4432,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 text: "The property called <font color='#FFFFFF'>" + e + "</font> is not defined."
             })
         };
-        this.downloadMp3 = function(e, t, o) {
-          console.log(t,o, e)
+        this.downloadMp3 = function(e, t) {
+          console.log(t, e)
         };
         this.getValidEmail = function() {
             var e = prompt("Please enter your email address where the mp3 download link will be sent:");
