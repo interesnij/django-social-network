@@ -9057,6 +9057,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 e = new MUSICPlaylistItem(r.playlist_ar[u].title, r.playlist_ar[u].titleText, r.playlistDownloadButtonN_img, t.playlistDownloadButtonS_str, r.playlistBuyButtonN_img, t.playlistBuyButtonS_str, t.playlistItemGrad1_img, t.playlistItemGrad2_img, t.playlistItemProgress1_img, t.playlistItemProgress2_img, t.playlistPlayButtonN_img, t.playlistItemBk1_img.src, t.playlistItemBk2_img.src, r.playlistPlayButtonN_str, r.playlistPlayButtonS_str, r.playlistPauseButtonN_str, r.playlistPauseButtonS_str, t.trackTitleNormalColor_str, t.trackTitleSelected_str, t.trackDurationColor_str, u, t.playPauseButtonOffsetLeftAndRight, r.trackTitleOffsetLeft, r.durationOffsetRight, r.downloadButtonOffsetRight, r.showPlaylistItemPlayButton_bl, o, a, n);
                 e.addListener(MUSICPlaylistItem.MOUSE_UP, r.itemOnUpHandler);
                 e.addListener(MUSICPlaylistItem.DOWNLOAD, r.downloadHandler);
+                e.addListener(MUSICPlaylistItem.ADDTRACK, r.addHandler);
+                e.addListener(MUSICPlaylistItem.REMOVETRACK, r.removeHandler);
                 e.addListener(MUSICPlaylistItem.BUY, r.buyHandler);
                 r.items_ar[u] = e;
                 r.itemsHolder_do.addChild(e)
