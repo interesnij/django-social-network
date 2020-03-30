@@ -3334,7 +3334,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             } else if (self.id > self.totalAudio - 1) {
                 self.id = self.totalAudio - 1
             }
-            var t = self.data.playlist_ar[self.id];
+            var t = self.data.playlist_ar[self.id].source;
             if (MUSIC.hasHTML5Audio) {
                 self.audioScreen_do.setSource(t)
             } else {
@@ -4474,7 +4474,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 self.loadOfficialFmList(t)
             } else if (t.indexOf("folder:") != -1) {
                 self.loadFolderPlaylist(t)
-            } else if (t.indexOf("http:") != -1 || t.indexOf("https:") != -1 || t.indexOf("www.") != -1) {
+            } else if (t.indexOf(".xml") != -1 || t.indexOf("http:") != -1 || t.indexOf("https:") != -1 || t.indexOf("www.") != -1) {
                 self.loadXMLPlaylist(t)
             } else {
                 self.parseDOMPlaylist(t)
@@ -4561,7 +4561,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             self.xhr.onreadystatechange = self.ajaxOnLoadHandler;
             self.xhr.onerror = self.ajaxOnErrorHandler;
             try {
-                self.xhr.open("get", self.sourceURL_str, true);
+                self.xhr.open("get", self.proxyPath_str + "?url=" + self.sourceURL_str + "&rand=" + parseInt(Math.random() * 99999999), true);
                 self.xhr.send()
             } catch (t) {
                 var n = t;
@@ -5144,7 +5144,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         };
         this.setSource = function(e) {
             r.sourcePath_str = e;
-            var t = r.sourcePath_str;
+            var t = r.sourcePath_str.split(",");
             var n = MUSIC.getAudioFormats;
             for (var i = 0; i < t.length; i++) {
                 var s = t[i];
@@ -5161,13 +5161,13 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 }
             }
             clearTimeout(r.testShoutCastId_to);
-            if (r.sourcePath_str != -1) {
+            if (r.sourcePath_str.indexOf(";") != -1) {
                 r.isShoutcast_bl = true;
                 r.countShoutCastErrors = 0
             } else {
                 r.isShoutcast_bl = false
             }
-            if (r.sourcePath_str == -1) {
+            if (r.sourcePath_str.indexOf(";") == -1) {
                 r.isNormalMp3_bl = true;
                 r.countNormalMp3Errors = 0
             } else {
@@ -8978,7 +8978,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             if (!r.items_ar) return;
             var n = "";
             var i = r.items_ar[r.countID3];
-            var s = r.playlist_ar[r.countID3];
+            var s = r.playlist_ar[r.countID3].source + "?rand=" + parseInt(Math.random() * 99999999);
             var o = r.playlist_ar[r.countID3];
             ID3.loadTags(s, function() {
                 if (r.countID3 > r.playlist_ar.length || r.countID3 == 2001) {
