@@ -7115,11 +7115,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 r.downloadButtonToolTip_do = new MUSICToolTip(r.downloadButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "download track", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
                 document.documentElement.appendChild(r.downloadButtonToolTip_do.screen)
             }
-            if (this.showBuyButton_bl) {
-                MUSICToolTip.setPrototype();
-                r.buyButtonToolTip_do = new MUSICToolTip(r.buyButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "buy track", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
-                document.documentElement.appendChild(r.buyButtonToolTip_do.screen)
-            }
             MUSICToolTip.setPrototype();
             r.volumeButtonToolTip_do = new MUSICToolTip(r.volumeButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "тишина / включить звук", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
             document.documentElement.appendChild(r.volumeButtonToolTip_do.screen)
@@ -7963,20 +7958,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.downloadButtonOnMouseUpHandler = function() {
             r.dispatchEvent(e.DOWNLOAD_MP3)
         };
-        this.setupBuyButton = function() {
-            MUSICSimpleButton.setPrototype();
-            r.buyButton_do = new MUSICSimpleButton(t.buyN_img, t.buySPath_str);
-            r.buyButton_do.addListener(MUSICSimpleButton.SHOW_TOOLTIP, r.buyButtonShowToolTipHandler);
-            r.buyButton_do.addListener(MUSICSimpleButton.MOUSE_UP, r.buyButtonOnMouseUpHandler);
-            r.buttons_ar.push(r.buyButton_do);
-            r.mainHolder_do.addChild(r.buyButton_do)
-        };
-        this.buyButtonShowToolTipHandler = function(e) {
-            r.showToolTip(r.buyButton_do, r.buyButtonToolTip_do, e.e)
-        };
-        this.buyButtonOnMouseUpHandler = function() {
-            r.dispatchEvent(e.BUY)
-        };
         this.setupShuffleButton = function() {
             MUSICSimpleButton.setPrototype();
             r.shuffleButton_do = new MUSICSimpleButton(r.shuffleN_img, t.shuffleSPath_str, undefined, true);
@@ -8010,7 +7991,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             r.playPauseButton_do.disable();
             r.nextButton_do.disable();
             if (r.downloadButton_do) r.downloadButton_do.disable();
-            if (r.buyButton_do) r.buyButton_do.disable();
             if (r.playlistButton_do) r.playlistButton_do.disable(true);
             r.updateTime("...", "...");
             r.setTitle("...")
@@ -8020,7 +8000,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             r.playPauseButton_do.enable();
             r.nextButton_do.enable();
             if (r.downloadButton_do) r.downloadButton_do.enable();
-            if (r.buyButton_do) r.buyButton_do.enable();
             if (r.playlistButton_do) r.playlistButton_do.enable();
         };
         this.init()
@@ -8886,7 +8865,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.playlistScrLines_img = t.playlistScrLines_img;
         this.playlistScrLinesOver_img = t.playlistScrLinesOver_img;
         this.playlistDownloadButtonN_img = t.playlistDownloadButtonN_img;
-        this.playlistBuyButtonN_img = t.playlistBuyButtonN_img;
         this.disable_do = null;
         this.separator_do = null;
         this.itemsHolder_do = null;
@@ -8949,7 +8927,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.expandPlaylistBackground_bl = t.expandControllerBackground_bl;
         this.isSortedNumerical_bl = true;
         this.showSortButtons_bl = t.showSortButtons_bl;
-        this.showPlaylistItemBuyButton_bl = t.showPlaylistItemBuyButton_bl;
         this.addScrollBarMouseWheelSupport_bl = t.addScrollBarMouseWheelSupport_bl;
         this.allowToScrollAndScrollBarIsActive_bl = false;
         this.isDragging_bl = false;
@@ -9859,8 +9836,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.playlistPlayButtonN_img = c;
         this.playlistDownloadButtonN_img = r;
         this.playlistDownloadButtonS_str = i;
-        this.playlistBuyButtonN_img = s;
-        this.playlistBuyButtonS_str = o;
         this.progress_do = null;
         this.playPause_do = null;
         this.playN_do = null;
@@ -9899,7 +9874,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.downloadButtonOffsetRight = N;
         this.setTextsSizeId_to;
         this.showDownloadButton_bl = k;
-        this.showBuyButton_bl = L;
         this.showPlayPauseButton_bl = C;
         this.showDuration_bl = A;
         this.isActive_bl = false;
@@ -9915,7 +9889,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             O.setNormalState(false, true);
             O.setupDumy();
             if (O.showDownloadButton_bl) O.setupDownloadButton();
-            if (O.showBuyButton_bl) O.setupBuyButton();
             if (O.id % 2 == 0) {
                 O.getStyle().background = "url('" + O.playlistItemBk1Path_str + "')";
                 O.grad_do.getStyle().background = "url('" + O.playlistItemGrad1_img.src + "')";
@@ -10077,18 +10050,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         };
         this.dwButtonClickHandler = function() {
             O.dispatchEvent(e.DOWNLOAD, {
-                id: O.id
-            })
-        };
-        this.setupBuyButton = function() {
-            MUSICSimpleSizeButton.setPrototype();
-            O.buyButton_do = new MUSICSimpleSizeButton(O.playlistBuyButtonN_img, O.playlistBuyButtonS_str, 18, 17);
-            O.buyButton_do.getStyle().position = "absolute";
-            O.buyButton_do.addListener(MUSICSimpleSizeButton.CLICK, O.buyButtonClickHandler);
-            O.addChild(O.buyButton_do)
-        };
-        this.buyButtonClickHandler = function() {
-            O.dispatchEvent(e.BUY, {
                 id: O.id
             })
         };

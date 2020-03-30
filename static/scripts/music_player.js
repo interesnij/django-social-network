@@ -9966,24 +9966,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 O.titleText_do.setX(O.trackTitleOffsetLeft)
             }
             O.titleText_do.setY(r);
-            if (O.buyButton_do && O.downloadButton_do) {
-                if (O.durationText_do) {
-                    O.durationText_do.setX(e - O.durationWidth - O.durationOffsetRight + 1);
-                    O.durationText_do.setY(r);
-                    n = O.durationText_do.x
-                } else {
-                    n = e
-                }
-                O.downloadButton_do.setX(n - O.downloadButton_do.w - O.downloadButtonOffsetRight + 3);
-                O.downloadButton_do.setY(parseInt((t - O.downloadButton_do.h) / 2));
-                O.buyButton_do.setX(O.downloadButton_do.x - O.buyButton_do.w - 4);
-                O.buyButton_do.setY(parseInt((t - O.buyButton_do.h) / 2));
-                if (O.titleText_do.x + O.titleWidth + O.downloadButton_do.w + O.buyButton_do.w + O.downloadButtonOffsetRight + 4 > n) {
-                    O.grad_do.setX(O.buyButton_do.x - O.downloadButtonOffsetRight + 2)
-                } else {
-                    O.grad_do.setX(-300)
-                }
-            } else if (O.downloadButton_do) {
+            if (O.downloadButton_do) {
                 if (O.durationText_do) {
                     O.durationText_do.setX(e - O.durationWidth - O.durationOffsetRight + 1);
                     O.durationText_do.setY(r);
@@ -9995,21 +9978,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 O.downloadButton_do.setY(parseInt((t - O.downloadButton_do.h) / 2));
                 if (O.titleText_do.x + O.titleWidth + O.downloadButton_do.w + O.downloadButtonOffsetRight > n) {
                     O.grad_do.setX(O.downloadButton_do.x - O.downloadButtonOffsetRight + 2)
-                } else {
-                    O.grad_do.setX(-300)
-                }
-            } else if (O.buyButton_do) {
-                if (O.durationText_do) {
-                    O.durationText_do.setX(e - O.durationWidth - O.durationOffsetRight + 1);
-                    O.durationText_do.setY(r);
-                    n = O.durationText_do.x
-                } else {
-                    n = e
-                }
-                O.buyButton_do.setX(n - O.buyButton_do.w - O.downloadButtonOffsetRight + 3);
-                O.buyButton_do.setY(parseInt((t - O.buyButton_do.h) / 2));
-                if (O.titleText_do.x + O.titleWidth + O.buyButton_do.w + O.downloadButtonOffsetRight > n) {
-                    O.grad_do.setX(O.buyButton_do.x - O.downloadButtonOffsetRight + 2)
                 } else {
                     O.grad_do.setX(-300)
                 }
