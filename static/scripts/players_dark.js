@@ -309,3 +309,9 @@ displayType:"responsive",
 					contextMenuItemDisabledColor:"#444"
 })
 }
+
+function onPlay()
+    {
+        console.log("current playing track id: " + music_player.getTrackId());
+    };
+onPlay();
