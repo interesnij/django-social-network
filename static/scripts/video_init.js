@@ -357,7 +357,7 @@ var FWDUVPATB = function(
 			if(animate){
 				Animation.to(self.mainHld, .8, {y:-self.h - 1 - offset, ease:Expo.easeInOut});
 			}else{
-				FAnimation.killTweensOf(self.mainHld);
+				Animation.killTweensOf(self.mainHld);
 				self.mainHld.setY(-self.h - 1);
 			}
 			setTimeout(self.positionButtons, 200);
