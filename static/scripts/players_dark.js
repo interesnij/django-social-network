@@ -86,7 +86,7 @@ new MUSIC({
 });
 
 
-
+if document.body.querySelector('#video_player'){
 new FWDUVPlayer({
 //main settings
 instanceName:"player_dark",
@@ -308,3 +308,4 @@ displayType:"responsive",
 					contextMenuItemSelectedColor:"#FFFFFF",
 					contextMenuItemDisabledColor:"#444"
 })
+}
