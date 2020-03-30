@@ -87,7 +87,7 @@ music_player = new MUSIC({
 
 
 if (document.querySelector("#video_player")) {
-video_player new FWDUVPlayer({
+video_player = new FWDUVPlayer({
 //main settings
 instanceName:"player_dark",
 parentId:"video_player",
@@ -320,13 +320,12 @@ MUSICUtils.onReady(function(){
 
 function music_onReady(){console.log("Аудио плеер готов");}
 function video_onReady(){console.log("Видео плеер готов");}
-function music_onPlay(){
 
+function video_onPlay(){
     console.log("Воспроизводится видео id: " + video_player.getVideoId());
     music_player.pause();
 }
-
-    function music_onPlay(){
-        console.log("Воспроизводится трек № : " + music_player.getTrackId());
-        video_player.pause();
-    }
+function music_onPlay(){
+    console.log("Воспроизводится трек № : " + music_player.getTrackId());
+    video_player.pause();
+}
