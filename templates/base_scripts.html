@@ -19,15 +19,15 @@
 
 
 <ul id="audio_playlists" style="display:none;">
-		<li data-source="playlist_1" data-thumbnail-path="/static/images/news_small1.jpg">
+		<li data-source="playlist_" data-thumbnail-path="/static/images/news_small1.jpg">
 			<p class="minimalWhiteCategoriesTitle"><span class="boldWhite">Название: </span>Мой плейлист</p>
 			<p class="minimalWhiteCategoriesType"><span class="boldWhite">Здесь тип плейлиста</span></p>
 			<p class="minimalWhiteCategoriesDescription">Здесь описание плейлиста</p>
 		</li>
 </ul>
 
-<span id="all_music_playlists" style="display:none;"> 
-<ul id="playlist_1">
+<span id="all_music_playlists" style="display:none;">
+<ul id="playlist_">
   {% for track in request.user.my_playlist_too %}
   <li data-path="{{ track.uri }}"
       data-thumbpath="{{ track.artwork_url }}">
