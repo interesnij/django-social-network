@@ -7,9 +7,11 @@ class TagMusicGet(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.tag = SoundTags.objects.get(pk=self.kwargs["pk"])
+        self.list = SoundcloudParsing.filter(tag=self.tag)
         return super(TagMusicGet,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context = super(TagMusicGet,self).get_context_data(**kwargs)
         context["tag"] = self.tag
+        context["list"] = self.list
         return context
