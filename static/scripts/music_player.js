@@ -2956,7 +2956,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             self.playlist_do = new MUSICPlaylist(self.data, self);
             self.playlist_do.addListener(MUSICPlaylistItem.MOUSE_UP, self.palylistItemOnUpHandler);
             self.playlist_do.addListener(MUSICPlaylistItem.DOWNLOAD, self.palylistItemDownloadHandler);
-            self.playlist_do.addListener(MUSICPlaylistItem.BUY, self.palylistItemBuyHandler);
             self.playlist_do.addListener(MUSICPlaylist.UPDATE_TRACK_TITLE_if_FOLDER, self.palylistUpdateFolderTrackTitle);
             self.main_do.addChild(self.playlist_do)
         };
@@ -2993,9 +2992,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 }
             }
         };
-        this.palylistItemDownloadHandler = function(e) {
-            self.downloadMP3(e.id)
-        };
         this.palylistUpdateFolderTrackTitle = function(e) {
             self.controller_do.setTitle(e.title)
         };
@@ -3022,7 +3018,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             self.controller_do.addListener(MUSICController.HIDE_PLAYLIST, self.hidePlaylistHandler);
             self.controller_do.addListener(MUSICController.ENABLE_LOOP, self.enableLoopHandler);
             self.controller_do.addListener(MUSICController.DISABLE_LOOP, self.disableLoopHandler);
-            self.controller_do.addListener(MUSICController.DOWNLOAD_MP3, self.controllerButtonDownloadMp3Handler);
             self.controller_do.addListener(MUSICController.ENABLE_SHUFFLE, self.enableShuffleHandler);
             self.controller_do.addListener(MUSICController.DISABLE_SHUFFLE, self.disableShuffleHandler);
             self.controller_do.addListener(MUSICController.BUY, self.controllerButtonBuyHandler);

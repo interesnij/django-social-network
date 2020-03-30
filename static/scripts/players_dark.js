@@ -8,7 +8,7 @@ new MUSIC({
     showSoundCloudUserNameInTitle:"no",
     position:"bottom",
     rightClickContextMenu:"developer",
-    animate:"no",
+    animate:"yes",
     autoPlay:"no",
     loop:"no",
     shuffle:"no",
