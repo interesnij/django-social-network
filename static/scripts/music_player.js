@@ -2999,9 +2999,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.palylistUpdateFolderTrackTitle = function(e) {
             self.controller_do.setTitle(e.title)
         };
-        this.palylistItemBuyHandler = function(e) {
-            self.buy(e.id)
-        };
         this.setupController = function() {
             MUSICController.setPrototype();
             self.controller_do = new MUSICController(self.data, self);
@@ -3025,7 +3022,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             self.controller_do.addListener(MUSICController.DOWNLOAD_MP3, self.controllerButtonDownloadMp3Handler);
             self.controller_do.addListener(MUSICController.ENABLE_SHUFFLE, self.enableShuffleHandler);
             self.controller_do.addListener(MUSICController.DISABLE_SHUFFLE, self.disableShuffleHandler);
-            self.controller_do.addListener(MUSICController.BUY, self.controllerButtonBuyHandler);
             self.main_do.addChild(self.controller_do);
             if (self.openInPopup_bl && self.data.showPlaylistsButtonAndPlaylists_bl) {
                 self.controller_do.setPlaylistButtonState("selected");
