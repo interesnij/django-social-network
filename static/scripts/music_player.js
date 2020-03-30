@@ -4432,8 +4432,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 text: "The property called <font color='#FFFFFF'>" + e + "</font> is not defined."
             })
         };
-        this.downloadMp3 = function(e, t) {
-          console.log(t.ids)
+        this.downloadMp3 = function(e, t, o) {
+          console.log(t,o, e)
         };
         this.getValidEmail = function() {
             var e = prompt("Please enter your email address where the mp3 download link will be sent:");
@@ -4947,7 +4947,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                     return
                 }
                 if (s > self.maxPlaylistItems - 1) break;
-                o.source = MUSICUtils.getAttributeValue(i, "data-path"); console.log(o.source);
+                o.source = MUSICUtils.getAttributeValue(i, "data-path");
                 var u = encodeURI(o.source.substr(0, o.source.lastIndexOf("/") + 1));
                 var a = o.source.substr(o.source.lastIndexOf("/") + 1);
                 if (a.indexOf(";.mp3") != -1) {
