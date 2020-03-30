@@ -371,3 +371,13 @@ if (!document.body.classList.contains(category)){
       music_player.playSpecificTrack(category, track_id);
     };
   });
+
+on('#ajax', 'click', '#load_1', function(e) {
+  music_player.loadPlaylist(0);
+})
+on('#ajax', 'click', '#load_2', function(e) {
+  music_player.loadPlaylist(1);
+})
+on('#ajax', 'click', '#load_3', function(e) {
+  music_player.loadPlaylist(2);
+})
