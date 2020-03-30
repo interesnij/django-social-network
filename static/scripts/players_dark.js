@@ -351,8 +351,8 @@ if (!document.body.classList.contains(category)){
       audio_playlists.append(category_block);
       all_music_playlists = body.querySelector("#all_music_playlists");
       new_playlist = document.querySelector(".ul_track_list").innerHTML;
-      audio_playlists.append(new_playlist);
-      music_player.loadPlaylist(category);
+      audio_playlists.prepend(new_playlist);
+      music_player.loadPlaylist(0);
       music_player.playSpecificTrack(category, track_id);
       }
     };
