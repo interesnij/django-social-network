@@ -4879,6 +4879,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 t.buy = undefined;
                 if (self.forceDisableDownloadButtonForFolder_bl) t.downloadable = false;
                 t.thumbPath = n[i]["@attributes"]["data-thumbpath"];
+                t.ids = n[r]["@attributes"]["data-id"];
                 t.title = "...";
                 t.titleText = "...";
                 if (MUSICUtils.isIEAndLessThen9) {
@@ -4994,6 +4995,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 } else {
                     o.duration = undefined
                 }
+                o.ids = MUSICUtils.getAttributeValue("data-id")
                 self.playlist_ar[s] = o
             }
             clearTimeout(self.dispatchPlaylistLoadCompleteWidthDelayId_to);
