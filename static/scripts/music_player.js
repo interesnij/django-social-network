@@ -4561,7 +4561,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             self.xhr.onreadystatechange = self.ajaxOnLoadHandler;
             self.xhr.onerror = self.ajaxOnErrorHandler;
             try {
-                self.xhr.open("get", self.sourceURL_str), true);
+                self.xhr.open("get", self.sourceURL_str, true);
                 self.xhr.send()
             } catch (t) {
                 var n = t;
