@@ -4995,7 +4995,10 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 } else {
                     o.duration = undefined
                 }
-                o.ids = MUSICUtils.getAttributeValue("data-id")
+                if (MUSICUtils.hasAttribute(i, "data-id")) {
+                    o.ids = MUSICUtils.getAttributeValue(i, "data-id")
+                } else {
+                    o.ids = undefined
                 self.playlist_ar[s] = o
             }
             clearTimeout(self.dispatchPlaylistLoadCompleteWidthDelayId_to);
