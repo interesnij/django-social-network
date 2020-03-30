@@ -308,11 +308,12 @@ displayType:"responsive",
 					contextMenuItemSelectedColor:"#FFFFFF",
 					contextMenuItemDisabledColor:"#444"
 })
-}
+
 FWDUVPUtils.onReady(function(){
     video_player.addListener(FWDUVPlayer.READY, video_onReady);
     video_player.addListener(FWDUVPlayer.PLAY, video_onPlay);
 });
+}
 MUSICUtils.onReady(function(){
         music_player.addListener(MUSIC.READY, music_onReady);
         music_player.addListener(MUSIC.PLAY, music_onPlay);
@@ -322,7 +323,7 @@ function music_onReady(){console.log("Аудио плеер готов");}
 function video_onReady(){console.log("Видео плеер готов");}
 
 function video_onPlay(){
-    console.log("Воспроизводится видео id: " + video_player.getVideoId());
+    console.log("Воспроизводится видео №: " + video_player.getVideoId());
     music_player.pause();
 }
 function music_onPlay(){
