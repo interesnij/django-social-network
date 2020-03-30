@@ -355,8 +355,8 @@ if (!document.body.classList.contains(category)){
 
       var new_playlist = body.querySelector(".hide_playlist");
       all_music_playlists.prepend(new_playlist);
-      music_player.loadPlaylist(0);
-      music_player.playSpecificTrack(0, track_id);
+      music_player.loadPlaylist(1);
+      music_player.playSpecificTrack(1, track_id);
 
       console.log(block, new_playlist)
       }
