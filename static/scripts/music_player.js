@@ -4162,12 +4162,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             self.showShuffleButton_bl = self.showShuffleButton_bl == "no" ? false : true;
             self.showDownloadMp3Button_bl = self.props_obj.showDownloadMp3Button;
             self.showDownloadMp3Button_bl = self.showDownloadMp3Button_bl == "no" ? false : true;
-            self.showBuyButton_bl = self.props_obj.showBuyButton;
-            self.showBuyButton_bl = self.showBuyButton_bl == "no" ? false : true;
             self.showOpenerPlayPauseButton_bl = self.props_obj.showOpenerPlayPauseButton;
             self.showOpenerPlayPauseButton_bl = self.showOpenerPlayPauseButton_bl == "no" ? false : true;
-            self.showPlaylistItemBuyButton_bl = self.props_obj.showPlaylistItemBuyButton;
-            self.showPlaylistItemBuyButton_bl = self.showPlaylistItemBuyButton_bl == "no" ? false : true;
             self.showOpener_bl = self.props_obj.showOpener;
             self.showOpener_bl = self.showOpener_bl == "no" ? false : true;
             self.showTracksNumbers_bl = self.props_obj.showTracksNumbers;
@@ -4356,9 +4352,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 }, {
                     img: self.playlistDownloadButtonN_img = new Image,
                     src: self.skinPath_str + "playlist-download-button.png"
-                }, {
-                    img: self.playlistBuyButtonN_img = new Image,
-                    src: self.skinPath_str + "playlist-buy-button.png"
                 });
                 self.playlistDownloadButtonS_str = self.skinPath_str + "playlist-download-button-over.png";
                 self.scrBkMiddlePath_str = self.skinPath_str + "playlist-scrollbar-background-middle.png";
@@ -4366,7 +4359,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 self.scrDragMiddlePath_str = self.skinPath_str + "playlist-scrollbar-drag-middle.png";
                 self.scrDragBottomPath_str = self.skinPath_str + "playlist-scrollbar-drag-top.png";
                 self.scrLinesSPath_str = self.skinPath_str + "playlist-scrollbar-lines-over.png";
-                self.playlistBuyButtonS_str = self.skinPath_str + "playlist-buy-button-over.png";
                 self.playlistPlayButtonN_str = self.skinPath_str + "playlist-play-button.png";
                 self.playlistPlayButtonS_str = self.skinPath_str + "playlist-play-button-over.png";
                 self.playlistPauseButtonN_str = self.skinPath_str + "playlist-pause-button.png";
@@ -6641,7 +6633,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.loopButton_do = null;
         this.shuffleButton_do = null;
         this.downloadButton_do = null;
-        this.buyButton_do = null;
         this.simpleText_do = null;
         this.animText1_do = null;
         this.animText2_do = null;
@@ -6654,7 +6645,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.loopButtonToolTip_do = null;
         this.shuffleButtonToolTip_do = null;
         this.downloadButtonToolTip_do = null;
-        this.buyButtonToolTip_do = null;
         this.populButtonToolTip_do = null;
         this.volumeButtonToolTip_do = null;
         this.controllerBkPath_str = t.controllerBkPath_str;
@@ -6715,7 +6705,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.startToAnimateTextId_to;
         this.setTimeSizeId_to;
         this.animateTextId_int;
-        this.showBuyButton_bl = t.showBuyButton_bl;
         this.showButtonsToolTips_bl = t.showButtonsToolTips_bl;
         this.showPlaylistsButtonAndPlaylists_bl = t.showPlaylistsButtonAndPlaylists_bl;
         this.loop_bl = t.loop_bl;
@@ -6765,7 +6754,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             if (r.showLoopButton_bl) r.setupLoopButton();
             if (r.showShuffleButton_bl) r.setupShuffleButton();
             if (r.showDownloadMp3Button_bl) r.setupDownloadButton();
-            if (r.showBuyButton_bl) r.setupBuyButton();
             if (r.showButtonsToolTips_bl) r.setupToolTips();
             if (!r.isMobile_bl) r.setupDisable();
             r.mainHolder_do.setBkColor("#FFFF00");
