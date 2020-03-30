@@ -332,7 +332,8 @@ function music_onPlay(){
     title = music_player.getTrackTitle();
     document.title = title.innerHTML;
     try{video_player.pause();}catch{var a=0}
-}
+};
+music_update(category, track_id);
 
 on('#ajax', 'click', '.tag_track', function(e) {
 var track_id = this.getAttribute('data-counter');
