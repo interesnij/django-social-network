@@ -87,7 +87,7 @@ music_player = new MUSIC({
 
 
 if (document.querySelector("#video_player")) {
-new FWDUVPlayer({
+video_player new FWDUVPlayer({
 //main settings
 instanceName:"player_dark",
 parentId:"video_player",
@@ -309,16 +309,24 @@ displayType:"responsive",
 					contextMenuItemDisabledColor:"#444"
 })
 }
-MUSICUtils.onReady(function()
-    {
-        music_player.addListener(MUSIC.READY, onReady);
-        music_player.addListener(MUSIC.PLAY, onPlay);
+FWDUVPlayer.onReady(function(){
+    video_player.addListener(FWDUVPlayer.READY, video_onReady);
+    video_player.addListener(FWDUVPlayer.PLAY, video_onPlay);
+});
+MUSICUtils.onReady(function(){
+        music_player.addListener(MUSIC.READY, music_onReady);
+        music_player.addListener(MUSIC.PLAY, music_onPlay);
     });
-    function onReady()
-    {
-        console.log("player ready");
-    }
-    function onPlay()
-    {
-        console.log("current playing track id: " + music_player.getTrackId());
+
+function music_onReady(){console.log("Аудио плеер готов");}
+function video_onReady(){console.log("Видео плеер готов");}
+function music_onPlay(){
+
+    console.log("Воспроизводится видео id: " + video_player.getVideoId());
+    music_player.pause();
+}
+
+    function music_onPlay(){
+        console.log("Воспроизводится трек № : " + music_player.getTrackId());
+        video_player.pause();
     }
