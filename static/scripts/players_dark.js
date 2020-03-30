@@ -333,6 +333,9 @@ function music_onPlay(){
     document.title = title.innerHTML;
     try{video_player.pause();}catch{var a=0}
 }
+function music_update(category, track_id){
+    music_player.playSpecificTrack(category, track_id)
+}
 
 on('#ajax', 'click', '.tag_track', function(e) {
 var track_id = this.getAttribute('data-counter');
@@ -364,10 +367,7 @@ if (!document.body.classList.contains(category)){
           all_music_playlists.innerHTML = "";
           all_music_playlists.prepend(list);
           audio_playlists.prepend(cat);
-          function music_update(){
-              music_player.playSpecificTrack(category, track_id)
-          }
-          music_player.playSpecificTrack(category, track_id);
+          music_update(category, track_id)
       }};
       tag_link.send( null );
   }};
