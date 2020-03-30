@@ -345,22 +345,21 @@ if (!document.body.classList.contains(category)){
     if ( playlist_link.readyState == 4 && playlist_link.status == 200 ) {
       var body = document.querySelector("body");
       body.className = "";body.classList.add(category);
-      var audio_playlists = body.querySelector("#audio_playlists");
-      var all_music_playlists = body.querySelector("#all_music_playlists");
-
-      var category_block = '<li data-source="' + category + '" data-thumbnail-path="/static/images/news_small1.jpg">' + '<p class="minimalWhiteCategoriesTitle"><span class="boldWhite">Название: </span>' + category + '</p></li>'
-      var block = null; block.innerHTML = category_block;
-      audio_playlists.append(block);
 
       var tag_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
       tag_link.open( 'GET', '/music/get/tag/' + tag_pk, true );
       tag_link.onreadystatechange = function () {
         if ( tag_link.readyState == 4 && tag_link.status == 200 ) {
-          var elem = document.createElement('span');
-          elem.innerHTML = tag_link.responseText;
-          all_music_playlists.append(elem);
-          music_player.loadPlaylist(1);
-          music_player.playSpecificTrack(1, track_id);
+          var list = document.createElement('span');
+          var cat = document.createElement('span');
+          var audio_playlists = body.querySelector("#audio_playlists");
+          var all_music_playlists = body.querySelector("#all_music_playlists");
+          list.innerHTML = tag_link.querySelector(".hide_list").responseText;
+          cat.innerHTML = tag_link.querySelector(".hide_cat").responseText;
+          all_music_playlists.prepend(list);
+          audio_playlists.prepend(cat);
+          music_player.loadPlaylist(0);
+          music_player.playSpecificTrack(0, track_id);
       }};
   }};
     playlist_link.send( null );
