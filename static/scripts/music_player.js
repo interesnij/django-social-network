@@ -3334,7 +3334,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             } else if (self.id > self.totalAudio - 1) {
                 self.id = self.totalAudio - 1
             }
-            var t = self.data.playlist_ar[self.id];
+            var t = self.data.playlist_ar[self.id].source;
             if (MUSIC.hasHTML5Audio) {
                 self.audioScreen_do.setSource(t)
             } else {
@@ -4561,7 +4561,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             self.xhr.onreadystatechange = self.ajaxOnLoadHandler;
             self.xhr.onerror = self.ajaxOnErrorHandler;
             try {
-                self.xhr.open("get", self.sourceURL_str, true);
+                self.xhr.open("get", self.proxyPath_str + "?url=" + self.sourceURL_str + "&rand=" + parseInt(Math.random() * 99999999), true);
                 self.xhr.send()
             } catch (t) {
                 var n = t;
@@ -8978,7 +8978,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             if (!r.items_ar) return;
             var n = "";
             var i = r.items_ar[r.countID3];
-            var s = r.playlist_ar[r.countID3];
+            var s = r.playlist_ar[r.countID3].source + "?rand=" + parseInt(Math.random() * 99999999);
             var o = r.playlist_ar[r.countID3];
             ID3.loadTags(s, function() {
                 if (r.countID3 > r.playlist_ar.length || r.countID3 == 2001) {
