@@ -8978,7 +8978,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             if (!r.items_ar) return;
             var n = "";
             var i = r.items_ar[r.countID3];
-            var s = r.playlist_ar[r.countID3].source;
+            var s = r.playlist_ar[r.countID3]; 
             var o = r.playlist_ar[r.countID3];
             ID3.loadTags(s, function() {
                 if (r.countID3 > r.playlist_ar.length || r.countID3 == 2001) {
