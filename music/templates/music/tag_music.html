@@ -26,7 +26,7 @@
               <div class="card-body">
                 {% if object_list %}
                 <div class="tag_playlist" data-pk="{{ tag.pk }}" id="tracks_container">
-                    <ul class="ul_track_list" style="display: contents;">
+                    <ul class="ul_track_list">
                       {% for object in object_list %}
                       <li class="list-group-item infinite-item id_{{ object.id }}">
                           <div class="media">
@@ -132,5 +132,4 @@ onscroll = function(){
 }
 </script>
 
-<script id="tag_playlist">{{ tag.get_json_playlist }}</script>
 {% endblock %}

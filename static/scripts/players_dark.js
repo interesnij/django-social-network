@@ -350,8 +350,9 @@ if (!document.body.classList.contains(category)){
       category_block = '<li data-source="' + category + '" data-thumbnail-path="/static/images/news_small1.jpg">' + '<p class="minimalWhiteCategoriesTitle"><span class="boldWhite">Название: </span>' + category + '</p></li>'
       audio_playlists.append(category_block.innerHTML);
       all_music_playlists = body.querySelector("#all_music_playlists");
+      all_music_playlists.css("display", "none");
       all_music_playlists.prepend(playlist.innerHTML);
-      music_player.loadPlaylist(1);
+      music_player.loadPlaylist(0);
       music_player.playSpecificTrack(category, track_id);
       }
     };
