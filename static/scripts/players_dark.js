@@ -350,7 +350,7 @@ if (!document.body.classList.contains(category)){
       var all_music_playlists = body.querySelector("#all_music_playlists");
 
       var category_block = '<li data-source="' + category + '" data-thumbnail-path="/static/images/news_small1.jpg">' + '<p class="minimalWhiteCategoriesTitle"><span class="boldWhite">Название: </span>' + category + '</p></li>'
-      audio_playlists.append(category_block);
+      audio_playlists.append(category_block.innerHTML);
 
       var new_playlist = playlist.querySelector(".ul_track_list");
       all_music_playlists.prepend(new_playlist);
