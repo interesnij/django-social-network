@@ -86,7 +86,7 @@ new MUSIC({
 });
 
 
-try{
+if (document.querySelector("#video_player")) {
 new FWDUVPlayer({
 //main settings
 instanceName:"player_dark",
@@ -308,4 +308,3 @@ displayType:"responsive",
 					contextMenuItemSelectedColor:"#FFFFFF",
 					contextMenuItemDisabledColor:"#444"
 })
-}catch{console.log("Здесь блок видео плеера не обнаружен, поэтому инициировать его здесь я не буду :-)")}
