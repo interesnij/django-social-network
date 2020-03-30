@@ -3,9 +3,9 @@
       {% for object in list %}
       {
         "@attributes": {
-            "data-path": "{{ track.uri }}",
-            "data-title": "{{ track.title }}",
-            "data-thumbpath": "{{ track.artwork_url }}"
+            "data-path": {{ object.uri }},
+            "data-title": {{ object.title }},
+            "data-thumbpath": {{ object.artwork_url }}
         }
     },
     {% endfor %}
