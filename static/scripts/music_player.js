@@ -4433,7 +4433,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             })
         };
         this.downloadMp3 = function(e, t, self) {
-          console.log(t, e, self)
+          console.log(t, e, self.volume)
         };
         this.getValidEmail = function() {
             var e = prompt("Please enter your email address where the mp3 download link will be sent:");
