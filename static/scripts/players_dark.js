@@ -317,7 +317,7 @@ FWDUVPUtils.onReady(function(){
 MUSICUtils.onReady(function(){
         music_player.addListener(MUSIC.READY, music_onReady);
         music_player.addListener(MUSIC.PLAY, music_onPlay);
-        music_player.addListener(MUSIC.UPDATE, music_update);
+        music_player.addListener(MUSIC.UPDATE, music_update(category, track_id));
     });
 
 function music_onReady(){console.log("Аудио плеер готов");}
@@ -332,9 +332,6 @@ function music_onPlay(){
     title = music_player.getTrackTitle();
     document.title = title.innerHTML;
     try{video_player.pause();}catch{var a=0}
-}
-function music_update(category, track_id){
-    music_player.playSpecificTrack(category, track_id)
 }
 
 on('#ajax', 'click', '.tag_track', function(e) {
