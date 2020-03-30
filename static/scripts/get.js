@@ -135,7 +135,11 @@ class Index {
             var album_photo_load = rtr.querySelector('#album_photo_load');var link = album_photo_load.getAttribute("data-link");
             list_load(rtr.querySelector("#album_photo_load"), link);
           };
-          load_chart()
+          load_chart();
+          MUSICUtils.onReady(function(){
+              music_player.addListener(MUSIC.READY, music_onReady);
+              music_player.addListener(MUSIC.PLAY, music_onPlay);
+          });
         }
       }
   };

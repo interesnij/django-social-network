@@ -362,7 +362,6 @@ if (!document.body.classList.contains(category)){
           var category_new = cat.getAttribute('data-pk');
           all_music_playlists.append(list);
           audio_playlists.append(cat);
-          music_player.reload();
           console.log(category, category_new);
 
           music_player.playSpecificTrack(category, track_id);
