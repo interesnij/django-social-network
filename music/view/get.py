@@ -1,5 +1,6 @@
 from music.models import *
 from django.views.generic.base import TemplateView
+import json
 
 
 class TagMusicGet(TemplateView):
@@ -12,9 +13,6 @@ class TagMusicGet(TemplateView):
         return super(TagMusicGet,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        import json
-        from django.http import HttpResponse
-
         context = super(TagMusicGet,self).get_context_data(**kwargs)
         context["tag"] = self.tag
         context["list"] = self.parse_list
