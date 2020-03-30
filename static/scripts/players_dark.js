@@ -367,6 +367,7 @@ if (!document.body.classList.contains(category)){
           cat1 = music_player.loadPlaylist(8480);
           cat2 = music_player.loadPlaylist(8481);
           console.log(cat1, cat2);
+          music_player.playSpecificTrack(category, track_id);
       }};
       tag_link.send( null );
   }};
