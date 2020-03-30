@@ -11,7 +11,10 @@ class TagMusicGet(TemplateView):
         return super(TagMusicGet,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
+        import json
+        from django.http import HttpResponse
+
         context = super(TagMusicGet,self).get_context_data(**kwargs)
         context["tag"] = self.tag
-        context["list"] = self.list
+        context["list"] = HttpResponse(json.dumps(self.list), content_type="application/json")
         return context
