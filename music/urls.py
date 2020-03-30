@@ -10,4 +10,5 @@ urlpatterns = [
     url(r'^genre/(?P<pk>\d+)/$', GenreMusicView.as_view(), name='genre_music'),
 
     url(r'^manage/', include('music.url.manage')),
+    url(r'^get/', include('music.url.get')),
 ]

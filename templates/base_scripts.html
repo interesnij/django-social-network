@@ -26,8 +26,8 @@
 		</li>
 </ul>
 
-<span id="all_music_playlists">
-<ul id="playlist_1" style="display:none;">
+<span id="all_music_playlists" style="display:none;"> 
+<ul id="playlist_1">
   {% for track in request.user.my_playlist_too %}
   <li data-path="{{ track.uri }}"
       data-thumbpath="{{ track.artwork_url }}">

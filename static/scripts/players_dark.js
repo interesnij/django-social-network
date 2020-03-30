@@ -335,17 +335,16 @@ function music_onPlay(){
 
 on('#ajax', 'click', '.tag_track', function(e) {
 var track_id = this.getAttribute('data-counter');
-var playlist = document.querySelector(".tag_playlist");
-var tag_pk = playlist.getAttribute('data-pk');
+var tag_pk = document.querySelector(".tag_playlist").getAttribute('data-pk');
 var category = 'tag_' + tag_pk;
+
 if (!document.body.classList.contains(category)){
   var playlist_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   playlist_link.open( 'GET', '/music/manage/temp_tag/' + tag_pk, true );
   playlist_link.onreadystatechange = function () {
     if ( playlist_link.readyState == 4 && playlist_link.status == 200 ) {
       var body = document.querySelector("body");
-      body.className = "";
-      body.classList.add(category);
+      body.className = "";body.classList.add(category);
       var audio_playlists = body.querySelector("#audio_playlists");
       var all_music_playlists = body.querySelector("#all_music_playlists");
 
@@ -353,14 +352,17 @@ if (!document.body.classList.contains(category)){
       var block = null; block.innerHTML = category_block;
       audio_playlists.append(block);
 
-      var new_playlist = body.querySelector(".hide_playlist");
-      all_music_playlists.prepend(new_playlist);
-      music_player.loadPlaylist(1);
-      music_player.playSpecificTrack(1, track_id);
-
-      console.log(block, new_playlist)
-      }
-    };
+      var tag_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+      tag_link.open( 'GET', '/music/get/tag/' + tag_pk, true );
+      tag_link.onreadystatechange = function () {
+        if ( tag_link.readyState == 4 && tag_link.status == 200 ) {
+          var elem = document.createElement('span');
+          elem.innerHTML = tag_link.responseText;
+          all_music_playlists.append(elem);
+          music_player.loadPlaylist(1);
+          music_player.playSpecificTrack(1, track_id);
+      }};
+  }};
     playlist_link.send( null );
     }else{
       music_player.playSpecificTrack(category, track_id);

@@ -131,12 +131,4 @@ onscroll = function(){
 }catch{return}
 }
 </script>
-<ul id="tag_{{ tag.pk }}" class="hide_playlist" style="display:none;">
-  {% for track in object_list %}
-  <li data-path="{{ track.uri }}"
-      data-thumbpath="{{ track.artwork_url }}">
-    <p><span style="font-weight:bold">{{ track.title }}</span></p>
-  </li>
-  {% endfor %}
-</ul>
 {% endblock %}

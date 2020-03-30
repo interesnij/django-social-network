@@ -1,0 +1,8 @@
+<ul id="tag_{{ tag.pk }}" class="hide_playlist" style="display:none;">
+  {% for track in tag.all %}
+  <li data-path="{{ track.uri }}"
+      data-thumbpath="{{ track.artwork_url }}">
+    <p><span style="font-weight:bold">{{ track.title }}</span></p>
+  </li>
+  {% endfor %}
+</ul>
