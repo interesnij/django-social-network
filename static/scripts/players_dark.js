@@ -309,9 +309,16 @@ displayType:"responsive",
 					contextMenuItemDisabledColor:"#444"
 })
 }
-
-function onPlay()
+music_player.onReady(function()
+    {
+        music_player.addListener(FWDMSP.READY, onReady);
+        music_player.addListener(FWDMSP.PLAY, onPlay);
+    });
+    function onReady()
+    {
+        console.log("player ready");
+    }
+    function onPlay()
     {
         console.log("current playing track id: " + music_player.getTrackId());
-    };
-onPlay();
+    }
