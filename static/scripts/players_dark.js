@@ -311,8 +311,8 @@ displayType:"responsive",
 }
 MUSICUtils.onReady(function()
     {
-        music_player.addListener(FWDMSP.READY, onReady);
-        music_player.addListener(FWDMSP.PLAY, onPlay);
+        music_player.addListener(MUSIC.READY, onReady);
+        music_player.addListener(MUSIC.PLAY, onPlay);
     });
     function onReady()
     {
