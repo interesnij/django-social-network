@@ -2062,6 +2062,7 @@ if (! function(t) {
                 }, !0), h(n.SlowMo, "SlowMo", "ease,"), h(i, "RoughEase", "ease,"), h(o, "SteppedEase", "ease,"), c
             }, !0)
         }), _fwd_gsScope.FWDFWD_gsDefine && _fwd_gsScope._fwd_gsQueue.pop()(),
+
         function(_, f) {
             "use strict";
             var p = {},
@@ -2699,7 +2700,7 @@ if (! function(t) {
                 g = !1
             }
         }("undefined" != typeof fwd_module && fwd_module.exports && "undefined" != typeof fwd_global ? fwd_global : this || window, "FWDAnimation")
-}
+}   
 if (! function(e) {
         var t = function() {
             var i = this;
