@@ -328,6 +328,6 @@ function video_onPlay(){
 }
 function music_onPlay(){
     console.log("Воспроизводится трек № : " + music_player.getTrackId());
-    document.title = music_player.getTrackTitle().innerHTML;
+    document.title = music_player.getTrackTitle();
     try{video_player.pause();}catch{var a=0}
 }
