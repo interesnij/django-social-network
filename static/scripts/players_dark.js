@@ -358,9 +358,10 @@ if (!document.body.classList.contains(category)){
           var all_music_playlists = body.querySelector("#all_music_playlists");
           list = _test_.querySelector(".hide_list");
           cat = _test_.querySelector(".hide_cat");
-          all_music_playlists.prepend(list);
+
           audio_playlists.innerHTML = "";
           all_music_playlists.innerHTML = "";
+          all_music_playlists.prepend(list);
           audio_playlists.prepend(cat);
           music_player.loadPlaylist(0);
           music_player.getCatId()
