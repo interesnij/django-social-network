@@ -309,7 +309,7 @@ displayType:"responsive",
 					contextMenuItemDisabledColor:"#444"
 })
 }
-FWDUVPlayer.onReady(function(){
+FWDUVPUtils.onReady(function(){ 
     video_player.addListener(FWDUVPlayer.READY, onReady);
     video_player.addListener(FWDUVPlayer.PLAY, onPlay);
 });
