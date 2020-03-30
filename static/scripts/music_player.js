@@ -4474,7 +4474,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 self.loadOfficialFmList(t)
             } else if (t.indexOf("folder:") != -1) {
                 self.loadFolderPlaylist(t)
-            } else if (t.indexOf(".xml") != -1 || t.indexOf("http:") != -1 || t.indexOf("https:") != -1 || t.indexOf("www.") != -1) {
+            } else if (t.indexOf("http:") != -1 || t.indexOf("https:") != -1 || t.indexOf("www.") != -1) {
                 self.loadXMLPlaylist(t)
             } else {
                 self.parseDOMPlaylist(t)
@@ -4542,7 +4542,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.closeJsonPLoader = function() {
             clearTimeout(self.JSONPRequestTimeoutId_to)
         };
-        this.loadXMLPlaylist = function(e) {
+        this.loadXMLPlaylist = function(e, url) {
             if (self.isPlaylistDispatchingError_bl) return;
             if (document.location.protocol == "file:" && e.indexOf("official.fm") == -1) {
                 self.isPlaylistDispatchingError_bl = true;
@@ -4561,7 +4561,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             self.xhr.onreadystatechange = self.ajaxOnLoadHandler;
             self.xhr.onerror = self.ajaxOnErrorHandler;
             try {
-                self.xhr.open("get", self.sourceURL_str + "&rand=" + 1, true);
+                self.xhr.open("get", url + "&rand=" + 1, true);
                 self.xhr.send()
             } catch (t) {
                 var n = t;

@@ -346,7 +346,7 @@ if (!document.body.classList.contains(category)){
     if ( playlist_link.readyState == 4 && playlist_link.status == 200 ) {
       var body = document.querySelector("body");
       body.className = "";body.classList.add(category);
-      music_player.loadPlaylist('/music/get/tag/' + tag_pk + '/&rand=1');
+      music_player.loadPlaylist('/music/get/tag/' + tag_pk);
       music_player.playSpecificTrack(category, track_id);
   }};
     playlist_link.send( null );
