@@ -4433,7 +4433,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             })
         };
         this.downloadMp3 = function(e, t) {
-          console.log(id)
+          console.log(t.ids)
         };
         this.getValidEmail = function() {
             var e = prompt("Please enter your email address where the mp3 download link will be sent:");
@@ -4843,6 +4843,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 t.downloadable = n[r]["@attributes"]["data-downloadable"] == "yes" ? true : false;
                 t.buy = n[r]["@attributes"]["data-buy-url"] == "yes" ? true : false;
                 t.thumbPath = n[r]["@attributes"]["data-thumbpath"];
+                t.ids = n[r]["@attributes"]["data-id"];
                 var o = "";
                 if (self.showTracksNumbers_bl) {
                     if (r < 9) o = "0";
