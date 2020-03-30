@@ -362,8 +362,8 @@ if (!document.body.classList.contains(category)){
 
           all_music_playlists.append(list);
           audio_playlists.append(cat);
-          var cat1 = music_player.loadPlaylist(category);
-          var cat2 = music_player.loadPlaylist(1);
+          var cat1 = music_player.showPlaylist(0);
+          var cat2 = music_player.showPlaylist(1);
           console.log(cat1, cat2);
           music_player.playSpecificTrack(category, track_id);
       }};
