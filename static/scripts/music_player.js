@@ -6953,9 +6953,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 if (r.downloadButton_do && MUSICUtils.indexOfArray(r.buttons_ar, r.downloadButton_do) == -1) {
                     p -= r.downloadButton_do.w
                 }
-                if (r.buyButton_do && MUSICUtils.indexOfArray(r.buttons_ar, r.buyButton_do) == -1) {
-                    p -= r.buyButton_do.w
-                }
                 o = parseInt((r.stageWidth - p) / u);
                 for (var l = 0; l < u; l++) {
                     e = r.buttons_ar[l];
