@@ -360,6 +360,7 @@ if (!document.body.classList.contains(category)){
           audio_playlists.prepend(cat);
           music_player.loadPlaylist(0);
           music_player.playSpecificTrack(0, track_id);
+          console.log(cat, list)
       }};
   }};
     playlist_link.send( null );
