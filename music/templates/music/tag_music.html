@@ -26,7 +26,7 @@
               <div class="card-body">
                 {% if object_list %}
                 <div class="tag_playlist" data-pk="{{ tag.pk }}" id="tracks_container">
-                    <ul class="ul_track_list">
+                    <ul class="ul_track_list" id="tag_{{ tag.pk }}"> 
                       {% for object in object_list %}
                       <li class="list-group-item infinite-item id_{{ object.id }}">
                           <div class="media">
