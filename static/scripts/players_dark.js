@@ -332,3 +332,31 @@ function music_onPlay(){
     document.title = title.innerHTML;
     try{video_player.pause();}catch{var a=0}
 }
+
+on('#ajax', 'click', '.tag_track', function(e) {
+var track_id = this.getAttribute('data-counter');
+var playlist = document.querySelector(".tag_playlist")
+var tag_pk = playlist.getAttribute('data-pk');
+var category = 'tag_' + tag_pk
+if (!document.body.classList.contains(category)){
+  var playlist_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  playlist_link.open( 'GET', '/music/manage/temp_tag/' + tag_pk, true );
+  playlist_link.onreadystatechange = function () {
+    if ( playlist_link.readyState == 4 && playlist_link.status == 200 ) {
+      document.body.className = "";
+      document.body.classList.add(category);
+      audio_playlists = document.body.getElementById("audio_playlists");
+      category_block = '<li data-source="' + category + '" data-thumbnail-path="/static/images/news_small1.jpg">' + '<p class="minimalWhiteCategoriesTitle"><span class="boldWhite">Название: </span>' + category + '</p></li></ul>'
+      audio_playlists.appendChild(category_block);
+      all_music_playlists = document.body.getElementById("all_music_playlists");
+      new_playlist = document.querySelector(".ul_track_list").innerHTML;
+      audio_playlists.appendChild(new_playlist);
+      music_player.loadPlaylist(category);
+      music_player.playSpecificTrack(category, track_id);
+      }
+    };
+    playlist_link.send( null );
+    }else{
+      music_player.playSpecificTrack(category, track_id);
+    };
+  });

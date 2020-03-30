@@ -5,28 +5,6 @@ var playlist = document.querySelector("#user_playlist").innerHTML;
 _playlist = JSON.parse(playlist);
 var myPlaylist = new jPlayerPlaylist(cssSelector, _playlist);
 
-on('#ajax', 'click', '.tag_track', function(e) {
-var track_id = this.getAttribute('data-counter');
-var playlist_block = document.querySelector(".music-dropdown");
-var tag_pk = document.querySelector(".tag_playlist").getAttribute('data-pk');
-if (!playlist_block.classList.contains('tag_' + tag_pk)){
-  var playlist_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  playlist_link.open( 'GET', '/music/manage/temp_tag/' + tag_pk, true );
-  playlist_link.onreadystatechange = function () {
-    if ( playlist_link.readyState == 4 && playlist_link.status == 200 ) {
-      playlist_block.className = "";
-      playlist_block.classList.add("dropdown-menu", "music-dropdown", "tag_" + tag_pk);
-      new_playlist = document.querySelector("#tag_playlist").innerHTML;
-      pllll = JSON.parse(new_playlist);
-      myPlaylist.setPlaylist(pllll);
-      setTimeout(function(){ myPlaylist.play(track_id);},2000);
-      }
-    };
-    playlist_link.send( null );
-    }else{
-      myPlaylist.play(track_id);
-    };
-  });
 
 on('#ajax', 'click', '.genre_track', function(e) {
 var track_id = this.getAttribute('data-counter');

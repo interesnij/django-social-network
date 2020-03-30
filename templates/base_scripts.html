@@ -26,6 +26,7 @@
 		</li>
 </ul>
 
+<span id="all_music_playlists">
 <ul id="playlist_1" style="display:none;">
   {% for track in request.user.my_playlist_too %}
   <li data-path="{{ track.uri }}"
@@ -35,16 +36,4 @@
   {% endfor %}
 </ul>
 
-<script>
-on('#ajax', 'click', '.tag_track', function(e) {
-var tag_pk = document.querySelector(".tag_playlist").getAttribute('data-pk');
-  var playlist_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  playlist_link.open( 'GET', '/music/manage/temp_tag/' + tag_pk, true );
-  playlist_link.onreadystatechange = function () {
-    if ( playlist_link.readyState == 4 && playlist_link.status == 200 ) {
-			console.log("okkkk")
-      }
-    };
-    playlist_link.send( null );
-  });
-</script>
+</span>
