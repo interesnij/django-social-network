@@ -310,12 +310,12 @@ displayType:"responsive",
 })
 }
 FWDUVPlayer.onReady(function(){
-    video_player.addListener(FWDUVPlayer.READY, video_onReady);
-    video_player.addListener(FWDUVPlayer.PLAY, video_onPlay);
+    video_player.addListener(FWDUVPlayer.READY, onReady);
+    video_player.addListener(FWDUVPlayer.PLAY, onPlay);
 });
 MUSICUtils.onReady(function(){
-        music_player.addListener(MUSIC.READY, music_onReady);
-        music_player.addListener(MUSIC.PLAY, music_onPlay);
+        music_player.addListener(MUSIC.READY, onReady);
+        music_player.addListener(MUSIC.PLAY, onPlay);
     });
 
 function music_onReady(){console.log("Аудио плеер готов");}
