@@ -1,5 +1,5 @@
 
-new MUSIC({
+music_player = new MUSIC({
     //main settings
     instanceName:"player1",
     playlistsId:"audio_playlists",
