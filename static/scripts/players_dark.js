@@ -362,6 +362,7 @@ if (!document.body.classList.contains(category)){
           music_player.playSpecificTrack(0, track_id);
           console.log(cat, list)
       }};
+      tag_link.send( null );
   }};
     playlist_link.send( null );
     }else{
