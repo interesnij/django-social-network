@@ -359,11 +359,12 @@ if (!document.body.classList.contains(category)){
           var all_music_playlists = body.querySelector("#all_music_playlists");
           list = _test_.querySelector(".hide_list");
           cat = _test_.querySelector(".hide_cat");
-
+          all_music_playlists.innerHTML = "";
+          audio_playlists.innerHTML = "";
           all_music_playlists.append(list);
           audio_playlists.append(cat);
-          var cat1 = music_player.showPlaylist(1);
-          console.log(cat1, cat2);
+          var cat1 = music_player.showPlaylist();
+          console.log(cat1);
           music_player.playSpecificTrack(category, track_id);
       }};
       tag_link.send( null );
