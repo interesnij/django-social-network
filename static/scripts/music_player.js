@@ -5167,7 +5167,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             } else {
                 r.isShoutcast_bl = false
             }
-            if (r.sourcePath_str.indexOf(";") == -1) {
+            if (r.sourcePath_str == -1) {
                 r.isNormalMp3_bl = true;
                 r.countNormalMp3Errors = 0
             } else {
