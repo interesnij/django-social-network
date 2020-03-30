@@ -6,6 +6,7 @@
           "data-title": "{{ object.title }}",
           "data-thumbpath": "{{ object.artwork_url }}"
       }
-  },
+  }{% if not forloop.first %},{% endfor %}
   {% endfor %}
+
 }
