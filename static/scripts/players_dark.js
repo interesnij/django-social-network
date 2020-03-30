@@ -350,13 +350,14 @@ if (!document.body.classList.contains(category)){
       tag_link.open( 'GET', '/music/get/tag/' + tag_pk, true );
       tag_link.onreadystatechange = function () {
         if ( tag_link.readyState == 4 && tag_link.status == 200 ) {
-          var _test_ = tag_link.responseText;
+          var _test_ = document.createElement('span');
+          _test_.innerHTML = tag_link.responseText;
           var list = document.createElement('span');
           var cat = document.createElement('span');
           var audio_playlists = body.querySelector("#audio_playlists");
           var all_music_playlists = body.querySelector("#all_music_playlists");
-          list.innerHTML = _test_.querySelector(".hide_list").responseText;
-          cat.innerHTML = _test_.querySelector(".hide_cat").responseText;
+          list.innerHTML = _test_.querySelector(".hide_list");
+          cat.innerHTML = _test_.querySelector(".hide_cat");
           all_music_playlists.prepend(list);
           audio_playlists.prepend(cat);
           music_player.loadPlaylist(0);
