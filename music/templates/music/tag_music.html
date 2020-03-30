@@ -26,9 +26,9 @@
               <div class="card-body">
                 {% if object_list %}
                 <div class="tag_playlist" data-pk="{{ tag.pk }}" id="tracks_container">
-                    <ul class="ul_track_list" id="tag_{{ tag.pk }}"> 
+                    <ul class="ul_track_list" id="tag_{{ tag.pk }}">
                       {% for object in object_list %}
-                      <li class="list-group-item infinite-item id_{{ object.id }}">
+                      <li class="list-group-item">
                           <div class="media">
                               <figure class="tag_track track_item" style="cursor:pointer" data-counter="{{ forloop.counter0 }}">
                                 <a>
@@ -131,5 +131,12 @@ onscroll = function(){
 }catch{return}
 }
 </script>
-
+<ul id="tag_{{ tag.pk }}" class="hide_playlist" style="display:none;">
+  {% for track in object_list %}
+  <li data-path="{{ track.uri }}"
+      data-thumbpath="{{ track.artwork_url }}">
+    <p><span style="font-weight:bold">{{ track.title }}</span></p>
+  </li>
+  {% endfor %}
+</ul>
 {% endblock %}

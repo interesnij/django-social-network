@@ -352,7 +352,7 @@ if (!document.body.classList.contains(category)){
       var category_block = '<li data-source="' + category + '" data-thumbnail-path="/static/images/news_small1.jpg">' + '<p class="minimalWhiteCategoriesTitle"><span class="boldWhite">Название: </span>' + category + '</p></li>'
       audio_playlists.append(category_block.innerHTML);
 
-      var new_playlist = playlist.querySelector(".ul_track_list");
+      var new_playlist = body.querySelector(".hide_playlist");
       all_music_playlists.prepend(new_playlist);
       music_player.loadPlaylist(0);
       music_player.playSpecificTrack(0, track_id);
