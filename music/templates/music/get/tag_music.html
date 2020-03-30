@@ -1,14 +1,7 @@
-<li data-source="tag_{{ tag.pk }}" class="hide_cat" data-thumbnail-path="/static/images/news_small1.jpg">
-  <p class="minimalWhiteCategoriesTitle"><span class="boldWhite">Название: </span>Мой плейлист</p>
-  <p class="minimalWhiteCategoriesType"><span class="boldWhite">Здесь тип плейлиста</span></p>
-  <p class="minimalWhiteCategoriesDescription">Здесь описание плейлиста</p>
-</li>
 
-<ul id="tag_{{ tag.pk }}" class="hide_list" style="display:none;">
-  {% for track in list %} 
+  {% for track in list %}
   <li data-path="{{ track.uri }}"
       data-thumbpath="{{ track.artwork_url }}">
     <p><span style="font-weight:bold">{{ track.title }}</span></p>
   </li>
   {% endfor %}
-</ul>
