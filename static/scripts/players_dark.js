@@ -324,6 +324,7 @@ function video_onReady(){console.log("Видео плеер готов");}
 
 function video_onPlay(){
     console.log("Воспроизводится видео №: " + video_player.getVideoId());
+    document.title = video_player.getTrackTitle();
     music_player.pause();
 }
 function music_onPlay(){
