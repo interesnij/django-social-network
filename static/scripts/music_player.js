@@ -3028,6 +3028,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             self.controller_do.addListener(MUSICController.ENABLE_LOOP, self.enableLoopHandler);
             self.controller_do.addListener(MUSICController.DISABLE_LOOP, self.disableLoopHandler);
             self.controller_do.addListener(MUSICController.DOWNLOAD_MP3, self.controllerButtonDownloadMp3Handler);
+            self.controller_do.addListener(MUSICController.ADDTRACK, self.controllerButtonAddTrackHandler);
+            self.controller_do.addListener(MUSICController.REMOVETRACK, self.controllerButtonRemoveTrackHandler);
             self.controller_do.addListener(MUSICController.ENABLE_SHUFFLE, self.enableShuffleHandler);
             self.controller_do.addListener(MUSICController.DISABLE_SHUFFLE, self.disableShuffleHandler);
             self.controller_do.addListener(MUSICController.BUY, self.controllerButtonBuyHandler);
