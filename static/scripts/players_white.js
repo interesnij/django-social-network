@@ -14,7 +14,6 @@ audio_player = new MUSIC({
 		useYoutube:"no",											// использовать youtube файлы
 		useVideo:"no",												// использовать видео файлы
 		rightClickContextMenu:"no",           // показ контекстног меню по щелчку правой кнопкой мыши
-		showButtonsToolTips:"no",             // показать всплывающие подсказки кнопок
 		addKeyboardSupport:"yes",             // добавить поддержку клавиатуры
 		animate:"yes",												// фнимация
 		autoPlay:"no",												// автостарт плеера
@@ -22,8 +21,6 @@ audio_player = new MUSIC({
 		shuffle:"no",													// перемешивание треков
 		maxWidth:850,                         // максимальная ширина
 		volume:.8,														// громкость по умолчанию 80%
-		// toolTipsButtonsHideDelay:1.5,      // задержка всплывающих подсказок для кнопок
-		// toolTipsButtonFontColor:"#888888", // цвет всплывающих подсказок
 
 		// controller settings
 		showControllerByDefault:"yes",        // показать контроллер по умолчанию
@@ -35,12 +32,9 @@ audio_player = new MUSIC({
 		showShuffleButton:"yes",              // показывать кнопку перемешивания треков
 		showDownloadMp3Button:"yes",          // показывать кнопку скачивания mp3
 		showShareButton:"no",									// показывать кнопку расшаривания треков
-		showMainScrubberAndVolumeScrubberToolTipLabel:"no",  // показывать всплывающее окно громкости и сам скруббер
 		expandBackground:"no",              	// развернуть фон
 		titleColor:"#000000",                 // цвет названия
 		timeColor:"#919191",                  // цвет времени
-		scrubbersToolTipLabelBackgroundColor:"#FFFFFF", // фон скруббера громкости
-		// scrubbersToolTipLabelFontColor:"#5a5a5a", // цвет всплывающих окон скруббера
 
 		// настройки выравнивания и размера контроллера (подробно описаны в документации!)
 		controllerHeight:76,                 // высота контроллера
@@ -171,7 +165,6 @@ video_player = new FWDUVPlayer({
 		preloaderFillColor:"#FFFFFF",             // цвет прелоадера
 		addKeyboardSupport:"yes",                 // использовать поддержку клавиатуры
 		autoScale:"yes",                          // автоматическое масштабирование
-		showButtonsToolTip:"yes",                 // показывать подсказки для кнопок
 		stopVideoWhenPlayComplete:"no",           // остановить плеер после проигрывания последнего ролика
 		playAfterVideoStop:"yes",                 // воспроизведение после остановки видео
 		autoPlay:"no",                            // автоматический старт проигрывания
@@ -181,11 +174,9 @@ video_player = new FWDUVPlayer({
 		maxWidth:1170,                            // максимальная ширина
 		maxHeight:659,                            // максимальная высота
 		volume:.8,                                // начальная громкость плеера (1 - 100%)
-		buttonsToolTipHideDelay:1.5,              // время задержки пояснительных окон у кнопок
 		backgroundColor:"#eeeeee",                // цвет фона
 		videoBackgroundColor:"#000000",           // цвет фона видео-секции
 		posterBackgroundColor:"#000000",          // цвет фона постера
-		buttonsToolTipFontColor:"#FFFFFF",        // цвет фона пояснительных окон у кнопок
 
 		//logo settings
 		showLogo:"no",                            // показывать логотип над секцией видео справа
@@ -267,7 +258,6 @@ video_player = new FWDUVPlayer({
 		showFullScreenButton:"yes",               // показывать кнопку полноэкранного режима
 		disableVideoScrubber:"no",                // выключить ползунок переключения времени видео
 		showScrubberWhenControllerIsHidden:"yes", // показывать ползунок времени воспроизведенного ролика при скрытом контроллере
-		showMainScrubberToolTipLabel:"yes",       // показывать пояснительное окно с временем воспроизведения над ползунком
 		showDefaultControllerForVimeo:"no",       // показывать контроллер vimeo
 		repeatBackground:"yes",                   // повтор бекгроунда
 		controllerHeight:42,                      // высота контроллера
@@ -284,8 +274,6 @@ video_player = new FWDUVPlayer({
 		timeColor:"#919191",                      // цвет времени воспроизведения
 		youtubeQualityButtonNormalColor:"#919191",// кнопка выбора качества плейлитса ютуба
 		youtubeQualityButtonSelectedColor:"#000000",// нажатая кнопка выбора качества плейлитса ютуба
-		scrubbersToolTipLabelBackgroundColor:"#000000",// цвет фона окна пояснения скруббера
-		scrubbersToolTipLabelFontColor:"#FFFFFF", // цвет текста окна пояснения скруббера
 
 		//advertisement on pause window
 		aopwTitle:"Advertisement",                // название рекламной вставки
