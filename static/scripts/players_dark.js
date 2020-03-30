@@ -347,26 +347,26 @@ if (!document.body.classList.contains(category)){
       var body = document.querySelector("body");
       body.className = "";body.classList.add(category);
 
-      var tag_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-      tag_link.open( 'GET', '/music/get/tag/' + tag_pk, true );
-      tag_link.onreadystatechange = function () {
-        if ( tag_link.readyState == 4 && tag_link.status == 200 ) {
-          var _test_ = document.createElement('span');
-          _test_.innerHTML = tag_link.responseText;
-          var list = document.createElement('span');
-          var cat = document.createElement('span');
-          var audio_playlists = body.querySelector("#audio_playlists");
-          var all_music_playlists = body.querySelector("#all_music_playlists");
-          list = _test_.querySelector(".hide_list");
-          cat = _test_.querySelector(".hide_cat");
-          var category_new = cat.getAttribute('data-pk');
-          all_music_playlists.append(list);
-          audio_playlists.append(cat);
-          console.log(category, category_new);
+      //var tag_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+      //tag_link.open( 'GET', '/music/get/tag/' + tag_pk, true );
+      //tag_link.onreadystatechange = function () {
+        //if ( tag_link.readyState == 4 && tag_link.status == 200 ) {
+          //var _test_ = document.createElement('span');
+          //_test_.innerHTML = tag_link.responseText;
+          //var list = document.createElement('span');
+          //var cat = document.createElement('span');
+          //var audio_playlists = body.querySelector("#audio_playlists");
+          //var all_music_playlists = body.querySelector("#all_music_playlists");
+          //list = _test_.querySelector(".hide_list");
+          //cat = _test_.querySelector(".hide_cat");
+          //var category_new = cat.getAttribute('data-pk');
+          //all_music_playlists.append(list);
+          //audio_playlists.append(cat);
+          //console.log(category, category_new);
           music_player.loadPlaylist('/music/get/tag/8481/' + '&rand=1');
           music_player.playSpecificTrack(category, track_id);
-      }};
-      tag_link.send( null );
+      //}};
+      //tag_link.send( null );
   }};
     playlist_link.send( null );
     }else{
