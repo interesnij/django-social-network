@@ -351,7 +351,7 @@ if (! function(t) {
         }, r.validateEmail = function(e) {
             return !!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(e)
         }, r.isReadyMethodCalled_bl = !1, t.FWDUVPUtils = r
-    }(window), !window.FWDAnimation) {
+    }(window), !window.Animation) {
     var _fwd_gsScope = "undefined" != typeof fwd_module && fwd_module.exports && "undefined" != typeof fwd_global ? fwd_global : this || window;
     (_fwd_gsScope._fwd_gsQueue || (_fwd_gsScope._fwd_gsQueue = [])).push(function() {
             "use strict";
@@ -428,7 +428,7 @@ if (! function(t) {
             function r(e) {
                 for (; e;) e.f || e.blob || (e.m = Math.round), e = e._next
             }
-            _fwd_gsScope.FWDFWD_gsDefine("FWDAnimation", ["core.FWDAnimation", "core.FWDSimpleTimeline", "TweenLite"], function(m, u, b) {
+            _fwd_gsScope.FWDFWD_gsDefine("Animation", ["core.Animation", "core.FWDSimpleTimeline", "TweenLite"], function(m, u, b) {
                 function g(e) {
                     var t, s = [],
                         o = e.length;
@@ -589,7 +589,7 @@ if (! function(t) {
                 }, e.yoyo = function(e) {
                     return arguments.length ? (this._yoyo = e, this) : this._yoyo
                 }, m
-            }, !0), _fwd_gsScope.FWDFWD_gsDefine("FWDTimelineLite", ["core.FWDAnimation", "core.FWDSimpleTimeline", "TweenLite"], function(u, h, c) {
+            }, !0), _fwd_gsScope.FWDFWD_gsDefine("FWDTimelineLite", ["core.Animation", "core.FWDSimpleTimeline", "TweenLite"], function(u, h, c) {
                 function _(e) {
                     h.call(this, e), this._labels = {}, this.autoRemoveChildren = !0 === this.vars.autoRemoveChildren, this.smoothChildTiming = !0 === this.vars.smoothChildTiming, this._sortChildren = !0, this._onUpdate = this.vars.onUpdate;
                     var t, s, o = this.vars;
@@ -626,12 +626,12 @@ if (! function(t) {
                     l = t.pauseCallback = function() {},
                     s = _.prototype = new h;
                 return _.version = "1.19.0", s.constructor = _, s.kill()._gc = s._forcingPlayhead = s._hasPause = !1, s.to = function(e, t, s, o) {
-                    var i = s.repeat && n.FWDAnimation || c;
+                    var i = s.repeat && n.Animation || c;
                     return t ? this.add(new i(e, t, s), o) : this.set(e, s, o)
                 }, s.from = function(e, t, s, o) {
-                    return this.add((s.repeat && n.FWDAnimation || c).from(e, t, s), o)
+                    return this.add((s.repeat && n.Animation || c).from(e, t, s), o)
                 }, s.fromTo = function(e, t, s, o, i) {
-                    var l = o.repeat && n.FWDAnimation || c;
+                    var l = o.repeat && n.Animation || c;
                     return t ? this.add(l.fromTo(e, t, s, o), i) : this.set(e, o, i)
                 }, s.staggerTo = function(e, t, s, o, i, l, n, a) {
                     var r, d, u = new _({
@@ -863,7 +863,7 @@ if (! function(t) {
                             useFrames: this.usesFrames(),
                             immediateRender: !1
                         },
-                        n = t.repeat && r.FWDAnimation || a;
+                        n = t.repeat && r.Animation || a;
                     for (o in t) l[o] = t[o];
                     return l.time = this._parseTimeOrLabel(e), s = Math.abs(Number(l.time) - this._time) / this._timeScale || .001, i = new n(this, s, l), l.onStart = function() {
                         i.target.paused(!0), i.vars.time !== i.target.time() && s === i.duration() && i.duration(Math.abs(i.vars.time - i.target.time()) / i.target._timeScale), t.onStart && i._callback("onStart")
@@ -2195,7 +2195,7 @@ if (! function(t) {
                         "auto" === s && d.frame < 5 && "hidden" !== document.visibilityState && d.useRAF(!1)
                     }, 1500)
                 }), (s = h.Ticker.prototype = new h.events.EventDispatcher).constructor = h.Ticker;
-                var d = c("core.FWDAnimation", function(e, t) {
+                var d = c("core.Animation", function(e, t) {
                     if (this.vars = t = t || {}, this._duration = this._totalDuration = e || 0, this._delay = Number(t.delay) || 0, this._timeScale = 1, this._active = !0 === t.immediateRender, this.data = t.data, this._reversed = !0 === t.reversed, G) {
                         g || b.wake();
                         var s = this.vars.useFrames ? Q : G;
@@ -2699,7 +2699,7 @@ if (! function(t) {
                 }
                 g = !1
             }
-        }("undefined" != typeof fwd_module && fwd_module.exports && "undefined" != typeof fwd_global ? fwd_global : this || window, "FWDAnimation")
+        }("undefined" != typeof fwd_module && fwd_module.exports && "undefined" != typeof fwd_global ? fwd_global : this || window, "Animation")
 }
 if (! function(e) {
         var t = function() {
@@ -2750,63 +2750,63 @@ if (! function(e) {
                 var t = c.totalWidth;
                 e && (t = 64), e ? (this.text_do.setVisible(!1), c.icon_do.setX(Math.round((t - c.iconS_do.w) / 2) - 1), c.icon_do.setY(Math.round((c.totalHeight - c.iconS_do.h) / 2))) : (this.text_do.setVisible(!0), c.icon_do.setX(c.text_do.x + c.text_do.getWidth() + 8 + c.iconS_do.w - c.iconS_do.w), c.icon_do.setY(parseInt((c.totalHeight - c.iconS_do.h) / 2) + 2)), c.iconS_do.setX(c.icon_do.x), c.iconS_do.setY(c.icon_do.y), c.setWidth(t), c.main_do.setWidth(t), c.bk_do.setWidth(t), c.border_do.setWidth(t - 1)
             }, this.setNormalState = function() {
-                FWDAnimation.to(c.iconS_do, .5, {
+                Animation.to(c.iconS_do, .5, {
                     alpha: 0,
                     ease: Expo.easeOut
-                }), FWDAnimation.to(c.text_do.screen, .5, {
+                }), Animation.to(c.text_do.screen, .5, {
                     css: {
                         color: c.textNormalColor_str
                     },
                     ease: Expo.easeOut
-                }), FWDAnimation.to(c.border_do.screen, .5, {
+                }), Animation.to(c.border_do.screen, .5, {
                     css: {
                         borderColor: c.borderNColor_str
                     },
                     ease: Expo.easeOut
                 })
             }, this.setSelectedState = function() {
-                FWDAnimation.to(c.iconS_do, .5, {
+                Animation.to(c.iconS_do, .5, {
                     alpha: 1,
                     ease: Expo.easeOut
-                }), FWDAnimation.to(c.text_do.screen, .5, {
+                }), Animation.to(c.text_do.screen, .5, {
                     css: {
                         color: c.textSelectedColor_str
                     },
                     ease: Expo.easeOut
-                }), FWDAnimation.to(c.border_do.screen, .5, {
+                }), Animation.to(c.border_do.screen, .5, {
                     css: {
                         borderColor: c.borderSColor_str
                     },
                     ease: Expo.easeOut
                 })
             }, this.show = function(e) {
-                this.isShowed_bl || (this.isShowed_bl = !0, this.setVisible(!0), FWDAnimation.killTweensOf(this.main_do), e && !c.isMbl ? "left" == this.position_str ? FWDAnimation.to(this.main_do, .8, {
+                this.isShowed_bl || (this.isShowed_bl = !0, this.setVisible(!0), Animation.killTweensOf(this.main_do), e && !c.isMbl ? "left" == this.position_str ? Animation.to(this.main_do, .8, {
                     x: 0,
                     delay: .8,
                     ease: Expo.easeInOut
-                }) : FWDAnimation.to(this.main_do, .8, {
+                }) : Animation.to(this.main_do, .8, {
                     x: 1 - this.totalWidth,
                     delay: .8,
                     ease: Expo.easeInOut
                 }) : "left" == this.position_str ? this.main_do.setX(0) : this.main_do.setX(-this.totalWidth), this.text_do.getStyle().color = this.textNormalColor_str)
             }, this.hide = function(e, t) {
-                (this.isShowed_bl || t) && (this.isShowed_bl = !1, this.hasThumbanil_bl = !1, FWDAnimation.killTweensOf(this.main_do), e && !c.isMbl ? "left" == this.position_str ? FWDAnimation.to(this.main_do, .8, {
+                (this.isShowed_bl || t) && (this.isShowed_bl = !1, this.hasThumbanil_bl = !1, Animation.killTweensOf(this.main_do), e && !c.isMbl ? "left" == this.position_str ? Animation.to(this.main_do, .8, {
                     x: -this.totalWidth,
                     ease: Expo.easeInOut,
                     onComplete: this.hideCompleteHandler
-                }) : FWDAnimation.to(this.main_do, .8, {
+                }) : Animation.to(this.main_do, .8, {
                     x: 0,
                     ease: Expo.easeInOut,
                     onComplete: this.hideCompleteHandler
                 }) : ("left" == this.position_str ? this.main_do.setX(-this.totalWidth) : this.main_do.setX(0), this.hideCompleteHandler()))
             }, this.hideCompleteHandler = function() {
-                c.smallImage_img && (c.smallImage_img.onload = null, c.smallImage_img.src = "", FWDAnimation.killTweensOf(c.icon_do)), 1 != c.main_do.alpha && c.main_do.setAlpha(1), c.thumbHolder_do.setVisible(!1), c.setVisible(!1)
+                c.smallImage_img && (c.smallImage_img.onload = null, c.smallImage_img.src = "", Animation.killTweensOf(c.icon_do)), 1 != c.main_do.alpha && c.main_do.setAlpha(1), c.thumbHolder_do.setVisible(!1), c.setVisible(!1)
             }, this.hideWithOpacity = function() {
-                FWDUVPUtils.isIEAndLessThen9 || FWDAnimation.to(this.main_do, .8, {
+                FWDUVPUtils.isIEAndLessThen9 || Animation.to(this.main_do, .8, {
                     alpha: .5
                 })
             }, this.showWithOpacity = function() {
-                FWDUVPUtils.isIEAndLessThen9 || FWDAnimation.to(this.main_do, .8, {
+                FWDUVPUtils.isIEAndLessThen9 || Animation.to(this.main_do, .8, {
                     alpha: 1
                 })
             }, c.init()
@@ -2835,39 +2835,39 @@ if (! function(e) {
                 var e = l.thumbHolder_do.w / l.smallImageOriginalW,
                     t = l.thumbHolder_do.h / l.smallImageOriginalH,
                     s = 0;
-                t <= e ? s = e : e <= t && (s = t), l.thumbnail_do.setWidth(Math.round(l.smallImageOriginalW * s)), l.thumbnail_do.setHeight(Math.round(l.smallImageOriginalH * s)), l.thumbnail_do.setX(Math.round((l.thumbHolder_do.w - l.thumbnail_do.w) / 2)), l.thumbnail_do.setY(Math.round((l.thumbHolder_do.h - l.thumbnail_do.h) / 2)), l.thumbnail_do.setAlpha(0), FWDAnimation.to(l.thumbnail_do, .8, {
+                t <= e ? s = e : e <= t && (s = t), l.thumbnail_do.setWidth(Math.round(l.smallImageOriginalW * s)), l.thumbnail_do.setHeight(Math.round(l.smallImageOriginalH * s)), l.thumbnail_do.setX(Math.round((l.thumbHolder_do.w - l.thumbnail_do.w) / 2)), l.thumbnail_do.setY(Math.round((l.thumbHolder_do.h - l.thumbnail_do.h) / 2)), l.thumbnail_do.setAlpha(0), Animation.to(l.thumbnail_do, .8, {
                     alpha: 1
                 }), l.updateText()
             }, this.updateText = function(e) {
                 e && this.text_do.setInnerHTML(e), this.hasThumbanil_bl ? (this.text_do.setX(16), this.text_do.setWidth(this.totalWidth - this.totalHeight - 26)) : (this.text_do.setX(8), this.text_do.setWidth(this.totalWidth - 16)), this.text_do.setY(parseInt((l.totalHeight - l.text_do.getHeight()) / 2))
             }, this.show = function(e) {
-                this.isShowed_bl || (this.isShowed_bl = !0, this.setVisible(!0), FWDAnimation.killTweensOf(this.main_do), e && !l.isMbl ? "left" == this.position_str ? FWDAnimation.to(this.main_do, .8, {
+                this.isShowed_bl || (this.isShowed_bl = !0, this.setVisible(!0), Animation.killTweensOf(this.main_do), e && !l.isMbl ? "left" == this.position_str ? Animation.to(this.main_do, .8, {
                     x: 0,
                     delay: .2,
                     ease: Expo.easeInOut
-                }) : FWDAnimation.to(this.main_do, .8, {
+                }) : Animation.to(this.main_do, .8, {
                     x: 1 - this.totalWidth,
                     delay: .2,
                     ease: Expo.easeInOut
                 }) : "left" == this.position_str ? this.main_do.setX(0) : this.main_do.setX(-this.totalWidth))
             }, this.hide = function(e, t) {
-                (this.isShowed_bl || t) && (this.isShowed_bl = !1, this.hasThumbanil_bl = !1, FWDAnimation.killTweensOf(this.main_do), e && !l.isMbl ? "left" == this.position_str ? FWDAnimation.to(this.main_do, .8, {
+                (this.isShowed_bl || t) && (this.isShowed_bl = !1, this.hasThumbanil_bl = !1, Animation.killTweensOf(this.main_do), e && !l.isMbl ? "left" == this.position_str ? Animation.to(this.main_do, .8, {
                     x: -this.totalWidth,
                     ease: Expo.easeInOut,
                     onComplete: this.hideCompleteHandler
-                }) : FWDAnimation.to(this.main_do, .8, {
+                }) : Animation.to(this.main_do, .8, {
                     x: 0,
                     ease: Expo.easeInOut,
                     onComplete: this.hideCompleteHandler
                 }) : ("left" == this.position_str ? this.main_do.setX(-this.totalWidth) : this.main_do.setX(0), this.hideCompleteHandler()))
             }, this.hideCompleteHandler = function() {
-                l.smallImage_img && (l.smallImage_img.onload = null, l.smallImage_img.src = "", FWDAnimation.killTweensOf(l.thumbnail_do)), 1 != l.main_do.alpha && l.main_do.setAlpha(1), l.thumbHolder_do.setVisible(!1), l.setVisible(!1)
+                l.smallImage_img && (l.smallImage_img.onload = null, l.smallImage_img.src = "", Animation.killTweensOf(l.thumbnail_do)), 1 != l.main_do.alpha && l.main_do.setAlpha(1), l.thumbHolder_do.setVisible(!1), l.setVisible(!1)
             }, this.hideWithOpacity = function() {
-                FWDUVPUtils.isIEAndLessThen9 || FWDAnimation.to(this.main_do, .8, {
+                FWDUVPUtils.isIEAndLessThen9 || Animation.to(this.main_do, .8, {
                     alpha: .5
                 })
             }, this.showWithOpacity = function() {
-                FWDUVPUtils.isIEAndLessThen9 || FWDAnimation.to(this.main_do, .8, {
+                FWDUVPUtils.isIEAndLessThen9 || Animation.to(this.main_do, .8, {
                     alpha: 1
                 })
             }, l.init()
@@ -2904,23 +2904,23 @@ if (! function(e) {
             }, this.closeClickButtonCloseHandler = function() {
                 self.hide(), self.isClsd = !0
             }, this.show = function() {
-                this.isShowed_bl || this.isClsd || (self.isShowed_bl = !0, self.setVisible(!0), FWDAnimation.killTweensOf(self), FWDAnimation.to(self, .8, {
+                this.isShowed_bl || this.isClsd || (self.isShowed_bl = !0, self.setVisible(!0), Animation.killTweensOf(self), Animation.to(self, .8, {
                     alpha: 1,
                     ease: Quint.easeOut
-                }), self.clsBtn && FWDAnimation.to(self.clsBtn, .8, {
+                }), self.clsBtn && Animation.to(self.clsBtn, .8, {
                     scale: 1,
                     delay: .2,
                     ease: Elastic.easeOut
                 }))
             }, this.hide = function() {
-                this.isShowed_bl && (FWDAnimation.killTweensOf(self), self.isShowed_bl = !1, self.setVisible(!1), self.setAlpha(0), self.clsBtn && (FWDAnimation.killTweensOf(self.clsBtn), self.clsBtn.setScale2(0)))
+                this.isShowed_bl && (Animation.killTweensOf(self), self.isShowed_bl = !1, self.setVisible(!1), self.setAlpha(0), self.clsBtn && (Animation.killTweensOf(self.clsBtn), self.clsBtn.setScale2(0)))
             }, this.setNormalState = function() {
-                self.selectedStateClass && FWDAnimation.to(self.screen, .8, {
+                self.selectedStateClass && Animation.to(self.screen, .8, {
                     className: self.normalStateClass,
                     ease: Quint.easeOut
                 })
             }, this.setSelectedAtate = function() {
-                self.selectedStateClass && FWDAnimation.to(self.screen, .8, {
+                self.selectedStateClass && Animation.to(self.screen, .8, {
                     className: self.selectedStateClass,
                     ease: Quint.easeOut
                 })
@@ -2982,10 +2982,10 @@ if (! function(e) {
                 if (n.setX(Math.round((i.sW - t * i.maxWidth) / 2)), n.setY(Math.round((i.tempVidStageHeight - t * i.maxHeight) / 2)), n.scale = i.sW / i.maxWidth, n.scaleY = n.scale, n.scaleX = n.scale, n.scaleInverse = i.maxWidth / i.sW, !n.showAnnotationsPositionTool_bl)
                     for (var s = 0; s < n.totalAnnotations; s++) {
                         var o = this.ann_ar[s];
-                        o.setScale2(n.scale), o.finalX = Math.floor(o.left * n.scaleX), i.playlist_do && i.isPlaylistShowed_bl && "right" == i.tempPlaylistPosition_str && !i.isFullScreen_bl && o.left > i.maxWidth / 3 && (o.finalX -= i.playlistWidth + i.spaceBetweenControllerAndPlaylist), o.finalY = Math.floor(o.top * n.scaleY), o.clsBtn && (o.clsBtn.setWidth(Math.round(o.clsBtn.buttonWidth * n.scaleInverse)), o.clsBtn.setHeight(Math.round(o.clsBtn.buttonHeight * n.scaleInverse)), o.clsBtn.n_do.setWidth(Math.round(o.clsBtn.buttonWidth * n.scaleInverse)), o.clsBtn.n_do.setHeight(Math.round(o.clsBtn.buttonHeight * n.scaleInverse)), o.clsBtn.n_do_canvas && (o.clsBtn.n_do_canvas.style.width = Math.round(o.clsBtn.buttonWidth * n.scaleInverse) + "px", o.clsBtn.n_do_canvas.style.height = Math.round(o.clsBtn.buttonheight * n.scaleInverse) + "px", o.clsBtn.s_do_canvas.style.width = Math.round(o.clsBtn.buttonWidth * n.scaleInverse) + "px", o.clsBtn.s_do_canvas.style.height = Math.round(o.clsBtn.buttonheight * n.scaleInverse) + "px"), o.clsBtn.s_do.setWidth(Math.round(o.clsBtn.buttonWidth * n.scaleInverse)), o.clsBtn.s_do.setHeight(Math.round(o.clsBtn.buttonHeight * n.scaleInverse)), o.clsBtn.setX(Math.floor(o.getWidth() - o.clsBtn.w / 2)), o.clsBtn.setY(Math.floor(-o.clsBtn.h / 2))), o.prevFinalX != o.finalX && (e ? FWDAnimation.to(o, .8, {
+                        o.setScale2(n.scale), o.finalX = Math.floor(o.left * n.scaleX), i.playlist_do && i.isPlaylistShowed_bl && "right" == i.tempPlaylistPosition_str && !i.isFullScreen_bl && o.left > i.maxWidth / 3 && (o.finalX -= i.playlistWidth + i.spaceBetweenControllerAndPlaylist), o.finalY = Math.floor(o.top * n.scaleY), o.clsBtn && (o.clsBtn.setWidth(Math.round(o.clsBtn.buttonWidth * n.scaleInverse)), o.clsBtn.setHeight(Math.round(o.clsBtn.buttonHeight * n.scaleInverse)), o.clsBtn.n_do.setWidth(Math.round(o.clsBtn.buttonWidth * n.scaleInverse)), o.clsBtn.n_do.setHeight(Math.round(o.clsBtn.buttonHeight * n.scaleInverse)), o.clsBtn.n_do_canvas && (o.clsBtn.n_do_canvas.style.width = Math.round(o.clsBtn.buttonWidth * n.scaleInverse) + "px", o.clsBtn.n_do_canvas.style.height = Math.round(o.clsBtn.buttonheight * n.scaleInverse) + "px", o.clsBtn.s_do_canvas.style.width = Math.round(o.clsBtn.buttonWidth * n.scaleInverse) + "px", o.clsBtn.s_do_canvas.style.height = Math.round(o.clsBtn.buttonheight * n.scaleInverse) + "px"), o.clsBtn.s_do.setWidth(Math.round(o.clsBtn.buttonWidth * n.scaleInverse)), o.clsBtn.s_do.setHeight(Math.round(o.clsBtn.buttonHeight * n.scaleInverse)), o.clsBtn.setX(Math.floor(o.getWidth() - o.clsBtn.w / 2)), o.clsBtn.setY(Math.floor(-o.clsBtn.h / 2))), o.prevFinalX != o.finalX && (e ? Animation.to(o, .8, {
                             x: o.finalX,
                             ease: Expo.easeInOut
-                        }) : o.setX(o.finalX)), o.prevFinalY != o.finalY && (e ? FWDAnimation.to(o, .8, {
+                        }) : o.setX(o.finalX)), o.prevFinalY != o.finalY && (e ? Animation.to(o, .8, {
                             y: o.finalY,
                             ease: Expo.easeInOut
                         }) : o.setY(o.finalY)), o.prevFinalX = o.finalX, o.prevFinalY = o.finalY
@@ -3161,9 +3161,9 @@ if (! function(e) {
                 -1 != s.sknPth.indexOf("hex_white") ? p.sBC = "#FFFFFF" : p.sBC = s.sBC, p.getStyle().zIndex = 2147483647, p.getStyle().msTouchAction = "none", p.getStyle().webkitTapHighlightColor = "rgba(0, 0, 0, 0)", p.getStyle().width = "100%", p.mainHld = new FWDUVPDisplayObject("div"), p.mainHld.screen.className = "fwduvp-categories-background", p.mainHld.getStyle().background = "url('" + p.catBkPath_str + "')", p.mainHld.setY(-3e3), p.addChild(p.mainHld), p.setupButtons(), p.setupDisable(), p.isMbl && (p.setupMobileMove(), FWDUVPUtils.isChrome && (FWDUVPUtils.isIEAndLessThen9 ? document.getElementsByTagName("body")[0].appendChild(p.screen) : document.documentElement.appendChild(p.screen))), (!p.isMbl || p.isMbl && p.hasPointerEvent_bl) && p.setSelectable(!1), window.addEventListener ? (p.screen.addEventListener("mousewheel", p.mouseWheelDumyHandler), p.screen.addEventListener("DOMMouseScroll", p.mouseWheelDumyHandler)) : document.attachEvent && p.screen.attachEvent("onmousewheel", p.mouseWheelDumyHandler), p.showSearchInpt && p.setupInput()
             }, this.mouseWheelDumyHandler = function(e) {
                 var t;
-                if (FWDAnimation.isTweening(p.mainHld)) return e.preventDefault && e.preventDefault(), !1;
+                if (Animation.isTweening(p.mainHld)) return e.preventDefault && e.preventDefault(), !1;
                 for (var s = 0; s < p.totalThumbnails; s++)
-                    if (t = p.thumbs_ar[s], FWDAnimation.isTweening(t)) return e.preventDefault && e.preventDefault(), !1;
+                    if (t = p.thumbs_ar[s], Animation.isTweening(t)) return e.preventDefault && e.preventDefault(), !1;
                 var o = e.detail || e.wheelDelta;
                 if (e.wheelDelta && (o *= -1), FWDUVPUtils.isOpera && (o *= -1), 0 < o) p.nextButtonOnMouseUpHandler();
                 else if (o < 0) {
@@ -3176,7 +3176,7 @@ if (! function(e) {
                 if (p.isShowed_bl || e) {
                     var t = FWDUVPUtils.getScrollOffsets(),
                         s = FWDUVPUtils.getViewportSize();
-                    p.sW = s.w, p.sH = s.h, FWDAnimation.killTweensOf(p.mainHld), p.mainHld.setX(0), p.mainHld.setWidth(p.sW), p.mainHld.setHeight(p.sH), p.setX(t.x), p.setY(t.y), p.setHeight(p.sH), (p.isMbl || o.isEmbedded_bl) && p.setWidth(p.sW), p.positionButtons(), p.tempId = p.id, p.resizeAndPositionThumbnails(), p.disableEnableNextAndPrevButtons(), p.input_do && (p.input_do.setX(p.sW - p.input_do.getWidth() - p.buttonsMargins), p.input_do.setY(p.sH - p.input_do.getHeight() - p.buttonsMargins), p.inputArrow_do.setX(p.input_do.x + p.input_do.getWidth() - 20), p.inputArrow_do.setY(p.input_do.y + p.input_do.getHeight() / 2 - p.inputArrow_do.getHeight() / 2))
+                    p.sW = s.w, p.sH = s.h, Animation.killTweensOf(p.mainHld), p.mainHld.setX(0), p.mainHld.setWidth(p.sW), p.mainHld.setHeight(p.sH), p.setX(t.x), p.setY(t.y), p.setHeight(p.sH), (p.isMbl || o.isEmbedded_bl) && p.setWidth(p.sW), p.positionButtons(), p.tempId = p.id, p.resizeAndPositionThumbnails(), p.disableEnableNextAndPrevButtons(), p.input_do && (p.input_do.setX(p.sW - p.input_do.getWidth() - p.buttonsMargins), p.input_do.setY(p.sH - p.input_do.getHeight() - p.buttonsMargins), p.inputArrow_do.setX(p.input_do.x + p.input_do.getWidth() - 20), p.inputArrow_do.setY(p.input_do.y + p.input_do.getHeight() / 2 - p.inputArrow_do.getHeight() / 2))
                 }
             }, p.onScrollHandler = function() {
                 var e = FWDUVPUtils.getScrollOffsets();
@@ -3201,13 +3201,13 @@ if (! function(e) {
                     p.keyPressed_bl = !1
                 }, 450)
             }, this.showNothingFound = function() {
-                p.isShowNothingFound_bl || (p.isShowNothingFound_bl = !0, p.noSearchFound_do.setVisible(!0), p.noSearchFound_do.setY(parseInt((p.sH - p.noSearchFound_do.getHeight()) / 2)), p.noSearchFound_do.setAlpha(0), FWDAnimation.to(p.noSearchFound_do, .1, {
+                p.isShowNothingFound_bl || (p.isShowNothingFound_bl = !0, p.noSearchFound_do.setVisible(!0), p.noSearchFound_do.setY(parseInt((p.sH - p.noSearchFound_do.getHeight()) / 2)), p.noSearchFound_do.setAlpha(0), Animation.to(p.noSearchFound_do, .1, {
                     alpha: 1,
                     yoyo: !0,
                     repeat: 4
                 }))
             }, this.hideNothingFound = function() {
-                p.isShowNothingFound_bl && (p.isShowNothingFound_bl = !1, FWDAnimation.killTweensOf(p.noSearchFound_do), p.noSearchFound_do.setVisible(!1))
+                p.isShowNothingFound_bl && (p.isShowNothingFound_bl = !1, Animation.killTweensOf(p.noSearchFound_do), p.noSearchFound_do.setVisible(!1))
             }, this.setupDisable = function() {
                 p.disable_do = new FWDUVPDisplayObject("div"), FWDUVPUtils.isIE && (p.disable_do.setBkColor("#FFFFFF"), p.disable_do.setAlpha(.01)), p.addChild(p.disable_do)
             }, this.showDisable = function() {
@@ -3264,7 +3264,7 @@ if (! function(e) {
                 if (p.areThumbnailsCreated_bl) {
                     var s, o, i, l, n, a, r, d, u, h = [].concat(p.thumbs_ar);
                     if (p.isSearched_bl = !1, p.input_do && (inputValue = p.input_do.screen.value.toLowerCase(), "search" != inputValue))
-                        for (var c = 0; c < h.length; c++) - 1 == (s = h[c]).htmlText_str.toLowerCase().indexOf(inputValue.toLowerCase()) && (FWDAnimation.killTweensOf(s), s.hide(), h.splice(c, 1), c--);
+                        for (var c = 0; c < h.length; c++) - 1 == (s = h[c]).htmlText_str.toLowerCase().indexOf(inputValue.toLowerCase()) && (Animation.killTweensOf(s), s.hide(), h.splice(c, 1), c--);
                     p.totalThumbnails = h.length, p.totalThumbnails != p.thumbs_ar.length && (p.isSearched_bl = !0), 0 == p.totalThumbnails ? p.showNothingFound() : p.hideNothingFound(), this.remainWidthSpace = this.sW - l;
                     var _ = p.sW - p.categoriesOffsetTotalWidth,
                         f = p.sH - p.categoriesOffsetTotalHeight;
@@ -3280,26 +3280,26 @@ if (! function(e) {
                 for (var e, t = 0; t < p.totalThumbnails; t++) e = p.thumbs_ar[t], t == p.id ? e.disable() : e.enable()
             }, this.show = function(e) {
                 p.isShowed_bl || (p.isShowed_bl = !0, p.isOnDOM_bl = !0, p.id = e, FWDUVPUtils.isChrome && p.isMbl ? p.setVisible(!0) : FWDUVPUtils.isIEAndLessThen9 ? document.getElementsByTagName("body")[0].appendChild(p.screen) : document.documentElement.appendChild(p.screen), window.addEventListener ? window.addEventListener("scroll", p.onScrollHandler) : window.attachEvent && window.attachEvent("onscroll", p.onScrollHandler), p.setupThumbnails(), p.useVectorIcons_bl ? (p.clsBtn.setFinalSize(!0), p.nextButton_do.setFinalSize(!0), p.prevButton_do.setFinalSize(!0), p.checkButtonsId_to = setInterval(function() {
-                    0 != p.clsBtn.w && (p.categoriesOffsetTotalWidth = 2 * p.clsBtn.w + 40 + 2 * p.buttonsMargins, p.categoriesOffsetTotalHeight = p.clsBtn.h, p.resizeAndPosition(!0), p.showDisable(), p.disableOrEnableThumbnails(), clearTimeout(p.hideCompleteId_to), clearTimeout(p.showCompleteId_to), p.mainHld.setY(-p.sH), p.isMbl ? (p.showCompleteId_to = setTimeout(p.showCompleteHandler, 1200), FWDAnimation.to(p.mainHld, .8, {
+                    0 != p.clsBtn.w && (p.categoriesOffsetTotalWidth = 2 * p.clsBtn.w + 40 + 2 * p.buttonsMargins, p.categoriesOffsetTotalHeight = p.clsBtn.h, p.resizeAndPosition(!0), p.showDisable(), p.disableOrEnableThumbnails(), clearTimeout(p.hideCompleteId_to), clearTimeout(p.showCompleteId_to), p.mainHld.setY(-p.sH), p.isMbl ? (p.showCompleteId_to = setTimeout(p.showCompleteHandler, 1200), Animation.to(p.mainHld, .8, {
                         y: 0,
                         delay: .4,
                         ease: Expo.easeInOut
-                    })) : (p.showCompleteId_to = setTimeout(p.showCompleteHandler, 800), FWDAnimation.to(p.mainHld, .8, {
+                    })) : (p.showCompleteId_to = setTimeout(p.showCompleteHandler, 800), Animation.to(p.mainHld, .8, {
                         y: 0,
                         ease: Expo.easeInOut
                     })), clearInterval(p.checkButtonsId_to))
-                }, 50)) : (p.resizeAndPosition(!0), p.showDisable(), p.disableOrEnableThumbnails(), clearTimeout(p.hideCompleteId_to), clearTimeout(p.showCompleteId_to), p.mainHld.setY(-p.sH), p.isMbl ? (p.showCompleteId_to = setTimeout(p.showCompleteHandler, 1200), FWDAnimation.to(p.mainHld, .8, {
+                }, 50)) : (p.resizeAndPosition(!0), p.showDisable(), p.disableOrEnableThumbnails(), clearTimeout(p.hideCompleteId_to), clearTimeout(p.showCompleteId_to), p.mainHld.setY(-p.sH), p.isMbl ? (p.showCompleteId_to = setTimeout(p.showCompleteHandler, 1200), Animation.to(p.mainHld, .8, {
                     y: 0,
                     delay: .4,
                     ease: Expo.easeInOut
-                })) : (p.showCompleteId_to = setTimeout(p.showCompleteHandler, 800), FWDAnimation.to(p.mainHld, .8, {
+                })) : (p.showCompleteId_to = setTimeout(p.showCompleteHandler, 800), Animation.to(p.mainHld, .8, {
                     y: 0,
                     ease: Expo.easeInOut
                 }))))
             }, this.showCompleteHandler = function() {
                 p.mainHld.setY(0), p.hideDisable(), FWDUVPUtils.isIphone && (o.videoScreen_do && o.videoScreen_do.setY(-5e3), o.ytb_do && o.ytb_do.setY(-5e3)), p.resizeAndPosition(!0), p.areThumbnailsLoaded_bl || (p.loadImages(), p.areThumbnailsLoaded_bl = !0)
             }, this.hide = function() {
-                p.isShowed_bl && (p.isShowed_bl = !1, FWDUVPUtils.isIphone && (o.videoScreen_do && o.videoScreen_do.setY(0), o.ytb_do && o.ytb_do.setY(0)), clearTimeout(p.hideCompleteId_to), clearTimeout(p.showCompleteId_to), p.showDisable(), p.hideCompleteId_to = setTimeout(p.hideCompleteHandler, 800), FWDAnimation.killTweensOf(p.mainHld), FWDAnimation.to(p.mainHld, .8, {
+                p.isShowed_bl && (p.isShowed_bl = !1, FWDUVPUtils.isIphone && (o.videoScreen_do && o.videoScreen_do.setY(0), o.ytb_do && o.ytb_do.setY(0)), clearTimeout(p.hideCompleteId_to), clearTimeout(p.showCompleteId_to), p.showDisable(), p.hideCompleteId_to = setTimeout(p.hideCompleteHandler, 800), Animation.killTweensOf(p.mainHld), Animation.to(p.mainHld, .8, {
                     y: -p.sH,
                     ease: Expo.easeInOut
                 }), window.addEventListener ? window.removeEventListener("scroll", p.onScrollHandler) : window.detachEvent && window.detachEvent("onscroll", p.onScrollHandler), p.resizeAndPosition())
@@ -3345,18 +3345,18 @@ if (! function(e) {
                     s.putImageData(o, 0, 0, 0, 0, o.width, o.height), a.effectImage_do = new FWDUVPDisplayObject("canvas"), a.effectImage_do.screen = t, a.effectImage_do.setAlpha(.9), a.effectImage_do.setMainProperties()
                 }
             }, this.setImage = function(e) {
-                a.normalImage_do = new FWDUVPDisplayObject("img"), a.normalImage_do.setScreen(e), a.imageOriginalW = a.normalImage_do.w, a.imageOriginalH = a.normalImage_do.h, a.setButtonMode(!0), a.setupBlackAndWhiteImage(e), a.resizeImage(), a.imageHolder_do.setX(parseInt(a.finalW / 2)), a.imageHolder_do.setY(parseInt(a.finalH / 2)), a.imageHolder_do.setWidth(0), a.imageHolder_do.setHeight(0), a.normalImage_do.setX(-parseInt(a.normalImage_do.w / 2)), a.normalImage_do.setY(-parseInt(a.normalImage_do.h / 2)), a.normalImage_do.setAlpha(0), a.effectImage_do && (a.effectImage_do.setX(-parseInt(a.normalImage_do.w / 2)), a.effectImage_do.setY(-parseInt(a.normalImage_do.h / 2)), a.effectImage_do.setAlpha(.01)), FWDAnimation.to(a.imageHolder_do, .8, {
+                a.normalImage_do = new FWDUVPDisplayObject("img"), a.normalImage_do.setScreen(e), a.imageOriginalW = a.normalImage_do.w, a.imageOriginalH = a.normalImage_do.h, a.setButtonMode(!0), a.setupBlackAndWhiteImage(e), a.resizeImage(), a.imageHolder_do.setX(parseInt(a.finalW / 2)), a.imageHolder_do.setY(parseInt(a.finalH / 2)), a.imageHolder_do.setWidth(0), a.imageHolder_do.setHeight(0), a.normalImage_do.setX(-parseInt(a.normalImage_do.w / 2)), a.normalImage_do.setY(-parseInt(a.normalImage_do.h / 2)), a.normalImage_do.setAlpha(0), a.effectImage_do && (a.effectImage_do.setX(-parseInt(a.normalImage_do.w / 2)), a.effectImage_do.setY(-parseInt(a.normalImage_do.h / 2)), a.effectImage_do.setAlpha(.01)), Animation.to(a.imageHolder_do, .8, {
                     x: 0,
                     y: 0,
                     w: a.finalW,
                     h: a.finalH,
                     ease: Expo.easeInOut
-                }), FWDAnimation.to(a.normalImage_do, .8, {
+                }), Animation.to(a.normalImage_do, .8, {
                     alpha: 1,
                     x: a.imageFinalX,
                     y: a.imageFinalY,
                     ease: Expo.easeInOut
-                }), a.effectImage_do && FWDAnimation.to(a.effectImage_do, .8, {
+                }), a.effectImage_do && Animation.to(a.effectImage_do, .8, {
                     x: a.imageFinalX,
                     y: a.imageFinalY,
                     ease: Expo.easeInOut
@@ -3370,7 +3370,7 @@ if (! function(e) {
                     id: a.id
                 }))
             }, this.resizeAndPosition = function(e, t) {
-                FWDAnimation.killTweensOf(a), FWDAnimation.killTweensOf(a.imageHolder_do), e ? FWDAnimation.to(a, .8, {
+                Animation.killTweensOf(a), Animation.killTweensOf(a.imageHolder_do), e ? Animation.to(a, .8, {
                     x: a.finalX,
                     y: a.finalY,
                     delay: t,
@@ -3378,34 +3378,34 @@ if (! function(e) {
                 }) : (a.setX(a.finalX), a.setY(a.finalY)), a.setWidth(a.finalW), a.setHeight(a.finalH), a.imageHolder_do.setX(0), a.imageHolder_do.setY(0), a.imageHolder_do.setWidth(a.finalW), a.imageHolder_do.setHeight(a.finalH), a.dumy_do.setWidth(a.finalW), a.dumy_do.setHeight(a.finalH), a.resizeImage(), a.positionDescription()
             }, this.resizeImage = function(e) {
                 if (a.normalImage_do) {
-                    FWDAnimation.killTweensOf(a.normalImage_do);
+                    Animation.killTweensOf(a.normalImage_do);
                     var t, s = a.finalW / a.imageOriginalW,
                         o = a.finalH / a.imageOriginalH;
-                    t = o <= s ? s : o, a.imageFinalW = Math.ceil(t * a.imageOriginalW), a.imageFinalH = Math.ceil(t * a.imageOriginalH), a.imageFinalX = Math.round((a.finalW - a.imageFinalW) / 2), a.imageFinalY = Math.round((a.finalH - a.imageFinalH) / 2), a.effectImage_do && (FWDAnimation.killTweensOf(a.effectImage_do), a.effectImage_do.setX(a.imageFinalX), a.effectImage_do.setY(a.imageFinalY), a.effectImage_do.setWidth(a.imageFinalW), a.effectImage_do.setHeight(a.imageFinalH), a.isDisabled_bl && a.setSelectedState(!1, !0)), a.normalImage_do.setX(a.imageFinalX), a.normalImage_do.setY(a.imageFinalY), a.normalImage_do.setWidth(a.imageFinalW + 1), a.normalImage_do.setHeight(a.imageFinalH), a.isDisabled_bl ? a.normalImage_do.setAlpha(.3) : a.normalImage_do.setAlpha(1)
+                    t = o <= s ? s : o, a.imageFinalW = Math.ceil(t * a.imageOriginalW), a.imageFinalH = Math.ceil(t * a.imageOriginalH), a.imageFinalX = Math.round((a.finalW - a.imageFinalW) / 2), a.imageFinalY = Math.round((a.finalH - a.imageFinalH) / 2), a.effectImage_do && (Animation.killTweensOf(a.effectImage_do), a.effectImage_do.setX(a.imageFinalX), a.effectImage_do.setY(a.imageFinalY), a.effectImage_do.setWidth(a.imageFinalW), a.effectImage_do.setHeight(a.imageFinalH), a.isDisabled_bl && a.setSelectedState(!1, !0)), a.normalImage_do.setX(a.imageFinalX), a.normalImage_do.setY(a.imageFinalY), a.normalImage_do.setWidth(a.imageFinalW + 1), a.normalImage_do.setHeight(a.imageFinalH), a.isDisabled_bl ? a.normalImage_do.setAlpha(.3) : a.normalImage_do.setAlpha(1)
                 }
             }, this.setNormalState = function(e) {
-                a.isSelected_bl && (a.isSelected_bl = !1, a.slTitle && (a.simpleText_do.screen.className = a.slTitle), "threshold" == a.thumbnailSelectedType_str || "blackAndWhite" == a.thumbnailSelectedType_str ? e ? FWDAnimation.to(a.effectImage_do, 1, {
+                a.isSelected_bl && (a.isSelected_bl = !1, a.slTitle && (a.simpleText_do.screen.className = a.slTitle), "threshold" == a.thumbnailSelectedType_str || "blackAndWhite" == a.thumbnailSelectedType_str ? e ? Animation.to(a.effectImage_do, 1, {
                     alpha: .01,
                     ease: Quart.easeOut
-                }) : a.effectImage_do.setAlpha(.01) : "opacity" == a.thumbnailSelectedType_str && (e ? FWDAnimation.to(a.normalImage_do, 1, {
+                }) : a.effectImage_do.setAlpha(.01) : "opacity" == a.thumbnailSelectedType_str && (e ? Animation.to(a.normalImage_do, 1, {
                     alpha: 1,
                     ease: Quart.easeOut
                 }) : a.normalImage_do.setAlpha(1)))
             }, this.setSelectedState = function(e, t) {
-                a.isSelected_bl && !t || (a.isSelected_bl = !0, a.setTitleSelectedClass(), "threshold" == a.thumbnailSelectedType_str || "blackAndWhite" == a.thumbnailSelectedType_str ? e ? FWDAnimation.to(a.effectImage_do, 1, {
+                a.isSelected_bl && !t || (a.isSelected_bl = !0, a.setTitleSelectedClass(), "threshold" == a.thumbnailSelectedType_str || "blackAndWhite" == a.thumbnailSelectedType_str ? e ? Animation.to(a.effectImage_do, 1, {
                     alpha: 1,
                     ease: Expo.easeOut
-                }) : a.effectImage_do.setAlpha(1) : "opacity" == a.thumbnailSelectedType_str && (e ? FWDAnimation.to(a.normalImage_do, 1, {
+                }) : a.effectImage_do.setAlpha(1) : "opacity" == a.thumbnailSelectedType_str && (e ? Animation.to(a.normalImage_do, 1, {
                     alpha: .3,
                     ease: Expo.easeOut
                 }) : a.normalImage_do.setAlpha(.3)))
             }, this.show = function() {
-                FWDAnimation.to(a, .8, {
+                Animation.to(a, .8, {
                     scale: 1,
                     ease: Expo.easeInOut
                 })
             }, this.hide = function() {
-                FWDAnimation.to(a, .8, {
+                Animation.to(a, .8, {
                     scale: 0,
                     ease: Expo.easeInOut
                 })
@@ -3443,7 +3443,7 @@ if (! function(e) {
                     id: n.curId
                 })
             }, this.openMenuHandler = function(e) {
-                FWDAnimation.isTweening(n.mainButtonsHolder_do) || (n.isShd ? n.checkOpenedMenu(e.e, !0) : (n.selector_do.disable(), n.show(!0), n.startToCheckOpenedMenu(), n.dispatchEvent(t.OPEN)))
+                Animation.isTweening(n.mainButtonsHolder_do) || (n.isShd ? n.checkOpenedMenu(e.e, !0) : (n.selector_do.disable(), n.show(!0), n.startToCheckOpenedMenu(), n.dispatchEvent(t.OPEN)))
             }, this.setButtonsStateBasedOnId = function(e) {
                 n.curId = e;
                 for (var t = 0; t < n.ttBtns; t++) button_do = n.buttons_ar[t], t == n.curId ? button_do.disable() : button_do.enable();
@@ -3468,19 +3468,19 @@ if (! function(e) {
             }, this.resizeAndPosition = function() {
                 n.sW = i.sW, n.sH = i.sH, n.bk_do.setWidth(n.sW), n.bk_do.setHeight(n.sH - i.removeFromThumbsHolderHeight + 5), n.mainButtonsHolder_do.setWidth(n.sW), n.mainButtonsHolder_do.setHeight(n.sH - i.removeFromThumbsHolderHeight), n.ttBtnH > n.mainButtonsHolder_do.h ? n.allowToScrollAndScrollBarIsActive_bl = !0 : n.allowToScrollAndScrollBarIsActive_bl = !1, !n.allowToScrollAndScrollBarIsActive_bl && n.scrMainHolder_do ? n.scrMainHolder_do.setVisible(!1) : n.allowToScrollAndScrollBarIsActive_bl && n.scrMainHolder_do && n.isShd && n.scrMainHolder_do.setVisible(!0), n.scrHandler_do && n.updateScrollBarSizeActiveAndDeactivate(), this.getMaxWidthResizeAndPosition(), n.updateScrollBarHandlerAndContent()
             }, this.hide = function(e, t) {
-                (n.isShd || t) && (FWDAnimation.killTweensOf(this), n.isShd = !1, FWDAnimation.killTweensOf(n.mainButtonsHolder_do), FWDAnimation.killTweensOf(n.bk_do), e ? (FWDAnimation.to(n.mainButtonsHolder_do, .8, {
+                (n.isShd || t) && (Animation.killTweensOf(this), n.isShd = !1, Animation.killTweensOf(n.mainButtonsHolder_do), Animation.killTweensOf(n.bk_do), e ? (Animation.to(n.mainButtonsHolder_do, .8, {
                     y: -n.ttBtnH,
                     ease: Expo.easeInOut,
                     onComplete: n.hideComplete
-                }), FWDAnimation.to(n.bk_do, .8, {
+                }), Animation.to(n.bk_do, .8, {
                     alpha: 0
                 })) : (n.mainButtonsHolder_do.setY(n.buttonHeight - n.ttBtnH), n.bk_do.setAlpha(0), n.setHeight(n.buttonHeight)))
             }, this.hideComplete = function() {
                 n.mainButtonsHolder_do.setVisible(!1), n.bk_do.setVisible(!1)
             }, this.show = function(e, t) {
-                n.isShd && !t || (FWDAnimation.killTweensOf(this), n.mainButtonsHolder_do.setY(-n.ttBtnH), n.isShd = !0, n.mainButtonsHolder_do.setVisible(!0), n.bk_do.setVisible(!0), n.resizeAndPosition(), FWDAnimation.killTweensOf(n.mainButtonsHolder_do), FWDAnimation.killTweensOf(n.bk_do), n.scrMainHolder_do && n.allowToScrollAndScrollBarIsActive_bl && n.scrMainHolder_do.setVisible(!0), e ? (FWDAnimation.to(n.bk_do, .8, {
+                n.isShd && !t || (Animation.killTweensOf(this), n.mainButtonsHolder_do.setY(-n.ttBtnH), n.isShd = !0, n.mainButtonsHolder_do.setVisible(!0), n.bk_do.setVisible(!0), n.resizeAndPosition(), Animation.killTweensOf(n.mainButtonsHolder_do), Animation.killTweensOf(n.bk_do), n.scrMainHolder_do && n.allowToScrollAndScrollBarIsActive_bl && n.scrMainHolder_do.setVisible(!0), e ? (Animation.to(n.bk_do, .8, {
                     alpha: 1
-                }), FWDAnimation.to(n.mainButtonsHolder_do, .8, {
+                }), Animation.to(n.mainButtonsHolder_do, .8, {
                     y: n.buttonHeight + i.spaceBetweenThumbnails,
                     ease: Expo.easeInOut
                 })) : (n.bk_do.setAlpha(1), n.mainButtonsHolder_do.setY(n.buttonHeight + i.spaceBetweenThumbnails)))
@@ -3489,7 +3489,7 @@ if (! function(e) {
             }, this.setupMobileScrollbar = function() {
                 n.hasPointEvt ? n.mainButtonsHolder_do.screen.addEventListener("pointerdown", n.scrollBarTouchStartHandler) : n.mainButtonsHolder_do.screen.addEventListener("touchstart", n.scrollBarTouchStartHandler), n.isMbl && (n.updateMobileScrollBarId_int = setInterval(n.updateMobileScrollBar, 16))
             }, this.scrollBarTouchStartHandler = function(e) {
-                e.preventDefault && e.preventDefault(), n.isScrollingOnMove_bl = !1, FWDAnimation.killTweensOf(n.buttonsHolder_do);
+                e.preventDefault && e.preventDefault(), n.isScrollingOnMove_bl = !1, Animation.killTweensOf(n.buttonsHolder_do);
                 var t = FWDUVPUtils.getViewportMouseCoordinates(e);
                 n.isDragging_bl = !0, n.lastPresedY = t.screenY, n.checkLastPresedY = t.screenY, n.hasPointEvt ? (o.addEventListener("pointerup", n.scrollBarTouchEndHandler), o.addEventListener("pointermove", n.scrollBarTouchMoveHandler)) : (o.addEventListener("touchend", n.scrollBarTouchEndHandler), o.addEventListener("touchmove", n.scrollBarTouchMoveHandler)), o.addEventListener("mouseup", n.scrollBarTouchEndHandler), o.addEventListener("mousemove", n.scrollBarTouchMoveHandler), clearInterval(n.updateMoveMobileScrollbarId_int), n.updateMoveMobileScrollbarId_int = setInterval(n.updateMoveMobileScrollbar, 20)
             }, this.scrollBarTouchMoveHandler = function(e) {
@@ -3501,7 +3501,7 @@ if (! function(e) {
                     if (n.thmbsFinY += s, n.thmbsFinY = Math.round(n.thmbsFinY), n.lastPresedY = t.screenY, n.vy = 2 * s, !n.isMobile) {
                         0 < n.thmbsFinY ? n.thmbsFinY = 0 : n.thmbsFinY < n.mainButtonsHolder_do.h - n.ttBtnH && (n.thmbsFinY = n.mainButtonsHolder_do.h - n.ttBtnH);
                         var o = Math.max(0, n.thmbsFinY / (n.mainButtonsHolder_do.h - n.ttBtnH));
-                        n.scrMainHolder_do && (n.scrBarHandY = Math.round((n.scrMainHolder_do.h - n.scrHandler_do.h) * o), n.scrBarHandY < 0 ? n.scrBarHandY = 0 : n.scrBarHandY > n.scrMainHolder_do.h - n.scrHandler_do.h - 1 && (n.scrBarHandY = n.scrMainHolder_do.h - n.scrHandler_do.h - 1), FWDAnimation.killTweensOf(n.scrHandler_do), FWDAnimation.killTweensOf(n.scrHandlerLines_do), n.scrHandler_do.setY(n.scrBarHandY), n.scrHandlerLines_do.setY(n.scrBarHandY + parseInt((n.scrHandler_do.h - n.scrHandlerLinesN_do.h) / 2)))
+                        n.scrMainHolder_do && (n.scrBarHandY = Math.round((n.scrMainHolder_do.h - n.scrHandler_do.h) * o), n.scrBarHandY < 0 ? n.scrBarHandY = 0 : n.scrBarHandY > n.scrMainHolder_do.h - n.scrHandler_do.h - 1 && (n.scrBarHandY = n.scrMainHolder_do.h - n.scrHandler_do.h - 1), Animation.killTweensOf(n.scrHandler_do), Animation.killTweensOf(n.scrHandlerLines_do), n.scrHandler_do.setY(n.scrBarHandY), n.scrHandlerLines_do.setY(n.scrBarHandY + parseInt((n.scrHandler_do.h - n.scrHandlerLinesN_do.h) / 2)))
                     }
                 }
             }, this.scrollBarTouchEndHandler = function(e) {
@@ -3525,48 +3525,48 @@ if (! function(e) {
                     n.scrHandlerLinesS_do.setWidth(n.scrHandlerLinesN_do.w), n.scrHandlerLinesS_do.setHeight(n.scrHandlerLinesN_do.h), n.scrubberLines_s_canvas = FWDUVPUtils.getCanvasWithModifiedColor(n.scrHandlerLinesS_img, n.sBC, !0), n.scrubbelinesSImage_img = n.scrubberLines_s_canvas.image, n.scrHandlerLinesS_do.getStyle().background = "url('" + n.scrubbelinesSImage_img.src + "') repeat-y"
                 }) : (n.scrHandlerLinesS_do = new FWDUVPDisplayObject("img"), n.scrHandlerLinesS_do.setScreen(n.scrHandlerLinesS_img), n.scrHandlerLinesS_do.setWidth(n.scrHandlerLinesN_do.w), n.scrHandlerLinesS_do.setHeight(n.scrHandlerLinesN_do.h)), n.scrHandlerLinesS_do.setAlpha(0), n.scrHandlerLines_do = new FWDUVPDisplayObject("div"), n.scrHandlerLines_do.setWidth(n.scrHandlerLinesN_do.w), n.scrHandlerLines_do.setHeight(n.scrHandlerLinesN_do.h), n.scrHandlerLines_do.setButtonMode(!0), n.scrTrack_do.addChild(n.scrTrackTop_do), n.scrTrack_do.addChild(n.scrTrackMiddle_do), n.scrTrack_do.addChild(n.scrTrackBottom_do), n.scrHandler_do.addChild(n.scrHandlerTop_do), n.scrHandler_do.addChild(n.scrHandlerMiddle_do), n.scrHandler_do.addChild(n.scrHandlerBottom_do), n.scrHandlerLines_do.addChild(n.scrHandlerLinesN_do), n.scrHandlerLines_do.addChild(n.scrHandlerLinesS_do), n.scrMainHolder_do.addChild(n.scrTrack_do), n.scrMainHolder_do.addChild(n.scrHandler_do), n.scrMainHolder_do.addChild(n.scrHandlerLines_do), n.mainButtonsHolder_do.addChild(n.scrMainHolder_do), n.scrHandler_do.screen.addEventListener ? (n.scrHandler_do.screen.addEventListener("mouseover", n.scrollBarHandlerOnMouseOver), n.scrHandler_do.screen.addEventListener("mouseout", n.scrollBarHandlerOnMouseOut), n.scrHandler_do.screen.addEventListener("mousedown", n.scrollBarHandlerOnMouseDown), n.scrHandlerLines_do.screen.addEventListener("mouseover", n.scrollBarHandlerOnMouseOver), n.scrHandlerLines_do.screen.addEventListener("mouseout", n.scrollBarHandlerOnMouseOut), n.scrHandlerLines_do.screen.addEventListener("mousedown", n.scrollBarHandlerOnMouseDown)) : n.scrHandler_do.screen.attachEvent && (n.scrHandler_do.screen.attachEvent("onmouseover", n.scrollBarHandlerOnMouseOver), n.scrHandler_do.screen.attachEvent("onmouseout", n.scrollBarHandlerOnMouseOut), n.scrHandler_do.screen.attachEvent("onmousedown", n.scrollBarHandlerOnMouseDown), n.scrHandlerLines_do.screen.attachEvent("onmouseover", n.scrollBarHandlerOnMouseOver), n.scrHandlerLines_do.screen.attachEvent("onmouseout", n.scrollBarHandlerOnMouseOut), n.scrHandlerLines_do.screen.attachEvent("onmousedown", n.scrollBarHandlerOnMouseDown))
             }, this.scrollBarHandlerOnMouseOver = function(e) {
-                n.allowToScrollAndScrollBarIsActive_bl && (FWDAnimation.killTweensOf(n.scrHandlerLinesN_do), FWDAnimation.killTweensOf(n.scrHandlerLinesS_do), FWDAnimation.to(n.scrHandlerLinesN_do, .8, {
+                n.allowToScrollAndScrollBarIsActive_bl && (Animation.killTweensOf(n.scrHandlerLinesN_do), Animation.killTweensOf(n.scrHandlerLinesS_do), Animation.to(n.scrHandlerLinesN_do, .8, {
                     alpha: 0,
                     ease: Expo.easeOut
-                }), FWDAnimation.to(n.scrHandlerLinesS_do, .8, {
+                }), Animation.to(n.scrHandlerLinesS_do, .8, {
                     alpha: 1,
                     ease: Expo.easeOut
                 }))
             }, this.scrollBarHandlerOnMouseOut = function(e) {
-                !n.isDragging_bl && n.allowToScrollAndScrollBarIsActive_bl && (FWDAnimation.killTweensOf(n.scrHandlerLinesN_do), FWDAnimation.killTweensOf(n.scrHandlerLinesS_do), FWDAnimation.to(n.scrHandlerLinesN_do, .8, {
+                !n.isDragging_bl && n.allowToScrollAndScrollBarIsActive_bl && (Animation.killTweensOf(n.scrHandlerLinesN_do), Animation.killTweensOf(n.scrHandlerLinesS_do), Animation.to(n.scrHandlerLinesN_do, .8, {
                     alpha: 1,
                     ease: Expo.easeOut
-                }), FWDAnimation.to(n.scrHandlerLinesS_do, .8, {
+                }), Animation.to(n.scrHandlerLinesS_do, .8, {
                     alpha: 0,
                     ease: Expo.easeOut
                 }))
             }, this.scrollBarHandlerOnMouseDown = function(e) {
                 if (n.allowToScrollAndScrollBarIsActive_bl) {
                     var t = FWDUVPUtils.getViewportMouseCoordinates(e);
-                    n.isDragging_bl = !0, n.yPositionOnPress = n.scrHandler_do.y, n.lastPresedY = t.screenY, FWDAnimation.killTweensOf(n.scrHandler_do), i.prt.showDisable(), o.addEventListener ? (o.addEventListener("mousemove", n.scrollBarHandlerMoveHandler), o.addEventListener("mouseup", n.scrollBarHandlerEndHandler)) : document.attachEvent && (document.attachEvent("onmousemove", n.scrollBarHandlerMoveHandler), document.attachEvent("onmouseup", n.scrollBarHandlerEndHandler))
+                    n.isDragging_bl = !0, n.yPositionOnPress = n.scrHandler_do.y, n.lastPresedY = t.screenY, Animation.killTweensOf(n.scrHandler_do), i.prt.showDisable(), o.addEventListener ? (o.addEventListener("mousemove", n.scrollBarHandlerMoveHandler), o.addEventListener("mouseup", n.scrollBarHandlerEndHandler)) : document.attachEvent && (document.attachEvent("onmousemove", n.scrollBarHandlerMoveHandler), document.attachEvent("onmouseup", n.scrollBarHandlerEndHandler))
                 }
             }, this.scrollBarHandlerMoveHandler = function(e) {
                 e.preventDefault && e.preventDefault();
                 var t = FWDUVPUtils.getViewportMouseCoordinates(e),
                     s = n.scrBarHandY + parseInt((n.scrHandler_do.h - n.scrHandlerLines_do.h) / 2);
-                n.scrBarHandY = Math.round(n.yPositionOnPress + t.screenY - n.lastPresedY), n.scrBarHandY >= n.scrTrack_do.h - n.scrHandler_do.h ? n.scrBarHandY = n.scrTrack_do.h - n.scrHandler_do.h : n.scrBarHandY <= 0 && (n.scrBarHandY = 0), n.scrHandler_do.setY(n.scrBarHandY), FWDAnimation.killTweensOf(n.scrHandler_do), FWDAnimation.to(n.scrHandlerLines_do, .8, {
+                n.scrBarHandY = Math.round(n.yPositionOnPress + t.screenY - n.lastPresedY), n.scrBarHandY >= n.scrTrack_do.h - n.scrHandler_do.h ? n.scrBarHandY = n.scrTrack_do.h - n.scrHandler_do.h : n.scrBarHandY <= 0 && (n.scrBarHandY = 0), n.scrHandler_do.setY(n.scrBarHandY), Animation.killTweensOf(n.scrHandler_do), Animation.to(n.scrHandlerLines_do, .8, {
                     y: s,
                     ease: Quart.easeOut
                 }), n.updateScrollBarHandlerAndContent(!0)
             }, n.scrollBarHandlerEndHandler = function(e) {
                 var t = FWDUVPUtils.getViewportMouseCoordinates(e);
-                n.isDragging_bl = !1, FWDUVPUtils.hitTest(n.scrHandler_do.screen, t.screenX, t.screenY) || (FWDAnimation.killTweensOf(n.scrHandlerLinesN_do), FWDAnimation.killTweensOf(n.scrHandlerLinesS_do), FWDAnimation.to(n.scrHandlerLinesN_do, .8, {
+                n.isDragging_bl = !1, FWDUVPUtils.hitTest(n.scrHandler_do.screen, t.screenX, t.screenY) || (Animation.killTweensOf(n.scrHandlerLinesN_do), Animation.killTweensOf(n.scrHandlerLinesS_do), Animation.to(n.scrHandlerLinesN_do, .8, {
                     alpha: 1,
                     ease: Expo.easeOut
-                }), FWDAnimation.to(n.scrHandlerLinesS_do, .8, {
+                }), Animation.to(n.scrHandlerLinesS_do, .8, {
                     alpha: 0,
                     ease: Expo.easeOut
-                })), i.prt.hideDisable(), FWDAnimation.killTweensOf(n.scrHandler_do), FWDAnimation.to(n.scrHandler_do, .4, {
+                })), i.prt.hideDisable(), Animation.killTweensOf(n.scrHandler_do), Animation.to(n.scrHandler_do, .4, {
                     y: n.scrBarHandY,
                     ease: Quart.easeOut
                 }), o.removeEventListener ? (o.removeEventListener("mousemove", n.scrollBarHandlerMoveHandler), o.removeEventListener("mouseup", n.scrollBarHandlerEndHandler)) : document.detachEvent && (document.detachEvent("onmousemove", n.scrollBarHandlerMoveHandler), document.detachEvent("onmouseup", n.scrollBarHandlerEndHandler))
             }, this.updateScrollBarSizeActiveAndDeactivate = function() {
-                n.disableForAWhileAfterThumbClick_bl || (n.allowToScrollAndScrollBarIsActive_bl ? (n.allowToScrollAndScrollBarIsActive_bl = !0, n.scrMainHolder_do.setX(n.sW - n.scrMainHolder_do.w), n.scrMainHolder_do.setHeight(n.mainButtonsHolder_do.h), n.scrTrack_do.setHeight(n.scrMainHolder_do.h), n.scrTrackMiddle_do.setHeight(n.scrTrack_do.h - 2 * n.scrTrackTop_do.h), n.scrTrackBottom_do.setY(n.scrTrackMiddle_do.y + n.scrTrackMiddle_do.h), n.scrMainHolder_do.setAlpha(1), n.scrHandler_do.setButtonMode(!0), n.scrHandlerLines_do.setButtonMode(!0)) : (n.allowToScrollAndScrollBarIsActive_bl = !1, n.scrMainHolder_do.setX(n.sW - n.scrMainHolder_do.w), n.scrMainHolder_do.setHeight(n.mainButtonsHolder_do.h), n.scrTrack_do.setHeight(n.scrMainHolder_do.h), n.scrTrackMiddle_do.setHeight(n.scrTrack_do.h - 2 * n.scrTrackTop_do.h), n.scrTrackBottom_do.setY(n.scrTrackMiddle_do.y + n.scrTrackMiddle_do.h), n.scrMainHolder_do.setAlpha(.5), n.scrHandler_do.setY(0), n.scrHandler_do.setButtonMode(!1), n.scrHandlerLines_do.setButtonMode(!1)), n.scrHandler_do.setHeight(Math.max(120, Math.round(Math.min(1, n.scrMainHolder_do.h / n.ttBtnH) * n.scrMainHolder_do.h))), n.scrHandlerMiddle_do.setHeight(n.scrHandler_do.h - 2 * n.scrHandlerTop_do.h), n.scrHandlerBottom_do.setY(n.scrHandlerMiddle_do.y + n.scrHandlerMiddle_do.h), FWDAnimation.killTweensOf(n.scrHandlerLines_do), n.scrHandlerLines_do.setY(n.scrBarHandY + parseInt((n.scrHandler_do.h - n.scrHandlerLines_do.h) / 2)), n.scrHandlerBottom_do.setY(n.scrHandler_do.h - n.scrHandlerBottom_do.h))
+                n.disableForAWhileAfterThumbClick_bl || (n.allowToScrollAndScrollBarIsActive_bl ? (n.allowToScrollAndScrollBarIsActive_bl = !0, n.scrMainHolder_do.setX(n.sW - n.scrMainHolder_do.w), n.scrMainHolder_do.setHeight(n.mainButtonsHolder_do.h), n.scrTrack_do.setHeight(n.scrMainHolder_do.h), n.scrTrackMiddle_do.setHeight(n.scrTrack_do.h - 2 * n.scrTrackTop_do.h), n.scrTrackBottom_do.setY(n.scrTrackMiddle_do.y + n.scrTrackMiddle_do.h), n.scrMainHolder_do.setAlpha(1), n.scrHandler_do.setButtonMode(!0), n.scrHandlerLines_do.setButtonMode(!0)) : (n.allowToScrollAndScrollBarIsActive_bl = !1, n.scrMainHolder_do.setX(n.sW - n.scrMainHolder_do.w), n.scrMainHolder_do.setHeight(n.mainButtonsHolder_do.h), n.scrTrack_do.setHeight(n.scrMainHolder_do.h), n.scrTrackMiddle_do.setHeight(n.scrTrack_do.h - 2 * n.scrTrackTop_do.h), n.scrTrackBottom_do.setY(n.scrTrackMiddle_do.y + n.scrTrackMiddle_do.h), n.scrMainHolder_do.setAlpha(.5), n.scrHandler_do.setY(0), n.scrHandler_do.setButtonMode(!1), n.scrHandlerLines_do.setButtonMode(!1)), n.scrHandler_do.setHeight(Math.max(120, Math.round(Math.min(1, n.scrMainHolder_do.h / n.ttBtnH) * n.scrMainHolder_do.h))), n.scrHandlerMiddle_do.setHeight(n.scrHandler_do.h - 2 * n.scrHandlerTop_do.h), n.scrHandlerBottom_do.setY(n.scrHandlerMiddle_do.y + n.scrHandlerMiddle_do.h), Animation.killTweensOf(n.scrHandlerLines_do), n.scrHandlerLines_do.setY(n.scrBarHandY + parseInt((n.scrHandler_do.h - n.scrHandlerLines_do.h) / 2)), n.scrHandlerBottom_do.setY(n.scrHandler_do.h - n.scrHandlerBottom_do.h))
             }, this.addMouseWheelSupport = function() {
                 n.screen.addEventListener ? (n.screen.addEventListener("DOMMouseScroll", n.mouseWheelHandler), n.screen.addEventListener("mousewheel", n.mouseWheelHandler)) : n.screen.attachEvent && n.screen.attachEvent("onmousewheel", n.mouseWheelHandler)
             }, n.mouseWheelHandler = function(e) {
@@ -3574,10 +3574,10 @@ if (! function(e) {
                 var t = e.detail || e.wheelDelta;
                 e.wheelDelta && (t *= -1), 0 < t ? n.scrBarHandY += Math.round(160 * n.scollbarSpeedSensitivity * (n.mainButtonsHolder_do.h / n.ttBtnH)) : t < 0 && (n.scrBarHandY -= Math.round(160 * n.scollbarSpeedSensitivity * (n.mainButtonsHolder_do.h / n.ttBtnH))), n.scrBarHandY >= n.scrTrack_do.h - n.scrHandler_do.h ? n.scrBarHandY = n.scrTrack_do.h - n.scrHandler_do.h : n.scrBarHandY <= 0 && (n.scrBarHandY = 0);
                 var s = n.scrBarHandY + parseInt((n.scrHandler_do.h - n.scrHandlerLines_do.h) / 2);
-                if (FWDAnimation.killTweensOf(n.scrHandler_do), FWDAnimation.killTweensOf(n.scrHandlerLines_do), FWDAnimation.to(n.scrHandlerLines_do, .8, {
+                if (Animation.killTweensOf(n.scrHandler_do), Animation.killTweensOf(n.scrHandlerLines_do), Animation.to(n.scrHandlerLines_do, .8, {
                         y: s,
                         ease: Quart.easeOut
-                    }), FWDAnimation.to(n.scrHandler_do, .5, {
+                    }), Animation.to(n.scrHandler_do, .5, {
                         y: n.scrBarHandY,
                         ease: Quart.easeOut
                     }), n.isDragging_bl = !0, n.updateScrollBarHandlerAndContent(!0), n.isDragging_bl = !1, !e.preventDefault) return !1;
@@ -3585,13 +3585,13 @@ if (! function(e) {
             }, this.updateScrollBarHandlerAndContent = function(e, t) {
                 if (!n.disableForAWhileAfterThumbClick_bl && (n.allowToScrollAndScrollBarIsActive_bl || t)) {
                     var s = 0;
-                    n.isDragging_bl && !n.isMbl ? ("Infinity" == (s = n.scrBarHandY / (n.scrMainHolder_do.h - n.scrHandler_do.h)) ? s = 0 : 1 <= s && (scrollPercent = 1), n.thmbsFinY = -1 * Math.round(s * (n.ttBtnH - n.mainButtonsHolder_do.h)), 0 == n.mainButtonsHolder_do.h && (n.thmbsFinY = 0)) : (s = n.curId / (n.ttBtns - 1), n.thmbsFinY = Math.min(0, -1 * Math.round(s * (n.ttBtnH - n.mainButtonsHolder_do.h))), 0 == n.mainButtonsHolder_do.h && (n.thmbsFinY = 0), n.scrMainHolder_do && (n.scrBarHandY = Math.round((n.scrMainHolder_do.h - n.scrHandler_do.h) * s), n.scrBarHandY < 0 ? n.scrBarHandY = 0 : n.scrBarHandY > n.scrMainHolder_do.h - n.scrHandler_do.h - 1 && (n.scrBarHandY = n.scrMainHolder_do.h - n.scrHandler_do.h - 1), FWDAnimation.killTweensOf(n.scrHandler_do), FWDAnimation.killTweensOf(n.scrHandlerLines_do), e ? (FWDAnimation.to(n.scrHandler_do, .4, {
+                    n.isDragging_bl && !n.isMbl ? ("Infinity" == (s = n.scrBarHandY / (n.scrMainHolder_do.h - n.scrHandler_do.h)) ? s = 0 : 1 <= s && (scrollPercent = 1), n.thmbsFinY = -1 * Math.round(s * (n.ttBtnH - n.mainButtonsHolder_do.h)), 0 == n.mainButtonsHolder_do.h && (n.thmbsFinY = 0)) : (s = n.curId / (n.ttBtns - 1), n.thmbsFinY = Math.min(0, -1 * Math.round(s * (n.ttBtnH - n.mainButtonsHolder_do.h))), 0 == n.mainButtonsHolder_do.h && (n.thmbsFinY = 0), n.scrMainHolder_do && (n.scrBarHandY = Math.round((n.scrMainHolder_do.h - n.scrHandler_do.h) * s), n.scrBarHandY < 0 ? n.scrBarHandY = 0 : n.scrBarHandY > n.scrMainHolder_do.h - n.scrHandler_do.h - 1 && (n.scrBarHandY = n.scrMainHolder_do.h - n.scrHandler_do.h - 1), Animation.killTweensOf(n.scrHandler_do), Animation.killTweensOf(n.scrHandlerLines_do), e ? (Animation.to(n.scrHandler_do, .4, {
                         y: n.scrBarHandY,
                         ease: Quart.easeOut
-                    }), FWDAnimation.to(n.scrHandlerLines_do, .8, {
+                    }), Animation.to(n.scrHandlerLines_do, .8, {
                         y: n.scrBarHandY + parseInt((n.scrHandler_do.h - n.scrHandlerLinesN_do.h) / 2),
                         ease: Quart.easeOut
-                    })) : (n.scrHandler_do.setY(n.scrBarHandY), n.scrHandlerLines_do.setY(n.scrBarHandY + parseInt((n.scrHandler_do.h - n.scrHandlerLinesN_do.h) / 2))))), n.lastThumbnailFinalY != n.thmbsFinY && (FWDAnimation.killTweensOf(n.buttonsHolder_do), e ? FWDAnimation.to(n.buttonsHolder_do, .5, {
+                    })) : (n.scrHandler_do.setY(n.scrBarHandY), n.scrHandlerLines_do.setY(n.scrBarHandY + parseInt((n.scrHandler_do.h - n.scrHandlerLinesN_do.h) / 2))))), n.lastThumbnailFinalY != n.thmbsFinY && (Animation.killTweensOf(n.buttonsHolder_do), e ? Animation.to(n.buttonsHolder_do, .5, {
                         y: n.thmbsFinY,
                         ease: Quart.easeOut
                     }) : n.buttonsHolder_do.setY(n.thmbsFinY)), n.lastThumbnailFinalY = n.thmbsFinY
@@ -3610,9 +3610,9 @@ if (! function(e) {
             }, r.setupMainContainers = function() {
                 r.bk_sdo = new FWDUVPDisplayObject("div"), r.bk_sdo.setBkColor(r.bkNClr), r.addChild(r.bk_sdo), r.text_sdo = new FWDUVPDisplayObject("div"), r.text_sdo.getStyle().whiteSpace = "nowrap", r.text_sdo.screen.className = "fwduvp-cb-button", r.text_sdo.setBackfaceVisibility(), r.text_sdo.setOverflow("visible"), r.text_sdo.setDisplay("inline-block"), r.text_sdo.getStyle().fontFamily = "Arial", r.text_sdo.getStyle().fontSize = "13px", r.text_sdo.getStyle().padding = "6px", r.text_sdo.getStyle().fontWeight = "100", r.text_sdo.getStyle().color = r.nBC, r.text_sdo.getStyle().fontSmoothing = "antialiased", r.text_sdo.getStyle().webkitFontSmoothing = "antialiased", r.text_sdo.getStyle().textRendering = "optimizeLegibility", FWDUVPUtils.isIEAndLessThen9 ? r.text_sdo.screen.innerText = r.label1_str : r.text_sdo.setInnerHTML(r.label1_str), r.addChild(r.text_sdo), r.dumy_sdo = new FWDUVPDisplayObject("div"), FWDUVPUtils.isIE && (r.dumy_sdo.setBkColor("#FF0000"), r.dumy_sdo.setAlpha(0)), r.addChild(r.dumy_sdo), r.hasPointerEvent_bl ? (r.screen.addEventListener("pointerup", r.onClick), r.screen.addEventListener("pointerover", r.onMouseOver), r.screen.addEventListener("pointerout", r.onMouseOut)) : r.screen.addEventListener && (r.isMbl || (r.screen.addEventListener("mouseover", r.onMouseOver), r.screen.addEventListener("mouseout", r.onMouseOut), r.screen.addEventListener("mouseup", r.onClick)), r.screen.addEventListener("touchend", r.onClick))
             }, r.onMouseOver = function(e) {
-                r.isDisabled_bl || e.pointerType && e.pointerType != e.MSPOINTER_TYPE_MOUSE || (FWDAnimation.killTweensOf(r.text_sdo), r.setSelectedState(!0), r.dispatchEvent(d.MOUSE_OVER))
+                r.isDisabled_bl || e.pointerType && e.pointerType != e.MSPOINTER_TYPE_MOUSE || (Animation.killTweensOf(r.text_sdo), r.setSelectedState(!0), r.dispatchEvent(d.MOUSE_OVER))
             }, r.onMouseOut = function(e) {
-                r.isDisabled_bl || e.pointerType && e.pointerType != e.MSPOINTER_TYPE_MOUSE || (FWDAnimation.killTweensOf(r.text_sdo), r.setNormalState(!0), r.dispatchEvent(d.MOUSE_OUT))
+                r.isDisabled_bl || e.pointerType && e.pointerType != e.MSPOINTER_TYPE_MOUSE || (Animation.killTweensOf(r.text_sdo), r.setNormalState(!0), r.dispatchEvent(d.MOUSE_OUT))
             }, r.onClick = function(e) {
                 r.isDisabled_bl || t.isScrollingOnMove_bl || (e.preventDefault && e.preventDefault(), r.dispatchEvent(d.CLICK))
             }, r.onMouseDown = function(e) {
@@ -3620,24 +3620,24 @@ if (! function(e) {
                     e: e
                 }))
             }, this.setSelectedState = function(e) {
-                FWDAnimation.killTweensOf(r.bk_sdo.screen), FWDAnimation.killTweensOf(r.text_sdo.screen), e ? (FWDAnimation.to(r.bk_sdo.screen, .6, {
+                Animation.killTweensOf(r.bk_sdo.screen), Animation.killTweensOf(r.text_sdo.screen), e ? (Animation.to(r.bk_sdo.screen, .6, {
                     css: {
                         backgroundColor: r.bkSClr
                     },
                     ease: Quart.easeOut
-                }), FWDAnimation.to(r.text_sdo.screen, .6, {
+                }), Animation.to(r.text_sdo.screen, .6, {
                     css: {
                         color: r.txtSClr
                     },
                     ease: Quart.easeOut
                 })) : (r.bk_sdo.setBkColor(r.bkSClr), r.text_sdo.getStyle().color = r.txtSClr)
             }, this.setNormalState = function(e) {
-                FWDAnimation.killTweensOf(r.bk_sdo.screen), FWDAnimation.killTweensOf(r.text_sdo.screen), e ? (FWDAnimation.to(r.bk_sdo.screen, .6, {
+                Animation.killTweensOf(r.bk_sdo.screen), Animation.killTweensOf(r.text_sdo.screen), e ? (Animation.to(r.bk_sdo.screen, .6, {
                     css: {
                         backgroundColor: r.bkNClr
                     },
                     ease: Quart.easeOut
-                }), FWDAnimation.to(r.text_sdo.screen, .6, {
+                }), Animation.to(r.text_sdo.screen, .6, {
                     css: {
                         color: r.txtNClr
                     },
@@ -3667,9 +3667,9 @@ if (! function(e) {
                     _.arrowN_sdo.setWidth(_.arrowN_img.width), _.arrowN_sdo.setHeight(_.arrowN_img.height), _.nBC = _.bkNColor, _.scrubberLines_n_canvas = FWDUVPUtils.getCanvasWithModifiedColor(_.arrowN_img, _.nBC, !0), _.scrubbelinesNImage_img = _.scrubberLines_n_canvas.image, _.arrowN_sdo.getStyle().background = "url('" + _.scrubbelinesNImage_img.src + "') repeat-y", _.arrowS_sdo.setWidth(_.arrowS_img.width), _.arrowS_sdo.setHeight(_.arrowS_img.height), _.sBC = _.arrowS_str, _.scrubberLines_s_canvas = FWDUVPUtils.getCanvasWithModifiedColor(_.arrowS_img, _.sBC, !0), _.scrubbelinesSImage_img = _.scrubberLines_s_canvas.image, _.arrowS_sdo.getStyle().background = "url('" + _.scrubbelinesSImage_img.src + "') repeat-y"
                 }) : (_.arrowN_sdo = new FWDUVPDisplayObject("div"), _.arrowN_sdo.screen.style.backgroundImage = "url(" + _.arrowN_str + ")", _.arrowS_sdo = new FWDUVPDisplayObject("div"), _.arrowS_sdo.screen.style.backgroundImage = "url(" + _.arrowS_str + ")"), _.arrowS_sdo.setAlpha(0), _.arrow_do.addChild(_.arrowN_sdo), _.arrow_do.addChild(_.arrowS_sdo), _.addChild(_.arrow_do), _.arrowN_sdo.setWidth(_.arrowWidth), _.arrowN_sdo.setHeight(_.arrowHeight), _.arrowS_sdo.setWidth(_.arrowWidth), _.arrowS_sdo.setHeight(_.arrowHeight), _.dumy_sdo = new FWDUVPDisplayObject("div"), FWDUVPUtils.isIE && (_.dumy_sdo.setBkColor("#FF0000"), _.dumy_sdo.setAlpha(0)), _.addChild(_.dumy_sdo), _.hasPointEvt ? (_.screen.addEventListener("pointerup", _.onClick), _.screen.addEventListener("pointerover", _.onMouseOver), _.screen.addEventListener("pointerout", _.onMouseOut)) : _.screen.addEventListener && (_.screen.addEventListener("mouseover", _.onMouseOver), _.screen.addEventListener("mouseout", _.onMouseOut), _.screen.addEventListener("mouseup", _.onClick), _.screen.addEventListener("touchend", _.onClick))
             }, _.onMouseOver = function(e) {
-                _.isDble || e.pointerType && e.pointerType != e.MSPOINTER_TYPE_MOUSE || (FWDAnimation.killTweensOf(_.text_sdo), _.setSelectedState(!0, 0), _.dispatchEvent(f.MOUSE_OVER))
+                _.isDble || e.pointerType && e.pointerType != e.MSPOINTER_TYPE_MOUSE || (Animation.killTweensOf(_.text_sdo), _.setSelectedState(!0, 0), _.dispatchEvent(f.MOUSE_OVER))
             }, _.onMouseOut = function(e) {
-                _.isDble || e.pointerType && e.pointerType != e.MSPOINTER_TYPE_MOUSE || (FWDAnimation.killTweensOf(_.text_sdo), _.setNormalState(!0, !0), _.dispatchEvent(f.MOUSE_OUT))
+                _.isDble || e.pointerType && e.pointerType != e.MSPOINTER_TYPE_MOUSE || (Animation.killTweensOf(_.text_sdo), _.setNormalState(!0, !0), _.dispatchEvent(f.MOUSE_OUT))
             }, _.onClick = function(e) {
                 _.isDeveleper_bl ? window.open("", "_blank") : (e.preventDefault && e.preventDefault(), _.dispatchEvent(f.CLICK, {
                     e: e
@@ -3679,31 +3679,31 @@ if (! function(e) {
                     e: e
                 })
             }, this.setSelectedState = function(e, t) {
-                e ? (FWDAnimation.to(_.bk_sdo, .6, {
+                e ? (Animation.to(_.bk_sdo, .6, {
                     alpha: 1,
                     ease: Expo.easeOut
-                }), FWDAnimation.to(_.text_sdo.screen, .6, {
+                }), Animation.to(_.text_sdo.screen, .6, {
                     css: {
                         color: _.tSColor
                     },
                     ease: Expo.easeOut
-                }), FWDAnimation.to(_.arrowS_sdo, .6, {
+                }), Animation.to(_.arrowS_sdo, .6, {
                     alpha: 1,
                     ease: Expo.easeOut
                 })) : (_.bk_sdo.setAlpha(1), _.text_sdo.getStyle().color = _.tSColor, _.arrowS_sdo.alpha = 1)
             }, this.setNormalState = function(e, t) {
                 var s = .6;
-                t && (s = 0), s = 0, FWDAnimation.killTweensOf(_.bk_sdo), FWDAnimation.killTweensOf(_.text_sdo.screen), FWDAnimation.killTweensOf(_.arrowS_sdo), e ? (FWDAnimation.to(_.bk_sdo, .6, {
+                t && (s = 0), s = 0, Animation.killTweensOf(_.bk_sdo), Animation.killTweensOf(_.text_sdo.screen), Animation.killTweensOf(_.arrowS_sdo), e ? (Animation.to(_.bk_sdo, .6, {
                     alpha: 0,
                     delay: s,
                     ease: Expo.easeOut
-                }), FWDAnimation.to(_.text_sdo.screen, .6, {
+                }), Animation.to(_.text_sdo.screen, .6, {
                     css: {
                         color: _.tNColor
                     },
                     delay: s,
                     ease: Expo.easeOut
-                }), FWDAnimation.to(_.arrowS_sdo, .6, {
+                }), Animation.to(_.arrowS_sdo, .6, {
                     alpha: 0,
                     delay: s,
                     ease: Expo.easeOut
@@ -3713,24 +3713,24 @@ if (! function(e) {
             }, _.getMaxTextWidth = function() {
                 return _.text_sdo.getWidth()
             }, this.disable = function() {
-                _.isDble = !0, _.setSelectedState(!0), FWDUVPUtils.hasTransform2d && (FWDAnimation.to(_.arrowN_sdo.screen, .8, {
+                _.isDble = !0, _.setSelectedState(!0), FWDUVPUtils.hasTransform2d && (Animation.to(_.arrowN_sdo.screen, .8, {
                     css: {
                         rotation: 180
                     },
                     ease: Quart.easeOut
-                }), FWDAnimation.to(_.arrowS_sdo.screen, .8, {
+                }), Animation.to(_.arrowS_sdo.screen, .8, {
                     css: {
                         rotation: 180
                     },
                     ease: Quart.easeOut
                 })), _.setNormalState(!0)
             }, this.enable = function() {
-                _.isDble = !1, FWDUVPUtils.hasTransform2d && (FWDAnimation.to(_.arrowN_sdo.screen, .8, {
+                _.isDble = !1, FWDUVPUtils.hasTransform2d && (Animation.to(_.arrowN_sdo.screen, .8, {
                     css: {
                         rotation: 0
                     },
                     ease: Quart.easeOut
-                }), FWDAnimation.to(_.arrowS_sdo.screen, .8, {
+                }), Animation.to(_.arrowS_sdo.screen, .8, {
                     css: {
                         rotation: 0
                     },
@@ -3782,41 +3782,41 @@ if (! function(e) {
             }, c.setButtonState = function(e) {
                 1 == e ? (c.firstButton_do.setVisible(!0), c.secondButton_do.setVisible(!1), c.currentState = 1) : (c.firstButton_do.setVisible(!1), c.secondButton_do.setVisible(!0), c.currentState = 0)
             }, this.setNormalState = function(e) {
-                c.isMbl && !c.hasPointerEvent_bl && !c.useFontAwesome_bl || (c.isSelectedState_bl = !1, FWDAnimation.killTweensOf(c.s1_do), FWDAnimation.killTweensOf(c.s2_do), c.useFontAwesome_bl ? (FWDAnimation.killTweensOf(c.n1_do.screen), FWDAnimation.killTweensOf(c.n2_do.screen), e ? (FWDAnimation.to(c.n1_do.screen, .8, {
+                c.isMbl && !c.hasPointerEvent_bl && !c.useFontAwesome_bl || (c.isSelectedState_bl = !1, Animation.killTweensOf(c.s1_do), Animation.killTweensOf(c.s2_do), c.useFontAwesome_bl ? (Animation.killTweensOf(c.n1_do.screen), Animation.killTweensOf(c.n2_do.screen), e ? (Animation.to(c.n1_do.screen, .8, {
                     className: c.normalCalssName,
                     ease: Expo.easeOut
-                }), FWDAnimation.to(c.n2_do.screen, .8, {
+                }), Animation.to(c.n2_do.screen, .8, {
                     className: c.normalCalssName,
                     ease: Expo.easeOut
-                })) : (c.n1_do.screen.className = c.normalCalssName, c.n2_do.screen.className = c.normalCalssName)) : (FWDAnimation.to(c.s1_do, .5, {
+                })) : (c.n1_do.screen.className = c.normalCalssName, c.n2_do.screen.className = c.normalCalssName)) : (Animation.to(c.s1_do, .5, {
                     alpha: 0,
                     ease: Expo.easeOut
-                }), FWDAnimation.to(c.s2_do, .5, {
+                }), Animation.to(c.s2_do, .5, {
                     alpha: 0,
                     ease: Expo.easeOut
                 })))
             }, this.setSelectedState = function(e) {
-                c.isSelectedState_bl = !0, FWDAnimation.killTweensOf(c.s1_do), FWDAnimation.killTweensOf(c.s2_do), c.useFontAwesome_bl ? (FWDAnimation.killTweensOf(c.n1_do.screen), FWDAnimation.killTweensOf(c.n2_do.screen), e ? (FWDAnimation.to(c.n1_do.screen, .8, {
+                c.isSelectedState_bl = !0, Animation.killTweensOf(c.s1_do), Animation.killTweensOf(c.s2_do), c.useFontAwesome_bl ? (Animation.killTweensOf(c.n1_do.screen), Animation.killTweensOf(c.n2_do.screen), e ? (Animation.to(c.n1_do.screen, .8, {
                     className: c.selectedCalssName,
                     ease: Expo.easeOut
-                }), FWDAnimation.to(c.n2_do.screen, .8, {
+                }), Animation.to(c.n2_do.screen, .8, {
                     className: c.selectedCalssName,
                     ease: Expo.easeOut
-                })) : (c.n1_do.screen.className = c.selectedCalssName, c.n2_do.screen.className = c.selectedCalssName)) : (FWDAnimation.to(c.s1_do, .5, {
+                })) : (c.n1_do.screen.className = c.selectedCalssName, c.n2_do.screen.className = c.selectedCalssName)) : (Animation.to(c.s1_do, .5, {
                     alpha: 1,
                     delay: .1,
                     ease: Expo.easeOut
-                }), FWDAnimation.to(c.s2_do, .5, {
+                }), Animation.to(c.s2_do, .5, {
                     alpha: 1,
                     delay: .1,
                     ease: Expo.easeOut
                 }))
             }, this.disable = function() {
-                c.isDisabled_bl || (c.isDisabled_bl = !0, c.setButtonMode(!1), FWDAnimation.killTweensOf(c), FWDAnimation.to(c, .6, {
+                c.isDisabled_bl || (c.isDisabled_bl = !0, c.setButtonMode(!1), Animation.killTweensOf(c), Animation.to(c, .6, {
                     alpha: .4
                 }), c.setNormalState())
             }, this.enable = function() {
-                c.isDisabled_bl && (c.isDisabled_bl = !1, c.setButtonMode(!0), FWDAnimation.killTweensOf(c), FWDAnimation.to(c, .6, {
+                c.isDisabled_bl && (c.isDisabled_bl = !1, c.setButtonMode(!0), Animation.killTweensOf(c), Animation.to(c, .6, {
                     alpha: 1
                 }))
             }, this.updateHEXColors = function(e, t) {
@@ -3867,7 +3867,7 @@ if (! function(e) {
             }, r.addContextEvent = function() {
                 r.prt.main_do.screen.addEventListener ? r.prt.main_do.screen.addEventListener("contextmenu", r.contextMenuHandler) : r.prt.main_do.screen.attachEvent("oncontextmenu", r.contextMenuHandler)
             }, r.contextMenuHandler = function(e) {
-                return r.show_bl && n.showContextmenu_bl && (clearTimeout(r.removeMenuId_to), r.prt.main_do.addChild(r), r.positionButtons(e), r.setAlpha(0), FWDAnimation.to(r, .4, {
+                return r.show_bl && n.showContextmenu_bl && (clearTimeout(r.removeMenuId_to), r.prt.main_do.addChild(r), r.positionButtons(e), r.setAlpha(0), Animation.to(r, .4, {
                     alpha: 1,
                     ease: Quart.easeOut
                 }), window.addEventListener ? (window.addEventListener("mousedown", r.contextMenuWindowOnMouseDownHandler), window.addEventListener("mouseup", r.contextMenuWindowOnMouseDownHandler)) : (document.documentElement.attachEvent("onmousedown", r.contextMenuWindowOnMouseDownHandler), document.documentElement.attachEvent("onmouseup", r.contextMenuWindowOnMouseDownHandler))), !!e.preventDefault && void e.preventDefault()
@@ -3905,24 +3905,24 @@ if (! function(e) {
             }, n.setupMainContainers = function() {
                 n.text1_sdo = new FWDUVPDisplayObject("div"), n.text1_sdo.setBackfaceVisibility(), n.text1_sdo.setDisplay("inline-block"), n.text1_sdo.getStyle().fontFamily = "Arial", n.text1_sdo.getStyle().fontSize = "12px", n.text1_sdo.getStyle().color = n.nBC, n.text1_sdo.getStyle().fontSmoothing = "antialiased", n.text1_sdo.setInnerHTML(n.label1_str), n.addChild(n.text1_sdo), n.showSecondButton_bl && (n.text2_sdo = new FWDUVPDisplayObject("div"), n.text2_sdo.setBackfaceVisibility(), n.text2_sdo.setDisplay("inline-block"), n.text2_sdo.getStyle().fontFamily = "Arial", n.text2_sdo.getStyle().fontSize = "12px", n.text2_sdo.getStyle().color = n.nBC, n.text2_sdo.getStyle().fontSmoothing = "antialiased", n.text2_sdo.setInnerHTML(n.label2_str), n.addChild(n.text2_sdo)), n.dumy_sdo = new FWDUVPDisplayObject("div"), FWDUVPUtils.isIE && (n.dumy_sdo.setBkColor("#FF0000"), n.dumy_sdo.setAlpha(0)), n.addChild(n.dumy_sdo), n.isMbl ? n.screen.addEventListener("touchstart", n.onMouseDown) : n.screen.addEventListener && (n.screen.addEventListener("mouseover", n.onMouseOver), n.screen.addEventListener("mouseout", n.onMouseOut), n.screen.addEventListener("mousedown", n.onMouseDown), n.screen.addEventListener("click", n.onClick))
             }, n.onMouseOver = function(e) {
-                n.isDisabled_bl || (FWDAnimation.killTweensOf(n.text1_sdo), e ? (FWDAnimation.to(n.text1_sdo.screen, .5, {
+                n.isDisabled_bl || (Animation.killTweensOf(n.text1_sdo), e ? (Animation.to(n.text1_sdo.screen, .5, {
                     css: {
                         color: n.sBC
                     },
                     ease: Expo.easeOut
-                }), n.showSecondButton_bl && FWDAnimation.to(n.text2_sdo.screen, .5, {
+                }), n.showSecondButton_bl && Animation.to(n.text2_sdo.screen, .5, {
                     css: {
                         color: n.sBC
                     },
                     ease: Expo.easeOut
-                })) : (n.text1_sdo.getStyle().color = n.sBC, n.showSecondButton_bl && (FWDAnimation.killTweensOf(n.text2_sdo), n.text2_sdo.getStyle().color = n.sBC)), n.dispatchEvent(a.MOUSE_OVER))
+                })) : (n.text1_sdo.getStyle().color = n.sBC, n.showSecondButton_bl && (Animation.killTweensOf(n.text2_sdo), n.text2_sdo.getStyle().color = n.sBC)), n.dispatchEvent(a.MOUSE_OVER))
             }, n.onMouseOut = function(e) {
-                n.isDisabled_bl || (FWDAnimation.killTweensOf(n.text1_sdo), FWDAnimation.to(n.text1_sdo.screen, .5, {
+                n.isDisabled_bl || (Animation.killTweensOf(n.text1_sdo), Animation.to(n.text1_sdo.screen, .5, {
                     css: {
                         color: n.nBC
                     },
                     ease: Expo.easeOut
-                }), n.showSecondButton_bl && (FWDAnimation.killTweensOf(n.text2_sdo), FWDAnimation.to(n.text2_sdo.screen, .5, {
+                }), n.showSecondButton_bl && (Animation.killTweensOf(n.text2_sdo), Animation.to(n.text2_sdo.screen, .5, {
                     css: {
                         color: n.nBC
                     },
@@ -3945,14 +3945,14 @@ if (! function(e) {
                     t = 0;
                 return n.showSecondButton_bl && (t = n.text2_sdo.getWidth()), Math.max(e, t)
             }, n.disable = function() {
-                n.isDisabled_bl = !0, FWDAnimation.killTweensOf(n.text1_sdo), FWDAnimation.to(n.text1_sdo.screen, .5, {
+                n.isDisabled_bl = !0, Animation.killTweensOf(n.text1_sdo), Animation.to(n.text1_sdo.screen, .5, {
                     css: {
                         color: n.disabledColor_str
                     },
                     ease: Expo.easeOut
                 }), n.setButtonMode(!1)
             }, n.enable = function() {
-                n.isDisabled_bl = !1, FWDAnimation.killTweensOf(n.text1_sdo), FWDAnimation.to(n.text1_sdo.screen, .5, {
+                n.isDisabled_bl = !1, Animation.killTweensOf(n.text1_sdo), Animation.to(n.text1_sdo.screen, .5, {
                     css: {
                         color: n.nBC
                     },
@@ -3976,7 +3976,7 @@ if (! function(e) {
                 }
                 b.mainHld.addChild(b.bk_do), b.mainHld.setOverflow("visible"), b.mainHld.getStyle().zIndex = 1, b.addChild(b.mainHld), b.showYoutubeQualityButton_bl && (b.ytbQuality_ar = ["hd2160", "hd1440", "highres", "hd1080", "hd720", "large", "medium", "small", "tiny"], b.ytbButtons_ar = [], b.ttYtbBtns = b.ytbQuality_ar.length, b.setupYtbButtons()), b.showNextAndPrevButtonsInController_bl && b.setupPrevButton(), b.setupPlayPauseButton(), b.showRewindButton_bl && b.setupRewindButton(), b.showNextAndPrevButtonsInController_bl && b.setupNextButton(), b.setupMainScrubber(), b.showTime_bl && b.setupTime(), b.showVolumeButton_bl && b.setupVolumeButton(), b.showPlaylistsButtonAndPlaylists_bl && b.setupCategoriesButton(), b.showPlaylistButtonAndPlaylist_bl && b.setupPlaylistButton(), b.showYoutubeQualityButton_bl && b.setupYoutubeQualityButton(), b.showShareButton_bl && b.setupShareButton(), b.showEmbedButton_bl && b.setupEmbedButton(), p.useAToB && b.setupAtbButton(), b.showInfoButton_bl && b.setupInfoButton(), p.showPlaybackRateButton_bl && b.setupPlaybackRateButton(), b.showDownloadVideoButton_bl && b.setupDownloadButton(), b.showSubBtn && b.setupSubtitleButton(), p.showChromecastButton_bl && b.setupChromecastButton(), b.showFullScreenButton_bl && b.setupFullscreenButton(), b.showButtonsToolTip_bl && b.setupToolTips(), b.showVolumeScrubber_bl && (b.setupVolumeScrubber(), b.hideVolumeScrubber()), b.hide(!1)
             }, b.resizeAndPosition = function() {
-                b.sW = m.tempVidStageWidth, b.positionButtons(), b.setY(m.tempVidStageHeight - b.sH), b.hideQualityButtons(!1), b.ytbButtonsHolder_do && (FWDAnimation.killTweensOf(b.ytbButtonsHolder_do), b.ytbButtonsHolder_do.setY(m.tempStageHeight)), b.subtitlesButtonsHolder_do && (FWDAnimation.killTweensOf(b.subtitlesButtonsHolder_do), b.subtitlesButtonsHolder_do.setY(m.sH)), b.playbackRatesButtonsHolder_do && (FWDAnimation.killTweensOf(b.playbackRatesButtonsHolder_do), b.playbackRatesButtonsHolder_do.setY(m.sH)), b.positionAdsLines()
+                b.sW = m.tempVidStageWidth, b.positionButtons(), b.setY(m.tempVidStageHeight - b.sH), b.hideQualityButtons(!1), b.ytbButtonsHolder_do && (Animation.killTweensOf(b.ytbButtonsHolder_do), b.ytbButtonsHolder_do.setY(m.tempStageHeight)), b.subtitlesButtonsHolder_do && (Animation.killTweensOf(b.subtitlesButtonsHolder_do), b.subtitlesButtonsHolder_do.setY(m.sH)), b.playbackRatesButtonsHolder_do && (Animation.killTweensOf(b.playbackRatesButtonsHolder_do), b.playbackRatesButtonsHolder_do.setY(m.sH)), b.positionAdsLines()
             }, this.getButtonIndex = function(e) {
                 return FWDUVPUtils.indexOfArray(b.buttons_ar, e)
             }, b.positionButtons = function() {
@@ -4027,7 +4027,7 @@ if (! function(e) {
                             b.showNextAndPrevButtonsInController_bl && b.maiScrbW, a && (b.maiScrbW -= 2 * b.timeOffsetLeftWidth), o = c.length;
                             for (_ = 0; _ < o; _++)
                                 if (e = c[_], 0 == _) e.setX(b.startSpaceBetweenButtons);
-                                else if (e == b.mainScrubber_do) t = c[_ - 1], FWDAnimation.killTweensOf(b.mainScrubber_do), b.mainScrubber_do.setX(t.x + t.w + b.spaceBetweenButtons), b.mainScrubber_do.setY(parseInt((b.sH - b.mainScrbH) / 2)), b.mainScrubber_do.setWidth(b.maiScrbW + 1), b.mainScrubberBkMiddle_do.setWidth(b.maiScrbW - 2 * b.scrbsBkLARW), b.mainScrubberBkRight_do.setX(b.maiScrbW - b.scrbsBkLARW), b.mainScrubberDragMiddle_do.setWidth(b.maiScrbW - b.scrbsBkLARW - b.scrubbersOffsetWidth);
+                                else if (e == b.mainScrubber_do) t = c[_ - 1], Animation.killTweensOf(b.mainScrubber_do), b.mainScrubber_do.setX(t.x + t.w + b.spaceBetweenButtons), b.mainScrubber_do.setY(parseInt((b.sH - b.mainScrbH) / 2)), b.mainScrubber_do.setWidth(b.maiScrbW + 1), b.mainScrubberBkMiddle_do.setWidth(b.maiScrbW - 2 * b.scrbsBkLARW), b.mainScrubberBkRight_do.setX(b.maiScrbW - b.scrbsBkLARW), b.mainScrubberDragMiddle_do.setWidth(b.maiScrbW - b.scrbsBkLARW - b.scrubbersOffsetWidth);
                             else if (e == b.time_do) {
                                 t = c[_ - 1], e.setX(t.x + t.w + b.spaceBetweenButtons + b.timeOffsetLeftWidth);
                                 var f = 0;
@@ -4041,10 +4041,10 @@ if (! function(e) {
             }, this.positionScrollBarOnTopOfTheController = function() {
                 b.maiScrbW = b.sW, b.updatePreloaderBar(b.percentLoaded), b.mainScrubber_do.setWidth(b.maiScrbW + 1), b.mainScrubberBkMiddle_do.setWidth(b.maiScrbW - 2 * b.scrbsBkLARW), b.mainScrubberBkRight_do.setX(b.maiScrbW - b.scrbsBkLARW), b.mainScrubberDragMiddle_do.setWidth(b.maiScrbW - b.scrbsBkLARW - b.scrubbersOffsetWidth);
                 var e = 0;
-                b.atb && b.atb.isShowed_bl && (e = b.sH), FWDAnimation.killTweensOf(b.mainScrubber_do), b.mainScrubber_do.setX(0), b.mainScrubber_do.setAlpha(1), b.isMainScrubberOnTop_bl || b.isShowed_bl ? (b.atb && b.atb.isShowed_bl && !b.isShowed_bl ? e += b.mainScrubberOffestTop : e = 0, FWDAnimation.killTweensOf(b.mainScrubber_do), b.isShowed_bl ? b.mainScrubber_do.setY(-b.mainScrubberOffestTop - e) : FWDAnimation.to(b.mainScrubber_do, .8, {
+                b.atb && b.atb.isShowed_bl && (e = b.sH), Animation.killTweensOf(b.mainScrubber_do), b.mainScrubber_do.setX(0), b.mainScrubber_do.setAlpha(1), b.isMainScrubberOnTop_bl || b.isShowed_bl ? (b.atb && b.atb.isShowed_bl && !b.isShowed_bl ? e += b.mainScrubberOffestTop : e = 0, Animation.killTweensOf(b.mainScrubber_do), b.isShowed_bl ? b.mainScrubber_do.setY(-b.mainScrubberOffestTop - e) : Animation.to(b.mainScrubber_do, .8, {
                     y: -b.mainScrubberOffestTop - e,
                     ease: Expo.easeOut
-                })) : b.isLive || FWDAnimation.to(b.mainScrubber_do, .8, {
+                })) : b.isLive || Animation.to(b.mainScrubber_do, .8, {
                     y: -b.mainScrubberOffestTop - e,
                     ease: Expo.easeOut
                 }), b.isMainScrubberOnTop_bl = !0
@@ -4076,14 +4076,14 @@ if (! function(e) {
                     for (var e = 0; e < this.line_ar.length; e++) this.line_ar[e].setAlpha(0), this.line_ar[e].isShowed_bl = !1
             }, this.positionAdsLines = function(e) {
                 if (b.linesHolder_do && e && (b.totalDuration = e, m.isAdd_bl ? this.linesHolder_do.setX(-5e3) : this.linesHolder_do.setX(0), this.line_ar))
-                    for (var t, s = 0; s < this.line_ar.length; s++)(t = this.line_ar[s]).setX(Math.round(t.timeStart / b.totalDuration * b.maiScrbW) - 1), t.x < 0 && t.setX(0), t.isUsed_bl || 0 == b.totalDuration || t.isShowed_bl || (FWDAnimation.to(t, 1, {
+                    for (var t, s = 0; s < this.line_ar.length; s++)(t = this.line_ar[s]).setX(Math.round(t.timeStart / b.totalDuration * b.maiScrbW) - 1), t.x < 0 && t.setX(0), t.isUsed_bl || 0 == b.totalDuration || t.isShowed_bl || (Animation.to(t, 1, {
                         alpha: 1,
                         delay: 1,
                         ease: Expo.easeOut
                     }), t.isShowed_bl = !0)
             }, this.resetsAdsLines = function() {
                 if (b.line_ar) {
-                    for (var e = 0; e < b.line_ar.length; e++) FWDAnimation.killTweensOf(b.line_ar[e]), b.linesHolder_do.removeChild(b.line_ar[e]);
+                    for (var e = 0; e < b.line_ar.length; e++) Animation.killTweensOf(b.line_ar[e]), b.linesHolder_do.removeChild(b.line_ar[e]);
                     b.curLinesId = -1, b.line_ar = null
                 }
             }, this.playbackRatesSource_ar = p.defaultPlaybackRate_ar, this.playbackRateButtons_ar = [], this.totalPlaybackRateButtons = 6, this.arePlaybackRateButtonsShowed_bl = !0, this.showPlaybackRateButton_bl || (this.arePlaybackRateButtonsShowed_bl = !1), this.setupPlaybackRateButton = function() {
@@ -4136,10 +4136,10 @@ if (! function(e) {
                 }
             }, this.disablePlaybackRateButtons = function(e) {
                 if (null != e)
-                    for (var t = 0; t < b.totalPlaybackRateButtons; t++) btn = b.playbackRateButtons_ar[t], t == e ? (FWDAnimation.killTweensOf(b.playbackRateQualityArrow_do), b.playbackRateQualityArrow_do.setY(btn.y + parseInt((btn.h - b.playbackRateQualityArrow_do.h) / 2) - 1), btn.disable(), b.playbackRateDisabledButton_do = btn) : btn.enable()
+                    for (var t = 0; t < b.totalPlaybackRateButtons; t++) btn = b.playbackRateButtons_ar[t], t == e ? (Animation.killTweensOf(b.playbackRateQualityArrow_do), b.playbackRateQualityArrow_do.setY(btn.y + parseInt((btn.h - b.playbackRateQualityArrow_do.h) / 2) - 1), btn.disable(), b.playbackRateDisabledButton_do = btn) : btn.enable()
             }, this.setPlaybackRateArrowPosition = function(e) {
                 var t = 0;
-                t = e ? e.y + parseInt((e.h - b.playbackRateQualityArrow_do.h) / 2 - 1) : b.playbackRateDisabledButton_do.y + parseInt((b.playbackRateDisabledButton_do.h - b.playbackRateQualityArrow_do.h) / 2 - 1), FWDAnimation.killTweensOf(b.playbackRateQualityArrow_do), FWDAnimation.to(b.playbackRateQualityArrow_do, .6, {
+                t = e ? e.y + parseInt((e.h - b.playbackRateQualityArrow_do.h) / 2 - 1) : b.playbackRateDisabledButton_do.y + parseInt((b.playbackRateDisabledButton_do.h - b.playbackRateQualityArrow_do.h) / 2 - 1), Animation.killTweensOf(b.playbackRateQualityArrow_do), Animation.to(b.playbackRateQualityArrow_do, .6, {
                     y: t,
                     delay: .1,
                     ease: Expo.easeInOut
@@ -4149,16 +4149,16 @@ if (! function(e) {
                     b.hideQualityButtons(), b.arePlaybackRateButtonsShowed_bl = !0;
                     var t = parseInt(b.playbackRateButton_do.x + parseInt(b.playbackRateButton_do.w - b.playbackRatesButtonsHolder_do.w) / 2),
                         s = parseInt(m.tempVidStageHeight - b.sH - b.playbackRatesButtonsHolder_do.h - 6);
-                    b.hasPointerEvent_bl ? window.addEventListener("pointerdown", b.hideplaybackRatesButtonsHandler) : (b.isMbl || window.addEventListener("mousedown", b.hideplaybackRatesButtonsHandler), window.addEventListener("touchstart", b.hideplaybackRatesButtonsHandler)), b.playbackRatesButtonsHolder_do.setX(t), e ? FWDAnimation.to(b.playbackRatesButtonsHolder_do, .6, {
+                    b.hasPointerEvent_bl ? window.addEventListener("pointerdown", b.hideplaybackRatesButtonsHandler) : (b.isMbl || window.addEventListener("mousedown", b.hideplaybackRatesButtonsHandler), window.addEventListener("touchstart", b.hideplaybackRatesButtonsHandler)), b.playbackRatesButtonsHolder_do.setX(t), e ? Animation.to(b.playbackRatesButtonsHolder_do, .6, {
                         y: s,
                         ease: Expo.easeInOut
-                    }) : (FWDAnimation.killTweensOf(b.playbackRatesButtonsHolder_do), b.playbackRatesButtonsHolder_do.setY(s))
+                    }) : (Animation.killTweensOf(b.playbackRatesButtonsHolder_do), b.playbackRatesButtonsHolder_do.setY(s))
                 }
             }, this.hidePlaybackRateButtons = function(e) {
-                b.arePlaybackRateButtonsShowed_bl && b.playbackRatesButtonsHolder_do && (b.arePlaybackRateButtonsShowed_bl = !1, b.showMainScrubberOnTop(), e ? FWDAnimation.to(b.playbackRatesButtonsHolder_do, .6, {
+                b.arePlaybackRateButtonsShowed_bl && b.playbackRatesButtonsHolder_do && (b.arePlaybackRateButtonsShowed_bl = !1, b.showMainScrubberOnTop(), e ? Animation.to(b.playbackRatesButtonsHolder_do, .6, {
                     y: m.sH,
                     ease: Expo.easeInOut
-                }) : (FWDAnimation.killTweensOf(b.playbackRatesButtonsHolder_do), b.playbackRatesButtonsHolder_do.setY(m.sH)), b.hasPointerEvent_bl ? window.removeEventListener("pointerdown", b.hideplaybackRatesButtonsHandler) : (b.isMbl || window.removeEventListener("mousedown", b.hideplaybackRatesButtonsHandler), window.removeEventListener("touchstart", b.hideplaybackRatesButtonsHandler)))
+                }) : (Animation.killTweensOf(b.playbackRatesButtonsHolder_do), b.playbackRatesButtonsHolder_do.setY(m.sH)), b.hasPointerEvent_bl ? window.removeEventListener("pointerdown", b.hideplaybackRatesButtonsHandler) : (b.isMbl || window.removeEventListener("mousedown", b.hideplaybackRatesButtonsHandler), window.removeEventListener("touchstart", b.hideplaybackRatesButtonsHandler)))
             }, this.hideplaybackRatesButtonsHandler = function(e) {
                 var t = FWDUVPUtils.getViewportMouseCoordinates(e);
                 FWDUVPUtils.hitTest(b.playbackRateButton_do.screen, t.screenX, t.screenY) || FWDUVPUtils.hitTest(b.playbackRatesButtonsHolder_do.screen, t.screenX, t.screenY) || b.hidePlaybackRateButtons(!0)
@@ -4236,11 +4236,11 @@ if (! function(e) {
                 if (b.mainScrubber_do) {
                     b.isLive && (e = 0);
                     var t = parseInt(e * b.maiScrbW);
-                    isNaN(t) || null == t || (t < 0 && (t = 0), b.percentPlayed = e, !FWDUVPlayer.hasHTML5Video && t >= b.mainProgress_do.w && (t = b.mainProgress_do.w), t < 1 && b.isMainScrubberLineVisible_bl ? (b.isMainScrubberLineVisible_bl = !1, FWDAnimation.to(b.mainScrubberBarLine_do, .5, {
+                    isNaN(t) || null == t || (t < 0 && (t = 0), b.percentPlayed = e, !FWDUVPlayer.hasHTML5Video && t >= b.mainProgress_do.w && (t = b.mainProgress_do.w), t < 1 && b.isMainScrubberLineVisible_bl ? (b.isMainScrubberLineVisible_bl = !1, Animation.to(b.mainScrubberBarLine_do, .5, {
                         alpha: 0
-                    })) : 1 < t && !b.isMainScrubberLineVisible_bl && (b.isMainScrubberLineVisible_bl = !0, FWDAnimation.to(b.mainScrubberBarLine_do, .5, {
+                    })) : 1 < t && !b.isMainScrubberLineVisible_bl && (b.isMainScrubberLineVisible_bl = !0, Animation.to(b.mainScrubberBarLine_do, .5, {
                         alpha: 1
-                    })), b.mainScrubberDrag_do.setWidth(t), t > b.maiScrbW - b.scrubbersOffsetWidth && (t = b.maiScrbW - b.scrubbersOffsetWidth), t < 0 && (t = 0), FWDAnimation.to(b.mainScrubberBarLine_do, .8, {
+                    })), b.mainScrubberDrag_do.setWidth(t), t > b.maiScrbW - b.scrubbersOffsetWidth && (t = b.maiScrbW - b.scrubbersOffsetWidth), t < 0 && (t = 0), Animation.to(b.mainScrubberBarLine_do, .8, {
                         x: t + 1,
                         ease: Expo.easeOut
                     }))
@@ -4360,10 +4360,10 @@ if (! function(e) {
                 }
             }, this.disableQualityButtons = function(e) {
                 "highres" == e || "hd1080" == e || "hd720" == e || "hd1440" == e || "hd2160" == e ? b.ytbQualityButton_do.showDisabledState() : b.ytbQualityButton_do.hideDisabledState();
-                for (var t = 0; t < b.ttYtbBtns; t++) btn = b.ytbButtons_ar[t], btn.label_str == e ? (FWDAnimation.killTweensOf(b.ytbQualityArrow_do), 0 != btn.y && (b.ytbQualityArrow_do.setY(btn.y + Math.round((btn.h - b.ytbQualityArrow_do.h) / 2)), b.ytbDisabledButton_do = btn), btn.disable()) : btn.enable()
+                for (var t = 0; t < b.ttYtbBtns; t++) btn = b.ytbButtons_ar[t], btn.label_str == e ? (Animation.killTweensOf(b.ytbQualityArrow_do), 0 != btn.y && (b.ytbQualityArrow_do.setY(btn.y + Math.round((btn.h - b.ytbQualityArrow_do.h) / 2)), b.ytbDisabledButton_do = btn), btn.disable()) : btn.enable()
             }, this.setYtbQualityArrowPosition = function(e) {
                 var t = 0;
-                t = e ? e.y + parseInt((e.h - b.ytbQualityArrow_do.h) / 2) : b.ytbDisabledButton_do.y + parseInt((b.ytbDisabledButton_do.h - b.ytbQualityArrow_do.h) / 2), FWDAnimation.killTweensOf(b.ytbQualityArrow_do), FWDAnimation.to(b.ytbQualityArrow_do, .6, {
+                t = e ? e.y + parseInt((e.h - b.ytbQualityArrow_do.h) / 2) : b.ytbDisabledButton_do.y + parseInt((b.ytbDisabledButton_do.h - b.ytbQualityArrow_do.h) / 2), Animation.killTweensOf(b.ytbQualityArrow_do), Animation.to(b.ytbQualityArrow_do, .6, {
                     y: t,
                     delay: .1,
                     ease: Expo.easeInOut
@@ -4373,16 +4373,16 @@ if (! function(e) {
                     b.hideSubtitleButtons(), b.hideMainScrubberTop(), b.areYtbQualityButtonsShowed_bl = !0;
                     var t = parseInt(b.ytbQualityButton_do.x + parseInt(b.ytbQualityButton_do.w - b.ytbButtonsHolder_do.w) / 2),
                         s = parseInt(m.tempVidStageHeight - b.sH - b.ytbButtonsHolder_do.h - 6);
-                    window.hasPointerEvent_bl ? window.addEventListener("pointerdown", b.hideQualityButtonsHandler) : (b.isMbl || window.addEventListener("mousedown", b.hideQualityButtonsHandler), window.addEventListener("touchstart", b.hideQualityButtonsHandler)), b.ytbButtonsHolder_do.setX(t), e ? FWDAnimation.to(b.ytbButtonsHolder_do, .6, {
+                    window.hasPointerEvent_bl ? window.addEventListener("pointerdown", b.hideQualityButtonsHandler) : (b.isMbl || window.addEventListener("mousedown", b.hideQualityButtonsHandler), window.addEventListener("touchstart", b.hideQualityButtonsHandler)), b.ytbButtonsHolder_do.setX(t), e ? Animation.to(b.ytbButtonsHolder_do, .6, {
                         y: s,
                         ease: Expo.easeInOut
-                    }) : (FWDAnimation.killTweensOf(b.ytbButtonsHolder_do), b.ytbButtonsHolder_do.setY(s))
+                    }) : (Animation.killTweensOf(b.ytbButtonsHolder_do), b.ytbButtonsHolder_do.setY(s))
                 }
             }, this.hideQualityButtons = function(e) {
-                b.areYtbQualityButtonsShowed_bl && b.showYoutubeQualityButton_bl && (b.hideSubtitleButtons(), b.areYtbQualityButtonsShowed_bl = !1, e ? FWDAnimation.to(b.ytbButtonsHolder_do, .6, {
+                b.areYtbQualityButtonsShowed_bl && b.showYoutubeQualityButton_bl && (b.hideSubtitleButtons(), b.areYtbQualityButtonsShowed_bl = !1, e ? Animation.to(b.ytbButtonsHolder_do, .6, {
                     y: m.sH,
                     ease: Expo.easeInOut
-                }) : (FWDAnimation.killTweensOf(b.ytbButtonsHolder_do), b.ytbButtonsHolder_do.setY(m.sH)), window.hasPointerEvent_bl ? window.removeEventListener("pointerdown", b.hideQualityButtonsHandler) : (b.isMbl || window.removeEventListener("mousedown", b.hideQualityButtonsHandler), window.removeEventListener("touchstart", b.hideQualityButtonsHandler)))
+                }) : (Animation.killTweensOf(b.ytbButtonsHolder_do), b.ytbButtonsHolder_do.setY(m.sH)), window.hasPointerEvent_bl ? window.removeEventListener("pointerdown", b.hideQualityButtonsHandler) : (b.isMbl || window.removeEventListener("mousedown", b.hideQualityButtonsHandler), window.removeEventListener("touchstart", b.hideQualityButtonsHandler)))
             }, this.showSubBtn, this.subtitlesSource_ar = p.subtitles_ar, this.subtitleButtons_ar = [], this.totalSubttleButtons = 10, this.setupSubtitleButton = function() {
                 b.useVectorIcons_bl ? (FWDUVPComplexButton.setPrototype(), b.subtitleButton_do = new FWDUVPComplexButton(void 0, void 0, void 0, void 0, !0, void 0, void 0, void 0, "<span class='fwdicon fwdicon-CC'></span>", "<span class='fwdicon fwdicon-CC-off'></span>", "UVPMainButtonsNormalState", "UVPMainButtonsSelectedState")) : (FWDUVPComplexButton.setPrototype(), b.subtitleButton_do = new FWDUVPComplexButton(p.showSubtitleNPath_img, p.showSubtitleSPath_str, p.hideSubtitleNPath_img, p.hideSubtitleSPath_str, !0, b.useHEX, b.nBC, b.sBC));
                 var e = setInterval(function() {
@@ -4428,11 +4428,11 @@ if (! function(e) {
                     }
                 }
             }, this.disableSubtitleButtons = function(e) {
-                for (var t = 0; t < b.totalSubttleButtons; t++) btn = b.subtitleButtons_ar[t], t == e ? (FWDAnimation.killTweensOf(b.subtitleQualityArrow_do), b.subtitleQualityArrow_do.setY(btn.y + parseInt((btn.h - b.subtitleQualityArrow_do.h) / 2) + 1), btn.disable(), b.subtitleDisabledButton_do = btn) : btn.enable();
+                for (var t = 0; t < b.totalSubttleButtons; t++) btn = b.subtitleButtons_ar[t], t == e ? (Animation.killTweensOf(b.subtitleQualityArrow_do), b.subtitleQualityArrow_do.setY(btn.y + parseInt((btn.h - b.subtitleQualityArrow_do.h) / 2) + 1), btn.disable(), b.subtitleDisabledButton_do = btn) : btn.enable();
                 b.subtitlesSource_ar.length - 1 - e == 0 ? b.subtitleButton_do.setButtonState(0) : b.subtitleButton_do.setButtonState(1)
             }, this.setSubtitleArrowPosition = function(e) {
                 var t = 0;
-                t = e ? e.y + parseInt((e.h - b.subtitleQualityArrow_do.h) / 2) : b.subtitleDisabledButton_do.y + parseInt((b.subtitleDisabledButton_do.h - b.subtitleQualityArrow_do.h) / 2), FWDAnimation.killTweensOf(b.subtitleQualityArrow_do), FWDAnimation.to(b.subtitleQualityArrow_do, .6, {
+                t = e ? e.y + parseInt((e.h - b.subtitleQualityArrow_do.h) / 2) : b.subtitleDisabledButton_do.y + parseInt((b.subtitleDisabledButton_do.h - b.subtitleQualityArrow_do.h) / 2), Animation.killTweensOf(b.subtitleQualityArrow_do), Animation.to(b.subtitleQualityArrow_do, .6, {
                     y: t,
                     delay: .1,
                     ease: Expo.easeInOut
@@ -4442,16 +4442,16 @@ if (! function(e) {
                     b.hideQualityButtons(), b.hideMainScrubberTop(), b.areSubtitleButtonsShowed_bl = !0;
                     var t = parseInt(b.subtitleButton_do.x + parseInt(b.subtitleButton_do.w - b.subtitlesButtonsHolder_do.w) / 2),
                         s = parseInt(m.tempVidStageHeight - b.sH - b.subtitlesButtonsHolder_do.h - 6);
-                    b.hasPointerEvent_bl ? window.addEventListener("pointerdown", b.hideSubtitlesButtonsHandler) : (b.isMbl || window.addEventListener("mousedown", b.hideSubtitlesButtonsHandler), window.addEventListener("touchstart", b.hideSubtitlesButtonsHandler)), b.subtitlesButtonsHolder_do.setX(t), e ? FWDAnimation.to(b.subtitlesButtonsHolder_do, .6, {
+                    b.hasPointerEvent_bl ? window.addEventListener("pointerdown", b.hideSubtitlesButtonsHandler) : (b.isMbl || window.addEventListener("mousedown", b.hideSubtitlesButtonsHandler), window.addEventListener("touchstart", b.hideSubtitlesButtonsHandler)), b.subtitlesButtonsHolder_do.setX(t), e ? Animation.to(b.subtitlesButtonsHolder_do, .6, {
                         y: s,
                         ease: Expo.easeInOut
-                    }) : (FWDAnimation.killTweensOf(b.subtitlesButtonsHolder_do), b.subtitlesButtonsHolder_do.setY(s))
+                    }) : (Animation.killTweensOf(b.subtitlesButtonsHolder_do), b.subtitlesButtonsHolder_do.setY(s))
                 }
             }, this.hideSubtitleButtons = function(e) {
-                b.areSubtitleButtonsShowed_bl && b.subtitlesButtonsHolder_do && (b.areSubtitleButtonsShowed_bl = !1, e ? FWDAnimation.to(b.subtitlesButtonsHolder_do, .6, {
+                b.areSubtitleButtonsShowed_bl && b.subtitlesButtonsHolder_do && (b.areSubtitleButtonsShowed_bl = !1, e ? Animation.to(b.subtitlesButtonsHolder_do, .6, {
                     y: m.sH,
                     ease: Expo.easeInOut
-                }) : (FWDAnimation.killTweensOf(b.subtitlesButtonsHolder_do), b.subtitlesButtonsHolder_do.setY(m.sH)), b.hasPointerEvent_bl ? window.removeEventListener("pointerdown", b.hideSubtitlesButtonsHandler) : (b.isMbl || window.removeEventListener("mousedown", b.hideSubtitlesButtonsHandler), window.removeEventListener("touchstart", b.hideSubtitlesButtonsHandler)), b.showMainScrubberOnTop())
+                }) : (Animation.killTweensOf(b.subtitlesButtonsHolder_do), b.subtitlesButtonsHolder_do.setY(m.sH)), b.hasPointerEvent_bl ? window.removeEventListener("pointerdown", b.hideSubtitlesButtonsHandler) : (b.isMbl || window.removeEventListener("mousedown", b.hideSubtitlesButtonsHandler), window.removeEventListener("touchstart", b.hideSubtitlesButtonsHandler)), b.showMainScrubberOnTop())
             }, this.hideSubtitlesButtonsHandler = function(e) {
                 var t = FWDUVPUtils.getViewportMouseCoordinates(e);
                 FWDUVPUtils.hitTest(b.subtitleButton_do.screen, t.screenX, t.screenY) || FWDUVPUtils.hitTest(b.subtitlesButtonsHolder_do.screen, t.screenX, t.screenY) || b.hideSubtitleButtons(!0)
@@ -4462,7 +4462,7 @@ if (! function(e) {
                 }, 50);
                 b.ytbQualityButton_do.addListener(FWDUVPSimpleButton.MOUSE_UP, b.ytbQualityMouseUpHandler), b.mainHld.addChild(b.ytbQualityButton_do)
             }, this.ytbQualityMouseUpHandler = function() {
-                b.areYtbQualityButtonsShowed_bl ? (b.hideQualityButtons(!0), b.isMainScrubberOnTop_bl && (b.mainScrubber_do.setX(0), FWDAnimation.to(b.mainScrubber_do, .6, {
+                b.areYtbQualityButtonsShowed_bl ? (b.hideQualityButtons(!0), b.isMainScrubberOnTop_bl && (b.mainScrubber_do.setX(0), Animation.to(b.mainScrubber_do, .6, {
                     alpha: 1
                 }))) : b.showQualityButtons(!0)
             }, this.hideQualityButtonsHandler = function(e) {
@@ -4591,14 +4591,14 @@ if (! function(e) {
                 }, 50);
                 b.buttons_ar.push(b.volBtn), b.mainHld.addChild(b.volBtn), 0 == b.volume && b.volBtn.setDisabledState()
             }, this.volumeButtonShowTooltipHandler = function(e) {}, this.hideMainScrubberTop = function() {
-                b.isMainScrubberOnTop_bl && FWDAnimation.to(b.mainScrubber_do, .4, {
+                b.isMainScrubberOnTop_bl && Animation.to(b.mainScrubber_do, .4, {
                     alpha: 0,
                     onComplete: function() {
                         b.mainScrubber_do.setX(-5e3)
                     }
                 })
             }, this.showMainScrubberOnTop = function() {
-                b.isMainScrubberOnTop_bl && (b.mainScrubber_do.setX(0), FWDAnimation.to(b.mainScrubber_do, .6, {
+                b.isMainScrubberOnTop_bl && (b.mainScrubber_do.setX(0), Animation.to(b.mainScrubber_do, .6, {
                     alpha: 1
                 }))
             }, this.volumeOnMouseOverHandler = function() {
@@ -4653,15 +4653,15 @@ if (! function(e) {
             }, this.updateVolumeScrubber = function(e) {
                 var t = b.volumeScrubberHeight - b.volumeScrubberOfsetHeight,
                     s = Math.round(e * t);
-                b.volumeScrubberDrag_do.setHeight(Math.max(0, s - b.volumeScrubberDragBottom_do.h)), b.volumeScrubberDrag_do.setY(t - s), s < 1 && b.isVolumeScrubberLineVisible_bl ? (b.isVolumeScrubberLineVisible_bl = !1, FWDAnimation.to(b.volumeScrubberBarLine_do, .5, {
+                b.volumeScrubberDrag_do.setHeight(Math.max(0, s - b.volumeScrubberDragBottom_do.h)), b.volumeScrubberDrag_do.setY(t - s), s < 1 && b.isVolumeScrubberLineVisible_bl ? (b.isVolumeScrubberLineVisible_bl = !1, Animation.to(b.volumeScrubberBarLine_do, .5, {
                     alpha: 0
-                }), FWDAnimation.to(b.volumeScrubberDragBottom_do, .5, {
+                }), Animation.to(b.volumeScrubberDragBottom_do, .5, {
                     alpha: 0
-                })) : 1 < s && !b.isVolumeScrubberLineVisible_bl && (b.isVolumeScrubberLineVisible_bl = !0, FWDAnimation.to(b.volumeScrubberBarLine_do, .5, {
+                })) : 1 < s && !b.isVolumeScrubberLineVisible_bl && (b.isVolumeScrubberLineVisible_bl = !0, Animation.to(b.volumeScrubberBarLine_do, .5, {
                     alpha: 1
-                }), FWDAnimation.to(b.volumeScrubberDragBottom_do, .5, {
+                }), Animation.to(b.volumeScrubberDragBottom_do, .5, {
                     alpha: 1
-                })), t < s && (s = t), FWDAnimation.to(b.volumeScrubberBarLine_do, .8, {
+                })), t < s && (s = t), Animation.to(b.volumeScrubberBarLine_do, .8, {
                     y: t - s - 2,
                     ease: Expo.easeOut
                 })
@@ -4675,35 +4675,35 @@ if (! function(e) {
                     var t = -b.volumeScrubberHolder_do.h + b.h;
                     b.volumeScrubberHolder_do.setVisible(!0), b.isMbl ? setTimeout(function() {
                         window.addEventListener("touchstart", b.hideVolumeSchubberOnMoveHandler)
-                    }, 50) : window.addEventListener("mousemove", b.hideVolumeSchubberOnMoveHandler), b.volumeScrubberHolder_do.setX(parseInt(b.volBtn.x + (b.volBtn.w - b.volumeScrubberHolder_do.w) / 2)), e ? FWDAnimation.to(b.volumeScrubberHolder_do, .6, {
+                    }, 50) : window.addEventListener("mousemove", b.hideVolumeSchubberOnMoveHandler), b.volumeScrubberHolder_do.setX(parseInt(b.volBtn.x + (b.volBtn.w - b.volumeScrubberHolder_do.w) / 2)), e ? Animation.to(b.volumeScrubberHolder_do, .6, {
                         y: t,
                         ease: Expo.easeInOut
-                    }) : (FWDAnimation.killTweensOf(b.volumeScrubberHolder_do), b.volumeScrubberHolder_do.setY(t))
+                    }) : (Animation.killTweensOf(b.volumeScrubberHolder_do), b.volumeScrubberHolder_do.setY(t))
                 }
             }, this.hideVolumeSchubberOnMoveHandler = function(e) {
                 var t = FWDUVPUtils.getViewportMouseCoordinates(e);
-                (FWDUVPUtils.hitTest(b.volumeScrubberHolder_do.screen, t.screenX, t.screenY) || FWDUVPUtils.hitTest(b.volBtn.screen, t.screenX, t.screenY)) && !b.isMbl || FWDUVPUtils.hitTest(b.volumeScrubber_do.screen, t.screenX, t.screenY) && b.isMbl || b.volumeScrubberIsDragging_bl || (b.hideVolumeScrubber(!0), b.isMainScrubberOnTop_bl && (b.mainScrubber_do.setX(0), FWDAnimation.to(b.mainScrubber_do, .6, {
+                (FWDUVPUtils.hitTest(b.volumeScrubberHolder_do.screen, t.screenX, t.screenY) || FWDUVPUtils.hitTest(b.volBtn.screen, t.screenX, t.screenY)) && !b.isMbl || FWDUVPUtils.hitTest(b.volumeScrubber_do.screen, t.screenX, t.screenY) && b.isMbl || b.volumeScrubberIsDragging_bl || (b.hideVolumeScrubber(!0), b.isMainScrubberOnTop_bl && (b.mainScrubber_do.setX(0), Animation.to(b.mainScrubber_do, .6, {
                     alpha: 1
                 })))
             }, this.hideVolumeScrubber = function(e) {
-                b.isVolumeScrubberShowed_bl && (b.isVolumeScrubberShowed_bl = !1, b.volBtn.setNormalState(!0), e ? FWDAnimation.to(b.volumeScrubberHolder_do, .6, {
+                b.isVolumeScrubberShowed_bl && (b.isVolumeScrubberShowed_bl = !1, b.volBtn.setNormalState(!0), e ? Animation.to(b.volumeScrubberHolder_do, .6, {
                     y: m.sH,
                     ease: Expo.easeInOut,
                     onComplete: function() {
                         b.volumeScrubberHolder_do.setVisible(!1)
                     }
-                }) : (FWDAnimation.killTweensOf(b.ytbButtonsHolder_do), b.volumeScrubberHolder_do.setY(m.sH), b.volumeScrubberHolder_do.setVisible(!1)), b.isMbl ? window.removeEventListener("touchstart", b.hideVolumeSchubberOnMoveHandler) : window.removeEventListener("mousemove", b.hideVolumeSchubberOnMoveHandler))
+                }) : (Animation.killTweensOf(b.ytbButtonsHolder_do), b.volumeScrubberHolder_do.setY(m.sH), b.volumeScrubberHolder_do.setVisible(!1)), b.isMbl ? window.removeEventListener("touchstart", b.hideVolumeSchubberOnMoveHandler) : window.removeEventListener("mousemove", b.hideVolumeSchubberOnMoveHandler))
             }, this.show = function(e) {
-                b.isShowed_bl || (b.isShowed_bl = !0, b.setX(0), e ? FWDAnimation.to(b.mainHld, .8, {
+                b.isShowed_bl || (b.isShowed_bl = !0, b.setX(0), e ? Animation.to(b.mainHld, .8, {
                     y: 0,
                     ease: Expo.easeInOut
-                }) : (FWDAnimation.killTweensOf(b.mainHld), b.mainHld.setY(0)), setTimeout(b.positionButtons, 200))
+                }) : (Animation.killTweensOf(b.mainHld), b.mainHld.setY(0)), setTimeout(b.positionButtons, 200))
             }, this.hide = function(e, t) {
-                b.isShowed_bl && (t = t || 0, b.atb && b.atb.isShowed_bl && (t += b.h + 1), b.isMainScrubberOnTop_bl && b.atb && b.atb.isShowed_bl && (t += b.mainScrubberOffestTop), p.showScrubberWhenControllerIsHidden_bl || (t += b.mainScrubber_do.h - 14), b.isShowed_bl = !1, e ? FWDAnimation.to(b.mainHld, .8, {
+                b.isShowed_bl && (t = t || 0, b.atb && b.atb.isShowed_bl && (t += b.h + 1), b.isMainScrubberOnTop_bl && b.atb && b.atb.isShowed_bl && (t += b.mainScrubberOffestTop), p.showScrubberWhenControllerIsHidden_bl || (t += b.mainScrubber_do.h - 14), b.isShowed_bl = !1, e ? Animation.to(b.mainHld, .8, {
                     y: b.sH + t,
                     ease: Expo.easeInOut,
                     onComplete: function() {}
-                }) : (FWDAnimation.killTweensOf(b.mainHld), b.mainHld.setY(b.sH + t)), b.hideQualityButtons(!0), b.hideSubtitleButtons(!0), b.hidePlaybackRateButtons(!0))
+                }) : (Animation.killTweensOf(b.mainHld), b.mainHld.setY(b.sH + t)), b.hideQualityButtons(!0), b.hideSubtitleButtons(!0), b.hidePlaybackRateButtons(!0))
             }, this.mainScrubberDragMiddleAddPath_str = p.mainScrubberDragMiddleAddPath_str, this.updateHexColorForScrubber = function(e) {
                 if (e) b.mainScrubberDragMiddle_do.getStyle().background = "url('" + b.mainScrubberDragMiddleAddPath_str + "') repeat-x", b.mainScrubberDragLeft_do.screen.src = p.mainScrubberDragLeftAddPath_str;
                 else if (b.useHEX && b.mainSCrubberMiddleCanvas) {
@@ -6030,8 +6030,8 @@ var FWDUVPAddress = new function() {
         }, this.sendClickHandler = function() {
             var e = !1;
             if (!r.getValidEmail(r.yourEmailInpt.screen.value)) {
-                if (FWDAnimation.isTweening(r.yourEmailInpt.screen)) return;
-                FWDAnimation.to(r.yourEmailInpt.screen, .1, {
+                if (Animation.isTweening(r.yourEmailInpt.screen)) return;
+                Animation.to(r.yourEmailInpt.screen, .1, {
                     css: {
                         backgroundColor: "#FF0000"
                     },
@@ -6040,8 +6040,8 @@ var FWDUVPAddress = new function() {
                 }), e = !0
             }
             if (!r.getValidEmail(r.friendEmailInpt.screen.value)) {
-                if (FWDAnimation.isTweening(r.friendEmailInpt.screen)) return;
-                FWDAnimation.to(r.friendEmailInpt.screen, .1, {
+                if (Animation.isTweening(r.friendEmailInpt.screen)) return;
+                Animation.to(r.friendEmailInpt.screen, .1, {
                     css: {
                         backgroundColor: "#FF0000"
                     },
@@ -6081,7 +6081,7 @@ var FWDUVPAddress = new function() {
                 l = t + s;
             i = i.replace(/&?RVPInstanceName=.+RVPVideoId=[0-9]+/g, ""), e = e.replace(/&?RVPInstanceName=.+RVPVideoId=[0-9]+/g, ""), r.finalEmbedPath_str = i ? o ? l + i + "&RVPInstanceName=" + n.instanceName_str + "&RVPPlaylistId=" + n.catId + "&RVPVideoId=" + n.id + o : l + i + "&RVPInstanceName=" + n.instanceName_str + "&RVPPlaylistId=" + n.catId + "&RVPVideoId=" + n.id : o ? l + "?RVPInstanceName=" + n.instanceName_str + "&RVPPlaylistId=" + n.catId + "&RVPVideoId=" + n.id + o : l + "?RVPInstanceName=" + n.instanceName_str + "&RVPPlaylistId=" + n.catId + "&RVPVideoId=" + n.id, o ? -1 == o.indexOf("playlistId=") ? r.linkToVideo_str = l + i + o + "&playlistId=" + n.catId + "&videoId=" + n.id : r.linkToVideo_str = e : r.linkToVideo_str = e + "#/?playlistId=" + n.catId + "&videoId=" + n.id, r.finalEmbedPath_str = encodeURI(r.finalEmbedPath_str), r.linkToVideo_str = encodeURI(r.linkToVideo_str), r.finalEmbedCode_str = "<iframe src='" + r.finalEmbedPath_str + "' width='" + n.sW + "' height='" + n.sH + "' frameborder='0' scrolling='no' allowfullscreen></iframe>", FWDUVPUtils.isIE ? (r.linkTxt.screen.innerText = r.linkToVideo_str, r.embdTxt.screen.innerText = r.finalEmbedCode_str) : (r.linkTxt.screen.textContent = r.linkToVideo_str, r.embdTxt.screen.textContent = r.finalEmbedCode_str)
         }, this.showInfo = function(e, t) {
-            r.infoText_do.setInnerHTML(e), r.sendMainHld.addChild(r.infoText_do), r.infoText_do.setWidth(r.buttonWidth), r.infoText_do.setHeight(r.buttonHeight - 4), r.infoText_do.setX(r.sndBtn.x), r.infoText_do.setY(r.sndBtn.y - 23), r.infoText_do.setAlpha(0), r.infoText_do.getStyle().color = t ? "#FF0000" : r.mainLabelsColor_str, FWDAnimation.killTweensOf(r.infoText_do), FWDAnimation.to(r.infoText_do, .16, {
+            r.infoText_do.setInnerHTML(e), r.sendMainHld.addChild(r.infoText_do), r.infoText_do.setWidth(r.buttonWidth), r.infoText_do.setHeight(r.buttonHeight - 4), r.infoText_do.setX(r.sndBtn.x), r.infoText_do.setY(r.sndBtn.y - 23), r.infoText_do.setAlpha(0), r.infoText_do.getStyle().color = t ? "#FF0000" : r.mainLabelsColor_str, Animation.killTweensOf(r.infoText_do), Animation.to(r.infoText_do, .16, {
                 alpha: 1,
                 yoyo: !0,
                 repeat: 7
@@ -6089,21 +6089,21 @@ var FWDUVPAddress = new function() {
         }, this.show = function(e) {
             r.isShowed_bl || (r.isShowed_bl = !0, n.main_do.addChild(r), r.init(), r.resetInputs(), r.setEmbedData(), (!FWDUVPUtils.isMobile || FWDUVPUtils.isMobile && FWDUVPUtils.hasPointerEvent) && n.main_do.setSelectable(!0), r.useVectorIcons_bl ? r.checkButtonsId_to = setInterval(function() {
                 0 != r.clsBtn.w && (r.positionAndResize(), clearInterval(r.checkButtonsId_to), clearTimeout(r.hideCompleteId_to), clearTimeout(r.showCompleteId_to), r.mainHld.setY(-r.sH), r.showCompleteId_to = setTimeout(r.showCompleteHandler, 900), setTimeout(function() {
-                    FWDAnimation.to(r.mainHld, .8, {
+                    Animation.to(r.mainHld, .8, {
                         y: 0,
                         delay: .1,
                         ease: Expo.easeInOut
                     })
                 }, 100))
             }, 50) : (r.positionAndResize(), clearTimeout(r.hideCompleteId_to), clearTimeout(r.showCompleteId_to), r.mainHld.setY(-r.sH), r.showCompleteId_to = setTimeout(r.showCompleteHandler, 900), setTimeout(function() {
-                FWDAnimation.to(r.mainHld, .8, {
+                Animation.to(r.mainHld, .8, {
                     y: 0,
                     delay: .1,
                     ease: Expo.easeInOut
                 })
             }, 100)))
         }, this.showCompleteHandler = function() {}, this.hide = function() {
-            r.isShowed_bl && (r.isShowed_bl = !1, n.customContextMenu_do && n.customContextMenu_do.enable(), r.positionAndResize(), clearTimeout(r.hideCompleteId_to), clearTimeout(r.showCompleteId_to), (!FWDUVPUtils.isMobile || FWDUVPUtils.isMobile && FWDUVPUtils.hasPointerEvent) && n.main_do.setSelectable(!1), r.hideCompleteId_to = setTimeout(r.hideCompleteHandler, 800), FWDAnimation.killTweensOf(r.mainHld), FWDAnimation.to(r.mainHld, .8, {
+            r.isShowed_bl && (r.isShowed_bl = !1, n.customContextMenu_do && n.customContextMenu_do.enable(), r.positionAndResize(), clearTimeout(r.hideCompleteId_to), clearTimeout(r.showCompleteId_to), (!FWDUVPUtils.isMobile || FWDUVPUtils.isMobile && FWDUVPUtils.hasPointerEvent) && n.main_do.setSelectable(!1), r.hideCompleteId_to = setTimeout(r.hideCompleteHandler, 800), Animation.killTweensOf(r.mainHld), Animation.to(r.mainHld, .8, {
                 y: -r.sH,
                 ease: Expo.easeInOut
             }))
@@ -6234,14 +6234,14 @@ var FWDUVPAddress = new function() {
                 o.mainTextHolder_do.setWidth(o.totalWidth), e = o.mainTextHolder_do.getHeight(), o.bk_do.setWidth(o.totalWidth - 2), o.bk_do.setHeight(e - 2), o.mainTextHolder_do.setX(parseInt((o.sW - o.totalWidth) / 2)), o.mainTextHolder_do.setY(parseInt((o.sH - e) / 2) - 8)
             }, this.show = function(e) {
                 o.isShowed_bl || (o.isShowed_bl = !0, t.main_do.addChild(o), o.text_do.setInnerHTML(e), o.positionAndResize(), clearTimeout(o.hideCompleteId_to), clearTimeout(o.showCompleteId_to), o.mainHld.setY(-o.sH), o.showCompleteId_to = setTimeout(o.showCompleteHandler, 900), setTimeout(function() {
-                    FWDAnimation.to(o.mainHld, .8, {
+                    Animation.to(o.mainHld, .8, {
                         y: 0,
                         delay: .1,
                         ease: Expo.easeInOut
                     })
                 }, 100))
             }, this.showCompleteHandler = function() {}, this.hide = function() {
-                o.isShowed_bl && (o.isShowed_bl = !1, t.customContextMenu_do && t.customContextMenu_do.enable(), o.positionAndResize(), clearTimeout(o.hideCompleteId_to), clearTimeout(o.showCompleteId_to), o.hideCompleteId_to = setTimeout(o.hideCompleteHandler, 800), FWDAnimation.killTweensOf(o.mainHld), FWDAnimation.to(o.mainHld, .8, {
+                o.isShowed_bl && (o.isShowed_bl = !1, t.customContextMenu_do && t.customContextMenu_do.enable(), o.positionAndResize(), clearTimeout(o.hideCompleteId_to), clearTimeout(o.showCompleteId_to), o.hideCompleteId_to = setTimeout(o.hideCompleteHandler, 800), Animation.killTweensOf(o.mainHld), Animation.to(o.mainHld, .8, {
                     y: -o.sH,
                     ease: Expo.easeInOut
                 }))
@@ -6275,7 +6275,7 @@ var FWDUVPAddress = new function() {
                 }, self.startPosisionOnMin = function() {
                     self.wasPlaylistShowed_bl = self.isPlaylistShowed_bl, self.showPlaylist(), self.resizeHandler(), self.positionOnMin()
                 }, self.setNormal = function() {
-                    self.isMin && (self.isMinShowed = !0, self.isMin = !1, self.main_do.getStyle().position = "relative", self.main_do.getStyle().zIndex = 0, FWDAnimation.killTweensOf(self.main_do), self.main_do.setAlpha(1), self.main_do.setX(0), self.main_do.setY(0), self.opener_do && self.opener_do.setX(-1e3), self.startPosisionOnNormal())
+                    self.isMin && (self.isMinShowed = !0, self.isMin = !1, self.main_do.getStyle().position = "relative", self.main_do.getStyle().zIndex = 0, Animation.killTweensOf(self.main_do), self.main_do.setAlpha(1), self.main_do.setX(0), self.main_do.setY(0), self.opener_do && self.opener_do.setX(-1e3), self.startPosisionOnNormal())
                 }, self.startPosisionOnNormal = function() {
                     self.opener_do && self.opener_do.showCloseButton(), self.isPlaylistShowed_bl = self.wasPlaylistShowed_bl, self.isPlaylistShowed_bl && self.hidePlaylist(!0), self.resizeHandler()
                 }, self.positionOnMin = function(e) {
@@ -6286,17 +6286,17 @@ var FWDUVPAddress = new function() {
                         var o = 0;
                         if (self.isMinShowed || (s = 0, o = Math.round(self.tempStageHeight) + t), self.opener_do) var i = self.ws.w - self.opener_do.w - t,
                             l = self.ws.h - self.tempStageHeight - t + o - self.opener_do.h;
-                        self.main_do.setX(self.ws.w - self.tempStageWidth - t), 0 == self.main_do.alpha || e ? (0 == self.main_do.alpha && (self.main_do.setY(self.ws.h), self.opener_do && (self.opener_do.setX(i), self.opener_do.setY(self.ws.h))), FWDAnimation.to(self.main_do, .8, {
+                        self.main_do.setX(self.ws.w - self.tempStageWidth - t), 0 == self.main_do.alpha || e ? (0 == self.main_do.alpha && (self.main_do.setY(self.ws.h), self.opener_do && (self.opener_do.setX(i), self.opener_do.setY(self.ws.h))), Animation.to(self.main_do, .8, {
                             alpha: 1,
                             y: self.ws.h - self.tempStageHeight - t + o,
                             delay: s,
                             ease: Expo.easeInOut
-                        }), self.opener_do && (FWDAnimation.killTweensOf(self.opener_do), FWDAnimation.to(self.opener_do, .8, {
+                        }), self.opener_do && (Animation.killTweensOf(self.opener_do), Animation.to(self.opener_do, .8, {
                             x: i,
                             y: l,
                             delay: s,
                             ease: Expo.easeInOut
-                        }))) : (FWDAnimation.killTweensOf(self.main_do), self.main_do.setAlpha(1), self.main_do.setY(self.ws.h - self.tempStageHeight - t + o), self.opener_do && (FWDAnimation.killTweensOf(self.opener_do), self.opener_do.setX(i), self.opener_do.setY(l)))
+                        }))) : (Animation.killTweensOf(self.main_do), self.main_do.setAlpha(1), self.main_do.setY(self.ws.h - self.tempStageHeight - t + o), self.opener_do && (Animation.killTweensOf(self.opener_do), self.opener_do.setX(i), self.opener_do.setY(l)))
                     }
                 }, self.onInitlalizeScrollHandler = function() {
                     var e = FWDUVPUtils.getScrollOffsets();
@@ -6347,11 +6347,11 @@ var FWDUVPAddress = new function() {
                             self.lightBoxWidth > s.w ? (self.finalLightBoxWidth = s.w, self.finalLightBoxHeight = parseInt(self.lightBoxHeight * (s.w / self.lightBoxWidth))) : (self.finalLightBoxWidth = self.lightBoxWidth, self.finalLightBoxHeight = self.lightBoxHeight), self.lightBox_do.setWidth(s.w), self.lightBox_do.setHeight(s.h), self.lightBox_do.setX(o.x), self.lightBox_do.setY(o.y), self.lightBox_do.mainLightBox_do.setX(parseInt((s.w - self.finalLightBoxWidth) / 2)), self.lightBox_do.mainLightBox_do.setY(parseInt((s.h - self.finalLightBoxHeight) / 2)), self.lightBox_do.clsBtn && self.lightBox_do.isShowed_bl && (self.lightBox_do.clsBtn.setX(s.w - self.lightBox_do.clsBtn.w - 15), self.lightBox_do.clsBtn.setY(15)), self.main_do.setX(0), self.main_do.setY(0), self.lightBox_do.mainLightBox_do.setWidth(self.finalLightBoxWidth), self.lightBox_do.mainLightBox_do.setHeight(self.finalLightBoxHeight), self.sW = self.finalLightBoxWidth, self.sH = self.finalLightBoxHeight
                         }
                     else self.main_do.getStyle().width = "100%", self.main_do.getWidth() > self.maxWidth && self.main_do.setWidth(self.maxWidth), self.sW = self.main_do.getWidth(), self.autoScale_bl ? self.sH = parseInt(self.maxHeight * (self.sW / self.maxWidth)) : self.sH = self.maxHeight;
-                    self.sH > s.h && self.isFullScreen_bl && (self.sH = s.h), self.data && self.playlist_do && (self.playlistHeight = parseInt(self.data.playlistBottomHeight)), self.isMin && !self.isFullScreen_bl && (self.sW = Math.min(self.stickyOnScrollWidth - 10, self.ws.w - 10), self.sH = parseInt(self.stickyOnScrollHeight * (self.sW / self.stickyOnScrollWidth)), self.tempStageHeight = self.sH), self.data && (self.tempPlaylistPosition_str = self.data.playlistPosition_str, (self.sW < 800 || self.ec && self.sH < 600) && (self.tempPlaylistPosition_str = "bottom"), self.playlistPosition_str = self.tempPlaylistPosition_str, self.playlist_do && (self.playlist_do.position_str = self.tempPlaylistPosition_str)), self.playlist_do && self.isPlaylistShowed_bl ? "bottom" == self.playlistPosition_str ? (self.vidStageWidth = self.sW, self.sH += self.playlistHeight + self.spaceBetweenControllerAndPlaylist, self.vidStageHeight = self.sH - self.playlistHeight - self.spaceBetweenControllerAndPlaylist, self.displayType == FWDUVPlayer.FULL_SCREEN && self.controller_do.disablePlaylistButton()) : "right" == self.playlistPosition_str && (self.isFullScreen_bl && !self.showPlaylistOnFullScreen ? self.vidStageWidth = self.sW : self.vidStageWidth = self.sW - self.playlistWidth - self.spaceBetweenControllerAndPlaylist, self.controller_do && self.controller_do.enablePlaylistButton(), self.vidStageHeight = self.sH) : (self.vidStageWidth = self.sW, self.vidStageHeight = self.sH), self.controller_do && self.playlist_do && ("right" == self.playlistPosition_str ? self.isFullScreen_bl && !self.showPlaylistOnFullScreen ? self.controller_do.disablePlaylistButton() : self.controller_do.enablePlaylistButton() : self.isEmbedded_bl && self.controller_do.disablePlaylistButton()), self.mainBackground_do && (self.mainBackground_do.setWidth(self.ws.w), self.mainBackground_do.setHeight(self.sH)), e || (FWDAnimation.killTweensOf(self), self.tempStageWidth = self.sW, self.tempStageHeight = self.sH, self.tempVidStageWidth = self.vidStageWidth, self.tempVidStageHeight = Math.max(0, self.vidStageHeight), self.resizeFinal(t), self.prevVpW == s.w && self.displayType == FWDUVPlayer.STICKY || self.setStageContainerFinalHeightAndPosition(t)), setTimeout(function() {
+                    self.sH > s.h && self.isFullScreen_bl && (self.sH = s.h), self.data && self.playlist_do && (self.playlistHeight = parseInt(self.data.playlistBottomHeight)), self.isMin && !self.isFullScreen_bl && (self.sW = Math.min(self.stickyOnScrollWidth - 10, self.ws.w - 10), self.sH = parseInt(self.stickyOnScrollHeight * (self.sW / self.stickyOnScrollWidth)), self.tempStageHeight = self.sH), self.data && (self.tempPlaylistPosition_str = self.data.playlistPosition_str, (self.sW < 800 || self.ec && self.sH < 600) && (self.tempPlaylistPosition_str = "bottom"), self.playlistPosition_str = self.tempPlaylistPosition_str, self.playlist_do && (self.playlist_do.position_str = self.tempPlaylistPosition_str)), self.playlist_do && self.isPlaylistShowed_bl ? "bottom" == self.playlistPosition_str ? (self.vidStageWidth = self.sW, self.sH += self.playlistHeight + self.spaceBetweenControllerAndPlaylist, self.vidStageHeight = self.sH - self.playlistHeight - self.spaceBetweenControllerAndPlaylist, self.displayType == FWDUVPlayer.FULL_SCREEN && self.controller_do.disablePlaylistButton()) : "right" == self.playlistPosition_str && (self.isFullScreen_bl && !self.showPlaylistOnFullScreen ? self.vidStageWidth = self.sW : self.vidStageWidth = self.sW - self.playlistWidth - self.spaceBetweenControllerAndPlaylist, self.controller_do && self.controller_do.enablePlaylistButton(), self.vidStageHeight = self.sH) : (self.vidStageWidth = self.sW, self.vidStageHeight = self.sH), self.controller_do && self.playlist_do && ("right" == self.playlistPosition_str ? self.isFullScreen_bl && !self.showPlaylistOnFullScreen ? self.controller_do.disablePlaylistButton() : self.controller_do.enablePlaylistButton() : self.isEmbedded_bl && self.controller_do.disablePlaylistButton()), self.mainBackground_do && (self.mainBackground_do.setWidth(self.ws.w), self.mainBackground_do.setHeight(self.sH)), e || (Animation.killTweensOf(self), self.tempStageWidth = self.sW, self.tempStageHeight = self.sH, self.tempVidStageWidth = self.vidStageWidth, self.tempVidStageHeight = Math.max(0, self.vidStageHeight), self.resizeFinal(t), self.prevVpW == s.w && self.displayType == FWDUVPlayer.STICKY || self.setStageContainerFinalHeightAndPosition(t)), setTimeout(function() {
                         self.prevVpW = s.w
                     }, 50)
                 }, this.resizeFinal = function(e) {
-                    if (self.displayType == FWDUVPlayer.STICKY || self.isMin || (self.stageContainer.style.height = self.tempStageHeight + "px"), self.mainBackground_do && (self.mainBackground_do.setWidth(self.ws.w), self.mainBackground_do.setHeight(self.tempStageHeight)), self.main_do.setWidth(self.tempStageWidth), self.videoHolder_do.setWidth(self.tempVidStageWidth), self.videoHolder_do.setHeight(self.tempVidStageHeight), self.showPlaylistButtonAndPlaylist_bl && self.isPlaylistShowed_bl && self.playlistPosition_str, self.main_do.setHeight(self.tempStageHeight), self.displayType == FWDUVPlayer.LIGHTBOX && self.lightBox_do.mainLightBox_do.setY(parseInt((self.ws.h - self.tempStageHeight) / 2)), self.audioScreen_do && self.videoType_str == FWDUVPlayer.MP3 && self.audioScreen_do.resizeAndPosition(self.tempVidStageWidth, self.tempVidStageHeight), self.ytb_do && self.videoType_str == FWDUVPlayer.YOUTUBE && (self.ytb_do.setWidth(self.tempVidStageWidth), self.ytb_do.setHeight(self.tempVidStageHeight)), self.logo_do && self.logo_do.positionAndResize(), self.playlist_do && !FWDAnimation.isTweening(self) && (self.isMbl ? self.playlist_do.resizeAndPosition(!1) : self.playlist_do.resizeAndPosition(e)), self.annotations_do && (FWDAnimation.isTweening(self) ? self.annotations_do.position(!0) : self.annotations_do.position(!1)), self.controller_do && self.controller_do.resizeAndPosition(), self.categories_do && self.categories_do.resizeAndPosition(), self.videoScreen_do && (self.videoType_str == FWDUVPlayer.VIDEO || self.videoType_str == FWDUVPlayer.HLS_JS || self.videoType_str == FWDUVPlayer.DASH)) {
+                    if (self.displayType == FWDUVPlayer.STICKY || self.isMin || (self.stageContainer.style.height = self.tempStageHeight + "px"), self.mainBackground_do && (self.mainBackground_do.setWidth(self.ws.w), self.mainBackground_do.setHeight(self.tempStageHeight)), self.main_do.setWidth(self.tempStageWidth), self.videoHolder_do.setWidth(self.tempVidStageWidth), self.videoHolder_do.setHeight(self.tempVidStageHeight), self.showPlaylistButtonAndPlaylist_bl && self.isPlaylistShowed_bl && self.playlistPosition_str, self.main_do.setHeight(self.tempStageHeight), self.displayType == FWDUVPlayer.LIGHTBOX && self.lightBox_do.mainLightBox_do.setY(parseInt((self.ws.h - self.tempStageHeight) / 2)), self.audioScreen_do && self.videoType_str == FWDUVPlayer.MP3 && self.audioScreen_do.resizeAndPosition(self.tempVidStageWidth, self.tempVidStageHeight), self.ytb_do && self.videoType_str == FWDUVPlayer.YOUTUBE && (self.ytb_do.setWidth(self.tempVidStageWidth), self.ytb_do.setHeight(self.tempVidStageHeight)), self.logo_do && self.logo_do.positionAndResize(), self.playlist_do && !Animation.isTweening(self) && (self.isMbl ? self.playlist_do.resizeAndPosition(!1) : self.playlist_do.resizeAndPosition(e)), self.annotations_do && (Animation.isTweening(self) ? self.annotations_do.position(!0) : self.annotations_do.position(!1)), self.controller_do && self.controller_do.resizeAndPosition(), self.categories_do && self.categories_do.resizeAndPosition(), self.videoScreen_do && (self.videoType_str == FWDUVPlayer.VIDEO || self.videoType_str == FWDUVPlayer.HLS_JS || self.videoType_str == FWDUVPlayer.DASH)) {
                         if (self.fillEntireVideoScreen_bl) {
                             if (self.videoScreen_do && self.videoScreen_do.video_el && 0 != self.videoScreen_do.video_el.videoWidth) {
                                 var t = self.videoScreen_do.video_el.videoWidth,
@@ -6365,40 +6365,40 @@ var FWDUVPAddress = new function() {
                     }
                     self.isIMA && self.IMA && self.IMA.resizeAndPosition(), self.ytb_do && self.ytb_do.ytb && self.videoType_str == FWDUVPlayer.YOUTUBE && self.ytb_do.resizeAndPosition(), self.vimeo_do && self.videoType_str == FWDUVPlayer.VIMEO && self.vimeo_do.resizeAndPosition(), self.preloader_do && self.positionPreloader(), self.dumyClick_do && (self.is360 && self.videoType_str == FWDUVPlayer.YOUTUBE ? self.dumyClick_do.setWidth(0) : (self.dumyClick_do.setWidth(self.tempVidStageWidth), self.isMbl || self.videoType_str != FWDUVPlayer.YOUTUBE || self.isAdd_bl, self.dumyClick_do.setHeight(self.tempVidStageHeight))), self.videoHider_do && self.resizeVideoHider(), self.lrgPlayBtn && self.positionLargePlayButton(), self.videoPoster_do && self.videoPoster_do.allowToShow_bl && self.videoPoster_do.positionAndResize(), self.popw_do && self.popw_do.isShowed_bl && self.popw_do.positionAndResize(), self.embedWindow_do && self.embedWindow_do.isShowed_bl && self.embedWindow_do.positionAndResize(), self.passWindow_do && self.passWindow_do.isShowed_bl && self.passWindow_do.positionAndResize(), self.infoWindow_do && self.infoWindow_do.isShowed_bl && self.infoWindow_do.positionAndResize(), self.info_do && self.info_do.isShowed_bl && self.info_do.positionAndResize(), self.shareWindow_do && self.shareWindow_do.isShowed_bl && self.shareWindow_do.positionAndResize(), self.adsStart_do && self.isAdd_bl && self.positionAds(), self.subtitle_do && self.subtitle_do.position(e), self.popupAds_do && self.popupAds_do.position(e), self.positionAdsImage(), self.positionOnMin()
                 }, this.setStageContainerFinalHeightAndPosition = function(e) {
-                    self.displayType == FWDUVPlayer.STICKY && (self.allowToResizeAndPosition_bl = !0, clearTimeout(self.showPlaylistWithDelayId_to), self.horizontalPosition_str == FWDUVPlayer.LEFT ? (self.main_do.setX(self.offsetX), self.opener_do && ("right" == self.data.openerAlignment_str ? self.opener_do.setX(Math.round(self.sW - self.opener_do.w + self.offsetX)) : self.opener_do.setX(self.offsetX))) : self.horizontalPosition_str == FWDUVPlayer.CENTER ? (self.main_do.setX(Math.round((self.ws.w - self.sW) / 2)), self.opener_do && ("right" == self.data.openerAlignment_str ? self.opener_do.setX(parseInt((self.ws.w - self.sW) / 2) + self.sW - self.opener_do.w) : self.opener_do.setX(self.main_do.x))) : self.horizontalPosition_str == FWDUVPlayer.RIGHT && (self.main_do.setX(Math.round(self.ws.w - self.sW - self.offsetX)), self.opener_do && ("right" == self.data.openerAlignment_str ? self.opener_do.setX(Math.round(self.ws.w - self.opener_do.w - self.offsetX)) : self.opener_do.setX(Math.round(self.ws.w - self.sW - self.offsetX)))), e ? self.position_str == FWDUVPlayer.POSITION_TOP ? (self.isShowed_bl && !self.isShowedFirstTime_bl ? FWDAnimation.to(self.stageContainer, .8, {
+                    self.displayType == FWDUVPlayer.STICKY && (self.allowToResizeAndPosition_bl = !0, clearTimeout(self.showPlaylistWithDelayId_to), self.horizontalPosition_str == FWDUVPlayer.LEFT ? (self.main_do.setX(self.offsetX), self.opener_do && ("right" == self.data.openerAlignment_str ? self.opener_do.setX(Math.round(self.sW - self.opener_do.w + self.offsetX)) : self.opener_do.setX(self.offsetX))) : self.horizontalPosition_str == FWDUVPlayer.CENTER ? (self.main_do.setX(Math.round((self.ws.w - self.sW) / 2)), self.opener_do && ("right" == self.data.openerAlignment_str ? self.opener_do.setX(parseInt((self.ws.w - self.sW) / 2) + self.sW - self.opener_do.w) : self.opener_do.setX(self.main_do.x))) : self.horizontalPosition_str == FWDUVPlayer.RIGHT && (self.main_do.setX(Math.round(self.ws.w - self.sW - self.offsetX)), self.opener_do && ("right" == self.data.openerAlignment_str ? self.opener_do.setX(Math.round(self.ws.w - self.opener_do.w - self.offsetX)) : self.opener_do.setX(Math.round(self.ws.w - self.sW - self.offsetX)))), e ? self.position_str == FWDUVPlayer.POSITION_TOP ? (self.isShowed_bl && !self.isShowedFirstTime_bl ? Animation.to(self.stageContainer, .8, {
                         css: {
                             top: self.offsetY
                         },
                         ease: Expo.easeInOut
-                    }) : FWDAnimation.to(self.stageContainer, .8, {
+                    }) : Animation.to(self.stageContainer, .8, {
                         css: {
                             top: -self.sH
                         },
                         ease: Expo.easeInOut
-                    }), self.isShowedFirstTime_bl ? self.opener_do && FWDAnimation.to(self.opener_do, .8, {
+                    }), self.isShowedFirstTime_bl ? self.opener_do && Animation.to(self.opener_do, .8, {
                         y: self.sH - self.opener_do.h,
                         ease: Expo.easeInOut
-                    }) : self.opener_do && FWDAnimation.to(self.opener_do, .8, {
+                    }) : self.opener_do && Animation.to(self.opener_do, .8, {
                         y: self.sH,
                         ease: Expo.easeInOut
-                    })) : (self.isShowed_bl && !self.isShowedFirstTime_bl ? FWDAnimation.to(self.stageContainer, .8, {
+                    })) : (self.isShowed_bl && !self.isShowedFirstTime_bl ? Animation.to(self.stageContainer, .8, {
                         css: {
                             top: self.ws.h - self.sH - self.offsetY
                         },
                         ease: Expo.easeInOut
-                    }) : FWDAnimation.to(self.stageContainer, .8, {
+                    }) : Animation.to(self.stageContainer, .8, {
                         css: {
                             top: self.ws.h
                         },
                         ease: Expo.easeInOut,
                         onComplete: self.moveWheyLeft
-                    }), self.isShowedFirstTime_bl ? self.opener_do && FWDAnimation.to(self.opener_do, .8, {
+                    }), self.isShowedFirstTime_bl ? self.opener_do && Animation.to(self.opener_do, .8, {
                         y: 0,
                         ease: Expo.easeInOut
-                    }) : self.opener_do && FWDAnimation.to(self.opener_do, .8, {
+                    }) : self.opener_do && Animation.to(self.opener_do, .8, {
                         y: -self.opener_do.h,
                         ease: Expo.easeInOut
-                    })) : (FWDAnimation.killTweensOf(self.stageContainer), self.position_str == FWDUVPlayer.POSITION_TOP ? (self.isShowed_bl && !self.isShowedFirstTime_bl ? self.stageContainer.style.top = self.offsetY + "px" : self.stageContainer.style.top = -self.sH + "px", self.isShowedFirstTime_bl ? self.opener_do && self.opener_do.setY(self.sH - self.opener_do.h) : self.opener_do && self.opener_do.setY(self.sH)) : (self.isShowed_bl && !self.isShowedFirstTime_bl ? self.stageContainer.style.top = self.ws.h - self.sH - self.offsetY + "px" : self.stageContainer.style.top = self.ws.h + "px", self.isShowedFirstTime_bl ? self.opener_do && self.opener_do.setY(0) : self.opener_do && self.opener_do.setY(-self.opener_do.h))))
+                    })) : (Animation.killTweensOf(self.stageContainer), self.position_str == FWDUVPlayer.POSITION_TOP ? (self.isShowed_bl && !self.isShowedFirstTime_bl ? self.stageContainer.style.top = self.offsetY + "px" : self.stageContainer.style.top = -self.sH + "px", self.isShowedFirstTime_bl ? self.opener_do && self.opener_do.setY(self.sH - self.opener_do.h) : self.opener_do && self.opener_do.setY(self.sH)) : (self.isShowed_bl && !self.isShowedFirstTime_bl ? self.stageContainer.style.top = self.ws.h - self.sH - self.offsetY + "px" : self.stageContainer.style.top = self.ws.h + "px", self.isShowedFirstTime_bl ? self.opener_do && self.opener_do.setY(0) : self.opener_do && self.opener_do.setY(-self.opener_do.h))))
                 }, this.setupClickScreen = function() {
                     self.dumyClick_do = new FWDUVPDisplayObject("div"), FWDUVPUtils.isIE && (self.dumyClick_do.setBkColor("#00FF00"), self.dumyClick_do.setAlpha(.001)), self.hasPointerEvent_bl ? (self.dumyClick_do.screen.addEventListener("pointerdown", self.playPauseDownHandler), self.dumyClick_do.screen.addEventListener("pointerup", self.playPauseClickHandler), self.dumyClick_do.screen.addEventListener("pointermove", self.playPauseMoveHandler)) : self.isMbl ? self.dumyClick_do.screen.addEventListener("click", self.playPauseClickHandler) : (self.dumyClick_do.screen.addEventListener("mousedown", self.playPauseDownHandler), self.dumyClick_do.screen.addEventListener("mouseup", self.playPauseClickHandler), self.dumyClick_do.screen.addEventListener("mousemove", self.playPauseMoveHandler)), self.hideClickScreen(), self.videoHolder_do.addChild(self.dumyClick_do)
                 }, this.playPauseDownHandler = function(e) {
@@ -6460,51 +6460,51 @@ var FWDUVPAddress = new function() {
                     clearTimeout(self.vizFinisedId_to), clearTimeout(self.vizFinished2Id_to);
                     var t = Math.round(self.tempVidStageWidth / 2),
                         s = Math.round(1.5 * self.tempVidStageHeight);
-                    FWDAnimation.killTweensOf(self.mainVzBackgrond_do), self.lasPosition != e && self.mainVzBackgrond_do.setAlpha(0), FWDAnimation.to(self.mainVzBackgrond_do, .4, {
+                    Animation.killTweensOf(self.mainVzBackgrond_do), self.lasPosition != e && self.mainVzBackgrond_do.setAlpha(0), Animation.to(self.mainVzBackgrond_do, .4, {
                         alpha: 1
                     }), self.mainVz_do.setVisible(!0), self.mainVz_do.setWidth(t), self.mainVz_do.setHeight(s), self.mainVz_do.setY((self.tempVidStageHeight - s) / 2);
                     var o = Math.abs(self.mainVz_do.y);
-                    self.controller_do && self.controller_do.isShowed_bl && (o -= self.controller_do.sH / 2), self.videoHolder_do.contains(self.mainVz_do) || (self.controller_do ? self.videoHolder_do.addChildAt(self.mainVz_do, self.videoHolder_do.getChildIndex(self.controller_do) - 1) : self.videoHolder_do.addChild(self.mainVz_do)), "right" == e ? (self.mainVz_do.getStyle().borderRadius = "100% 0% 0% 100%", self.mainVz_do.setX(t), self.vzImg1_do.setRotation(0), self.vzImg2_do.setRotation(0), self.vzImg3_do.setRotation(0)) : (self.mainVz_do.getStyle().borderRadius = "0% 100% 100% 0%", self.mainVz_do.setX(0), self.vzImg1_do.setRotation(180), self.vzImg2_do.setRotation(180), self.vzImg3_do.setRotation(180)), self.vzImg1_do.setX(Math.round(t - 3 * self.vzImg1_do.w) / 2), self.vzImg1_do.setY(Math.round(o + (self.tempVidStageHeight - self.vzImg1_do.h) / 2)), self.vzImg2_do.setX(self.vzImg1_do.x + self.vzImg1_do.w), self.vzImg2_do.setY(self.vzImg1_do.y), self.vzImg3_do.setX(self.vzImg2_do.x + self.vzImg2_do.w), self.vzImg3_do.setY(self.vzImg2_do.y), FWDAnimation.killTweensOf(self.vzImg1_do), FWDAnimation.killTweensOf(self.vzImg2_do), FWDAnimation.killTweensOf(self.vzImg3_do), self.vzImg1_do.setAlpha(0), self.vzImg2_do.setAlpha(0), self.vzImg3_do.setAlpha(0), "right" == e ? (FWDAnimation.to(self.vzImg1_do, .4, {
+                    self.controller_do && self.controller_do.isShowed_bl && (o -= self.controller_do.sH / 2), self.videoHolder_do.contains(self.mainVz_do) || (self.controller_do ? self.videoHolder_do.addChildAt(self.mainVz_do, self.videoHolder_do.getChildIndex(self.controller_do) - 1) : self.videoHolder_do.addChild(self.mainVz_do)), "right" == e ? (self.mainVz_do.getStyle().borderRadius = "100% 0% 0% 100%", self.mainVz_do.setX(t), self.vzImg1_do.setRotation(0), self.vzImg2_do.setRotation(0), self.vzImg3_do.setRotation(0)) : (self.mainVz_do.getStyle().borderRadius = "0% 100% 100% 0%", self.mainVz_do.setX(0), self.vzImg1_do.setRotation(180), self.vzImg2_do.setRotation(180), self.vzImg3_do.setRotation(180)), self.vzImg1_do.setX(Math.round(t - 3 * self.vzImg1_do.w) / 2), self.vzImg1_do.setY(Math.round(o + (self.tempVidStageHeight - self.vzImg1_do.h) / 2)), self.vzImg2_do.setX(self.vzImg1_do.x + self.vzImg1_do.w), self.vzImg2_do.setY(self.vzImg1_do.y), self.vzImg3_do.setX(self.vzImg2_do.x + self.vzImg2_do.w), self.vzImg3_do.setY(self.vzImg2_do.y), Animation.killTweensOf(self.vzImg1_do), Animation.killTweensOf(self.vzImg2_do), Animation.killTweensOf(self.vzImg3_do), self.vzImg1_do.setAlpha(0), self.vzImg2_do.setAlpha(0), self.vzImg3_do.setAlpha(0), "right" == e ? (Animation.to(self.vzImg1_do, .4, {
                         alpha: 1
-                    }), FWDAnimation.to(self.vzImg1_do, .4, {
+                    }), Animation.to(self.vzImg1_do, .4, {
                         alpha: 0,
                         delay: .3
-                    }), FWDAnimation.to(self.vzImg2_do, .4, {
+                    }), Animation.to(self.vzImg2_do, .4, {
                         alpha: 1,
                         delay: .3
-                    }), FWDAnimation.to(self.vzImg2_do, .4, {
+                    }), Animation.to(self.vzImg2_do, .4, {
                         alpha: 0,
                         delay: .6
-                    }), FWDAnimation.to(self.vzImg3_do, .4, {
+                    }), Animation.to(self.vzImg3_do, .4, {
                         alpha: 1,
                         delay: .6
-                    }), FWDAnimation.to(self.vzImg3_do, .4, {
+                    }), Animation.to(self.vzImg3_do, .4, {
                         alpha: 0,
                         delay: .9
-                    })) : (FWDAnimation.to(self.vzImg3_do, .4, {
+                    })) : (Animation.to(self.vzImg3_do, .4, {
                         alpha: 1
-                    }), FWDAnimation.to(self.vzImg3_do, .4, {
+                    }), Animation.to(self.vzImg3_do, .4, {
                         alpha: 0,
                         delay: .3
-                    }), FWDAnimation.to(self.vzImg2_do, .4, {
+                    }), Animation.to(self.vzImg2_do, .4, {
                         alpha: 1,
                         delay: .3
-                    }), FWDAnimation.to(self.vzImg2_do, .4, {
+                    }), Animation.to(self.vzImg2_do, .4, {
                         alpha: 0,
                         delay: .6
-                    }), FWDAnimation.to(self.vzImg1_do, .4, {
+                    }), Animation.to(self.vzImg1_do, .4, {
                         alpha: 1,
                         delay: .6
-                    }), FWDAnimation.to(self.vzImg1_do, .4, {
+                    }), Animation.to(self.vzImg1_do, .4, {
                         alpha: 0,
                         delay: .9
-                    })), FWDAnimation.killTweensOf(self.circle_do), self.circle_do.setAlpha(1), self.circle_do.setScale2(1), self.circle_do.setWidth(t), self.circle_do.setHeight(t), self.circle_do.setScale2(0), self.circle_do.setX(self.firstTapX - self.mainVz_do.x - self.circle_do.w / 2), self.circle_do.setY(self.firstTapY + o - self.circle_do.w / 2), FWDAnimation.to(self.circle_do, .8, {
+                    })), Animation.killTweensOf(self.circle_do), self.circle_do.setAlpha(1), self.circle_do.setScale2(1), self.circle_do.setWidth(t), self.circle_do.setHeight(t), self.circle_do.setScale2(0), self.circle_do.setX(self.firstTapX - self.mainVz_do.x - self.circle_do.w / 2), self.circle_do.setY(self.firstTapY + o - self.circle_do.w / 2), Animation.to(self.circle_do, .8, {
                         scale: 2,
                         ease: Expo.easeInOut
                     }), self.vizFinisedId_to = setTimeout(function() {
-                        FWDAnimation.to(self.mainVzBackgrond_do, .4, {
+                        Animation.to(self.mainVzBackgrond_do, .4, {
                             alpha: 0
-                        }), FWDAnimation.to(self.circle_do, .4, {
+                        }), Animation.to(self.circle_do, .4, {
                             alpha: 0
                         }), self.vizFinished2Id_to = setTimeout(function() {
                             self.mainVz_do.setVisible(!1)
@@ -6850,12 +6850,12 @@ var FWDUVPAddress = new function() {
                     self.isThumbClick_bl = !0, self.callVastEvent("skip"), self.videoScreenPlayCompleteHandler(null, !0)
                 }, this.positionAds = function(e) {
                     var t, s;
-                    t = "left" == self.data.adsButtonsPosition_str ? 0 : self.tempVidStageWidth, s = self.controller_do ? self.controller_do.isShowed_bl ? self.tempVidStageHeight - self.adsStart_do.h - self.data.controllerHeight - 30 : self.tempVidStageHeight - self.adsStart_do.h - self.data.controllerHeight : self.tempVidStageHeight - self.adsStart_do.h, FWDAnimation.killTweensOf(this.adsStart_do), e ? FWDAnimation.to(this.adsStart_do, .8, {
+                    t = "left" == self.data.adsButtonsPosition_str ? 0 : self.tempVidStageWidth, s = self.controller_do ? self.controller_do.isShowed_bl ? self.tempVidStageHeight - self.adsStart_do.h - self.data.controllerHeight - 30 : self.tempVidStageHeight - self.adsStart_do.h - self.data.controllerHeight : self.tempVidStageHeight - self.adsStart_do.h, Animation.killTweensOf(this.adsStart_do), e ? Animation.to(this.adsStart_do, .8, {
                         y: s,
                         ease: Expo.easeInOut
                     }) : this.adsStart_do.setY(s), self.adsStart_do.setX(t);
                     var o = !1;
-                    self.tempStageWidth < 600 && (o = !0), self.adsSkip_do.resize(o), t = "left" == self.data.adsButtonsPosition_str ? 0 : self.tempVidStageWidth, s = self.controller_do ? self.controller_do.isShowed_bl ? self.tempVidStageHeight - self.adsSkip_do.h - self.data.controllerHeight - 30 : self.tempVidStageHeight - self.adsSkip_do.h - self.data.controllerHeight : self.tempVidStageHeight - self.adsSkip_do.h, FWDAnimation.killTweensOf(this.adsSkip_do), e ? FWDAnimation.to(this.adsSkip_do, .8, {
+                    self.tempStageWidth < 600 && (o = !0), self.adsSkip_do.resize(o), t = "left" == self.data.adsButtonsPosition_str ? 0 : self.tempVidStageWidth, s = self.controller_do ? self.controller_do.isShowed_bl ? self.tempVidStageHeight - self.adsSkip_do.h - self.data.controllerHeight - 30 : self.tempVidStageHeight - self.adsSkip_do.h - self.data.controllerHeight : self.tempVidStageHeight - self.adsSkip_do.h, Animation.killTweensOf(this.adsSkip_do), e ? Animation.to(this.adsSkip_do, .8, {
                         y: s,
                         ease: Expo.easeInOut
                     }) : this.adsSkip_do.setY(s), self.adsSkip_do.setX(t)
@@ -6992,7 +6992,7 @@ var FWDUVPAddress = new function() {
                 }, this.hideCategories = function() {
                     self.isAPIReady_bl && self.categories_do && (self.categories_do.hide(), self.controller_do && self.controller_do.setCategoriesButtonState("unselected"))
                 }, this.showPlaylist = function() {
-                    self.isAPIReady_bl && self.showPlaylistButtonAndPlaylist_bl && (self.isPlaylistShowed_bl = !1, self.controller_do && self.controller_do.showHidePlaylistButton(), self.playlist_do.hide(self.animate_bl), "right" == self.playlistPosition_str && self.resizeHandler(!self.isMbl), self.sH = self.vidStageHeight, self.setStageContainerFinalHeightAndPosition(self.animate_bl), FWDAnimation.to(self, .8, {
+                    self.isAPIReady_bl && self.showPlaylistButtonAndPlaylist_bl && (self.isPlaylistShowed_bl = !1, self.controller_do && self.controller_do.showHidePlaylistButton(), self.playlist_do.hide(self.animate_bl), "right" == self.playlistPosition_str && self.resizeHandler(!self.isMbl), self.sH = self.vidStageHeight, self.setStageContainerFinalHeightAndPosition(self.animate_bl), Animation.to(self, .8, {
                         tempStageWidth: self.sW,
                         tempStageHeight: self.sH,
                         tempVidStageWidth: self.vidStageWidth,
@@ -7001,7 +7001,7 @@ var FWDUVPAddress = new function() {
                         onUpdate: self.resizeFinal
                     }))
                 }, this.hidePlaylist = function(e) {
-                    self.isAPIReady_bl && self.showPlaylistButtonAndPlaylist_bl && (self.isPlaylistShowed_bl = !0, self.controller_do && self.controller_do.showShowPlaylistButton(), e ? self.playlist_do.show(!1) : self.playlist_do.show(self.animate_bl), self.resizeHandler(self.animate_bl), self.setStageContainerFinalHeightAndPosition(self.animate_bl), FWDAnimation.to(self, .8, {
+                    self.isAPIReady_bl && self.showPlaylistButtonAndPlaylist_bl && (self.isPlaylistShowed_bl = !0, self.controller_do && self.controller_do.showShowPlaylistButton(), e ? self.playlist_do.show(!1) : self.playlist_do.show(self.animate_bl), self.resizeHandler(self.animate_bl), self.setStageContainerFinalHeightAndPosition(self.animate_bl), Animation.to(self, .8, {
                         tempStageWidth: self.sW,
                         tempStageHeight: self.sH,
                         tempVidStageWidth: self.vidStageWidth,
@@ -7038,7 +7038,7 @@ var FWDUVPAddress = new function() {
                     }
                 }, this.updateImageScreen = function(e) {
                     this.imageSceeenHolder_do || (this.imageSceeenHolder_do = new FWDUVPDisplayObject("div"), this.imageSceeenHolder_do.setX(0), this.imageSceeenHolder_do.setY(0), this.imageSceeenHolder_do.setBkColor("#000000")), self.videoHolder_do.addChildAt(self.imageSceeenHolder_do, self.videoHolder_do.getChildIndex(self.dumyClick_do) - 1), self.showClickScreen(), self.imageSceeenHolder_do.contains(self.imageScreen_do) && self.imageSceeenHolder_do.removeChild(this.imageScreen_do), this.imageScreen_do = null, self.imageScreen_do = new FWDUVPDisplayObject("img"), self.imageAdd_img = new Image, self.imageAdd_img.src = e, self.preloader_do && self.preloader_do.show(!1), self.lrgPlayBtn && self.lrgPlayBtn.hide(), self.imageAdd_img.onload = function() {
-                        self.imageScreen_do.setScreen(self.imageAdd_img), self.imageScreen_do.setAlpha(0), FWDAnimation.to(self.imageScreen_do, 1, {
+                        self.imageScreen_do.setScreen(self.imageAdd_img), self.imageScreen_do.setAlpha(0), Animation.to(self.imageScreen_do, 1, {
                             alpha: 1
                         }), self.imageAddOriginalWidth = self.imageAdd_img.width, self.imageAddOriginalHeight = self.imageAdd_img.height, self.preloader_do && self.preloader_do.hide(), self.imageSceeenHolder_do.addChild(self.imageScreen_do), self.positionAdsImage(), self.startToUpdateAdsButton()
                     }, self.imageAdd_img.onerror = function() {
@@ -7329,9 +7329,9 @@ var FWDUVPAddress = new function() {
                     n.clsBtn ? (n.hideCloseButton(!1), n.showCloseButton(!0), n.clsBtn.setX(-200)) : n.loadClsoeButtonImage();
                     var e = FWDUVPUtils.getViewportSize(),
                         t = FWDUVPUtils.getScrollOffsets();
-                    n.setWidth(e.w), n.setHeight(e.h), n.setX(t.x), n.setY(t.y), n.lightBoxBackground_sdo.setAlpha(0), FWDAnimation.to(n.lightBoxBackground_sdo, .8, {
+                    n.setWidth(e.w), n.setHeight(e.h), n.setX(t.x), n.setY(t.y), n.lightBoxBackground_sdo.setAlpha(0), Animation.to(n.lightBoxBackground_sdo, .8, {
                         alpha: n.lightBoxBackgroundOpacity
-                    }), n.setX(t.x), n.setY(t.y), n.mainLightBox_do.setX(parseInt(e.w / 2)), n.mainLightBox_do.setY(parseInt(e.h / 2)), n.lightBoxWidth > e.w ? (n.finalLightBoxWidth = e.w, n.finalLightBoxHeight = parseInt(n.lightBoxHeight * (e.w / n.lightBoxWidth))) : (n.finalLightBoxWidth = n.lightBoxWidth, n.finalLightBoxHeight = n.lightBoxHeight), FWDAnimation.to(n.mainLightBox_do, .8, {
+                    }), n.setX(t.x), n.setY(t.y), n.mainLightBox_do.setX(parseInt(e.w / 2)), n.mainLightBox_do.setY(parseInt(e.h / 2)), n.lightBoxWidth > e.w ? (n.finalLightBoxWidth = e.w, n.finalLightBoxHeight = parseInt(n.lightBoxHeight * (e.w / n.lightBoxWidth))) : (n.finalLightBoxWidth = n.lightBoxWidth, n.finalLightBoxHeight = n.lightBoxHeight), Animation.to(n.mainLightBox_do, .8, {
                         w: n.finalLightBoxWidth,
                         h: n.finalLightBoxHeight,
                         x: parseInt((e.w - n.finalLightBoxWidth) / 2),
@@ -7355,11 +7355,11 @@ var FWDUVPAddress = new function() {
             }, this.showCloseButtonComplete = function() {
                 n.closeButtonIsTweening_bl = !1
             }, this.hideCloseButton = function(e) {
-                FWDAnimation.killTweensOf(n.clsBtn), e ? FWDAnimation.to(n.clsBtn, .9, {
+                Animation.killTweensOf(n.clsBtn), e ? Animation.to(n.clsBtn, .9, {
                     alpha: 0
                 }) : n.clsBtn.setAlpha(0)
             }, this.showCloseButton = function(e) {
-                FWDAnimation.killTweensOf(n.clsBtn), e ? FWDAnimation.to(n.clsBtn, .9, {
+                Animation.killTweensOf(n.clsBtn), e ? Animation.to(n.clsBtn, .9, {
                     alpha: 1,
                     delay: .8
                 }) : n.clsBtn.setAlpha(1)
@@ -7370,19 +7370,19 @@ var FWDUVPAddress = new function() {
                 if (n.isShowed_bl) {
                     n.isShowed_bl = !1;
                     var t = FWDUVPUtils.getViewportSize();
-                    n.clsBtn.removeListener(FWDUVPSimpleButton.MOUSE_UP, n.closeButtonOnStartHandler), FWDAnimation.to(n.clsBtn, .9, {
+                    n.clsBtn.removeListener(FWDUVPSimpleButton.MOUSE_UP, n.closeButtonOnStartHandler), Animation.to(n.clsBtn, .9, {
                         alpha: 0
-                    }), FWDAnimation.to(n.mainLightBox_do, .8, {
+                    }), Animation.to(n.mainLightBox_do, .8, {
                         w: 0,
                         h: 0,
                         x: parseInt(t.w / 2),
                         y: parseInt(t.h / 2),
                         delay: .4,
                         ease: Expo.easeInOut
-                    }), FWDAnimation.to(n.lightBoxBackground_sdo, .8, {
+                    }), Animation.to(n.lightBoxBackground_sdo, .8, {
                         alpha: 0,
                         delay: .8
-                    }), FWDAnimation.to(s.main_do, .8, {
+                    }), Animation.to(s.main_do, .8, {
                         x: -s.main_do.w / 2,
                         y: -s.main_do.h / 2,
                         ease: Expo.easeInOut,
@@ -7410,12 +7410,12 @@ var FWDUVPAddress = new function() {
             }, this.positionAndResize = function() {
                 e.tempVidStageWidth && ("topleft" == i.position_str ? (i.finalX = i.margins, i.finalY = i.margins) : "topright" == i.position_str ? (i.finalX = e.tempVidStageWidth - i.w - i.margins, i.finalY = i.margins) : "bottomright" == i.position_str ? (i.finalX = e.tempVidStageWidth - i.w - i.margins, i.finalY = e.tempVidStageHeight - i.h - i.margins) : "bottomleft" == i.position_str && (i.finalX = i.margins, i.finalY = e.tempVidStageHeight - i.h - i.margins), i.setX(i.finalX), i.setY(i.finalY))
             }, this.show = function(e) {
-                i.isShowed_bl || (i.isShowed_bl = !0, i.setVisible(!0), FWDAnimation.killTweensOf(i), e ? FWDAnimation.to(i, .8, {
+                i.isShowed_bl || (i.isShowed_bl = !0, i.setVisible(!0), Animation.killTweensOf(i), e ? Animation.to(i, .8, {
                     alpha: 1,
                     ease: Expo.easeInOut
                 }) : i.setAlpha(1))
             }, this.hide = function(e, t) {
-                (i.isShowed_bl || t) && (i.isShowed_bl = !1, FWDAnimation.killTweensOf(i), e ? FWDAnimation.to(i, .8, {
+                (i.isShowed_bl || t) && (i.isShowed_bl = !1, Animation.killTweensOf(i), e ? Animation.to(i, .8, {
                     alpha: 0,
                     ease: Expo.easeInOut,
                     onComplete: function() {
@@ -7458,18 +7458,18 @@ var FWDUVPAddress = new function() {
             }, this.playButtonMouseUpHandler = function() {
                 0 == o.playPauseButton_do.currentState ? o.dispatchEvent(FWDUVPController.PAUSE) : o.dispatchEvent(FWDUVPController.PLAY)
             }, this.setNormalState = function() {
-                o.isMbl && !o.hasPointerEvent_bl || (FWDAnimation.killTweensOf(o.openS_do), FWDAnimation.killTweensOf(o.closeS_do), FWDAnimation.to(o.openS_do, .5, {
+                o.isMbl && !o.hasPointerEvent_bl || (Animation.killTweensOf(o.openS_do), Animation.killTweensOf(o.closeS_do), Animation.to(o.openS_do, .5, {
                     alpha: 0,
                     ease: Expo.easeOut
-                }), FWDAnimation.to(o.closeS_do, .5, {
+                }), Animation.to(o.closeS_do, .5, {
                     alpha: 0,
                     ease: Expo.easeOut
                 }))
             }, this.setSelectedState = function(e) {
-                FWDAnimation.killTweensOf(o.openS_do), FWDAnimation.killTweensOf(o.closeS_do), FWDAnimation.to(o.openS_do, .5, {
+                Animation.killTweensOf(o.openS_do), Animation.killTweensOf(o.closeS_do), Animation.to(o.openS_do, .5, {
                     alpha: 1,
                     ease: Expo.easeOut
-                }), FWDAnimation.to(o.closeS_do, .5, {
+                }), Animation.to(o.closeS_do, .5, {
                     alpha: 1,
                     ease: Expo.easeOut
                 })
@@ -7531,7 +7531,7 @@ var FWDUVPAddress = new function() {
                 var e, t, s = o.passLbl.getHeight();
                 t = o.passMainLbl.getHeight(), o.passMainLbl.setX(16), o.passLbl.setX(16), o.passLbl.setY(t + 14), o.passInpt.setX(10), o.passInpt.setWidth(parseInt(o.totalWidth - 40 - o.buttonWidth)), o.passInpt.setY(o.passLbl.y + s + 5), o.passBtn.setX(10 + o.passInpt.w + 20), o.passBtn.setY(o.passLbl.y + s + 6), o.passMainHldBk.setY(o.passLbl.y - 9), o.passMainHldBk.setWidth(o.totalWidth - 2), o.passMainHldBk.setHeight(o.passBtn.y + o.passBtn.h - 9), o.passMainHolder_do.setWidth(o.totalWidth), o.passMainHolder_do.setHeight(o.passBtn.y + o.passBtn.h + 14), o.passMainHolder_do.setX(Math.round((o.sW - o.totalWidth) / 2)), e = o.passMainHldBk.getHeight(), o.passMainHolder_do.setY(Math.round((o.sH - e) / 2) - 10)
             }, this.passClickHandler = function() {
-                o.privateVideoPassword_str = e.privateVideoPassword_str, t.playlistPass && (o.privateVideoPassword_str = e.playlistPass), e.playlist_ar[t.id].privateVideoPassword_str && (o.privateVideoPassword_str = e.playlist_ar[t.id].privateVideoPassword_str), o.privateVideoPassword_str == FWDUVPUtils.MD5(o.passInpt.screen.value) ? (t.playlistPass = void 0, s.isCorect = !0, o.dispatchEvent(s.CORRECT)) : FWDAnimation.isTweening(o.passInpt.screen) || FWDAnimation.to(o.passInpt.screen, .1, {
+                o.privateVideoPassword_str = e.privateVideoPassword_str, t.playlistPass && (o.privateVideoPassword_str = e.playlistPass), e.playlist_ar[t.id].privateVideoPassword_str && (o.privateVideoPassword_str = e.playlist_ar[t.id].privateVideoPassword_str), o.privateVideoPassword_str == FWDUVPUtils.MD5(o.passInpt.screen.value) ? (t.playlistPass = void 0, s.isCorect = !0, o.dispatchEvent(s.CORRECT)) : Animation.isTweening(o.passInpt.screen) || Animation.to(o.passInpt.screen, .1, {
                     css: {
                         backgroundColor: "#FF0000"
                     },
@@ -7541,21 +7541,21 @@ var FWDUVPAddress = new function() {
             }, this.updateHEXColors = function(e, t) {
                 o.passBtn.updateHEXColors(e, t), o.clsBtn.updateHEXColors(e, t)
             }, this.showInfo = function(e, t) {
-                o.infoText_do.setInnerHTML(e), o.passMainHolder_do.addChild(o.infoText_do), o.infoText_do.setWidth(o.buttonWidth), o.infoText_do.setHeight(o.buttonHeight - 4), o.infoText_do.setX(o.passBtn.x), o.infoText_do.setY(o.passBtn.y - 23), o.infoText_do.setAlpha(0), o.infoText_do.getStyle().color = t ? "#FF0000" : o.mainLabelsColor_str, FWDAnimation.killTweensOf(o.infoText_do), FWDAnimation.to(o.infoText_do, .16, {
+                o.infoText_do.setInnerHTML(e), o.passMainHolder_do.addChild(o.infoText_do), o.infoText_do.setWidth(o.buttonWidth), o.infoText_do.setHeight(o.buttonHeight - 4), o.infoText_do.setX(o.passBtn.x), o.infoText_do.setY(o.passBtn.y - 23), o.infoText_do.setAlpha(0), o.infoText_do.getStyle().color = t ? "#FF0000" : o.mainLabelsColor_str, Animation.killTweensOf(o.infoText_do), Animation.to(o.infoText_do, .16, {
                     alpha: 1,
                     yoyo: !0,
                     repeat: 7
                 })
             }, this.show = function(e) {
                 o.isShowed_bl || (s.isCorect = !1, o.isShowed_bl = !0, t.main_do.addChild(o), o.passInpt.setInnerHTML(""), (!FWDUVPUtils.isMobile || FWDUVPUtils.isMobile && FWDUVPUtils.hasPointerEvent) && t.main_do.setSelectable(!0), o.positionAndResize(), clearTimeout(o.hideCompleteId_to), clearTimeout(o.showCompleteId_to), o.mainHld.setY(-o.sH), o.showCompleteId_to = setTimeout(o.showCompleteHandler, 900), setTimeout(function() {
-                    FWDAnimation.to(o.mainHld, .8, {
+                    Animation.to(o.mainHld, .8, {
                         y: 0,
                         delay: .1,
                         ease: Expo.easeInOut
                     })
                 }, 100))
             }, this.showCompleteHandler = function() {}, this.hide = function() {
-                o.isShowed_bl && (o.isShowed_bl = !1, t.customContextMenu_do && t.customContextMenu_do.enable(), o.positionAndResize(), clearTimeout(o.hideCompleteId_to), clearTimeout(o.showCompleteId_to), (!FWDUVPUtils.isMobile || FWDUVPUtils.isMobile && FWDUVPUtils.hasPointerEvent) && t.main_do.setSelectable(!1), o.hideCompleteId_to = setTimeout(o.hideCompleteHandler, 800), FWDAnimation.killTweensOf(o.mainHld), FWDAnimation.to(o.mainHld, .8, {
+                o.isShowed_bl && (o.isShowed_bl = !1, t.customContextMenu_do && t.customContextMenu_do.enable(), o.positionAndResize(), clearTimeout(o.hideCompleteId_to), clearTimeout(o.showCompleteId_to), (!FWDUVPUtils.isMobile || FWDUVPUtils.isMobile && FWDUVPUtils.hasPointerEvent) && t.main_do.setSelectable(!1), o.hideCompleteId_to = setTimeout(o.hideCompleteHandler, 800), Animation.killTweensOf(o.mainHld), Animation.to(o.mainHld, .8, {
                     y: -o.sH,
                     ease: Expo.easeInOut
                 }))
@@ -7594,7 +7594,7 @@ var FWDUVPAddress = new function() {
             }, this.destroyPlaylist = function() {
                 if (a.thumbs_ar) {
                     var e;
-                    a.hasPlaylist_bl = !1, a.image_img && (a.image_img.onerror = null, a.image_img.onload = null), FWDAnimation.killTweensOf(a.mainHld), "bottom" == a.position_str ? a.mainHld.setY(-a.sH - 5) : a.mainHld.setX(-a.sW - 5), a.ec && a.ec.setX(-5e3), clearTimeout(a.loadWithDelayId_to);
+                    a.hasPlaylist_bl = !1, a.image_img && (a.image_img.onerror = null, a.image_img.onload = null), Animation.killTweensOf(a.mainHld), "bottom" == a.position_str ? a.mainHld.setY(-a.sH - 5) : a.mainHld.setX(-a.sW - 5), a.ec && a.ec.setX(-5e3), clearTimeout(a.loadWithDelayId_to);
                     for (var t = 0; t < a.totalThumbs; t++) e = a.thumbs_ar[t], a.thumbsHolder_do.removeChild(e), e.destroy();
                     a.thumbs_ar = null
                 }
@@ -7650,13 +7650,13 @@ var FWDUVPAddress = new function() {
             }, this.keyUpHandler = function(e) {
                 e.stopPropagation && e.stopPropagation(), a.prevInputValue_str != a.input_do.screen.value && (a.isMbl ? (a.positionThumbs(!1), a.thumbnailsFinalY = -1 * Math.round(a.curId / (a.totalThumbs - 1) * (a.totalThumbsHeight - a.mainThumbsHolder_do.h))) : a.positionThumbs(!0)), a.prevInputValue_str = a.input_do.screen.value, a.scrHandler_do && (a.updateScrollBarSizeActiveAndDeactivate(), a.updateScrollBarHandlerAndContent(!0, !0))
             }, this.showNothingFound = function() {
-                a.isShowNothingFound_bl || (a.isShowNothingFound_bl = !0, a.noSearchFound_do.setVisible(!0), a.noSearchFound_do.setY(parseInt((a.sH - a.noSearchFound_do.getHeight()) / 2)), a.noSearchFound_do.setAlpha(0), FWDAnimation.to(a.noSearchFound_do, .1, {
+                a.isShowNothingFound_bl || (a.isShowNothingFound_bl = !0, a.noSearchFound_do.setVisible(!0), a.noSearchFound_do.setY(parseInt((a.sH - a.noSearchFound_do.getHeight()) / 2)), a.noSearchFound_do.setAlpha(0), Animation.to(a.noSearchFound_do, .1, {
                     alpha: 1,
                     yoyo: !0,
                     repeat: 4
                 }))
             }, this.hideNothingFound = function() {
-                a.isShowNothingFound_bl && (a.isShowNothingFound_bl = !1, FWDAnimation.killTweensOf(a.noSearchFound_do), a.noSearchFound_do.setVisible(!1))
+                a.isShowNothingFound_bl && (a.isShowNothingFound_bl = !1, Animation.killTweensOf(a.noSearchFound_do), a.noSearchFound_do.setVisible(!1))
             }, this.positionControllBar = function() {
                 var e, t, s;
                 if (a.input_do && a.sW <= 340) {
@@ -7732,7 +7732,7 @@ var FWDUVPAddress = new function() {
                     var t, s, o = a.spaceBetweenThumbnails,
                         i = [].concat(a.thumbs_ar);
                     if (a.isSearched_bl = !1, a.input_do && "search" != (s = a.input_do.screen.value.toLowerCase()))
-                        for (var l = 0; l < i.length; l++) - 1 == (t = i[l]).htmlText_str.indexOf(s) && (FWDAnimation.killTweensOf(t), t.setX(-t.w - 20), i.splice(l, 1), l--);
+                        for (var l = 0; l < i.length; l++) - 1 == (t = i[l]).htmlText_str.indexOf(s) && (Animation.killTweensOf(t), t.setX(-t.w - 20), i.splice(l, 1), l--);
                     var n = i.length;
                     a.totalThumbs != n && (a.isSearched_bl = !0);
                     for (l = 0; l < n; l++)(t = i[l]).finalW = a.sW, t.finalX = 0, t.finalY = l * (t.finalH + o), t.resizeAndPosition(e);
@@ -7741,7 +7741,7 @@ var FWDUVPAddress = new function() {
             }, this.setupMobileScrollbar = function() {
                 a.hasPointerEvent_bl ? a.mainThumbsHolder_do.screen.addEventListener("pointerdown", a.scrollBarTouchStartHandler) : a.mainThumbsHolder_do.screen.addEventListener("touchstart", a.scrollBarTouchStartHandler), a.isMbl && (a.updateMobileScrollBarId_int = setInterval(a.updateMobileScrollBar, 16))
             }, this.scrollBarTouchStartHandler = function(e) {
-                e.preventDefault && e.preventDefault(), a.isScrollingOnMove_bl = !1, FWDAnimation.killTweensOf(a.thumbsHolder_do);
+                e.preventDefault && e.preventDefault(), a.isScrollingOnMove_bl = !1, Animation.killTweensOf(a.thumbsHolder_do);
                 var t = FWDUVPUtils.getViewportMouseCoordinates(e);
                 a.isDragging_bl = !0, a.lastPresedY = t.screenY, a.checkLastPresedY = t.screenY, a.hasPointerEvent_bl ? (n.addEventListener("pointerup", a.scrollBarTouchEndHandler), n.addEventListener("pointermove", a.scrollBarTouchMoveHandler)) : (n.addEventListener("touchend", a.scrollBarTouchEndHandler), n.addEventListener("touchmove", a.scrollBarTouchMoveHandler)), clearInterval(a.updateMoveMobileScrollbarId_int), a.updateMoveMobileScrollbarId_int = setInterval(a.updateMoveMobileScrollbar, 20)
             }, this.scrollBarTouchMoveHandler = function(e) {
@@ -7753,7 +7753,7 @@ var FWDUVPAddress = new function() {
                     if (a.thumbnailsFinalY += s, a.thumbnailsFinalY = Math.round(a.thumbnailsFinalY), a.lastPresedY = t.screenY, a.vy = 2 * s, !a.isMobile) {
                         0 < a.thumbnailsFinalY ? a.thumbnailsFinalY = 0 : a.thumbnailsFinalY < a.mainThumbsHolder_do.h - a.totalThumbsHeight && (a.thumbnailsFinalY = a.mainThumbsHolder_do.h - a.totalThumbsHeight);
                         var o = Math.max(0, a.thumbnailsFinalY / (a.mainThumbsHolder_do.h - a.totalThumbsHeight));
-                        a.scrMainHolder_do && (a.scrollBarHandlerFinalY = Math.round((a.scrMainHolder_do.h - a.scrHandler_do.h) * o), a.scrollBarHandlerFinalY < 0 ? a.scrollBarHandlerFinalY = 0 : a.scrollBarHandlerFinalY > a.scrMainHolder_do.h - a.scrHandler_do.h - 1 && (a.scrollBarHandlerFinalY = a.scrMainHolder_do.h - a.scrHandler_do.h - 1), FWDAnimation.killTweensOf(a.scrHandler_do), FWDAnimation.killTweensOf(a.scrHandlerLines_do), a.scrHandler_do.setY(a.scrollBarHandlerFinalY), a.scrHandlerLines_do.setY(a.scrollBarHandlerFinalY + parseInt((a.scrHandler_do.h - a.scrHandlerLinesN_do.h) / 2)))
+                        a.scrMainHolder_do && (a.scrollBarHandlerFinalY = Math.round((a.scrMainHolder_do.h - a.scrHandler_do.h) * o), a.scrollBarHandlerFinalY < 0 ? a.scrollBarHandlerFinalY = 0 : a.scrollBarHandlerFinalY > a.scrMainHolder_do.h - a.scrHandler_do.h - 1 && (a.scrollBarHandlerFinalY = a.scrMainHolder_do.h - a.scrHandler_do.h - 1), Animation.killTweensOf(a.scrHandler_do), Animation.killTweensOf(a.scrHandlerLines_do), a.scrHandler_do.setY(a.scrollBarHandlerFinalY), a.scrHandlerLines_do.setY(a.scrollBarHandlerFinalY + parseInt((a.scrHandler_do.h - a.scrHandlerLinesN_do.h) / 2)))
                     }
                 }
             }, this.scrollBarTouchEndHandler = function(e) {
@@ -7778,58 +7778,58 @@ var FWDUVPAddress = new function() {
                 var t = FWDUVPUtils.getViewportMouseCoordinates(e);
                 FWDUVPUtils.hitTest(a.mainThumbsHolder_do.screen, t.screenX, t.screenY) ? (a.isDragging_bl = !0, a.scrollBarHandlerMoveHandler(e)) : a.isDragging_bl = !1
             }, this.scrollBarHandlerOnMouseOver = function(e) {
-                a.allowToScrollAndScrollBarIsActive_bl && !a.addScrOnMM_bl && (FWDAnimation.killTweensOf(a.scrHandlerLinesN_do), FWDAnimation.killTweensOf(a.scrHandlerLinesS_do), FWDAnimation.to(a.scrHandlerLinesN_do, .8, {
+                a.allowToScrollAndScrollBarIsActive_bl && !a.addScrOnMM_bl && (Animation.killTweensOf(a.scrHandlerLinesN_do), Animation.killTweensOf(a.scrHandlerLinesS_do), Animation.to(a.scrHandlerLinesN_do, .8, {
                     alpha: 0,
                     ease: Expo.easeOut
-                }), FWDAnimation.to(a.scrHandlerLinesS_do, .8, {
+                }), Animation.to(a.scrHandlerLinesS_do, .8, {
                     alpha: 1,
                     ease: Expo.easeOut
                 }))
             }, this.scrollBarHandlerOnMouseOut = function(e) {
-                !a.isDragging_bl && a.allowToScrollAndScrollBarIsActive_bl && (FWDAnimation.killTweensOf(a.scrHandlerLinesN_do), FWDAnimation.killTweensOf(a.scrHandlerLinesS_do), FWDAnimation.to(a.scrHandlerLinesN_do, .8, {
+                !a.isDragging_bl && a.allowToScrollAndScrollBarIsActive_bl && (Animation.killTweensOf(a.scrHandlerLinesN_do), Animation.killTweensOf(a.scrHandlerLinesS_do), Animation.to(a.scrHandlerLinesN_do, .8, {
                     alpha: 1,
                     ease: Expo.easeOut
-                }), FWDAnimation.to(a.scrHandlerLinesS_do, .8, {
+                }), Animation.to(a.scrHandlerLinesS_do, .8, {
                     alpha: 0,
                     ease: Expo.easeOut
                 }))
             }, this.scrollBarHandlerOnMouseDown = function(e) {
                 if (a.allowToScrollAndScrollBarIsActive_bl && !a.addScrOnMM_bl) {
                     var t = FWDUVPUtils.getViewportMouseCoordinates(e);
-                    a.isDragging_bl = !0, a.yPositionOnPress = a.scrHandler_do.y, a.lastPresedY = t.screenY, FWDAnimation.killTweensOf(a.scrHandler_do), i.showDisable(), n.addEventListener && (n.addEventListener("mousemove", a.scrollBarHandlerMoveHandler), n.addEventListener("mouseup", a.scrollBarHandlerEndHandler))
+                    a.isDragging_bl = !0, a.yPositionOnPress = a.scrHandler_do.y, a.lastPresedY = t.screenY, Animation.killTweensOf(a.scrHandler_do), i.showDisable(), n.addEventListener && (n.addEventListener("mousemove", a.scrollBarHandlerMoveHandler), n.addEventListener("mouseup", a.scrollBarHandlerEndHandler))
                 }
             }, this.scrollBarHandlerMoveHandler = function(e) {
                 e.preventDefault && e.preventDefault();
                 var t = FWDUVPUtils.getViewportMouseCoordinates(e),
                     s = a.scrollBarHandlerFinalY + parseInt((a.scrHandler_do.h - a.scrHandlerLines_do.h) / 2);
-                a.addScrOnMM_bl ? a.scrollBarHandlerFinalY = Math.round(t.screenY - a.mainThumbsHolder_do.getGlobalY() - a.scrHandler_do.h / 2) : a.scrollBarHandlerFinalY = Math.round(a.yPositionOnPress + t.screenY - a.lastPresedY), a.scrollBarHandlerFinalY >= a.scrTrack_do.h - a.scrHandler_do.h ? a.scrollBarHandlerFinalY = a.scrTrack_do.h - a.scrHandler_do.h : a.scrollBarHandlerFinalY <= 0 && (a.scrollBarHandlerFinalY = 0), a.scrHandler_do.setY(a.scrollBarHandlerFinalY), FWDAnimation.killTweensOf(a.scrHandler_do), FWDAnimation.to(a.scrHandlerLines_do, .8, {
+                a.addScrOnMM_bl ? a.scrollBarHandlerFinalY = Math.round(t.screenY - a.mainThumbsHolder_do.getGlobalY() - a.scrHandler_do.h / 2) : a.scrollBarHandlerFinalY = Math.round(a.yPositionOnPress + t.screenY - a.lastPresedY), a.scrollBarHandlerFinalY >= a.scrTrack_do.h - a.scrHandler_do.h ? a.scrollBarHandlerFinalY = a.scrTrack_do.h - a.scrHandler_do.h : a.scrollBarHandlerFinalY <= 0 && (a.scrollBarHandlerFinalY = 0), a.scrHandler_do.setY(a.scrollBarHandlerFinalY), Animation.killTweensOf(a.scrHandler_do), Animation.to(a.scrHandlerLines_do, .8, {
                     y: s,
                     ease: Quart.easeOut
                 }), a.updateScrollBarHandlerAndContent(!0)
             }, a.scrollBarHandlerEndHandler = function(e) {
                 var t = FWDUVPUtils.getViewportMouseCoordinates(e);
-                a.isDragging_bl = !1, FWDUVPUtils.hitTest(a.scrHandler_do.screen, t.screenX, t.screenY) || (FWDAnimation.killTweensOf(a.scrHandlerLinesN_do), FWDAnimation.killTweensOf(a.scrHandlerLinesS_do), FWDAnimation.to(a.scrHandlerLinesN_do, .8, {
+                a.isDragging_bl = !1, FWDUVPUtils.hitTest(a.scrHandler_do.screen, t.screenX, t.screenY) || (Animation.killTweensOf(a.scrHandlerLinesN_do), Animation.killTweensOf(a.scrHandlerLinesS_do), Animation.to(a.scrHandlerLinesN_do, .8, {
                     alpha: 1,
                     ease: Expo.easeOut
-                }), FWDAnimation.to(a.scrHandlerLinesS_do, .8, {
+                }), Animation.to(a.scrHandlerLinesS_do, .8, {
                     alpha: 0,
                     ease: Expo.easeOut
-                })), i.hideDisable(), FWDAnimation.killTweensOf(a.scrHandler_do), FWDAnimation.to(a.scrHandler_do, .4, {
+                })), i.hideDisable(), Animation.killTweensOf(a.scrHandler_do), Animation.to(a.scrHandler_do, .4, {
                     y: a.scrollBarHandlerFinalY,
                     ease: Quart.easeOut
                 }), n.removeEventListener && (n.removeEventListener("mousemove", a.scrollBarHandlerMoveHandler), n.removeEventListener("mouseup", a.scrollBarHandlerEndHandler))
             }, this.updateScrollBarSizeActiveAndDeactivate = function() {
-                a.disableForAWhileAfterThumbClick_bl || (a.allowToScrollAndScrollBarIsActive_bl ? (a.allowToScrollAndScrollBarIsActive_bl = !0, a.scrMainHolder_do.setX(a.sW - a.scrMainHolder_do.w), a.scrMainHolder_do.setHeight(a.sH - a.removeFromThumbsHolderHeight), a.scrTrack_do.setHeight(a.scrMainHolder_do.h), a.scrTrackMiddle_do.setHeight(a.scrTrack_do.h - 2 * a.scrTrackTop_do.h), a.scrTrackBottom_do.setY(a.scrTrackMiddle_do.y + a.scrTrackMiddle_do.h), a.scrMainHolder_do.setAlpha(1), a.addScrOnMM_bl || (a.scrHandler_do.setButtonMode(!0), a.scrHandlerLines_do.setButtonMode(!0))) : (a.allowToScrollAndScrollBarIsActive_bl = !1, a.scrMainHolder_do.setX(a.sW - a.scrMainHolder_do.w), a.scrMainHolder_do.setHeight(a.sH - a.removeFromThumbsHolderHeight), a.scrTrack_do.setHeight(a.scrMainHolder_do.h), a.scrTrackMiddle_do.setHeight(a.scrTrack_do.h - 2 * a.scrTrackTop_do.h), a.scrTrackBottom_do.setY(a.scrTrackMiddle_do.y + a.scrTrackMiddle_do.h), a.scrMainHolder_do.setAlpha(.5), a.scrHandler_do.setY(0), a.scrHandler_do.setButtonMode(!1), a.scrHandlerLines_do.setButtonMode(!1)), a.scrHandler_do.setHeight(Math.max(120, Math.round(Math.min(1, a.scrMainHolder_do.h / a.totalThumbsHeight) * a.scrMainHolder_do.h))), a.scrHandlerMiddle_do.setHeight(a.scrHandler_do.h - 2 * a.scrHandlerTop_do.h), a.scrHandlerBottom_do.setY(a.scrHandlerMiddle_do.y + a.scrHandlerMiddle_do.h), FWDAnimation.killTweensOf(a.scrHandlerLines_do), a.scrHandlerLines_do.setY(a.scrollBarHandlerFinalY + parseInt((a.scrHandler_do.h - a.scrHandlerLines_do.h) / 2)), a.scrHandlerBottom_do.setY(a.scrHandler_do.h - a.scrHandlerBottom_do.h))
+                a.disableForAWhileAfterThumbClick_bl || (a.allowToScrollAndScrollBarIsActive_bl ? (a.allowToScrollAndScrollBarIsActive_bl = !0, a.scrMainHolder_do.setX(a.sW - a.scrMainHolder_do.w), a.scrMainHolder_do.setHeight(a.sH - a.removeFromThumbsHolderHeight), a.scrTrack_do.setHeight(a.scrMainHolder_do.h), a.scrTrackMiddle_do.setHeight(a.scrTrack_do.h - 2 * a.scrTrackTop_do.h), a.scrTrackBottom_do.setY(a.scrTrackMiddle_do.y + a.scrTrackMiddle_do.h), a.scrMainHolder_do.setAlpha(1), a.addScrOnMM_bl || (a.scrHandler_do.setButtonMode(!0), a.scrHandlerLines_do.setButtonMode(!0))) : (a.allowToScrollAndScrollBarIsActive_bl = !1, a.scrMainHolder_do.setX(a.sW - a.scrMainHolder_do.w), a.scrMainHolder_do.setHeight(a.sH - a.removeFromThumbsHolderHeight), a.scrTrack_do.setHeight(a.scrMainHolder_do.h), a.scrTrackMiddle_do.setHeight(a.scrTrack_do.h - 2 * a.scrTrackTop_do.h), a.scrTrackBottom_do.setY(a.scrTrackMiddle_do.y + a.scrTrackMiddle_do.h), a.scrMainHolder_do.setAlpha(.5), a.scrHandler_do.setY(0), a.scrHandler_do.setButtonMode(!1), a.scrHandlerLines_do.setButtonMode(!1)), a.scrHandler_do.setHeight(Math.max(120, Math.round(Math.min(1, a.scrMainHolder_do.h / a.totalThumbsHeight) * a.scrMainHolder_do.h))), a.scrHandlerMiddle_do.setHeight(a.scrHandler_do.h - 2 * a.scrHandlerTop_do.h), a.scrHandlerBottom_do.setY(a.scrHandlerMiddle_do.y + a.scrHandlerMiddle_do.h), Animation.killTweensOf(a.scrHandlerLines_do), a.scrHandlerLines_do.setY(a.scrollBarHandlerFinalY + parseInt((a.scrHandler_do.h - a.scrHandlerLines_do.h) / 2)), a.scrHandlerBottom_do.setY(a.scrHandler_do.h - a.scrHandlerBottom_do.h))
             }, this.updateScrollBarHandlerAndContent = function(e, t) {
                 if (!a.disableForAWhileAfterThumbClick_bl && (a.allowToScrollAndScrollBarIsActive_bl || t)) {
                     var s = 0;
-                    a.isDragging_bl && !a.isMbl ? ("Infinity" == (s = a.scrollBarHandlerFinalY / (a.scrMainHolder_do.h - a.scrHandler_do.h)) ? s = 0 : 1 <= s && (scrollPercent = 1), a.thumbnailsFinalY = -1 * Math.round(s * (a.totalThumbsHeight - a.mainThumbsHolder_do.h))) : (s = a.isSearched_bl ? a.percentScrolled = 0 : a.curId / (a.totalThumbs - 1), a.thumbnailsFinalY = Math.min(0, -1 * Math.round(s * (a.totalThumbsHeight - a.mainThumbsHolder_do.h))), a.scrMainHolder_do && (a.scrollBarHandlerFinalY = Math.round((a.scrMainHolder_do.h - a.scrHandler_do.h) * s), a.scrollBarHandlerFinalY < 0 ? a.scrollBarHandlerFinalY = 0 : a.scrollBarHandlerFinalY > a.scrMainHolder_do.h - a.scrHandler_do.h - 1 && (a.scrollBarHandlerFinalY = a.scrMainHolder_do.h - a.scrHandler_do.h - 1), FWDAnimation.killTweensOf(a.scrHandler_do), FWDAnimation.killTweensOf(a.scrHandlerLines_do), e ? (FWDAnimation.to(a.scrHandler_do, .4, {
+                    a.isDragging_bl && !a.isMbl ? ("Infinity" == (s = a.scrollBarHandlerFinalY / (a.scrMainHolder_do.h - a.scrHandler_do.h)) ? s = 0 : 1 <= s && (scrollPercent = 1), a.thumbnailsFinalY = -1 * Math.round(s * (a.totalThumbsHeight - a.mainThumbsHolder_do.h))) : (s = a.isSearched_bl ? a.percentScrolled = 0 : a.curId / (a.totalThumbs - 1), a.thumbnailsFinalY = Math.min(0, -1 * Math.round(s * (a.totalThumbsHeight - a.mainThumbsHolder_do.h))), a.scrMainHolder_do && (a.scrollBarHandlerFinalY = Math.round((a.scrMainHolder_do.h - a.scrHandler_do.h) * s), a.scrollBarHandlerFinalY < 0 ? a.scrollBarHandlerFinalY = 0 : a.scrollBarHandlerFinalY > a.scrMainHolder_do.h - a.scrHandler_do.h - 1 && (a.scrollBarHandlerFinalY = a.scrMainHolder_do.h - a.scrHandler_do.h - 1), Animation.killTweensOf(a.scrHandler_do), Animation.killTweensOf(a.scrHandlerLines_do), e ? (Animation.to(a.scrHandler_do, .4, {
                         y: a.scrollBarHandlerFinalY,
                         ease: Quart.easeOut
-                    }), FWDAnimation.to(a.scrHandlerLines_do, .8, {
+                    }), Animation.to(a.scrHandlerLines_do, .8, {
                         y: a.scrollBarHandlerFinalY + parseInt((a.scrHandler_do.h - a.scrHandlerLinesN_do.h) / 2),
                         ease: Quart.easeOut
-                    })) : (a.scrHandler_do.setY(a.scrollBarHandlerFinalY), a.scrHandlerLines_do.setY(a.scrollBarHandlerFinalY + parseInt((a.scrHandler_do.h - a.scrHandlerLinesN_do.h) / 2))))), a.lastThumbnailFinalY != a.thumbnailsFinalY && (FWDAnimation.killTweensOf(a.thumbsHolder_do), e ? FWDAnimation.to(a.thumbsHolder_do, .5, {
+                    })) : (a.scrHandler_do.setY(a.scrollBarHandlerFinalY), a.scrHandlerLines_do.setY(a.scrollBarHandlerFinalY + parseInt((a.scrHandler_do.h - a.scrHandlerLinesN_do.h) / 2))))), a.lastThumbnailFinalY != a.thumbnailsFinalY && (Animation.killTweensOf(a.thumbsHolder_do), e ? Animation.to(a.thumbsHolder_do, .5, {
                         y: a.thumbnailsFinalY,
                         ease: Quart.easeOut
                     }) : a.thumbsHolder_do.setY(a.thumbnailsFinalY)), a.lastThumbnailFinalY = a.thumbnailsFinalY
@@ -7842,39 +7842,39 @@ var FWDUVPAddress = new function() {
                     var t = e.detail || e.wheelDelta;
                     e.wheelDelta && (t *= -1), 0 < t ? a.scrollBarHandlerFinalY += Math.round(160 * a.scollbarSpeedSensitivity * (a.mainThumbsHolder_do.h / a.totalThumbsHeight)) : t < 0 && (a.scrollBarHandlerFinalY -= Math.round(160 * a.scollbarSpeedSensitivity * (a.mainThumbsHolder_do.h / a.totalThumbsHeight))), a.scrollBarHandlerFinalY >= a.scrTrack_do.h - a.scrHandler_do.h ? a.scrollBarHandlerFinalY = a.scrTrack_do.h - a.scrHandler_do.h : a.scrollBarHandlerFinalY <= 0 && (a.scrollBarHandlerFinalY = 0);
                     var s = a.scrollBarHandlerFinalY + parseInt((a.scrHandler_do.h - a.scrHandlerLines_do.h) / 2);
-                    if (FWDAnimation.killTweensOf(a.scrHandler_do), FWDAnimation.killTweensOf(a.scrHandlerLines_do), FWDAnimation.to(a.scrHandlerLines_do, .8, {
+                    if (Animation.killTweensOf(a.scrHandler_do), Animation.killTweensOf(a.scrHandlerLines_do), Animation.to(a.scrHandlerLines_do, .8, {
                             y: s,
                             ease: Quart.easeOut
-                        }), FWDAnimation.to(a.scrHandler_do, .5, {
+                        }), Animation.to(a.scrHandler_do, .5, {
                             y: a.scrollBarHandlerFinalY,
                             ease: Quart.easeOut
                         }), a.isDragging_bl = !0, a.updateScrollBarHandlerAndContent(!0), a.isDragging_bl = !1, !e.preventDefault) return !1;
                     e.preventDefault()
                 }
             }, this.hideAndShow = function(e) {
-                "bottom" == a.position_str ? (a.mainHld.setY(-a.sH), FWDAnimation.to(a.mainHld, .8, {
+                "bottom" == a.position_str ? (a.mainHld.setY(-a.sH), Animation.to(a.mainHld, .8, {
                     y: 0,
                     delay: .3,
                     ease: Expo.easeInOut
-                })) : (a.mainHld.setX(-a.sW - 2), FWDAnimation.to(a.mainHld, .8, {
+                })) : (a.mainHld.setX(-a.sW - 2), Animation.to(a.mainHld, .8, {
                     x: 0,
                     delay: .3,
                     ease: Expo.easeInOut
-                }), a.ec && (a.ec.setX(-a.sW - 2), FWDAnimation.to(a.ec, .8, {
+                }), a.ec && (a.ec.setX(-a.sW - 2), Animation.to(a.ec, .8, {
                     x: 0,
                     delay: .3,
                     ease: Expo.easeInOut
                 })))
             }, this.hide = function(e) {
-                a.isShowed_bl = !1, e ? "bottom" == a.position_str && FWDAnimation.to(a.mainHld, .8, {
+                a.isShowed_bl = !1, e ? "bottom" == a.position_str && Animation.to(a.mainHld, .8, {
                     y: -a.sH,
                     ease: Expo.easeInOut
-                }) : (FWDAnimation.killTweensOf(a.mainHld), "bottom" == a.position_str && a.mainHld.setY(-a.sH))
+                }) : (Animation.killTweensOf(a.mainHld), "bottom" == a.position_str && a.mainHld.setY(-a.sH))
             }, this.show = function(e) {
-                a.isShowed_bl = !0, FWDAnimation.isTweening(a.mainHld) || a.hide(!1), e ? "bottom" == a.position_str ? FWDAnimation.to(a.mainHld, .8, {
+                a.isShowed_bl = !0, Animation.isTweening(a.mainHld) || a.hide(!1), e ? "bottom" == a.position_str ? Animation.to(a.mainHld, .8, {
                     y: 0,
                     ease: Expo.easeInOut
-                }) : a.mainHld.setY(0) : (FWDAnimation.killTweensOf(a.mainHld), a.mainHld.setX(0), a.mainHld.setY(0), clearTimeout(a.disableThumbsId_to), a.disableThumbsId_to = setTimeout(function() {
+                }) : a.mainHld.setY(0) : (Animation.killTweensOf(a.mainHld), a.mainHld.setX(0), a.mainHld.setY(0), clearTimeout(a.disableThumbsId_to), a.disableThumbsId_to = setTimeout(function() {
                     a.disableThumbs_bl = !1
                 }, 200), a.disableThumbs_bl = !0)
             }, this.init()
@@ -7913,18 +7913,18 @@ var FWDUVPAddress = new function() {
                 } catch (e) {}
             }, this.setImage = function(e) {
                 var t;
-                (c.normalImage_do = new FWDUVPDisplayObject("img"), c.normalImage_do.setScreen(e), c.imageOriginalW = c.normalImage_do.w, c.imageOriginalH = c.normalImage_do.h, c.resizeImage(), c.imageHolder_do.setX(parseInt(c.thumbImageWidth / 2)), c.imageHolder_do.setY(parseInt(c.thumbImageHeight / 2)), c.imageHolder_do.setWidth(0), c.imageHolder_do.setHeight(0), c.normalImage_do.setX(-parseInt(c.normalImage_do.w / 2)), c.normalImage_do.setY(-parseInt(c.normalImage_do.h / 2)), FWDAnimation.to(c.imageHolder_do, .8, {
+                (c.normalImage_do = new FWDUVPDisplayObject("img"), c.normalImage_do.setScreen(e), c.imageOriginalW = c.normalImage_do.w, c.imageOriginalH = c.normalImage_do.h, c.resizeImage(), c.imageHolder_do.setX(parseInt(c.thumbImageWidth / 2)), c.imageHolder_do.setY(parseInt(c.thumbImageHeight / 2)), c.imageHolder_do.setWidth(0), c.imageHolder_do.setHeight(0), c.normalImage_do.setX(-parseInt(c.normalImage_do.w / 2)), c.normalImage_do.setY(-parseInt(c.normalImage_do.h / 2)), Animation.to(c.imageHolder_do, .8, {
                     x: 0,
                     y: 0,
                     w: c.thumbImageWidth,
                     h: c.thumbImageHeight,
                     ease: Expo.easeInOut
-                }), c.normalImage_do.setAlpha(0), c.isMbl) ? (t = c.id == s.curId ? .3 : 1, FWDAnimation.to(c.normalImage_do, .8, {
+                }), c.normalImage_do.setAlpha(0), c.isMbl) ? (t = c.id == s.curId ? .3 : 1, Animation.to(c.normalImage_do, .8, {
                     alpha: t,
                     x: c.imageFinalX,
                     y: c.imageFinalY,
                     ease: Expo.easeInOut
-                })) : FWDAnimation.to(c.normalImage_do, .8, {
+                })) : Animation.to(c.normalImage_do, .8, {
                     alpha: 1,
                     x: c.imageFinalX,
                     y: c.imageFinalY,
@@ -7932,11 +7932,11 @@ var FWDUVPAddress = new function() {
                 });
                 c.imageHolder_do.addChild(c.normalImage_do), this.hasImage_bl = !0
             }, this.resizeAndPosition = function(e) {
-                c.showThumbnail_bl ? c.txt.setWidth(c.finalW - (2 * c.padding + c.thumbImageWidth) - 16) : c.txt.setWidth(c.finalW - 2 * c.padding - 16), c.setWidth(c.finalW), c.setHeight(c.finalH), e ? FWDAnimation.to(c, .6, {
+                c.showThumbnail_bl ? c.txt.setWidth(c.finalW - (2 * c.padding + c.thumbImageWidth) - 16) : c.txt.setWidth(c.finalW - 2 * c.padding - 16), c.setWidth(c.finalW), c.setHeight(c.finalH), e ? Animation.to(c, .6, {
                     x: c.finalX,
                     y: c.finalY,
                     ease: Expo.easeInOut
-                }) : (FWDAnimation.killTweensOf(c), c.setX(c.finalX), c.setY(c.finalY)), c.resizeImage()
+                }) : (Animation.killTweensOf(c), c.setX(c.finalX), c.setY(c.finalY)), c.resizeImage()
             }, this.resizeImage = function(e) {
                 if (c.normalImage_do) {
                     c.isMbl ? 1 == c.normalImage_do.alpha || c.isDisabled_bl || c.normalImage_do.setAlpha(1) : 1 == c.imageHolder_do.alpha || c.isDisabled_bl || c.imageHolder_do.setAlpha(1);
@@ -7945,40 +7945,40 @@ var FWDUVPAddress = new function() {
                     t = o <= s ? s : o, c.imageFinalW = Math.ceil(t * c.imageOriginalW), c.imageFinalH = Math.ceil(t * c.imageOriginalH), c.imageFinalX = Math.round((c.thumbImageWidth - c.imageFinalW) / 2), c.imageFinalY = Math.round((c.thumbImageHeight - c.imageFinalH) / 2), c.normalImage_do.setX(c.imageFinalX), c.normalImage_do.setY(c.imageFinalY), c.normalImage_do.setWidth(c.imageFinalW), c.normalImage_do.setHeight(c.imageFinalH)
                 }
             }, this.setNormalState = function(e) {
-                "normal" != c.curStt && (c.curStt = "normal", c.slTitle && (c.txt.screen.className = c.slTitle), e ? FWDAnimation.to(c.screen, .8, {
+                "normal" != c.curStt && (c.curStt = "normal", c.slTitle && (c.txt.screen.className = c.slTitle), e ? Animation.to(c.screen, .8, {
                     css: {
                         backgroundColor: c.thumbnailNormalBackgroundColor_str
                     },
                     ease: Expo.easeOut
-                }) : (FWDAnimation.killTweensOf(c.screen), c.getStyle().backgroundColor = c.thumbnailNormalBackgroundColor_str))
+                }) : (Animation.killTweensOf(c.screen), c.getStyle().backgroundColor = c.thumbnailNormalBackgroundColor_str))
             }, this.setSelectedState = function(e) {
-                "selected" != c.curStt && (c.curStt = "selected", c.setTitleSelectedClass(), e ? FWDAnimation.to(c.screen, .8, {
+                "selected" != c.curStt && (c.curStt = "selected", c.setTitleSelectedClass(), e ? Animation.to(c.screen, .8, {
                     css: {
                         backgroundColor: c.thumbnailHoverBackgroundColor_str
                     },
                     ease: Expo.easeOut
-                }) : (FWDAnimation.killTweensOf(c.screen), c.getStyle().backgroundColor = c.thumbnailNormalBackgroundColor_str))
+                }) : (Animation.killTweensOf(c.screen), c.getStyle().backgroundColor = c.thumbnailNormalBackgroundColor_str))
             }, this.setDisabledState = function(e) {
-                "disabled" != c.curStt && (c.curStt = "disabled", c.setTitleSelectedClass(), e ? FWDAnimation.to(c.screen, .8, {
+                "disabled" != c.curStt && (c.curStt = "disabled", c.setTitleSelectedClass(), e ? Animation.to(c.screen, .8, {
                     css: {
                         backgroundColor: c.thumbnailDisabledBackgroundColor_str
                     },
                     ease: Expo.easeOut
-                }) : (FWDAnimation.killTweensOf(c.screen), c.getStyle().backgroundColor = c.thumbnailNormalBackgroundColor_str))
+                }) : (Animation.killTweensOf(c.screen), c.getStyle().backgroundColor = c.thumbnailNormalBackgroundColor_str))
             }, this.setTitleSelectedClass = function() {
                 c.slTitle && (c.txt.screen.className = c.slTitle + " active")
             }, this.enable = function() {
-                c.isDisabled_bl && (c.isDisabled_bl = !1, c.setButtonMode(!0), c.setNormalState(!0), c.isMbl ? c.normalImage_do && c.normalImage_do.setAlpha(1) : FWDAnimation.to(c.imageHolder_do, .6, {
+                c.isDisabled_bl && (c.isDisabled_bl = !1, c.setButtonMode(!0), c.setNormalState(!0), c.isMbl ? c.normalImage_do && c.normalImage_do.setAlpha(1) : Animation.to(c.imageHolder_do, .6, {
                     alpha: 1
                 }))
             }, this.disable = function() {
                 c.isDisabled_bl || (c.disableForAWhile_bl = !0, clearTimeout(c.disableForAWhileId_to), c.disableForAWhileId_to = setTimeout(function() {
                     c.disableForAWhile_bl = !1
-                }, 200), c.isDisabled_bl = !0, c.setButtonMode(!1), c.setDisabledState(!0), c.isMbl ? c.normalImage_do && c.normalImage_do.setAlpha(.3) : FWDAnimation.to(c.imageHolder_do, .6, {
+                }, 200), c.isDisabled_bl = !0, c.setButtonMode(!1), c.setDisabledState(!0), c.isMbl ? c.normalImage_do && c.normalImage_do.setAlpha(.3) : Animation.to(c.imageHolder_do, .6, {
                     alpha: .3
                 }))
             }, this.destroy = function() {
-                FWDAnimation.killTweensOf(c), c.normalImage_do && (FWDAnimation.killTweensOf(c.normalImage_do), c.normalImage_do.destroy()), FWDAnimation.killTweensOf(c.imageHolder_do), c.imageHolder_do.destroy(), c.dumy_do.destroy(), c.txt.destroy(), c.backgroundImagePath_str = t, c.imageHolder_do = null, c.normalImage_do = null, c.dumy_do = null, c.txt = null, c.htmlContent_str = null, c.htmlText_str = null, c.curStt = null
+                Animation.killTweensOf(c), c.normalImage_do && (Animation.killTweensOf(c.normalImage_do), c.normalImage_do.destroy()), Animation.killTweensOf(c.imageHolder_do), c.imageHolder_do.destroy(), c.dumy_do.destroy(), c.txt.destroy(), c.backgroundImagePath_str = t, c.imageHolder_do = null, c.normalImage_do = null, c.dumy_do = null, c.txt = null, c.htmlContent_str = null, c.htmlText_str = null, c.curStt = null
             }, this.init()
         };
         _.setPrototype = function() {
@@ -8006,9 +8006,9 @@ var FWDUVPAddress = new function() {
                 var t, s;
                 e = e || 0, s = "bottom" == l.position_str ? (t = parseInt((l.w - l.pointerWidth) / 2) + e, l.h) : (t = l.w, parseInt((l.h - l.pointerHeight) / 2)), l.pointer_do.setX(t), l.pointer_do.setY(s)
             }, this.show = function() {
-                l.isShowed_bl || (l.isShowed_bl = !0, FWDAnimation.killTweensOf(l), clearTimeout(l.showWithDelayId_to), l.showWithDelayId_to = setTimeout(l.showFinal, 100))
+                l.isShowed_bl || (l.isShowed_bl = !0, Animation.killTweensOf(l), clearTimeout(l.showWithDelayId_to), l.showWithDelayId_to = setTimeout(l.showFinal, 100))
             }, this.showFinal = function() {
-                l.setVisible(!0), l.setAlpha(0), FWDAnimation.to(l, .4, {
+                l.setVisible(!0), l.setAlpha(0), Animation.to(l, .4, {
                     alpha: 1,
                     onComplete: function() {
                         l.setVisible(!0)
@@ -8016,7 +8016,7 @@ var FWDUVPAddress = new function() {
                     ease: Quart.easeOut
                 })
             }, this.hide = function() {
-                l.isShowed_bl && (clearTimeout(l.showWithDelayId_to), FWDAnimation.killTweensOf(l), l.setVisible(!1), l.isShowed_bl = !1)
+                l.isShowed_bl && (clearTimeout(l.showWithDelayId_to), Animation.killTweensOf(l), l.setVisible(!1), l.isShowed_bl = !1)
             }, this.init()
         };
         n.setPrototype = function() {
@@ -8042,11 +8042,11 @@ var FWDUVPAddress = new function() {
                     this.isShowed_bl = !1;
                     var t = Math.min(1, i.prt.tempVidStageWidth / y.originalW);
                     parseInt(t * y.originalH);
-                    finalY = parseInt(i.prt.tempVidStageHeight), i.setY(finalY), y.setX(-5e3), FWDAnimation.killTweensOf(i), e ? (i.removeChild(y), i.setWidth(0), i.setHeight(0)) : (y.setWidth(0), y.setHeight(0), i.setVisible(!1), y.setVisible(!1))
+                    finalY = parseInt(i.prt.tempVidStageHeight), i.setY(finalY), y.setX(-5e3), Animation.killTweensOf(i), e ? (i.removeChild(y), i.setWidth(0), i.setHeight(0)) : (y.setWidth(0), y.setHeight(0), i.setVisible(!1), y.setVisible(!1))
                 }
             }, this.show = function() {
                 this.isShowed_bl || this.isClsd || !y.isLded || (this.isShowed_bl = !0, y.setX(0), setTimeout(function() {
-                    if (FWDAnimation.killTweensOf(i), i.setVisible(!0), y.setVisible(!0), "adsense" != y.type || y.isGooglAdCreated_bl) "iframe" == y.type && (y.container = new FWDUVPTransformDisplayObject("div"), y.container.setWidth(y.originalW), y.container.setHeight(y.originalH), y.ifr = new FWDUVPTransformDisplayObject("iframe"), y.ifr.screen.scrolling = "no", y.ifr.setWidth(y.originalW), y.ifr.setHeight(y.originalH), y.ifr.screen.src = y.imgSrc, y.container.addChild(y.ifr), y.link && (y.clicker = new FWDUVPDisplayObject("div"), y.clicker.screen.style.width = "100%", y.clicker.screen.style.height = "100%", y.container.addChild(y.clicker), y.container.addChild(y.clicker), y.container.screen.addEventListener("click", y.clickHandler)), y.addChild(y.container), y.clsBtn && (y.addChild(y.clsBtn), y.clsBtn.setX(-300)));
+                    if (Animation.killTweensOf(i), i.setVisible(!0), y.setVisible(!0), "adsense" != y.type || y.isGooglAdCreated_bl) "iframe" == y.type && (y.container = new FWDUVPTransformDisplayObject("div"), y.container.setWidth(y.originalW), y.container.setHeight(y.originalH), y.ifr = new FWDUVPTransformDisplayObject("iframe"), y.ifr.screen.scrolling = "no", y.ifr.setWidth(y.originalW), y.ifr.setHeight(y.originalH), y.ifr.screen.src = y.imgSrc, y.container.addChild(y.ifr), y.link && (y.clicker = new FWDUVPDisplayObject("div"), y.clicker.screen.style.width = "100%", y.clicker.screen.style.height = "100%", y.container.addChild(y.clicker), y.container.addChild(y.clicker), y.container.screen.addEventListener("click", y.clickHandler)), y.addChild(y.container), y.clsBtn && (y.addChild(y.clsBtn), y.clsBtn.setX(-300)));
                     else {
                         y.isGooglAdCreated_bl = !0, window.google_ad_client = y.google_ad_client, window.google_ad_slot = y.google_ad_slot, window.google_ad_width = y.originalW, window.google_ad_height = y.originalH, y.container = new FWDUVPTransformDisplayObject("div"), y.container.setWidth(y.originalW), y.container.setHeight(y.originalH), y.addChild(y.container);
                         var t = document.write;
@@ -8064,7 +8064,7 @@ var FWDUVPAddress = new function() {
                 if (y.isLded && !y.isClsd && y.isShowed_bl) {
                     var t, s;
                     FWDUVPUtils.isIEAndLessThen9;
-                    s = Math.min(1, i.prt.tempVidStageWidth / y.originalW), y.finalW = parseInt(s * y.originalW), y.finalH = parseInt(s * y.originalH), y.finalW == y.prevFinalW && y.finalH == y.prevFinalH || (y.setWidth(y.finalW), y.setHeight(y.finalH), "image" == y.type ? (y.image_do.setWidth(y.finalW), y.image_do.setHeight(y.finalH)) : y.container && (y.container.setScale2(s), y.container.setX((y.finalW - y.originalW) / 2), y.container.setY((y.finalH - y.originalH) / 2)), t = i.prt.controller_do ? i.prt.controller_do.isShowed_bl ? parseInt(i.prt.tempVidStageHeight - i.prt.controller_do.h - y.originalH * s - 10) : parseInt(i.prt.tempVidStageHeight - y.originalH * s - 10) : parseInt(i.prt.tempVidStageHeight - y.originalH * s), i.setX(parseInt((i.prt.tempVidStageWidth - y.finalW) / 2)), FWDAnimation.killTweensOf(i), e ? FWDAnimation.to(i, .8, {
+                    s = Math.min(1, i.prt.tempVidStageWidth / y.originalW), y.finalW = parseInt(s * y.originalW), y.finalH = parseInt(s * y.originalH), y.finalW == y.prevFinalW && y.finalH == y.prevFinalH || (y.setWidth(y.finalW), y.setHeight(y.finalH), "image" == y.type ? (y.image_do.setWidth(y.finalW), y.image_do.setHeight(y.finalH)) : y.container && (y.container.setScale2(s), y.container.setX((y.finalW - y.originalW) / 2), y.container.setY((y.finalH - y.originalH) / 2)), t = i.prt.controller_do ? i.prt.controller_do.isShowed_bl ? parseInt(i.prt.tempVidStageHeight - i.prt.controller_do.h - y.originalH * s - 10) : parseInt(i.prt.tempVidStageHeight - y.originalH * s - 10) : parseInt(i.prt.tempVidStageHeight - y.originalH * s), i.setX(parseInt((i.prt.tempVidStageWidth - y.finalW) / 2)), Animation.killTweensOf(i), e ? Animation.to(i, .8, {
                         y: t,
                         ease: Expo.easeInOut
                     }) : i.setY(t), y.clsBtn && (y.clsBtn.setY(5), y.clsBtn.setX(parseInt(y.finalW - 21 - 5))), y.prevFinalW = y.finalW, y.prevFinallH = y.finalH, i.setWidth(y.finalW), i.setHeight(y.finalH))
@@ -8100,12 +8100,12 @@ var FWDUVPAddress = new function() {
             }, this.posterLoadHandler = function(e) {
                 i.imgW = i.img_img.width, i.imgH = i.img_img.height, i.img_do.setScreen(i.img_img), i.addChild(i.img_do), i.positionAndResize(), i.isShowed_bl && i.show()
             }, this.show = function(e) {
-                i.allowToShow_bl && !i.isShowed_bl && i.showOrLoadOnMobile_bl && (i.isShowed_bl = !0, i.isTransparent_bl ? 0 != i.alpha && i.setAlpha(0) : 1 != i.alpha && i.setAlpha(1), i.setVisible(!0), i.isMbl || i.isTransparent_bl || (FWDAnimation.killTweensOf(i), i.setAlpha(0), FWDAnimation.to(i, .6, {
+                i.allowToShow_bl && !i.isShowed_bl && i.showOrLoadOnMobile_bl && (i.isShowed_bl = !0, i.isTransparent_bl ? 0 != i.alpha && i.setAlpha(0) : 1 != i.alpha && i.setAlpha(1), i.setVisible(!0), i.isMbl || i.isTransparent_bl || (Animation.killTweensOf(i), i.setAlpha(0), Animation.to(i, .6, {
                     alpha: 1,
                     delay: .4
                 })), i.positionAndResize())
             }, this.hide = function(e) {
-                (i.isShowed_bl || e) && (FWDAnimation.killTweensOf(i), i.isShowed_bl = !1, i.setVisible(!1))
+                (i.isShowed_bl || e) && (Animation.killTweensOf(i), i.isShowed_bl = !1, i.setVisible(!1))
             }, this.init()
         };
         s.setPrototype = function() {
@@ -8127,13 +8127,13 @@ var FWDUVPAddress = new function() {
             }, this.drawFill = function() {
                 a.fillCircleCanvas.screen.width = 2 * a.radius + 2 * a.strokeSize, a.fillCircleCanvas.screen.height = 2 * a.radius + 2 * a.strokeSize, a.fillCircleCanvasContext.lineWidth = a.thicknessSize, a.fillCircleCanvasContext.translate(a.strokeSize / 2, a.strokeSize / 2), a.fillCircleCanvasContext.lineWidth = a.strokeSize, a.fillCircleCanvasContext.strokeStyle = a.fillColor, a.fillCircleCanvasContext.beginPath(), a.fillCircleCanvasContext.arc(a.radius, a.radius, a.radius, Math.PI / 180 * a.strtAngle, Math.PI / 180 * (a.strtAngle + a.slideshowAngle.n), !1), a.fillCircleCanvasContext.stroke(), a.fillCircleCanvasContext.closePath()
             }, this.startSlideshow = function() {
-                null != a && (FWDAnimation.killTweensOf(a.slideshowAngle), FWDAnimation.to(a.slideshowAngle, a.animDuration, {
+                null != a && (Animation.killTweensOf(a.slideshowAngle), Animation.to(a.slideshowAngle, a.animDuration, {
                     n: 360,
                     onUpdate: a.drawFill,
                     onComplete: a.stopSlideshow
                 }))
             }, this.stopSlideshow = function() {
-                FWDAnimation.killTweensOf(a.slideshowAngle), FWDAnimation.to(a.slideshowAngle, .8, {
+                Animation.killTweensOf(a.slideshowAngle), Animation.to(a.slideshowAngle, .8, {
                     n: 0,
                     onupdate: a.drawFill,
                     onUpdate: a.drawFill,
@@ -8142,27 +8142,27 @@ var FWDUVPAddress = new function() {
             }, this.startPreloader = function() {
                 a.stopPreloader(), a.slideshowAngle = {
                     n: 0
-                }, FWDAnimation.to(a.slideshowAngle, a.animDuration, {
+                }, Animation.to(a.slideshowAngle, a.animDuration, {
                     n: 360,
                     onUpdate: a.drawFill,
                     repeat: 100,
                     yoyo: !0,
                     ease: Expo.easInOut
-                }), FWDAnimation.to(a.main_do.screen, a.animDuration, {
+                }), Animation.to(a.main_do.screen, a.animDuration, {
                     rotation: 360,
                     repeat: 100
                 })
             }, this.stopPreloader = function() {
-                FWDAnimation.killTweensOf(a.slideshowAngle), FWDAnimation.killTweensOf(a.main_do.screen), FWDAnimation.to(a.main_do.screen, 1e-5, {
+                Animation.killTweensOf(a.slideshowAngle), Animation.killTweensOf(a.main_do.screen), Animation.to(a.main_do.screen, 1e-5, {
                     rotation: 0
                 })
             }, this.show = function() {
-                a.isShowed_bl || (a.setVisible(!0), FWDAnimation.killTweensOf(a), FWDAnimation.to(a, 1, {
+                a.isShowed_bl || (a.setVisible(!0), Animation.killTweensOf(a), Animation.to(a, 1, {
                     alpha: 1,
                     delay: .2
                 }), a.stopPreloader(), a.startPreloader(), a.isShowed_bl = !0)
             }, this.hide = function(e) {
-                a.isShowed_bl && (FWDAnimation.killTweensOf(this), e ? FWDAnimation.to(this, .2, {
+                a.isShowed_bl && (Animation.killTweensOf(this), e ? Animation.to(this, .2, {
                     alpha: 0,
                     onComplete: a.onHideComplete
                 }) : (a.setVisible(!1), a.setAlpha(0)), a.isShowed_bl = !1)
@@ -8191,12 +8191,12 @@ var FWDUVPAddress = new function() {
                     l.image_sdo.setX(-e)
                 }
             }, this.show = function() {
-                l.isShowed_bl || (l.setVisible(!0), l.start(), FWDAnimation.killTweensOf(l), FWDAnimation.to(l, 1, {
+                l.isShowed_bl || (l.setVisible(!0), l.start(), Animation.killTweensOf(l), Animation.to(l, 1, {
                     alpha: 1,
                     delay: .2
                 }), l.isShowed_bl = !0)
             }, this.hide = function(e) {
-                l.isShowed_bl && (FWDAnimation.killTweensOf(this), e ? FWDAnimation.to(this, 1, {
+                l.isShowed_bl && (Animation.killTweensOf(this), e ? Animation.to(this, 1, {
                     alpha: 0,
                     onComplete: l.onHideComplete
                 }) : (l.setVisible(!1), l.setAlpha(0)), l.isShowed_bl = !1)
@@ -8255,9 +8255,9 @@ var FWDUVPAddress = new function() {
                 var t, s;
                 e = e || 0, t = parseInt((l.w - 8) / 2) + e, s = l.h, l.pointerHolder_do.setX(t), l.pointerHolder_do.setY(s)
             }, this.show = function() {
-                l.isShowed_bl = !0, clearTimeout(l.hideWithDelayId_to), FWDAnimation.killTweensOf(l), clearTimeout(l.showWithDelayId_to), l.showWithDelayId_to = setTimeout(l.showFinal, l.toolTipsButtonsHideDelay)
+                l.isShowed_bl = !0, clearTimeout(l.hideWithDelayId_to), Animation.killTweensOf(l), clearTimeout(l.showWithDelayId_to), l.showWithDelayId_to = setTimeout(l.showFinal, l.toolTipsButtonsHideDelay)
             }, this.showFinal = function() {
-                l.setVisible(!0), FWDAnimation.to(l, .4, {
+                l.setVisible(!0), Animation.to(l, .4, {
                     alpha: 1,
                     onComplete: function() {
                         l.setVisible(!0)
@@ -8266,7 +8266,7 @@ var FWDUVPAddress = new function() {
                 })
             }, this.hide = function() {
                 l.isShowed_bl && (clearTimeout(l.showWithDelayId_to), clearTimeout(l.hideWithDelayId_to), l.hideWithDelayId_to = setTimeout(function() {
-                    FWDAnimation.killTweensOf(l), l.setVisible(!1), l.isShowed_bl = !1, l.setAlpha(0)
+                    Animation.killTweensOf(l), l.setVisible(!1), l.isShowed_bl = !1, l.setAlpha(0)
                 }, 100))
             }, this.init()
         };
@@ -8343,20 +8343,20 @@ var FWDUVPAddress = new function() {
                 }
             }, this.show = function(e) {
                 f.isShowed_bl || (f.isShowed_bl = !0, t.main_do.addChild(f), f.init(), f.useVectorIcons_bl ? f.checkButtonsId_to = setInterval(function() {
-                    0 != f.clsBtn.w && (f.positionAndResize(), clearInterval(f.checkButtonsId_to), clearTimeout(f.hideCompleteId_to), clearTimeout(f.showCompleteId_to), f.mainHld.setY(-f.sH), f.showCompleteId_to = setTimeout(f.showCompleteHandler, 900), FWDAnimation.to(f.mainHld, .8, {
+                    0 != f.clsBtn.w && (f.positionAndResize(), clearInterval(f.checkButtonsId_to), clearTimeout(f.hideCompleteId_to), clearTimeout(f.showCompleteId_to), f.mainHld.setY(-f.sH), f.showCompleteId_to = setTimeout(f.showCompleteHandler, 900), Animation.to(f.mainHld, .8, {
                         y: 0,
                         delay: .1,
                         ease: Expo.easeInOut
                     }))
                 }, 50) : (f.positionAndResize(), clearTimeout(f.hideCompleteId_to), clearTimeout(f.showCompleteId_to), f.mainHld.setY(-f.sH), f.showCompleteId_to = setTimeout(f.showCompleteHandler, 900), setTimeout(function() {
-                    FWDAnimation.to(f.mainHld, .8, {
+                    Animation.to(f.mainHld, .8, {
                         y: 0,
                         delay: .1,
                         ease: Expo.easeInOut
                     })
                 }, 100)))
             }, this.showCompleteHandler = function() {}, this.hide = function() {
-                f.isShowed_bl && (f.isShowed_bl = !1, (!FWDUVPUtils.isMobile || FWDUVPUtils.isMobile && FWDUVPUtils.hasPointerEvent) && t.main_do.setSelectable(!1), t.customContextMenu_do && t.customContextMenu_do.enable(), f.positionAndResize(), clearTimeout(f.hideCompleteId_to), clearTimeout(f.showCompleteId_to), f.hideCompleteId_to = setTimeout(f.hideCompleteHandler, 800), FWDAnimation.killTweensOf(f.mainHld), FWDAnimation.to(f.mainHld, .8, {
+                f.isShowed_bl && (f.isShowed_bl = !1, (!FWDUVPUtils.isMobile || FWDUVPUtils.isMobile && FWDUVPUtils.hasPointerEvent) && t.main_do.setSelectable(!1), t.customContextMenu_do && t.customContextMenu_do.enable(), f.positionAndResize(), clearTimeout(f.hideCompleteId_to), clearTimeout(f.showCompleteId_to), f.hideCompleteId_to = setTimeout(f.hideCompleteHandler, 800), Animation.killTweensOf(f.mainHld), Animation.to(f.mainHld, .8, {
                     y: -f.sH,
                     ease: Expo.easeInOut
                 }))
@@ -8419,35 +8419,35 @@ var FWDUVPAddress = new function() {
                     c.setFinalSize()
                 }, 100), c.prevWidth != c.lastWidth && 0 != c.lastWidth && (c.setWidth(c.n_do.screen.firstChild.offsetWidth), c.setHeight(c.n_do.screen.firstChild.offsetHeight), c.n_do.setWidth(c.w), c.n_do.setHeight(c.h), c.buttonWidth = c.w, c.buttonHeight = c.h, c.totalWidth = c.w, c.totalHeight = c.h, c.hd_do && (c.hd_do.setX(c.w - c.hd_do.w + 2), c.hd_do.setY(-2)), c.prevWidth = c.lastWidth))
             }, c.setSelected = function() {
-                c.isSelectedFinal_bl = !0, c.s_sdo && (FWDAnimation.killTweensOf(c.s_sdo), FWDAnimation.to(c.s_sdo, .8, {
+                c.isSelectedFinal_bl = !0, c.s_sdo && (Animation.killTweensOf(c.s_sdo), Animation.to(c.s_sdo, .8, {
                     alpha: 1,
                     ease: Expo.easeOut
                 }))
             }, c.setUnselected = function() {
-                c.isSelectedFinal_bl = !1, c.s_sdo && FWDAnimation.to(c.s_sdo, .8, {
+                c.isSelectedFinal_bl = !1, c.s_sdo && Animation.to(c.s_sdo, .8, {
                     alpha: 0,
                     delay: .1,
                     ease: Expo.easeOut
                 })
             }, this.setNormalState = function(e) {
-                c.doNotallowToSetNormal || (c.useFontAwesome_bl ? (FWDAnimation.killTweensOf(c.n_do.screen), e ? FWDAnimation.to(c.n_do.screen, .6, {
+                c.doNotallowToSetNormal || (c.useFontAwesome_bl ? (Animation.killTweensOf(c.n_do.screen), e ? Animation.to(c.n_do.screen, .6, {
                     className: c.normalCalssName,
                     ease: Quart.easeOut
-                }) : c.n_do.screen.className = c.normalCalssName) : c.showOver ? (FWDAnimation.killTweensOf(c.s_sdo), FWDAnimation.to(c.s_sdo, .6, {
+                }) : c.n_do.screen.className = c.normalCalssName) : c.showOver ? (Animation.killTweensOf(c.s_sdo), Animation.to(c.s_sdo, .6, {
                     alpha: 1,
                     ease: Quart.easeOut
-                })) : (FWDAnimation.killTweensOf(c.s_sdo), FWDAnimation.to(c.s_sdo, .6, {
+                })) : (Animation.killTweensOf(c.s_sdo), Animation.to(c.s_sdo, .6, {
                     alpha: 0,
                     ease: Quart.easeOut
                 })))
             }, this.setSelectedState = function(e) {
-                c.useFontAwesome_bl ? (FWDAnimation.killTweensOf(c.n_do.screen), e ? FWDAnimation.to(c.n_do.screen, .6, {
+                c.useFontAwesome_bl ? (Animation.killTweensOf(c.n_do.screen), e ? Animation.to(c.n_do.screen, .6, {
                     className: c.selectedCalssName,
                     ease: Quart.easeOut
-                }) : c.n_do.screen.className = c.selectedCalssName) : c.showOver ? (FWDAnimation.killTweensOf(c.s_sdo), FWDAnimation.to(c.s_sdo, .6, {
+                }) : c.n_do.screen.className = c.selectedCalssName) : c.showOver ? (Animation.killTweensOf(c.s_sdo), Animation.to(c.s_sdo, .6, {
                     alpha: 0,
                     ease: Quart.easeOut
-                })) : (FWDAnimation.killTweensOf(c.s_sdo), FWDAnimation.to(c.s_sdo, .6, {
+                })) : (Animation.killTweensOf(c.s_sdo), Animation.to(c.s_sdo, .6, {
                     alpha: 1,
                     delay: .1,
                     ease: Quart.easeOut
@@ -8457,11 +8457,11 @@ var FWDUVPAddress = new function() {
             }, this.setEnabledState = function() {
                 c.isSetToDisabledState_bl && (c.isSetToDisabledState_bl = !1, c.d_sdo && c.d_sdo.setX(-100), c.hd_do && c.hd_do.setX(-1e5))
             }, this.disable = function() {
-                c.isDisabledForGood_bl || c.isDisabled_bl || (c.isDisabled_bl = !0, c.setButtonMode(!1), FWDAnimation.killTweensOf(c), FWDAnimation.to(c, .6, {
+                c.isDisabledForGood_bl || c.isDisabled_bl || (c.isDisabled_bl = !0, c.setButtonMode(!1), Animation.killTweensOf(c), Animation.to(c, .6, {
                     alpha: .4
                 }), c.setNormalState(!0))
             }, this.enable = function() {
-                !c.isDisabledForGood_bl && c.isDisabled_bl && (c.isDisabled_bl = !1, c.setButtonMode(!0), FWDAnimation.killTweensOf(c), FWDAnimation.to(c, .6, {
+                !c.isDisabledForGood_bl && c.isDisabled_bl && (c.isDisabled_bl = !1, c.setButtonMode(!0), Animation.killTweensOf(c), Animation.to(c, .6, {
                     alpha: 1
                 }))
             }, this.disableForGood = function() {
@@ -8471,17 +8471,17 @@ var FWDUVPAddress = new function() {
             }, this.hideDisabledState = function() {
                 c.d_sdo && -100 != c.d_sdo.x && c.d_sdo.setX(-100), c.hd_do && c.hd_do.setX(-1e4)
             }, this.show = function() {
-                c.isShowed_bl || (c.isShowed_bl = !0, FWDAnimation.killTweensOf(c), FWDUVPUtils.isIEAndLessThen9 ? (FWDUVPUtils.isIEAndLessThen9 || (c.setAlpha(0), FWDAnimation.to(c, .4, {
+                c.isShowed_bl || (c.isShowed_bl = !0, Animation.killTweensOf(c), FWDUVPUtils.isIEAndLessThen9 ? (FWDUVPUtils.isIEAndLessThen9 || (c.setAlpha(0), Animation.to(c, .4, {
                     alpha: 1,
                     delay: .4
-                })), c.setVisible(!0)) : FWDUVPUtils.isIEWebKit ? (FWDAnimation.killTweensOf(c.n_do), c.n_do.setScale2(0), FWDAnimation.to(c.n_do, .8, {
+                })), c.setVisible(!0)) : FWDUVPUtils.isIEWebKit ? (Animation.killTweensOf(c.n_do), c.n_do.setScale2(0), Animation.to(c.n_do, .8, {
                     scale: 1,
                     delay: .4,
                     onStart: function() {
                         c.setVisible(!0)
                     },
                     ease: Elastic.easeOut
-                })) : (c.setScale2(0), FWDAnimation.to(c, .8, {
+                })) : (c.setScale2(0), Animation.to(c, .8, {
                     scale: 1,
                     delay: .4,
                     onStart: function() {
@@ -8490,7 +8490,7 @@ var FWDUVPAddress = new function() {
                     ease: Elastic.easeOut
                 })))
             }, this.hide = function(e) {
-                c.isShowed_bl && (c.isShowed_bl = !1, FWDAnimation.killTweensOf(c), FWDAnimation.killTweensOf(c.n_do), c.setVisible(!1))
+                c.isShowed_bl && (c.isShowed_bl = !1, Animation.killTweensOf(c), Animation.killTweensOf(c.n_do), c.setVisible(!1))
             }, c.updateHEXColors = function(e, t) {
                 c.n_do_canvas && FWDUVPUtils.changeCanvasHEXColor(c.nImg, c.n_do_canvas, e), c.s_sdo_canvas && FWDUVPUtils.changeCanvasHEXColor(c.img1, c.s_sdo_canvas, t)
             }, c.init()
@@ -8512,18 +8512,18 @@ var FWDUVPAddress = new function() {
                     r.s_do_canvas = FWDUVPUtils.getCanvasWithModifiedColor(r.sImg, r.nBC).canvas, r.s_do.screen.appendChild(r.s_do_canvas)
                 }, r.showOver || r.s_do.setAlpha(0), r.addChild(r.s_do)) : (r.s_do = new FWDUVPDisplayObject("img"), r.s_do.setScreen(r.sImg), r.s_do.setWidth(r.buttonWidth), r.s_do.setHeight(r.buttonHeight), r.addChild(r.s_do), r.useHEX || r.s_do.setAlpha(0)), r.showOver && r.addChild(r.s_do), r.hasPointerEvent_bl ? (r.screen.addEventListener("pointerup", r.onMouseUp), r.screen.addEventListener("pointerover", r.setSelectedState), r.screen.addEventListener("pointerout", r.setNormalState)) : r.screen.addEventListener && (r.isMbl || (r.screen.addEventListener("mouseover", r.setSelectedState), r.screen.addEventListener("mouseout", r.setNormalState), r.screen.addEventListener("mouseup", r.onMouseUp)), r.screen.addEventListener("touchend", r.onMouseUp))
             }, this.setNormalState = function(e) {
-                r.showOver ? (FWDAnimation.killTweensOf(r.s_do), FWDAnimation.to(r.s_do, .6, {
+                r.showOver ? (Animation.killTweensOf(r.s_do), Animation.to(r.s_do, .6, {
                     alpha: 1,
                     ease: Quart.easeOut
-                })) : (FWDAnimation.killTweensOf(r.s_do), FWDAnimation.to(r.s_do, .6, {
+                })) : (Animation.killTweensOf(r.s_do), Animation.to(r.s_do, .6, {
                     alpha: 0,
                     ease: Quart.easeOut
                 }))
             }, this.setSelectedState = function(e) {
-                r.showOver ? (FWDAnimation.killTweensOf(r.s_do), FWDAnimation.to(r.s_do, .6, {
+                r.showOver ? (Animation.killTweensOf(r.s_do), Animation.to(r.s_do, .6, {
                     alpha: 0,
                     ease: Quart.easeOut
-                })) : (FWDAnimation.killTweensOf(r.s_do), FWDAnimation.to(r.s_do, .6, {
+                })) : (Animation.killTweensOf(r.s_do), Animation.to(r.s_do, .6, {
                     alpha: 1,
                     ease: Quart.easeOut
                 }))
@@ -8614,7 +8614,7 @@ var FWDUVPAddress = new function() {
                     var t;
                     this.setWidth(i.tempVidStageWidth), this.text_do.setWidth(i.tempVidStageWidth), u.setX(Math.round((i.tempVidStageWidth - u.w) / 2));
                     var s = u.text_do.getHeight();
-                    t = i.controller_do ? i.controller_do.isShowed_bl ? parseInt(i.vidStageHeight - i.controller_do.h - s) : parseInt(i.vidStageHeight - s - 10) : parseInt(i.vidStageHeight - s), FWDAnimation.killTweensOf(u.text_do), e ? FWDAnimation.to(u.text_do, .8, {
+                    t = i.controller_do ? i.controller_do.isShowed_bl ? parseInt(i.vidStageHeight - i.controller_do.h - s) : parseInt(i.vidStageHeight - s - 10) : parseInt(i.vidStageHeight - s), Animation.killTweensOf(u.text_do), e ? Animation.to(u.text_do, .8, {
                         y: t,
                         ease: Expo.easeInOut
                     }) : u.text_do.setY(t), u.text_do.setX(0)
@@ -8650,9 +8650,9 @@ var FWDUVPAddress = new function() {
                 var t, s;
                 e = e || 0, t = parseInt((n.w - n.pointerWidth) / 2) + e, s = n.h, n.pointer_do.setX(t), n.pointer_do.setY(s)
             }, this.show = function() {
-                n.isShowed_bl || (n.isShowed_bl = !0, FWDAnimation.killTweensOf(n), clearTimeout(n.showWithDelayId_to), n.showWithDelayId_to = setTimeout(n.showFinal, n.toolTipsButtonsHideDelay), a.addEventListener ? a.addEventListener("mousemove", n.moveHandler) : document.attachEvent && (document.detachEvent("onmousemove", n.moveHandler), document.attachEvent("onmousemove", n.moveHandler)))
+                n.isShowed_bl || (n.isShowed_bl = !0, Animation.killTweensOf(n), clearTimeout(n.showWithDelayId_to), n.showWithDelayId_to = setTimeout(n.showFinal, n.toolTipsButtonsHideDelay), a.addEventListener ? a.addEventListener("mousemove", n.moveHandler) : document.attachEvent && (document.detachEvent("onmousemove", n.moveHandler), document.attachEvent("onmousemove", n.moveHandler)))
             }, this.showFinal = function() {
-                n.setVisible(!0), n.setAlpha(0), FWDAnimation.to(n, .4, {
+                n.setVisible(!0), n.setAlpha(0), Animation.to(n, .4, {
                     alpha: 1,
                     onComplete: function() {
                         n.setVisible(!0)
@@ -8663,7 +8663,7 @@ var FWDUVPAddress = new function() {
                 var t = FWDUVPUtils.getViewportMouseCoordinates(e);
                 FWDUVPUtils.hitTest(n.buttonRef_do.screen, t.screenX, t.screenY) || n.hide()
             }, this.hide = function() {
-                n.isShowed_bl && (clearTimeout(n.showWithDelayId_to), a.removeEventListener ? a.removeEventListener("mousemove", n.moveHandler) : document.detachEvent && document.detachEvent("onmousemove", n.moveHandler), FWDAnimation.killTweensOf(n), n.setVisible(!1), n.isShowed_bl = !1)
+                n.isShowed_bl && (clearTimeout(n.showWithDelayId_to), a.removeEventListener ? a.removeEventListener("mousemove", n.moveHandler) : document.detachEvent && document.detachEvent("onmousemove", n.moveHandler), Animation.killTweensOf(n), n.setVisible(!1), n.isShowed_bl = !1)
             }, this.init()
         };
         r.setPrototype = function() {
@@ -9141,24 +9141,24 @@ var FWDUVPAddress = new function() {
                     u.setFinalSize()
                 }, 300)
             }, this.setNormalState = function(e) {
-                u.useFontAwesome_bl ? (FWDAnimation.killTweensOf(u.n_sdo.screen), FWDAnimation.killTweensOf(u.d_sdo.screen), e ? (FWDAnimation.to(u.n_sdo.screen, .8, {
+                u.useFontAwesome_bl ? (Animation.killTweensOf(u.n_sdo.screen), Animation.killTweensOf(u.d_sdo.screen), e ? (Animation.to(u.n_sdo.screen, .8, {
                     className: u.normalCalssName,
                     ease: Expo.easeOut
-                }), FWDAnimation.to(u.d_sdo.screen, .8, {
+                }), Animation.to(u.d_sdo.screen, .8, {
                     className: u.normalCalssName,
                     ease: Expo.easeOut
-                })) : (u.n_sdo.screen.className = u.normalCalssName, u.d_sdo.screen.className = u.normalCalssName)) : (FWDAnimation.killTweensOf(u.s_sdo), FWDAnimation.to(u.s_sdo, .5, {
+                })) : (u.n_sdo.screen.className = u.normalCalssName, u.d_sdo.screen.className = u.normalCalssName)) : (Animation.killTweensOf(u.s_sdo), Animation.to(u.s_sdo, .5, {
                     alpha: 0,
                     ease: Expo.easeOut
                 }))
             }, this.setSelectedState = function(e) {
-                u.useFontAwesome_bl ? (FWDAnimation.killTweensOf(u.n_sdo.screen), FWDAnimation.killTweensOf(u.d_sdo.screen), e ? (FWDAnimation.to(u.n_sdo.screen, .8, {
+                u.useFontAwesome_bl ? (Animation.killTweensOf(u.n_sdo.screen), Animation.killTweensOf(u.d_sdo.screen), e ? (Animation.to(u.n_sdo.screen, .8, {
                     className: u.selectedCalssName,
                     ease: Expo.easeOut
-                }), FWDAnimation.to(u.d_sdo.screen, .8, {
+                }), Animation.to(u.d_sdo.screen, .8, {
                     className: u.selectedCalssName,
                     ease: Expo.easeOut
-                })) : (u.n_sdo.screen.className = u.selectedCalssName, u.d_sdo.screen.className = u.selectedCalssName)) : (FWDAnimation.killTweensOf(u.s_sdo), FWDAnimation.to(u.s_sdo, .5, {
+                })) : (u.n_sdo.screen.className = u.selectedCalssName, u.d_sdo.screen.className = u.selectedCalssName)) : (Animation.killTweensOf(u.s_sdo), Animation.to(u.s_sdo, .5, {
                     alpha: 1,
                     delay: .1,
                     ease: Expo.easeOut
@@ -9186,23 +9186,23 @@ var FWDUVPAddress = new function() {
                     e: e
                 })
             }, u.setSelctedFinal = function() {
-                u.isSelectedFinal_bl = !0, FWDAnimation.killTweensOf(u.s_sdo), FWDAnimation.to(u.s_sdo, .8, {
+                u.isSelectedFinal_bl = !0, Animation.killTweensOf(u.s_sdo), Animation.to(u.s_sdo, .8, {
                     alpha: 1,
                     ease: Expo.easeOut
                 }), u.setButtonMode(!1)
             }, u.setUnselctedFinal = function() {
-                u.isSelectedFinal_bl = !1, FWDAnimation.to(u.s_sdo, .8, {
+                u.isSelectedFinal_bl = !1, Animation.to(u.s_sdo, .8, {
                     alpha: 0,
                     delay: .1,
                     ease: Expo.easeOut
                 }), u.setButtonMode(!0)
             }, this.setDisabledState = function() {
-                u.isSetToDisabledState_bl = !0, u.useFontAwesome_bl ? (u.n_sdo.setX(-1e4), u.d_sdo.setX(0)) : (u.d_sdo.setX(0), FWDAnimation.killTweensOf(u.d_sdo), FWDAnimation.to(u.d_sdo, .8, {
+                u.isSetToDisabledState_bl = !0, u.useFontAwesome_bl ? (u.n_sdo.setX(-1e4), u.d_sdo.setX(0)) : (u.d_sdo.setX(0), Animation.killTweensOf(u.d_sdo), Animation.to(u.d_sdo, .8, {
                     alpha: 1,
                     ease: Expo.easeOut
                 }))
             }, this.setEnabledState = function() {
-                u.isSetToDisabledState_bl = !1, u.useFontAwesome_bl ? (u.n_sdo.setX(0), u.d_sdo.setX(-1e4)) : (u.d_sdo.setX(-100), FWDAnimation.killTweensOf(u.d_sdo), FWDAnimation.to(u.d_sdo, .8, {
+                u.isSetToDisabledState_bl = !1, u.useFontAwesome_bl ? (u.n_sdo.setX(0), u.d_sdo.setX(-1e4)) : (u.d_sdo.setX(-100), Animation.killTweensOf(u.d_sdo), Animation.to(u.d_sdo, .8, {
                     alpha: 0,
                     delay: .1,
                     ease: Expo.easeOut
@@ -9214,7 +9214,7 @@ var FWDUVPAddress = new function() {
             }, u.updateHEXColors = function(e, t) {
                 FWDUVPUtils.changeCanvasHEXColor(u.nImg, u.n_sdo_canvas, e), FWDUVPUtils.changeCanvasHEXColor(u.img1, u.s_sdo_canvas, t)
             }, u.destroy = function() {
-                u.isMbl ? u.hasPointerEvent_bl ? (u.screen.removeEventListener("pointerdown", u.onMouseUp), u.screen.removeEventListener("pointerover", u.onMouseOver), u.screen.removeEventListener("pointerout", u.onMouseOut)) : (u.screen.removeEventListener("touchstart", u.onMouseDown), u.screen.removeEventListener("touchend", u.onMouseUp)) : u.screen.removeEventListener && (u.screen.removeEventListener("mouseover", u.onMouseOver), u.screen.removeEventListener("mouseout", u.onMouseOut), u.screen.removeEventListener("mousedown", u.onMouseUp)), FWDAnimation.killTweensOf(u.s_sdo), u.n_sdo.destroy(), u.s_sdo.destroy(), u.d_sdo && (FWDAnimation.killTweensOf(u.d_sdo), u.d_sdo.destroy()), u.nImg = null, u.sImg = null, u.dImg = null, u.n_sdo = null, u.s_sdo = null, u.d_sdo = null, sImg = e = null, dImg = null, u.toolTipLabel_str = null, u.init = null, u.setupMainContainers = null, u.onMouseOver = null, u.onMouseOut = null, u.onClick = null, u.onMouseDown = null, u.setSelctedFinal = null, u.setUnselctedFinal = null, u.setInnerHTML(""), h.destroy(), h = u = null, c.prototype = null
+                u.isMbl ? u.hasPointerEvent_bl ? (u.screen.removeEventListener("pointerdown", u.onMouseUp), u.screen.removeEventListener("pointerover", u.onMouseOver), u.screen.removeEventListener("pointerout", u.onMouseOut)) : (u.screen.removeEventListener("touchstart", u.onMouseDown), u.screen.removeEventListener("touchend", u.onMouseUp)) : u.screen.removeEventListener && (u.screen.removeEventListener("mouseover", u.onMouseOver), u.screen.removeEventListener("mouseout", u.onMouseOut), u.screen.removeEventListener("mousedown", u.onMouseUp)), Animation.killTweensOf(u.s_sdo), u.n_sdo.destroy(), u.s_sdo.destroy(), u.d_sdo && (Animation.killTweensOf(u.d_sdo), u.d_sdo.destroy()), u.nImg = null, u.sImg = null, u.dImg = null, u.n_sdo = null, u.s_sdo = null, u.d_sdo = null, sImg = e = null, dImg = null, u.toolTipLabel_str = null, u.init = null, u.setupMainContainers = null, u.onMouseOver = null, u.onMouseOut = null, u.onClick = null, u.onMouseDown = null, u.setSelctedFinal = null, u.setUnselctedFinal = null, u.setInnerHTML(""), h.destroy(), h = u = null, c.prototype = null
             }, u.init()
         };
         c.setPrototype = function() {
@@ -9410,23 +9410,23 @@ var FWDUVPAddress = new function() {
             }, this.updateText = function(e) {
                 this.label_str = e, this.text_do.setInnerHTML(l.label_str), l.hd_do && ("highres" == l.label_str || "hd1080" == l.label_str || "hd720" == l.label_str || "hd1440" == l.label_str || "hd2160" == l.label_str ? l.hd_do.setVisible(!0) : l.hd_do.setVisible(!1))
             }, this.setSelectedState = function(e) {
-                this.isSelected_bl = !0, FWDAnimation.killTweensOf(l.text_do), e ? FWDAnimation.to(l.text_do.screen, .5, {
+                this.isSelected_bl = !0, Animation.killTweensOf(l.text_do), e ? Animation.to(l.text_do.screen, .5, {
                     css: {
                         color: l.sBC
                     },
                     ease: Expo.easeOut
                 }) : l.text_do.getStyle().color = l.sBC
             }, this.setNormalState = function(e) {
-                this.isSelected_bl = !1, FWDAnimation.killTweensOf(l.text_do), e ? FWDAnimation.to(l.text_do.screen, .5, {
+                this.isSelected_bl = !1, Animation.killTweensOf(l.text_do), e ? Animation.to(l.text_do.screen, .5, {
                     css: {
                         color: l.nBC
                     },
                     ease: Expo.easeOut
                 }) : l.text_do.getStyle().color = l.nBC
             }, this.disable = function() {
-                l.isDisabled_bl = !0, FWDAnimation.killTweensOf(l.text_do), l.setSelectedState(!0), l.dumy_do.setButtonMode(!1)
+                l.isDisabled_bl = !0, Animation.killTweensOf(l.text_do), l.setSelectedState(!0), l.dumy_do.setButtonMode(!1)
             }, this.enable = function() {
-                l.isDisabled_bl = !1, FWDAnimation.killTweensOf(l.text_do), l.setNormalState(!0), l.dumy_do.setButtonMode(!0)
+                l.isDisabled_bl = !1, Animation.killTweensOf(l.text_do), l.setNormalState(!0), l.dumy_do.setButtonMode(!0)
             }, l.init()
         };
         n.setPrototype = function() {

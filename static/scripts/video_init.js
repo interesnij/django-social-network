@@ -244,7 +244,7 @@ var FWDUVPATB = function(
 			}else{
 				window.addEventListener("mousemove", self.bMoveHandler);
 			}
-			FWDAnimation.to(self.rightTxt.screen, .8, {css:{color:self.timeTextColorSelected}, ease:Expo.easeOut});
+			Animation.to(self.rightTxt.screen, .8, {css:{color:self.timeTextColorSelected}, ease:Expo.easeOut});
 			self.dispatchEvent(FWDUVPATB.START_TO_SCRUB);
 		}
 
@@ -255,7 +255,7 @@ var FWDUVPATB = function(
 			}else{
 				window.removeEventListener("mousemove", self.bMoveHandler);
 			}
-			FWDAnimation.to(self.rightTxt.screen, .8, {css:{color:self.timeTextColorNormal}, ease:Expo.easeOut});
+			Animation.to(self.rightTxt.screen, .8, {css:{color:self.timeTextColorNormal}, ease:Expo.easeOut});
 			self.dispatchEvent(FWDUVPATB.STOP_TO_SCRUB);
 		}
 
@@ -284,7 +284,7 @@ var FWDUVPATB = function(
 			}else{
 				window.addEventListener("mousemove", self.aMoveHandler);
 			}
-			FWDAnimation.to(self.leftTxt.screen, .8, {css:{color:self.timeTextColorSelected}, ease:Expo.easeOut});
+			Animation.to(self.leftTxt.screen, .8, {css:{color:self.timeTextColorSelected}, ease:Expo.easeOut});
 			self.dispatchEvent(FWDUVPATB.START_TO_SCRUB);
 		}
 
@@ -295,7 +295,7 @@ var FWDUVPATB = function(
 			}else{
 				window.removeEventListener("mousemove", self.aMoveHandler);
 			}
-			FWDAnimation.to(self.leftTxt.screen, .8, {css:{color:self.timeTextColorNormal}, ease:Expo.easeOut});
+			Animation.to(self.leftTxt.screen, .8, {css:{color:self.timeTextColorNormal}, ease:Expo.easeOut});
 			self.dispatchEvent(FWDUVPATB.STOP_TO_SCRUB);
 		}
 
@@ -355,9 +355,9 @@ var FWDUVPATB = function(
 			var offset = 0;
 			if(controller.isMainScrubberOnTop_bl) offset += controller.mainScrubber_do.h - controller.mainScrubberOffestTop - 1;
 			if(animate){
-				FWDAnimation.to(self.mainHld, .8, {y:-self.h - 1 - offset, ease:Expo.easeInOut});
+				Animation.to(self.mainHld, .8, {y:-self.h - 1 - offset, ease:Expo.easeInOut});
 			}else{
-				FWDAnimation.killTweensOf(self.mainHld);
+				FAnimation.killTweensOf(self.mainHld);
 				self.mainHld.setY(-self.h - 1);
 			}
 			setTimeout(self.positionButtons, 200);
@@ -368,9 +368,9 @@ var FWDUVPATB = function(
 			if(!self.isShowed_bl) return;
 			self.isShowed_bl = false;
 			if(animate){
-				FWDAnimation.to(self.mainHld, .8, {y:0, ease:Expo.easeInOut});
+				Animation.to(self.mainHld, .8, {y:0, ease:Expo.easeInOut});
 			}else{
-				FWDAnimation.killTweensOf(self.mainHld);
+				Animation.killTweensOf(self.mainHld);
 				self.mainHld.setY(0);
 			}
 			setTimeout(self.positionButtons, 200);
@@ -524,17 +524,17 @@ var FWDUVPTextButton = function(
 		/* Set normal / selected state */
 		//####################################//
 		this.setNormalState = function(animate){
-			FWDAnimation.to(self.screen, .8, {css:{color:self.colorN, backgroundColor:self.bkColorN}, ease:Expo.easeOut});
+			Animation.to(self.screen, .8, {css:{color:self.colorN, backgroundColor:self.bkColorN}, ease:Expo.easeOut});
 		};
 
 		this.setSelectedState = function(animate){
-			FWDAnimation.to(self.screen, .8, {css:{color:self.colorS, backgroundColor:self.bkColorS}, ease:Expo.easeOut});
+			Animation.to(self.screen, .8, {css:{color:self.colorS, backgroundColor:self.bkColorS}, ease:Expo.easeOut});
 		};
 
 		this.disable = function(){
 			this.onMouseOver();
 			this.dumy_do.setButtonMode(false);
-			FWDAnimation.to(self, .8, {alpha:.4, ease:Expo.easeOut});
+			Animation.to(self, .8, {alpha:.4, ease:Expo.easeOut});
 			this.isDisabled_bl = true;
 		}
 
@@ -542,14 +542,14 @@ var FWDUVPTextButton = function(
 			this.isDisabled_bl = false;
 			this.onMouseOut();
 			this.dumy_do.setButtonMode(true);
-			FWDAnimation.to(self, .8, {alpha:1, ease:Expo.easeOut});
+			Animation.to(self, .8, {alpha:1, ease:Expo.easeOut});
 
 		}
 
 
 		self.init();
 	};
-	
+
 	/* set prototype */
 	FWDUVPTextButton.setPrototype = function(){
 		FWDUVPTextButton.prototype = null;
