@@ -30,9 +30,8 @@
   {% for track in request.user.my_playlist_too %}
   <li data-path="{{ track.uri }}"
       data-thumbpath="{{ track.artwork_url }}"
-			data-downloadable="yes"
-			data-id="{{ track.id }}">
-    <p><span style="font-weight:bold">{{ track.title }}</p>
+			data-downloadable="yes">
+    <p><span style="font-weight:bold">{{ track.title }}</span> <span style="color:lime;margin-left:50px">Скачать</span></p>
   </li>
   {% endfor %}
 </ul>
