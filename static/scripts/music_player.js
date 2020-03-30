@@ -3334,7 +3334,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             } else if (self.id > self.totalAudio - 1) {
                 self.id = self.totalAudio - 1
             }
-            var t = self.data.playlist_ar[self.id].source;
+            var t = self.data.playlist_ar[self.id];
             if (MUSIC.hasHTML5Audio) {
                 self.audioScreen_do.setSource(t)
             } else {
