@@ -360,7 +360,7 @@ if (!document.body.classList.contains(category)){
           cat = _test_.querySelector(".hide_cat");
           all_music_playlists.prepend(list);
           audio_playlists.prepend(cat);
-          music_player.loadPlaylist(0);
+          music_player.loadPlaylist(category);
           music_player.playSpecificTrack(category, track_id);
           console.log(cat, list)
       }};
