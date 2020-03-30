@@ -346,13 +346,13 @@ if (!document.body.classList.contains(category)){
       var body = document.querySelector("body");
       body.className = "";
       body.classList.add(category);
-      audio_playlists = body.querySelector("#audio_playlists");
-      all_music_playlists = body.querySelector("#all_music_playlists");
+      var audio_playlists = body.querySelector("#audio_playlists");
+      var all_music_playlists = body.querySelector("#all_music_playlists");
 
-      category_block = '<li data-source="' + category + '" data-thumbnail-path="/static/images/news_small1.jpg">' + '<p class="minimalWhiteCategoriesTitle"><span class="boldWhite">Название: </span>' + category + '</p></li>'
-      audio_playlists.append(category_block.innerHTML);
+      var category_block = '<li data-source="' + category + '" data-thumbnail-path="/static/images/news_small1.jpg">' + '<p class="minimalWhiteCategoriesTitle"><span class="boldWhite">Название: </span>' + category + '</p></li>'
+      audio_playlists.append(category_block);
 
-      new_playlist = playlist.querySelector("ul_track_list");
+      var new_playlist = playlist.querySelector("ul_track_list");
       all_music_playlists.prepend(new_playlist);
       music_player.loadPlaylist(0);
       music_player.playSpecificTrack(0, track_id);
