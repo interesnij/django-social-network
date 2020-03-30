@@ -308,3 +308,4 @@ displayType:"responsive",
 					contextMenuItemSelectedColor:"#FFFFFF",
 					contextMenuItemDisabledColor:"#444"
 })
+}
