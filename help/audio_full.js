@@ -7115,6 +7115,11 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 r.downloadButtonToolTip_do = new MUSICToolTip(r.downloadButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "download track", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
                 document.documentElement.appendChild(r.downloadButtonToolTip_do.screen)
             }
+            if (this.showBuyButton_bl) {
+                MUSICToolTip.setPrototype();
+                r.buyButtonToolTip_do = new MUSICToolTip(r.buyButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "buy track", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
+                document.documentElement.appendChild(r.buyButtonToolTip_do.screen)
+            }
             MUSICToolTip.setPrototype();
             r.volumeButtonToolTip_do = new MUSICToolTip(r.volumeButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "тишина / включить звук", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
             document.documentElement.appendChild(r.volumeButtonToolTip_do.screen)
@@ -7958,6 +7963,20 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.downloadButtonOnMouseUpHandler = function() {
             r.dispatchEvent(e.DOWNLOAD_MP3)
         };
+        this.setupBuyButton = function() {
+            MUSICSimpleButton.setPrototype();
+            r.buyButton_do = new MUSICSimpleButton(t.buyN_img, t.buySPath_str);
+            r.buyButton_do.addListener(MUSICSimpleButton.SHOW_TOOLTIP, r.buyButtonShowToolTipHandler);
+            r.buyButton_do.addListener(MUSICSimpleButton.MOUSE_UP, r.buyButtonOnMouseUpHandler);
+            r.buttons_ar.push(r.buyButton_do);
+            r.mainHolder_do.addChild(r.buyButton_do)
+        };
+        this.buyButtonShowToolTipHandler = function(e) {
+            r.showToolTip(r.buyButton_do, r.buyButtonToolTip_do, e.e)
+        };
+        this.buyButtonOnMouseUpHandler = function() {
+            r.dispatchEvent(e.BUY)
+        };
         this.setupShuffleButton = function() {
             MUSICSimpleButton.setPrototype();
             r.shuffleButton_do = new MUSICSimpleButton(r.shuffleN_img, t.shuffleSPath_str, undefined, true);
@@ -7991,6 +8010,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             r.playPauseButton_do.disable();
             r.nextButton_do.disable();
             if (r.downloadButton_do) r.downloadButton_do.disable();
+            if (r.buyButton_do) r.buyButton_do.disable();
             if (r.playlistButton_do) r.playlistButton_do.disable(true);
             r.updateTime("...", "...");
             r.setTitle("...")
@@ -8000,6 +8020,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             r.playPauseButton_do.enable();
             r.nextButton_do.enable();
             if (r.downloadButton_do) r.downloadButton_do.enable();
+            if (r.buyButton_do) r.buyButton_do.enable();
             if (r.playlistButton_do) r.playlistButton_do.enable();
         };
         this.init()
@@ -8928,6 +8949,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.expandPlaylistBackground_bl = t.expandControllerBackground_bl;
         this.isSortedNumerical_bl = true;
         this.showSortButtons_bl = t.showSortButtons_bl;
+        this.showPlaylistItemBuyButton_bl = t.showPlaylistItemBuyButton_bl;
         this.addScrollBarMouseWheelSupport_bl = t.addScrollBarMouseWheelSupport_bl;
         this.allowToScrollAndScrollBarIsActive_bl = false;
         this.isDragging_bl = false;
@@ -9837,6 +9859,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.playlistPlayButtonN_img = c;
         this.playlistDownloadButtonN_img = r;
         this.playlistDownloadButtonS_str = i;
+        this.playlistBuyButtonN_img = s;
+        this.playlistBuyButtonS_str = o;
         this.progress_do = null;
         this.playPause_do = null;
         this.playN_do = null;
@@ -9875,6 +9899,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.downloadButtonOffsetRight = N;
         this.setTextsSizeId_to;
         this.showDownloadButton_bl = k;
+        this.showBuyButton_bl = L;
         this.showPlayPauseButton_bl = C;
         this.showDuration_bl = A;
         this.isActive_bl = false;
@@ -9890,6 +9915,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             O.setNormalState(false, true);
             O.setupDumy();
             if (O.showDownloadButton_bl) O.setupDownloadButton();
+            if (O.showBuyButton_bl) O.setupBuyButton();
             if (O.id % 2 == 0) {
                 O.getStyle().background = "url('" + O.playlistItemBk1Path_str + "')";
                 O.grad_do.getStyle().background = "url('" + O.playlistItemGrad1_img.src + "')";
@@ -9967,7 +9993,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 O.titleText_do.setX(O.trackTitleOffsetLeft)
             }
             O.titleText_do.setY(r);
-            if (O.downloadButton_do) {
+            if (O.buyButton_do && O.downloadButton_do) {
                 if (O.durationText_do) {
                     O.durationText_do.setX(e - O.durationWidth - O.durationOffsetRight + 1);
                     O.durationText_do.setY(r);
@@ -9977,8 +10003,10 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 }
                 O.downloadButton_do.setX(n - O.downloadButton_do.w - O.downloadButtonOffsetRight + 3);
                 O.downloadButton_do.setY(parseInt((t - O.downloadButton_do.h) / 2));
-                if (O.titleText_do.x + O.titleWidth + O.downloadButton_do.w + O.downloadButtonOffsetRight + 4 > n) {
-                    O.grad_do.setX(O.downloadButtonOffsetRight + 2)
+                O.buyButton_do.setX(O.downloadButton_do.x - O.buyButton_do.w - 4);
+                O.buyButton_do.setY(parseInt((t - O.buyButton_do.h) / 2));
+                if (O.titleText_do.x + O.titleWidth + O.downloadButton_do.w + O.buyButton_do.w + O.downloadButtonOffsetRight + 4 > n) {
+                    O.grad_do.setX(O.buyButton_do.x - O.downloadButtonOffsetRight + 2)
                 } else {
                     O.grad_do.setX(-300)
                 }
@@ -9994,6 +10022,21 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 O.downloadButton_do.setY(parseInt((t - O.downloadButton_do.h) / 2));
                 if (O.titleText_do.x + O.titleWidth + O.downloadButton_do.w + O.downloadButtonOffsetRight > n) {
                     O.grad_do.setX(O.downloadButton_do.x - O.downloadButtonOffsetRight + 2)
+                } else {
+                    O.grad_do.setX(-300)
+                }
+            } else if (O.buyButton_do) {
+                if (O.durationText_do) {
+                    O.durationText_do.setX(e - O.durationWidth - O.durationOffsetRight + 1);
+                    O.durationText_do.setY(r);
+                    n = O.durationText_do.x
+                } else {
+                    n = e
+                }
+                O.buyButton_do.setX(n - O.buyButton_do.w - O.downloadButtonOffsetRight + 3);
+                O.buyButton_do.setY(parseInt((t - O.buyButton_do.h) / 2));
+                if (O.titleText_do.x + O.titleWidth + O.buyButton_do.w + O.downloadButtonOffsetRight > n) {
+                    O.grad_do.setX(O.buyButton_do.x - O.downloadButtonOffsetRight + 2)
                 } else {
                     O.grad_do.setX(-300)
                 }
