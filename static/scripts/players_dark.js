@@ -358,10 +358,10 @@ if (!document.body.classList.contains(category)){
           var list = _test_.querySelectorAll("li");
           music_player.loadPlaylist(1);
           for (track in list){
-            music_player.addTrack(source=track.getAttribute("data-path"),
-                                  title=track.getAttribute("data-title"),
-                                  thumbPath=track.getAttribute("data-thumbpath"),
-                                  addAtTheBegginngOfPlaylist=true)
+            _source=track.getAttribute("data-path");
+            _title=track.getAttribute("data-title");
+            _thumbPath=track.getAttribute("data-thumbpath");
+            music_player.addTrack(source=track._source, title=_title, thumbPath=_thumbPath, addAtTheBegginngOfPlaylist=true)
           }
 
           music_player.playSpecificTrack(1, 0);
