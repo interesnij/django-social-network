@@ -7707,7 +7707,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 var o, s;
                 e = e || 0, o = parseInt((r.w - r.pointerWidth) / 2) + e, t ? (s = -3, r.pointerUp_do.setX(o), r.pointerUp_do.setY(s), r.pointer_do.setX(0), r.pointer_do.setY(0)) : (s = r.h, r.pointer_do.setX(o), r.pointer_do.setY(s), r.pointerUp_do.setX(0), r.pointerUp_do.setY(0))
             }, this.show = function() {
-                r.isShowed_bl || (r.isShowed_bl = !0, FWDAnimation.killTweensOf(r), clearTimeout(r.showWithDelayId_to), r.showWithDelayId_to = setTimeout(r.showFinal, a.addEventListener ? a.addEventListener("mousemove", r.moveHandler) : document.attachEvent && (document.detachEvent("onmousemove", r.moveHandler), document.attachEvent("onmousemove", r.moveHandler)))
+                r.isShowed_bl || (r.isShowed_bl = !0, FWDAnimation.killTweensOf(r), clearTimeout(r.showWithDelayId_to), r.showWithDelayId_to = setTimeout(r.showFinal, a.addEventListener ? a.addEventListener("mousemove", r.moveHandler) : document.attachEvent && (document.detachEvent("onmousemove", r.moveHandler), document.attachEvent("onmousemove", r.moveHandler))))
             }, this.showFinal = function() {
                 r.setVisible(!0), r.setAlpha(0), FWDAnimation.to(r, .4, {
                     alpha: 1,
