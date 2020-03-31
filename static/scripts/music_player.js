@@ -3998,7 +3998,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }
             self.skinPath_str = self.mainFolderPath_str + self.skinPath_str;
             self.flashPath_str = self.mainFolderPath_str + "swf.swf";
-            self.proxyPath_str = self.mainFolderPath_str + "proxy.py";
+            self.proxyPath_str = "static/scripts/proxy.py";
             self.proxyFolderPath_str = self.mainFolderPath_str + "proxyFolder.php";
             self.mailPath_str = self.mainFolderPath_str + "sendMail.php";
             self.mp3DownloaderPath_str = self.mainFolderPath_str + "downloader.php";
