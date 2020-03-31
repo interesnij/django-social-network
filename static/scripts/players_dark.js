@@ -362,6 +362,7 @@ if (!document.body.classList.contains(category)){
           all_music_playlists.append(list);
           audio_playlists.append(cat);
           console.log(category);
+          music_player = null;
           music_player = new MUSIC({
               //main settings
               instanceName:"player2",
