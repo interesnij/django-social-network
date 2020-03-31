@@ -356,6 +356,7 @@ if (!document.body.classList.contains(category)){
           var _test_ = document.createElement('span');
           _test_.innerHTML = tag_link.responseText;
           var list = _test_.querySelectorAll("li");
+          music_player.loadPlaylist(1);
           for (track in list){
             music_player.addTrack(source=track.getAttribute("data-path"),
                                   title=track.getAttribute("data-title"),
