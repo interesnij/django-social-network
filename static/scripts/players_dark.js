@@ -349,6 +349,23 @@ if (!document.body.classList.contains(category)){
       body.className = "";
       body.classList.add(category);
 
+      var tag_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+      tag_link.open( 'GET', '/music/get/tag/' + tag_pk, true );
+      tag_link.onreadystatechange = function () {
+        if ( tag_link.readyState == 4 && tag_link.status == 200 ) {
+          var _test_ = document.createElement('span');
+          _test_.innerHTML = tag_link.responseText;
+          var list = _test_.querySelectorAll("li");
+          for (track in list){
+            music_player.addTrack(source=track.getAttribute("data-path"),
+                                  title=track.getAttribute("data-title"),
+                                  thumbPath=track.getAttribute("data-thumbpath"),
+                                  addAtTheBegginngOfPlaylist=true)
+          }
+
+          music_player.playSpecificTrack(1, 0);
+      }};
+      tag_link.send( null );
   }};
     playlist_link.send( null );
     }else{
