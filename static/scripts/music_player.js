@@ -5047,10 +5047,14 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 var a = o.source.substr(o.source.lastIndexOf("/") + 1);
                 if (a.indexOf(";.mp3") != -1) {
                     a = o.source.substr(o.source.lastIndexOf("/") + 1)
-                } else {
-                    a = encodeURIComponent(o.source.substr(o.source.lastIndexOf("/") + 1))
+                    o.source = u + a
                 }
-                o.source = u + a;
+                else if (o.source.indexOf(".soundcloud.") != -1) {
+                    o.source = o.source + '/stream?client_id=' + 'dce5652caa1b66331903493735ddd64d'
+                } else{
+                    a = encodeURIComponent(o.source.substr(o.source.lastIndexOf("/") + 1))
+                    o.source = u + a
+                }
                 o.downloadPath = o.source;
                 if (FWDMSPUtils.hasAttribute(i, "data-thumbpath")) {
                     o.thumbPath = FWDMSPUtils.getAttributeValue(i, "data-thumbpath")
