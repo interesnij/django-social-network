@@ -5311,7 +5311,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                         }, 50));
                         if (n > self.maxPlaylistItems - 1) break;
 
-                        console.log(l.source);
                         if (l.isShoutcast_bl = FWDMSPUtils.getAttributeValue(o, "data-type"), l.isShoutcast_bl && (-1 != l.isShoutcast_bl.toLowerCase().indexOf("shoutcastv1") ? (l.shoutcastVersion = 1, l.isShoutcast_bl = !0) : -1 != l.isShoutcast_bl.toLowerCase().indexOf("shoutcastv2") ? (l.shoutcastVersion = 2, l.isShoutcast_bl = !0) : l.isShoutcast_bl = !1), l.isIcecast_bl = FWDMSPUtils.getAttributeValue(o, "data-type"), l.isIcecast_bl && (-1 != l.isIcecast_bl.toLowerCase().indexOf("icecast") ? l.isIcecast_bl = !0 : l.isIcecast_bl = !1), l.source = FWDMSPUtils.getAttributeValue(o, "data-path"), -1 != l.source.indexOf("encrypt:") && (l.source = atob(l.source.substr(8))), -1 != l.source.indexOf("youtube.")) {
                             var r = l.source.match(/^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/);
                             l.source = r[2]
@@ -5320,7 +5319,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                                 d = l.source.substr(l.source.lastIndexOf("/") + 1);
                             d = -1 != d.indexOf(";.mp3") || FWDMSPUtils.isURLEncoded(d) ? l.source.substr(l.source.lastIndexOf("/") + 1) : encodeURIComponent(l.source.substr(l.source.lastIndexOf("/") + 1)), l.source = a + d
                         }
-
+                        console.log(l.source);
                         l.downloadPath = l.source, (l.isShoutcast_bl || l.isIcecast_bl) && "/" != l.source.substr(l.source.length - 1) && (l.source += "/"), FWDMSPUtils.hasAttribute(o, "data-thumbpath") ? l.thumbPath = FWDMSPUtils.getAttributeValue(o, "data-thumbpath") : l.thumbPath = void 0, FWDMSPUtils.hasAttribute(o, "data-downloadable") ? l.downloadable = "yes" == FWDMSPUtils.getAttributeValue(o, "data-downloadable") : l.downloadable = void 0, FWDMSPUtils.hasAttribute(o, "data-buy-url") ? l.buy = FWDMSPUtils.getAttributeValue(o, "data-buy-url") : l.buy = void 0, l.title = "not defined!";
                         try {
                             var u = "";
