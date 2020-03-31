@@ -414,7 +414,7 @@ if (!document.body.classList.contains(category)){
           _test_.innerHTML = tag_link.responseText;
           var list = _test_.querySelectorAll("li");
           var count = list.length;
-          music_player.loadPlaylist(1);
+          //music_player.loadPlaylist(1);
           for(i=0; i<count; i++) {
             _source=list[i].getAttribute("data-path") + '/stream?client_id=' + 'dce5652caa1b66331903493735ddd64d';
             _title=list[i].getAttribute("data-title");
