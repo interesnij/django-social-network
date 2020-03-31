@@ -3998,7 +3998,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }
             self.skinPath_str = self.mainFolderPath_str + self.skinPath_str;
             self.flashPath_str = self.mainFolderPath_str + "swf.swf";
-            self.proxyPath_str = self.mainFolderPath_str + "proxy.php";
+            self.proxyPath_str = self.mainFolderPath_str + "proxy.py";
             self.proxyFolderPath_str = self.mainFolderPath_str + "proxyFolder.php";
             self.mailPath_str = self.mainFolderPath_str + "sendMail.php";
             self.mp3DownloaderPath_str = self.mainFolderPath_str + "downloader.php";
@@ -4474,7 +4474,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 self.loadOfficialFmList(t)
             } else if (t.indexOf("folder:") != -1) {
                 self.loadFolderPlaylist(t)
-            } else if (t.indexOf("http:") != -1 || t.indexOf("https:") != -1 || t.indexOf("www.") != -1) {
+            } else if (t.indexOf(".xml") != -1 || t.indexOf("http:") != -1 || t.indexOf("https:") != -1 || t.indexOf("www.") != -1) {
                 self.loadXMLPlaylist(t)
             } else {
                 self.parseDOMPlaylist(t)
@@ -4542,7 +4542,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.closeJsonPLoader = function() {
             clearTimeout(self.JSONPRequestTimeoutId_to)
         };
-        this.loadXMLPlaylist = function(e, url) {
+        this.loadXMLPlaylist = function(e) {
             if (self.isPlaylistDispatchingError_bl) return;
             if (document.location.protocol == "file:" && e.indexOf("official.fm") == -1) {
                 self.isPlaylistDispatchingError_bl = true;
@@ -4561,7 +4561,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             self.xhr.onreadystatechange = self.ajaxOnLoadHandler;
             self.xhr.onerror = self.ajaxOnErrorHandler;
             try {
-                self.xhr.open("get", url + "&rand=" + 1, true);
+                self.xhr.open("get", self.proxyPath_str + "?url=" + self.sourceURL_str + "&rand=" + parseInt(Math.random() * 99999999), true);
                 self.xhr.send()
             } catch (t) {
                 var n = t;

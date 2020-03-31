@@ -1,12 +1,7 @@
-{
-  {% for object in list %}
-    "li":{
-      "@attributes": {
-          "data-path": "{{ object.uri }}",
-          "data-title": "{{ object.title }}",
-          "data-thumbpath": "{{ object.artwork_url }}"
-      }
-  }{% if not forloop.last %},{% endif %}
-  {% endfor %}
 
-}
+  {% for object in list %}
+  <li data-path="{{ object.uri }}"
+      data-thumbpath="{{ object.artwork_url }}">
+    <p><span style="font-weight:bold">{{ object.title }}</span></p>
+  </li>
+  {% endfor %}
