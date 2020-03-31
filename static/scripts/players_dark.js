@@ -416,7 +416,7 @@ if (!document.body.classList.contains(category)){
           var list = _test_.querySelectorAll("li");
           var count = list.length;
           console.log(list);
-          
+          music_player.loadPlaylist(1);
           for(i=0; i<count; i++) {
             _source=list[i].getAttribute("data-path");
             _title=list[i].getAttribute("data-title");
