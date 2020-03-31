@@ -1,4 +1,3 @@
-
 function A(e, t, n) {
     var r = t || 0,
         i = 0;
@@ -489,7 +488,7 @@ function B(e, t, n) {
         return n
     };
     t.isReadyMethodCalled_bl = false;
-    e.MUSICUtils = t
+    e.FWDMSPUtils = t
 })(window);
 (function(e) {
     var t = function() {
@@ -500,12 +499,11 @@ function B(e, t, n) {
             this.setupScreen();
             e.onerror = this.showError;
             this.screen.style.zIndex = 100000009;
-            this.screen.classList.add("screeeen");
             setTimeout(this.addConsoleToDom, 100);
             setInterval(this.position, 100)
         };
         this.position = function() {
-            var e = MUSICUtils.getScrollOffsets();
+            var e = FWDMSPUtils.getScrollOffsets();
             n.setX(e.x + 100);
             n.setY(e.y)
         };
@@ -517,7 +515,7 @@ function B(e, t, n) {
             }
         };
         this.setupScreen = function() {
-            this.main_do = new MUSICDisplayObject("div", "absolute");
+            this.main_do = new FWDMSPDisplayObject("div", "absolute");
             this.main_do.setOverflow("auto");
             this.main_do.setWidth(200);
             this.main_do.setHeight(300);
@@ -539,7 +537,7 @@ function B(e, t, n) {
         this.init()
     };
     t.setPrototype = function() {
-        t.prototype = new MUSICDisplayObject("div", "absolute")
+        t.prototype = new FWDMSPDisplayObject("div", "absolute")
     };
     t.prototype = null;
     e.FWDConsole = t
@@ -2161,43 +2159,43 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
     })
 })(window);
 (function(window) {
-    var MUSIC = function(props) {
+    var FWDMSP = function(props) {
         var self = this;
         self.init = function() {
             TweenLite.ticker.useRAF(false);
             this.props_obj = props;
             this.instanceName_str = this.props_obj.instanceName;
             if (!this.instanceName_str) {
-                alert("MUSIC instance name is requires please make sure that the instanceName parameter exsists and it's value is uinique.");
+                alert("FWDMSP instance name is requires please make sure that the instanceName parameter exsists and it's value is uinique.");
                 return
             }
             if (window[this.instanceName_str]) {
-                alert("MUSIC instance name " + this.instanceName_str + " is already defined and contains a different instance reference, set a different instance name.");
+                alert("FWDMSP instance name " + this.instanceName_str + " is already defined and contains a different instance reference, set a different instance name.");
                 return
             } else {
                 window[this.instanceName_str] = this
             }
             if (!this.props_obj) {
-                alert("MUSIC constructor properties object is not defined!");
+                alert("FWDMSP constructor properties object is not defined!");
                 return
             }
             this.position_str = self.props_obj.position;
-            if (!this.position_str) this.position_str = MUSIC.POSITION_TOP;
+            if (!this.position_str) this.position_str = FWDMSP.POSITION_TOP;
             if (this.position_str == "bottom") {
-                this.position_str = MUSIC.POSITION_BOTTOM
+                this.position_str = FWDMSP.POSITION_BOTTOM
             } else {
-                this.position_str = MUSIC.POSITION_TOP
+                this.position_str = FWDMSP.POSITION_TOP
             }
             this.stageContainer = document.createElement("div");
             this.stageContainer.style.position = "fixed";
-            if (MUSICUtils.isIEAndLessThen9) {
+            if (FWDMSPUtils.isIEAndLessThen9) {
                 this.stageContainer.style.zIndex = "2147483630"
             } else {
                 this.stageContainer.style.zIndex = "99999999990"
             }
             this.stageContainer.style.overflow = "visible";
             self.stageContainer.style.height = "0px";
-            if (MUSICUtils.isIE) {
+            if (FWDMSPUtils.isIE) {
                 document.getElementsByTagName("body")[0].appendChild(this.stageContainer)
             } else {
                 document.documentElement.appendChild(this.stageContainer)
@@ -2236,7 +2234,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             this.lastPercentPlayed = 0;
             this.popupWindowWidth = self.props_obj.popupWindowWidth || 500;
             this.popupWindowHeight = self.props_obj.popupWindowHeight || 400;
-            if (MUSICUtils.isIE) this.popupWindowHeight -= 3;
+            if (FWDMSPUtils.isIE) this.popupWindowHeight -= 3;
             this.resizeHandlerId_to;
             this.resizeHandler2Id_to;
             this.hidePreloaderId_to;
@@ -2257,17 +2255,17 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             this.useDeepLinking_bl = self.props_obj.useDeepLinking;
             this.useDeepLinking_bl = self.useDeepLinking_bl == "yes" ? true : false;
             this.openInPopup_bl = false;
-            this.isMobile_bl = MUSICUtils.isMobile;
-            this.hasPointerEvent_bl = MUSICUtils.hasPointerEvent;
+            this.isMobile_bl = FWDMSPUtils.isMobile;
+            this.hasPointerEvent_bl = FWDMSPUtils.hasPointerEvent;
             try {
                 if (window.opener && window.opener[this.instanceName_str] && window.opener[this.instanceName_str].instanceName_str == this.instanceName_str) {
                     this.openInPopup_bl = true;
                     this.popupWindow = window.opener[this.instanceName_str];
                     window.opener[this.instanceName_str].removeAndDisablePlayer();
                     if (!self.isMobile_bl) {
-                        document.cookie = "MUSIC=" + self.instanceName_str + "; path=/";
+                        document.cookie = "FWDMSP=" + self.instanceName_str + "; path=/";
                         window.onbeforeunload = function(e) {
-                            document.cookie = "MUSIC=; expires=Thu, 01-Jan-70 00:00:01 GMT; path=/"
+                            document.cookie = "FWDMSP=; expires=Thu, 01-Jan-70 00:00:01 GMT; path=/"
                         }
                     }
                 }
@@ -2276,7 +2274,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             this.startResizeHandler();
             this.setupInfo();
             this.setupData();
-            MUSIC.instaces_ar.push(this)
+            FWDMSP.instaces_ar.push(this)
         };
         this.popup = function() {
             if (self.popupWindow && !self.popupWindow.closed) return;
@@ -2284,9 +2282,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             var t = screen.width / 2 - self.popupWindowWidth / 2;
             var n = screen.height / 2 - self.popupWindowHeight / 2;
             var r = "no";
-            if (MUSICUtils.isSafari) r = "yes";
+            if (FWDMSPUtils.isSafari) r = "yes";
             try {
-                if (MUSICUtils.isMobile) {
+                if (FWDMSPUtils.isMobile) {
                     self.popupWindow = window.open(location.href, self.instanceName_str)
                 } else {
                     self.popupWindow = window.open(location.href, self.instanceName_str, "location=" + r + ", width=" + self.popupWindowWidth + ", height=" + self.popupWindowHeight + ", top=" + n + ", left=" + t)
@@ -2299,32 +2297,32 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                     self.isAPIReady_bl = false
                 }
                 self.stopResizeHandler();
-                self.dispatchEvent(MUSIC.POPUP)
+                self.dispatchEvent(FWDMSP.POPUP)
             } catch (i) {}
         };
         this.removeAndDisablePlayer = function() {
             self.stageContainer.style.display = "none"
         };
         self.setupMainDo = function() {
-            self.background_do = new MUSICDisplayObject("div");
+            self.background_do = new FWDMSPDisplayObject("div");
             self.background_do.getStyle().width = "100%";
-            self.main_do = new MUSICDisplayObject("div");
+            self.main_do = new FWDMSPDisplayObject("div");
             self.main_do.getStyle().msTouchAction = "none";
             self.main_do.getStyle().webkitTapHighlightColor = "rgba(0, 0, 0, 0)";
             self.main_do.setBackfaceVisibility();
-            if (!MUSICUtils.isMobile || MUSICUtils.isMobile && MUSICUtils.hasPointerEvent) self.main_do.setSelectable(false);
+            if (!FWDMSPUtils.isMobile || FWDMSPUtils.isMobile && FWDMSPUtils.hasPointerEvent) self.main_do.setSelectable(false);
             if (self.openInPopup_bl) {
                 document.documentElement.appendChild(self.main_do.screen);
                 self.stageContainer.style.position = "absolute";
                 document.documentElement.style.overflow = "hidden";
                 document.documentElement.style.backgroundColor = self.popupWindowBackgroundColor;
                 self.main_do.setBkColor(self.popupWindowBackgroundColor);
-                if (MUSICUtils.isIEAndLessThen9) {
+                if (FWDMSPUtils.isIEAndLessThen9) {
                     this.main_do.getStyle().zIndex = "2147483631"
                 } else {
                     this.main_do.getStyle().zIndex = "99999999991"
                 }
-                if (MUSICUtils.isIE) {
+                if (FWDMSPUtils.isIE) {
                     document.getElementsByTagName("body")[0].appendChild(self.main_do.screen)
                 } else {
                     document.getElementsByTagName("body")[0].style.display = "none"
@@ -2336,9 +2334,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }
         };
         self.setupInfo = function() {
-            MUSICInfo.setPrototype();
-            self.info_do = new MUSICInfo(self);
-            if (MUSICUtils.isIEAndLessThen9) {
+            FWDMSPInfo.setPrototype();
+            self.info_do = new FWDMSPInfo(self);
+            if (FWDMSPUtils.isIEAndLessThen9) {
                 self.info_do.getStyle().zIndex = "2147483632"
             } else {
                 self.info_do.getStyle().zIndex = "99999999992"
@@ -2347,7 +2345,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         self.startResizeHandler = function() {
             if (window.addEventListener) {
                 window.addEventListener("resize", self.onResizeHandler);
-                if (MUSICUtils.isAndroid) window.addEventListener("orientationchange", self.orientationChange)
+                if (FWDMSPUtils.isAndroid) window.addEventListener("orientationchange", self.orientationChange)
             } else if (window.attachEvent) {
                 window.attachEvent("onresize", self.onResizeHandler)
             }
@@ -2383,7 +2381,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         };
         self.resizeHandler = function(e, t) {
             if (!self.orintationChangeComplete_bl) return;
-            self.ws = MUSICUtils.getViewportSize();
+            self.ws = FWDMSPUtils.getViewportSize();
             self.stageWidth = document.documentElement.offsetWidth;
             self.stageContainer.style.width = "100%";
             self.stageContainer.style.left = "0px";
@@ -2401,7 +2399,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             if (self.isFirstPlaylistLoaded_bl) self.setStageContainerFinalHeightAndPosition(false)
         };
         this.setStageContainerFinalHeightAndPosition = function(e) {
-            if (!self.ws) self.ws = MUSICUtils.getViewportSize();
+            if (!self.ws) self.ws = FWDMSPUtils.getViewportSize();
             if (!self.controller_do || !self.allowToResizeAndPosition_bl) return;
             if (self.openInPopup_bl) {
                 self.main_do.setX(0);
@@ -2409,9 +2407,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 self.main_do.getStyle().width = "100%";
                 self.main_do.setHeight(self.ws.h);
                 self.controller_do.setX(0);
-                MUSICTweenMax.killTweensOf(self.controller_do);
+                FWDMSPTweenMax.killTweensOf(self.controller_do);
                 if (e) {
-                    if (self.controller_do.y != 0) MUSICTweenMax.to(self.controller_do, .8, {
+                    if (self.controller_do.y != 0) FWDMSPTweenMax.to(self.controller_do, .8, {
                         y: 0,
                         ease: Expo.easeInOut
                     })
@@ -2419,10 +2417,10 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                     self.controller_do.setY(0)
                 }
                 if (self.playlist_do) {
-                    MUSICTweenMax.killTweensOf(self.playlist_do);
+                    FWDMSPTweenMax.killTweensOf(self.playlist_do);
                     self.playlist_do.setX(0);
                     if (e) {
-                        MUSICTweenMax.to(self.playlist_do, .8, {
+                        FWDMSPTweenMax.to(self.playlist_do, .8, {
                             y: self.controller_do.h,
                             delay: .4,
                             ease: Expo.easeInOut
@@ -2435,7 +2433,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }
             clearTimeout(self.showPlaylistWithDelayId_to);
             if (self.playlist_do && self.playlist_do.isShowed_bl) addToHeight = self.playlist_do.h;
-            if (self.position_str == MUSIC.POSITION_TOP) {
+            if (self.position_str == FWDMSP.POSITION_TOP) {
                 if (self.playlist_do) {
                     self.background_do.setHeight(self.playlist_do.h + self.controller_do.h);
                     self.playlist_do.setY(0);
@@ -2463,101 +2461,101 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             } else {
                 if (self.main_do.x > 0) self.opener_do.setX(self.main_do.x)
             }
-            MUSICTweenMax.killTweensOf(self.stageContainer);
-            MUSICTweenMax.killTweensOf(self.background_do);
-            MUSICTweenMax.killTweensOf(self.controller_do);
-            MUSICTweenMax.killTweensOf(self.opener_do);
+            FWDMSPTweenMax.killTweensOf(self.stageContainer);
+            FWDMSPTweenMax.killTweensOf(self.background_do);
+            FWDMSPTweenMax.killTweensOf(self.controller_do);
+            FWDMSPTweenMax.killTweensOf(self.opener_do);
             self.center();
             if (e) {
-                if (self.position_str == MUSIC.POSITION_TOP) {
+                if (self.position_str == FWDMSP.POSITION_TOP) {
                     if (self.playlist_do && self.playlist_do.isShowed_bl && self.controller_do.isShowed_bl) {
-                        MUSICTweenMax.to(self.stageContainer, .8, {
+                        FWDMSPTweenMax.to(self.stageContainer, .8, {
                             css: {
                                 top: 0
                             },
                             ease: Expo.easeInOut
                         });
-                        MUSICTweenMax.to(self.opener_do, .8, {
+                        FWDMSPTweenMax.to(self.opener_do, .8, {
                             y: self.playlist_do.h + self.controller_do.h,
                             ease: Expo.easeInOut
                         })
                     } else if (self.controller_do.isShowed_bl && self.playlist_do) {
-                        MUSICTweenMax.to(self.stageContainer, .8, {
+                        FWDMSPTweenMax.to(self.stageContainer, .8, {
                             css: {
                                 top: -self.playlist_do.h
                             },
                             ease: Expo.easeInOut
                         });
-                        MUSICTweenMax.to(self.opener_do, .8, {
+                        FWDMSPTweenMax.to(self.opener_do, .8, {
                             y: self.playlist_do.h + self.controller_do.h,
                             ease: Expo.easeInOut
                         })
                     } else if (!self.controller_do.isShowed_bl && self.playlist_do) {
-                        MUSICTweenMax.to(self.stageContainer, .8, {
+                        FWDMSPTweenMax.to(self.stageContainer, .8, {
                             css: {
                                 top: -self.playlist_do.h - self.controller_do.h
                             },
                             ease: Expo.easeInOut
                         });
-                        MUSICTweenMax.to(self.opener_do, .8, {
+                        FWDMSPTweenMax.to(self.opener_do, .8, {
                             y: self.playlist_do.h + self.controller_do.h,
                             ease: Expo.easeInOut,
                             onComplete: self.moveWheyLeft
                         })
                     } else if (self.controller_do.isShowed_bl) {
-                        MUSICTweenMax.to(self.stageContainer, .8, {
+                        FWDMSPTweenMax.to(self.stageContainer, .8, {
                             css: {
                                 top: 0
                             },
                             ease: Expo.easeInOut
                         });
-                        MUSICTweenMax.to(self.opener_do, .8, {
+                        FWDMSPTweenMax.to(self.opener_do, .8, {
                             y: self.controller_do.h,
                             ease: Expo.easeInOut
                         })
                     } else {
-                        MUSICTweenMax.to(self.stageContainer, .8, {
+                        FWDMSPTweenMax.to(self.stageContainer, .8, {
                             css: {
                                 top: -self.controller_do.h
                             },
                             ease: Expo.easeInOut
                         });
-                        MUSICTweenMax.to(self.opener_do, .8, {
+                        FWDMSPTweenMax.to(self.opener_do, .8, {
                             y: self.controller_do.h,
                             ease: Expo.easeInOut
                         })
                     }
                 } else {
                     if (self.playlist_do && self.playlist_do.isShowed_bl && self.controller_do.isShowed_bl) {
-                        MUSICTweenMax.to(self.stageContainer, .8, {
+                        FWDMSPTweenMax.to(self.stageContainer, .8, {
                             css: {
                                 top: self.ws.h - self.controller_do.h - self.playlist_do.h
                             },
                             ease: Expo.easeInOut
                         })
                     } else if (self.controller_do.isShowed_bl && self.playlist_do) {
-                        MUSICTweenMax.to(self.stageContainer, .8, {
+                        FWDMSPTweenMax.to(self.stageContainer, .8, {
                             css: {
                                 top: self.ws.h - self.controller_do.h
                             },
                             ease: Expo.easeInOut
                         })
                     } else if (self.controller_do.isShowed_bl) {
-                        MUSICTweenMax.to(self.stageContainer, .8, {
+                        FWDMSPTweenMax.to(self.stageContainer, .8, {
                             css: {
                                 top: self.ws.h - self.controller_do.h
                             },
                             ease: Expo.easeInOut
                         })
                     } else if (self.controller_do.isShowed_bl) {
-                        MUSICTweenMax.to(self.stageContainer, .8, {
+                        FWDMSPTweenMax.to(self.stageContainer, .8, {
                             css: {
                                 top: 0
                             },
                             ease: Expo.easeInOut
                         })
                     } else {
-                        MUSICTweenMax.to(self.stageContainer, .8, {
+                        FWDMSPTweenMax.to(self.stageContainer, .8, {
                             css: {
                                 top: self.ws.h
                             },
@@ -2565,13 +2563,13 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                             onComplete: self.moveWheyLeft
                         })
                     }
-                    MUSICTweenMax.to(self.opener_do, .8, {
+                    FWDMSPTweenMax.to(self.opener_do, .8, {
                         y: -self.opener_do.h,
                         ease: Expo.easeInOut
                     })
                 }
             } else {
-                if (self.position_str == MUSIC.POSITION_TOP) {
+                if (self.position_str == FWDMSP.POSITION_TOP) {
                     if (self.playlist_do && self.playlist_do.isShowed_bl && self.controller_do.isShowed_bl) {
                         self.stageContainer.style.top = "0px";
                         self.opener_do.setY(self.playlist_do.h + self.controller_do.h)
@@ -2613,11 +2611,11 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             self.background_do.getStyle().width = "100%"
         };
         this.setupContextMenu = function() {
-            self.customContextMenu_do = new MUSICContextMenu(self.main_do, self.data.rightClickContextMenu_str)
+            self.customContextMenu_do = new FWDMSPContextMenu(self.main_do, self.data.rightClickContextMenu_str)
         };
         this.setupMainInstances = function() {
             if (self.controller_do) return;
-            if (MUSIC.hasHTML5Audio) self.setupAudioScreen();
+            if (FWDMSP.hasHTML5Audio) self.setupAudioScreen();
             if (self.data.showPlaylistsButtonAndPlaylists_bl) self.setupCategories();
             if (self.data.showPlayListButtonAndPlaylist_bl) self.setupPlaylist();
             self.setupController();
@@ -2625,12 +2623,12 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             self.controller_do.resizeAndPosition()
         };
         this.setupData = function() {
-            MUSICAudioData.setPrototype();
-            self.data = new MUSICAudioData(self.props_obj, self.rootElement_el, self);
-            self.data.addListener(MUSICAudioData.PRELOADER_LOAD_DONE, self.onPreloaderLoadDone);
-            self.data.addListener(MUSICAudioData.LOAD_ERROR, self.dataLoadError);
-            self.data.addListener(MUSICAudioData.SKIN_LOAD_COMPLETE, self.dataSkinLoadComplete);
-            self.data.addListener(MUSICAudioData.PLAYLIST_LOAD_COMPLETE, self.dataPlayListLoadComplete)
+            FWDMSPAudioData.setPrototype();
+            self.data = new FWDMSPAudioData(self.props_obj, self.rootElement_el, self);
+            self.data.addListener(FWDMSPAudioData.PRELOADER_LOAD_DONE, self.onPreloaderLoadDone);
+            self.data.addListener(FWDMSPAudioData.LOAD_ERROR, self.dataLoadError);
+            self.data.addListener(FWDMSPAudioData.SKIN_LOAD_COMPLETE, self.dataSkinLoadComplete);
+            self.data.addListener(FWDMSPAudioData.PLAYLIST_LOAD_COMPLETE, self.dataPlayListLoadComplete)
         };
         self.onPreloaderLoadDone = function() {
             self.maxHeight = 32;
@@ -2647,8 +2645,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             self.main_do.addChild(self.info_do);
             self.info_do.showText(e.text);
             if (!self.controller_do) {
-                if (!self.ws) self.ws = MUSICUtils.getViewportSize();
-                if (self.position_str == MUSIC.POSITION_TOP) {
+                if (!self.ws) self.ws = FWDMSPUtils.getViewportSize();
+                if (self.position_str == FWDMSP.POSITION_TOP) {
                     self.stageContainer.style.top = "0px"
                 } else {
                     self.stageContainer.style.top = self.ws.h - self.maxHeight + "px"
@@ -2656,12 +2654,13 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 self.main_do.setHeight(self.maxHeight)
             }
             self.resizeHandler();
-            self.dispatchEvent(MUSIC.ERROR, {
+            self.dispatchEvent(FWDMSP.ERROR, {
                 error: e.text
             })
         };
         self.dataSkinLoadComplete = function() {
             self.animate_bl = self.data.animate_bl;
+            if (self.openInPopup_bl) self.data.showPopupButton_bl = false;
             if (self.useDeepLinking_bl) {
                 setTimeout(function() {
                     self.setupDL()
@@ -2678,10 +2677,10 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }
         };
         this.dataPlayListLoadComplete = function() {
-            if (!self.isAPIReady_bl) self.dispatchEvent(MUSIC.READY);
+            if (!self.isAPIReady_bl) self.dispatchEvent(FWDMSP.READY);
             self.isAPIReady_bl = true;
             self.isPlaylistLoaded_bl = true;
-            if (MUSIC.hasHTML5Audio) {
+            if (FWDMSP.hasHTML5Audio) {
                 self.setupMainInstances();
                 self.updatePlaylist()
             } else {
@@ -2691,7 +2690,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                     self.setupFlashScreen()
                 }
             }
-            self.dispatchEvent(MUSIC.LOAD_PLAYLIST_COMPLETE)
+            self.dispatchEvent(FWDMSP.LOAD_PLAYLIST_COMPLETE)
         };
         this.updatePlaylist = function() {
             if (self.main_do)
@@ -2731,7 +2730,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 return
             }
             self.allowToResizeAndPosition_bl = true;
-            if (self.position_str == MUSIC.POSITION_TOP) {
+            if (self.position_str == FWDMSP.POSITION_TOP) {
                 if (self.playlist_do && self.controller_do.isShowed_bl) {
                     if (!self.showedFirstTime_bl) {
                         self.stageContainer.style.top = -self.controller_do.h - self.playlist_do.h + "px";
@@ -2801,7 +2800,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             if (self.playlist_do) self.playlist_do.destroyPlaylist();
             self.positionPreloader();
             self.setStageContainerFinalHeightAndPosition(false);
-            self.dispatchEvent(MUSIC.START_TO_LOAD_PLAYLIST)
+            self.dispatchEvent(FWDMSP.START_TO_LOAD_PLAYLIST)
         };
         this.setupDL = function() {
             FWDAddress.onChange = self.dlChangeHandler;
@@ -2847,10 +2846,10 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }
         };
         this.setupPreloader = function() {
-            MUSICPreloader.setPrototype();
-            self.preloader_do = new MUSICPreloader(self.data.preloaderPath_str, 53, 34, 30, 80);
-            self.preloader_do.addListener(MUSICPreloader.HIDE_COMPLETE, self.preloaderHideComplete);
-            if (MUSICUtils.isIEAndLessThen9) {
+            FWDMSPPreloader.setPrototype();
+            self.preloader_do = new FWDMSPPreloader(self.data.preloaderPath_str, 53, 34, 30, 80);
+            self.preloader_do.addListener(FWDMSPPreloader.HIDE_COMPLETE, self.preloaderHideComplete);
+            if (FWDMSPUtils.isIEAndLessThen9) {
                 self.preloader_do.getStyle().zIndex = "2147483633"
             } else {
                 self.preloader_do.getStyle().zIndex = "99999999993"
@@ -2868,7 +2867,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 } else {
                     self.preloader_do.setY(0)
                 }
-            } else if (self.position_str == MUSIC.POSITION_TOP) {
+            } else if (self.position_str == FWDMSP.POSITION_TOP) {
                 if (self.controller_do && !self.controller_do.isShowed_bl) {
                     self.preloader_do.setY(-200)
                 } else if (self.controller_do) {
@@ -2895,9 +2894,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             if (!self.animate_bl) self.setStageContainerFinalHeightAndPosition(false)
         };
         this.setupOpener = function() {
-            MUSICOpener.setPrototype();
-            self.opener_do = new MUSICOpener(self.data, self.position_str, self.controller_do.isShowed_bl);
-            if (MUSICUtils.isIEAndLessThen9) {
+            FWDMSPOpener.setPrototype();
+            self.opener_do = new FWDMSPOpener(self.data, self.position_str, self.controller_do.isShowed_bl);
+            if (FWDMSPUtils.isIEAndLessThen9) {
                 self.opener_do.getStyle().zIndex = "2147483634"
             } else {
                 self.opener_do.getStyle().zIndex = "99999999994"
@@ -2908,10 +2907,10 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             } else {
                 self.opener_do.showOpenButton()
             }
-            self.opener_do.addListener(MUSICOpener.SHOW, self.openerShowHandler);
-            self.opener_do.addListener(MUSICOpener.HIDE, self.openerHideHandler);
-            self.opener_do.addListener(MUSICController.PLAY, self.controllerOnPlayHandler);
-            self.opener_do.addListener(MUSICController.PAUSE, self.controllerOnPauseHandler);
+            self.opener_do.addListener(FWDMSPOpener.SHOW, self.openerShowHandler);
+            self.opener_do.addListener(FWDMSPOpener.HIDE, self.openerHideHandler);
+            self.opener_do.addListener(FWDMSPController.PLAY, self.controllerOnPlayHandler);
+            self.opener_do.addListener(FWDMSPController.PAUSE, self.controllerOnPauseHandler);
             if (self.data.showOpener_bl) self.stageContainer.appendChild(self.opener_do.screen)
         };
         this.openerShowHandler = function() {
@@ -2921,14 +2920,14 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             self.hidePlayer()
         };
         this.setupCategories = function() {
-            MUSICCategories.setPrototype();
-            self.categories_do = new MUSICCategories(self.data);
-            if (MUSICUtils.isIEAndLessThen9) {
+            FWDMSPCategories.setPrototype();
+            self.categories_do = new FWDMSPCategories(self.data);
+            if (FWDMSPUtils.isIEAndLessThen9) {
                 self.categories_do.getStyle().zIndex = "2147483635"
             } else {
                 self.categories_do.getStyle().zIndex = "99999999995"
             }
-            self.categories_do.addListener(MUSICCategories.HIDE_COMPLETE, self.categoriesHideCompleteHandler);
+            self.categories_do.addListener(FWDMSPCategories.HIDE_COMPLETE, self.categoriesHideCompleteHandler);
             if (self.data.showPlaylistsByDefault_bl) {
                 self.showCatWidthDelayId_to = setTimeout(function() {
                     self.showCategories()
@@ -2952,16 +2951,16 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }
         };
         this.setupPlaylist = function() {
-            MUSICPlaylist.setPrototype();
-            self.playlist_do = new MUSICPlaylist(self.data, self);
-            self.playlist_do.addListener(MUSICPlaylistItem.MOUSE_UP, self.palylistItemOnUpHandler);
-            self.playlist_do.addListener(MUSICPlaylistItem.DOWNLOAD, self.palylistItemDownloadHandler);
-            self.playlist_do.addListener(MUSICPlaylistItem.BUY, self.palylistItemBuyHandler);
-            self.playlist_do.addListener(MUSICPlaylist.UPDATE_TRACK_TITLE_if_FOLDER, self.palylistUpdateFolderTrackTitle);
+            FWDMSPPlaylist.setPrototype();
+            self.playlist_do = new FWDMSPPlaylist(self.data, self);
+            self.playlist_do.addListener(FWDMSPPlaylistItem.MOUSE_UP, self.palylistItemOnUpHandler);
+            self.playlist_do.addListener(FWDMSPPlaylistItem.DOWNLOAD, self.palylistItemDownloadHandler);
+            self.playlist_do.addListener(FWDMSPPlaylistItem.BUY, self.palylistItemBuyHandler);
+            self.playlist_do.addListener(FWDMSPPlaylist.UPDATE_TRACK_TITLE_if_FOLDER, self.palylistUpdateFolderTrackTitle);
             self.main_do.addChild(self.playlist_do)
         };
         this.palylistItemOnUpHandler = function(e) {
-            if (MUSIC.hasHTML5Audio) {
+            if (FWDMSP.hasHTML5Audio) {
                 if (self.audioScreen_do.isPlaying_bl && e.id == self.id) {
                     self.pause()
                 } else if (!self.audioScreen_do.isStopped_bl && e.id == self.id) {
@@ -3003,29 +3002,29 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             self.buy(e.id)
         };
         this.setupController = function() {
-            MUSICController.setPrototype();
-            self.controller_do = new MUSICController(self.data, self);
-            self.controller_do.addListener(MUSICController.POPUP, self.controllerOnPopupHandler);
-            self.controller_do.addListener(MUSICController.PLAY, self.controllerOnPlayHandler);
-            self.controller_do.addListener(MUSICController.PLAY_NEXT, self.controllerPlayNextHandler);
-            self.controller_do.addListener(MUSICController.PLAY_PREV, self.controllerPlayPrevHandler);
-            self.controller_do.addListener(MUSICController.PAUSE, self.controllerOnPauseHandler);
-            self.controller_do.addListener(MUSICController.VOLUME_START_TO_SCRUB, self.volumeStartToScrubbHandler);
-            self.controller_do.addListener(MUSICController.VOLUME_STOP_TO_SCRUB, self.volumeStopToScrubbHandler);
-            self.controller_do.addListener(MUSICController.START_TO_SCRUB, self.controllerStartToScrubbHandler);
-            self.controller_do.addListener(MUSICController.SCRUB, self.controllerScrubbHandler);
-            self.controller_do.addListener(MUSICController.SCRUB_PLAYLIST_ITEM, self.controllerPlaylistItemScrubbHandler);
-            self.controller_do.addListener(MUSICController.STOP_TO_SCRUB, self.controllerStopToScrubbHandler);
-            self.controller_do.addListener(MUSICController.CHANGE_VOLUME, self.controllerChangeVolumeHandler);
-            self.controller_do.addListener(MUSICController.SHOW_CATEGORIES, self.showCategoriesHandler);
-            self.controller_do.addListener(MUSICController.SHOW_PLAYLIST, self.showPlaylistHandler);
-            self.controller_do.addListener(MUSICController.HIDE_PLAYLIST, self.hidePlaylistHandler);
-            self.controller_do.addListener(MUSICController.ENABLE_LOOP, self.enableLoopHandler);
-            self.controller_do.addListener(MUSICController.DISABLE_LOOP, self.disableLoopHandler);
-            self.controller_do.addListener(MUSICController.DOWNLOAD_MP3, self.controllerButtonDownloadMp3Handler);
-            self.controller_do.addListener(MUSICController.ENABLE_SHUFFLE, self.enableShuffleHandler);
-            self.controller_do.addListener(MUSICController.DISABLE_SHUFFLE, self.disableShuffleHandler);
-            self.controller_do.addListener(MUSICController.BUY, self.controllerButtonBuyHandler);
+            FWDMSPController.setPrototype();
+            self.controller_do = new FWDMSPController(self.data, self);
+            self.controller_do.addListener(FWDMSPController.POPUP, self.controllerOnPopupHandler);
+            self.controller_do.addListener(FWDMSPController.PLAY, self.controllerOnPlayHandler);
+            self.controller_do.addListener(FWDMSPController.PLAY_NEXT, self.controllerPlayNextHandler);
+            self.controller_do.addListener(FWDMSPController.PLAY_PREV, self.controllerPlayPrevHandler);
+            self.controller_do.addListener(FWDMSPController.PAUSE, self.controllerOnPauseHandler);
+            self.controller_do.addListener(FWDMSPController.VOLUME_START_TO_SCRUB, self.volumeStartToScrubbHandler);
+            self.controller_do.addListener(FWDMSPController.VOLUME_STOP_TO_SCRUB, self.volumeStopToScrubbHandler);
+            self.controller_do.addListener(FWDMSPController.START_TO_SCRUB, self.controllerStartToScrubbHandler);
+            self.controller_do.addListener(FWDMSPController.SCRUB, self.controllerScrubbHandler);
+            self.controller_do.addListener(FWDMSPController.SCRUB_PLAYLIST_ITEM, self.controllerPlaylistItemScrubbHandler);
+            self.controller_do.addListener(FWDMSPController.STOP_TO_SCRUB, self.controllerStopToScrubbHandler);
+            self.controller_do.addListener(FWDMSPController.CHANGE_VOLUME, self.controllerChangeVolumeHandler);
+            self.controller_do.addListener(FWDMSPController.SHOW_CATEGORIES, self.showCategoriesHandler);
+            self.controller_do.addListener(FWDMSPController.SHOW_PLAYLIST, self.showPlaylistHandler);
+            self.controller_do.addListener(FWDMSPController.HIDE_PLAYLIST, self.hidePlaylistHandler);
+            self.controller_do.addListener(FWDMSPController.ENABLE_LOOP, self.enableLoopHandler);
+            self.controller_do.addListener(FWDMSPController.DISABLE_LOOP, self.disableLoopHandler);
+            self.controller_do.addListener(FWDMSPController.DOWNLOAD_MP3, self.controllerButtonDownloadMp3Handler);
+            self.controller_do.addListener(FWDMSPController.ENABLE_SHUFFLE, self.enableShuffleHandler);
+            self.controller_do.addListener(FWDMSPController.DISABLE_SHUFFLE, self.disableShuffleHandler);
+            self.controller_do.addListener(FWDMSPController.BUY, self.controllerButtonBuyHandler);
             self.main_do.addChild(self.controller_do);
             if (self.openInPopup_bl && self.data.showPlaylistsButtonAndPlaylists_bl) {
                 self.controller_do.setPlaylistButtonState("selected");
@@ -3036,7 +3035,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             self.popup()
         };
         this.controllerOnPlayHandler = function(e) {
-            if (MUSIC.hasHTML5Audio) {
+            if (FWDMSP.hasHTML5Audio) {
                 self.audioScreen_do.play()
             } else if (self.isFlashScreenReady_bl) {
                 self.flashObject.playAudio()
@@ -3057,7 +3056,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }
         };
         this.controllerOnPauseHandler = function(e) {
-            if (MUSIC.hasHTML5Audio) {
+            if (FWDMSP.hasHTML5Audio) {
                 self.audioScreen_do.pause()
             } else if (self.isFlashScreenReady_bl) {
                 self.flashObject.pauseAudio()
@@ -3071,15 +3070,15 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         };
         this.controllerStartToScrubbHandler = function(e) {
             if (self.playlist_do) self.playlist_do.showDisable();
-            if (MUSIC.hasHTML5Audio) {
+            if (FWDMSP.hasHTML5Audio) {
                 self.audioScreen_do.startToScrub()
             } else if (self.isFlashScreenReady_bl) {
-                MUSIC.pauseAllAudio(self);
+                FWDMSP.pauseAllAudio(self);
                 self.flashObject.startToScrub()
             }
         };
         this.controllerScrubbHandler = function(e) {
-            if (MUSIC.hasHTML5Audio) {
+            if (FWDMSP.hasHTML5Audio) {
                 self.audioScreen_do.scrub(e.percent)
             } else if (self.isFlashScreenReady_bl) {
                 self.flashObject.scrub(e.percent)
@@ -3090,14 +3089,14 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         };
         this.controllerStopToScrubbHandler = function(e) {
             if (self.playlist_do) self.playlist_do.hideDisable();
-            if (MUSIC.hasHTML5Audio) {
+            if (FWDMSP.hasHTML5Audio) {
                 self.audioScreen_do.stopToScrub()
             } else if (self.isFlashScreenReady_bl) {
                 self.flashObject.stopToScrub()
             }
         };
         this.controllerChangeVolumeHandler = function(e) {
-            if (MUSIC.hasHTML5Audio) {
+            if (FWDMSP.hasHTML5Audio) {
                 self.audioScreen_do.setVolume(e.percent)
             } else if (self.isFlashScreenReady_bl) {
                 self.flashObject.setVolume(e.percent)
@@ -3140,18 +3139,18 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             self.buy()
         };
         this.setupAudioScreen = function() {
-            MUSICAudioScreen.setPrototype();
-            self.audioScreen_do = new MUSICAudioScreen(self.data.volume, self.data.autoPlay_bl, self.data.loop_bl);
-            self.audioScreen_do.addListener(MUSICAudioScreen.ERROR, self.audioScreenErrorHandler);
-            self.audioScreen_do.addListener(MUSICAudioScreen.START, self.audioScreenSatrtHandler);
-            self.audioScreen_do.addListener(MUSICAudioScreen.SAFE_TO_SCRUBB, self.audioScreenSafeToScrubbHandler);
-            self.audioScreen_do.addListener(MUSICAudioScreen.STOP, self.audioScreenStopHandler);
-            self.audioScreen_do.addListener(MUSICAudioScreen.PLAY, self.audioScreenPlayHandler);
-            self.audioScreen_do.addListener(MUSICAudioScreen.PAUSE, self.audioScreenPauseHandler);
-            self.audioScreen_do.addListener(MUSICAudioScreen.UPDATE, self.audioScreenUpdateHandler);
-            self.audioScreen_do.addListener(MUSICAudioScreen.UPDATE_TIME, self.audioScreenUpdateTimeHandler);
-            self.audioScreen_do.addListener(MUSICAudioScreen.LOAD_PROGRESS, self.audioScreenLoadProgressHandler);
-            self.audioScreen_do.addListener(MUSICAudioScreen.PLAY_COMPLETE, self.audioScreenPlayCompleteHandler);
+            FWDMSPAudioScreen.setPrototype();
+            self.audioScreen_do = new FWDMSPAudioScreen(self.data.volume, self.data.autoPlay_bl, self.data.loop_bl);
+            self.audioScreen_do.addListener(FWDMSPAudioScreen.ERROR, self.audioScreenErrorHandler);
+            self.audioScreen_do.addListener(FWDMSPAudioScreen.START, self.audioScreenSatrtHandler);
+            self.audioScreen_do.addListener(FWDMSPAudioScreen.SAFE_TO_SCRUBB, self.audioScreenSafeToScrubbHandler);
+            self.audioScreen_do.addListener(FWDMSPAudioScreen.STOP, self.audioScreenStopHandler);
+            self.audioScreen_do.addListener(FWDMSPAudioScreen.PLAY, self.audioScreenPlayHandler);
+            self.audioScreen_do.addListener(FWDMSPAudioScreen.PAUSE, self.audioScreenPauseHandler);
+            self.audioScreen_do.addListener(FWDMSPAudioScreen.UPDATE, self.audioScreenUpdateHandler);
+            self.audioScreen_do.addListener(FWDMSPAudioScreen.UPDATE_TIME, self.audioScreenUpdateTimeHandler);
+            self.audioScreen_do.addListener(FWDMSPAudioScreen.LOAD_PROGRESS, self.audioScreenLoadProgressHandler);
+            self.audioScreen_do.addListener(FWDMSPAudioScreen.PLAY_COMPLETE, self.audioScreenPlayCompleteHandler);
             if (self.useOnlyAPI_bl) {
                 document.documentElement.appendChild(self.audioScreen_do.screen)
             } else {
@@ -3160,7 +3159,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         };
         this.audioScreenErrorHandler = function(e) {
             var t;
-            if (MUSIC.hasHTML5Audio) {
+            if (FWDMSP.hasHTML5Audio) {
                 t = e.text;
                 if (self.main_do) self.main_do.addChild(self.info_do);
                 if (self.info_do) self.info_do.showText(t)
@@ -3169,16 +3168,16 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 if (self.main_do) self.main_do.addChild(self.info_do);
                 if (self.info_do) self.info_do.showText(t)
             }
-            if (self.position_str == MUSIC.POSITION_TOP && self.playlist_do) {
+            if (self.position_str == FWDMSP.POSITION_TOP && self.playlist_do) {
                 self.info_do.setY(self.playlist_do.h);
                 self.info_do.setHeight(self.controller_do.h)
             }
-            self.dispatchEvent(MUSIC.ERROR, {
+            self.dispatchEvent(FWDMSP.ERROR, {
                 error: t
             })
         };
         this.audioScreenSatrtHandler = function() {
-            self.dispatchEvent(MUSIC.START)
+            self.dispatchEvent(FWDMSP.START)
         };
         this.audioScreenSafeToScrubbHandler = function() {
             if (self.controller_do) self.controller_do.enableMainScrubber()
@@ -3191,7 +3190,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 self.controller_do.stopEqulizer();
                 self.controller_do.disableMainScrubber()
             }
-            self.dispatchEvent(MUSIC.STOP)
+            self.dispatchEvent(FWDMSP.STOP)
         };
         this.audioScreenPlayHandler = function() {
             if (self.controller_do) {
@@ -3206,7 +3205,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                     self.scrubbedFirstTimeInPopup_bl = true
                 }, 600)
             }
-            self.dispatchEvent(MUSIC.PLAY)
+            self.dispatchEvent(FWDMSP.PLAY)
         };
         this.audioScreenPauseHandler = function() {
             if (self.controller_do) {
@@ -3217,11 +3216,11 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             if (self.playlist_do) {
                 self.playlist_do.setCurItemPlayState()
             }
-            self.dispatchEvent(MUSIC.PAUSE)
+            self.dispatchEvent(FWDMSP.PAUSE)
         };
         this.audioScreenUpdateHandler = function(e) {
             var t;
-            if (MUSIC.hasHTML5Audio) {
+            if (FWDMSP.hasHTML5Audio) {
                 t = e.percent;
                 if (self.controller_do) self.controller_do.updateMainScrubber(t);
                 if (self.playlist_do) self.playlist_do.updateCurItemProgress(t)
@@ -3230,14 +3229,14 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 if (self.controller_do) self.controller_do.updateMainScrubber(t);
                 if (self.playlist_do) self.playlist_do.updateCurItemProgress(t)
             }
-            self.dispatchEvent(MUSIC.UPDATE, {
+            self.dispatchEvent(FWDMSP.UPDATE, {
                 percent: t
             })
         };
         this.audioScreenUpdateTimeHandler = function(e, t) {
             var n;
             var r;
-            if (MUSIC.hasHTML5Audio) {
+            if (FWDMSP.hasHTML5Audio) {
                 n = e.curTime;
                 r = e.totalTime;
                 if (self.controller_do) self.controller_do.updateTime(n, r)
@@ -3247,21 +3246,21 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 if (r.length > n.length) n = parseInt(r.substring(0, 1)) - 1 + ":" + n;
                 if (self.controller_do) self.controller_do.updateTime(n, r)
             }
-            self.dispatchEvent(MUSIC.UPDATE_TIME, {
+            self.dispatchEvent(FWDMSP.UPDATE_TIME, {
                 curTime: n,
                 totalTime: r
             })
         };
         this.audioScreenLoadProgressHandler = function(e) {
-            if (MUSIC.hasHTML5Audio) {
+            if (FWDMSP.hasHTML5Audio) {
                 if (self.controller_do) self.controller_do.updatePreloaderBar(e.percent)
             } else {
                 if (self.controller_do) self.controller_do.updatePreloaderBar(e)
             }
         };
         this.audioScreenPlayCompleteHandler = function() {
-            self.dispatchEvent(MUSIC.PLAY_COMPLETE);
-            if (MUSIC.hasHTML5Audio) {
+            self.dispatchEvent(FWDMSP.PLAY_COMPLETE);
+            if (FWDMSP.hasHTML5Audio) {
                 if (self.data.loop_bl) {
                     self.audioScreen_do.replay()
                 } else if (self.data.shuffle_bl) {
@@ -3291,7 +3290,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 if (self.preloader_do) self.preloader_do.hide(false);
                 return
             }
-            self.flash_do = new MUSICDisplayObject("div");
+            self.flash_do = new FWDMSPDisplayObject("div");
             self.flash_do.setBackfaceVisibility();
             self.flash_do.setResizableSizeAfterParent();
             if (self.useOnlyAPI_bl) {
@@ -3303,7 +3302,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             self.flashObjectMarkup_str = '<object id="' + (self.instanceName_str + "1") + '" name="' + (self.instanceName_str + "1") + '" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="100%" height="100%"><param name="movie" value="' + self.data.flashPath_str + '"/><param name="wmode" value="transparent"><param name=FlashVars value="instanceName=' + self.instanceName_str + "&sourcePath=" + e + "&volume=" + self.data.volume + "&autoPlay=" + self.data.autoPlay_bl + "&loop=" + self.data.loop_bl + '"/><param name = "allowScriptAccess" value="always" /><!--[if !IE]>--><object name="myCom" type="application/x-shockwave-flash" data="' + self.data.flashPath_str + '" width="100%" height="100%"><param name="swliveconnect" value="true"/><param name="wmode" value="transparent"><param name=FlashVars value="instanceName=' + self.instanceName_str + "&sourcePath=" + e + "&volume=" + self.data.volume + "&autoPlay=" + self.data.autoPlay_bl + "&loop=" + self.data.loop_bl + '"/><!--<![endif]--><!--[if !IE]>--></object><!--<![endif]--></object>';
             self.flash_do.screen.innerHTML = self.flashObjectMarkup_str;
             self.flashObject = self.flash_do.screen.firstChild;
-            if (!MUSICUtils.isIE) self.flashObject = self.flashObject.getElementsByTagName("object")[0]
+            if (!FWDMSPUtils.isIE) self.flashObject = self.flashObject.getElementsByTagName("object")[0]
         };
         this.flashScreenIsReady = function() {
             self.isFlashScreenReady_bl = true;
@@ -3335,13 +3334,13 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 self.id = self.totalAudio - 1
             }
             var t = self.data.playlist_ar[self.id].source;
-            if (MUSIC.hasHTML5Audio) {
+            if (FWDMSP.hasHTML5Audio) {
                 self.audioScreen_do.setSource(t)
             } else {
                 var n = t.split(",");
                 for (var r = 0; r < n.length; r++) {
                     t = n[r];
-                    n[r] = MUSICUtils.trim(t)
+                    n[r] = FWDMSPUtils.trim(t)
                 }
                 for (var r = 0; r < n.length; r++) {
                     if (n[r].indexOf(".mp3") != -1) {
@@ -3356,7 +3355,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             if (self.data.playlist_ar[self.id].duration == undefined) {
                 self.controller_do.updateTime("00:00", "00:00")
             } else {
-                self.controller_do.updateTime("00:00", MUSIC.formatTotalTime(self.data.playlist_ar[self.id].duration))
+                self.controller_do.updateTime("00:00", FWDMSP.formatTotalTime(self.data.playlist_ar[self.id].duration))
             }
             self.controller_do.loadThumb(self.data.playlist_ar[self.id].thumbPath);
             if (self.playlist_do) self.playlist_do.activateItems(self.id, e);
@@ -3366,7 +3365,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 self.loadID3IfPlaylistDisabled()
             }
         };
-
         this.showPlayer = function() {
             if (!self.isAPIReady_bl) return;
             self.controller_do.isShowed_bl = true;
@@ -3488,8 +3486,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         };
         this.play = function() {
             if (!self.isAPIReady_bl || !self.isPlaylistLoaded_bl) return;
-            MUSIC.pauseAllAudio(self);
-            if (MUSIC.hasHTML5Audio) {
+            FWDMSP.pauseAllAudio(self);
+            if (FWDMSP.hasHTML5Audio) {
                 self.audioScreen_do.play()
             } else if (self.isFlashScreenReady_bl) {
                 self.flashObject.playAudio()
@@ -3497,7 +3495,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         };
         this.pause = function() {
             if (!self.isAPIReady_bl || !self.isPlaylistLoaded_bl) return;
-            if (MUSIC.hasHTML5Audio) {
+            if (FWDMSP.hasHTML5Audio) {
                 self.audioScreen_do.pause()
             } else if (self.isFlashScreenReady_bl) {
                 self.flashObject.pauseAudio()
@@ -3505,7 +3503,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         };
         this.stop = function() {
             if (!self.isAPIReady_bl) return;
-            if (MUSIC.hasHTML5Audio) {
+            if (FWDMSP.hasHTML5Audio) {
                 self.audioScreen_do.stop()
             } else if (self.isFlashScreenReady_bl) {
                 self.flashObject.stopAudio()
@@ -3513,7 +3511,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         };
         this.startToScrub = function() {
             if (!self.isAPIReady_bl || !self.isPlaylistLoaded_bl) return;
-            if (MUSIC.hasHTML5Audio) {
+            if (FWDMSP.hasHTML5Audio) {
                 self.audioScreen_do.startToScrub()
             } else if (self.isFlashScreenReady_bl) {
                 self.flashObject.startToScrub()
@@ -3521,7 +3519,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         };
         this.stopToScrub = function() {
             if (!self.isAPIReady_bl || !self.isPlaylistLoaded_bl) return;
-            if (MUSIC.hasHTML5Audio) {
+            if (FWDMSP.hasHTML5Audio) {
                 self.audioScreen_do.stopToScrub()
             } else if (self.isFlashScreenReady_bl) {
                 self.flashObject.stopToScrub()
@@ -3535,7 +3533,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             } else if (e > 1) {
                 e = 1
             }
-            if (MUSIC.hasHTML5Audio) {
+            if (FWDMSP.hasHTML5Audio) {
                 if (self.audioScreen_do) self.audioScreen_do.scrub(e)
             } else if (self.isFlashScreenReady_bl) {
                 self.flashObject.scrub(e)
@@ -3664,18 +3662,18 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         };
         self.init()
     };
-    MUSIC.setPrototype = function() {
-        MUSIC.prototype = new MUSICEventDispatcher
+    FWDMSP.setPrototype = function() {
+        FWDMSP.prototype = new FWDMSPEventDispatcher
     };
-    MUSIC.pauseAllAudio = function(e) {
-        var t = MUSIC.instaces_ar.length;
+    FWDMSP.pauseAllAudio = function(e) {
+        var t = FWDMSP.instaces_ar.length;
         var n;
         for (var r = 0; r < t; r++) {
-            n = MUSIC.instaces_ar[r];
+            n = FWDMSP.instaces_ar[r];
             if (n != e) n.stop()
         }
     };
-    MUSIC.hasHTML5Audio = function() {
+    FWDMSP.hasHTML5Audio = function() {
         var e = document.createElement("audio");
         var t = false;
         if (e.canPlayType) {
@@ -3684,7 +3682,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         if (self.isMobile_bl) return true;
         return t
     }();
-    MUSIC.getAudioFormats = function() {
+    FWDMSP.getAudioFormats = function() {
         var e = document.createElement("audio");
         if (!e.canPlayType) return;
         var t = "";
@@ -3703,10 +3701,10 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         e = null;
         return n
     }();
-    MUSIC.hasCanvas = function() {
+    FWDMSP.hasCanvas = function() {
         return Boolean(document.createElement("canvas"))
     }();
-    MUSIC.formatTotalTime = function(e) {
+    FWDMSP.formatTotalTime = function(e) {
         if (typeof e == "string" && e.indexOf(":") != -1) {
             return e
         }
@@ -3725,7 +3723,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             return r + ":" + s
         }
     };
-    MUSIC.getAudioFormats = function() {
+    FWDMSP.getAudioFormats = function() {
         var e = document.createElement("audio");
         if (!e.canPlayType) return;
         var t = "";
@@ -3744,28 +3742,28 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         e = null;
         return n
     }();
-    MUSIC.instaces_ar = [];
-    MUSIC.POPUP = "popup";
-    MUSIC.POSITION_TOP = "positionTop";
-    MUSIC.POSITION_BOTTOM = "positionBottom";
-    MUSIC.READY = "ready";
-    MUSIC.START = "start";
-    MUSIC.START_TO_LOAD_PLAYLIST = "startToLoadPlaylist";
-    MUSIC.LOAD_PLAYLIST_COMPLETE = "loadPlaylistComplete";
-    MUSIC.STOP = "stop";
-    MUSIC.PLAY = "play";
-    MUSIC.PAUSE = "pause";
-    MUSIC.UPDATE = "update";
-    MUSIC.UPDATE_TIME = "updateTime";
-    MUSIC.ERROR = "error";
-    MUSIC.PLAY_COMPLETE = "playComplete";
-    MUSIC.PLAYLIST_LOAD_COMPLETE = "onPlayListLoadComplete";
-    window.MUSIC = MUSIC
+    FWDMSP.instaces_ar = [];
+    FWDMSP.POPUP = "popup";
+    FWDMSP.POSITION_TOP = "positionTop";
+    FWDMSP.POSITION_BOTTOM = "positionBottom";
+    FWDMSP.READY = "ready";
+    FWDMSP.START = "start";
+    FWDMSP.START_TO_LOAD_PLAYLIST = "startToLoadPlaylist";
+    FWDMSP.LOAD_PLAYLIST_COMPLETE = "loadPlaylistComplete";
+    FWDMSP.STOP = "stop";
+    FWDMSP.PLAY = "play";
+    FWDMSP.PAUSE = "pause";
+    FWDMSP.UPDATE = "update";
+    FWDMSP.UPDATE_TIME = "updateTime";
+    FWDMSP.ERROR = "error";
+    FWDMSP.PLAY_COMPLETE = "playComplete";
+    FWDMSP.PLAYLIST_LOAD_COMPLETE = "onPlayListLoadComplete";
+    window.FWDMSP = FWDMSP
 })(window);
 (function(window) {
-    var MUSICAudioData = function(props, playListElement, parent) {
+    var FWDMSPAudioData = function(props, playListElement, parent) {
         var self = this;
-        var prototype = MUSICAudioData.prototype;
+        var prototype = FWDMSPAudioData.prototype;
         this.xhr = null;
         this.emailXHR = null;
         this.playlist_ar = null;
@@ -3812,7 +3810,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.replayN_img = null;
         this.playlistN_img = null;
         this.shuffleN_img = null;
-        this.repost_img = null;
         this.titlebarAnimBkPath_img = null;
         this.titlebarLeftPath_img = null;
         this.titlebarRightPath_img = null;
@@ -3881,6 +3878,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.categoriesId_str = null;
         this.thumbnailSelectedType_str = null;
         this.openerAlignment_str = null;
+        this.toolTipsButtonFontColor_str = null;
         this.prevId = -1;
         this.totalCats = 0;
         this.countLoadedSkinImages = 0;
@@ -3919,6 +3917,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.verticalSpaceBetweenThumbnails = 0;
         this.openerEqulizerOffsetLeft = 0, this.openerEqulizerOffsetTop = 0;
         this.countID3 = 0;
+        this.toolTipsButtonsHideDelay = 0;
         this.JSONPRequestTimeoutId_to;
         this.showLoadPlaylistErrorId_to;
         this.dispatchPlaylistLoadCompleteWidthDelayId_to;
@@ -3927,6 +3926,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.isPlaylistDispatchingError_bl = false;
         this.allowToChangeVolume_bl = true;
         this.showContextMenu_bl = false;
+        this.showButtonsToolTips_bl = false;
         this.autoPlay_bl = false;
         this.loop_bl = false;
         this.shuffle_bl = false;
@@ -3936,6 +3936,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.showPlaylistsButtonAndPlaylists_bl = false;
         this.showPlaylistsByDefault_bl = false;
         this.showPlayListButtonAndPlaylist_bl = false;
+        this.showPopupButton_bl = false;
         this.animate_bl = false;
         this.showControllerByDefault_bl = false;
         this.showPlayListByDefault_bl = false;
@@ -3951,8 +3952,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.forceDisableDownloadButtonForOfficialFM_bl = false;
         this.forceDisableDownloadButtonForFolder_bl = false;
         this.loadFromFolder_bl = false;
-        this.isMobile_bl = MUSICUtils.isMobile;
-        this.hasPointerEvent_bl = MUSICUtils.hasPointerEvent;
+        this.isMobile_bl = FWDMSPUtils.isMobile;
+        this.hasPointerEvent_bl = FWDMSPUtils.hasPointerEvent;
         self.init = function() {
             self.parseProperties()
         };
@@ -3962,7 +3963,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 setTimeout(function() {
                     if (self == null) return;
                     errorMessage_str = "The <font color='#FFFFFF'>playlistsId</font> property is not defined in the constructor function!";
-                    self.dispatchEvent(MUSICAudioData.LOAD_ERROR, {
+                    self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, {
                         text: errorMessage_str
                     })
                 }, 50);
@@ -3973,7 +3974,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 setTimeout(function() {
                     if (self == null) return;
                     errorMessage_str = "The <font color='#FFFFFF'>mainFolderPath</font> property is not defined in the constructor function!";
-                    self.dispatchEvent(MUSICAudioData.LOAD_ERROR, {
+                    self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, {
                         text: errorMessage_str
                     })
                 }, 50);
@@ -3987,7 +3988,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 setTimeout(function() {
                     if (self == null) return;
                     errorMessage_str = "The <font color='#FFFFFF'>skinPath</font> property is not defined in the constructor function!";
-                    self.dispatchEvent(MUSICAudioData.LOAD_ERROR, {
+                    self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, {
                         text: errorMessage_str
                     })
                 }, 50);
@@ -4007,20 +4008,20 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 setTimeout(function() {
                     if (self == null) return;
                     errorMessage_str = "The html element with id <font color='#FFFFFF'>" + self.categoriesId_str + "</font> is not found in the DOM, this html element represents the player categories.!";
-                    self.dispatchEvent(MUSICAudioData.LOAD_ERROR, {
+                    self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, {
                         text: errorMessage_str
                     })
                 }, 50);
                 return
             }
-            var e = MUSICUtils.getChildren(self.categories_el);
+            var e = FWDMSPUtils.getChildren(self.categories_el);
             self.totalCats = e.length;
             self.categories_el = document.getElementById(self.categoriesId_str);
             if (self.totalCats == 0) {
                 setTimeout(function() {
                     if (self == null) return;
                     errorMessage_str = "At least one category is required!";
-                    self.dispatchEvent(MUSICAudioData.LOAD_ERROR, {
+                    self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, {
                         text: errorMessage_str
                     })
                 }, 50);
@@ -4029,32 +4030,34 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             for (var t = 0; t < self.totalCats; t++) {
                 var n = {};
                 child = e[t];
-                if (!MUSICUtils.hasAttribute(child, "data-source")) {
+                if (!FWDMSPUtils.hasAttribute(child, "data-source")) {
                     setTimeout(function() {
                         if (self == null) return;
-                        self.dispatchEvent(MUSICAudioData.LOAD_ERROR, {
+                        self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, {
                             text: "Attribute <font color='#FFFFFF'>data-source</font> is required in the categories html element at position <font color='#FFFFFF'>" + (t + 1)
                         })
                     }, 50);
                     return
                 }
-                if (!MUSICUtils.hasAttribute(child, "data-thumbnail-path")) {
+                if (!FWDMSPUtils.hasAttribute(child, "data-thumbnail-path")) {
                     setTimeout(function() {
                         if (self == null) return;
-                        self.dispatchEvent(MUSICAudioData.LOAD_ERROR, {
+                        self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, {
                             text: "Attribute <font color='#FFFFFF'>data-thumbnail-path</font> is required in the categories html element at position <font color='#FFFFFF'>" + (t + 1)
                         })
                     }, 50);
                     return
                 }
-                n.source = MUSICUtils.getAttributeValue(child, "data-source");
-                n.thumbnailPath = MUSICUtils.getAttributeValue(child, "data-thumbnail-path");
+                n.source = FWDMSPUtils.getAttributeValue(child, "data-source");
+                n.thumbnailPath = FWDMSPUtils.getAttributeValue(child, "data-thumbnail-path");
                 n.htmlContent = child.innerHTML;
                 self.cats_ar[t] = n
             }
             self.playlistBackgroundColor_str = self.props_obj.playlistBackgroundColor || "transparent";
+            self.searchInputColor_str = self.props_obj.searchInputColor || "#FF0000";
             self.openerAlignment_str = self.props_obj.openerAlignment || "right";
             if (self.openerAlignment_str != "right" && self.openerAlignment_str != "left") self.openerAlignment_str = "right";
+            self.toolTipsButtonFontColor_str = self.props_obj.toolTipsButtonFontColor || "#FF0000";
             self.totalCategories = self.cats_ar.length;
             self.playlistIdOrPath_str = self.props_obj.playlistIdOrPath || undefined;
             self.timeColor_str = self.props_obj.timeColor || "#FF0000";
@@ -4066,8 +4069,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             if (self.thumbnailSelectedType_str != "blackAndWhite" && self.thumbnailSelectedType_str != "threshold" && self.thumbnailSelectedType_str != "opacity") {
                 self.thumbnailSelectedType_str = "opacity"
             }
-            if (self.isMobile_bl || MUSICUtils.isIEAndLessThen9) self.thumbnailSelectedType_str = "opacity";
+            if (self.isMobile_bl || FWDMSPUtils.isIEAndLessThen9) self.thumbnailSelectedType_str = "opacity";
             if (document.location.protocol == "file:") self.thumbnailSelectedType_str = "opacity";
+            self.searchInputColor_str = self.props_obj.searchInputColor || "#FF0000";
             self.playlistBackgroundColor_str = self.props_obj.playlistBackgroundColor || "transparent";
             self.startAtPlaylist = self.props_obj.startAtPlaylist || 0;
             if (isNaN(self.startAtPlaylist)) self.startAtPlaylist = 0;
@@ -4085,6 +4089,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             } else if (self.volume < 0) {
                 self.volume = 0
             }
+            self.searchBarHeight = self.props_obj.searchBarHeight || 50;
             self.buttonsMargins = self.props_obj.buttonsMargins || 0;
             self.thumbnailMaxWidth = self.props_obj.thumbnailMaxWidth || 330;
             self.thumbnailMaxHeight = self.props_obj.thumbnailMaxHeight || 330;
@@ -4094,6 +4099,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             if (self.verticalSpaceBetweenThumbnails == undefined) self.verticalSpaceBetweenThumbnails = 40;
             self.openerEqulizerOffsetLeft = self.props_obj.openerEqulizerOffsetLeft || 0;
             self.openerEqulizerOffsetTop = self.props_obj.openerEqulizerOffsetTop || 0;
+            self.toolTipsButtonsHideDelay = self.props_obj.toolTipsButtonsHideDelay || 1.5;
+            self.inputSearchTextOffsetTop = self.props_obj.inputSearchTextOffsetTop;
+            self.inputSearchOffsetLeft = self.props_obj.inputSearchOffsetLeft;
             self.startSpaceBetweenButtons = self.props_obj.startSpaceBetweenButtons || 0;
             self.spaceBetweenButtons = self.props_obj.spaceBetweenButtons || 0;
             self.mainScrubberOffsetTop = self.props_obj.mainScrubberOffsetTop || 100;
@@ -4124,6 +4132,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             if (self.isMobile_bl) self.allowToChangeVolume_bl = false;
             self.showContextMenu_bl = self.props_obj.showContextMenu;
             self.showContextMenu_bl = self.showContextMenu_bl == "no" ? false : true;
+            self.showButtonsToolTips_bl = self.props_obj.showButtonsToolTips;
+            self.showButtonsToolTips_bl = self.showButtonsToolTips_bl == "no" ? false : true;
+            if (self.isMobile_bl) self.showButtonsToolTips_bl = false;
             self.autoPlay_bl = self.props_obj.autoPlay;
             self.autoPlay_bl = self.autoPlay_bl == "yes" ? true : false;
             self.loop_bl = self.props_obj.loop;
@@ -4140,7 +4151,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             self.showLoopButton_bl = self.props_obj.showLoopButton == "no" ? false : true;
             self.showPlayListButtonAndPlaylist_bl = self.props_obj.showPlayListButtonAndPlaylist;
             self.showPlayListButtonAndPlaylist_bl = self.showPlayListButtonAndPlaylist_bl == "no" ? false : true;
-            if (MUSICUtils.isAndroid && self.showPlayListButtonAndPlaylist_bl && self.props_obj.showPlayListOnAndroid == "no") {
+            if (FWDMSPUtils.isAndroid && self.showPlayListButtonAndPlaylist_bl && self.props_obj.showPlayListOnAndroid == "no") {
                 self.showPlayListButtonAndPlaylist_bl = false
             }
             self.rightClickContextMenu_str = self.props_obj.rightClickContextMenu || "developer";
@@ -4154,13 +4165,18 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             self.showShuffleButton_bl = self.showShuffleButton_bl == "no" ? false : true;
             self.showDownloadMp3Button_bl = self.props_obj.showDownloadMp3Button;
             self.showDownloadMp3Button_bl = self.showDownloadMp3Button_bl == "no" ? false : true;
+            self.showBuyButton_bl = self.props_obj.showBuyButton;
+            self.showBuyButton_bl = self.showBuyButton_bl == "no" ? false : true;
+            self.showPopupButton_bl = self.props_obj.showPopupButton;
+            self.showPopupButton_bl = self.showPopupButton_bl == "no" ? false : true;
             self.showOpenerPlayPauseButton_bl = self.props_obj.showOpenerPlayPauseButton;
             self.showOpenerPlayPauseButton_bl = self.showOpenerPlayPauseButton_bl == "no" ? false : true;
+            self.showPlaylistItemBuyButton_bl = self.props_obj.showPlaylistItemBuyButton;
+            self.showPlaylistItemBuyButton_bl = self.showPlaylistItemBuyButton_bl == "no" ? false : true;
             self.showOpener_bl = self.props_obj.showOpener;
             self.showOpener_bl = self.showOpener_bl == "no" ? false : true;
             self.showTracksNumbers_bl = self.props_obj.showTracksNumbers;
             self.showTracksNumbers_bl = self.showTracksNumbers_bl == "yes" ? true : false;
-
             self.animate_bl = self.props_obj.animate;
             self.animate_bl = self.animate_bl == "yes" ? true : false;
             self.showControllerByDefault_bl = self.props_obj.showControllerByDefault;
@@ -4183,6 +4199,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             self.forceDisableDownloadButtonForFolder_bl = self.forceDisableDownloadButtonForFolder_bl == "yes" ? true : false;
             self.addScrollBarMouseWheelSupport_bl = self.props_obj.addScrollBarMouseWheelSupport;
             self.addScrollBarMouseWheelSupport_bl = self.addScrollBarMouseWheelSupport_bl == "no" ? false : true;
+            self.showSearchBar_bl = self.props_obj.showSearchBar;
+            self.showSearchBar_bl = self.showSearchBar_bl == "no" ? false : true;
             self.showSortButtons_bl = self.props_obj.showSortButtons;
             self.showSortButtons_bl = self.showSortButtons_bl == "no" ? false : true;
             self.preloaderPath_str = self.skinPath_str + "preloader.png";
@@ -4267,9 +4285,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 img: self.shuffleN_img = new Image,
                 src: self.skinPath_str + "shuffle-button.png"
             }, {
-                img: self.repost_img = new Image,
-                src: self.skinPath_str + "repost.png"
-            }, {
                 img: self.titlebarAnimBkPath_img = new Image,
                 src: self.skinPath_str + "titlebar-equlizer-background.png"
             }, {
@@ -4344,6 +4359,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 }, {
                     img: self.playlistDownloadButtonN_img = new Image,
                     src: self.skinPath_str + "playlist-download-button.png"
+                }, {
+                    img: self.playlistBuyButtonN_img = new Image,
+                    src: self.skinPath_str + "playlist-buy-button.png"
                 });
                 self.playlistDownloadButtonS_str = self.skinPath_str + "playlist-download-button-over.png";
                 self.scrBkMiddlePath_str = self.skinPath_str + "playlist-scrollbar-background-middle.png";
@@ -4351,6 +4369,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 self.scrDragMiddlePath_str = self.skinPath_str + "playlist-scrollbar-drag-middle.png";
                 self.scrDragBottomPath_str = self.skinPath_str + "playlist-scrollbar-drag-top.png";
                 self.scrLinesSPath_str = self.skinPath_str + "playlist-scrollbar-lines-over.png";
+                self.playlistBuyButtonS_str = self.skinPath_str + "playlist-buy-button-over.png";
                 self.playlistPlayButtonN_str = self.skinPath_str + "playlist-play-button.png";
                 self.playlistPlayButtonS_str = self.skinPath_str + "playlist-play-button-over.png";
                 self.playlistPauseButtonN_str = self.skinPath_str + "playlist-pause-button.png";
@@ -4379,8 +4398,31 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 self.catPrevDPath_str = self.skinPath_str + "categories-prev-button-disabled.png";
                 self.catCloseSPath_str = self.skinPath_str + "categories-close-button-over.png"
             }
+            if (self.showSearchBar_bl) {
+                self.skinPaths_ar.push({
+                    img: self.sortAN_img = new Image,
+                    src: self.skinPath_str + "sort-alphabetical-button.png"
+                }, {
+                    img: self.sortNN_img = new Image,
+                    src: self.skinPath_str + "sort-numerical-button.png"
+                }, {
+                    img: self.ascendingN_img = new Image,
+                    src: self.skinPath_str + "ascending-button.png"
+                }, {
+                    img: self.decendingN_img = new Image,
+                    src: self.skinPath_str + "descending-button.png"
+                });
+                self.sortASPath_str = self.skinPath_str + "sort-alphabetical-button-over.png";
+                self.sortNSPath_str = self.skinPath_str + "sort-numerical-button-over.png";
+                self.ascendingSpath_str = self.skinPath_str + "ascending-button-over.png";
+                self.decendingSpath_str = self.skinPath_str + "descending-button-over.png";
+                self.inputArrowPath_str = self.skinPath_str + "input-arrow.png"
+            }
             self.categoriesSPath_str = self.skinPath_str + "categories-button-over.png";
             self.replaySPath_str = self.skinPath_str + "replay-button-over.png";
+            self.toopTipBk_str = self.skinPath_str + "tooltip-background.png";
+            self.toopTipPointer_str = self.skinPath_str + "tooltip-pointer-down.png";
+            self.toopTipPointerUp_str = self.skinPath_str + "tooltip-pointer-up.png";
             var r = self.skinPath_str + "playlist-button.png";
             self.playlistSPath_str = self.skinPath_str + "playlist-button-over.png";
             self.shuffleSPath_str = self.skinPath_str + "shuffle-button-over.png";
@@ -4391,7 +4433,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         };
         this.onPreloaderLoadHandler = function() {
             setTimeout(function() {
-                self.dispatchEvent(MUSICAudioData.PRELOADER_LOAD_DONE)
+                self.dispatchEvent(FWDMSPAudioData.PRELOADER_LOAD_DONE)
             }, 50)
         };
         self.loadSkin = function() {
@@ -4409,12 +4451,12 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             self.countLoadedSkinImages++;
             if (self.countLoadedSkinImages == self.totalGraphics) {
                 setTimeout(function() {
-                    self.dispatchEvent(MUSICAudioData.SKIN_LOAD_COMPLETE)
+                    self.dispatchEvent(FWDMSPAudioData.SKIN_LOAD_COMPLETE)
                 }, 50)
             }
         };
         self.onSkinLoadErrorHandler = function(e) {
-            if (MUSICUtils.isIEAndLessThen9) {
+            if (FWDMSPUtils.isIEAndLessThen9) {
                 message = "Graphics image not found!"
             } else {
                 message = "The skin icon with label <font color='#FFFFFF'>" + e.target.src + "</font> can't be loaded, check path!"
@@ -4424,16 +4466,71 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 text: message
             };
             setTimeout(function() {
-                self.dispatchEvent(MUSICAudioData.LOAD_ERROR, t)
+                self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, t)
             }, 50)
         };
         self.showPropertyError = function(e) {
-            self.dispatchEvent(MUSICAudioData.LOAD_ERROR, {
+            self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, {
                 text: "The property called <font color='#FFFFFF'>" + e + "</font> is not defined."
             })
         };
-        this.downloadMp3 = function(e, t, self) {
-          console.log(e, t)
+        this.downloadMp3 = function(e, t) {
+            if (!t) return;
+            if (e.indexOf("api.soundcloud") == -1) {
+                t = t.replace(/[^A-Z0-9\-\_\.]+/ig, "_");
+                if (!/\.(mp3)$/i.test(t)) t += ".mp3";
+                if (e.indexOf("http:") == -1) {
+                    e = e.substr(e.indexOf("/") + 1);
+                    e = encodeURIComponent(e)
+                }
+            }
+            var n = self.mp3DownloaderPath_str;
+            if (!self.dlIframe) {
+                self.dlIframe = document.createElement("IFRAME");
+                self.dlIframe.style.display = "none";
+                document.documentElement.appendChild(self.dlIframe)
+            }
+            if (self.isMobile_bl) {
+                var r = self.getValidEmail();
+                if (!r) return;
+                if (self.emailXHR != null) {
+                    try {
+                        self.emailXHR.abort()
+                    } catch (i) {}
+                    self.emailXHR.onreadystatechange = null;
+                    self.emailXHR.onerror = null;
+                    self.emailXHR = null
+                }
+                self.emailXHR = new XMLHttpRequest;
+                self.emailXHR.onreadystatechange = function(e) {
+                    if (self.emailXHR.readyState == 4) {
+                        if (self.emailXHR.status == 200) {
+                            if (self.emailXHR.responseText == "sent") {
+                                alert("Email sent.")
+                            } else {
+                                alert("Error sending email, this is a server side error, the php file can't send the email!")
+                            }
+                        } else {
+                            alert("Error sending email: " + self.emailXHR.status + ": " + self.emailXHR.statusText)
+                        }
+                    }
+                };
+                self.emailXHR.onerror = function(e) {
+                    try {
+                        if (window.console) console.log(e);
+                        if (window.console) console.log(e.message)
+                    } catch (e) {}
+                    alert("Error sending email: " + e.message)
+                };
+                self.emailXHR.open("get", self.mailPath_str + "?mail=" + r + "&name=" + t + "&path=" + e, true);
+                self.emailXHR.send();
+                return
+            }
+            if (e.indexOf("soundcloud.com") != -1) {
+                self.dlIframe.src = e
+            } else {
+                self.dlIframe.src = n + "?path=" + e + "&name=" + t
+            }
         };
         this.getValidEmail = function() {
             var e = prompt("Please enter your email address where the mp3 download link will be sent:");
@@ -4451,7 +4548,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             if (!t) {
                 self.isPlaylistDispatchingError_bl = true;
                 showLoadPlaylistErrorId_to = setTimeout(function() {
-                    self.dispatchEvent(MUSICAudioData.LOAD_ERROR, {
+                    self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, {
                         text: "<font color='#FFFFFF'>loadPlaylist()</font> - Please specify an html elementid, podcast link, soudcloud link or xml path"
                     });
                     self.isPlaylistDispatchingError_bl = false
@@ -4461,7 +4558,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             if (!isNaN(t)) {
                 self.isPlaylistDispatchingError_bl = true;
                 showLoadPlaylistErrorId_to = setTimeout(function() {
-                    self.dispatchEvent(MUSICAudioData.LOAD_ERROR, {
+                    self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, {
                         text: "<font color='#FFFFFF'>loadPlaylist()</font> - The parameter must be of type string!"
                     });
                     self.isPlaylistDispatchingError_bl = false
@@ -4507,7 +4604,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.JSONPRequestTimeoutError = function() {
             self.isPlaylistDispatchingError_bl = true;
             showLoadPlaylistErrorId_to = setTimeout(function() {
-                self.dispatchEvent(MUSICAudioData.LOAD_ERROR, {
+                self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, {
                     text: "Error loading offical.fm url!<font color='#FFFFFF'>" + self.sourceURL_str + "</font>"
                 });
                 self.isPlaylistDispatchingError_bl = false
@@ -4532,7 +4629,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.JSONPRequestTimeoutError = function() {
             self.isPlaylistDispatchingError_bl = true;
             showLoadPlaylistErrorId_to = setTimeout(function() {
-                self.dispatchEvent(MUSICAudioData.LOAD_ERROR, {
+                self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, {
                     text: "Error loading official.fm url!<font color='#FFFFFF'>" + self.sourceURL_str + "</font>"
                 });
                 self.isPlaylistDispatchingError_bl = false
@@ -4547,7 +4644,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             if (document.location.protocol == "file:" && e.indexOf("official.fm") == -1) {
                 self.isPlaylistDispatchingError_bl = true;
                 showLoadPlaylistErrorId_to = setTimeout(function() {
-                    self.dispatchEvent(MUSICAudioData.LOAD_ERROR, {
+                    self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, {
                         text: "Loading XML files local is not allowed or possible!. To function properly please test online."
                     });
                     self.isPlaylistDispatchingError_bl = false
@@ -4568,7 +4665,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 if (t) {
                     if (t.message) n = t.message
                 }
-                self.dispatchEvent(MUSICAudioData.LOAD_ERROR, {
+                self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, {
                     text: "XML file can't be loaded! <font color='#FFFFFF'>" + self.sourceURL_str + "</font>. " + n
                 })
             }
@@ -4578,7 +4675,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             if (document.location.protocol == "file:" && e.indexOf("official.fm") == -1) {
                 self.isPlaylistDispatchingError_bl = true;
                 showLoadPlaylistErrorId_to = setTimeout(function() {
-                    self.dispatchEvent(MUSICAudioData.LOAD_ERROR, {
+                    self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, {
                         text: "Creating a mp3 playlist from a folder is not allowed or possible local! To function properly please test online."
                     });
                     self.isPlaylistDispatchingError_bl = false
@@ -4600,7 +4697,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 if (t) {
                     if (t.message) n = t.message
                 }
-                self.dispatchEvent(MUSICAudioData.LOAD_ERROR, {
+                self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, {
                     text: "Folder proxy file path is not found: <font color='#FFFFFF'>" + self.proxyFolderPath_str + "</font>"
                 })
             }
@@ -4611,21 +4708,21 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             if (self.xhr.readyState == 4) {
                 if (self.xhr.status == 404) {
                     if (self.loadFromFolder_bl) {
-                        self.dispatchEvent(MUSICAudioData.LOAD_ERROR, {
+                        self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, {
                             text: "Folder proxy file path is not found: <font color='#FFFFFF'>" + self.proxyFolderPath_str + "</font>"
                         })
                     } else {
-                        self.dispatchEvent(MUSICAudioData.LOAD_ERROR, {
+                        self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, {
                             text: "Proxy file path is not found: <font color='#FFFFFF'>" + self.proxyPath_str + "</font>"
                         })
                     }
                 } else if (self.xhr.status == 408) {
-                    self.dispatchEvent(MUSICAudioData.LOAD_ERROR, {
+                    self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, {
                         text: "Proxy file request load timeout!"
                     })
                 } else if (self.xhr.status == 200) {
                     if (self.xhr.responseText.indexOf("<b>Warning</b>:") != -1) {
-                        self.dispatchEvent(MUSICAudioData.LOAD_ERROR, {
+                        self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, {
                             text: "Error loading folder: <font color='#FFFFFF'>" + self.sourceURL_str + "</font>. Make sure that the folder path is correct!"
                         });
                         return
@@ -4642,7 +4739,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                     } else if (response.li) {
                         self.parseXML(response)
                     } else if (response.error) {
-                        self.dispatchEvent(MUSICAudioData.LOAD_ERROR, {
+                        self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, {
                             text: "Error loading file: <font color='#FFFFFF'>" + self.sourceURL_str + "</font>. Make sure the file path (xml or podcast) is correct and well formatted!"
                         })
                     }
@@ -4655,11 +4752,11 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 if (window.console) console.log(e.message)
             } catch (e) {}
             if (self.loadFromFolder_bl) {
-                self.dispatchEvent(MUSICAudioData.LOAD_ERROR, {
+                self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, {
                     text: "Error loading file : <font color='#FFFFFF'>" + self.proxyFolderPath_str + "</font>. Make sure the path is correct"
                 })
             } else {
-                self.dispatchEvent(MUSICAudioData.LOAD_ERROR, {
+                self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, {
                     text: "Error loading file : <font color='#FFFFFF'>" + self.proxyPath_str + "</font>. Make sure the path is correct"
                 })
             }
@@ -4685,7 +4782,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             } else if (e.length || e.kind == "track") {
                 self.createSoundcloudPlaylist(e)
             } else {
-                self.dispatchEvent(MUSICAudioData.LOAD_ERROR, {
+                self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, {
                     text: "Please provide a playlist or track URL : <font color='#FFFFFF'>" + self.sourceURL_str + "</font>."
                 })
             }
@@ -4745,7 +4842,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }
             clearTimeout(self.dispatchPlaylistLoadCompleteWidthDelayId_to);
             self.dispatchPlaylistLoadCompleteWidthDelayId_to = setTimeout(function() {
-                self.dispatchEvent(MUSICAudioData.PLAYLIST_LOAD_COMPLETE)
+                self.dispatchEvent(FWDMSPAudioData.PLAYLIST_LOAD_COMPLETE)
             }, 50);
             self.isDataLoaded_bl = true
         };
@@ -4781,7 +4878,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }
             clearTimeout(self.dispatchPlaylistLoadCompleteWidthDelayId_to);
             self.dispatchPlaylistLoadCompleteWidthDelayId_to = setTimeout(function() {
-                self.dispatchEvent(MUSICAudioData.PLAYLIST_LOAD_COMPLETE)
+                self.dispatchEvent(FWDMSPAudioData.PLAYLIST_LOAD_COMPLETE)
             }, 50);
             self.isDataLoaded_bl = true
         };
@@ -4820,7 +4917,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }
             clearTimeout(self.dispatchPlaylistLoadCompleteWidthDelayId_to);
             self.dispatchPlaylistLoadCompleteWidthDelayId_to = setTimeout(function() {
-                self.dispatchEvent(MUSICAudioData.PLAYLIST_LOAD_COMPLETE)
+                self.dispatchEvent(FWDMSPAudioData.PLAYLIST_LOAD_COMPLETE)
             }, 50);
             self.isDataLoaded_bl = true
         };
@@ -4830,7 +4927,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             var n = e.li;
             for (var r = 0; r < n.length; r++) {
                 t = {};
-                t.source = n[r]["@attributes"]["data-path"]; console.log(t.source);
+                t.source = n[r]["@attributes"]["data-path"];
                 var i = encodeURI(t.source.substr(0, t.source.lastIndexOf("/") + 1));
                 var s = t.source.substr(t.source.lastIndexOf("/") + 1);
                 if (s.indexOf(";.mp3") != -1) {
@@ -4843,7 +4940,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 t.downloadable = n[r]["@attributes"]["data-downloadable"] == "yes" ? true : false;
                 t.buy = n[r]["@attributes"]["data-buy-url"] == "yes" ? true : false;
                 t.thumbPath = n[r]["@attributes"]["data-thumbpath"];
-                t.ids = n[r]["@attributes"]["data-id"];
                 var o = "";
                 if (self.showTracksNumbers_bl) {
                     if (r < 9) o = "0";
@@ -4859,7 +4955,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }
             clearTimeout(self.dispatchPlaylistLoadCompleteWidthDelayId_to);
             self.dispatchPlaylistLoadCompleteWidthDelayId_to = setTimeout(function() {
-                self.dispatchEvent(MUSICAudioData.PLAYLIST_LOAD_COMPLETE)
+                self.dispatchEvent(FWDMSPAudioData.PLAYLIST_LOAD_COMPLETE)
             }, 50);
             self.isDataLoaded_bl = true
         };
@@ -4870,7 +4966,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             var r = 0;
             for (var i = 0; i < n.length; i++) {
                 t = {};
-                t.source = n[i]["@attributes"]["data-path"]; console.log(t.source);
+                t.source = n[i]["@attributes"]["data-path"];
                 var s = encodeURI(t.source.substr(0, t.source.lastIndexOf("/") + 1));
                 var o = encodeURIComponent(t.source.substr(t.source.lastIndexOf("/") + 1));
                 t.source = s + o;
@@ -4879,10 +4975,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 t.buy = undefined;
                 if (self.forceDisableDownloadButtonForFolder_bl) t.downloadable = false;
                 t.thumbPath = n[i]["@attributes"]["data-thumbpath"];
-                t.ids = n[r]["@attributes"]["data-id"];
                 t.title = "...";
                 t.titleText = "...";
-                if (MUSICUtils.isIEAndLessThen9) {
+                if (FWDMSPUtils.isIEAndLessThen9) {
                     var u = "";
                     if (self.showTracksNumbers_bl) {
                         if (i < 9) u = "0";
@@ -4901,7 +4996,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }
             clearTimeout(self.dispatchPlaylistLoadCompleteWidthDelayId_to);
             self.dispatchPlaylistLoadCompleteWidthDelayId_to = setTimeout(function() {
-                self.dispatchEvent(MUSICAudioData.PLAYLIST_LOAD_COMPLETE)
+                self.dispatchEvent(FWDMSPAudioData.PLAYLIST_LOAD_COMPLETE)
             }, 50);
             self.isDataLoaded_bl = true
         };
@@ -4913,21 +5008,21 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             if (!t) {
                 self.isPlaylistDispatchingError_bl = true;
                 showLoadPlaylistErrorId_to = setTimeout(function() {
-                    self.dispatchEvent(MUSICAudioData.LOAD_ERROR, {
+                    self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, {
                         text: "The playlist with id <font color='#FFFFFF'>" + e + "</font> is not found in the DOM."
                     });
                     self.isPlaylistDispatchingError_bl = false
                 }, 50);
                 return
             }
-            var n = MUSICUtils.getChildren(t);
+            var n = FWDMSPUtils.getChildren(t);
             var r = n.length;
             var i;
             self.playlist_ar = [];
             if (r == 0) {
                 self.isPlaylistDispatchingError_bl = true;
                 showLoadPlaylistErrorId_to = setTimeout(function() {
-                    self.dispatchEvent(MUSICAudioData.LOAD_ERROR, {
+                    self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, {
                         text: "The playlist whit the id  <font color='#FFFFFF'>" + e + "</font> must contain at least one track."
                     });
                     self.isPlaylistDispatchingError_bl = false
@@ -4937,17 +5032,17 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             for (var s = 0; s < r; s++) {
                 var o = {};
                 i = n[s];
-                if (!MUSICUtils.hasAttribute(i, "data-path")) {
+                if (!FWDMSPUtils.hasAttribute(i, "data-path")) {
                     self.isPlaylistDispatchingError_bl = true;
                     showLoadPlaylistErrorId_to = setTimeout(function() {
-                        self.dispatchEvent(MUSICAudioData.LOAD_ERROR, {
+                        self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, {
                             text: "Attribute <font color='#FFFFFF'>data-path</font> is required in the playlist at position <font color='#FFFFFF'>" + (s + 1)
                         })
                     }, 50);
                     return
                 }
                 if (s > self.maxPlaylistItems - 1) break;
-                o.source = MUSICUtils.getAttributeValue(i, "data-path");
+                o.source = FWDMSPUtils.getAttributeValue(i, "data-path");
                 var u = encodeURI(o.source.substr(0, o.source.lastIndexOf("/") + 1));
                 var a = o.source.substr(o.source.lastIndexOf("/") + 1);
                 if (a.indexOf(";.mp3") != -1) {
@@ -4961,18 +5056,18 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                     o.source = u + a
                 }
                 o.downloadPath = o.source;
-                if (MUSICUtils.hasAttribute(i, "data-thumbpath")) {
-                    o.thumbPath = MUSICUtils.getAttributeValue(i, "data-thumbpath")
+                if (FWDMSPUtils.hasAttribute(i, "data-thumbpath")) {
+                    o.thumbPath = FWDMSPUtils.getAttributeValue(i, "data-thumbpath")
                 } else {
                     o.thumbPath = undefined
                 }
-                if (MUSICUtils.hasAttribute(i, "data-downloadable")) {
-                    o.downloadable = MUSICUtils.getAttributeValue(i, "data-downloadable") == "yes" ? true : false
+                if (FWDMSPUtils.hasAttribute(i, "data-downloadable")) {
+                    o.downloadable = FWDMSPUtils.getAttributeValue(i, "data-downloadable") == "yes" ? true : false
                 } else {
                     o.downloadable = undefined
                 }
-                if (MUSICUtils.hasAttribute(i, "data-buy-url")) {
-                    o.buy = MUSICUtils.getAttributeValue(i, "data-buy-url")
+                if (FWDMSPUtils.hasAttribute(i, "data-buy-url")) {
+                    o.buy = FWDMSPUtils.getAttributeValue(i, "data-buy-url")
                 } else {
                     o.buy = undefined
                 }
@@ -4982,29 +5077,24 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                     if (self.showTracksNumbers_bl) {
                         if (s < 9) f = "0";
                         f = f + (s + 1) + ". ";
-                        o.title = f + MUSICUtils.getChildren(i)[0].innerHTML
+                        o.title = f + FWDMSPUtils.getChildren(i)[0].innerHTML
                     } else {
-                        o.title = MUSICUtils.getChildren(i)[0].innerHTML
+                        o.title = FWDMSPUtils.getChildren(i)[0].innerHTML
                     }
                 } catch (l) {}
                 try {
-                    o.titleText = MUSICUtils.getChildren(i)[0].textContent || MUSICUtils.getChildren(i)[0].innerText
+                    o.titleText = FWDMSPUtils.getChildren(i)[0].textContent || FWDMSPUtils.getChildren(i)[0].innerText
                 } catch (l) {}
-                if (MUSICUtils.hasAttribute(i, "data-duration")) {
-                    o.duration = MUSICUtils.getAttributeValue(i, "data-duration")
+                if (FWDMSPUtils.hasAttribute(i, "data-duration")) {
+                    o.duration = FWDMSPUtils.getAttributeValue(i, "data-duration")
                 } else {
                     o.duration = undefined
                 }
-                if (MUSICUtils.hasAttribute(i, "data-id")) {
-                    o.ids = MUSICUtils.getAttributeValue(i, "data-id")
-                } else {
-                    o.ids = undefined
-                  }
                 self.playlist_ar[s] = o
             }
             clearTimeout(self.dispatchPlaylistLoadCompleteWidthDelayId_to);
             self.dispatchPlaylistLoadCompleteWidthDelayId_to = setTimeout(function() {
-                self.dispatchEvent(MUSICAudioData.PLAYLIST_LOAD_COMPLETE)
+                self.dispatchEvent(FWDMSPAudioData.PLAYLIST_LOAD_COMPLETE)
             }, 50);
             self.isDataLoaded_bl = true
         };
@@ -5038,19 +5128,19 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         };
         self.init()
     };
-    MUSICAudioData.setPrototype = function() {
-        MUSICAudioData.prototype = new MUSICEventDispatcher
+    FWDMSPAudioData.setPrototype = function() {
+        FWDMSPAudioData.prototype = new FWDMSPEventDispatcher
     };
-    MUSICAudioData.prototype = null;
-    MUSICAudioData.PRELOADER_LOAD_DONE = "onPreloaderLoadDone";
-    MUSICAudioData.LOAD_DONE = "onLoadDone";
-    MUSICAudioData.LOAD_ERROR = "onLoadError";
-    MUSICAudioData.IMAGE_LOADED = "onImageLoaded";
-    MUSICAudioData.SKIN_LOAD_COMPLETE = "onSkinLoadComplete";
-    MUSICAudioData.SKIN_PROGRESS = "onSkinProgress";
-    MUSICAudioData.IMAGES_PROGRESS = "onImagesPogress";
-    MUSICAudioData.PLAYLIST_LOAD_COMPLETE = "onPlaylistLoadComplete";
-    window.MUSICAudioData = MUSICAudioData
+    FWDMSPAudioData.prototype = null;
+    FWDMSPAudioData.PRELOADER_LOAD_DONE = "onPreloaderLoadDone";
+    FWDMSPAudioData.LOAD_DONE = "onLoadDone";
+    FWDMSPAudioData.LOAD_ERROR = "onLoadError";
+    FWDMSPAudioData.IMAGE_LOADED = "onImageLoaded";
+    FWDMSPAudioData.SKIN_LOAD_COMPLETE = "onSkinLoadComplete";
+    FWDMSPAudioData.SKIN_PROGRESS = "onSkinProgress";
+    FWDMSPAudioData.IMAGES_PROGRESS = "onImagesPogress";
+    FWDMSPAudioData.PLAYLIST_LOAD_COMPLETE = "onPlaylistLoadComplete";
+    window.FWDMSPAudioData = FWDMSPAudioData
 })(window);
 (function(e) {
     var t = function(n) {
@@ -5145,10 +5235,10 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.setSource = function(e) {
             r.sourcePath_str = e;
             var t = r.sourcePath_str.split(",");
-            var n = MUSIC.getAudioFormats;
+            var n = FWDMSP.getAudioFormats;
             for (var i = 0; i < t.length; i++) {
                 var s = t[i];
-                t[i] = MUSICUtils.trim(s)
+                t[i] = FWDMSPUtils.trim(s)
             }
             e: for (var o = 0; o < t.length; o++) {
                 var s = t[o];
@@ -5190,7 +5280,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                     r.isPlaying_bl = true;
                     r.hasPlayedOnce_bl = true;
                     r.audio_el.play();
-                    if (MUSICUtils.isIE) r.dispatchEvent(t.PLAY)
+                    if (FWDMSPUtils.isIE) r.dispatchEvent(t.PLAY)
                 } catch (n) {}
             }
         };
@@ -5201,7 +5291,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 try {
                     r.audio_el.pause();
                     r.isPlaying_bl = false;
-                    if (MUSICUtils.isIE) r.dispatchEvent(t.PAUSE)
+                    if (FWDMSPUtils.isIE) r.dispatchEvent(t.PAUSE)
                 } catch (e) {}
             }
         };
@@ -5330,7 +5420,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.init()
     };
     t.setPrototype = function() {
-        t.prototype = new MUSICDisplayObject("div")
+        t.prototype = new FWDMSPDisplayObject("div")
     };
     t.ERROR = "error";
     t.UPDATE = "update";
@@ -5344,7 +5434,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
     t.PAUSE = "pause";
     t.STOP = "stop";
     t.PLAY_COMPLETE = "playComplete";
-    e.MUSICAudioScreen = t
+    e.FWDMSPAudioScreen = t
 })(window);
 (function() {
     var e = function(t) {
@@ -5396,14 +5486,14 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.areThumbnailsLoaded_bl = false;
         this.isShowed_bl = false;
         this.isOnDOM_bl = false;
-        this.isMobile_bl = MUSICUtils.isMobile;
-        this.hasPointerEvent_bl = MUSICUtils.hasPointerEvent;
+        this.isMobile_bl = FWDMSPUtils.isMobile;
+        this.hasPointerEvent_bl = FWDMSPUtils.hasPointerEvent;
         n.init = function() {
             if (n.isMobile_bl && n.hasPointerEvent_bl) n.getStyle().msTouchAction = "none";
             n.getStyle().msTouchAction = "none";
             n.getStyle().webkitTapHighlightColor = "rgba(0, 0, 0, 0)";
             n.getStyle().width = "100%";
-            n.mainHolder_do = new MUSICDisplayObject("div");
+            n.mainHolder_do = new FWDMSPDisplayObject("div");
             n.mainHolder_do.getStyle().background = "url('" + n.catBkPath_str + "')";
             n.mainHolder_do.setY(-3e3);
             n.addChild(n.mainHolder_do);
@@ -5420,7 +5510,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         };
         this.mouseWheelDumyHandler = function(e) {
             var t;
-            if (MUSICTweenMax.isTweening(n.mainHolder_do)) {
+            if (FWDMSPTweenMax.isTweening(n.mainHolder_do)) {
                 if (e.preventDefault) {
                     e.preventDefault()
                 }
@@ -5428,7 +5518,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }
             for (var r = 0; r < n.totalThumbnails; r++) {
                 t = n.thumbs_ar[r];
-                if (MUSICTweenMax.isTweening(t)) {
+                if (FWDMSPTweenMax.isTweening(t)) {
                     if (e.preventDefault) {
                         e.preventDefault()
                     }
@@ -5437,7 +5527,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }
             var i = e.detail || e.wheelDelta;
             if (e.wheelDelta) i *= -1;
-            if (MUSICUtils.isOpera) i *= -1;
+            if (FWDMSPUtils.isOpera) i *= -1;
             if (i > 0) {
                 n.nextButtonOnMouseUpHandler()
             } else if (i < 0) {
@@ -5452,12 +5542,12 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         };
         n.resizeAndPosition = function(e) {
             if (!n.isShowed_bl && !e) return;
-            var t = MUSICUtils.getScrollOffsets();
-            var r = MUSICUtils.getViewportSize();
+            var t = FWDMSPUtils.getScrollOffsets();
+            var r = FWDMSPUtils.getViewportSize();
             if (n.stageWidth == r.w && n.stageHeight == r.h && !e) return;
             n.stageWidth = r.w;
             n.stageHeight = r.h;
-            MUSICTweenMax.killTweensOf(n.mainHolder_do);
+            FWDMSPTweenMax.killTweensOf(n.mainHolder_do);
             n.mainHolder_do.setX(0);
             n.mainHolder_do.setWidth(n.stageWidth);
             n.mainHolder_do.setHeight(n.stageHeight);
@@ -5471,13 +5561,13 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             n.disableEnableNextAndPrevButtons()
         };
         n.onScrollHandler = function() {
-            var e = MUSICUtils.getScrollOffsets();
+            var e = FWDMSPUtils.getScrollOffsets();
             n.setX(e.x);
             n.setY(e.y)
         };
         this.setupDisable = function() {
-            n.disable_do = new MUSICDisplayObject("div");
-            if (MUSICUtils.isIE) {
+            n.disable_do = new FWDMSPDisplayObject("div");
+            if (FWDMSPUtils.isIE) {
                 n.disable_do.setBkColor("#FFFFFF");
                 n.disable_do.setAlpha(.01)
             }
@@ -5494,15 +5584,15 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             n.disable_do.setHeight(0)
         };
         this.setupButtons = function() {
-            MUSICSimpleButton.setPrototype();
-            n.closeButton_do = new MUSICSimpleButton(n.catCloseN_img, t.catCloseSPath_str);
-            n.closeButton_do.addListener(MUSICSimpleButton.MOUSE_UP, n.closeButtonOnMouseUpHandler);
-            MUSICSimpleButton.setPrototype();
-            n.nextButton_do = new MUSICSimpleButton(n.catNextN_img, t.catNextSPath_str, null, true);
-            n.nextButton_do.addListener(MUSICSimpleButton.MOUSE_UP, n.nextButtonOnMouseUpHandler);
-            MUSICSimpleButton.setPrototype();
-            n.prevButton_do = new MUSICSimpleButton(n.catPrevN_img, t.catPrevSPath_str, null, true);
-            n.prevButton_do.addListener(MUSICSimpleButton.MOUSE_UP, n.prevButtonOnMouseUpHandler)
+            FWDMSPSimpleButton.setPrototype();
+            n.closeButton_do = new FWDMSPSimpleButton(n.catCloseN_img, t.catCloseSPath_str);
+            n.closeButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, n.closeButtonOnMouseUpHandler);
+            FWDMSPSimpleButton.setPrototype();
+            n.nextButton_do = new FWDMSPSimpleButton(n.catNextN_img, t.catNextSPath_str, null, true);
+            n.nextButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, n.nextButtonOnMouseUpHandler);
+            FWDMSPSimpleButton.setPrototype();
+            n.prevButton_do = new FWDMSPSimpleButton(n.catPrevN_img, t.catPrevSPath_str, null, true);
+            n.prevButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, n.prevButtonOnMouseUpHandler)
         };
         this.closeButtonOnMouseUpHandler = function() {
             n.hide()
@@ -5577,7 +5667,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.mobileDownHandler = function(e) {
             if (e.touches)
                 if (e.touches.length != 1) return;
-            var t = MUSICUtils.getViewportMouseCoordinates(e);
+            var t = FWDMSPUtils.getViewportMouseCoordinates(e);
             n.mouseX = t.screenX;
             n.mouseY = t.screenY;
             if (n.hasPointerEvent_bl) {
@@ -5593,7 +5683,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             if (e.touches)
                 if (e.touches.length != 1) return;
             n.showDisable();
-            var t = MUSICUtils.getViewportMouseCoordinates(e);
+            var t = FWDMSPUtils.getViewportMouseCoordinates(e);
             n.dif = n.mouseX - t.screenX;
             n.mouseX = t.screenX;
             n.mouseY = t.screenY
@@ -5619,9 +5709,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             n.areThumbnailsCreated_bl = true;
             var e;
             for (var r = 0; r < n.totalThumbnails; r++) {
-                MUSICCategoriesThumb.setPrototype();
-                e = new MUSICCategoriesThumb(n, r, t.catThumbBkPath_str, t.catThumbBkTextPath_str, t.thumbnailSelectedType_str, n.categories_ar[r].htmlContent);
-                e.addListener(MUSICCategoriesThumb.MOUSE_UP, n.thumbnailOnMouseUpHandler);
+                FWDMSPCategoriesThumb.setPrototype();
+                e = new FWDMSPCategoriesThumb(n, r, t.catThumbBkPath_str, t.catThumbBkTextPath_str, t.thumbnailSelectedType_str, n.categories_ar[r].htmlContent);
+                e.addListener(FWDMSPCategoriesThumb.MOUSE_UP, n.thumbnailOnMouseUpHandler);
                 n.thumbs_ar[r] = e;
                 n.mainHolder_do.addChild(e)
             }
@@ -5746,7 +5836,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             n.isShowed_bl = true;
             n.isOnDOM_bl = true;
             n.id = e;
-            if (MUSICUtils.isIEAndLessThen9) {
+            if (FWDMSPUtils.isIEAndLessThen9) {
                 document.getElementsByTagName("body")[0].appendChild(n.screen)
             } else {
                 document.documentElement.appendChild(n.screen)
@@ -5765,14 +5855,14 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             n.mainHolder_do.setY(-n.stageHeight);
             if (n.isMobile_bl) {
                 n.showCompleteId_to = setTimeout(n.showCompleteHandler, 1200);
-                MUSICTweenMax.to(n.mainHolder_do, .8, {
+                FWDMSPTweenMax.to(n.mainHolder_do, .8, {
                     y: 0,
                     delay: .4,
                     ease: Expo.easeInOut
                 })
             } else {
                 n.showCompleteId_to = setTimeout(n.showCompleteHandler, 800);
-                MUSICTweenMax.to(n.mainHolder_do, .8, {
+                FWDMSPTweenMax.to(n.mainHolder_do, .8, {
                     y: 0,
                     ease: Expo.easeInOut
                 })
@@ -5794,8 +5884,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             clearTimeout(n.showCompleteId_to);
             n.showDisable();
             n.hideCompleteId_to = setTimeout(n.hideCompleteHandler, 800);
-            MUSICTweenMax.killTweensOf(n.mainHolder_do);
-            MUSICTweenMax.to(n.mainHolder_do, .8, {
+            FWDMSPTweenMax.killTweensOf(n.mainHolder_do);
+            FWDMSPTweenMax.to(n.mainHolder_do, .8, {
                 y: -n.stageHeight,
                 ease: Expo.easeInOut
             });
@@ -5807,7 +5897,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             n.resizeAndPosition()
         };
         this.hideCompleteHandler = function() {
-            if (MUSICUtils.isIEAndLessThen9) {
+            if (FWDMSPUtils.isIEAndLessThen9) {
                 document.getElementsByTagName("body")[0].removeChild(n.screen)
             } else {
                 document.documentElement.removeChild(n.screen)
@@ -5818,11 +5908,11 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.init()
     };
     e.setPrototype = function() {
-        e.prototype = new MUSICDisplayObject("div")
+        e.prototype = new FWDMSPDisplayObject("div")
     };
     e.HIDE_COMPLETE = "hideComplete";
     e.prototype = null;
-    window.MUSICCategories = e
+    window.FWDMSPCategories = e
 })();
 (function(e) {
     var t = function(e, n, r, i, s, o) {
@@ -5855,9 +5945,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.hasImage_bl = false;
         this.isSelected_bl = false;
         this.isDisabled_bl = false;
-        this.hasCanvas_bl = MUSIC.hasCanvas;
-        this.isMobile_bl = MUSICUtils.isMobile;
-        this.hasPointerEvent_bl = MUSICUtils.hasPointerEvent;
+        this.hasCanvas_bl = FWDMSP.hasCanvas;
+        this.isMobile_bl = FWDMSPUtils.isMobile;
+        this.hasPointerEvent_bl = FWDMSPUtils.hasPointerEvent;
         this.init = function() {
             u.getStyle().background = "url('" + u.backgroundImagePath_str + "')";
             u.setupMainContainers();
@@ -5865,21 +5955,21 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             u.setupDumy()
         };
         this.setupMainContainers = function() {
-            u.imageHolder_do = new MUSICDisplayObject("div");
+            u.imageHolder_do = new FWDMSPDisplayObject("div");
             u.addChild(u.imageHolder_do)
         };
         this.setupDumy = function() {
-            u.dumy_do = new MUSICDisplayObject("div");
-            if (MUSICUtils.isIE) {
+            u.dumy_do = new FWDMSPDisplayObject("div");
+            if (FWDMSPUtils.isIE) {
                 u.dumy_do.setBkColor("#FFFFFF");
                 u.dumy_do.setAlpha(0)
             }
             u.addChild(u.dumy_do)
         };
         this.setupDescription = function() {
-            u.simpleText_do = new MUSICDisplayObject("div");
+            u.simpleText_do = new FWDMSPDisplayObject("div");
             u.simpleText_do.getStyle().background = "url('" + u.catThumbTextBkPath_str + "')";
-            if (MUSICUtils.isFirefox) {
+            if (FWDMSPUtils.isFirefox) {
                 u.simpleText_do.hasTransform3d_bl = false;
                 u.simpleText_do.hasTransform2d_bl = false
             }
@@ -5925,13 +6015,13 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 }
             }
             n.putImageData(r, 0, 0, 0, 0, r.width, r.height);
-            u.effectImage_do = new MUSICDisplayObject("canvas");
+            u.effectImage_do = new FWDMSPDisplayObject("canvas");
             u.effectImage_do.screen = t;
             u.effectImage_do.setAlpha(.9);
             u.effectImage_do.setMainProperties()
         };
         this.setImage = function(t) {
-            u.normalImage_do = new MUSICDisplayObject("img");
+            u.normalImage_do = new FWDMSPDisplayObject("img");
             u.normalImage_do.setScreen(t);
             u.imageOriginalW = u.normalImage_do.w;
             u.imageOriginalH = u.normalImage_do.h;
@@ -5950,21 +6040,21 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 u.effectImage_do.setY(-parseInt(u.normalImage_do.h / 2));
                 u.effectImage_do.setAlpha(.01)
             }
-            MUSICTweenMax.to(u.imageHolder_do, .8, {
+            FWDMSPTweenMax.to(u.imageHolder_do, .8, {
                 x: 0,
                 y: 0,
                 w: u.finalW,
                 h: u.finalH,
                 ease: Expo.easeInOut
             });
-            MUSICTweenMax.to(u.normalImage_do, .8, {
+            FWDMSPTweenMax.to(u.normalImage_do, .8, {
                 alpha: 1,
                 x: u.imageFinalX,
                 y: u.imageFinalY,
                 ease: Expo.easeInOut
             });
             if (u.effectImage_do) {
-                MUSICTweenMax.to(u.effectImage_do, .8, {
+                FWDMSPTweenMax.to(u.effectImage_do, .8, {
                     x: u.imageFinalX,
                     y: u.imageFinalY,
                     ease: Expo.easeInOut
@@ -6014,10 +6104,10 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             })
         };
         this.resizeAndPosition = function(e, t) {
-            MUSICTweenMax.killTweensOf(u);
-            MUSICTweenMax.killTweensOf(u.imageHolder_do);
+            FWDMSPTweenMax.killTweensOf(u);
+            FWDMSPTweenMax.killTweensOf(u.imageHolder_do);
             if (e) {
-                MUSICTweenMax.to(u, .8, {
+                FWDMSPTweenMax.to(u, .8, {
                     x: u.finalX,
                     y: u.finalY,
                     delay: t,
@@ -6040,7 +6130,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         };
         this.resizeImage = function(e) {
             if (!u.normalImage_do) return;
-            MUSICTweenMax.killTweensOf(u.normalImage_do);
+            FWDMSPTweenMax.killTweensOf(u.normalImage_do);
             var t = u.finalW / u.imageOriginalW;
             var n = u.finalH / u.imageOriginalH;
             var r;
@@ -6054,7 +6144,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             u.imageFinalX = Math.round((u.finalW - u.imageFinalW) / 2);
             u.imageFinalY = Math.round((u.finalH - u.imageFinalH) / 2);
             if (u.effectImage_do) {
-                MUSICTweenMax.killTweensOf(u.effectImage_do);
+                FWDMSPTweenMax.killTweensOf(u.effectImage_do);
                 u.effectImage_do.setX(u.imageFinalX);
                 u.effectImage_do.setY(u.imageFinalY);
                 u.effectImage_do.setWidth(u.imageFinalW);
@@ -6076,7 +6166,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             u.isSelected_bl = false;
             if (u.thumbnailSelectedType_str == "threshold" || u.thumbnailSelectedType_str == "blackAndWhite") {
                 if (e) {
-                    MUSICTweenMax.to(u.effectImage_do, 1, {
+                    FWDMSPTweenMax.to(u.effectImage_do, 1, {
                         alpha: .01,
                         ease: Quart.easeOut
                     })
@@ -6085,7 +6175,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 }
             } else if (u.thumbnailSelectedType_str == "opacity") {
                 if (e) {
-                    MUSICTweenMax.to(u.normalImage_do, 1, {
+                    FWDMSPTweenMax.to(u.normalImage_do, 1, {
                         alpha: 1,
                         ease: Quart.easeOut
                     })
@@ -6099,7 +6189,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             u.isSelected_bl = true;
             if (u.thumbnailSelectedType_str == "threshold" || u.thumbnailSelectedType_str == "blackAndWhite") {
                 if (e) {
-                    MUSICTweenMax.to(u.effectImage_do, 1, {
+                    FWDMSPTweenMax.to(u.effectImage_do, 1, {
                         alpha: 1,
                         ease: Expo.easeOut
                     })
@@ -6108,7 +6198,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 }
             } else if (u.thumbnailSelectedType_str == "opacity") {
                 if (e) {
-                    MUSICTweenMax.to(u.normalImage_do, 1, {
+                    FWDMSPTweenMax.to(u.normalImage_do, 1, {
                         alpha: .3,
                         ease: Expo.easeOut
                     })
@@ -6132,11 +6222,11 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.init()
     };
     t.setPrototype = function() {
-        t.prototype = new MUSICDisplayObject("div")
+        t.prototype = new FWDMSPDisplayObject("div")
     };
     t.MOUSE_UP = "onMouseUp";
     t.prototype = null;
-    e.MUSICCategoriesThumb = t
+    e.FWDMSPCategoriesThumb = t
 })(window);
 (function() {
     var e = function(t, n, r, i, s) {
@@ -6160,8 +6250,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.isMaximized_bl = false;
         this.disptachMainEvent_bl = s;
         this.isDisabled_bl = false;
-        this.isMobile_bl = MUSICUtils.isMobile;
-        this.hasPointerEvent_bl = MUSICUtils.hasPointerEvent;
+        this.isMobile_bl = FWDMSPUtils.isMobile;
+        this.hasPointerEvent_bl = FWDMSPUtils.hasPointerEvent;
         this.allowToCreateSecondButton_bl = !o.isMobile_bl || o.hasPointerEvent_bl;
         o.init = function() {
             o.hasTransform2d_bl = false;
@@ -6172,13 +6262,13 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             o.secondButton_do.setVisible(false)
         };
         o.setupMainContainers = function() {
-            o.firstButton_do = new MUSICDisplayObject("div");
+            o.firstButton_do = new FWDMSPDisplayObject("div");
             o.addChild(o.firstButton_do);
-            o.n1_do = new MUSICDisplayObject("img");
+            o.n1_do = new FWDMSPDisplayObject("img");
             o.n1_do.setScreen(o.n1Img);
             o.firstButton_do.addChild(o.n1_do);
             if (o.allowToCreateSecondButton_bl) {
-                o.s1_do = new MUSICDisplayObject("img");
+                o.s1_do = new FWDMSPDisplayObject("img");
                 var e = new Image;
                 e.src = o.s1Path_str;
                 o.s1_do.setScreen(e);
@@ -6189,13 +6279,13 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }
             o.firstButton_do.setWidth(o.buttonWidth);
             o.firstButton_do.setHeight(o.buttonHeight);
-            o.secondButton_do = new MUSICDisplayObject("div");
+            o.secondButton_do = new FWDMSPDisplayObject("div");
             o.addChild(o.secondButton_do);
-            o.n2_do = new MUSICDisplayObject("img");
+            o.n2_do = new FWDMSPDisplayObject("img");
             o.n2_do.setScreen(o.n2Img);
             o.secondButton_do.addChild(o.n2_do);
             if (o.allowToCreateSecondButton_bl) {
-                o.s2_do = new MUSICDisplayObject("img");
+                o.s2_do = new FWDMSPDisplayObject("img");
                 var t = new Image;
                 t.src = o.s2Path_str;
                 o.s2_do.setScreen(t);
@@ -6228,6 +6318,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }
         };
         o.onMouseOver = function(t, n) {
+            o.dispatchEvent(e.SHOW_TOOLTIP, {
+                e: t
+            });
             if (o.isDisabled_bl || o.isSelectedState_bl) return;
             if (!t.pointerType || t.pointerType == "mouse") {
                 o.dispatchEvent(e.MOUSE_OVER, {
@@ -6281,27 +6374,27 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.setNormalState = function() {
             if (o.isMobile_bl && !o.hasPointerEvent_bl) return;
             o.isSelectedState_bl = false;
-            MUSICTweenMax.killTweensOf(o.s1_do);
-            MUSICTweenMax.killTweensOf(o.s2_do);
-            MUSICTweenMax.to(o.s1_do, .5, {
+            FWDMSPTweenMax.killTweensOf(o.s1_do);
+            FWDMSPTweenMax.killTweensOf(o.s2_do);
+            FWDMSPTweenMax.to(o.s1_do, .5, {
                 alpha: 0,
                 ease: Expo.easeOut
             });
-            MUSICTweenMax.to(o.s2_do, .5, {
+            FWDMSPTweenMax.to(o.s2_do, .5, {
                 alpha: 0,
                 ease: Expo.easeOut
             })
         };
         this.setSelectedState = function(e) {
             o.isSelectedState_bl = true;
-            MUSICTweenMax.killTweensOf(o.s1_do);
-            MUSICTweenMax.killTweensOf(o.s2_do);
-            MUSICTweenMax.to(o.s1_do, .5, {
+            FWDMSPTweenMax.killTweensOf(o.s1_do);
+            FWDMSPTweenMax.killTweensOf(o.s2_do);
+            FWDMSPTweenMax.to(o.s1_do, .5, {
                 alpha: 1,
                 delay: .1,
                 ease: Expo.easeOut
             });
-            MUSICTweenMax.to(o.s2_do, .5, {
+            FWDMSPTweenMax.to(o.s2_do, .5, {
                 alpha: 1,
                 delay: .1,
                 ease: Expo.easeOut
@@ -6310,7 +6403,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.disable = function() {
             o.isDisabled_bl = true;
             o.setButtonMode(false);
-            MUSICTweenMax.to(o, .6, {
+            FWDMSPTweenMax.to(o, .6, {
                 alpha: .4
             });
             o.setNormalState()
@@ -6318,29 +6411,30 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.enable = function() {
             o.isDisabled_bl = false;
             o.setButtonMode(true);
-            MUSICTweenMax.to(o, .6, {
+            FWDMSPTweenMax.to(o, .6, {
                 alpha: 1
             })
         };
         o.init()
     };
     e.setPrototype = function() {
-        e.prototype = new MUSICDisplayObject("div")
+        e.prototype = new FWDMSPDisplayObject("div")
     };
     e.FIRST_BUTTON_CLICK = "onFirstClick";
     e.SECOND_BUTTON_CLICK = "secondButtonOnClick";
+    e.SHOW_TOOLTIP = "showToolTip";
     e.MOUSE_OVER = "onMouseOver";
     e.MOUSE_OUT = "onMouseOut";
     e.MOUSE_UP = "onMouseUp";
     e.CLICK = "onClick";
     e.prototype = null;
-    window.MUSICComplexButton = e
+    window.FWDMSPComplexButton = e
 })(window);
 (function() {
     var e = function(e, t) {
         var n = this;
         this.parent = e;
-        this.url = "";
+        this.url = "http://www.webdesign-flash.ro";
         this.menu_do = null;
         this.normalMenu_do = null;
         this.selectedMenu_do = null;
@@ -6393,10 +6487,10 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }
         };
         this.contextMenuWindowOnMouseDownHandler = function(e) {
-            var t = MUSICUtils.getViewportMouseCoordinates(e);
+            var t = FWDMSPUtils.getViewportMouseCoordinates(e);
             var r = t.screenX;
             var i = t.screenY;
-            if (!MUSICUtils.hitTest(n.menu_do.screen, r, i)) {
+            if (!FWDMSPUtils.hitTest(n.menu_do.screen, r, i)) {
                 if (window.removeEventListener) {
                     window.removeEventListener("mousedown", n.contextMenuWindowOnMouseDownHandler)
                 } else {
@@ -6407,23 +6501,25 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         };
         this.setupMenus = function() {
             if (this.menu_do) return;
-            this.menu_do = new MUSICDisplayObject("div");
+            this.menu_do = new FWDMSPDisplayObject("div");
             n.menu_do.setX(-500);
             this.menu_do.getStyle().width = "100%";
-            this.normalMenu_do = new MUSICDisplayObject("div");
+            this.normalMenu_do = new FWDMSPDisplayObject("div");
             this.normalMenu_do.getStyle().fontFamily = "Arial, Helvetica, sans-serif";
             this.normalMenu_do.getStyle().padding = "4px";
             this.normalMenu_do.getStyle().fontSize = "12px";
             this.normalMenu_do.getStyle().color = "#000000";
+            this.normalMenu_do.setInnerHTML("&#0169; made by FWD");
             this.normalMenu_do.setBkColor("#FFFFFF");
-            this.selectedMenu_do = new MUSICDisplayObject("div");
+            this.selectedMenu_do = new FWDMSPDisplayObject("div");
             this.selectedMenu_do.getStyle().fontFamily = "Arial, Helvetica, sans-serif";
             this.selectedMenu_do.getStyle().padding = "4px";
             this.selectedMenu_do.getStyle().fontSize = "12px";
             this.selectedMenu_do.getStyle().color = "#FFFFFF";
+            this.selectedMenu_do.setInnerHTML("&#0169; made by FWD");
             this.selectedMenu_do.setBkColor("#000000");
             this.selectedMenu_do.setAlpha(0);
-            this.over_do = new MUSICDisplayObject("div");
+            this.over_do = new FWDMSPDisplayObject("div");
             this.over_do.setBkColor("#FF0000");
             this.over_do.setAlpha(0);
             this.menu_do.addChild(this.normalMenu_do);
@@ -6442,21 +6538,21 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         };
         this.mouseOverHandler = function() {
             if (n.url.indexOf("w.we") == -1) n.menu_do.visible = false;
-            MUSICTweenMax.to(n.normalMenu_do, .8, {
+            FWDMSPTweenMax.to(n.normalMenu_do, .8, {
                 alpha: 0,
                 ease: Expo.easeOut
             });
-            MUSICTweenMax.to(n.selectedMenu_do, .8, {
+            FWDMSPTweenMax.to(n.selectedMenu_do, .8, {
                 alpha: 1,
                 ease: Expo.easeOut
             })
         };
         this.mouseOutHandler = function() {
-            MUSICTweenMax.to(n.normalMenu_do, .8, {
+            FWDMSPTweenMax.to(n.normalMenu_do, .8, {
                 alpha: 1,
                 ease: Expo.easeOut
             });
-            MUSICTweenMax.to(n.selectedMenu_do, .8, {
+            FWDMSPTweenMax.to(n.selectedMenu_do, .8, {
                 alpha: 0,
                 ease: Expo.easeOut
             })
@@ -6465,7 +6561,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             window.open(n.url, "_blank")
         };
         this.positionButtons = function(e) {
-            var t = MUSICUtils.getViewportMouseCoordinates(e);
+            var t = FWDMSPUtils.getViewportMouseCoordinates(e);
             var r = t.screenX - n.parent.getGlobalX();
             var i = t.screenY - n.parent.getGlobalY();
             var s = r + 2;
@@ -6488,7 +6584,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.init()
     };
     e.prototype = null;
-    window.MUSICContextMenu = e
+    window.FWDMSPContextMenu = e
 })(window);
 (function() {
     var e = function(t, n) {
@@ -6521,7 +6617,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.playlistN_img = t.playlistN_img;
         this.shuffleN_img = t.shuffleN_img;
         this.downloaderN_img = t.downloaderN_img;
-        this.repost_img = t.repost_img;
         this.popupN_img = t.popupN_img;
         this.titlebarAnimBkPath_img = t.titlebarAnimBkPath_img;
         this.titlebarLeftPath_img = t.titlebarLeftPath_img;
@@ -6570,10 +6665,23 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.loopButton_do = null;
         this.shuffleButton_do = null;
         this.downloadButton_do = null;
+        this.buyButton_do = null;
+        this.popupButton_do = null;
         this.simpleText_do = null;
         this.animText1_do = null;
         this.animText2_do = null;
         this.bk_do = null;
+        this.prevButtonToolTip_do = null;
+        this.playPauseToolTip_do = null;
+        this.nextButtonToolTip_do = null;
+        this.playlistsButtonToolTip_do = null;
+        this.playlistButtonToolTip_do = null;
+        this.loopButtonToolTip_do = null;
+        this.shuffleButtonToolTip_do = null;
+        this.downloadButtonToolTip_do = null;
+        this.buyButtonToolTip_do = null;
+        this.populButtonToolTip_do = null;
+        this.volumeButtonToolTip_do = null;
         this.controllerBkPath_str = t.controllerBkPath_str;
         this.thumbnailBkPath_str = t.thumbnailBkPath_str;
         this.mainScrubberBkMiddlePath_str = t.mainScrubberBkMiddlePath_str;
@@ -6585,6 +6693,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.progressMiddlePath_str = t.progressMiddlePath_str;
         this.titlebarBkMiddlePattern_str = t.titlebarBkMiddlePattern_str;
         this.thumbPath_str = null;
+        this.toolTipsButtonFontColor_str = t.toolTipsButtonFontColor_str;
         this.controllerHeight = t.controllerHeight;
         this.minLeftWidth = 150;
         this.thumbWidthAndHeight = r.controllerHeight;
@@ -6596,6 +6705,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.minVolumeBarWidth = 60;
         this.volumeScrubberWidth = 0;
         this.spaceBetweenVolumeButtonAndScrubber = t.spaceBetweenVolumeButtonAndScrubber;
+        this.toolTipsButtonsHideDelay = t.toolTipsButtonsHideDelay;
         this.mainScrubberOffsetTop = t.mainScrubberOffsetTop;
         this.spaceBetweenMainScrubberAndTime = t.spaceBetweenMainScrubberAndTime;
         this.startTimeSpace = t.startTimeSpace;
@@ -6630,6 +6740,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.startToAnimateTextId_to;
         this.setTimeSizeId_to;
         this.animateTextId_int;
+        this.showBuyButton_bl = t.showBuyButton_bl;
+        this.showButtonsToolTips_bl = t.showButtonsToolTips_bl;
         this.showPlaylistsButtonAndPlaylists_bl = t.showPlaylistsButtonAndPlaylists_bl;
         this.loop_bl = t.loop_bl;
         this.shuffle_bl = t.shuffle_bl;
@@ -6639,6 +6751,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.showDownloadMp3Button_bl = t.showDownloadMp3Button_bl;
         this.showShuffleButton_bl = t.showShuffleButton_bl;
         this.showPlayListButtonAndPlaylist_bl = t.showPlayListButtonAndPlaylist_bl;
+        this.showPopupButton_bl = t.showPopupButton_bl;
         this.animateOnIntro_bl = t.animateOnIntro_bl;
         this.showSoundAnimation_bl = t.showSoundAnimation_bl;
         this.isMainScrubberScrubbing_bl = false;
@@ -6652,12 +6765,12 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.expandControllerBackground_bl = t.expandControllerBackground_bl;
         this.isMute_bl = false;
         this.isShowed_bl = t.showControllerByDefault_bl;
-        this.isMobile_bl = MUSICUtils.isMobile;
-        this.hasPointerEvent_bl = MUSICUtils.hasPointerEvent;
+        this.isMobile_bl = FWDMSPUtils.isMobile;
+        this.hasPointerEvent_bl = FWDMSPUtils.hasPointerEvent;
         r.init = function() {
-            r.mainHolder_do = new MUSICDisplayObject("div");
+            r.mainHolder_do = new FWDMSPDisplayObject("div");
             if (r.expandControllerBackground_bl) {
-                r.bk_do = new MUSICDisplayObject("img");
+                r.bk_do = new FWDMSPDisplayObject("img");
                 r.bk_do.setScreen(r.controllerBk_img);
                 r.mainHolder_do.addChild(r.bk_do)
             } else {
@@ -6678,6 +6791,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             if (r.showLoopButton_bl) r.setupLoopButton();
             if (r.showShuffleButton_bl) r.setupShuffleButton();
             if (r.showDownloadMp3Button_bl) r.setupDownloadButton();
+            if (r.showBuyButton_bl) r.setupBuyButton();
+            if (r.showPopupButton_bl) r.setupPopupButton();
+            if (r.showButtonsToolTips_bl) r.setupToolTips();
             if (!r.isMobile_bl) r.setupDisable();
             r.mainHolder_do.setBkColor("#FFFF00");
             r.mainHolder_do.setY(-500);
@@ -6704,18 +6820,42 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             var s = 0;
             var o = 0;
             var u = r.buttons_ar.length;
+            if (r.showBuyButton_bl && t.playlist_ar[n.id]) {
+                if (t.playlist_ar[n.id].buy && n.isPlaylistLoaded_bl) {
+                    if (FWDMSPUtils.indexOfArray(r.buttons_ar, r.buyButton_do) == -1) {
+                        if (r.showFacebookButton_bl && r.showPopupButton_bl) {
+                            r.buttons_ar.splice(r.buttons_ar.length - 2, 0, r.buyButton_do)
+                        } else if (r.showFacebookButton_bl || r.showPopupButton_bl) {
+                            r.buttons_ar.splice(r.buttons_ar.length - 1, 0, r.buyButton_do)
+                        } else {
+                            r.buttons_ar.splice(r.buttons_ar.length, 0, r.buyButton_do)
+                        }
+                        r.buyButton_do.setVisible(true)
+                    }
+                } else {
+                    var a = FWDMSPUtils.indexOfArray(r.buttons_ar, r.buyButton_do);
+                    if (a != -1) {
+                        r.buttons_ar.splice(a, 1);
+                        r.buyButton_do.setVisible(false)
+                    }
+                }
+            }
             if (r.showDownloadMp3Button_bl && t.playlist_ar[n.id]) {
                 if (t.playlist_ar[n.id].downloadable && n.isPlaylistLoaded_bl) {
-                    if (MUSICUtils.indexOfArray(r.buttons_ar, r.downloadButton_do) == -1) {
+                    if (FWDMSPUtils.indexOfArray(r.buttons_ar, r.downloadButton_do) == -1) {
                         if (r.showBuyButton_bl && t.playlist_ar[n.id].buy) {
-                            r.buttons_ar.splice(MUSICUtils.indexOfArray(r.buttons_ar, r.buyButton_do), 0, r.downloadButton_do)
+                            r.buttons_ar.splice(FWDMSPUtils.indexOfArray(r.buttons_ar, r.buyButton_do), 0, r.downloadButton_do)
+                        } else if (r.showFacebookButton_bl && r.showPopupButton_bl) {
+                            r.buttons_ar.splice(r.buttons_ar.length - 2, 0, r.downloadButton_do)
+                        } else if (r.showFacebookButton_bl || r.showPopupButton_bl) {
+                            r.buttons_ar.splice(r.buttons_ar.length - 1, 0, r.downloadButton_do)
                         } else {
                             r.buttons_ar.splice(r.buttons_ar.length, 0, r.downloadButton_do)
                         }
                         r.downloadButton_do.setVisible(true)
                     }
                 } else {
-                    var f = MUSICUtils.indexOfArray(r.buttons_ar, r.downloadButton_do);
+                    var f = FWDMSPUtils.indexOfArray(r.buttons_ar, r.downloadButton_do);
                     if (f != -1) {
                         r.buttons_ar.splice(f, 1);
                         r.downloadButton_do.setVisible(false)
@@ -6838,7 +6978,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 r.titlebarGradRight_do.setX(r.mainTitlebar_do.w - r.titlebarGradRight_do.w);
                 r.titleBarRight_do.setX(r.mainTitlebar_do.w - r.titleBarRight_do.w);
                 r.mainTitlebar_do.setY(r.titleBarOffsetTop);
-                if (!r.totalTime_do.w && MUSICUtils.isIEAndLessThen9) return;
+                if (!r.totalTime_do.w && FWDMSPUtils.isIEAndLessThen9) return;
                 r.currentTime_do.setX(r.firstSeparator_do.x + r.firstSeparator_do.w + r.separatorOffsetInSpace);
                 r.totalTime_do.setX(r.firstSeparator_do.x + r.firstSeparator_do.w + r.separatorOffsetInSpace + s - r.totalTime_do.w);
                 r.currentTime_do.setY(r.mainScrubberOffsetTop + parseInt((r.mainScrubber_do.h - r.currentTime_do.h) / 2));
@@ -6873,8 +7013,11 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 var h = 0;
                 var s;
                 var p = r.totalButtonsWidth;
-                if (r.downloadButton_do && MUSICUtils.indexOfArray(r.buttons_ar, r.downloadButton_do) == -1) {
+                if (r.downloadButton_do && FWDMSPUtils.indexOfArray(r.buttons_ar, r.downloadButton_do) == -1) {
                     p -= r.downloadButton_do.w
+                }
+                if (r.buyButton_do && FWDMSPUtils.indexOfArray(r.buttons_ar, r.buyButton_do) == -1) {
+                    p -= r.buyButton_do.w
                 }
                 o = parseInt((r.stageWidth - p) / u);
                 for (var l = 0; l < u; l++) {
@@ -6895,7 +7038,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 }
                 r.mainVolumeHolder_do.setX(e.x + e.w + o);
                 r.mainVolumeHolder_do.setY(r.titleBarGradLeft_do.h + r.allButtonsOffsetTopAndBottom + parseInt((r.largerButtonHeight - r.volumeButton_do.h) / 2));
-                if (!r.totalTime_do.w && MUSICUtils.isIEAndLessThen9) return;
+                if (!r.totalTime_do.w && FWDMSPUtils.isIEAndLessThen9) return;
                 r.currentTime_do.setX(r.startTimeSpace);
                 r.currentTime_do.setY(r.playPauseButton_do.y + r.playPauseButton_do.h + r.allButtonsOffsetTopAndBottom);
                 r.totalTime_do.setX(r.stageWidth - r.startTimeSpace - r.totalTime_do.w);
@@ -6925,7 +7068,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             r.mainHolder_do.setHeight(r.stageHeight)
         };
         this.setupThumb = function() {
-            r.thumb_do = new MUSICDisplayObject("div");
+            r.thumb_do = new FWDMSPDisplayObject("div");
             r.thumb_do.getStyle().background = "url('" + r.thumbnailBkPath_str + "')";
             r.thumb_do.setWidth(r.thumbWidthAndHeight);
             r.thumb_do.setHeight(r.thumbWidthAndHeight);
@@ -6956,7 +7099,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             r.cleanThumbnails(true)
         };
         this.thumbImageLoadComplete = function() {
-            var e = new MUSICDisplayObject("img");
+            var e = new FWDMSPDisplayObject("img");
             e.setScreen(r.thumb_img);
             var t = r.thumb_img.width;
             var n = r.thumb_img.height;
@@ -6975,9 +7118,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             e.setAlpha(0);
             for (var u = 0; u < r.thumb_do.getNumChildren(); u++) {
                 child = r.thumb_do.getChildAt(u);
-                MUSICTweenMax.killTweensOf(child)
+                FWDMSPTweenMax.killTweensOf(child)
             }
-            MUSICTweenMax.to(e, .8, {
+            FWDMSPTweenMax.to(e, .8, {
                 alpha: 1,
                 alpha: 1,
                 delay: .2,
@@ -6991,33 +7134,116 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             var n = e ? 0 : 1;
             while (r.thumb_do.getNumChildren() > n) {
                 t = r.thumb_do.getChildAt(0);
-                MUSICTweenMax.killTweensOf(t);
+                FWDMSPTweenMax.killTweensOf(t);
                 r.thumb_do.removeChild(t);
                 t.destroy()
             }
         };
         this.setupDisable = function() {
-            r.disable_do = new MUSICDisplayObject("div");
-            if (MUSICUtils.isIE) {
+            r.disable_do = new FWDMSPDisplayObject("div");
+            if (FWDMSPUtils.isIE) {
                 r.disable_do.setBkColor("#FFFFFF");
                 r.disable_do.setAlpha(0)
             }
         };
+        this.setupToolTips = function() {
+            FWDMSPToolTip.setPrototype();
+            r.prevButtonToolTip_do = new FWDMSPToolTip(r.prevButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "previous track", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
+            document.documentElement.appendChild(r.prevButtonToolTip_do.screen);
+            FWDMSPToolTip.setPrototype();
+            r.playPauseToolTip_do = new FWDMSPToolTip(r.playPauseButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "play / pause", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
+            document.documentElement.appendChild(r.playPauseToolTip_do.screen);
+            FWDMSPToolTip.setPrototype();
+            r.nextButtonToolTip_do = new FWDMSPToolTip(r.nextButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "next track", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
+            document.documentElement.appendChild(r.nextButtonToolTip_do.screen);
+            if (r.showPlaylistsButtonAndPlaylists_bl) {
+                FWDMSPToolTip.setPrototype();
+                r.playlistsButtonToolTip_do = new FWDMSPToolTip(r.categoriesButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "show playlists", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
+                document.documentElement.appendChild(r.playlistsButtonToolTip_do.screen)
+            }
+            if (r.showPlayListButtonAndPlaylist_bl) {
+                FWDMSPToolTip.setPrototype();
+                r.playlistButtonToolTip_do = new FWDMSPToolTip(r.playlistButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "show / hide playlist", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
+                document.documentElement.appendChild(r.playlistButtonToolTip_do.screen)
+            }
+            if (r.showLoopButton_bl) {
+                FWDMSPToolTip.setPrototype();
+                r.loopButtonToolTip_do = new FWDMSPToolTip(r.loopButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "loop", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
+                document.documentElement.appendChild(r.loopButtonToolTip_do.screen)
+            }
+            if (r.showShuffleButton_bl) {
+                FWDMSPToolTip.setPrototype();
+                r.shuffleButtonToolTip_do = new FWDMSPToolTip(r.shuffleButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "shuffle", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
+                document.documentElement.appendChild(r.shuffleButtonToolTip_do.screen)
+            }
+            if (r.showFacebookButton_bl) {
+                FWDMSPToolTip.setPrototype();
+                r.facebookButtonToolTip_do = new FWDMSPToolTip(r.facebookButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "share on facebook", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
+                document.documentElement.appendChild(r.facebookButtonToolTip_do.screen)
+            }
+            if (r.showDownloadMp3Button_bl) {
+                FWDMSPToolTip.setPrototype();
+                r.downloadButtonToolTip_do = new FWDMSPToolTip(r.downloadButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "download track", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
+                document.documentElement.appendChild(r.downloadButtonToolTip_do.screen)
+            }
+            if (this.showBuyButton_bl) {
+                FWDMSPToolTip.setPrototype();
+                r.buyButtonToolTip_do = new FWDMSPToolTip(r.buyButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "buy track", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
+                document.documentElement.appendChild(r.buyButtonToolTip_do.screen)
+            }
+            if (r.showPopupButton_bl) {
+                FWDMSPToolTip.setPrototype();
+                r.populButtonToolTip_do = new FWDMSPToolTip(r.popupButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "popup", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
+                document.documentElement.appendChild(r.populButtonToolTip_do.screen)
+            }
+            FWDMSPToolTip.setPrototype();
+            r.volumeButtonToolTip_do = new FWDMSPToolTip(r.volumeButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "mute / unmute", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
+            document.documentElement.appendChild(r.volumeButtonToolTip_do.screen)
+        };
+        this.showToolTip = function(e, t, n) {
+            if (!r.showButtonsToolTips_bl) return;
+            var i = FWDMSPUtils.getViewportSize();
+            var s = FWDMSPUtils.getViewportMouseCoordinates(n);
+            var o = parseInt(e.getGlobalX() + e.w / 2 - t.w / 2);
+            var u = parseInt(e.getGlobalY() - t.h - 6);
+            var a = 0;
+            if (o < 0) {
+                a = o;
+                o = 0
+            } else if (o + t.w > i.w) {
+                a = (i.w - (o + t.w)) * -1;
+                o = o + a * -1
+            }
+            if (u < 0) {
+                u += e.h + t.h + 12;
+                t.positionPointer(a, true)
+            } else {
+                t.positionPointer(a, false)
+            }
+            t.setX(o);
+            t.setY(u);
+            t.show()
+        };
         this.setupPrevButton = function() {
-            MUSICSimpleButton.setPrototype();
-            r.prevButton_do = new MUSICSimpleButton(r.prevN_img, t.prevSPath_str);
-            r.prevButton_do.addListener(MUSICSimpleButton.MOUSE_UP, r.prevButtonOnMouseUpHandler);
+            FWDMSPSimpleButton.setPrototype();
+            r.prevButton_do = new FWDMSPSimpleButton(r.prevN_img, t.prevSPath_str);
+            r.prevButton_do.addListener(FWDMSPSimpleButton.SHOW_TOOLTIP, r.prevButtonShowToolTipHandler);
+            r.prevButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, r.prevButtonOnMouseUpHandler);
             r.buttons_ar.push(r.prevButton_do);
             r.mainHolder_do.addChild(r.prevButton_do)
+        };
+        this.prevButtonShowToolTipHandler = function(e) {
+            r.showToolTip(r.prevButton_do, r.prevButtonToolTip_do, e.e)
         };
         this.prevButtonOnMouseUpHandler = function() {
             r.dispatchEvent(e.PLAY_PREV)
         };
         this.setupPlayPauseButton = function() {
-            MUSICComplexButton.setPrototype();
-            r.playPauseButton_do = new MUSICComplexButton(r.playN_img, t.playSPath_str, r.pauseN_img, t.pauseSPath_str, true);
+            FWDMSPComplexButton.setPrototype();
+            r.playPauseButton_do = new FWDMSPComplexButton(r.playN_img, t.playSPath_str, r.pauseN_img, t.pauseSPath_str, true);
             r.buttons_ar.push(r.playPauseButton_do);
-            r.playPauseButton_do.addListener(MUSICComplexButton.MOUSE_UP, r.playButtonMouseUpHandler);
+            r.playPauseButton_do.addListener(FWDMSPComplexButton.SHOW_TOOLTIP, r.playButtonShowToolTipHandler);
+            r.playPauseButton_do.addListener(FWDMSPComplexButton.MOUSE_UP, r.playButtonMouseUpHandler);
             r.mainHolder_do.addChild(r.playPauseButton_do)
         };
         this.showPlayButton = function() {
@@ -7028,6 +7254,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             if (!r.playPauseButton_do) return;
             r.playPauseButton_do.setButtonState(0)
         };
+        this.playButtonShowToolTipHandler = function(e) {
+            r.showToolTip(r.playPauseButton_do, r.playPauseToolTip_do, e.e)
+        };
         this.playButtonMouseUpHandler = function() {
             if (r.playPauseButton_do.currentState == 0) {
                 r.dispatchEvent(e.PAUSE)
@@ -7036,20 +7265,24 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }
         };
         this.setupNextButton = function() {
-            MUSICSimpleButton.setPrototype();
-            r.nextButton_do = new MUSICSimpleButton(r.nextN_img, t.nextSPath_str);
-            r.nextButton_do.addListener(MUSICSimpleButton.MOUSE_UP, r.nextButtonOnMouseUpHandler);
+            FWDMSPSimpleButton.setPrototype();
+            r.nextButton_do = new FWDMSPSimpleButton(r.nextN_img, t.nextSPath_str);
+            r.nextButton_do.addListener(FWDMSPSimpleButton.SHOW_TOOLTIP, r.nextButtonShowToolTipHandler);
+            r.nextButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, r.nextButtonOnMouseUpHandler);
             r.nextButton_do.setY(parseInt((r.stageHeight - r.nextButton_do.h) / 2));
             r.buttons_ar.push(r.nextButton_do);
             r.mainHolder_do.addChild(r.nextButton_do)
+        };
+        this.nextButtonShowToolTipHandler = function(e) {
+            r.showToolTip(r.nextButton_do, r.nextButtonToolTip_do, e.e)
         };
         this.nextButtonOnMouseUpHandler = function() {
             r.dispatchEvent(e.PLAY_NEXT)
         };
         this.setupSeparators = function() {
-            r.firstSeparator_do = new MUSICDisplayObject("img");
+            r.firstSeparator_do = new FWDMSPDisplayObject("img");
             r.firstSeparator_do.setScreen(r.separator1_img);
-            r.secondSeparator_do = new MUSICDisplayObject("img");
+            r.secondSeparator_do = new FWDMSPDisplayObject("img");
             r.secondSeparator_do.setScreen(r.separator2_img);
             r.firstSeparator_do.setX(-10);
             r.secondSeparator_do.setX(-10);
@@ -7059,14 +7292,14 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             r.mainHolder_do.addChild(r.secondSeparator_do)
         };
         this.setupTitlebar = function() {
-            r.mainTitlebar_do = new MUSICDisplayObject("div");
+            r.mainTitlebar_do = new FWDMSPDisplayObject("div");
             r.mainTitlebar_do.getStyle().background = "url('" + r.titlebarBkMiddlePattern_str + "')";
             r.mainTitlebar_do.setHeight(r.titlebarHeight);
-            r.titleBarLeft_do = new MUSICDisplayObject("img");
+            r.titleBarLeft_do = new FWDMSPDisplayObject("img");
             r.titleBarLeft_do.setScreen(r.titleBarLeft_img);
-            r.titleBarRight_do = new MUSICDisplayObject("img");
+            r.titleBarRight_do = new FWDMSPDisplayObject("img");
             r.titleBarRight_do.setScreen(r.titleBarRigth_img);
-            r.simpleText_do = new MUSICDisplayObject("div");
+            r.simpleText_do = new FWDMSPDisplayObject("div");
             r.simpleText_do.setOverflow("visible");
             r.simpleText_do.hasTransform3d_bl = false;
             r.simpleText_do.hasTransform2d_bl = false;
@@ -7079,7 +7312,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             r.simpleText_do.getStyle().fontSmoothing = "antialiased";
             r.simpleText_do.getStyle().webkitFontSmoothing = "antialiased";
             r.simpleText_do.getStyle().textRendering = "optimizeLegibility";
-            r.animText1_do = new MUSICDisplayObject("div");
+            r.animText1_do = new FWDMSPDisplayObject("div");
             r.animText1_do.setOverflow("visible");
             r.animText1_do.hasTransform3d_bl = false;
             r.animText1_do.hasTransform2d_bl = false;
@@ -7092,7 +7325,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             r.animText1_do.getStyle().fontSmoothing = "antialiased";
             r.animText1_do.getStyle().webkitFontSmoothing = "antialiased";
             r.animText1_do.getStyle().textRendering = "optimizeLegibility";
-            r.animText2_do = new MUSICDisplayObject("div");
+            r.animText2_do = new FWDMSPDisplayObject("div");
             r.animText2_do.setOverflow("visible");
             r.animText2_do.hasTransform3d_bl = false;
             r.animText2_do.hasTransform2d_bl = false;
@@ -7105,18 +7338,18 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             r.animText2_do.getStyle().fontSmoothing = "antialiased";
             r.animText2_do.getStyle().webkitFontSmoothing = "antialiased";
             r.animText2_do.getStyle().textRendering = "optimizeLegibility";
-            r.titleBarGradLeft_do = new MUSICDisplayObject("img");
+            r.titleBarGradLeft_do = new FWDMSPDisplayObject("img");
             r.titleBarGradLeft_do.setScreen(r.titlebarLeftPath_img);
             r.titleBarGradLeft_do.setX(-50);
-            r.titlebarGradRight_do = new MUSICDisplayObject("img");
+            r.titlebarGradRight_do = new FWDMSPDisplayObject("img");
             r.titlebarGradRight_do.setScreen(r.titlebarRightPath_img);
             if (r.showSoundAnimation_bl) {
-                r.animationBackground_do = new MUSICDisplayObject("img");
+                r.animationBackground_do = new FWDMSPDisplayObject("img");
                 r.animationBackground_do.setScreen(r.titlebarAnimBkPath_img);
                 r.animationHolderWidth = r.animationBackground_do.w;
                 r.simpleText_do.setX(r.animationBackground_do.w + 5);
-                MUSICPreloader.setPrototype();
-                r.animation_do = new MUSICPreloader(t.animationPath_str, 29, 22, 31, 80, true);
+                FWDMSPPreloader.setPrototype();
+                r.animation_do = new FWDMSPPreloader(t.animationPath_str, 29, 22, 31, 80, true);
                 r.animation_do.setX(r.equlizerOffsetLeft);
                 r.animation_do.setY(0);
                 r.animation_do.show(true);
@@ -7208,45 +7441,45 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             if (r.animation_do) r.animation_do.start()
         };
         this.setupMainScrubber = function() {
-            r.mainScrubber_do = new MUSICDisplayObject("div");
+            r.mainScrubber_do = new FWDMSPDisplayObject("div");
             r.mainScrubber_do.setY(parseInt((r.stageHeight - r.scrubbersHeight) / 2));
             r.mainScrubber_do.setHeight(r.scrubbersHeight);
-            r.mainScrubberBkLeft_do = new MUSICDisplayObject("img");
+            r.mainScrubberBkLeft_do = new FWDMSPDisplayObject("img");
             r.mainScrubberBkLeft_do.setScreen(r.mainScrubberBkLeft_img);
-            r.mainScrubberBkRight_do = new MUSICDisplayObject("img");
+            r.mainScrubberBkRight_do = new FWDMSPDisplayObject("img");
             r.mainScrubberBkRight_do.setScreen(r.mainScrubberBkRight_img);
             var e = new Image;
             e.src = r.mainScrubberBkMiddlePath_str;
             if (r.isMobile_bl) {
-                r.mainScrubberBkMiddle_do = new MUSICDisplayObject("div");
+                r.mainScrubberBkMiddle_do = new FWDMSPDisplayObject("div");
                 r.mainScrubberBkMiddle_do.getStyle().background = "url('" + r.mainScrubberBkMiddlePath_str + "')"
             } else {
-                r.mainScrubberBkMiddle_do = new MUSICDisplayObject("img");
+                r.mainScrubberBkMiddle_do = new FWDMSPDisplayObject("img");
                 r.mainScrubberBkMiddle_do.setScreen(e)
             }
             r.mainScrubberBkMiddle_do.setHeight(r.scrubbersHeight);
             r.mainScrubberBkMiddle_do.setX(r.scrubbersBkLeftAndRightWidth);
-            r.mainProgress_do = new MUSICDisplayObject("div");
+            r.mainProgress_do = new FWDMSPDisplayObject("div");
             r.mainProgress_do.setHeight(r.scrubbersHeight);
-            r.progressLeft_do = new MUSICDisplayObject("img");
+            r.progressLeft_do = new FWDMSPDisplayObject("img");
             r.progressLeft_do.setScreen(r.mainScrubberLeftProgress_img);
             e = new Image;
             e.src = r.progressMiddlePath_str;
-            r.progressMiddle_do = new MUSICDisplayObject("div");
+            r.progressMiddle_do = new FWDMSPDisplayObject("div");
             r.progressMiddle_do.getStyle().background = "url('" + r.progressMiddlePath_str + "')";
             r.progressMiddle_do.setHeight(r.scrubbersHeight);
             r.progressMiddle_do.setX(r.mainScrubberDragLeftWidth);
-            r.mainScrubberDrag_do = new MUSICDisplayObject("div");
+            r.mainScrubberDrag_do = new FWDMSPDisplayObject("div");
             r.mainScrubberDrag_do.setHeight(r.scrubbersHeight);
-            r.mainScrubberDragLeft_do = new MUSICDisplayObject("img");
+            r.mainScrubberDragLeft_do = new FWDMSPDisplayObject("img");
             r.mainScrubberDragLeft_do.setScreen(r.mainScrubberDragLeft_img);
             e = new Image;
             e.src = r.mainScrubberDragMiddlePath_str;
-            r.mainScrubberDragMiddle_do = new MUSICDisplayObject("div");
+            r.mainScrubberDragMiddle_do = new FWDMSPDisplayObject("div");
             r.mainScrubberDragMiddle_do.getStyle().background = "url('" + r.mainScrubberDragMiddlePath_str + "')";
             r.mainScrubberDragMiddle_do.setHeight(r.scrubbersHeight);
             r.mainScrubberDragMiddle_do.setX(r.mainScrubberDragLeftWidth);
-            r.mainScrubberBarLine_do = new MUSICDisplayObject("img");
+            r.mainScrubberBarLine_do = new FWDMSPDisplayObject("img");
             r.mainScrubberBarLine_do.setScreen(r.mainScrubberLine_img);
             r.mainScrubberBarLine_do.setAlpha(0);
             r.mainScrubberBarLine_do.hasTransform3d_bl = false;
@@ -7291,7 +7524,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             if (r.isMainScrubberDisabled_bl) return;
             if (t.preventDefault) t.preventDefault();
             r.isMainScrubberScrubbing_bl = true;
-            var n = MUSICUtils.getViewportMouseCoordinates(t);
+            var n = FWDMSPUtils.getViewportMouseCoordinates(t);
             var i = n.screenX - r.mainScrubber_do.getGlobalX();
             if (i < 0) {
                 i = 0
@@ -7299,7 +7532,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 i = r.mainScrubberWidth - r.scrubbersOffsetWidth
             }
             var s = i / r.mainScrubberWidth;
-            if (!MUSIC.hasHTML5Audio && i >= r.mainProgress_do.w) i = r.mainProgress_do.w;
+            if (!FWDMSP.hasHTML5Audio && i >= r.mainProgress_do.w) i = r.mainProgress_do.w;
             var o = i / r.mainScrubberWidth;
             if (r.disable_do) r.addChild(r.disable_do);
             r.updateMainScrubber(s);
@@ -7330,7 +7563,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         };
         this.mainScrubberMoveHandler = function(t) {
             if (t.preventDefault) t.preventDefault();
-            var n = MUSICUtils.getViewportMouseCoordinates(t);
+            var n = FWDMSPUtils.getViewportMouseCoordinates(t);
             var i = n.screenX - r.mainScrubber_do.getGlobalX();
             if (i < 0) {
                 i = 0
@@ -7338,7 +7571,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 i = r.mainScrubberWidth - r.scrubbersOffsetWidth
             }
             var s = i / r.mainScrubberWidth;
-            if (!MUSIC.hasHTML5Audio && i >= r.mainProgress_do.w) i = r.mainProgress_do.w;
+            if (!FWDMSP.hasHTML5Audio && i >= r.mainProgress_do.w) i = r.mainProgress_do.w;
             var o = i / r.mainScrubberWidth;
             r.updateMainScrubber(s);
             r.dispatchEvent(e.SCRUB_PLAYLIST_ITEM, {
@@ -7388,21 +7621,21 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             if (!r.mainScrubber_do || isNaN(e)) return;
             var t = parseInt(e * r.mainScrubberWidth);
             r.percentPlayed = e;
-            if (!MUSIC.hasHTML5Audio && t >= r.mainProgress_do.w) t = r.mainProgress_do.w;
+            if (!FWDMSP.hasHTML5Audio && t >= r.mainProgress_do.w) t = r.mainProgress_do.w;
             if (t < 1 && r.isMainScrubberLineVisible_bl) {
                 r.isMainScrubberLineVisible_bl = false;
-                MUSICTweenMax.to(r.mainScrubberBarLine_do, .5, {
+                FWDMSPTweenMax.to(r.mainScrubberBarLine_do, .5, {
                     alpha: 0
                 })
             } else if (t > 2 && !r.isMainScrubberLineVisible_bl) {
                 r.isMainScrubberLineVisible_bl = true;
-                MUSICTweenMax.to(r.mainScrubberBarLine_do, .5, {
+                FWDMSPTweenMax.to(r.mainScrubberBarLine_do, .5, {
                     alpha: 1
                 })
             }
             r.mainScrubberDrag_do.setWidth(t);
             if (t > r.mainScrubberWidth - r.scrubbersOffsetWidth) t = r.mainScrubberWidth - r.scrubbersOffsetWidth;
-            MUSICTweenMax.to(r.mainScrubberBarLine_do, .8, {
+            FWDMSPTweenMax.to(r.mainScrubberBarLine_do, .8, {
                 x: t,
                 ease: Expo.easeOut
             })
@@ -7420,7 +7653,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             r.mainProgress_do.setWidth(t)
         };
         this.setupTime = function() {
-            r.currentTime_do = new MUSICDisplayObject("div");
+            r.currentTime_do = new FWDMSPDisplayObject("div");
             r.currentTime_do.hasTransform3d_bl = false;
             r.currentTime_do.hasTransform2d_bl = false;
             r.currentTime_do.getStyle().fontFamily = "Arial";
@@ -7432,7 +7665,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             r.currentTime_do.getStyle().webkitFontSmoothing = "antialiased";
             r.currentTime_do.getStyle().textRendering = "optimizeLegibility";
             r.mainHolder_do.addChild(r.currentTime_do);
-            r.totalTime_do = new MUSICDisplayObject("div");
+            r.totalTime_do = new FWDMSPDisplayObject("div");
             r.totalTime_do.hasTransform3d_bl = false;
             r.totalTime_do.hasTransform2d_bl = false;
             r.totalTime_do.getStyle().fontFamily = "Arial";
@@ -7475,24 +7708,25 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }
         };
         this.setupVolumeScrubber = function() {
-            r.mainVolumeHolder_do = new MUSICDisplayObject("div");
+            r.mainVolumeHolder_do = new FWDMSPDisplayObject("div");
             r.mainVolumeHolder_do.setHeight(r.volumeN_img.height);
             r.mainHolder_do.addChild(r.mainVolumeHolder_do);
-            MUSICSimpleButton.setPrototype();
-            r.volumeButton_do = new MUSICSimpleButton(r.volumeN_img, t.volumeSPath_str, t.volumeDPath_str);
-            r.volumeButton_do.addListener(MUSICSimpleButton.MOUSE_UP, r.volumeButtonOnMouseUpHandler);
+            FWDMSPSimpleButton.setPrototype();
+            r.volumeButton_do = new FWDMSPSimpleButton(r.volumeN_img, t.volumeSPath_str, t.volumeDPath_str);
+            r.volumeButton_do.addListener(FWDMSPSimpleButton.SHOW_TOOLTIP, r.volumeButtonShowToolTipHandler);
+            r.volumeButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, r.volumeButtonOnMouseUpHandler);
             if (!r.allowToChangeVolume_bl) r.volumeButton_do.disable();
-            r.volumeScrubber_do = new MUSICDisplayObject("div");
+            r.volumeScrubber_do = new FWDMSPDisplayObject("div");
             r.volumeScrubber_do.setHeight(r.scrubbersHeight);
             r.volumeScrubber_do.setX(r.volumeButton_do.w);
             r.volumeScrubber_do.setY(parseInt((r.volumeButton_do.h - r.scrubbersHeight) / 2));
-            r.volumeScrubberBkLeft_do = new MUSICDisplayObject("img");
+            r.volumeScrubberBkLeft_do = new FWDMSPDisplayObject("img");
             var e = new Image;
             e.src = r.mainScrubberBkLeft_do.screen.src;
             r.volumeScrubberBkLeft_do.setScreen(e);
             r.volumeScrubberBkLeft_do.setWidth(r.mainScrubberBkLeft_do.w);
             r.volumeScrubberBkLeft_do.setHeight(r.mainScrubberBkLeft_do.h);
-            r.volumeScrubberBkRight_do = new MUSICDisplayObject("img");
+            r.volumeScrubberBkRight_do = new FWDMSPDisplayObject("img");
             var n = new Image;
             n.src = r.mainScrubberBkRight_do.screen.src;
             r.volumeScrubberBkRight_do.setScreen(n);
@@ -7501,17 +7735,17 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             var i = new Image;
             i.src = r.volumeScrubberBkMiddlePath_str;
             if (r.isMobile_bl) {
-                r.volumeScrubberBkMiddle_do = new MUSICDisplayObject("div");
+                r.volumeScrubberBkMiddle_do = new FWDMSPDisplayObject("div");
                 r.volumeScrubberBkMiddle_do.getStyle().background = "url('" + r.volumeScrubberBkMiddlePath_str + "')"
             } else {
-                r.volumeScrubberBkMiddle_do = new MUSICDisplayObject("img");
+                r.volumeScrubberBkMiddle_do = new FWDMSPDisplayObject("img");
                 r.volumeScrubberBkMiddle_do.setScreen(i)
             }
             r.volumeScrubberBkMiddle_do.setHeight(r.scrubbersHeight);
             r.volumeScrubberBkMiddle_do.setX(r.scrubbersBkLeftAndRightWidth);
-            r.volumeScrubberDrag_do = new MUSICDisplayObject("div");
+            r.volumeScrubberDrag_do = new FWDMSPDisplayObject("div");
             r.volumeScrubberDrag_do.setHeight(r.scrubbersHeight);
-            r.volumeScrubberDragLeft_do = new MUSICDisplayObject("img");
+            r.volumeScrubberDragLeft_do = new FWDMSPDisplayObject("img");
             var s = new Image;
             s.src = r.mainScrubberDragLeft_img.src;
             r.volumeScrubberDragLeft_do.setScreen(s);
@@ -7520,15 +7754,15 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             i = new Image;
             i.src = r.volumeScrubberDragMiddlePath_str;
             if (r.isMobile_bl) {
-                r.volumeScrubberDragMiddle_do = new MUSICWDMSPDisplayObject("div");
+                r.volumeScrubberDragMiddle_do = new FWDMSPDisplayObject("div");
                 r.volumeScrubberDragMiddle_do.getStyle().background = "url('" + r.volumeScrubberDragMiddlePath_str + "')"
             } else {
-                r.volumeScrubberDragMiddle_do = new MUSICDisplayObject("img");
+                r.volumeScrubberDragMiddle_do = new FWDMSPDisplayObject("img");
                 r.volumeScrubberDragMiddle_do.setScreen(i)
             }
             r.volumeScrubberDragMiddle_do.setHeight(r.scrubbersHeight);
             r.volumeScrubberDragMiddle_do.setX(r.mainScrubberDragLeftWidth);
-            r.volumeScrubberBarLine_do = new MUSICDisplayObject("img");
+            r.volumeScrubberBarLine_do = new FWDMSPDisplayObject("img");
             var o = new Image;
             o.src = r.mainScrubberBarLine_do.screen.src;
             r.volumeScrubberBarLine_do.setScreen(o);
@@ -7580,6 +7814,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }
             r.updateVolume(e)
         };
+        this.volumeButtonShowToolTipHandler = function(e) {
+            r.showToolTip(r.volumeButton_do, r.volumeButtonToolTip_do, e)
+        };
         this.volumeScrubberOnOverHandler = function(e) {
             if (r.isVolumeScrubberDisabled_bl) return
         };
@@ -7589,7 +7826,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.volumeScrubberOnDownHandler = function(t) {
             if (r.isVolumeScrubberDisabled_bl) return;
             if (t.preventDefault) t.preventDefault();
-            var n = MUSICUtils.getViewportMouseCoordinates(t);
+            var n = FWDMSPUtils.getViewportMouseCoordinates(t);
             var i = n.screenX - r.volumeScrubber_do.getGlobalX();
             if (i < 0) {
                 i = 0
@@ -7622,7 +7859,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.volumeScrubberMoveHandler = function(e) {
             if (r.isVolumeScrubberDisabled_bl) return;
             if (e.preventDefault) e.preventDefault();
-            var t =MUSICUtils.getViewportMouseCoordinates(e);
+            var t = FWDMSPUtils.getViewportMouseCoordinates(e);
             var n = t.screenX - r.volumeScrubber_do.getGlobalX();
             if (n < 0) {
                 n = 0
@@ -7670,17 +7907,17 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             r.volumeScrubberDrag_do.setWidth(t);
             if (t < 1 && r.isVolumeScrubberLineVisible_bl) {
                 r.isVolumeScrubberLineVisible_bl = false;
-                MUSICTweenMax.to(r.volumeScrubberBarLine_do, .5, {
+                FWDMSPTweenMax.to(r.volumeScrubberBarLine_do, .5, {
                     alpha: 0
                 })
             } else if (t > 1 && !r.isVolumeScrubberLineVisible_bl) {
                 r.isVolumeScrubberLineVisible_bl = true;
-                MUSICTweenMax.to(r.volumeScrubberBarLine_do, .5, {
+                FWDMSPTweenMax.to(r.volumeScrubberBarLine_do, .5, {
                     alpha: 1
                 })
             }
             if (t > r.volumeScrubberWidth - r.scrubbersOffsetWidth) t = r.volumeScrubberWidth - r.scrubbersOffsetWidth;
-            MUSICTweenMax.to(r.volumeScrubberBarLine_do, .8, {
+            FWDMSPTweenMax.to(r.volumeScrubberBarLine_do, .8, {
                 x: t,
                 ease: Expo.easeOut
             })
@@ -7707,15 +7944,19 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             })
         };
         this.setupPlaylistButton = function() {
-            MUSICSimpleButton.setPrototype();
-            r.playlistButton_do = new MUSICSimpleButton(r.playlistN_img, t.playlistSPath_str, undefined, true);
-            r.playlistButton_do.addListener(MUSICSimpleButton.MOUSE_UP, r.playlistButtonOnMouseUpHandler);
+            FWDMSPSimpleButton.setPrototype();
+            r.playlistButton_do = new FWDMSPSimpleButton(r.playlistN_img, t.playlistSPath_str, undefined, true);
+            r.playlistButton_do.addListener(FWDMSPSimpleButton.SHOW_TOOLTIP, r.playlistButtonShowToolTipHandler);
+            r.playlistButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, r.playlistButtonOnMouseUpHandler);
             r.playlistButton_do.setY(parseInt((r.stageHeight - r.playlistButton_do.h) / 2));
             r.buttons_ar.push(r.playlistButton_do);
             r.mainHolder_do.addChild(r.playlistButton_do);
             if (r.showPlayListByDefault_bl) {
                 r.setPlaylistButtonState("selected")
             }
+        };
+        this.playlistButtonShowToolTipHandler = function(e) {
+            r.showToolTip(r.playlistButton_do, r.playlistButtonToolTip_do, e.e)
         };
         this.playlistButtonOnMouseUpHandler = function() {
             if (r.playlistButton_do.isSelectedFinal_bl) {
@@ -7733,12 +7974,16 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }
         };
         this.setupCategoriesButton = function() {
-            MUSICSimpleButton.setPrototype();
-            r.categoriesButton_do = new MUSICSimpleButton(r.categoriesN_img, t.categoriesSPath_str, undefined, true);
-            r.categoriesButton_do.addListener(MUSICSimpleButton.MOUSE_UP, r.categoriesButtonOnMouseUpHandler);
+            FWDMSPSimpleButton.setPrototype();
+            r.categoriesButton_do = new FWDMSPSimpleButton(r.categoriesN_img, t.categoriesSPath_str, undefined, true);
+            r.categoriesButton_do.addListener(FWDMSPSimpleButton.SHOW_TOOLTIP, r.categoriesButtonShowTooltipHandler);
+            r.categoriesButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, r.categoriesButtonOnMouseUpHandler);
             r.categoriesButton_do.setY(parseInt((r.stageHeight - r.categoriesButton_do.h) / 2));
             r.buttons_ar.push(r.categoriesButton_do);
             r.mainHolder_do.addChild(r.categoriesButton_do)
+        };
+        this.categoriesButtonShowTooltipHandler = function(e) {
+            r.showToolTip(r.categoriesButton_do, r.playlistsButtonToolTip_do, e.e)
         };
         this.categoriesButtonOnMouseUpHandler = function() {
             r.dispatchEvent(e.SHOW_CATEGORIES)
@@ -7752,13 +7997,17 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }
         };
         this.setupLoopButton = function() {
-            MUSICSimpleButton.setPrototype();
-            r.loopButton_do = new MUSICSimpleButton(r.replayN_img, t.replaySPath_str, undefined, true);
-            r.loopButton_do.addListener(MUSICSimpleButton.MOUSE_UP, r.loopButtonOnMouseUpHandler);
+            FWDMSPSimpleButton.setPrototype();
+            r.loopButton_do = new FWDMSPSimpleButton(r.replayN_img, t.replaySPath_str, undefined, true);
+            r.loopButton_do.addListener(FWDMSPSimpleButton.SHOW_TOOLTIP, r.loopButtonShowTooltipHandler);
+            r.loopButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, r.loopButtonOnMouseUpHandler);
             r.loopButton_do.setY(parseInt((r.stageHeight - r.loopButton_do.h) / 2));
             r.buttons_ar.push(r.loopButton_do);
             r.mainHolder_do.addChild(r.loopButton_do);
             if (r.loop_bl) r.setLoopStateButton("selected")
+        };
+        this.loopButtonShowTooltipHandler = function(e) {
+            r.showToolTip(r.loopButton_do, r.loopButtonToolTip_do, e.e)
         };
         this.loopButtonOnMouseUpHandler = function() {
             if (r.loopButton_do.isSelectedFinal_bl) {
@@ -7776,24 +8025,46 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }
         };
         this.setupDownloadButton = function() {
-            MUSICSimpleButton.setPrototype();
-            r.downloadButton_do = new MUSICSimpleButton(r.downloaderN_img, t.downloaderSPath_str);
-            r.downloadButton_do.addListener(MUSICSimpleButton.MOUSE_UP, r.downloadButtonOnMouseUpHandler);
+            FWDMSPSimpleButton.setPrototype();
+            r.downloadButton_do = new FWDMSPSimpleButton(r.downloaderN_img, t.downloaderSPath_str);
+            r.downloadButton_do.addListener(FWDMSPSimpleButton.SHOW_TOOLTIP, r.downloadButtonShowToolTipHandler);
+            r.downloadButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, r.downloadButtonOnMouseUpHandler);
             r.downloadButton_do.setY(parseInt((r.stageHeight - r.downloadButton_do.h) / 2));
             r.buttons_ar.push(r.downloadButton_do);
             r.mainHolder_do.addChild(r.downloadButton_do)
         };
+        this.downloadButtonShowToolTipHandler = function(e) {
+            r.showToolTip(r.downloadButton_do, r.downloadButtonToolTip_do, e.e)
+        };
         this.downloadButtonOnMouseUpHandler = function() {
             r.dispatchEvent(e.DOWNLOAD_MP3)
         };
+        this.setupBuyButton = function() {
+            FWDMSPSimpleButton.setPrototype();
+            r.buyButton_do = new FWDMSPSimpleButton(t.buyN_img, t.buySPath_str);
+            r.buyButton_do.addListener(FWDMSPSimpleButton.SHOW_TOOLTIP, r.buyButtonShowToolTipHandler);
+            r.buyButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, r.buyButtonOnMouseUpHandler);
+            r.buttons_ar.push(r.buyButton_do);
+            r.mainHolder_do.addChild(r.buyButton_do)
+        };
+        this.buyButtonShowToolTipHandler = function(e) {
+            r.showToolTip(r.buyButton_do, r.buyButtonToolTip_do, e.e)
+        };
+        this.buyButtonOnMouseUpHandler = function() {
+            r.dispatchEvent(e.BUY)
+        };
         this.setupShuffleButton = function() {
-            MUSICSimpleButton.setPrototype();
-            r.shuffleButton_do = new MUSICSimpleButton(r.shuffleN_img, t.shuffleSPath_str, undefined, true);
-            r.shuffleButton_do.addListener(MUSICSimpleButton.MOUSE_UP, r.shuffleButtonOnMouseUpHandler);
+            FWDMSPSimpleButton.setPrototype();
+            r.shuffleButton_do = new FWDMSPSimpleButton(r.shuffleN_img, t.shuffleSPath_str, undefined, true);
+            r.shuffleButton_do.addListener(FWDMSPSimpleButton.SHOW_TOOLTIP, r.shuffleButtonShowToolTipHandler);
+            r.shuffleButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, r.shuffleButtonOnMouseUpHandler);
             r.shuffleButton_do.setY(parseInt((r.stageHeight - r.shuffleButton_do.h) / 2));
             r.buttons_ar.push(r.shuffleButton_do);
             r.mainHolder_do.addChild(r.shuffleButton_do);
             if (!r.loop_bl && r.shuffle_bl) r.setShuffleButtonState("selected")
+        };
+        this.shuffleButtonShowToolTipHandler = function(e) {
+            r.showToolTip(r.shuffleButton_do, r.shuffleButtonToolTip_do, e.e)
         };
         this.shuffleButtonOnMouseUpHandler = function() {
             if (r.shuffleButton_do.isSelectedFinal_bl) {
@@ -7810,12 +8081,45 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 r.shuffleButton_do.setUnselected()
             }
         };
+        this.setupFacebookButton = function() {
+            FWDMSPSimpleButton.setPrototype();
+            r.facebookButton_do = new FWDMSPSimpleButton(r.facebookN_img, t.facebookSPath_str);
+            r.facebookButton_do.addListener(FWDMSPSimpleButton.SHOW_TOOLTIP, r.facebookButtonShowToolTipHandler);
+            r.facebookButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, r.faceboolButtonOnMouseUpHandler);
+            r.facebookButton_do.setY(parseInt((r.stageHeight - r.facebookButton_do.h) / 2));
+            r.buttons_ar.push(r.facebookButton_do);
+            r.mainHolder_do.addChild(r.facebookButton_do)
+        };
+        this.facebookButtonShowToolTipHandler = function(e) {
+            r.showToolTip(r.facebookButton_do, r.facebookButtonToolTip_do, e.e)
+        };
+        this.faceboolButtonOnMouseUpHandler = function() {
+            r.dispatchEvent(e.FACEBOOK_SHARE)
+        };
+        this.setupPopupButton = function() {
+            FWDMSPSimpleButton.setPrototype();
+            r.popupButton_do = new FWDMSPSimpleButton(r.popupN_img, t.popupSPath_str);
+            r.popupButton_do.addListener(FWDMSPSimpleButton.SHOW_TOOLTIP, r.popupButtonShowToolTipHandler);
+            r.popupButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, r.popupButtonOnMouseUpHandler);
+            r.popupButton_do.setY(parseInt((r.stageHeight - r.popupButton_do.h) / 2));
+            r.buttons_ar.push(r.popupButton_do);
+            r.mainHolder_do.addChild(r.popupButton_do)
+        };
+        this.popupButtonShowToolTipHandler = function(e) {
+            r.showToolTip(r.popupButton_do, r.populButtonToolTip_do, e.e)
+        };
+        this.popupButtonOnMouseUpHandler = function() {
+            if (r.populButtonToolTip_do) r.populButtonToolTip_do.hide();
+            r.dispatchEvent(e.POPUP)
+        };
         this.disableControllerWhileLoadingPlaylist = function() {
             r.prevButton_do.disable();
             r.playPauseButton_do.disable();
             r.nextButton_do.disable();
             if (r.downloadButton_do) r.downloadButton_do.disable();
+            if (r.buyButton_do) r.buyButton_do.disable();
             if (r.playlistButton_do) r.playlistButton_do.disable(true);
+            if (r.facebookButton_do) r.facebookButton_do.disable();
             r.updateTime("...", "...");
             r.setTitle("...")
         };
@@ -7824,13 +8128,16 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             r.playPauseButton_do.enable();
             r.nextButton_do.enable();
             if (r.downloadButton_do) r.downloadButton_do.enable();
+            if (r.buyButton_do) r.buyButton_do.enable();
             if (r.playlistButton_do) r.playlistButton_do.enable();
+            if (r.facebookButton_do) r.facebookButton_do.enable()
         };
         this.init()
     };
     e.setPrototype = function() {
-        e.prototype = new MUSICDisplayObject("div")
+        e.prototype = new FWDMSPDisplayObject("div")
     };
+    e.FACEBOOK_SHARE = "facebookShare";
     e.PLAY_NEXT = "playNext";
     e.PLAY_PREV = "playPrev";
     e.PLAY = "play";
@@ -7853,7 +8160,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
     e.DOWNLOAD_MP3 = "downloadMp3";
     e.BUY = "buy";
     e.prototype = null;
-    window.MUSICController = e
+    window.FWDMSPController = e
 })();
 (function(e) {
     var t = function(e, t, n, r) {
@@ -7884,9 +8191,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.innerHTML = "";
         this.opacityType = "";
         this.isHtml5_bl = false;
-        this.hasTransform3d_bl = MUSICUtils.hasTransform3d;
-        this.hasTransform2d_bl = MUSICUtils.hasTransform2d;
-        if (MUSICUtils.isIE || MUSICUtils.isIE11 && !MUSICUtils.isMobile) {
+        this.hasTransform3d_bl = FWDMSPUtils.hasTransform3d;
+        this.hasTransform2d_bl = FWDMSPUtils.hasTransform2d;
+        if (FWDMSPUtils.isIE || FWDMSPUtils.isIE11 && !FWDMSPUtils.isMobile) {
             i.hasTransform3d_bl = false;
             i.hasTransform2d_bl = false
         }
@@ -8122,7 +8429,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         };
         i.addChild = function(e) {
             if (i.contains(e)) {
-                i.children_ar.splice(MUSICUtils.indexOfArray(i.children_ar, e), 1);
+                i.children_ar.splice(FWDMSPUtils.indexOfArray(i.children_ar, e), 1);
                 i.children_ar.push(e);
                 i.screen.appendChild(e.screen)
             } else {
@@ -8132,14 +8439,14 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         };
         i.removeChild = function(e) {
             if (i.contains(e)) {
-                i.children_ar.splice(MUSICUtils.indexOfArray(i.children_ar, e), 1);
+                i.children_ar.splice(FWDMSPUtils.indexOfArray(i.children_ar, e), 1);
                 i.screen.removeChild(e.screen)
             } else {
                 throw Error("##removeChild()## Child dose't exist, it can't be removed!")
             }
         };
         i.contains = function(e) {
-            if (MUSICUtils.indexOfArray(i.children_ar, e) == -1) {
+            if (FWDMSPUtils.indexOfArray(i.children_ar, e) == -1) {
                 return false
             } else {
                 return true
@@ -8153,17 +8460,17 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 i.screen.insertBefore(e.screen, i.children_ar[0].screen);
                 i.screen.insertBefore(i.children_ar[0].screen, e.screen);
                 if (i.contains(e)) {
-                    i.children_ar.splice(MUSICUtils.indexOfArray(i.children_ar, e), 1, e)
+                    i.children_ar.splice(FWDMSPUtils.indexOfArray(i.children_ar, e), 1, e)
                 } else {
-                    i.children_ar.splice(MUSICUtils.indexOfArray(i.children_ar, e), 0, e)
+                    i.children_ar.splice(FWDMSPUtils.indexOfArray(i.children_ar, e), 0, e)
                 }
             } else {
                 if (t < 0 || t > i.getNumChildren() - 1) throw Error("##getChildAt()## Index out of bounds!");
                 i.screen.insertBefore(e.screen, i.children_ar[t].screen);
                 if (i.contains(e)) {
-                    i.children_ar.splice(MUSICUtils.indexOfArray(i.children_ar, e), 1, e)
+                    i.children_ar.splice(FWDMSPUtils.indexOfArray(i.children_ar, e), 1, e)
                 } else {
-                    i.children_ar.splice(MUSICUtils.indexOfArray(i.children_ar, e), 0, e)
+                    i.children_ar.splice(FWDMSPUtils.indexOfArray(i.children_ar, e), 0, e)
                 }
             }
         };
@@ -8252,7 +8559,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         };
         i.init()
     };
-    e.MUSICDisplayObject = t
+    e.FWDMSPDisplayObject = t
 })(window);
 (function() {
     var e = function() {
@@ -8302,7 +8609,78 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             this.removeListener = null
         }
     };
-    window.MUSICEventDispatcher = e
+    window.FWDMSPEventDispatcher = e
+})(window);
+(function(e) {
+    var t = function(n) {
+        var r = this;
+        var i = t.prototype;
+        this.appId = parseInt(n);
+        var s = false;
+        r.init = function() {
+            r.checkFBRoot();
+            if (!e.fbAsyncInit) r.connect()
+        };
+        this.checkFBRoot = function() {
+            var e = Boolean(document.getElementById("fb-root"));
+            if (!e) {
+                e = document.createElement("div");
+                e.id = "fb-root";
+                document.getElementsByTagName("body")[0].appendChild(e)
+            }
+        };
+        this.connect = function() {
+            if (r.hasStartedToConnect_bl) return;
+            r.hasStartedToConnect_bl = true;
+            e.fbAsyncInit = function() {
+                FB.init({
+                    appId: r.appId,
+                    status: true,
+                    cookie: true,
+                    xfbml: true,
+                    oauth: true
+                });
+                FB.Event.subscribe("auth.authResponseChange", function(e) {
+                    if (e.status === "connected") {} else {
+                        FB.login()
+                    }
+                })
+            };
+            (function(e) {
+                var t, n = "facebook-jssdk";
+                if (e.getElementById(n)) {
+                    return
+                }
+                t = e.createElement("script");
+                t.id = n;
+                t.async = true;
+                t.src = "//connect.facebook.net/en_US/all.js";
+                e.getElementsByTagName("body")[0].appendChild(t)
+            })(document)
+        };
+        this.share = function(e, t, n) {
+            if (String(n).indexOf("undefined") == -1) {
+                FB.ui({
+                    method: "feed",
+                    link: e,
+                    caption: t,
+                    picture: n
+                }, function(e) {})
+            } else {
+                FB.ui({
+                    method: "feed",
+                    link: e,
+                    caption: t
+                }, function(e) {})
+            }
+        };
+        r.init()
+    };
+    t.setPrototype = function() {
+        t.prototype = new FWDMSPEventDispatcher
+    };
+    t.prototype = null;
+    e.FWDMSPFacebookShare = t
 })(window);
 (function(e) {
     var t = function(e) {
@@ -8316,11 +8694,11 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.allowToRemove_bl = true;
         this.init = function() {
             n.setResizableSizeAfterParent();
-            n.bk_do = new MUSICDisplayObject("div");
+            n.bk_do = new FWDMSPDisplayObject("div");
             n.bk_do.setAlpha(.4);
             n.bk_do.setBkColor("#FF0000");
             n.addChild(n.bk_do);
-            n.textHolder_do = new MUSICDisplayObject("div");
+            n.textHolder_do = new FWDMSPDisplayObject("div");
             n.textHolder_do.getStyle().wordWrap = "break-word";
             n.textHolder_do.getStyle().padding = "10px";
             n.textHolder_do.getStyle().paddingBottom = "0px";
@@ -8393,16 +8771,16 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.init()
     };
     t.setPrototype = function() {
-        t.prototype = new MUSICDisplayObject("div", "relative")
+        t.prototype = new FWDMSPDisplayObject("div", "relative")
     };
     t.prototype = null;
-    e.MUSICInfo = t
+    e.FWDMSPInfo = t
 })(window);
 (function() {
     var e = function(t, n, r) {
         var i = this;
         this.animation_img = t.openerAnimation_img;
-        if (n == MUSIC.POSITION_TOP) {
+        if (n == FWDMSP.POSITION_TOP) {
             this.openN_img = t.openTopN_img;
             this.openSPath_str = t.openTopSPath_str
         } else {
@@ -8433,8 +8811,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.showFirstTime_bl = true;
         this.playerIsShowed_bl = r;
         this.showOpenerPlayPauseButton_bl = t.showOpenerPlayPauseButton_bl;
-        this.isMobile_bl = MUSICUtils.isMobile;
-        this.hasPointerEvent_bl = MUSICUtils.hasPointerEvent;
+        this.isMobile_bl = FWDMSPUtils.isMobile;
+        this.hasPointerEvent_bl = FWDMSPUtils.hasPointerEvent;
         this.init = function() {
             i.hasTransform3d_bl = false;
             i.hasTransform2d_bl = false;
@@ -8453,7 +8831,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             i.setHeight(i.totalHeight)
         };
         this.setupStuff = function(e) {
-            i.mainHolder_do = new MUSICDisplayObject("div");
+            i.mainHolder_do = new FWDMSPDisplayObject("div");
             i.mainHolder_do.hasTransform3d_bl = false;
             i.mainHolder_do.hasTransform2d_bl = false;
             i.mainHolder_do.setBackfaceVisibility();
@@ -8463,14 +8841,14 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 i.mainHolder_do.setWidth(i.totalWidth)
             }
             i.mainHolder_do.setHeight(i.totalHeight);
-            i.openN_do = new MUSICDisplayObject("img");
+            i.openN_do = new FWDMSPDisplayObject("img");
             i.openN_do.setScreen(i.openN_img);
             i.openN_do.hasTransform3d_bl = false;
             i.openN_do.hasTransform2d_bl = false;
             i.openN_do.setBackfaceVisibility();
             var t = new Image;
             t.src = i.openSPath_str;
-            i.openS_do = new MUSICDisplayObject("img");
+            i.openS_do = new FWDMSPDisplayObject("img");
             i.openS_do.setScreen(t);
             i.openS_do.hasTransform3d_bl = false;
             i.openS_do.hasTransform2d_bl = false;
@@ -8478,14 +8856,14 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             i.openS_do.setWidth(i.openN_do.w);
             i.openS_do.setHeight(i.openN_do.h);
             i.openS_do.setAlpha(0);
-            i.closeN_do = new MUSICDisplayObject("img");
+            i.closeN_do = new FWDMSPDisplayObject("img");
             i.closeN_do.setScreen(i.closeN_img);
             i.closeN_do.hasTransform3d_bl = false;
             i.closeN_do.hasTransform2d_bl = false;
             i.closeN_do.setBackfaceVisibility();
             var n = new Image;
             n.src = i.closeSPath_str;
-            i.closeS_do = new MUSICDisplayObject("img");
+            i.closeS_do = new FWDMSPDisplayObject("img");
             i.closeS_do.setScreen(n);
             i.closeS_do.setWidth(i.closeN_do.w);
             i.closeS_do.setHeight(i.closeN_do.h);
@@ -8493,12 +8871,12 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             i.closeS_do.hasTransform2d_bl = false;
             i.closeS_do.setBackfaceVisibility();
             i.closeS_do.setAlpha(0);
-            MUSICPreloader.setPrototype();
-            i.animation_do = new MUSICPreloader(i.animationPath_str, 29, 22, 31, 80, true);
+            FWDMSPPreloader.setPrototype();
+            i.animation_do = new FWDMSPPreloader(i.animationPath_str, 29, 22, 31, 80, true);
             i.animation_do.setY(i.openerEqulizerOffsetTop);
             i.animation_do.show(false);
             i.animation_do.stop();
-            i.dumy_do = new MUSICDisplayObject("div");
+            i.dumy_do = new FWDMSPDisplayObject("div");
             i.dumy_do.setWidth(i.totalWidth);
             i.dumy_do.setHeight(i.totalHeight);
             i.dumy_do.getStyle().zIndex = 2;
@@ -8506,7 +8884,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             i.dumy_do.hasTransform2d_bl = false;
             i.dumy_do.setBackfaceVisibility();
             i.dumy_do.setButtonMode(true);
-            if (MUSICUtils.isIE || MUSICUtils.isAndroid) {
+            if (FWDMSPUtils.isIE || FWDMSPUtils.isAndroid) {
                 i.dumy_do.setBkColor("#FF0000");
                 i.dumy_do.setAlpha(.01)
             }
@@ -8556,9 +8934,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }
         };
         this.setupPlayPauseButton = function() {
-            MUSICComplexButton.setPrototype();
-            i.playPauseButton_do = new MUSICComplexButton(i.openerPlayN_img, i.openerPlaySPath_str, i.openerPauseN_img, i.openerPauseS_str, true);
-            i.playPauseButton_do.addListener(MUSICComplexButton.MOUSE_UP, i.playButtonMouseUpHandler);
+            FWDMSPComplexButton.setPrototype();
+            i.playPauseButton_do = new FWDMSPComplexButton(i.openerPlayN_img, i.openerPlaySPath_str, i.openerPauseN_img, i.openerPauseS_str, true);
+            i.playPauseButton_do.addListener(FWDMSPComplexButton.MOUSE_UP, i.playButtonMouseUpHandler);
             i.addChild(i.playPauseButton_do)
         };
         this.showPlayButton = function() {
@@ -8571,32 +8949,32 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         };
         this.playButtonMouseUpHandler = function() {
             if (i.playPauseButton_do.currentState == 0) {
-                i.dispatchEvent(MUSICController.PAUSE)
+                i.dispatchEvent(FWDMSPController.PAUSE)
             } else {
-                i.dispatchEvent(MUSICController.PLAY)
+                i.dispatchEvent(FWDMSPController.PLAY)
             }
         };
         this.setNormalState = function() {
             if (i.isMobile_bl && !i.hasPointerEvent_bl) return;
-            MUSICTweenMax.killTweensOf(i.openS_do);
-            MUSICTweenMax.killTweensOf(i.closeS_do);
-            MUSICTweenMax.to(i.openS_do, .5, {
+            FWDMSPTweenMax.killTweensOf(i.openS_do);
+            FWDMSPTweenMax.killTweensOf(i.closeS_do);
+            FWDMSPTweenMax.to(i.openS_do, .5, {
                 alpha: 0,
                 ease: Expo.easeOut
             });
-            MUSICTweenMax.to(i.closeS_do, .5, {
+            FWDMSPTweenMax.to(i.closeS_do, .5, {
                 alpha: 0,
                 ease: Expo.easeOut
             })
         };
         this.setSelectedState = function(e) {
-            MUSICTweenMax.killTweensOf(i.openS_do);
-            MUSICTweenMax.killTweensOf(i.closeS_do);
-            MUSICTweenMax.to(i.openS_do, .5, {
+            FWDMSPTweenMax.killTweensOf(i.openS_do);
+            FWDMSPTweenMax.killTweensOf(i.closeS_do);
+            FWDMSPTweenMax.to(i.openS_do, .5, {
                 alpha: 1,
                 ease: Expo.easeOut
             });
-            MUSICTweenMax.to(i.closeS_do, .5, {
+            FWDMSPTweenMax.to(i.closeS_do, .5, {
                 alpha: 1,
                 ease: Expo.easeOut
             })
@@ -8663,12 +9041,12 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.init()
     };
     e.setPrototype = function() {
-        e.prototype = new MUSICDisplayObject("div")
+        e.prototype = new FWDMSPDisplayObject("div")
     };
     e.SHOW = "show";
     e.HIDE = "hise";
     e.prototype = null;
-    window.MUSICOpener = e
+    window.FWDMSPOpener = e
 })(window);
 (function() {
     var e = function(t, n) {
@@ -8689,6 +9067,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.playlistScrLines_img = t.playlistScrLines_img;
         this.playlistScrLinesOver_img = t.playlistScrLinesOver_img;
         this.playlistDownloadButtonN_img = t.playlistDownloadButtonN_img;
+        this.playlistBuyButtonN_img = t.playlistBuyButtonN_img;
         this.disable_do = null;
         this.separator_do = null;
         this.itemsHolder_do = null;
@@ -8711,10 +9090,15 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.playlistPauseButtonS_str = t.playlistPauseButtonS_str;
         this.controllerBkPath_str = t.controllerBkPath_str;
         this.playlistBackgroundColor_str = t.playlistBackgroundColor_str;
+        this.searchInputColor_str = t.searchInputColor_str;
+        this.toolTipsButtonFontColor_str = t.toolTipsButtonFontColor_str;
         this.countTrack = 0;
+        this.inputSearchTextOffsetTop = t.inputSearchTextOffsetTop;
+        this.inputSearchOffsetLeft = t.inputSearchOffsetLeft;
         this.startSpaceBetweenButtons = t.startSpaceBetweenButtons;
         this.spaceBetweenButtons = t.spaceBetweenButtons;
         if (this.spaceBetweenButtons > 15) this.spaceBetweenButtons = 10;
+        this.searchBarHeight = t.searchBarHeight;
         this.countID3 = 0;
         this.id = 0;
         this.stageWidth = 0;
@@ -8729,6 +9113,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.playPuaseIconHeight = r.playlistPlayButtonN_img.height;
         this.nrOfVisiblePlaylistItems = t.nrOfVisiblePlaylistItems;
         this.durationOffsetRight = t.durationOffsetRight;
+        this.toolTipsButtonsHideDelay = t.toolTipsButtonsHideDelay;
         this.totalPlayListItems = 0;
         this.visibleNrOfItems = 0;
         this.yPositionOnPress = 0;
@@ -8744,10 +9129,13 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.updateMoveMobileScrollbarId_int;
         this.disableOnMoveId_to;
         this.updateMobileScrollbarOnPlaylistLoadId_to;
+        this.showButtonsToolTips_bl = t.showButtonsToolTips_bl;
         this.allowToTweenPlaylistItems_bl = false;
         this.expandPlaylistBackground_bl = t.expandControllerBackground_bl;
         this.isSortedNumerical_bl = true;
         this.showSortButtons_bl = t.showSortButtons_bl;
+        this.showSearchBar_bl = t.showSearchBar_bl;
+        this.showPlaylistItemBuyButton_bl = t.showPlaylistItemBuyButton_bl;
         this.addScrollBarMouseWheelSupport_bl = t.addScrollBarMouseWheelSupport_bl;
         this.allowToScrollAndScrollBarIsActive_bl = false;
         this.isDragging_bl = false;
@@ -8757,17 +9145,17 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.isShowedFirstTime_bl = false;
         this.animateOnIntro_bl = t.animateOnIntro_bl;
         this.isListCreated_bl = false;
-        this.isMobile_bl = MUSICUtils.isMobile;
-        this.hasPointerEvent_bl = MUSICUtils.hasPointerEvent;
+        this.isMobile_bl = FWDMSPUtils.isMobile;
+        this.hasPointerEvent_bl = FWDMSPUtils.hasPointerEvent;
         r.init = function() {
             r.hasTransform3d_bl = false;
             r.hasTransform2d_bl = false;
             r.setBackfaceVisibility();
-            r.mainHolder_do = new MUSICDisplayObject("div");
+            r.mainHolder_do = new FWDMSPDisplayObject("div");
             r.mainHolder_do.hasTransform3d_bl = false;
             r.mainHolder_do.hasTransform2d_bl = false;
             r.mainHolder_do.setBackfaceVisibility();
-            r.itemsHolder_do = new MUSICDisplayObject("div");
+            r.itemsHolder_do = new FWDMSPDisplayObject("div");
             r.itemsHolder_do.setBackfaceVisibility();
             r.setupSeparator();
             r.itemsHolder_do.setY(0);
@@ -8781,9 +9169,61 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 r.setupScrollbar();
                 if (r.addScrollBarMouseWheelSupport_bl) r.addMouseWheelSupport()
             }
+            if (r.showSearchBar_bl) {
+                r.searchBar_do = new FWDMSPDisplayObject("div");
+                r.searchBar_do.setOverflow("visible");
+                if (!r.expandPlaylistBackground_bl) {
+                    r.controllerBk_do = new FWDMSPDisplayObject("div");
+                    r.controllerBk_do.getStyle().background = "url('" + r.controllerBkPath_str + "')"
+                } else {
+                    r.controllerBk_do = new FWDMSPDisplayObject("img");
+                    var e = new Image;
+                    e.src = r.controllerBkPath_str;
+                    r.controllerBk_do.setScreen(e)
+                }
+                r.controllerBk_do.getStyle().width = "100%";
+                r.searchSeparator_do = new FWDMSPDisplayObject("div");
+                r.searchSeparator_do.setBackfaceVisibility();
+                r.searchSeparator_do.hasTransform3d_bl = false;
+                r.searchSeparator_do.hasTransform2d_bl = false;
+                r.searchSeparator_do.getStyle().background = "url('" + r.playlistSeparator_img.src + "')";
+                r.searchSeparator_do.setHeight(r.playlistSeparator_img.height);
+                r.searchBar_do.setHeight(r.searchBarHeight + r.searchSeparator_do.h);
+                r.controllerBk_do.setHeight(r.searchBar_do.h + 1);
+                r.searchBar_do.addChild(r.controllerBk_do);
+                r.searchBar_do.addChild(r.searchSeparator_do);
+                r.setupInput();
+                if (r.showSortButtons_bl) {
+                    r.setupButtons();
+                    if (r.showButtonsToolTips_bl) r.setupToolTips()
+                }
+                r.mainHolder_do.addChild(r.searchBar_do)
+            }
             r.addChild(r.separator_do);
             r.mainHolder_do.setWidth(500);
             r.mainHolder_do.setHeight(500)
+        };
+        r.disableSearchBar = function() {
+            if (r.isSearchBarDisabled_bl) return;
+            r.isSearchBarDisabled_bl = true;
+            r.input_do.screen.value = "Search will be available when all tracks data is loaded!";
+            r.input_do.screen.disabled = true;
+            if (r.sortNButton_do) {
+                r.sortNButton_do.disable();
+                r.sortAButton_do.disable();
+                r.ascDscButton_do.disable()
+            }
+        };
+        r.enableSearchBar = function() {
+            if (!r.isSearchBarDisabled_bl) return;
+            r.isSearchBarDisabled_bl = false;
+            r.input_do.screen.value = "Search for track";
+            r.input_do.screen.disabled = false;
+            if (r.sortNButton_do) {
+                r.sortNButton_do.enable();
+                r.sortAButton_do.enable();
+                r.ascDscButton_do.enable()
+            }
         };
         r.resizeAndPosition = function(e) {
             if (n.stageWidth == r.stageWidth && n.stageHeight == r.stageHeight && !e) return;
@@ -8791,18 +9231,36 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             r.stageWidth = n.stageWidth;
             r.stageWidth = n.stageWidth;
             r.positionList();
+            if (r.searchBar_do) r.positionSearchBar();
             if (r.scrMainHolder_do && r.allowToScrollAndScrollBarIsActive_bl) r.scrMainHolder_do.setX(r.stageWidth - r.scrWidth)
         };
         r.positionList = function() {
             if (!r.isListCreated_bl && r.stageWidth == 0) return;
             var e;
             r.copy_ar = [].concat(r.items_ar);
+            r.isSearched_bl = false;
+            if (r.input_do) {
+                inputValue = r.input_do.screen.value;
+                if (inputValue != "Search for track" && !r.isSearchBarDisabled_bl) {
+                    inputValue = r.input_do.screen.value.toLowerCase();
+                    for (var t = 0; t < r.copy_ar.length; t++) {
+                        e = r.copy_ar[t];
+                        if (e.titleText_str.toLowerCase().indexOf(inputValue.toLowerCase()) == -1) {
+                            FWDMSPTweenMax.killTweensOf(e);
+                            e.setX(-e.w);
+                            r.copy_ar.splice(t, 1);
+                            t--
+                        }
+                    }
+                }
+            }
             var n = 0;
             for (var t = 0; t < r.copy_ar.length; t++) {
                 e = r.copy_ar[t];
                 e.changeSource(t % 2)
             }
             var i = r.copy_ar.length;
+            r.totalSearchedItems = i;
             r.itemsTotalHeight = i * r.itemHeight;
             if (r.visibleNrOfItems >= i) {
                 r.allowToScrollAndScrollBarIsActive_bl = false
@@ -8812,12 +9270,12 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             for (var t = 0; t < i; t++) {
                 e = r.copy_ar[t];
                 if (r.allowToTweenPlaylistItems_bl && e.x < 0 && !r.isMobile_bl) {
-                    if (!MUSICTweenMax.isTweening(e)) MUSICTweenMax.to(e, .8, {
+                    if (!FWDMSPTweenMax.isTweening(e)) FWDMSPTweenMax.to(e, .8, {
                         x: 0,
                         ease: Expo.easeInOut
                     })
                 } else {
-                    MUSICTweenMax.killTweensOf(e);
+                    FWDMSPTweenMax.killTweensOf(e);
                     e.setX(0)
                 }
                 e.setY(r.itemHeight * t);
@@ -8853,7 +9311,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             r.isShowedFirstTime_bl = true;
             r.stageHeight = 0;
             r.isListCreated_bl = true;
-            if (r.input_do) r.input_do.screen.value = "";
+            if (r.input_do) r.input_do.screen.value = "Search for track";
             r.allowToScrollAndScrollBarIsActive_bl = false;
             r.countID3 == 2001;
             r.countTrack = 0;
@@ -8863,6 +9321,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 r.visibleNrOfItems = r.totalPlayListItems
             }
             r.stageHeight = r.visibleNrOfItems * r.itemHeight + r.separator_do.h;
+            if (r.searchBar_do) r.stageHeight += r.separator_do.h + r.searchBarHeight;
             r.itemsTotalHeight = r.totalPlayListItems * r.itemHeight;
             r.mainHolder_do.setY(-r.stageHeight);
             r.itemsHolder_do.setY(0);
@@ -8871,6 +9330,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 r.ascDscButton_do.setButtonState(1);
                 r.srotAscending_bl = true
             }
+            if (r.showSearchBar_bl) r.enableSearchBar();
             r.createPlayList();
             r.loadId3();
             var i = r.items_ar.length;
@@ -8890,7 +9350,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 }
                 if (r.scrHandler_do) r.updateScrollBarSizeActiveAndDeactivate();
                 if (r.scrMainHolder_do && r.allowToScrollAndScrollBarIsActive_bl) r.scrMainHolder_do.setX(r.stageWidth - r.scrWidth);
-                if (n.position_str == MUSIC.POSITION_TOP) {
+                if (n.position_str == FWDMSP.POSITION_TOP) {
                     r.mainHolder_do.setY(0);
                     r.separator_do.setY(r.stageHeight - r.separator_do.h)
                 } else {
@@ -8927,7 +9387,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             r.mainHolder_do.setBkColor(r.playlistBackgroundColor_str);
             r.items_ar = [];
             for (var u = 0; u < r.totalPlayListItems; u++) {
-                n = r.playlist_ar[u].duration == undefined ? undefined : MUSIC.formatTotalTime(r.playlist_ar[u].duration);
+                n = r.playlist_ar[u].duration == undefined ? undefined : FWDMSP.formatTotalTime(r.playlist_ar[u].duration);
                 if (u % 2 == 0) {
                     i = t.playlistItemProgress1_img;
                     s = t.playlistItemGrad1_img
@@ -8937,28 +9397,29 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 }
                 var o = r.playlist_ar[u].downloadable;
                 if (!r.showPlaylistItemDownloadButton_bl) o = false;
-                var a = false;
-                MUSICPlaylistItem.setPrototype();
-                e = new MUSICPlaylistItem(r.playlist_ar[u].title, r.playlist_ar[u].titleText, r.playlistDownloadButtonN_img, t.playlistDownloadButtonS_str, r.playlistBuyButtonN_img, t.playlistBuyButtonS_str, t.playlistItemGrad1_img, t.playlistItemGrad2_img, t.playlistItemProgress1_img, t.playlistItemProgress2_img, t.playlistPlayButtonN_img, t.playlistItemBk1_img.src, t.playlistItemBk2_img.src, r.playlistPlayButtonN_str, r.playlistPlayButtonS_str, r.playlistPauseButtonN_str, r.playlistPauseButtonS_str, t.trackTitleNormalColor_str, t.trackTitleSelected_str, t.trackDurationColor_str, u, t.playPauseButtonOffsetLeftAndRight, r.trackTitleOffsetLeft, r.durationOffsetRight, r.downloadButtonOffsetRight, r.showPlaylistItemPlayButton_bl, o, a, n);
-                e.addListener(MUSICPlaylistItem.MOUSE_UP, r.itemOnUpHandler);
-                e.addListener(MUSICPlaylistItem.DOWNLOAD, r.downloadHandler);
-                e.addListener(MUSICPlaylistItem.BUY, r.buyHandler);
+                var a = Boolean(r.playlist_ar[u].buy);
+                if (!r.showPlaylistItemBuyButton_bl) a = false;
+                FWDMSPPlaylistItem.setPrototype();
+                e = new FWDMSPPlaylistItem(r.playlist_ar[u].title, r.playlist_ar[u].titleText, r.playlistDownloadButtonN_img, t.playlistDownloadButtonS_str, r.playlistBuyButtonN_img, t.playlistBuyButtonS_str, t.playlistItemGrad1_img, t.playlistItemGrad2_img, t.playlistItemProgress1_img, t.playlistItemProgress2_img, t.playlistPlayButtonN_img, t.playlistItemBk1_img.src, t.playlistItemBk2_img.src, r.playlistPlayButtonN_str, r.playlistPlayButtonS_str, r.playlistPauseButtonN_str, r.playlistPauseButtonS_str, t.trackTitleNormalColor_str, t.trackTitleSelected_str, t.trackDurationColor_str, u, t.playPauseButtonOffsetLeftAndRight, r.trackTitleOffsetLeft, r.durationOffsetRight, r.downloadButtonOffsetRight, r.showPlaylistItemPlayButton_bl, o, a, n);
+                e.addListener(FWDMSPPlaylistItem.MOUSE_UP, r.itemOnUpHandler);
+                e.addListener(FWDMSPPlaylistItem.DOWNLOAD, r.downloadHandler);
+                e.addListener(FWDMSPPlaylistItem.BUY, r.buyHandler);
                 r.items_ar[u] = e;
                 r.itemsHolder_do.addChild(e)
             }
         };
         this.itemOnUpHandler = function(e) {
-            r.dispatchEvent(MUSICPlaylistItem.MOUSE_UP, {
+            r.dispatchEvent(FWDMSPPlaylistItem.MOUSE_UP, {
                 id: e.id
             })
         };
         this.downloadHandler = function(e) {
-            r.dispatchEvent(MUSICPlaylistItem.DOWNLOAD, {
+            r.dispatchEvent(FWDMSPPlaylistItem.DOWNLOAD, {
                 id: e.id
             })
         };
         this.buyHandler = function(e) {
-            r.dispatchEvent(MUSICPlaylistItem.BUY, {
+            r.dispatchEvent(FWDMSPPlaylistItem.BUY, {
                 id: e.id
             })
         };
@@ -8971,11 +9432,16 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                     return
                 }
             }
+            if (r.showSearchBar_bl) r.disableSearchBar();
             r.countID3 = 0;
             r.loadID3AndPopulate()
         };
         this.loadID3AndPopulate = function() {
             if (!r.items_ar) return;
+            if (!r.playlist_ar[r.countID3]) {
+                if (r.showSearchBar_bl) r.enableSearchBar();
+                return
+            }
             var n = "";
             var i = r.items_ar[r.countID3];
             var s = r.playlist_ar[r.countID3].source + "?rand=" + parseInt(Math.random() * 99999999);
@@ -9053,19 +9519,22 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         };
         this.setupInput = function() {
             r.titlebarHeight = t.titlebarLeftPath_img.height;
+            r.mainSearchInput_do = new FWDMSPDisplayObject("div");
+            r.mainSearchInput_do.getStyle().background = "url('" + t.titlebarBkMiddlePattern_str + "')";
+            r.mainSearchInput_do.setHeight(r.titlebarHeight);
             var e = new Image;
             e.src = t.titleBarLeft_img.src;
-            r.titleBarLeft_do = new MUSICDisplayObject("img");
+            r.titleBarLeft_do = new FWDMSPDisplayObject("img");
             r.titleBarLeft_do.setScreen(e);
             r.titleBarLeft_do.setWidth(t.titleBarLeft_img.width);
             r.titleBarLeft_do.setHeight(t.titleBarLeft_img.height);
             var n = new Image;
             n.src = t.titleBarRigth_img.src;
-            r.titleBarRight_do = new MUSICDisplayObject("img");
+            r.titleBarRight_do = new FWDMSPDisplayObject("img");
             r.titleBarRight_do.setScreen(n);
             r.titleBarRight_do.setWidth(t.titleBarRigth_img.width);
             r.titleBarRight_do.setHeight(t.titleBarRigth_img.height);
-            r.input_do = new MUSICDisplayObject("input");
+            r.input_do = new FWDMSPDisplayObject("input");
             r.input_do.screen.maxLength = 20;
             r.input_do.getStyle().textAlign = "left";
             r.input_do.getStyle().outline = "none";
@@ -9076,9 +9545,24 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             r.input_do.getStyle().fontFamily = "Arial";
             r.input_do.getStyle().fontSize = "12px";
             r.input_do.getStyle().padding = "6px";
-            if (!MUSICUtils.isIEAndLessThen9) r.input_do.getStyle().paddingRight = "-6px";
+            if (!FWDMSPUtils.isIEAndLessThen9) r.input_do.getStyle().paddingRight = "-6px";
             r.input_do.getStyle().paddingTop = "2px";
             r.input_do.getStyle().paddingBottom = "3px";
+            r.input_do.getStyle().color = r.searchInputColor_str;
+            r.input_do.screen.value = "Search for track";
+            r.noSearchFound_do = new FWDMSPDisplayObject("div");
+            r.noSearchFound_do.setX(0);
+            r.noSearchFound_do.getStyle().textAlign = "center";
+            r.noSearchFound_do.getStyle().width = "100%";
+            r.noSearchFound_do.getStyle().fontSmoothing = "antialiased";
+            r.noSearchFound_do.getStyle().webkitFontSmoothing = "antialiased";
+            r.noSearchFound_do.getStyle().textRendering = "optimizeLegibility";
+            r.noSearchFound_do.getStyle().fontFamily = "Arial";
+            r.noSearchFound_do.getStyle().fontSize = "12px";
+            r.noSearchFound_do.getStyle().color = r.searchInputColor_str;
+            r.noSearchFound_do.setInnerHTML("NOTHING FOUND!");
+            r.noSearchFound_do.setVisible(false);
+            r.mainHolder_do.addChild(r.noSearchFound_do);
             if (r.input_do.screen.addEventListener) {
                 r.input_do.screen.addEventListener("focus", r.inputFocusInHandler);
                 r.input_do.screen.addEventListener("blur", r.inputFocusOutHandler);
@@ -9090,22 +9574,36 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }
             var i = new Image;
             i.src = t.inputArrowPath_str;
-            r.inputArrow_do = new MUSICDisplayObject("img");
+            r.inputArrow_do = new FWDMSPDisplayObject("img");
             r.inputArrow_do.setScreen(i);
             r.inputArrow_do.setWidth(14);
             r.inputArrow_do.setHeight(12);
+            setTimeout(function() {
+                var e = 1;
+                r.input_do.setY(parseInt((r.titlebarHeight - r.input_do.getHeight()) / 2) + r.inputSearchTextOffsetTop)
+            }, 50);
+            r.mainSearchInput_do.addChild(r.titleBarLeft_do);
+            r.mainSearchInput_do.addChild(r.titleBarRight_do);
+            r.mainSearchInput_do.addChild(r.input_do);
+            r.searchBar_do.addChild(r.inputArrow_do);
+            r.searchBar_do.addChild(r.mainSearchInput_do)
         };
         this.inputFocusInHandler = function() {
             if (r.hasInputFocus_bl) return;
             r.hasInputFocus_bl = true;
+            if (r.isSearchBarDisabled_bl) {
+                r.input_do.screen.value == "Search will be available when all tracks data is loaded!"
+            } else if (r.input_do.screen.value == "Search for track") {
+                r.input_do.screen.value = ""
+            }
         };
         this.inputFocusOutHandler = function(e) {
             if (!r.hasInputFocus_bl) return;
-            var t = MUSICUtils.getViewportMouseCoordinates(e);
-            if (!MUSICUtils.hitTest(r.input_do.screen, t.screenX, t.screenY)) {
+            var t = FWDMSPUtils.getViewportMouseCoordinates(e);
+            if (!FWDMSPUtils.hitTest(r.input_do.screen, t.screenX, t.screenY)) {
                 r.hasInputFocus_bl = false;
                 if (r.input_do.screen.value == "") {
-                    r.input_do.screen.value = ""
+                    r.input_do.screen.value = "Search for track"
                 }
                 return
             }
@@ -9125,24 +9623,55 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 r.updateScrollBarHandlerAndContent(false)
             }
         };
+        this.showNothingFound = function() {
+            if (r.isShowNothingFound_bl) return;
+            r.isShowNothingFound_bl = true;
+            r.noSearchFound_do.setVisible(true);
+            r.noSearchFound_do.setY(parseInt((r.stageHeight - r.noSearchFound_do.getHeight() - r.searchBar_do.h) / 2));
+            r.noSearchFound_do.setAlpha(0);
+            FWDMSPTweenMax.to(r.noSearchFound_do, .1, {
+                alpha: 1,
+                yoyo: true,
+                repeat: 4
+            })
+        };
+        this.hideNothingFound = function() {
+            if (!r.isShowNothingFound_bl) return;
+            r.isShowNothingFound_bl = false;
+            FWDMSPTweenMax.killTweensOf(r.noSearchFound_do);
+            r.noSearchFound_do.setVisible(false)
+        };
         this.setupButtons = function() {
-            MUSICSimpleButton.setPrototype();
-            r.sortNButton_do = new MUSICSimpleButton(t.sortNN_img, t.sortNSPath_str, null, true);
-            r.sortNButton_do.addListener(MUSICSimpleButton.MOUSE_UP, r.sortNButtonOnMouseUpHandler);
+            r.searchBarButtons_ar = [];
+            FWDMSPSimpleButton.setPrototype();
+            r.sortNButton_do = new FWDMSPSimpleButton(t.sortNN_img, t.sortNSPath_str, null, true);
+            r.searchBarButtons_ar.push(r.sortNButton_do);
+            r.sortNButton_do.addListener(FWDMSPSimpleButton.SHOW_TOOLTIP, r.sortNButtonShowTooltipHandler);
+            r.sortNButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, r.sortNButtonOnMouseUpHandler);
+            r.searchBar_do.addChild(r.sortNButton_do);
             r.sortNButton_do.setX(410);
-            MUSICSimpleButton.setPrototype();
-            r.sortAButton_do = new MUSICSimpleButton(t.sortAN_img, t.sortASPath_str, null, true);
-            r.sortAButton_do.addListener(MUSICSimpleButton.MOUSE_UP, r.sortAButtonOnMouseUpHandler);
+            FWDMSPSimpleButton.setPrototype();
+            r.sortAButton_do = new FWDMSPSimpleButton(t.sortAN_img, t.sortASPath_str, null, true);
+            r.searchBarButtons_ar.push(r.sortAButton_do);
+            r.sortAButton_do.addListener(FWDMSPSimpleButton.SHOW_TOOLTIP, r.sortAButtonShowTooltipHandler);
+            r.sortAButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, r.sortAButtonOnMouseUpHandler);
+            r.searchBar_do.addChild(r.sortAButton_do);
             r.sortAButton_do.setX(450);
-            MUSICComplexButton.setPrototype();
-            r.ascDscButton_do = new MUSICComplexButton(t.ascendingN_img, t.ascendingSpath_str, t.decendingN_img, t.decendingSpath_str, true);
+            FWDMSPComplexButton.setPrototype();
+            r.ascDscButton_do = new FWDMSPComplexButton(t.ascendingN_img, t.ascendingSpath_str, t.decendingN_img, t.decendingSpath_str, true);
             r.ascDscButton_do.setX(500);
-            r.ascDscButton_do.addListener(MUSICComplexButton.MOUSE_UP, r.ascDscMouseUpHandler);
+            r.searchBarButtons_ar.push(r.ascDscButton_do);
+            r.ascDscButton_do.addListener(FWDMSPComplexButton.SHOW_TOOLTIP, r.ascDscShowToolTipHandler);
+            r.ascDscButton_do.addListener(FWDMSPComplexButton.MOUSE_UP, r.ascDscMouseUpHandler);
+            r.searchBar_do.addChild(r.ascDscButton_do);
             if (r.isSortedNumerical_bl) {
                 r.disableSortNButton()
             } else {
                 r.disableSortAButton()
             }
+        };
+        this.ascDscShowToolTipHandler = function(e) {
+            r.showToolTip(r.ascDscButton_do, r.ascDscButtonToolTip_do, e.e)
         };
         this.ascDscMouseUpHandler = function() {
             if (r.srotAscending_bl) {
@@ -9154,9 +9683,15 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }
             r.sortList()
         };
+        this.sortAButtonShowTooltipHandler = function(e) {
+            r.showToolTip(r.sortAButton_do, r.sortAButtonToolTip_do, e.e)
+        };
         this.sortAButtonOnMouseUpHandler = function() {
             r.disableSortAButton();
             r.sortList()
+        };
+        this.sortNButtonShowTooltipHandler = function(e) {
+            r.showToolTip(r.sortNButton_do, r.sortNButtonToolTip_do, e.e)
         };
         this.sortNButtonOnMouseUpHandler = function() {
             r.disableSortNButton();
@@ -9197,9 +9732,74 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             r.positionList();
             r.updateScrollBarHandlerAndContent(false)
         };
+        r.positionSearchBar = function() {
+            var e = 0;
+            var t;
+            inputWidth = r.stageWidth - r.startSpaceBetweenButtons * 2 - r.inputArrow_do.w - 12;
+            if (inputWidth > 430) inputWidth = 430;
+            if (r.showSortButtons_bl) {
+                for (var n = r.searchBarButtons_ar.length - 1; n >= 0; n--) {
+                    t = r.searchBarButtons_ar[n];
+                    if (n == r.searchBarButtons_ar.length - 1) {
+                        t.setX(r.stageWidth - t.w - r.startSpaceBetweenButtons)
+                    } else {
+                        t.setX(r.searchBarButtons_ar[n + 1].x - t.w - r.spaceBetweenButtons)
+                    }
+                    t.setY(r.searchSeparator_do.h + parseInt((r.searchBar_do.h - r.searchSeparator_do.h - t.h) / 2));
+                    e += t.w + r.spaceBetweenButtons
+                }
+            }
+            e += r.startSpaceBetweenButtons;
+            inputWidth -= e;
+            r.mainSearchInput_do.setWidth(inputWidth);
+            r.input_do.setWidth(inputWidth);
+            r.mainSearchInput_do.setX(r.startSpaceBetweenButtons + r.inputSearchOffsetLeft);
+            r.mainSearchInput_do.setY(parseInt(r.searchSeparator_do.h + parseInt((r.searchBar_do.h - r.searchSeparator_do.h - r.mainSearchInput_do.h) / 2)));
+            r.titleBarRight_do.setX(r.mainSearchInput_do.w - r.titleBarRight_do.w);
+            r.inputArrow_do.setX(parseInt(r.mainSearchInput_do.x + inputWidth) + 4);
+            r.inputArrow_do.setY(r.searchSeparator_do.h + parseInt((r.searchBar_do.h - r.searchSeparator_do.h - r.inputArrow_do.h) / 2));
+            r.searchSeparator_do.setWidth(r.stageWidth);
+            r.searchBar_do.setWidth(r.stageWidth);
+            r.searchBar_do.setY(r.stageHeight - r.searchSeparator_do.h - r.searchBar_do.h)
+        };
+        this.setupToolTips = function() {
+            FWDMSPToolTip.setPrototype();
+            r.sortNButtonToolTip_do = new FWDMSPToolTip(r.sortNButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "numeric sort", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
+            document.documentElement.appendChild(r.sortNButtonToolTip_do.screen);
+            FWDMSPToolTip.setPrototype();
+            r.sortAButtonToolTip_do = new FWDMSPToolTip(r.sortAButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "alphabetic sort", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
+            document.documentElement.appendChild(r.sortAButtonToolTip_do.screen);
+            FWDMSPToolTip.setPrototype();
+            r.ascDscButtonToolTip_do = new FWDMSPToolTip(r.ascDscButton_do, t.toopTipBk_str, t.toopTipPointer_str, t.toopTipPointerUp_str, "ascending / decending sort", r.toolTipsButtonFontColor_str, r.toolTipsButtonsHideDelay);
+            document.documentElement.appendChild(r.ascDscButtonToolTip_do.screen)
+        };
+        this.showToolTip = function(e, t, n) {
+            if (!r.showButtonsToolTips_bl) return;
+            var i = FWDMSPUtils.getViewportSize();
+            var s = FWDMSPUtils.getViewportMouseCoordinates(n);
+            var o = parseInt(e.getGlobalX() + e.w / 2 - t.w / 2);
+            var u = parseInt(e.getGlobalY() - t.h - 6);
+            var a = 0;
+            if (o < 0) {
+                a = o;
+                o = 0
+            } else if (o + t.w > i.w) {
+                a = (i.w - (o + t.w)) * -1;
+                o = o + a * -1
+            }
+            if (u < 0) {
+                u += e.h + t.h + 12;
+                t.positionPointer(a, true)
+            } else {
+                t.positionPointer(a, false)
+            }
+            t.setX(o);
+            t.setY(u);
+            t.show()
+        };
         this.setupDisable = function() {
-            r.disable_do = new MUSICDisplayObject("div");
-            if (MUSICUtils.isIE) {
+            r.disable_do = new FWDMSPDisplayObject("div");
+            if (FWDMSPUtils.isIE) {
                 r.disable_do.setBkColor("#FFFFFF");
                 r.disable_do.setAlpha(0)
             }
@@ -9221,7 +9821,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             r.disable_do.setHeight(0)
         };
         this.setupSeparator = function() {
-            r.separator_do = new MUSICDisplayObject("div");
+            r.separator_do = new FWDMSPDisplayObject("div");
             r.separator_do.setBackfaceVisibility();
             r.separator_do.hasTransform3d_bl = false;
             r.separator_do.hasTransform2d_bl = false;
@@ -9230,47 +9830,47 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             r.separator_do.setY(-r.separator_do.h)
         };
         this.setupScrollbar = function() {
-            r.scrMainHolder_do = new MUSICDisplayObject("div");
+            r.scrMainHolder_do = new FWDMSPDisplayObject("div");
             r.scrMainHolder_do.setWidth(r.scrWidth);
-            r.scrTrack_do = new MUSICDisplayObject("div");
+            r.scrTrack_do = new FWDMSPDisplayObject("div");
             r.scrTrack_do.setWidth(r.scrWidth);
-            r.scrTrackTop_do = new MUSICDisplayObject("img");
+            r.scrTrackTop_do = new FWDMSPDisplayObject("img");
             r.scrTrackTop_do.setScreen(r.playlistScrBkTop_img);
-            r.scrTrackMiddle_do = new MUSICDisplayObject("div");
+            r.scrTrackMiddle_do = new FWDMSPDisplayObject("div");
             r.scrTrackMiddle_do.getStyle().background = "url('" + t.scrBkMiddlePath_str + "')";
             r.scrTrackMiddle_do.setWidth(r.scrWidth);
             r.scrTrackMiddle_do.setY(r.scrTrackTop_do.h);
             var e = new Image;
             e.src = t.scrBkBottomPath_str;
-            r.scrTrackBottom_do = new MUSICDisplayObject("img");
+            r.scrTrackBottom_do = new FWDMSPDisplayObject("img");
             r.scrTrackBottom_do.setScreen(e);
             r.scrTrackBottom_do.setWidth(r.scrTrackTop_do.w);
             r.scrTrackBottom_do.setHeight(r.scrTrackTop_do.h);
-            r.scrHandler_do = new MUSICDisplayObject("div");
+            r.scrHandler_do = new FWDMSPDisplayObject("div");
             r.scrHandler_do.setWidth(r.scrWidth);
-            r.scrHandlerTop_do = new MUSICDisplayObject("img");
+            r.scrHandlerTop_do = new FWDMSPDisplayObject("img");
             r.scrHandlerTop_do.setScreen(r.playlistScrDragTop_img);
-            r.scrHandlerMiddle_do = new MUSICDisplayObject("div");
+            r.scrHandlerMiddle_do = new FWDMSPDisplayObject("div");
             r.scrHandlerMiddle_do.getStyle().background = "url('" + t.scrDragMiddlePath_str + "')";
             r.scrHandlerMiddle_do.setWidth(r.scrWidth);
             r.scrHandlerMiddle_do.setY(r.scrHandlerTop_do.h);
             var n = new Image;
             n.src = t.scrDragBottomPath_str;
-            r.scrHandlerBottom_do = new MUSICDisplayObject("img");
+            r.scrHandlerBottom_do = new FWDMSPDisplayObject("img");
             r.scrHandlerBottom_do.setScreen(n);
             r.scrHandlerBottom_do.setWidth(r.scrHandlerTop_do.w);
             r.scrHandlerBottom_do.setHeight(r.scrHandlerTop_do.h);
             r.scrHandler_do.setButtonMode(true);
-            r.scrHandlerLinesN_do = new MUSICDisplayObject("img");
+            r.scrHandlerLinesN_do = new FWDMSPDisplayObject("img");
             r.scrHandlerLinesN_do.setScreen(r.playlistScrLines_img);
             var i = new Image;
             i.src = t.scrLinesSPath_str;
-            r.scrHandlerLinesS_do = new MUSICDisplayObject("img");
+            r.scrHandlerLinesS_do = new FWDMSPDisplayObject("img");
             r.scrHandlerLinesS_do.setScreen(i);
             r.scrHandlerLinesS_do.setWidth(r.scrHandlerLinesN_do.w);
             r.scrHandlerLinesS_do.setHeight(r.scrHandlerLinesN_do.h);
             r.scrHandlerLinesS_do.setAlpha(0);
-            r.scrHandlerLines_do = new MUSICDisplayObject("div");
+            r.scrHandlerLines_do = new FWDMSPDisplayObject("div");
             r.scrHandlerLines_do.hasTransform3d_bl = false;
             r.scrHandlerLines_do.hasTransform2d_bl = false;
             r.scrHandlerLines_do.setBackfaceVisibility();
@@ -9306,25 +9906,25 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }
         };
         this.scrollBarHandlerOnMouseOver = function(e) {
-            MUSICTweenMax.to(r.scrHandlerLinesS_do, .8, {
+            FWDMSPTweenMax.to(r.scrHandlerLinesS_do, .8, {
                 alpha: 1,
                 ease: Expo.easeOut
             })
         };
         this.scrollBarHandlerOnMouseOut = function(e) {
             if (r.isDragging_bl) return;
-            MUSICTweenMax.to(r.scrHandlerLinesS_do, .8, {
+            FWDMSPTweenMax.to(r.scrHandlerLinesS_do, .8, {
                 alpha: 0,
                 ease: Expo.easeOut
             })
         };
         this.scrollBarHandlerOnMouseDown = function(e) {
             if (!r.allowToScrollAndScrollBarIsActive_bl) return;
-            var t = MUSICUtils.getViewportMouseCoordinates(e);
+            var t = FWDMSPUtils.getViewportMouseCoordinates(e);
             r.isDragging_bl = true;
             r.yPositionOnPress = r.scrHandler_do.y;
             r.lastPresedY = t.screenY;
-            MUSICTweenMax.killTweensOf(r.scrHandler_do);
+            FWDMSPTweenMax.killTweensOf(r.scrHandler_do);
             r.showDisable();
             if (window.addEventListener) {
                 window.addEventListener("mousemove", r.scrollBarHandlerMoveHandler);
@@ -9336,7 +9936,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         };
         this.scrollBarHandlerMoveHandler = function(e) {
             if (e.preventDefault) e.preventDefault();
-            var t = MUSICUtils.getViewportMouseCoordinates(e);
+            var t = FWDMSPUtils.getViewportMouseCoordinates(e);
             r.scrollBarHandlerFinalY = Math.round(r.yPositionOnPress + t.screenY - r.lastPresedY);
             if (r.scrollBarHandlerFinalY >= r.scrTrack_do.h - r.scrHandler_do.h) {
                 r.scrollBarHandlerFinalY = r.scrTrack_do.h - r.scrHandler_do.h
@@ -9344,17 +9944,17 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 r.scrollBarHandlerFinalY = 0
             }
             r.scrHandler_do.setY(r.scrollBarHandlerFinalY);
-            MUSICTweenMax.to(r.scrHandlerLines_do, .8, {
+            FWDMSPTweenMax.to(r.scrHandlerLines_do, .8, {
                 y: r.scrollBarHandlerFinalY + parseInt((r.scrHandler_do.h - r.scrHandlerLines_do.h) / 2),
                 ease: Quart.easeOut
             });
             r.updateScrollBarHandlerAndContent(true)
         };
         r.scrollBarHandlerEndHandler = function(e) {
-            var t = MUSICUtils.getViewportMouseCoordinates(e);
+            var t = FWDMSPUtils.getViewportMouseCoordinates(e);
             r.isDragging_bl = false;
-            if (!MUSICUtils.hitTest(r.scrHandler_do.screen, t.screenX, t.screenY)) {
-                MUSICTweenMax.to(r.scrHandlerLinesS_do, .8, {
+            if (!FWDMSPUtils.hitTest(r.scrHandler_do.screen, t.screenX, t.screenY)) {
+                FWDMSPTweenMax.to(r.scrHandlerLinesS_do, .8, {
                     alpha: 0,
                     ease: Expo.easeOut
                 })
@@ -9366,8 +9966,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 r.scrollBarHandlerFinalY = r.scrTrack_do.h - r.scrHandler_do.h - 1
             }
             r.hideDisable();
-            MUSICTweenMax.killTweensOf(r.scrHandler_do);
-            MUSICTweenMax.to(r.scrHandler_do, .5, {
+            FWDMSPTweenMax.killTweensOf(r.scrHandler_do);
+            FWDMSPTweenMax.to(r.scrHandler_do, .5, {
                 y: r.scrollBarHandlerFinalY,
                 ease: Quart.easeOut
             });
@@ -9383,6 +9983,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             if (r.allowToScrollAndScrollBarIsActive_bl) {
                 var e = 0;
                 r.allowToScrollAndScrollBarIsActive_bl = true;
+                if (r.searchBar_do) {
+                    e = r.searchBar_do.h
+                }
                 r.scrMainHolder_do.setHeight(r.stageHeight - r.separator_do.h - e);
                 r.scrTrack_do.setHeight(r.stageHeight - r.separator_do.h - e);
                 r.scrTrackMiddle_do.setHeight(r.scrTrack_do.h - r.scrTrackTop_do.h * 2);
@@ -9427,14 +10030,14 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                     } else if (r.scrollBarHandlerFinalY > r.scrMainHolder_do.h - r.scrHandler_do.h - 1) {
                         r.scrollBarHandlerFinalY = r.scrMainHolder_do.h - r.scrHandler_do.h - 1
                     }
-                    MUSICTweenMax.killTweensOf(r.scrHandler_do);
-                    MUSICTweenMax.killTweensOf(r.scrHandlerLines_do);
+                    FWDMSPTweenMax.killTweensOf(r.scrHandler_do);
+                    FWDMSPTweenMax.killTweensOf(r.scrHandlerLines_do);
                     if (e) {
-                        MUSICTweenMax.to(r.scrHandler_do, .5, {
+                        FWDMSPTweenMax.to(r.scrHandler_do, .5, {
                             y: r.scrollBarHandlerFinalY,
                             ease: Quart.easeOut
                         });
-                        MUSICTweenMax.to(r.scrHandlerLines_do, .8, {
+                        FWDMSPTweenMax.to(r.scrHandlerLines_do, .8, {
                             y: r.scrollBarHandlerFinalY + parseInt((r.scrHandler_do.h - r.scrHandlerLinesN_do.h) / 2),
                             ease: Quart.easeOut
                         })
@@ -9445,9 +10048,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 }
             }
             if (r.lastListY != r.playListFinalY) {
-                MUSICTweenMax.killTweensOf(r.itemsHolder_do);
+                FWDMSPTweenMax.killTweensOf(r.itemsHolder_do);
                 if (e) {
-                    MUSICTweenMax.to(r.itemsHolder_do, .5, {
+                    FWDMSPTweenMax.to(r.itemsHolder_do, .5, {
                         y: r.playListFinalY,
                         ease: Quart.easeOut
                     })
@@ -9469,7 +10072,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             if (!r.allowToScrollAndScrollBarIsActive_bl || r.isDragging_bl) return;
             var t = e.detail || e.wheelDelta;
             if (e.wheelDelta) t *= -1;
-            if (MUSICUtils.isOpera) t *= -1;
+            if (FWDMSPUtils.isOpera) t *= -1;
             if (t > 0) {
                 r.playListFinalY -= r.itemHeight
             } else {
@@ -9489,17 +10092,17 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             } else if (r.scrollBarHandlerFinalY > r.scrMainHolder_do.h - r.scrHandler_do.h - 1) {
                 r.scrollBarHandlerFinalY = r.scrMainHolder_do.h - r.scrHandler_do.h - 1
             }
-            MUSICTweenMax.killTweensOf(r.itemsHolder_do);
-            MUSICTweenMax.to(r.itemsHolder_do, .5, {
+            FWDMSPTweenMax.killTweensOf(r.itemsHolder_do);
+            FWDMSPTweenMax.to(r.itemsHolder_do, .5, {
                 y: r.playListFinalY,
                 ease: Expo.easeOut
             });
-            MUSICTweenMax.killTweensOf(r.scrHandler_do);
-            MUSICTweenMax.to(r.scrHandler_do, .5, {
+            FWDMSPTweenMax.killTweensOf(r.scrHandler_do);
+            FWDMSPTweenMax.to(r.scrHandler_do, .5, {
                 y: r.scrollBarHandlerFinalY,
                 ease: Expo.easeOut
             });
-            MUSICTweenMax.to(r.scrHandlerLines_do, .8, {
+            FWDMSPTweenMax.to(r.scrHandlerLines_do, .8, {
                 y: r.scrollBarHandlerFinalY + parseInt((r.scrHandler_do.h - r.scrHandlerLinesN_do.h) / 2),
                 ease: Quart.easeOut
             });
@@ -9521,8 +10124,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         };
         r.scrollBarTouchStartHandler = function(e) {
             if (r.stageHeight > r.itemsTotalHeight) return;
-            MUSICTweenMax.killTweensOf(r.itemsHolder_do);
-            var t = MUSICUtils.getViewportMouseCoordinates(e);
+            FWDMSPTweenMax.killTweensOf(r.itemsHolder_do);
+            var t = FWDMSPUtils.getViewportMouseCoordinates(e);
             r.isDragging_bl = true;
             r.lastPresedY = t.screenY;
             if (r.hasPointerEvent_bl) {
@@ -9538,7 +10141,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         r.scrollBarTouchMoveHandler = function(e) {
             if (e.preventDefault) e.preventDefault();
             r.showDisable();
-            var t = MUSICUtils.getViewportMouseCoordinates(e);
+            var t = FWDMSPUtils.getViewportMouseCoordinates(e);
             var n = t.screenY - r.lastPresedY;
             r.playListFinalY += n;
             r.playListFinalY = Math.round(r.playListFinalY);
@@ -9564,15 +10167,15 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             r.itemsHolder_do.setY(r.playListFinalY)
         };
         r.updateMobileScrollBar = function(e) {
-            if (!r.isDragging_bl && !MUSICTweenMax.isTweening(r.itemsHolder_do)) {
+            if (!r.isDragging_bl && !FWDMSPTweenMax.isTweening(r.itemsHolder_do)) {
                 r.vy *= r.friction;
                 r.playListFinalY += r.vy;
                 if (r.playListFinalY > 0) {
                     r.vy2 = (0 - r.playListFinalY) * .3;
                     r.vy *= r.friction;
                     r.playListFinalY += r.vy2
-                } else if (r.playListFinalY < r.stageHeight - r.separator_do.h - r.itemsTotalHeight) {
-                    r.vy2 = (r.stageHeight - r.separator_do.h - r.itemsTotalHeight - r.playListFinalY) * .3;
+                } else if (r.playListFinalY < r.stageHeight - r.separator_do.h - r.itemsTotalHeight - r.searchBar_do.h) {
+                    r.vy2 = (r.stageHeight - r.separator_do.h - r.itemsTotalHeight - r.searchBar_do.h - r.playListFinalY) * .3;
                     r.vy *= r.friction;
                     r.playListFinalY += r.vy2
                 }
@@ -9590,13 +10193,13 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.init()
     };
     e.setPrototype = function() {
-        e.prototype = new MUSICDisplayObject("div")
+        e.prototype = new FWDMSPDisplayObject("div")
     };
     e.PLAY = "play";
     e.PAUSE = "pause";
     e.UPDATE_TRACK_TITLE_if_FOLDER = "update_trak_title";
     e.prototype = null;
-    window.MUSICPlaylist = e
+    window.FWDMSPPlaylist = e
 })();
 (function() {
     var e = function(t, n, r, i, s, o, u, a, f, l, c, h, p, d, v, m, g, y, b, w, E, S, x, T, N, C, k, L, A) {
@@ -9609,6 +10212,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.playlistPlayButtonN_img = c;
         this.playlistDownloadButtonN_img = r;
         this.playlistDownloadButtonS_str = i;
+        this.playlistBuyButtonN_img = s;
+        this.playlistBuyButtonS_str = o;
         this.progress_do = null;
         this.playPause_do = null;
         this.playN_do = null;
@@ -9647,12 +10252,13 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.downloadButtonOffsetRight = N;
         this.setTextsSizeId_to;
         this.showDownloadButton_bl = k;
+        this.showBuyButton_bl = L;
         this.showPlayPauseButton_bl = C;
         this.showDuration_bl = A;
         this.isActive_bl = false;
         this.isSelected_bl = false;
-        this.isMobile_bl = MUSICUtils.isMobile;
-        this.hasPointerEvent_bl = MUSICUtils.hasPointerEvent;
+        this.isMobile_bl = FWDMSPUtils.isMobile;
+        this.hasPointerEvent_bl = FWDMSPUtils.hasPointerEvent;
         O.init = function() {
             O.setupProgress();
             O.setupTitle();
@@ -9662,6 +10268,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             O.setNormalState(false, true);
             O.setupDumy();
             if (O.showDownloadButton_bl) O.setupDownloadButton();
+            if (O.showBuyButton_bl) O.setupBuyButton();
             if (O.id % 2 == 0) {
                 O.getStyle().background = "url('" + O.playlistItemBk1Path_str + "')";
                 O.grad_do.getStyle().background = "url('" + O.playlistItemGrad1_img.src + "')";
@@ -9728,7 +10335,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }
         };
         O.resize = function(e, t) {
-            if (MUSICUtils.isIEAndLessThen9 && !O.textHeight || O == null) return;
+            if (FWDMSPUtils.isIEAndLessThen9 && !O.textHeight || O == null) return;
             O.stageWidth = e;
             var n = 0;
             var r = parseInt((t - O.textHeight) / 2) + 1;
@@ -9739,7 +10346,24 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 O.titleText_do.setX(O.trackTitleOffsetLeft)
             }
             O.titleText_do.setY(r);
-            if (O.downloadButton_do) {
+            if (O.buyButton_do && O.downloadButton_do) {
+                if (O.durationText_do) {
+                    O.durationText_do.setX(e - O.durationWidth - O.durationOffsetRight + 1);
+                    O.durationText_do.setY(r);
+                    n = O.durationText_do.x
+                } else {
+                    n = e
+                }
+                O.downloadButton_do.setX(n - O.downloadButton_do.w - O.downloadButtonOffsetRight + 3);
+                O.downloadButton_do.setY(parseInt((t - O.downloadButton_do.h) / 2));
+                O.buyButton_do.setX(O.downloadButton_do.x - O.buyButton_do.w - 4);
+                O.buyButton_do.setY(parseInt((t - O.buyButton_do.h) / 2));
+                if (O.titleText_do.x + O.titleWidth + O.downloadButton_do.w + O.buyButton_do.w + O.downloadButtonOffsetRight + 4 > n) {
+                    O.grad_do.setX(O.buyButton_do.x - O.downloadButtonOffsetRight + 2)
+                } else {
+                    O.grad_do.setX(-300)
+                }
+            } else if (O.downloadButton_do) {
                 if (O.durationText_do) {
                     O.durationText_do.setX(e - O.durationWidth - O.durationOffsetRight + 1);
                     O.durationText_do.setY(r);
@@ -9754,7 +10378,22 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 } else {
                     O.grad_do.setX(-300)
                 }
-            }else if (O.durationText_do) {
+            } else if (O.buyButton_do) {
+                if (O.durationText_do) {
+                    O.durationText_do.setX(e - O.durationWidth - O.durationOffsetRight + 1);
+                    O.durationText_do.setY(r);
+                    n = O.durationText_do.x
+                } else {
+                    n = e
+                }
+                O.buyButton_do.setX(n - O.buyButton_do.w - O.downloadButtonOffsetRight + 3);
+                O.buyButton_do.setY(parseInt((t - O.buyButton_do.h) / 2));
+                if (O.titleText_do.x + O.titleWidth + O.buyButton_do.w + O.downloadButtonOffsetRight > n) {
+                    O.grad_do.setX(O.buyButton_do.x - O.downloadButtonOffsetRight + 2)
+                } else {
+                    O.grad_do.setX(-300)
+                }
+            } else if (O.durationText_do) {
                 O.durationText_do.setX(e - O.durationWidth - O.durationOffsetRight + 1);
                 O.durationText_do.setY(r);
                 if (O.titleText_do.x + O.titleWidth > O.durationText_do.x) {
@@ -9783,10 +10422,10 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             O.setHeight(t)
         };
         this.setupDownloadButton = function() {
-            MUSICSimpleSizeButton.setPrototype();
-            O.downloadButton_do = new MUSICSimpleSizeButton(O.playlistDownloadButtonN_img, O.playlistDownloadButtonS_str, 18, 17);
+            FWDMSPSimpleSizeButton.setPrototype();
+            O.downloadButton_do = new FWDMSPSimpleSizeButton(O.playlistDownloadButtonN_img, O.playlistDownloadButtonS_str, 18, 17);
             O.downloadButton_do.getStyle().position = "absolute";
-            O.downloadButton_do.addListener(MUSICSimpleSizeButton.CLICK, O.dwButtonClickHandler);
+            O.downloadButton_do.addListener(FWDMSPSimpleSizeButton.CLICK, O.dwButtonClickHandler);
             O.addChild(O.downloadButton_do)
         };
         this.dwButtonClickHandler = function() {
@@ -9794,8 +10433,20 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 id: O.id
             })
         };
+        this.setupBuyButton = function() {
+            FWDMSPSimpleSizeButton.setPrototype();
+            O.buyButton_do = new FWDMSPSimpleSizeButton(O.playlistBuyButtonN_img, O.playlistBuyButtonS_str, 18, 17);
+            O.buyButton_do.getStyle().position = "absolute";
+            O.buyButton_do.addListener(FWDMSPSimpleSizeButton.CLICK, O.buyButtonClickHandler);
+            O.addChild(O.buyButton_do)
+        };
+        this.buyButtonClickHandler = function() {
+            O.dispatchEvent(e.BUY, {
+                id: O.id
+            })
+        };
         this.setupProgress = function() {
-            O.progress_do = new MUSICDisplayObject("div");
+            O.progress_do = new FWDMSPDisplayObject("div");
             O.progress_do.setBackfaceVisibility();
             O.progress_do.getStyle().background = "url('" + O.playlistItemProgress_img.src + "')";
             O.progress_do.setHeight(f.height);
@@ -9808,24 +10459,24 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             O.progress_do.setWidth(parseInt(O.stageWidth * e))
         };
         this.setupPlayPauseButton = function() {
-            O.playPause_do = new MUSICDisplayObject("div");
+            O.playPause_do = new FWDMSPDisplayObject("div");
             O.playPause_do.setWidth(O.playPauseButtonWidth);
             O.playPause_do.setHeight(O.playPauseButtonHeight);
-            O.playN_do = new MUSICDisplayObject("div");
+            O.playN_do = new FWDMSPDisplayObject("div");
             O.playN_do.getStyle().background = "url('" + O.playlistPlayButtonN_str + "') no-repeat";
             O.playN_do.setWidth(O.playPauseButtonWidth);
             O.playN_do.setHeight(O.playPauseButtonHeight);
-            O.playS_do = new MUSICDisplayObject("div");
+            O.playS_do = new FWDMSPDisplayObject("div");
             O.playS_do.getStyle().background = "url('" + O.playlistPlayButtonS_str + "') no-repeat";
             O.playS_do.setWidth(O.playPauseButtonWidth);
             O.playS_do.setHeight(O.playPauseButtonHeight);
             O.playS_do.setAlpha(0);
-            O.pauseN_do = new MUSICDisplayObject("div");
+            O.pauseN_do = new FWDMSPDisplayObject("div");
             O.pauseN_do.getStyle().background = "url('" + O.playlistPauseButtonN_str + "') no-repeat";
             O.pauseN_do.setWidth(O.playPauseButtonWidth);
             O.pauseN_do.setHeight(O.playPauseButtonHeight);
             O.pauseN_do.setX(-300);
-            O.pauseS_do = new MUSICDisplayObject("div");
+            O.pauseS_do = new FWDMSPDisplayObject("div");
             O.pauseS_do.getStyle().background = "url('" + O.playlistPauseButtonS_str + "') no-repeat";
             O.pauseS_do.setWidth(O.playPauseButtonWidth);
             O.pauseS_do.setHeight(O.playPauseButtonHeight);
@@ -9839,8 +10490,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             O.addChild(O.playPause_do)
         };
         this.setupTitle = function() {
-            O.titleText_do = new MUSICDisplayObject("div");
-            if (MUSICUtils.isApple) {
+            O.titleText_do = new FWDMSPDisplayObject("div");
+            if (FWDMSPUtils.isApple) {
                 O.titleText_do.hasTransform3d_bl = false;
                 O.titleText_do.hasTransform2d_bl = false
             }
@@ -9871,9 +10522,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             O.grad_do.setWidth(150)
         };
         this.setupGrad = function() {
-            O.grad_do = new MUSICDisplayObject("div");
+            O.grad_do = new FWDMSPDisplayObject("div");
             O.grad_do.setOverflow("visible");
-            if (MUSICUtils.isApple) {
+            if (FWDMSPUtils.isApple) {
                 O.grad_do.hasTransform3d_bl = false;
                 O.grad_do.hasTransform2d_bl = false
             }
@@ -9883,8 +10534,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             O.addChild(O.grad_do)
         };
         this.setupDuration = function() {
-            O.durationText_do = new MUSICDisplayObject("div");
-            if (MUSICUtils.isApple) {
+            O.durationText_do = new FWDMSPDisplayObject("div");
+            if (FWDMSPUtils.isApple) {
                 O.durationText_do.hasTransform3d_bl = false;
                 O.durationText_do.hasTransform2d_bl = false
             }
@@ -9903,9 +10554,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             O.addChild(O.durationText_do)
         };
         this.setupDumy = function() {
-            O.dumy_do = new MUSICDisplayObject("div");
+            O.dumy_do = new FWDMSPDisplayObject("div");
             O.dumy_do.setButtonMode(true);
-            if (MUSICUtils.isIE) {
+            if (FWDMSPUtils.isIE) {
                 O.dumy_do.setBkColor("#FFFFFF");
                 O.dumy_do.setAlpha(.001)
             }
@@ -9915,14 +10566,14 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             if (!O.isSelected_bl && !t) return;
             O.isSelected_bl = false;
             if (e) {
-                MUSICTweenMax.to(O.titleText_do.screen, .8, {
+                FWDMSPTweenMax.to(O.titleText_do.screen, .8, {
                     css: {
                         color: O.titleNormalColor_str
                     },
                     ease: Expo.easeOut
                 });
                 if (O.durationText_do) {
-                    MUSICTweenMax.to(O.durationText_do.screen, .8, {
+                    FWDMSPTweenMax.to(O.durationText_do.screen, .8, {
                         css: {
                             color: O.durationColor_str
                         },
@@ -9930,22 +10581,22 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                     })
                 }
                 if (O.playPause_do) {
-                    MUSICTweenMax.to(O.pauseS_do, .8, {
+                    FWDMSPTweenMax.to(O.pauseS_do, .8, {
                         alpha: 0,
                         ease: Expo.easeOut
                     });
-                    MUSICTweenMax.to(O.playS_do, .8, {
+                    FWDMSPTweenMax.to(O.playS_do, .8, {
                         alpha: 0,
                         ease: Expo.easeOut
                     })
                 }
             } else {
-                MUSICTweenMax.killTweensOf(O.titleText_do);
+                FWDMSPTweenMax.killTweensOf(O.titleText_do);
                 O.titleText_do.getStyle().color = O.titleNormalColor_str;
                 if (O.durationText_do) O.durationText_do.getStyle().color = O.durationColor_str;
                 if (O.playPause_do) {
-                    MUSICTweenMax.killTweensOf(O.pauseS_do);
-                    MUSICTweenMax.killTweensOf(O.playS_do);
+                    FWDMSPTweenMax.killTweensOf(O.pauseS_do);
+                    FWDMSPTweenMax.killTweensOf(O.playS_do);
                     O.pauseS_do.setAlpha(0);
                     O.playS_do.setAlpha(0)
                 }
@@ -9955,14 +10606,14 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             if (O.isSelected_bl) return;
             O.isSelected_bl = true;
             if (e) {
-                MUSICTweenMax.to(O.titleText_do.screen, .8, {
+                FWDMSPTweenMax.to(O.titleText_do.screen, .8, {
                     css: {
                         color: O.trackTitleSelected_str
                     },
                     ease: Expo.easeOut
                 });
                 if (O.durationText_do) {
-                    MUSICTweenMax.to(O.durationText_do.screen, .8, {
+                    FWDMSPTweenMax.to(O.durationText_do.screen, .8, {
                         css: {
                             color: O.trackTitleSelected_str
                         },
@@ -9970,22 +10621,22 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                     })
                 }
                 if (O.playPause_do) {
-                    MUSICTweenMax.to(O.pauseS_do, .8, {
+                    FWDMSPTweenMax.to(O.pauseS_do, .8, {
                         alpha: 1,
                         ease: Expo.easeOut
                     });
-                    MUSICTweenMax.to(O.playS_do, .8, {
+                    FWDMSPTweenMax.to(O.playS_do, .8, {
                         alpha: 1,
                         ease: Expo.easeOut
                     })
                 }
             } else {
-                MUSICTweenMax.killTweensOf(O.titleText_do);
+                FWDMSPTweenMax.killTweensOf(O.titleText_do);
                 if (O.durationText_do) O.durationText_do.getStyle().color = O.trackTitleSelected_str;
                 O.titleText_do.getStyle().color = O.trackTitleSelected_str;
                 if (O.playPause_do) {
-                    MUSICTweenMax.killTweensOf(O.pauseS_do);
-                    MUSICTweenMax.killTweensOf(O.playS_do);
+                    FWDMSPTweenMax.killTweensOf(O.pauseS_do);
+                    FWDMSPTweenMax.killTweensOf(O.playS_do);
                     O.pauseS_do.setAlpha(1);
                     O.playS_do.setAlpha(1)
                 }
@@ -10053,7 +10704,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.init()
     };
     e.setPrototype = function() {
-        e.prototype = new MUSICDisplayObject("div")
+        e.prototype = new FWDMSPDisplayObject("div")
     };
     e.PLAY = "play";
     e.PAUSE = "pause";
@@ -10061,7 +10712,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
     e.DOWNLOAD = "download";
     e.BUY = "buy";
     e.prototype = null;
-    window.MUSICPlaylistItem = e
+    window.FWDMSPPlaylistItem = e
 })();
 (function(e) {
     var t = function(e, n, r, i, s, o) {
@@ -10084,7 +10735,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             u.setHeight(u.segmentHeight);
             u.imageSource_img = new Image;
             u.imageSource_img.src = u.imageSourcePath_str;
-            u.image_sdo = new MUSICDisplayObject("img");
+            u.image_sdo = new FWDMSPDisplayObject("img");
             u.image_sdo.setScreen(u.imageSource_img);
             u.image_sdo.setWidth(u.totalWidth);
             u.image_sdo.setHeight(u.segmentHeight);
@@ -10116,17 +10767,17 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.show = function() {
             this.setVisible(true);
             this.start();
-            MUSICTweenMax.killTweensOf(this);
-            MUSICTweenMax.to(this, 1, {
+            FWDMSPTweenMax.killTweensOf(this);
+            FWDMSPTweenMax.to(this, 1, {
                 alpha: 1
             });
             this.isShowed_bl = true
         };
         this.hide = function(e) {
             if (!this.isShowed_bl) return;
-            MUSICTweenMax.killTweensOf(this);
+            FWDMSPTweenMax.killTweensOf(this);
             if (e) {
-                MUSICTweenMax.to(this, 1, {
+                FWDMSPTweenMax.to(this, 1, {
                     alpha: 0,
                     onComplete: this.onHideComplete
                 })
@@ -10152,11 +10803,11 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.init()
     };
     t.setPrototype = function() {
-        t.prototype = new MUSICDisplayObject("div")
+        t.prototype = new FWDMSPDisplayObject("div")
     };
     t.HIDE_COMPLETE = "hideComplete";
     t.prototype = null;
-    e.MUSICPreloader = t
+    e.FWDMSPPreloader = t
 })(window);
 (function(e) {
     var t = function(e, n, r, i) {
@@ -10168,6 +10819,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.n_sdo;
         this.s_sdo;
         this.d_sdo;
+        this.toolTipLabel_str;
         this.totalWidth = this.nImg.width;
         this.totalHeight = this.nImg.height;
         this.isShowed_bl = true;
@@ -10176,20 +10828,20 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.isDisabledForGood_bl = false;
         this.isSelectedFinal_bl = false;
         this.isActive_bl = false;
-        this.isMobile_bl = MUSICUtils.isMobile;
-        this.hasPointerEvent_bl = MUSICUtils.hasPointerEvent;
+        this.isMobile_bl = FWDMSPUtils.isMobile;
+        this.hasPointerEvent_bl = FWDMSPUtils.hasPointerEvent;
         this.allowToCreateSecondButton_bl = !s.isMobile_bl || s.hasPointerEvent_bl || i;
         s.init = function() {
             s.setupMainContainers()
         };
         s.setupMainContainers = function() {
-            s.n_sdo = new MUSICDisplayObject("img");
+            s.n_sdo = new FWDMSPDisplayObject("img");
             s.n_sdo.setScreen(s.nImg);
             s.addChild(s.n_sdo);
             if (s.allowToCreateSecondButton_bl) {
                 var e = new Image;
                 e.src = s.sPath_str;
-                s.s_sdo = new MUSICDisplayObject("img");
+                s.s_sdo = new FWDMSPDisplayObject("img");
                 s.s_sdo.setScreen(e);
                 s.s_sdo.setWidth(s.totalWidth);
                 s.s_sdo.setHeight(s.totalHeight);
@@ -10198,7 +10850,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 if (s.dPath_str) {
                     var t = new Image;
                     t.src = s.dPath_str;
-                    s.d_sdo = new MUSICDisplayObject("img");
+                    s.d_sdo = new FWDMSPDisplayObject("img");
                     s.d_sdo.setScreen(t);
                     s.d_sdo.setWidth(s.totalWidth);
                     s.d_sdo.setHeight(s.totalHeight);
@@ -10229,6 +10881,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }
         };
         s.onMouseOver = function(e) {
+            s.dispatchEvent(t.SHOW_TOOLTIP, {
+                e: e
+            });
             if (s.isDisabledForGood_bl) return;
             if (!e.pointerType || e.pointerType == "mouse") {
                 if (s.isDisabled_bl || s.isSelectedFinal_bl) return;
@@ -10259,8 +10914,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         s.setSelected = function() {
             s.isSelectedFinal_bl = true;
             if (!s.s_sdo) return;
-            MUSICTweenMax.killTweensOf(s.s_sdo);
-            MUSICTweenMax.to(s.s_sdo, .8, {
+            FWDMSPTweenMax.killTweensOf(s.s_sdo);
+            FWDMSPTweenMax.to(s.s_sdo, .8, {
                 alpha: 1,
                 ease: Expo.easeOut
             })
@@ -10268,7 +10923,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         s.setUnselected = function() {
             s.isSelectedFinal_bl = false;
             if (!s.s_sdo) return;
-            MUSICTweenMax.to(s.s_sdo, .8, {
+            FWDMSPTweenMax.to(s.s_sdo, .8, {
                 alpha: 0,
                 delay: .1,
                 ease: Expo.easeOut
@@ -10276,16 +10931,16 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         };
         this.setNormalState = function() {
             if (!s.s_sdo) return;
-            MUSICTweenMax.killTweensOf(s.s_sdo);
-            MUSICTweenMax.to(s.s_sdo, .5, {
+            FWDMSPTweenMax.killTweensOf(s.s_sdo);
+            FWDMSPTweenMax.to(s.s_sdo, .5, {
                 alpha: 0,
                 ease: Expo.easeOut
             })
         };
         this.setSelectedState = function() {
             if (!s.s_sdo) return;
-            MUSICTweenMax.killTweensOf(s.s_sdo);
-            MUSICTweenMax.to(s.s_sdo, .5, {
+            FWDMSPTweenMax.killTweensOf(s.s_sdo);
+            FWDMSPTweenMax.to(s.s_sdo, .5, {
                 alpha: 1,
                 delay: .1,
                 ease: Expo.easeOut
@@ -10305,7 +10960,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             if (s.isDisabledForGood_bl || s.isDisabled_bl) return;
             s.isDisabled_bl = true;
             s.setButtonMode(false);
-            MUSICTweenMax.to(s, .6, {
+            FWDMSPTweenMax.to(s, .6, {
                 alpha: .4
             });
             if (!e) s.setNormalState()
@@ -10314,7 +10969,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             if (s.isDisabledForGood_bl || !s.isDisabled_bl) return;
             s.isDisabled_bl = false;
             s.setButtonMode(true);
-            MUSICTweenMax.to(s, .6, {
+            FWDMSPTweenMax.to(s, .6, {
                 alpha: 1
             })
         };
@@ -10335,12 +10990,12 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.show = function() {
             if (s.isShowed_bl) return;
             s.isShowed_bl = true;
-            MUSICTweenMax.killTweensOf(s);
-            if (!MUSICUtils.isIEAndLessThen9) {
-                if (MUSICUtils.isIEWebKit) {
-                    MUSICTweenMax.killTweensOf(s.n_sdo);
+            FWDMSPTweenMax.killTweensOf(s);
+            if (!FWDMSPUtils.isIEAndLessThen9) {
+                if (FWDMSPUtils.isIEWebKit) {
+                    FWDMSPTweenMax.killTweensOf(s.n_sdo);
                     s.n_sdo.setScale2(0);
-                    MUSICTweenMax.to(s.n_sdo, .8, {
+                    FWDMSPTweenMax.to(s.n_sdo, .8, {
                         scale: 1,
                         delay: .4,
                         onStart: function() {
@@ -10350,7 +11005,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                     })
                 } else {
                     s.setScale2(0);
-                    MUSICTweenMax.to(s, .8, {
+                    FWDMSPTweenMax.to(s, .8, {
                         scale: 1,
                         delay: .4,
                         onStart: function() {
@@ -10359,11 +11014,11 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                         ease: Elastic.easeOut
                     })
                 }
-            } else if (MUSICUtils.isIEAndLessThen9) {
+            } else if (FWDMSPUtils.isIEAndLessThen9) {
                 s.setVisible(true)
             } else {
                 s.setAlpha(0);
-                MUSICTweenMax.to(s, .4, {
+                FWDMSPTweenMax.to(s, .4, {
                     alpha: 1,
                     delay: .4
                 });
@@ -10373,22 +11028,23 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.hide = function(e) {
             if (!s.isShowed_bl) return;
             s.isShowed_bl = false;
-            MUSICTweenMax.killTweensOf(s);
-            MUSICTweenMax.killTweensOf(s.n_sdo);
+            FWDMSPTweenMax.killTweensOf(s);
+            FWDMSPTweenMax.killTweensOf(s.n_sdo);
             s.setVisible(false)
         };
         s.init()
     };
     t.setPrototype = function() {
         t.prototype = null;
-        t.prototype = new MUSICDisplayObject("div")
+        t.prototype = new FWDMSPDisplayObject("div")
     };
     t.CLICK = "onClick";
     t.MOUSE_OVER = "onMouseOver";
+    t.SHOW_TOOLTIP = "showTooltip";
     t.MOUSE_OUT = "onMouseOut";
     t.MOUSE_UP = "onMouseDown";
     t.prototype = null;
-    e.MUSICSimpleButton = t
+    e.FWDMSPSimpleButton = t
 })(window);
 (function(e) {
     var t = function(e, n, r, i) {
@@ -10400,8 +11056,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.sImgPath_str = n;
         this.buttonWidth = s.nImg_img.width;
         this.buttonHeight = s.nImg_img.height;
-        this.isMobile_bl = MUSICUtils.isMobile;
-        this.hasPointerEvent_bl = MUSICUtils.hasPointerEvent;
+        this.isMobile_bl = FWDMSPUtils.isMobile;
+        this.hasPointerEvent_bl = FWDMSPUtils.hasPointerEvent;
         this.isDisabled_bl = false;
         this.init = function() {
             s.setupMainContainers();
@@ -10410,13 +11066,13 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             s.setButtonMode(true)
         };
         this.setupMainContainers = function() {
-            s.n_do = new MUSICDisplayObject("img");
+            s.n_do = new FWDMSPDisplayObject("img");
             var e = new Image;
             e.src = s.nImg_img.src;
             s.n_do.setScreen(e);
             s.n_do.setWidth(s.buttonWidth);
             s.n_do.setHeight(s.buttonHeight);
-            s.s_do = new MUSICDisplayObject("img");
+            s.s_do = new FWDMSPDisplayObject("img");
             var t = new Image;
             t.src = s.sImgPath_str;
             s.s_do.setScreen(t);
@@ -10429,13 +11085,13 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             s.screen.onclick = s.onClick
         };
         this.onMouseOver = function(e) {
-            MUSICTweenMax.to(s.n_do, .9, {
+            FWDMSPTweenMax.to(s.n_do, .9, {
                 alpha: 0,
                 ease: Expo.easeOut
             })
         };
         this.onMouseOut = function(e) {
-            MUSICTweenMax.to(s.n_do, .9, {
+            FWDMSPTweenMax.to(s.n_do, .9, {
                 alpha: 1,
                 ease: Expo.easeOut
             })
@@ -10445,7 +11101,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         };
         this.destroy = function() {
             if (s.n_do) {
-                MUSICTweenMax.killTweensOf(s.n_do);
+                FWDMSPTweenMax.killTweensOf(s.n_do);
                 s.n_do.destroy();
                 s.s_do.destroy()
             }
@@ -10459,11 +11115,11 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
     };
     t.setPrototype = function() {
         t.prototype = null;
-        t.prototype = new MUSICDisplayObject("div", "relative")
+        t.prototype = new FWDMSPDisplayObject("div", "relative")
     };
     t.CLICK = "onClick";
     t.prototype = null;
-    e.MUSICSimpleSizeButton = t
+    e.FWDMSPSimpleSizeButton = t
 })(window);
 (function(e) {
     var t = function(n, r, i, s, o, u, a) {
@@ -10476,21 +11132,24 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.pointer_do = null;
         this.pointerUp_do = null;
         this.fontColor_str = u;
+        this.toolTipLabel_str = o;
         this.toopTipPointerUp_str = s;
+        this.toolTipsButtonsHideDelay = a * 1e3;
         this.pointerWidth = 7;
         this.pointerHeight = 4;
         this.showWithDelayId_to;
-        this.isMobile_bl = MUSICUtils.isMobile;
+        this.isMobile_bl = FWDMSPUtils.isMobile;
         this.isShowed_bl = true;
         this.init = function() {
             f.setOverflow("visible");
             f.setupMainContainers();
+            f.setLabel(f.toolTipLabel_str);
             f.hide();
             f.getStyle().background = "url('" + f.bkPath_str + "')";
             f.getStyle().zIndex = 9999999999
         };
         this.setupMainContainers = function() {
-            f.text_do = new MUSICDisplayObject("div");
+            f.text_do = new FWDMSPDisplayObject("div");
             f.text_do.hasTransform3d_bl = false;
             f.text_do.hasTransform2d_bl = false;
             f.text_do.setBackfaceVisibility();
@@ -10509,14 +11168,14 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             f.addChild(f.text_do);
             var e = new Image;
             e.src = f.pointerPath_str;
-            f.pointer_do = new MUSICDisplayObject("img");
+            f.pointer_do = new FWDMSPDisplayObject("img");
             f.pointer_do.setScreen(e);
             f.pointer_do.setWidth(f.pointerWidth);
             f.pointer_do.setHeight(f.pointerHeight);
             f.addChild(f.pointer_do);
             var t = new Image;
             t.src = f.toopTipPointerUp_str;
-            f.pointerUp_do = new MUSICDisplayObject("img");
+            f.pointerUp_do = new FWDMSPDisplayObject("img");
             f.pointerUp_do.setScreen(t);
             f.pointerUp_do.setWidth(f.pointerWidth);
             f.pointerUp_do.setHeight(f.pointerHeight);
@@ -10553,8 +11212,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.show = function() {
             if (f.isShowed_bl) return;
             f.isShowed_bl = true;
-            MUSICTweenMax.killTweensOf(f);
+            FWDMSPTweenMax.killTweensOf(f);
             clearTimeout(f.showWithDelayId_to);
+            f.showWithDelayId_to = setTimeout(f.showFinal, f.toolTipsButtonsHideDelay);
             if (e.addEventListener) {
                 e.addEventListener("mousemove", f.moveHandler)
             } else if (document.attachEvent) {
@@ -10565,7 +11225,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
         this.showFinal = function() {
             f.setVisible(true);
             f.setAlpha(0);
-            MUSICTweenMax.to(f, .4, {
+            FWDMSPTweenMax.to(f, .4, {
                 alpha: 1,
                 onComplete: function() {
                     f.setVisible(true)
@@ -10574,8 +11234,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             })
         };
         this.moveHandler = function(e) {
-            var t = MUSICUtils.getViewportMouseCoordinates(e);
-            if (!MUSICUtils.hitTest(f.buttonRef_do.screen, t.screenX, t.screenY)) f.hide()
+            var t = FWDMSPUtils.getViewportMouseCoordinates(e);
+            if (!FWDMSPUtils.hitTest(f.buttonRef_do.screen, t.screenX, t.screenY)) f.hide()
         };
         this.hide = function() {
             if (!f.isShowed_bl) return;
@@ -10585,7 +11245,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             } else if (document.detachEvent) {
                 document.detachEvent("onmousemove", f.moveHandler)
             }
-            MUSICTweenMax.killTweensOf(f);
+            FWDMSPTweenMax.killTweensOf(f);
             f.setVisible(false);
             f.isShowed_bl = false
         };
@@ -10593,9 +11253,5838 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
     };
     t.setPrototype = function() {
         t.prototype = null;
-        t.prototype = new MUSICDisplayObject("div", "fixed")
+        t.prototype = new FWDMSPDisplayObject("div", "fixed")
     };
     t.CLICK = "onClick";
     t.MOUSE_DOWN = "onMouseDown";
     t.prototype = null;
+    e.FWDMSPToolTip = t
 })(window);
+(window._gsQueue || (window._gsQueue = [])).push(function() {
+    "use strict";
+    window._gsDefine("FWDMSPTweenMax", ["core.Animation", "core.SimpleTimeline", "TweenLite"], function(e, t, n) {
+        var r = [].slice,
+            i = function(e, t, r) {
+                n.call(this, e, t, r);
+                this._cycle = 0;
+                this._yoyo = this.vars.yoyo === true;
+                this._repeat = this.vars.repeat || 0;
+                this._repeatDelay = this.vars.repeatDelay || 0;
+                this._dirty = true
+            },
+            s = function(e) {
+                return e.jquery || e.length && e[0] && e[0].nodeType && e[0].style
+            },
+            o = i.prototype = n.to({}, .1, {}),
+            u = [];
+        i.version = "1.9.7";
+        o.constructor = i;
+        o.kill()._gc = false;
+        i.killTweensOf = i.killDelayedCallsTo = n.killTweensOf;
+        i.getTweensOf = n.getTweensOf;
+        i.ticker = n.ticker;
+        o.invalidate = function() {
+            this._yoyo = this.vars.yoyo === true;
+            this._repeat = this.vars.repeat || 0;
+            this._repeatDelay = this.vars.repeatDelay || 0;
+            this._uncache(true);
+            return n.prototype.invalidate.call(this)
+        };
+        o.updateTo = function(e, t) {
+            var r = this.ratio,
+                i;
+            if (t && this.timeline && this._startTime < this._timeline._time) {
+                this._startTime = this._timeline._time;
+                this._uncache(false);
+                if (this._gc) {
+                    this._enabled(true, false)
+                } else {
+                    this._timeline.insert(this, this._startTime - this._delay)
+                }
+            }
+            for (i in e) {
+                this.vars[i] = e[i]
+            }
+            if (this._initted) {
+                if (t) {
+                    this._initted = false
+                } else {
+                    if (this._notifyPluginsOfEnabled && this._firstPT) {
+                        n._onPluginEvent("_onDisable", this)
+                    }
+                    if (this._time / this._duration > .998) {
+                        var s = this._time;
+                        this.render(0, true, false);
+                        this._initted = false;
+                        this.render(s, true, false)
+                    } else if (this._time > 0) {
+                        this._initted = false;
+                        this._init();
+                        var o = 1 / (1 - r),
+                            u = this._firstPT,
+                            a;
+                        while (u) {
+                            a = u.s + u.c;
+                            u.c *= o;
+                            u.s = a - u.c;
+                            u = u._next
+                        }
+                    }
+                }
+            }
+            return this
+        };
+        o.render = function(e, t, n) {
+            var r = !this._dirty ? this._totalDuration : this.totalDuration(),
+                i = this._time,
+                s = this._totalTime,
+                o = this._cycle,
+                a, f, l, c, h, p, d;
+            if (e >= r) {
+                this._totalTime = r;
+                this._cycle = this._repeat;
+                if (this._yoyo && (this._cycle & 1) !== 0) {
+                    this._time = 0;
+                    this.ratio = this._ease._calcEnd ? this._ease.getRatio(0) : 0
+                } else {
+                    this._time = this._duration;
+                    this.ratio = this._ease._calcEnd ? this._ease.getRatio(1) : 1
+                }
+                if (!this._reversed) {
+                    a = true;
+                    f = "onComplete"
+                }
+                if (this._duration === 0) {
+                    if (e === 0 || this._rawPrevTime < 0)
+                        if (this._rawPrevTime !== e) {
+                            n = true;
+                            if (this._rawPrevTime > 0) {
+                                f = "onReverseComplete";
+                                if (t) {
+                                    e = -1
+                                }
+                            }
+                        } this._rawPrevTime = e
+                }
+            } else if (e < 1e-7) {
+                this._totalTime = this._time = this._cycle = 0;
+                this.ratio = this._ease._calcEnd ? this._ease.getRatio(0) : 0;
+                if (s !== 0 || this._duration === 0 && this._rawPrevTime > 0) {
+                    f = "onReverseComplete";
+                    a = this._reversed
+                }
+                if (e < 0) {
+                    this._active = false;
+                    if (this._duration === 0) {
+                        if (this._rawPrevTime >= 0) {
+                            n = true
+                        }
+                        this._rawPrevTime = e
+                    }
+                } else if (!this._initted) {
+                    n = true
+                }
+            } else {
+                this._totalTime = this._time = e;
+                if (this._repeat !== 0) {
+                    c = this._duration + this._repeatDelay;
+                    this._cycle = this._totalTime / c >> 0;
+                    if (this._cycle !== 0)
+                        if (this._cycle === this._totalTime / c) {
+                            this._cycle--
+                        } this._time = this._totalTime - this._cycle * c;
+                    if (this._yoyo)
+                        if ((this._cycle & 1) !== 0) {
+                            this._time = this._duration - this._time
+                        } if (this._time > this._duration) {
+                        this._time = this._duration
+                    } else if (this._time < 0) {
+                        this._time = 0
+                    }
+                }
+                if (this._easeType) {
+                    h = this._time / this._duration;
+                    p = this._easeType;
+                    d = this._easePower;
+                    if (p === 1 || p === 3 && h >= .5) {
+                        h = 1 - h
+                    }
+                    if (p === 3) {
+                        h *= 2
+                    }
+                    if (d === 1) {
+                        h *= h
+                    } else if (d === 2) {
+                        h *= h * h
+                    } else if (d === 3) {
+                        h *= h * h * h
+                    } else if (d === 4) {
+                        h *= h * h * h * h
+                    }
+                    if (p === 1) {
+                        this.ratio = 1 - h
+                    } else if (p === 2) {
+                        this.ratio = h
+                    } else if (this._time / this._duration < .5) {
+                        this.ratio = h / 2
+                    } else {
+                        this.ratio = 1 - h / 2
+                    }
+                } else {
+                    this.ratio = this._ease.getRatio(this._time / this._duration)
+                }
+            }
+            if (i === this._time && !n) {
+                if (s !== this._totalTime)
+                    if (this._onUpdate)
+                        if (!t) {
+                            this._onUpdate.apply(this.vars.onUpdateScope || this, this.vars.onUpdateParams || u)
+                        } return
+            } else if (!this._initted) {
+                this._init();
+                if (!this._initted) {
+                    return
+                }
+                if (this._time && !a) {
+                    this.ratio = this._ease.getRatio(this._time / this._duration)
+                } else if (a && this._ease._calcEnd) {
+                    this.ratio = this._ease.getRatio(this._time === 0 ? 0 : 1)
+                }
+            }
+            if (!this._active)
+                if (!this._paused) {
+                    this._active = true
+                } if (s === 0) {
+                if (this._startAt) {
+                    if (e >= 0) {
+                        this._startAt.render(e, t, n)
+                    } else if (!f) {
+                        f = "_dummyGS"
+                    }
+                }
+                if (this.vars.onStart)
+                    if (this._totalTime !== 0 || this._duration === 0)
+                        if (!t) {
+                            this.vars.onStart.apply(this.vars.onStartScope || this, this.vars.onStartParams || u)
+                        }
+            }
+            l = this._firstPT;
+            while (l) {
+                if (l.f) {
+                    l.t[l.p](l.c * this.ratio + l.s)
+                } else {
+                    var v = l.c * this.ratio + l.s;
+                    if (l.p == "x") {
+                        l.t.setX(v)
+                    } else if (l.p == "y") {
+                        l.t.setY(v)
+                    } else if (l.p == "z") {
+                        l.t.setZ(v)
+                    } else if (l.p == "w") {
+                        l.t.setWidth(v)
+                    } else if (l.p == "h") {
+                        l.t.setHeight(v)
+                    } else if (l.p == "alpha") {
+                        l.t.setAlpha(v)
+                    } else if (l.p == "scale") {
+                        l.t.setScale(v)
+                    } else {
+                        l.t[l.p] = v
+                    }
+                }
+                l = l._next
+            }
+            if (this._onUpdate) {
+                if (e < 0)
+                    if (this._startAt) {
+                        this._startAt.render(e, t, n)
+                    } if (!t) {
+                    this._onUpdate.apply(this.vars.onUpdateScope || this, this.vars.onUpdateParams || u)
+                }
+            }
+            if (this._cycle !== o)
+                if (!t)
+                    if (!this._gc)
+                        if (this.vars.onRepeat) {
+                            this.vars.onRepeat.apply(this.vars.onRepeatScope || this, this.vars.onRepeatParams || u)
+                        } if (f)
+                if (!this._gc) {
+                    if (e < 0 && this._startAt && !this._onUpdate) {
+                        this._startAt.render(e, t, n)
+                    }
+                    if (a) {
+                        if (this._timeline.autoRemoveChildren) {
+                            this._enabled(false, false)
+                        }
+                        this._active = false
+                    }
+                    if (!t && this.vars[f]) {
+                        this.vars[f].apply(this.vars[f + "Scope"] || this, this.vars[f + "Params"] || u)
+                    }
+                }
+        };
+        i.to = function(e, t, n) {
+            return new i(e, t, n)
+        };
+        i.from = function(e, t, n) {
+            n.runBackwards = true;
+            n.immediateRender = n.immediateRender != false;
+            return new i(e, t, n)
+        };
+        i.fromTo = function(e, t, n, r) {
+            r.startAt = n;
+            r.immediateRender = r.immediateRender != false && n.immediateRender != false;
+            return new i(e, t, r)
+        };
+        i.staggerTo = i.allTo = function(e, t, o, a, f, l, c) {
+            a = a || 0;
+            var h = o.delay || 0,
+                p = [],
+                d = function() {
+                    if (o.onComplete) {
+                        o.onComplete.apply(o.onCompleteScope || this, o.onCompleteParams || u)
+                    }
+                    f.apply(c || this, l || u)
+                },
+                v, m, g, y;
+            if (!(e instanceof Array)) {
+                if (typeof e === "string") {
+                    e = n.selector(e) || e
+                }
+                if (s(e)) {
+                    e = r.call(e, 0)
+                }
+            }
+            v = e.length;
+            for (g = 0; g < v; g++) {
+                m = {};
+                for (y in o) {
+                    m[y] = o[y]
+                }
+                m.delay = h;
+                if (g === v - 1 && f) {
+                    m.onComplete = d
+                }
+                p[g] = new i(e[g], t, m);
+                h += a
+            }
+            return p
+        };
+        i.staggerFrom = i.allFrom = function(e, t, n, r, s, o, u) {
+            n.runBackwards = true;
+            n.immediateRender = n.immediateRender != false;
+            return i.staggerTo(e, t, n, r, s, o, u)
+        };
+        i.staggerFromTo = i.allFromTo = function(e, t, n, r, s, o, u, a) {
+            r.startAt = n;
+            r.immediateRender = r.immediateRender != false && n.immediateRender != false;
+            return i.staggerTo(e, t, r, s, o, u, a)
+        };
+        i.delayedCall = function(e, t, n, r, s) {
+            return new i(t, 0, {
+                delay: e,
+                onComplete: t,
+                onCompleteParams: n,
+                onCompleteScope: r,
+                onReverseComplete: t,
+                onReverseCompleteParams: n,
+                onReverseCompleteScope: r,
+                immediateRender: false,
+                useFrames: s,
+                overwrite: 0
+            })
+        };
+        i.set = function(e, t) {
+            return new i(e, 0, t)
+        };
+        i.isTweening = function(e) {
+            var t = n.getTweensOf(e),
+                r = t.length,
+                i;
+            while (--r > -1) {
+                i = t[r];
+                if (i._active || i._startTime === i._timeline._time && i._timeline._active) {
+                    return true
+                }
+            }
+            return false
+        };
+        var a = function(e, t) {
+                var r = [],
+                    i = 0,
+                    s = e._first;
+                while (s) {
+                    if (s instanceof n) {
+                        r[i++] = s
+                    } else {
+                        if (t) {
+                            r[i++] = s
+                        }
+                        r = r.concat(a(s, t));
+                        i = r.length
+                    }
+                    s = s._next
+                }
+                return r
+            },
+            f = i.getAllTweens = function(t) {
+                return a(e._rootTimeline, t).concat(a(e._rootFramesTimeline, t))
+            };
+        i.killAll = function(e, n, r, i) {
+            if (n == null) {
+                n = true
+            }
+            if (r == null) {
+                r = true
+            }
+            var s = f(i != false),
+                o = s.length,
+                u = n && r && i,
+                a, l, c;
+            for (c = 0; c < o; c++) {
+                l = s[c];
+                if (u || l instanceof t || (a = l.target === l.vars.onComplete) && r || n && !a) {
+                    if (e) {
+                        l.totalTime(l.totalDuration())
+                    } else {
+                        l._enabled(false, false)
+                    }
+                }
+            }
+        };
+        i.killChildTweensOf = function(e, t) {
+            if (e == null) {
+                return
+            }
+            var o = n._tweenLookup,
+                u, a, f, l, c;
+            if (typeof e === "string") {
+                e = n.selector(e) || e
+            }
+            if (s(e)) {
+                e = r(e, 0)
+            }
+            if (e instanceof Array) {
+                l = e.length;
+                while (--l > -1) {
+                    i.killChildTweensOf(e[l], t)
+                }
+                return
+            }
+            u = [];
+            for (f in o) {
+                a = o[f].target.parentNode;
+                while (a) {
+                    if (a === e) {
+                        u = u.concat(o[f].tweens)
+                    }
+                    a = a.parentNode
+                }
+            }
+            c = u.length;
+            for (l = 0; l < c; l++) {
+                if (t) {
+                    u[l].totalTime(u[l].totalDuration())
+                }
+                u[l]._enabled(false, false)
+            }
+        };
+        var l = function(e, n, r, i) {
+            if (n === undefined) {
+                n = true
+            }
+            if (r === undefined) {
+                r = true
+            }
+            var s = f(i),
+                o = n && r && i,
+                u = s.length,
+                a, l;
+            while (--u > -1) {
+                l = s[u];
+                if (o || l instanceof t || (a = l.target === l.vars.onComplete) && r || n && !a) {
+                    l.paused(e)
+                }
+            }
+        };
+        i.pauseAll = function(e, t, n) {
+            l(true, e, t, n)
+        };
+        i.resumeAll = function(e, t, n) {
+            l(false, e, t, n)
+        };
+        o.progress = function(e) {
+            return !arguments.length ? this._time / this.duration() : this.totalTime(this.duration() * (this._yoyo && (this._cycle & 1) !== 0 ? 1 - e : e) + this._cycle * (this._duration + this._repeatDelay), false)
+        };
+        o.totalProgress = function(e) {
+            return !arguments.length ? this._totalTime / this.totalDuration() : this.totalTime(this.totalDuration() * e, false)
+        };
+        o.time = function(e, t) {
+            if (!arguments.length) {
+                return this._time
+            }
+            if (this._dirty) {
+                this.totalDuration()
+            }
+            if (e > this._duration) {
+                e = this._duration
+            }
+            if (this._yoyo && (this._cycle & 1) !== 0) {
+                e = this._duration - e + this._cycle * (this._duration + this._repeatDelay)
+            } else if (this._repeat !== 0) {
+                e += this._cycle * (this._duration + this._repeatDelay)
+            }
+            return this.totalTime(e, t)
+        };
+        o.duration = function(t) {
+            if (!arguments.length) {
+                return this._duration
+            }
+            return e.prototype.duration.call(this, t)
+        };
+        o.totalDuration = function(e) {
+            if (!arguments.length) {
+                if (this._dirty) {
+                    this._totalDuration = this._repeat === -1 ? 999999999999 : this._duration * (this._repeat + 1) + this._repeatDelay * this._repeat;
+                    this._dirty = false
+                }
+                return this._totalDuration
+            }
+            return this._repeat === -1 ? this : this.duration((e - this._repeat * this._repeatDelay) / (this._repeat + 1))
+        };
+        o.repeat = function(e) {
+            if (!arguments.length) {
+                return this._repeat
+            }
+            this._repeat = e;
+            return this._uncache(true)
+        };
+        o.repeatDelay = function(e) {
+            if (!arguments.length) {
+                return this._repeatDelay
+            }
+            this._repeatDelay = e;
+            return this._uncache(true)
+        };
+        o.yoyo = function(e) {
+            if (!arguments.length) {
+                return this._yoyo
+            }
+            this._yoyo = e;
+            return this
+        };
+        return i
+    }, true);
+    window._gsDefine("TimelineLite", ["core.Animation", "core.SimpleTimeline", "TweenLite"], function(e, t, n) {
+        var r = function(e) {
+                t.call(this, e);
+                this._labels = {};
+                this.autoRemoveChildren = this.vars.autoRemoveChildren === true;
+                this.smoothChildTiming = this.vars.smoothChildTiming === true;
+                this._sortChildren = true;
+                this._onUpdate = this.vars.onUpdate;
+                var n = this.vars,
+                    r = i.length,
+                    s, o;
+                while (--r > -1) {
+                    o = n[i[r]];
+                    if (o) {
+                        s = o.length;
+                        while (--s > -1) {
+                            if (o[s] === "{self}") {
+                                o = n[i[r]] = o.concat();
+                                o[s] = this
+                            }
+                        }
+                    }
+                }
+                if (n.tweens instanceof Array) {
+                    this.add(n.tweens, 0, n.align, n.stagger)
+                }
+            },
+            i = ["onStartParams", "onUpdateParams", "onCompleteParams", "onReverseCompleteParams", "onRepeatParams"],
+            s = [],
+            o = function(e) {
+                var t = {},
+                    n;
+                for (n in e) {
+                    t[n] = e[n]
+                }
+                return t
+            },
+            u = s.slice,
+            a = r.prototype = new t;
+        r.version = "1.9.7";
+        a.constructor = r;
+        a.kill()._gc = false;
+        a.to = function(e, t, r, i) {
+            return t ? this.add(new n(e, t, r), i) : this.set(e, r, i)
+        };
+        a.from = function(e, t, r, i) {
+            return this.add(n.from(e, t, r), i)
+        };
+        a.fromTo = function(e, t, r, i, s) {
+            return t ? this.add(n.fromTo(e, t, r, i), s) : this.set(e, i, s)
+        };
+        a.staggerTo = function(e, t, i, s, a, f, l, c) {
+            var h = new r({
+                    onComplete: f,
+                    onCompleteParams: l,
+                    onCompleteScope: c
+                }),
+                p;
+            if (typeof e === "string") {
+                e = n.selector(e) || e
+            }
+            if (!(e instanceof Array) && e.length && e[0] && e[0].nodeType && e[0].style) {
+                e = u.call(e, 0)
+            }
+            s = s || 0;
+            for (p = 0; p < e.length; p++) {
+                if (i.startAt) {
+                    i.startAt = o(i.startAt)
+                }
+                h.to(e[p], t, o(i), p * s)
+            }
+            return this.add(h, a)
+        };
+        a.staggerFrom = function(e, t, n, r, i, s, o, u) {
+            n.immediateRender = n.immediateRender != false;
+            n.runBackwards = true;
+            return this.staggerTo(e, t, n, r, i, s, o, u)
+        };
+        a.staggerFromTo = function(e, t, n, r, i, s, o, u, a) {
+            r.startAt = n;
+            r.immediateRender = r.immediateRender != false && n.immediateRender != false;
+            return this.staggerTo(e, t, r, i, s, o, u, a)
+        };
+        a.call = function(e, t, r, i) {
+            return this.add(n.delayedCall(0, e, t, r), i)
+        };
+        a.set = function(e, t, r) {
+            r = this._parseTimeOrLabel(r, 0, true);
+            if (t.immediateRender == null) {
+                t.immediateRender = r === this._time && !this._paused
+            }
+            return this.add(new n(e, 0, t), r)
+        };
+        r.exportRoot = function(e, t) {
+            e = e || {};
+            if (e.smoothChildTiming == null) {
+                e.smoothChildTiming = true
+            }
+            var i = new r(e),
+                s = i._timeline,
+                o, u;
+            if (t == null) {
+                t = true
+            }
+            s._remove(i, true);
+            i._startTime = 0;
+            i._rawPrevTime = i._time = i._totalTime = s._time;
+            o = s._first;
+            while (o) {
+                u = o._next;
+                if (!t || !(o instanceof n && o.target === o.vars.onComplete)) {
+                    i.add(o, o._startTime - o._delay)
+                }
+                o = u
+            }
+            s.add(i, 0);
+            return i
+        };
+        a.add = function(i, s, o, u) {
+            var a, f, l, c, h;
+            if (typeof s !== "number") {
+                s = this._parseTimeOrLabel(s, 0, true, i)
+            }
+            if (!(i instanceof e)) {
+                if (i instanceof Array) {
+                    o = o || "normal";
+                    u = u || 0;
+                    a = s;
+                    f = i.length;
+                    for (l = 0; l < f; l++) {
+                        if ((c = i[l]) instanceof Array) {
+                            c = new r({
+                                tweens: c
+                            })
+                        }
+                        this.add(c, a);
+                        if (typeof c !== "string" && typeof c !== "function") {
+                            if (o === "sequence") {
+                                a = c._startTime + c.totalDuration() / c._timeScale
+                            } else if (o === "start") {
+                                c._startTime -= c.delay()
+                            }
+                        }
+                        a += u
+                    }
+                    return this._uncache(true)
+                } else if (typeof i === "string") {
+                    return this.addLabel(i, s)
+                } else if (typeof i === "function") {
+                    i = n.delayedCall(0, i)
+                } else {
+                    throw "Cannot add " + i + " into the timeline; it is neither a tween, timeline, function, nor a string."
+                }
+            }
+            t.prototype.add.call(this, i, s);
+            if (this._gc)
+                if (!this._paused)
+                    if (this._time === this._duration)
+                        if (this._time < this.duration()) {
+                            h = this;
+                            while (h._gc && h._timeline) {
+                                if (h._timeline.smoothChildTiming) {
+                                    h.totalTime(h._totalTime, true)
+                                } else {
+                                    h._enabled(true, false)
+                                }
+                                h = h._timeline
+                            }
+                        } return this
+        };
+        a.remove = function(t) {
+            if (t instanceof e) {
+                return this._remove(t, false)
+            } else if (t instanceof Array) {
+                var n = t.length;
+                while (--n > -1) {
+                    this.remove(t[n])
+                }
+                return this
+            } else if (typeof t === "string") {
+                return this.removeLabel(t)
+            }
+            return this.kill(null, t)
+        };
+        a.append = function(e, t) {
+            return this.add(e, this._parseTimeOrLabel(null, t, true, e))
+        };
+        a.insert = a.insertMultiple = function(e, t, n, r) {
+            return this.add(e, t || 0, n, r)
+        };
+        a.appendMultiple = function(e, t, n, r) {
+            return this.add(e, this._parseTimeOrLabel(null, t, true, e), n, r)
+        };
+        a.addLabel = function(e, t) {
+            this._labels[e] = this._parseTimeOrLabel(t);
+            return this
+        };
+        a.removeLabel = function(e) {
+            delete this._labels[e];
+            return this
+        };
+        a.getLabelTime = function(e) {
+            return this._labels[e] != null ? this._labels[e] : -1
+        };
+        a._parseTimeOrLabel = function(t, n, r, i) {
+            var s;
+            if (i instanceof e && i.timeline === this) {
+                this.remove(i)
+            } else if (i instanceof Array) {
+                s = i.length;
+                while (--s > -1) {
+                    if (i[s] instanceof e && i[s].timeline === this) {
+                        this.remove(i[s])
+                    }
+                }
+            }
+            if (typeof n === "string") {
+                return this._parseTimeOrLabel(n, r && typeof t === "number" && this._labels[n] == null ? t - this.duration() : 0, r)
+            }
+            n = n || 0;
+            if (typeof t === "string" && (isNaN(t) || this._labels[t] != null)) {
+                s = t.indexOf("=");
+                if (s === -1) {
+                    if (this._labels[t] == null) {
+                        return r ? this._labels[t] = this.duration() + n : n
+                    }
+                    return this._labels[t] + n
+                }
+                n = parseInt(t.charAt(s - 1) + "1", 10) * Number(t.substr(s + 1));
+                t = s > 1 ? this._parseTimeOrLabel(t.substr(0, s - 1), 0, r) : this.duration()
+            } else if (t == null) {
+                t = this.duration()
+            }
+            return Number(t) + n
+        };
+        a.seek = function(e, t) {
+            return this.totalTime(typeof e === "number" ? e : this._parseTimeOrLabel(e), t !== false)
+        };
+        a.stop = function() {
+            return this.paused(true)
+        };
+        a.gotoAndPlay = function(e, t) {
+            return this.play(e, t)
+        };
+        a.gotoAndStop = function(e, t) {
+            return this.pause(e, t)
+        };
+        a.render = function(e, t, n) {
+            if (this._gc) {
+                this._enabled(true, false)
+            }
+            this._active = !this._paused;
+            var r = !this._dirty ? this._totalDuration : this.totalDuration(),
+                i = this._time,
+                o = this._startTime,
+                u = this._timeScale,
+                a = this._paused,
+                f, l, c, h, p;
+            if (e >= r) {
+                this._totalTime = this._time = r;
+                if (!this._reversed)
+                    if (!this._hasPausedChild()) {
+                        l = true;
+                        h = "onComplete";
+                        if (this._duration === 0)
+                            if (e === 0 || this._rawPrevTime < 0)
+                                if (this._rawPrevTime !== e && this._first) {
+                                    p = true;
+                                    if (this._rawPrevTime > 0) {
+                                        h = "onReverseComplete"
+                                    }
+                                }
+                    } this._rawPrevTime = e;
+                e = r + 1e-6
+            } else if (e < 1e-7) {
+                this._totalTime = this._time = 0;
+                if (i !== 0 || this._duration === 0 && this._rawPrevTime > 0) {
+                    h = "onReverseComplete";
+                    l = this._reversed
+                }
+                if (e < 0) {
+                    this._active = false;
+                    if (this._duration === 0)
+                        if (this._rawPrevTime >= 0 && this._first) {
+                            p = true
+                        }
+                } else if (!this._initted) {
+                    p = true
+                }
+                this._rawPrevTime = e;
+                e = 0
+            } else {
+                this._totalTime = this._time = this._rawPrevTime = e
+            }
+            if ((this._time === i || !this._first) && !n && !p) {
+                return
+            } else if (!this._initted) {
+                this._initted = true
+            }
+            if (i === 0)
+                if (this.vars.onStart)
+                    if (this._time !== 0)
+                        if (!t) {
+                            this.vars.onStart.apply(this.vars.onStartScope || this, this.vars.onStartParams || s)
+                        } if (this._time >= i) {
+                f = this._first;
+                while (f) {
+                    c = f._next;
+                    if (this._paused && !a) {
+                        break
+                    } else if (f._active || f._startTime <= this._time && !f._paused && !f._gc) {
+                        if (!f._reversed) {
+                            f.render((e - f._startTime) * f._timeScale, t, n)
+                        } else {
+                            f.render((!f._dirty ? f._totalDuration : f.totalDuration()) - (e - f._startTime) * f._timeScale, t, n)
+                        }
+                    }
+                    f = c
+                }
+            } else {
+                f = this._last;
+                while (f) {
+                    c = f._prev;
+                    if (this._paused && !a) {
+                        break
+                    } else if (f._active || f._startTime <= i && !f._paused && !f._gc) {
+                        if (!f._reversed) {
+                            f.render((e - f._startTime) * f._timeScale, t, n)
+                        } else {
+                            f.render((!f._dirty ? f._totalDuration : f.totalDuration()) - (e - f._startTime) * f._timeScale, t, n)
+                        }
+                    }
+                    f = c
+                }
+            }
+            if (this._onUpdate)
+                if (!t) {
+                    this._onUpdate.apply(this.vars.onUpdateScope || this, this.vars.onUpdateParams || s)
+                } if (h)
+                if (!this._gc)
+                    if (o === this._startTime || u !== this._timeScale)
+                        if (this._time === 0 || r >= this.totalDuration()) {
+                            if (l) {
+                                if (this._timeline.autoRemoveChildren) {
+                                    this._enabled(false, false)
+                                }
+                                this._active = false
+                            }
+                            if (!t && this.vars[h]) {
+                                this.vars[h].apply(this.vars[h + "Scope"] || this, this.vars[h + "Params"] || s)
+                            }
+                        }
+        };
+        a._hasPausedChild = function() {
+            var e = this._first;
+            while (e) {
+                if (e._paused || e instanceof r && e._hasPausedChild()) {
+                    return true
+                }
+                e = e._next
+            }
+            return false
+        };
+        a.getChildren = function(e, t, r, i) {
+            i = i || -9999999999;
+            var s = [],
+                o = this._first,
+                u = 0;
+            while (o) {
+                if (o._startTime < i) {} else if (o instanceof n) {
+                    if (t !== false) {
+                        s[u++] = o
+                    }
+                } else {
+                    if (r !== false) {
+                        s[u++] = o
+                    }
+                    if (e !== false) {
+                        s = s.concat(o.getChildren(true, t, r));
+                        u = s.length
+                    }
+                }
+                o = o._next
+            }
+            return s
+        };
+        a.getTweensOf = function(e, t) {
+            var r = n.getTweensOf(e),
+                i = r.length,
+                s = [],
+                o = 0;
+            while (--i > -1) {
+                if (r[i].timeline === this || t && this._contains(r[i])) {
+                    s[o++] = r[i]
+                }
+            }
+            return s
+        };
+        a._contains = function(e) {
+            var t = e.timeline;
+            while (t) {
+                if (t === this) {
+                    return true
+                }
+                t = t.timeline
+            }
+            return false
+        };
+        a.shiftChildren = function(e, t, n) {
+            n = n || 0;
+            var r = this._first,
+                i = this._labels,
+                s;
+            while (r) {
+                if (r._startTime >= n) {
+                    r._startTime += e
+                }
+                r = r._next
+            }
+            if (t) {
+                for (s in i) {
+                    if (i[s] >= n) {
+                        i[s] += e
+                    }
+                }
+            }
+            return this._uncache(true)
+        };
+        a._kill = function(e, t) {
+            if (!e && !t) {
+                return this._enabled(false, false)
+            }
+            var n = !t ? this.getChildren(true, true, false) : this.getTweensOf(t),
+                r = n.length,
+                i = false;
+            while (--r > -1) {
+                if (n[r]._kill(e, t)) {
+                    i = true
+                }
+            }
+            return i
+        };
+        a.clear = function(e) {
+            var t = this.getChildren(false, true, true),
+                n = t.length;
+            this._time = this._totalTime = 0;
+            while (--n > -1) {
+                t[n]._enabled(false, false)
+            }
+            if (e !== false) {
+                this._labels = {}
+            }
+            return this._uncache(true)
+        };
+        a.invalidate = function() {
+            var e = this._first;
+            while (e) {
+                e.invalidate();
+                e = e._next
+            }
+            return this
+        };
+        a._enabled = function(e, n) {
+            if (e === this._gc) {
+                var r = this._first;
+                while (r) {
+                    r._enabled(e, true);
+                    r = r._next
+                }
+            }
+            return t.prototype._enabled.call(this, e, n)
+        };
+        a.progress = function(e) {
+            return !arguments.length ? this._time / this.duration() : this.totalTime(this.duration() * e, false)
+        };
+        a.duration = function(e) {
+            if (!arguments.length) {
+                if (this._dirty) {
+                    this.totalDuration()
+                }
+                return this._duration
+            }
+            if (this.duration() !== 0 && e !== 0) {
+                this.timeScale(this._duration / e)
+            }
+            return this
+        };
+        a.totalDuration = function(e) {
+            if (!arguments.length) {
+                if (this._dirty) {
+                    var t = 0,
+                        n = this._last,
+                        r = 999999999999,
+                        i, s;
+                    while (n) {
+                        i = n._prev;
+                        if (n._dirty) {
+                            n.totalDuration()
+                        }
+                        if (n._startTime > r && this._sortChildren && !n._paused) {
+                            this.add(n, n._startTime - n._delay)
+                        } else {
+                            r = n._startTime
+                        }
+                        if (n._startTime < 0 && !n._paused) {
+                            t -= n._startTime;
+                            if (this._timeline.smoothChildTiming) {
+                                this._startTime += n._startTime / this._timeScale
+                            }
+                            this.shiftChildren(-n._startTime, false, -9999999999);
+                            r = 0
+                        }
+                        s = n._startTime + n._totalDuration / n._timeScale;
+                        if (s > t) {
+                            t = s
+                        }
+                        n = i
+                    }
+                    this._duration = this._totalDuration = t;
+                    this._dirty = false
+                }
+                return this._totalDuration
+            }
+            if (this.totalDuration() !== 0)
+                if (e !== 0) {
+                    this.timeScale(this._totalDuration / e)
+                } return this
+        };
+        a.usesFrames = function() {
+            var t = this._timeline;
+            while (t._timeline) {
+                t = t._timeline
+            }
+            return t === e._rootFramesTimeline
+        };
+        a.rawTime = function() {
+            return this._paused || this._totalTime !== 0 && this._totalTime !== this._totalDuration ? this._totalTime : (this._timeline.rawTime() - this._startTime) * this._timeScale
+        };
+        return r
+    }, true);
+    window._gsDefine("TimelineMax", ["TimelineLite", "TweenLite", "easing.Ease"], function(e, t, n) {
+        var r = function(t) {
+                e.call(this, t);
+                this._repeat = this.vars.repeat || 0;
+                this._repeatDelay = this.vars.repeatDelay || 0;
+                this._cycle = 0;
+                this._yoyo = this.vars.yoyo === true;
+                this._dirty = true
+            },
+            i = [],
+            s = new n(null, null, 1, 0),
+            o = function(e) {
+                while (e) {
+                    if (e._paused) {
+                        return true
+                    }
+                    e = e._timeline
+                }
+                return false
+            },
+            u = r.prototype = new e;
+        u.constructor = r;
+        u.kill()._gc = false;
+        r.version = "1.9.7";
+        u.invalidate = function() {
+            this._yoyo = this.vars.yoyo === true;
+            this._repeat = this.vars.repeat || 0;
+            this._repeatDelay = this.vars.repeatDelay || 0;
+            this._uncache(true);
+            return e.prototype.invalidate.call(this)
+        };
+        u.addCallback = function(e, n, r, i) {
+            return this.add(t.delayedCall(0, e, r, i), n)
+        };
+        u.removeCallback = function(e, t) {
+            if (t == null) {
+                this._kill(null, e)
+            } else {
+                var n = this.getTweensOf(e, false),
+                    r = n.length,
+                    i = this._parseTimeOrLabel(t);
+                while (--r > -1) {
+                    if (n[r]._startTime === i) {
+                        n[r]._enabled(false, false)
+                    }
+                }
+            }
+            return this
+        };
+        u.tweenTo = function(e, n) {
+            n = n || {};
+            var r = {
+                    ease: s,
+                    overwrite: 2,
+                    useFrames: this.usesFrames(),
+                    immediateRender: false
+                },
+                o, u;
+            for (o in n) {
+                r[o] = n[o]
+            }
+            r.time = this._parseTimeOrLabel(e);
+            u = new t(this, Math.abs(Number(r.time) - this._time) / this._timeScale || .001, r);
+            r.onStart = function() {
+                u.target.paused(true);
+                if (u.vars.time !== u.target.time()) {
+                    u.duration(Math.abs(u.vars.time - u.target.time()) / u.target._timeScale)
+                }
+                if (n.onStart) {
+                    n.onStart.apply(n.onStartScope || u, n.onStartParams || i)
+                }
+            };
+            return u
+        };
+        u.tweenFromTo = function(e, t, n) {
+            n = n || {};
+            e = this._parseTimeOrLabel(e);
+            n.startAt = {
+                onComplete: this.seek,
+                onCompleteParams: [e],
+                onCompleteScope: this
+            };
+            n.immediateRender = n.immediateRender !== false;
+            var r = this.tweenTo(t, n);
+            return r.duration(Math.abs(r.vars.time - e) / this._timeScale || .001)
+        };
+        u.render = function(e, t, n) {
+            if (this._gc) {
+                this._enabled(true, false)
+            }
+            this._active = !this._paused;
+            var r = !this._dirty ? this._totalDuration : this.totalDuration(),
+                s = this._duration,
+                o = this._time,
+                u = this._totalTime,
+                a = this._startTime,
+                f = this._timeScale,
+                l = this._rawPrevTime,
+                c = this._paused,
+                h = this._cycle,
+                p, d, v, m, g, y;
+            if (e >= r) {
+                if (!this._locked) {
+                    this._totalTime = r;
+                    this._cycle = this._repeat
+                }
+                if (!this._reversed)
+                    if (!this._hasPausedChild()) {
+                        d = true;
+                        m = "onComplete";
+                        if (s === 0)
+                            if (e === 0 || this._rawPrevTime < 0)
+                                if (this._rawPrevTime !== e && this._first) {
+                                    g = true;
+                                    if (this._rawPrevTime > 0) {
+                                        m = "onReverseComplete"
+                                    }
+                                }
+                    } this._rawPrevTime = e;
+                if (this._yoyo && (this._cycle & 1) !== 0) {
+                    this._time = e = 0
+                } else {
+                    this._time = s;
+                    e = s + 1e-6
+                }
+            } else if (e < 1e-7) {
+                if (!this._locked) {
+                    this._totalTime = this._cycle = 0
+                }
+                this._time = 0;
+                if (o !== 0 || s === 0 && this._rawPrevTime > 0 && !this._locked) {
+                    m = "onReverseComplete";
+                    d = this._reversed
+                }
+                if (e < 0) {
+                    this._active = false;
+                    if (s === 0)
+                        if (this._rawPrevTime >= 0 && this._first) {
+                            g = true
+                        }
+                } else if (!this._initted) {
+                    g = true
+                }
+                this._rawPrevTime = e;
+                e = 0
+            } else {
+                this._time = this._rawPrevTime = e;
+                if (!this._locked) {
+                    this._totalTime = e;
+                    if (this._repeat !== 0) {
+                        y = s + this._repeatDelay;
+                        this._cycle = this._totalTime / y >> 0;
+                        if (this._cycle !== 0)
+                            if (this._cycle === this._totalTime / y) {
+                                this._cycle--
+                            } this._time = this._totalTime - this._cycle * y;
+                        if (this._yoyo)
+                            if ((this._cycle & 1) !== 0) {
+                                this._time = s - this._time
+                            } if (this._time > s) {
+                            this._time = s;
+                            e = s + 1e-6
+                        } else if (this._time < 0) {
+                            this._time = e = 0
+                        } else {
+                            e = this._time
+                        }
+                    }
+                }
+            }
+            if (this._cycle !== h)
+                if (!this._locked) {
+                    var b = this._yoyo && (h & 1) !== 0,
+                        w = b === (this._yoyo && (this._cycle & 1) !== 0),
+                        E = this._totalTime,
+                        S = this._cycle,
+                        x = this._rawPrevTime,
+                        T = this._time;
+                    this._totalTime = h * s;
+                    if (this._cycle < h) {
+                        b = !b
+                    } else {
+                        this._totalTime += s
+                    }
+                    this._time = o;
+                    this._rawPrevTime = s === 0 ? l - 1e-5 : l;
+                    this._cycle = h;
+                    this._locked = true;
+                    o = b ? 0 : s;
+                    this.render(o, t, s === 0);
+                    if (!t)
+                        if (!this._gc) {
+                            if (this.vars.onRepeat) {
+                                this.vars.onRepeat.apply(this.vars.onRepeatScope || this, this.vars.onRepeatParams || i)
+                            }
+                        } if (w) {
+                        o = b ? s + 1e-6 : -1e-6;
+                        this.render(o, true, false)
+                    }
+                    this._time = T;
+                    this._totalTime = E;
+                    this._cycle = S;
+                    this._rawPrevTime = x;
+                    this._locked = false
+                } if ((this._time === o || !this._first) && !n && !g) {
+                if (u !== this._totalTime)
+                    if (this._onUpdate)
+                        if (!t) {
+                            this._onUpdate.apply(this.vars.onUpdateScope || this, this.vars.onUpdateParams || i)
+                        } return
+            } else if (!this._initted) {
+                this._initted = true
+            }
+            if (u === 0)
+                if (this.vars.onStart)
+                    if (this._totalTime !== 0)
+                        if (!t) {
+                            this.vars.onStart.apply(this.vars.onStartScope || this, this.vars.onStartParams || i)
+                        } if (this._time >= o) {
+                p = this._first;
+                while (p) {
+                    v = p._next;
+                    if (this._paused && !c) {
+                        break
+                    } else if (p._active || p._startTime <= this._time && !p._paused && !p._gc) {
+                        if (!p._reversed) {
+                            p.render((e - p._startTime) * p._timeScale, t, n)
+                        } else {
+                            p.render((!p._dirty ? p._totalDuration : p.totalDuration()) - (e - p._startTime) * p._timeScale, t, n)
+                        }
+                    }
+                    p = v
+                }
+            } else {
+                p = this._last;
+                while (p) {
+                    v = p._prev;
+                    if (this._paused && !c) {
+                        break
+                    } else if (p._active || p._startTime <= o && !p._paused && !p._gc) {
+                        if (!p._reversed) {
+                            p.render((e - p._startTime) * p._timeScale, t, n)
+                        } else {
+                            p.render((!p._dirty ? p._totalDuration : p.totalDuration()) - (e - p._startTime) * p._timeScale, t, n)
+                        }
+                    }
+                    p = v
+                }
+            }
+            if (this._onUpdate)
+                if (!t) {
+                    this._onUpdate.apply(this.vars.onUpdateScope || this, this.vars.onUpdateParams || i)
+                } if (m)
+                if (!this._locked)
+                    if (!this._gc)
+                        if (a === this._startTime || f !== this._timeScale)
+                            if (this._time === 0 || r >= this.totalDuration()) {
+                                if (d) {
+                                    if (this._timeline.autoRemoveChildren) {
+                                        this._enabled(false, false)
+                                    }
+                                    this._active = false
+                                }
+                                if (!t && this.vars[m]) {
+                                    this.vars[m].apply(this.vars[m + "Scope"] || this, this.vars[m + "Params"] || i)
+                                }
+                            }
+        };
+        u.getActive = function(e, t, n) {
+            if (e == null) {
+                e = true
+            }
+            if (t == null) {
+                t = true
+            }
+            if (n == null) {
+                n = false
+            }
+            var r = [],
+                i = this.getChildren(e, t, n),
+                s = 0,
+                u = i.length,
+                a, f;
+            for (a = 0; a < u; a++) {
+                f = i[a];
+                if (!f._paused)
+                    if (f._timeline._time >= f._startTime)
+                        if (f._timeline._time < f._startTime + f._totalDuration / f._timeScale)
+                            if (!o(f._timeline)) {
+                                r[s++] = f
+                            }
+            }
+            return r
+        };
+        u.getLabelAfter = function(e) {
+            if (!e)
+                if (e !== 0) {
+                    e = this._time
+                } var t = this.getLabelsArray(),
+                n = t.length,
+                r;
+            for (r = 0; r < n; r++) {
+                if (t[r].time > e) {
+                    return t[r].name
+                }
+            }
+            return null
+        };
+        u.getLabelBefore = function(e) {
+            if (e == null) {
+                e = this._time
+            }
+            var t = this.getLabelsArray(),
+                n = t.length;
+            while (--n > -1) {
+                if (t[n].time < e) {
+                    return t[n].name
+                }
+            }
+            return null
+        };
+        u.getLabelsArray = function() {
+            var e = [],
+                t = 0,
+                n;
+            for (n in this._labels) {
+                e[t++] = {
+                    time: this._labels[n],
+                    name: n
+                }
+            }
+            e.sort(function(e, t) {
+                return e.time - t.time
+            });
+            return e
+        };
+        u.progress = function(e) {
+            return !arguments.length ? this._time / this.duration() : this.totalTime(this.duration() * (this._yoyo && (this._cycle & 1) !== 0 ? 1 - e : e) + this._cycle * (this._duration + this._repeatDelay), false)
+        };
+        u.totalProgress = function(e) {
+            return !arguments.length ? this._totalTime / this.totalDuration() : this.totalTime(this.totalDuration() * e, false)
+        };
+        u.totalDuration = function(t) {
+            if (!arguments.length) {
+                if (this._dirty) {
+                    e.prototype.totalDuration.call(this);
+                    this._totalDuration = this._repeat === -1 ? 999999999999 : this._duration * (this._repeat + 1) + this._repeatDelay * this._repeat
+                }
+                return this._totalDuration
+            }
+            return this._repeat === -1 ? this : this.duration((t - this._repeat * this._repeatDelay) / (this._repeat + 1))
+        };
+        u.time = function(e, t) {
+            if (!arguments.length) {
+                return this._time
+            }
+            if (this._dirty) {
+                this.totalDuration()
+            }
+            if (e > this._duration) {
+                e = this._duration
+            }
+            if (this._yoyo && (this._cycle & 1) !== 0) {
+                e = this._duration - e + this._cycle * (this._duration + this._repeatDelay)
+            } else if (this._repeat !== 0) {
+                e += this._cycle * (this._duration + this._repeatDelay)
+            }
+            return this.totalTime(e, t)
+        };
+        u.repeat = function(e) {
+            if (!arguments.length) {
+                return this._repeat
+            }
+            this._repeat = e;
+            return this._uncache(true)
+        };
+        u.repeatDelay = function(e) {
+            if (!arguments.length) {
+                return this._repeatDelay
+            }
+            this._repeatDelay = e;
+            return this._uncache(true)
+        };
+        u.yoyo = function(e) {
+            if (!arguments.length) {
+                return this._yoyo
+            }
+            this._yoyo = e;
+            return this
+        };
+        u.currentLabel = function(e) {
+            if (!arguments.length) {
+                return this.getLabelBefore(this._time + 1e-8)
+            }
+            return this.seek(e, true)
+        };
+        return r
+    }, true);
+    (function() {
+        var e = 180 / Math.PI,
+            t = Math.PI / 180,
+            n = [],
+            r = [],
+            i = [],
+            s = {},
+            o = function(e, t, n, r) {
+                this.a = e;
+                this.b = t;
+                this.c = n;
+                this.d = r;
+                this.da = r - e;
+                this.ca = n - e;
+                this.ba = t - e
+            },
+            u = ",x,y,z,left,top,right,bottom,marginTop,marginLeft,marginRight,marginBottom,paddingLeft,paddingTop,paddingRight,paddingBottom,backgroundPosition,backgroundPosition_y,",
+            a = function(e, t, n, r) {
+                var i = {
+                        a: e
+                    },
+                    s = {},
+                    o = {},
+                    u = {
+                        c: r
+                    },
+                    a = (e + t) / 2,
+                    f = (t + n) / 2,
+                    l = (n + r) / 2,
+                    c = (a + f) / 2,
+                    h = (f + l) / 2,
+                    p = (h - c) / 8;
+                i.b = a + (e - a) / 4;
+                s.b = c + p;
+                i.c = s.a = (i.b + s.b) / 2;
+                s.c = o.a = (c + h) / 2;
+                o.b = h - p;
+                u.b = l + (r - l) / 4;
+                o.c = u.a = (o.b + u.b) / 2;
+                return [i, s, o, u]
+            },
+            f = function(e, t, s, o, u) {
+                var f = e.length - 1,
+                    l = 0,
+                    c = e[0].a,
+                    h, p, d, v, m, g, y, b, w, E, S, x, T;
+                for (h = 0; h < f; h++) {
+                    m = e[l];
+                    p = m.a;
+                    d = m.d;
+                    v = e[l + 1].d;
+                    if (u) {
+                        S = n[h];
+                        x = r[h];
+                        T = (x + S) * t * .25 / (o ? .5 : i[h] || .5);
+                        g = d - (d - p) * (o ? t * .5 : S !== 0 ? T / S : 0);
+                        y = d + (v - d) * (o ? t * .5 : x !== 0 ? T / x : 0);
+                        b = d - (g + ((y - g) * (S * 3 / (S + x) + .5) / 4 || 0))
+                    } else {
+                        g = d - (d - p) * t * .5;
+                        y = d + (v - d) * t * .5;
+                        b = d - (g + y) / 2
+                    }
+                    g += b;
+                    y += b;
+                    m.c = w = g;
+                    if (h !== 0) {
+                        m.b = c
+                    } else {
+                        m.b = c = m.a + (m.c - m.a) * .6
+                    }
+                    m.da = d - p;
+                    m.ca = w - p;
+                    m.ba = c - p;
+                    if (s) {
+                        E = a(p, c, w, d);
+                        e.splice(l, 1, E[0], E[1], E[2], E[3]);
+                        l += 4
+                    } else {
+                        l++
+                    }
+                    c = y
+                }
+                m = e[l];
+                m.b = c;
+                m.c = c + (m.d - c) * .4;
+                m.da = m.d - m.a;
+                m.ca = m.c - m.a;
+                m.ba = c - m.a;
+                if (s) {
+                    E = a(m.a, c, m.c, m.d);
+                    e.splice(l, 1, E[0], E[1], E[2], E[3])
+                }
+            },
+            l = function(e, t, i, s) {
+                var u = [],
+                    a, f, l, c, h, p;
+                if (s) {
+                    e = [s].concat(e);
+                    f = e.length;
+                    while (--f > -1) {
+                        if (typeof(p = e[f][t]) === "string")
+                            if (p.charAt(1) === "=") {
+                                e[f][t] = s[t] + Number(p.charAt(0) + p.substr(2))
+                            }
+                    }
+                }
+                a = e.length - 2;
+                if (a < 0) {
+                    u[0] = new o(e[0][t], 0, 0, e[a < -1 ? 0 : 1][t]);
+                    return u
+                }
+                for (f = 0; f < a; f++) {
+                    l = e[f][t];
+                    c = e[f + 1][t];
+                    u[f] = new o(l, 0, 0, c);
+                    if (i) {
+                        h = e[f + 2][t];
+                        n[f] = (n[f] || 0) + (c - l) * (c - l);
+                        r[f] = (r[f] || 0) + (h - c) * (h - c)
+                    }
+                }
+                u[f] = new o(e[f][t], 0, 0, e[f + 1][t]);
+                return u
+            },
+            c = function(e, t, o, a, c, h) {
+                var p = {},
+                    d = [],
+                    v = h || e[0],
+                    m, g, y, b, w, E, S, x;
+                c = typeof c === "string" ? "," + c + "," : u;
+                if (t == null) {
+                    t = 1
+                }
+                for (g in e[0]) {
+                    d.push(g)
+                }
+                if (e.length > 1) {
+                    x = e[e.length - 1];
+                    S = true;
+                    m = d.length;
+                    while (--m > -1) {
+                        g = d[m];
+                        if (Math.abs(v[g] - x[g]) > .05) {
+                            S = false;
+                            break
+                        }
+                    }
+                    if (S) {
+                        e = e.concat();
+                        if (h) {
+                            e.unshift(h)
+                        }
+                        e.push(e[1]);
+                        h = e[e.length - 3]
+                    }
+                }
+                n.length = r.length = i.length = 0;
+                m = d.length;
+                while (--m > -1) {
+                    g = d[m];
+                    s[g] = c.indexOf("," + g + ",") !== -1;
+                    p[g] = l(e, g, s[g], h)
+                }
+                m = n.length;
+                while (--m > -1) {
+                    n[m] = Math.sqrt(n[m]);
+                    r[m] = Math.sqrt(r[m])
+                }
+                if (!a) {
+                    m = d.length;
+                    while (--m > -1) {
+                        if (s[g]) {
+                            y = p[d[m]];
+                            E = y.length - 1;
+                            for (b = 0; b < E; b++) {
+                                w = y[b + 1].da / r[b] + y[b].da / n[b];
+                                i[b] = (i[b] || 0) + w * w
+                            }
+                        }
+                    }
+                    m = i.length;
+                    while (--m > -1) {
+                        i[m] = Math.sqrt(i[m])
+                    }
+                }
+                m = d.length;
+                b = o ? 4 : 1;
+                while (--m > -1) {
+                    g = d[m];
+                    y = p[g];
+                    f(y, t, o, a, s[g]);
+                    if (S) {
+                        y.splice(0, b);
+                        y.splice(y.length - b, b)
+                    }
+                }
+                return p
+            },
+            h = function(e, t, n) {
+                t = t || "soft";
+                var r = {},
+                    i = t === "cubic" ? 3 : 2,
+                    s = t === "soft",
+                    u = [],
+                    a, f, l, c, h, p, d, v, m, g, y;
+                if (s && n) {
+                    e = [n].concat(e)
+                }
+                if (e == null || e.length < i + 1) {
+                    throw "invalid Bezier data"
+                }
+                for (m in e[0]) {
+                    u.push(m)
+                }
+                p = u.length;
+                while (--p > -1) {
+                    m = u[p];
+                    r[m] = h = [];
+                    g = 0;
+                    v = e.length;
+                    for (d = 0; d < v; d++) {
+                        a = n == null ? e[d][m] : typeof(y = e[d][m]) === "string" && y.charAt(1) === "=" ? n[m] + Number(y.charAt(0) + y.substr(2)) : Number(y);
+                        if (s)
+                            if (d > 1)
+                                if (d < v - 1) {
+                                    h[g++] = (a + h[g - 2]) / 2
+                                } h[g++] = a
+                    }
+                    v = g - i + 1;
+                    g = 0;
+                    for (d = 0; d < v; d += i) {
+                        a = h[d];
+                        f = h[d + 1];
+                        l = h[d + 2];
+                        c = i === 2 ? 0 : h[d + 3];
+                        h[g++] = y = i === 3 ? new o(a, f, l, c) : new o(a, (2 * f + a) / 3, (2 * f + l) / 3, l)
+                    }
+                    h.length = g
+                }
+                return r
+            },
+            p = function(e, t, n) {
+                var r = 1 / n,
+                    i = e.length,
+                    s, o, u, a, f, l, c, h, p, d, v;
+                while (--i > -1) {
+                    d = e[i];
+                    u = d.a;
+                    a = d.d - u;
+                    f = d.c - u;
+                    l = d.b - u;
+                    s = o = 0;
+                    for (h = 1; h <= n; h++) {
+                        c = r * h;
+                        p = 1 - c;
+                        s = o - (o = (c * c * a + 3 * p * (c * f + p * l)) * c);
+                        v = i * n + h - 1;
+                        t[v] = (t[v] || 0) + s * s
+                    }
+                }
+            },
+            d = function(e, t) {
+                t = t >> 0 || 6;
+                var n = [],
+                    r = [],
+                    i = 0,
+                    s = 0,
+                    o = t - 1,
+                    u = [],
+                    a = [],
+                    f, l, c, h;
+                for (f in e) {
+                    p(e[f], n, t)
+                }
+                c = n.length;
+                for (l = 0; l < c; l++) {
+                    i += Math.sqrt(n[l]);
+                    h = l % t;
+                    a[h] = i;
+                    if (h === o) {
+                        s += i;
+                        h = l / t >> 0;
+                        u[h] = a;
+                        r[h] = s;
+                        i = 0;
+                        a = []
+                    }
+                }
+                return {
+                    length: s,
+                    lengths: r,
+                    segments: u
+                }
+            },
+            v = window._gsDefine.plugin({
+                propName: "bezier",
+                priority: -1,
+                API: 2,
+                global: true,
+                init: function(e, t, n) {
+                    this._target = e;
+                    if (t instanceof Array) {
+                        t = {
+                            values: t
+                        }
+                    }
+                    this._func = {};
+                    this._round = {};
+                    this._props = [];
+                    this._timeRes = t.timeResolution == null ? 6 : parseInt(t.timeResolution, 10);
+                    var r = t.values || [],
+                        i = {},
+                        s = r[0],
+                        o = t.autoRotate || n.vars.orientToBezier,
+                        u, a, f, l, p;
+                    this._autoRotate = o ? o instanceof Array ? o : [
+                        ["x", "y", "rotation", o === true ? 0 : Number(o) || 0]
+                    ] : null;
+                    for (u in s) {
+                        this._props.push(u)
+                    }
+                    f = this._props.length;
+                    while (--f > -1) {
+                        u = this._props[f];
+                        this._overwriteProps.push(u);
+                        a = this._func[u] = typeof e[u] === "function";
+                        i[u] = !a ? parseFloat(e[u]) : e[u.indexOf("set") || typeof e["get" + u.substr(3)] !== "function" ? u : "get" + u.substr(3)]();
+                        if (!p)
+                            if (i[u] !== r[0][u]) {
+                                p = i
+                            }
+                    }
+                    this._beziers = t.type !== "cubic" && t.type !== "quadratic" && t.type !== "soft" ? c(r, isNaN(t.curviness) ? 1 : t.curviness, false, t.type === "thruBasic", t.correlate, p) : h(r, t.type, i);
+                    this._segCount = this._beziers[u].length;
+                    if (this._timeRes) {
+                        var v = d(this._beziers, this._timeRes);
+                        this._length = v.length;
+                        this._lengths = v.lengths;
+                        this._segments = v.segments;
+                        this._l1 = this._li = this._s1 = this._si = 0;
+                        this._l2 = this._lengths[0];
+                        this._curSeg = this._segments[0];
+                        this._s2 = this._curSeg[0];
+                        this._prec = 1 / this._curSeg.length
+                    }
+                    if (o = this._autoRotate) {
+                        if (!(o[0] instanceof Array)) {
+                            this._autoRotate = o = [o]
+                        }
+                        f = o.length;
+                        while (--f > -1) {
+                            for (l = 0; l < 3; l++) {
+                                u = o[f][l];
+                                this._func[u] = typeof e[u] === "function" ? e[u.indexOf("set") || typeof e["get" + u.substr(3)] !== "function" ? u : "get" + u.substr(3)] : false
+                            }
+                        }
+                    }
+                    return true
+                },
+                set: function(t) {
+                    var n = this._segCount,
+                        r = this._func,
+                        i = this._target,
+                        s, o, u, a, f, l, c, h, p, d;
+                    if (!this._timeRes) {
+                        s = t < 0 ? 0 : t >= 1 ? n - 1 : n * t >> 0;
+                        l = (t - s * (1 / n)) * n
+                    } else {
+                        p = this._lengths;
+                        d = this._curSeg;
+                        t *= this._length;
+                        u = this._li;
+                        if (t > this._l2 && u < n - 1) {
+                            h = n - 1;
+                            while (u < h && (this._l2 = p[++u]) <= t) {}
+                            this._l1 = p[u - 1];
+                            this._li = u;
+                            this._curSeg = d = this._segments[u];
+                            this._s2 = d[this._s1 = this._si = 0]
+                        } else if (t < this._l1 && u > 0) {
+                            while (u > 0 && (this._l1 = p[--u]) >= t) {}
+                            if (u === 0 && t < this._l1) {
+                                this._l1 = 0
+                            } else {
+                                u++
+                            }
+                            this._l2 = p[u];
+                            this._li = u;
+                            this._curSeg = d = this._segments[u];
+                            this._s1 = d[(this._si = d.length - 1) - 1] || 0;
+                            this._s2 = d[this._si]
+                        }
+                        s = u;
+                        t -= this._l1;
+                        u = this._si;
+                        if (t > this._s2 && u < d.length - 1) {
+                            h = d.length - 1;
+                            while (u < h && (this._s2 = d[++u]) <= t) {}
+                            this._s1 = d[u - 1];
+                            this._si = u
+                        } else if (t < this._s1 && u > 0) {
+                            while (u > 0 && (this._s1 = d[--u]) >= t) {}
+                            if (u === 0 && t < this._s1) {
+                                this._s1 = 0
+                            } else {
+                                u++
+                            }
+                            this._s2 = d[u];
+                            this._si = u
+                        }
+                        l = (u + (t - this._s1) / (this._s2 - this._s1)) * this._prec
+                    }
+                    o = 1 - l;
+                    u = this._props.length;
+                    while (--u > -1) {
+                        a = this._props[u];
+                        f = this._beziers[a][s];
+                        c = (l * l * f.da + 3 * o * (l * f.ca + o * f.ba)) * l + f.a;
+                        if (this._round[a]) {
+                            c = c + (c > 0 ? .5 : -.5) >> 0
+                        }
+                        if (r[a]) {
+                            i[a](c)
+                        } else {
+                            if (a == "x") {
+                                i.setX(c)
+                            } else if (a == "y") {
+                                i.setY(c)
+                            } else if (a == "z") {
+                                i.setZ(c)
+                            } else if (a == "angleX") {
+                                i.setAngleX(c)
+                            } else if (a == "angleY") {
+                                i.setAngleY(c)
+                            } else if (a == "angleZ") {
+                                i.setAngleZ(c)
+                            } else if (a == "w") {
+                                i.setWidth(c)
+                            } else if (a == "h") {
+                                i.setHeight(c)
+                            } else if (a == "alpha") {
+                                i.setAlpha(c)
+                            } else if (a == "scale") {
+                                i.setScale2(c)
+                            } else {
+                                i[a] = c
+                            }
+                        }
+                    }
+                    if (this._autoRotate) {
+                        var v = this._autoRotate,
+                            m, g, y, b, w, E, S;
+                        u = v.length;
+                        while (--u > -1) {
+                            a = v[u][2];
+                            E = v[u][3] || 0;
+                            S = v[u][4] === true ? 1 : e;
+                            f = this._beziers[v[u][0]];
+                            m = this._beziers[v[u][1]];
+                            if (f && m) {
+                                f = f[s];
+                                m = m[s];
+                                g = f.a + (f.b - f.a) * l;
+                                b = f.b + (f.c - f.b) * l;
+                                g += (b - g) * l;
+                                b += (f.c + (f.d - f.c) * l - b) * l;
+                                y = m.a + (m.b - m.a) * l;
+                                w = m.b + (m.c - m.b) * l;
+                                y += (w - y) * l;
+                                w += (m.c + (m.d - m.c) * l - w) * l;
+                                c = Math.atan2(w - y, b - g) * S + E;
+                                if (r[a]) {
+                                    i[a](c)
+                                } else {
+                                    i[a] = c
+                                }
+                            }
+                        }
+                    }
+                }
+            }),
+            m = v.prototype;
+        v.bezierThrough = c;
+        v.cubicToQuadratic = a;
+        v._autoCSS = true;
+        v.quadraticToCubic = function(e, t, n) {
+            return new o(e, (2 * t + e) / 3, (2 * t + n) / 3, n)
+        };
+        v._cssRegister = function() {
+            var e = window._gsDefine.globals.CSSPlugin;
+            if (!e) {
+                return
+            }
+            var n = e._internals,
+                r = n._parseToProxy,
+                i = n._setPluginRatio,
+                s = n.CSSPropTween;
+            n._registerComplexSpecialProp("bezier", {
+                parser: function(e, n, o, u, a, f) {
+                    if (n instanceof Array) {
+                        n = {
+                            values: n
+                        }
+                    }
+                    f = new v;
+                    var l = n.values,
+                        c = l.length - 1,
+                        h = [],
+                        p = {},
+                        d, m, g;
+                    if (c < 0) {
+                        return a
+                    }
+                    for (d = 0; d <= c; d++) {
+                        g = r(e, l[d], u, a, f, c !== d);
+                        h[d] = g.end
+                    }
+                    for (m in n) {
+                        p[m] = n[m]
+                    }
+                    p.values = h;
+                    a = new s(e, "bezier", 0, 0, g.pt, 2);
+                    a.data = g;
+                    a.plugin = f;
+                    a.setRatio = i;
+                    if (p.autoRotate === 0) {
+                        p.autoRotate = true
+                    }
+                    if (p.autoRotate && !(p.autoRotate instanceof Array)) {
+                        d = p.autoRotate === true ? 0 : Number(p.autoRotate) * t;
+                        p.autoRotate = g.end.left != null ? [
+                            ["left", "top", "rotation", d, true]
+                        ] : g.end.x != null ? [
+                            ["x", "y", "rotation", d, true]
+                        ] : false
+                    }
+                    if (p.autoRotate) {
+                        if (!u._transform) {
+                            u._enableTransforms(false)
+                        }
+                        g.autoRotate = u._target._gsTransform
+                    }
+                    f._onInitTween(g.proxy, p, u._tween);
+                    return a
+                }
+            })
+        };
+        m._roundProps = function(e, t) {
+            var n = this._overwriteProps,
+                r = n.length;
+            while (--r > -1) {
+                if (e[n[r]] || e.bezier || e.bezierThrough) {
+                    this._round[n[r]] = t
+                }
+            }
+        };
+        m._kill = function(e) {
+            var t = this._props,
+                n, r;
+            for (n in this._beziers) {
+                if (n in e) {
+                    delete this._beziers[n];
+                    delete this._func[n];
+                    r = t.length;
+                    while (--r > -1) {
+                        if (t[r] === n) {
+                            t.splice(r, 1)
+                        }
+                    }
+                }
+            }
+            return this._super._kill.call(this, e)
+        }
+    })();
+    window._gsDefine("plugins.CSSPlugin", ["plugins.TweenPlugin", "TweenLite"], function(e, t) {
+        var n = function() {
+                e.call(this, "css");
+                this._overwriteProps.length = 0
+            },
+            r, i, s, o, u = {},
+            a = n.prototype = new e("css");
+        a.constructor = n;
+        n.version = "1.9.7";
+        n.API = 2;
+        n.defaultTransformPerspective = 0;
+        a = "px";
+        n.suffixMap = {
+            top: a,
+            right: a,
+            bottom: a,
+            left: a,
+            width: a,
+            height: a,
+            fontSize: a,
+            padding: a,
+            margin: a,
+            perspective: a
+        };
+        var f = /(?:\d|\-\d|\.\d|\-\.\d)+/g,
+            l = /(?:\d|\-\d|\.\d|\-\.\d|\+=\d|\-=\d|\+=.\d|\-=\.\d)+/g,
+            c = /(?:\+=|\-=|\-|\b)[\d\-\.]+[a-zA-Z0-9]*(?:%|\b)/gi,
+            h = /[^\d\-\.]/g,
+            p = /(?:\d|\-|\+|=|#|\.)*/g,
+            d = /opacity *= *([^)]*)/,
+            v = /opacity:([^;]*)/,
+            m = /alpha\(opacity *=.+?\)/i,
+            g = /^(rgb|hsl)/,
+            y = /([A-Z])/g,
+            b = /-([a-z])/gi,
+            w = /(^(?:url\(\"|url\())|(?:(\"\))$|\)$)/gi,
+            E = function(e, t) {
+                return t.toUpperCase()
+            },
+            S = /(?:Left|Right|Width)/i,
+            x = /(M11|M12|M21|M22)=[\d\-\.e]+/gi,
+            T = /progid\:DXImageTransform\.Microsoft\.Matrix\(.+?\)/i,
+            N = /,(?=[^\)]*(?:\(|$))/gi,
+            C = Math.PI / 180,
+            k = 180 / Math.PI,
+            L = {},
+            A = document,
+            O = A.createElement("div"),
+            M = A.createElement("img"),
+            _ = n._internals = {
+                _specialProps: u
+            },
+            D = navigator.userAgent,
+            P, H, B, j, F, I, q = function() {
+                var e = D.indexOf("Android"),
+                    t = A.createElement("div"),
+                    n;
+                B = D.indexOf("Safari") !== -1 && D.indexOf("Chrome") === -1 && (e === -1 || Number(D.substr(e + 8, 1)) > 3);
+                F = B && Number(D.substr(D.indexOf("Version/") + 8, 1)) < 6;
+                j = D.indexOf("Firefox") !== -1;
+                /MSIE ([0-9]{1,}[\.0-9]{0,})/.exec(D);
+                I = parseFloat(RegExp.$1);
+                t.innerHTML = "<a style='top:1px;opacity:.55;'>a</a>";
+                n = t.getElementsByTagName("a")[0];
+                return n ? /^0.55/.test(n.style.opacity) : false
+            }(),
+            R = function(e) {
+                return d.test(typeof e === "string" ? e : (e.currentStyle ? e.currentStyle.filter : e.style.filter) || "") ? parseFloat(RegExp.$1) / 100 : 1
+            },
+            U = function(e) {
+                if (window.console) {
+                    console.log(e)
+                }
+            },
+            z = "",
+            W = "",
+            X = function(e, t) {
+                t = t || O;
+                var n = t.style,
+                    r, i;
+                if (n[e] !== undefined) {
+                    return e
+                }
+                e = e.charAt(0).toUpperCase() + e.substr(1);
+                r = ["O", "Moz", "ms", "Ms", "Webkit"];
+                i = 5;
+                while (--i > -1 && n[r[i] + e] === undefined) {}
+                if (i >= 0) {
+                    W = i === 3 ? "ms" : r[i];
+                    z = "-" + W.toLowerCase() + "-";
+                    return W + e
+                }
+                return null
+            },
+            V = A.defaultView ? A.defaultView.getComputedStyle : function() {},
+            $ = n.getStyle = function(e, t, n, r, i) {
+                var s;
+                if (!q)
+                    if (t === "opacity") {
+                        return R(e)
+                    } if (!r && e.style[t]) {
+                    s = e.style[t]
+                } else if (n = n || V(e, null)) {
+                    e = n.getPropertyValue(t.replace(y, "-$1").toLowerCase());
+                    s = e || n.length ? e : n[t]
+                } else if (e.currentStyle) {
+                    n = e.currentStyle;
+                    s = n[t]
+                }
+                return i != null && (!s || s === "none" || s === "auto" || s === "auto auto") ? i : s
+            },
+            J = function(e, t, n, r, i) {
+                if (r === "px" || !r) {
+                    return n
+                }
+                if (r === "auto" || !n) {
+                    return 0
+                }
+                var s = S.test(t),
+                    o = e,
+                    u = O.style,
+                    a = n < 0,
+                    f;
+                if (a) {
+                    n = -n
+                }
+                if (r === "%" && t.indexOf("border") !== -1) {
+                    f = n / 100 * (s ? e.clientWidth : e.clientHeight)
+                } else {
+                    u.cssText = "border-style:solid; border-width:0; position:absolute; line-height:0;";
+                    if (r === "%" || !o.appendChild) {
+                        o = e.parentNode || A.body;
+                        u[s ? "width" : "height"] = n + r
+                    } else {
+                        u[s ? "borderLeftWidth" : "borderTopWidth"] = n + r
+                    }
+                    o.appendChild(O);
+                    f = parseFloat(O[s ? "offsetWidth" : "offsetHeight"]);
+                    o.removeChild(O);
+                    if (f === 0 && !i) {
+                        f = J(e, t, n, r, true)
+                    }
+                }
+                return a ? -f : f
+            },
+            K = function(e, t, n) {
+                if ($(e, "position", n) !== "absolute") {
+                    return 0
+                }
+                var r = t === "left" ? "Left" : "Top",
+                    i = $(e, "margin" + r, n);
+                return e["offset" + r] - (J(e, t, parseFloat(i), i.replace(p, "")) || 0)
+            },
+            Q = function(e, t) {
+                var n = {},
+                    r, i;
+                if (t = t || V(e, null)) {
+                    if (r = t.length) {
+                        while (--r > -1) {
+                            n[t[r].replace(b, E)] = t.getPropertyValue(t[r])
+                        }
+                    } else {
+                        for (r in t) {
+                            n[r] = t[r]
+                        }
+                    }
+                } else if (t = e.currentStyle || e.style) {
+                    for (r in t) {
+                        n[r.replace(b, E)] = t[r]
+                    }
+                }
+                if (!q) {
+                    n.opacity = R(e)
+                }
+                i = Nt(e, t, false);
+                n.rotation = i.rotation * k;
+                n.skewX = i.skewX * k;
+                n.scaleX = i.scaleX;
+                n.scaleY = i.scaleY;
+                n.x = i.x;
+                n.y = i.y;
+                if (Tt) {
+                    n.z = i.z;
+                    n.rotationX = i.rotationX * k;
+                    n.rotationY = i.rotationY * k;
+                    n.scaleZ = i.scaleZ
+                }
+                if (n.filters) {
+                    delete n.filters
+                }
+                return n
+            },
+            G = function(e, t, n, r, i) {
+                var s = {},
+                    o = e.style,
+                    u, a, f;
+                for (a in n) {
+                    if (a !== "cssText")
+                        if (a !== "length")
+                            if (isNaN(a))
+                                if (t[a] !== (u = n[a]) || i && i[a])
+                                    if (a.indexOf("Origin") === -1)
+                                        if (typeof u === "number" || typeof u === "string") {
+                                            s[a] = u === "auto" && (a === "left" || a === "top") ? K(e, a) : (u === "" || u === "auto" || u === "none") && typeof t[a] === "string" && t[a].replace(h, "") !== "" ? 0 : u;
+                                            if (o[a] !== undefined) {
+                                                f = new ht(o, a, o[a], f)
+                                            }
+                                        }
+                }
+                if (r) {
+                    for (a in r) {
+                        if (a !== "className") {
+                            s[a] = r[a]
+                        }
+                    }
+                }
+                return {
+                    difs: s,
+                    firstMPT: f
+                }
+            },
+            Y = {
+                width: ["Left", "Right"],
+                height: ["Top", "Bottom"]
+            },
+            Z = ["marginLeft", "marginRight", "marginTop", "marginBottom"],
+            et = function(e, t, n) {
+                var r = parseFloat(t === "width" ? e.offsetWidth : e.offsetHeight),
+                    i = Y[t],
+                    s = i.length;
+                n = n || V(e, null);
+                while (--s > -1) {
+                    r -= parseFloat($(e, "padding" + i[s], n, true)) || 0;
+                    r -= parseFloat($(e, "border" + i[s] + "Width", n, true)) || 0
+                }
+                return r
+            },
+            tt = function(e, t) {
+                if (e == null || e === "" || e === "auto" || e === "auto auto") {
+                    e = "0 0"
+                }
+                var n = e.split(" "),
+                    r = e.indexOf("left") !== -1 ? "0%" : e.indexOf("right") !== -1 ? "100%" : n[0],
+                    i = e.indexOf("top") !== -1 ? "0%" : e.indexOf("bottom") !== -1 ? "100%" : n[1];
+                if (i == null) {
+                    i = "0"
+                } else if (i === "center") {
+                    i = "50%"
+                }
+                if (r === "center" || isNaN(parseFloat(r))) {
+                    r = "50%"
+                }
+                if (t) {
+                    t.oxp = r.indexOf("%") !== -1;
+                    t.oyp = i.indexOf("%") !== -1;
+                    t.oxr = r.charAt(1) === "=";
+                    t.oyr = i.charAt(1) === "=";
+                    t.ox = parseFloat(r.replace(h, ""));
+                    t.oy = parseFloat(i.replace(h, ""))
+                }
+                return r + " " + i + (n.length > 2 ? " " + n[2] : "")
+            },
+            nt = function(e, t) {
+                return typeof e === "string" && e.charAt(1) === "=" ? parseInt(e.charAt(0) + "1", 10) * parseFloat(e.substr(2)) : parseFloat(e) - parseFloat(t)
+            },
+            rt = function(e, t) {
+                return e == null ? t : typeof e === "string" && e.charAt(1) === "=" ? parseInt(e.charAt(0) + "1", 10) * Number(e.substr(2)) + t : parseFloat(e)
+            },
+            it = function(e, t, n, r) {
+                var i = 1e-6,
+                    s, o, u, a;
+                if (e == null) {
+                    a = t
+                } else if (typeof e === "number") {
+                    a = e * C
+                } else {
+                    s = Math.PI * 2;
+                    o = e.split("_");
+                    u = Number(o[0].replace(h, "")) * (e.indexOf("rad") === -1 ? C : 1) - (e.charAt(1) === "=" ? 0 : t);
+                    if (o.length) {
+                        if (r) {
+                            r[n] = t + u
+                        }
+                        if (e.indexOf("short") !== -1) {
+                            u = u % s;
+                            if (u !== u % (s / 2)) {
+                                u = u < 0 ? u + s : u - s
+                            }
+                        }
+                        if (e.indexOf("_cw") !== -1 && u < 0) {
+                            u = (u + s * 9999999999) % s - (u / s | 0) * s
+                        } else if (e.indexOf("ccw") !== -1 && u > 0) {
+                            u = (u - s * 9999999999) % s - (u / s | 0) * s
+                        }
+                    }
+                    a = t + u
+                }
+                if (a < i && a > -i) {
+                    a = 0
+                }
+                return a
+            },
+            st = {
+                aqua: [0, 255, 255],
+                lime: [0, 255, 0],
+                silver: [192, 192, 192],
+                black: [0, 0, 0],
+                maroon: [128, 0, 0],
+                teal: [0, 128, 128],
+                blue: [0, 0, 255],
+                navy: [0, 0, 128],
+                white: [255, 255, 255],
+                fuchsia: [255, 0, 255],
+                olive: [128, 128, 0],
+                yellow: [255, 255, 0],
+                orange: [255, 165, 0],
+                gray: [128, 128, 128],
+                purple: [128, 0, 128],
+                green: [0, 128, 0],
+                red: [255, 0, 0],
+                pink: [255, 192, 203],
+                cyan: [0, 255, 255],
+                transparent: [255, 255, 255, 0]
+            },
+            ot = function(e, t, n) {
+                e = e < 0 ? e + 1 : e > 1 ? e - 1 : e;
+                return (e * 6 < 1 ? t + (n - t) * e * 6 : e < .5 ? n : e * 3 < 2 ? t + (n - t) * (2 / 3 - e) * 6 : t) * 255 + .5 | 0
+            },
+            ut = function(e) {
+                var t, n, r, i, s, o;
+                if (!e || e === "") {
+                    return st.black
+                }
+                if (typeof e === "number") {
+                    return [e >> 16, e >> 8 & 255, e & 255]
+                }
+                if (e.charAt(e.length - 1) === ",") {
+                    e = e.substr(0, e.length - 1)
+                }
+                if (st[e]) {
+                    return st[e]
+                }
+                if (e.charAt(0) === "#") {
+                    if (e.length === 4) {
+                        t = e.charAt(1), n = e.charAt(2), r = e.charAt(3);
+                        e = "#" + t + t + n + n + r + r
+                    }
+                    e = parseInt(e.substr(1), 16);
+                    return [e >> 16, e >> 8 & 255, e & 255]
+                }
+                if (e.substr(0, 3) === "hsl") {
+                    e = e.match(f);
+                    i = Number(e[0]) % 360 / 360;
+                    s = Number(e[1]) / 100;
+                    o = Number(e[2]) / 100;
+                    n = o <= .5 ? o * (s + 1) : o + s - o * s;
+                    t = o * 2 - n;
+                    if (e.length > 3) {
+                        e[3] = Number(e[3])
+                    }
+                    e[0] = ot(i + 1 / 3, t, n);
+                    e[1] = ot(i, t, n);
+                    e[2] = ot(i - 1 / 3, t, n);
+                    return e
+                }
+                e = e.match(f) || st.transparent;
+                e[0] = Number(e[0]);
+                e[1] = Number(e[1]);
+                e[2] = Number(e[2]);
+                if (e.length > 3) {
+                    e[3] = Number(e[3])
+                }
+                return e
+            },
+            at = "(?:\\b(?:(?:rgb|rgba|hsl|hsla)\\(.+?\\))|\\B#.+?\\b";
+        for (a in st) {
+            at += "|" + a + "\\b"
+        }
+        at = new RegExp(at + ")", "gi");
+        var ft = function(e, t, n, r) {
+                if (e == null) {
+                    return function(e) {
+                        return e
+                    }
+                }
+                var i = t ? (e.match(at) || [""])[0] : "",
+                    s = e.split(i).join("").match(c) || [],
+                    o = e.substr(0, e.indexOf(s[0])),
+                    u = e.charAt(e.length - 1) === ")" ? ")" : "",
+                    a = e.indexOf(" ") !== -1 ? " " : ",",
+                    l = s.length,
+                    h = l > 0 ? s[0].replace(f, "") : "",
+                    p;
+                if (!l) {
+                    return function(e) {
+                        return e
+                    }
+                }
+                if (t) {
+                    p = function(e) {
+                        var t, f, d, v;
+                        if (typeof e === "number") {
+                            e += h
+                        } else if (r && N.test(e)) {
+                            v = e.replace(N, "|").split("|");
+                            for (d = 0; d < v.length; d++) {
+                                v[d] = p(v[d])
+                            }
+                            return v.join(",")
+                        }
+                        t = (e.match(at) || [i])[0];
+                        f = e.split(t).join("").match(c) || [];
+                        d = f.length;
+                        if (l > d--) {
+                            while (++d < l) {
+                                f[d] = n ? f[(d - 1) / 2 | 0] : s[d]
+                            }
+                        }
+                        return o + f.join(a) + a + t + u + (e.indexOf("inset") !== -1 ? " inset" : "")
+                    };
+                    return p
+                }
+                p = function(e) {
+                    var t, i, f;
+                    if (typeof e === "number") {
+                        e += h
+                    } else if (r && N.test(e)) {
+                        i = e.replace(N, "|").split("|");
+                        for (f = 0; f < i.length; f++) {
+                            i[f] = p(i[f])
+                        }
+                        return i.join(",")
+                    }
+                    t = e.match(c) || [];
+                    f = t.length;
+                    if (l > f--) {
+                        while (++f < l) {
+                            t[f] = n ? t[(f - 1) / 2 | 0] : s[f]
+                        }
+                    }
+                    return o + t.join(a) + u
+                };
+                return p
+            },
+            lt = function(e) {
+                e = e.split(",");
+                return function(t, n, r, i, s, o, u) {
+                    var a = (n + "").split(" "),
+                        f;
+                    u = {};
+                    for (f = 0; f < 4; f++) {
+                        u[e[f]] = a[f] = a[f] || a[(f - 1) / 2 >> 0]
+                    }
+                    return i.parse(t, u, s, o)
+                }
+            },
+            ct = _._setPluginRatio = function(e) {
+                this.plugin.setRatio(e);
+                var t = this.data,
+                    n = t.proxy,
+                    r = t.firstMPT,
+                    i = 1e-6,
+                    s, o, u, a;
+                while (r) {
+                    s = n[r.v];
+                    if (r.r) {
+                        s = s > 0 ? s + .5 | 0 : s - .5 | 0
+                    } else if (s < i && s > -i) {
+                        s = 0
+                    }
+                    r.t[r.p] = s;
+                    r = r._next
+                }
+                if (t.autoRotate) {
+                    t.autoRotate.rotation = n.rotation
+                }
+                if (e === 1) {
+                    r = t.firstMPT;
+                    while (r) {
+                        o = r.t;
+                        if (!o.type) {
+                            o.e = o.s + o.xs0
+                        } else if (o.type === 1) {
+                            a = o.xs0 + o.s + o.xs1;
+                            for (u = 1; u < o.l; u++) {
+                                a += o["xn" + u] + o["xs" + (u + 1)]
+                            }
+                            o.e = a
+                        }
+                        r = r._next
+                    }
+                }
+            },
+            ht = function(e, t, n, r, i) {
+                this.t = e;
+                this.p = t;
+                this.v = n;
+                this.r = i;
+                if (r) {
+                    r._prev = this;
+                    this._next = r
+                }
+            },
+            pt = _._parseToProxy = function(e, t, n, r, i, s) {
+                var o = r,
+                    u = {},
+                    a = {},
+                    f = n._transform,
+                    l = L,
+                    c, h, p, d, v;
+                n._transform = null;
+                L = t;
+                r = v = n.parse(e, t, r, i);
+                L = l;
+                if (s) {
+                    n._transform = f;
+                    if (o) {
+                        o._prev = null;
+                        if (o._prev) {
+                            o._prev._next = null
+                        }
+                    }
+                }
+                while (r && r !== o) {
+                    if (r.type <= 1) {
+                        h = r.p;
+                        a[h] = r.s + r.c;
+                        u[h] = r.s;
+                        if (!s) {
+                            d = new ht(r, "s", h, d, r.r);
+                            r.c = 0
+                        }
+                        if (r.type === 1) {
+                            c = r.l;
+                            while (--c > 0) {
+                                p = "xn" + c;
+                                h = r.p + "_" + p;
+                                a[h] = r.data[p];
+                                u[h] = r[p];
+                                if (!s) {
+                                    d = new ht(r, p, h, d, r.rxp[p])
+                                }
+                            }
+                        }
+                    }
+                    r = r._next
+                }
+                return {
+                    proxy: u,
+                    end: a,
+                    firstMPT: d,
+                    pt: v
+                }
+            },
+            dt = _.CSSPropTween = function(e, t, n, i, s, u, a, f, l, c, h) {
+                this.t = e;
+                this.p = t;
+                this.s = n;
+                this.c = i;
+                this.n = a || "css_" + t;
+                if (!(e instanceof dt)) {
+                    o.push(this.n)
+                }
+                this.r = f;
+                this.type = u || 0;
+                if (l) {
+                    this.pr = l;
+                    r = true
+                }
+                this.b = c === undefined ? n : c;
+                this.e = h === undefined ? n + i : h;
+                if (s) {
+                    this._next = s;
+                    s._prev = this
+                }
+            },
+            vt = n.parseComplex = function(e, t, n, r, i, s, o, u, a, c) {
+                n = n || s || "";
+                o = new dt(e, t, 0, 0, o, c ? 2 : 1, null, false, u, n, r);
+                r += "";
+                var h = n.split(", ").join(",").split(" "),
+                    p = r.split(", ").join(",").split(" "),
+                    d = h.length,
+                    v = P !== false,
+                    m, y, b, w, E, S, x, T, C, k, L, A;
+                if (r.indexOf(",") !== -1 || n.indexOf(",") !== -1) {
+                    h = h.join(" ").replace(N, ", ").split(" ");
+                    p = p.join(" ").replace(N, ", ").split(" ");
+                    d = h.length
+                }
+                if (d !== p.length) {
+                    h = (s || "").split(" ");
+                    d = h.length
+                }
+                o.plugin = a;
+                o.setRatio = c;
+                for (m = 0; m < d; m++) {
+                    w = h[m];
+                    E = p[m];
+                    T = parseFloat(w);
+                    if (T || T === 0) {
+                        o.appendXtra("", T, nt(E, T), E.replace(l, ""), v && E.indexOf("px") !== -1, true)
+                    } else if (i && (w.charAt(0) === "#" || st[w] || g.test(w))) {
+                        A = E.charAt(E.length - 1) === "," ? ")," : ")";
+                        w = ut(w);
+                        E = ut(E);
+                        C = w.length + E.length > 6;
+                        if (C && !q && E[3] === 0) {
+                            o["xs" + o.l] += o.l ? " transparent" : "transparent";
+                            o.e = o.e.split(p[m]).join("transparent")
+                        } else {
+                            if (!q) {
+                                C = false
+                            }
+                            o.appendXtra(C ? "rgba(" : "rgb(", w[0], E[0] - w[0], ",", true, true).appendXtra("", w[1], E[1] - w[1], ",", true).appendXtra("", w[2], E[2] - w[2], C ? "," : A, true);
+                            if (C) {
+                                w = w.length < 4 ? 1 : w[3];
+                                o.appendXtra("", w, (E.length < 4 ? 1 : E[3]) - w, A, false)
+                            }
+                        }
+                    } else {
+                        S = w.match(f);
+                        if (!S) {
+                            o["xs" + o.l] += o.l ? " " + w : w
+                        } else {
+                            x = E.match(l);
+                            if (!x || x.length !== S.length) {
+                                return o
+                            }
+                            b = 0;
+                            for (y = 0; y < S.length; y++) {
+                                L = S[y];
+                                k = w.indexOf(L, b);
+                                o.appendXtra(w.substr(b, k - b), Number(L), nt(x[y], L), "", v && w.substr(k + L.length, 2) === "px", y === 0);
+                                b = k + L.length
+                            }
+                            o["xs" + o.l] += w.substr(b)
+                        }
+                    }
+                }
+                if (r.indexOf("=") !== -1)
+                    if (o.data) {
+                        A = o.xs0 + o.data.s;
+                        for (m = 1; m < o.l; m++) {
+                            A += o["xs" + m] + o.data["xn" + m]
+                        }
+                        o.e = A + o["xs" + m]
+                    } if (!o.l) {
+                    o.type = -1;
+                    o.xs0 = o.e
+                }
+                return o.xfirst || o
+            },
+            mt = 9;
+        a = dt.prototype;
+        a.l = a.pr = 0;
+        while (--mt > 0) {
+            a["xn" + mt] = 0;
+            a["xs" + mt] = ""
+        }
+        a.xs0 = "";
+        a._next = a._prev = a.xfirst = a.data = a.plugin = a.setRatio = a.rxp = null;
+        a.appendXtra = function(e, t, n, r, i, s) {
+            var o = this,
+                u = o.l;
+            o["xs" + u] += s && u ? " " + e : e || "";
+            if (!n)
+                if (u !== 0 && !o.plugin) {
+                    o["xs" + u] += t + (r || "");
+                    return o
+                } o.l++;
+            o.type = o.setRatio ? 2 : 1;
+            o["xs" + o.l] = r || "";
+            if (u > 0) {
+                o.data["xn" + u] = t + n;
+                o.rxp["xn" + u] = i;
+                o["xn" + u] = t;
+                if (!o.plugin) {
+                    o.xfirst = new dt(o, "xn" + u, t, n, o.xfirst || o, 0, o.n, i, o.pr);
+                    o.xfirst.xs0 = 0
+                }
+                return o
+            }
+            o.data = {
+                s: t + n
+            };
+            o.rxp = {};
+            o.s = t;
+            o.c = n;
+            o.r = i;
+            return o
+        };
+        var gt = function(e, t) {
+                t = t || {};
+                this.p = t.prefix ? X(e) || e : e;
+                u[e] = u[this.p] = this;
+                this.format = t.formatter || ft(t.defaultValue, t.color, t.collapsible, t.multi);
+                if (t.parser) {
+                    this.parse = t.parser
+                }
+                this.clrs = t.color;
+                this.multi = t.multi;
+                this.keyword = t.keyword;
+                this.dflt = t.defaultValue;
+                this.pr = t.priority || 0
+            },
+            yt = _._registerComplexSpecialProp = function(e, t, n) {
+                if (typeof t !== "object") {
+                    t = {
+                        parser: n
+                    }
+                }
+                var r = e.split(","),
+                    i = t.defaultValue,
+                    s, o;
+                n = n || [i];
+                for (s = 0; s < r.length; s++) {
+                    t.prefix = s === 0 && t.prefix;
+                    t.defaultValue = n[s] || i;
+                    o = new gt(r[s], t)
+                }
+            },
+            bt = function(e) {
+                if (!u[e]) {
+                    var t = e.charAt(0).toUpperCase() + e.substr(1) + "Plugin";
+                    yt(e, {
+                        parser: function(e, n, r, i, s, o, a) {
+                            var f = (window.GreenSockGlobals || window).com.greensock.plugins[t];
+                            if (!f) {
+                                U("Error: " + t + " js file not loaded.");
+                                return s
+                            }
+                            f._cssRegister();
+                            return u[r].parse(e, n, r, i, s, o, a)
+                        }
+                    })
+                }
+            };
+        a = gt.prototype;
+        a.parseComplex = function(e, t, n, r, i, s) {
+            var o = this.keyword,
+                u, a, f, l, c, h;
+            if (this.multi)
+                if (N.test(n) || N.test(t)) {
+                    a = t.replace(N, "|").split("|");
+                    f = n.replace(N, "|").split("|")
+                } else if (o) {
+                a = [t];
+                f = [n]
+            }
+            if (f) {
+                l = f.length > a.length ? f.length : a.length;
+                for (u = 0; u < l; u++) {
+                    t = a[u] = a[u] || this.dflt;
+                    n = f[u] = f[u] || this.dflt;
+                    if (o) {
+                        c = t.indexOf(o);
+                        h = n.indexOf(o);
+                        if (c !== h) {
+                            n = h === -1 ? f : a;
+                            n[u] += " " + o
+                        }
+                    }
+                }
+                t = a.join(", ");
+                n = f.join(", ")
+            }
+            return vt(e, this.p, t, n, this.clrs, this.dflt, r, this.pr, i, s)
+        };
+        a.parse = function(e, t, n, r, i, o, u) {
+            return this.parseComplex(e.style, this.format($(e, this.p, s, false, this.dflt)), this.format(t), i, o)
+        };
+        n.registerSpecialProp = function(e, t, n) {
+            yt(e, {
+                parser: function(e, r, i, s, o, u, a) {
+                    var f = new dt(e, i, 0, 0, o, 2, i, false, n);
+                    f.plugin = u;
+                    f.setRatio = t(e, r, s._tween, i);
+                    return f
+                },
+                priority: n
+            })
+        };
+        var wt = "scaleX,scaleY,scaleZ,x,y,z,skewX,rotation,rotationX,rotationY,perspective".split(","),
+            Et = X("transform"),
+            St = z + "transform",
+            xt = X("transformOrigin"),
+            Tt = X("perspective") !== null,
+            Nt = function(e, t, r) {
+                var i = r ? e._gsTransform || {
+                        skewY: 0
+                    } : {
+                        skewY: 0
+                    },
+                    s = i.scaleX < 0,
+                    o = 2e-5,
+                    u = 1e5,
+                    a = -Math.PI + 1e-4,
+                    f = Math.PI - 1e-4,
+                    l = Tt ? parseFloat($(e, xt, t, false, "0 0 0").split(" ")[2]) || i.zOrigin || 0 : 0,
+                    c, h, p, d, v, m, g, y, b, w, E, S, T;
+                if (Et) {
+                    c = $(e, St, t, true)
+                } else if (e.currentStyle) {
+                    c = e.currentStyle.filter.match(x);
+                    if (c && c.length === 4) {
+                        c = [c[0].substr(4), Number(c[2].substr(4)), Number(c[1].substr(4)), c[3].substr(4), i.x || 0, i.y || 0].join(",")
+                    } else if (i.x != null) {
+                        return i
+                    } else {
+                        c = ""
+                    }
+                }
+                h = (c || "").match(/(?:\-|\b)[\d\-\.e]+\b/gi) || [];
+                p = h.length;
+                while (--p > -1) {
+                    d = Number(h[p]);
+                    h[p] = (v = d - (d |= 0)) ? (v * u + (v < 0 ? -.5 : .5) | 0) / u + d : d
+                }
+                if (h.length === 16) {
+                    var N = h[8],
+                        C = h[9],
+                        k = h[10],
+                        L = h[12],
+                        A = h[13],
+                        O = h[14];
+                    if (i.zOrigin) {
+                        O = -i.zOrigin;
+                        L = N * O - h[12];
+                        A = C * O - h[13];
+                        O = k * O + i.zOrigin - h[14]
+                    }
+                    if (!r || i.rotationX == null) {
+                        var M = h[0],
+                            _ = h[1],
+                            D = h[2],
+                            P = h[3],
+                            H = h[4],
+                            B = h[5],
+                            j = h[6],
+                            F = h[7],
+                            I = h[11],
+                            q = i.rotationX = Math.atan2(j, k),
+                            R = q < a || q > f,
+                            U, z, W, X, V, J, K;
+                        if (q) {
+                            X = Math.cos(-q);
+                            V = Math.sin(-q);
+                            U = H * X + N * V;
+                            z = B * X + C * V;
+                            W = j * X + k * V;
+                            N = H * -V + N * X;
+                            C = B * -V + C * X;
+                            k = j * -V + k * X;
+                            I = F * -V + I * X;
+                            H = U;
+                            B = z;
+                            j = W
+                        }
+                        q = i.rotationY = Math.atan2(N, M);
+                        if (q) {
+                            J = q < a || q > f;
+                            X = Math.cos(-q);
+                            V = Math.sin(-q);
+                            U = M * X - N * V;
+                            z = _ * X - C * V;
+                            W = D * X - k * V;
+                            C = _ * V + C * X;
+                            k = D * V + k * X;
+                            I = P * V + I * X;
+                            M = U;
+                            _ = z;
+                            D = W
+                        }
+                        q = i.rotation = Math.atan2(_, B);
+                        if (q) {
+                            K = q < a || q > f;
+                            X = Math.cos(-q);
+                            V = Math.sin(-q);
+                            M = M * X + H * V;
+                            z = _ * X + B * V;
+                            B = _ * -V + B * X;
+                            j = D * -V + j * X;
+                            _ = z
+                        }
+                        if (K && R) {
+                            i.rotation = i.rotationX = 0
+                        } else if (K && J) {
+                            i.rotation = i.rotationY = 0
+                        } else if (J && R) {
+                            i.rotationY = i.rotationX = 0
+                        }
+                        i.scaleX = (Math.sqrt(M * M + _ * _) * u + .5 | 0) / u;
+                        i.scaleY = (Math.sqrt(B * B + C * C) * u + .5 | 0) / u;
+                        i.scaleZ = (Math.sqrt(j * j + k * k) * u + .5 | 0) / u;
+                        i.skewX = 0;
+                        i.perspective = I ? 1 / (I < 0 ? -I : I) : 0;
+                        i.x = L;
+                        i.y = A;
+                        i.z = O
+                    }
+                } else if ((!Tt || h.length === 0 || i.x !== h[4] || i.y !== h[5] || !i.rotationX && !i.rotationY) && !(i.x !== undefined && $(e, "display", t) === "none")) {
+                    var Q = h.length >= 6,
+                        G = Q ? h[0] : 1,
+                        Y = h[1] || 0,
+                        Z = h[2] || 0,
+                        et = Q ? h[3] : 1;
+                    i.x = h[4] || 0;
+                    i.y = h[5] || 0;
+                    m = Math.sqrt(G * G + Y * Y);
+                    g = Math.sqrt(et * et + Z * Z);
+                    y = G || Y ? Math.atan2(Y, G) : i.rotation || 0;
+                    b = Z || et ? Math.atan2(Z, et) + y : i.skewX || 0;
+                    w = m - Math.abs(i.scaleX || 0);
+                    E = g - Math.abs(i.scaleY || 0);
+                    if (Math.abs(b) > Math.PI / 2 && Math.abs(b) < Math.PI * 1.5) {
+                        if (s) {
+                            m *= -1;
+                            b += y <= 0 ? Math.PI : -Math.PI;
+                            y += y <= 0 ? Math.PI : -Math.PI
+                        } else {
+                            g *= -1;
+                            b += b <= 0 ? Math.PI : -Math.PI
+                        }
+                    }
+                    S = (y - i.rotation) % Math.PI;
+                    T = (b - i.skewX) % Math.PI;
+                    if (i.skewX === undefined || w > o || w < -o || E > o || E < -o || S > a && S < f && S * u | 0 !== 0 || T > a && T < f && T * u | 0 !== 0) {
+                        i.scaleX = m;
+                        i.scaleY = g;
+                        i.rotation = y;
+                        i.skewX = b
+                    }
+                    if (Tt) {
+                        i.rotationX = i.rotationY = i.z = 0;
+                        i.perspective = parseFloat(n.defaultTransformPerspective) || 0;
+                        i.scaleZ = 1
+                    }
+                }
+                i.zOrigin = l;
+                for (p in i) {
+                    if (i[p] < o)
+                        if (i[p] > -o) {
+                            i[p] = 0
+                        }
+                }
+                if (r) {
+                    e._gsTransform = i
+                }
+                return i
+            },
+            Ct = function(e) {
+                var t = this.data,
+                    n = -t.rotation,
+                    r = n + t.skewX,
+                    i = 1e5,
+                    s = (Math.cos(n) * t.scaleX * i | 0) / i,
+                    o = (Math.sin(n) * t.scaleX * i | 0) / i,
+                    u = (Math.sin(r) * -t.scaleY * i | 0) / i,
+                    a = (Math.cos(r) * t.scaleY * i | 0) / i,
+                    f = this.t.style,
+                    l = this.t.currentStyle,
+                    c, h;
+                if (!l) {
+                    return
+                }
+                h = o;
+                o = -u;
+                u = -h;
+                c = l.filter;
+                f.filter = "";
+                var v = this.t.offsetWidth,
+                    m = this.t.offsetHeight,
+                    g = l.position !== "absolute",
+                    y = "progid:DXImageTransform.Microsoft.Matrix(M11=" + s + ", M12=" + o + ", M21=" + u + ", M22=" + a,
+                    b = t.x,
+                    w = t.y,
+                    E, S;
+                if (t.ox != null) {
+                    E = (t.oxp ? v * t.ox * .01 : t.ox) - v / 2;
+                    S = (t.oyp ? m * t.oy * .01 : t.oy) - m / 2;
+                    b += E - (E * s + S * o);
+                    w += S - (E * u + S * a)
+                }
+                if (!g) {
+                    var x = I < 8 ? 1 : -1,
+                        N, C, k;
+                    E = t.ieOffsetX || 0;
+                    S = t.ieOffsetY || 0;
+                    t.ieOffsetX = Math.round((v - ((s < 0 ? -s : s) * v + (o < 0 ? -o : o) * m)) / 2 + b);
+                    t.ieOffsetY = Math.round((m - ((a < 0 ? -a : a) * m + (u < 0 ? -u : u) * v)) / 2 + w);
+                    for (mt = 0; mt < 4; mt++) {
+                        C = Z[mt];
+                        N = l[C];
+                        h = N.indexOf("px") !== -1 ? parseFloat(N) : J(this.t, C, parseFloat(N), N.replace(p, "")) || 0;
+                        if (h !== t[C]) {
+                            k = mt < 2 ? -t.ieOffsetX : -t.ieOffsetY
+                        } else {
+                            k = mt < 2 ? E - t.ieOffsetX : S - t.ieOffsetY
+                        }
+                        f[C] = (t[C] = Math.round(h - k * (mt === 0 || mt === 2 ? 1 : x))) + "px"
+                    }
+                    y += ", sizingMethod='auto expand')"
+                } else {
+                    E = v / 2;
+                    S = m / 2;
+                    y += ", Dx=" + (E - (E * s + S * o) + b) + ", Dy=" + (S - (E * u + S * a) + w) + ")"
+                }
+                if (c.indexOf("DXImageTransform.Microsoft.Matrix(") !== -1) {
+                    f.filter = c.replace(T, y)
+                } else {
+                    f.filter = y + " " + c
+                }
+                if (e === 0 || e === 1)
+                    if (s === 1)
+                        if (o === 0)
+                            if (u === 0)
+                                if (a === 1)
+                                    if (!g || y.indexOf("Dx=0, Dy=0") !== -1)
+                                        if (!d.test(c) || parseFloat(RegExp.$1) === 100)
+                                            if (c.indexOf("gradient(") === -1) {
+                                                f.removeAttribute("filter")
+                                            }
+            },
+            kt = function(e) {
+                var t = this.data,
+                    n = this.t.style,
+                    r = t.perspective,
+                    i = t.scaleX,
+                    s = 0,
+                    o = 0,
+                    u = 0,
+                    a = 0,
+                    f = t.scaleY,
+                    l = 0,
+                    c = 0,
+                    h = 0,
+                    p = 0,
+                    d = t.scaleZ,
+                    v = 0,
+                    m = 0,
+                    g = 0,
+                    y = r ? -1 / r : 0,
+                    b = t.rotation,
+                    w = t.zOrigin,
+                    E = 1e5,
+                    S, x, T, N, C, k, L, A, O;
+                if (j) {
+                    L = n.top ? "top" : n.bottom ? "bottom" : parseFloat($(this.t, "top", null, false)) ? "bottom" : "top";
+                    T = $(this.t, L, null, false);
+                    A = parseFloat(T) || 0;
+                    O = T.substr((A + "").length) || "px";
+                    t._ffFix = !t._ffFix;
+                    n[L] = (t._ffFix ? A + .05 : A - .05) + O
+                }
+                if (b || t.skewX) {
+                    T = i * Math.cos(b);
+                    N = f * Math.sin(b);
+                    b -= t.skewX;
+                    s = i * -Math.sin(b);
+                    f = f * Math.cos(b);
+                    i = T;
+                    a = N
+                }
+                b = t.rotationY;
+                if (b) {
+                    S = Math.cos(b);
+                    x = Math.sin(b);
+                    T = i * S;
+                    N = a * S;
+                    C = d * -x;
+                    k = y * -x;
+                    o = i * x;
+                    l = a * x;
+                    d = d * S;
+                    y *= S;
+                    i = T;
+                    a = N;
+                    h = C;
+                    m = k
+                }
+                b = t.rotationX;
+                if (b) {
+                    S = Math.cos(b);
+                    x = Math.sin(b);
+                    T = s * S + o * x;
+                    N = f * S + l * x;
+                    C = p * S + d * x;
+                    k = g * S + y * x;
+                    o = s * -x + o * S;
+                    l = f * -x + l * S;
+                    d = p * -x + d * S;
+                    y = g * -x + y * S;
+                    s = T;
+                    f = N;
+                    p = C;
+                    g = k
+                }
+                if (w) {
+                    v -= w;
+                    u = o * v;
+                    c = l * v;
+                    v = d * v + w
+                }
+                u = (T = (u += t.x) - (u |= 0)) ? (T * E + (T < 0 ? -.5 : .5) | 0) / E + u : u;
+                c = (T = (c += t.y) - (c |= 0)) ? (T * E + (T < 0 ? -.5 : .5) | 0) / E + c : c;
+                v = (T = (v += t.z) - (v |= 0)) ? (T * E + (T < 0 ? -.5 : .5) | 0) / E + v : v;
+                n[Et] = "matrix3d(" + [(i * E | 0) / E, (a * E | 0) / E, (h * E | 0) / E, (m * E | 0) / E, (s * E | 0) / E, (f * E | 0) / E, (p * E | 0) / E, (g * E | 0) / E, (o * E | 0) / E, (l * E | 0) / E, (d * E | 0) / E, (y * E | 0) / E, u, c, v, r ? 1 + -v / r : 1].join(",") + ")"
+            },
+            Lt = function(e) {
+                var t = this.data,
+                    n = this.t,
+                    r = n.style,
+                    i, s, o, u, a, f, l, c, h;
+                if (j) {
+                    i = r.top ? "top" : r.bottom ? "bottom" : parseFloat($(n, "top", null, false)) ? "bottom" : "top";
+                    s = $(n, i, null, false);
+                    o = parseFloat(s) || 0;
+                    u = s.substr((o + "").length) || "px";
+                    t._ffFix = !t._ffFix;
+                    r[i] = (t._ffFix ? o + .05 : o - .05) + u
+                }
+                if (!t.rotation && !t.skewX) {
+                    r[Et] = "matrix(" + t.scaleX + ",0,0," + t.scaleY + "," + t.x + "," + t.y + ")"
+                } else {
+                    a = t.rotation;
+                    f = a - t.skewX;
+                    l = 1e5;
+                    c = t.scaleX * l;
+                    h = t.scaleY * l;
+                    r[Et] = "matrix(" + (Math.cos(a) * c | 0) / l + "," + (Math.sin(a) * c | 0) / l + "," + (Math.sin(f) * -h | 0) / l + "," + (Math.cos(f) * h | 0) / l + "," + t.x + "," + t.y + ")"
+                }
+            };
+        yt("transform,scale,scaleX,scaleY,scaleZ,x,y,z,rotation,rotationX,rotationY,rotationZ,skewX,skewY,shortRotation,shortRotationX,shortRotationY,shortRotationZ,transformOrigin,transformPerspective,directionalRotation", {
+            parser: function(e, t, n, r, i, o, u) {
+                if (r._transform) {
+                    return i
+                }
+                var a = r._transform = Nt(e, s, true),
+                    f = e.style,
+                    l = 1e-6,
+                    c = wt.length,
+                    h = u,
+                    p = {},
+                    d, v, m, g, y, b, w;
+                if (typeof h.transform === "string" && Et) {
+                    m = f.cssText;
+                    f[Et] = h.transform;
+                    f.display = "block";
+                    d = Nt(e, null, false);
+                    f.cssText = m
+                } else if (typeof h === "object") {
+                    d = {
+                        scaleX: rt(h.scaleX != null ? h.scaleX : h.scale, a.scaleX),
+                        scaleY: rt(h.scaleY != null ? h.scaleY : h.scale, a.scaleY),
+                        scaleZ: rt(h.scaleZ != null ? h.scaleZ : h.scale, a.scaleZ),
+                        x: rt(h.x, a.x),
+                        y: rt(h.y, a.y),
+                        z: rt(h.z, a.z),
+                        perspective: rt(h.transformPerspective, a.perspective)
+                    };
+                    w = h.directionalRotation;
+                    if (w != null) {
+                        if (typeof w === "object") {
+                            for (m in w) {
+                                h[m] = w[m]
+                            }
+                        } else {
+                            h.rotation = w
+                        }
+                    }
+                    d.rotation = it("rotation" in h ? h.rotation : "shortRotation" in h ? h.shortRotation + "_short" : "rotationZ" in h ? h.rotationZ : a.rotation * k, a.rotation, "rotation", p);
+                    if (Tt) {
+                        d.rotationX = it("rotationX" in h ? h.rotationX : "shortRotationX" in h ? h.shortRotationX + "_short" : a.rotationX * k || 0, a.rotationX, "rotationX", p);
+                        d.rotationY = it("rotationY" in h ? h.rotationY : "shortRotationY" in h ? h.shortRotationY + "_short" : a.rotationY * k || 0, a.rotationY, "rotationY", p)
+                    }
+                    d.skewX = h.skewX == null ? a.skewX : it(h.skewX, a.skewX);
+                    d.skewY = h.skewY == null ? a.skewY : it(h.skewY, a.skewY);
+                    if (v = d.skewY - a.skewY) {
+                        d.skewX += v;
+                        d.rotation += v
+                    }
+                }
+                y = a.z || a.rotationX || a.rotationY || d.z || d.rotationX || d.rotationY || d.perspective;
+                if (!y && h.scale != null) {
+                    d.scaleZ = 1
+                }
+                while (--c > -1) {
+                    n = wt[c];
+                    g = d[n] - a[n];
+                    if (g > l || g < -l || L[n] != null) {
+                        b = true;
+                        i = new dt(a, n, a[n], g, i);
+                        if (n in p) {
+                            i.e = p[n]
+                        }
+                        i.xs0 = 0;
+                        i.plugin = o;
+                        r._overwriteProps.push(i.n)
+                    }
+                }
+                g = h.transformOrigin;
+                if (g || Tt && y && a.zOrigin) {
+                    if (Et) {
+                        b = true;
+                        g = (g || $(e, n, s, false, "50% 50%")) + "";
+                        n = xt;
+                        i = new dt(f, n, 0, 0, i, -1, "css_transformOrigin");
+                        i.b = f[n];
+                        i.plugin = o;
+                        if (Tt) {
+                            m = a.zOrigin;
+                            g = g.split(" ");
+                            a.zOrigin = (g.length > 2 ? parseFloat(g[2]) : m) || 0;
+                            i.xs0 = i.e = f[n] = g[0] + " " + (g[1] || "50%") + " 0px";
+                            i = new dt(a, "zOrigin", 0, 0, i, -1, i.n);
+                            i.b = m;
+                            i.xs0 = i.e = a.zOrigin
+                        } else {
+                            i.xs0 = i.e = f[n] = g
+                        }
+                    } else {
+                        tt(g + "", a)
+                    }
+                }
+                if (b) {
+                    r._transformType = y || this._transformType === 3 ? 3 : 2
+                }
+                return i
+            },
+            prefix: true
+        });
+        yt("boxShadow", {
+            defaultValue: "0px 0px 0px 0px #999",
+            prefix: true,
+            color: true,
+            multi: true,
+            keyword: "inset"
+        });
+        yt("borderRadius", {
+            defaultValue: "0px",
+            parser: function(e, t, n, r, o, u) {
+                t = this.format(t);
+                var a = ["borderTopLeftRadius", "borderTopRightRadius", "borderBottomRightRadius", "borderBottomLeftRadius"],
+                    f = e.style,
+                    l, c, h, p, d, v, m, g, y, b, w, E, S, x, T, N;
+                y = parseFloat(e.offsetWidth);
+                b = parseFloat(e.offsetHeight);
+                l = t.split(" ");
+                for (c = 0; c < a.length; c++) {
+                    if (this.p.indexOf("border")) {
+                        a[c] = X(a[c])
+                    }
+                    d = p = $(e, a[c], s, false, "0px");
+                    if (d.indexOf(" ") !== -1) {
+                        p = d.split(" ");
+                        d = p[0];
+                        p = p[1]
+                    }
+                    v = h = l[c];
+                    m = parseFloat(d);
+                    E = d.substr((m + "").length);
+                    S = v.charAt(1) === "=";
+                    if (S) {
+                        g = parseInt(v.charAt(0) + "1", 10);
+                        v = v.substr(2);
+                        g *= parseFloat(v);
+                        w = v.substr((g + "").length - (g < 0 ? 1 : 0)) || ""
+                    } else {
+                        g = parseFloat(v);
+                        w = v.substr((g + "").length)
+                    }
+                    if (w === "") {
+                        w = i[n] || E
+                    }
+                    if (w !== E) {
+                        x = J(e, "borderLeft", m, E);
+                        T = J(e, "borderTop", m, E);
+                        if (w === "%") {
+                            d = x / y * 100 + "%";
+                            p = T / b * 100 + "%"
+                        } else if (w === "em") {
+                            N = J(e, "borderLeft", 1, "em");
+                            d = x / N + "em";
+                            p = T / N + "em"
+                        } else {
+                            d = x + "px";
+                            p = T + "px"
+                        }
+                        if (S) {
+                            v = parseFloat(d) + g + w;
+                            h = parseFloat(p) + g + w
+                        }
+                    }
+                    o = vt(f, a[c], d + " " + p, v + " " + h, false, "0px", o)
+                }
+                return o
+            },
+            prefix: true,
+            formatter: ft("0px 0px 0px 0px", false, true)
+        });
+        yt("backgroundPosition", {
+            defaultValue: "0 0",
+            parser: function(e, t, n, r, i, o) {
+                var u = "background-position",
+                    a = s || V(e, null),
+                    f = this.format((a ? I ? a.getPropertyValue(u + "-x") + " " + a.getPropertyValue(u + "-y") : a.getPropertyValue(u) : e.currentStyle.backgroundPositionX + " " + e.currentStyle.backgroundPositionY) || "0 0"),
+                    l = this.format(t),
+                    c, h, p, d, v, m;
+                if (f.indexOf("%") !== -1 !== (l.indexOf("%") !== -1)) {
+                    m = $(e, "backgroundImage").replace(w, "");
+                    if (m && m !== "none") {
+                        c = f.split(" ");
+                        h = l.split(" ");
+                        M.setAttribute("src", m);
+                        p = 2;
+                        while (--p > -1) {
+                            f = c[p];
+                            d = f.indexOf("%") !== -1;
+                            if (d !== (h[p].indexOf("%") !== -1)) {
+                                v = p === 0 ? e.offsetWidth - M.width : e.offsetHeight - M.height;
+                                c[p] = d ? parseFloat(f) / 100 * v + "px" : parseFloat(f) / v * 100 + "%"
+                            }
+                        }
+                        f = c.join(" ")
+                    }
+                }
+                return this.parseComplex(e.style, f, l, i, o)
+            },
+            formatter: tt
+        });
+        yt("backgroundSize", {
+            defaultValue: "0 0",
+            formatter: tt
+        });
+        yt("perspective", {
+            defaultValue: "0px",
+            prefix: true
+        });
+        yt("perspectiveOrigin", {
+            defaultValue: "50% 50%",
+            prefix: true
+        });
+        yt("transformStyle", {
+            prefix: true
+        });
+        yt("backfaceVisibility", {
+            prefix: true
+        });
+        yt("margin", {
+            parser: lt("marginTop,marginRight,marginBottom,marginLeft")
+        });
+        yt("padding", {
+            parser: lt("paddingTop,paddingRight,paddingBottom,paddingLeft")
+        });
+        yt("clip", {
+            defaultValue: "rect(0px,0px,0px,0px)",
+            parser: function(e, t, n, r, i, o) {
+                var u, a, f;
+                if (I < 9) {
+                    a = e.currentStyle;
+                    f = I < 8 ? " " : ",";
+                    u = "rect(" + a.clipTop + f + a.clipRight + f + a.clipBottom + f + a.clipLeft + ")";
+                    t = this.format(t).split(",").join(f)
+                } else {
+                    u = this.format($(e, this.p, s, false, this.dflt));
+                    t = this.format(t)
+                }
+                return this.parseComplex(e.style, u, t, i, o)
+            }
+        });
+        yt("textShadow", {
+            defaultValue: "0px 0px 0px #999",
+            color: true,
+            multi: true
+        });
+        yt("autoRound,strictUnits", {
+            parser: function(e, t, n, r, i) {
+                return i
+            }
+        });
+        yt("border", {
+            defaultValue: "0px solid #000",
+            parser: function(e, t, n, r, i, o) {
+                return this.parseComplex(e.style, this.format($(e, "borderTopWidth", s, false, "0px") + " " + $(e, "borderTopStyle", s, false, "solid") + " " + $(e, "borderTopColor", s, false, "#000")), this.format(t), i, o)
+            },
+            color: true,
+            formatter: function(e) {
+                var t = e.split(" ");
+                return t[0] + " " + (t[1] || "solid") + " " + (e.match(at) || ["#000"])[0]
+            }
+        });
+        yt("float,cssFloat,styleFloat", {
+            parser: function(e, t, n, r, i, s) {
+                var o = e.style,
+                    u = "cssFloat" in o ? "cssFloat" : "styleFloat";
+                return new dt(o, u, 0, 0, i, -1, n, false, 0, o[u], t)
+            }
+        });
+        var At = function(e) {
+            var t = this.t,
+                n = t.filter,
+                r = this.s + this.c * e | 0,
+                i;
+            if (r === 100) {
+                if (n.indexOf("atrix(") === -1 && n.indexOf("radient(") === -1) {
+                    t.removeAttribute("filter");
+                    i = !$(this.data, "filter")
+                } else {
+                    t.filter = n.replace(m, "");
+                    i = true
+                }
+            }
+            if (!i) {
+                if (this.xn1) {
+                    t.filter = n = n || "alpha(opacity=100)"
+                }
+                if (n.indexOf("opacity") === -1) {
+                    t.filter += " alpha(opacity=" + r + ")"
+                } else {
+                    t.filter = n.replace(d, "opacity=" + r)
+                }
+            }
+        };
+        yt("opacity,alpha,autoAlpha", {
+            defaultValue: "1",
+            parser: function(e, t, n, r, i, o) {
+                var u = parseFloat($(e, "opacity", s, false, "1")),
+                    a = e.style,
+                    f;
+                t = parseFloat(t);
+                if (n === "autoAlpha") {
+                    f = $(e, "visibility", s);
+                    if (u === 1 && f === "hidden" && t !== 0) {
+                        u = 0
+                    }
+                    i = new dt(a, "visibility", 0, 0, i, -1, null, false, 0, u !== 0 ? "visible" : "hidden", t === 0 ? "hidden" : "visible");
+                    i.xs0 = "visible";
+                    r._overwriteProps.push(i.n)
+                }
+                if (q) {
+                    i = new dt(a, "opacity", u, t - u, i)
+                } else {
+                    i = new dt(a, "opacity", u * 100, (t - u) * 100, i);
+                    i.xn1 = n === "autoAlpha" ? 1 : 0;
+                    a.zoom = 1;
+                    i.type = 2;
+                    i.b = "alpha(opacity=" + i.s + ")";
+                    i.e = "alpha(opacity=" + (i.s + i.c) + ")";
+                    i.data = e;
+                    i.plugin = o;
+                    i.setRatio = At
+                }
+                return i
+            }
+        });
+        var Ot = function(e, t) {
+                if (t) {
+                    if (e.removeProperty) {
+                        e.removeProperty(t.replace(y, "-$1").toLowerCase())
+                    } else {
+                        e.removeAttribute(t)
+                    }
+                }
+            },
+            Mt = function(e) {
+                this.t._gsClassPT = this;
+                if (e === 1 || e === 0) {
+                    this.t.className = e === 0 ? this.b : this.e;
+                    var t = this.data,
+                        n = this.t.style;
+                    while (t) {
+                        if (!t.v) {
+                            Ot(n, t.p)
+                        } else {
+                            n[t.p] = t.v
+                        }
+                        t = t._next
+                    }
+                    if (e === 1 && this.t._gsClassPT === this) {
+                        this.t._gsClassPT = null
+                    }
+                } else if (this.t.className !== this.e) {
+                    this.t.className = this.e
+                }
+            };
+        yt("className", {
+            parser: function(e, t, n, i, o, u, a) {
+                var f = e.className,
+                    l = e.style.cssText,
+                    c, h, p, d, v;
+                o = i._classNamePT = new dt(e, n, 0, 0, o, 2);
+                o.setRatio = Mt;
+                o.pr = -11;
+                r = true;
+                o.b = f;
+                h = Q(e, s);
+                p = e._gsClassPT;
+                if (p) {
+                    d = {};
+                    v = p.data;
+                    while (v) {
+                        d[v.p] = 1;
+                        v = v._next
+                    }
+                    p.setRatio(1)
+                }
+                e._gsClassPT = o;
+                o.e = t.charAt(1) !== "=" ? t : f.replace(new RegExp("\\s*\\b" + t.substr(2) + "\\b"), "") + (t.charAt(0) === "+" ? " " + t.substr(2) : "");
+                if (i._tween._duration) {
+                    e.className = o.e;
+                    c = G(e, h, Q(e), a, d);
+                    e.className = f;
+                    o.data = c.firstMPT;
+                    e.style.cssText = l;
+                    o = o.xfirst = i.parse(e, c.difs, o, u)
+                }
+                return o
+            }
+        });
+        var _t = function(e) {
+            if (e === 1 || e === 0)
+                if (this.data._totalTime === this.data._totalDuration) {
+                    var t = this.e === "all",
+                        n = this.t.style,
+                        r = t ? n.cssText.split(";") : this.e.split(","),
+                        i = r.length,
+                        s = u.transform.parse,
+                        o;
+                    while (--i > -1) {
+                        o = r[i];
+                        if (t) {
+                            o = o.substr(0, o.indexOf(":")).split(" ").join("")
+                        }
+                        if (u[o]) {
+                            o = u[o].parse === s ? Et : u[o].p
+                        }
+                        Ot(n, o)
+                    }
+                }
+        };
+        yt("clearProps", {
+            parser: function(e, t, n, i, s) {
+                s = new dt(e, n, 0, 0, s, 2);
+                s.setRatio = _t;
+                s.e = t;
+                s.pr = -10;
+                s.data = i._tween;
+                r = true;
+                return s
+            }
+        });
+        a = "bezier,throwProps,physicsProps,physics2D".split(",");
+        mt = a.length;
+        while (mt--) {
+            bt(a[mt])
+        }
+        a = n.prototype;
+        a._firstPT = null;
+        a._onInitTween = function(e, t, u) {
+            if (!e.nodeType) {
+                return false
+            }
+            this._target = e;
+            this._tween = u;
+            this._vars = t;
+            P = t.autoRound;
+            r = false;
+            i = t.suffixMap || n.suffixMap;
+            s = V(e, "");
+            o = this._overwriteProps;
+            var a = e.style,
+                f, l, c, h, p, d, m, g, y;
+            if (H)
+                if (a.zIndex === "") {
+                    f = $(e, "zIndex", s);
+                    if (f === "auto" || f === "") {
+                        a.zIndex = 0
+                    }
+                } if (typeof t === "string") {
+                h = a.cssText;
+                f = Q(e, s);
+                a.cssText = h + ";" + t;
+                f = G(e, f, Q(e)).difs;
+                if (!q && v.test(t)) {
+                    f.opacity = parseFloat(RegExp.$1)
+                }
+                t = f;
+                a.cssText = h
+            }
+            this._firstPT = l = this.parse(e, t, null);
+            if (this._transformType) {
+                y = this._transformType === 3;
+                if (!Et) {
+                    a.zoom = 1
+                } else if (B) {
+                    H = true;
+                    if (a.zIndex === "") {
+                        m = $(e, "zIndex", s);
+                        if (m === "auto" || m === "") {
+                            a.zIndex = 0
+                        }
+                    }
+                    if (F) {
+                        a.WebkitBackfaceVisibility = this._vars.WebkitBackfaceVisibility || (y ? "visible" : "hidden")
+                    }
+                }
+                c = l;
+                while (c && c._next) {
+                    c = c._next
+                }
+                g = new dt(e, "transform", 0, 0, null, 2);
+                this._linkCSSP(g, null, c);
+                g.setRatio = y && Tt ? kt : Et ? Lt : Ct;
+                g.data = this._transform || Nt(e, s, true);
+                o.pop()
+            }
+            if (r) {
+                while (l) {
+                    d = l._next;
+                    c = h;
+                    while (c && c.pr > l.pr) {
+                        c = c._next
+                    }
+                    if (l._prev = c ? c._prev : p) {
+                        l._prev._next = l
+                    } else {
+                        h = l
+                    }
+                    if (l._next = c) {
+                        c._prev = l
+                    } else {
+                        p = l
+                    }
+                    l = d
+                }
+                this._firstPT = h
+            }
+            return true
+        };
+        a.parse = function(e, t, n, r) {
+            var o = e.style,
+                a, f, l, c, h, d, v, m, y, b;
+            for (a in t) {
+                d = t[a];
+                f = u[a];
+                if (f) {
+                    n = f.parse(e, d, a, this, n, r, t)
+                } else {
+                    h = $(e, a, s) + "";
+                    y = typeof d === "string";
+                    if (a === "color" || a === "fill" || a === "stroke" || a.indexOf("Color") !== -1 || y && g.test(d)) {
+                        if (!y) {
+                            d = ut(d);
+                            d = (d.length > 3 ? "rgba(" : "rgb(") + d.join(",") + ")"
+                        }
+                        n = vt(o, a, h, d, true, "transparent", n, 0, r)
+                    } else if (y && (d.indexOf(" ") !== -1 || d.indexOf(",") !== -1)) {
+                        n = vt(o, a, h, d, true, null, n, 0, r)
+                    } else {
+                        l = parseFloat(h);
+                        v = l || l === 0 ? h.substr((l + "").length) : "";
+                        if (h === "" || h === "auto") {
+                            if (a === "width" || a === "height") {
+                                l = et(e, a, s);
+                                v = "px"
+                            } else if (a === "left" || a === "top") {
+                                l = K(e, a, s);
+                                v = "px"
+                            } else {
+                                l = a !== "opacity" ? 0 : 1;
+                                v = ""
+                            }
+                        }
+                        b = y && d.charAt(1) === "=";
+                        if (b) {
+                            c = parseInt(d.charAt(0) + "1", 10);
+                            d = d.substr(2);
+                            c *= parseFloat(d);
+                            m = d.replace(p, "")
+                        } else {
+                            c = parseFloat(d);
+                            m = y ? d.substr((c + "").length) || "" : ""
+                        }
+                        if (m === "") {
+                            m = i[a] || v
+                        }
+                        d = c || c === 0 ? (b ? c + l : c) + m : t[a];
+                        if (v !== m)
+                            if (m !== "")
+                                if (c || c === 0)
+                                    if (l || l === 0) {
+                                        l = J(e, a, l, v);
+                                        if (m === "%") {
+                                            l /= J(e, a, 100, "%") / 100;
+                                            if (l > 100) {
+                                                l = 100
+                                            }
+                                            if (t.strictUnits !== true) {
+                                                h = l + "%"
+                                            }
+                                        } else if (m === "em") {
+                                            l /= J(e, a, 1, "em")
+                                        } else {
+                                            c = J(e, a, c, m);
+                                            m = "px"
+                                        }
+                                        if (b)
+                                            if (c || c === 0) {
+                                                d = c + l + m
+                                            }
+                                    } if (b) {
+                            c += l
+                        }
+                        if ((l || l === 0) && (c || c === 0)) {
+                            n = new dt(o, a, l, c - l, n, 0, "css_" + a, P !== false && (m === "px" || a === "zIndex"), 0, h, d);
+                            n.xs0 = m
+                        } else if (o[a] === undefined || !d && (d + "" === "NaN" || d == null)) {
+                            U("invalid " + a + " tween value: " + t[a])
+                        } else {
+                            n = new dt(o, a, c || l || 0, 0, n, -1, "css_" + a, false, 0, h, d);
+                            n.xs0 = d === "none" && (a === "display" || a.indexOf("Style") !== -1) ? h : d
+                        }
+                    }
+                }
+                if (r)
+                    if (n && !n.plugin) {
+                        n.plugin = r
+                    }
+            }
+            return n
+        };
+        a.setRatio = function(e) {
+            var t = this._firstPT,
+                n = 1e-6,
+                r, i, s;
+            if (e === 1 && (this._tween._time === this._tween._duration || this._tween._time === 0)) {
+                while (t) {
+                    if (t.type !== 2) {
+                        t.t[t.p] = t.e
+                    } else {
+                        t.setRatio(e)
+                    }
+                    t = t._next
+                }
+            } else if (e || !(this._tween._time === this._tween._duration || this._tween._time === 0) || this._tween._rawPrevTime === -1e-6) {
+                while (t) {
+                    r = t.c * e + t.s;
+                    if (t.r) {
+                        r = r > 0 ? r + .5 | 0 : r - .5 | 0
+                    } else if (r < n)
+                        if (r > -n) {
+                            r = 0
+                        } if (!t.type) {
+                        t.t[t.p] = r + t.xs0
+                    } else if (t.type === 1) {
+                        s = t.l;
+                        if (s === 2) {
+                            t.t[t.p] = t.xs0 + r + t.xs1 + t.xn1 + t.xs2
+                        } else if (s === 3) {
+                            t.t[t.p] = t.xs0 + r + t.xs1 + t.xn1 + t.xs2 + t.xn2 + t.xs3
+                        } else if (s === 4) {
+                            t.t[t.p] = t.xs0 + r + t.xs1 + t.xn1 + t.xs2 + t.xn2 + t.xs3 + t.xn3 + t.xs4
+                        } else if (s === 5) {
+                            t.t[t.p] = t.xs0 + r + t.xs1 + t.xn1 + t.xs2 + t.xn2 + t.xs3 + t.xn3 + t.xs4 + t.xn4 + t.xs5
+                        } else {
+                            i = t.xs0 + r + t.xs1;
+                            for (s = 1; s < t.l; s++) {
+                                i += t["xn" + s] + t["xs" + (s + 1)]
+                            }
+                            t.t[t.p] = i
+                        }
+                    } else if (t.type === -1) {
+                        t.t[t.p] = t.xs0
+                    } else if (t.setRatio) {
+                        t.setRatio(e)
+                    }
+                    t = t._next
+                }
+            } else {
+                while (t) {
+                    if (t.type !== 2) {
+                        t.t[t.p] = t.b
+                    } else {
+                        t.setRatio(e)
+                    }
+                    t = t._next
+                }
+            }
+        };
+        a._enableTransforms = function(e) {
+            this._transformType = e || this._transformType === 3 ? 3 : 2
+        };
+        a._linkCSSP = function(e, t, n, r) {
+            if (e) {
+                if (t) {
+                    t._prev = e
+                }
+                if (e._next) {
+                    e._next._prev = e._prev
+                }
+                if (n) {
+                    n._next = e
+                } else if (!r && this._firstPT === null) {
+                    this._firstPT = e
+                }
+                if (e._prev) {
+                    e._prev._next = e._next
+                } else if (this._firstPT === e) {
+                    this._firstPT = e._next
+                }
+                e._next = t;
+                e._prev = n
+            }
+            return e
+        };
+        a._kill = function(t) {
+            var n = t,
+                r, i, s;
+            if (t.css_autoAlpha || t.css_alpha) {
+                n = {};
+                for (i in t) {
+                    n[i] = t[i]
+                }
+                n.css_opacity = 1;
+                if (n.css_autoAlpha) {
+                    n.css_visibility = 1
+                }
+            }
+            if (t.css_className && (r = this._classNamePT)) {
+                s = r.xfirst;
+                if (s && s._prev) {
+                    this._linkCSSP(s._prev, r._next, s._prev._prev)
+                } else if (s === this._firstPT) {
+                    this._firstPT = r._next
+                }
+                if (r._next) {
+                    this._linkCSSP(r._next, r._next._next, s._prev)
+                }
+                this._classNamePT = null
+            }
+            return e.prototype._kill.call(this, n)
+        };
+        var Dt = function(e, t, n) {
+            var r, i, s, o;
+            if (e.slice) {
+                i = e.length;
+                while (--i > -1) {
+                    Dt(e[i], t, n)
+                }
+                return
+            }
+            r = e.childNodes;
+            i = r.length;
+            while (--i > -1) {
+                s = r[i];
+                o = s.type;
+                if (s.style) {
+                    t.push(Q(s));
+                    if (n) {
+                        n.push(s)
+                    }
+                }
+                if ((o === 1 || o === 9 || o === 11) && s.childNodes.length) {
+                    Dt(s, t, n)
+                }
+            }
+        };
+        n.cascadeTo = function(e, n, r) {
+            var i = t.to(e, n, r),
+                s = [i],
+                o = [],
+                u = [],
+                a = [],
+                f = t._internals.reservedProps,
+                l, c, h;
+            e = i._targets || i.target;
+            Dt(e, o, a);
+            i.render(n, true);
+            Dt(e, u);
+            i.render(0, true);
+            i._enabled(true);
+            l = a.length;
+            while (--l > -1) {
+                c = G(a[l], o[l], u[l]);
+                if (c.firstMPT) {
+                    c = c.difs;
+                    for (h in r) {
+                        if (f[h]) {
+                            c[h] = r[h]
+                        }
+                    }
+                    s.push(t.to(a[l], n, c))
+                }
+            }
+            return s
+        };
+        e.activate([n]);
+        return n
+    }, true);
+    (function() {
+        var e = window._gsDefine.plugin({
+                propName: "roundProps",
+                priority: -1,
+                API: 2,
+                init: function(e, t, n) {
+                    this._tween = n;
+                    return true
+                }
+            }),
+            t = e.prototype;
+        t._onInitAllProps = function() {
+            var e = this._tween,
+                t = e.vars.roundProps instanceof Array ? e.vars.roundProps : e.vars.roundProps.split(","),
+                n = t.length,
+                r = {},
+                i = e._propLookup.roundProps,
+                s, o, u;
+            while (--n > -1) {
+                r[t[n]] = 1
+            }
+            n = t.length;
+            while (--n > -1) {
+                s = t[n];
+                o = e._firstPT;
+                while (o) {
+                    u = o._next;
+                    if (o.pg) {
+                        o.t._roundProps(r, true)
+                    } else if (o.n === s) {
+                        this._add(o.t, s, o.s, o.c);
+                        if (u) {
+                            u._prev = o._prev
+                        }
+                        if (o._prev) {
+                            o._prev._next = u
+                        } else if (e._firstPT === o) {
+                            e._firstPT = u
+                        }
+                        o._next = o._prev = null;
+                        e._propLookup[s] = i
+                    }
+                    o = u
+                }
+            }
+            return false
+        };
+        t._add = function(e, t, n, r) {
+            this._addTween(e, t, n, n + r, t, true);
+            this._overwriteProps.push(t)
+        }
+    })();
+    window._gsDefine.plugin({
+        propName: "attr",
+        API: 2,
+        init: function(e, t, n) {
+            var r;
+            if (typeof e.setAttribute !== "function") {
+                return false
+            }
+            this._target = e;
+            this._proxy = {};
+            for (r in t) {
+                this._addTween(this._proxy, r, parseFloat(e.getAttribute(r)), t[r], r);
+                this._overwriteProps.push(r)
+            }
+            return true
+        },
+        set: function(e) {
+            this._super.setRatio.call(this, e);
+            var t = this._overwriteProps,
+                n = t.length,
+                r;
+            while (--n > -1) {
+                r = t[n];
+                this._target.setAttribute(r, this._proxy[r] + "")
+            }
+        }
+    });
+    window._gsDefine.plugin({
+        propName: "directionalRotation",
+        API: 2,
+        init: function(e, t, n) {
+            if (typeof t !== "object") {
+                t = {
+                    rotation: t
+                }
+            }
+            this.finals = {};
+            var r = t.useRadians === true ? Math.PI * 2 : 360,
+                i = 1e-6,
+                s, o, u, a, f, l;
+            for (s in t) {
+                if (s !== "useRadians") {
+                    l = (t[s] + "").split("_");
+                    o = l[0];
+                    u = parseFloat(typeof e[s] !== "function" ? e[s] : e[s.indexOf("set") || typeof e["get" + s.substr(3)] !== "function" ? s : "get" + s.substr(3)]());
+                    a = this.finals[s] = typeof o === "string" && o.charAt(1) === "=" ? u + parseInt(o.charAt(0) + "1", 10) * Number(o.substr(2)) : Number(o) || 0;
+                    f = a - u;
+                    if (l.length) {
+                        o = l.join("_");
+                        if (o.indexOf("short") !== -1) {
+                            f = f % r;
+                            if (f !== f % (r / 2)) {
+                                f = f < 0 ? f + r : f - r
+                            }
+                        }
+                        if (o.indexOf("_cw") !== -1 && f < 0) {
+                            f = (f + r * 9999999999) % r - (f / r | 0) * r
+                        } else if (o.indexOf("ccw") !== -1 && f > 0) {
+                            f = (f - r * 9999999999) % r - (f / r | 0) * r
+                        }
+                    }
+                    if (f > i || f < -i) {
+                        this._addTween(e, s, u, u + f, s);
+                        this._overwriteProps.push(s)
+                    }
+                }
+            }
+            return true
+        },
+        set: function(e) {
+            var t;
+            if (e !== 1) {
+                this._super.setRatio.call(this, e)
+            } else {
+                t = this._firstPT;
+                while (t) {
+                    if (t.f) {
+                        t.t[t.p](this.finals[t.p])
+                    } else {
+                        t.t[t.p] = this.finals[t.p]
+                    }
+                    t = t._next
+                }
+            }
+        }
+    })._autoCSS = true;
+    window._gsDefine("easing.Back", ["easing.Ease"], function(e) {
+        var t = window.GreenSockGlobals || window,
+            n = t.com.greensock,
+            r = Math.PI * 2,
+            i = Math.PI / 2,
+            s = n._class,
+            o = function(t, n) {
+                var r = s("easing." + t, function() {}, true),
+                    i = r.prototype = new e;
+                i.constructor = r;
+                i.getRatio = n;
+                return r
+            },
+            u = e.register || function() {},
+            a = function(e, t, n, r, i) {
+                var o = s("easing." + e, {
+                    easeOut: new t,
+                    easeIn: new n,
+                    easeInOut: new r
+                }, true);
+                u(o, e);
+                return o
+            },
+            f = function(e, t, n) {
+                this.t = e;
+                this.v = t;
+                if (n) {
+                    this.next = n;
+                    n.prev = this;
+                    this.c = n.v - t;
+                    this.gap = n.t - e
+                }
+            },
+            l = function(t, n) {
+                var r = s("easing." + t, function(e) {
+                        this._p1 = e || e === 0 ? e : 1.70158;
+                        this._p2 = this._p1 * 1.525
+                    }, true),
+                    i = r.prototype = new e;
+                i.constructor = r;
+                i.getRatio = n;
+                i.config = function(e) {
+                    return new r(e)
+                };
+                return r
+            },
+            c = a("Back", l("BackOut", function(e) {
+                return (e = e - 1) * e * ((this._p1 + 1) * e + this._p1) + 1
+            }), l("BackIn", function(e) {
+                return e * e * ((this._p1 + 1) * e - this._p1)
+            }), l("BackInOut", function(e) {
+                return (e *= 2) < 1 ? .5 * e * e * ((this._p2 + 1) * e - this._p2) : .5 * ((e -= 2) * e * ((this._p2 + 1) * e + this._p2) + 2)
+            })),
+            h = s("easing.SlowMo", function(e, t, n) {
+                t = t || t === 0 ? t : .7;
+                if (e == null) {
+                    e = .7
+                } else if (e > 1) {
+                    e = 1
+                }
+                this._p = e !== 1 ? t : 0;
+                this._p1 = (1 - e) / 2;
+                this._p2 = e;
+                this._p3 = this._p1 + this._p2;
+                this._calcEnd = n === true
+            }, true),
+            p = h.prototype = new e,
+            d, v, m;
+        p.constructor = h;
+        p.getRatio = function(e) {
+            var t = e + (.5 - e) * this._p;
+            if (e < this._p1) {
+                return this._calcEnd ? 1 - (e = 1 - e / this._p1) * e : t - (e = 1 - e / this._p1) * e * e * e * t
+            } else if (e > this._p3) {
+                return this._calcEnd ? 1 - (e = (e - this._p3) / this._p1) * e : t + (e - t) * (e = (e - this._p3) / this._p1) * e * e * e
+            }
+            return this._calcEnd ? 1 : t
+        };
+        h.ease = new h(.7, .7);
+        p.config = h.config = function(e, t, n) {
+            return new h(e, t, n)
+        };
+        d = s("easing.SteppedEase", function(e) {
+            e = e || 1;
+            this._p1 = 1 / e;
+            this._p2 = e + 1
+        }, true);
+        p = d.prototype = new e;
+        p.constructor = d;
+        p.getRatio = function(e) {
+            if (e < 0) {
+                e = 0
+            } else if (e >= 1) {
+                e = .999999999
+            }
+            return (this._p2 * e >> 0) * this._p1
+        };
+        p.config = d.config = function(e) {
+            return new d(e)
+        };
+        v = s("easing.RoughEase", function(t) {
+            t = t || {};
+            var n = t.taper || "none",
+                r = [],
+                i = 0,
+                s = (t.points || 20) | 0,
+                o = s,
+                u = t.randomize !== false,
+                a = t.clamp === true,
+                l = t.template instanceof e ? t.template : null,
+                c = typeof t.strength === "number" ? t.strength * .4 : .4,
+                h, p, d, v, m, g;
+            while (--o > -1) {
+                h = u ? Math.random() : 1 / s * o;
+                p = l ? l.getRatio(h) : h;
+                if (n === "none") {
+                    d = c
+                } else if (n === "out") {
+                    v = 1 - h;
+                    d = v * v * c
+                } else if (n === "in") {
+                    d = h * h * c
+                } else if (h < .5) {
+                    v = h * 2;
+                    d = v * v * .5 * c
+                } else {
+                    v = (1 - h) * 2;
+                    d = v * v * .5 * c
+                }
+                if (u) {
+                    p += Math.random() * d - d * .5
+                } else if (o % 2) {
+                    p += d * .5
+                } else {
+                    p -= d * .5
+                }
+                if (a) {
+                    if (p > 1) {
+                        p = 1
+                    } else if (p < 0) {
+                        p = 0
+                    }
+                }
+                r[i++] = {
+                    x: h,
+                    y: p
+                }
+            }
+            r.sort(function(e, t) {
+                return e.x - t.x
+            });
+            g = new f(1, 1, null);
+            o = s;
+            while (--o > -1) {
+                m = r[o];
+                g = new f(m.x, m.y, g)
+            }
+            this._prev = new f(0, 0, g.t !== 0 ? g : g.next)
+        }, true);
+        p = v.prototype = new e;
+        p.constructor = v;
+        p.getRatio = function(e) {
+            var t = this._prev;
+            if (e > t.t) {
+                while (t.next && e >= t.t) {
+                    t = t.next
+                }
+                t = t.prev
+            } else {
+                while (t.prev && e <= t.t) {
+                    t = t.prev
+                }
+            }
+            this._prev = t;
+            return t.v + (e - t.t) / t.gap * t.c
+        };
+        p.config = function(e) {
+            return new v(e)
+        };
+        v.ease = new v;
+        a("Bounce", o("BounceOut", function(e) {
+            if (e < 1 / 2.75) {
+                return 7.5625 * e * e
+            } else if (e < 2 / 2.75) {
+                return 7.5625 * (e -= 1.5 / 2.75) * e + .75
+            } else if (e < 2.5 / 2.75) {
+                return 7.5625 * (e -= 2.25 / 2.75) * e + .9375
+            }
+            return 7.5625 * (e -= 2.625 / 2.75) * e + .984375
+        }), o("BounceIn", function(e) {
+            if ((e = 1 - e) < 1 / 2.75) {
+                return 1 - 7.5625 * e * e
+            } else if (e < 2 / 2.75) {
+                return 1 - (7.5625 * (e -= 1.5 / 2.75) * e + .75)
+            } else if (e < 2.5 / 2.75) {
+                return 1 - (7.5625 * (e -= 2.25 / 2.75) * e + .9375)
+            }
+            return 1 - (7.5625 * (e -= 2.625 / 2.75) * e + .984375)
+        }), o("BounceInOut", function(e) {
+            var t = e < .5;
+            if (t) {
+                e = 1 - e * 2
+            } else {
+                e = e * 2 - 1
+            }
+            if (e < 1 / 2.75) {
+                e = 7.5625 * e * e
+            } else if (e < 2 / 2.75) {
+                e = 7.5625 * (e -= 1.5 / 2.75) * e + .75
+            } else if (e < 2.5 / 2.75) {
+                e = 7.5625 * (e -= 2.25 / 2.75) * e + .9375
+            } else {
+                e = 7.5625 * (e -= 2.625 / 2.75) * e + .984375
+            }
+            return t ? (1 - e) * .5 : e * .5 + .5
+        }));
+        a("Circ", o("CircOut", function(e) {
+            return Math.sqrt(1 - (e = e - 1) * e)
+        }), o("CircIn", function(e) {
+            return -(Math.sqrt(1 - e * e) - 1)
+        }), o("CircInOut", function(e) {
+            return (e *= 2) < 1 ? -.5 * (Math.sqrt(1 - e * e) - 1) : .5 * (Math.sqrt(1 - (e -= 2) * e) + 1)
+        }));
+        m = function(t, n, i) {
+            var o = s("easing." + t, function(e, t) {
+                    this._p1 = e || 1;
+                    this._p2 = t || i;
+                    this._p3 = this._p2 / r * (Math.asin(1 / this._p1) || 0)
+                }, true),
+                u = o.prototype = new e;
+            u.constructor = o;
+            u.getRatio = n;
+            u.config = function(e, t) {
+                return new o(e, t)
+            };
+            return o
+        };
+        a("Elastic", m("ElasticOut", function(e) {
+            return this._p1 * Math.pow(2, -10 * e) * Math.sin((e - this._p3) * r / this._p2) + 1
+        }, .3), m("ElasticIn", function(e) {
+            return -(this._p1 * Math.pow(2, 10 * (e -= 1)) * Math.sin((e - this._p3) * r / this._p2))
+        }, .3), m("ElasticInOut", function(e) {
+            return (e *= 2) < 1 ? -.5 * this._p1 * Math.pow(2, 10 * (e -= 1)) * Math.sin((e - this._p3) * r / this._p2) : this._p1 * Math.pow(2, -10 * (e -= 1)) * Math.sin((e - this._p3) * r / this._p2) * .5 + 1
+        }, .45));
+        a("Expo", o("ExpoOut", function(e) {
+            return 1 - Math.pow(2, -10 * e)
+        }), o("ExpoIn", function(e) {
+            return Math.pow(2, 10 * (e - 1)) - .001
+        }), o("ExpoInOut", function(e) {
+            return (e *= 2) < 1 ? .5 * Math.pow(2, 10 * (e - 1)) : .5 * (2 - Math.pow(2, -10 * (e - 1)))
+        }));
+        a("Sine", o("SineOut", function(e) {
+            return Math.sin(e * i)
+        }), o("SineIn", function(e) {
+            return -Math.cos(e * i) + 1
+        }), o("SineInOut", function(e) {
+            return -.5 * (Math.cos(Math.PI * e) - 1)
+        }));
+        s("easing.EaseLookup", {
+            find: function(t) {
+                return e.map[t]
+            }
+        }, true);
+        u(t.SlowMo, "SlowMo", "ease,");
+        u(v, "RoughEase", "ease,");
+        u(d, "SteppedEase", "ease,");
+        return c
+    }, true)
+});
+(function(e) {
+    "use strict";
+    var t = e.GreenSockGlobals || e,
+        n = function(e) {
+            var n = e.split("."),
+                r = t,
+                i;
+            for (i = 0; i < n.length; i++) {
+                r[n[i]] = r = r[n[i]] || {}
+            }
+            return r
+        },
+        r = n("com.greensock"),
+        i = [].slice,
+        s = function() {},
+        o, u, a, f, l, c = {},
+        h = function(r, i, s, o) {
+            this.sc = c[r] ? c[r].sc : [];
+            c[r] = this;
+            this.gsClass = null;
+            this.func = s;
+            var u = [];
+            this.check = function(a) {
+                var f = i.length,
+                    l = f,
+                    p, d, v, m;
+                while (--f > -1) {
+                    if ((p = c[i[f]] || new h(i[f], [])).gsClass) {
+                        u[f] = p.gsClass;
+                        l--
+                    } else if (a) {
+                        p.sc.push(this)
+                    }
+                }
+                if (l === 0 && s) {
+                    d = ("com.greensock." + r).split(".");
+                    v = d.pop();
+                    m = n(d.join("."))[v] = this.gsClass = s.apply(s, u);
+                    if (o) {
+                        t[v] = m;
+                        if (typeof define === "function" && define.amd) {
+                            define((e.GreenSockAMDPath ? e.GreenSockAMDPath + "/" : "") + r.split(".").join("/"), [], function() {
+                                return m
+                            })
+                        } else if (typeof module !== "undefined" && module.exports) {
+                            module.exports = m
+                        }
+                    }
+                    for (f = 0; f < this.sc.length; f++) {
+                        this.sc[f].check()
+                    }
+                }
+            };
+            this.check(true)
+        },
+        p = e._gsDefine = function(e, t, n, r) {
+            return new h(e, t, n, r)
+        },
+        d = r._class = function(e, t, n) {
+            t = t || function() {};
+            p(e, [], function() {
+                return t
+            }, n);
+            return t
+        };
+    p.globals = t;
+    var v = [0, 0, 1, 1],
+        m = [],
+        g = d("easing.Ease", function(e, t, n, r) {
+            this._func = e;
+            this._type = n || 0;
+            this._power = r || 0;
+            this._params = t ? v.concat(t) : v
+        }, true),
+        y = g.map = {},
+        b = g.register = function(e, t, n, i) {
+            var s = t.split(","),
+                o = s.length,
+                u = (n || "easeIn,easeOut,easeInOut").split(","),
+                a, f, l, c;
+            while (--o > -1) {
+                f = s[o];
+                a = i ? d("easing." + f, null, true) : r.easing[f] || {};
+                l = u.length;
+                while (--l > -1) {
+                    c = u[l];
+                    y[f + "." + c] = y[c + f] = a[c] = e.getRatio ? e : e[c] || new e
+                }
+            }
+        };
+    a = g.prototype;
+    a._calcEnd = false;
+    a.getRatio = function(e) {
+        if (this._func) {
+            this._params[0] = e;
+            return this._func.apply(null, this._params)
+        }
+        var t = this._type,
+            n = this._power,
+            r = t === 1 ? 1 - e : t === 2 ? e : e < .5 ? e * 2 : (1 - e) * 2;
+        if (n === 1) {
+            r *= r
+        } else if (n === 2) {
+            r *= r * r
+        } else if (n === 3) {
+            r *= r * r * r
+        } else if (n === 4) {
+            r *= r * r * r * r
+        }
+        return t === 1 ? 1 - r : t === 2 ? r : e < .5 ? r / 2 : 1 - r / 2
+    };
+    o = ["Linear", "Quad", "Cubic", "Quart", "Quint,Strong"];
+    u = o.length;
+    while (--u > -1) {
+        a = o[u] + ",Power" + u;
+        b(new g(null, null, 1, u), a, "easeOut", true);
+        b(new g(null, null, 2, u), a, "easeIn" + (u === 0 ? ",easeNone" : ""));
+        b(new g(null, null, 3, u), a, "easeInOut")
+    }
+    y.linear = r.easing.Linear.easeIn;
+    y.swing = r.easing.Quad.easeInOut;
+    var w = d("events.EventDispatcher", function(e) {
+        this._listeners = {};
+        this._eventTarget = e || this
+    });
+    a = w.prototype;
+    a.addEventListener = function(e, t, n, r, i) {
+        i = i || 0;
+        var s = this._listeners[e],
+            o = 0,
+            u, a;
+        if (s == null) {
+            this._listeners[e] = s = []
+        }
+        a = s.length;
+        while (--a > -1) {
+            u = s[a];
+            if (u.c === t && u.s === n) {
+                s.splice(a, 1)
+            } else if (o === 0 && u.pr < i) {
+                o = a + 1
+            }
+        }
+        s.splice(o, 0, {
+            c: t,
+            s: n,
+            up: r,
+            pr: i
+        });
+        if (this === f && !l) {
+            f.wake()
+        }
+    };
+    a.removeEventListener = function(e, t) {
+        var n = this._listeners[e],
+            r;
+        if (n) {
+            r = n.length;
+            while (--r > -1) {
+                if (n[r].c === t) {
+                    n.splice(r, 1);
+                    return
+                }
+            }
+        }
+    };
+    a.dispatchEvent = function(e) {
+        var t = this._listeners[e],
+            n, r, i;
+        if (t) {
+            n = t.length;
+            r = this._eventTarget;
+            while (--n > -1) {
+                i = t[n];
+                if (i.up) {
+                    i.c.call(i.s || r, {
+                        type: e,
+                        target: r
+                    })
+                } else {
+                    i.c.call(i.s || r)
+                }
+            }
+        }
+    };
+    var E = e.requestAnimationFrame,
+        S = e.cancelAnimationFrame,
+        x = Date.now || function() {
+            return (new Date).getTime()
+        };
+    o = ["ms", "moz", "webkit", "o"];
+    u = o.length;
+    while (--u > -1 && !E) {
+        E = e[o[u] + "RequestAnimationFrame"];
+        S = e[o[u] + "CancelAnimationFrame"] || e[o[u] + "CancelRequestAnimationFrame"]
+    }
+    d("Ticker", function(e, t) {
+        var n = this,
+            r = x(),
+            i = t !== false && E,
+            o, u, a, c, h, p = function(e) {
+                n.time = (x() - r) / 1e3;
+                var t = a,
+                    i = n.time - h;
+                if (!o || i > 0 || e === true) {
+                    n.frame++;
+                    h += i + (i >= c ? .004 : c - i);
+                    n.dispatchEvent("tick")
+                }
+                if (e !== true && t === a) {
+                    a = u(p)
+                }
+            };
+        w.call(n);
+        this.time = this.frame = 0;
+        this.tick = function() {
+            p(true)
+        };
+        this.sleep = function() {
+            if (a == null) {
+                return
+            }
+            if (!i || !S) {
+                clearTimeout(a)
+            } else {
+                S(a)
+            }
+            u = s;
+            a = null;
+            if (n === f) {
+                l = false
+            }
+        };
+        this.wake = function() {
+            if (a !== null) {
+                n.sleep()
+            }
+            u = o === 0 ? s : !i || !E ? function(e) {
+                return setTimeout(e, (h - n.time) * 1e3 + 1 | 0)
+            } : E;
+            if (n === f) {
+                l = true
+            }
+            p(2)
+        };
+        this.fps = function(e) {
+            if (!arguments.length) {
+                return o
+            }
+            o = e;
+            c = 1 / (o || 60);
+            h = this.time + c;
+            n.wake()
+        };
+        this.useRAF = function(e) {
+            if (!arguments.length) {
+                return i
+            }
+            n.sleep();
+            i = e;
+            n.fps(o)
+        };
+        n.fps(e);
+        setTimeout(function() {
+            if (i && (!a || n.frame < 5)) {
+                n.useRAF(false)
+            }
+        }, 1500)
+    });
+    a = r.Ticker.prototype = new r.events.EventDispatcher;
+    a.constructor = r.Ticker;
+    var T = d("core.Animation", function(e, t) {
+        this.vars = t || {};
+        this._duration = this._totalDuration = e || 0;
+        this._delay = Number(this.vars.delay) || 0;
+        this._timeScale = 1;
+        this._active = this.vars.immediateRender === true;
+        this.data = this.vars.data;
+        this._reversed = this.vars.reversed === true;
+        if (!B) {
+            return
+        }
+        if (!l) {
+            f.wake()
+        }
+        var n = this.vars.useFrames ? H : B;
+        n.add(this, n._time);
+        if (this.vars.paused) {
+            this.paused(true)
+        }
+    });
+    f = T.ticker = new r.Ticker;
+    a = T.prototype;
+    a._dirty = a._gc = a._initted = a._paused = false;
+    a._totalTime = a._time = 0;
+    a._rawPrevTime = -1;
+    a._next = a._last = a._onUpdate = a._timeline = a.timeline = null;
+    a._paused = false;
+    a.play = function(e, t) {
+        if (arguments.length) {
+            this.seek(e, t)
+        }
+        return this.reversed(false).paused(false)
+    };
+    a.pause = function(e, t) {
+        if (arguments.length) {
+            this.seek(e, t)
+        }
+        return this.paused(true)
+    };
+    a.resume = function(e, t) {
+        if (arguments.length) {
+            this.seek(e, t)
+        }
+        return this.paused(false)
+    };
+    a.seek = function(e, t) {
+        return this.totalTime(Number(e), t !== false)
+    };
+    a.restart = function(e, t) {
+        return this.reversed(false).paused(false).totalTime(e ? -this._delay : 0, t !== false, true)
+    };
+    a.reverse = function(e, t) {
+        if (arguments.length) {
+            this.seek(e || this.totalDuration(), t)
+        }
+        return this.reversed(true).paused(false)
+    };
+    a.render = function() {};
+    a.invalidate = function() {
+        return this
+    };
+    a._enabled = function(e, t) {
+        if (!l) {
+            f.wake()
+        }
+        this._gc = !e;
+        this._active = e && !this._paused && this._totalTime > 0 && this._totalTime < this._totalDuration;
+        if (t !== true) {
+            if (e && !this.timeline) {
+                this._timeline.add(this, this._startTime - this._delay)
+            } else if (!e && this.timeline) {
+                this._timeline._remove(this, true)
+            }
+        }
+        return false
+    };
+    a._kill = function(e, t) {
+        return this._enabled(false, false)
+    };
+    a.kill = function(e, t) {
+        this._kill(e, t);
+        return this
+    };
+    a._uncache = function(e) {
+        var t = e ? this : this.timeline;
+        while (t) {
+            t._dirty = true;
+            t = t.timeline
+        }
+        return this
+    };
+    a.eventCallback = function(e, t, n, r) {
+        if (e == null) {
+            return null
+        } else if (e.substr(0, 2) === "on") {
+            var i = this.vars,
+                s;
+            if (arguments.length === 1) {
+                return i[e]
+            }
+            if (t == null) {
+                delete i[e]
+            } else {
+                i[e] = t;
+                i[e + "Params"] = n;
+                i[e + "Scope"] = r;
+                if (n) {
+                    s = n.length;
+                    while (--s > -1) {
+                        if (n[s] === "{self}") {
+                            n = i[e + "Params"] = n.concat();
+                            n[s] = this
+                        }
+                    }
+                }
+            }
+            if (e === "onUpdate") {
+                this._onUpdate = t
+            }
+        }
+        return this
+    };
+    a.delay = function(e) {
+        if (!arguments.length) {
+            return this._delay
+        }
+        if (this._timeline.smoothChildTiming) {
+            this.startTime(this._startTime + e - this._delay)
+        }
+        this._delay = e;
+        return this
+    };
+    a.duration = function(e) {
+        if (!arguments.length) {
+            this._dirty = false;
+            return this._duration
+        }
+        this._duration = this._totalDuration = e;
+        this._uncache(true);
+        if (this._timeline.smoothChildTiming)
+            if (this._time > 0)
+                if (this._time < this._duration)
+                    if (e !== 0) {
+                        this.totalTime(this._totalTime * (e / this._duration), true)
+                    } return this
+    };
+    a.totalDuration = function(e) {
+        this._dirty = false;
+        return !arguments.length ? this._totalDuration : this.duration(e)
+    };
+    a.time = function(e, t) {
+        if (!arguments.length) {
+            return this._time
+        }
+        if (this._dirty) {
+            this.totalDuration()
+        }
+        return this.totalTime(e > this._duration ? this._duration : e, t)
+    };
+    a.totalTime = function(e, t, n) {
+        if (!l) {
+            f.wake()
+        }
+        if (!arguments.length) {
+            return this._totalTime
+        }
+        if (this._timeline) {
+            if (e < 0 && !n) {
+                e += this.totalDuration()
+            }
+            if (this._timeline.smoothChildTiming) {
+                if (this._dirty) {
+                    this.totalDuration()
+                }
+                var r = this._totalDuration,
+                    i = this._timeline;
+                if (e > r && !n) {
+                    e = r
+                }
+                this._startTime = (this._paused ? this._pauseTime : i._time) - (!this._reversed ? e : r - e) / this._timeScale;
+                if (!i._dirty) {
+                    this._uncache(false)
+                }
+                if (!i._active) {
+                    while (i._timeline) {
+                        i.totalTime(i._totalTime, true);
+                        i = i._timeline
+                    }
+                }
+            }
+            if (this._gc) {
+                this._enabled(true, false)
+            }
+            if (this._totalTime !== e) {
+                this.render(e, t, false)
+            }
+        }
+        return this
+    };
+    a.startTime = function(e) {
+        if (!arguments.length) {
+            return this._startTime
+        }
+        if (e !== this._startTime) {
+            this._startTime = e;
+            if (this.timeline)
+                if (this.timeline._sortChildren) {
+                    this.timeline.add(this, e - this._delay)
+                }
+        }
+        return this
+    };
+    a.timeScale = function(e) {
+        if (!arguments.length) {
+            return this._timeScale
+        }
+        e = e || 1e-6;
+        if (this._timeline && this._timeline.smoothChildTiming) {
+            var t = this._pauseTime,
+                n = t || t === 0 ? t : this._timeline.totalTime();
+            this._startTime = n - (n - this._startTime) * this._timeScale / e
+        }
+        this._timeScale = e;
+        return this._uncache(false)
+    };
+    a.reversed = function(e) {
+        if (!arguments.length) {
+            return this._reversed
+        }
+        if (e != this._reversed) {
+            this._reversed = e;
+            this.totalTime(this._totalTime, true)
+        }
+        return this
+    };
+    a.paused = function(e) {
+        if (!arguments.length) {
+            return this._paused
+        }
+        if (e != this._paused)
+            if (this._timeline) {
+                if (!l && !e) {
+                    f.wake()
+                }
+                var t = this._timeline.rawTime(),
+                    n = t - this._pauseTime;
+                if (!e && this._timeline.smoothChildTiming) {
+                    this._startTime += n;
+                    this._uncache(false)
+                }
+                this._pauseTime = e ? t : null;
+                this._paused = e;
+                this._active = !e && this._totalTime > 0 && this._totalTime < this._totalDuration;
+                if (!e && n !== 0 && this._duration !== 0) {
+                    this.render(this._totalTime, true, true)
+                }
+            } if (this._gc && !e) {
+            this._enabled(true, false)
+        }
+        return this
+    };
+    var N = d("core.SimpleTimeline", function(e) {
+        T.call(this, 0, e);
+        this.autoRemoveChildren = this.smoothChildTiming = true
+    });
+    a = N.prototype = new T;
+    a.constructor = N;
+    a.kill()._gc = false;
+    a._first = a._last = null;
+    a._sortChildren = false;
+    a.add = a.insert = function(e, t, n, r) {
+        var i, s;
+        e._startTime = Number(t || 0) + e._delay;
+        if (e._paused)
+            if (this !== e._timeline) {
+                e._pauseTime = e._startTime + (this.rawTime() - e._startTime) / e._timeScale
+            } if (e.timeline) {
+            e.timeline._remove(e, true)
+        }
+        e.timeline = e._timeline = this;
+        if (e._gc) {
+            e._enabled(true, true)
+        }
+        i = this._last;
+        if (this._sortChildren) {
+            s = e._startTime;
+            while (i && i._startTime > s) {
+                i = i._prev
+            }
+        }
+        if (i) {
+            e._next = i._next;
+            i._next = e
+        } else {
+            e._next = this._first;
+            this._first = e
+        }
+        if (e._next) {
+            e._next._prev = e
+        } else {
+            this._last = e
+        }
+        e._prev = i;
+        if (this._timeline) {
+            this._uncache(true)
+        }
+        return this
+    };
+    a._remove = function(e, t) {
+        if (e.timeline === this) {
+            if (!t) {
+                e._enabled(false, true)
+            }
+            e.timeline = null;
+            if (e._prev) {
+                e._prev._next = e._next
+            } else if (this._first === e) {
+                this._first = e._next
+            }
+            if (e._next) {
+                e._next._prev = e._prev
+            } else if (this._last === e) {
+                this._last = e._prev
+            }
+            if (this._timeline) {
+                this._uncache(true)
+            }
+        }
+        return this
+    };
+    a.render = function(e, t, n) {
+        var r = this._first,
+            i;
+        this._totalTime = this._time = this._rawPrevTime = e;
+        while (r) {
+            i = r._next;
+            if (r._active || e >= r._startTime && !r._paused) {
+                if (!r._reversed) {
+                    r.render((e - r._startTime) * r._timeScale, t, n)
+                } else {
+                    r.render((!r._dirty ? r._totalDuration : r.totalDuration()) - (e - r._startTime) * r._timeScale, t, n)
+                }
+            }
+            r = i
+        }
+    };
+    a.rawTime = function() {
+        if (!l) {
+            f.wake()
+        }
+        return this._totalTime
+    };
+    var C = d("TweenLite", function(e, t, n) {
+            T.call(this, t, n);
+            if (e == null) {
+                throw "Cannot tween a null target."
+            }
+            this.target = e = typeof e !== "string" ? e : C.selector(e) || e;
+            var r = e.jquery || e.length && e[0] && e[0].nodeType && e[0].style,
+                s = this.vars.overwrite,
+                o, u, a;
+            this._overwrite = s = s == null ? P[C.defaultOverwrite] : typeof s === "number" ? s >> 0 : P[s];
+            if ((r || e instanceof Array) && typeof e[0] !== "number") {
+                this._targets = a = i.call(e, 0);
+                this._propLookup = [];
+                this._siblings = [];
+                for (o = 0; o < a.length; o++) {
+                    u = a[o];
+                    if (!u) {
+                        a.splice(o--, 1);
+                        continue
+                    } else if (typeof u === "string") {
+                        u = a[o--] = C.selector(u);
+                        if (typeof u === "string") {
+                            a.splice(o + 1, 1)
+                        }
+                        continue
+                    } else if (u.length && u[0] && u[0].nodeType && u[0].style) {
+                        a.splice(o--, 1);
+                        this._targets = a = a.concat(i.call(u, 0));
+                        continue
+                    }
+                    this._siblings[o] = j(u, this, false);
+                    if (s === 1)
+                        if (this._siblings[o].length > 1) {
+                            F(u, this, null, 1, this._siblings[o])
+                        }
+                }
+            } else {
+                this._propLookup = {};
+                this._siblings = j(e, this, false);
+                if (s === 1)
+                    if (this._siblings.length > 1) {
+                        F(e, this, null, 1, this._siblings)
+                    }
+            }
+            if (this.vars.immediateRender || t === 0 && this._delay === 0 && this.vars.immediateRender !== false) {
+                this.render(-this._delay, false, true)
+            }
+        }, true),
+        k = function(e) {
+            return e.length && e[0] && e[0].nodeType && e[0].style
+        },
+        L = function(e, t) {
+            var n = {},
+                r;
+            for (r in e) {
+                if (!D[r] && (!(r in t) || r === "x" || r === "y" || r === "width" || r === "height" || r === "className") && (!O[r] || O[r] && O[r]._autoCSS)) {
+                    n[r] = e[r];
+                    delete e[r]
+                }
+            }
+            e.css = n
+        };
+    a = C.prototype = new T;
+    a.constructor = C;
+    a.kill()._gc = false;
+    a.ratio = 0;
+    a._firstPT = a._targets = a._overwrittenProps = a._startAt = null;
+    a._notifyPluginsOfEnabled = false;
+    C.version = "1.9.7";
+    C.defaultEase = a._ease = new g(null, null, 1, 1);
+    C.defaultOverwrite = "auto";
+    C.ticker = f;
+    C.autoSleep = true;
+    C.selector = e.$ || e.jQuery || function(t) {
+        if (e.$) {
+            C.selector = e.$;
+            return e.$(t)
+        }
+        return e.document ? e.document.getElementById(t.charAt(0) === "#" ? t.substr(1) : t) : t
+    };
+    var A = C._internals = {},
+        O = C._plugins = {},
+        M = C._tweenLookup = {},
+        _ = 0,
+        D = A.reservedProps = {
+            ease: 1,
+            delay: 1,
+            overwrite: 1,
+            onComplete: 1,
+            onCompleteParams: 1,
+            onCompleteScope: 1,
+            useFrames: 1,
+            runBackwards: 1,
+            startAt: 1,
+            onUpdate: 1,
+            onUpdateParams: 1,
+            onUpdateScope: 1,
+            onStart: 1,
+            onStartParams: 1,
+            onStartScope: 1,
+            onReverseComplete: 1,
+            onReverseCompleteParams: 1,
+            onReverseCompleteScope: 1,
+            onRepeat: 1,
+            onRepeatParams: 1,
+            onRepeatScope: 1,
+            easeParams: 1,
+            yoyo: 1,
+            immediateRender: 1,
+            repeat: 1,
+            repeatDelay: 1,
+            data: 1,
+            paused: 1,
+            reversed: 1,
+            autoCSS: 1
+        },
+        P = {
+            none: 0,
+            all: 1,
+            auto: 2,
+            concurrent: 3,
+            allOnStart: 4,
+            preexisting: 5,
+            "true": 1,
+            "false": 0
+        },
+        H = T._rootFramesTimeline = new N,
+        B = T._rootTimeline = new N;
+    B._startTime = f.time;
+    H._startTime = f.frame;
+    B._active = H._active = true;
+    T._updateRoot = function() {
+        B.render((f.time - B._startTime) * B._timeScale, false, false);
+        H.render((f.frame - H._startTime) * H._timeScale, false, false);
+        if (!(f.frame % 120)) {
+            var e, t, n;
+            for (n in M) {
+                t = M[n].tweens;
+                e = t.length;
+                while (--e > -1) {
+                    if (t[e]._gc) {
+                        t.splice(e, 1)
+                    }
+                }
+                if (t.length === 0) {
+                    delete M[n]
+                }
+            }
+            n = B._first;
+            if (!n || n._paused)
+                if (C.autoSleep && !H._first && f._listeners.tick.length === 1) {
+                    while (n && n._paused) {
+                        n = n._next
+                    }
+                    if (!n) {
+                        f.sleep()
+                    }
+                }
+        }
+    };
+    f.addEventListener("tick", T._updateRoot);
+    var j = function(e, t, n) {
+            var r = e._gsTweenID,
+                i, s;
+            if (!M[r || (e._gsTweenID = r = "t" + _++)]) {
+                M[r] = {
+                    target: e,
+                    tweens: []
+                }
+            }
+            if (t) {
+                i = M[r].tweens;
+                i[s = i.length] = t;
+                if (n) {
+                    while (--s > -1) {
+                        if (i[s] === t) {
+                            i.splice(s, 1)
+                        }
+                    }
+                }
+            }
+            return M[r].tweens
+        },
+        F = function(e, t, n, r, i) {
+            var s, o, u, a;
+            if (r === 1 || r >= 4) {
+                a = i.length;
+                for (s = 0; s < a; s++) {
+                    if ((u = i[s]) !== t) {
+                        if (!u._gc)
+                            if (u._enabled(false, false)) {
+                                o = true
+                            }
+                    } else if (r === 5) {
+                        break
+                    }
+                }
+                return o
+            }
+            var f = t._startTime + 1e-10,
+                l = [],
+                c = 0,
+                h = t._duration === 0,
+                p;
+            s = i.length;
+            while (--s > -1) {
+                if ((u = i[s]) === t || u._gc || u._paused) {} else if (u._timeline !== t._timeline) {
+                    p = p || I(t, 0, h);
+                    if (I(u, p, h) === 0) {
+                        l[c++] = u
+                    }
+                } else if (u._startTime <= f)
+                    if (u._startTime + u.totalDuration() / u._timeScale + 1e-10 > f)
+                        if (!((h || !u._initted) && f - u._startTime <= 2e-10)) {
+                            l[c++] = u
+                        }
+            }
+            s = c;
+            while (--s > -1) {
+                u = l[s];
+                if (r === 2)
+                    if (u._kill(n, e)) {
+                        o = true
+                    } if (r !== 2 || !u._firstPT && u._initted) {
+                    if (u._enabled(false, false)) {
+                        o = true
+                    }
+                }
+            }
+            return o
+        },
+        I = function(e, t, n) {
+            var r = e._timeline,
+                i = r._timeScale,
+                s = e._startTime,
+                o = 1e-10;
+            while (r._timeline) {
+                s += r._startTime;
+                i *= r._timeScale;
+                if (r._paused) {
+                    return -100
+                }
+                r = r._timeline
+            }
+            s /= i;
+            return s > t ? s - t : n && s === t || !e._initted && s - t < 2 * o ? o : (s += e.totalDuration() / e._timeScale / i) > t + o ? 0 : s - t - o
+        };
+    a._init = function() {
+        var e = this.vars,
+            t = this._overwrittenProps,
+            n = this._duration,
+            r = e.ease,
+            i, s, o, u;
+        if (e.startAt) {
+            e.startAt.overwrite = 0;
+            e.startAt.immediateRender = true;
+            this._startAt = C.to(this.target, 0, e.startAt);
+            if (e.immediateRender) {
+                this._startAt = null;
+                if (this._time === 0 && n !== 0) {
+                    return
+                }
+            }
+        } else if (e.runBackwards && e.immediateRender && n !== 0) {
+            if (this._startAt) {
+                this._startAt.render(-1, true);
+                this._startAt = null
+            } else if (this._time === 0) {
+                o = {};
+                for (u in e) {
+                    if (!D[u] || u === "autoCSS") {
+                        o[u] = e[u]
+                    }
+                }
+                o.overwrite = 0;
+                this._startAt = C.to(this.target, 0, o);
+                return
+            }
+        }
+        if (!r) {
+            this._ease = C.defaultEase
+        } else if (r instanceof g) {
+            this._ease = e.easeParams instanceof Array ? r.config.apply(r, e.easeParams) : r
+        } else {
+            this._ease = typeof r === "function" ? new g(r, e.easeParams) : y[r] || C.defaultEase
+        }
+        this._easeType = this._ease._type;
+        this._easePower = this._ease._power;
+        this._firstPT = null;
+        if (this._targets) {
+            i = this._targets.length;
+            while (--i > -1) {
+                if (this._initProps(this._targets[i], this._propLookup[i] = {}, this._siblings[i], t ? t[i] : null)) {
+                    s = true
+                }
+            }
+        } else {
+            s = this._initProps(this.target, this._propLookup, this._siblings, t)
+        }
+        if (s) {
+            C._onPluginEvent("_onInitAllProps", this)
+        }
+        if (t)
+            if (!this._firstPT)
+                if (typeof this.target !== "function") {
+                    this._enabled(false, false)
+                } if (e.runBackwards) {
+            o = this._firstPT;
+            while (o) {
+                o.s += o.c;
+                o.c = -o.c;
+                o = o._next
+            }
+        }
+        this._onUpdate = e.onUpdate;
+        this._initted = true
+    };
+    a._initProps = function(e, t, n, r) {
+        var i, s, o, u, a, f, l;
+        if (e == null) {
+            return false
+        }
+        if (!this.vars.css)
+            if (e.style)
+                if (e.nodeType)
+                    if (O.css)
+                        if (this.vars.autoCSS !== false) {
+                            L(this.vars, e)
+                        } for (i in this.vars) {
+            if (D[i]) {
+                if (i === "onStartParams" || i === "onUpdateParams" || i === "onCompleteParams" || i === "onReverseCompleteParams" || i === "onRepeatParams")
+                    if (a = this.vars[i]) {
+                        s = a.length;
+                        while (--s > -1) {
+                            if (a[s] === "{self}") {
+                                a = this.vars[i] = a.concat();
+                                a[s] = this
+                            }
+                        }
+                    }
+            } else if (O[i] && (u = new O[i])._onInitTween(e, this.vars[i], this)) {
+                this._firstPT = f = {
+                    _next: this._firstPT,
+                    t: u,
+                    p: "setRatio",
+                    s: 0,
+                    c: 1,
+                    f: true,
+                    n: i,
+                    pg: true,
+                    pr: u._priority
+                };
+                s = u._overwriteProps.length;
+                while (--s > -1) {
+                    t[u._overwriteProps[s]] = this._firstPT
+                }
+                if (u._priority || u._onInitAllProps) {
+                    o = true
+                }
+                if (u._onDisable || u._onEnable) {
+                    this._notifyPluginsOfEnabled = true
+                }
+            } else {
+                this._firstPT = t[i] = f = {
+                    _next: this._firstPT,
+                    t: e,
+                    p: i,
+                    f: typeof e[i] === "function",
+                    n: i,
+                    pg: false,
+                    pr: 0
+                };
+                f.s = !f.f ? parseFloat(e[i]) : e[i.indexOf("set") || typeof e["get" + i.substr(3)] !== "function" ? i : "get" + i.substr(3)]();
+                l = this.vars[i];
+                f.c = typeof l === "string" && l.charAt(1) === "=" ? parseInt(l.charAt(0) + "1", 10) * Number(l.substr(2)) : Number(l) - f.s || 0
+            }
+            if (f)
+                if (f._next) {
+                    f._next._prev = f
+                }
+        }
+        if (r)
+            if (this._kill(r, e)) {
+                return this._initProps(e, t, n, r)
+            } if (this._overwrite > 1)
+            if (this._firstPT)
+                if (n.length > 1)
+                    if (F(e, this, t, this._overwrite, n)) {
+                        this._kill(t, e);
+                        return this._initProps(e, t, n, r)
+                    } return o
+    };
+    a.render = function(e, t, n) {
+        var r = this._time,
+            i, s, o;
+        if (e >= this._duration) {
+            this._totalTime = this._time = this._duration;
+            this.ratio = this._ease._calcEnd ? this._ease.getRatio(1) : 1;
+            if (!this._reversed) {
+                i = true;
+                s = "onComplete"
+            }
+            if (this._duration === 0) {
+                if (e === 0 || this._rawPrevTime < 0)
+                    if (this._rawPrevTime !== e) {
+                        n = true;
+                        if (this._rawPrevTime > 0) {
+                            s = "onReverseComplete";
+                            if (t) {
+                                e = -1
+                            }
+                        }
+                    } this._rawPrevTime = e
+            }
+        } else if (e < 1e-7) {
+            this._totalTime = this._time = 0;
+            this.ratio = this._ease._calcEnd ? this._ease.getRatio(0) : 0;
+            if (r !== 0 || this._duration === 0 && this._rawPrevTime > 0) {
+                s = "onReverseComplete";
+                i = this._reversed
+            }
+            if (e < 0) {
+                this._active = false;
+                if (this._duration === 0) {
+                    if (this._rawPrevTime >= 0) {
+                        n = true
+                    }
+                    this._rawPrevTime = e
+                }
+            } else if (!this._initted) {
+                n = true
+            }
+        } else {
+            this._totalTime = this._time = e;
+            if (this._easeType) {
+                var u = e / this._duration,
+                    a = this._easeType,
+                    f = this._easePower;
+                if (a === 1 || a === 3 && u >= .5) {
+                    u = 1 - u
+                }
+                if (a === 3) {
+                    u *= 2
+                }
+                if (f === 1) {
+                    u *= u
+                } else if (f === 2) {
+                    u *= u * u
+                } else if (f === 3) {
+                    u *= u * u * u
+                } else if (f === 4) {
+                    u *= u * u * u * u
+                }
+                if (a === 1) {
+                    this.ratio = 1 - u
+                } else if (a === 2) {
+                    this.ratio = u
+                } else if (e / this._duration < .5) {
+                    this.ratio = u / 2
+                } else {
+                    this.ratio = 1 - u / 2
+                }
+            } else {
+                this.ratio = this._ease.getRatio(e / this._duration)
+            }
+        }
+        if (this._time === r && !n) {
+            return
+        } else if (!this._initted) {
+            this._init();
+            if (!this._initted) {
+                return
+            }
+            if (this._time && !i) {
+                this.ratio = this._ease.getRatio(this._time / this._duration)
+            } else if (i && this._ease._calcEnd) {
+                this.ratio = this._ease.getRatio(this._time === 0 ? 0 : 1)
+            }
+        }
+        if (!this._active)
+            if (!this._paused) {
+                this._active = true
+            } if (r === 0) {
+            if (this._startAt) {
+                if (e >= 0) {
+                    this._startAt.render(e, t, n)
+                } else if (!s) {
+                    s = "_dummyGS"
+                }
+            }
+            if (this.vars.onStart)
+                if (this._time !== 0 || this._duration === 0)
+                    if (!t) {
+                        this.vars.onStart.apply(this.vars.onStartScope || this, this.vars.onStartParams || m)
+                    }
+        }
+        o = this._firstPT;
+        while (o) {
+            if (o.f) {
+                o.t[o.p](o.c * this.ratio + o.s)
+            } else {
+                o.t[o.p] = o.c * this.ratio + o.s
+            }
+            o = o._next
+        }
+        if (this._onUpdate) {
+            if (e < 0)
+                if (this._startAt) {
+                    this._startAt.render(e, t, n)
+                } if (!t) {
+                this._onUpdate.apply(this.vars.onUpdateScope || this, this.vars.onUpdateParams || m)
+            }
+        }
+        if (s)
+            if (!this._gc) {
+                if (e < 0 && this._startAt && !this._onUpdate) {
+                    this._startAt.render(e, t, n)
+                }
+                if (i) {
+                    if (this._timeline.autoRemoveChildren) {
+                        this._enabled(false, false)
+                    }
+                    this._active = false
+                }
+                if (!t && this.vars[s]) {
+                    this.vars[s].apply(this.vars[s + "Scope"] || this, this.vars[s + "Params"] || m)
+                }
+            }
+    };
+    a._kill = function(e, t) {
+        if (e === "all") {
+            e = null
+        }
+        if (e == null)
+            if (t == null || t === this.target) {
+                return this._enabled(false, false)
+            } t = typeof t !== "string" ? t || this._targets || this.target : C.selector(t) || t;
+        var n, r, i, s, o, u, a, f;
+        if ((t instanceof Array || k(t)) && typeof t[0] !== "number") {
+            n = t.length;
+            while (--n > -1) {
+                if (this._kill(e, t[n])) {
+                    u = true
+                }
+            }
+        } else {
+            if (this._targets) {
+                n = this._targets.length;
+                while (--n > -1) {
+                    if (t === this._targets[n]) {
+                        o = this._propLookup[n] || {};
+                        this._overwrittenProps = this._overwrittenProps || [];
+                        r = this._overwrittenProps[n] = e ? this._overwrittenProps[n] || {} : "all";
+                        break
+                    }
+                }
+            } else if (t !== this.target) {
+                return false
+            } else {
+                o = this._propLookup;
+                r = this._overwrittenProps = e ? this._overwrittenProps || {} : "all"
+            }
+            if (o) {
+                a = e || o;
+                f = e !== r && r !== "all" && e !== o && (e == null || e._tempKill !== true);
+                for (i in a) {
+                    if (s = o[i]) {
+                        if (s.pg && s.t._kill(a)) {
+                            u = true
+                        }
+                        if (!s.pg || s.t._overwriteProps.length === 0) {
+                            if (s._prev) {
+                                s._prev._next = s._next
+                            } else if (s === this._firstPT) {
+                                this._firstPT = s._next
+                            }
+                            if (s._next) {
+                                s._next._prev = s._prev
+                            }
+                            s._next = s._prev = null
+                        }
+                        delete o[i]
+                    }
+                    if (f) {
+                        r[i] = 1
+                    }
+                }
+                if (!this._firstPT && this._initted) {
+                    this._enabled(false, false)
+                }
+            }
+        }
+        return u
+    };
+    a.invalidate = function() {
+        if (this._notifyPluginsOfEnabled) {
+            C._onPluginEvent("_onDisable", this)
+        }
+        this._firstPT = null;
+        this._overwrittenProps = null;
+        this._onUpdate = null;
+        this._startAt = null;
+        this._initted = this._active = this._notifyPluginsOfEnabled = false;
+        this._propLookup = this._targets ? {} : [];
+        return this
+    };
+    a._enabled = function(e, t) {
+        if (!l) {
+            f.wake()
+        }
+        if (e && this._gc) {
+            var n = this._targets,
+                r;
+            if (n) {
+                r = n.length;
+                while (--r > -1) {
+                    this._siblings[r] = j(n[r], this, true)
+                }
+            } else {
+                this._siblings = j(this.target, this, true)
+            }
+        }
+        T.prototype._enabled.call(this, e, t);
+        if (this._notifyPluginsOfEnabled)
+            if (this._firstPT) {
+                return C._onPluginEvent(e ? "_onEnable" : "_onDisable", this)
+            } return false
+    };
+    C.to = function(e, t, n) {
+        return new C(e, t, n)
+    };
+    C.from = function(e, t, n) {
+        n.runBackwards = true;
+        n.immediateRender = n.immediateRender != false;
+        return new C(e, t, n)
+    };
+    C.fromTo = function(e, t, n, r) {
+        r.startAt = n;
+        r.immediateRender = r.immediateRender != false && n.immediateRender != false;
+        return new C(e, t, r)
+    };
+    C.delayedCall = function(e, t, n, r, i) {
+        return new C(t, 0, {
+            delay: e,
+            onComplete: t,
+            onCompleteParams: n,
+            onCompleteScope: r,
+            onReverseComplete: t,
+            onReverseCompleteParams: n,
+            onReverseCompleteScope: r,
+            immediateRender: false,
+            useFrames: i,
+            overwrite: 0
+        })
+    };
+    C.set = function(e, t) {
+        return new C(e, 0, t)
+    };
+    C.killTweensOf = C.killDelayedCallsTo = function(e, t) {
+        var n = C.getTweensOf(e),
+            r = n.length;
+        while (--r > -1) {
+            n[r]._kill(t, e)
+        }
+    };
+    C.getTweensOf = function(e) {
+        if (e == null) {
+            return []
+        }
+        e = typeof e !== "string" ? e : C.selector(e) || e;
+        var t, n, r, i;
+        if ((e instanceof Array || k(e)) && typeof e[0] !== "number") {
+            t = e.length;
+            n = [];
+            while (--t > -1) {
+                n = n.concat(C.getTweensOf(e[t]))
+            }
+            t = n.length;
+            while (--t > -1) {
+                i = n[t];
+                r = t;
+                while (--r > -1) {
+                    if (i === n[r]) {
+                        n.splice(t, 1)
+                    }
+                }
+            }
+        } else {
+            n = j(e).concat();
+            t = n.length;
+            while (--t > -1) {
+                if (n[t]._gc) {
+                    n.splice(t, 1)
+                }
+            }
+        }
+        return n
+    };
+    var q = d("plugins.TweenPlugin", function(e, t) {
+        this._overwriteProps = (e || "").split(",");
+        this._propName = this._overwriteProps[0];
+        this._priority = t || 0;
+        this._super = q.prototype
+    }, true);
+    a = q.prototype;
+    q.version = "1.9.1";
+    q.API = 2;
+    a._firstPT = null;
+    a._addTween = function(e, t, n, r, i, s) {
+        var o, u;
+        if (r != null && (o = typeof r === "number" || r.charAt(1) !== "=" ? Number(r) - n : parseInt(r.charAt(0) + "1", 10) * Number(r.substr(2)))) {
+            this._firstPT = u = {
+                _next: this._firstPT,
+                t: e,
+                p: t,
+                s: n,
+                c: o,
+                f: typeof e[t] === "function",
+                n: i || t,
+                r: s
+            };
+            if (u._next) {
+                u._next._prev = u
+            }
+        }
+    };
+    a.setRatio = function(e) {
+        var t = this._firstPT,
+            n = 1e-6,
+            r;
+        while (t) {
+            r = t.c * e + t.s;
+            if (t.r) {
+                r = r + (r > 0 ? .5 : -.5) >> 0
+            } else if (r < n)
+                if (r > -n) {
+                    r = 0
+                } if (t.f) {
+                t.t[t.p](r)
+            } else {
+                t.t[t.p] = r
+            }
+            t = t._next
+        }
+    };
+    a._kill = function(e) {
+        var t = this._overwriteProps,
+            n = this._firstPT,
+            r;
+        if (e[this._propName] != null) {
+            this._overwriteProps = []
+        } else {
+            r = t.length;
+            while (--r > -1) {
+                if (e[t[r]] != null) {
+                    t.splice(r, 1)
+                }
+            }
+        }
+        while (n) {
+            if (e[n.n] != null) {
+                if (n._next) {
+                    n._next._prev = n._prev
+                }
+                if (n._prev) {
+                    n._prev._next = n._next;
+                    n._prev = null
+                } else if (this._firstPT === n) {
+                    this._firstPT = n._next
+                }
+            }
+            n = n._next
+        }
+        return false
+    };
+    a._roundProps = function(e, t) {
+        var n = this._firstPT;
+        while (n) {
+            if (e[this._propName] || n.n != null && e[n.n.split(this._propName + "_").join("")]) {
+                n.r = t
+            }
+            n = n._next
+        }
+    };
+    C._onPluginEvent = function(e, t) {
+        var n = t._firstPT,
+            r, i, s, o, u;
+        if (e === "_onInitAllProps") {
+            while (n) {
+                u = n._next;
+                i = s;
+                while (i && i.pr > n.pr) {
+                    i = i._next
+                }
+                if (n._prev = i ? i._prev : o) {
+                    n._prev._next = n
+                } else {
+                    s = n
+                }
+                if (n._next = i) {
+                    i._prev = n
+                } else {
+                    o = n
+                }
+                n = u
+            }
+            n = t._firstPT = s
+        }
+        while (n) {
+            if (n.pg)
+                if (typeof n.t[e] === "function")
+                    if (n.t[e]()) {
+                        r = true
+                    } n = n._next
+        }
+        return r
+    };
+    q.activate = function(e) {
+        var t = e.length;
+        while (--t > -1) {
+            if (e[t].API === q.API) {
+                O[(new e[t])._propName] = e[t]
+            }
+        }
+        return true
+    };
+    p.plugin = function(e) {
+        if (!e || !e.propName || !e.init || !e.API) {
+            throw "illegal plugin definition."
+        }
+        var t = e.propName,
+            n = e.priority || 0,
+            r = e.overwriteProps,
+            i = {
+                init: "_onInitTween",
+                set: "setRatio",
+                kill: "_kill",
+                round: "_roundProps",
+                initAll: "_onInitAllProps"
+            },
+            s = d("plugins." + t.charAt(0).toUpperCase() + t.substr(1) + "Plugin", function() {
+                q.call(this, t, n);
+                this._overwriteProps = r || []
+            }, e.global === true),
+            o = s.prototype = new q(t),
+            u;
+        o.constructor = s;
+        s.API = e.API;
+        for (u in i) {
+            if (typeof e[u] === "function") {
+                o[i[u]] = e[u]
+            }
+        }
+        s.version = e.version;
+        q.activate([s]);
+        return s
+    };
+    o = e._gsQueue;
+    if (o) {
+        for (u = 0; u < o.length; u++) {
+            o[u]()
+        }
+        for (a in c) {
+            if (!c[a].func) {
+                e.console.log("GSAP encountered missing dependency: com.greensock." + a)
+            }
+        }
+    }
+    l = false
+})(window)
