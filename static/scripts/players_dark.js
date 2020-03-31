@@ -361,8 +361,9 @@ if (!document.body.classList.contains(category)){
           cat = _test_.querySelector(".hide_cat");
           all_music_playlists.append(list);
           audio_playlists.append(cat);
-          console.log(category);
-          music_player = null;
+          
+          body.nextElementSibling.innerHTML="";
+          body.nextElementSibling.nextElementSibling.innerHTML="";
           music_player = new MUSIC({
               //main settings
               instanceName:"player2",
