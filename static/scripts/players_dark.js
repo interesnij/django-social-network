@@ -356,13 +356,13 @@ if (!document.body.classList.contains(category)){
           var _test_ = document.createElement('span');
           _test_.innerHTML = tag_link.responseText;
           var list = _test_.querySelectorAll("li");
+          var count = list.length;
           console.log(list);
           music_player.loadPlaylist(1);
-          for (track in list){
-            html = track.innerHTML;
-            _source=track.getAttributeNode("data-path");
-            _title=track.getAttributeNode("data-title");
-            _thumbPath=track.getAttribute("data-thumbpath");
+          for(i=0; i<count; i++) {
+            _source=list[i].getAttribute("id");
+            _title=list[i].getAttributeNode("data-title");
+            _thumbPath=list[i].getAttribute("data-thumbpath");
             music_player.addTrack(source=track._source, title=_title, thumbPath=_thumbPath, addAtTheBegginngOfPlaylist=true);
             console.log(_source,_title,_thumbPath);
           }
