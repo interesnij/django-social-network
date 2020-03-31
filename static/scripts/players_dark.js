@@ -1,5 +1,5 @@
 
-music_player = new MUSIC({
+music_player = new FWDMSP({
     //main settings
     instanceName:"player1",
     playlistsId:"audio_playlists",
@@ -314,9 +314,9 @@ FWDUVPUtils.onReady(function(){
     video_player.addListener(FWDUVPlayer.PLAY, video_onPlay);
 });
 }
-MUSICUtils.onReady(function(){
-        music_player.addListener(MUSIC.READY, music_onReady);
-        music_player.addListener(MUSIC.PLAY, music_onPlay);
+FWDMSPUtils.onReady(function(){
+        music_player.addListener(FWDMSP.READY, music_onReady);
+        music_player.addListener(FWDMSP.PLAY, music_onPlay);
     });
 
 function music_onReady(){console.log("Аудио плеер готов");}
@@ -371,6 +371,10 @@ if (!document.body.classList.contains(category)){
       music_player.playSpecificTrack(category, track_id);
     };
   });
+
+  on('#ajax', 'click', '#load_1', function(e) {
+    music_player.loadPlaylist(0);
+  })
 
 on('#ajax', 'click', '#load_1', function(e) {
   music_player.loadPlaylist(0);
