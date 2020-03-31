@@ -1,9 +1,8 @@
 
   {% for object in list %}
-  
-  <li>
-    <p class="uri">{{ object.uri }}</p>
-    <p class="artwork_url">{{ object.artwork_url }}</p>
-    <p class="title">{{ object.title }}</p>
+  <li data-path="{{ object.uri }}"
+      data-thumbpath="{{ object.artwork_url }}"
+      data-title="{{ object.title }}">
   </li>
+
   {% endfor %}
