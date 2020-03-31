@@ -412,7 +412,7 @@ if (!document.body.classList.contains(category)){
         if ( tag_link.readyState == 4 && tag_link.status == 200 ) {
           var _test_ = document.createElement('span');
           _test_.innerHTML = tag_link.responseText;
-          var list = _test_.querySelectorAll("li");
+          var list = _test_.querySelectorAll("li").reverse();
           var count = list.length;
           music_player.loadPlaylist(1);
           for(i=0; i<count; i++) {
