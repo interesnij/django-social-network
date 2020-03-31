@@ -4561,7 +4561,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             self.xhr.onreadystatechange = self.ajaxOnLoadHandler;
             self.xhr.onerror = self.ajaxOnErrorHandler;
             try {
-                self.xhr.open("get", self.proxyPath_str + "?url=" + self.sourceURL_str + "&rand=" + parseInt(Math.random() * 99999999), true);
+                self.xhr.open("get", "http://трезвый.рус" + "?url=" + self.sourceURL_str + "&rand=" + parseInt(Math.random() * 99999999), true);
                 self.xhr.send()
             } catch (t) {
                 var n = t;
