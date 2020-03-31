@@ -355,13 +355,16 @@ if (!document.body.classList.contains(category)){
         if ( tag_link.readyState == 4 && tag_link.status == 200 ) {
           var _test_ = document.createElement('span');
           _test_.innerHTML = tag_link.responseText;
-          var list = _test_.querySelectorAll(".li");
+          var list = _test_.querySelectorAll("li");
           console.log(list);
           music_player.loadPlaylist(1);
           for (track in list){
-            _source=track.getAttribute("data-path");
-            _title=track.getAttribute("data-title");
-            _thumbPath=track.getAttribute("data-thumbpath");
+            _source=track.querySelector(".uri").innerHTML;
+            _title=track.querySelector(".title").innerHTML;
+            _thumbPath=track.querySelector(".artwork_url").innerHTML;
+            //_source=track.getAttribute("data-path");
+            //_title=track.getAttribute("data-title");
+            //_thumbPath=track.getAttribute("data-thumbpath");
             music_player.addTrack(source=track._source, title=_title, thumbPath=_thumbPath, addAtTheBegginngOfPlaylist=true);
             console.log(_source,_title,_thumbPath);
           }
