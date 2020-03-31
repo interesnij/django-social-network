@@ -363,8 +363,9 @@ if (!document.body.classList.contains(category)){
             _source=list[i].getAttribute("id");
             _title=list[i].getAttributeNode("data-title");
             _thumbPath=list[i].getAttribute("data-thumbpath");
-            body.querySelector('#player1').addTrack(source=_source, title=_title, thumbPath=_thumbPath, addAtTheBegginngOfPlaylist=true);
             console.log(_source,_title,_thumbPath);
+            body.querySelector('#player1').addTrack(source=_source, title=_title, thumbPath=_thumbPath, addAtTheBegginngOfPlaylist=true);
+
           }
 
           music_player.playSpecificTrack(1, 0);
