@@ -1,10 +1,10 @@
 
 		music_player = 	new FWDMSP({
 				//main settings
-				instanceName:"minimaldrk1",
+				instanceName:"player1",
 				playlistsId:"playlists",
-				mainFolderPath:"content",
-				skinPath:"minimal_skin_dark",
+				mainFolderPath:"/static/images/",
+				skinPath:"audio_dark",
 				showSoundCloudUserNameInTitle:"yes",
 				privatePassword:"428c841430ea18a70f7b06525d4b748a",
 				showMainBackground:"yes",
