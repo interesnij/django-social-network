@@ -31,7 +31,7 @@
 </ul>
 
 
-<ul id="playlist_">
+<ul id="playlist_" style="display:none;">
   {% for track in request.user.my_playlist_too %}
   <li data-path="{{ track.uri }}"
       data-thumbpath="{{ track.artwork_url }}">
@@ -39,7 +39,7 @@
   </li>
   {% endfor %}
 </ul>
-<ul id="playlist_new">
+<ul id="playlist_new" style="display:none;">
 		<li data-path="https://api.soundcloud.com/tracks/601535613" data-thumbpath="/static/images/news_small1.jpg">
 	   <p><span style="font-weight:bold">Тесттттттт</span></p>
 	 </li>
