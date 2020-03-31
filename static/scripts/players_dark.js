@@ -422,8 +422,7 @@ if (!document.body.classList.contains(category)){
             _title=list[i].getAttribute("data-title");
             _thumbPath=list[i].getAttribute("data-thumbpath");
             console.log(_source,_title,_thumbPath);
-            music_player.addTrack(_source, _title, _thumbPath, false, false, null);
-
+          //  music_player.addTrack(_source, _title, _thumbPath, false, false, null);
           }
 
           music_player.playSpecificTrack(category, track_id);
