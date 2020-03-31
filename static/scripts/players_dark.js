@@ -128,8 +128,8 @@ function msToTime(duration) {
 				inputColor:"#FFFFFF",
 				//opener settings
 				openerAlignment:"right",
-				showOpener:"no",
-				showOpenerPlayPauseButton:"no",
+				showOpener:"yes",
+				showOpenerPlayPauseButton:"yes",
 				openerEqulizerOffsetLeft:3,
 				openerEqulizerOffsetTop:-1,
 				//popup settings
