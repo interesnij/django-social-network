@@ -7634,7 +7634,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 }
                 a.setWidth(a.totalWidth), a.setHeight(a.totalHeight), a.setButtonMode(!0), a.screen.style.yellowOverlayPointerEvents = "none", a.isMobile_bl ? a.hasPointerEvent_bl ? (a.screen.addEventListener("pointerup", a.onMouseUp), a.screen.addEventListener("pointerover", a.onMouseOver), a.screen.addEventListener("pointerout", a.onMouseOut)) : a.screen.addEventListener("touchend", a.onMouseUp) : a.screen.addEventListener ? (a.screen.addEventListener("mouseover", a.onMouseOver), a.screen.addEventListener("mouseout", a.onMouseOut), a.screen.addEventListener("mouseup", a.onMouseUp)) : a.screen.attachEvent && (a.screen.attachEvent("onmouseover", a.onMouseOver), a.screen.attachEvent("onmouseout", a.onMouseOut), a.screen.attachEvent("onmouseup", a.onMouseUp))
             }, a.onMouseOver = function(e) {
-                !(a.isDisabledForGood_bl || e.pointerType && e.pointerType != e.MSPOINTER_TYPE_MOUSE && "mouse" != e.pointerType) {
+                if (!a.isDisabledForGood_bl || e.pointerType && e.pointerType != e.MSPOINTER_TYPE_MOUSE && "mouse" != e.pointerType) {
                     if (a.isDisabled_bl || a.isSelectedFinal_bl) return;
                     a.dispatchEvent(d.MOUSE_OVER, {
                         e: e
