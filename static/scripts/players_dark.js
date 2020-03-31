@@ -362,9 +362,6 @@ if (!document.body.classList.contains(category)){
           all_music_playlists.append(list);
           audio_playlists.append(cat);
 
-          body.nextElementSibling.innerHTML="";
-          body.nextElementSibling.nextElementSibling.innerHTML="";
-
           music_player.playSpecificTrack(category, track_id);
       }};
       tag_link.send( null );
