@@ -378,7 +378,7 @@ FWDMSPUtils.onReady(function(){
     });
 
 function music_onReady(){console.log("Аудио плеер готов");}
-function myFunction(console.log("YYYYYYYYY"));
+function myFunction(){console.log("YYYYYYYYY")};
 function video_onReady(){console.log("Видео плеер готов");}
 
 function video_onPlay(){
