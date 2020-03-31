@@ -6366,7 +6366,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                     var o = t / p.mainScrubberWidth;
                     !FWDMSP.hasHTML5Audio && t >= p.mainProgress_do.w && (t = p.mainProgress_do.w);
                     var s = t / p.mainScrubberWidth;
-                    p.disable_do && p.addChild(p.disable_do), p.ttm.show(), p.updateMainScrubber(o), p.dispatchEvent(n.START_TO_SCRUB), p.dispatchEvent(n.SCRUB_PLAYLIST_ITEM, {
+                    p.disable_do && p.addChild(p.disable_do), p.updateMainScrubber(o), p.dispatchEvent(n.START_TO_SCRUB), p.dispatchEvent(n.SCRUB_PLAYLIST_ITEM, {
                         percent: s
                     }), p.dispatchEvent(n.SCRUB, {
                         percent: o

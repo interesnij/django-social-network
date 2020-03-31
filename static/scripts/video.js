@@ -4196,7 +4196,7 @@ if (! function(e) {
                 b.updateThumbnailsPreview(s, o)
             }, this.mainScrubberOnOverHandler = function(e) {
                 if (!b.isMainScrubberDisabled_bl) {
-                    p.showMainScrubberToolTipLabel_bl && !m.hasThumbnailsPreview && b.ttm.show(), b.thumbnailsPreview_do && m.hasThumbnailsPreview && b.thumbnailsPreview_do.show(), b.isMbl || !b.ttm && !b.thumbnailsPreview_do || (window.removeEventListener("mousemove", b.mainScrubberWMouseMove), window.addEventListener("mousemove", b.mainScrubberWMouseMove));
+                    p.showMainScrubberToolTipLabel_bl && !m.hasThumbnailsPreview, b.thumbnailsPreview_do && m.hasThumbnailsPreview && b.thumbnailsPreview_do.show(), b.isMbl || !b.ttm && !b.thumbnailsPreview_do || (window.removeEventListener("mousemove", b.mainScrubberWMouseMove), window.addEventListener("mousemove", b.mainScrubberWMouseMove));
                     var t = FWDUVPUtils.getViewportMouseCoordinates(e).screenX - b.mainScrubber_do.getGlobalX();
                     t < 0 ? t = 0 : t > b.maiScrbW - b.scrubbersOffsetWidth && (t = b.maiScrbW - b.scrubbersOffsetWidth);
                     var s = t / b.maiScrbW;
@@ -4210,7 +4210,7 @@ if (! function(e) {
                     var t = FWDUVPUtils.getViewportMouseCoordinates(e).screenX - b.mainScrubber_do.getGlobalX();
                     t < 0 ? t = 0 : t > b.maiScrbW - b.scrubbersOffsetWidth && (t = b.maiScrbW - b.scrubbersOffsetWidth);
                     var s = t / b.maiScrbW;
-                    p.showMainScrubberToolTipLabel_bl && !m.hasThumbnailsPreview && b.ttm.show(), b.thumbnailsPreview_do && m.hasThumbnailsPreview && b.thumbnailsPreview_do.show(), b.updateToolTip(t, s), b.updateMainScrubber(s), b.updateThumbnailsPreview(t, s), b.dispatchEvent(o.START_TO_SCRUB), b.dispatchEvent(o.SCRUB, {
+                    p.showMainScrubberToolTipLabel_bl && !m.hasThumbnailsPreview, b.thumbnailsPreview_do && m.hasThumbnailsPreview && b.thumbnailsPreview_do.show(), b.updateToolTip(t, s), b.updateMainScrubber(s), b.updateThumbnailsPreview(t, s), b.dispatchEvent(o.START_TO_SCRUB), b.dispatchEvent(o.SCRUB, {
                         percent: s
                     }), b.hasPointerEvent_bl ? (window.addEventListener("pointermove", b.mainScrubberMoveHandler), window.addEventListener("pointerup", b.mainScrubberEndHandler)) : (window.addEventListener("mousemove", b.mainScrubberMoveHandler), window.addEventListener("mouseup", b.mainScrubberEndHandler), window.addEventListener("touchmove", b.mainScrubberMoveHandler), window.addEventListener("touchend", b.mainScrubberEndHandler))
                 }
