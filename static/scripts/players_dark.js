@@ -2,7 +2,7 @@
 		music_player = 	new FWDMSP({
 				//main settings
 				instanceName:"player1",
-				playlistsId:"all_music_playlists", 
+				playlistsId:"audio_playlists", 
 				mainFolderPath:"/static/images/",
 				skinPath:"audio_dark",
 				showSoundCloudUserNameInTitle:"yes",
