@@ -40,5 +40,9 @@
   </li>
   {% endfor %}
 </ul>
-<ul id="playlist_new"></ul>
+<ul id="playlist_new">
+		<li data-path="{{ track.uri }}" data-thumbpath="{{ track.artwork_url }}">
+	   <p><span style="font-weight:bold">{{ track.title }}</span></p>
+	 </li>
+</ul>
 </span>

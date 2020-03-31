@@ -336,7 +336,8 @@ function music_onPlay(){
 
 on('#ajax', 'click', '.tag_track', function(e) {
 var track_id = this.getAttribute('data-counter');
-var tag_pk = document.querySelector(".tag_playlist").getAttribute('data-pk');
+var tag = document.querySelector(".tag_playlist");
+var tag_pk = tag.getAttribute('data-pk');
 var category = 'tag_' + tag_pk;
 
 if (!document.body.classList.contains(category)){
@@ -345,26 +346,9 @@ if (!document.body.classList.contains(category)){
   playlist_link.onreadystatechange = function () {
     if ( playlist_link.readyState == 4 && playlist_link.status == 200 ) {
       var body = document.querySelector("body");
-      body.className = "";body.classList.add(category);
+      body.className = "";
+      body.classList.add(category);
 
-      var tag_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-      tag_link.open( 'GET', '/music/get/tag/' + tag_pk, true );
-      tag_link.onreadystatechange = function () {
-        if ( tag_link.readyState == 4 && tag_link.status == 200 ) {
-          var _test_ = document.createElement('span');
-          _test_.innerHTML = tag_link.responseText;
-          var list = document.createElement('span');
-          var cat = document.createElement('span');
-          var audio_playlists = body.querySelector("#audio_playlists");
-          var all_music_playlists = body.querySelector("#all_music_playlists");
-          list = _test_.querySelector(".hide_list");
-          cat = _test_.querySelector(".hide_cat");
-          all_music_playlists.append(list);
-          audio_playlists.append(cat);
-
-          music_player.playSpecificTrack(category, track_id);
-      }};
-      tag_link.send( null );
   }};
     playlist_link.send( null );
     }else{
