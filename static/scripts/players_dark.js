@@ -360,9 +360,9 @@ if (!document.body.classList.contains(category)){
           music_player.loadPlaylist(1);
           for (track in list){
             html = track.innerHTML;
-            _source=html.getAttribute("data-path");
-            _title=html.getAttribute("data-title");
-            _thumbPath=html.getAttribute("data-thumbpath");
+            _source=track.getAttributeNode("data-path"));
+            _title=track.getAttributeNode("data-title");
+            _thumbPath=track.getAttribute("data-thumbpath");
             music_player.addTrack(source=track._source, title=_title, thumbPath=_thumbPath, addAtTheBegginngOfPlaylist=true);
             console.log(_source,_title,_thumbPath);
           }
