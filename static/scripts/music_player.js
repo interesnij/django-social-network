@@ -4158,7 +4158,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                             }, this.audioScreenLoadProgressHandler = function(e) {
                                 FWDMSP.hasHTML5Audio ? self.controller_do && self.controller_do.updatePreloaderBar(e.percent) : self.controller_do && self.controller_do.updatePreloaderBar(e)
                             }, this.audioScreenPlayCompleteHandler = function() {
-                                self.data.playlist_ar && (self.videoNameGa = self.data.playlist_ar[self.id].titleText, self.videoCat = self.data.cats_ar[self.catId].playlistsName), FWDMSP.hasHTML5Audio && (self.data.loop_bl ? "hls_flash" == self.audioType_str ? setTimeout(function() {
+                                self.data.playlist_ar && (self.videoNameGa = self.data.playlist_ar[self.id].titleText, self.videoCat = self.data.cats_ar[self.catId]), FWDMSP.hasHTML5Audio && (self.data.loop_bl ? "hls_flash" == self.audioType_str ? setTimeout(function() {
                                     self.scrub(0), self.resume()
                                 }, 50) : (self.scrub(0), self.play()) : self.data.shuffle_bl ? self.playShuffle() : 1 == self.playlist_do.items_ar.length ? (self.stop(), self.playlist_do && self.playlist_do.updateCurItemProgress(0)) : self.playNext()), self.dispatchEvent(FWDMSP.PLAY_COMPLETE)
                             }, this.loadID3IfPlaylistDisabled = function() {

@@ -61,8 +61,8 @@
 				equlizerOffsetLeft:1,
 				//playlists window settings
 				showPlaylistsSearchInput:"yes",
-				usePlaylistsSelectBox:"yes",
-				showPlaylistsSelectBoxNumbers:"yes",
+				usePlaylistsSelectBox:"no",
+				showPlaylistsSelectBoxNumbers:"no",
 				showPlaylistsButtonAndPlaylists:"yes",
 				showPlaylistsByDefault:1,
 				thumbnailSelectedType:"opacity",
