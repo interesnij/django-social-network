@@ -123,8 +123,8 @@
 				inputColor:"#FFFFFF",
 				//opener settings
 				openerAlignment:"right",
-				showOpener:"yes",
-				showOpenerPlayPauseButton:"yes",
+				showOpener:"no",
+				showOpenerPlayPauseButton:"no",
 				openerEqulizerOffsetLeft:3,
 				openerEqulizerOffsetTop:-1,
 				//popup settings
