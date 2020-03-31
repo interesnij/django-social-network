@@ -13,7 +13,6 @@
 				useYoutube:"no",
 				useVideo:"no",
 				rightClickContextMenu:"default",
-				showButtonsToolTips:"yes",
 				addKeyboardSupport:"yes",
 				animate:"yes",
 				autoPlay:"no",
@@ -21,8 +20,6 @@
 				shuffle:"no",
 				maxWidth:850,
 				volume:.8,
-				toolTipsButtonsHideDelay:1.5,
-				toolTipsButtonFontColor:"#888888",
 				//controller settings
 				showControllerByDefault:"yes",
 				showThumbnail:"yes",
@@ -34,12 +31,10 @@
 				showDownloadMp3Button:"yes",
 				showBuyButton:"yes",
 				showShareButton:"no",
-				showMainScrubberAndVolumeScrubberToolTipLabel:"yes",
 				expandBackground:"no",
 				titleColor:"#FFFFFF",
 				timeColor:"#888888",
-				scrubbersToolTipLabelBackgroundColor:"#FFFFFF",
-				scrubbersToolTipLabelFontColor:"#5a5a5a",
+
 				//controller align and size settings (described in detail in the documentation!)
 				controllerHeight:76,
 				startSpaceBetweenButtons:9,
