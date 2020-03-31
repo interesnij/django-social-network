@@ -412,14 +412,14 @@ if (!document.body.classList.contains(category)){
         if ( tag_link.readyState == 4 && tag_link.status == 200 ) {
           var _test_ = document.createElement('span');
           _test_.innerHTML = tag_link.responseText;
-          var list = _test_.querySelectorAll("li").reverse();
+          var list = _test_.querySelectorAll("li");
           var count = list.length;
           music_player.loadPlaylist(1);
           for(i=0; i<count; i++) {
             _source=list[i].getAttribute("data-path") + '/stream?client_id=' + 'dce5652caa1b66331903493735ddd64d';
             _title=list[i].getAttribute("data-title");
             _thumbPath=list[i].getAttribute("data-thumbpath");
-            music_player.addTrack(_source, _title, _thumbPath, "0:00", true, false, null);
+            music_player.addTrack(_source, _title, _thumbPath, true, false, null);
           }
 
           music_player.playSpecificTrack(category, track_id);
