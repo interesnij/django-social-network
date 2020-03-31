@@ -413,7 +413,7 @@ if (!document.body.classList.contains(category)){
           var _test_ = document.createElement('span');
           _test_.innerHTML = tag_link.responseText;
           var list = _test_.querySelectorAll("li");
-					list.split(',').reverse().join('');
+					list.split(',').reverse().join(',');
           var count = list.length;
           //music_player.loadPlaylist(1);
           for(i=0; i<count; i++) {
