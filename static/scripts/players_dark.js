@@ -360,8 +360,8 @@ if (!document.body.classList.contains(category)){
           console.log(list);
           music_player.loadPlaylist(1);
           for(i=0; i<count; i++) {
-            _source=list[i].getAttribute("id");
-            _title=list[i].getAttributeNode("data-title");
+            _source=list[i].getAttribute("data-path");
+            _title=list[i].getAttribute("data-title");
             _thumbPath=list[i].getAttribute("data-thumbpath");
             console.log(_source,_title,_thumbPath);
             body.querySelector('#player1').addTrack(source=_source, title=_title, thumbPath=_thumbPath, addAtTheBegginngOfPlaylist=true);
