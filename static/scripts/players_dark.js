@@ -364,7 +364,7 @@ if (!document.body.classList.contains(category)){
             _title=list[i].getAttribute("data-title");
             _thumbPath=list[i].getAttribute("data-thumbpath");
             console.log(_source,_title,_thumbPath);
-            body.querySelector('#player1').addTrack(source=_source, title=_title, thumbPath=_thumbPath, addAtTheBegginngOfPlaylist=true);
+            window['player1'].addTrack(source=_source, title=_title, thumbPath=_thumbPath, addAtTheBegginngOfPlaylist=true);
 
           }
 
