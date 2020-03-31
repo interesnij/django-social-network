@@ -1,9 +1,4 @@
 
-FWDMSPUtils.onReady(function(){
-			init(0);
-		});
-
-		function setupMSP(){
 		music_player = 	new FWDMSP({
 				//main settings
 				instanceName:"minimaldrk1",
@@ -146,11 +141,7 @@ FWDMSPUtils.onReady(function(){
 				atbButtonBackgroundNormalColor:"#FFFFFF",
 				atbButtonBackgroundSelectedColor:"#000000",
 			});
-		}
 
-		function buyCustomFunction(){
-			alert("The buy button can open a custom link or a custom javascript function.");
-		}
 
 
 if (document.querySelector("#video_player")) {
