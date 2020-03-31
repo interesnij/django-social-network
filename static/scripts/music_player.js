@@ -5310,10 +5310,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                             })
                         }, 50));
                         if (n > self.maxPlaylistItems - 1) break;
-                        if (l.source.indexOf(".soundcloud.") != -1) {
-                            l.source = l.source + '/stream?client_id=' + 'dce5652caa1b66331903493735ddd64d';
-                        }
-                        else if (l.isShoutcast_bl = FWDMSPUtils.getAttributeValue(o, "data-type"), l.isShoutcast_bl && (-1 != l.isShoutcast_bl.toLowerCase().indexOf("shoutcastv1") ? (l.shoutcastVersion = 1, l.isShoutcast_bl = !0) : -1 != l.isShoutcast_bl.toLowerCase().indexOf("shoutcastv2") ? (l.shoutcastVersion = 2, l.isShoutcast_bl = !0) : l.isShoutcast_bl = !1), l.isIcecast_bl = FWDMSPUtils.getAttributeValue(o, "data-type"), l.isIcecast_bl && (-1 != l.isIcecast_bl.toLowerCase().indexOf("icecast") ? l.isIcecast_bl = !0 : l.isIcecast_bl = !1), l.source = FWDMSPUtils.getAttributeValue(o, "data-path"), -1 != l.source.indexOf("encrypt:") && (l.source = atob(l.source.substr(8))), -1 != l.source.indexOf("youtube.")) {
+
+                        console.log(l.source);
+                        if (l.isShoutcast_bl = FWDMSPUtils.getAttributeValue(o, "data-type"), l.isShoutcast_bl && (-1 != l.isShoutcast_bl.toLowerCase().indexOf("shoutcastv1") ? (l.shoutcastVersion = 1, l.isShoutcast_bl = !0) : -1 != l.isShoutcast_bl.toLowerCase().indexOf("shoutcastv2") ? (l.shoutcastVersion = 2, l.isShoutcast_bl = !0) : l.isShoutcast_bl = !1), l.isIcecast_bl = FWDMSPUtils.getAttributeValue(o, "data-type"), l.isIcecast_bl && (-1 != l.isIcecast_bl.toLowerCase().indexOf("icecast") ? l.isIcecast_bl = !0 : l.isIcecast_bl = !1), l.source = FWDMSPUtils.getAttributeValue(o, "data-path"), -1 != l.source.indexOf("encrypt:") && (l.source = atob(l.source.substr(8))), -1 != l.source.indexOf("youtube.")) {
                             var r = l.source.match(/^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/);
                             l.source = r[2]
                         } else if (-1 == l.source.lastIndexOf("google.") && !l.isShoutcast_bl && !l.isIcecast_bl) {
