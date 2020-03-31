@@ -4374,7 +4374,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                             }, this.pause = function() {
                                 self.isAPIReady_bl && self.isPlaylistLoaded_bl && (self.isPlaylistItemClicked_bl = !0, self.largePlayButton_do && self.isFullScreen_bl && self.largePlayButton_do.show(), self.audioType_str == FWDMSP.YOUTUBE ? self.ytb_do.pause() : self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS || !self.videoScreen_do ? FWDMSP.hasHTML5Audio && self.audioScreen_do && self.audioScreen_do.pause() : self.videoScreen_do.pause())
                             }, this.stop = function(e) {
-                                self.isAPIReady_bl && (e || (self.isIcecastLoaded_bl = !1, self.isShoutcastLoaded_bl = !1), self.isRadioLoaded_bl = !1, self.hasStartedToPlay_bl = !1, self.hasPassedPassowrd_bl = !1, self.isShoutcast_bl = !1, self.isIcecast_bl = !1, self.destroyHLS(), self.atb_do && self.atb_do.hide(!0), self.opener_do && self.opener_do.showPlayButton(), self.largePlayButton_do && self.largePlayButton_do.hide(), self.playlist_do && (self.playlist_do.setCurItemPlayState(), self.playlist_do.updateCurItemProgress(0)), self.controller_do && self.controller_do.ttm && self.controller_do.ttm.hide(), self.showCursor(), self.audioType_str == FWDMSP.YOUTUBE ? self.ytb_do.stop() : self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS || !self.videoScreen_do ? FWDMSP.hasHTML5Audio && self.audioScreen_do.stop() : self.videoScreen_do.stop(), self.controller_do && self.controller_do.disableAtbButton(), self.setPlaybackRate(self.data.defaultPlaybackRate), self.hasHlsPlayedOnce_bl = !1, self.isSafeToScrub_bl = !1, self.hlsState = void 0, self.changeHLS_bl = !1)
+                                self.isAPIReady_bl && (e || (self.isIcecastLoaded_bl = !1, self.isShoutcastLoaded_bl = !1), self.isRadioLoaded_bl = !1, self.hasStartedToPlay_bl = !1, self.hasPassedPassowrd_bl = !1, self.isShoutcast_bl = !1, self.isIcecast_bl = !1, self.destroyHLS(), self.atb_do && self.atb_do.hide(!0), self.opener_do && self.opener_do.showPlayButton(), self.largePlayButton_do && self.largePlayButton_do.hide(), self.playlist_do && (self.playlist_do.setCurItemPlayState(), self.playlist_do.updateCurItemProgress(0)), self.controller_do, self.showCursor(), self.audioType_str == FWDMSP.YOUTUBE ? self.ytb_do.stop() : self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS || !self.videoScreen_do ? FWDMSP.hasHTML5Audio && self.audioScreen_do.stop() : self.videoScreen_do.stop(), self.controller_do && self.controller_do.disableAtbButton(), self.setPlaybackRate(self.data.defaultPlaybackRate), self.hasHlsPlayedOnce_bl = !1, self.isSafeToScrub_bl = !1, self.hlsState = void 0, self.changeHLS_bl = !1)
                             }, this.startToScrub = function() {
                                 self.isAPIReady_bl && self.isPlaylistLoaded_bl && (self.audioType_str == FWDMSP.YOUTUBE ? self.ytb_do.startToScrub() : self.audioType_str == FWDMSP.VIDEO ? self.videoScreen_do.startToScrub() : FWDMSP.hasHTML5Audio ? self.audioScreen_do.startToScrub() : self.isFlashScreenReady_bl && self.flashObject.startToScrub())
                             }, this.stopToScrub = function() {
@@ -6352,12 +6352,12 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 }
             }, p.mainScrubberWMouseMove = function(e) {
                 var t = FWDMSPUtils.getViewportMouseCoordinates(e);
-                p.vcX = t.screenX, p.vcY = t.screenY, FWDMSPUtils.hitTest(p.mainScrubber_do.screen, p.vcX, p.vcY) || p.isMainScrubberScrubbing_bl || (window.removeEventListener("mousemove", p.mainScrubberWMouseMove), p.ttm.hide());
+                p.vcX = t.screenX, p.vcY = t.screenY, FWDMSPUtils.hitTest(p.mainScrubber_do.screen, p.vcX, p.vcY) || p.isMainScrubberScrubbing_bl || (window.removeEventListener("mousemove", p.mainScrubberWMouseMove));
                 var o = FWDMSPUtils.getViewportMouseCoordinates(e).screenX - p.mainScrubber_do.getGlobalX();
                 o < 0 ? o = 0 : o > p.mainScrubberWidth - p.scrubbersOffsetWidth && (o = p.mainScrubberWidth - p.scrubbersOffsetWidth);
                 var s = o / p.mainScrubberWidth;
             }, this.mainScrubberOnOutHandler = function(e) {
-                p.isMainScrubberDisabled_bl || p.isMainScrubberScrubbing_bl || p.ttm && p.ttm.hide()
+                p.isMainScrubberDisabled_bl || p.isMainScrubberScrubbing_bl
             }, this.mainScrubberOnDownHandler = function(e) {
                 if (!p.isMainScrubberDisabled_bl) {
                     e.preventDefault && e.preventDefault(), p.isMainScrubberScrubbing_bl = !0;
@@ -6375,9 +6375,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }, this.mainScrubberMoveHandler = function(e) {
                 e.preventDefault && e.preventDefault();
                 var t = FWDMSPUtils.getViewportMouseCoordinates(e);
-                p.vcX = t.screenX, p.vcY = t.screenY, FWDMSPUtils.hitTest(p.mainScrubber_do.screen, p.vcX, p.vcY) || p.isMainScrubberScrubbing_bl || (window.removeEventListener("mousemove", p.mainScrubberWMouseMove), p.ttm.hide());
+                p.vcX = t.screenX, p.vcY = t.screenY, FWDMSPUtils.hitTest(p.mainScrubber_do.screen, p.vcX, p.vcY) || p.isMainScrubberScrubbing_bl || (window.removeEventListener("mousemove", p.mainScrubberWMouseMove));
                 var o = FWDMSPUtils.getViewportMouseCoordinates(e).screenX - p.mainScrubber_do.getGlobalX();
-                FWDMSPUtils.hitTest(p.mainScrubber_do.screen, p.vcX, p.vcY) || p.isMainScrubberScrubbing_bl || (window.removeEventListener("mousemove", p.mainScrubberWMouseMove), p.ttm.hide()), o < 0 ? o = 0 : o > p.mainScrubberWidth - p.scrubbersOffsetWidth && (o = p.mainScrubberWidth - p.scrubbersOffsetWidth);
+                FWDMSPUtils.hitTest(p.mainScrubber_do.screen, p.vcX, p.vcY) || p.isMainScrubberScrubbing_bl || (window.removeEventListener("mousemove", p.mainScrubberWMouseMove)), o < 0 ? o = 0 : o > p.mainScrubberWidth - p.scrubbersOffsetWidth && (o = p.mainScrubberWidth - p.scrubbersOffsetWidth);
                 var s = o / p.mainScrubberWidth;
                 !FWDMSP.hasHTML5Audio && o >= p.mainProgress_do.w && (o = p.mainProgress_do.w);
                 var i = o / p.mainScrubberWidth;
@@ -6389,7 +6389,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }, this.mainScrubberEndHandler = function(e) {
                 if (p.disable_do && p.contains(p.disable_do) && p.removeChild(p.disable_do), p.isMainScrubberScrubbing_bl = !1, e) {
                     var t = FWDMSPUtils.getViewportMouseCoordinates(e);
-                    FWDMSPUtils.hitTest(p.mainScrubber_do.screen, t.screenX, t.screenY) || p.ttm && p.ttm.hide()
+                    FWDMSPUtils.hitTest(p.mainScrubber_do.screen, t.screenX, t.screenY)
                 }
                 p.dispatchEvent(n.STOP_TO_SCRUB), p.hasPointerEvent_bl ? (window.removeEventListener("pointermove", p.mainScrubberMoveHandler), window.removeEventListener("pointerup", p.mainScrubberEndHandler)) : (window.removeEventListener("mousemove", p.mainScrubberMoveHandler), window.removeEventListener("mouseup", p.mainScrubberEndHandler), window.removeEventListener("touchmove", p.mainScrubberMoveHandler), window.removeEventListener("touchend", p.mainScrubberEndHandler))
             }, this.disableMainScrubber = function() {
