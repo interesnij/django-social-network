@@ -1,3 +1,13 @@
+function msToTime(duration) {
+  var milliseconds = parseInt((duration % 1000) / 100),
+    seconds = Math.floor((duration / 1000) % 60),
+    minutes = Math.floor((duration / (1000 * 60)) % 60);
+
+  minutes = (minutes < 10) ? "0" + minutes : minutes;
+  seconds = (seconds < 10) ? "0" + seconds : seconds;
+
+  return minutes + ":" + seconds;
+}
 
 		music_player = 	new FWDMSP({
 				//main settings
@@ -415,7 +425,9 @@ if (!document.body.classList.contains(category)){
             _source=list[i].getAttribute("data-path") + '/stream?client_id=' + 'dce5652caa1b66331903493735ddd64d';
             _title=list[i].getAttribute("data-title");
             _thumbPath=list[i].getAttribute("data-thumbpath");
-            music_player.addTrack(_source, _title, _thumbPath, "0:00", true, false, null);
+						_duration=list[i].getAttribute("data-duration");
+						time = msToTime(_duration);
+            music_player.addTrack(_source, _title, _thumbPath, time, true, false, null);
           }
 
           music_player.playSpecificTrack(category, track_id);
