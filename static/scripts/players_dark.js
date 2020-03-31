@@ -346,8 +346,110 @@ if (!document.body.classList.contains(category)){
     if ( playlist_link.readyState == 4 && playlist_link.status == 200 ) {
       var body = document.querySelector("body");
       body.className = "";body.classList.add(category);
-      music_player.loadXMLPlaylist('/music/get/tag/' + tag_pk);
-      music_player.playSpecificTrack(category, track_id);
+
+      var tag_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+      tag_link.open( 'GET', '/music/get/tag/' + tag_pk, true );
+      tag_link.onreadystatechange = function () {
+        if ( tag_link.readyState == 4 && tag_link.status == 200 ) {
+          var _test_ = document.createElement('span');
+          _test_.innerHTML = tag_link.responseText;
+          var list = document.createElement('span');
+          var cat = document.createElement('span');
+          var audio_playlists = body.querySelector("#audio_playlists");
+          var all_music_playlists = body.querySelector("#all_music_playlists");
+          list = _test_.querySelector(".hide_list");
+          cat = _test_.querySelector(".hide_cat");
+          all_music_playlists.append(list);
+          audio_playlists.append(cat);
+          console.log(category);
+          music_player = new MUSIC({
+              //main settings
+              instanceName:"player2",
+              playlistsId:"audio_playlists",
+              mainFolderPath:"/static/images/",
+              skinPath:"audio_dark",
+              showSoundCloudUserNameInTitle:"no",
+              position:"bottom",
+              rightClickContextMenu:"developer",
+              animate:"yes",
+              autoPlay:"no",
+              loop:"no",
+              shuffle:"no",
+              maxWidth:850,
+              volume:.8,
+              //controller settings
+              showControllerByDefault:"yes",
+              showThumbnail:"yes",
+              showSoundAnimation:"yes",
+              showLoopButton:"yes",
+              showShuffleButton:"yes",
+              showDownloadMp3Button:"yes",
+              expandBackground:"no",
+              titleColor:"#FFFFFF",
+              timeColor:"#888888",
+              //controller align and size settings (described in detail in the documentation!)
+              controllerHeight:76,
+              startSpaceBetweenButtons:9,
+              spaceBetweenButtons:8,
+              separatorOffsetOutSpace:5,
+              separatorOffsetInSpace:9,
+              lastButtonsOffsetTop:14,
+              allButtonsOffsetTopAndBottom:14,
+              titleBarOffsetTop:13,
+              mainScrubberOffsetTop:47,
+              spaceBetweenMainScrubberAndTime:10,
+              startTimeSpace:10,
+              scrubbersOffsetWidth:2,
+              scrubbersOffestTotalWidth:0,
+              volumeButtonAndScrubberOffsetTop:47,
+              spaceBetweenVolumeButtonAndScrubber:6,
+              volumeScrubberOffestWidth:4,
+              scrubberOffsetBottom:10,
+              equlizerOffsetLeft:1,
+              //playlists window settings
+              showPlaylistsButtonAndPlaylists:"yes",
+              showPlaylistsByDefault:"no",
+              thumbnailSelectedType:"opacity",
+              startAtPlaylist:0,
+              startAtTrack:0,
+              buttonsMargins:0,
+              thumbnailMaxWidth:330,
+              thumbnailMaxHeight:330,
+              horizontalSpaceBetweenThumbnails:40,
+              verticalSpaceBetweenThumbnails:40,
+              //playlist settings
+              showPlayListButtonAndPlaylist:"yes",
+              showPlayListOnAndroid:"yes",
+              showPlayListByDefault:"no",
+              showPlaylistItemPlayButton:"yes",
+              showPlaylistItemDownloadButton:"yes",
+              forceDisableDownloadButtonForPodcast:"no",
+              forceDisableDownloadButtonForOfficialFM:"no",
+              forceDisableDownloadButtonForFolder:"no",
+              addScrollBarMouseWheelSupport:"no",
+              showTracksNumbers:"yes",
+              playlistBackgroundColor:"#000000",
+              trackTitleNormalColor:"#888888",
+              trackTitleSelectedColor:"#FFFFFF",
+              trackDurationColor:"#888888",
+              maxPlaylistItems:100,
+              nrOfVisiblePlaylistItems:12,
+              trackTitleOffsetLeft:0,
+              playPauseButtonOffsetLeftAndRight:11,
+              durationOffsetRight:9,
+              downloadButtonOffsetRight:11,
+              scrollbarOffestWidth:7,
+
+              //opener settings
+              openerAlignment:"right",
+              showOpener:"yes",
+              showOpenerPlayPauseButton:"yes",
+              openerEqulizerOffsetLeft:3,
+              openerEqulizerOffsetTop:-1,
+          });
+          music_player.playSpecificTrack(category, track_id);
+      }};
+      tag_link.send( null );
   }};
     playlist_link.send( null );
     }else{
