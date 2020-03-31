@@ -356,12 +356,14 @@ if (!document.body.classList.contains(category)){
           var _test_ = document.createElement('span');
           _test_.innerHTML = tag_link.responseText;
           var list = _test_.querySelectorAll("li");
+          console.log(list);
           music_player.loadPlaylist(1);
           for (track in list){
             _source=track.getAttribute("data-path");
             _title=track.getAttribute("data-title");
             _thumbPath=track.getAttribute("data-thumbpath");
-            music_player.addTrack(source=track._source, title=_title, thumbPath=_thumbPath, addAtTheBegginngOfPlaylist=true)
+            music_player.addTrack(source=track._source, title=_title, thumbPath=_thumbPath, addAtTheBegginngOfPlaylist=true);
+            console.log(_source,_title,_thumbPath);
           }
 
           music_player.playSpecificTrack(1, 0);
