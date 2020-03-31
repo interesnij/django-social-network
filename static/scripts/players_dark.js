@@ -414,7 +414,7 @@ if (!document.body.classList.contains(category)){
           _test_.innerHTML = tag_link.responseText;
           var list = _test_.querySelectorAll("li");
 					reversed_list = [];
-					for(x in list) {reversed_list += x};
+					for(x in list) {reversed_list += [x,]};
 					reversed_list.reverse();
           var count = list.length;
           //music_player.loadPlaylist(1);
