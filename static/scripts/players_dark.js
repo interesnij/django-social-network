@@ -426,7 +426,7 @@ if (!document.body.classList.contains(category)){
 
           }
 
-          music_player.playSpecificTrack(1, 0);
+          music_player.playSpecificTrack(category, track_id);
       }};
       tag_link.send( null );
   }};
