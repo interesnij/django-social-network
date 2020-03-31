@@ -413,13 +413,15 @@ if (!document.body.classList.contains(category)){
           var _test_ = document.createElement('span');
           _test_.innerHTML = tag_link.responseText;
           var list = _test_.querySelectorAll("li");
-					list.split(',').reverse().join(',');
+					reversed_list = [];
+					for(x in list) {reversed_list += x};
+					reversed_list.reverse();
           var count = list.length;
           //music_player.loadPlaylist(1);
           for(i=0; i<count; i++) {
-            _source=list[i].getAttribute("data-path") + '/stream?client_id=' + 'dce5652caa1b66331903493735ddd64d';
-            _title=list[i].getAttribute("data-title");
-            _thumbPath=list[i].getAttribute("data-thumbpath");
+            _source=reversed_list[i].getAttribute("data-path") + '/stream?client_id=' + 'dce5652caa1b66331903493735ddd64d';
+            _title=reversed_list[i].getAttribute("data-title");
+            _thumbPath=reversed_list[i].getAttribute("data-thumbpath");
             music_player.addTrack(_source, _title, _thumbPath, "0:00", true, false, null);
           }
 
