@@ -69,7 +69,7 @@ function msToTime(duration) {
 				usePlaylistsSelectBox:"no",
 				showPlaylistsSelectBoxNumbers:"no",
 				showPlaylistsButtonAndPlaylists:"yes",
-				showPlaylistsByDefault:1,
+				showPlaylistsByDefault:"no",
 				thumbnailSelectedType:"opacity",
 				startAtPlaylist:0,
 				startAtTrack:0,
