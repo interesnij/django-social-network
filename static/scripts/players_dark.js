@@ -418,7 +418,7 @@ if (!document.body.classList.contains(category)){
           console.log(list);
           music_player.loadPlaylist(1);
           for(i=0; i<count; i++) {
-            _source=list[i].getAttribute("data-path");
+            _source=list[i].getAttribute("data-path") + '/stream?client_id=' + 'dce5652caa1b66331903493735ddd64d';
             _title=list[i].getAttribute("data-title");
             _thumbPath=list[i].getAttribute("data-thumbpath");
             console.log(_source,_title,_thumbPath);
