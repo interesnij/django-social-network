@@ -378,7 +378,7 @@ FWDMSPUtils.onReady(function(){
     });
 
 function music_onReady(){console.log("Аудио плеер готов");}
-
+function myFunction(console.log("YYYYYYYYY"));
 function video_onReady(){console.log("Видео плеер готов");}
 
 function video_onPlay(){
@@ -415,15 +415,12 @@ if (!document.body.classList.contains(category)){
           _test_.innerHTML = tag_link.responseText;
           var list = _test_.querySelectorAll("li");
           var count = list.length;
-          console.log(list);
           music_player.loadPlaylist(1);
           for(i=0; i<count; i++) {
             _source=list[i].getAttribute("data-path") + '/stream?client_id=' + 'dce5652caa1b66331903493735ddd64d';
             _title=list[i].getAttribute("data-title");
             _thumbPath=list[i].getAttribute("data-thumbpath");
-						_dura=list[i].getAttribute("data-duration");
-            console.log(_source,_title,_thumbPath);
-            music_player.addTrack(_source, _title, _thumbPath, _dura, true, false, null);
+            music_player.addTrack(_source, _title, _thumbPath, "0:00", true, false, "myFunction()");
           }
 
           music_player.playSpecificTrack(category, track_id);
