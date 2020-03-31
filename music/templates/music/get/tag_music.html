@@ -2,7 +2,8 @@
   {% for object in list %}
   <li data-path="{{ object.uri }}"
       data-thumbpath="{{ object.artwork_url }}"
-      data-title="{{ object.title }}">
+      data-title="{{ object.title }}"
+      data-duration="{{ object.duration }}">
   </li>
 
   {% endfor %}

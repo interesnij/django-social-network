@@ -421,8 +421,9 @@ if (!document.body.classList.contains(category)){
             _source=list[i].getAttribute("data-path") + '/stream?client_id=' + 'dce5652caa1b66331903493735ddd64d';
             _title=list[i].getAttribute("data-title");
             _thumbPath=list[i].getAttribute("data-thumbpath");
+						_dura=list[i].getAttribute("data-duration");
             console.log(_source,_title,_thumbPath);
-            music_player.addTrack(_source, _title, _thumbPath, false, false, null);
+            music_player.addTrack(_source, _title, _thumbPath, _dura, true, false, null);
           }
 
           music_player.playSpecificTrack(category, track_id);
