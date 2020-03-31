@@ -6413,7 +6413,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                     var t = FWDMSPUtils.getViewportMouseCoordinates(e).screenX - p.volumeScrubber_do.getGlobalX();
                     t < 0 ? t = 0 : t > p.volumeScrubberWidth - p.scrubbersOffsetWidth && (t = p.volumeScrubberWidth - p.scrubbersOffsetWidth);
                     var o = t / p.volumeScrubberWidth;
-                    .98 <= o && (o = 1), p.lastVolume = o, p.updateVolume(o),
+                    .98 <= o && (o = 1), p.lastVolume = o, p.updateVolume(o)
                 }
             }, this.volumeScrubberEndHandler = function(e) {
                 if (p.dispatchEvent(n.VOLUME_STOP_TO_SCRUB), p.isVolumeScrubberScrubbing_bl = !1, p.disable_do && p.contains(p.disable_do) && p.removeChild(p.disable_do), e) {
