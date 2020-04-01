@@ -4111,12 +4111,47 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 			this.showVideoFullScreenButton_bl = _.showVideoFullScreenButton_bl,
 			p.init = function() {
 					var e;
-					p.videoControllerHolder_do = new FWDMSPDisplayObject("div"), p.videoControllerBk_do = new FWDMSPDisplayObject("div"), p.videoControllerBk_do.getStyle().background = "url('" + p.controllerBkPath_str + "')", p.videoControllerBk_do.getStyle().width = "100%", p.videoControllerBk_do.getStyle().height = "100%", p.videoControllerHolder_do.addChild(p.videoControllerBk_do), p.mainHolder_do = new FWDMSPDisplayObject("div"), p.expandControllerBackground_bl ? (p.bk_do = new FWDMSPDisplayObject("img"), p.bk_do.setScreen(p.controllerBk_img), p.bk_do.getStyle().backgroundColor = "#000000", p.mainHolder_do.addChild(p.bk_do)) : p.mainHolder_do.getStyle().background = "url('" + p.controllerBkPath_str + "')", p.addChild(p.mainHolder_do), p.setupThumb(), p.setupPrevButton(), p.setupPlayPauseButton(), p.setupNextButton(), p.setupSeparators(), p.setupMainScrubber(), p.setupTitlebar(), p.setupTime(), p.setupVolumeScrubber(), p.showPlaylistsButtonAndPlaylists_bl && p.setupCategoriesButton(), p.showPlayListButtonAndPlaylist_bl && p.setupPlaylistButton(), p.showLoopButton_bl && p.setupLoopButton(),
-						p.showShuffleButton_bl && p.setupShuffleButton(), p.showPlaybackRateButton_bl && p.setupPlaybacRateButton(), p.showBuyButton_bl && p.setupBuyButton(), p.showFacebookButton_bl && p.setupFacebookButton(), p.setupAtbButton(), p.showPopupButton_bl && p.setupPopupButton(), p.isMobile_bl || p.setupDisable(), p.mainHolder_do.setBkColor("#FFFF00"), p.mainHolder_do.setY(-500);
-					for (var t = 0; t < p.buttons_ar.length; t++) e = p.buttons_ar[t], p.totalButtonsWidth += e.w, e.h > p.largerButtonHeight && (p.largerButtonHeight = e.h);
-					p.showNextAndPrevButtons_bl || (p.totalButtonsWidth -= p.nextN_img.width - p.prevN_img.width), p.totalButtonsWidth += p.volumeButton_do.w,
-						p.totalButtonsWidth += 2 * p.startSpaceBetweenButtons
-				}, p.resizeAndPosition = function(e) {
+					p.videoControllerHolder_do = new FWDMSPDisplayObject("div"),
+					p.videoControllerBk_do = new FWDMSPDisplayObject("div"),
+					p.videoControllerBk_do.getStyle().background = "url('" + p.controllerBkPath_str + "')",
+					p.videoControllerBk_do.getStyle().width = "100%",
+					p.videoControllerBk_do.getStyle().height = "100%",
+					p.videoControllerHolder_do.addChild(p.videoControllerBk_do),
+					p.mainHolder_do = new FWDMSPDisplayObject("div"),
+					p.expandControllerBackground_bl ? (p.bk_do = new FWDMSPDisplayObject("img"),
+					p.bk_do.setScreen(p.controllerBk_img),
+					p.bk_do.getStyle().backgroundColor = "#000000",
+					p.mainHolder_do.addChild(p.bk_do)) : p.mainHolder_do.getStyle().background = "url('" + p.controllerBkPath_str + "')",
+					p.addChild(p.mainHolder_do),
+					p.setupThumb(),
+					p.setupPrevButton(),
+					p.setupPlayPauseButton(),
+					p.setupNextButton(),
+					p.setupSeparators(),
+					p.setupMainScrubber(),
+					p.setupTitlebar(),
+					p.setupTime(),
+					p.setupVolumeScrubber(),
+					p.showPlaylistsButtonAndPlaylists_bl && p.setupCategoriesButton(),
+					p.showPlayListButtonAndPlaylist_bl && p.setupPlaylistButton(),
+					p.showLoopButton_bl && p.setupLoopButton(),
+					p.showShuffleButton_bl && p.setupShuffleButton(),
+					p.showPlaybackRateButton_bl && p.setupPlaybacRateButton(),
+					p.showBuyButton_bl && p.setupBuyButton(),
+					p.showFacebookButton_bl && p.setupFacebookButton(),
+					p.setupAtbButton(),
+					//p.showPopupButton_bl && p.setupPopupButton(),
+					p.isMobile_bl || p.setupDisable(),
+					p.mainHolder_do.setBkColor("#FFFF00"),
+					p.mainHolder_do.setY(-500);
+					for (var t = 0; t < p.buttons_ar.length; t++) e = p.buttons_ar[t],
+					p.totalButtonsWidth += e.w,
+					e.h > p.largerButtonHeight && (p.largerButtonHeight = e.h);
+					p.showNextAndPrevButtons_bl || (p.totalButtonsWidth -= p.nextN_img.width - p.prevN_img.width),
+					p.totalButtonsWidth += p.volumeButton_do.w,
+					p.totalButtonsWidth += 2 * p.startSpaceBetweenButtons
+				},
+				p.resizeAndPosition = function(e) {
 					if (f.stageWidth != p.stageWidth || f.stageHeight != p.stageHeight || e) {
 						if (f.isFullScreen_bl) {
 							var t = FWDMSPUtils.getViewportSize();
