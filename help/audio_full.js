@@ -1571,7 +1571,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 							}, this.setupHider = function() {
 								FWDMSPHider.setPrototype(), self.hider = new FWDMSPHider(self.main_do, self.controller_do.videoControllerHolder_do, 2e3), self.hider.addListener(FWDMSPHider.SHOW, self.hiderShowHandler), self.hider.addListener(FWDMSPHider.HIDE, self.hiderHideHandler), self.hider.addListener(FWDMSPHider.HIDE_COMPLETE, self.hiderHideCompleteHandler)
 							}, this.hiderShowHandler = function() {
-								self.controller_do && self.controller_do.showVideoContoller(!0), self.showCursor()
+								self.controller_do, self.showCursor()
 							}, this.hiderHideHandler = function() {
 								FWDMSPUtils.isIphone
 							}, this.hiderHideCompleteHandler = function() {}, this.setupVideosHolder = function() {
@@ -4174,20 +4174,11 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 							y: p.stageHeight,
 							ease: Expo.easeInOut
 						})
-				}, this.showVideoContoller = function() {
-					FWDAnimation.killTweensOf(p.videoControllerHolder_do),
-						FWDAnimation.to(p.videoControllerHolder_do, .8, {
-							y: p.stageHeight - p.controllerHeight,
-							ease: Expo.easeInOut
-						})
-				}, this.goNormalScreen = function() {
-					p.isFullScreen_bl = !1, p.mainHolder_do.removeChild(p.videoControllerHolder_do),
-						p.volumeButton_do && (p.volumeButton_do.setX(0), p.volumeButton_do.setY(0), p.mainVolumeHolder_do.addChild(p.volumeButton_do), p.mainVolumeHolder_do.addChild(p.volumeScrubber_do)), p.volumeScrubber_do && (p.mainHolder_do.addChild(p.mainScrubber_do), p.volumeScrubber_do.setY(parseInt((p.volumeButton_do.h - p.scrubbersHeight) / 2))), p.playPauseButton_do && p.mainHolder_do.addChild(p.playPauseButton_do), p.currentTime_do && p.mainHolder_do.addChild(p.currentTime_do), p.totalTime_do && p.mainHolder_do.addChild(p.totalTime_do)
 				}, p.positionButtons = function() {
 					var e, t, o = 0,
 						s = 0,
 						i = p.buttons_ar.length;
-					if (f.fullScreenButton_do && (-1 != FWDMSPUtils.indexOfArray(p.buttons_ar, f.fullScreenButton_do) && p.buttons_ar.splice(FWDMSPUtils.indexOfArray(p.buttons_ar, f.fullScreenButton_do), 1), p.mainHolder_do.contains(p.fullScreenButton_do) || (f.audioType_str == FWDMSP.VIDEO || f.audioType_str == FWDMSP.YOUTUBE ? (f.fullScreenButton_do.setX(parseInt((p.controllerHeight - f.fullScreenButton_do.w) / 2) + 1), f.fullScreenButton_do.setY(parseInt((p.controllerHeight - f.fullScreenButton_do.h) / 2) + 1), f.isFullScreen_bl || f.fullScreenButton_do.setAlpha(0)) : f.fullScreenButton_do.setX(-500))), f.isFullScreen_bl) {
+					if (-1 != FWDMSPUtils.indexOfArray(p.buttons_ar) && p.buttons_ar.splice(FWDMSPUtils.indexOfArray(p.buttons_ar), 1)) {
 						o = p.stageWidth, f.main_do.setX(0), p.stageWidth < 500 ? (p.volumeScrubberWidth = 50, p.showVolumeScrubber_bl = !1) : (p.volumeScrubberWidth = 150, p.showVolumeScrubber_bl = !0);
 						var n = [];
 						n.push(p.playPauseButton_do), n.push(p.currentTime_do), n.push(p.mainScrubber_do), n.push(p.totalTime_do), n.push(p.volumeButton_do), p.showVolumeScrubber_bl ? n.push(p.volumeScrubber_do) : p.volumeScrubber_do.setX(-1e3), n.push(f.fullScreenButton_do), i = n.length, FWDAnimation.killTweensOf(p.videoControllerHolder_do), p.videoControllerHolder_do.setWidth(p.stageWidth), p.videoControllerHolder_do.setHeight(p.controllerHeight), p.videoControllerHolder_do.setY(p.stageHeight - p.controllerHeight), o -= p.playPauseButton_do.w + p.currentTime_do.w + p.totalTime_do.w + p.volumeButton_do.w + p.volumeScrubberWidth + f.fullScreenButton_do.w, o -= 8 * p.spaceBetweenButtons, p.showVolumeScrubber_bl || (o += p.volumeScrubberWidth, o += p.spaceBetweenButtons), p.mainScrubberWidth = o, 0 < p.mainScrubberWidth && p.mainScrubber_do.setWidth(p.mainScrubberWidth), p.mainScrubberBkMiddle_do.setWidth(p.mainScrubberWidth - 2 * p.scrubbersBkLeftAndRightWidth), p.mainScrubberBkRight_do.setX(p.mainScrubberWidth - p.scrubbersBkLeftAndRightWidth), p.mainScrubberDragMiddle_do.setWidth(p.mainScrubberWidth - p.scrubbersBkLeftAndRightWidth - p.scrubbersOffsetWidth), p.progressMiddle_do.setWidth(p.mainScrubberWidth - p.scrubbersBkLeftAndRightWidth - p.scrubbersOffsetWidth), p.updateMainScrubber(p.percentPlayed),
