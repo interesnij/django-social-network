@@ -36,6 +36,11 @@
   <li data-path="{{ track.uri }}"
       data-thumbpath="{{ track.artwork_url }}"
 			data-downloadable="yes"
+			{% if not request.user|is_track_exists:track.id %}
+			data-add="true"
+			{% else %}
+			data-add="false"
+			{% endif %}
 			data-track-id="{{ track.pk }}">
     <p><span style="font-weight:bold">{{ track.title }}</span></p>
   </li>

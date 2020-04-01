@@ -4096,13 +4096,13 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                             }, this.disableShuffleHandler = function(e) {
                                 self.data.shuffle_bl = !1, self.controller_do.setShuffleButtonState("unselected")
                             }, this.facebookShareHandler = function(e) {
-                                self.resizeHandler(), self.shareWindow_do.show(), self.controller_do && !self.isMobile_bl && (self.controller_do.shareButton_do.setSelectedState(), self.controller_do.shareButton_do.isDisabled_bl = !0)
+                                console.log("Кнопка поделиться нажата!")
                             }, this.showPlaybacrateWindowHandler = function(e) {
                                 self.resizeHandler(), self.playbackRateWindow_do.show(), self.controller_do && !self.isMobile_bl && (self.controller_do.playbackRateButton_do.setSelectedState(), self.controller_do.playbackRateButton_do.isDisabled_bl = !0)
                             }, this.showAtobWindowHandler = function(e) {
                                 self.resizeHandler(), self.atb_do.positionAndResize(), self.atb_do.show(!0), self.controller_do && !self.isMobile_bl && (self.controller_do.atbButton_do.setSelectedState(), self.controller_do.atbButton_do.isDisabled_bl = !0)
                             }, this.controllerButtonBuyHandler = function() {
-                                self.buy()
+                                self.buy();
                             }, this.setupAudioScreen = function() {
                                 FWDMSPAudioScreen.setPrototype(), self.audioScreen_do = new FWDMSPAudioScreen(self.data.volume, self.data.autoPlay_bl, self.data.loop_bl), self.audioScreen_do.addListener(FWDMSPAudioScreen.ERROR, self.audioScreenErrorHandler), self.audioScreen_do.addListener(FWDMSPAudioScreen.START, self.audioScreenSatrtHandler), self.audioScreen_do.addListener(FWDMSPAudioScreen.SAFE_TO_SCRUBB, self.audioScreenSafeToScrubbHandler), self.audioScreen_do.addListener(FWDMSPAudioScreen.STOP, self.audioScreenStopHandler), self.audioScreen_do.addListener(FWDMSPAudioScreen.PLAY, self.audioScreenPlayHandler), self.audioScreen_do.addListener(FWDMSPAudioScreen.PAUSE, self.audioScreenPauseHandler), self.audioScreen_do.addListener(FWDMSPAudioScreen.UPDATE, self.audioScreenUpdateHandler), self.audioScreen_do.addListener(FWDMSPAudioScreen.UPDATE_TIME, self.audioScreenUpdateTimeHandler), self.audioScreen_do.addListener(FWDMSPAudioScreen.LOAD_PROGRESS, self.audioScreenLoadProgressHandler), self.audioScreen_do.addListener(FWDMSPAudioScreen.PLAY_COMPLETE, self.audioScreenPlayCompleteHandler), self.useOnlyAPI_bl ? document.documentElement.appendChild(self.audioScreen_do.screen) : self.main_do.addChild(self.audioScreen_do)
                             }, this.audioScreenErrorHandler = function(e) {
@@ -4433,12 +4433,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                                 self.data.downloadMp3(o, s)
                             }, this.buy = function(pId) {
                                 if (self.isAPIReady_bl) {
-                                    if ("file:" == document.location.protocol) {
-                                        var error = "Buying mp3 files local is not allowed or possible!. To function properly please test online.";
-                                        return self.main_do.addChild(self.info_do), void self.info_do.showText(error)
-                                    }
                                     null == pId && (pId = self.id);
-                                    var buy = self.data.playlist_ar[pId].buy; - 1 != buy.indexOf("http") && buy.indexOf("http") < 3 ? window.open(buy) : eval(buy)
+                                    var buy = self.data.playlist_ar[pId].buy;
+                                    console.log(pId, buy);
                                 }
                             }, this.playFirstTrack = function() {
                                 self.playSpecificTrack(self.catId, 0)
@@ -5251,7 +5248,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                         var l = t.source.match(/^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/);
                         t.source = l[2]
                     } else n = -1 != n.indexOf(";.mp3") || FWDMSPUtils.isURLEncoded(n) ? t.source.substr(t.source.lastIndexOf("/") + 1) : encodeURIComponent(t.source.substr(t.source.lastIndexOf("/") + 1)), t.source = i + n;
-                    t.downloadPath = t.source, t.downloadable = "yes" == o[s]["@attributes"]["data-downloadable"], t.buy = o[s]["@attributes"]["data-buy-url"], null == t.buy && (t.buy = ""), t.thumbPath = o[s]["@attributes"]["data-thumbpath"];
+                    t.downloadPath = t.source, t.downloadable = "yes" == o[s]["@attributes"]["data-downloadable"], t.buy = o[s]["@attributes"]["data-track-id"], null == t.buy && (t.buy = ""), t.thumbPath = o[s]["@attributes"]["data-thumbpath"];
                     var r = "";
                     if (self.showTracksNumbers_bl ? (s < 9 && (r = "0"), r = r + (s + 1) + ". ", t.title = r + o[s]["@attributes"]["data-title"]) : t.title = o[s]["@attributes"]["data-title"], t.titleText = o[s]["@attributes"]["data-title"], t.duration = o[s]["@attributes"]["data-duration"], t.atb = o[s]["@attributes"]["data-use-a-to-b"], t.isPrivate = o[s]["@attributes"]["data-is-private"], "yes" == t.isPrivate ? t.isPrivate = !0 : t.isPrivate = !1, t.privateVideoPassword_str = o[s]["@attributes"]["data-private-video-password"], t.startAtTime = o[s]["@attributes"]["data-start-at-time"], "00:00:00" != t.startAtTime && FWDMSPUtils.checkTime(t.startAtTime) || (t.startAtTime = void 0), t.stopAtTime = o[s]["@attributes"]["data-stop-at-time"], "00:00:00" != t.stopAtTime && FWDMSPUtils.checkTime(t.stopAtTime) || (t.stopAtTime = void 0), t.isShoutcast_bl = o[s]["@attributes"]["data-type"], t.isShoutcast_bl && (-1 != t.isShoutcast_bl.toLowerCase().indexOf("shoutcastv1") ? (t.shoutcastVersion = 1, t.isShoutcast_bl = !0) : -1 != t.isShoutcast_bl.toLowerCase().indexOf("shoutcastv2") ? (t.shoutcastVersion = 2, t.isShoutcast_bl = !0) : t.isShoutcast_bl = !1), t.isIcecast_bl = o[s]["@attributes"]["data-type"], t.isIcecast_bl && (-1 != t.isIcecast_bl.toLowerCase().indexOf("icecast") ? t.isIcecast_bl = !0 : t.isIcecast_bl = !1), self.playlist_ar[s] = t, s > self.maxPlaylistItems - 1) break
                 }
@@ -5319,7 +5316,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                         if (l.source.indexOf(".soundcloud.") != -1) {
                             l.source = l.source + '/stream?client_id=' + 'dce5652caa1b66331903493735ddd64d'
                         };
-                        l.downloadPath = l.source, (l.isShoutcast_bl || l.isIcecast_bl) && "/" != l.source.substr(l.source.length - 1) && (l.source += "/"), FWDMSPUtils.hasAttribute(o, "data-thumbpath") ? l.thumbPath = FWDMSPUtils.getAttributeValue(o, "data-thumbpath") : l.thumbPath = void 0, FWDMSPUtils.hasAttribute(o, "data-downloadable") ? l.downloadable = "yes" == FWDMSPUtils.getAttributeValue(o, "data-downloadable") : l.downloadable = void 0, FWDMSPUtils.hasAttribute(o, "data-buy-url") ? l.buy = FWDMSPUtils.getAttributeValue(o, "data-buy-url") : l.buy = void 0, l.title = "not defined!";
+                        l.downloadPath = l.source, (l.isShoutcast_bl || l.isIcecast_bl) && "/" != l.source.substr(l.source.length - 1) && (l.source += "/"), FWDMSPUtils.hasAttribute(o, "data-thumbpath") ? l.thumbPath = FWDMSPUtils.getAttributeValue(o, "data-thumbpath") : l.thumbPath = void 0, FWDMSPUtils.hasAttribute(o, "data-downloadable") ? l.downloadable = "yes" == FWDMSPUtils.getAttributeValue(o, "data-downloadable") : l.downloadable = void 0, FWDMSPUtils.hasAttribute(o, "data-track-id") ? l.buy = FWDMSPUtils.getAttributeValue(o, "data-track-id") : l.buy = void 0, l.title = "not defined!";
                         try {
                             var u = "";
                             self.showTracksNumbers_bl ? (n < 9 && (u = "0"), u = u + (n + 1) + ". ", l.title = u + FWDMSPUtils.getChildren(o)[0].innerHTML) : l.title = FWDMSPUtils.getChildren(o)[0].innerHTML
