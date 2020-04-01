@@ -1653,7 +1653,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 							}, this.scrub = function(e) {
 								self.isAPIReady_bl && self.isPlaylistLoaded_bl && (isNaN(e) || (e < 0 ? e = 0 : 1 < e && (e = 1), self.audioType_str == FWDMSP.VIDEO ? self.videoScreen_do.scrub(e) : FWDMSP.hasHTML5Audio ? self.audioType_str == FWDMSP.HLS ? self.flashObject.playerSeek(e * self.HLSDuration) : self.audioScreen_do && self.audioScreen_do.scrub(e) : self.isFlashScreenReady_bl && self.flashObject.scrub(e)))
 							}, this.setPlaybackRate = function(e) {
-								self.isAPIReady_bl && (self.data.defaultPlaybackRate = e, self.audioType_str == FWDMSP.VIDEO && self.videoScreen_do ? self.videoScreen_do.setPlaybackRate(e) : self.audioType_str == FWDMSP.AUDIO && self.audioScreen_do ? self.audioScreen_do.setPlaybackRate(e) : self.audioType_str == FWDMSP.YOUTUBE && self.ytb_do.setPlaybackRate(e))
+								self.isAPIReady_bl && (self.data.defaultPlaybackRate = e, self.audioType_str == FWDMSP.VIDEO && self.videoScreen_do ? self.videoScreen_do.setPlaybackRate(e) : self.audioType_str == FWDMSP.AUDIO && self.audioScreen_do ? self.audioScreen_do.setPlaybackRate(e) : self.ytb_do.setPlaybackRate(e))
 							}, this.setVolume = function(e) {
 								self.isAPIReady_bl && (self.volume = e, self.controller_do && self.controller_do.updateVolume(e, !0), self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS || !self.videoScreen_do ? FWDMSP.hasHTML5Audio && self.audioScreen_do && self.audioScreen_do.setVolume(e) : self.videoScreen_do.setVolume(e))
 							}, this.showCategories = function() {
@@ -1677,13 +1677,13 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 							}, this.getThumbnailPath = function() {
 								return self.data.playlist_ar[self.id].thumbPath
 							}, this.getCurrentTime = function() {
-								if (self.isAPIReady_bl) return self.audioType_str == FWDMSP.YOUTUBE ? self.ytb_do.getCurrentTime() : self.audioType_str == FWDMSP.AUDIO ? self.audioScreen_do.getCurrentTime() : self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS || !self.videoScreen_do ? void 0 : self.videoScreen_do.getCurrentTime()
+								if (self.isAPIReady_bl) return self.audioType_str == FWDMSP.AUDIO ? self.audioScreen_do.getCurrentTime() : self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS || !self.videoScreen_do ? void 0 : self.videoScreen_do.getCurrentTime()
 							}, this.getDuration = function() {
-								if (self.isAPIReady_bl) return self.audioType_str == FWDMSP.YOUTUBE ? self.ytb_do.getDuration() : self.audioType_str == FWDMSP.AUDIO ? self.audioScreen_do.getDuration() : self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS || !self.videoScreen_do ? void 0 : self.videoScreen_do.getDuration()
+								if (self.isAPIReady_bl) return self.audioType_str == FWDMSP.AUDIO ? self.audioScreen_do.getDuration() : self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS || !self.videoScreen_do ? void 0 : self.videoScreen_do.getDuration()
 							}, this.share = function() {
 								self.isAPIReady_bl && self.shareWindow_do && self.shareWindow_do.show()
 							}, this.scrubbAtTime = function(e) {
-								self.isAPIReady_bl && e && (-1 != String(e).indexOf(":") && (e = FWDMSPUtils.getSecondsFromString(e)), self.audioType_str == FWDMSP.YOUTUBE && self.ytb_do && self.ytb_do.isSafeToBeControlled_bl ? self.ytb_do.scrubbAtTime(e) : self.audioType_str == FWDMSP.AUDIO ? self.audioScreen_do && self.audioScreen_do.scrubbAtTime(e) : self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS || !self.videoScreen_do || self.videoScreen_do && self.videoScreen_do.scrubbAtTime(e))
+								self.isAPIReady_bl && e && (-1 != String(e).indexOf(":") && (e = FWDMSPUtils.getSecondsFromString(e)), self.audioType_str == FWDMSP.AUDIO ? self.audioScreen_do && self.audioScreen_do.scrubbAtTime(e) : self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS || !self.videoScreen_do || self.videoScreen_do && self.videoScreen_do.scrubbAtTime(e))
 							}, this.buy = function(pId) {
 								if (self.isAPIReady_bl) {
 									null == pId && (pId = self.id);
