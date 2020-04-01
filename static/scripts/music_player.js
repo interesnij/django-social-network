@@ -4358,8 +4358,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 							ease: Expo.easeInOut
 						})
 					}, 100))
-				}, this.showCompleteHandler = function() {}, this.hide = function() {
-					o.isShowed_bl 
+				}, this.showCompleteHandler = function() {},
+        this.hide = function() {
+					
 				},
         this.hideCompleteHandler = function() {
 					t.main_do.removeChild(o), o.dispatchEvent(s.HIDE_COMPLETE)
