@@ -4359,15 +4359,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 						this.listeners.events_ar[o].listener.call(this, this.listeners.events_ar[o])
 					}
 			}
-		}, this.removeListener = function(e, t) {
-			if (null == e) throw Error("type is required.");
-			if ("object" == typeof e) throw Error("type must be of type String.");
-			if ("function" != typeof t) throw Error("listener must be of type Function." + e);
-			for (var o = 0, s = this.listeners.events_ar.length; o < s; o++)
-				if (this.listeners.events_ar[o].target === this && this.listeners.events_ar[o].type === e && this.listeners.events_ar[o].listener === t) {
-					this.listeners.events_ar.splice(o, 1);
-					break
-				}
 		}, this.destroy = function() {
 			this.listeners = null, this.addListener = null, this.dispatchEvent = null, this.removeListener = null
 		}
