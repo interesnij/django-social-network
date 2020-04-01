@@ -2516,10 +2516,12 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 											self.inputArrowPath_str = self.skinPath_str + "input-arrow.png",
 											self.categoriesSPath_str = self.skinPath_str + "categories-button-over.png",
 											self.replaySPath_str = self.skinPath_str + "replay-button-over.png",
-										self.skinPath_str;
-										self.playlistSPath_str = self.skinPath_str + "playlist-button-over.png",
+											self.skinPath_str,
+											self.playlistSPath_str = self.skinPath_str + "playlist-button-over.png",
 											self.shuffleSPath_str = self.skinPath_str + "shuffle-button-over.png",
-											self.shareSPath_str = self.skinPath_str + "share-over.png", self.animationPath_str = self.skinPath_str + "equalizer.png", self.titlebarBkMiddlePattern_str = self.skinPath_str + "titlebar-middle-pattern.png",
+											self.shareSPath_str = self.skinPath_str + "share-over.png",
+											self.animationPath_str = self.skinPath_str + "equalizer.png",
+											self.titlebarBkMiddlePattern_str = self.skinPath_str + "titlebar-middle-pattern.png",
 											self.passButtonNPath_str = self.skinPath_str + "pass-button.png",
 											self.passButtonSPath_str = self.skinPath_str + "pass-button-over.png",
 											self.showShareButton_bl && (self.skinPaths_ar.push({
