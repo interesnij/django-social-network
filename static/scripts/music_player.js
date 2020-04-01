@@ -2025,32 +2025,50 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 											self.showShareWindowButton_bl = "no" != self.showShareWindowButton_bl,
 											self.randomizePlaylist_bl = self.props_obj.randomizePlaylist,
 											self.randomizePlaylist_bl = "yes" == self.randomizePlaylist_bl,
-											self.showBuyButton_bl = self.props_obj.showBuyButton, self.showBuyButton_bl = "no" != self.showBuyButton_bl,
-											self.showFacebookButton_bl = self.props_obj.showShareButton, self.showFacebookButton_bl = "no" != self.showFacebookButton_bl,
-											self.showPopupButton_bl = self.props_obj.showPopupButton, self.showPopupButton_bl = "no" != self.showPopupButton_bl,
+											self.showBuyButton_bl = self.props_obj.showBuyButton,
+											self.showBuyButton_bl = "no" != self.showBuyButton_bl,
+											self.showFacebookButton_bl = self.props_obj.showShareButton,
+											self.showFacebookButton_bl = "no" != self.showFacebookButton_bl,
+											self.showPopupButton_bl = self.props_obj.showPopupButton,
+											self.showPopupButton_bl = "no" != self.showPopupButton_bl,
 											self.showOpenerPlayPauseButton_bl = self.props_obj.showOpenerPlayPauseButton,
 											self.showOpenerPlayPauseButton_bl = "no" != self.showOpenerPlayPauseButton_bl,
 											self.showPlaylistItemBuyButton_bl = self.props_obj.showPlaylistItemBuyButton,
 											self.showPlaylistItemBuyButton_bl = "no" != self.showPlaylistItemBuyButton_bl,
-											self.normalButtonsColor_str = self.props_obj.normalHEXButtonsColor || "#FF0000", self.selectedButtonsColor_str = self.props_obj.selectedHEXButtonsColor || "#00FF00", self.showOpener_bl = self.props_obj.showOpener,
-											self.showOpener_bl = "no" != self.showOpener_bl, self.showTracksNumbers_bl = self.props_obj.showTracksNumbers,
+											self.normalButtonsColor_str = self.props_obj.normalHEXButtonsColor || "#FF0000",
+											self.selectedButtonsColor_str = self.props_obj.selectedHEXButtonsColor || "#00FF00",
+											self.showOpener_bl = self.props_obj.showOpener,
+											self.showOpener_bl = "no" != self.showOpener_bl,
+											self.showTracksNumbers_bl = self.props_obj.showTracksNumbers,
 											self.showTracksNumbers_bl = "yes" == self.showTracksNumbers_bl,
-											self.disableScrubber_bl = self.props_obj.disableScrubber, self.disableScrubber_bl = "yes" == self.disableScrubber_bl,
+											self.disableScrubber_bl = self.props_obj.disableScrubber,
+											self.disableScrubber_bl = "yes" == self.disableScrubber_bl,
 											self.showVideoFullScreenButton_bl = self.props_obj.showFullScreenButton,
 											self.showVideoFullScreenButton_bl = "yes" == self.showVideoFullScreenButton_bl,
 											self.showPlaybackRateButton_bl = self.props_obj.showPlaybackRateButton,
 											self.showPlaybackRateButton_bl = "yes" == self.showPlaybackRateButton_bl,
 											self.playTrackAfterPlaylistLoad_bl = self.props_obj.playTrackAfterPlaylistLoad,
 											self.playTrackAfterPlaylistLoad_bl = "yes" == self.playTrackAfterPlaylistLoad_bl,
-											self.atbTimeBackgroundColor = self.props_obj.atbTimeBackgroundColor || "transparent", self.atbTimeTextColorNormal = self.props_obj.atbTimeTextColorNormal || "#888888", self.atbTimeTextColorSelected = self.props_obj.atbTimeTextColorSelected || "#FFFFFF", self.atbButtonTextNormalColor = self.props_obj.atbButtonTextNormalColor || "#888888", self.atbButtonTextSelectedColor = self.props_obj.atbButtonTextSelectedColor || "#FFFFFF", self.atbButtonBackgroundNormalColor = self.props_obj.atbButtonBackgroundNormalColor || "#FFFFFF", self.atbButtonBackgroundSelectedColor = self.props_obj.atbButtonBackgroundSelectedColor || "#000000", self.defaultPlaybackRate = parseFloat(self.props_obj.defaultPlaybackRate.toFixed(1)) || 1,
-											isNaN(self.defaultPlaybackRate) && (self.defaultPlaybackRate = 1), self.defaultPlaybackRate < .5 ? self.defaultPlaybackRate = .5 : 2 < self.defaultPlaybackRate && (self.defaultPlaybackRate = 2), self.animate_bl = self.props_obj.animate,
-											self.animate_bl = "yes" == self.animate_bl, self.showControllerByDefault_bl = self.props_obj.showControllerByDefault,
+											self.atbTimeBackgroundColor = self.props_obj.atbTimeBackgroundColor || "transparent",
+											self.atbTimeTextColorNormal = self.props_obj.atbTimeTextColorNormal || "#888888",
+											self.atbTimeTextColorSelected = self.props_obj.atbTimeTextColorSelected || "#FFFFFF",
+											self.atbButtonTextNormalColor = self.props_obj.atbButtonTextNormalColor || "#888888",
+											self.atbButtonTextSelectedColor = self.props_obj.atbButtonTextSelectedColor || "#FFFFFF",
+											self.atbButtonBackgroundNormalColor = self.props_obj.atbButtonBackgroundNormalColor || "#FFFFFF",
+											self.atbButtonBackgroundSelectedColor = self.props_obj.atbButtonBackgroundSelectedColor || "#000000",
+											self.defaultPlaybackRate = parseFloat(self.props_obj.defaultPlaybackRate.toFixed(1)) || 1,
+											isNaN(self.defaultPlaybackRate) && (self.defaultPlaybackRate = 1),
+											self.defaultPlaybackRate < .5 ? self.defaultPlaybackRate = .5 : 2 < self.defaultPlaybackRate && (self.defaultPlaybackRate = 2),
+											self.animate_bl = self.props_obj.animate,
+											self.animate_bl = "yes" == self.animate_bl,
+											self.showControllerByDefault_bl = self.props_obj.showControllerByDefault,
 											self.showControllerByDefault_bl = "no" != self.showControllerByDefault_bl,
 											self.showPlayListByDefault_bl = self.props_obj.showPlayListByDefault,
 											self.showPlayListByDefault_bl = "no" != self.showPlayListByDefault_bl,
 											self.showSoundAnimation_bl = self.props_obj.showSoundAnimation,
 											self.showSoundAnimation_bl = "yes" == self.showSoundAnimation_bl,
-											self.showShareButton_bl = self.props_obj.showShareButton, self.showShareButton_bl = "yes" == self.showShareButton_bl,
+											self.showShareButton_bl = self.props_obj.showShareButton,
+											self.showShareButton_bl = "yes" == self.showShareButton_bl,
 											self.expandControllerBackground_bl = self.props_obj.expandBackground,
 											self.expandControllerBackground_bl = "yes" == self.expandControllerBackground_bl,
 											self.showPlaylistItemPlayButton_bl = self.props_obj.showPlaylistItemPlayButton,
@@ -2061,15 +2079,28 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 											self.usePlaylistsSelectBox_bl = "yes" == self.usePlaylistsSelectBox_bl,
 											self.showPlaylistsSelectBoxNumbers_bl = self.props_obj.showPlaylistsSelectBoxNumbers,
 											self.showPlaylistsSelectBoxNumbers_bl = "yes" == self.showPlaylistsSelectBoxNumbers_bl,
-											self.mainSelectorBackgroundSelectedColor = self.props_obj.mainSelectorBackgroundSelectedColor || "#FFFFFF", self.mainSelectorTextNormalColor = self.props_obj.mainSelectorTextNormalColor || "#FFFFFF", self.mainSelectorTextSelectedColor = self.props_obj.mainSelectorTextSelectedColor || "#000000", self.mainButtonBackgroundNormalColor = self.props_obj.mainButtonBackgroundNormalColor || "#212021", self.mainButtonBackgroundSelectedColor = self.props_obj.mainButtonBackgroundSelectedColor || "#FFFFFF", self.mainButtonTextNormalColor = self.props_obj.mainButtonTextNormalColor || "#FFFFFF", self.mainButtonTextSelectedColor = self.props_obj.mainButtonTextSelectedColor || "#000000", self.showSearchBar_bl = self.props_obj.showSearchBar, self.showSearchBar_bl = "no" != self.showSearchBar_bl,
-											self.showSortButtons_bl = self.props_obj.showSortButtons, self.showSortButtons_bl = "no" != self.showSortButtons_bl,
-											self.preloaderPath_str = self.skinPath_str + "preloader.png", self.animationPath_str = self.skinPath_str + "equalizer.png", self.arrowN_str = self.skinPath_str + "combobox-arrow-normal.png",
+											self.mainSelectorBackgroundSelectedColor = self.props_obj.mainSelectorBackgroundSelectedColor || "#FFFFFF",
+											self.mainSelectorTextNormalColor = self.props_obj.mainSelectorTextNormalColor || "#FFFFFF",
+											self.mainSelectorTextSelectedColor = self.props_obj.mainSelectorTextSelectedColor || "#000000",
+											self.mainButtonBackgroundNormalColor = self.props_obj.mainButtonBackgroundNormalColor || "#212021",
+											self.mainButtonBackgroundSelectedColor = self.props_obj.mainButtonBackgroundSelectedColor || "#FFFFFF",
+											self.mainButtonTextNormalColor = self.props_obj.mainButtonTextNormalColor || "#FFFFFF",
+											self.mainButtonTextSelectedColor = self.props_obj.mainButtonTextSelectedColor || "#000000",
+											self.showSearchBar_bl = self.props_obj.showSearchBar,
+											self.showSearchBar_bl = "no" != self.showSearchBar_bl,
+											self.showSortButtons_bl = self.props_obj.showSortButtons,
+											self.showSortButtons_bl = "no" != self.showSortButtons_bl,
+											self.preloaderPath_str = self.skinPath_str + "preloader.png",
+											self.animationPath_str = self.skinPath_str + "equalizer.png",
+											self.arrowN_str = self.skinPath_str + "combobox-arrow-normal.png",
 											self.arrowS_str = self.skinPath_str + "combobox-arrow-selected.png",
 											self.comboboxBk1_str = self.skinPath_str + "combobox-item-background1.png",
 											self.comboboxBk2_str = self.skinPath_str + "combobox-item-background2.png",
-											self.mainPreloader_img = new Image, self.mainPreloader_img.onerror = self.onSkinLoadErrorHandler,
+											self.mainPreloader_img = new Image,
+											self.mainPreloader_img.onerror = self.onSkinLoadErrorHandler,
 											self.mainPreloader_img.onload = self.onPreloaderLoadHandler,
-											self.mainPreloader_img.src = self.skinPath_str + "preloader.png", self.shareBkPath_str = self.skinPath_str + "categories-background.png",
+											self.mainPreloader_img.src = self.skinPath_str + "preloader.png",
+											self.shareBkPath_str = self.skinPath_str + "categories-background.png",
 											self.skinPaths_ar = [{
 												img: self.controllerBk_img = new Image,
 												src: self.skinPath_str + "controller-background.png"
@@ -2199,7 +2230,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 											self.volumeScrubberDragMiddlePath_str = self.skinPath_str + "scrubber-middle-drag.png",
 											self.volumeSPath_str = self.skinPath_str + "volume-icon-over.png",
 											self.volumeDPath_str = self.skinPath_str + "volume-icon-disabled.png",
-											self.openerAnimationPath_str = self.skinPath_str + "equalizer.png", self.openTopSPath_str = self.skinPath_str + "open-button-selected-top.png",
+											self.openerAnimationPath_str = self.skinPath_str + "equalizer.png",
+											self.openTopSPath_str = self.skinPath_str + "open-button-selected-top.png",
 											self.openBottomSPath_str = self.skinPath_str + "open-button-selected-bottom.png",
 											self.closeSPath_str = self.skinPath_str + "close-button-selected.png",
 											self.openerPauseS_str = self.skinPath_str + "open-pause-button-selected.png",
@@ -2242,7 +2274,18 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 											}, {
 												img: self.playlistBuyButtonN_img = new Image,
 												src: self.skinPath_str + "playlist-buy-button.png"
-											}), self.scrBkMiddlePath_str = self.skinPath_str + "playlist-scrollbar-background-middle.png", self.scrBkBottomPath_str = self.skinPath_str + "playlist-scrollbar-background-bottom.png", self.scrDragMiddlePath_str = self.skinPath_str + "playlist-scrollbar-drag-middle.png", self.scrDragBottomPath_str = self.skinPath_str + "playlist-scrollbar-drag-top.png", self.scrLinesSPath_str = self.skinPath_str + "playlist-scrollbar-lines-over.png", self.playlistBuyButtonS_str = self.skinPath_str + "playlist-buy-button-over.png", self.playlistPlayButtonN_str = self.skinPath_str + "playlist-play-button.png", self.playlistPlayButtonS_str = self.skinPath_str + "playlist-play-button-over.png", self.playlistPauseButtonN_str = self.skinPath_str + "playlist-pause-button.png", self.playlistPauseButtonS_str = self.skinPath_str + "playlist-pause-button-over.png"), self.showPlaylistsButtonAndPlaylists_bl && (self.skinPaths_ar.push({
+											}),
+											self.scrBkMiddlePath_str = self.skinPath_str + "playlist-scrollbar-background-middle.png",
+											self.scrBkBottomPath_str = self.skinPath_str + "playlist-scrollbar-background-bottom.png",
+											self.scrDragMiddlePath_str = self.skinPath_str + "playlist-scrollbar-drag-middle.png",
+											self.scrDragBottomPath_str = self.skinPath_str + "playlist-scrollbar-drag-top.png",
+											self.scrLinesSPath_str = self.skinPath_str + "playlist-scrollbar-lines-over.png",
+											self.playlistBuyButtonS_str = self.skinPath_str + "playlist-buy-button-over.png",
+											self.playlistPlayButtonN_str = self.skinPath_str + "playlist-play-button.png",
+											self.playlistPlayButtonS_str = self.skinPath_str + "playlist-play-button-over.png",
+											self.playlistPauseButtonN_str = self.skinPath_str + "playlist-pause-button.png",
+											self.playlistPauseButtonS_str = self.skinPath_str + "playlist-pause-button-over.png"),
+											self.showPlaylistsButtonAndPlaylists_bl && (self.skinPaths_ar.push({
 												img: self.catNextN_img = new Image,
 												src: self.skinPath_str + "categories-next-button.png"
 											}, {
@@ -2254,7 +2297,15 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 											}, {
 												img: new Image,
 												src: self.skinPath_str + "categories-background.png"
-											}), self.catBkPath_str = self.skinPath_str + "categories-background.png", self.catThumbBkPath_str = self.skinPath_str + "categories-thumbnail-background.png", self.catThumbBkTextPath_str = self.skinPath_str + "categories-thumbnail-text-backgorund.png", self.catNextSPath_str = self.skinPath_str + "categories-next-button-over.png", self.catNextDPath_str = self.skinPath_str + "categories-next-button-disabled.png", self.catPrevSPath_str = self.skinPath_str + "categories-prev-button-over.png", self.catPrevDPath_str = self.skinPath_str + "categories-prev-button-disabled.png", self.catCloseSPath_str = self.skinPath_str + "categories-close-button-over.png"), self.showSearchBar_bl && (self.skinPaths_ar.push({
+											}), self.catBkPath_str = self.skinPath_str + "categories-background.png",
+											self.catThumbBkPath_str = self.skinPath_str + "categories-thumbnail-background.png",
+											self.catThumbBkTextPath_str = self.skinPath_str + "categories-thumbnail-text-backgorund.png",
+											self.catNextSPath_str = self.skinPath_str + "categories-next-button-over.png",
+											self.catNextDPath_str = self.skinPath_str + "categories-next-button-disabled.png",
+											self.catPrevSPath_str = self.skinPath_str + "categories-prev-button-over.png",
+											self.catPrevDPath_str = self.skinPath_str + "categories-prev-button-disabled.png",
+											self.catCloseSPath_str = self.skinPath_str + "categories-close-button-over.png"),
+											self.showSearchBar_bl && (self.skinPaths_ar.push({
 												img: self.sortAN_img = new Image,
 												src: self.skinPath_str + "sort-alphabetical-button.png"
 											}, {
@@ -2267,48 +2318,25 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 												img: self.decendingN_img = new Image,
 												src: self.skinPath_str + "descending-button.png"
 											}), self.sortASPath_str = self.skinPath_str + "sort-alphabetical-button-over.png", self.sortNSPath_str = self.skinPath_str + "sort-numerical-button-over.png", self.ascendingSpath_str = self.skinPath_str + "ascending-button-over.png", self.decendingSpath_str = self.skinPath_str + "descending-button-over.png", self.inputArrowPath_str = self.skinPath_str + "input-arrow.png"), self.categoriesSPath_str = self.skinPath_str + "categories-button-over.png",
-											self.replaySPath_str = self.skinPath_str + "replay-button-over.png";
+										self.replaySPath_str = self.skinPath_str + "replay-button-over.png";
 										self.skinPath_str;
 										self.playlistSPath_str = self.skinPath_str + "playlist-button-over.png",
 											self.shuffleSPath_str = self.skinPath_str + "shuffle-button-over.png",
-											self.shareSPath_str = self.skinPath_str + "share-over.png", self.animationPath_str = self.skinPath_str + "equalizer.png", self.titlebarBkMiddlePattern_str = self.skinPath_str + "titlebar-middle-pattern.png",
+											self.shareSPath_str = self.skinPath_str + "share-over.png",
+											self.animationPath_str = self.skinPath_str + "equalizer.png",
+											self.titlebarBkMiddlePattern_str = self.skinPath_str + "titlebar-middle-pattern.png",
 											self.passButtonNPath_str = self.skinPath_str + "pass-button.png",
 											self.passButtonSPath_str = self.skinPath_str + "pass-button-over.png",
-											self.showShareButton_bl && (self.skinPaths_ar.push({
-												img: self.shareClooseN_img = new Image,
-												src: self.skinPath_str + "embed-close-button.png"
-											}, {
-												img: self.facebookN_img = new Image,
-												src: self.skinPath_str + "facebook-button.png"
-											}, {
-												img: self.googleN_img = new Image,
-												src: self.skinPath_str + "google-plus.png"
-											}, {
-												img: self.twitterN_img = new Image,
-												src: self.skinPath_str + "twitter.png"
-											}, {
-												img: self.likedInkN_img = new Image,
-												src: self.skinPath_str + "likedin.png"
-											}, {
-												img: self.bufferkN_img = new Image,
-												src: self.skinPath_str + "buffer.png"
-											}, {
-												img: self.diggN_img = new Image,
-												src: self.skinPath_str + "digg.png"
-											}, {
-												img: self.redditN_img = new Image,
-												src: self.skinPath_str + "reddit.png"
-											}, {
-												img: self.thumbrlN_img = new Image,
-												src: self.skinPath_str + "thumbrl.png"
-											}), self.facebookSPath_str = self.skinPath_str + "facebook-button-over.png", self.googleSPath_str = self.skinPath_str + "google-plus-over.png", self.twitterSPath_str = self.skinPath_str + "twitter-over.png", self.likedInSPath_str = self.skinPath_str + "likedin-over.png", self.bufferSPath_str = self.skinPath_str + "buffer-over.png", self.diggSPath_str = self.skinPath_str + "digg-over.png", self.redditSPath_str = self.skinPath_str + "reddit-over.png", self.thumbrlSPath_str = self.skinPath_str + "thumbrl-over.png"), self.embedWindowClosePathS_str = self.skinPath_str + "embed-close-button-over.png",
+											self.embedWindowClosePathS_str = self.skinPath_str + "embed-close-button-over.png",
 											self.showPlaybackRateButton_bl && (self.skinPaths_ar.push({
 												img: self.playbackRateWindowClooseN_img = new Image,
 												src: self.skinPath_str + "embed-close-button.png"
 											}, {
 												img: self.closeClooseN_img = new Image,
 												src: self.skinPath_str + "embed-close-button.png"
-											}), self.playbackRateClosePathS_str = self.skinPath_str + "embed-close-button-over.png"), self.totalGraphics = self.skinPaths_ar.length,
+											}),
+											self.playbackRateClosePathS_str = self.skinPath_str + "embed-close-button-over.png"),
+											self.totalGraphics = self.skinPaths_ar.length,
 											self.loadSkin()
 									} else setTimeout(function() {
 										null != self && (errorMessage_str = "At least one category is required!", self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, {
