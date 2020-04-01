@@ -13124,9 +13124,7 @@ document.write(
                                         .mainScrubberOnOverHandler
                                         ), p.mainScrubber_do
                                     .screen.addEventListener(
-                                        "mousemove", p
-                                        .updateTooltipOnMove), p
-                                    .mainScrubber_do.screen
+                                        "mousemove", p.mainScrubber_do.screen
                                     .addEventListener("mouseout",
                                         p.mainScrubberOnOutHandler
                                         ), p.mainScrubber_do
@@ -13138,22 +13136,9 @@ document.write(
                                     "touchstart", p
                                     .mainScrubberOnDownHandler))),
                         p.disableMainScrubber()
-                }, this.updateToolTip = function(e, t) {
-                    var o;
-                    _.showMainScrubberToolTipLabel_bl && (p.ttm
-                        .setLabel(FWDMSPUtils.formatTime(Math
-                            .round(f.totalDuration * t))), p
-                        .ttm.setX(Math.round(p.mainScrubber_do
-                                .x + e - p.ttm.getWidth() / 2
-                                )), o = p.isFullScreen_bl ? p
-                        .videoControllerHolder_do.y + p
-                        .mainScrubber_do.y - p.ttm2.h - 2 : p
-                        .mainScrubber_do.y - p.ttm.h - 2, p
-                        .ttm.setY(o))
                 }, this.mainScrubberOnOverHandler = function(e) {
                     if (!p.isMainScrubberDisabled_bl) {
-                        _.showMainScrubberToolTipLabel_bl && 0 !=
-                            f.totalDuration && p.ttm.show(), !p
+                        0 != f.totalDuration && p.ttm.show(), !p
                             .isMobile_bl && p.ttm && window
                             .addEventListener("mousemove", p
                                 .mainScrubberWMouseMove);
@@ -13166,7 +13151,6 @@ document.write(
                                 .mainScrubberWidth - p
                                 .scrubbersOffsetWidth);
                         var o = t / p.mainScrubberWidth;
-                        p.updateToolTip(t, o)
                     }
                 }, p.mainScrubberWMouseMove = function(e) {
                     var t = FWDMSPUtils
@@ -13186,7 +13170,6 @@ document.write(
                             .mainScrubberWidth - p
                             .scrubbersOffsetWidth);
                     var s = o / p.mainScrubberWidth;
-                    p.updateToolTip(o, s)
                 }, this.mainScrubberOnOutHandler = function(e) {
                     p.isMainScrubberDisabled_bl || p
                         .isMainScrubberScrubbing_bl || p.ttm && p
@@ -13209,9 +13192,8 @@ document.write(
                                 .mainProgress_do.w);
                         var s = t / p.mainScrubberWidth;
                         p.disable_do && p.addChild(p.disable_do),
-                            _.showMainScrubberToolTipLabel_bl && p
-                            .ttm.show(), p.updateMainScrubber(o),
-                            p.updateToolTip(t, o), p
+                            p.ttm.show(),
+                            p.updateMainScrubber(o),
                             .dispatchEvent(n.START_TO_SCRUB), p
                             .dispatchEvent(n
                             .SCRUB_PLAYLIST_ITEM, {
@@ -13265,7 +13247,7 @@ document.write(
                         .mainProgress_do.w && (o = p
                             .mainProgress_do.w);
                     var i = o / p.mainScrubberWidth;
-                    p.updateToolTip(o, s), p.updateMainScrubber(
+                    p.updateMainScrubber(
                         s), p.dispatchEvent(n
                         .SCRUB_PLAYLIST_ITEM, {
                             percent: i
@@ -13579,40 +13561,7 @@ document.write(
                                     "touchstart", p
                                     .volumeScrubberOnDownHandler))
                             ), _
-                        .showMainScrubberToolTipLabel_bl && (
-                            FWDMSPScrubberTooltip.setPrototype(),
-                            document.documentElement.appendChild(p
-                                .ttm2.screen)), p
-                        .enableVolumeScrubber(), p
-                        .updateVolumeScrubber(p.volume)
-                }, this.updateVolumeToolTip = function() {
-                    var e;
-                    _.showMainScrubberToolTipLabel_bl && (p.ttm2
-                        .setLabel(Math.round(100 * p.volume)),
-                        p.ttm2.setX(t()), e = p
-                        .isFullScreen_bl ? p
-                        .videoControllerHolder_do.y + p
-                        .volumeScrubber_do.y - p.ttm2.h - 2 :
-                        p.getGlobalY() + FWDMSPUtils
-                        .getScrollOffsets().y + p
-                        .mainVolumeHolder_do.y - p.ttm2.h - 2,
-                        p.ttm2.setY(e), clearTimeout(p
-                            .setVolTooltipId_to), p
-                        .setVolTooltipId_to = setTimeout(
-                            function() {
-                                p.ttm2.setX(t())
-                            }, 200));
-
-                    function t() {
-                        var e;
-                        return e = p.isFullScreen_bl ? p
-                            .volumeScrubber_do.x + f.main_do.x : p
-                            .mainVolumeHolder_do.x + p
-                            .volumeScrubber_do.x + f.main_do.x,
-                            e = Math.round(e + p.volume * p
-                                .volumeScrubberWidth - p.ttm2
-                                .getWidth() / 2)
-                    }
+                        p.enableVolumeScrubber(), p.updateVolumeScrubber(p.volume)
                 }, this.volumeButtonOnMouseUpHandler =
             function() {
                     var e = p.lastVolume;
@@ -13622,8 +13571,7 @@ document.write(
                 }, this.volumeScrubberOnOverHandler = function(
                 e) {
                     p.isVolumeScrubberDisabled_bl || (_
-                        .showMainScrubberToolTipLabel_bl && p
-                        .ttm2.show(), p.updateVolumeToolTip())
+                        p.ttm2.show())
                 }, this.volumeScrubberOnOutHandler = function(e) {
                     p.isVolumeScrubberDisabled_bl || p
                         .isVolumeScrubberScrubbing_bl || p.ttm2 &&
@@ -13646,8 +13594,7 @@ document.write(
                             p.lastVolume = o, p
                             .isVolumeScrubberScrubbing_bl = !0, p
                             .updateVolume(o), _
-                            .showMainScrubberToolTipLabel_bl && p
-                            .ttm2.show(), p.updateVolumeToolTip(),
+                            p.ttm2.show(),
                             p.dispatchEvent(n
                                 .VOLUME_START_TO_SCRUB), p
                             .isMobile_bl ? p.hasPointerEvent_bl ?
@@ -13682,7 +13629,6 @@ document.write(
                         var o = t / p.volumeScrubberWidth;
                         .98 <= o && (o = 1), p.lastVolume = o, p
                             .updateVolume(o), p
-                            .updateVolumeToolTip()
                     }
                 }, this.volumeScrubberEndHandler = function(e) {
                     if (p.dispatchEvent(n.VOLUME_STOP_TO_SCRUB), p
@@ -13769,9 +13715,6 @@ document.write(
                             .normalButtonsColor_str, _
                             .selectedButtonsColor_str), p
                         .playlistButton_do.addListener(
-                            FWDMSPSimpleButton.SHOW_TOOLTIP, p
-                            .playlistButtonShowToolTipHandler), p
-                        .playlistButton_do.addListener(
                             FWDMSPSimpleButton.MOUSE_UP, p
                             .playlistButtonOnMouseUpHandler), p
                         .playlistButton_do.setY(parseInt((p
@@ -13782,10 +13725,6 @@ document.write(
                             .playlistButton_do), p
                         .showPlayListByDefault_bl && p
                         .setPlaylistButtonState("selected")
-                }, this.playlistButtonShowToolTipHandler =
-                function(e) {
-                    p.showToolTip(p.playlistButton_do, p
-                        .playlistButtonToolTip_do, e.e)
                 }, this.playlistButtonOnMouseUpHandler =
                 function() {
                     p.playlistButton_do.isSelectedFinal_bl ? p
@@ -13803,11 +13742,7 @@ document.write(
                             _.categoriesSPath_str, null, !0, _
                             .useHEXColorsForSkin_bl, _
                             .normalButtonsColor_str, _
-                            .selectedButtonsColor_str), p
-                        .categoriesButton_do.addListener(
-                            FWDMSPSimpleButton.SHOW_TOOLTIP, p
-                            .categoriesButtonShowTooltipHandler),
-                        p.categoriesButton_do.addListener(
+                            .selectedButtonsColor_str), p.categoriesButton_do.addListener(
                             FWDMSPSimpleButton.MOUSE_UP, p
                             .categoriesButtonOnMouseUpHandler), p
                         .categoriesButton_do.setY(parseInt((p
@@ -13816,10 +13751,6 @@ document.write(
                         .buttons_ar.push(p.categoriesButton_do), p
                         .mainHolder_do.addChild(p
                             .categoriesButton_do)
-                }, this.categoriesButtonShowTooltipHandler =
-                function(e) {
-                    p.showToolTip(p.categoriesButton_do, p
-                        .playlistsButtonToolTip_do, e.e)
                 }, this.categoriesButtonOnMouseUpHandler =
                 function() {
                     p.dispatchEvent(n.SHOW_CATEGORIES)
@@ -13836,9 +13767,6 @@ document.write(
                             .normalButtonsColor_str, _
                             .selectedButtonsColor_str), p
                         .loopButton_do.addListener(
-                            FWDMSPSimpleButton.SHOW_TOOLTIP, p
-                            .loopButtonShowTooltipHandler), p
-                        .loopButton_do.addListener(
                             FWDMSPSimpleButton.MOUSE_UP, p
                             .loopButtonOnMouseUpHandler), p
                         .loopButton_do.setY(parseInt((p
@@ -13847,10 +13775,6 @@ document.write(
                             .loopButton_do), p.mainHolder_do
                         .addChild(p.loopButton_do), p.loop_bl && p
                         .setLoopStateButton("selected")
-                }, this.loopButtonShowTooltipHandler = function(
-                e) {
-                    p.showToolTip(p.loopButton_do, p
-                        .loopButtonToolTip_do, e.e)
                 }, this.loopButtonOnMouseUpHandler = function() {
                     p.loopButton_do.isSelectedFinal_bl ? p
                         .dispatchEvent(n.DISABLE_LOOP) : p
@@ -13869,9 +13793,6 @@ document.write(
                             .normalButtonsColor_str, _
                             .selectedButtonsColor_str), p
                         .downloadButton_do.addListener(
-                            FWDMSPSimpleButton.SHOW_TOOLTIP, p
-                            .downloadButtonShowToolTipHandler), p
-                        .downloadButton_do.addListener(
                             FWDMSPSimpleButton.MOUSE_UP, p
                             .downloadButtonOnMouseUpHandler), p
                         .downloadButton_do.setY(parseInt((p
@@ -13880,10 +13801,6 @@ document.write(
                         .buttons_ar.push(p.downloadButton_do), p
                         .mainHolder_do.addChild(p
                             .downloadButton_do)
-                }, this.downloadButtonShowToolTipHandler =
-                function(e) {
-                    p.showToolTip(p.downloadButton_do, p
-                        .downloadButtonToolTip_do, e.e)
                 }, this.downloadButtonOnMouseUpHandler =
                 function() {
                     p.dispatchEvent(n.DOWNLOAD_MP3)
@@ -13895,17 +13812,10 @@ document.write(
                             .normalButtonsColor_str, _
                             .selectedButtonsColor_str), p
                         .buyButton_do.addListener(
-                            FWDMSPSimpleButton.SHOW_TOOLTIP, p
-                            .buyButtonShowToolTipHandler), p
-                        .buyButton_do.addListener(
                             FWDMSPSimpleButton.MOUSE_UP, p
                             .buyButtonOnMouseUpHandler), p
                         .buttons_ar.push(p.buyButton_do), p
                         .mainHolder_do.addChild(p.buyButton_do)
-                }, this.buyButtonShowToolTipHandler = function(
-                e) {
-                    p.showToolTip(p.buyButton_do, p
-                        .buyButtonToolTip_do, e.e)
                 }, this.buyButtonOnMouseUpHandler = function() {
                     p.dispatchEvent(n.BUY)
                 }, this.setupShuffleButton = function() {
@@ -13917,9 +13827,6 @@ document.write(
                             .normalButtonsColor_str, _
                             .selectedButtonsColor_str), p
                         .shuffleButton_do.addListener(
-                            FWDMSPSimpleButton.SHOW_TOOLTIP, p
-                            .shuffleButtonShowToolTipHandler), p
-                        .shuffleButton_do.addListener(
                             FWDMSPSimpleButton.MOUSE_UP, p
                             .shuffleButtonOnMouseUpHandler), p
                         .shuffleButton_do.setY(parseInt((p
@@ -13930,10 +13837,6 @@ document.write(
                             .shuffleButton_do), !p.loop_bl && p
                         .shuffle_bl && p.setShuffleButtonState(
                             "selected")
-                }, this.shuffleButtonShowToolTipHandler =
-                function(e) {
-                    p.showToolTip(p.shuffleButton_do, p
-                        .shuffleButtonToolTip_do, e.e)
                 }, this.shuffleButtonOnMouseUpHandler =
             function() {
                     p.shuffleButton_do.isSelectedFinal_bl ? p
@@ -13952,9 +13855,6 @@ document.write(
                             .normalButtonsColor_str, _
                             .selectedButtonsColor_str), p
                         .shareButton_do.addListener(
-                            FWDMSPSimpleButton.SHOW_TOOLTIP, p
-                            .facebookButtonShowToolTipHandler), p
-                        .shareButton_do.addListener(
                             FWDMSPSimpleButton.MOUSE_UP, p
                             .faceboolButtonOnMouseUpHandler), p
                         .shareButton_do.setY(parseInt((p
@@ -13962,10 +13862,6 @@ document.write(
                             .shareButton_do.h) / 2)), p.buttons_ar
                         .push(p.shareButton_do), p.mainHolder_do
                         .addChild(p.shareButton_do)
-                }, this.facebookButtonShowToolTipHandler =
-                function(e) {
-                    p.showToolTip(p.shareButton_do, p
-                        .facebookButtonToolTip_do, e.e)
                 }, this.faceboolButtonOnMouseUpHandler =
                 function() {
                     p.dispatchEvent(n.FACEBOOK_SHARE)
@@ -13977,9 +13873,6 @@ document.write(
                             .normalButtonsColor_str, _
                             .selectedButtonsColor_str), p
                         .popupButton_do.addListener(
-                            FWDMSPSimpleButton.SHOW_TOOLTIP, p
-                            .popupButtonShowToolTipHandler), p
-                        .popupButton_do.addListener(
                             FWDMSPSimpleButton.MOUSE_UP, p
                             .popupButtonOnMouseUpHandler), p
                         .popupButton_do.setY(parseInt((p
@@ -13987,14 +13880,6 @@ document.write(
                             .popupButton_do.h) / 2)), p.buttons_ar
                         .push(p.popupButton_do), p.mainHolder_do
                         .addChild(p.popupButton_do)
-                }, this.popupButtonShowToolTipHandler = function(
-                    e) {
-                    p.showToolTip(p.popupButton_do, p
-                        .populButtonToolTip_do, e.e)
-                }, this.popupButtonOnMouseUpHandler = function() {
-                    p.populButtonToolTip_do && p
-                        .populButtonToolTip_do.hide(), p
-                        .dispatchEvent(n.POPUP)
                 }, this.disableControllerWhileLoadingPlaylist =
                 function() {
                     p.prevButton_do.disable(), p
@@ -15247,8 +15132,6 @@ document.write(
                 .playbackRateWindowTextColor_str = s
                 .playbackRateWindowTextColor_str, this
                 .defaultPlaybackRate = s.defaultPlaybackRate, this
-                .toolTipsButtonFontColor_str = s
-                .toolTipsButtonFontColor_str, this
                 .toopTipPointerUp_str = s.toopTipPointer_str, this
                 .toopTipBk_str = s.toopTipBk_str, this
                 .totalWidth = 0, this.stageWidth = 0, this
@@ -15256,7 +15139,6 @@ document.write(
                 .hSpace = 20, this.minHSpace = 10, this.vSpace =
                 15, this.minValue = .5, this.maxValue = 3, this
                 .pointerWidth = 7, this.pointerHeight = 4, this
-                .percent = 0, this.toolTip_do, this
                 .isScrubbing_bl = !1, this.isShowed_bl = !1, this
                 .isMobile_bl = FWDMSPUtils.isMobile, this.init =
                 function() {
@@ -15284,7 +15166,7 @@ document.write(
                         .addChild(i.mainHolder_do), i
                         .mainHolder_do.addChild(i.bk_do), i
                         .mainHolder_do.addChild(i.closeButton_do),
-                        this.setupScrubber(), this.setupTooltip()
+                        this.setupScrubber()
                 }, this.closeButtonOnMouseUpHandler = function() {
                     i.isShowed_bl && i.hide(!0)
                 }, this.positionAndResize = function() {
@@ -15304,62 +15186,6 @@ document.write(
                         .setHeight(i.stageHeight), i
                         .positionScruber(), i.updateScrubber(i
                             .percent)
-                }, this.setupTooltip = function() {
-                    i.mainToolTip_do = new FWDMSPDisplayObject(
-                            "div"), i.mainToolTip_do.setOverflow(
-                            "visible"), i.mainToolTip_do
-                        .getStyle().background = "url('" + i
-                        .toopTipBk_str + "')", i.mainToolTip_do
-                        .setBkColor("#FF0000"), i.text_do =
-                        new FWDMSPDisplayObject("div"), i.text_do
-                        .hasTransform3d_bl = !1, i.text_do
-                        .hasTransform2d_bl = !1, i.text_do
-                        .setBackfaceVisibility(), i.text_do
-                        .setDisplay("inline"), i.text_do
-                        .getStyle().fontFamily = "Arial", i
-                        .text_do.getStyle().fontSize = "12px", i
-                        .text_do.getStyle().color = i
-                        .toolTipsButtonFontColor_str, i.text_do
-                        .getStyle().whiteSpace = "nowrap", i
-                        .text_do.getStyle().fontSmoothing =
-                        "antialiased", i.text_do.getStyle()
-                        .webkitFontSmoothing = "antialiased", i
-                        .text_do.getStyle().textRendering =
-                        "optimizeLegibility", i.text_do.getStyle()
-                        .padding = "6px", i.text_do.getStyle()
-                        .paddingTop = "4px", i.text_do.getStyle()
-                        .paddingBottom = "4px";
-                    var e = new Image;
-                    e.src = i.toopTipPointerUp_str, i
-                        .pointerUp_do = new FWDMSPDisplayObject(
-                            "img"), i.pointerUp_do.setScreen(e), i
-                        .pointerUp_do.setWidth(i.pointerWidth), i
-                        .pointerUp_do.setHeight(i.pointerHeight),
-                        i.mainToolTip_do.addChild(i.pointerUp_do),
-                        i.mainToolTip_do.addChild(i.text_do), i
-                        .mainHolder_do.addChild(i.mainToolTip_do)
-                }, this.setTooltipLabel = function(e) {
-                    if (1 == e && (e = "1.0"), e && i.text_do
-                        .setInnerHTML(e), 0 != i.mainToolTip_do.w
-                        ) {
-                        var t = parseInt((i.mainToolTip_do.w - i
-                                .pointerWidth) / 2),
-                            o = i.mainToolTip_do.h;
-                        return i.pointerUp_do.setX(t), void i
-                            .pointerUp_do.setY(o)
-                    }
-                    setTimeout(function() {
-                        i.mainToolTip_do.setWidth(i
-                                .text_do.getWidth()), i
-                            .mainToolTip_do.setHeight(i
-                                .text_do.getHeight());
-                        var e = parseInt((i.mainToolTip_do
-                                    .w - i.pointerWidth) /
-                                2),
-                            t = i.mainToolTip_do.h;
-                        i.pointerUp_do.setX(e), i
-                            .pointerUp_do.setY(t)
-                    }, 50)
                 }, this.setupScrubber = function() {
                     i.scrubber_do = new FWDMSPDisplayObject(
                         "div"), i.scrubber_do.setHeight(i
