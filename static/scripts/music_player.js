@@ -3333,8 +3333,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }, this.volumeButtonOnMouseUpHandler = function() {
                 var e = p.lastVolume;
                 p.isMute_bl ? (e = p.lastVolume, p.isMute_bl = !1) : (e = 1e-6, p.isMute_bl = !0), p.updateVolume(e)
-            }, this.volumeButtonShowToolTipHandler = function(e) {
-                p.showToolTip(p.volumeButton_do, p.volumeButtonToolTip_do, e)
             }, this.volumeScrubberOnOverHandler = function(e) {
                 p.isVolumeScrubberDisabled_bl || (_.showMainScrubberToolTipLabel_bl && p.ttm2.show(), p.updateVolumeToolTip())
             }, this.volumeScrubberOnOutHandler = function(e) {
