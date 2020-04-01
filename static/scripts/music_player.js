@@ -3155,14 +3155,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 p.atbButton_do && p.atbButton_do.disable()
             }, this.enableAtbButton = function() {
                 p.atbButton_do && p.atbButton_do.enable()
-            }, this.showToolTip = function(e, t, o) {
-                if (p.showButtonsToolTips_bl) {
-                    var s = FWDMSPUtils.getViewportSize(),
-                        i = (FWDMSPUtils.getViewportMouseCoordinates(o), parseInt(e.getGlobalX() + e.w / 2 - t.w / 2)),
-                        n = parseInt(e.getGlobalY() - t.h - 6),
-                        l = 0;
-                    i < 0 ? (l = i, i = 0) : i + t.w > s.w && (i += -1 * (l = -1 * (s.w - (i + t.w)))), n < 0 ? (n += e.h + t.h + 12, t.positionPointer(l, !0)) : t.positionPointer(l, !1), t.setX(i), t.setY(n), t.show()
-                }
             }, this.setupPlaybacRateButton = function() {
                 FWDMSPSimpleButton.setPrototype(), p.playbackRateButton_do = new FWDMSPSimpleButton(_.playbackRateNormal_img, _.playbackRateSelectedPath_str, null, !0, _.useHEXColorsForSkin_bl, _.normalButtonsColor_str, _.selectedButtonsColor_str), p.playbackRateButton_do.addListener(FWDMSPSimpleButton.SHOW_TOOLTIP, p.playbacRateButtonShowToolTipHandler), p.playbackRateButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, p.playbacRateButtonOnMouseUpHandler), p.buttons_ar.push(p.playbackRateButton_do), p.mainHolder_do.addChild(p.playbackRateButton_do)
             }, this.playbacRateButtonShowToolTipHandler = function(e) {
