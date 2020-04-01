@@ -2483,7 +2483,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 											self.playlistPlayButtonN_str = self.skinPath_str + "playlist-play-button.png",
 											self.playlistPlayButtonS_str = self.skinPath_str + "playlist-play-button-over.png",
 											self.playlistPauseButtonN_str = self.skinPath_str + "playlist-pause-button.png",
-											self.playlistPauseButtonS_str = self.skinPath_str + "playlist-pause-button-over.png", 
+											self.playlistPauseButtonS_str = self.skinPath_str + "playlist-pause-button-over.png",
 											self.showPlaylistsButtonAndPlaylists_bl && (self.skinPaths_ar.push({
 												img: self.catNextN_img = new Image,
 												src: self.skinPath_str + "categories-next-button.png"
@@ -2508,7 +2508,13 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 											}, {
 												img: self.decendingN_img = new Image,
 												src: self.skinPath_str + "descending-button.png"
-											}), self.sortASPath_str = self.skinPath_str + "sort-alphabetical-button-over.png", self.sortNSPath_str = self.skinPath_str + "sort-numerical-button-over.png", self.ascendingSpath_str = self.skinPath_str + "ascending-button-over.png", self.decendingSpath_str = self.skinPath_str + "descending-button-over.png", self.inputArrowPath_str = self.skinPath_str + "input-arrow.png"), self.categoriesSPath_str = self.skinPath_str + "categories-button-over.png",
+											}),
+											self.sortASPath_str = self.skinPath_str + "sort-alphabetical-button-over.png",
+											self.sortNSPath_str = self.skinPath_str + "sort-numerical-button-over.png",
+											self.ascendingSpath_str = self.skinPath_str + "ascending-button-over.png",
+											self.decendingSpath_str = self.skinPath_str + "descending-button-over.png",
+											self.inputArrowPath_str = self.skinPath_str + "input-arrow.png", 
+											self.categoriesSPath_str = self.skinPath_str + "categories-button-over.png",
 											self.replaySPath_str = self.skinPath_str + "replay-button-over.png";
 										self.skinPath_str;
 										self.playlistSPath_str = self.skinPath_str + "playlist-button-over.png",
