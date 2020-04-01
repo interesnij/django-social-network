@@ -4434,8 +4434,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                             }, this.buy = function(pId) {
                                 if (self.isAPIReady_bl) {
                                     null == pId && (pId = self.id);
-                                    var buy = self.data.playlist_ar[pId].buy;
-                                    console.log(pId, buy);
+                                    var track_id = self.data.playlist_ar[pId].buy;
+                                    var can_add = self.data.playlist_ar[pId].can_add;
+                                    console.log("номер дорожки: "+ pId, "id трека: " + track_id, "возможность добавить: " + can_add);
                                 }
                             }, this.playFirstTrack = function() {
                                 self.playSpecificTrack(self.catId, 0)
@@ -5248,7 +5249,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                         var l = t.source.match(/^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/);
                         t.source = l[2]
                     } else n = -1 != n.indexOf(";.mp3") || FWDMSPUtils.isURLEncoded(n) ? t.source.substr(t.source.lastIndexOf("/") + 1) : encodeURIComponent(t.source.substr(t.source.lastIndexOf("/") + 1)), t.source = i + n;
-                    t.downloadPath = t.source, t.downloadable = "yes" == o[s]["@attributes"]["data-downloadable"], t.buy = o[s]["@attributes"]["data-track-id"], null == t.buy && (t.buy = ""), t.thumbPath = o[s]["@attributes"]["data-thumbpath"];
+                    t.downloadPath = t.source, t.downloadable = "yes" == o[s]["@attributes"]["data-downloadable"], t.buy = o[s]["@attributes"]["data-track-id"], t.can_add = o[s]["@attributes"]["data-add"], null == t.buy && (t.buy = ""), t.thumbPath = o[s]["@attributes"]["data-thumbpath"];
                     var r = "";
                     if (self.showTracksNumbers_bl ? (s < 9 && (r = "0"), r = r + (s + 1) + ". ", t.title = r + o[s]["@attributes"]["data-title"]) : t.title = o[s]["@attributes"]["data-title"], t.titleText = o[s]["@attributes"]["data-title"], t.duration = o[s]["@attributes"]["data-duration"], t.atb = o[s]["@attributes"]["data-use-a-to-b"], t.isPrivate = o[s]["@attributes"]["data-is-private"], "yes" == t.isPrivate ? t.isPrivate = !0 : t.isPrivate = !1, t.privateVideoPassword_str = o[s]["@attributes"]["data-private-video-password"], t.startAtTime = o[s]["@attributes"]["data-start-at-time"], "00:00:00" != t.startAtTime && FWDMSPUtils.checkTime(t.startAtTime) || (t.startAtTime = void 0), t.stopAtTime = o[s]["@attributes"]["data-stop-at-time"], "00:00:00" != t.stopAtTime && FWDMSPUtils.checkTime(t.stopAtTime) || (t.stopAtTime = void 0), t.isShoutcast_bl = o[s]["@attributes"]["data-type"], t.isShoutcast_bl && (-1 != t.isShoutcast_bl.toLowerCase().indexOf("shoutcastv1") ? (t.shoutcastVersion = 1, t.isShoutcast_bl = !0) : -1 != t.isShoutcast_bl.toLowerCase().indexOf("shoutcastv2") ? (t.shoutcastVersion = 2, t.isShoutcast_bl = !0) : t.isShoutcast_bl = !1), t.isIcecast_bl = o[s]["@attributes"]["data-type"], t.isIcecast_bl && (-1 != t.isIcecast_bl.toLowerCase().indexOf("icecast") ? t.isIcecast_bl = !0 : t.isIcecast_bl = !1), self.playlist_ar[s] = t, s > self.maxPlaylistItems - 1) break
                 }
@@ -5316,7 +5317,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                         if (l.source.indexOf(".soundcloud.") != -1) {
                             l.source = l.source + '/stream?client_id=' + 'dce5652caa1b66331903493735ddd64d'
                         };
-                        l.downloadPath = l.source, (l.isShoutcast_bl || l.isIcecast_bl) && "/" != l.source.substr(l.source.length - 1) && (l.source += "/"), FWDMSPUtils.hasAttribute(o, "data-thumbpath") ? l.thumbPath = FWDMSPUtils.getAttributeValue(o, "data-thumbpath") : l.thumbPath = void 0, FWDMSPUtils.hasAttribute(o, "data-downloadable") ? l.downloadable = "yes" == FWDMSPUtils.getAttributeValue(o, "data-downloadable") : l.downloadable = void 0, FWDMSPUtils.hasAttribute(o, "data-track-id") ? l.buy = FWDMSPUtils.getAttributeValue(o, "data-track-id") : l.buy = void 0, l.title = "not defined!";
+                        l.downloadPath = l.source, (l.isShoutcast_bl || l.isIcecast_bl) && "/" != l.source.substr(l.source.length - 1) && (l.source += "/"), FWDMSPUtils.hasAttribute(o, "data-thumbpath") ? l.thumbPath = FWDMSPUtils.getAttributeValue(o, "data-thumbpath") : l.thumbPath = void 0, FWDMSPUtils.hasAttribute(o, "data-downloadable") ? l.downloadable = "yes" == FWDMSPUtils.getAttributeValue(o, "data-downloadable") : l.downloadable = void 0, FWDMSPUtils.hasAttribute(o, "data-track-id") ? l.buy = FWDMSPUtils.getAttributeValue(o, "data-track-id") : l.buy = void 0, FWDMSPUtils.hasAttribute(o, "data-add") ? l.can_add = FWDMSPUtils.getAttributeValue(o, "data-add") : l.can_add = void 0, l.title = "not defined!";
                         try {
                             var u = "";
                             self.showTracksNumbers_bl ? (n < 9 && (u = "0"), u = u + (n + 1) + ". ", l.title = u + FWDMSPUtils.getChildren(o)[0].innerHTML) : l.title = FWDMSPUtils.getChildren(o)[0].innerHTML
