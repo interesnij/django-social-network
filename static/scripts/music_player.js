@@ -4360,11 +4360,11 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 					}, 100))
 				}, this.showCompleteHandler = function() {},
         this.hide = function() {
-					
+
 				},
         this.hideCompleteHandler = function() {
 					t.main_do.removeChild(o), o.dispatchEvent(s.HIDE_COMPLETE)
-				}, this.init()
+				}
 		};
 		s.setPrototype = function() {
 			s.prototype = new FWDMSPDisplayObject("div")
