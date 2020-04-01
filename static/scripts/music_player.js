@@ -1583,7 +1583,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 							}, this.hiderShowHandler = function() {
 								self.controller_do && self.controller_do.showVideoContoller(!0), self.showCursor()
 							}, this.hiderHideHandler = function() {
-								FWDMSPUtils.isIphone || ((self.audioType_str != FWDMSP.VIDEO || !self.videoScreen_do || self.videoScreen_do.isPlaying_bl) && (self.audioType_str != FWDMSP.YOUTUBE || !self.ytb_do || self.ytb_do.isPlaying_bl) ? FWDMSPUtils.hitTest(self.controller_do.videoControllerHolder_do.screen, self.hider.globalX, self.hider.globalY) ? self.hider.reset() : (self.hideCursor(), self.controller_do.hideVideoContoller(!0)) : self.hider.reset())
+								FWDMSPUtils.isIphone 
 							}, this.hiderHideCompleteHandler = function() {}, this.setupVideosHolder = function() {
 								this.videosHolder_do = new FWDMSPDisplayObject("div"),
 									self.videosHolder_do.getStyle().background = "url('" + self.data.thumbnailBkPath_str + "')", this.videosHolder_do.setWidth(self.data.controllerHeight), this.videosHolder_do.setHeight(self.data.controllerHeight), this.controller_do.mainHolder_do.addChild(this.videosHolder_do),
