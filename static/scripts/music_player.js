@@ -4361,8 +4361,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 				}, this.showCompleteHandler = function() {},
         this.hide = function() {
 
-				},
-        this.init()
+				};this.init()
 		};
 		s.setPrototype = function() {
 			s.prototype = new FWDMSPDisplayObject("div")
