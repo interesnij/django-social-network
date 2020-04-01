@@ -1483,7 +1483,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 									}));
 									self.audioScreen_do.setSource(self.audioPath),
 									(self.data.autoPlay_bl || self.isPlaylistItemClicked_bl) && self.play(),
-									!Boolean("true" == FWDMSPUtils.getCookie("FWDMSPppPlay")) || self.isMobile_bl || self.ppPplayedOnce || self.play());
+									!Boolean("true" == FWDMSPUtils.getCookie("FWDMSPppPlay")) || self.isMobile_bl || self.ppPplayedOnce || self.play();
 									self.controller_do.stopEqulizer(),
 										self.controller_do.setTitle(self.data.playlist_ar[self.id].title), null == self.data.playlist_ar[self.id].duration ? self.controller_do.updateTime("00:00", "00:00") : self.controller_do.updateTime("00:00", FWDMSP.formatTotalTime(self.data.playlist_ar[self.id].duration)), self.controller_do.loadThumb(self.data.playlist_ar[self.id].thumbPath), self.playlist_do ? self.playlist_do.activateItems(self.id, self.itemClicked) : self.loadID3IfPlaylistDisabled(),
 										self.setPlaybackRate(self.data.defaultPlaybackRate)
