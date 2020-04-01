@@ -1729,7 +1729,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 									}
 							}, self.useYoutube_bl && (-1 != location.protocol.indexOf("file:") && FWDMSPUtils.isIE || -1 != location.protocol.indexOf("file:") && FWDMSPUtils.isOpera)) return self.stageContainer = FWDMSPUtils.getChildById(props.parentId), self.setupMainDo(),
 							self.setupInfo(), self.main_do.addChild(self.info_do), self.info_do.allowToRemove_bl = !1, self.info_do.showText('This browser dosen\'t allow the Youtube API to run local, please test it online or in another browser like Firefox or Chrome! If you don\'t want to use Youtube set <font color="#FF000000">useYoutube:"no"</font>.'), void self.resizeHandler();
-						setTimeout(FWDMSP.checkIfHasYoutube, 100)
+						//setTimeout(FWDMSP.checkIfHasYoutube, 100)
 					}
 				} else alert("FWDMSP instance name is requires please make sure that the instanceName parameter exsists and it's value is uinique.");
 
@@ -1743,11 +1743,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 			},
 			TZ, UZ, f$, g$;
 
-			FWDMSP.checkIfHasYoutube = function() {
-					
-
+			//FWDMSP.checkIfHasYoutube = function() {
 						setTimeout(FWDMSP.setupAllInstances, 500)
-				},
+			//	},
 
 		FWDMSP.setupAllInstances = function() {
 				if (!FWDMSP.areInstancesCreated_bl) {
