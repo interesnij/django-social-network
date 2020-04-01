@@ -1652,7 +1652,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 			var self = this,
 				prototype = FWDMSPAudioData.prototype;
 			this.xhr = null, this.emailXHR = null, this.playlist_ar = null, this.dlIframe = null, this.mainPreloader_img = null, this.bk_img = null,
-				this.thumbnail_img = null, this.separator1_img = null, this.separator2_img = null, this.prevN_img = null, this.playN_img = null, this.pauseN_img = null, this.nextN_img = null, this.popupN_img = null, this.toopTipBk_str = null, this.toopTipPointer_str = null, this.toopTipPointerUp_str = null, this.mainScrubberBkLeft_img = null, this.mainScrubberBkRight_img = null, this.mainScrubberDragLeft_img = null,
+				this.thumbnail_img = null, this.separator1_img = null, this.separator2_img = null, this.prevN_img = null, this.playN_img = null, this.pauseN_img = null, this.nextN_img = null, this.popupN_img = null, this.mainScrubberBkLeft_img = null, this.mainScrubberBkRight_img = null, this.mainScrubberDragLeft_img = null,
 				this.mainScrubberLine_img = null, this.mainScrubberLeftProgress_img = null, this.volumeScrubberBkLeft_img = null, this.volumeScrubberBkRight_img = null, this.volumeScrubberDragLeft_img = null, this.volumeScrubberLine_img = null, this.volumeD_img = null, this.progressLeft_img = null, this.titleBarLeft_img = null, this.titleBarRigth_img = null, this.openerAnimation_img = null, this.openTopN_img = null, this.openTopS_img = null,
 				this.openBottomN_img = null, this.openBottomS_img = null, this.closeN_img = null,
 				this.closeS_img = null, this.openerPauseN_img = null, this.openerPauseS_img = null, this.openerPlayN_img = null, this.openerPlayS_img = null, this.categoriesN_img = null, this.replayN_img = null, this.playlistN_img = null,
@@ -4377,7 +4377,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 			l.prototype;
 			this.embedColoseN_img = s.embedColoseN_img, this.bk_do = null, this.mainHolder_do = null, this.closeButton_do = null, this.buttons_ar = [], this.embedWindowBackground_str = s.shareBkPath_str,
 				this.embedWindowCloseButtonMargins = 0, this.scrubbersHeight = s.mainScrubberBkLeft_img.height, this.scrubberBkMiddlePath_str = s.mainScrubberBkMiddlePath_str, this.scrubbersBkLeftAndRightWidth = s.mainScrubberBkLeft_img.width, this.useHEXColorsForSkin_bl = s.useHEXColorsForSkin_bl, this.normalButtonsColor_str = s.normalButtonsColor_str, this.selectedButtonsColor_str = s.selectedButtonsColor_str,
-				this.mainScrubberDragMiddlePath_str = s.mainScrubberDragMiddlePath_str, this.scrubberDragLeftWidth = s.mainScrubberDragLeft_img.width, this.playbackRateWindowTextColor_str = s.playbackRateWindowTextColor_str, this.defaultPlaybackRate = s.defaultPlaybackRate, this.toopTipPointerUp_str = s.toopTipPointer_str, this.toopTipBk_str = s.toopTipBk_str, this.totalWidth = 0, this.stageWidth = 0, this.stageHeight = 0, this.minMarginXSpace = 20, this.hSpace = 20, this.minHSpace = 10, this.vSpace = 15, this.minValue = .5, this.maxValue = 3, this.pointerWidth = 7, this.pointerHeight = 4, this.percent = 0,
+				this.mainScrubberDragMiddlePath_str = s.mainScrubberDragMiddlePath_str, this.scrubberDragLeftWidth = s.mainScrubberDragLeft_img.width, this.playbackRateWindowTextColor_str = s.playbackRateWindowTextColor_str, this.defaultPlaybackRate = s.defaultPlaybackRate, this.totalWidth = 0, this.stageWidth = 0, this.stageHeight = 0, this.minMarginXSpace = 20, this.hSpace = 20, this.minHSpace = 10, this.vSpace = 15, this.minValue = .5, this.maxValue = 3, this.pointerWidth = 7, this.pointerHeight = 4, this.percent = 0,
 				this.isScrubbing_bl = !1, this.isShowed_bl = !1, this.isMobile_bl = FWDMSPUtils.isMobile, this.init = function() {
 					i.setBackfaceVisibility(), i.mainHolder_do = new FWDMSPDisplayObject("div"), i.mainHolder_do.hasTransform3d_bl = !1, i.mainHolder_do.hasTransform2d_bl = !1, i.mainHolder_do.setBackfaceVisibility(), i.bk_do = new FWDMSPDisplayObject("div"), i.bk_do.getStyle().width = "100%", i.bk_do.getStyle().height = "100%", i.bk_do.setAlpha(.9), i.bk_do.getStyle().background = "url('" + i.embedWindowBackground_str + "')",
 						FWDMSPSimpleButton.setPrototype(), i.closeButton_do = new FWDMSPSimpleButton(s.playbackRateWindowClooseN_img, s.playbackRateClosePathS_str, void 0, !0, s.useHEXColorsForSkin_bl, s.normalButtonsColor_str, s.selectedButtonsColor_str), i.closeButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, i.closeButtonOnMouseUpHandler), i.addChild(i.mainHolder_do), i.mainHolder_do.addChild(i.bk_do), i.mainHolder_do.addChild(i.closeButton_do),
@@ -5369,7 +5369,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 			d.prototype;
 			this.buttonRef_do = e, this.bkPath_str = t, this.pointerPath_str = o, this.text_do = null, this.pointer_do = null, this.pointerUp_do = null,
 				this.fontColor_str = n,
-				this.toopTipPointerUp_str = s, this.pointerWidth = 7, this.pointerHeight = 4, this.showWithDelayId_to, this.isMobile_bl = FWDMSPUtils.isMobile, this.isShowed_bl = !0, this.init = function() {
+				this.pointerWidth = 7, this.pointerHeight = 4, this.showWithDelayId_to, this.isMobile_bl = FWDMSPUtils.isMobile, this.isShowed_bl = !0, this.init = function() {
 					r.setOverflow("visible"), r.setupMainContainers(), r.hide(), r.getStyle().background = "url('" + r.bkPath_str + "')", r.getStyle().zIndex = 9999999999
 				}, this.setupMainContainers = function() {
 					r.text_do = new FWDMSPDisplayObject("div"), r.text_do.hasTransform3d_bl = !1, r.text_do.hasTransform2d_bl = !1, r.text_do.setBackfaceVisibility(), r.text_do.setDisplay("inline"), r.text_do.getStyle().fontFamily = "Arial", r.text_do.getStyle().fontSize = "12px", r.text_do.getStyle().color = r.fontColor_str, r.text_do.getStyle().whiteSpace = "nowrap", r.text_do.getStyle().fontSmoothing = "antialiased",
@@ -5378,7 +5378,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 					var e = new Image;
 					e.src = r.pointerPath_str, r.pointer_do = new FWDMSPDisplayObject("img"), r.pointer_do.setScreen(e), r.pointer_do.setWidth(r.pointerWidth), r.pointer_do.setHeight(r.pointerHeight), r.addChild(r.pointer_do);
 					var t = new Image;
-					t.src = r.toopTipPointerUp_str, r.pointerUp_do = new FWDMSPDisplayObject("img"), r.pointerUp_do.setScreen(t), r.pointerUp_do.setWidth(r.pointerWidth), r.pointerUp_do.setHeight(r.pointerHeight),
+					r.pointerUp_do = new FWDMSPDisplayObject("img"), r.pointerUp_do.setScreen(t), r.pointerUp_do.setWidth(r.pointerWidth), r.pointerUp_do.setHeight(r.pointerHeight),
 						r.addChild(r.pointerUp_do)
 				}, this.setLabel = function(e) {
 					r.text_do.setInnerHTML(i), setTimeout(function() {

@@ -3777,7 +3777,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 						p.disableMainScrubber()
 				}, this.mainScrubberOnOverHandler = function(e) {
 					if (!p.isMainScrubberDisabled_bl) {
-						0 != f.totalDuration && p.ttm.show(), !p.isMobile_bl && p.ttm && window.addEventListener("mousemove", p.mainScrubberWMouseMove);
+						0 != f.totalDuration, !p.isMobile_bl && p.ttm && window.addEventListener("mousemove", p.mainScrubberWMouseMove);
 						var t = FWDMSPUtils.getViewportMouseCoordinates(e).screenX - p.mainScrubber_do.getGlobalX();
 						t < 0 ? t = 0 : t > p.mainScrubberWidth - p.scrubbersOffsetWidth && (t = p.mainScrubberWidth - p.scrubbersOffsetWidth);
 						var o = t / p.mainScrubberWidth;
@@ -3800,7 +3800,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 						!FWDMSP.hasHTML5Audio && t >= p.mainProgress_do.w && (t = p.mainProgress_do.w);
 						var s = t / p.mainScrubberWidth;
 						p.disable_do && p.addChild(p.disable_do),
-							p.ttm.show(), p.updateMainScrubber(o), p.dispatchEvent(n.START_TO_SCRUB), p.dispatchEvent(n.SCRUB_PLAYLIST_ITEM, {
+							p.updateMainScrubber(o), p.dispatchEvent(n.START_TO_SCRUB), p.dispatchEvent(n.SCRUB_PLAYLIST_ITEM, {
 								percent: s
 							}), p.dispatchEvent(n.SCRUB, {
 								percent: o
@@ -3876,7 +3876,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 					var e = p.lastVolume;
 					p.isMute_bl ? (e = p.lastVolume, p.isMute_bl = !1) : (e = 1e-6, p.isMute_bl = !0), p.updateVolume(e)
 				}, this.volumeScrubberOnOverHandler = function(e) {
-					p.isVolumeScrubberDisabled_bl || (p.ttm2.show())
+					p.isVolumeScrubberDisabled_bl
 				}, this.volumeScrubberOnOutHandler = function(e) {
 					p.isVolumeScrubberDisabled_bl || p.isVolumeScrubberScrubbing_bl || p.ttm2 && p.ttm2.hide()
 				}, this.volumeScrubberOnDownHandler = function(e) {
@@ -3886,7 +3886,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 						t < 0 ? t = 0 : t > p.volumeScrubberWidth - p.scrubbersOffsetWidth && (t = p.volumeScrubberWidth - p.scrubbersOffsetWidth);
 						var o = t / p.volumeScrubberWidth;
 						p.disable_do && p.addChild(p.disable_do),
-							p.lastVolume = o, p.isVolumeScrubberScrubbing_bl = !0, p.updateVolume(o), p.ttm2.show(),
+							p.lastVolume = o, p.isVolumeScrubberScrubbing_bl = !0, p.updateVolume(o),
 							p.dispatchEvent(n.VOLUME_START_TO_SCRUB), p.isMobile_bl ? p.hasPointerEvent_bl ? (window.addEventListener("pointermove", p.volumeScrubberMoveHandler), window.addEventListener("pointerup", p.volumeScrubberEndHandler)) : (window.addEventListener("touchmove", p.volumeScrubberMoveHandler), window.addEventListener("touchend", p.volumeScrubberEndHandler)) : (window.addEventListener("mousemove", p.volumeScrubberMoveHandler), window.addEventListener("mouseup", p.volumeScrubberEndHandler))
 					}
 				}, this.volumeScrubberMoveHandler = function(e) {
