@@ -1464,7 +1464,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 							}, this.setSource = function(e) {
 								if (self.stop(!0), FWDMSPUtils.getCookie("FWDMSPusePP") && !self.playedOnceCP_bl && self.setVolume(Number(FWDMSPUtils.getCookie("FWDMSPVolume"))), self.data.playVideoOnlyWhenLoggedIn_bl && !self.data.isLoggedIn_bl) return self.main_do.addChild(self.info_do), self.info_do.showText(self.data.loggedInMessage_str),
 									void(self.info_do.allowToRemove_bl = !1);
-								if (!self.ytb_do.isReady_bl) setTimeout(self.setSource, 200);
+								//if (!self.ytb_do.isReady_bl) setTimeout(self.setSource, 200);
 								else {
 									if (e && (self.itemClicked = e), self.passWindow_do && self.passWindow_do.hide(), self.id < 0 ? self.id = 0 : self.id > self.totalAudio - 1 && (self.id = self.totalAudio - 1), self.audioPath = self.data.playlist_ar[self.id].source, self.isShoutcast_bl = self.data.playlist_ar[self.id].isShoutcast_bl, self.isIcecast_bl = self.data.playlist_ar[self.id].isIcecast_bl, self.data.shoutcastVersion = self.data.playlist_ar[self.id].shoutcastVersion, !self.isShoutcastLoaded_bl && self.isShoutcast_bl && self.prevAudioPath != self.audioPath) return self.isShoutcastLoaded_bl = !0, self.playlist_do && self.playlist_do.activateItems(self.id, self.itemClicked),
 										self.resizeHandler(),
