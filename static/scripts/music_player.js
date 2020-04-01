@@ -1634,7 +1634,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 											self.disableClick_bl = !1
 									}, 500)
 							}, this.goFullScreen = function() {
-								if (self.isAPIReady_bl && (self.audioType_str == FWDMSP.YOUTUBE || self.audioType_str == FWDMSP.VIDEO)) {
+								if (self.isAPIReady_bl && (self.audioType_str == FWDMSP.VIDEO)) {
 									document.addEventListener && (document.addEventListener("fullscreenchange", self.onFullScreenChange), document.addEventListener("mozfullscreenchange", self.onFullScreenChange), document.addEventListener("webkitfullscreenchange", self.onFullScreenChange), document.addEventListener("MSFullscreenChange", self.onFullScreenChange)),
 										document.documentElement.requestFullScreen ? document.documentElement.requestFullScreen() : document.documentElement.mozRequestFullScreen ? document.documentElement.mozRequestFullScreen() : document.documentElement.webkitRequestFullScreen ? document.documentElement.webkitRequestFullScreen() : document.documentElement.msRequestFullscreen && document.documentElement.msRequestFullscreen(), self.disableClick(), self.main_do.getStyle().position = "fixed", self.main_do.getStyle().overflow = "visible", self.controller_do.setOverflow("visible"), self.controller_do.mainHolder_do.setOverflow("visible"),
 										document.documentElement.style.overflow = "hidden", self.opener_do && self.opener_do.setVisible(!1), self.main_do.getStyle().zIndex = 9999999999998, self.playlist_do && self.playlist_do.setVisible(!1),
@@ -1644,7 +1644,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 										self.isFullScreen_bl = !0,
 										self.fullScreenButton_do.setButtonState(0);
 									var e = FWDMSPUtils.getScrollOffsets();
-									self.lastX = e.x, self.lastY = e.y, self.hider && self.audioType_str == FWDMSP.VIDEO && self.videoScreen_do && self.videoScreen_do.isPlaying_bl ? self.hider.start() : self.hider && self.audioType_str == FWDMSP.YOUTUBE && self.ytb_do && self.ytb_do.isPlaying_bl && self.hider.start(), self.playlist_do && self.playlist_do.ascDscButton_do && self.playlist_do.ascDscButton_do.setAlpha(0), self.audioType_str == FWDMSP.VIDEO && self.videoScreen_do && !self.videoScreen_do.isPlaying_bl ? self.largePlayButton_do.show() : self.audioType_str != FWDMSP.YOUTUBE || !self.ytb_do || self.ytb_do.isPlaying_bl || self.isMobile_bl || self.largePlayButton_do.show(),
+									self.lastX = e.x, self.lastY = e.y, self.hider && self.audioType_str == FWDMSP.VIDEO && self.videoScreen_do && self.videoScreen_do.isPlaying_bl ? self.hider.start() : self.hider && self.hider.start(), self.playlist_do && self.playlist_do.ascDscButton_do && self.playlist_do.ascDscButton_do.setAlpha(0), self.audioType_str == FWDMSP.VIDEO && self.videoScreen_do || !self.ytb_do || self.ytb_do.isPlaying_bl || self.isMobile_bl || self.largePlayButton_do.show(),
 										window.scrollTo(0, 0), self.isMobile_bl && window.addEventListener("touchmove", self.disableFullScreenOnMobileHandler),
 										self.resizeHandler(!0)
 								}
@@ -1688,26 +1688,26 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 									if (self.data.playlist_ar[self.id].isPrivate && !self.hasPassedPassowrd_bl && self.passWindow_do) return self.resizeHandler(),
 										void self.passWindow_do.show();
 									self.hasPassedPassowrd_bl = !0,
-										self.largePlayButton_do && self.largePlayButton_do.hide(), FWDMSP.pauseAllAudio(self), self.audioType_str == FWDMSP.YOUTUBE && self.ytb_do ? self.ytb_do.play() : self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS || !self.videoScreen_do ? self.audioScreen_do && self.audioScreen_do.play() : self.audioType_str != FWDMSP.HLS_JS || self.isHLSManifestReady_bl ? self.videoScreen_do && self.videoScreen_do.play() : (self.videoScreen_do.initVideo(), self.setupHLS(), self.hlsJS.loadSource(self.audioPath), self.hlsJS.attachMedia(self.videoScreen_do.video_el), self.hlsJS.on(Hls.Events.MANIFEST_PARSED, function(e) {
+										self.largePlayButton_do && self.largePlayButton_do.hide(), FWDMSP.pauseAllAudio(self),  self.audioType_str != FWDMSP.HLS || !self.videoScreen_do ? self.audioScreen_do && self.audioScreen_do.play() : self.audioType_str != FWDMSP.HLS_JS || self.isHLSManifestReady_bl ? self.videoScreen_do && self.videoScreen_do.play() : (self.videoScreen_do.initVideo(), self.setupHLS(), self.hlsJS.loadSource(self.audioPath), self.hlsJS.attachMedia(self.videoScreen_do.video_el), self.hlsJS.on(Hls.Events.MANIFEST_PARSED, function(e) {
 											self.isHLSManifestReady_bl = !0, self.audioType_str == FWDMSP.HLS_JS && self.play()
 										}))
 								}
 							}, this.resume = function() {
 								self.isAPIReady_bl && FWDMSP.hasHTML5Audio && self.audioType_str == FWDMSP.HLS && self.flashObject.playerResume()
 							}, this.pause = function() {
-								self.isAPIReady_bl && self.isPlaylistLoaded_bl && (self.isPlaylistItemClicked_bl = !0, self.largePlayButton_do && self.isFullScreen_bl && self.largePlayButton_do.show(), self.audioType_str == FWDMSP.YOUTUBE ? self.ytb_do.pause() : self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS || !self.videoScreen_do ? FWDMSP.hasHTML5Audio && self.audioScreen_do && self.audioScreen_do.pause() : self.videoScreen_do.pause())
+								self.isAPIReady_bl && self.isPlaylistLoaded_bl && (self.isPlaylistItemClicked_bl = !0, self.largePlayButton_do && self.isFullScreen_bl && self.largePlayButton_do.show(), self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS || !self.videoScreen_do ? FWDMSP.hasHTML5Audio && self.audioScreen_do && self.audioScreen_do.pause() : self.videoScreen_do.pause())
 							}, this.stop = function(e) {
-								self.isAPIReady_bl && (e || (self.isIcecastLoaded_bl = !1, self.isShoutcastLoaded_bl = !1), self.isRadioLoaded_bl = !1, self.hasStartedToPlay_bl = !1, self.hasPassedPassowrd_bl = !1, self.isShoutcast_bl = !1, self.isIcecast_bl = !1, self.destroyHLS(), self.atb_do && self.atb_do.hide(!0), self.opener_do && self.opener_do.showPlayButton(), self.largePlayButton_do && self.largePlayButton_do.hide(), self.playlist_do && (self.playlist_do.setCurItemPlayState(), self.playlist_do.updateCurItemProgress(0)), self.controller_do && self.controller_do.ttm && self.controller_do.ttm.hide(), self.showCursor(), self.audioType_str == FWDMSP.YOUTUBE ? self.ytb_do.stop() : self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS || !self.videoScreen_do ? FWDMSP.hasHTML5Audio && self.audioScreen_do.stop() : self.videoScreen_do.stop(), self.controller_do && self.controller_do.disableAtbButton(), self.setPlaybackRate(self.data.defaultPlaybackRate), self.hasHlsPlayedOnce_bl = !1, self.isSafeToScrub_bl = !1, self.hlsState = void 0, self.changeHLS_bl = !1)
+								self.isAPIReady_bl && (e || (self.isIcecastLoaded_bl = !1, self.isShoutcastLoaded_bl = !1), self.isRadioLoaded_bl = !1, self.hasStartedToPlay_bl = !1, self.hasPassedPassowrd_bl = !1, self.isShoutcast_bl = !1, self.isIcecast_bl = !1, self.destroyHLS(), self.atb_do && self.atb_do.hide(!0), self.opener_do && self.opener_do.showPlayButton(), self.largePlayButton_do && self.largePlayButton_do.hide(), self.playlist_do && (self.playlist_do.setCurItemPlayState(), self.playlist_do.updateCurItemProgress(0)), self.controller_do && self.controller_do.ttm && self.controller_do.ttm.hide(), self.showCursor(), self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS || !self.videoScreen_do ? FWDMSP.hasHTML5Audio && self.audioScreen_do.stop() : self.videoScreen_do.stop(), self.controller_do && self.controller_do.disableAtbButton(), self.setPlaybackRate(self.data.defaultPlaybackRate), self.hasHlsPlayedOnce_bl = !1, self.isSafeToScrub_bl = !1, self.hlsState = void 0, self.changeHLS_bl = !1)
 							}, this.startToScrub = function() {
-								self.isAPIReady_bl && self.isPlaylistLoaded_bl && (self.audioType_str == FWDMSP.YOUTUBE ? self.ytb_do.startToScrub() : self.audioType_str == FWDMSP.VIDEO ? self.videoScreen_do.startToScrub() : FWDMSP.hasHTML5Audio ? self.audioScreen_do.startToScrub() : self.isFlashScreenReady_bl && self.flashObject.startToScrub())
+								self.isAPIReady_bl && self.isPlaylistLoaded_bl && (self.audioType_str == FWDMSP.VIDEO ? self.videoScreen_do.startToScrub() : FWDMSP.hasHTML5Audio ? self.audioScreen_do.startToScrub() : self.isFlashScreenReady_bl && self.flashObject.startToScrub())
 							}, this.stopToScrub = function() {
-								self.isAPIReady_bl && self.isPlaylistLoaded_bl && (self.audioType_str == FWDMSP.YOUTUBE ? self.ytb_do.stopToScrub() : self.audioType_str == FWDMSP.VIDEO ? self.videoScreen_do.stopToScrub() : FWDMSP.hasHTML5Audio ? self.audioScreen_do.stopToScrub() : self.isFlashScreenReady_bl && self.flashObject.stopToScrub())
+								self.isAPIReady_bl && self.isPlaylistLoaded_bl && (self.audioType_str == FWDMSP.VIDEO ? self.videoScreen_do.stopToScrub() : FWDMSP.hasHTML5Audio ? self.audioScreen_do.stopToScrub() : self.isFlashScreenReady_bl && self.flashObject.stopToScrub())
 							}, this.scrub = function(e) {
-								self.isAPIReady_bl && self.isPlaylistLoaded_bl && (isNaN(e) || (e < 0 ? e = 0 : 1 < e && (e = 1), self.audioType_str == FWDMSP.YOUTUBE ? self.ytb_do.scrub(e) : self.audioType_str == FWDMSP.VIDEO ? self.videoScreen_do.scrub(e) : FWDMSP.hasHTML5Audio ? self.audioType_str == FWDMSP.HLS ? self.flashObject.playerSeek(e * self.HLSDuration) : self.audioScreen_do && self.audioScreen_do.scrub(e) : self.isFlashScreenReady_bl && self.flashObject.scrub(e)))
+								self.isAPIReady_bl && self.isPlaylistLoaded_bl && (isNaN(e) || (e < 0 ? e = 0 : 1 < e && (e = 1), self.audioType_str == FWDMSP.VIDEO ? self.videoScreen_do.scrub(e) : FWDMSP.hasHTML5Audio ? self.audioType_str == FWDMSP.HLS ? self.flashObject.playerSeek(e * self.HLSDuration) : self.audioScreen_do && self.audioScreen_do.scrub(e) : self.isFlashScreenReady_bl && self.flashObject.scrub(e)))
 							}, this.setPlaybackRate = function(e) {
-								self.isAPIReady_bl && (self.data.defaultPlaybackRate = e, self.audioType_str == FWDMSP.VIDEO && self.videoScreen_do ? self.videoScreen_do.setPlaybackRate(e) : self.audioType_str == FWDMSP.AUDIO && self.audioScreen_do ? self.audioScreen_do.setPlaybackRate(e) : self.audioType_str == FWDMSP.YOUTUBE && self.ytb_do.setPlaybackRate(e))
+								self.isAPIReady_bl && (self.data.defaultPlaybackRate = e, self.audioType_str == FWDMSP.VIDEO && self.videoScreen_do ? self.videoScreen_do.setPlaybackRate(e) : self.audioType_str == FWDMSP.AUDIO && self.audioScreen_do ? self.audioScreen_do.setPlaybackRate(e) : self.ytb_do.setPlaybackRate(e))
 							}, this.setVolume = function(e) {
-								self.isAPIReady_bl && (self.volume = e, self.controller_do && self.controller_do.updateVolume(e, !0), self.audioType_str == FWDMSP.YOUTUBE && self.ytb_do ? self.ytb_do.setVolume(e) : self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS || !self.videoScreen_do ? FWDMSP.hasHTML5Audio && self.audioScreen_do && self.audioScreen_do.setVolume(e) : self.videoScreen_do.setVolume(e))
+								self.isAPIReady_bl && (self.volume = e, self.controller_do && self.controller_do.updateVolume(e, !0), self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS || !self.videoScreen_do ? FWDMSP.hasHTML5Audio && self.audioScreen_do && self.audioScreen_do.setVolume(e) : self.videoScreen_do.setVolume(e))
 							}, this.showCategories = function() {
 								self.isAPIReady_bl && self.categories_do && (self.categories_do.show(self.catId), self.customContextMenu_do && self.customContextMenu_do.updateParent(self.categories_do), self.controller_do.setCategoriesButtonState("selected"))
 							}, this.hideCategories = function() {
@@ -1729,13 +1729,13 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 							}, this.getThumbnailPath = function() {
 								return self.data.playlist_ar[self.id].thumbPath
 							}, this.getCurrentTime = function() {
-								if (self.isAPIReady_bl) return self.audioType_str == FWDMSP.YOUTUBE ? self.ytb_do.getCurrentTime() : self.audioType_str == FWDMSP.AUDIO ? self.audioScreen_do.getCurrentTime() : self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS || !self.videoScreen_do ? void 0 : self.videoScreen_do.getCurrentTime()
+								if (self.isAPIReady_bl) return self.audioType_str == FWDMSP.AUDIO ? self.audioScreen_do.getCurrentTime() : self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS || !self.videoScreen_do ? void 0 : self.videoScreen_do.getCurrentTime()
 							}, this.getDuration = function() {
-								if (self.isAPIReady_bl) return self.audioType_str == FWDMSP.YOUTUBE ? self.ytb_do.getDuration() : self.audioType_str == FWDMSP.AUDIO ? self.audioScreen_do.getDuration() : self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS || !self.videoScreen_do ? void 0 : self.videoScreen_do.getDuration()
+								if (self.isAPIReady_bl) return self.audioType_str == FWDMSP.AUDIO ? self.audioScreen_do.getDuration() : self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS || !self.videoScreen_do ? void 0 : self.videoScreen_do.getDuration()
 							}, this.share = function() {
 								self.isAPIReady_bl && self.shareWindow_do && self.shareWindow_do.show()
 							}, this.scrubbAtTime = function(e) {
-								self.isAPIReady_bl && e && (-1 != String(e).indexOf(":") && (e = FWDMSPUtils.getSecondsFromString(e)), self.audioType_str == FWDMSP.YOUTUBE && self.ytb_do && self.ytb_do.isSafeToBeControlled_bl ? self.ytb_do.scrubbAtTime(e) : self.audioType_str == FWDMSP.AUDIO ? self.audioScreen_do && self.audioScreen_do.scrubbAtTime(e) : self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS || !self.videoScreen_do || self.videoScreen_do && self.videoScreen_do.scrubbAtTime(e))
+								self.isAPIReady_bl && e && (-1 != String(e).indexOf(":") && (e = FWDMSPUtils.getSecondsFromString(e)), self.ytb_do.isSafeToBeControlled_bl ? self.ytb_do.scrubbAtTime(e) : self.audioType_str == FWDMSP.AUDIO ? self.audioScreen_do && self.audioScreen_do.scrubbAtTime(e) : self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS || !self.videoScreen_do || self.videoScreen_do && self.videoScreen_do.scrubbAtTime(e))
 							}, this.buy = function(pId) {
 								if (self.isAPIReady_bl) {
 									null == pId && (pId = self.id);
@@ -1779,9 +1779,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 										this.listeners.events_ar.splice(o, 1);
 										break
 									}
-							}, self.useYoutube_bl && (-1 != location.protocol.indexOf("file:") && FWDMSPUtils.isIE || -1 != location.protocol.indexOf("file:") && FWDMSPUtils.isOpera)) return self.stageContainer = FWDMSPUtils.getChildById(props.parentId), self.setupMainDo(),
-							self.setupInfo(), self.main_do.addChild(self.info_do), self.info_do.allowToRemove_bl = !1, self.info_do.showText('This browser dosen\'t allow the Youtube API to run local, please test it online or in another browser like Firefox or Chrome! If you don\'t want to use Youtube set <font color="#FF000000">useYoutube:"no"</font>.'), void self.resizeHandler();
-						setTimeout(FWDMSP.checkIfHasYoutube, 100)
+							}, (-1 != location.protocol.indexOf("file:") && FWDMSPUtils.isIE || -1 != location.protocol.indexOf("file:") && FWDMSPUtils.isOpera)) return self.stageContainer = FWDMSPUtils.getChildById(props.parentId), self.setupMainDo(),
+							self.setupInfo(), self.main_do.addChild(self.info_do), self.info_do.allowToRemove_bl = !1, self.info_do.showText('This browser dosen\'t allow the API to run local, please test it online or in another browser like Firefox or Chrome! If you don\'t want to use set <font color="#FF000000">:"no"</font>.'), void self.resizeHandler();
 					}
 				} else alert("FWDMSP instance name is requires please make sure that the instanceName parameter exsists and it's value is uinique.");
 
@@ -1794,24 +1793,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 				}
 			},
 			TZ, UZ, f$, g$;
-		FWDMSP.checkIfHasYoutube = function() {
-				if (!FWDMSP.checkIfHasYoutube_bl) {
-					for (var e = !(FWDMSP.checkIfHasYoutube_bl = !0),
-							t = FWDMSP.instaces_ar.length, o = 0; o < t; o++) FWDMSP.instaces_ar[o].useYoutube_bl && (e = !0);
-					e ? setTimeout(FWDMSP.setupYoutubeAPI, 500) : setTimeout(FWDMSP.setupAllInstances, 500)
-				}
-			}, FWDMSP.setupYoutubeAPI = function() {
-				if (!FWDMSP.isYoutubeAPICreated_bl)
-					if (FWDMSP.isYoutubeAPICreated_bl = !0, "undefined" != typeof YT) FWDMSP.setupAllInstances();
-					else {
-						var e = document.createElement("script");
-						e.src = "https://www.youtube.com/iframe_api";
-						var t = document.getElementsByTagName("script")[0];
-						t.parentNode.insertBefore(e, t), window.onYouTubeIframeAPIReady ? window.onYouTubeIframeAPIReady = function() {
-							FWDMSP.setupAllInstances()
-						} : setTimeout(FWDMSP.setupAllInstances, 1e3)
-					}
-			}, FWDMSP.setupAllInstances = function() {
+		FWDMSP.setupAllInstances = function() {
 				if (!FWDMSP.areInstancesCreated_bl) {
 					var e = FWDMSPUtils.getUrlArgs(window.location.search).MSPInstanceName;
 					"pause" != FWDMSP.audioStartBehaviour && "stop" != FWDMSP.audioStartBehaviour && "none" != FWDMSP.audioStartBehaviour && (FWDMSP.audioStartBehaviour = "pause"),
@@ -1857,7 +1839,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 					return "probably" != e.canPlayType("audio/mpeg") && "maybe" != e.canPlayType("audio/mpeg") || (t += ".mp3"), "probably" != e.canPlayType("audio/ogg") && "maybe" != e.canPlayType("audio/ogg") || (t += ".ogg"), "probably" != e.canPlayType("audio/mp4") && "maybe" != e.canPlayType("audio/mp4") || (t += ".webm"), (o = t.split(".")).shift(), e = null, o
 				}
 			}(), FWDMSP.hasHTMLHLS = (f$ = document.createElement("video"), g$ = !1, f$.canPlayType && (g$ = Boolean("probably" === f$.canPlayType("application/vnd.apple.mpegurl") || "maybe" === f$.canPlayType("application/vnd.apple.mpegurl"))), g$),
-			FWDMSP.instaces_ar = [], FWDMSP.CENTER = "center", FWDMSP.LEFT = "left", FWDMSP.RIGHT = "right", FWDMSP.YOUTUBE = "youtube", FWDMSP.VIDEO = "video",
+			FWDMSP.instaces_ar = [], FWDMSP.CENTER = "center", FWDMSP.LEFT = "left", FWDMSP.RIGHT = "right", FWDMSP.VIDEO = "video",
 			FWDMSP.AUDIO = "audio",
 			FWDMSP.POPUP = "popup", FWDMSP.POSITION_TOP = "positionTop", FWDMSP.POSITION_BOTTOM = "positionBottom",
 			FWDMSP.READY = "ready", FWDMSP.START = "start", FWDMSP.START_TO_LOAD_PLAYLIST = "startToLoadPlaylist", FWDMSP.LOAD_PLAYLIST_COMPLETE = "loadPlaylistComplete", FWDMSP.STOP = "stop", FWDMSP.PLAY = "play", FWDMSP.PAUSE = "pause", FWDMSP.UPDATE = "update", FWDMSP.UPDATE_TIME = "updateTime", FWDMSP.ERROR = "error", FWDMSP.PLAY_COMPLETE = "playComplete", FWDMSP.PLAYLIST_LOAD_COMPLETE = "onPlayListLoadComplete", FWDMSP.HLS = "hls_flash", window.FWDMSP = FWDMSP
@@ -1891,7 +1873,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 				this.showThumbnail_bl = !1, this.showSoundAnimation_bl = !1, this.expandControllerBackground_bl = !1, this.showPlaylistItemPlayButton_bl = !1, this.loadFromFolder_bl = !1, this.isMobile_bl = FWDMSPUtils.isMobile, this.hasPointerEvent_bl = FWDMSPUtils.hasPointerEvent, self.init = function() {
 					self.parseProperties()
 				}, self.parseProperties = function() {
-					if (this.useYoutube_bl = self.props_obj.useYoutube || "no", this.useYoutube_bl = "yes" == self.useYoutube_bl, this.addKeyboardSupport_bl = self.props_obj.addKeyboardSupport || "no", this.addKeyboardSupport_bl = "yes" == self.addKeyboardSupport_bl, this.useVideo_bl = self.props_obj.useVideo || "no", this.useVideo_bl = "yes" == self.useVideo_bl, self.useHEXColorsForSkin_bl = self.props_obj.useHEXColorsForSkin, self.useHEXColorsForSkin_bl = "yes" == self.useHEXColorsForSkin_bl, -1 != location.protocol.indexOf("file:") && (self.useHEXColorsForSkin_bl = !1), self.categoriesId_str = self.props_obj.playlistsId, self.categoriesId_str)
+					if (this.addKeyboardSupport_bl = self.props_obj.addKeyboardSupport || "no", this.addKeyboardSupport_bl = "yes" == self.addKeyboardSupport_bl, this.useVideo_bl = self.props_obj.useVideo || "no", this.useVideo_bl = "yes" == self.useVideo_bl, self.useHEXColorsForSkin_bl = self.props_obj.useHEXColorsForSkin, self.useHEXColorsForSkin_bl = "yes" == self.useHEXColorsForSkin_bl, -1 != location.protocol.indexOf("file:") && (self.useHEXColorsForSkin_bl = !1), self.categoriesId_str = self.props_obj.playlistsId, self.categoriesId_str)
 						if (self.mainFolderPath_str = self.props_obj.mainFolderPath, self.mainFolderPath_str)
 							if (self.mainFolderPath_str.lastIndexOf("/") + 1 != self.mainFolderPath_str.length && (self.mainFolderPath_str += "/"), self.skinPath_str = self.props_obj.skinPath, self.skinPath_str)
 								if (self.skinPath_str.lastIndexOf("/") + 1 != self.skinPath_str.length && (self.skinPath_str += "/"), self.skinPath_str = self.mainFolderPath_str + self.skinPath_str, self.flashPath_str = self.mainFolderPath_str + "flashlsChromeless.swf", self.proxyPath_str = self.mainFolderPath_str + "proxy.php", self.proxyFolderPath_str = self.mainFolderPath_str + "proxyFolder.php", self.mailPath_str = self.mainFolderPath_str + "sendMail.php", self.hlsPath_str = self.mainFolderPath_str + "hls.js", self.categories_el = document.getElementById(self.categoriesId_str), self.categories_el) {
@@ -2417,7 +2399,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 						}, 50));
 						self.closeData(),
 						self.isYoutbe_bl = !1,
-						-1 != t.indexOf("soundcloud.com") ? self.loadSoundCloudList(t) : -1 != t.indexOf("list=") && self.useYoutube_bl ? (self.isYoutbe_bl = !0, self.loadYoutubePlaylist(t)) : -1 != t.indexOf("official.fm") ? self.loadOfficialFmList(t) : -1 != t.indexOf("folder:") ? self.loadFolderPlaylist(t) : -1 != t.indexOf(".xml")
+						-1 != t.indexOf("soundcloud.com") ? self.loadSoundCloudList(t) : -1 != t.indexOf("list=") && -1 != t.indexOf("official.fm") ? self.loadOfficialFmList(t) : -1 != t.indexOf("folder:") ? self.loadFolderPlaylist(t) : -1 != t.indexOf(".xml")
 						|| -1 != t.indexOf("http:")
 						|| -1 != t.indexOf("https:")
 						|| -1 != t.indexOf("www.")
@@ -2774,10 +2756,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 						(t = {}).source = o[s]["@attributes"]["data-path"], -1 != t.source.indexOf("encrypt:") && (t.source = atob(t.source.substr(8)));
 						var i = encodeURI(t.source.substr(0, t.source.lastIndexOf("/") + 1)),
 							n = t.source.substr(t.source.lastIndexOf("/") + 1);
-						if (-1 != t.source.indexOf("youtube.")) {
-							var l = t.source.match(/^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/);
-							t.source = l[2]
-						} else n = -1 != n.indexOf(";.mp3") || FWDMSPUtils.isURLEncoded(n) ? t.source.substr(t.source.lastIndexOf("/") + 1) : encodeURIComponent(t.source.substr(t.source.lastIndexOf("/") + 1)), t.source = i + n;
+						n = -1 != n.indexOf(";.mp3") || FWDMSPUtils.isURLEncoded(n) ? t.source.substr(t.source.lastIndexOf("/") + 1) : encodeURIComponent(t.source.substr(t.source.lastIndexOf("/") + 1)), t.source = i + n;
 						t.buy = o[s]["@attributes"]["data-track-id"], t.can_add = o[s]["@attributes"]["data-add"], null == t.buy && (t.buy = ""), t.thumbPath = o[s]["@attributes"]["data-thumbpath"];
 						var r = "";
 						if (self.showTracksNumbers_bl ? (s < 9 && (r = "0"), r = r + (s + 1) + ". ", t.title = r + o[s]["@attributes"]["data-title"]) : t.title = o[s]["@attributes"]
@@ -2837,7 +2816,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 								})
 							}, 50));
 							if (n > self.maxPlaylistItems - 1) break;
-							if (l.isShoutcast_bl = FWDMSPUtils.getAttributeValue(o, "data-type"), l.isShoutcast_bl && (-1 != l.isShoutcast_bl.toLowerCase().indexOf("shoutcastv1") ? (l.shoutcastVersion = 1, l.isShoutcast_bl = !0) : -1 != l.isShoutcast_bl.toLowerCase().indexOf("shoutcastv2") ? (l.shoutcastVersion = 2, l.isShoutcast_bl = !0) : l.isShoutcast_bl = !1), l.isIcecast_bl = FWDMSPUtils.getAttributeValue(o, "data-type"), l.isIcecast_bl && (-1 != l.isIcecast_bl.toLowerCase().indexOf("icecast") ? l.isIcecast_bl = !0 : l.isIcecast_bl = !1), l.source = FWDMSPUtils.getAttributeValue(o, "data-path"), -1 != l.source.indexOf("encrypt:") && (l.source = atob(l.source.substr(8))), -1 != l.source.indexOf("youtube.")) {
+							if (l.isShoutcast_bl = FWDMSPUtils.getAttributeValue(o, "data-type"), l.isShoutcast_bl && (-1 != l.isShoutcast_bl.toLowerCase().indexOf("shoutcastv1") ? (l.shoutcastVersion = 1, l.isShoutcast_bl = !0) : -1 != l.isShoutcast_bl.toLowerCase().indexOf("shoutcastv2") ? (l.shoutcastVersion = 2, l.isShoutcast_bl = !0) : l.isShoutcast_bl = !1), l.isIcecast_bl = FWDMSPUtils.getAttributeValue(o, "data-type"), l.isIcecast_bl && (-1 != l.isIcecast_bl.toLowerCase().indexOf("icecast") ? l.isIcecast_bl = !0 : l.isIcecast_bl = !1), l.source = FWDMSPUtils.getAttributeValue(o, "data-path"), -1 != l.source.indexOf("encrypt:") && (l.source = atob(l.source.substr(8)))) {
 								var r = l.source.match(/^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/);
 								l.source = r[2]
 							} else if (-1 == l.source.lastIndexOf("google.") && !l.isShoutcast_bl && !l.isIcecast_bl) {
@@ -3904,7 +3883,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 					var e, t, o = 0,
 						s = 0,
 						i = p.buttons_ar.length;
-					if (f.fullScreenButton_do && (-1 != FWDMSPUtils.indexOfArray(p.buttons_ar, f.fullScreenButton_do) && p.buttons_ar.splice(FWDMSPUtils.indexOfArray(p.buttons_ar, f.fullScreenButton_do), 1), p.mainHolder_do.contains(p.fullScreenButton_do) || (f.audioType_str == FWDMSP.VIDEO || f.audioType_str == FWDMSP.YOUTUBE ? (f.fullScreenButton_do.setX(parseInt((p.controllerHeight - f.fullScreenButton_do.w) / 2) + 1), f.fullScreenButton_do.setY(parseInt((p.controllerHeight - f.fullScreenButton_do.h) / 2) + 1), f.isFullScreen_bl || f.fullScreenButton_do.setAlpha(0)) : f.fullScreenButton_do.setX(-500))), f.isFullScreen_bl) {
+					if (f.fullScreenButton_do && (-1 != FWDMSPUtils.indexOfArray(p.buttons_ar, f.fullScreenButton_do) && p.buttons_ar.splice(FWDMSPUtils.indexOfArray(p.buttons_ar, f.fullScreenButton_do), 1), p.mainHolder_do.contains(p.fullScreenButton_do) || f.fullScreenButton_do.setX(-500))), f.isFullScreen_bl) {
 						o = p.stageWidth, f.main_do.setX(0), p.stageWidth < 500 ? (p.volumeScrubberWidth = 50, p.showVolumeScrubber_bl = !1) : (p.volumeScrubberWidth = 150, p.showVolumeScrubber_bl = !0);
 						var n = [];
 						n.push(p.playPauseButton_do), n.push(p.currentTime_do), n.push(p.mainScrubber_do), n.push(p.totalTime_do), n.push(p.volumeButton_do), p.showVolumeScrubber_bl ? n.push(p.volumeScrubber_do) : p.volumeScrubber_do.setX(-1e3), n.push(f.fullScreenButton_do), i = n.length, FWDAnimation.killTweensOf(p.videoControllerHolder_do), p.videoControllerHolder_do.setWidth(p.stageWidth), p.videoControllerHolder_do.setHeight(p.controllerHeight), p.videoControllerHolder_do.setY(p.stageHeight - p.controllerHeight), o -= p.playPauseButton_do.w + p.currentTime_do.w + p.totalTime_do.w + p.volumeButton_do.w + p.volumeScrubberWidth + f.fullScreenButton_do.w, o -= 8 * p.spaceBetweenButtons, p.showVolumeScrubber_bl || (o += p.volumeScrubberWidth, o += p.spaceBetweenButtons), p.mainScrubberWidth = o, 0 < p.mainScrubberWidth && p.mainScrubber_do.setWidth(p.mainScrubberWidth), p.mainScrubberBkMiddle_do.setWidth(p.mainScrubberWidth - 2 * p.scrubbersBkLeftAndRightWidth), p.mainScrubberBkRight_do.setX(p.mainScrubberWidth - p.scrubbersBkLeftAndRightWidth), p.mainScrubberDragMiddle_do.setWidth(p.mainScrubberWidth - p.scrubbersBkLeftAndRightWidth - p.scrubbersOffsetWidth), p.progressMiddle_do.setWidth(p.mainScrubberWidth - p.scrubbersBkLeftAndRightWidth - p.scrubbersOffsetWidth), p.updateMainScrubber(p.percentPlayed),
@@ -3921,7 +3900,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 								var a = FWDMSPUtils.indexOfArray(p.buttons_ar, p.buyButton_do); - 1 != a && (p.buttons_ar.splice(a, 1), p.buyButton_do.setVisible(!1))
 							}
 						if (f.isPlaylistLoaded_bl) - 1 == FWDMSPUtils.indexOfArray(p.buttons_ar) && (p.showBuyButton_bl && _.playlist_ar[f.id].buy ? p.buttons_ar.splice(FWDMSPUtils.indexOfArray(p.buttons_ar, p.buyButton_do), 0) : p.showPopupButton_bl ? p.buttons_ar.splice(p.buttons_ar.length - 2, 0) : p.showFacebookButton_bl || p.showPopupButton_bl ? p.buttons_ar.splice(p.buttons_ar.length - 1, 0) : p.buttons_ar.splice(p.buttons_ar.length, 0));
-						p.showNextAndPrevButtons_bl || (-1 == FWDMSPUtils.indexOfArray(p.buttons_ar, p.prevButton_do) && p.buttons_ar.splice(0, 0, p.prevButton_do), -1 == FWDMSPUtils.indexOfArray(p.buttons_ar, p.nextButton_do) && p.buttons_ar.splice(2, 0, p.nextButton_do)), i = p.buttons_ar.length, _.playlist_ar ? null == _.playlist_ar[f.id] ? p.showThumbnail_bl = !1 : p.showThumbnail_bl = Boolean(_.playlist_ar[f.id].thumbPath) : p.showThumbnail_bl = !0, _.showThumbnail_bl || (p.showThumbnail_bl = !1), _.showThumbnail_bl || (p.showThumbnail_bl = !1), f.audioType_str == FWDMSP.YOUTUBE && f.useYoutube_bl || f.audioType_str == FWDMSP.VIDEO && f.useVideo_bl ? (p.showThumbnail_bl = !0, f.videosHolder_do.setX(0), f.audioType_str == FWDMSP.YOUTUBE ? (f.ytb_do && f.ytb_do.setX(0), f.videoScreen_do && f.videoScreen_do.setX(-1e4)) : f.audioType_str == FWDMSP.VIDEO && (f.ytb_do && f.ytb_do.setX(-1e5), f.videoScreen_do && f.videoScreen_do.setX(0))) : (_.showThumbnail_bl || (p.showThumbnail_bl = !1), f.videosHolder_do && f.videosHolder_do.setX(-1e5)), p.showThumbnail_bl ? (o += p.thumbWidthAndHeight, p.thumb_do.setX(0)) : p.thumb_do.setX(-300);
+						p.showNextAndPrevButtons_bl || (-1 == FWDMSPUtils.indexOfArray(p.buttons_ar, p.prevButton_do) && p.buttons_ar.splice(0, 0, p.prevButton_do), -1 == FWDMSPUtils.indexOfArray(p.buttons_ar, p.nextButton_do) && p.buttons_ar.splice(2, 0, p.nextButton_do)), i = p.buttons_ar.length, _.playlist_ar ? null == _.playlist_ar[f.id] ? p.showThumbnail_bl = !1 : p.showThumbnail_bl = Boolean(_.playlist_ar[f.id].thumbPath) : p.showThumbnail_bl = !0, _.showThumbnail_bl || (p.showThumbnail_bl = !1), _.showThumbnail_bl || (p.showThumbnail_bl = !1), f.audioType_str == FWDMSP.VIDEO && f.useVideo_bl ? (p.showThumbnail_bl = !0, f.videosHolder_do.setX(0), f.audioType_str == FWDMSP.VIDEO && (f.ytb_do && f.ytb_do.setX(-1e5), f.videoScreen_do && f.videoScreen_do.setX(0))) : (_.showThumbnail_bl || (p.showThumbnail_bl = !1), f.videosHolder_do && f.videosHolder_do.setX(-1e5)), p.showThumbnail_bl ? (o += p.thumbWidthAndHeight, p.thumb_do.setX(0)) : p.thumb_do.setX(-300);
 						for (l = 0; l < i; l++) o += (e = p.buttons_ar[l]).w + p.spaceBetweenButtons;
 						if (3 < i) {
 							var u = 0;
@@ -3955,7 +3934,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 							var c = 0,
 								h = p.totalButtonsWidth;
 							p.showNextAndPrevButtons_bl || (-1 != FWDMSPUtils.indexOfArray(p.buttons_ar, p.prevButton_do) && p.buttons_ar.splice(FWDMSPUtils.indexOfArray(p.buttons_ar, p.prevButton_do), 1), -1 != FWDMSPUtils.indexOfArray(p.buttons_ar, p.nextButton_do) && p.buttons_ar.splice(FWDMSPUtils.indexOfArray(p.buttons_ar, p.nextButton_do), 1)),
-								i = p.buttons_ar.length, -1 == FWDMSPUtils.indexOfArray(p.buttons_ar), p.buyButton_do && -1 == FWDMSPUtils.indexOfArray(p.buttons_ar, p.buyButton_do) && (h -= p.buyButton_do.w), !p.showVideoFullScreenButton_bl || f.audioType_str != FWDMSP.VIDEO && f.audioType_str != FWDMSP.YOUTUBE ? -1 != FWDMSPUtils.indexOfArray(p.buttons_ar, f.fullScreenButton_do) && (p.buttons_ar.splice(FWDMSPUtils.indexOfArray(p.buttons_ar, f.fullScreenButton_do), 1), f.fullScreenButton_do.setX(-500)) : (-1 == FWDMSPUtils.indexOfArray(p.buttons_ar, f.fullScreenButton_do) && (p.mainHolder_do.addChild(f.fullScreenButton_do), FWDAnimation.killTweensOf(f.fullScreenButton_do), p.buttons_ar.splice(0, 0, f.fullScreenButton_do)), h += f.fullScreenButton_do.w, FWDAnimation.killTweensOf(p.fullScreenButton_do), f.fullScreenButton_do.setAlpha(1)), i = p.buttons_ar.length, s = parseInt((p.stageWidth - h) / i);
+								i = p.buttons_ar.length, -1 == FWDMSPUtils.indexOfArray(p.buttons_ar), p.buyButton_do && -1 == FWDMSPUtils.indexOfArray(p.buttons_ar, p.buyButton_do) && (h -= p.buyButton_do.w), !p.showVideoFullScreenButton_bl || f.audioType_str != FWDMSP.VIDEO && (-1 == FWDMSPUtils.indexOfArray(p.buttons_ar, f.fullScreenButton_do) && (p.mainHolder_do.addChild(f.fullScreenButton_do), FWDAnimation.killTweensOf(f.fullScreenButton_do), p.buttons_ar.splice(0, 0, f.fullScreenButton_do)), h += f.fullScreenButton_do.w, FWDAnimation.killTweensOf(p.fullScreenButton_do), f.fullScreenButton_do.setAlpha(1)), i = p.buttons_ar.length, s = parseInt((p.stageWidth - h) / i);
 							for (l = 0; l < i; l++) c += (e = p.buttons_ar[l]).w + s;
 							c += p.volumeButton_do.w, o = parseInt((p.stageWidth - c) / 2) - p.startSpaceBetweenButtons;
 							for (l = 0; l < i; l++)(e = p.buttons_ar[l]).setY(p.titleBarGradLeft_do.h + p.allButtonsOffsetTopAndBottom + parseInt((p.largerButtonHeight - e.h) / 2)), 0 == l ? e.setX(o + p.startSpaceBetweenButtons) : (t = p.buttons_ar[l - 1], e.setX(Math.round(t.x + t.w + s)));
@@ -7009,32 +6988,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 				this.isReady_bl = !1, this.isQualityArrayDisapatched_bl = !1, this.isMobile_bl = FWDMSPUtils.isMobile, this.init = function() {
 					l.getStyle().width = "100%", l.getStyle().height = "100%", l.hasTransform3d_bl = !1, l.hasTransform2d_bl = !1, l.setBkColor("#000000"),
 						l.setBackfaceVisibility(),
-						l.id = "youtubePlayer", t.main_do.addChild(l), l.resizeAndPosition(), l.setupVideo()
-				}, this.setupVideo = function() {
-					l.ytb || (l.videoHolder_do = new FWDMSPDisplayObject("div"), l.videoHolder_do.hasTransform3d_bl = !1, l.videoHolder_do.hasTransform2d_bl = !1, l.videoHolder_do.screen.setAttribute("id", t.instanceName_str + "youtube"), l.videoHolder_do.getStyle().width = "100%", l.videoHolder_do.getStyle().height = "100%", l.videoHolder_do.setBackfaceVisibility(), l.addChild(l.videoHolder_do), l.ytb = new YT.Player(t.instanceName_str + "youtube", {
-						width: "100%",
-						height: "100%",
-						playerVars: {
-							controls: 0,
-							disablekb: 0,
-							loop: 0,
-							autoplay: 0,
-							wmode: "opaque",
-							showinfo: 0,
-							rel: 0,
-							modestbranding: 1,
-							iv_load_policy: 3,
-							cc_load_policy: 0,
-							fs: 0,
-							html5: 0
-						},
-						events: {
-							onReady: l.playerReadyHandler,
-							onError: l.playerErrorHandler,
-							onStateChange: l.stateChangeHandler,
-							onPlaybackQualityChange: l.qualityChangeHandler
-						}
-					}))
+						t.main_do.addChild(l), l.resizeAndPosition(), l.setupVideo()
 				}, this.playerReadyHandler = function() {
 					l.isReady_bl = !0, l.resizeAndPosition(), l.dispatchEvent(s.READY), l.hasBeenCreatedOnce_bl = !0
 				}, this.stateChangeHandler = function(e) {
@@ -7056,7 +7010,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 					if (l.isPausedInEvent_bl = !0, !l.isStopped_bl && !l.hasError_bl && l.isReady_bl) {
 						var t = "";
 						l.hasError_bl = !0, console.log(e.data),
-							2 == e.data ? t = "The youtube id is not well formatted, make sure it has exactly 11 characters and that it dosn't contain invalid characters such as exclamation points or asterisks." : 5 == e.data ? t = "The requested content cannot be played in an HTML5 player or another error related to the HTML5 player has occurred." : 100 == e.data ? t = "The youtube video request was not found, probably the video ID is incorrect." : 101 != e.data && 150 != e.data || (t = "The owner of the requested video does not allow it to be played in embedded players."), l.dispatchEvent(s.ERROR, {
+							2 == e.data ? t = "The id is not well formatted, make sure it has exactly 11 characters and that it dosn't contain invalid characters such as exclamation points or asterisks." : 5 == e.data ? t = "The requested content cannot be played in an HTML5 player or another error related to the HTML5 player has occurred." : 100 == e.data ? t = "The video request was not found, probably the video ID is incorrect." : 101 != e.data && 150 != e.data || (t = "The owner of the requested video does not allow it to be played in embedded players."), l.dispatchEvent(s.ERROR, {
 								text: t
 							})
 					}
@@ -7123,8 +7077,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 						curTime: "00:00",
 						totalTime: "00:00"
 					}))
-				}, this.destroyYoutube = function() {
-					l.videoHolder_do && (l.videoHolder_do.screen.removeAttribute("id", t.instanceName_str + "youtube"), l.videoHolder_do.destroy(), l.videoHolder_do = null), l.ytb && l.ytb.destroy(), l.ytb = null
 				}, this.stopVideo = function() {
 					l.ytb.cueVideoById(l.sourcePath_str)
 				}, this.startToScrub = function() {
@@ -7152,5 +7104,5 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 		};
 		s.setPrototype = function() {
 			s.prototype = new FWDMSPDisplayObject("div")
-		}, s.READY = "ready", s.ERROR = "error", s.UPDATE = "update", s.UPDATE_TIME = "updateTime", s.SAFE_TO_SCRUBB = "safeToControll", s.LOAD_PROGRESS = "loadProgress", s.PLAY = "play", s.PAUSE = "pause", s.STOP = "stop", s.PLAY_COMPLETE = "playComplete", s.CUED = "cued", s.QUALITY_CHANGE = "qualityChange", e.FWDMSPYoutubeScreen = s
+		}, s.READY = "ready", s.ERROR = "error", s.UPDATE = "update", s.UPDATE_TIME = "updateTime", s.SAFE_TO_SCRUBB = "safeToControll", s.LOAD_PROGRESS = "loadProgress", s.PLAY = "play", s.PAUSE = "pause", s.STOP = "stop", s.PLAY_COMPLETE = "playComplete", s.CUED = "cued", s.QUALITY_CHANGE = "qualityChange"
 	}(window);
