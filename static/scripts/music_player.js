@@ -1742,7 +1742,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 				}
 			},
 			TZ, UZ, f$, g$;
-		FWDMSP.setupAllInstances();
+			
+		FWDMSP.setupAllInstances;
 
 		FWDMSP.setupAllInstances = function() {
 				if (!FWDMSP.areInstancesCreated_bl) {
