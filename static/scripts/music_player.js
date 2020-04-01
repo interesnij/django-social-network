@@ -1678,9 +1678,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 							}, this.getThumbnailPath = function() {
 								return self.data.playlist_ar[self.id].thumbPath
 							}, this.getCurrentTime = function() {
-								if (self.isAPIReady_bl) return self.audioType_str == FWDMSP.AUDIO ? self.audioScreen_do.getCurrentTime() : self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS || !self.videoScreen_do ? void 0 : self.videoScreen_do.getCurrentTime()
+								if (self.isAPIReady_bl) return self.audioType_str == FWDMSP.AUDIO
 							}, this.getDuration = function() {
-								if (self.isAPIReady_bl) return self.audioType_str == FWDMSP.AUDIO ? self.audioScreen_do.getDuration() : self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS || !self.videoScreen_do ? void 0 : self.videoScreen_do.getDuration()
+								if (self.isAPIReady_bl) return self.audioType_str == FWDMSP.AUDIO
 							}, this.share = function() {
 								self.isAPIReady_bl && self.shareWindow_do && self.shareWindow_do.show()
 							}, this.scrubbAtTime = function(e) {
