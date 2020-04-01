@@ -4359,7 +4359,21 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 						})
 					}, 100))
 				}, this.showCompleteHandler = function() {}, this.hide = function() {
-					o.isShowed_bl 
+					o.isShowed_bl && (
+						                 o.isShowed_bl = !1,
+														 t.customContextMenu_do && t.customContextMenu_do.enable(),
+														 o.positionAndResize(),
+														 clearTimeout(o.hideCompleteId_to),
+														 clearTimeout(o.showCompleteId_to),
+														 (!FWDMSPUtils.isMobile || FWDMSPUtils.isMobile && FWDMSPUtils.hasPointerEvent) && t.main_do.setSelectable(!1),
+														 o.hideCompleteId_to = setTimeout(o.hideCompleteHandler, 800),
+														 FWDAnimation.killTweensOf(o.mainHolder_do),
+														 FWDAnimation.to(o.mainHolder_do, .8, {
+															 																			y: -o.stageHeight,
+															 																			ease: Expo.easeInOut
+																																	}
+																						)
+													)
 				}, this.hideCompleteHandler = function() {
 					t.main_do.removeChild(o), o.dispatchEvent(s.HIDE_COMPLETE)
 				}, this.init()
