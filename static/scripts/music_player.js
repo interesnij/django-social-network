@@ -1260,10 +1260,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 								: self.audioType_str != FWDMSP.AUDIO
 								|| self.audioScreen_do.isStopped_bl
 								&& !self.audioScreen_do.isStopped_bl
-								
-								? self.pause() : self.audioType_str != FWDMSP.YOUTUBE
-								|| self.ytb_do.isStopped_bl
-								|| self.play() : self.play() : self.pause() : self.play() : self.useDeepLinking_bl &&
+								 : self.play() : self.useDeepLinking_bl &&
 								self.id != e.id ? (FWDAddress.setValue(self.instanceName_str + "?catid=" + self.catId + "&trackid=" + e.id), self.id = e.id)
 								: (self.id = e.id, self.setSource(!0),
 										self.changeHLS_bl = !0,
