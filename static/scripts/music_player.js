@@ -4096,13 +4096,13 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                             }, this.disableShuffleHandler = function(e) {
                                 self.data.shuffle_bl = !1, self.controller_do.setShuffleButtonState("unselected")
                             }, this.facebookShareHandler = function(e) {
-                                self.resizeHandler(), self.shareWindow_do.show(), self.controller_do && !self.isMobile_bl && (self.controller_do.shareButton_do.setSelectedState(), self.controller_do.shareButton_do.isDisabled_bl = !0)
+                                console.log("Кнопка поделиться нажата!")
                             }, this.showPlaybacrateWindowHandler = function(e) {
                                 self.resizeHandler(), self.playbackRateWindow_do.show(), self.controller_do && !self.isMobile_bl && (self.controller_do.playbackRateButton_do.setSelectedState(), self.controller_do.playbackRateButton_do.isDisabled_bl = !0)
                             }, this.showAtobWindowHandler = function(e) {
                                 self.resizeHandler(), self.atb_do.positionAndResize(), self.atb_do.show(!0), self.controller_do && !self.isMobile_bl && (self.controller_do.atbButton_do.setSelectedState(), self.controller_do.atbButton_do.isDisabled_bl = !0)
                             }, this.controllerButtonBuyHandler = function() {
-                                self.buy()
+                                console.log("Кнопка покупки нажата!")
                             }, this.setupAudioScreen = function() {
                                 FWDMSPAudioScreen.setPrototype(), self.audioScreen_do = new FWDMSPAudioScreen(self.data.volume, self.data.autoPlay_bl, self.data.loop_bl), self.audioScreen_do.addListener(FWDMSPAudioScreen.ERROR, self.audioScreenErrorHandler), self.audioScreen_do.addListener(FWDMSPAudioScreen.START, self.audioScreenSatrtHandler), self.audioScreen_do.addListener(FWDMSPAudioScreen.SAFE_TO_SCRUBB, self.audioScreenSafeToScrubbHandler), self.audioScreen_do.addListener(FWDMSPAudioScreen.STOP, self.audioScreenStopHandler), self.audioScreen_do.addListener(FWDMSPAudioScreen.PLAY, self.audioScreenPlayHandler), self.audioScreen_do.addListener(FWDMSPAudioScreen.PAUSE, self.audioScreenPauseHandler), self.audioScreen_do.addListener(FWDMSPAudioScreen.UPDATE, self.audioScreenUpdateHandler), self.audioScreen_do.addListener(FWDMSPAudioScreen.UPDATE_TIME, self.audioScreenUpdateTimeHandler), self.audioScreen_do.addListener(FWDMSPAudioScreen.LOAD_PROGRESS, self.audioScreenLoadProgressHandler), self.audioScreen_do.addListener(FWDMSPAudioScreen.PLAY_COMPLETE, self.audioScreenPlayCompleteHandler), self.useOnlyAPI_bl ? document.documentElement.appendChild(self.audioScreen_do.screen) : self.main_do.addChild(self.audioScreen_do)
                             }, this.audioScreenErrorHandler = function(e) {
