@@ -699,7 +699,19 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 	function(window) {
 		var FWDMSP = function(props) {
 				var self = this;
-				if (FWDMSP.instaces_ar.push(this), self.mainFolderPath_str = props.mainFolderPath, self.mainFolderPath_str.lastIndexOf("/") + 1 != self.mainFolderPath_str.length && (self.mainFolderPath_str += "/"), this.skinPath_str = props.skinPath, self.skinPath_str.lastIndexOf("/") + 1 != self.skinPath_str.length && (self.skinPath_str += "/"), this.warningIconPath_str = self.mainFolderPath_str + this.skinPath_str + "warningIcon.png", this.useYoutube_bl = props.useYoutube || "no", this.useYoutube_bl = "yes" == self.useYoutube_bl, this.useVideo_bl = props.useVideo || "no", this.useVideo_bl = "yes" == self.useVideo_bl, this.instanceName_str = props.instanceName, this.instanceName_str) {
+				if (FWDMSP.instaces_ar.push(this),
+            self.mainFolderPath_str = props.mainFolderPath,
+            self.mainFolderPath_str.lastIndexOf("/") + 1 != self.mainFolderPath_str.length && (self.mainFolderPath_str += "/"),
+            this.skinPath_str = props.skinPath,
+            self.skinPath_str.lastIndexOf("/") + 1 != self.skinPath_str.length && (self.skinPath_str += "/"),
+            this.warningIconPath_str = self.mainFolderPath_str + this.skinPath_str + "warningIcon.png",
+            this.useYoutube_bl = props.useYoutube || "no",
+            this.useYoutube_bl = "yes" == self.useYoutube_bl,
+            this.useVideo_bl = props.useVideo || "no",
+            this.useVideo_bl = "yes" == self.useVideo_bl,
+            this.instanceName_str = props.instanceName,
+            this.instanceName_str)
+            {
 					if (window[this.instanceName_str]) alert("FWDMSP instance name " + this.instanceName_str + " is already defined and contains a different instance reference, set a different instance name.");
 					else if (window[this.instanceName_str] = this, this.listeners = {
 							events_ar: []
@@ -961,29 +973,52 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 											t += 5, 5 == (t = FWDMSPUtils.formatTime(t)).length && (t = "00:" + t), 7 == t.length && (t = "0" + t), self.scrubbAtTime(t)
 									}
 								}
-							}, this.onKeyUpHandler = function(e) {
+							},
+              this.onKeyUpHandler = function(e) {
 								self.isSpaceDown_bl = !1
-							}, this.setupAopw = function() {
-								FWDMSPOPWindow.setPrototype(), self.popw_do = new FWDMSPOPWindow(self.data, self)
+							},
+              this.setupAopw = function() {
+								FWDMSPOPWindow.setPrototype(),
+                self.popw_do = new FWDMSPOPWindow(self.data, self)
 							}, this.setupPasswordWindow = function() {
-								FWDMSPPassword.setPrototype(), self.passWindow_do = new FWDMSPPassword(self.data, self), self.passWindow_do.addListener(FWDMSPPassword.CORRECT, self.passordCorrect)
-							}, this.passordCorrect = function() {
-								self.passWindow_do.hide(), self.hasPassedPassowrd_bl = !0, self.play()
-							}, this.setupShareWindow = function() {
-								FWDMSPShareWindow.setPrototype(), self.shareWindow_do = new FWDMSPShareWindow(self.data, self), self.shareWindow_do.addListener(FWDMSPShareWindow.HIDE_COMPLETE, self.shareWindowHideCompleteHandler)
-							}, this.shareWindowHideCompleteHandler = function() {
+								FWDMSPPassword.setPrototype(),
+                self.passWindow_do = new FWDMSPPassword(self.data, self),
+                self.passWindow_do.addListener(FWDMSPPassword.CORRECT, self.passordCorrect)
+							},
+              this.passordCorrect = function() {
+								self.passWindow_do.hide(),
+                self.hasPassedPassowrd_bl = !0,
+                self.play()
+							},
+              this.setupShareWindow = function() {
+								FWDMSPShareWindow.setPrototype(),
+                self.shareWindow_do = new FWDMSPShareWindow(self.data, self),
+                self.shareWindow_do.addListener(FWDMSPShareWindow.HIDE_COMPLETE, self.shareWindowHideCompleteHandler)
+							},
+              this.shareWindowHideCompleteHandler = function() {
 								self.controller_do && !self.isMobile_bl && (self.controller_do.shareButton_do.isDisabled_bl = !1, self.controller_do.shareButton_do.setNormalState())
-							}, this.setupAtbWindow = function() {
-								FWDMSPATB.setPrototype(), self.atb_do = new FWDMSPATB(self.controller_do, self), self.atb_do.addListener(FWDMSPATB.HIDE_COMPLETE, self.atbWindowHideCompleteHandler)
-							}, this.atbWindowHideCompleteHandler = function() {
+							},
+              this.setupAtbWindow = function() {
+								FWDMSPATB.setPrototype(),
+                self.atb_do = new FWDMSPATB(self.controller_do, self),
+                self.atb_do.addListener(FWDMSPATB.HIDE_COMPLETE, self.atbWindowHideCompleteHandler)
+							},
+              this.atbWindowHideCompleteHandler = function() {
 								self.controller_do && !self.isMobile_bl && (self.controller_do.atbButton_do.isDisabled_bl = !1, self.controller_do.atbButton_do.setNormalState())
-							}, this.setupPlaybackRateWindow = function() {
-								FWDMSPPlaybackRateWindow.setPrototype(), self.playbackRateWindow_do = new FWDMSPPlaybackRateWindow(self.data, self), self.playbackRateWindow_do.addListener(FWDMSPPlaybackRateWindow.HIDE_COMPLETE, self.playbackRateWindowHideCompleteHandler), self.playbackRateWindow_do.addListener(FWDMSPPlaybackRateWindow.SET_PLAYBACK_RATE, self.playbackRateWindowSetPlaybackRateHandler)
-							}, this.playbackRateWindowHideCompleteHandler = function() {
+							},
+              this.setupPlaybackRateWindow = function() {
+								FWDMSPPlaybackRateWindow.setPrototype(),
+                self.playbackRateWindow_do = new FWDMSPPlaybackRateWindow(self.data, self),
+                self.playbackRateWindow_do.addListener(FWDMSPPlaybackRateWindow.HIDE_COMPLETE, self.playbackRateWindowHideCompleteHandler),
+                self.playbackRateWindow_do.addListener(FWDMSPPlaybackRateWindow.SET_PLAYBACK_RATE, self.playbackRateWindowSetPlaybackRateHandler)
+							},
+              this.playbackRateWindowHideCompleteHandler = function() {
 								self.controller_do && !self.isMobile_bl && (self.controller_do.playbackRateButton_do.isDisabled_bl = !1, self.controller_do.playbackRateButton_do.setNormalState())
-							}, this.playbackRateWindowSetPlaybackRateHandler = function(e) {
+							},
+              this.playbackRateWindowSetPlaybackRateHandler = function(e) {
 								self.setPlaybackRate(e.rate)
-							}, this.setupContinousPlayback = function() {
+							},
+              this.setupContinousPlayback = function() {
 								self.data.useContinuousPlayback_bl && (self.ppPplayedOnce = !1, window.onbeforeunload = function(e) {
 									var t = new Date;
 									t.setTime(t.getTime() + 2e4);
@@ -997,192 +1032,375 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 										document.cookie = "FWDMSPid=" + self.id + "; expires=" + t.toGMTString() + ", 01-Jan-70 00:00:01 GMT; path=/"
 								})
 							}, this.setupData = function() {
-								FWDMSPAudioData.setPrototype(), self.data = new FWDMSPAudioData(self.props_obj, self.rootElement_el, self), self.data.useYoutube_bl = self.useYoutube_bl, self.data.addListener(FWDMSPAudioData.UPDATE_IMAGE, self.onImageUpdate), self.data.addListener(FWDMSPAudioData.PRELOADER_LOAD_DONE, self.onPreloaderLoadDone), self.data.addListener(FWDMSPAudioData.SOUNDCLOUD_TRACK_READY, self.onSoundClooudReady), self.data.addListener(FWDMSPAudioData.RADIO_TRACK_READY, self.onRadioReady), self.data.addListener(FWDMSPAudioData.RADIO_TRACK_UPDATE, self.onRadioTrackUpdate), self.data.addListener(FWDMSPAudioData.LOAD_ERROR, self.dataLoadError), self.data.addListener(FWDMSPAudioData.SKIN_LOAD_COMPLETE, self.dataSkinLoadComplete), self.data.addListener(FWDMSPAudioData.PLAYLIST_LOAD_COMPLETE, self.dataPlayListLoadComplete)
-							}, self.onImageUpdate = function(e) {
+								FWDMSPAudioData.setPrototype(),
+                self.data = new FWDMSPAudioData(self.props_obj, self.rootElement_el, self),
+                self.data.useYoutube_bl = self.useYoutube_bl,
+                self.data.addListener(FWDMSPAudioData.UPDATE_IMAGE, self.onImageUpdate),
+                self.data.addListener(FWDMSPAudioData.PRELOADER_LOAD_DONE, self.onPreloaderLoadDone),
+                self.data.addListener(FWDMSPAudioData.SOUNDCLOUD_TRACK_READY, self.onSoundClooudReady),
+                self.data.addListener(FWDMSPAudioData.RADIO_TRACK_READY, self.onRadioReady),
+                self.data.addListener(FWDMSPAudioData.RADIO_TRACK_UPDATE, self.onRadioTrackUpdate),
+                self.data.addListener(FWDMSPAudioData.LOAD_ERROR, self.dataLoadError),
+                self.data.addListener(FWDMSPAudioData.SKIN_LOAD_COMPLETE, self.dataSkinLoadComplete),
+                self.data.addListener(FWDMSPAudioData.PLAYLIST_LOAD_COMPLETE, self.dataPlayListLoadComplete)
+							},
+              self.onImageUpdate = function(e) {
 								self.controller_do.loadThumb(e.image)
-							}, self.onRadioReady = function(e) {
+							},
+              self.onRadioReady = function(e) {
 								self.isShoutcast_bl || self.isIcecast_bl ? (self.radioSource_str = e.source, self.data.playlist_ar[self.id].title = e.songTitle, self.controller_do.setTitle(e.songTitle), self.prevAudioPath != self.audioPath && (self.setSource(), self.isPlaylistItemClicked_bl && self.play(), self.prevAudioPath = self.audioPath)) : self.data.closeJsonPLoader()
-							}, self.onRadioTrackUpdate = function(e) {
-								self.curTitle = e.songTitle, self.curTitle != self.prevTitle && (self.controller_do.setTitle(e.songTitle), self.prevTitle = self.curTitle)
-							}, self.onSoundClooudReady = function(e) {
-								self.data.playlist_ar[self.id].source = e.source, self.setSource(), self.isPlaylistItemClicked_bl && self.play()
-							}, self.onPreloaderLoadDone = function() {
+							},
+              self.onRadioTrackUpdate = function(e) {
+								self.curTitle = e.songTitle,
+                self.curTitle != self.prevTitle && (self.controller_do.setTitle(e.songTitle), self.prevTitle = self.curTitle)
+							},
+              self.onSoundClooudReady = function(e) {
+								self.data.playlist_ar[self.id].source = e.source,
+                self.setSource(),
+                self.isPlaylistItemClicked_bl && self.play()
+							},
+              self.onPreloaderLoadDone = function() {
 								!self.data.useContinuousPlayback_bl && !self.data.autoPlay_bl || FWDMSP.iFrame || !FWDMSPUtils.isChrome || FWDMSPUtils.isMobile || (FWDMSP.iFrame = document.createElement("iframe"), FWDMSP.iFrame.src = self.data.mainFolderPath_str + "audio/silent.mp3", FWDMSP.iFrame.style.position = "absolute", FWDMSP.iFrame.style.top = "-500px", document.documentElement.appendChild(FWDMSP.iFrame)),
 									self.maxHeight = 32, self.usePlaylistsSelectBox_bl = self.data.usePlaylistsSelectBox_bl,
 									self.background_do && (self.background_do.getStyle().background = "url('" + self.data.skinPath_str + "main-background.png')"), self.setupPreloader(), !self.isMobile_bl && self.data.showContextMenu_bl && self.setupContextMenu(), self.resizeHandler(), self.main_do.setHeight(self.stageHeight), self.openInPopup_bl && self.main_do.setHeight(3e3)
-							}, self.dataLoadError = function(e) {
-								self.maxHeight = 120, self.preloader_do && self.preloader_do.hide(!1), self.main_do.addChild(self.info_do), self.info_do.showText(e.text), self.controller_do || (self.ws || (self.ws = FWDMSPUtils.getViewportSize()), self.position_str == FWDMSP.POSITION_TOP ? self.stageContainer.style.top = "0px" : self.stageContainer.style.top = self.ws.h - self.maxHeight + "px", self.main_do.setHeight(self.maxHeight)), self.resizeHandler(), self.dispatchEvent(FWDMSP.ERROR, {
+							},
+              self.dataLoadError = function(e) {
+								self.maxHeight = 120,
+                self.preloader_do && self.preloader_do.hide(!1),
+                self.main_do.addChild(self.info_do),
+                self.info_do.showText(e.text),
+                self.controller_do || (self.ws || (self.ws = FWDMSPUtils.getViewportSize()),
+                self.position_str == FWDMSP.POSITION_TOP ? self.stageContainer.style.top = "0px" : self.stageContainer.style.top = self.ws.h - self.maxHeight + "px", self.main_do.setHeight(self.maxHeight)),
+                self.resizeHandler(),
+                self.dispatchEvent(FWDMSP.ERROR, {
 									error: e.text
 								})
-							}, self.dataSkinLoadComplete = function() {
-								self.animate_bl = self.data.animate_bl, self.openInPopup_bl && (self.data.showPopupButton_bl = !1),
-									self.lastVolume = self.volume = self.data.volume, self.setupContinousPlayback(), self.initPlaylist()
-							}, self.initPlaylist = function() {
+							},
+              self.dataSkinLoadComplete = function() {
+								self.animate_bl = self.data.animate_bl,
+                self.openInPopup_bl && (self.data.showPopupButton_bl = !1),
+								self.lastVolume = self.volume = self.data.volume,
+                self.setupContinousPlayback(),
+                self.initPlaylist()
+							},
+              self.initPlaylist = function() {
 								self.useDeepLinking_bl ? setTimeout(function() {
 									self.setupDL()
-								}, 200) : (FWDMSPUtils.getCookie("FWDMSPusePP") ? (self.catId = FWDMSPUtils.getCookie("FWDMSPcatId"), self.id = FWDMSPUtils.getCookie("FWDMSPid")) : self.openInPopup_bl ? (self.catId = self.popupWindow.catId, self.id = self.popupWindow.id) : (self.catId = self.data.startAtPlaylist, self.id = self.data.startAtTrack), self.loadInternalPlaylist())
-							}, this.dataPlayListLoadComplete = function() {
-								self.isAPIReady_bl || self.dispatchEvent(FWDMSP.READY), self.data.randomizePlaylist_bl && (self.data.playlist_ar = FWDMSPUtils.randomizeArray(self.data.playlist_ar)),
-									self.isAPIReady_bl = !0, self.isPlaylistLoaded_bl = !0, self.data.startAtRandomTrack_bl && (self.id = Math.max(0, parseInt(Math.random() * self.data.playlist_ar.length) - 1), self.startAtTrack = self.id, self.useDeepLinking_bl && (self.preventFWDDLchange_bl = !0, FWDAddress.setValue(self.instanceName_str + "?catid=" + self.catId + "&trackid=" + self.id), setTimeout(function() {
+								}, 200) :
+                (FWDMSPUtils.getCookie("FWDMSPusePP") ? (self.catId = FWDMSPUtils.getCookie("FWDMSPcatId"), self.id = FWDMSPUtils.getCookie("FWDMSPid")) : self.openInPopup_bl ? (self.catId = self.popupWindow.catId, self.id = self.popupWindow.id) : (self.catId = self.data.startAtPlaylist, self.id = self.data.startAtTrack),
+                  self.loadInternalPlaylist()
+                )
+							},
+              this.dataPlayListLoadComplete = function() {
+								self.isAPIReady_bl || self.dispatchEvent(FWDMSP.READY),
+                self.data.randomizePlaylist_bl && (self.data.playlist_ar = FWDMSPUtils.randomizeArray(self.data.playlist_ar)),
+								self.isAPIReady_bl = !0,
+                self.isPlaylistLoaded_bl = !0,
+                self.data.startAtRandomTrack_bl && (self.id = Math.max(0, parseInt(Math.random() * self.data.playlist_ar.length) - 1),
+                self.startAtTrack = self.id,
+                self.useDeepLinking_bl && (self.preventFWDDLchange_bl = !0, FWDAddress.setValue(self.instanceName_str + "?catid=" + self.catId + "&trackid=" + self.id), setTimeout(function() {
 										self.preventFWDDLchange_bl = !1
-									}, 250))), self.setupMainInstances(), self.updatePlaylist(), self.dispatchEvent(FWDMSP.LOAD_PLAYLIST_COMPLETE)
-							}, this.updatePlaylist = function() {
-								if (self.main_do && self.main_do.contains(self.info_do) && self.main_do.removeChild(self.info_do), self.id > self.data.playlist_ar.length && (self.id = 0), self.data.playlist_ar && (self.videoNameGa = self.data.playlist_ar[self.id].titleText, self.videoCat = self.data.cats_ar[self.catId].playlistsName), self.preloader_do.hide(!0), self.prevId = -1, self.totalAudio = self.data.playlist_ar.length, self.controller_do.enableControllerWhileLoadingPlaylist(), self.controller_do.cleanThumbnails(!0), self.playlist_do && (self.playlist_do.updatePlaylist(self.data.playlist_ar), self.playlist_do.resizeAndPosition(), self.playlist_do.isShowed_bl && self.controller_do.setPlaylistButtonState("selected")), self.openInPopup_bl && self.popupWindow.audioScreen_do && (self.lastPercentPlayed = self.popupWindow.audioScreen_do.lastPercentPlayed), self.playlist_do && self.playlist_do.comboBox_do && self.playlist_do.comboBox_do.setButtonsStateBasedOnId(self.catId), self.setSource(), (self.data.autoPlay_bl || self.data.playTrackAfterPlaylistLoad_bl) && setTimeout(self.play, 1e3), self.openInPopup_bl && !self.showedFirstTime_bl ? (self.controller_do.setY(-self.controller_do.h), self.playlist_do && self.playlist_do.setY(-self.playlist_do.h)) : self.playlist_do && self.playlist_do.setY(-self.playlist_do.h + self.controller_do.h), self.setStageContainerFinalHeightAndPosition(!0), self.openInPopup_bl) return clearTimeout(self.showPlaylistWithDelayId_to),
+									}, 250))),
+                self.setupMainInstances(),
+                self.updatePlaylist(),
+                self.dispatchEvent(FWDMSP.LOAD_PLAYLIST_COMPLETE)
+							},
+              this.updatePlaylist = function() {
+								if (self.main_do && self.main_do.contains(self.info_do) && self.main_do.removeChild(self.info_do),
+                    self.id > self.data.playlist_ar.length && (self.id = 0),
+                    self.data.playlist_ar && (self.videoNameGa = self.data.playlist_ar[self.id].titleText,
+                      self.videoCat = self.data.cats_ar[self.catId].playlistsName),
+                    self.preloader_do.hide(!0),
+                    self.prevId = -1,
+                    self.totalAudio = self.data.playlist_ar.length,
+                    self.controller_do.enableControllerWhileLoadingPlaylist(),
+                    self.controller_do.cleanThumbnails(!0),
+                    self.playlist_do && (self.playlist_do.updatePlaylist(self.data.playlist_ar),
+                                         self.playlist_do.resizeAndPosition(),
+                                         self.playlist_do.isShowed_bl && self.controller_do.setPlaylistButtonState("selected")
+                                        ),
+                    self.openInPopup_bl && self.popupWindow.audioScreen_do && (self.lastPercentPlayed = self.popupWindow.audioScreen_do.lastPercentPlayed),
+                    self.playlist_do && self.playlist_do.comboBox_do && self.playlist_do.comboBox_do.setButtonsStateBasedOnId(self.catId),
+                    self.setSource(),
+                    (self.data.autoPlay_bl || self.data.playTrackAfterPlaylistLoad_bl) && setTimeout(self.play, 1e3), self.openInPopup_bl && !self.showedFirstTime_bl ? (self.controller_do.setY(-self.controller_do.h), self.playlist_do && self.playlist_do.setY(-self.playlist_do.h)) : self.playlist_do && self.playlist_do.setY(-self.playlist_do.h + self.controller_do.h), self.setStageContainerFinalHeightAndPosition(!0), self.openInPopup_bl) return clearTimeout(self.showPlaylistWithDelayId_to),
 									self.showedFirstTime_bl ? self.showPlaylistWithDelayId_to = setTimeout(function() {
 										self.setStageContainerFinalHeightAndPosition(!0)
 									}, 100) : self.showPlaylistWithDelayId_to = setTimeout(function() {
 										self.setStageContainerFinalHeightAndPosition(!0)
-									}, 900), self.showedFirstTime_bl = !0,
-									void(self.allowToResizeAndPosition_bl = !0);
+									}, 900),
+                self.showedFirstTime_bl = !0,
+								void(self.allowToResizeAndPosition_bl = !0);
 								self.allowToResizeAndPosition_bl = !0,
-									self.position_str == FWDMSP.POSITION_TOP ? self.playlist_do && self.controller_do.isShowed_bl ? self.showedFirstTime_bl ? (self.stageContainer.style.top = -self.playlist_do.h + "px", self.opener_do.setY(self.controller_do.h + self.playlist_do.h)) : (self.stageContainer.style.top = -self.controller_do.h - self.playlist_do.h + "px", self.opener_do.setY(self.controller_do.h + self.playlist_do.h - self.opener_do.h)) : self.controller_do.isShowed_bl ? self.playlist_do ? (self.stageContainer.style.top = self.controller_do.h + "px", self.opener_do.setY(self.controller_do.h + self.playlist_do.h - self.opener_do.h)) : self.showedFirstTime_bl || (self.stageContainer.style.top = -self.controller_do.h + "px", self.opener_do.setY(self.controller_do.h - self.opener_do.h)) : self.playlist_do ? (self.stageContainer.style.top = -self.controller_do.h - self.playlist_do.h + "px", self.opener_do.setY(0)) : self.showedFirstTime_bl ? (self.stageContainer.style.top = -self.controller_do.h + "px", self.opener_do.setY(0)) : (self.stageContainer.style.top = -self.controller_do.h + "px", self.opener_do.setY(-self.opener_do.h)) : self.controller_do.isShowed_bl || self.playlist_do && self.controller_do.isShowed_bl ? self.showedFirstTime_bl ? (self.stageContainer.style.top = self.ws.h - self.controller_do.h + "px", self.opener_do.setY(-self.opener_do.h)) : (self.stageContainer.style.top = self.ws.h + "px", self.opener_do.setY(0)) : self.showedFirstTime_bl ? (self.stageContainer.style.top = self.ws.h + "px", self.opener_do.setY(-self.opener_do.h)) : (self.stageContainer.style.top = self.ws.h + "px", self.opener_do.setY(0)),
-									clearTimeout(self.showPlaylistWithDelayId_to),
-									self.showPlaylistWithDelayId_to = setTimeout(function() {
+								self.position_str == FWDMSP.POSITION_TOP ? self.playlist_do && self.controller_do.isShowed_bl ? self.showedFirstTime_bl ? (self.stageContainer.style.top = -self.playlist_do.h + "px", self.opener_do.setY(self.controller_do.h + self.playlist_do.h))
+                : (self.stageContainer.style.top = -self.controller_do.h - self.playlist_do.h + "px", self.opener_do.setY(self.controller_do.h + self.playlist_do.h - self.opener_do.h))
+                : self.controller_do.isShowed_bl ? self.playlist_do ? (self.stageContainer.style.top = self.controller_do.h + "px", self.opener_do.setY(self.controller_do.h + self.playlist_do.h - self.opener_do.h))
+                : self.showedFirstTime_bl || (self.stageContainer.style.top = -self.controller_do.h + "px", self.opener_do.setY(self.controller_do.h - self.opener_do.h))
+                : self.playlist_do ? (self.stageContainer.style.top = -self.controller_do.h - self.playlist_do.h + "px", self.opener_do.setY(0))
+                : self.showedFirstTime_bl ? (self.stageContainer.style.top = -self.controller_do.h + "px", self.opener_do.setY(0))
+                : (self.stageContainer.style.top = -self.controller_do.h + "px", self.opener_do.setY(-self.opener_do.h))
+                : self.controller_do.isShowed_bl || self.playlist_do && self.controller_do.isShowed_bl ? self.showedFirstTime_bl ? (self.stageContainer.style.top = self.ws.h - self.controller_do.h + "px", self.opener_do.setY(-self.opener_do.h))
+                : (self.stageContainer.style.top = self.ws.h + "px", self.opener_do.setY(0))
+                : self.showedFirstTime_bl ? (self.stageContainer.style.top = self.ws.h + "px", self.opener_do.setY(-self.opener_do.h))
+                : (self.stageContainer.style.top = self.ws.h + "px", self.opener_do.setY(0)),
+								clearTimeout(self.showPlaylistWithDelayId_to),
+								self.showPlaylistWithDelayId_to = setTimeout(function() {
 										self.setStageContainerFinalHeightAndPosition(!0)
-									}, 900), self.showedFirstTime_bl = !0
-							}, this.loadInternalPlaylist = function() {
-								self.isPlaylistLoaded_bl = !1, self.data.loadPlaylist(self.catId),
-									self.isPlaylistItemClicked_bl = !1, self.stop(), self.playbackRateWindow_do && self.playbackRateWindow_do.hide(),
-									self.shareWindow_do && self.shareWindow_do.hide(), self.preloader_do.show(!0), self.controller_do && (self.controller_do.disableControllerWhileLoadingPlaylist(), self.controller_do.loadThumb()), self.hider && (self.hider.reset(), self.hider.stop()),
-									self.playlist_do && self.playlist_do.destroyPlaylist(),
-									self.positionPreloader(), self.setStageContainerFinalHeightAndPosition(!1), self.dispatchEvent(FWDMSP.START_TO_LOAD_PLAYLIST)
-							}, this.setupDL = function() {
-								self.setOnceDL = !0, self.dlChangeHandler(), FWDAddress.onChange = self.dlChangeHandler
-							}, this.dlChangeHandler = function() {
+									}, 900),
+                self.showedFirstTime_bl = !0
+							},
+              this.loadInternalPlaylist = function() {
+								self.isPlaylistLoaded_bl = !1,
+                self.data.loadPlaylist(self.catId),
+								self.isPlaylistItemClicked_bl = !1,
+                self.stop(),
+                self.playbackRateWindow_do && self.playbackRateWindow_do.hide(),
+								self.shareWindow_do && self.shareWindow_do.hide(),
+                self.preloader_do.show(!0),
+                self.controller_do && (self.controller_do.disableControllerWhileLoadingPlaylist(), self.controller_do.loadThumb()),
+                self.hider && (self.hider.reset(), self.hider.stop()),
+								self.playlist_do && self.playlist_do.destroyPlaylist(),
+								self.positionPreloader(),
+                self.setStageContainerFinalHeightAndPosition(!1),
+                self.dispatchEvent(FWDMSP.START_TO_LOAD_PLAYLIST)
+							},
+              this.setupDL = function() {
+								self.setOnceDL = !0,
+                self.dlChangeHandler(),
+                FWDAddress.onChange = self.dlChangeHandler
+							},
+              this.dlChangeHandler = function() {
 								var e = !1;
 								if (!self.preventFWDDLchange_bl)
 									if (self.categories_do && self.categories_do.isOnDOM_bl) self.categories_do.hide();
 									else {
 										if (self.catId = parseInt(FWDAddress.getParameter("catid")), self.id = parseInt(FWDAddress.getParameter("trackid")), "true" == FWDMSPUtils.getCookie("FWDMSPusePP") && self.setOnceDL && -1 == location.hash.indexOf("catid=")) return self.catId = FWDMSPUtils.getCookie("FWDMSPcatId"),
-											self.id = FWDMSPUtils.getCookie("FWDMSPid"), self.setOnceDL = !1, void(location.hash = self.instanceName_str + "?catid=" + self.catId + "&trackid=" + self.id);
-										(void 0 === self.catId || void 0 === self.id || isNaN(self.catId) || isNaN(self.id)) && (self.catId = self.data.startAtPlaylist, self.id = self.data.startAtTrack, e = !0), (self.catId < 0 || self.catId > self.data.totalCategories - 1 && !e) && (self.catId = self.data.startAtPlaylist, self.id = self.data.startAtTrack, e = !0),
-										self.data.playlist_ar && (self.id < 0 && !e ? (self.id = self.data.startAtTrack, e = !0) : self.prevCatId == self.catId && self.id > self.data.playlist_ar.length - 1 && !e && (self.id = self.data.playlist_ar.length - 1, e = !0)), e ? location.hash = self.instanceName_str + "?catid=" + self.catId + "&trackid=" + self.id : self.prevCatId != self.catId ? (self.loadInternalPlaylist(), self.prevCatId = self.catId) : (self.isPlaylistItemClicked_bl = !0, self.setSource(!1), self.changeHLS_bl = !0, self.isShoutcast_bl || self.isIcecast_bl || self.play())
+										  self.id = FWDMSPUtils.getCookie("FWDMSPid"),
+                      self.setOnceDL = !1,
+                      void(location.hash = self.instanceName_str + "?catid=" + self.catId + "&trackid=" + self.id);
+										(void 0 === self.catId || void 0 === self.id || isNaN(self.catId) || isNaN(self.id)) && (self.catId = self.data.startAtPlaylist, self.id = self.data.startAtTrack, e = !0),
+                    (self.catId < 0 || self.catId > self.data.totalCategories - 1 && !e) && (self.catId = self.data.startAtPlaylist, self.id = self.data.startAtTrack, e = !0),
+										self.data.playlist_ar && (self.id < 0 && !e ? (self.id = self.data.startAtTrack, e = !0) : self.prevCatId == self.catId && self.id > self.data.playlist_ar.length - 1 && !e && (self.id = self.data.playlist_ar.length - 1, e = !0)),
+                    e ? location.hash = self.instanceName_str + "?catid=" + self.catId + "&trackid=" + self.id : self.prevCatId != self.catId ? (self.loadInternalPlaylist(), self.prevCatId = self.catId) : (self.isPlaylistItemClicked_bl = !0, self.setSource(!1), self.changeHLS_bl = !0, self.isShoutcast_bl || self.isIcecast_bl || self.play())
 									}
 							}, this.setupPreloader = function() {
-								FWDMSPPreloader.setPrototype(), self.preloader_do = new FWDMSPPreloader(self.data.preloaderPath_str, 53, 34, 30, 80), self.preloader_do.addListener(FWDMSPPreloader.HIDE_COMPLETE, self.preloaderHideComplete),
-									FWDMSPUtils.isIEAndLessThen9 ? self.preloader_do.getStyle().zIndex = "2147483633" : self.preloader_do.getStyle().zIndex = "99999999993", self.preloader_do.setPosition("fixed"), self.preloader_do.setForFixedPosition(), self.preloader_do.show(!0),
-									document.documentElement.appendChild(self.preloader_do.screen)
-							}, this.positionPreloader = function() {
-								self.preloader_do.setX(parseInt((self.ws.w - self.preloader_do.w) / 2)), self.openInPopup_bl ? self.controller_do ? self.preloader_do.setY(parseInt((self.controller_do.h - self.preloader_do.h) / 2)) : self.preloader_do.setY(0) : self.position_str == FWDMSP.POSITION_TOP ? self.controller_do && !self.controller_do.isShowed_bl ? self.preloader_do.setY(-200) : self.controller_do ? self.preloader_do.setY(parseInt((self.controller_do.h - self.preloader_do.h) / 2)) : self.preloader_do.setY(parseInt((self.stageHeight - self.preloader_do.h) / 2)) : self.controller_do && !self.controller_do.isShowed_bl ? self.preloader_do.setY(self.ws.h) : self.controller_do ? self.preloader_do.setY(self.ws.h - self.controller_do.h + parseInt((self.controller_do.h - self.preloader_do.h) / 2)) : self.preloader_do.setY(self.ws.h - self.preloader_do.h)
-							}, this.preloaderHideComplete = function() {
-								self.controller_do.show(), self.opener_do.show(), self.playlist_do && self.playlist_do.show(), self.isFirstPlaylistLoaded_bl = !0,
-									self.allowToResizeAndPosition_bl = !0,
-									self.animate_bl || self.setStageContainerFinalHeightAndPosition(!1)
-							}, this.setupOpener = function() {
-								FWDMSPOpener.setPrototype(), self.opener_do = new FWDMSPOpener(self.data, self.position_str, self.controller_do.isShowed_bl),
-									FWDMSPUtils.isIEAndLessThen9 ? self.opener_do.getStyle().zIndex = "2147483634" : self.opener_do.getStyle().zIndex = "99999999994", self.opener_do.setX(-1e3), self.controller_do.isShowed_bl ? self.opener_do.showCloseButton() : self.opener_do.showOpenButton(), self.opener_do.addListener(FWDMSPOpener.SHOW, self.openerShowHandler), self.opener_do.addListener(FWDMSPOpener.HIDE, self.openerHideHandler), self.opener_do.addListener(FWDMSPController.PLAY, self.controllerOnPlayHandler),
-									self.opener_do.addListener(FWDMSPController.PAUSE, self.controllerOnPauseHandler),
-									self.data.showOpener_bl && self.stageContainer.appendChild(self.opener_do.screen)
-							}, this.openerShowHandler = function() {
+								FWDMSPPreloader.setPrototype(),
+                self.preloader_do = new FWDMSPPreloader(self.data.preloaderPath_str, 53, 34, 30, 80),
+                self.preloader_do.addListener(FWDMSPPreloader.HIDE_COMPLETE, self.preloaderHideComplete),
+								FWDMSPUtils.isIEAndLessThen9 ? self.preloader_do.getStyle().zIndex = "2147483633" : self.preloader_do.getStyle().zIndex = "99999999993",
+                self.preloader_do.setPosition("fixed"),
+                self.preloader_do.setForFixedPosition(),
+                self.preloader_do.show(!0),
+								document.documentElement.appendChild(self.preloader_do.screen)
+							},
+              this.positionPreloader = function() {
+								self.preloader_do.setX(parseInt((self.ws.w - self.preloader_do.w) / 2)),
+                self.openInPopup_bl ? self.controller_do ? self.preloader_do.setY(parseInt((self.controller_do.h - self.preloader_do.h) / 2)) : self.preloader_do.setY(0) : self.position_str == FWDMSP.POSITION_TOP ? self.controller_do && !self.controller_do.isShowed_bl ? self.preloader_do.setY(-200) : self.controller_do ? self.preloader_do.setY(parseInt((self.controller_do.h - self.preloader_do.h) / 2)) : self.preloader_do.setY(parseInt((self.stageHeight - self.preloader_do.h) / 2)) : self.controller_do && !self.controller_do.isShowed_bl ? self.preloader_do.setY(self.ws.h) : self.controller_do ? self.preloader_do.setY(self.ws.h - self.controller_do.h + parseInt((self.controller_do.h - self.preloader_do.h) / 2)) : self.preloader_do.setY(self.ws.h - self.preloader_do.h)
+							},
+              this.preloaderHideComplete = function() {
+								self.controller_do.show(),
+                self.opener_do.show(),
+                self.playlist_do && self.playlist_do.show(),
+                self.isFirstPlaylistLoaded_bl = !0,
+								self.allowToResizeAndPosition_bl = !0,
+								self.animate_bl || self.setStageContainerFinalHeightAndPosition(!1)
+							},
+              this.setupOpener = function() {
+								FWDMSPOpener.setPrototype(),
+                self.opener_do = new FWDMSPOpener(self.data, self.position_str, self.controller_do.isShowed_bl),
+								FWDMSPUtils.isIEAndLessThen9 ? self.opener_do.getStyle().zIndex = "2147483634" : self.opener_do.getStyle().zIndex = "99999999994", self.opener_do.setX(-1e3), self.controller_do.isShowed_bl ? self.opener_do.showCloseButton() : self.opener_do.showOpenButton(), self.opener_do.addListener(FWDMSPOpener.SHOW, self.openerShowHandler), self.opener_do.addListener(FWDMSPOpener.HIDE, self.openerHideHandler), self.opener_do.addListener(FWDMSPController.PLAY, self.controllerOnPlayHandler),
+								self.opener_do.addListener(FWDMSPController.PAUSE, self.controllerOnPauseHandler),
+								self.data.showOpener_bl && self.stageContainer.appendChild(self.opener_do.screen)
+							},
+              this.openerShowHandler = function() {
 								self.showPlayer()
-							}, this.openerHideHandler = function() {
+							},
+              this.openerHideHandler = function() {
 								self.hidePlayer()
-							}, this.setupCategories = function() {
-								FWDMSPCategories.setPrototype(), self.categories_do = new FWDMSPCategories(self.data),
-									FWDMSPUtils.isIEAndLessThen9 ? self.categories_do.getStyle().zIndex = "2147483635" : self.categories_do.getStyle().zIndex = "99999999995", self.categories_do.addListener(FWDMSPCategories.HIDE_COMPLETE, self.categoriesHideCompleteHandler), self.data.showPlaylistsByDefault_bl && (self.showCatWidthDelayId_to = setTimeout(function() {
+							},
+              this.setupCategories = function() {
+								FWDMSPCategories.setPrototype(),
+                self.categories_do = new FWDMSPCategories(self.data),
+								FWDMSPUtils.isIEAndLessThen9 ? self.categories_do.getStyle().zIndex = "2147483635" : self.categories_do.getStyle().zIndex = "99999999995",
+                self.categories_do.addListener(FWDMSPCategories.HIDE_COMPLETE, self.categoriesHideCompleteHandler),
+                self.data.showPlaylistsByDefault_bl && (self.showCatWidthDelayId_to = setTimeout(function() {
 										self.showCategories()
 									}, 1400))
-							}, this.categoriesHideCompleteHandler = function(e) {
-								if (self.controller_do.setCategoriesButtonState("unselected"), self.customContextMenu_do && self.customContextMenu_do.updateParent(self.main_do), self.useDeepLinking_bl) self.categories_do.id != self.catId && (self.catId = self.categories_do.id, self.id = 0, FWDAddress.setValue(self.instanceName_str + "?catid=" + self.catId + "&trackid=" + self.id));
+							},
+              this.categoriesHideCompleteHandler = function(e) {
+								if (self.controller_do.setCategoriesButtonState("unselected"),
+                self.customContextMenu_do && self.customContextMenu_do.updateParent(self.main_do),
+                self.useDeepLinking_bl) self.categories_do.id != self.catId && (
+                                                                                  self.catId = self.categories_do.id, self.id = 0, FWDAddress.setValue(self.instanceName_str + "?catid=" + self.catId + "&trackid=" + self.id)
+                                                                                );
 								else {
 									if (self.catId == self.categories_do.id) return;
-									self.catId = self.categories_do.id, self.id = 0, self.loadInternalPlaylist(self.catId)
+									self.catId = self.categories_do.id,
+                  self.id = 0,
+                  self.loadInternalPlaylist(self.catId)
 								}
-							}, this.setupPlaylist = function() {
-								FWDMSPPlaylist.setPrototype(), self.playlist_do = new FWDMSPPlaylist(self.data, self), self.playlist_do.addListener(FWDMSPPlaylist.CHANGE_PLAYLIST, self.playlistChangePlaylistHandler), self.playlist_do.addListener(FWDMSPPlaylistItem.MOUSE_UP, self.palylistItemOnUpHandler),
-									self.playlist_do.addListener(FWDMSPPlaylistItem.BUY, self.palylistItemBuyHandler), self.playlist_do.addListener(FWDMSPPlaylist.UPDATE_TRACK_TITLE_if_FOLDER, self.palylistUpdateFolderTrackTitle), self.main_do.addChild(self.playlist_do)
-							}, this.playlistChangePlaylistHandler = function(e) {
-								if (self.controller_do.setCategoriesButtonState("unselected"), self.customContextMenu_do && self.customContextMenu_do.updateParent(self.main_do), self.useDeepLinking_bl) e.id != self.catId && (self.catId = e.id, self.id = 0, FWDAddress.setValue(self.instanceName_str + "?catid=" + self.catId + "&trackid=" + self.id));
+							},
+              this.setupPlaylist = function() {
+								FWDMSPPlaylist.setPrototype(),
+                self.playlist_do = new FWDMSPPlaylist(self.data, self),
+                self.playlist_do.addListener(FWDMSPPlaylist.CHANGE_PLAYLIST, self.playlistChangePlaylistHandler),
+                self.playlist_do.addListener(FWDMSPPlaylistItem.MOUSE_UP, self.palylistItemOnUpHandler),
+								self.playlist_do.addListener(FWDMSPPlaylistItem.BUY, self.palylistItemBuyHandler),
+                self.playlist_do.addListener(FWDMSPPlaylist.UPDATE_TRACK_TITLE_if_FOLDER, self.palylistUpdateFolderTrackTitle),
+                self.main_do.addChild(self.playlist_do)
+							},
+              this.playlistChangePlaylistHandler = function(e) {
+								if (self.controller_do.setCategoriesButtonState("unselected"), self.customContextMenu_do && self.customContextMenu_do.updateParent(self.main_do), self.useDeepLinking_bl)
+                   e.id != self.catId && (self.catId = e.id, self.id = 0, FWDAddress.setValue(self.instanceName_str + "?catid=" + self.catId + "&trackid=" + self.id));
 								else {
 									if (self.catId == e.id) return;
 									self.catId = e.id, self.id = 0,
 										self.loadInternalPlaylist(self.catId)
 								}
-							}, this.palylistItemOnUpHandler = function(e) {
-								self.isPlaylistItemClicked_bl = !0, e.id == self.id ? self.audioType_str == FWDMSP.AUDIO && self.audioScreen_do.isPlaying_bl ? self.pause() : self.audioType_str != FWDMSP.AUDIO || self.audioScreen_do.isStopped_bl && !self.audioScreen_do.isStopped_bl ? self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS || !self.videoScreen_do.isPlaying_bl ? self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS || self.videoScreen_do.isStopped_bl ? self.audioType_str == FWDMSP.YOUTUBE && self.ytb_do.isPlaying_bl ? self.pause() : self.audioType_str != FWDMSP.YOUTUBE || self.ytb_do.isStopped_bl || self.play() : self.play() : self.pause() : self.play() : self.useDeepLinking_bl && self.id != e.id ? (FWDAddress.setValue(self.instanceName_str + "?catid=" + self.catId + "&trackid=" + e.id), self.id = e.id) : (self.id = e.id, self.setSource(!0), self.changeHLS_bl = !0, self.autioType_str != FWDMSP.HLS && self.play()), self.data.playlist_ar && (self.videoNameGa = self.data.playlist_ar[self.id].titleText, self.videoCat = self.data.cats_ar[self.catId].playlistsName)
-							}, this.palylistUpdateFolderTrackTitle = function(e) {
+							},
+              this.palylistItemOnUpHandler = function(e) {
+								self.isPlaylistItemClicked_bl = !0,
+                e.id == self.id ? self.audioType_str == FWDMSP.AUDIO && self.audioScreen_do.isPlaying_bl ? self.pause() : self.audioType_str != FWDMSP.AUDIO || self.audioScreen_do.isStopped_bl && !self.audioScreen_do.isStopped_bl ? self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS || !self.videoScreen_do.isPlaying_bl ? self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS || self.videoScreen_do.isStopped_bl ? self.audioType_str == FWDMSP.YOUTUBE && self.ytb_do.isPlaying_bl ? self.pause() : self.audioType_str != FWDMSP.YOUTUBE || self.ytb_do.isStopped_bl || self.play() : self.play() : self.pause() : self.play() : self.useDeepLinking_bl && self.id != e.id ? (FWDAddress.setValue(self.instanceName_str + "?catid=" + self.catId + "&trackid=" + e.id), self.id = e.id) : (self.id = e.id, self.setSource(!0), self.changeHLS_bl = !0, self.autioType_str != FWDMSP.HLS && self.play()), self.data.playlist_ar && (self.videoNameGa = self.data.playlist_ar[self.id].titleText, self.videoCat = self.data.cats_ar[self.catId].playlistsName)
+							},
+              this.palylistUpdateFolderTrackTitle = function(e) {
 								self.controller_do.setTitle(e.title)
-							}, this.palylistItemBuyHandler = function(e) {
+							},
+              this.palylistItemBuyHandler = function(e) {
 								self.buy(e.id)
-							}, this.setupController = function() {
+							},
+              this.setupController = function() {
 								FWDMSPController.setPrototype(), self.controller_do = new FWDMSPController(self.data, self), self.controller_do.addListener(FWDMSPController.POPUP, self.controllerOnPopupHandler),
 									self.controller_do.addListener(FWDMSPController.PLAY, self.controllerOnPlayHandler),
-									self.controller_do.addListener(FWDMSPController.PLAY_NEXT, self.controllerPlayNextHandler), self.controller_do.addListener(FWDMSPController.PLAY_PREV, self.controllerPlayPrevHandler),
+									self.controller_do.addListener(FWDMSPController.PLAY_NEXT, self.controllerPlayNextHandler),
+                  self.controller_do.addListener(FWDMSPController.PLAY_PREV, self.controllerPlayPrevHandler),
 									self.controller_do.addListener(FWDMSPController.PAUSE, self.controllerOnPauseHandler),
-									self.controller_do.addListener(FWDMSPController.CHANGE_VOLUME, self.controllerChangeVolumeHandler), self.controller_do.addListener(FWDMSPController.VOLUME_START_TO_SCRUB, self.volumeStartToScrubbHandler),
+									self.controller_do.addListener(FWDMSPController.CHANGE_VOLUME, self.controllerChangeVolumeHandler),
+                  self.controller_do.addListener(FWDMSPController.VOLUME_START_TO_SCRUB, self.volumeStartToScrubbHandler),
 									self.controller_do.addListener(FWDMSPController.VOLUME_STOP_TO_SCRUB, self.volumeStopToScrubbHandler),
-									self.controller_do.addListener(FWDMSPController.START_TO_SCRUB, self.controllerStartToScrubbHandler), self.controller_do.addListener(FWDMSPController.SCRUB, self.controllerScrubbHandler),
-									self.controller_do.addListener(FWDMSPController.SCRUB_PLAYLIST_ITEM, self.controllerPlaylistItemScrubbHandler), self.controller_do.addListener(FWDMSPController.STOP_TO_SCRUB, self.controllerStopToScrubbHandler), self.controller_do.addListener(FWDMSPController.SHOW_CATEGORIES, self.showCategoriesHandler), self.controller_do.addListener(FWDMSPController.SHOW_PLAYLIST, self.showPlaylistHandler), self.controller_do.addListener(FWDMSPController.HIDE_PLAYLIST, self.hidePlaylistHandler), self.controller_do.addListener(FWDMSPController.ENABLE_LOOP, self.enableLoopHandler), self.controller_do.addListener(FWDMSPController.DISABLE_LOOP, self.disableLoopHandler), self.controller_do.addListener(FWDMSPController.ENABLE_SHUFFLE, self.enableShuffleHandler), self.controller_do.addListener(FWDMSPController.DISABLE_SHUFFLE, self.disableShuffleHandler), self.controller_do.addListener(FWDMSPController.BUY, self.controllerButtonBuyHandler),
-									self.controller_do.addListener(FWDMSPController.FACEBOOK_SHARE, self.facebookShareHandler), self.controller_do.addListener(FWDMSPController.SHOW_PLAYBACKRATE, self.showPlaybacrateWindowHandler), self.controller_do.addListener(FWDMSPController.SHOW_ATOB, self.showAtobWindowHandler), self.main_do.addChild(self.controller_do), self.openInPopup_bl && self.data.showPlaylistsButtonAndPlaylists_bl && (self.controller_do.setPlaylistButtonState("selected"), self.controller_do.playlistButton_do && self.controller_do.playlistButton_do.disableForGood())
-							}, this.controllerOnPopupHandler = function() {
+									self.controller_do.addListener(FWDMSPController.START_TO_SCRUB, self.controllerStartToScrubbHandler),
+                  self.controller_do.addListener(FWDMSPController.SCRUB, self.controllerScrubbHandler),
+									self.controller_do.addListener(FWDMSPController.SCRUB_PLAYLIST_ITEM, self.controllerPlaylistItemScrubbHandler),
+                  self.controller_do.addListener(FWDMSPController.STOP_TO_SCRUB, self.controllerStopToScrubbHandler),
+                  self.controller_do.addListener(FWDMSPController.SHOW_CATEGORIES, self.showCategoriesHandler),
+                  self.controller_do.addListener(FWDMSPController.SHOW_PLAYLIST, self.showPlaylistHandler),
+                  self.controller_do.addListener(FWDMSPController.HIDE_PLAYLIST, self.hidePlaylistHandler),
+                  self.controller_do.addListener(FWDMSPController.ENABLE_LOOP, self.enableLoopHandler),
+                  self.controller_do.addListener(FWDMSPController.DISABLE_LOOP, self.disableLoopHandler),
+                  self.controller_do.addListener(FWDMSPController.ENABLE_SHUFFLE, self.enableShuffleHandler),
+                  self.controller_do.addListener(FWDMSPController.DISABLE_SHUFFLE, self.disableShuffleHandler),
+                  self.controller_do.addListener(FWDMSPController.BUY, self.controllerButtonBuyHandler),
+									self.controller_do.addListener(FWDMSPController.FACEBOOK_SHARE, self.facebookShareHandler),
+                  self.controller_do.addListener(FWDMSPController.SHOW_PLAYBACKRATE, self.showPlaybacrateWindowHandler),
+                  self.controller_do.addListener(FWDMSPController.SHOW_ATOB, self.showAtobWindowHandler),
+                  self.main_do.addChild(self.controller_do),
+                  self.openInPopup_bl && self.data.showPlaylistsButtonAndPlaylists_bl && (self.controller_do.setPlaylistButtonState("selected"), self.controller_do.playlistButton_do && self.controller_do.playlistButton_do.disableForGood())
+							},
+              this.controllerOnPopupHandler = function() {
 								self.popup()
-							}, this.controllerOnPlayHandler = function(e) {
+							},
+              this.controllerOnPlayHandler = function(e) {
 								self.play()
-							}, this.controllerPlayNextHandler = function(e) {
+							},
+              this.controllerPlayNextHandler = function(e) {
 								self.isPlaylistItemClicked_bl = !0,
 									self.data.shuffle_bl ? self.playShuffle() : self.playNext()
-							}, this.controllerPlayPrevHandler = function(e) {
+							},
+              this.controllerPlayPrevHandler = function(e) {
 								self.isPlaylistItemClicked_bl = !0,
-									self.data.shuffle_bl ? self.playShuffle() : self.playPrev()
-							}, this.controllerOnPauseHandler = function(e) {
+								self.data.shuffle_bl ? self.playShuffle() : self.playPrev()
+							},
+              this.controllerOnPauseHandler = function(e) {
 								self.isPlaylistItemClicked_bl = !0,
 									self.pause()
-							}, this.volumeStartToScrubbHandler = function(e) {
+							},
+              this.volumeStartToScrubbHandler = function(e) {
 								self.playlist_do && self.playlist_do.showDisable()
-							}, this.volumeStopToScrubbHandler = function(e) {
+							},
+              this.volumeStopToScrubbHandler = function(e) {
 								self.playlist_do && self.playlist_do.hideDisable()
-							}, this.controllerStartToScrubbHandler = function(e) {
+							},
+              this.controllerStartToScrubbHandler = function(e) {
 								self.playlist_do && self.playlist_do.showDisable(), self.audioType_str == FWDMSP.YOUTUBE && self.ytb_do ? self.ytb_do.startToScrub() : self.audioType_str == FWDMSP.VIDEO && self.videoScreen_do ? self.videoScreen_do.startToScrub() : FWDMSP.hasHTML5Audio ? self.audioScreen_do.startToScrub() : self.isFlashScreenReady_bl && (FWDMSP.pauseAllAudio(self), self.flashObject.startToScrub())
-							}, this.controllerScrubbHandler = function(e) {
+							},
+              this.controllerScrubbHandler = function(e) {
 								self.audioType_str == FWDMSP.YOUTUBE && self.ytb_do ? self.ytb_do.scrub(e.percent) : self.audioType_str == FWDMSP.VIDEO && self.videoScreen_do ? self.videoScreen_do.scrub(e.percent) : FWDMSP.hasHTML5Audio ? self.audioScreen_do.scrub(e.percent) : self.isFlashScreenReady_bl && self.flashObject.scrub(e.percent)
-							}, this.controllerPlaylistItemScrubbHandler = function(e) {
+							},
+              this.controllerPlaylistItemScrubbHandler = function(e) {
 								self.playlist_do && self.playlist_do.updateCurItemProgress(e.percent)
-							}, this.controllerStopToScrubbHandler = function(e) {
+							},
+              this.controllerStopToScrubbHandler = function(e) {
 								self.playlist_do && self.playlist_do.hideDisable(), self.audioType_str == FWDMSP.YOUTUBE && self.ytb_do ? self.ytb_do.stopToScrub() : self.audioType_str == FWDMSP.VIDEO && self.videoScreen_do ? self.videoScreen_do.stopToScrub() : FWDMSP.hasHTML5Audio ? self.audioScreen_do.stopToScrub() : self.isFlashScreenReady_bl && self.flashObject.stopToScrub()
-							}, this.controllerChangeVolumeHandler = function(e) {
+							},
+              this.controllerChangeVolumeHandler = function(e) {
 								self.setVolume(e.percent)
-							}, this.showCategoriesHandler = function(e) {
-								self.showCategories(), self.controller_do.setCategoriesButtonState("selected")
-							}, this.showPlaylistHandler = function(e) {
-								self.showPlaylist()
-							}, this.hidePlaylistHandler = function(e) {
-								self.hidePlaylist()
-							}, this.enableLoopHandler = function(e) {
+							},
+              this.showCategoriesHandler = function(e) {
+                self.showCategories(), self.controller_do.setCategoriesButtonState("selected")
+							},
+              this.showPlaylistHandler = function(e) {
+                self.showPlaylist()
+							},
+              this.hidePlaylistHandler = function(e) {
+                self.hidePlaylist()
+							},
+              this.enableLoopHandler = function(e) {
 								self.data.loop_bl = !0, self.data.shuffle_bl = !1, self.controller_do.setLoopStateButton("selected"), self.controller_do.setShuffleButtonState("unselected")
-							}, this.disableLoopHandler = function(e) {
+							},
+              this.disableLoopHandler = function(e) {
 								self.data.loop_bl = !1, self.controller_do.setLoopStateButton("unselected")
-							}, this.enableShuffleHandler = function(e) {
+							},
+              this.enableShuffleHandler = function(e) {
 								self.data.shuffle_bl = !0, self.data.loop_bl = !1, self.controller_do.setShuffleButtonState("selected"), self.controller_do.setLoopStateButton("unselected")
-							}, this.disableShuffleHandler = function(e) {
+							},
+              this.disableShuffleHandler = function(e) {
 								self.data.shuffle_bl = !1, self.controller_do.setShuffleButtonState("unselected")
-							}, this.facebookShareHandler = function(e) {
+							},
+              this.facebookShareHandler = function(e) {
 								console.log("Кнопка поделиться нажата!")
-							}, this.showPlaybacrateWindowHandler = function(e) {
-								self.resizeHandler(), self.playbackRateWindow_do.show(),
-									self.controller_do && !self.isMobile_bl && (self.controller_do.playbackRateButton_do.setSelectedState(), self.controller_do.playbackRateButton_do.isDisabled_bl = !0)
-							}, this.showAtobWindowHandler = function(e) {
-								self.resizeHandler(), self.atb_do.positionAndResize(), self.atb_do.show(!0), self.controller_do && !self.isMobile_bl && (self.controller_do.atbButton_do.setSelectedState(), self.controller_do.atbButton_do.isDisabled_bl = !0)
-							}, this.controllerButtonBuyHandler = function() {
+							},
+              this.showPlaybacrateWindowHandler = function(e) {
+								self.resizeHandler(),
+                self.playbackRateWindow_do.show(),
+								self.controller_do && !self.isMobile_bl && (self.controller_do.playbackRateButton_do.setSelectedState(), self.controller_do.playbackRateButton_do.isDisabled_bl = !0)
+							},
+              this.showAtobWindowHandler = function(e) {
+								self.resizeHandler(),
+                self.atb_do.positionAndResize(),
+                self.atb_do.show(!0),
+                self.controller_do && !self.isMobile_bl && (self.controller_do.atbButton_do.setSelectedState(), self.controller_do.atbButton_do.isDisabled_bl = !0)
+							},
+              this.controllerButtonBuyHandler = function() {
 								self.buy();
-							}, this.setupAudioScreen = function() {
+							},
+              this.setupAudioScreen = function() {
 								FWDMSPAudioScreen.setPrototype(), self.audioScreen_do = new FWDMSPAudioScreen(self.data.volume, self.data.autoPlay_bl, self.data.loop_bl), self.audioScreen_do.addListener(FWDMSPAudioScreen.ERROR, self.audioScreenErrorHandler),
 									self.audioScreen_do.addListener(FWDMSPAudioScreen.START, self.audioScreenSatrtHandler),
-									self.audioScreen_do.addListener(FWDMSPAudioScreen.SAFE_TO_SCRUBB, self.audioScreenSafeToScrubbHandler), self.audioScreen_do.addListener(FWDMSPAudioScreen.STOP, self.audioScreenStopHandler), self.audioScreen_do.addListener(FWDMSPAudioScreen.PLAY, self.audioScreenPlayHandler), self.audioScreen_do.addListener(FWDMSPAudioScreen.PAUSE, self.audioScreenPauseHandler),
+									self.audioScreen_do.addListener(FWDMSPAudioScreen.SAFE_TO_SCRUBB, self.audioScreenSafeToScrubbHandler),
+                  self.audioScreen_do.addListener(FWDMSPAudioScreen.STOP, self.audioScreenStopHandler),
+                  self.audioScreen_do.addListener(FWDMSPAudioScreen.PLAY, self.audioScreenPlayHandler),
+                  self.audioScreen_do.addListener(FWDMSPAudioScreen.PAUSE, self.audioScreenPauseHandler),
 									self.audioScreen_do.addListener(FWDMSPAudioScreen.UPDATE, self.audioScreenUpdateHandler),
-									self.audioScreen_do.addListener(FWDMSPAudioScreen.UPDATE_TIME, self.audioScreenUpdateTimeHandler), self.audioScreen_do.addListener(FWDMSPAudioScreen.LOAD_PROGRESS, self.audioScreenLoadProgressHandler), self.audioScreen_do.addListener(FWDMSPAudioScreen.PLAY_COMPLETE, self.audioScreenPlayCompleteHandler), self.useOnlyAPI_bl ? document.documentElement.appendChild(self.audioScreen_do.screen) : self.main_do.addChild(self.audioScreen_do)
-							}, this.audioScreenErrorHandler = function(e) {
+									self.audioScreen_do.addListener(FWDMSPAudioScreen.UPDATE_TIME, self.audioScreenUpdateTimeHandler),
+                  self.audioScreen_do.addListener(FWDMSPAudioScreen.LOAD_PROGRESS, self.audioScreenLoadProgressHandler),
+                  self.audioScreen_do.addListener(FWDMSPAudioScreen.PLAY_COMPLETE, self.audioScreenPlayCompleteHandler),
+                  self.useOnlyAPI_bl ? document.documentElement.appendChild(self.audioScreen_do.screen) : self.main_do.addChild(self.audioScreen_do)
+							},
+              this.audioScreenErrorHandler = function(e) {
 								var t; - 1 == e.text.indexOf(">null<") && (t = FWDMSP.hasHTML5Audio ? e.text : e, self.main_do && self.main_do.addChild(self.info_do), self.info_do && self.info_do.showText(t), self.position_str == FWDMSP.POSITION_TOP && self.playlist_do && (self.info_do.setY(self.playlist_do.h), self.info_do.setHeight(self.controller_do.h)), self.hider && (self.hider.reset(), self.hider.stop()), self.dispatchEvent(FWDMSP.ERROR, {
 									error: t
 								}))
-							}, this.audioScreenSatrtHandler = function() {
+							},
+              this.audioScreenSatrtHandler = function() {
 								self.dispatchEvent(FWDMSP.START)
-							}, this.audioScreenSafeToScrubbHandler = function() {
+							},
+              this.audioScreenSafeToScrubbHandler = function() {
 								self.controller_do && self.controller_do.enableMainScrubber(), FWDMSPUtils.getCookie("FWDMSPusePP") && !self.playedOnceCP_bl && (self.setVolume(Number(FWDMSPUtils.getCookie("FWDMSPVolume"))), setTimeout(function() {
 									self.scrub(Number(FWDMSPUtils.getCookie("FWDMSPpp")))
 								}, 200)), self.playedOnceCP_bl = !0
-							}, this.audioScreenStopHandler = function(e) {
+							},
+              this.audioScreenStopHandler = function(e) {
 								self.main_do && self.main_do.contains(self.info_do) && self.main_do.removeChild(self.info_do), self.opener_do && self.opener_do.showPlayButton(), self.controller_do && (self.controller_do.showPlayButton(), self.controller_do.stopEqulizer(), self.controller_do.disableMainScrubber()), self.hider && (self.hider.reset(), self.hider.stop()), self.dispatchEvent(FWDMSP.STOP)
-							}, this.sendGAPlayedEvent = function() {
+							},
+              this.sendGAPlayedEvent = function() {
 								if (window.ga && self.videoNameGa && self.videoNameGa != self.prevVideoNameGa) {
 									var e = "trackName:" + self.videoNameGa;
 									ga("send", {
@@ -1194,8 +1412,10 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 									})
 								}
 								self.prevVideoNameGa = self.videoNameGa
-							}, this.audioScreenPlayHandler = function() {
-								self.sendGAPlayedEvent(), (FWDMSP.keyboardCurInstance = self).controller_do && (self.controller_do.showPauseButton(), self.controller_do.startEqulizer()), self.opener_do && self.opener_do.showPauseButton(), self.playlist_do && self.playlist_do.setCurItemPauseState(), self.largePlayButton_do && self.largePlayButton_do.hide(), self.hider && self.isFullScreen_bl && self.hider.start(), self.openInPopup_bl && setTimeout(function() {
+							},
+              this.audioScreenPlayHandler = function() {
+								self.sendGAPlayedEvent(), 
+                (FWDMSP.keyboardCurInstance = self).controller_do && (self.controller_do.showPauseButton(), self.controller_do.startEqulizer()), self.opener_do && self.opener_do.showPauseButton(), self.playlist_do && self.playlist_do.setCurItemPauseState(), self.largePlayButton_do && self.largePlayButton_do.hide(), self.hider && self.isFullScreen_bl && self.hider.start(), self.openInPopup_bl && setTimeout(function() {
 									self.scrubbedFirstTimeInPopup_bl || self.scrub(self.lastPercentPlayed), self.scrubbedFirstTimeInPopup_bl = !0
 								}, 600), self.hasStartedToPlay_bl || self.data.playlist_ar[self.id].startAtTime && self.scrubbAtTime(self.data.playlist_ar[self.id].startAtTime), setTimeout(function() {
 									self.isPlaylistItemClicked_bl = !1
