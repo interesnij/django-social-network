@@ -3886,7 +3886,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 						t < 0 ? t = 0 : t > p.volumeScrubberWidth - p.scrubbersOffsetWidth && (t = p.volumeScrubberWidth - p.scrubbersOffsetWidth);
 						var o = t / p.volumeScrubberWidth;
 						p.disable_do && p.addChild(p.disable_do),
-							p.lastVolume = o, p.isVolumeScrubberScrubbing_bl = !0, p.updateVolume(o), p.ttm2.show(),
+							p.lastVolume = o, p.isVolumeScrubberScrubbing_bl = !0, p.updateVolume(o),
 							p.dispatchEvent(n.VOLUME_START_TO_SCRUB), p.isMobile_bl ? p.hasPointerEvent_bl ? (window.addEventListener("pointermove", p.volumeScrubberMoveHandler), window.addEventListener("pointerup", p.volumeScrubberEndHandler)) : (window.addEventListener("touchmove", p.volumeScrubberMoveHandler), window.addEventListener("touchend", p.volumeScrubberEndHandler)) : (window.addEventListener("mousemove", p.volumeScrubberMoveHandler), window.addEventListener("mouseup", p.volumeScrubberEndHandler))
 					}
 				}, this.volumeScrubberMoveHandler = function(e) {
