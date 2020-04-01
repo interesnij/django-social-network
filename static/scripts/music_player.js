@@ -3777,7 +3777,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 						p.disableMainScrubber()
 				}, this.mainScrubberOnOverHandler = function(e) {
 					if (!p.isMainScrubberDisabled_bl) {
-						0 != f.totalDuration && p.ttm.show(), !p.isMobile_bl && p.ttm && window.addEventListener("mousemove", p.mainScrubberWMouseMove);
+						0 != f.totalDuration, !p.isMobile_bl && p.ttm && window.addEventListener("mousemove", p.mainScrubberWMouseMove);
 						var t = FWDMSPUtils.getViewportMouseCoordinates(e).screenX - p.mainScrubber_do.getGlobalX();
 						t < 0 ? t = 0 : t > p.mainScrubberWidth - p.scrubbersOffsetWidth && (t = p.mainScrubberWidth - p.scrubbersOffsetWidth);
 						var o = t / p.mainScrubberWidth;
@@ -3800,7 +3800,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 						!FWDMSP.hasHTML5Audio && t >= p.mainProgress_do.w && (t = p.mainProgress_do.w);
 						var s = t / p.mainScrubberWidth;
 						p.disable_do && p.addChild(p.disable_do),
-							p.ttm.show(), p.updateMainScrubber(o), p.dispatchEvent(n.START_TO_SCRUB), p.dispatchEvent(n.SCRUB_PLAYLIST_ITEM, {
+							p.updateMainScrubber(o), p.dispatchEvent(n.START_TO_SCRUB), p.dispatchEvent(n.SCRUB_PLAYLIST_ITEM, {
 								percent: s
 							}), p.dispatchEvent(n.SCRUB, {
 								percent: o
