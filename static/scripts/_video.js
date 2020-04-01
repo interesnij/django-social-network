@@ -516,7 +516,7 @@ function() {
         };
         u.setPrototype = function() {
             u.prototype = new FWDSIDisplayObject("div")
-        }, u.HOVER = "onHover", u.CLICK = "onClick", u.IFRAME = "iframe", u.IMAGE = "image", u.FLASH = "flash", u.AUDIO = "audio", u.VIDEO = "video", u.VIMEO = "vimeo", u.YOUTUBE = "youtube", u.MAPS = "maps", u.AJAX = "ajax", u.HTML = "html", u.prototype = null, c.FWDSIThumb = u
+        }, u.HOVER = "onHover", u.CLICK = "onClick", u.IFRAME = "iframe", u.IMAGE = "image", u.FLASH = "flash", u.AUDIO = "audio", u.MAPS = "maps", u.AJAX = "ajax", u.HTML = "html", u.prototype = null, c.FWDSIThumb = u
     }(window),
     function(t) {
         function o() {}
