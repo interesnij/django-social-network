@@ -4435,7 +4435,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                                 if (self.isAPIReady_bl) {
                                     null == pId && (pId = self.id);
                                     var buy = self.data.playlist_ar[pId].buy;
-                                    console.log(pId);
+                                    console.log(pId, buy, self.data, self.pk);
                                 }
                             }, this.playFirstTrack = function() {
                                 self.playSpecificTrack(self.catId, 0)
