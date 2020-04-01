@@ -4102,7 +4102,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                             }, this.showAtobWindowHandler = function(e) {
                                 self.resizeHandler(), self.atb_do.positionAndResize(), self.atb_do.show(!0), self.controller_do && !self.isMobile_bl && (self.controller_do.atbButton_do.setSelectedState(), self.controller_do.atbButton_do.isDisabled_bl = !0)
                             }, this.controllerButtonBuyHandler = function() {
-                                console.log("Кнопка покупки нажата!")
+                                self.buy();
                             }, this.setupAudioScreen = function() {
                                 FWDMSPAudioScreen.setPrototype(), self.audioScreen_do = new FWDMSPAudioScreen(self.data.volume, self.data.autoPlay_bl, self.data.loop_bl), self.audioScreen_do.addListener(FWDMSPAudioScreen.ERROR, self.audioScreenErrorHandler), self.audioScreen_do.addListener(FWDMSPAudioScreen.START, self.audioScreenSatrtHandler), self.audioScreen_do.addListener(FWDMSPAudioScreen.SAFE_TO_SCRUBB, self.audioScreenSafeToScrubbHandler), self.audioScreen_do.addListener(FWDMSPAudioScreen.STOP, self.audioScreenStopHandler), self.audioScreen_do.addListener(FWDMSPAudioScreen.PLAY, self.audioScreenPlayHandler), self.audioScreen_do.addListener(FWDMSPAudioScreen.PAUSE, self.audioScreenPauseHandler), self.audioScreen_do.addListener(FWDMSPAudioScreen.UPDATE, self.audioScreenUpdateHandler), self.audioScreen_do.addListener(FWDMSPAudioScreen.UPDATE_TIME, self.audioScreenUpdateTimeHandler), self.audioScreen_do.addListener(FWDMSPAudioScreen.LOAD_PROGRESS, self.audioScreenLoadProgressHandler), self.audioScreen_do.addListener(FWDMSPAudioScreen.PLAY_COMPLETE, self.audioScreenPlayCompleteHandler), self.useOnlyAPI_bl ? document.documentElement.appendChild(self.audioScreen_do.screen) : self.main_do.addChild(self.audioScreen_do)
                             }, this.audioScreenErrorHandler = function(e) {
@@ -4433,12 +4433,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                                 self.data.downloadMp3(o, s)
                             }, this.buy = function(pId) {
                                 if (self.isAPIReady_bl) {
-                                    if ("file:" == document.location.protocol) {
-                                        var error = "Buying mp3 files local is not allowed or possible!. To function properly please test online.";
-                                        return self.main_do.addChild(self.info_do), void self.info_do.showText(error)
-                                    }
                                     null == pId && (pId = self.id);
-                                    var buy = self.data.playlist_ar[pId].buy; - 1 != buy.indexOf("http") && buy.indexOf("http") < 3 ? window.open(buy) : eval(buy)
+                                    var buy = self.data.playlist_ar[pId].buy;
+                                    window.open(buy)
                                 }
                             }, this.playFirstTrack = function() {
                                 self.playSpecificTrack(self.catId, 0)
