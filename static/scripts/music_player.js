@@ -1742,7 +1742,24 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 				}
 			},
 			TZ, UZ, f$, g$;
-			 
+			FWDMSP.checkIfHasYoutube = function() {
+			 if (!FWDMSP.checkIfHasYoutube_bl) {
+				 for (var e = !(FWDMSP.checkIfHasYoutube_bl = !0),
+						 t = FWDMSP.instaces_ar.length, o = 0; o < t; o++) FWDMSP.instaces_ar[o].useYoutube_bl && (e = !0);
+				 e ? setTimeout(FWDMSP.setupYoutubeAPI, 500) : setTimeout(FWDMSP.setupAllInstances, 500)
+			 }
+		 }, FWDMSP.setupYoutubeAPI = function() {
+			 if (!FWDMSP.isYoutubeAPICreated_bl)
+				 if (FWDMSP.isYoutubeAPICreated_bl = !0, "undefined" != typeof YT) FWDMSP.setupAllInstances();
+				 else {
+					 var e = document.createElement("script");
+					 e.src = "https://www.youtube.com/iframe_api";
+					 var t = document.getElementsByTagName("script")[0];
+					 t.parentNode.insertBefore(e, t), window.onYouTubeIframeAPIReady ? window.onYouTubeIframeAPIReady = function() {
+						 FWDMSP.setupAllInstances()
+					 } : setTimeout(FWDMSP.setupAllInstances, 1e3)
+				 }
+		 },
 
 		FWDMSP.setupAllInstances = function() {
 				if (!FWDMSP.areInstancesCreated_bl) {
