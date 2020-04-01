@@ -1253,7 +1253,30 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 							},
               this.palylistItemOnUpHandler = function(e) {
 								self.isPlaylistItemClicked_bl = !0,
-								e.id == self.id ? self.audioType_str == FWDMSP.AUDIO && self.audioScreen_do.isPlaying_bl ? self.pause() : self.audioType_str != FWDMSP.AUDIO || self.audioScreen_do.isStopped_bl && !self.audioScreen_do.isStopped_bl ? self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS || !self.videoScreen_do.isPlaying_bl ? self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS || self.videoScreen_do.isStopped_bl ? self.audioType_str == FWDMSP.YOUTUBE && self.ytb_do.isPlaying_bl ? self.pause() : self.audioType_str != FWDMSP.YOUTUBE || self.ytb_do.isStopped_bl || self.play() : self.play() : self.pause() : self.play() : self.useDeepLinking_bl && self.id != e.id ? (FWDAddress.setValue(self.instanceName_str + "?catid=" + self.catId + "&trackid=" + e.id), self.id = e.id) : (self.id = e.id, self.setSource(!0), self.changeHLS_bl = !0, self.autioType_str != FWDMSP.HLS && self.play()), self.data.playlist_ar && (self.videoNameGa = self.data.playlist_ar[self.id].titleText, self.videoCat = self.data.cats_ar[self.catId].playlistsName)
+								e.id == self.id
+								? self.audioType_str == FWDMSP.AUDIO
+								&& self.audioScreen_do.isPlaying_bl
+								? self.pause()
+								: self.audioType_str != FWDMSP.AUDIO
+								|| self.audioScreen_do.isStopped_bl
+								&& !self.audioScreen_do.isStopped_bl
+								? self.audioType_str != FWDMSP.VIDEO
+								&& self.audioType_str != FWDMSP.HLS
+								|| !self.videoScreen_do.isPlaying_bl
+								? self.audioType_str != FWDMSP.VIDEO
+								&& self.audioType_str != FWDMSP.HLS
+								|| self.videoScreen_do.isStopped_bl
+								? self.audioType_str == FWDMSP.YOUTUBE
+								&& self.ytb_do.isPlaying_bl
+								? self.pause() : self.audioType_str != FWDMSP.YOUTUBE
+								|| self.ytb_do.isStopped_bl
+								|| self.play() : self.play() : self.pause() : self.play() : self.useDeepLinking_bl &&
+								self.id != e.id ? (FWDAddress.setValue(self.instanceName_str + "?catid=" + self.catId + "&trackid=" + e.id), self.id = e.id)
+								: (self.id = e.id, self.setSource(!0),
+										self.changeHLS_bl = !0,
+										self.autioType_str != FWDMSP.HLS
+										&& self.play()
+									)
 
 							},
               this.palylistUpdateFolderTrackTitle = function(e) {
