@@ -1745,8 +1745,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 
 			FWDMSP.checkIfHasYoutube = function() {
 					if (!FWDMSP.checkIfHasYoutube_bl) {
-						for (var e = !(FWDMSP.checkIfHasYoutube_bl = !0),
-								t = FWDMSP.instaces_ar.length, o = 0; o < t; o++) FWDMSP.instaces_ar[o].useYoutube_bl && (e = !0);
+					
 						setTimeout(FWDMSP.setupAllInstances, 500)
 					}
 				},
