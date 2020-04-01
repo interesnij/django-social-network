@@ -41,5 +41,35 @@ on('body', 'click', '.drop', function() {
   var block = this.nextElementSibling;
   block.classList.toggle("show");
 });
-
 </script>
+
+<ul id="audio_playlists" style="display:none;">
+		<li data-source="playlist_" data-playlist-name="Мой плейлист" data-thumbnail-path="/static/images/news_small1.jpg">
+			<p class="minimalWhiteCategoriesTitle"><span class="boldWhite">Название: </span>Мой плейлист</p>
+			<p class="minimalWhiteCategoriesType"><span class="boldWhite">Здесь тип плейлиста</span></p>
+			<p class="minimalWhiteCategoriesDescription">Здесь описание плейлиста</p>
+		</li>
+		<li data-source="playlist_new" data-playlist-name="Мой плейлист номер 2" data-thumbnail-path="/static/images/news_small1.jpg">
+			<p class="minimalWhiteCategoriesTitle"><span class="boldWhite">Название: </span>Мой плейлист</p>
+			<p class="minimalWhiteCategoriesType"><span class="boldWhite">Здесь тип плейлиста</span></p>
+			<p class="minimalWhiteCategoriesDescription">Здесь описание плейлиста</p>
+		</li>
+</ul>
+
+
+<ul id="playlist_" style="display:none;">
+  {% for track in request.user.my_playlist_too %}
+  <li data-path="{{ track.uri }}"
+      data-thumbpath="{{ track.artwork_url }}"
+			data-downloadable="yes"
+			data-add="{% if not request.user|is_track_exists:track.id %}tru{% else %}false{% endif %}"
+			data-track-id="{{ track.pk }}">
+    <p><span style="font-weight:bold">{{ track.title }}</span></p>
+  </li>
+  {% endfor %}
+</ul>
+<ul id="playlist_new" style="display:none;">
+		<li data-path="https://api.soundcloud.com/tracks/601535613" data-thumbpath="/static/images/news_small1.jpg">
+	   <p><span style="font-weight:bold">Тесттттттт</span></p>
+	 </li>
+</ul>
