@@ -6568,7 +6568,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             }, this.faceboolButtonOnMouseUpHandler = function() {
                 p.dispatchEvent(n.FACEBOOK_SHARE)
             }, this.setupPopupButton = function() {
-                FWDMSPSimpleButton.setPrototype(), p.popupButton_do = new FWDMSPSimpleButton(p.popupN_img, _.popupSPath_str, null, !0, _.useHEXColorsForSkin_bl, _.normalButtonsColor_str, _.selectedButtonsColor_str), p.popupButton_do.addListener(FWDMSPSimpleButton.SHOW_TOOLTIP, p.popupButtonShowToolTipHandler), p.popupButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, p.popupButtonOnMouseUpHandler), p.popupButton_do.setY(parseInt((p.stageHeight - p.popupButton_do.h) / 2)), p.buttons_ar.push(p.popupButton_do), p.mainHolder_do.addChild(p.popupButton_do)
+                FWDMSPSimpleButton.setPrototype(), p.popupButton_do = new FWDMSPSimpleButton(p.popupN_img, _.popupSPath_str, null, !0, _.useHEXColorsForSkin_bl, _.normalButtonsColor_str, _.selectedButtonsColor_str), p.popupButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, p.popupButtonOnMouseUpHandler), p.popupButton_do.setY(parseInt((p.stageHeight - p.popupButton_do.h) / 2)), p.buttons_ar.push(p.popupButton_do), p.mainHolder_do.addChild(p.popupButton_do)
             }, this.popupButtonShowToolTipHandler = function(e) {
                 p.showToolTip(p.popupButton_do, p.populButtonToolTip_do, e.e)
             }, this.popupButtonOnMouseUpHandler = function() {
