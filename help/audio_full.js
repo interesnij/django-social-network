@@ -6023,40 +6023,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 					t = 0;
 					t = s.playlist_do && s.position_str == FWDMSP.POSITION_TOP ? s.playlist_do.h : f.embedWindowCloseButtonMargins, f.closeButton_do.setX(e), f.closeButton_do.setY(0), f.setY(t), f.setWidth(f.stageWidth), f.setHeight(f.stageHeight), f.mainHolder_do.setWidth(f.stageWidth), f.mainHolder_do.setHeight(f.stageHeight), f.positionButtons()
 				},
-        this.setupButtons = function() {
-					FWDMSPSimpleButton.setPrototype(), f.facebookButton_do = new FWDMSPSimpleButton(o.facebookN_img, o.facebookSPath_str, void 0, !0, o.useHEXColorsForSkin_bl, o.normalButtonsColor_str, o.selectedButtonsColor_str), f.facebookButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, f.facebookOnMouseUpHandler), this.buttons_ar.push(f.facebookButton_do),
-						FWDMSPSimpleButton.setPrototype(), f.googleButton_do = new FWDMSPSimpleButton(o.googleN_img, o.googleSPath_str, void 0, !0, o.useHEXColorsForSkin_bl, o.normalButtonsColor_str, o.selectedButtonsColor_str), f.googleButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, f.googleOnMouseUpHandler), this.buttons_ar.push(f.googleButton_do),
-						FWDMSPSimpleButton.setPrototype(), f.twitterButton_do = new FWDMSPSimpleButton(o.twitterN_img, o.twitterSPath_str, void 0, !0, o.useHEXColorsForSkin_bl, o.normalButtonsColor_str, o.selectedButtonsColor_str), f.twitterButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, f.twitterOnMouseUpHandler), this.buttons_ar.push(f.twitterButton_do),
-						FWDMSPSimpleButton.setPrototype(), f.likedinButton_do = new FWDMSPSimpleButton(o.likedInkN_img, o.likedInSPath_str, void 0, !0, o.useHEXColorsForSkin_bl, o.normalButtonsColor_str, o.selectedButtonsColor_str), f.likedinButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, f.likedinOnMouseUpHandler), this.buttons_ar.push(f.likedinButton_do),
-						FWDMSPSimpleButton.setPrototype(), f.bufferButton_do = new FWDMSPSimpleButton(o.bufferkN_img, o.bufferSPath_str, void 0, !0, o.useHEXColorsForSkin_bl, o.normalButtonsColor_str, o.selectedButtonsColor_str), f.bufferButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, f.bufferOnMouseUpHandler), this.buttons_ar.push(f.bufferButton_do),
-						FWDMSPSimpleButton.setPrototype(), f.diggButton_do = new FWDMSPSimpleButton(o.diggN_img, o.diggSPath_str, void 0, !0, o.useHEXColorsForSkin_bl, o.normalButtonsColor_str, o.selectedButtonsColor_str), f.diggButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, f.diggOnMouseUpHandler), this.buttons_ar.push(f.diggButton_do),
-						FWDMSPSimpleButton.setPrototype(), f.redditButton_do = new FWDMSPSimpleButton(o.redditN_img, o.redditSPath_str, void 0, !0, o.useHEXColorsForSkin_bl, o.normalButtonsColor_str, o.selectedButtonsColor_str), f.redditButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, f.redditOnMouseUpHandler), this.buttons_ar.push(f.redditButton_do),
-						FWDMSPSimpleButton.setPrototype(), f.thumbrlButton_do = new FWDMSPSimpleButton(o.thumbrlN_img, o.thumbrlSPath_str, void 0, !0, o.useHEXColorsForSkin_bl, o.normalButtonsColor_str, o.selectedButtonsColor_str), f.thumbrlButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, f.thumbrlOnMouseUpHandler), this.buttons_ar.push(f.thumbrlButton_do), f.mainHolder_do.addChild(f.facebookButton_do), f.mainHolder_do.addChild(f.googleButton_do), f.mainHolder_do.addChild(f.twitterButton_do), f.mainHolder_do.addChild(f.likedinButton_do), f.mainHolder_do.addChild(f.bufferButton_do), f.mainHolder_do.addChild(f.diggButton_do), f.mainHolder_do.addChild(f.redditButton_do), f.mainHolder_do.addChild(f.thumbrlButton_do)
-				}, this.facebookOnMouseUpHandler = function() {
-					var e = "http://www.facebook.com/share.php?u=" + encodeURIComponent(location.href);
-					t.open(e, "", "menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=400,width=600")
-				}, this.googleOnMouseUpHandler = function() {
-					var e = "https://plus.google.com/share?url=" + encodeURIComponent(location.href);
-					t.open(e, "", "menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=400,width=600")
-				}, this.twitterOnMouseUpHandler = function() {
-					var e = "http://twitter.com/home?status=" + encodeURIComponent(location.href);
-					t.open(e, "", "menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=400,width=600")
-				}, this.likedinOnMouseUpHandler = function() {
-					var e = "https://www.linkedin.com/cws/share?url=" + location.href;
-					t.open(e, "", "menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=400,width=600")
-				}, this.bufferOnMouseUpHandler = function() {
-					var e = "https://buffer.com/add?url=" + location.href;
-					t.open(e, "", "menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=400,width=600")
-				}, this.diggOnMouseUpHandler = function() {
-					var e = "http://digg.com/submit?url=" + location.href;
-					t.open(e, "", "menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=400,width=600")
-				}, this.redditOnMouseUpHandler = function() {
-					var e = "https://www.reddit.com/?submit=" + location.href;
-					t.open(e, "", "menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=400,width=600")
-				}, this.thumbrlOnMouseUpHandler = function() {
-					var e = "http://www.tumblr.com/share/link?url=" + location.href;
-					t.open(e, "", "menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=400,width=600")
-				}, this.positionButtons = function() {
+        this.positionButtons = function() {
 					var e, t, o, s = [],
 						i = [],
 						n = [],
@@ -6107,20 +6074,50 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 		var d = function(e, t, o, s, i, n, l, r) {
 			var a = this;
 			d.prototype;
-			this.nImg = e, this.sPath_str = t, this.dPath_str = o,
-				this.n_sdo, this.s_sdo, this.d_sdo, this.totalWidth = this.nImg.width, this.totalHeight = this.nImg.height, this.useHEXColorsForSkin_bl = i, this.normalButtonsColor_str = n, this.selectedButtonsColor_str = l, this.inverseHEXColors_bl = r, this.isShowed_bl = !0,
-				this.isSetToDisabledState_bl = !1, this.isDisabled_bl = !1, this.isDisabledForGood_bl = !1, this.isSelectedFinal_bl = !1, this.isActive_bl = !1, this.isMobile_bl = FWDMSPUtils.isMobile, this.hasPointerEvent_bl = FWDMSPUtils.hasPointerEvent, this.allowToCreateSecondButton_bl = !a.isMobile_bl || a.hasPointerEvent_bl || s, a.init = function() {
+			this.nImg = e,
+      this.sPath_str = t,
+      this.dPath_str = o,
+			this.n_sdo,
+      this.s_sdo,
+      this.d_sdo,
+      this.totalWidth = this.nImg.width,
+      this.totalHeight = this.nImg.height,
+      this.useHEXColorsForSkin_bl = i,
+      this.normalButtonsColor_str = n,
+      this.selectedButtonsColor_str = l,
+      this.inverseHEXColors_bl = r,
+      this.isShowed_bl = !0,
+			this.isSetToDisabledState_bl = !1,
+      this.isDisabled_bl = !1,
+      this.isDisabledForGood_bl = !1,
+      this.isSelectedFinal_bl = !1,
+      this.isActive_bl = !1,
+      this.isMobile_bl = FWDMSPUtils.isMobile,
+      this.hasPointerEvent_bl = FWDMSPUtils.hasPointerEvent,
+      this.allowToCreateSecondButton_bl = !a.isMobile_bl || a.hasPointerEvent_bl || s,
+      a.init = function() {
 					a.setupMainContainers()
-				}, a.setupMainContainers = function() {
+				},
+        a.setupMainContainers = function() {
 					if (a.useHEXColorsForSkin_bl ? (a.n_sdo = new FWDMSPTransformDisplayObject("div"), a.n_sdo.setWidth(a.totalWidth), a.n_sdo.setHeight(a.totalHeight), a.n_sdo_canvas = FWDMSPUtils.getCanvasWithModifiedColor(a.nImg, a.normalButtonsColor_str).canvas, a.n_sdo.screen.appendChild(a.n_sdo_canvas)) : (a.n_sdo = new FWDMSPTransformDisplayObject("img"), a.n_sdo.setScreen(a.nImg)), a.addChild(a.n_sdo), a.allowToCreateSecondButton_bl) {
-						a.img1 = new Image, a.img1.src = a.sPath_str;
+						a.img1 = new Image,
+            a.img1.src = a.sPath_str;
 						var e = new Image;
-						a.sImg = e, a.useHEXColorsForSkin_bl ? (a.s_sdo = new FWDMSPTransformDisplayObject("div"), a.s_sdo.setWidth(a.totalWidth), a.s_sdo.setHeight(a.totalHeight), a.img1.onload = function() {
+						a.sImg = e,
+            a.useHEXColorsForSkin_bl ? (a.s_sdo = new FWDMSPTransformDisplayObject("div"), a.s_sdo.setWidth(a.totalWidth), a.s_sdo.setHeight(a.totalHeight), a.img1.onload = function() {
 							a.inverseHEXColors_bl ? a.s_sdo_canvas = FWDMSPUtils.getCanvasWithModifiedColor(a.img1, a.normalButtonsColor_str).canvas : a.s_sdo_canvas = FWDMSPUtils.getCanvasWithModifiedColor(a.img1, a.selectedButtonsColor_str).canvas, a.s_sdo.screen.appendChild(a.s_sdo_canvas)
 						}) : (a.s_sdo = new FWDMSPDisplayObject("img"), a.s_sdo.setScreen(a.img1), a.s_sdo.setWidth(a.totalWidth), a.s_sdo.setHeight(a.totalHeight)), a.s_sdo.setAlpha(0), a.addChild(a.s_sdo), a.dPath_str && (e.src = a.dPath_str, a.d_sdo = new FWDMSPDisplayObject("img"), a.d_sdo.setScreen(e), a.d_sdo.setWidth(a.totalWidth), a.d_sdo.setHeight(a.totalHeight), a.d_sdo.setX(-100), a.addChild(a.d_sdo))
 					}
-					a.setWidth(a.totalWidth), a.setHeight(a.totalHeight), a.setButtonMode(!0), a.screen.style.yellowOverlayPointerEvents = "none", a.isMobile_bl ? a.hasPointerEvent_bl ? (a.screen.addEventListener("pointerup", a.onMouseUp), a.screen.addEventListener("pointerover", a.onMouseOver), a.screen.addEventListener("pointerout", a.onMouseOut)) : a.screen.addEventListener("touchend", a.onMouseUp) : a.screen.addEventListener ? (a.screen.addEventListener("mouseover", a.onMouseOver), a.screen.addEventListener("mouseout", a.onMouseOut), a.screen.addEventListener("mouseup", a.onMouseUp)) : a.screen.attachEvent && (a.screen.attachEvent("onmouseover", a.onMouseOver), a.screen.attachEvent("onmouseout", a.onMouseOut), a.screen.attachEvent("onmouseup", a.onMouseUp))
-				}, a.onMouseOver = function(e) {
+					a.setWidth(a.totalWidth),
+          a.setHeight(a.totalHeight),
+          a.setButtonMode(!0),
+          a.screen.style.yellowOverlayPointerEvents = "none",
+          a.isMobile_bl ? a.hasPointerEvent_bl ? (a.screen.addEventListener("pointerup", a.onMouseUp), a.screen.addEventListener("pointerover", a.onMouseOver), a.screen.addEventListener("pointerout", a.onMouseOut))
+          : a.screen.addEventListener("touchend", a.onMouseUp)
+          : a.screen.addEventListener ? (a.screen.addEventListener("mouseover", a.onMouseOver), a.screen.addEventListener("mouseout", a.onMouseOut), a.screen.addEventListener("mouseup", a.onMouseUp))
+          : a.screen.attachEvent && (a.screen.attachEvent("onmouseover", a.onMouseOver), a.screen.attachEvent("onmouseout", a.onMouseOut), a.screen.attachEvent("onmouseup", a.onMouseUp))
+				},
+        a.onMouseOver = function(e) {
 					if (!(a.isDisabledForGood_bl || e.pointerType && e.pointerType != e.MSPOINTER_TYPE_MOUSE && "mouse" != e.pointerType)) {
 						if (a.isDisabled_bl || a.isSelectedFinal_bl) return;
 						a.dispatchEvent(d.MOUSE_OVER, {
@@ -6134,7 +6131,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 							e: e
 						}), a.setNormalState()
 					}
-				}, a.onMouseUp = function(e) {
+				},
+        a.onMouseUp = function(e) {
 					a.isDisabledForGood_bl || (e.preventDefault && e.preventDefault(), a.isDisabled_bl || 2 == e.button || a.dispatchEvent(d.MOUSE_UP, {
 						e: e
 					}))
@@ -6143,48 +6141,61 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 						alpha: 1,
 						ease: Expo.easeOut
 					}))
-				}, a.setUnselected = function() {
+				},
+        a.setUnselected = function() {
 					a.isSelectedFinal_bl = !1, a.s_sdo && FWDAnimation.to(a.s_sdo, .8, {
 						alpha: 0,
 						delay: .1,
 						ease: Expo.easeOut
 					})
-				}, this.setNormalState = function() {
+				},
+        this.setNormalState = function() {
 					FWDAnimation.killTweensOf(a.s_sdo),
 						FWDAnimation.to(a.s_sdo, .5, {
 							alpha: 0,
 							ease: Expo.easeOut
 						})
-				}, this.setSelectedState = function() {
+				},
+        this.setSelectedState = function() {
 					FWDAnimation.killTweensOf(a.s_sdo),
 						FWDAnimation.to(a.s_sdo, .5, {
 							alpha: 1,
 							delay: .1,
 							ease: Expo.easeOut
 						})
-				}, this.setDisabledState = function() {
+				},
+        this.setDisabledState = function() {
 					a.isSetToDisabledState_bl || (a.isSetToDisabledState_bl = !0, a.d_sdo && a.d_sdo.setX(0))
-				}, this.setEnabledState = function() {
+				},
+        this.setEnabledState = function() {
 					a.isSetToDisabledState_bl && (a.isSetToDisabledState_bl = !1, a.d_sdo && a.d_sdo.setX(-100))
-				}, this.disable = function() {
+				},
+        this.disable = function() {
 					a.isDisabledForGood_bl || a.isDisabled_bl || (a.isDisabled_bl = !0, FWDAnimation.killTweensOf(a), a.setButtonMode(!1), FWDAnimation.to(a, .6, {
 						alpha: .4
 					}), a.setNormalState())
-				}, this.enable = function() {
+				},
+        this.enable = function() {
 					!a.isDisabledForGood_bl && a.isDisabled_bl && (a.isDisabled_bl = !1, FWDAnimation.killTweensOf(a), a.setButtonMode(!0), FWDAnimation.to(a, .6, {
 						alpha: 1
 					}))
-				}, this.disableForGood = function() {
+				},
+        this.disableForGood = function() {
 					a.isDisabledForGood_bl = !0, a.setButtonMode(!1)
-				}, this.disableForGood = function() {
+				},
+        this.disableForGood = function() {
 					a.isDisabledForGood_bl = !0, a.setButtonMode(!1)
-				}, this.enableForGood = function() {
+				},
+        this.enableForGood = function() {
 					a.isDisabledForGood_bl = !1, a.setButtonMode(!0)
-				}, this.showDisabledState = function() {
+				},
+        this.showDisabledState = function() {
 					0 != a.d_sdo.x && a.d_sdo.setX(0)
-				}, this.hideDisabledState = function() {
+				},
+        this.hideDisabledState = function() {
 					-100 != a.d_sdo.x && a.d_sdo.setX(-100)
-				}, this.show = function() {
+				},
+        this.show = function() {
 					a.isShowed_bl || (a.isShowed_bl = !0, FWDAnimation.killTweensOf(a), FWDMSPUtils.isIEAndLessThen9 ? (FWDMSPUtils.isIEAndLessThen9 || (a.setAlpha(0), FWDAnimation.to(a, .4, {
 						alpha: 1,
 						delay: .4
@@ -6203,82 +6214,163 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 						},
 						ease: Elastic.easeOut
 					})))
-				}, this.hide = function(e) {
+				},
+        this.hide = function(e) {
 					a.isShowed_bl && (a.isShowed_bl = !1, FWDAnimation.killTweensOf(a), FWDAnimation.killTweensOf(a.n_sdo), a.setVisible(!1))
-				}, a.updateHEXColors = function(e, t) {
+				},
+        a.updateHEXColors = function(e, t) {
 					FWDMSPUtils.changeCanvasHEXColor(a.nImg, a.n_sdo_canvas, e), FWDMSPUtils.changeCanvasHEXColor(a.img1, a.s_sdo_canvas, t)
 				}, a.init()
 		};
 		d.setPrototype = function() {
 				d.prototype = null, d.prototype = new FWDMSPTransformDisplayObject("div")
-			}, d.CLICK = "onClick", d.MOUSE_OVER = "onMouseOver", d.MOUSE_OUT = "onMouseOut",
-			d.MOUSE_UP = "onMouseDown", d.prototype = null, e.FWDMSPSimpleButton = d
+			},
+      d.CLICK = "onClick",
+      d.MOUSE_OVER = "onMouseOver",
+      d.MOUSE_OUT = "onMouseOut",
+			d.MOUSE_UP = "onMouseDown",
+      d.prototype = null,
+      e.FWDMSPSimpleButton = d
 	}(window),
 	function(e) {
 		var a = function(e, t, o, s, i, n, l) {
 			var r = this;
 			a.prototype;
-			this.nImg_img = null, this.sImg_img = null, this.n_do,
-				this.s_do, this.useHEXColorsForSkin_bl = i, this.normalButtonsColor_str = l, this.selectedButtonsColor_str = n, this.nImgPath_str = e, this.sImgPath_str = t, this.buttonWidth = o,
-				this.buttonHeight = s, this.isMobile_bl = FWDMSPUtils.isMobile, this.hasPointerEvent_bl = FWDMSPUtils.hasPointerEvent, this.isDisabled_bl = !1, this.init = function() {
-					r.setupMainContainers(), r.setWidth(r.buttonWidth), r.setHeight(r.buttonHeight), r.setButtonMode(!0)
-				}, this.setupMainContainers = function() {
-					r.nImg = new Image, r.nImg.src = r.nImgPath_str, r.useHEXColorsForSkin_bl ? (r.n_do = new FWDMSPTransformDisplayObject("div"), r.n_do.setWidth(r.buttonWidth), r.n_do.setHeight(r.buttonHeight), r.nImg.onload = function() {
+			this.nImg_img = null,
+      this.sImg_img = null,
+      this.n_do,
+			this.s_do,
+      this.useHEXColorsForSkin_bl = i,
+      this.normalButtonsColor_str = l,
+      this.selectedButtonsColor_str = n,
+      this.nImgPath_str = e,
+      this.sImgPath_str = t,
+      this.buttonWidth = o,
+			this.buttonHeight = s,
+      this.isMobile_bl = FWDMSPUtils.isMobile,
+      this.hasPointerEvent_bl = FWDMSPUtils.hasPointerEvent,
+      this.isDisabled_bl = !1,
+      this.init = function() {
+					r.setupMainContainers(),
+          r.setWidth(r.buttonWidth),
+          r.setHeight(r.buttonHeight),
+          r.setButtonMode(!0)
+				},
+        this.setupMainContainers = function() {
+					r.nImg = new Image,
+          r.nImg.src = r.nImgPath_str,
+          r.useHEXColorsForSkin_bl ? (r.n_do = new FWDMSPTransformDisplayObject("div"), r.n_do.setWidth(r.buttonWidth), r.n_do.setHeight(r.buttonHeight), r.nImg.onload = function() {
 						r.n_do_canvas = FWDMSPUtils.getCanvasWithModifiedColor(r.nImg, r.normalButtonsColor_str).canvas, r.n_do.screen.appendChild(r.n_do_canvas)
-					}) : (r.n_do = new FWDMSPDisplayObject("img"), r.n_do.setScreen(r.nImg), r.n_do.setWidth(r.buttonWidth), r.n_do.setHeight(r.buttonHeight)), r.addChild(r.n_do), r.sImg = new Image, r.sImg.src = r.sImgPath_str, r.useHEXColorsForSkin_bl ? (r.s_do = new FWDMSPTransformDisplayObject("div"), r.s_do.setWidth(r.buttonWidth), r.s_do.setHeight(r.buttonHeight), r.sImg.onload = function() {
+					})
+          : (r.n_do = new FWDMSPDisplayObject("img"), r.n_do.setScreen(r.nImg), r.n_do.setWidth(r.buttonWidth), r.n_do.setHeight(r.buttonHeight)), r.addChild(r.n_do), r.sImg = new Image, r.sImg.src = r.sImgPath_str, r.useHEXColorsForSkin_bl ? (r.s_do = new FWDMSPTransformDisplayObject("div"), r.s_do.setWidth(r.buttonWidth), r.s_do.setHeight(r.buttonHeight), r.sImg.onload = function() {
 						r.s_do_canvas = FWDMSPUtils.getCanvasWithModifiedColor(r.sImg, r.selectedButtonsColor_str).canvas, r.s_do.screen.appendChild(r.s_do_canvas)
-					}) : (r.s_do = new FWDMSPDisplayObject("img"), r.s_do.setScreen(r.sImg), r.s_do.setWidth(r.buttonWidth), r.s_do.setHeight(r.buttonHeight)), r.addChild(r.s_do), r.hasPointerEvent_bl ? (r.screen.addEventListener("pointerup", r.onMouseUp), r.screen.addEventListener("pointerover", r.setNormalState), r.screen.addEventListener("pointerout", r.setSelectedState)) : r.screen.addEventListener && (r.isMobile_bl || (r.screen.addEventListener("mouseover", r.setNormalState), r.screen.addEventListener("mouseout", r.setSelectedState), r.screen.addEventListener("mouseup", r.onMouseUp)), r.screen.addEventListener("touchend", r.onMouseUp))
-				}, this.setNormalState = function(e) {
+					})
+          : (r.s_do = new FWDMSPDisplayObject("img"), r.s_do.setScreen(r.sImg), r.s_do.setWidth(r.buttonWidth), r.s_do.setHeight(r.buttonHeight)), r.addChild(r.s_do), r.hasPointerEvent_bl ? (r.screen.addEventListener("pointerup", r.onMouseUp), r.screen.addEventListener("pointerover", r.setNormalState), r.screen.addEventListener("pointerout", r.setSelectedState)) : r.screen.addEventListener && (r.isMobile_bl || (r.screen.addEventListener("mouseover", r.setNormalState), r.screen.addEventListener("mouseout", r.setSelectedState),
+          r.screen.addEventListener("mouseup", r.onMouseUp)),
+          r.screen.addEventListener("touchend", r.onMouseUp))
+				},
+        this.setNormalState = function(e) {
 					FWDAnimation.killTweensOf(r.s_do),
 						FWDAnimation.to(r.s_do, .5, {
 							alpha: 0,
 							ease: Expo.easeOut
 						})
-				}, this.setSelectedState = function(e) {
+				},
+        this.setSelectedState = function(e) {
 					FWDAnimation.killTweensOf(r.s_do),
 						FWDAnimation.to(r.s_do, .5, {
 							alpha: 1,
 							ease: Expo.easeOut
 						})
-				}, this.onMouseUp = function(e) {
+				},
+        this.onMouseUp = function(e) {
 					r.dispatchEvent(a.CLICK)
-				}, r.updateHEXColors = function(e, t) {
+				},
+        r.updateHEXColors = function(e, t) {
 					FWDMSPUtils.changeCanvasHEXColor(r.nImg, r.n_do_canvas, t), FWDMSPUtils.changeCanvasHEXColor(r.sImg, r.s_do_canvas, e)
 				}, this.destroy = function() {
 					FWDAnimation.killTweensOf(r.n_do), r.n_do.destroy(), this.s_do.destroy(), r.screen.onmouseover = null, r.screen.onmouseout = null, r.screen.onclick = null, r.nImg_img = null, r.sImg_img = null, r = null, a.prototype = null
 				}, r.init()
 		};
 		a.setPrototype = function() {
-			a.prototype = null, a.prototype = new FWDMSPTransformDisplayObject("div", "relative")
-		}, a.CLICK = "onClick", a.prototype = null, e.FWDMSPSimpleSizeButton = a
+			a.prototype = null,
+      a.prototype = new FWDMSPTransformDisplayObject("div", "relative")
+		},
+    a.CLICK = "onClick",
+    a.prototype = null,
+    e.FWDMSPSimpleSizeButton = a
 	}(window),
 	function(a) {
 		var d = function(e, t, o, s, i, n, l) {
 			var r = this;
 			d.prototype;
-			this.buttonRef_do = e, this.bkPath_str = t, this.pointerPath_str = o, this.text_do = null, this.pointer_do = null, this.pointerUp_do = null,
-				this.fontColor_str = n,
-				this.pointerWidth = 7, this.pointerHeight = 4, this.showWithDelayId_to, this.isMobile_bl = FWDMSPUtils.isMobile, this.isShowed_bl = !0, this.init = function() {
-					r.setOverflow("visible"), r.setupMainContainers(), r.hide(), r.getStyle().background = "url('" + r.bkPath_str + "')", r.getStyle().zIndex = 9999999999
-				}, this.setupMainContainers = function() {
-					r.text_do = new FWDMSPDisplayObject("div"), r.text_do.hasTransform3d_bl = !1, r.text_do.hasTransform2d_bl = !1, r.text_do.setBackfaceVisibility(), r.text_do.setDisplay("inline"), r.text_do.getStyle().fontFamily = "Arial", r.text_do.getStyle().fontSize = "12px", r.text_do.getStyle().color = r.fontColor_str, r.text_do.getStyle().whiteSpace = "nowrap", r.text_do.getStyle().fontSmoothing = "antialiased",
-						r.text_do.getStyle().webkitFontSmoothing = "antialiased", r.text_do.getStyle().textRendering = "optimizeLegibility", r.text_do.getStyle().padding = "6px", r.text_do.getStyle().paddingTop = "4px", r.text_do.getStyle().paddingBottom = "4px",
-						r.setLabel(), r.addChild(r.text_do);
+			this.buttonRef_do = e,
+      this.bkPath_str = t,
+      this.pointerPath_str = o,
+      this.text_do = null,
+      this.pointer_do = null,
+      this.pointerUp_do = null,
+			this.fontColor_str = n,
+			this.pointerWidth = 7,
+      this.pointerHeight = 4,
+      this.showWithDelayId_to,
+      this.isMobile_bl = FWDMSPUtils.isMobile,
+      this.isShowed_bl = !0,
+      this.init = function() {
+					r.setOverflow("visible"),
+          r.setupMainContainers(),
+          r.hide(),
+          r.getStyle().background = "url('" + r.bkPath_str + "')",
+          r.getStyle().zIndex = 9999999999
+				},
+        this.setupMainContainers = function() {
+					r.text_do = new FWDMSPDisplayObject("div"),
+          r.text_do.hasTransform3d_bl = !1,
+          r.text_do.hasTransform2d_bl = !1,
+          r.text_do.setBackfaceVisibility(),
+          r.text_do.setDisplay("inline"),
+          r.text_do.getStyle().fontFamily = "Arial",
+          r.text_do.getStyle().fontSize = "12px",
+          r.text_do.getStyle().color = r.fontColor_str,
+          r.text_do.getStyle().whiteSpace = "nowrap",
+          r.text_do.getStyle().fontSmoothing = "antialiased",
+					r.text_do.getStyle().webkitFontSmoothing = "antialiased",
+          r.text_do.getStyle().textRendering = "optimizeLegibility",
+          r.text_do.getStyle().padding = "6px",
+          r.text_do.getStyle().paddingTop = "4px",
+          r.text_do.getStyle().paddingBottom = "4px",
+					r.setLabel(),
+          r.addChild(r.text_do);
 					var e = new Image;
-					e.src = r.pointerPath_str, r.pointer_do = new FWDMSPDisplayObject("img"), r.pointer_do.setScreen(e), r.pointer_do.setWidth(r.pointerWidth), r.pointer_do.setHeight(r.pointerHeight), r.addChild(r.pointer_do);
+					e.src = r.pointerPath_str,
+          r.pointer_do = new FWDMSPDisplayObject("img"),
+          r.pointer_do.setScreen(e),
+          r.pointer_do.setWidth(r.pointerWidth),
+          r.pointer_do.setHeight(r.pointerHeight),
+          r.addChild(r.pointer_do);
 					var t = new Image;
-					r.pointerUp_do = new FWDMSPDisplayObject("img"), r.pointerUp_do.setScreen(t), r.pointerUp_do.setWidth(r.pointerWidth), r.pointerUp_do.setHeight(r.pointerHeight),
-						r.addChild(r.pointerUp_do)
-				}, this.setLabel = function(e) {
-					r.text_do.setInnerHTML(i), setTimeout(function() {
-						null != r && (r.setWidth(r.text_do.getWidth()), r.setHeight(r.text_do.getHeight()), r.positionPointer())
+					r.pointerUp_do = new FWDMSPDisplayObject("img"),
+          r.pointerUp_do.setScreen(t),
+          r.pointerUp_do.setWidth(r.pointerWidth),
+          r.pointerUp_do.setHeight(r.pointerHeight),
+					r.addChild(r.pointerUp_do)
+				},
+        this.setLabel = function(e) {
+					r.text_do.setInnerHTML(i),
+          setTimeout(function() {
+						null != r && (r.setWidth(r.text_do.getWidth()),
+            r.setHeight(r.text_do.getHeight()),
+            r.positionPointer())
 					}, 50)
-				}, this.positionPointer = function(e, t) {
+				},
+        this.positionPointer = function(e, t) {
 					var o, s;
 					e = e || 0, o = parseInt((r.w - r.pointerWidth) / 2) + e, t ? (s = -3, r.pointerUp_do.setX(o), r.pointerUp_do.setY(s), r.pointer_do.setX(0), r.pointer_do.setY(0)) : (s = r.h, r.pointer_do.setX(o), r.pointer_do.setY(s), r.pointerUp_do.setX(0), r.pointerUp_do.setY(0))
-				}, this.show = function() {
+				},
+        this.show = function() {
 					r.isShowed_bl || (r.isShowed_bl = !0, FWDAnimation.killTweensOf(r), clearTimeout(r.showWithDelayId_to), r.showWithDelayId_to = setTimeout(r.showFinal), a.addEventListener ? a.addEventListener("mousemove", r.moveHandler) : document.attachEvent && (document.detachEvent("onmousemove", r.moveHandler), document.attachEvent("onmousemove", r.moveHandler)))
-				}, this.showFinal = function() {
+				},
+        this.showFinal = function() {
 					r.setVisible(!0), r.setAlpha(0), FWDAnimation.to(r, .4, {
 						alpha: 1,
 						onComplete: function() {
@@ -6286,12 +6378,15 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 						},
 						ease: Quart.easeOut
 					})
-				}, this.moveHandler = function(e) {
+				},
+        this.moveHandler = function(e) {
 					var t = FWDMSPUtils.getViewportMouseCoordinates(e);
 					FWDMSPUtils.hitTest(r.buttonRef_do.screen, t.screenX, t.screenY) || r.hide()
-				}, this.hide = function() {
+				},
+        this.hide = function() {
 					r.isShowed_bl && (clearTimeout(r.showWithDelayId_to), a.removeEventListener ? a.removeEventListener("mousemove", r.moveHandler) : document.detachEvent && document.detachEvent("onmousemove", r.moveHandler), FWDAnimation.killTweensOf(r), r.setVisible(!1), r.isShowed_bl = !1)
-				}, this.init()
+				},
+        this.init()
 		};
 		d.setPrototype = function() {
 			d.prototype = null, d.prototype = new FWDMSPDisplayObject("div", "fixed")
@@ -6302,30 +6397,81 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 		};
 		var i = this;
 		if ("div" != e && "img" != e && "canvas" != e) throw Error("Type is not valid! " + e);
-		this.type = e, this.children_ar = [], this.style, this.screen,
-			this.numChildren, this.transform, this.position = t || "absolute", this.overflow = o || "hidden", this.display = s || "block", this.visible = !0,
-			this.buttonMode, this.x = 0, this.y = 0, this.scale = 1, this.rotation = 0, this.w = 0, this.h = 0, this.rect, this.alpha = 1, this.innerHTML = "",
-			this.opacityType = "", this.isHtml5_bl = !1, this.hasTransform2d_bl = FWDMSPUtils.hasTransform2d, this.init = function() {
+		this.type = e,
+    this.children_ar = [],
+    this.style,
+    this.screen,
+		this.numChildren,
+    this.transform,
+    this.position = t || "absolute",
+    this.overflow = o || "hidden",
+    this.display = s || "block",
+    this.visible = !0,
+		this.buttonMode,
+    this.x = 0,
+    this.y = 0,
+    this.scale = 1,
+    this.rotation = 0,
+    this.w = 0,
+    this.h = 0,
+    this.rect,
+    this.alpha = 1,
+    this.innerHTML = "",
+		this.opacityType = "",
+    this.isHtml5_bl = !1,
+    this.hasTransform2d_bl = FWDMSPUtils.hasTransform2d,
+    this.init = function() {
 				this.setScreen()
-			}, this.getTransform = function() {
+			},
+      this.getTransform = function() {
 				for (var e, t = ["transform", "msTransform", "WebkitTransform", "MozTransform", "OTransform"]; e = t.shift();)
 					if (void 0 !== this.screen.style[e]) return e;
 				return !1
-			}, this.getOpacityType = function() {
+			},
+      this.getOpacityType = function() {
 				return void 0 !== this.screen.style.opacity ? "opacity" : "filter"
-			}, this.setScreen = function(e) {
+			},
+      this.setScreen = function(e) {
 				"img" == this.type && e ? this.screen = e : this.screen = document.createElement(this.type), this.setMainProperties()
-			}, this.setMainProperties = function() {
-				this.transform = this.getTransform(), this.setPosition(this.position), this.setOverflow(this.overflow), this.opacityType = this.getOpacityType(), "opacity" == this.opacityType && (this.isHtml5_bl = !0), "filter" == i.opacityType && (i.screen.style.filter = "inherit"),
-					this.screen.style.left = "0px", this.screen.style.top = "0px", this.screen.style.margin = "0px", this.screen.style.padding = "0px", this.screen.style.maxWidth = "none", this.screen.style.maxHeight = "none", this.screen.style.border = "none", this.screen.style.lineHeight = "1", this.screen.style.backgroundColor = "transparent", this.screen.style.backfaceVisibility = "hidden", this.screen.style.webkitBackfaceVisibility = "hidden", this.screen.style.MozBackfaceVisibility = "hidden",
-					this.screen.style.MozImageRendering = "optimizeSpeed", this.screen.style.WebkitImageRendering = "optimizeSpeed", "img" == e && (this.setWidth(this.screen.width), this.setHeight(this.screen.height), this.screen.onmousedown = function(e) {
+			},
+      this.setMainProperties = function() {
+				this.transform = this.getTransform(),
+        this.setPosition(this.position),
+        this.setOverflow(this.overflow),
+        this.opacityType = this.getOpacityType(),
+        "opacity" == this.opacityType && (this.isHtml5_bl = !0),
+        "filter" == i.opacityType && (i.screen.style.filter = "inherit"),
+				this.screen.style.left = "0px",
+        this.screen.style.top = "0px",
+        this.screen.style.margin = "0px",
+        this.screen.style.padding = "0px",
+        this.screen.style.maxWidth = "none",
+        this.screen.style.maxHeight = "none",
+        this.screen.style.border = "none",
+        this.screen.style.lineHeight = "1",
+        this.screen.style.backgroundColor = "transparent",
+        this.screen.style.backfaceVisibility = "hidden",
+        this.screen.style.webkitBackfaceVisibility = "hidden",
+        this.screen.style.MozBackfaceVisibility = "hidden",
+				this.screen.style.MozImageRendering = "optimizeSpeed",
+        this.screen.style.WebkitImageRendering = "optimizeSpeed",
+        "img" == e && (this.setWidth(this.screen.width),
+        this.setHeight(this.screen.height),
+        this.screen.onmousedown = function(e) {
 						return !1
 					})
-			}, i.setBackfaceVisibility = function() {
-				i.screen.style.backfaceVisibility = "visible", i.screen.style.webkitBackfaceVisibility = "visible", i.screen.style.MozBackfaceVisibility = "visible"
-			}, i.removeBackfaceVisibility = function() {
-				i.screen.style.backfaceVisibility = "hidden", i.screen.style.webkitBackfaceVisibility = "hidden", i.screen.style.MozBackfaceVisibility = "hidden"
-			}, this.setSelectable = function(e) {
+			},
+      i.setBackfaceVisibility = function() {
+				i.screen.style.backfaceVisibility = "visible",
+        i.screen.style.webkitBackfaceVisibility = "visible",
+        i.screen.style.MozBackfaceVisibility = "visible"
+			},
+      i.removeBackfaceVisibility = function() {
+				i.screen.style.backfaceVisibility = "hidden",
+        i.screen.style.webkitBackfaceVisibility = "hidden",
+        i.screen.style.MozBackfaceVisibility = "hidden"
+			},
+      this.setSelectable = function(e) {
 				if (!e) {
 					try {
 						this.screen.style.userSelect = "none"
@@ -6354,89 +6500,127 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 						return !1
 					}, this.screen.style.webkitTouchCallout = "none"
 				}
-			}, this.getScreen = function() {
+			},
+      this.getScreen = function() {
 				return i.screen
-			}, this.setVisible = function(e) {
+			},
+      this.setVisible = function(e) {
 				this.visible = e, 1 == this.visible ? this.screen.style.visibility = "visible" : this.screen.style.visibility = "hidden"
-			}, this.getVisible = function() {
+			},
+      this.getVisible = function() {
 				return this.visible
-			}, this.setResizableSizeAfterParent = function() {
+			},
+      this.setResizableSizeAfterParent = function() {
 				this.screen.style.width = "100%", this.screen.style.height = "100%"
-			}, this.getStyle = function() {
+			},
+      this.getStyle = function() {
 				return this.screen.style
-			}, this.setOverflow = function(e) {
+			},
+      this.setOverflow = function(e) {
 				i.overflow = e, i.screen.style.overflow = i.overflow
-			}, this.setPosition = function(e) {
+			},
+      this.setPosition = function(e) {
 				i.position = e, i.screen.style.position = i.position
-			}, this.setDisplay = function(e) {
+			},
+      this.setDisplay = function(e) {
 				this.display = e, this.screen.style.display = this.display
-			}, this.setButtonMode = function(e) {
+			},
+      this.setButtonMode = function(e) {
 				this.buttonMode = e, 1 == this.buttonMode ? this.screen.style.cursor = "pointer" : this.screen.style.cursor = "default"
-			}, this.setBkColor = function(e) {
+			},
+      this.setBkColor = function(e) {
 				i.screen.style.backgroundColor = e
-			}, this.setInnerHTML = function(e) {
+			},
+      this.setInnerHTML = function(e) {
 				i.innerHTML = e, i.screen.innerHTML = i.innerHTML
-			}, this.getInnerHTML = function() {
+			},
+      this.getInnerHTML = function() {
 				return i.innerHTML
-			}, this.getRect = function() {
+			},
+      this.getRect = function() {
 				return i.screen.getBoundingClientRect()
-			}, this.setAlpha = function(e) {
+			},
+      this.setAlpha = function(e) {
 				i.alpha = e, "opacity" == i.opacityType ? i.screen.style.opacity = i.alpha : "filter" == i.opacityType && (i.screen.style.filter = "alpha(opacity=" + 100 * i.alpha + ")", i.screen.style.filter = "progid:DXImageTransform.Microsoft.Alpha(Opacity=" + Math.round(100 * i.alpha) + ")")
-			}, this.getAlpha = function() {
+			},
+      this.getAlpha = function() {
 				return i.alpha
-			}, this.getRect = function() {
+			},
+      this.getRect = function() {
 				return this.screen.getBoundingClientRect()
-			}, this.getGlobalX = function() {
+			},
+      this.getGlobalX = function() {
 				return this.getRect().left
-			}, this.getGlobalY = function() {
+			},
+      this.getGlobalY = function() {
 				return this.getRect().top
-			}, this.setX = function(e) {
+			},
+      this.setX = function(e) {
 				i.x = e, i.hasTransform2d_bl ? i.screen.style[i.transform] = "translate(" + i.x + "px," + i.y + "px) scale(" + i.scale + " , " + i.scale + ") rotate(" + i.rotation + "deg)" : i.screen.style.left = i.x + "px"
-			}, this.getX = function() {
+			},
+      this.getX = function() {
 				return i.x
-			}, this.setY = function(e) {
+			},
+      this.setY = function(e) {
 				i.y = e, i.hasTransform2d_bl ? i.screen.style[i.transform] = "translate(" + i.x + "px," + i.y + "px) scale(" + i.scale + " , " + i.scale + ") rotate(" + i.rotation + "deg)" : i.screen.style.top = i.y + "px"
-			}, this.getY = function() {
+			},
+      this.getY = function() {
 				return i.y
-			}, this.setScale2 = function(e) {
+			},
+      this.setScale2 = function(e) {
 				i.scale = e, i.hasTransform2d_bl && (i.screen.style[i.transform] = "translate(" + i.x + "px," + i.y + "px) scale(" + i.scale + " , " + i.scale + ") rotate(" + i.rotation + "deg)")
-			}, this.getScale = function() {
+			},
+      this.getScale = function() {
 				return i.scale
-			}, this.setRotation = function(e) {
+			},
+      this.setRotation = function(e) {
 				i.rotation = e, i.hasTransform2d_bl && (i.screen.style[i.transform] = "translate(" + i.x + "px," + i.y + "px) scale(" + i.scale + " , " + i.scale + ") rotate(" + i.rotation + "deg)")
-			}, i.setWidth = function(e) {
+			},
+      i.setWidth = function(e) {
 				i.w = e, "img" == i.type && (i.screen.width = i.w), i.screen.style.width = i.w + "px"
-			}, this.getWidth = function() {
+			},
+      this.getWidth = function() {
 				return "div" == i.type ? 0 != i.screen.offsetWidth ? i.screen.offsetWidth : i.w : "img" == i.type ? 0 != i.screen.offsetWidth ? i.screen.offsetWidth : 0 != i.screen.width ? i.screen.width : i._w : "canvas" == i.type ? 0 != i.screen.offsetWidth ? i.screen.offsetWidth : i.w : void 0
-			}, i.setHeight = function(e) {
+			},
+      i.setHeight = function(e) {
 				i.h = e, "img" == i.type && (i.screen.height = i.h), i.screen.style.height = i.h + "px"
-			}, this.getHeight = function() {
+			},
+      this.getHeight = function() {
 				return "div" == i.type ? 0 != i.screen.offsetHeight ? i.screen.offsetHeight : i.h : "img" == i.type ? 0 != i.screen.offsetHeight ? i.screen.offsetHeight : 0 != i.screen.height ? i.screen.height : i.h : "canvas" == i.type ? 0 != i.screen.offsetHeight ? i.screen.offsetHeight : i.h : void 0
-			}, this.getNumChildren = function() {
+			},
+      this.getNumChildren = function() {
 				return i.children_ar.length
-			}, this.addChild = function(e) {
+			},
+      this.addChild = function(e) {
 				this.contains(e) && this.children_ar.splice(FWDMSPUtils.indexOfArray(this.children_ar, e), 1), this.children_ar.push(e), this.screen.appendChild(e.screen)
-			}, this.removeChild = function(e) {
+			},
+      this.removeChild = function(e) {
 				if (!this.contains(e)) throw Error("##removeChild()## Child doesn't exist, it can't be removed!");
 				this.children_ar.splice(FWDMSPUtils.indexOfArray(this.children_ar, e), 1), this.screen.removeChild(e.screen)
-			}, this.contains = function(e) {
+			},
+      this.contains = function(e) {
 				return -1 != FWDMSPUtils.indexOfArray(this.children_ar, e)
-			}, this.addChildAtZero = function(e) {
+			},
+      this.addChildAtZero = function(e) {
 				0 == this.numChildren ? (this.children_ar.push(e), this.screen.appendChild(e.screen)) : (this.screen.insertBefore(e.screen, this.children_ar[0].screen), this.contains(e) && this.children_ar.splice(FWDMSPUtils.indexOfArray(this.children_ar, e), 1), this.children_ar.unshift(e))
-			}, this.getChildAt = function(e) {
+			},
+      this.getChildAt = function(e) {
 				if (e < 0 || e > this.numChildren - 1) throw Error("##getChildAt()## Index out of bounds!");
 				if (0 == this.numChildren) throw Errror("##getChildAt## Child dose not exist!");
 				return this.children_ar[e]
-			}, this.removeChildAtZero = function() {
+			},
+      this.removeChildAtZero = function() {
 				this.screen.removeChild(this.children_ar[0].screen),
 					this.children_ar.shift()
-			}, this.addListener = function(e, t) {
+			},
+      this.addListener = function(e, t) {
 				if (null == e) throw Error("type is required.");
 				if ("object" == typeof e) throw Error("type must be of type String.");
 				if ("function" != typeof t) throw Error("listener must be of type Function.");
 				var o = {};
 				o.type = e, o.listener = t, (o.target = this).listeners.events_ar.push(o)
-			}, this.dispatchEvent = function(e, t) {
+			},
+      this.dispatchEvent = function(e, t) {
 				if (null == e) throw Error("type is required.");
 				if ("object" == typeof e) throw Error("type must be of type String.");
 				for (var o = 0, s = this.listeners.events_ar.length; o < s; o++)
@@ -6446,7 +6630,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 						this.listeners.events_ar[o].listener.call(this, this.listeners.events_ar[o]);
 						break
 					}
-			}, this.removeListener = function(e, t) {
+			},
+      this.removeListener = function(e, t) {
 				if (null == e) throw Error("type is required.");
 				if ("object" == typeof e) throw Error("type must be of type String.");
 				if ("function" != typeof t) throw Error("listener must be of type Function." + e);
@@ -6455,37 +6640,116 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 						this.listeners.events_ar.splice(o, 1);
 						break
 					}
-			}, this.disposeImage = function() {
+			},
+      this.disposeImage = function() {
 				"img" == this.type && (this.screen.src = null)
-			}, this.destroy = function() {
+			},
+      this.destroy = function() {
 				try {
 					this.screen.parentNode.removeChild(this.screen)
 				} catch (e) {}
-				this.screen.onselectstart = null, this.screen.ondragstart = null, this.screen.ontouchstart = null, this.screen.ontouchmove = null, this.screen.ontouchend = null, this.screen.onmouseover = null, this.screen.onmouseout = null, this.screen.onmouseup = null, this.screen.onmousedown = null,
-					this.screen.onmousemove = null, this.screen.onclick = null, delete this.screen, delete this.style, delete this.rect, delete this.selectable,
-					delete this.buttonMode, delete this.position,
-					delete this.overflow, delete this.visible,
-					delete this.innerHTML, delete this.numChildren,
-					delete this.x, delete this.y, delete this.w,
-					delete this.h, delete this.opacityType,
-					delete this.isHtml5_bl, delete this.hasTransform2d_bl, this.children_ar = null, this.style = null, this.screen = null, this.numChildren = null, this.transform = null, this.position = null, this.overflow = null, this.display = null, this.visible = null, this.buttonMode = null,
-					this.globalX = null, this.globalY = null, this.x = null, this.y = null,
-					this.w = null, this.h = null, this.rect = null,
-					this.alpha = null, this.innerHTML = null, this.opacityType = null, this.isHtml5_bl = null, this.hasTransform3d_bl = null, this.hasTransform2d_bl = null, i = null
-			}, this.init()
+				this.screen.onselectstart = null,
+        this.screen.ondragstart = null,
+        this.screen.ontouchstart = null,
+        this.screen.ontouchmove = null,
+        this.screen.ontouchend = null,
+        this.screen.onmouseover = null,
+        this.screen.onmouseout = null,
+        this.screen.onmouseup = null,
+        this.screen.onmousedown = null,
+				this.screen.onmousemove = null,
+        this.screen.onclick = null,
+        delete this.screen,
+        delete this.style,
+        delete this.rect,
+        delete this.selectable,
+				delete this.buttonMode,
+        delete this.position,
+				delete this.overflow,
+        delete this.visible,
+				delete this.innerHTML,
+        delete this.numChildren,
+				delete this.x,
+        delete this.y,
+        delete this.w,
+				delete this.h,
+        delete this.opacityType,
+				delete this.isHtml5_bl,
+        delete this.hasTransform2d_bl,
+        this.children_ar = null,
+        this.style = null,
+        this.screen = null,
+        this.numChildren = null,
+        this.transform = null,
+        this.position = null,
+        this.overflow = null,
+        this.display = null,
+        this.visible = null,
+        this.buttonMode = null,
+				this.globalX = null,
+        this.globalY = null,
+        this.x = null,
+        this.y = null,
+				this.w = null,
+        this.h = null,
+        this.rect = null,
+				this.alpha = null,
+        this.innerHTML = null,
+        this.opacityType = null,
+        this.isHtml5_bl = null,
+        this.hasTransform3d_bl = null,
+        this.hasTransform2d_bl = null,
+        i = null
+			},
+      this.init()
 	},
 	function(o) {
 		var i = function(t, e) {
 			var l = this;
 			i.prototype;
-			this.video_el = null, this.sourcePath_str = null, this.bk_do = null, this.controllerHeight = t.data.controllerHeight, this.stageWidth = 0, this.stageHeight = 0, this.lastPercentPlayed = 0, this.volume = e, this.curDuration = 0, this.countNormalMp3Errors = 0, this.countShoutCastErrors = 0, this.maxShoutCastCountErrors = 5, this.maxNormalCountErrors = 1, this.disableClickForAWhileId_to, this.showErrorWithDelayId_to, this.playWithDelayId_to,
-				this.disableClick_bl = !1, this.allowScrubing_bl = !1, this.hasError_bl = !0,
-				this.isPlaying_bl = !1, this.isStopped_bl = !0,
-				this.hasPlayedOnce_bl = !1, this.isStartEventDispatched_bl = !1, this.isSafeToBeControlled_bl = !1, this.isMobile_bl = FWDMSPUtils.isMobile,
-				this.init = function() {
-					l.getStyle().width = "100%", l.getStyle().height = "100%", l.setBkColor(t.videoBackgroundColor_str), l.setupVideo()
-				}, this.setupVideo = function() {
-					null == l.video_el && (l.video_el = document.createElement("video"), l.video_el.controls = !1, l.video_el.volume = l.volume, l.video_el.WebKitPlaysInline = !0, l.video_el.playsinline = !0, l.video_el.setAttribute("playsinline", ""), l.video_el.setAttribute("webkit-playsinline", ""), l.video_el.style.position = "relative", l.video_el.style.left = "0px", l.video_el.style.top = "0px", l.video_el.style.width = "100%", l.video_el.style.height = "100%", l.video_el.style.margin = "0px", l.video_el.style.padding = "0px", l.video_el.style.maxWidth = "none", l.video_el.style.maxHeight = "none", l.video_el.style.border = "none", l.video_el.style.lineHeight = "0", l.video_el.style.msTouchAction = "none", l.screen.appendChild(l.video_el)), l.video_el.addEventListener("error", l.errorHandler), l.video_el.addEventListener("canplay", l.safeToBeControlled), l.video_el.addEventListener("canplaythrough", l.safeToBeControlled), l.video_el.addEventListener("progress", l.updateProgress), l.video_el.addEventListener("timeupdate", l.updateVideo), l.video_el.addEventListener("pause", l.pauseHandler), l.video_el.addEventListener("play", l.playHandler),
+			this.video_el = null,
+      this.sourcePath_str = null,
+      this.bk_do = null,
+      this.controllerHeight = t.data.controllerHeight,
+      this.stageWidth = 0,
+      this.stageHeight = 0,
+      this.lastPercentPlayed = 0,
+      this.volume = e,
+      this.curDuration = 0,
+      this.countNormalMp3Errors = 0,
+      this.countShoutCastErrors = 0,
+      this.maxShoutCastCountErrors = 5,
+      this.maxNormalCountErrors = 1,
+      this.disableClickForAWhileId_to,
+      this.showErrorWithDelayId_to,
+      this.playWithDelayId_to,
+			this.disableClick_bl = !1,
+      this.allowScrubing_bl = !1,
+      this.hasError_bl = !0,
+			this.isPlaying_bl = !1,
+      this.isStopped_bl = !0,
+			this.hasPlayedOnce_bl = !1,
+      this.isStartEventDispatched_bl = !1,
+      this.isSafeToBeControlled_bl = !1,
+      this.isMobile_bl = FWDMSPUtils.isMobile,
+			this.init = function() {
+					l.getStyle().width = "100%",
+          l.getStyle().height = "100%",
+          l.setBkColor(t.videoBackgroundColor_str),
+          l.setupVideo()
+				},
+        this.setupVideo = function() {
+					null == l.video_el && (l.video_el = document.createElement("video"),
+          l.video_el.controls = !1,
+          l.video_el.volume = l.volume,
+          l.video_el.WebKitPlaysInline = !0,
+          l.video_el.playsinline = !0,
+          l.video_el.setAttribute("playsinline", ""),
+          l.video_el.setAttribute("webkit-playsinline", ""),
+          l.video_el.style.position = "relative",
+          l.video_el.style.left = "0px",
+          l.video_el.style.top = "0px",
+          l.video_el.style.width = "100%", l.video_el.style.height = "100%", l.video_el.style.margin = "0px", l.video_el.style.padding = "0px", l.video_el.style.maxWidth = "none", l.video_el.style.maxHeight = "none", l.video_el.style.border = "none", l.video_el.style.lineHeight = "0", l.video_el.style.msTouchAction = "none", l.screen.appendChild(l.video_el)), l.video_el.addEventListener("error", l.errorHandler), l.video_el.addEventListener("canplay", l.safeToBeControlled), l.video_el.addEventListener("canplaythrough", l.safeToBeControlled), l.video_el.addEventListener("progress", l.updateProgress), l.video_el.addEventListener("timeupdate", l.updateVideo), l.video_el.addEventListener("pause", l.pauseHandler), l.video_el.addEventListener("play", l.playHandler),
 						FWDMSPUtils.isIE || l.video_el.addEventListener("waiting", l.startToBuffer), l.video_el.addEventListener("playing", l.stopToBuffer),
 						l.video_el.addEventListener("ended", l.endedHandler), l.resizeAndPosition()
 				}, this.destroyVideo = function() {
