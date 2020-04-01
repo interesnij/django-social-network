@@ -1414,7 +1414,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 								self.prevVideoNameGa = self.videoNameGa
 							},
               this.audioScreenPlayHandler = function() {
-								self.sendGAPlayedEvent(), 
+								self.sendGAPlayedEvent(),
                 (FWDMSP.keyboardCurInstance = self).controller_do && (self.controller_do.showPauseButton(), self.controller_do.startEqulizer()), self.opener_do && self.opener_do.showPauseButton(), self.playlist_do && self.playlist_do.setCurItemPauseState(), self.largePlayButton_do && self.largePlayButton_do.hide(), self.hider && self.isFullScreen_bl && self.hider.start(), self.openInPopup_bl && setTimeout(function() {
 									self.scrubbedFirstTimeInPopup_bl || self.scrub(self.lastPercentPlayed), self.scrubbedFirstTimeInPopup_bl = !0
 								}, 600), self.hasStartedToPlay_bl || self.data.playlist_ar[self.id].startAtTime && self.scrubbAtTime(self.data.playlist_ar[self.id].startAtTime), setTimeout(function() {
