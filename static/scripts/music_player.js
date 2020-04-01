@@ -1758,7 +1758,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 						t.parentNode.insertBefore(e, t), window.onYouTubeIframeAPIReady ? window.onYouTubeIframeAPIReady = function() {
 							FWDMSP.setupAllInstances()
 						} : setTimeout(FWDMSP.setupAllInstances, 1e3)
-					}
+					},
+			TZ, UZ, f$, g$;
 
 		FWDMSP.setupAllInstances = function() {
 				if (!FWDMSP.areInstancesCreated_bl) {
