@@ -983,14 +983,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 								self.controller_do && !self.isMobile_bl && (self.controller_do.playbackRateButton_do.isDisabled_bl = !1, self.controller_do.playbackRateButton_do.setNormalState())
 							}, this.playbackRateWindowSetPlaybackRateHandler = function(e) {
 								self.setPlaybackRate(e.rate)
-							}, this.setupVideoScreen = function() {
-								FWDMSPVideoScreen.setPrototype(), self.videoScreen_do = new FWDMSPVideoScreen(self, self.data.volume), self.videoScreen_do.addListener(FWDMSPVideoScreen.ERROR, self.audioScreenErrorHandler),
-									self.videoScreen_do.addListener(FWDMSPVideoScreen.SAFE_TO_SCRUBB, self.audioScreenSafeToScrubbHandler), self.videoScreen_do.addListener(FWDMSPVideoScreen.STOP, self.audioScreenStopHandler), self.videoScreen_do.addListener(FWDMSPVideoScreen.PLAY, self.audioScreenPlayHandler), self.videoScreen_do.addListener(FWDMSPVideoScreen.PAUSE, self.audioScreenPauseHandler),
-									self.videoScreen_do.addListener(FWDMSPVideoScreen.UPDATE, self.audioScreenUpdateHandler),
-									self.videoScreen_do.addListener(FWDMSPVideoScreen.UPDATE_TIME, self.audioScreenUpdateTimeHandler), self.videoScreen_do.addListener(FWDMSPVideoScreen.LOAD_PROGRESS, self.audioScreenLoadProgressHandler), self.videoScreen_do.addListener(FWDMSPVideoScreen.PLAY_COMPLETE, self.audioScreenPlayCompleteHandler), self.videosHolder_do.addChild(self.videoScreen_do)
-							}, this.setupYoutubePlayer = function() {
-								-1 != location.protocol.indexOf("file:") && (FWDMSPUtils.isOpera || FWDMSPUtils.isIE) || (FWDMSPYoutubeScreen.setPrototype(), self.ytb_do = new FWDMSPYoutubeScreen(self, self.data.volume), self.ytb_do.addListener(FWDMSPYoutubeScreen.READY, self.youtubeReadyHandler), self.ytb_do.addListener(FWDMSPAudioScreen.ERROR, self.audioScreenErrorHandler), self.ytb_do.addListener(FWDMSPYoutubeScreen.SAFE_TO_SCRUBB, self.audioScreenSafeToScrubbHandler), self.ytb_do.addListener(FWDMSPYoutubeScreen.STOP, self.audioScreenStopHandler), self.ytb_do.addListener(FWDMSPYoutubeScreen.PLAY, self.audioScreenPlayHandler), self.ytb_do.addListener(FWDMSPYoutubeScreen.PAUSE, self.audioScreenPauseHandler), self.ytb_do.addListener(FWDMSPYoutubeScreen.UPDATE, self.audioScreenUpdateHandler), self.ytb_do.addListener(FWDMSPYoutubeScreen.UPDATE_TIME, self.audioScreenUpdateTimeHandler), self.ytb_do.addListener(FWDMSPYoutubeScreen.LOAD_PROGRESS, self.audioScreenLoadProgressHandler), self.ytb_do.addListener(FWDMSPYoutubeScreen.PLAY_COMPLETE, self.audioScreenPlayCompleteHandler), self.videosHolder_do.addChild(self.ytb_do))
-							}, this.youtubeReadyHandler = function(e) {}, this.setupContinousPlayback = function() {
+							}, this.setupContinousPlayback = function() {
 								self.data.useContinuousPlayback_bl && (self.ppPplayedOnce = !1, window.onbeforeunload = function(e) {
 									var t = new Date;
 									t.setTime(t.getTime() + 2e4);
