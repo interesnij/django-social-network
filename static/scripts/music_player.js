@@ -836,7 +836,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 										self.orintationChangeComplete_bl = !0, self.resizeHandler(!0)
 									}, 1e3), self.stageContainer.style.left = "-5000px", self.preloader_do && self.preloader_do.setX(-5e3)
 							}, self.resizeHandler = function(e, t) {
-								self.orintationChangeComplete_bl && (self.ws = FWDMSPUtils.getViewportSize(), self.stageWidth = document.documentElement.offsetWidth, self.stageContainer.style.left = "0px", self.stageWidth > self.maxWidth && !self.openInPopup_bl && (self.stageWidth = self.maxWidth), self.controller_do && (self.maxHeight = self.controller_do.h), self.stageHeight = self.maxHeight, self.main_do.setWidth(self.stageWidth), self.preloader_do && self.positionPreloader(), self.controller_do && self.controller_do.resizeAndPosition(e), self.categories_do && self.categories_do.resizeAndPosition(), self.playlist_do && self.playlist_do.resizeAndPosition(), self.isFirstPlaylistLoaded_bl && self.setStageContainerFinalHeightAndPosition(!1), self.info_do && self.info_do.isShowed_bl && self.info_do.positionAndResize(), self.atb_do && self.atb_do.isShowed_bl && self.atb_do.positionAndResize(), self.shareWindow_do && self.shareWindow_do.isShowed_bl && self.shareWindow_do.positionAndResize(), self.passWindow_do && self.passWindow_do.isShowed_bl && self.passWindow_do.positionAndResize(), self.playbackRateWindow_do && self.playbackRateWindow_do.isShowed_bl && self.playbackRateWindow_do.positionAndResize())
+								self.orintationChangeComplete_bl && (self.ws = FWDMSPUtils.getViewportSize(), self.stageWidth = document.documentElement.offsetWidth, self.stageContainer.style.left = "0px", self.stageWidth > self.maxWidth && !self.openInPopup_bl && (self.stageWidth = self.maxWidth), self.controller_do && (self.maxHeight = self.controller_do.h), self.stageHeight = self.maxHeight, self.main_do.setWidth(self.stageWidth), self.preloader_do && self.positionPreloader(), self.controller_do && self.controller_do.resizeAndPosition(e), self.categories_do && self.categories_do.resizeAndPosition(), self.playlist_do && self.playlist_do.resizeAndPosition(), self.isFirstPlaylistLoaded_bl && self.setStageContainerFinalHeightAndPosition(!1), self.info_do && self.info_do.isShowed_bl && self.info_do.positionAndResize(), self.atb_do && self.atb_do.isShowed_bl && self.atb_do.positionAndResize(), self.passWindow_do && self.passWindow_do.isShowed_bl && self.passWindow_do.positionAndResize(), self.playbackRateWindow_do && self.playbackRateWindow_do.isShowed_bl && self.playbackRateWindow_do.positionAndResize())
 							}, this.setStageContainerFinalHeightAndPosition = function(e) {
 								if (self.ws || (self.ws = FWDMSPUtils.getViewportSize()), self.controller_do && self.allowToResizeAndPosition_bl) {
 									if (self.openInPopup_bl) return self.main_do.setX(0),
@@ -927,7 +927,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 							}, this.setupContextMenu = function() {
 								self.customContextMenu_do = new FWDMSPContextMenu(self.main_do, self.data.rightClickContextMenu_str)
 							}, this.setupMainInstances = function() {
-								self.controller_do || (FWDMSP.hasHTML5Audio && self.setupAudioScreen(), self.data.showPlaylistsButtonAndPlaylists_bl && self.setupCategories(), self.data.showPlayListButtonAndPlaylist_bl && self.setupPlaylist(), self.setupController(), self.setupHider(), self.data.showShareButton_bl && self.setupShareWindow(), self.data.showPlaybackRateButton_bl && self.setupPlaybackRateWindow(), self.setupPasswordWindow(), self.setupOpener(), self.controller_do.resizeAndPosition(), self.data.addKeyboardSupport_bl && self.addKeyboardSupport())
+								self.controller_do || (FWDMSP.hasHTML5Audio && self.setupAudioScreen(), self.data.showPlaylistsButtonAndPlaylists_bl && self.setupCategories(), self.data.showPlayListButtonAndPlaylist_bl && self.setupPlaylist(), self.setupController(), self.setupHider(), self.data.showPlaybackRateButton_bl && self.setupPlaybackRateWindow(), self.setupPasswordWindow(), self.setupOpener(), self.controller_do.resizeAndPosition(), self.data.addKeyboardSupport_bl && self.addKeyboardSupport())
 							}, this.setInputs = function() {
 								for (var e = document.querySelectorAll("input"),
 										t = 0; t < e.length; t++) self.hasPointerEvent_bl ? e[t].addEventListener("pointerdown", self.inputFocusInHandler) : e[t].addEventListener && (e[t].addEventListener("mousedown", self.inputFocusInHandler), e[t].addEventListener("touchstart", self.inputFocusInHandler))
@@ -985,14 +985,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                 self.hasPassedPassowrd_bl = !0,
                 self.play()
 							},
-              this.setupShareWindow = function() {
-								FWDMSPShareWindow.setPrototype(),
-                self.shareWindow_do = new FWDMSPShareWindow(self.data, self),
-                self.shareWindow_do.addListener(FWDMSPShareWindow.HIDE_COMPLETE, self.shareWindowHideCompleteHandler)
-							},
-              this.shareWindowHideCompleteHandler = function() {
-								self.controller_do && !self.isMobile_bl && (self.controller_do.shareButton_do.isDisabled_bl = !1, self.controller_do.shareButton_do.setNormalState())
-							},
+
               this.setupAtbWindow = function() {
 								FWDMSPATB.setPrototype(),
                 self.atb_do = new FWDMSPATB(self.controller_do, self),
@@ -1148,7 +1141,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 								self.isPlaylistItemClicked_bl = !1,
                 self.stop(),
                 self.playbackRateWindow_do && self.playbackRateWindow_do.hide(),
-								self.shareWindow_do && self.shareWindow_do.hide(),
                 self.preloader_do.show(!0),
                 self.controller_do && (self.controller_do.disableControllerWhileLoadingPlaylist(), self.controller_do.loadThumb()),
                 self.hider && (self.hider.reset(), self.hider.stop()),
@@ -1665,7 +1657,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 									self.playlist_do.hideDisable()
 								}, 150), self.playlist_do.showDisable()), self.setStageContainerFinalHeightAndPosition(self.animate_bl))
 							}, this.hidePlaylist = function() {
-								self.isAPIReady_bl && (self.playlist_do && (self.isPlaylistShowed_bl = !1, self.playlist_do.hide(), self.controller_do.setPlaylistButtonState("unselected"), self.setStageContainerFinalHeightAndPosition(self.animate_bl)), self.shareWindow_do && self.shareWindow_do.hide(!0))
+								self.isAPIReady_bl && (self.playlist_do && (self.isPlaylistShowed_bl = !1, self.playlist_do.hide(), self.controller_do.setPlaylistButtonState("unselected"), self.setStageContainerFinalHeightAndPosition(self.animate_bl)))
 							}, this.getIsAPIReady = function() {
 								return self.isAPIReady_bl
 							}, this.getCatId = function() {
@@ -1680,8 +1672,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 								if (self.isAPIReady_bl) return self.audioType_str == FWDMSP.AUDIO ? self.audioScreen_do.getCurrentTime() : self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS || !self.videoScreen_do ? void 0 : self.videoScreen_do.getCurrentTime()
 							}, this.getDuration = function() {
 								if (self.isAPIReady_bl) return self.audioType_str == FWDMSP.AUDIO ? self.audioScreen_do.getDuration() : self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS || !self.videoScreen_do ? void 0 : self.videoScreen_do.getDuration()
-							}, this.share = function() {
-								self.isAPIReady_bl && self.shareWindow_do && self.shareWindow_do.show()
 							}, this.scrubbAtTime = function(e) {
 								self.isAPIReady_bl && e && (-1 != String(e).indexOf(":") && (e = FWDMSPUtils.getSecondsFromString(e)), self.audioType_str == FWDMSP.AUDIO ? self.audioScreen_do && self.audioScreen_do.scrubbAtTime(e) : self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS || !self.videoScreen_do || self.videoScreen_do && self.videoScreen_do.scrubbAtTime(e))
 							}, this.buy = function(pId) {
@@ -1698,7 +1688,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 							}, this.addTrack = function(e, t, o, s, i, n, l) {
 								self.isReady_bl || (self.useDeepLinking_bl && (location.hash = self.instanceName_str + "?catid=" + self.catId + "&trackid=" + (self.id + 1)), self.playlist_do && self.playlist_do.addTrack(e, t, o, s, i, n, l), self.useDeepLinking_bl && (location.hash = self.instanceName_str + "?catid=" + self.catId + "&trackid=0"))
 							}, this.updateHEXColors = function(e, t) {
-								self.isAPIReady_bl && (self.controller_do.updateHEXColors(e, t), self.largePlayButton_do && self.largePlayButton_do.updateHEXColors(e, "#FFFFFF"), self.shareWindow_do && self.shareWindow_do.updateHEXColors(e, t), self.playlist_do && self.playlist_do.updateHEXColors(e, t), self.opener_do && self.opener_do.updateHEXColors(e, "#FFFFFF"), self.playbackRateWindow_do && self.playbackRateWindow_do.updateHEXColors(e, t))
+								self.isAPIReady_bl && (self.controller_do.updateHEXColors(e, t), self.largePlayButton_do && self.largePlayButton_do.updateHEXColors(e, "#FFFFFF"), self.playlist_do && self.playlist_do.updateHEXColors(e, t), self.opener_do && self.opener_do.updateHEXColors(e, "#FFFFFF"), self.playbackRateWindow_do && self.playbackRateWindow_do.updateHEXColors(e, t))
 							}, this.addListener = function(e, t) {
 								if (this.listeners) {
 									if (null == e) throw Error("type is required.");
@@ -2133,7 +2123,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 											self.showPlaylistsByDefault_bl = "yes" == self.showPlaylistsByDefault_bl,
 											self.showShuffleButton_bl = self.props_obj.showShuffleButton,
 											self.showShuffleButton_bl = "no" != self.showShuffleButton_bl,
-											self.showShareWindowButton_bl = self.props_obj.showShareWindowButton,
 											self.showShareWindowButton_bl = "no" != self.showShareWindowButton_bl,
 											self.randomizePlaylist_bl = self.props_obj.randomizePlaylist,
 											self.randomizePlaylist_bl = "yes" == self.randomizePlaylist_bl,
@@ -3949,33 +3938,178 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 		var n = function(_, f) {
 			var p = this;
 			n.prototype;
-			this.data = _, this.bk_img = _.bk_img, this.thumbnail_img = _.thumbnail_img, this.separator1_img = _.separator1_img, this.separator2_img = _.separator2_img, this.prevN_img = _.prevN_img, this.playN_img = _.playN_img, this.pauseN_img = _.pauseN_img, this.nextN_img = _.nextN_img,
-				this.mainScrubberBkLeft_img = _.mainScrubberBkLeft_img, this.mainScrubberBkRight_img = _.mainScrubberBkRight_img, this.mainScrubberDragLeft_img = _.mainScrubberDragLeft_img, this.mainScrubberLine_img = _.mainScrubberLine_img,
-				this.mainScrubberLeftProgress_img = _.mainScrubberLeftProgress_img, this.volumeScrubberBkLeft_img = _.volumeScrubberBkLeft_img, this.volumeScrubberBkRight_img = _.volumeScrubberBkRight_img, this.volumeScrubberDragLeft_img = _.volumeScrubberDragLeft_img, this.volumeScrubberLine_img = _.volumeScrubberLine_img, this.volumeN_img = _.volumeN_img, this.thumb_img = null, this.titleBarLeft_img = _.titleBarLeft_img, this.titleBarRigth_img = _.titleBarRigth_img, this.controllerBk_img = _.controllerBk_img, this.categoriesN_img = _.categoriesN_img, this.replayN_img = _.replayN_img, this.playlistN_img = _.playlistN_img, this.shuffleN_img = _.shuffleN_img, this.shareN_img = _.shareN_img,
-				this.popupN_img = _.popupN_img, p.useHEXColorsForSkin_bl = _.useHEXColorsForSkin_bl, p.normalButtonsColor_str = _.normalButtonsColor_str, p.selectedButtonsColor_str = _.selectedButtonsColor_str, this.titlebarAnimBkPath_img = _.titlebarAnimBkPath_img, this.titlebarLeftPath_img = _.titlebarLeftPath_img,
-				this.titlebarRightPath_img = _.titlebarRightPath_img, this.soundAnimationPath_img = _.soundAnimationPath_img, this.disableScrubber_bl = _.disableScrubber_bl, this.buttons_ar = [], this.thumb_do = null, this.disable_do = null, this.mainHolder_do = null, this.firstSeparator_do = null, this.secondSeparator_do = null, this.prevButton_do = null, this.playPauseButton_do = null, this.mainTitlebar_do = null, this.animationBackground_do = null, this.titleBarGradLeft_do = null, this.titlebarGradRight_do = null, this.titleBarLeft_do = null, this.titleBarRIght_do = null, this.animation_do = null, this.mainScrubber_do = null, this.mainScrubberBkLeft_do = null, this.mainScrubberBkMiddle_do = null, this.mainScrubberBkRight_do = null, this.mainScrubberDrag_do = null, this.mainScrubberDragLeft_do = null,
-				this.mainScrubberDragMiddle_do = null, this.mainScrubberBarLine_do = null, this.mainProgress_do = null, this.progressLeft_do = null, this.progressMiddle_do = null, this.currentTime_do = null, this.totalTime_do = null,
-				this.mainVolumeHolder_do = null, this.volumeButton_do = null, this.volumeScrubber_do = null, this.volumeScrubberBkLeft_do = null, this.volumeScrubberBkMiddle_do = null, this.volumeScrubberBkRight_do = null, this.volumeScrubberDrag_do = null, this.volumeScrubberDragLeft_do = null, this.volumeScrubberDragMiddle_do = null, this.volumeScrubberBarLine_do = null, this.categoriesButton_do = null, this.playlistButton_do = null, this.loopButton_do = null, this.shuffleButton_do = null, this.buyButton_do = null, this.shareButton_do = null,
-				this.popupButton_do = null, this.simpleText_do = null, this.animText1_do = null, this.animText2_do = null, this.bk_do = null, this.controllerBkPath_str = _.controllerBkPath_str,
-				this.thumbnailBkPath_str = _.thumbnailBkPath_str,
-				this.mainScrubberBkMiddlePath_str = _.mainScrubberBkMiddlePath_str, this.volumeScrubberBkMiddlePath_str = _.volumeScrubberBkMiddlePath_str,
-				this.mainScrubberDragMiddlePath_str = _.mainScrubberDragMiddlePath_str, this.volumeScrubberDragMiddlePath_str = _.volumeScrubberDragMiddlePath_str, this.timeColor_str = _.timeColor_str, this.titleColor_str = _.titleColor_str, this.progressMiddlePath_str = _.progressMiddlePath_str, this.titlebarBkMiddlePattern_str = _.titlebarBkMiddlePattern_str, this.thumbPath_str = null, this.controllerHeight = _.controllerHeight,
-				this.minLeftWidth = 150, this.thumbWidthAndHeight = p.controllerHeight, this.stageWidth = 0, this.stageHeight = p.controllerHeight, this.scrubbersBkLeftAndRightWidth = this.mainScrubberBkLeft_img.width, this.mainScrubberWidth = 0, this.totalVolumeBarWidth = 100, this.minVolumeBarWidth = 60, this.volumeScrubberWidth = 0, this.spaceBetweenVolumeButtonAndScrubber = _.spaceBetweenVolumeButtonAndScrubber,
-				this.mainScrubberOffsetTop = _.mainScrubberOffsetTop,
-				this.spaceBetweenMainScrubberAndTime = _.spaceBetweenMainScrubberAndTime, this.startTimeSpace = _.startTimeSpace, this.scrubbersHeight = this.mainScrubberBkLeft_img.height, this.mainScrubberDragLeftWidth = p.mainScrubberDragLeft_img.width, this.scrubbersOffsetWidth = _.scrubbersOffsetWidth,
-				this.scrubbersOffestTotalWidth = _.scrubbersOffestTotalWidth, this.volumeButtonAndScrubberOffsetTop = _.volumeButtonAndScrubberOffsetTop,
-				this.volume = _.volume, this.lastVolume = p.volume, this.startSpaceBetweenButtons = _.startSpaceBetweenButtons, this.spaceBetweenButtons = _.spaceBetweenButtons, this.volumeScrubberOffestWidth = _.volumeScrubberOffestWidth, this.percentPlayed = 0, this.separatorOffsetOutSpace = _.separatorOffsetOutSpace, this.separatorOffsetInSpace = _.separatorOffsetInSpace, this.titlebarHeight = p.titlebarLeftPath_img.height, this.titleBarOffsetTop = _.titleBarOffsetTop, this.animTextWidth = 0, this.animationHolderWidth = 0,
-				this.lastTotalTimeLength = 0, this.lastCurTimeLength = 0, this.lastButtonsOffsetTop = _.lastButtonsOffsetTop,
-				this.allButtonsOffsetTopAndBottom = _.allButtonsOffsetTopAndBottom, this.timeHeight = 0, this.totalButtonsWidth = 0, this.largerButtonHeight = 0, this.scrubberOffsetBottom = _.scrubberOffsetBottom,
-				this.equlizerOffsetLeft = _.equlizerOffsetLeft,
-				this.showAnimationIntroId_to, this.animateTextId_to, this.startToAnimateTextId_to,
-				this.setTimeSizeId_to, this.animateTextId_int,
-				this.showNextAndPrevButtons_bl = _.showNextAndPrevButtons_bl, this.showBuyButton_bl = _.showBuyButton_bl, this.showPlaylistsButtonAndPlaylists_bl = _.showPlaylistsButtonAndPlaylists_bl, this.loop_bl = _.loop_bl, this.shuffle_bl = _.shuffle_bl, this.showVolumeScrubber_bl = _.showVolumeScrubber_bl, this.allowToChangeVolume_bl = _.allowToChangeVolume_bl, this.showLoopButton_bl = _.showLoopButton_bl, this.showPlaybackRateButton_bl = _.showPlaybackRateButton_bl, this.showShuffleButton_bl = _.showShuffleButton_bl,
-				this.showPlayListButtonAndPlaylist_bl = _.showPlayListButtonAndPlaylist_bl, this.showFacebookButton_bl = _.showFacebookButton_bl,
-				this.showPopupButton_bl = _.showPopupButton_bl,
-				this.animateOnIntro_bl = _.animateOnIntro_bl, this.showSoundAnimation_bl = _.showSoundAnimation_bl,
-				this.isMainScrubberScrubbing_bl = !1, this.isMainScrubberDisabled_bl = !1, this.isVolumeScrubberDisabled_bl = !1, this.isMainScrubberLineVisible_bl = !1, this.isVolumeScrubberLineVisible_bl = !1, this.showPlayListByDefault_bl = _.showPlayListByDefault_bl,
-				this.showThumbnail_bl = !1, this.isTextAnimating_bl = !1, this.expandControllerBackground_bl = _.expandControllerBackground_bl, this.isMute_bl = !1, this.isShowed_bl = _.showControllerByDefault_bl, this.isMobile_bl = FWDMSPUtils.isMobile, this.hasPointerEvent_bl = FWDMSPUtils.hasPointerEvent, this.showVideoFullScreenButton_bl = _.showVideoFullScreenButton_bl, p.init = function() {
+			this.data = _,
+			this.bk_img = _.bk_img,
+			this.thumbnail_img = _.thumbnail_img,
+			this.separator1_img = _.separator1_img,
+			this.separator2_img = _.separator2_img,
+			this.prevN_img = _.prevN_img,
+			this.playN_img = _.playN_img,
+			this.pauseN_img = _.pauseN_img,
+			this.nextN_img = _.nextN_img,
+			this.mainScrubberBkLeft_img = _.mainScrubberBkLeft_img,
+			this.mainScrubberBkRight_img = _.mainScrubberBkRight_img,
+			this.mainScrubberDragLeft_img = _.mainScrubberDragLeft_img,
+			this.mainScrubberLine_img = _.mainScrubberLine_img,
+			this.mainScrubberLeftProgress_img = _.mainScrubberLeftProgress_img,
+			this.volumeScrubberBkLeft_img = _.volumeScrubberBkLeft_img,
+			this.volumeScrubberBkRight_img = _.volumeScrubberBkRight_img,
+			this.volumeScrubberDragLeft_img = _.volumeScrubberDragLeft_img,
+			this.volumeScrubberLine_img = _.volumeScrubberLine_img,
+			this.volumeN_img = _.volumeN_img,
+			this.thumb_img = null,
+			this.titleBarLeft_img = _.titleBarLeft_img,
+			this.titleBarRigth_img = _.titleBarRigth_img,
+			this.controllerBk_img = _.controllerBk_img,
+			this.categoriesN_img = _.categoriesN_img,
+			this.replayN_img = _.replayN_img,
+			this.playlistN_img = _.playlistN_img,
+			this.shuffleN_img = _.shuffleN_img,
+			this.shareN_img = _.shareN_img,
+			this.popupN_img = _.popupN_img,
+			p.useHEXColorsForSkin_bl = _.useHEXColorsForSkin_bl,
+			p.normalButtonsColor_str = _.normalButtonsColor_str,
+			p.selectedButtonsColor_str = _.selectedButtonsColor_str,
+			this.titlebarAnimBkPath_img = _.titlebarAnimBkPath_img,
+			this.titlebarLeftPath_img = _.titlebarLeftPath_img,
+			this.titlebarRightPath_img = _.titlebarRightPath_img,
+			this.soundAnimationPath_img = _.soundAnimationPath_img,
+			this.disableScrubber_bl = _.disableScrubber_bl,
+			this.buttons_ar = [],
+			this.thumb_do = null,
+			this.disable_do = null,
+			this.mainHolder_do = null,
+			this.firstSeparator_do = null,
+			this.secondSeparator_do = null,
+			this.prevButton_do = null,
+			this.playPauseButton_do = null,
+			this.mainTitlebar_do = null,
+			this.animationBackground_do = null,
+			this.titleBarGradLeft_do = null,
+			this.titlebarGradRight_do = null,
+			this.titleBarLeft_do = null,
+			this.titleBarRIght_do = null,
+			this.animation_do = null,
+			this.mainScrubber_do = null,
+			this.mainScrubberBkLeft_do = null,
+			this.mainScrubberBkMiddle_do = null,
+			this.mainScrubberBkRight_do = null,
+			this.mainScrubberDrag_do = null,
+			this.mainScrubberDragLeft_do = null,
+			this.mainScrubberDragMiddle_do = null,
+			this.mainScrubberBarLine_do = null,
+			this.mainProgress_do = null,
+			this.progressLeft_do = null,
+			this.progressMiddle_do = null,
+			this.currentTime_do = null,
+			this.totalTime_do = null,
+			this.mainVolumeHolder_do = null,
+			this.volumeButton_do = null,
+			this.volumeScrubber_do = null,
+			this.volumeScrubberBkLeft_do = null,
+			this.volumeScrubberBkMiddle_do = null,
+			this.volumeScrubberBkRight_do = null,
+			this.volumeScrubberDrag_do = null,
+			this.volumeScrubberDragLeft_do = null,
+			this.volumeScrubberDragMiddle_do = null,
+			this.volumeScrubberBarLine_do = null,
+			this.categoriesButton_do = null,
+			this.playlistButton_do = null,
+			this.loopButton_do = null,
+			this.shuffleButton_do = null,
+			this.buyButton_do = null,
+			this.shareButton_do = null,
+			this.popupButton_do = null,
+			this.simpleText_do = null,
+			this.animText1_do = null,
+			this.animText2_do = null,
+			this.bk_do = null,
+			this.controllerBkPath_str = _.controllerBkPath_str,
+			this.thumbnailBkPath_str = _.thumbnailBkPath_str,
+			this.mainScrubberBkMiddlePath_str = _.mainScrubberBkMiddlePath_str,
+			this.volumeScrubberBkMiddlePath_str = _.volumeScrubberBkMiddlePath_str,
+			this.mainScrubberDragMiddlePath_str = _.mainScrubberDragMiddlePath_str,
+			this.volumeScrubberDragMiddlePath_str = _.volumeScrubberDragMiddlePath_str,
+			this.timeColor_str = _.timeColor_str,
+			this.titleColor_str = _.titleColor_str,
+			this.progressMiddlePath_str = _.progressMiddlePath_str,
+			this.titlebarBkMiddlePattern_str = _.titlebarBkMiddlePattern_str,
+			this.thumbPath_str = null,
+			this.controllerHeight = _.controllerHeight,
+			this.minLeftWidth = 150,
+			this.thumbWidthAndHeight = p.controllerHeight,
+			this.stageWidth = 0,
+			this.stageHeight = p.controllerHeight,
+			this.scrubbersBkLeftAndRightWidth = this.mainScrubberBkLeft_img.width,
+			this.mainScrubberWidth = 0,
+			this.totalVolumeBarWidth = 100,
+			this.minVolumeBarWidth = 60,
+			this.volumeScrubberWidth = 0,
+			this.spaceBetweenVolumeButtonAndScrubber = _.spaceBetweenVolumeButtonAndScrubber,
+			this.mainScrubberOffsetTop = _.mainScrubberOffsetTop,
+			this.spaceBetweenMainScrubberAndTime = _.spaceBetweenMainScrubberAndTime,
+			this.startTimeSpace = _.startTimeSpace,
+			this.scrubbersHeight = this.mainScrubberBkLeft_img.height,
+			this.mainScrubberDragLeftWidth = p.mainScrubberDragLeft_img.width,
+			this.scrubbersOffsetWidth = _.scrubbersOffsetWidth,
+			this.scrubbersOffestTotalWidth = _.scrubbersOffestTotalWidth,
+			this.volumeButtonAndScrubberOffsetTop = _.volumeButtonAndScrubberOffsetTop,
+			this.volume = _.volume,
+			this.lastVolume = p.volume,
+			this.startSpaceBetweenButtons = _.startSpaceBetweenButtons,
+			this.spaceBetweenButtons = _.spaceBetweenButtons,
+			this.volumeScrubberOffestWidth = _.volumeScrubberOffestWidth,
+			this.percentPlayed = 0,
+			this.separatorOffsetOutSpace = _.separatorOffsetOutSpace,
+			this.separatorOffsetInSpace = _.separatorOffsetInSpace,
+			this.titlebarHeight = p.titlebarLeftPath_img.height,
+			this.titleBarOffsetTop = _.titleBarOffsetTop,
+			this.animTextWidth = 0,
+			this.animationHolderWidth = 0,
+			this.lastTotalTimeLength = 0,
+			this.lastCurTimeLength = 0,
+			this.lastButtonsOffsetTop = _.lastButtonsOffsetTop,
+			this.allButtonsOffsetTopAndBottom = _.allButtonsOffsetTopAndBottom,
+			this.timeHeight = 0,
+			this.totalButtonsWidth = 0,
+			this.largerButtonHeight = 0,
+			this.scrubberOffsetBottom = _.scrubberOffsetBottom,
+			this.equlizerOffsetLeft = _.equlizerOffsetLeft,
+			this.showAnimationIntroId_to,
+			this.animateTextId_to,
+			this.startToAnimateTextId_to,
+			this.setTimeSizeId_to,
+			this.animateTextId_int,
+			this.showNextAndPrevButtons_bl = _.showNextAndPrevButtons_bl,
+			this.showBuyButton_bl = _.showBuyButton_bl,
+			this.showPlaylistsButtonAndPlaylists_bl = _.showPlaylistsButtonAndPlaylists_bl,
+			this.loop_bl = _.loop_bl,
+			this.shuffle_bl = _.shuffle_bl,
+			this.showVolumeScrubber_bl = _.showVolumeScrubber_bl,
+			this.allowToChangeVolume_bl = _.allowToChangeVolume_bl,
+			this.showLoopButton_bl = _.showLoopButton_bl,
+			this.showPlaybackRateButton_bl = _.showPlaybackRateButton_bl,
+			this.showShuffleButton_bl = _.showShuffleButton_bl,
+			this.showPlayListButtonAndPlaylist_bl = _.showPlayListButtonAndPlaylist_bl,
+			this.showFacebookButton_bl = _.showFacebookButton_bl,
+			this.showPopupButton_bl = _.showPopupButton_bl,
+			this.animateOnIntro_bl = _.animateOnIntro_bl,
+			this.showSoundAnimation_bl = _.showSoundAnimation_bl,
+			this.isMainScrubberScrubbing_bl = !1,
+			this.isMainScrubberDisabled_bl = !1,
+			this.isVolumeScrubberDisabled_bl = !1,
+			this.isMainScrubberLineVisible_bl = !1,
+			this.isVolumeScrubberLineVisible_bl = !1,
+			this.showPlayListByDefault_bl = _.showPlayListByDefault_bl,
+			this.showThumbnail_bl = !1,
+			this.isTextAnimating_bl = !1,
+			this.expandControllerBackground_bl = _.expandControllerBackground_bl,
+			this.isMute_bl = !1,
+			this.isShowed_bl = _.showControllerByDefault_bl,
+			this.isMobile_bl = FWDMSPUtils.isMobile,
+			this.hasPointerEvent_bl = FWDMSPUtils.hasPointerEvent,
+			this.showVideoFullScreenButton_bl = _.showVideoFullScreenButton_bl,
+			p.init = function() {
 					var e;
 					p.videoControllerHolder_do = new FWDMSPDisplayObject("div"), p.videoControllerBk_do = new FWDMSPDisplayObject("div"), p.videoControllerBk_do.getStyle().background = "url('" + p.controllerBkPath_str + "')", p.videoControllerBk_do.getStyle().width = "100%", p.videoControllerBk_do.getStyle().height = "100%", p.videoControllerHolder_do.addChild(p.videoControllerBk_do), p.mainHolder_do = new FWDMSPDisplayObject("div"), p.expandControllerBackground_bl ? (p.bk_do = new FWDMSPDisplayObject("img"), p.bk_do.setScreen(p.controllerBk_img), p.bk_do.getStyle().backgroundColor = "#000000", p.mainHolder_do.addChild(p.bk_do)) : p.mainHolder_do.getStyle().background = "url('" + p.controllerBkPath_str + "')", p.addChild(p.mainHolder_do), p.setupThumb(), p.setupPrevButton(), p.setupPlayPauseButton(), p.setupNextButton(), p.setupSeparators(), p.setupMainScrubber(), p.setupTitlebar(), p.setupTime(), p.setupVolumeScrubber(), p.showPlaylistsButtonAndPlaylists_bl && p.setupCategoriesButton(), p.showPlayListButtonAndPlaylist_bl && p.setupPlaylistButton(), p.showLoopButton_bl && p.setupLoopButton(),
 						p.showShuffleButton_bl && p.setupShuffleButton(), p.showPlaybackRateButton_bl && p.setupPlaybacRateButton(), p.showBuyButton_bl && p.setupBuyButton(), p.showFacebookButton_bl && p.setupFacebookButton(), p.setupAtbButton(), p.showPopupButton_bl && p.setupPopupButton(), p.isMobile_bl || p.setupDisable(), p.mainHolder_do.setBkColor("#FFFF00"), p.mainHolder_do.setY(-500);
