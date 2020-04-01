@@ -7,8 +7,10 @@ class MainPageView(TemplateView):
 	template_name=None
 
 	def get(self,request,*args,**kwargs):
-
-		self.template_name = request.user.get_settings_template(folder="main/", template="news.html", request=request)
+		if request.user.is_authenticated:
+			self.template_name = request.user.get_settings_template(folder="main/", template="news.html", request=request)
+		else:
+			template_name = 'main/auth.html'
 		return super(MainPageView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
