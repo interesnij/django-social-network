@@ -1560,7 +1560,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 									FWDMSPUtils.isIE && (self.dumyClick_do.setBkColor("#00FF00"), self.dumyClick_do.setAlpha(1e-5)),
 									self.dumyClick_do.screen.addEventListener ? self.dumyClick_do.screen.addEventListener("click", self.playPauseClickHandler) : self.dumyClick_do.screen.attachEvent && self.dumyClick_do.screen.attachEvent("onclick", self.playPauseClickHandler)
 							}, this.playPauseClickHandler = function(e) {
-								2 != e.button && (self.disableClick_bl || (self.firstTapPlaying_bl = self.isPlaying_bl, (FWDMSP.keyboardCurInstance = self).audioType_str == FWDMSP.YOUTUBE ? self.ytb_do.togglePlayPause() : self.audioType_str == FWDMSP.VIDEO && self.videoScreen_do && self.videoScreen_do.togglePlayPause()))
+								2 != e.button && (self.disableClick_bl || (self.firstTapPlaying_bl = self.isPlaying_bl))
 							}, this.addDoubleClickSupport = function() {
 								!self.isMobile_bl && self.dumyClick_do.screen.addEventListener ? (self.dumyClick_do.screen.addEventListener("mousedown", self.onFirstDown), FWDMSPUtils.isIEWebKit && self.dumyClick_do.screen.addEventListener("dblclick", self.onSecondDown)) : self.isMobile_bl ? self.dumyClick_do.screen.addEventListener("touchstart", self.onFirstDown) : self.dumyClick_do.screen.addEventListener && self.dumyClick_do.screen.addEventListener("mousedown", self.onFirstDown)
 							}, this.onFirstDown = function(e) {
