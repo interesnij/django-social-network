@@ -22,7 +22,7 @@ function msToTime(duration) {
 				useDeepLinking:"no",
 				useYoutube:"no",
 				useVideo:"no",
-				rightClickContextMenu:"default",
+				rightClickContextMenu:"developer",
 				addKeyboardSupport:"yes",
 				animate:"yes",
 				autoPlay:"no",
