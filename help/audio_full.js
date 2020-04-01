@@ -693,24 +693,119 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
     function(window) {
         var FWDMSP = function(props) {
                 var self = this;
-                if (FWDMSP.instaces_ar.push(this), self.mainFolderPath_str = props.mainFolderPath, self.mainFolderPath_str.lastIndexOf("/") + 1 != self.mainFolderPath_str.length && (self.mainFolderPath_str += "/"), this.skinPath_str = props.skinPath, self.skinPath_str.lastIndexOf("/") + 1 != self.skinPath_str.length && (self.skinPath_str += "/"), this.warningIconPath_str = self.mainFolderPath_str + this.skinPath_str + "warningIcon.png", this.useYoutube_bl = props.useYoutube || "no", this.useYoutube_bl = "yes" == self.useYoutube_bl, this.useVideo_bl = props.useVideo || "no", this.useVideo_bl = "yes" == self.useVideo_bl, this.instanceName_str = props.instanceName, this.instanceName_str) {
-                    if (window[this.instanceName_str]) alert("FWDMSP instance name " + this.instanceName_str + " is already defined and contains a different instance reference, set a different instance name.");
-                    else if (window[this.instanceName_str] = this, this.listeners = {
-                            events_ar: []
-                        }, window[this.instanceName_str].addListener = function() {}, !document.cookie || -1 == document.cookie.indexOf("FWDMSP=" + self.instanceName_str) || self.isMobile_bl) {
-                        var recoverDecodingErrorDate, recoverSwapAudioCodecDate;
+                if (FWDMSP.instaces_ar.push(this),
+                    self.mainFolderPath_str = props.mainFolderPath,
+                    self.mainFolderPath_str.lastIndexOf("/") + 1 != self.mainFolderPath_str.length && (self.mainFolderPath_str += "/"),
+                    this.skinPath_str = props.skinPath,
+                    self.skinPath_str.lastIndexOf("/") + 1 != self.skinPath_str.length && (self.skinPath_str += "/"),
+                    this.warningIconPath_str = self.mainFolderPath_str + this.skinPath_str + "warningIcon.png",
+                    this.useYoutube_bl = props.useYoutube || "no",
+                    this.useYoutube_bl = "yes" == self.useYoutube_bl,
+                    this.useVideo_bl = props.useVideo || "no",
+                    this.useVideo_bl = "yes" == self.useVideo_bl,
+                    this.instanceName_str = props.instanceName,
+                    this.instanceName_str)
+                    {
+                    if (window[this.instanceName_str])
+                      alert("FWDMSP instance name " + this.instanceName_str + " is already defined and contains a different instance reference, set a different instance name.");
+                    else if (window[this.instanceName_str] = this, this.listeners = {events_ar: []},
+                             window[this.instanceName_str].addListener = function() {},
+                             !document.cookie || -1 == document.cookie.indexOf("FWDMSP=" + self.instanceName_str) || self.isMobile_bl)
+                        {
+                        var recoverDecodingErrorDate,
+                        recoverSwapAudioCodecDate;
                         if (self.init = function() {
                                 if (FWDTweenLite.ticker.useRAF(!1), this.props_obj = props, this.props_obj) {
-                                    this.position_str = self.props_obj.verticalPosition, this.position_str || (this.position_str = FWDMSP.POSITION_TOP), "bottom" == this.position_str ? this.position_str = FWDMSP.POSITION_BOTTOM : this.position_str = FWDMSP.POSITION_TOP, this.horizontalPosition_str = self.props_obj.horizontalPosition, this.horizontalPosition_str || (this.horizontalPosition_str = FWDMSP.CENTER), "center" == this.horizontalPosition_str ? this.horizontalPosition_str = FWDMSP.CENTER : "left" == this.horizontalPosition_str ? this.horizontalPosition_str = FWDMSP.LEFT : "right" == this.horizontalPosition_str ? this.horizontalPosition_str = FWDMSP.RIGHT : this.horizontalPosition_str = FWDMSP.CENTER, this.stageContainer = document.createElement("div"), this.stageContainer.style.position = "fixed", self.stageContainer.style.width = "100%", FWDMSPUtils.isIEAndLessThen9 ? this.stageContainer.style.zIndex = "21474836" : this.stageContainer.style.zIndex = "21474835", this.stageContainer.style.overflow = "visible", self.stageContainer.style.height = "0px", FWDMSPUtils.isIE ? document.getElementsByTagName("body")[0].appendChild(this.stageContainer) : document.documentElement.appendChild(this.stageContainer), this.popupWindow, this.ws = null, this.so = null, this.data = null, this.opener_do = null, this.customContextMenu_do = null, this.info_do = null, this.main_do = null, this.background_do = null, this.preloader_do = null, this.controller_do = null, this.categories_do = null, this.playlist_do = null, this.audioScreen_do = null, this.flash_do = null, this.flashObject = null, this.flashObjectMarkup_str = null, this.popupWindowBackgroundColor = this.props_obj.popupWindowBackgroundColor || "#000000", this.prevCatId = -1, this.catId = -1, this.id = -1, this.prevId = -1, this.totalAudio = 0, this.stageWidth = 0, this.stageHeight = 0, this.maxWidth = self.props_obj.maxWidth || 2e3, this.maxHeight = 0, this.prevAddToHeight = -1, this.lastPercentPlayed = 0, this.popupWindowWidth = self.props_obj.popupWindowWidth || 500, this.popupWindowHeight = self.props_obj.popupWindowHeight || 400, FWDMSPUtils.isIE && (this.popupWindowHeight -= 3), this.resizeHandlerId_to, this.resizeHandler2Id_to, this.hidePreloaderId_to, this.orientationChangeId_to, this.showCatWidthDelayId_to, this.showPlaylistWithDelayId_to, this.disablePlaylistForAWhileId_to, this.allowToResizeAndPosition_bl = !1, this.isAPIReady_bl = !1, this.isPlaylistLoaded_bl = !1, this.isFlashScreenReady_bl = !1, this.orintationChangeComplete_bl = !0, this.animate_bl = !1, this.isFirstPlaylistLoaded_bl = !1, this.scrubbedFirstTimeInPopup_bl = !1, this.showedFirstTime_bl = !1, self.isPlaylistShowed_bl = !1, this.useDeepLinking_bl = self.props_obj.useDeepLinking, this.useDeepLinking_bl = "yes" == self.useDeepLinking_bl, this.showMainBackground_bl = "no" != self.props_obj.showMainBackground, this.openInPopup_bl = !1, this.isMobile_bl = FWDMSPUtils.isMobile, this.hasPointerEvent_bl = FWDMSPUtils.hasPointerEvent;
+                                    this.position_str = self.props_obj.verticalPosition,
+                                    this.position_str || (this.position_str = FWDMSP.POSITION_TOP),
+                                    "bottom" == this.position_str ? this.position_str = FWDMSP.POSITION_BOTTOM : this.position_str = FWDMSP.POSITION_TOP,
+                                    this.horizontalPosition_str = self.props_obj.horizontalPosition,
+                                    this.horizontalPosition_str || (this.horizontalPosition_str = FWDMSP.CENTER),
+                                    "center" == this.horizontalPosition_str ? this.horizontalPosition_str = FWDMSP.CENTER : "left" == this.horizontalPosition_str ? this.horizontalPosition_str = FWDMSP.LEFT : "right" == this.horizontalPosition_str ? this.horizontalPosition_str = FWDMSP.RIGHT : this.horizontalPosition_str = FWDMSP.CENTER,
+                                    this.stageContainer = document.createElement("div"),
+                                    this.stageContainer.style.position = "fixed",
+                                    self.stageContainer.style.width = "100%",
+                                    FWDMSPUtils.isIEAndLessThen9 ? this.stageContainer.style.zIndex = "21474836" : this.stageContainer.style.zIndex = "21474835",
+                                    this.stageContainer.style.overflow = "visible",
+                                    self.stageContainer.style.height = "0px",
+                                    FWDMSPUtils.isIE ? document.getElementsByTagName("body")[0].appendChild(this.stageContainer) : document.documentElement.appendChild(this.stageContainer),
+                                    this.popupWindow,
+                                    this.ws = null,
+                                    this.so = null,
+                                    this.data = null,
+                                    this.opener_do = null,
+                                    this.customContextMenu_do = null,
+                                    this.info_do = null,
+                                    this.main_do = null,
+                                    this.background_do = null,
+                                    this.preloader_do = null,
+                                    this.controller_do = null,
+                                    this.categories_do = null,
+                                    this.playlist_do = null,
+                                    this.audioScreen_do = null,
+                                    this.flash_do = null,
+                                    this.flashObject = null,
+                                    this.flashObjectMarkup_str = null,
+                                    this.popupWindowBackgroundColor = this.props_obj.popupWindowBackgroundColor || "#000000",
+                                    this.prevCatId = -1,
+                                    this.catId = -1,
+                                    this.id = -1,
+                                    this.prevId = -1,
+                                    this.totalAudio = 0,
+                                    this.stageWidth = 0,
+                                    this.stageHeight = 0,
+                                    this.maxWidth = self.props_obj.maxWidth || 2e3,
+                                    this.maxHeight = 0,
+                                    this.prevAddToHeight = -1,
+                                    this.lastPercentPlayed = 0,
+                                    this.popupWindowWidth = self.props_obj.popupWindowWidth || 500,
+                                    this.popupWindowHeight = self.props_obj.popupWindowHeight || 400,
+                                    FWDMSPUtils.isIE && (this.popupWindowHeight -= 3),
+                                    this.resizeHandlerId_to,
+                                    this.resizeHandler2Id_to,
+                                    this.hidePreloaderId_to,
+                                    this.orientationChangeId_to,
+                                    this.showCatWidthDelayId_to,
+                                    this.showPlaylistWithDelayId_to,
+                                    this.disablePlaylistForAWhileId_to,
+                                    this.allowToResizeAndPosition_bl = !1,
+                                    this.isAPIReady_bl = !1,
+                                    this.isPlaylistLoaded_bl = !1,
+                                    this.isFlashScreenReady_bl = !1,
+                                    this.orintationChangeComplete_bl = !0,
+                                    this.animate_bl = !1,
+                                    this.isFirstPlaylistLoaded_bl = !1,
+                                    this.scrubbedFirstTimeInPopup_bl = !1,
+                                    this.showedFirstTime_bl = !1,
+                                    self.isPlaylistShowed_bl = !1,
+                                    this.useDeepLinking_bl = self.props_obj.useDeepLinking,
+                                    this.useDeepLinking_bl = "yes" == self.useDeepLinking_bl,
+                                    this.showMainBackground_bl = "no" != self.props_obj.showMainBackground,
+                                    this.openInPopup_bl = !1,
+                                    this.isMobile_bl = FWDMSPUtils.isMobile,
+                                    this.hasPointerEvent_bl = FWDMSPUtils.hasPointerEvent;
                                     try {
-                                        window.opener && window.opener[this.instanceName_str] && window.opener[this.instanceName_str].instanceName_str == this.instanceName_str && (this.openInPopup_bl = !0, this.popupWindow = window.opener[this.instanceName_str], window.opener[this.instanceName_str].removeAndDisablePlayer(), self.isMobile_bl || (document.cookie = "FWDMSP=" + self.instanceName_str + "; expires=Thu, 18 Dec 2030 12:00:00 UTC; path=/", window.onbeforeunload = function(e) {
+                                        window.opener && window.opener[this.instanceName_str] && window.opener[this.instanceName_str].instanceName_str == this.instanceName_str && (this.openInPopup_bl = !0,
+                                        this.popupWindow = window.opener[this.instanceName_str],
+                                        window.opener[this.instanceName_str].removeAndDisablePlayer(),
+                                        self.isMobile_bl || (document.cookie = "FWDMSP=" + self.instanceName_str + "; expires=Thu, 18 Dec 2030 12:00:00 UTC; path=/",
+                                        window.onbeforeunload = function(e) {
                                             document.cookie = "FWDMSP=; expires=Thu, 01-Jan-70 00:00:01 GMT; path=/"
-                                        }))
+                                        }
+                                      )
+                                    )
                                     } catch (e) {}
-                                    var e, t, o, s, i;
-                                   this.setupMainDo(), this.startResizeHandler(), this.setupInfo(), this.setupData()
-                                } else alert("FWDMSP constructor properties object is not defined!")
-                            }, this.popup = function() {
+
+                                  var e, t, o, s, i;
+
+                                   this.setupMainDo(),
+                                   this.startResizeHandler(),
+                                   this.setupInfo(),
+                                   this.setupData()
+                                }
+                                else alert("FWDMSP constructor properties object is not defined!")
+                            },
+                            this.popup = function() {
                                 if (!self.popupWindow || self.popupWindow.closed) {
                                     FWDMSP.isOpenedInPopup = self.instanceName_str;
                                     var e = screen.width / 2 - self.popupWindowWidth / 2,
