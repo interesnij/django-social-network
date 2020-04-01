@@ -4434,8 +4434,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                             }, this.buy = function(pId) {
                                 if (self.isAPIReady_bl) {
                                     null == pId && (pId = self.id);
-                                    var buy = self.data.playlist_ar[pId].buy;
-                                    console.log(pId, buy);
+                                    var track_id = self.data.playlist_ar[pId].buy;
+                                    var can_add = self.data.playlist_ar[pId].can_add;
+                                    console.log("номер дорожки: "+ pId, "id трека: " + track_id, "возможность добавить: " + can_add);
                                 }
                             }, this.playFirstTrack = function() {
                                 self.playSpecificTrack(self.catId, 0)
