@@ -1583,7 +1583,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 							}, this.hiderShowHandler = function() {
 								self.controller_do && self.controller_do.showVideoContoller(!0), self.showCursor()
 							}, this.hiderHideHandler = function() {
-								FWDMSPUtils.isIphone 
+								FWDMSPUtils.isIphone
 							}, this.hiderHideCompleteHandler = function() {}, this.setupVideosHolder = function() {
 								this.videosHolder_do = new FWDMSPDisplayObject("div"),
 									self.videosHolder_do.getStyle().background = "url('" + self.data.thumbnailBkPath_str + "')", this.videosHolder_do.setWidth(self.data.controllerHeight), this.videosHolder_do.setHeight(self.data.controllerHeight), this.controller_do.mainHolder_do.addChild(this.videosHolder_do),
@@ -1633,25 +1633,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 										self.disableClick_do && (self.disableClick_do.setWidth(0), self.disableClick_do.setHeight(0)),
 											self.disableClick_bl = !1
 									}, 500)
-							}, this.goFullScreen = function() {
-								if (self.isAPIReady_bl && (self.audioType_str == FWDMSP.YOUTUBE || self.audioType_str == FWDMSP.VIDEO)) {
-									document.addEventListener && (document.addEventListener("fullscreenchange", self.onFullScreenChange), document.addEventListener("mozfullscreenchange", self.onFullScreenChange), document.addEventListener("webkitfullscreenchange", self.onFullScreenChange), document.addEventListener("MSFullscreenChange", self.onFullScreenChange)),
-										document.documentElement.requestFullScreen ? document.documentElement.requestFullScreen() : document.documentElement.mozRequestFullScreen ? document.documentElement.mozRequestFullScreen() : document.documentElement.webkitRequestFullScreen ? document.documentElement.webkitRequestFullScreen() : document.documentElement.msRequestFullscreen && document.documentElement.msRequestFullscreen(), self.disableClick(), self.main_do.getStyle().position = "fixed", self.main_do.getStyle().overflow = "visible", self.controller_do.setOverflow("visible"), self.controller_do.mainHolder_do.setOverflow("visible"),
-										document.documentElement.style.overflow = "hidden", self.opener_do && self.opener_do.setVisible(!1), self.main_do.getStyle().zIndex = 9999999999998, self.playlist_do && self.playlist_do.setVisible(!1),
-										self.controller_do.goFullScreen(), self.controller_do.setY(0), self.controller_do.videoControllerHolder_do.addChild(self.fullScreenButton_do),
-										self.videosHolder_do.setX(0),
-										self.fullScreenButtonOverlay_do.setVisible(!1), FWDMSP.setInstancesInvisible(this),
-										self.isFullScreen_bl = !0,
-										self.fullScreenButton_do.setButtonState(0);
-									var e = FWDMSPUtils.getScrollOffsets();
-									self.lastX = e.x, self.lastY = e.y, self.hider && self.audioType_str == FWDMSP.VIDEO && self.videoScreen_do && self.videoScreen_do.isPlaying_bl ? self.hider.start() : self.hider && self.audioType_str == FWDMSP.YOUTUBE && self.ytb_do && self.ytb_do.isPlaying_bl && self.hider.start(), self.playlist_do && self.playlist_do.ascDscButton_do && self.playlist_do.ascDscButton_do.setAlpha(0), self.audioType_str == FWDMSP.VIDEO && self.videoScreen_do && !self.videoScreen_do.isPlaying_bl ? self.largePlayButton_do.show() : self.audioType_str != FWDMSP.YOUTUBE || !self.ytb_do || self.ytb_do.isPlaying_bl || self.isMobile_bl || self.largePlayButton_do.show(),
-										window.scrollTo(0, 0), self.isMobile_bl && window.addEventListener("touchmove", self.disableFullScreenOnMobileHandler),
-										self.resizeHandler(!0)
-								}
-							}, this.disableFullScreenOnMobileHandler = function(e) {
-								e.preventDefault && e.preventDefault()
-							}, this.goNormalScreen = function() {
-								self.isAPIReady_bl && (document.cancelFullScreen ? document.cancelFullScreen() : document.mozCancelFullScreen ? document.mozCancelFullScreen() : document.webkitCancelFullScreen ? document.webkitCancelFullScreen() : document.msExitFullscreen && document.msExitFullscreen(), self.disableClick(), self.addMainDoToTheOriginalParent(), self.showCursor(), self.fullScreenButton_do && self.fullScreenButton_do.setButtonState(1), self.playlist_do && self.playlist_do.ascDscButton_do && self.playlist_do.ascDscButton_do.setAlpha(1))
 							}, this.addMainDoToTheOriginalParent = function() {
 								self.isFullScreen_bl && (document.removeEventListener && (document.removeEventListener("fullscreenchange", self.onFullScreenChange), document.removeEventListener("mozfullscreenchange", self.onFullScreenChange), document.removeEventListener("webkitfullscreenchange", self.onFullScreenChange), document.removeEventListener("MSFullscreenChange", self.onFullScreenChange)), self.isFullScreen_bl = !1, self.isEmbedded_bl || (FWDMSPUtils.isIEAndLessThen9 ? document.documentElement.style.overflow = "auto" : document.documentElement.style.overflow = "visible", self.main_do.getStyle().position = "relative"), self.controller_do.setOverflow("hidden"), self.controller_do.mainHolder_do.setOverflow("hidden"), self.opener_do && self.opener_do.setVisible(!0), self.controller_do.goNormalScreen(), self.videosHolder_do.addChild(self.fullScreenButton_do), document.documentElement.style.overflow = "visible", self.main_do.getStyle().zIndex = 0, self.playlist_do && (self.playlist_do.setVisible(!0), self.playlist_do.ascDscButton_do && self.playlist_do.ascDscButton_do.setAlpha(1)), self.hideFullScreenButtonAndOverlay(!1), self.fullScreenButtonOverlay_do.setVisible(!0), self.checkShowFullScreenButtonHitTest(), self.largePlayButton_do && self.largePlayButton_do.hide(), self.hider && (self.hider.reset(), self.hider.stop()), FWDMSP.setInstancesInvisible(this, !0), self.resizeHandler(!0), window.scrollTo(self.lastX, self.lastY), FWDMSPUtils.isIE || setTimeout(function() {
 									window.scrollTo(self.lastX, self.lastY)
