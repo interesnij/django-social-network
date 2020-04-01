@@ -2513,9 +2513,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 											self.sortNSPath_str = self.skinPath_str + "sort-numerical-button-over.png",
 											self.ascendingSpath_str = self.skinPath_str + "ascending-button-over.png",
 											self.decendingSpath_str = self.skinPath_str + "descending-button-over.png",
-											self.inputArrowPath_str = self.skinPath_str + "input-arrow.png", 
+											self.inputArrowPath_str = self.skinPath_str + "input-arrow.png",
 											self.categoriesSPath_str = self.skinPath_str + "categories-button-over.png",
-											self.replaySPath_str = self.skinPath_str + "replay-button-over.png";
+											self.replaySPath_str = self.skinPath_str + "replay-button-over.png",
 										self.skinPath_str;
 										self.playlistSPath_str = self.skinPath_str + "playlist-button-over.png",
 											self.shuffleSPath_str = self.skinPath_str + "shuffle-button-over.png",
