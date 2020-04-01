@@ -1653,7 +1653,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 							}, this.scrub = function(e) {
 								self.isAPIReady_bl && self.isPlaylistLoaded_bl && (isNaN(e) || (e < 0 ? e = 0 : 1 < e && (e = 1), self.audioType_str == FWDMSP.VIDEO ? self.videoScreen_do.scrub(e) : FWDMSP.hasHTML5Audio ? self.audioType_str == FWDMSP.HLS ? self.flashObject.playerSeek(e * self.HLSDuration) : self.audioScreen_do && self.audioScreen_do.scrub(e) : self.isFlashScreenReady_bl && self.flashObject.scrub(e)))
 							}, this.setPlaybackRate = function(e) {
-								self.isAPIReady_bl && (self.data.defaultPlaybackRate = e, self.audioType_str == FWDMSP.VIDEO && self.videoScreen_do ? self.videoScreen_do.setPlaybackRate(e) : self.audioType_str == FWDMSP.AUDIO && self.audioScreen_do ? self.audioScreen_do.setPlaybackRate(e) : self.audioType_str == FWDMSP.YOUTUBE && self.ytb_do.setPlaybackRate(e))
+								self.isAPIReady_bl && (self.data.defaultPlaybackRate = e, self.audioType_str == FWDMSP.VIDEO && self.videoScreen_do ? self.videoScreen_do.setPlaybackRate(e) : self.audioType_str == FWDMSP.AUDIO && self.audioScreen_do ? self.audioScreen_do.setPlaybackRate(e))
 							}, this.setVolume = function(e) {
 								self.isAPIReady_bl && (self.volume = e, self.controller_do && self.controller_do.updateVolume(e, !0), self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS || !self.videoScreen_do ? FWDMSP.hasHTML5Audio && self.audioScreen_do && self.audioScreen_do.setVolume(e) : self.videoScreen_do.setVolume(e))
 							}, this.showCategories = function() {
@@ -1677,13 +1677,13 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 							}, this.getThumbnailPath = function() {
 								return self.data.playlist_ar[self.id].thumbPath
 							}, this.getCurrentTime = function() {
-								if (self.isAPIReady_bl) return self.audioType_str == FWDMSP.YOUTUBE ? self.ytb_do.getCurrentTime() : self.audioType_str == FWDMSP.AUDIO ? self.audioScreen_do.getCurrentTime() : self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS || !self.videoScreen_do ? void 0 : self.videoScreen_do.getCurrentTime()
+								if (self.isAPIReady_bl) return self.audioType_str == FWDMSP.AUDIO ? self.audioScreen_do.getCurrentTime() : self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS || !self.videoScreen_do ? void 0 : self.videoScreen_do.getCurrentTime()
 							}, this.getDuration = function() {
-								if (self.isAPIReady_bl) return self.audioType_str == FWDMSP.YOUTUBE ? self.ytb_do.getDuration() : self.audioType_str == FWDMSP.AUDIO ? self.audioScreen_do.getDuration() : self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS || !self.videoScreen_do ? void 0 : self.videoScreen_do.getDuration()
+								if (self.isAPIReady_bl) return self.audioType_str == FWDMSP.AUDIO ? self.audioScreen_do.getDuration() : self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS || !self.videoScreen_do ? void 0 : self.videoScreen_do.getDuration()
 							}, this.share = function() {
 								self.isAPIReady_bl && self.shareWindow_do && self.shareWindow_do.show()
 							}, this.scrubbAtTime = function(e) {
-								self.isAPIReady_bl && e && (-1 != String(e).indexOf(":") && (e = FWDMSPUtils.getSecondsFromString(e)), self.audioType_str == FWDMSP.YOUTUBE && self.ytb_do && self.ytb_do.isSafeToBeControlled_bl ? self.ytb_do.scrubbAtTime(e) : self.audioType_str == FWDMSP.AUDIO ? self.audioScreen_do && self.audioScreen_do.scrubbAtTime(e) : self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS || !self.videoScreen_do || self.videoScreen_do && self.videoScreen_do.scrubbAtTime(e))
+								self.isAPIReady_bl && e && (-1 != String(e).indexOf(":") && (e = FWDMSPUtils.getSecondsFromString(e)), self.ytb_do.scrubbAtTime(e) : self.audioType_str == FWDMSP.AUDIO ? self.audioScreen_do && self.audioScreen_do.scrubbAtTime(e) : self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS || !self.videoScreen_do || self.videoScreen_do && self.videoScreen_do.scrubbAtTime(e))
 							}, this.buy = function(pId) {
 								if (self.isAPIReady_bl) {
 									null == pId && (pId = self.id);
@@ -1727,9 +1727,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 										this.listeners.events_ar.splice(o, 1);
 										break
 									}
-							}, self.useYoutube_bl && (-1 != location.protocol.indexOf("file:") && FWDMSPUtils.isIE || -1 != location.protocol.indexOf("file:") && FWDMSPUtils.isOpera)) return self.stageContainer = FWDMSPUtils.getChildById(props.parentId), self.setupMainDo(),
-							self.setupInfo(), self.main_do.addChild(self.info_do), self.info_do.allowToRemove_bl = !1, self.info_do.showText('This browser dosen\'t allow the Youtube API to run local, please test it online or in another browser like Firefox or Chrome! If you don\'t want to use Youtube set <font color="#FF000000">useYoutube:"no"</font>.'), void self.resizeHandler();
-						setTimeout(FWDMSP.checkIfHasYoutube, 100)
+							}, (-1 != location.protocol.indexOf("file:") && FWDMSPUtils.isIE || -1 != location.protocol.indexOf("file:") && FWDMSPUtils.isOpera)) return self.stageContainer = FWDMSPUtils.getChildById(props.parentId), self.setupMainDo(),
+							self.setupInfo(), self.main_do.addChild(self.info_do), self.info_do.allowToRemove_bl = !1, self.info_do.showText('This browser dosen\'t allow the  API to run local, please test it online or in another browser like Firefox or Chrome! If you don\'t want to use  set <font color="#FF000000">:"no"</font>.'), void self.resizeHandler();
 					}
 				} else alert("FWDMSP instance name is requires please make sure that the instanceName parameter exsists and it's value is uinique.");
 
@@ -1742,24 +1741,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 				}
 			},
 			TZ, UZ, f$, g$;
-		FWDMSP.checkIfHasYoutube = function() {
-				if (!FWDMSP.checkIfHasYoutube_bl) {
-					for (var e = !(FWDMSP.checkIfHasYoutube_bl = !0),
-							t = FWDMSP.instaces_ar.length, o = 0; o < t; o++) FWDMSP.instaces_ar[o].useYoutube_bl && (e = !0);
-					e ? setTimeout(FWDMSP.setupYoutubeAPI, 500) : setTimeout(FWDMSP.setupAllInstances, 500)
-				}
-			}, FWDMSP.setupYoutubeAPI = function() {
-				if (!FWDMSP.isYoutubeAPICreated_bl)
-					if (FWDMSP.isYoutubeAPICreated_bl = !0, "undefined" != typeof YT) FWDMSP.setupAllInstances();
-					else {
-						var e = document.createElement("script");
-						e.src = "https://www.youtube.com/iframe_api";
-						var t = document.getElementsByTagName("script")[0];
-						t.parentNode.insertBefore(e, t), window.onYouTubeIframeAPIReady ? window.onYouTubeIframeAPIReady = function() {
-							FWDMSP.setupAllInstances()
-						} : setTimeout(FWDMSP.setupAllInstances, 1e3)
-					}
-			}, FWDMSP.setupAllInstances = function() {
+		FWDMSP.setupAllInstances = function() {
 				if (!FWDMSP.areInstancesCreated_bl) {
 					var e = FWDMSPUtils.getUrlArgs(window.location.search).MSPInstanceName;
 					"pause" != FWDMSP.audioStartBehaviour && "stop" != FWDMSP.audioStartBehaviour && "none" != FWDMSP.audioStartBehaviour && (FWDMSP.audioStartBehaviour = "pause"),
