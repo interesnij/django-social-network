@@ -5203,31 +5203,31 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 							b.mainHolder_do.setHeight(b.stageHeight + o), b.setWidth(b.stageWidth), b.setHeight(b.stageHeight + o)
 					}
 				}, this.setupcomboBox = function() {
-					b.labels_ar = [];
-					for (var e = 0; e < p.cats_ar.length; e++) {
-						b.labels_ar[e] = p.cats_ar[e].playlistsName;
-						var t = "";
-						p.showPlaylistsSelectBoxNumbers_bl ? (e < 9 && (t = "0"), t = t + (e + 1) + ". ", b.labels_ar[e] = t + p.cats_ar[e].playlistsName) : b.labels_ar[e] = p.cats_ar[e].playlistsName
-					}
-					var o = {
-						categories_ar: b.labels_ar,
-						selectorLabel: b.labels_ar[0],
-						bk1_str: p.comboboxBk1_str,
-						bk2_str: p.comboboxBk2_str,
-						selectorBackgroundNormalColor: p.mainSelectorBackgroundSelectedColor,
-						selectorTextNormalColor: p.mainSelectorTextNormalColor,
-						selectorTextSelectedColor: p.mainSelectorTextSelectedColor,
-						buttonBackgroundNormalColor: p.mainButtonBackgroundNormalColor,
-						buttonBackgroundSelectedColor: p.mainButtonBackgroundSelectedColor,
-						buttonTextNormalColor: p.mainButtonTextNormalColor,
-						buttonTextSelectedColor: p.mainButtonTextSelectedColor,
-						buttonHeight: b.comboboxHeight,
-						arrowN_str: p.arrowN_str,
-						arrowS_str: p.arrowS_str,
-						arrowW: 11,
-						arrowH: 6
-					};
-					FWDMSPComboBox.setPrototype(), b.comboBox_do = new FWDMSPComboBox(b, o), b.comboBox_do.addListener(FWDMSPComboBox.BUTTON_PRESSED, b.changePlaylistOnClick), b.addChild(b.comboBox_do)
+						b.labels_ar = [];
+						for (var e = 0; e < p.cats_ar.length; e++) {
+								b.labels_ar[e] = p.cats_ar[e].playlistsName;
+								var t = "";
+								p.showPlaylistsSelectBoxNumbers_bl ? (e < 9 && (t = "0"), t = t + (e + 1) + ". ", b.labels_ar[e] = t + p.cats_ar[e].playlistsName) : b.labels_ar[e] = p.cats_ar[e].playlistsName
+						}
+						var o = {
+								categories_ar: b.labels_ar,
+								selectorLabel: b.labels_ar[0],
+								bk1_str: p.comboboxBk1_str,
+								bk2_str: p.comboboxBk2_str,
+								selectorBackgroundNormalColor: p.mainSelectorBackgroundSelectedColor,
+								selectorTextNormalColor: p.mainSelectorTextNormalColor,
+								selectorTextSelectedColor: p.mainSelectorTextSelectedColor,
+								buttonBackgroundNormalColor: p.mainButtonBackgroundNormalColor,
+								buttonBackgroundSelectedColor: p.mainButtonBackgroundSelectedColor,
+								buttonTextNormalColor: p.mainButtonTextNormalColor,
+								buttonTextSelectedColor: p.mainButtonTextSelectedColor,
+								buttonHeight: b.comboboxHeight,
+								arrowN_str: p.arrowN_str,
+								arrowS_str: p.arrowS_str,
+								arrowW: 11,
+								arrowH: 6
+						};
+						FWDMSPComboBox.setPrototype(), b.comboBox_do = new FWDMSPComboBox(b, o), b.comboBox_do.addListener(FWDMSPComboBox.BUTTON_PRESSED, b.changePlaylistOnClick), b.addChild(b.comboBox_do)
 				}, this.changePlaylistOnClick = function(e) {
 					b.dispatchEvent(n.CHANGE_PLAYLIST, {
 						id: e.id
