@@ -1571,7 +1571,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 							}, this.setupHider = function() {
 								FWDMSPHider.setPrototype(), self.hider = new FWDMSPHider(self.main_do, self.controller_do.videoControllerHolder_do, 2e3), self.hider.addListener(FWDMSPHider.SHOW, self.hiderShowHandler), self.hider.addListener(FWDMSPHider.HIDE, self.hiderHideHandler), self.hider.addListener(FWDMSPHider.HIDE_COMPLETE, self.hiderHideCompleteHandler)
 							}, this.hiderShowHandler = function() {
-								self.controller_do && self.controller_do.showVideoContoller(!0), self.showCursor()
+								self.controller_do, self.showCursor()
 							}, this.hiderHideHandler = function() {
 								FWDMSPUtils.isIphone
 							}, this.hiderHideCompleteHandler = function() {}, this.setupVideosHolder = function() {
