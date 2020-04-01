@@ -1684,7 +1684,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 							}, this.share = function() {
 								self.isAPIReady_bl && self.shareWindow_do && self.shareWindow_do.show()
 							}, this.scrubbAtTime = function(e) {
-								self.isAPIReady_bl && e && (-1 != String(e).indexOf(":") && (e = FWDMSPUtils.getSecondsFromString(e)), self.ytb_do.scrubbAtTime(e) : self.audioType_str == FWDMSP.AUDIO ? self.audioScreen_do && self.audioScreen_do.scrubbAtTime(e) : self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS || !self.videoScreen_do || self.videoScreen_do && self.videoScreen_do.scrubbAtTime(e))
+								self.isAPIReady_bl && e && (-1 != String(e).indexOf(":") && (e = FWDMSPUtils.getSecondsFromString(e)), self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS || !self.videoScreen_do || self.videoScreen_do && self.videoScreen_do.scrubbAtTime(e))
 							}, this.buy = function(pId) {
 								if (self.isAPIReady_bl) {
 									null == pId && (pId = self.id);
