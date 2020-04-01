@@ -2317,10 +2317,16 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 											}, {
 												img: self.decendingN_img = new Image,
 												src: self.skinPath_str + "descending-button.png"
-											}), self.sortASPath_str = self.skinPath_str + "sort-alphabetical-button-over.png", self.sortNSPath_str = self.skinPath_str + "sort-numerical-button-over.png", self.ascendingSpath_str = self.skinPath_str + "ascending-button-over.png", self.decendingSpath_str = self.skinPath_str + "descending-button-over.png", self.inputArrowPath_str = self.skinPath_str + "input-arrow.png"), self.categoriesSPath_str = self.skinPath_str + "categories-button-over.png",
-										self.replaySPath_str = self.skinPath_str + "replay-button-over.png";
-										self.skinPath_str;
-										self.playlistSPath_str = self.skinPath_str + "playlist-button-over.png",
+											}),
+											self.sortASPath_str = self.skinPath_str + "sort-alphabetical-button-over.png",
+											self.sortNSPath_str = self.skinPath_str + "sort-numerical-button-over.png",
+											self.ascendingSpath_str = self.skinPath_str + "ascending-button-over.png",
+											self.decendingSpath_str = self.skinPath_str + "descending-button-over.png",
+											self.inputArrowPath_str = self.skinPath_str + "input-arrow.png"),
+											self.categoriesSPath_str = self.skinPath_str + "categories-button-over.png",
+										  self.replaySPath_str = self.skinPath_str + "replay-button-over.png";
+										  self.skinPath_str;
+										  self.playlistSPath_str = self.skinPath_str + "playlist-button-over.png",
 											self.shuffleSPath_str = self.skinPath_str + "shuffle-button-over.png",
 											self.shareSPath_str = self.skinPath_str + "share-over.png",
 											self.animationPath_str = self.skinPath_str + "equalizer.png",
@@ -2408,43 +2414,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 							}), self.isPlaylistDispatchingError_bl = !1
 						}, 50));
 						self.closeData(), self.resetYoutubePlaylistLoader(), self.isYoutbe_bl = !1, -1 != t.indexOf("soundcloud.com") ? self.loadSoundCloudList(t) : -1 != t.indexOf("list=") && self.useYoutube_bl ? (self.isYoutbe_bl = !0, self.loadYoutubePlaylist(t)) : -1 != t.indexOf("official.fm") ? self.loadOfficialFmList(t) : -1 != t.indexOf("folder:") ? self.loadFolderPlaylist(t) : -1 != t.indexOf(".xml") || -1 != t.indexOf("http:") || -1 != t.indexOf("https:") || -1 != t.indexOf("www.") || -1 != t.indexOf(".pls") ? self.loadXMLPlaylist(t) : self.parseDOMPlaylist(t), self.prevId = e
-					}
-				}, this.loadYoutubePlaylist = function(e) {
-					if (!self.isPlaylistDispatchingError_bl || self.isYoutbe_bl) {
-						self.youtubeUrl_str || (e = e.substr(e.indexOf("=") + 1), self.youtubeUrl_str = e), self.loadFromFolder_bl = !0, self.nextPageToken_str ? self.sourceURL_str = "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&pageToken=" + self.nextPageToken_str + "&playlistId=" + self.youtubeUrl_str + "&key=AIzaSyAlyhJ-C5POyo4hofPh3b7ECAxWy6t6lyg&maxResults=50&callback=" + parent.instanceName_str + ".data.parseYoutubePlaylist" : self.sourceURL_str = "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=" + self.youtubeUrl_str + "&key=AIzaSyAlyhJ-C5POyo4hofPh3b7ECAxWy6t6lyg&maxResults=50&callback=" + parent.instanceName_str + ".data.parseYoutubePlaylist";
-						try {
-							self.scs_el = document.createElement("script"), self.scs_el.src = self.sourceURL_str, document.documentElement.appendChild(self.scs_el)
-						} catch (e) {}
-					}
-				}, this.JSONPYotuubeRequestTimeoutError = function() {
-					self.closeData(), self.isPlaylistDispatchingError_bl = !0,
-						showLoadPlaylistErrorId_to = setTimeout(function() {
-							self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, {
-								text: "Error loading youtube playlist!<font color='#ff0000'>" + self.youtubeUrl_str + "</font>"
-							}), self.isPlaylistDispatchingError_bl = !1
-						}, 50)
-				}, this.resetYoutubePlaylistLoader = function() {
-					self.isYoutbe_bl = !1, self.youtubeObject_ar = null, self.nextPageToken_str = null, self.youtubeUrl_str = null
-				}, this.parseYoutubePlaylist = function(e) {
-					if (!self.isPlaylistDispatchingError_bl && self.isYoutbe_bl) {
-						if (e.error) return self.JSONPRequestTimeoutError(), void(console && console.dir(e));
-						var t, o;
-						self.playlist_ar = [], self.youtubeObject_ar || (self.youtubeObject_ar = []);
-						for (var s = 0; s < e.items.length; s++) self.youtubeObject_ar.push(e.items[s]);
-						if (t = self.youtubeObject_ar.length, self.closeData(), e.nextPageToken && t < self.maxPlaylistItems) return self.nextPageToken_str = e.nextPageToken, void self.loadYoutubePlaylist();
-						for (s = 0; s < t && !(s > self.maxPlaylistItems - 1); s++) {
-							var i = {};
-							o = self.youtubeObject_ar[s], i.source = o.snippet.resourceId.videoId, i.buy = void 0;
-							var n = "";
-							self.showTracksNumbers_bl ? (s < 9 && (n = "0"), n = n + (s + 1) + ". ", i.title = n + "<span style='font-weight:bold;'>" + o.snippet.title + "</span>") : i.title = "<span style='font-weight:bold;'>" + o.snippet.title + "</span>", i.titleText = o.snippet.title;
-							try {
-								i.thumbPath = o.snippet.thumbnails.default.url
-							} catch (e) {}
-							i.posterSource = "none", -1 == o.snippet.title.indexOf("eleted video") && -1 == o.snippet.title.indexOf("his video is unavailable") && self.playlist_ar.push(i)
-						}
-						clearTimeout(self.dispatchPlaylistLoadCompleteWidthDelayId_to), self.dispatchPlaylistLoadCompleteWidthDelayId_to = setTimeout(function() {
-							self.dispatchEvent(FWDMSPAudioData.PLAYLIST_LOAD_COMPLETE)
-						}, 50), self.isDataLoaded_bl = !0
 					}
 				}, this.loadSoundCloudList = function(e) {
 					if (!self.isPlaylistDispatchingError_bl) {
@@ -2909,16 +2878,23 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 		};
 		FWDMSPAudioData.setPrototype = function() {
 				FWDMSPAudioData.prototype = new FWDMSPEventDispatcher
-			}, FWDMSPAudioData.prototype = null, FWDMSPAudioData.RADIO_TRACK_UPDATE = "shoutcastTitleUpdate",
-			FWDMSPAudioData.RADIO_TRACK_READY = "radioTrackReady",
-			FWDMSPAudioData.UPDATE_IMAGE = "updateImage",
-			FWDMSPAudioData.SOUNDCLOUD_TRACK_READY = "soundcloudTrackReady", FWDMSPAudioData.PRELOADER_LOAD_DONE = "onPreloaderLoadDone",
-			FWDMSPAudioData.LOAD_DONE = "onLoadDone", FWDMSPAudioData.LOAD_ERROR = "onLoadError", FWDMSPAudioData.IMAGE_LOADED = "onImageLoaded",
-			FWDMSPAudioData.SKIN_LOAD_COMPLETE = "onSkinLoadComplete",
-			FWDMSPAudioData.SKIN_PROGRESS = "onSkinProgress",
-			FWDMSPAudioData.IMAGES_PROGRESS = "onImagesPogress",
-			FWDMSPAudioData.PLAYLIST_LOAD_COMPLETE = "onPlaylistLoadComplete", window.FWDMSPAudioData = FWDMSPAudioData
+			},
+		FWDMSPAudioData.prototype = null,
+		FWDMSPAudioData.RADIO_TRACK_UPDATE = "shoutcastTitleUpdate",
+		FWDMSPAudioData.RADIO_TRACK_READY = "radioTrackReady",
+		FWDMSPAudioData.UPDATE_IMAGE = "updateImage",
+		FWDMSPAudioData.SOUNDCLOUD_TRACK_READY = "soundcloudTrackReady",
+		FWDMSPAudioData.PRELOADER_LOAD_DONE = "onPreloaderLoadDone",
+		FWDMSPAudioData.LOAD_DONE = "onLoadDone",
+		FWDMSPAudioData.LOAD_ERROR = "onLoadError",
+		FWDMSPAudioData.IMAGE_LOADED = "onImageLoaded",
+		FWDMSPAudioData.SKIN_LOAD_COMPLETE = "onSkinLoadComplete",
+		FWDMSPAudioData.SKIN_PROGRESS = "onSkinProgress",
+		FWDMSPAudioData.IMAGES_PROGRESS = "onImagesPogress",
+		FWDMSPAudioData.PLAYLIST_LOAD_COMPLETE = "onPlaylistLoadComplete",
+		window.FWDMSPAudioData = FWDMSPAudioData
 	}(window),
+	
 	function(o) {
 		var i = function(e) {
 			var l = this;
