@@ -705,8 +705,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             this.skinPath_str = props.skinPath,
             self.skinPath_str.lastIndexOf("/") + 1 != self.skinPath_str.length && (self.skinPath_str += "/"),
             this.warningIconPath_str = self.mainFolderPath_str + this.skinPath_str + "warningIcon.png",
-            this.useYoutube_bl = props.useYoutube || "no",
-            this.useYoutube_bl = "yes" == self.useYoutube_bl,
             this.useVideo_bl = props.useVideo || "no",
             this.useVideo_bl = "yes" == self.useVideo_bl,
             this.instanceName_str = props.instanceName,
@@ -945,10 +943,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 							}, this.onKeyDownHandler = function(e) {
 								if (!self.isSpaceDown_bl && self.hasStartedToPlay_bl && !FWDMSP.isSearchedFocused_bl && (self.isSpaceDown_bl = !0, e.preventDefault && e.preventDefault(), self == FWDMSP.keyboardCurInstance)) {
 									if (32 == e.keyCode) {
-										if (self.audioType_str == FWDMSP.YOUTUBE) {
-											if (!self.ytb_do.isSafeToBeControlled_bl) return;
-											self.ytb_do.togglePlayPause()
-										} else if (self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS || !self.videoScreen_do) {
+										if (self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS || !self.videoScreen_do) {
 											if (!self.audioScreen_do.isSafeToBeControlled_bl) return;
 											self.audioScreen_do.togglePlayPause()
 										} else {
@@ -1023,7 +1018,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 									var t = new Date;
 									t.setTime(t.getTime() + 2e4);
 									var o, s = 0;
-									self.audioType_str == FWDMSP.YOUTUBE && self.ytb_do ? self.ytb_do && (s = self.ytb_do.lastPercentPlayed, o = self.ytb_do.isPlaying_bl) : self.audioType_str == FWDMSP.VIDEO && self.videoScreen_do ? self.videoScreen_do && (s = self.videoScreen_do.lastPercentPlayed, o = self.videoScreen_do.isPlaying_bl) : self.audioScreen_do && (s = self.audioScreen_do.lastPercentPlayed, o = self.audioScreen_do.isPlaying_bl),
+									self.ytb_do ? self.ytb_do && (s = self.ytb_do.lastPercentPlayed, o = self.ytb_do.isPlaying_bl) : self.audioType_str == FWDMSP.VIDEO && self.videoScreen_do ? self.videoScreen_do && (s = self.videoScreen_do.lastPercentPlayed, o = self.videoScreen_do.isPlaying_bl) : self.audioScreen_do && (s = self.audioScreen_do.lastPercentPlayed, o = self.audioScreen_do.isPlaying_bl),
 										document.cookie = "FWDMSPusePP=true; expires=" + t.toGMTString() + ", 01-Jan-70 00:00:01 GMT; path=/",
 										document.cookie = "FWDMSPVolume=" + self.volume + "; expires=" + t.toGMTString() + ", 01-Jan-70 00:00:01 GMT; path=/",
 										document.cookie = "FWDMSPpp=" + s + "; expires=" + t.toGMTString() + ", 01-Jan-70 00:00:01 GMT; path=/",
@@ -1034,7 +1029,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 							}, this.setupData = function() {
 								FWDMSPAudioData.setPrototype(),
                 self.data = new FWDMSPAudioData(self.props_obj, self.rootElement_el, self),
-                self.data.useYoutube_bl = self.useYoutube_bl,
                 self.data.addListener(FWDMSPAudioData.UPDATE_IMAGE, self.onImageUpdate),
                 self.data.addListener(FWDMSPAudioData.PRELOADER_LOAD_DONE, self.onPreloaderLoadDone),
                 self.data.addListener(FWDMSPAudioData.SOUNDCLOUD_TRACK_READY, self.onSoundClooudReady),
@@ -1259,7 +1253,20 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 							},
               this.palylistItemOnUpHandler = function(e) {
 								self.isPlaylistItemClicked_bl = !0,
-                e.id == self.id ? self.audioType_str == FWDMSP.AUDIO && self.audioScreen_do.isPlaying_bl ? self.pause() : self.audioType_str != FWDMSP.AUDIO || self.audioScreen_do.isStopped_bl && !self.audioScreen_do.isStopped_bl ? self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS || !self.videoScreen_do.isPlaying_bl ? self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS || self.videoScreen_do.isStopped_bl ? self.audioType_str == FWDMSP.YOUTUBE && self.ytb_do.isPlaying_bl ? self.pause() : self.audioType_str != FWDMSP.YOUTUBE || self.ytb_do.isStopped_bl || self.play() : self.play() : self.pause() : self.play() : self.useDeepLinking_bl && self.id != e.id ? (FWDAddress.setValue(self.instanceName_str + "?catid=" + self.catId + "&trackid=" + e.id), self.id = e.id) : (self.id = e.id, self.setSource(!0), self.changeHLS_bl = !0, self.autioType_str != FWDMSP.HLS && self.play()), self.data.playlist_ar && (self.videoNameGa = self.data.playlist_ar[self.id].titleText, self.videoCat = self.data.cats_ar[self.catId].playlistsName)
+								e.id == self.id
+								? self.audioType_str == FWDMSP.AUDIO && self.audioScreen_do.isPlaying_bl
+								? self.pause() : self.audioType_str != FWDMSP.AUDIO || self.audioScreen_do.isStopped_bl && !self.audioScreen_do.isStopped_bl
+								? self.audioType_str != FWDMSP.HLS
+								? self.audioType_str != FWDMSP.VIDEO
+								? self.ytb_do.isPlaying_bl
+								? self.pause() : self.play() : self.play() : self.pause() : self.play() : self.useDeepLinking_bl &&
+								self.id != e.id ? (FWDAddress.setValue(self.instanceName_str + "?catid=" + self.catId + "&trackid=" + e.id), self.id = e.id)
+								: (self.id = e.id, self.setSource(!0),
+										self.changeHLS_bl = !0,
+										self.autioType_str != FWDMSP.HLS
+										&& self.play()
+									)
+
 							},
               this.palylistUpdateFolderTrackTitle = function(e) {
 								self.controller_do.setTitle(e.title)
@@ -1319,16 +1326,16 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 								self.playlist_do && self.playlist_do.hideDisable()
 							},
               this.controllerStartToScrubbHandler = function(e) {
-								self.playlist_do && self.playlist_do.showDisable(), self.audioType_str == FWDMSP.YOUTUBE && self.ytb_do ? self.ytb_do.startToScrub() : self.audioType_str == FWDMSP.VIDEO && self.videoScreen_do ? self.videoScreen_do.startToScrub() : FWDMSP.hasHTML5Audio ? self.audioScreen_do.startToScrub() : self.isFlashScreenReady_bl && (FWDMSP.pauseAllAudio(self), self.flashObject.startToScrub())
+								self.playlist_do && self.playlist_do.showDisable(), self.ytb_do ? self.ytb_do.startToScrub() : self.audioType_str == FWDMSP.VIDEO && self.videoScreen_do ? self.videoScreen_do.startToScrub() : FWDMSP.hasHTML5Audio ? self.audioScreen_do.startToScrub() : self.isFlashScreenReady_bl && (FWDMSP.pauseAllAudio(self), self.flashObject.startToScrub())
 							},
               this.controllerScrubbHandler = function(e) {
-								self.audioType_str == FWDMSP.YOUTUBE && self.ytb_do ? self.ytb_do.scrub(e.percent) : self.audioType_str == FWDMSP.VIDEO && self.videoScreen_do ? self.videoScreen_do.scrub(e.percent) : FWDMSP.hasHTML5Audio ? self.audioScreen_do.scrub(e.percent) : self.isFlashScreenReady_bl && self.flashObject.scrub(e.percent)
+								self.ytb_do ? self.ytb_do.scrub(e.percent) : self.audioType_str == FWDMSP.VIDEO && self.videoScreen_do ? self.videoScreen_do.scrub(e.percent) : FWDMSP.hasHTML5Audio ? self.audioScreen_do.scrub(e.percent) : self.isFlashScreenReady_bl && self.flashObject.scrub(e.percent)
 							},
               this.controllerPlaylistItemScrubbHandler = function(e) {
 								self.playlist_do && self.playlist_do.updateCurItemProgress(e.percent)
 							},
               this.controllerStopToScrubbHandler = function(e) {
-								self.playlist_do && self.playlist_do.hideDisable(), self.audioType_str == FWDMSP.YOUTUBE && self.ytb_do ? self.ytb_do.stopToScrub() : self.audioType_str == FWDMSP.VIDEO && self.videoScreen_do ? self.videoScreen_do.stopToScrub() : FWDMSP.hasHTML5Audio ? self.audioScreen_do.stopToScrub() : self.isFlashScreenReady_bl && self.flashObject.stopToScrub()
+								self.playlist_do && self.playlist_do.hideDisable(), self.ytb_do ? self.ytb_do.stopToScrub() : self.audioType_str == FWDMSP.VIDEO && self.videoScreen_do ? self.videoScreen_do.stopToScrub() : FWDMSP.hasHTML5Audio ? self.audioScreen_do.stopToScrub() : self.isFlashScreenReady_bl && self.flashObject.stopToScrub()
 							},
               this.controllerChangeVolumeHandler = function(e) {
 								self.setVolume(e.percent)
@@ -1421,7 +1428,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 									self.isPlaylistItemClicked_bl = !1
 								}, 500), self.ppPplayedOnce = !0, self.hasStartedToPlay_bl = !0, self.dispatchEvent(FWDMSP.PLAY)
 							}, this.audioScreenPauseHandler = function() {
-								self.isPlaying_bl = !1, self.opener_do && self.opener_do.showPlayButton(), self.largePlayButton_do && self.isFullScreen_bl && self.largePlayButton_do.show(), self.hider && (self.hider.reset(), self.hider.stop()), !FWDMSPUtils.isIphone && self.largePlayButton_do && self.isFullScreen_bl && (self.audioType_str == FWDMSP.VIDEO ? self.largePlayButton_do && self.isFullScreen_bl && self.largePlayButton_do.show() : self.audioType_str != FWDMSP.YOUTUBE || self.isMobile_bl || self.largePlayButton_do && self.isFullScreen_bl && self.largePlayButton_do.show()),
+								self.isPlaying_bl = !1, self.opener_do && self.opener_do.showPlayButton(), self.largePlayButton_do && self.isFullScreen_bl && self.largePlayButton_do.show(), self.hider && (self.hider.reset(), self.hider.stop()), !FWDMSPUtils.isIphone && self.largePlayButton_do && self.isFullScreen_bl && (self.isMobile_bl || self.largePlayButton_do && self.isFullScreen_bl && self.largePlayButton_do.show()),
 									self.showCursor(), self.controller_do && (self.controller_do.showPlayButton(), self.controller_do.stopEqulizer()), self.playlist_do && self.playlist_do.setCurItemPlayState(), self.dispatchEvent(FWDMSP.PAUSE)
 							}, this.audioScreenUpdateHandler = function(e) {
 								var t;
