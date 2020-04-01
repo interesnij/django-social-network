@@ -13135,7 +13135,7 @@ document.write(
                                 .screen.addEventListener(
                                     "touchstart", p
                                     .mainScrubberOnDownHandler))),
-                        p.disableMainScrubber()
+                        p.disableMainScrubber();
                 }, this.mainScrubberOnOverHandler = function(e) {
                     if (!p.isMainScrubberDisabled_bl) {
                         0 != f.totalDuration && p.ttm.show(), !p
