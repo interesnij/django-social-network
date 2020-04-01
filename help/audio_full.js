@@ -3886,7 +3886,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 						t < 0 ? t = 0 : t > p.volumeScrubberWidth - p.scrubbersOffsetWidth && (t = p.volumeScrubberWidth - p.scrubbersOffsetWidth);
 						var o = t / p.volumeScrubberWidth;
 						p.disable_do && p.addChild(p.disable_do),
-							p.lastVolume = o, p.isVolumeScrubberScrubbing_bl = !0, p.updateVolume(o), _.showMainScrubberToolTipLabel_bl && p.ttm2.show(), p.updateVolumeToolTip(),
+							p.lastVolume = o, p.isVolumeScrubberScrubbing_bl = !0, p.updateVolume(o), p.ttm2.show(),
 							p.dispatchEvent(n.VOLUME_START_TO_SCRUB), p.isMobile_bl ? p.hasPointerEvent_bl ? (window.addEventListener("pointermove", p.volumeScrubberMoveHandler), window.addEventListener("pointerup", p.volumeScrubberEndHandler)) : (window.addEventListener("touchmove", p.volumeScrubberMoveHandler), window.addEventListener("touchend", p.volumeScrubberEndHandler)) : (window.addEventListener("mousemove", p.volumeScrubberMoveHandler), window.addEventListener("mouseup", p.volumeScrubberEndHandler))
 					}
 				}, this.volumeScrubberMoveHandler = function(e) {
@@ -3895,7 +3895,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 						var t = FWDMSPUtils.getViewportMouseCoordinates(e).screenX - p.volumeScrubber_do.getGlobalX();
 						t < 0 ? t = 0 : t > p.volumeScrubberWidth - p.scrubbersOffsetWidth && (t = p.volumeScrubberWidth - p.scrubbersOffsetWidth);
 						var o = t / p.volumeScrubberWidth;
-						.98 <= o && (o = 1), p.lastVolume = o, p.updateVolume(o), p.updateVolumeToolTip()
+						.98 <= o && (o = 1), p.lastVolume = o, p.updateVolume(o)
 					}
 				}, this.volumeScrubberEndHandler = function(e) {
 					if (p.dispatchEvent(n.VOLUME_STOP_TO_SCRUB), p.isVolumeScrubberScrubbing_bl = !1, p.disable_do && p.contains(p.disable_do) && p.removeChild(p.disable_do), e) {
@@ -3923,62 +3923,44 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 							percent: p.volume
 						})
 				}, this.setupPlaylistButton = function() {
-					FWDMSPSimpleButton.setPrototype(), p.playlistButton_do = new FWDMSPSimpleButton(p.playlistN_img, _.playlistSPath_str, null, !0, _.useHEXColorsForSkin_bl, _.normalButtonsColor_str, _.selectedButtonsColor_str), p.playlistButton_do.addListener(FWDMSPSimpleButton.SHOW_TOOLTIP, p.playlistButtonShowToolTipHandler), p.playlistButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, p.playlistButtonOnMouseUpHandler), p.playlistButton_do.setY(parseInt((p.stageHeight - p.playlistButton_do.h) / 2)), p.buttons_ar.push(p.playlistButton_do), p.mainHolder_do.addChild(p.playlistButton_do), p.showPlayListByDefault_bl && p.setPlaylistButtonState("selected")
-				}, this.playlistButtonShowToolTipHandler = function(e) {
-					p.showToolTip(p.playlistButton_do, p.playlistButtonToolTip_do, e.e)
+					FWDMSPSimpleButton.setPrototype(), p.playlistButton_do = new FWDMSPSimpleButton(p.playlistN_img, _.playlistSPath_str, null, !0, _.useHEXColorsForSkin_bl, _.normalButtonsColor_str, _.selectedButtonsColor_str), p.playlistButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, p.playlistButtonOnMouseUpHandler), p.playlistButton_do.setY(parseInt((p.stageHeight - p.playlistButton_do.h) / 2)), p.buttons_ar.push(p.playlistButton_do), p.mainHolder_do.addChild(p.playlistButton_do), p.showPlayListByDefault_bl && p.setPlaylistButtonState("selected")
 				}, this.playlistButtonOnMouseUpHandler = function() {
 					p.playlistButton_do.isSelectedFinal_bl ? p.dispatchEvent(n.HIDE_PLAYLIST) : p.dispatchEvent(n.SHOW_PLAYLIST)
 				}, this.setPlaylistButtonState = function(e) {
 					p.playlistButton_do && ("selected" == e ? p.playlistButton_do.setSelected() : "unselected" == e && p.playlistButton_do.setUnselected())
 				}, this.setupCategoriesButton = function() {
-					FWDMSPSimpleButton.setPrototype(), p.categoriesButton_do = new FWDMSPSimpleButton(p.categoriesN_img, _.categoriesSPath_str, null, !0, _.useHEXColorsForSkin_bl, _.normalButtonsColor_str, _.selectedButtonsColor_str), p.categoriesButton_do.addListener(FWDMSPSimpleButton.SHOW_TOOLTIP, p.categoriesButtonShowTooltipHandler),
+					FWDMSPSimpleButton.setPrototype(), p.categoriesButton_do = new FWDMSPSimpleButton(p.categoriesN_img, _.categoriesSPath_str, null, !0, _.useHEXColorsForSkin_bl, _.normalButtonsColor_str, _.selectedButtonsColor_str),
 						p.categoriesButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, p.categoriesButtonOnMouseUpHandler), p.categoriesButton_do.setY(parseInt((p.stageHeight - p.categoriesButton_do.h) / 2)), p.buttons_ar.push(p.categoriesButton_do), p.mainHolder_do.addChild(p.categoriesButton_do)
-				}, this.categoriesButtonShowTooltipHandler = function(e) {
-					p.showToolTip(p.categoriesButton_do, p.playlistsButtonToolTip_do, e.e)
 				}, this.categoriesButtonOnMouseUpHandler = function() {
 					p.dispatchEvent(n.SHOW_CATEGORIES)
 				}, this.setCategoriesButtonState = function(e) {
 					p.categoriesButton_do && ("selected" == e ? p.categoriesButton_do.setSelected() : "unselected" == e && p.categoriesButton_do.setUnselected())
 				}, this.setupLoopButton = function() {
-					FWDMSPSimpleButton.setPrototype(), p.loopButton_do = new FWDMSPSimpleButton(p.replayN_img, _.replaySPath_str, null, !0, _.useHEXColorsForSkin_bl, _.normalButtonsColor_str, _.selectedButtonsColor_str), p.loopButton_do.addListener(FWDMSPSimpleButton.SHOW_TOOLTIP, p.loopButtonShowTooltipHandler), p.loopButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, p.loopButtonOnMouseUpHandler), p.loopButton_do.setY(parseInt((p.stageHeight - p.loopButton_do.h) / 2)), p.buttons_ar.push(p.loopButton_do), p.mainHolder_do.addChild(p.loopButton_do), p.loop_bl && p.setLoopStateButton("selected")
-				}, this.loopButtonShowTooltipHandler = function(e) {
-					p.showToolTip(p.loopButton_do, p.loopButtonToolTip_do, e.e)
+					FWDMSPSimpleButton.setPrototype(), p.loopButton_do = new FWDMSPSimpleButton(p.replayN_img, _.replaySPath_str, null, !0, _.useHEXColorsForSkin_bl, _.normalButtonsColor_str, _.selectedButtonsColor_str), p.loopButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, p.loopButtonOnMouseUpHandler), p.loopButton_do.setY(parseInt((p.stageHeight - p.loopButton_do.h) / 2)), p.buttons_ar.push(p.loopButton_do), p.mainHolder_do.addChild(p.loopButton_do), p.loop_bl && p.setLoopStateButton("selected")
 				}, this.loopButtonOnMouseUpHandler = function() {
 					p.loopButton_do.isSelectedFinal_bl ? p.dispatchEvent(n.DISABLE_LOOP) : p.dispatchEvent(n.ENABLE_LOOP)
 				}, this.setLoopStateButton = function(e) {
 					p.loopButton_do && ("selected" == e ? p.loopButton_do.setSelected() : "unselected" == e && p.loopButton_do.setUnselected())
 				}, this.setupDownloadButton = function() {
-					FWDMSPSimpleButton.setPrototype(), p.downloadButton_do = new FWDMSPSimpleButton(p.downloaderN_img, _.downloaderSPath_str, null, !0, _.useHEXColorsForSkin_bl, _.normalButtonsColor_str, _.selectedButtonsColor_str), p.downloadButton_do.addListener(FWDMSPSimpleButton.SHOW_TOOLTIP, p.downloadButtonShowToolTipHandler), p.downloadButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, p.downloadButtonOnMouseUpHandler), p.downloadButton_do.setY(parseInt((p.stageHeight - p.downloadButton_do.h) / 2)), p.buttons_ar.push(p.downloadButton_do), p.mainHolder_do.addChild(p.downloadButton_do)
-				}, this.downloadButtonShowToolTipHandler = function(e) {
-					p.showToolTip(p.downloadButton_do, p.downloadButtonToolTip_do, e.e)
+					FWDMSPSimpleButton.setPrototype(), p.downloadButton_do = new FWDMSPSimpleButton(p.downloaderN_img, _.downloaderSPath_str, null, !0, _.useHEXColorsForSkin_bl, _.normalButtonsColor_str, _.selectedButtonsColor_str), p.downloadButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, p.downloadButtonOnMouseUpHandler), p.downloadButton_do.setY(parseInt((p.stageHeight - p.downloadButton_do.h) / 2)), p.buttons_ar.push(p.downloadButton_do), p.mainHolder_do.addChild(p.downloadButton_do)
 				}, this.downloadButtonOnMouseUpHandler = function() {
 					p.dispatchEvent(n.DOWNLOAD_MP3)
 				}, this.setupBuyButton = function() {
-					FWDMSPSimpleButton.setPrototype(), p.buyButton_do = new FWDMSPSimpleButton(_.buyN_img, _.buySPath_str, null, !0, _.useHEXColorsForSkin_bl, _.normalButtonsColor_str, _.selectedButtonsColor_str), p.buyButton_do.addListener(FWDMSPSimpleButton.SHOW_TOOLTIP, p.buyButtonShowToolTipHandler), p.buyButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, p.buyButtonOnMouseUpHandler), p.buttons_ar.push(p.buyButton_do), p.mainHolder_do.addChild(p.buyButton_do)
-				}, this.buyButtonShowToolTipHandler = function(e) {
-					p.showToolTip(p.buyButton_do, p.buyButtonToolTip_do, e.e)
+					FWDMSPSimpleButton.setPrototype(), p.buyButton_do = new FWDMSPSimpleButton(_.buyN_img, _.buySPath_str, null, !0, _.useHEXColorsForSkin_bl, _.normalButtonsColor_str, _.selectedButtonsColor_str), p.buyButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, p.buyButtonOnMouseUpHandler), p.buttons_ar.push(p.buyButton_do), p.mainHolder_do.addChild(p.buyButton_do)
 				}, this.buyButtonOnMouseUpHandler = function() {
 					p.dispatchEvent(n.BUY)
 				}, this.setupShuffleButton = function() {
-					FWDMSPSimpleButton.setPrototype(), p.shuffleButton_do = new FWDMSPSimpleButton(p.shuffleN_img, _.shuffleSPath_str, null, !0, _.useHEXColorsForSkin_bl, _.normalButtonsColor_str, _.selectedButtonsColor_str), p.shuffleButton_do.addListener(FWDMSPSimpleButton.SHOW_TOOLTIP, p.shuffleButtonShowToolTipHandler), p.shuffleButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, p.shuffleButtonOnMouseUpHandler), p.shuffleButton_do.setY(parseInt((p.stageHeight - p.shuffleButton_do.h) / 2)), p.buttons_ar.push(p.shuffleButton_do), p.mainHolder_do.addChild(p.shuffleButton_do), !p.loop_bl && p.shuffle_bl && p.setShuffleButtonState("selected")
-				}, this.shuffleButtonShowToolTipHandler = function(e) {
-					p.showToolTip(p.shuffleButton_do, p.shuffleButtonToolTip_do, e.e)
+					FWDMSPSimpleButton.setPrototype(), p.shuffleButton_do = new FWDMSPSimpleButton(p.shuffleN_img, _.shuffleSPath_str, null, !0, _.useHEXColorsForSkin_bl, _.normalButtonsColor_str, _.selectedButtonsColor_str), p.shuffleButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, p.shuffleButtonOnMouseUpHandler), p.shuffleButton_do.setY(parseInt((p.stageHeight - p.shuffleButton_do.h) / 2)), p.buttons_ar.push(p.shuffleButton_do), p.mainHolder_do.addChild(p.shuffleButton_do), !p.loop_bl && p.shuffle_bl && p.setShuffleButtonState("selected")
 				}, this.shuffleButtonOnMouseUpHandler = function() {
 					p.shuffleButton_do.isSelectedFinal_bl ? p.dispatchEvent(n.DISABLE_SHUFFLE) : p.dispatchEvent(n.ENABLE_SHUFFLE)
 				}, this.setShuffleButtonState = function(e) {
 					p.shuffleButton_do && ("selected" == e ? p.shuffleButton_do.setSelected() : "unselected" == e && p.shuffleButton_do.setUnselected())
 				}, this.setupFacebookButton = function() {
-					FWDMSPSimpleButton.setPrototype(), p.shareButton_do = new FWDMSPSimpleButton(p.shareN_img, _.shareSPath_str, null, !0, _.useHEXColorsForSkin_bl, _.normalButtonsColor_str, _.selectedButtonsColor_str), p.shareButton_do.addListener(FWDMSPSimpleButton.SHOW_TOOLTIP, p.facebookButtonShowToolTipHandler), p.shareButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, p.faceboolButtonOnMouseUpHandler), p.shareButton_do.setY(parseInt((p.stageHeight - p.shareButton_do.h) / 2)), p.buttons_ar.push(p.shareButton_do), p.mainHolder_do.addChild(p.shareButton_do)
-				}, this.facebookButtonShowToolTipHandler = function(e) {
-					p.showToolTip(p.shareButton_do, p.facebookButtonToolTip_do, e.e)
+					FWDMSPSimpleButton.setPrototype(), p.shareButton_do = new FWDMSPSimpleButton(p.shareN_img, _.shareSPath_str, null, !0, _.useHEXColorsForSkin_bl, _.normalButtonsColor_str, _.selectedButtonsColor_str), p.shareButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, p.faceboolButtonOnMouseUpHandler), p.shareButton_do.setY(parseInt((p.stageHeight - p.shareButton_do.h) / 2)), p.buttons_ar.push(p.shareButton_do), p.mainHolder_do.addChild(p.shareButton_do)
 				}, this.faceboolButtonOnMouseUpHandler = function() {
 					p.dispatchEvent(n.FACEBOOK_SHARE)
 				}, this.setupPopupButton = function() {
-					FWDMSPSimpleButton.setPrototype(), p.popupButton_do = new FWDMSPSimpleButton(p.popupN_img, _.popupSPath_str, null, !0, _.useHEXColorsForSkin_bl, _.normalButtonsColor_str, _.selectedButtonsColor_str), p.popupButton_do.addListener(FWDMSPSimpleButton.SHOW_TOOLTIP, p.popupButtonShowToolTipHandler), p.popupButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, p.popupButtonOnMouseUpHandler), p.popupButton_do.setY(parseInt((p.stageHeight - p.popupButton_do.h) / 2)), p.buttons_ar.push(p.popupButton_do), p.mainHolder_do.addChild(p.popupButton_do)
-				}, this.popupButtonShowToolTipHandler = function(e) {
-					p.showToolTip(p.popupButton_do, p.populButtonToolTip_do, e.e)
-				}, this.popupButtonOnMouseUpHandler = function() {
-					p.populButtonToolTip_do && p.populButtonToolTip_do.hide(), p.dispatchEvent(n.POPUP)
+					FWDMSPSimpleButton.setPrototype(), p.popupButton_do = new FWDMSPSimpleButton(p.popupN_img, _.popupSPath_str, null, !0, _.useHEXColorsForSkin_bl, _.normalButtonsColor_str, _.selectedButtonsColor_str), p.popupButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, p.popupButtonOnMouseUpHandler), p.popupButton_do.setY(parseInt((p.stageHeight - p.popupButton_do.h) / 2)), p.buttons_ar.push(p.popupButton_do), p.mainHolder_do.addChild(p.popupButton_do)
 				}, this.disableControllerWhileLoadingPlaylist = function() {
 					p.prevButton_do.disable(), p.playPauseButton_do.disable(), p.nextButton_do.disable(), p.downloadButton_do && p.downloadButton_do.disable(), p.buyButton_do && p.buyButton_do.disable(), p.playlistButton_do && p.playlistButton_do.disable(!0), p.shareButton_do && p.shareButton_do.disable(), p.updateTime("...", "..."), p.setTitle("...")
 				}, this.enableControllerWhileLoadingPlaylist = function() {
@@ -4395,11 +4377,11 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 			l.prototype;
 			this.embedColoseN_img = s.embedColoseN_img, this.bk_do = null, this.mainHolder_do = null, this.closeButton_do = null, this.buttons_ar = [], this.embedWindowBackground_str = s.shareBkPath_str,
 				this.embedWindowCloseButtonMargins = 0, this.scrubbersHeight = s.mainScrubberBkLeft_img.height, this.scrubberBkMiddlePath_str = s.mainScrubberBkMiddlePath_str, this.scrubbersBkLeftAndRightWidth = s.mainScrubberBkLeft_img.width, this.useHEXColorsForSkin_bl = s.useHEXColorsForSkin_bl, this.normalButtonsColor_str = s.normalButtonsColor_str, this.selectedButtonsColor_str = s.selectedButtonsColor_str,
-				this.mainScrubberDragMiddlePath_str = s.mainScrubberDragMiddlePath_str, this.scrubberDragLeftWidth = s.mainScrubberDragLeft_img.width, this.playbackRateWindowTextColor_str = s.playbackRateWindowTextColor_str, this.defaultPlaybackRate = s.defaultPlaybackRate, this.toolTipsButtonFontColor_str = s.toolTipsButtonFontColor_str, this.toopTipPointerUp_str = s.toopTipPointer_str, this.toopTipBk_str = s.toopTipBk_str, this.totalWidth = 0, this.stageWidth = 0, this.stageHeight = 0, this.minMarginXSpace = 20, this.hSpace = 20, this.minHSpace = 10, this.vSpace = 15, this.minValue = .5, this.maxValue = 3, this.pointerWidth = 7, this.pointerHeight = 4, this.percent = 0,
-				this.toolTip_do, this.isScrubbing_bl = !1, this.isShowed_bl = !1, this.isMobile_bl = FWDMSPUtils.isMobile, this.init = function() {
+				this.mainScrubberDragMiddlePath_str = s.mainScrubberDragMiddlePath_str, this.scrubberDragLeftWidth = s.mainScrubberDragLeft_img.width, this.playbackRateWindowTextColor_str = s.playbackRateWindowTextColor_str, this.defaultPlaybackRate = s.defaultPlaybackRate, this.toopTipPointerUp_str = s.toopTipPointer_str, this.toopTipBk_str = s.toopTipBk_str, this.totalWidth = 0, this.stageWidth = 0, this.stageHeight = 0, this.minMarginXSpace = 20, this.hSpace = 20, this.minHSpace = 10, this.vSpace = 15, this.minValue = .5, this.maxValue = 3, this.pointerWidth = 7, this.pointerHeight = 4, this.percent = 0,
+				this.isScrubbing_bl = !1, this.isShowed_bl = !1, this.isMobile_bl = FWDMSPUtils.isMobile, this.init = function() {
 					i.setBackfaceVisibility(), i.mainHolder_do = new FWDMSPDisplayObject("div"), i.mainHolder_do.hasTransform3d_bl = !1, i.mainHolder_do.hasTransform2d_bl = !1, i.mainHolder_do.setBackfaceVisibility(), i.bk_do = new FWDMSPDisplayObject("div"), i.bk_do.getStyle().width = "100%", i.bk_do.getStyle().height = "100%", i.bk_do.setAlpha(.9), i.bk_do.getStyle().background = "url('" + i.embedWindowBackground_str + "')",
 						FWDMSPSimpleButton.setPrototype(), i.closeButton_do = new FWDMSPSimpleButton(s.playbackRateWindowClooseN_img, s.playbackRateClosePathS_str, void 0, !0, s.useHEXColorsForSkin_bl, s.normalButtonsColor_str, s.selectedButtonsColor_str), i.closeButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, i.closeButtonOnMouseUpHandler), i.addChild(i.mainHolder_do), i.mainHolder_do.addChild(i.bk_do), i.mainHolder_do.addChild(i.closeButton_do),
-						this.setupScrubber(), this.setupTooltip()
+						this.setupScrubber()
 				}, this.closeButtonOnMouseUpHandler = function() {
 					i.isShowed_bl && i.hide(!0)
 				}, this.positionAndResize = function() {
@@ -4407,24 +4389,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 					var e = i.stageWidth - i.closeButton_do.w - i.embedWindowCloseButtonMargins,
 						t = 0;
 					t = o.playlist_do && o.position_str == FWDMSP.POSITION_TOP ? o.playlist_do.h : i.embedWindowCloseButtonMargins, i.closeButton_do.setX(e), i.closeButton_do.setY(0), i.setY(t), i.setWidth(i.stageWidth), i.setHeight(i.stageHeight), i.mainHolder_do.setWidth(i.stageWidth), i.mainHolder_do.setHeight(i.stageHeight), i.positionScruber(), i.updateScrubber(i.percent)
-				}, this.setupTooltip = function() {
-					i.mainToolTip_do = new FWDMSPDisplayObject("div"), i.mainToolTip_do.setOverflow("visible"), i.mainToolTip_do.getStyle().background = "url('" + i.toopTipBk_str + "')", i.mainToolTip_do.setBkColor("#FF0000"), i.text_do = new FWDMSPDisplayObject("div"), i.text_do.hasTransform3d_bl = !1, i.text_do.hasTransform2d_bl = !1, i.text_do.setBackfaceVisibility(), i.text_do.setDisplay("inline"), i.text_do.getStyle().fontFamily = "Arial", i.text_do.getStyle().fontSize = "12px", i.text_do.getStyle().color = i.toolTipsButtonFontColor_str, i.text_do.getStyle().whiteSpace = "nowrap", i.text_do.getStyle().fontSmoothing = "antialiased", i.text_do.getStyle().webkitFontSmoothing = "antialiased", i.text_do.getStyle().textRendering = "optimizeLegibility", i.text_do.getStyle().padding = "6px", i.text_do.getStyle().paddingTop = "4px", i.text_do.getStyle().paddingBottom = "4px";
-					var e = new Image;
-					e.src = i.toopTipPointerUp_str, i.pointerUp_do = new FWDMSPDisplayObject("img"), i.pointerUp_do.setScreen(e), i.pointerUp_do.setWidth(i.pointerWidth), i.pointerUp_do.setHeight(i.pointerHeight),
-						i.mainToolTip_do.addChild(i.pointerUp_do),
-						i.mainToolTip_do.addChild(i.text_do), i.mainHolder_do.addChild(i.mainToolTip_do)
-				}, this.setTooltipLabel = function(e) {
-					if (1 == e && (e = "1.0"), e && i.text_do.setInnerHTML(e), 0 != i.mainToolTip_do.w) {
-						var t = parseInt((i.mainToolTip_do.w - i.pointerWidth) / 2),
-							o = i.mainToolTip_do.h;
-						return i.pointerUp_do.setX(t), void i.pointerUp_do.setY(o)
-					}
-					setTimeout(function() {
-						i.mainToolTip_do.setWidth(i.text_do.getWidth()), i.mainToolTip_do.setHeight(i.text_do.getHeight());
-						var e = parseInt((i.mainToolTip_do.w - i.pointerWidth) / 2),
-							t = i.mainToolTip_do.h;
-						i.pointerUp_do.setX(e), i.pointerUp_do.setY(t)
-					}, 50)
 				}, this.setupScrubber = function() {
 					i.scrubber_do = new FWDMSPDisplayObject("div"), i.scrubber_do.setHeight(i.scrubbersHeight), i.scrubber_do.setButtonMode(!0), i.scrubberBkLeft_do = new FWDMSPDisplayObject("img");
 					var e = new Image;
@@ -4469,7 +4433,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 						alpha: 0
 					})) : 2 < t && !i.isMainScrubberLineVisible_bl && (i.isMainScrubberLineVisible_bl = !0, FWDAnimation.to(i.scrubberBarLine_do, .5, {
 						alpha: 1
-					})), i.scrubberDrag_do.setWidth(t), i.setTooltipLabel(i.defaultPlaybackRate), i.mainToolTip_do.setX(i.scrubber_do.x + t - Math.round(i.mainToolTip_do.w / 2) + 1), i.mainToolTip_do.setY(i.scrubber_do.y - i.mainToolTip_do.h - 5), t > i.scruberWidth - i.scrubbersOffsetWidth && (t = i.scruberWidth - i.scrubbersOffsetWidth), FWDAnimation.to(i.scrubberBarLine_do, .8, {
+					})), i.scrubberDrag_do.setWidth(t), t > i.scruberWidth - i.scrubbersOffsetWidth && (t = i.scruberWidth - i.scrubbersOffsetWidth), FWDAnimation.to(i.scrubberBarLine_do, .8, {
 						x: t,
 						ease: Expo.easeOut
 					}), i.dispatchEvent(l.SET_PLAYBACK_RATE, {
@@ -4517,15 +4481,15 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 				this.scrTrackTop_do = null, this.scrTrackMiddle_do = null, this.scrTrackBottom_do = null, this.scrHandler_do = null, this.scrHandlerTop_do = null, this.scrHandlerMiddle_do = null, this.scrHandlerBottom_do = null, this.scrHandlerLines_do = null, this.scrHandlerLinesN_do = null,
 				this.scrHandlerLinesS_do = null, this.playlistPlayButtonN_str = p.playlistPlayButtonN_str, this.playlistPlayButtonS_str = p.playlistPlayButtonS_str, this.playlistPauseButtonN_str = p.playlistPauseButtonN_str, this.playlistPauseButtonS_str = p.playlistPauseButtonS_str, this.controllerBkPath_str = p.controllerBkPath_str,
 				this.playlistBackgroundColor_str = p.playlistBackgroundColor_str, this.searchInputColor_str = p.searchInputColor_str,
-				this.toolTipsButtonFontColor_str = p.toolTipsButtonFontColor_str, b.useHEXColorsForSkin_bl = p.useHEXColorsForSkin_bl, b.normalButtonsColor_str = p.normalButtonsColor_str, b.selectedButtonsColor_str = p.selectedButtonsColor_str, this.countTrack = 0,
+				b.useHEXColorsForSkin_bl = p.useHEXColorsForSkin_bl, b.normalButtonsColor_str = p.normalButtonsColor_str, b.selectedButtonsColor_str = p.selectedButtonsColor_str, this.countTrack = 0,
 				this.inputSearchTextOffsetTop = p.inputSearchTextOffsetTop, this.inputSearchOffsetLeft = p.inputSearchOffsetLeft,
 				this.startSpaceBetweenButtons = p.startSpaceBetweenButtons, this.spaceBetweenButtons = p.spaceBetweenButtons, 15 < this.spaceBetweenButtons && (this.spaceBetweenButtons = 10), this.searchBarHeight = p.searchBarHeight, this.countID3 = 0, this.id = 0, this.stageWidth = 0,
 				this.stageHeight = 0, this.itemsTotalHeight = 0,
 				this.scrollbarOffestWidth = p.scrollbarOffestWidth, this.scrWidth = b.playlistScrBkTop_img.width, this.trackTitleOffsetLeft = p.trackTitleOffsetLeft,
-				this.downloadButtonOffsetRight = p.downloadButtonOffsetRight, this.itemHeight = b.playlistItemBk1_img.height, this.playPuaseIconWidth = b.playlistPlayButtonN_img.width, this.playPuaseIconHeight = b.playlistPlayButtonN_img.height, this.nrOfVisiblePlaylistItems = p.nrOfVisiblePlaylistItems, this.durationOffsetRight = p.durationOffsetRight, this.toolTipsButtonsHideDelay = p.toolTipsButtonsHideDelay,
+				this.downloadButtonOffsetRight = p.downloadButtonOffsetRight, this.itemHeight = b.playlistItemBk1_img.height, this.playPuaseIconWidth = b.playlistPlayButtonN_img.width, this.playPuaseIconHeight = b.playlistPlayButtonN_img.height, this.nrOfVisiblePlaylistItems = p.nrOfVisiblePlaylistItems, this.durationOffsetRight = p.durationOffsetRight,
 				this.totalPlayListItems = 0, this.visibleNrOfItems = 0, this.yPositionOnPress = 0, this.lastPresedY = 0, this.lastListY = 0, this.playListFinalY = 0,
 				this.scrollBarHandlerFinalY = 0, this.scrollBarHandlerFinalY = 0, this.vy = 0, this.vy2 = 0, this.friction = .9, this.comboboxHeight = 31,
-				this.updateMobileScrollBarId_int, this.updateMoveMobileScrollbarId_int, this.disableOnMoveId_to, this.updateMobileScrollbarOnPlaylistLoadId_to, this.usePlaylistsSelectBox_bl = p.usePlaylistsSelectBox_bl, this.showButtonsToolTips_bl = p.showButtonsToolTips_bl, this.allowToTweenPlaylistItems_bl = !1, this.expandPlaylistBackground_bl = p.expandControllerBackground_bl, this.isSortedNumerical_bl = !0, this.showSortButtons_bl = p.showSortButtons_bl, this.showSearchBar_bl = p.showSearchBar_bl, this.showPlaylistItemBuyButton_bl = p.showPlaylistItemBuyButton_bl, this.addScrollBarMouseWheelSupport_bl = p.addScrollBarMouseWheelSupport_bl,
+				this.updateMobileScrollBarId_int, this.updateMoveMobileScrollbarId_int, this.disableOnMoveId_to, this.updateMobileScrollbarOnPlaylistLoadId_to, this.usePlaylistsSelectBox_bl = p.usePlaylistsSelectBox_bl, this.allowToTweenPlaylistItems_bl = !1, this.expandPlaylistBackground_bl = p.expandControllerBackground_bl, this.isSortedNumerical_bl = !0, this.showSortButtons_bl = p.showSortButtons_bl, this.showSearchBar_bl = p.showSearchBar_bl, this.showPlaylistItemBuyButton_bl = p.showPlaylistItemBuyButton_bl, this.addScrollBarMouseWheelSupport_bl = p.addScrollBarMouseWheelSupport_bl,
 				this.allowToScrollAndScrollBarIsActive_bl = !1, this.isDragging_bl = !1, this.showPlaylistItemPlayButton_bl = p.showPlaylistItemPlayButton_bl, this.showPlaylistItemDownloadButton_bl = p.showPlaylistItemDownloadButton_bl, this.isShowed_bl = p.showPlayListByDefault_bl, this.isShowedFirstTime_bl = !1, this.animateOnIntro_bl = p.animateOnIntro_bl, this.isListCreated_bl = !1, this.isMobile_bl = FWDMSPUtils.isMobile, this.hasPointerEvent_bl = FWDMSPUtils.hasPointerEvent, b.init = function() {
 					if (b.hasTransform3d_bl = !1, b.hasTransform2d_bl = !1, b.setBackfaceVisibility(), b.mainHolder_do = new FWDMSPDisplayObject("div"), b.mainHolder_do.hasTransform3d_bl = !1, b.mainHolder_do.hasTransform2d_bl = !1, b.mainHolder_do.setBackfaceVisibility(), b.itemsHolder_do = new FWDMSPDisplayObject("div"), b.itemsHolder_do.setOverflow("visible"), b.itemsHolder_do.setY(0), b.itemsHolder_do.setBackfaceVisibility(), b.setupSeparator(), b.itemsHolder_do.setY(0), b.mainHolder_do.addChild(b.itemsHolder_do), b.addChild(b.mainHolder_do), b.isMobile_bl ? (b.setupMobileScrollbar(), b.hasPointerEvent_bl && b.setupDisable()) : (b.setupDisable(), b.setupScrollbar(), b.addScrollBarMouseWheelSupport_bl && b.addMouseWheelSupport()), b.usePlaylistsSelectBox_bl && b.setupcomboBox(), b.showSearchBar_bl) {
 						if (b.searchBar_do = new FWDMSPDisplayObject("div"), b.searchBar_do.setOverflow("visible"), b.expandPlaylistBackground_bl) {
@@ -4533,7 +4497,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 							var e = new Image;
 							e.src = b.controllerBkPath_str, b.controllerBk_do.setScreen(e)
 						} else b.controllerBk_do = new FWDMSPDisplayObject("div"), b.controllerBk_do.getStyle().background = "url('" + b.controllerBkPath_str + "')";
-						b.controllerBk_do.getStyle().width = "100%", b.searchSeparator_do = new FWDMSPDisplayObject("div"), b.searchSeparator_do.setBackfaceVisibility(), b.searchSeparator_do.hasTransform3d_bl = !1, b.searchSeparator_do.hasTransform2d_bl = !1, b.searchSeparator_do.getStyle().background = "url('" + b.playlistSeparator_img.src + "')", b.searchSeparator_do.setHeight(b.playlistSeparator_img.height), b.searchBar_do.setHeight(b.searchBarHeight + b.searchSeparator_do.h), b.controllerBk_do.setHeight(b.searchBar_do.h + 1), b.searchBar_do.addChild(b.controllerBk_do), b.searchBar_do.addChild(b.searchSeparator_do), b.setupInput(), b.showSortButtons_bl && (b.setupButtons(), b.showButtonsToolTips_bl && b.setupToolTips()), b.mainHolder_do.addChild(b.searchBar_do)
+						b.controllerBk_do.getStyle().width = "100%", b.searchSeparator_do = new FWDMSPDisplayObject("div"), b.searchSeparator_do.setBackfaceVisibility(), b.searchSeparator_do.hasTransform3d_bl = !1, b.searchSeparator_do.hasTransform2d_bl = !1, b.searchSeparator_do.getStyle().background = "url('" + b.playlistSeparator_img.src + "')", b.searchSeparator_do.setHeight(b.playlistSeparator_img.height), b.searchBar_do.setHeight(b.searchBarHeight + b.searchSeparator_do.h), b.controllerBk_do.setHeight(b.searchBar_do.h + 1), b.searchBar_do.addChild(b.controllerBk_do), b.searchBar_do.addChild(b.searchSeparator_do), b.setupInput(), b.showSortButtons_bl && (b.setupButtons()), b.mainHolder_do.addChild(b.searchBar_do)
 					}
 					b.addChild(b.separator_do), b.mainHolder_do.setWidth(500), b.mainHolder_do.setHeight(500)
 				}, b.disableSearchBar = function() {
@@ -5117,8 +5081,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 		var l = function(e, t, o, s, i) {
 			var n = this;
 			l.prototype;
-			this.buttonRef_do = e, this.bkColor = t, this.text_do = null, this.pointer_do = null, this.fontColor_str = o, this.toolTipLabel_str = s,
-				this.toolTipsButtonsHideDelay = 1e3 * i, this.pointerWidth = 7, this.pointerHeight = 4, this.showWithDelayId_to, this.isMobile_bl = FWDMSPUtils.isMobile, this.isShowed_bl = !0, this.init = function() {
+			this.buttonRef_do = e, this.bkColor = t, this.text_do = null, this.pointer_do = null, this.fontColor_str = o,
+				this.pointerWidth = 7, this.pointerHeight = 4, this.showWithDelayId_to, this.isMobile_bl = FWDMSPUtils.isMobile, this.isShowed_bl = !0, this.init = function() {
 					n.setOverflow("visible"), n.setupMainContainers(), n.setLabel(s), n.hide(), n.setVisible(!1), n.getStyle().backgroundColor = n.bkColor,
 						n.getStyle().zIndex = 9999999999999, n.getStyle().pointerEvents = "none"
 				}, this.setupMainContainers = function() {
@@ -5134,7 +5098,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 					e = e || 0, t = parseInt((n.w - 8) / 2) + e,
 						o = n.h, n.pointerHolder_do.setX(t), n.pointerHolder_do.setY(o)
 				}, this.show = function() {
-					n.isShowed_bl = !0, clearTimeout(n.hideWithDelayId_to), FWDAnimation.killTweensOf(n), clearTimeout(n.showWithDelayId_to), n.showWithDelayId_to = setTimeout(n.showFinal, n.toolTipsButtonsHideDelay)
+					n.isShowed_bl = !0, clearTimeout(n.hideWithDelayId_to), FWDAnimation.killTweensOf(n), clearTimeout(n.showWithDelayId_to), n.showWithDelayId_to = setTimeout(n.showFinal)
 				}, this.showFinal = function() {
 					n.setVisible(!0), FWDAnimation.to(n, .4, {
 						alpha: 1,
@@ -5152,7 +5116,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 		};
 		l.setPrototype = function() {
 			l.prototype = null, l.prototype = new FWDMSPDisplayObject("div")
-		}, l.CLICK = "onClick", l.MOUSE_DOWN = "onMouseDown", l.prototype = null, e.FWDMSPScrubberTooltip = l
+		}, l.CLICK = "onClick", l.MOUSE_DOWN = "onMouseDown", l.prototype = null
 	}(window),
 	function(t) {
 		var e = function(o, s) {
@@ -5255,7 +5219,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 			var a = this;
 			d.prototype;
 			this.nImg = e, this.sPath_str = t, this.dPath_str = o,
-				this.n_sdo, this.s_sdo, this.d_sdo, this.toolTipLabel_str, this.totalWidth = this.nImg.width, this.totalHeight = this.nImg.height, this.useHEXColorsForSkin_bl = i, this.normalButtonsColor_str = n, this.selectedButtonsColor_str = l, this.inverseHEXColors_bl = r, this.isShowed_bl = !0,
+				this.n_sdo, this.s_sdo, this.d_sdo, this.totalWidth = this.nImg.width, this.totalHeight = this.nImg.height, this.useHEXColorsForSkin_bl = i, this.normalButtonsColor_str = n, this.selectedButtonsColor_str = l, this.inverseHEXColors_bl = r, this.isShowed_bl = !0,
 				this.isSetToDisabledState_bl = !1, this.isDisabled_bl = !1, this.isDisabledForGood_bl = !1, this.isSelectedFinal_bl = !1, this.isActive_bl = !1, this.isMobile_bl = FWDMSPUtils.isMobile, this.hasPointerEvent_bl = FWDMSPUtils.hasPointerEvent, this.allowToCreateSecondButton_bl = !a.isMobile_bl || a.hasPointerEvent_bl || s, a.init = function() {
 					a.setupMainContainers()
 				}, a.setupMainContainers = function() {
@@ -5268,9 +5232,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 					}
 					a.setWidth(a.totalWidth), a.setHeight(a.totalHeight), a.setButtonMode(!0), a.screen.style.yellowOverlayPointerEvents = "none", a.isMobile_bl ? a.hasPointerEvent_bl ? (a.screen.addEventListener("pointerup", a.onMouseUp), a.screen.addEventListener("pointerover", a.onMouseOver), a.screen.addEventListener("pointerout", a.onMouseOut)) : a.screen.addEventListener("touchend", a.onMouseUp) : a.screen.addEventListener ? (a.screen.addEventListener("mouseover", a.onMouseOver), a.screen.addEventListener("mouseout", a.onMouseOut), a.screen.addEventListener("mouseup", a.onMouseUp)) : a.screen.attachEvent && (a.screen.attachEvent("onmouseover", a.onMouseOver), a.screen.attachEvent("onmouseout", a.onMouseOut), a.screen.attachEvent("onmouseup", a.onMouseUp))
 				}, a.onMouseOver = function(e) {
-					if (a.dispatchEvent(d.SHOW_TOOLTIP, {
-							e: e
-						}), !(a.isDisabledForGood_bl || e.pointerType && e.pointerType != e.MSPOINTER_TYPE_MOUSE && "mouse" != e.pointerType)) {
+					if (!(a.isDisabledForGood_bl || e.pointerType && e.pointerType != e.MSPOINTER_TYPE_MOUSE && "mouse" != e.pointerType)) {
 						if (a.isDisabled_bl || a.isSelectedFinal_bl) return;
 						a.dispatchEvent(d.MOUSE_OVER, {
 							e: e
@@ -5360,7 +5322,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 		};
 		d.setPrototype = function() {
 				d.prototype = null, d.prototype = new FWDMSPTransformDisplayObject("div")
-			}, d.CLICK = "onClick", d.MOUSE_OVER = "onMouseOver", d.SHOW_TOOLTIP = "showTooltip", d.MOUSE_OUT = "onMouseOut",
+			}, d.CLICK = "onClick", d.MOUSE_OVER = "onMouseOver", d.MOUSE_OUT = "onMouseOut",
 			d.MOUSE_UP = "onMouseDown", d.prototype = null, e.FWDMSPSimpleButton = d
 	}(window),
 	function(e) {
@@ -5406,9 +5368,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 			var r = this;
 			d.prototype;
 			this.buttonRef_do = e, this.bkPath_str = t, this.pointerPath_str = o, this.text_do = null, this.pointer_do = null, this.pointerUp_do = null,
-				this.fontColor_str = n, this.toolTipLabel_str = i,
-				this.toopTipPointerUp_str = s, this.toolTipsButtonsHideDelay = 1e3 * l, this.pointerWidth = 7, this.pointerHeight = 4, this.showWithDelayId_to, this.isMobile_bl = FWDMSPUtils.isMobile, this.isShowed_bl = !0, this.init = function() {
-					r.setOverflow("visible"), r.setupMainContainers(), r.setLabel(r.toolTipLabel_str), r.hide(), r.getStyle().background = "url('" + r.bkPath_str + "')", r.getStyle().zIndex = 9999999999
+				this.fontColor_str = n,
+				this.toopTipPointerUp_str = s, this.pointerWidth = 7, this.pointerHeight = 4, this.showWithDelayId_to, this.isMobile_bl = FWDMSPUtils.isMobile, this.isShowed_bl = !0, this.init = function() {
+					r.setOverflow("visible"), r.setupMainContainers(), r.hide(), r.getStyle().background = "url('" + r.bkPath_str + "')", r.getStyle().zIndex = 9999999999
 				}, this.setupMainContainers = function() {
 					r.text_do = new FWDMSPDisplayObject("div"), r.text_do.hasTransform3d_bl = !1, r.text_do.hasTransform2d_bl = !1, r.text_do.setBackfaceVisibility(), r.text_do.setDisplay("inline"), r.text_do.getStyle().fontFamily = "Arial", r.text_do.getStyle().fontSize = "12px", r.text_do.getStyle().color = r.fontColor_str, r.text_do.getStyle().whiteSpace = "nowrap", r.text_do.getStyle().fontSmoothing = "antialiased",
 						r.text_do.getStyle().webkitFontSmoothing = "antialiased", r.text_do.getStyle().textRendering = "optimizeLegibility", r.text_do.getStyle().padding = "6px", r.text_do.getStyle().paddingTop = "4px", r.text_do.getStyle().paddingBottom = "4px",
@@ -5426,7 +5388,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 					var o, s;
 					e = e || 0, o = parseInt((r.w - r.pointerWidth) / 2) + e, t ? (s = -3, r.pointerUp_do.setX(o), r.pointerUp_do.setY(s), r.pointer_do.setX(0), r.pointer_do.setY(0)) : (s = r.h, r.pointer_do.setX(o), r.pointer_do.setY(s), r.pointerUp_do.setX(0), r.pointerUp_do.setY(0))
 				}, this.show = function() {
-					r.isShowed_bl || (r.isShowed_bl = !0, FWDAnimation.killTweensOf(r), clearTimeout(r.showWithDelayId_to), r.showWithDelayId_to = setTimeout(r.showFinal, r.toolTipsButtonsHideDelay), a.addEventListener ? a.addEventListener("mousemove", r.moveHandler) : document.attachEvent && (document.detachEvent("onmousemove", r.moveHandler), document.attachEvent("onmousemove", r.moveHandler)))
+					r.isShowed_bl || (r.isShowed_bl = !0, FWDAnimation.killTweensOf(r), clearTimeout(r.showWithDelayId_to), r.showWithDelayId_to = setTimeout(r.showFinal), a.addEventListener ? a.addEventListener("mousemove", r.moveHandler) : document.attachEvent && (document.detachEvent("onmousemove", r.moveHandler), document.attachEvent("onmousemove", r.moveHandler)))
 				}, this.showFinal = function() {
 					r.setVisible(!0), r.setAlpha(0), FWDAnimation.to(r, .4, {
 						alpha: 1,
@@ -5444,7 +5406,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 		};
 		d.setPrototype = function() {
 			d.prototype = null, d.prototype = new FWDMSPDisplayObject("div", "fixed")
-		}, d.CLICK = "onClick", d.MOUSE_DOWN = "onMouseDown", d.prototype = null, a.FWDMSPToolTip = d
+		}, d.CLICK = "onClick", d.MOUSE_DOWN = "onMouseDown", d.prototype = null
 	}(window), window.FWDMSPTransformDisplayObject = function(e, t, o, s) {
 		this.listeners = {
 			events_ar: []

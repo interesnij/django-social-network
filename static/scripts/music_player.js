@@ -3876,7 +3876,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 					var e = p.lastVolume;
 					p.isMute_bl ? (e = p.lastVolume, p.isMute_bl = !1) : (e = 1e-6, p.isMute_bl = !0), p.updateVolume(e)
 				}, this.volumeScrubberOnOverHandler = function(e) {
-					p.isVolumeScrubberDisabled_bl || (p.ttm2.show())
+					p.isVolumeScrubberDisabled_bl
 				}, this.volumeScrubberOnOutHandler = function(e) {
 					p.isVolumeScrubberDisabled_bl || p.isVolumeScrubberScrubbing_bl || p.ttm2 && p.ttm2.hide()
 				}, this.volumeScrubberOnDownHandler = function(e) {
