@@ -6023,40 +6023,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 					t = 0;
 					t = s.playlist_do && s.position_str == FWDMSP.POSITION_TOP ? s.playlist_do.h : f.embedWindowCloseButtonMargins, f.closeButton_do.setX(e), f.closeButton_do.setY(0), f.setY(t), f.setWidth(f.stageWidth), f.setHeight(f.stageHeight), f.mainHolder_do.setWidth(f.stageWidth), f.mainHolder_do.setHeight(f.stageHeight), f.positionButtons()
 				},
-        this.setupButtons = function() {
-					FWDMSPSimpleButton.setPrototype(), f.facebookButton_do = new FWDMSPSimpleButton(o.facebookN_img, o.facebookSPath_str, void 0, !0, o.useHEXColorsForSkin_bl, o.normalButtonsColor_str, o.selectedButtonsColor_str), f.facebookButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, f.facebookOnMouseUpHandler), this.buttons_ar.push(f.facebookButton_do),
-						FWDMSPSimpleButton.setPrototype(), f.googleButton_do = new FWDMSPSimpleButton(o.googleN_img, o.googleSPath_str, void 0, !0, o.useHEXColorsForSkin_bl, o.normalButtonsColor_str, o.selectedButtonsColor_str), f.googleButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, f.googleOnMouseUpHandler), this.buttons_ar.push(f.googleButton_do),
-						FWDMSPSimpleButton.setPrototype(), f.twitterButton_do = new FWDMSPSimpleButton(o.twitterN_img, o.twitterSPath_str, void 0, !0, o.useHEXColorsForSkin_bl, o.normalButtonsColor_str, o.selectedButtonsColor_str), f.twitterButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, f.twitterOnMouseUpHandler), this.buttons_ar.push(f.twitterButton_do),
-						FWDMSPSimpleButton.setPrototype(), f.likedinButton_do = new FWDMSPSimpleButton(o.likedInkN_img, o.likedInSPath_str, void 0, !0, o.useHEXColorsForSkin_bl, o.normalButtonsColor_str, o.selectedButtonsColor_str), f.likedinButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, f.likedinOnMouseUpHandler), this.buttons_ar.push(f.likedinButton_do),
-						FWDMSPSimpleButton.setPrototype(), f.bufferButton_do = new FWDMSPSimpleButton(o.bufferkN_img, o.bufferSPath_str, void 0, !0, o.useHEXColorsForSkin_bl, o.normalButtonsColor_str, o.selectedButtonsColor_str), f.bufferButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, f.bufferOnMouseUpHandler), this.buttons_ar.push(f.bufferButton_do),
-						FWDMSPSimpleButton.setPrototype(), f.diggButton_do = new FWDMSPSimpleButton(o.diggN_img, o.diggSPath_str, void 0, !0, o.useHEXColorsForSkin_bl, o.normalButtonsColor_str, o.selectedButtonsColor_str), f.diggButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, f.diggOnMouseUpHandler), this.buttons_ar.push(f.diggButton_do),
-						FWDMSPSimpleButton.setPrototype(), f.redditButton_do = new FWDMSPSimpleButton(o.redditN_img, o.redditSPath_str, void 0, !0, o.useHEXColorsForSkin_bl, o.normalButtonsColor_str, o.selectedButtonsColor_str), f.redditButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, f.redditOnMouseUpHandler), this.buttons_ar.push(f.redditButton_do),
-						FWDMSPSimpleButton.setPrototype(), f.thumbrlButton_do = new FWDMSPSimpleButton(o.thumbrlN_img, o.thumbrlSPath_str, void 0, !0, o.useHEXColorsForSkin_bl, o.normalButtonsColor_str, o.selectedButtonsColor_str), f.thumbrlButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, f.thumbrlOnMouseUpHandler), this.buttons_ar.push(f.thumbrlButton_do), f.mainHolder_do.addChild(f.facebookButton_do), f.mainHolder_do.addChild(f.googleButton_do), f.mainHolder_do.addChild(f.twitterButton_do), f.mainHolder_do.addChild(f.likedinButton_do), f.mainHolder_do.addChild(f.bufferButton_do), f.mainHolder_do.addChild(f.diggButton_do), f.mainHolder_do.addChild(f.redditButton_do), f.mainHolder_do.addChild(f.thumbrlButton_do)
-				}, this.facebookOnMouseUpHandler = function() {
-					var e = "http://www.facebook.com/share.php?u=" + encodeURIComponent(location.href);
-					t.open(e, "", "menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=400,width=600")
-				}, this.googleOnMouseUpHandler = function() {
-					var e = "https://plus.google.com/share?url=" + encodeURIComponent(location.href);
-					t.open(e, "", "menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=400,width=600")
-				}, this.twitterOnMouseUpHandler = function() {
-					var e = "http://twitter.com/home?status=" + encodeURIComponent(location.href);
-					t.open(e, "", "menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=400,width=600")
-				}, this.likedinOnMouseUpHandler = function() {
-					var e = "https://www.linkedin.com/cws/share?url=" + location.href;
-					t.open(e, "", "menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=400,width=600")
-				}, this.bufferOnMouseUpHandler = function() {
-					var e = "https://buffer.com/add?url=" + location.href;
-					t.open(e, "", "menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=400,width=600")
-				}, this.diggOnMouseUpHandler = function() {
-					var e = "http://digg.com/submit?url=" + location.href;
-					t.open(e, "", "menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=400,width=600")
-				}, this.redditOnMouseUpHandler = function() {
-					var e = "https://www.reddit.com/?submit=" + location.href;
-					t.open(e, "", "menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=400,width=600")
-				}, this.thumbrlOnMouseUpHandler = function() {
-					var e = "http://www.tumblr.com/share/link?url=" + location.href;
-					t.open(e, "", "menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=400,width=600")
-				}, this.positionButtons = function() {
+        this.positionButtons = function() {
 					var e, t, o, s = [],
 						i = [],
 						n = [],
