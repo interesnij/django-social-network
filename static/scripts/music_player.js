@@ -4390,7 +4390,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                                     self.playlist_do.hideDisable()
                                 }, 150), self.playlist_do.showDisable()), self.setStageContainerFinalHeightAndPosition(self.animate_bl))
                             }, this.hidePlaylist = function() {
-                                self.isAPIReady_bl && (self.playlist_do && (self.isPlaylistShowed_bl = !1, self.playlist_do.hide(), self.controller_do.setPlaylistButtonState("unselected"), self.setStageContainerFinalHeightAndPosition(self.animate_bl)), self.shareWindow_do && self.shareWindow_do.hide(!0))
+                                self.isAPIReady_bl && (self.playlist_do && (self.isPlaylistShowed_bl = !1, self.playlist_do.hide(), self.controller_do.setPlaylistButtonState("unselected"), self.setStageContainerFinalHeightAndPosition(self.animate_bl)))
                             }, this.getIsAPIReady = function() {
                                 return self.isAPIReady_bl
                             }, this.getCatId = function() {
@@ -4406,7 +4406,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                             }, this.getDuration = function() {
                                 if (self.isAPIReady_bl) return self.audioType_str == FWDMSP.YOUTUBE ? self.ytb_do.getDuration() : self.audioType_str == FWDMSP.AUDIO ? self.audioScreen_do.getDuration() : self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS || !self.videoScreen_do ? void 0 : self.videoScreen_do.getDuration()
                             }, this.share = function() {
-                                self.isAPIReady_bl && self.shareWindow_do && self.shareWindow_do.show()
+                                console.log("share!")
                             }, this.scrubbAtTime = function(e) {
                                 self.isAPIReady_bl && e && (-1 != String(e).indexOf(":") && (e = FWDMSPUtils.getSecondsFromString(e)), self.audioType_str == FWDMSP.YOUTUBE && self.ytb_do && self.ytb_do.isSafeToBeControlled_bl ? self.ytb_do.scrubbAtTime(e) : self.audioType_str == FWDMSP.AUDIO ? self.audioScreen_do && self.audioScreen_do.scrubbAtTime(e) : self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS || !self.videoScreen_do || self.videoScreen_do && self.videoScreen_do.scrubbAtTime(e))
                             }, this.downloadMP3 = function(e) {
