@@ -2413,7 +2413,13 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 								text: "<font color='#FF0000'>loadPlaylist()</font> - The parameter must be of type string!"
 							}), self.isPlaylistDispatchingError_bl = !1
 						}, 50));
-						self.closeData(), self.resetYoutubePlaylistLoader(), self.isYoutbe_bl = !1, -1 != t.indexOf("soundcloud.com") ? self.loadSoundCloudList(t) : -1 != t.indexOf("list=") && self.useYoutube_bl ? (self.isYoutbe_bl = !0, self.loadYoutubePlaylist(t)) : -1 != t.indexOf("official.fm") ? self.loadOfficialFmList(t) : -1 != t.indexOf("folder:") ? self.loadFolderPlaylist(t) : -1 != t.indexOf(".xml") || -1 != t.indexOf("http:") || -1 != t.indexOf("https:") || -1 != t.indexOf("www.") || -1 != t.indexOf(".pls") ? self.loadXMLPlaylist(t) : self.parseDOMPlaylist(t), self.prevId = e
+						self.closeData(),
+						self.isYoutbe_bl = !1,
+						-1 != t.indexOf("soundcloud.com") ? self.loadSoundCloudList(t) : -1 != t.indexOf("list=") && self.useYoutube_bl ? (self.isYoutbe_bl = !0, self.loadYoutubePlaylist(t)) : -1 != t.indexOf("official.fm") ? self.loadOfficialFmList(t) : -1 != t.indexOf("folder:") ? self.loadFolderPlaylist(t) : -1 != t.indexOf(".xml")
+						|| -1 != t.indexOf("http:")
+						|| -1 != t.indexOf("https:")
+						|| -1 != t.indexOf("www.")
+						|| -1 != t.indexOf(".pls") ? self.loadXMLPlaylist(t) : self.parseDOMPlaylist(t), self.prevId = e
 					}
 				}, this.loadSoundCloudList = function(e) {
 					if (!self.isPlaylistDispatchingError_bl) {
@@ -2894,7 +2900,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 		FWDMSPAudioData.PLAYLIST_LOAD_COMPLETE = "onPlaylistLoadComplete",
 		window.FWDMSPAudioData = FWDMSPAudioData
 	}(window),
-	
+
 	function(o) {
 		var i = function(e) {
 			var l = this;
