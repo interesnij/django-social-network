@@ -192,8 +192,8 @@ class SoundTags(models.Model):
 class UserTempSoundList(models.Model):
     id = models.AutoField(primary_key=True)
     user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name='user_of_field', db_index=False, on_delete=models.CASCADE, verbose_name="Слушатель")
+    community = models.OneToOneField(Community, related_name='community_field', null=True, blank=True, on_delete=models.CASCADE, verbose_name="Связь на сообщество")
     tag = models.OneToOneField(SoundTags, related_name='tag_field', null=True, blank=True, on_delete=models.CASCADE, verbose_name="Связь на тег")
-    list = models.OneToOneField(SoundList, related_name='list_field', null=True, blank=True, on_delete=models.CASCADE, verbose_name="Связь на плейлист человека или сообщества")
     genre = models.OneToOneField(SoundGenres, related_name='genre_field', null=True, blank=True, on_delete=models.CASCADE, verbose_name="Связь на жанр")
 
     def __str__(self):

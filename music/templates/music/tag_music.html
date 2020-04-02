@@ -105,8 +105,7 @@
 
 <script>
 {% if is_tag_playlist %}
-playlist_block = document.querySelector("body");
-playlist_block.classList.add('tag_' + {{ tag.pk }});
+document.querySelector("body").classList.add('tag_' + {{ tag.pk }});
 {% endif %}
 
 var page = 2;

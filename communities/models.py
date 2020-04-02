@@ -447,8 +447,14 @@ class Community(models.Model):
     def is_public(self):
         return self.type is self.COMMUNITY_TYPE_PUBLIC
 
-    def is_community_playlist(self, user):
-        return user.usertempsoundlist.filter(user=self, tag=None, list__community__pk=self.pk).exists()
+    def is_community_playlist(self):
+        from music.models import UserTempSoundList
+
+        try:
+            UserTempSoundList.objects.get(tag=None, community=self, genre=None)
+            return True
+        except:
+            return False
 
     def add_administrator(self, user):
         user_membership = self.memberships.get(user=user)

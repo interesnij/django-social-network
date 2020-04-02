@@ -129,6 +129,10 @@
     }}
   }catch{return}
   }
+
+  {% if user.is_user_playlist %}
+    document.querySelector("body").classList.add('user_' + {{ user.pk }});
+  {% endif %}
 </script>
-<span id="user_playlist" data-list='{{ user.my_playlist }}'></span>
+
 {% endblock %}

@@ -127,5 +127,7 @@
   }catch{return}
   }
 </script>
-
+{% if user.is_user_playlist %}
+  document.querySelector("body").classList.add('user_' + {{ user.pk }});
+{% endif %}
 {% endblock %}
