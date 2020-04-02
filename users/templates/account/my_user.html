@@ -306,7 +306,8 @@ onscroll = function(){
 };
 
 {% if user.is_user_playlist %}
-  document.querySelector("body").classList.add('list_' + {{ user.pk }});
+  body = document.querySelector("body");
+  body.classList.add('list_' + {{ user.pk }});
 {% endif %}
 </script>
 
