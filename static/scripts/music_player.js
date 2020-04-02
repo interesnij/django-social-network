@@ -819,7 +819,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 								self.orintationChangeComplete_bl && (self.ws = FWDMSPUtils.getViewportSize(), self.stageWidth = document.documentElement.offsetWidth, self.stageContainer.style.left = "0px", self.stageWidth > self.maxWidth && (self.stageWidth = self.maxWidth), self.controller_do && (self.maxHeight = self.controller_do.h), self.stageHeight = self.maxHeight, self.main_do.setWidth(self.stageWidth), self.preloader_do && self.positionPreloader(), self.controller_do && self.controller_do.resizeAndPosition(e), self.categories_do && self.categories_do.resizeAndPosition(), self.playlist_do && self.playlist_do.resizeAndPosition(), self.isFirstPlaylistLoaded_bl && self.setStageContainerFinalHeightAndPosition(!1), self.info_do && self.info_do.isShowed_bl && self.info_do.positionAndResize(), self.atb_do && self.atb_do.isShowed_bl && self.atb_do.positionAndResize(), self.passWindow_do && self.passWindow_do.isShowed_bl && self.passWindow_do.positionAndResize(), self.playbackRateWindow_do && self.playbackRateWindow_do.isShowed_bl && self.playbackRateWindow_do.positionAndResize())
 							}, this.setStageContainerFinalHeightAndPosition = function(e) {
 								if (self.ws || (self.ws = FWDMSPUtils.getViewportSize()), self.controller_do && self.allowToResizeAndPosition_bl) {
-									if (self.openInPopup_bl) return self.main_do.setX(0),
+
 										self.main_do.setY(0), self.main_do.getStyle().width = "100%", self.main_do.setHeight(self.ws.h), self.controller_do.setX(0),
 										FWDAnimation.killTweensOf(self.controller_do),
 										e ? 0 != self.controller_do.y && FWDAnimation.to(self.controller_do, .8, {
@@ -1086,10 +1086,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                                          self.playlist_do.resizeAndPosition(),
                                          self.playlist_do.isShowed_bl && self.controller_do.setPlaylistButtonState("selected")
                                         ),
-                    self.openInPopup_bl && self.popupWindow.audioScreen_do && (self.lastPercentPlayed = self.popupWindow.audioScreen_do.lastPercentPlayed),
                     self.playlist_do && self.playlist_do.comboBox_do && self.playlist_do.comboBox_do.setButtonsStateBasedOnId(self.catId),
                     self.setSource(),
-                    (self.data.autoPlay_bl || self.data.playTrackAfterPlaylistLoad_bl) && setTimeout(self.play, 1e3), self.openInPopup_bl && !self.showedFirstTime_bl ? (self.controller_do.setY(-self.controller_do.h), self.playlist_do && self.playlist_do.setY(-self.playlist_do.h)) : self.playlist_do && self.playlist_do.setY(-self.playlist_do.h + self.controller_do.h), self.setStageContainerFinalHeightAndPosition(!0), self.openInPopup_bl) return clearTimeout(self.showPlaylistWithDelayId_to),
+                    (self.data.autoPlay_bl || self.data.playTrackAfterPlaylistLoad_bl) && setTimeout(self.play, 1e3), !self.showedFirstTime_bl ? (self.controller_do.setY(-self.controller_do.h), self.playlist_do && self.playlist_do.setY(-self.playlist_do.h)) : self.playlist_do && self.playlist_do.setY(-self.playlist_do.h + self.controller_do.h), self.setStageContainerFinalHeightAndPosition(!0)) return clearTimeout(self.showPlaylistWithDelayId_to),
 									self.showedFirstTime_bl ? self.showPlaylistWithDelayId_to = setTimeout(function() {
 										self.setStageContainerFinalHeightAndPosition(!0)
 									}, 100) : self.showPlaylistWithDelayId_to = setTimeout(function() {
@@ -1247,7 +1246,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 								self.buy(e.id)
 							},
               this.setupController = function() {
-								FWDMSPController.setPrototype(), self.controller_do = new FWDMSPController(self.data, self), self.controller_do.addListener(FWDMSPController.POPUP, self.controllerOnPopupHandler),
+								FWDMSPController.setPrototype(), self.controller_do = new FWDMSPController(self.data, self),
 									self.controller_do.addListener(FWDMSPController.PLAY, self.controllerOnPlayHandler),
 									self.controller_do.addListener(FWDMSPController.PLAY_NEXT, self.controllerPlayNextHandler),
                   self.controller_do.addListener(FWDMSPController.PLAY_PREV, self.controllerPlayPrevHandler),
@@ -1271,11 +1270,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                   self.controller_do.addListener(FWDMSPController.SHOW_PLAYBACKRATE, self.showPlaybacrateWindowHandler),
                   self.controller_do.addListener(FWDMSPController.SHOW_ATOB, self.showAtobWindowHandler),
                   self.main_do.addChild(self.controller_do),
-                  self.openInPopup_bl && self.data.showPlaylistsButtonAndPlaylists_bl && (self.controller_do.setPlaylistButtonState("selected"), self.controller_do.playlistButton_do && self.controller_do.playlistButton_do.disableForGood())
+                  self.data.showPlaylistsButtonAndPlaylists_bl && (self.controller_do.setPlaylistButtonState("selected"), self.controller_do.playlistButton_do && self.controller_do.playlistButton_do.disableForGood())
 							},
-              this.controllerOnPopupHandler = function() {
-								self.popup()
-							},
+
               this.controllerOnPlayHandler = function(e) {
 								self.play()
 							},
@@ -1395,7 +1392,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
               this.audioScreenPlayHandler = function() {
 								self.sendGAPlayedEvent(),
                 (FWDMSP.keyboardCurInstance = self).controller_do && (self.controller_do.showPauseButton(), self.controller_do.startEqulizer()), self.opener_do && self.opener_do.showPauseButton(), self.playlist_do && self.playlist_do.setCurItemPauseState(), self.largePlayButton_do && self.largePlayButton_do.hide(), self.hider && self.isFullScreen_bl && self.hider.start(), self.openInPopup_bl && setTimeout(function() {
-									self.scrubbedFirstTimeInPopup_bl || self.scrub(self.lastPercentPlayed), self.scrubbedFirstTimeInPopup_bl = !0
+									self.scrub(self.lastPercentPlayed)
 								}, 600), self.hasStartedToPlay_bl || self.data.playlist_ar[self.id].startAtTime && self.scrubbAtTime(self.data.playlist_ar[self.id].startAtTime), setTimeout(function() {
 									self.isPlaylistItemClicked_bl = !1
 								}, 500), self.ppPplayedOnce = !0, self.hasStartedToPlay_bl = !0, self.dispatchEvent(FWDMSP.PLAY)
