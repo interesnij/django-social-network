@@ -3,6 +3,7 @@ from django.db import models
 from django.contrib.contenttypes.fields import GenericRelation
 from django.contrib.postgres.indexes import BrinIndex
 from django.utils import timezone
+from communities.models import Community
 
 
 class SoundGenres(models.Model):
