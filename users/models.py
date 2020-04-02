@@ -280,11 +280,8 @@ class User(AbstractUser):
     def is_user_playlist(self):
         from music.models import UserTempSoundList
 
-        try:
-            UserTempSoundList.objects.get(list_field__creator=self, tag=None, community=None, genre=None)
-            return True
-        except:
-            return False
+        ttt = UserTempSoundList.objects.get(list_field__creator=self, tag=None, community=None, genre=None)
+            return ttt
 
     def is_tag_playlist(self, tag):
         from music.models import UserTempSoundList
