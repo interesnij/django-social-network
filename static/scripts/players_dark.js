@@ -441,7 +441,7 @@ on('#ajax', 'click', '.genre_item', function() {
   }else{music_player.playSpecificTrack("genre_" + genre_pk, track_id)}
 });
 
-on('#ajax', 'click', '.music_list_item', function() {
+on('#ajax', 'click', '.user_item', function() {
   var track_id = this.getAttribute('data-counter');
   var list_pk = document.querySelector(".music_playlist").getAttribute('data-pk');
   if (!document.body.classList.contains("list_" + list_pk)){
