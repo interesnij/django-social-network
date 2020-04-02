@@ -1090,7 +1090,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 									}, 250))),
                 self.setupMainInstances(),
                 self.updatePlaylist(),
-								self.setStageContainerFinalHeightAndPosition(!0),
+								//self.setStageContainerFinalHeightAndPosition(!0),
                 self.dispatchEvent(FWDMSP.LOAD_PLAYLIST_COMPLETE)
 							},
               this.updatePlaylist = function() {
