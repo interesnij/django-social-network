@@ -1246,7 +1246,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 								self.buy(e.id)
 							},
               this.setupController = function() {
-								FWDMSPController.setPrototype(), self.controller_do = new FWDMSPController(self.data, self), self.controller_do.addListener(FWDMSPController.POPUP, self.controllerOnPopupHandler),
+								FWDMSPController.setPrototype(), self.controller_do = new FWDMSPController(self.data, self),
 									self.controller_do.addListener(FWDMSPController.PLAY, self.controllerOnPlayHandler),
 									self.controller_do.addListener(FWDMSPController.PLAY_NEXT, self.controllerPlayNextHandler),
                   self.controller_do.addListener(FWDMSPController.PLAY_PREV, self.controllerPlayPrevHandler),
