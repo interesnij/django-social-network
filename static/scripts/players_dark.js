@@ -439,7 +439,7 @@ on('#ajax', 'click', '.genre_item', function() {
   if (!document.body.classList.contains("genre_" + genre_pk)){
     save_playlist("genre_" + genre_pk, '/music/manage/temp_genre/' + genre_pk, '/music/get/genre/' + genre_pk, track_id)
   }else{music_player.playSpecificTrack("genre_" + genre_pk, track_id)}
-});
+}); 
 
 on('#ajax', 'click', '.music_list_item', function() {
   var track_id = this.getAttribute('data-counter');
