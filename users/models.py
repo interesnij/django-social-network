@@ -544,7 +544,7 @@ class User(AbstractUser):
 
     def get_music_list_id(self):
         from music.models import SoundList
-        
+
         list = SoundList.objects.get(creator_id=self.id, community=None, name="my_first_generic_playlist_number_12345678900000000")
         return list.pk
 
@@ -597,7 +597,7 @@ class User(AbstractUser):
     def my_playlist_too(self):
         from music.models import SoundList, UserTempSoundList, SoundTags, SoundGenres
 
-        temp_list = UserTempSoundList.objects.get(user=self)
+        temp_list = UserTempSoundList.objects.get(list__creator=self) 
         try:
             list = SoundList.objects.get(pk=temp_list.list.pk)
         except:
