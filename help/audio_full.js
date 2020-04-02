@@ -778,7 +778,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 										this.isMobile_bl = FWDMSPUtils.isMobile,
 										this.hasPointerEvent_bl = FWDMSPUtils.hasPointerEvent;
 									try {
-										window.opener && window.opener[this.instanceName_str] && window.opener[this.instanceName_str].instanceName_str == this.instanceName_str && (this.openInPopup_bl = !0, this.popupWindow = window.opener[this.instanceName_str], window.opener[this.instanceName_str].removeAndDisablePlayer(), self.isMobile_bl || (document.cookie = "FWDMSP=" + self.instanceName_str + "; expires=Thu, 18 Dec 2030 12:00:00 UTC; path=/", window.onbeforeunload = function(e) {
+										window.opener && window.opener[this.instanceName_str] && window.opener[this.instanceName_str].instanceName_str == this.instanceName_str && (window.opener[this.instanceName_str].removeAndDisablePlayer(), self.isMobile_bl || (document.cookie = "FWDMSP=" + self.instanceName_str + "; expires=Thu, 18 Dec 2030 12:00:00 UTC; path=/", window.onbeforeunload = function(e) {
 											document.cookie = "FWDMSP=; expires=Thu, 01-Jan-70 00:00:01 GMT; path=/"
 										}))
 									} catch (e) {}
@@ -816,7 +816,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 										self.orintationChangeComplete_bl = !0, self.resizeHandler(!0)
 									}, 1e3), self.stageContainer.style.left = "-5000px", self.preloader_do && self.preloader_do.setX(-5e3)
 							}, self.resizeHandler = function(e, t) {
-								self.orintationChangeComplete_bl && (self.ws = FWDMSPUtils.getViewportSize(), self.stageWidth = document.documentElement.offsetWidth, self.stageContainer.style.left = "0px", self.stageWidth > self.maxWidth && !self.openInPopup_bl && (self.stageWidth = self.maxWidth), self.controller_do && (self.maxHeight = self.controller_do.h), self.stageHeight = self.maxHeight, self.main_do.setWidth(self.stageWidth), self.preloader_do && self.positionPreloader(), self.controller_do && self.controller_do.resizeAndPosition(e), self.categories_do && self.categories_do.resizeAndPosition(), self.playlist_do && self.playlist_do.resizeAndPosition(), self.isFirstPlaylistLoaded_bl && self.setStageContainerFinalHeightAndPosition(!1), self.info_do && self.info_do.isShowed_bl && self.info_do.positionAndResize(), self.atb_do && self.atb_do.isShowed_bl && self.atb_do.positionAndResize(), self.passWindow_do && self.passWindow_do.isShowed_bl && self.passWindow_do.positionAndResize(), self.playbackRateWindow_do && self.playbackRateWindow_do.isShowed_bl && self.playbackRateWindow_do.positionAndResize())
+								self.orintationChangeComplete_bl && (self.ws = FWDMSPUtils.getViewportSize(), self.stageWidth = document.documentElement.offsetWidth, self.stageContainer.style.left = "0px", self.stageWidth > self.maxWidth && (self.stageWidth = self.maxWidth), self.controller_do && (self.maxHeight = self.controller_do.h), self.stageHeight = self.maxHeight, self.main_do.setWidth(self.stageWidth), self.preloader_do && self.positionPreloader(), self.controller_do && self.controller_do.resizeAndPosition(e), self.categories_do && self.categories_do.resizeAndPosition(), self.playlist_do && self.playlist_do.resizeAndPosition(), self.isFirstPlaylistLoaded_bl && self.setStageContainerFinalHeightAndPosition(!1), self.info_do && self.info_do.isShowed_bl && self.info_do.positionAndResize(), self.atb_do && self.atb_do.isShowed_bl && self.atb_do.positionAndResize(), self.passWindow_do && self.passWindow_do.isShowed_bl && self.passWindow_do.positionAndResize(), self.playbackRateWindow_do && self.playbackRateWindow_do.isShowed_bl && self.playbackRateWindow_do.positionAndResize())
 							}, this.setStageContainerFinalHeightAndPosition = function(e) {
 								if (self.ws || (self.ws = FWDMSPUtils.getViewportSize()), self.controller_do && self.allowToResizeAndPosition_bl) {
 									if (self.openInPopup_bl) return self.main_do.setX(0),
@@ -1029,7 +1029,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
               self.onPreloaderLoadDone = function() {
 								!self.data.useContinuousPlayback_bl && !self.data.autoPlay_bl || FWDMSP.iFrame || !FWDMSPUtils.isChrome || FWDMSPUtils.isMobile || (FWDMSP.iFrame = document.createElement("iframe"), FWDMSP.iFrame.src = self.data.mainFolderPath_str + "audio/silent.mp3", FWDMSP.iFrame.style.position = "absolute", FWDMSP.iFrame.style.top = "-500px", document.documentElement.appendChild(FWDMSP.iFrame)),
 									self.maxHeight = 32, self.usePlaylistsSelectBox_bl = self.data.usePlaylistsSelectBox_bl,
-									self.background_do && (self.background_do.getStyle().background = "url('" + self.data.skinPath_str + "main-background.png')"), self.setupPreloader(), !self.isMobile_bl && self.data.showContextMenu_bl && self.setupContextMenu(), self.resizeHandler(), self.main_do.setHeight(self.stageHeight), self.openInPopup_bl && self.main_do.setHeight(3e3)
+									self.background_do && (self.background_do.getStyle().background = "url('" + self.data.skinPath_str + "main-background.png')"), self.setupPreloader(), !self.isMobile_bl && self.data.showContextMenu_bl && self.setupContextMenu(), self.resizeHandler(), self.main_do.setHeight(self.stageHeight), self.main_do.setHeight(3e3)
 							},
               self.dataLoadError = function(e) {
 								self.maxHeight = 120,
@@ -1045,7 +1045,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 							},
               self.dataSkinLoadComplete = function() {
 								self.animate_bl = self.data.animate_bl,
-                self.openInPopup_bl && (self.data.showPopupButton_bl = !1),
 								self.lastVolume = self.volume = self.data.volume,
                 self.setupContinousPlayback(),
                 self.initPlaylist()
@@ -1054,7 +1053,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 								self.useDeepLinking_bl ? setTimeout(function() {
 									self.setupDL()
 								}, 200) :
-                (FWDMSPUtils.getCookie("FWDMSPusePP") ? (self.catId = FWDMSPUtils.getCookie("FWDMSPcatId"), self.id = FWDMSPUtils.getCookie("FWDMSPid")) : self.openInPopup_bl ? (self.catId = self.popupWindow.catId, self.id = self.popupWindow.id) : (self.catId = self.data.startAtPlaylist, self.id = self.data.startAtTrack),
+                (FWDMSPUtils.getCookie("FWDMSPusePP") ? (self.catId = FWDMSPUtils.getCookie("FWDMSPcatId"), self.id = FWDMSPUtils.getCookie("FWDMSPid")) : (self.catId = self.data.startAtPlaylist, self.id = self.data.startAtTrack),
                   self.loadInternalPlaylist()
                 )
 							},
