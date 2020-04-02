@@ -79,11 +79,6 @@
 
 <script>
 
-  {% if user.is_user_playlist %}
-//    playlist_block = document.querySelector('.music-dropdown');
-//    playlist_block.classList.remove('user_{{ user.pk }}');
-  {% endif %}
-
   var page = 2;
   var loaded = false;
   onscroll = function(){
@@ -110,7 +105,7 @@
   }
 
   {% if user.is_user_playlist %}
-    document.querySelector("body").classList.add('user_' + {{ user.pk }});
+    document.querySelector("body").classList.add('list_' + {{ user.get_music_list_id }});
   {% endif %}
 </script>
 {% endblock %}
