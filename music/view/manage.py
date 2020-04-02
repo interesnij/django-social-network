@@ -12,9 +12,9 @@ class TempListOn(View):
     def get(self, request, *args, **kwargs):
         list = SoundList.objects.get(pk=self.kwargs["pk"])
         try:
-            my_list = UserTempSoundList.objects.get(list=list)
+            my_list = UserTempSoundList.objects.get(user=request.user)
         except:
-            my_list = UserTempSoundList.objects.create(list=list)
+            my_list = UserTempSoundList.objects.create(user=request.user)
         my_list.tag = None
         my_list.genre = None
         my_list.save()
@@ -28,9 +28,9 @@ class TempTagOn(View):
     def get(self, request, *args, **kwargs):
         tag = SoundTags.objects.get(pk=self.kwargs["pk"])
         try:
-            temp_tag = UserTempSoundList.objects.get(tag=tag)
+            temp_tag = UserTempSoundList.objects.get(user=request.user)
         except:
-            temp_tag = UserTempSoundList.objects.create(tag=tag)
+            temp_tag = UserTempSoundList.objects.create(user=request.user)
         temp_tag.list = None
         temp_tag.genre = None
         temp_tag.tag = tag

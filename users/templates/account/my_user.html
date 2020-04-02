@@ -160,7 +160,7 @@
             <div class="card border-top border-bottom">
                 <div class="card-body">
                     <div class="media">
-                        <figure class="music_list_item" style="cursor:pointer">
+                        <figure class="music_list_item" data-counter="{{ forloop.counter0 }}" style="cursor:pointer">
                           <a>
                             {% if object.artwork_url %}
                               <img style="width:50px;heigth:auto" src="{{ object.artwork_url }}" />
