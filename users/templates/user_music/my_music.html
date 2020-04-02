@@ -126,8 +126,8 @@
     }}
   }catch{return}
   }
+  {% if user.is_user_playlist %}
+    document.querySelector("body").classList.add('list_' + {{ user.get_music_list_id }});
+  {% endif %}
 </script>
-{% if user.is_user_playlist %}
-  document.querySelector("body").classList.add('list_' + {{ user.get_music_list_id }});
-{% endif %}
 {% endblock %}
