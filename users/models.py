@@ -597,7 +597,7 @@ class User(AbstractUser):
     def my_playlist_too(self):
         from music.models import SoundList, UserTempSoundList, SoundTags, SoundGenres
 
-        temp_list = UserTempSoundList.objects.get(list__creator=self) 
+        temp_list = UserTempSoundList.objects.get(list__creator=self)
         try:
             list = SoundList.objects.get(pk=temp_list.list.pk)
         except:
