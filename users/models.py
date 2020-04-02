@@ -531,7 +531,7 @@ class User(AbstractUser):
         music_list = SoundcloudParsing.objects.filter(music_query)
         return music_list
 
-    def get_my_music(self):
+    def get_last_music(self):
         from music.models import SoundList, SoundcloudParsing
         from moderation.models import ModeratedObject
 
@@ -539,7 +539,7 @@ class User(AbstractUser):
         list = SoundList.objects.get(creator_id=self.id, community=None, name="my_first_generic_playlist_number_12345678900000000")
         music_query = Q(players=list, is_deleted=False)
         music_query.add(exclude_reported_and_approved_music_query, Q.AND)
-        music_list = SoundcloudParsing.objects.filter(music_query)
+        music_list = SoundcloudParsing.objects.filter(music_query)[0:5]
         return music_list
 
     def my_playlist(self):
