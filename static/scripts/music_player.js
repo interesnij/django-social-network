@@ -1076,7 +1076,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 								if (self.main_do && self.main_do.contains(self.info_do) && self.main_do.removeChild(self.info_do),
                     self.id > self.data.playlist_ar.length && (self.id = 0),
                     self.data.playlist_ar && (self.videoNameGa = self.data.playlist_ar[self.id].titleText,
-                      self.videoCat = self.data.cats_ar[self.catId].playlistsName),
+                      self.videoCat = self.data.cats_ar[self.catId]),
                     self.preloader_do.hide(!0),
                     self.prevId = -1,
                     self.totalAudio = self.data.playlist_ar.length,
@@ -1423,7 +1423,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 							}, this.audioScreenLoadProgressHandler = function(e) {
 								FWDMSP.hasHTML5Audio ? self.controller_do && self.controller_do.updatePreloaderBar(e.percent) : self.controller_do && self.controller_do.updatePreloaderBar(e)
 							}, this.audioScreenPlayCompleteHandler = function() {
-								self.data.playlist_ar && (self.videoNameGa = self.data.playlist_ar[self.id].titleText, self.videoCat = self.data.cats_ar[self.catId].playlistsName), FWDMSP.hasHTML5Audio && (self.data.loop_bl ? "hls_flash" == self.audioType_str ? setTimeout(function() {
+								self.data.playlist_ar && (self.videoNameGa = self.data.playlist_ar[self.id].titleText, self.videoCat = self.data.cats_ar[self.catId]), FWDMSP.hasHTML5Audio && (self.data.loop_bl ? "hls_flash" == self.audioType_str ? setTimeout(function() {
 									self.scrub(0), self.resume()
 								}, 50) : (self.scrub(0), self.play()) : self.data.shuffle_bl ? self.playShuffle() : 1 == self.playlist_do.items_ar.length ? (self.stop(), self.playlist_do && self.playlist_do.updateCurItemProgress(0)) : self.playNext()), self.dispatchEvent(FWDMSP.PLAY_COMPLETE)
 							}, this.loadID3IfPlaylistDisabled = function() {
@@ -1591,9 +1591,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 							}, this.loadPlaylist = function(e) {
 								self.isAPIReady_bl && self.data.prevId != e && (self.catId = e, self.categories_do && (self.categories_do.id = self.catId), self.id = 0, self.catId < 0 ? self.catId = 0 : self.catId > self.data.totalCategories - 1 && (self.catId = self.data.totalCategories - 1), self.useDeepLinking_bl ? FWDAddress.setValue(self.instanceName_str + "?catid=" + self.catId + "&trackid=" + self.id) : self.loadInternalPlaylist(), self.data.playlist_ar)
 							}, this.playNext = function() {
-								self.isAPIReady_bl && self.isPlaylistLoaded_bl && (self.data.showPlayListButtonAndPlaylist_bl ? self.playlist_do.items_ar[self.playlist_do.curItem_do.sortId + 1] ? self.id = self.playlist_do.items_ar[self.playlist_do.curItem_do.sortId + 1].id : self.id = self.playlist_do.items_ar[0].id : (self.id++, self.id < 0 ? self.id = self.totalAudio - 1 : self.id > self.totalAudio - 1 && (self.id = 0)), self.useDeepLinking_bl ? FWDAddress.setValue(self.instanceName_str + "?catid=" + self.catId + "&trackid=" + self.id) : (self.setSource(), self.changeHLS_bl = !0, self.audioType_str != FWDMSP.HLS && self.play()), self.prevId = self.id, self.data.playlist_ar && (self.videoNameGa = self.data.playlist_ar[self.id].titleText, self.videoCat = self.data.cats_ar[self.catId].playlistsName))
+								self.isAPIReady_bl && self.isPlaylistLoaded_bl && (self.data.showPlayListButtonAndPlaylist_bl ? self.playlist_do.items_ar[self.playlist_do.curItem_do.sortId + 1] ? self.id = self.playlist_do.items_ar[self.playlist_do.curItem_do.sortId + 1].id : self.id = self.playlist_do.items_ar[0].id : (self.id++, self.id < 0 ? self.id = self.totalAudio - 1 : self.id > self.totalAudio - 1 && (self.id = 0)), self.useDeepLinking_bl ? FWDAddress.setValue(self.instanceName_str + "?catid=" + self.catId + "&trackid=" + self.id) : (self.setSource(), self.changeHLS_bl = !0, self.audioType_str != FWDMSP.HLS && self.play()), self.prevId = self.id, self.data.playlist_ar && (self.videoNameGa = self.data.playlist_ar[self.id].titleText, self.videoCat = self.data.cats_ar[self.catId]))
 							}, this.playPrev = function() {
-								self.isAPIReady_bl && self.isPlaylistLoaded_bl && (self.data.showPlayListButtonAndPlaylist_bl ? self.playlist_do.items_ar[self.playlist_do.curItem_do.sortId - 1] ? self.id = self.playlist_do.items_ar[self.playlist_do.curItem_do.sortId - 1].id : self.id = self.playlist_do.items_ar[self.totalAudio - 1].id : (self.id--, self.id < 0 ? self.id = self.totalAudio - 1 : self.id > self.totalAudio - 1 && (self.id = 0)), self.useDeepLinking_bl ? FWDAddress.setValue(self.instanceName_str + "?catid=" + self.catId + "&trackid=" + self.id) : (self.setSource(), self.changeHLS_bl = !0, self.audioType_str != FWDMSP.HLS && self.play()), self.prevId = self.id, self.data.playlist_ar && (self.videoNameGa = self.data.playlist_ar[self.id].titleText, self.videoCat = self.data.cats_ar[self.catId].playlistsName))
+								self.isAPIReady_bl && self.isPlaylistLoaded_bl && (self.data.showPlayListButtonAndPlaylist_bl ? self.playlist_do.items_ar[self.playlist_do.curItem_do.sortId - 1] ? self.id = self.playlist_do.items_ar[self.playlist_do.curItem_do.sortId - 1].id : self.id = self.playlist_do.items_ar[self.totalAudio - 1].id : (self.id--, self.id < 0 ? self.id = self.totalAudio - 1 : self.id > self.totalAudio - 1 && (self.id = 0)), self.useDeepLinking_bl ? FWDAddress.setValue(self.instanceName_str + "?catid=" + self.catId + "&trackid=" + self.id) : (self.setSource(), self.changeHLS_bl = !0, self.audioType_str != FWDMSP.HLS && self.play()), self.prevId = self.id, self.data.playlist_ar && (self.videoNameGa = self.data.playlist_ar[self.id].titleText, self.videoCat = self.data.cats_ar[self.catId]))
 							}, this.playShuffle = function() {
 								if (self.isAPIReady_bl && self.isPlaylistLoaded_bl) {
 									self.isPlaylistItemClicked_bl = !0;
@@ -5564,9 +5564,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 				}, this.setupcomboBox = function() {
 						b.labels_ar = [];
 						for (var e = 0; e < p.cats_ar.length; e++) {
-								b.labels_ar[e] = p.cats_ar[e].playlistsName;
+								b.labels_ar[e] = p.cats_ar[e];
 								var t = "";
-								p.showPlaylistsSelectBoxNumbers_bl ? (e < 9 && (t = "0"), t = t + (e + 1) + ". ", b.labels_ar[e] = t + p.cats_ar[e].playlistsName) : b.labels_ar[e] = p.cats_ar[e].playlistsName
+								p.showPlaylistsSelectBoxNumbers_bl ? (e < 9 && (t = "0"), t = t + (e + 1) + ". ", b.labels_ar[e] = t + p.cats_ar[e]) : b.labels_ar[e] = p.cats_ar[e]
 						}
 						var o = {
 								categories_ar: b.labels_ar,
