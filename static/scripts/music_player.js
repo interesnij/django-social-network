@@ -729,7 +729,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 										this.stageContainer.style.overflow = "visible",
 										self.stageContainer.style.height = "0px",
 										FWDMSPUtils.isIE ? document.getElementsByTagName("body")[0].appendChild(this.stageContainer) : document.documentElement.appendChild(this.stageContainer),
-										this.popupWindow,
 										this.ws = null,
 										this.so = null,
 										this.data = null,
@@ -746,7 +745,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 										this.flash_do = null,
 										this.flashObject = null,
 										this.flashObjectMarkup_str = null,
-										this.popupWindowBackgroundColor = this.props_obj.popupWindowBackgroundColor || "#000000",
 										this.prevCatId = -1,
 										this.catId = -1,
 										this.id = -1,
@@ -758,9 +756,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 										this.maxHeight = 0,
 										this.prevAddToHeight = -1,
 										this.lastPercentPlayed = 0,
-										this.popupWindowWidth = self.props_obj.popupWindowWidth || 500,
-										this.popupWindowHeight = self.props_obj.popupWindowHeight || 400,
-										FWDMSPUtils.isIE && (this.popupWindowHeight -= 3),
 										this.resizeHandlerId_to,
 										this.resizeHandler2Id_to,
 										this.hidePreloaderId_to,
@@ -775,13 +770,11 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 										this.orintationChangeComplete_bl = !0,
 										this.animate_bl = !1,
 										this.isFirstPlaylistLoaded_bl = !1,
-										this.scrubbedFirstTimeInPopup_bl = !1,
 										this.showedFirstTime_bl = !1,
 										self.isPlaylistShowed_bl = !1,
 										this.useDeepLinking_bl = self.props_obj.useDeepLinking,
 										this.useDeepLinking_bl = "yes" == self.useDeepLinking_bl,
 										this.showMainBackground_bl = "no" != self.props_obj.showMainBackground,
-										this.openInPopup_bl = !1,
 										this.isMobile_bl = FWDMSPUtils.isMobile,
 										this.hasPointerEvent_bl = FWDMSPUtils.hasPointerEvent;
 									try {
@@ -795,25 +788,12 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 										this.setupInfo(),
 										this.setupData()
 								} else alert("FWDMSP constructor properties object is not defined!")
-							}, this.popup = function() {
-								if (!self.popupWindow || self.popupWindow.closed) {
-									FWDMSP.isOpenedInPopup = self.instanceName_str;
-									var e = screen.width / 2 - self.popupWindowWidth / 2,
-										t = screen.height / 2 - self.popupWindowHeight / 2,
-										o = "no";
-									FWDMSPUtils.isSafari && (o = "yes");
-									try {
-										FWDMSPUtils.isMobile ? self.popupWindow = window.open(location.href, self.instanceName_str) : self.popupWindow = window.open(location.href, self.instanceName_str, "location=" + o + ", width=" + self.popupWindowWidth + ", height=" + self.popupWindowHeight + ", top=" + t + ", left=" + e), self.popupWindow && (self.stageContainer.style.display = "none", self.preloader_do && self.preloader_do.hide(!1), self.data.closeData(), self.stop(), self.isAPIReady_bl = !1),
-											self.stopResizeHandler(),
-											self.dispatchEvent(FWDMSP.POPUP)
-									} catch (e) {}
-								}
 							}, this.removeAndDisablePlayer = function() {
 								self.stageContainer.style.display = "none"
 							}, self.setupMainDo = function() {
 								self.showMainBackground_bl && (self.background_do = new FWDMSPDisplayObject("div"), self.background_do.getStyle().width = "100%"),
 									self.main_do = new FWDMSPDisplayObject("div"),
-									self.main_do.getStyle().msTouchAction = "none", self.main_do.getStyle().webkitTapHighlightColor = "rgba(0, 0, 0, 0)", self.main_do.setBackfaceVisibility(), (!FWDMSPUtils.isMobile || FWDMSPUtils.isMobile && FWDMSPUtils.hasPointerEvent) && self.main_do.setSelectable(!1), self.openInPopup_bl ? (document.documentElement.appendChild(self.main_do.screen), self.stageContainer.style.position = "absolute", document.documentElement.style.overflow = "hidden", document.documentElement.style.backgroundColor = self.popupWindowBackgroundColor, self.main_do.setBkColor(self.popupWindowBackgroundColor), FWDMSPUtils.isIEAndLessThen9 ? this.main_do.getStyle().zIndex = "2147483631" : this.main_do.getStyle().zIndex = "99999999991", FWDMSPUtils.isIE ? document.getElementsByTagName("body")[0].appendChild(self.main_do.screen) : document.getElementsByTagName("body")[0].style.display = "none", self.main_do.setHeight(3e3)) : (self.background_do && self.stageContainer.appendChild(self.background_do.screen), self.stageContainer.appendChild(self.main_do.screen))
+									self.main_do.getStyle().msTouchAction = "none", self.main_do.getStyle().webkitTapHighlightColor = "rgba(0, 0, 0, 0)", self.main_do.setBackfaceVisibility(), (!FWDMSPUtils.isMobile || FWDMSPUtils.isMobile && FWDMSPUtils.hasPointerEvent) && self.main_do.setSelectable(!1), self.background_do && self.stageContainer.appendChild(self.background_do.screen), self.stageContainer.appendChild(self.main_do.screen)
 							}, self.setupInfo = function() {
 								FWDMSPInfo.setPrototype(), self.info_do = new FWDMSPInfo(self, self.warningIconPath_str),
 									FWDMSPUtils.isIEAndLessThen9 ? self.info_do.getStyle().zIndex = "2147483632" : self.info_do.getStyle().zIndex = "99999999992"
