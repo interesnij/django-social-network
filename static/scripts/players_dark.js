@@ -443,7 +443,7 @@ on('#ajax', 'click', '.genre_item', function() {
 
 on('#ajax', 'click', '.user_item', function() {
   var track_id = this.getAttribute('data-counter');
-  var list_pk = document.querySelector(".music_playlist").getAttribute('data-pk');
+  var list_pk = document.querySelector(".user_playlist").getAttribute('data-pk');
   if (!document.body.classList.contains("list_" + list_pk)){
     save_playlist("list_" + list_pk, '/music/manage/temp_list/' + list_pk, '/music/get/list/' + list_pk, track_id)
   }else{music_player.playSpecificTrack("list_" + list_pk, track_id)}
