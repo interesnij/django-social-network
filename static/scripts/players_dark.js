@@ -393,46 +393,47 @@ function music_onPlay(){
     try{video_player.pause();}catch{var a=0}
 };
 
-on('#ajax', 'click', '.tag_track', function(e) {
-var track_id = this.getAttribute('data-counter');
-var tag = document.querySelector(".tag_playlist");
-var tag_pk = tag.getAttribute('data-pk');
-var category = 'tag_' + tag_pk;
-
-if (!document.body.classList.contains(category)){
-  var playlist_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  playlist_link.open( 'GET', '/music/manage/temp_tag/' + tag_pk, true );
-  playlist_link.onreadystatechange = function () {
-    if ( playlist_link.readyState == 4 && playlist_link.status == 200 ) {
-      var body = document.querySelector("body");
-      body.className = "";
-      body.classList.add(category);
-
-      var tag_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-      tag_link.open( 'GET', '/music/get/tag/' + tag_pk, true );
-      tag_link.onreadystatechange = function () {
-        if ( tag_link.readyState == 4 && tag_link.status == 200 ) {
-          var response = document.createElement('span');
-          response.innerHTML = tag_link.responseText;
-          var list = response.querySelectorAll("li");
-          var count = list.length;
-          for(i=0; i<count; i++) {
-            _source=list[i].getAttribute("data-path") + '/stream?client_id=' + 'dce5652caa1b66331903493735ddd64d';
-            _title=list[i].getAttribute("data-title");
-            _thumbPath=list[i].getAttribute("data-thumbpath");
-						_duration=list[i].getAttribute("data-duration");
-						time = msToTime(_duration);
-            music_player.addTrack(_source, _title, _thumbPath, time, true, false, null);
-          }
-
-          music_player.playSpecificTrack(category, track_id);
-      }};
-      tag_link.send( null );
+function load_playlist(link){
+  var _link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  _link.open( 'GET', link, true );
+  _link.onreadystatechange = function () {
+    if ( _link.readyState == 4 && tag_link.status == 200 ) {
+      var response = document.createElement('span');
+      response.innerHTML = tag_link.responseText;
+      var list = response.querySelectorAll("li");
+      var count = list.length;
+      for(i=0; i<count; i++) {
+        _source=list[i].getAttribute("data-path") + '/stream?client_id=' + 'dce5652caa1b66331903493735ddd64d';
+        _title=list[i].getAttribute("data-title");
+        _thumbPath=list[i].getAttribute("data-thumbpath");
+        _duration=list[i].getAttribute("data-duration");
+        time = msToTime(_duration);
+        music_player.addTrack(_source, _title, _thumbPath, time, true, false, null);
+      }
   }};
-    playlist_link.send( null );
-    }else{
+  _link.send( null );
+};
+
+
+on('#ajax', 'click', '.tag_track', function() {
+  var track_id = this.getAttribute('data-counter');
+  var tag = document.querySelector(".tag_playlist");
+  var tag_pk = tag.getAttribute('data-pk');
+  var category = 'tag_' + tag_pk;
+
+  if (!document.body.classList.contains(category)){
+    var playlist_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    playlist_link.open( 'GET', '/music/manage/temp_tag/' + tag_pk, true );
+    playlist_link.onreadystatechange = function () {
+    if ( playlist_link.readyState == 4 && playlist_link.status == 200 ) {
+      document.querySelector("body").className = "";
+      document.querySelector("body").classList.add(category);
+
+      load_playlist('/music/get/tag/' + tag_pk);
       music_player.playSpecificTrack(category, track_id);
-    };
+    }};
+    playlist_link.send( null );
+    }else{music_player.playSpecificTrack(category, track_id)};
   });
 
 on('#ajax', 'click', '#load_1', function(e) {
