@@ -31,7 +31,7 @@ class TempTagOn(View):
             temp_tag = UserTempSoundList.objects.get(tag=tag)
         except:
             temp_tag = UserTempSoundList.objects.create(tag=tag)
-        temp_list.list = None
+        temp_tag.list = None
         temp_tag.genre = None
         temp_tag.tag = tag
         temp_tag.save()
