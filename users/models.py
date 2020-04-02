@@ -539,8 +539,8 @@ class User(AbstractUser):
         list = SoundList.objects.get(creator_id=self.id, community=None, name="my_first_generic_playlist_number_12345678900000000")
         music_query = Q(players=list, is_deleted=False)
         music_query.add(exclude_reported_and_approved_music_query, Q.AND)
-        music_list = SoundcloudParsing.objects.filter(music_query)
-        return music_list[0:5]
+        music_list = SoundcloudParsing.objects.filter(music_query)[0:5]
+        return music_list
 
     def my_playlist(self):
         from common.utils import safe_json

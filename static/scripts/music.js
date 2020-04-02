@@ -1,10 +1,3 @@
-var cssSelector = {jPlayer: "#jquery_jplayer_1",cssSelectorAncestor: ".main-header"};
-//var options = { swfPath: "/static/jquery.jplayer.swf", supplied: "oga, mp3", wmode: "window", smoothPlayBar: false, keyEnabled: true};
-var playlist = document.querySelector("#user_playlist").innerHTML;
-
-_playlist = JSON.parse(playlist);
-var myPlaylist = new jPlayerPlaylist(cssSelector, _playlist);
-
 
 on('#ajax', 'click', '.genre_track', function(e) {
 var track_id = this.getAttribute('data-counter');

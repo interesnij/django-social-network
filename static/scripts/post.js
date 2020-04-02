@@ -145,34 +145,4 @@ $('body').on('click', '.user_unblock', function() {pk = $(this).parent().data("p
 $('body').on('click', '.follow_create', function() {pk = $(this).data("pk");$.ajax({url: "/follows/add/" + pk + "/",success: function () {$('#button_load').html('').load("/users/load/profile_button/" + pk + "/");}});});
 $('body').on('click', '.follow_delete', function() {pk = $(this).parent().data("pk");$.ajax({url: "/follows/delete/" + pk + "/",success: function () {$('#button_load').html('').load("/users/load/profile_button/" + pk + "/");}});});
 $('body').on('click', '.connect_create', function() {pk = $(this).parent().data("pk");$.ajax({url: "/frends/add/" + pk + "/",success: function () {$('#button_load').html('').load("/users/load/profile_button/" + pk + "/");}});});
-$('body').on('click', '.connect_delete', function() {pk = $(this).parent().data("pk");$.ajax({url: "/frends/delete/" + pk + "/",success: function () {$('#button_load').html('').load("/users/load/profile_button/" + pk + "/");}});});
-
-
-/*!
-     music scripts for user
-  */
-$('body').on('click', '.track_add', function() {btn = $(this);block = btn.parent();pk = block.parent().data("pk");$.ajax({url: "/music/manage/add_track/" + pk + "/",success: function (data) {$.toast({heading: 'Информация',text: 'Трек добавлен в Ваш основной плейлист!',showHideTransition: 'fade',icon: 'info'});btn.remove();block.append("<span class='track_remove' title='Удалить'><svg xmlns='http://www.w3.org/2000/svg' fill='currentColor' style='width:20px;' class='svg_default' viewBox='0 0 2424'><path fill='none' d='M0 0h24v24H0z'/><path d='M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z'/></svg></span>")}});});
-$('body').on('click', '.track_remove', function() {btn = $(this);block = btn.parent();pk = block.parent().data("pk");$.ajax({url: "/music/manage/remove_track/" + pk + "/",success: function () {$.toast({heading: 'Информация',text: 'Трек удален из Вашего основного плейлиста!',showHideTransition: 'fade',icon: 'info'});btn.remove();block.append("<span class='track_add' title='Добавить'><svg fill='currentColor' style='width:25px;' class='svg_default' xmlns='http://www.w3.org/2000/svg' viewBox='0 024 24'><path d='M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z'/><path d='M0 0h24v24H0z' fill='none'/></svg></span>")}});});
-
-
-/*!
-     переключение пользоватльской заливки
-  */
-on('#ajax', 'click', '.custom-radio', function() {
-  var span = this;
-  var color = this.getAttribute('data-color');
-  var input = span.querySelector(".custom-control-input");
-  var list = document.querySelector(".theme-color");
-  var link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'GET', "/users/progs/color/" + color + "/", true );
-  link_.send();
-  link_.onreadystatechange = function () {
-  if ( this.readyState == 4 && this.status == 200 ) {
-    var uncheck=document.getElementsByTagName('input');
-    for(var i=0;i<uncheck.length;i++)
-    {uncheck[i].checked=false;}
-    input.checked = true;
-    function addStyleSheets (href) {$head = document.head,$link = document.createElement('link');$link.rel = 'stylesheet';$link.href = href;$head.appendChild($link);};addStyleSheets("/static/styles/color/" + color + ".css");
-  }
-};
-});
+$('body').on('click', '.connect_delete', function() {pk = $(this).parent().data("pk");$.ajax({url: "/frends/delete/" + pk + "/",success: function () {$('#button_load').html('').load("/users/load/profile_button/" + pk + "/");}});})
