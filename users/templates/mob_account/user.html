@@ -109,6 +109,8 @@
 
       {% include 'profile/gallery.html' %}
 
+      {% include 'profile/music.html' %}
+
         <div id="stat_load"></div>
 
         <div id="lenta_load"></div>
@@ -136,7 +138,7 @@
           pk = box[i].getAttribute('item-pk');
           fetch('/users/progs/item_view/' + pk + "/")
     }}};
-    
+
     try{
     var items = document.getElementById("lenta_container");
 

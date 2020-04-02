@@ -1,6 +1,6 @@
 {% load liked_user get_key %}
 {% if user.get_last_music %}
-<div class="card mb-4" style="">
+<div class="card mb-4 music_playlist">
     <div class="card-header">
         <div class="media">
             <div class="media-body">
@@ -16,7 +16,7 @@
     <div class="card border-top border-bottom">
         <div class="card-body">
             <div class="media">
-                <figure class="track_item user_track" style="cursor:pointer">
+                <figure class="music_list_item" style="cursor:pointer">
                   <a>
                     {% if object.artwork_url %}
                       <img style="width:50px;heigth:auto" src="{{ object.artwork_url }}" />
@@ -26,7 +26,7 @@
                   </a>
                 </figure>
                 <div class="media-body">
-                    <h6 class="track_item user_track" style="cursor:pointer">{{ object.title }}</h6>
+                    <h6 class="music_list_item" style="cursor:pointer">{{ object.title }}</h6>
                     <p class="small">{{ object.genre }}
                       <span class='span_btn' style="float:right;" data-pk="{{ object.pk }}">
                         <span style="cursor:pointer">

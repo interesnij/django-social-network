@@ -55,6 +55,8 @@
 
         {% include 'profile/communities.html' %}
 
+        {% include 'profile/music.html' %}
+
         {% include 'profile/gallery.html' %}
 
     </div>
@@ -91,7 +93,7 @@
           pk = box[i].getAttribute('item-pk');
           fetch('/users/progs/item_view/' + pk + "/")
     }}};
-    
+
     try{
     var items = document.getElementById("lenta_container");
 

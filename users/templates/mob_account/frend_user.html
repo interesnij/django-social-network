@@ -83,29 +83,31 @@
           </div>
           {% endif %}
 
-      {% if user.get_pop_communities %}
-      <div class="card mb-4">
-        <a href="{% url 'communities' pk=user.pk %}" class="ajax">
-          <div class="card-body py-2">
-              <div class="media">
-                  <div class="media-body">
-                    <h6 class="my-0 text-truncated">{{ user.count_community }} {{ user.count_community|rupluralize:"сообщество,сообщества,сообществ" }}</h6>
-                    <p class="small">нет осоьых</p>
+          {% if user.get_pop_communities %}
+          <div class="card mb-4  ">
+            <a href="{% url 'communities' pk=user.pk %}" class="ajax">
+              <div class="card-body py-2">
+                  <div class="media">
+                      <div class="media-body">
+                        <h6 class="my-0 text-truncated">{{ user.count_community }} {{ user.count_community|rupluralize:"сообщество,сообщества,сообществ" }}</h6>
+                        <p class="small">нет осоьых</p>
+                      </div>
+                      {% for object in user.get_pop_communities %}
+                        <figure style="width:50px;border-radius:50px;" class="avatar-50 staked">
+                          {% if object.get_avatar %}
+                          <img src="{{ object.get_avatar.file|thumbnail_url:'avatar' }}" style="border-radius:50px;" alt="image">
+                          {% else %}
+                          <img src="/static/images/group.jpg" style="border-radius:50px;" alt="image">
+                          {% endif %}
+                        </figure>
+                      {% endfor %}
                   </div>
-                  {% for object in user.get_pop_communities %}
-                    <figure style="width:50px;border-radius:50px;" class="avatar-50 staked">
-                      {% if object.get_avatar %}
-                      <img src="{{ object.get_avatar.file|thumbnail_url:'avatar' }}" style="border-radius:50px;" alt="image">
-                      {% else %}
-                      <img src="/static/images/group.jpg" style="border-radius:50px;" alt="image">
-                      {% endif %}
-                    </figure>
-                  {% endfor %}
               </div>
-          </div>
-        </a>
-          </div>
-          {% endif %}
+            </a>
+              </div>
+              {% endif %}
+
+      {% include 'profile/music.html' %}
 
       {% include 'profile/gallery.html' %}
 
@@ -131,7 +133,7 @@
           pk = box[i].getAttribute('item-pk');
           fetch('/users/progs/item_view/' + pk + "/")
     }}};
-    
+
     try{
     var items = document.getElementById("lenta_container");
 
