@@ -87,7 +87,7 @@ function msToTime(duration) {
 				playTrackAfterPlaylistLoad:"no",
 				showPlayListButtonAndPlaylist:"yes",
 				showPlayListOnAndroid:"yes",
-				showPlayListByDefault:1,
+				showPlayListByDefault:"no",
 				showPlaylistItemPlayButton:"yes",
 				showPlaylistItemDownloadButton:"yes",
 				showPlaylistItemBuyButton:"yes",
@@ -412,12 +412,10 @@ if (!document.body.classList.contains(category)){
       tag_link.open( 'GET', '/music/get/tag/' + tag_pk, true );
       tag_link.onreadystatechange = function () {
         if ( tag_link.readyState == 4 && tag_link.status == 200 ) {
-          var _test_ = document.createElement('span');
-          _test_.innerHTML = tag_link.responseText;
-          var list = _test_.querySelectorAll("li");
-					var reversed_list = [];
+          var response = document.createElement('span');
+          response.innerHTML = tag_link.responseText;
+          var list = response.querySelectorAll("li");
           var count = list.length;
-          //music_player.loadPlaylist(1);
           for(i=0; i<count; i++) {
             _source=list[i].getAttribute("data-path") + '/stream?client_id=' + 'dce5652caa1b66331903493735ddd64d';
             _title=list[i].getAttribute("data-title");
@@ -436,10 +434,6 @@ if (!document.body.classList.contains(category)){
       music_player.playSpecificTrack(category, track_id);
     };
   });
-
-  on('#ajax', 'click', '#load_1', function(e) {
-    music_player.loadPlaylist(0);
-  })
 
 on('#ajax', 'click', '#load_1', function(e) {
   music_player.loadPlaylist(0);

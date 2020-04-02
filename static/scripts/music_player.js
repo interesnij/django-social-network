@@ -1090,6 +1090,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 									}, 250))),
                 self.setupMainInstances(),
                 self.updatePlaylist(),
+								self.setStageContainerFinalHeightAndPosition(!0),
                 self.dispatchEvent(FWDMSP.LOAD_PLAYLIST_COMPLETE)
 							},
               this.updatePlaylist = function() {
@@ -1782,11 +1783,34 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 						o = [];
 					return "probably" != e.canPlayType("audio/mpeg") && "maybe" != e.canPlayType("audio/mpeg") || (t += ".mp3"), "probably" != e.canPlayType("audio/ogg") && "maybe" != e.canPlayType("audio/ogg") || (t += ".ogg"), "probably" != e.canPlayType("audio/mp4") && "maybe" != e.canPlayType("audio/mp4") || (t += ".webm"), (o = t.split(".")).shift(), e = null, o
 				}
-			}(), FWDMSP.hasHTMLHLS = (f$ = document.createElement("video"), g$ = !1, f$.canPlayType && (g$ = Boolean("probably" === f$.canPlayType("application/vnd.apple.mpegurl") || "maybe" === f$.canPlayType("application/vnd.apple.mpegurl"))), g$),
-			FWDMSP.instaces_ar = [], FWDMSP.CENTER = "center", FWDMSP.LEFT = "left", FWDMSP.RIGHT = "right", FWDMSP.YOUTUBE = "youtube", FWDMSP.VIDEO = "video",
+			}(),
+			FWDMSP.hasHTMLHLS = (f$ = document.createElement("video"),
+			g$ = !1,
+			f$.canPlayType && (g$ = Boolean("probably" === f$.canPlayType("application/vnd.apple.mpegurl") || "maybe" === f$.canPlayType("application/vnd.apple.mpegurl"))), g$),
+			FWDMSP.instaces_ar = [],
+			FWDMSP.CENTER = "center",
+			FWDMSP.LEFT = "left",
+			FWDMSP.RIGHT = "right",
+			FWDMSP.YOUTUBE = "youtube",
+			FWDMSP.VIDEO = "video",
 			FWDMSP.AUDIO = "audio",
-			FWDMSP.POPUP = "popup", FWDMSP.POSITION_TOP = "positionTop", FWDMSP.POSITION_BOTTOM = "positionBottom",
-			FWDMSP.READY = "ready", FWDMSP.START = "start", FWDMSP.START_TO_LOAD_PLAYLIST = "startToLoadPlaylist", FWDMSP.LOAD_PLAYLIST_COMPLETE = "loadPlaylistComplete", FWDMSP.STOP = "stop", FWDMSP.PLAY = "play", FWDMSP.PAUSE = "pause", FWDMSP.UPDATE = "update", FWDMSP.UPDATE_TIME = "updateTime", FWDMSP.ERROR = "error", FWDMSP.PLAY_COMPLETE = "playComplete", FWDMSP.PLAYLIST_LOAD_COMPLETE = "onPlayListLoadComplete", FWDMSP.HLS = "hls_flash", window.FWDMSP = FWDMSP
+			FWDMSP.POPUP = "popup",
+			FWDMSP.POSITION_TOP = "positionTop",
+			FWDMSP.POSITION_BOTTOM = "positionBottom",
+			FWDMSP.READY = "ready",
+			FWDMSP.START = "start",
+			FWDMSP.START_TO_LOAD_PLAYLIST = "startToLoadPlaylist",
+			FWDMSP.LOAD_PLAYLIST_COMPLETE = "loadPlaylistComplete",
+			FWDMSP.STOP = "stop",
+			FWDMSP.PLAY = "play",
+			FWDMSP.PAUSE = "pause",
+			FWDMSP.UPDATE = "update",
+			FWDMSP.UPDATE_TIME = "updateTime",
+			FWDMSP.ERROR = "error",
+			FWDMSP.PLAY_COMPLETE = "playComplete",
+			FWDMSP.PLAYLIST_LOAD_COMPLETE = "onPlayListLoadComplete",
+			FWDMSP.HLS = "hls_flash",
+			window.FWDMSP = FWDMSP
 	}(window),
 	function(window) {
 		var FWDMSPAudioData = function(props, playListElement, parent) {
