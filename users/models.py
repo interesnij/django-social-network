@@ -542,6 +542,12 @@ class User(AbstractUser):
         music_list = SoundcloudParsing.objects.filter(music_query)
         return music_list[0:5]
 
+    def get_music_list_id(self):
+        from music.models import SoundList
+        
+        list = SoundList.objects.get(creator_id=self.id, community=None, name="my_first_generic_playlist_number_12345678900000000")
+        return list.pk
+
     def my_playlist(self):
         from common.utils import safe_json
         from music.models import SoundList, UserTempSoundList, SoundTags, SoundGenres

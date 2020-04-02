@@ -27,12 +27,12 @@
               <div class="card-body">
                 {% if object_list %}
 
-                <div class="user_playlist" id="tracks_container" data-pk="{{ user.pk }}">
+                <div class="music_playlist" id="tracks_container" data-pk="{{ user.get_music_list_id }}"> 
                     <ul>
                       {% for object in object_list %}
                       <li class="list-group-item infinite-item id_{{ object.id }}" data-counter="{{ forloop.counter0 }}">
                           <div class="media">
-                              <figure class="user_item" style="cursor:pointer">
+                              <figure class="music_list_item" style="cursor:pointer">
                                 <a>
                                   {% if object.artwork_url %}
                                     <img style="width:50px;heigth:auto" src="{{ object.artwork_url }}" />
@@ -42,7 +42,7 @@
                                 </a>
                               </figure>
                               <div class="media-body">
-                                  <h6 class="user_track user_item" style="cursor:pointer">{{ object.title }}</h6>
+                                  <h6 class="user_track music_list_item" style="cursor:pointer">{{ object.title }}</h6>
                                   <p class="small">{{ object.genre }}
                                     <span class='span_btn' style="float:right;" data-pk="{{ object.pk }}">
                                       <span style="cursor:pointer">

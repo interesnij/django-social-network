@@ -7,19 +7,19 @@ from rest_framework.exceptions import PermissionDenied
 
 class TempListOn(View):
     """
-    Выставляем плейлист человека или сообщества для пользователя как активный.
+    Выставляем плейлист пользователя как активный.
     """
     def get(self, request, *args, **kwargs):
         list = SoundList.objects.get(pk=self.kwargs["pk"])
         try:
-            temp_list = UserTempSoundList.objects.get(user=request.user)
+            my_list = UserTempSoundList.objects.get(list=list)
         except:
-            temp_list = UserTempSoundList.objects.create(user=request.user)
-        temp_list.list = list
-        temp_list.tag = None
-        temp_list.genre = None
-        temp_list.save()
+            my_list = UserTempSoundList.objects.create(list=list)
+        my_list.tag = None
+        my_list.genre = None
+        my_list.save()
         return HttpResponse("!")
+
 
 class TempTagOn(View):
     """
@@ -28,14 +28,15 @@ class TempTagOn(View):
     def get(self, request, *args, **kwargs):
         tag = SoundTags.objects.get(pk=self.kwargs["pk"])
         try:
-            temp_tag = UserTempSoundList.objects.get(user=request.user)
+            temp_tag = UserTempSoundList.objects.get(tag=tag)
         except:
-            temp_tag = UserTempSoundList.objects.create(user=request.user)
-        temp_tag.list = None
+            temp_tag = UserTempSoundList.objects.create(tag=tag)
+        temp_list.list = None
         temp_tag.genre = None
         temp_tag.tag = tag
         temp_tag.save()
         return HttpResponse("!")
+
 
 class TempGenreOn(View):
     """
@@ -53,21 +54,6 @@ class TempGenreOn(View):
         temp_genre.save()
         return HttpResponse("!")
 
-class UserListOn(View):
-    """
-    Выставляем плейлист пользователя как активный.
-    """
-    def get(self, request, *args, **kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        try:
-            my_list = UserTempSoundList.objects.get(user=request.user)
-        except:
-            my_list = UserTempSoundList.objects.create(user=request.user)
-        my_list.list = None
-        my_list.tag = None
-        my_list.genre = None
-        my_list.save()
-        return HttpResponse("!")
 
 class TrackAdd(View):
     """
