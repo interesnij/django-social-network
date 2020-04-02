@@ -1086,9 +1086,10 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                                          self.playlist_do.resizeAndPosition(),
                                          self.playlist_do.isShowed_bl && self.controller_do.setPlaylistButtonState("selected")
                                         ),
+                    self.openInPopup_bl && self.popupWindow.audioScreen_do && (self.lastPercentPlayed = self.popupWindow.audioScreen_do.lastPercentPlayed),
                     self.playlist_do && self.playlist_do.comboBox_do && self.playlist_do.comboBox_do.setButtonsStateBasedOnId(self.catId),
                     self.setSource(),
-                    (self.data.autoPlay_bl || self.data.playTrackAfterPlaylistLoad_bl) && setTimeout(self.play, 1e3), !self.showedFirstTime_bl ? (self.controller_do.setY(-self.controller_do.h), self.playlist_do && self.playlist_do.setY(-self.playlist_do.h)) : self.playlist_do && self.playlist_do.setY(-self.playlist_do.h + self.controller_do.h), self.setStageContainerFinalHeightAndPosition(!0), self.openInPopup_bl) return clearTimeout(self.showPlaylistWithDelayId_to),
+                    (self.data.autoPlay_bl || self.data.playTrackAfterPlaylistLoad_bl) && setTimeout(self.play, 1e3), self.openInPopup_bl && !self.showedFirstTime_bl ? (self.controller_do.setY(-self.controller_do.h), self.playlist_do && self.playlist_do.setY(-self.playlist_do.h)) : self.playlist_do && self.playlist_do.setY(-self.playlist_do.h + self.controller_do.h), self.setStageContainerFinalHeightAndPosition(!0), self.openInPopup_bl) return clearTimeout(self.showPlaylistWithDelayId_to),
 									self.showedFirstTime_bl ? self.showPlaylistWithDelayId_to = setTimeout(function() {
 										self.setStageContainerFinalHeightAndPosition(!0)
 									}, 100) : self.showPlaylistWithDelayId_to = setTimeout(function() {
@@ -1159,7 +1160,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 							},
               this.positionPreloader = function() {
 								self.preloader_do.setX(parseInt((self.ws.w - self.preloader_do.w) / 2)),
-                self.position_str == FWDMSP.POSITION_TOP ? self.controller_do && !self.controller_do.isShowed_bl ? self.preloader_do.setY(-200) : self.controller_do ? self.preloader_do.setY(parseInt((self.controller_do.h - self.preloader_do.h) / 2)) : self.preloader_do.setY(parseInt((self.stageHeight - self.preloader_do.h) / 2)) : self.controller_do && !self.controller_do.isShowed_bl ? self.preloader_do.setY(self.ws.h) : self.controller_do ? self.preloader_do.setY(self.ws.h - self.controller_do.h + parseInt((self.controller_do.h - self.preloader_do.h) / 2)) : self.preloader_do.setY(self.ws.h - self.preloader_do.h)
+                self.openInPopup_bl ? self.controller_do ? self.preloader_do.setY(parseInt((self.controller_do.h - self.preloader_do.h) / 2)) : self.preloader_do.setY(0) : self.position_str == FWDMSP.POSITION_TOP ? self.controller_do && !self.controller_do.isShowed_bl ? self.preloader_do.setY(-200) : self.controller_do ? self.preloader_do.setY(parseInt((self.controller_do.h - self.preloader_do.h) / 2)) : self.preloader_do.setY(parseInt((self.stageHeight - self.preloader_do.h) / 2)) : self.controller_do && !self.controller_do.isShowed_bl ? self.preloader_do.setY(self.ws.h) : self.controller_do ? self.preloader_do.setY(self.ws.h - self.controller_do.h + parseInt((self.controller_do.h - self.preloader_do.h) / 2)) : self.preloader_do.setY(self.ws.h - self.preloader_do.h)
 							},
               this.preloaderHideComplete = function() {
 								self.controller_do.show(),
@@ -1246,7 +1247,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 								self.buy(e.id)
 							},
               this.setupController = function() {
-								FWDMSPController.setPrototype(), self.controller_do = new FWDMSPController(self.data, self),
+								FWDMSPController.setPrototype(), self.controller_do = new FWDMSPController(self.data, self), self.controller_do.addListener(FWDMSPController.POPUP, self.controllerOnPopupHandler),
 									self.controller_do.addListener(FWDMSPController.PLAY, self.controllerOnPlayHandler),
 									self.controller_do.addListener(FWDMSPController.PLAY_NEXT, self.controllerPlayNextHandler),
                   self.controller_do.addListener(FWDMSPController.PLAY_PREV, self.controllerPlayPrevHandler),
@@ -1270,7 +1271,10 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                   self.controller_do.addListener(FWDMSPController.SHOW_PLAYBACKRATE, self.showPlaybacrateWindowHandler),
                   self.controller_do.addListener(FWDMSPController.SHOW_ATOB, self.showAtobWindowHandler),
                   self.main_do.addChild(self.controller_do),
-                  self.data.showPlaylistsButtonAndPlaylists_bl && (self.controller_do.setPlaylistButtonState("selected"), self.controller_do.playlistButton_do && self.controller_do.playlistButton_do.disableForGood())
+                  self.openInPopup_bl && self.data.showPlaylistsButtonAndPlaylists_bl && (self.controller_do.setPlaylistButtonState("selected"), self.controller_do.playlistButton_do && self.controller_do.playlistButton_do.disableForGood())
+							},
+              this.controllerOnPopupHandler = function() {
+								self.popup()
 							},
               this.controllerOnPlayHandler = function(e) {
 								self.play()
