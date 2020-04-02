@@ -281,7 +281,7 @@ class User(AbstractUser):
         from music.models import UserTempSoundList
 
         try:
-            UserTempSoundList.objects.get(user=self, tag=None, community=None, genre=None)
+            UserTempSoundList.objects.get(creator__user=self, tag=None, community=None, genre=None)
             return True
         except:
             return False
@@ -290,7 +290,7 @@ class User(AbstractUser):
         from music.models import UserTempSoundList
 
         try:
-            UserTempSoundList.objects.get(user=self, tag=tag, community=None, genre=None)
+            UserTempSoundList.objects.get(creator__user=self, tag=tag, community=None, genre=None)
             return True
         except:
             return False
@@ -299,7 +299,7 @@ class User(AbstractUser):
         from music.models import UserTempSoundList
 
         try:
-            UserTempSoundList.objects.get(user=self, tag=None, list=None, genre=genre)
+            UserTempSoundList.objects.get(creator__user=self, tag=None, list=None, genre=genre)
             return True
         except:
             return False
