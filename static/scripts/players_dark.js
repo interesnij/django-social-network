@@ -393,7 +393,7 @@ function music_onPlay(){
     try{video_player.pause();}catch{var a=0}
 };
 
-function track_click(suffix, post_link, get_link, track_id){
+function save_playlist(suffix, post_link, get_link, track_id){
     var playlist_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     playlist_link.open( 'GET', post_link, true );
     playlist_link.onreadystatechange = function () {
@@ -430,7 +430,7 @@ on('#ajax', 'click', '.tag_track', function() {
   var tag_pk = document.querySelector(".tag_playlist").getAttribute('data-pk');
 
   if (!document.body.classList.contains("tag_" + tag_pk)){
-    track_click("tag_" + tag_pk, '/music/manage/temp_tag/' + tag_pk, '/music/get/tag/' + tag_pk, track_id)
+    save_playlist("tag_" + tag_pk, '/music/manage/temp_tag/' + tag_pk, '/music/get/tag/' + tag_pk, track_id)
   }else{music_player.playSpecificTrack("tag_" + tag_pk, track_id)}
   });
 
