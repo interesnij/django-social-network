@@ -13,3 +13,7 @@ import django, json, requests
 django.setup()
 
 from django.conf import settings
+from music.models import UserTempSoundList
+
+
+UserTempSoundList.objects.all().delete()
