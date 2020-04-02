@@ -9,7 +9,7 @@ class TagMusicGet(TemplateView):
     def get(self,request,*args,**kwargs):
         self.tag = SoundTags.objects.get(pk=self.kwargs["pk"])
         self.list_ = SoundcloudParsing.objects.filter(tag=self.tag)
-        self.list_ = self.list_[0:300]
+        self.list_ = self.list_[0:100]
         self.result = reversed(list(self.list_))
         return super(TagMusicGet,self).get(request,*args,**kwargs)
 
@@ -24,7 +24,7 @@ class GenreMusicGet(TemplateView):
     def get(self,request,*args,**kwargs):
         self.genre = SoundGenres.objects.get(pk=self.kwargs["pk"])
         self.list_ = SoundcloudParsing.objects.filter(genre=self.genre)
-        self.list_ = self.list_[0:300]
+        self.list_ = self.list_[0:100]
         self.result = reversed(list(self.list_))
         return super(GenreMusicGet,self).get(request,*args,**kwargs)
 
@@ -39,7 +39,7 @@ class ListMusicGet(TemplateView):
     def get(self,request,*args,**kwargs):
         self.list = SoundList.objects.get(pk=self.kwargs["pk"])
         self.list_ = SoundcloudParsing.objects.filter(players=self.list)
-        self.list_ = self.list_[0:300]
+        self.list_ = self.list_[0:100]
         self.result = reversed(list(self.list_))
         return super(ListMusicGet,self).get(request,*args,**kwargs)
 
