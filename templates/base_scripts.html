@@ -37,8 +37,7 @@
   {% for track in request.user.my_playlist_too %}
   <li data-path="{{ track.uri }}"
       data-thumbpath="{{ track.artwork_url }}"
-			data-downloadable="yes"
-			data-add="{% if not request.user|is_track_exists:track.id %}tru{% else %}false{% endif %}"
+			data-add="{% if not request.user|is_track_exists:track.id %}true{% else %}false{% endif %}"
 			data-track-id="{{ track.pk }}">
     <p><span style="font-weight:bold">{{ track.title }}</span></p>
   </li>
@@ -48,7 +47,10 @@
 		<li data-path="https://api.soundcloud.com/tracks/601535613" data-thumbpath="/static/images/news_small1.jpg">
 	   <p><span style="font-weight:bold">Тесттттттт</span></p>
 	 </li>
-	 <li data-path="http://mp3.trb-stream.net/;.mp3" data-thumbpath="/static/images/news_small1.jpg" data-downloadable="no" data-duration="00:00">
+	 <li data-path="http://mp3.trb-stream.net/;.mp3"
+	     data-thumbpath="/static/images/news_small1.jpg"
+			 data-add="{% if not request.user|is_track_exists:track.id %}true{% else %}false{% endif %}"
+ 			 data-track-id="{{ track.pk }}">
 			<p><span style="font-weight:bold; color:#FF0000;">SHOUTCAST EXAMPLE</span> - it really works :) - http://mp3.trb-stream.net/;.mp3</p>
 		</li>
 </ul>
