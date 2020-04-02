@@ -393,47 +393,45 @@ function music_onPlay(){
     try{video_player.pause();}catch{var a=0}
 };
 
-function load_playlist(link){
-  var _link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  _link.open( 'GET', link, true );
-  _link.onreadystatechange = function () {
-    if ( _link.readyState == 4 && tag_link.status == 200 ) {
-      var response = document.createElement('span');
-      response.innerHTML = tag_link.responseText;
-      var list = response.querySelectorAll("li");
-      var count = list.length;
-      for(i=0; i<count; i++) {
-        _source=list[i].getAttribute("data-path") + '/stream?client_id=' + 'dce5652caa1b66331903493735ddd64d';
-        _title=list[i].getAttribute("data-title");
-        _thumbPath=list[i].getAttribute("data-thumbpath");
-        _duration=list[i].getAttribute("data-duration");
-        time = msToTime(_duration);
-        music_player.addTrack(_source, _title, _thumbPath, time, true, false, null);
-      }
-  }};
-  _link.send( null );
-};
+function track_click(suffix, post_link, get_link, track_id){
+    var playlist_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    playlist_link.open( 'GET', post_link, true );
+    playlist_link.onreadystatechange = function () {
+    if ( playlist_link.readyState == 4 && playlist_link.status == 200 ) {
+      document.querySelector("body").className = "";
+      document.querySelector("body").classList.add(suffix);
+
+      var _link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+      _link.open( 'GET', get_link, true );
+      _link.onreadystatechange = function () {
+        if ( _link.readyState == 4 && _link.status == 200 ) {
+          var response = document.createElement('span');
+          response.innerHTML = _link.responseText;
+          var list = response.querySelectorAll("li");
+          var count = list.length;
+          for(i=0; i<count; i++) {
+            _source=list[i].getAttribute("data-path") + '/stream?client_id=' + 'dce5652caa1b66331903493735ddd64d';
+            _title=list[i].getAttribute("data-title");
+            _thumbPath=list[i].getAttribute("data-thumbpath");
+            _duration=list[i].getAttribute("data-duration");
+            time = msToTime(_duration);
+            music_player.addTrack(_source, _title, _thumbPath, time, true, false, null);
+          }
+          music_player.playSpecificTrack(suffix, track_id);
+      }};
+      _link.send( null );
+    }};
+    playlist_link.send( null );
+    };
 
 
 on('#ajax', 'click', '.tag_track', function() {
   var track_id = this.getAttribute('data-counter');
-  var tag = document.querySelector(".tag_playlist");
-  var tag_pk = tag.getAttribute('data-pk');
-  var category = 'tag_' + tag_pk;
+  var tag_pk = document.querySelector(".tag_playlist").getAttribute('data-pk');
 
-  if (!document.body.classList.contains(category)){
-    var playlist_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    playlist_link.open( 'GET', '/music/manage/temp_tag/' + tag_pk, true );
-    playlist_link.onreadystatechange = function () {
-    if ( playlist_link.readyState == 4 && playlist_link.status == 200 ) {
-      document.querySelector("body").className = "";
-      document.querySelector("body").classList.add(category);
-
-      load_playlist('/music/get/tag/' + tag_pk);
-      music_player.playSpecificTrack(category, track_id);
-    }};
-    playlist_link.send( null );
-    }else{music_player.playSpecificTrack(category, track_id)};
+  if (!document.body.classList.contains("tag_" + tag_pk)){
+    track_click("tag_" + tag_pk, '/music/manage/temp_tag/' + tag_pk, '/music/get/tag/' + tag_pk, track_id)
+  }else{music_player.playSpecificTrack("tag_" + tag_pk, track_id)}
   });
 
 on('#ajax', 'click', '#load_1', function(e) {
