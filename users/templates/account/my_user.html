@@ -159,9 +159,9 @@
             {% for object in user.get_last_music %}
             <div class="card border-top border-bottom">
                 <div class="card-body">
-                    <div class="media">
-                        <figure class="music_list_item" data-counter="{{ forloop.counter0 }}" style="cursor:pointer">
-                          <a>
+                    <div class="media" data-counter="{{ forloop.counter0 }}">
+                        <figure style="cursor:pointer">
+                          <a class="music_list_item">
                             {% if object.artwork_url %}
                               <img style="width:50px;heigth:auto" src="{{ object.artwork_url }}" />
                             {% else %}
@@ -170,9 +170,7 @@
                           </a>
                         </figure>
                         <div class="media-body">
-                          <a>
-                            <h6 class="track_item music_list_item" style="cursor:pointer">{{ object.title }}</h6>
-                          </a>
+                            <h6 class="track_item music_list_item" style="cursor:pointer"><a>{{ object.title }}</a></h6>
                             <p class="small">{{ object.genre }}
                               <span class='span_btn' style="float:right;" data-pk="{{ object.pk }}">
                                 <span style="cursor:pointer">
