@@ -1042,7 +1042,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 										e.preventDefault && e.preventDefault(),
 										self == FWDMSP.keyboardCurInstance)) {
 									if (32 == e.keyCode) {
-										if (self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS || !self.videoScreen_do) {
+										if (self.audioType_str != FWDMSP.VIDEO) {
 											if (!self.audioScreen_do.isSafeToBeControlled_bl)
 											  return;
 											self.audioScreen_do.togglePlayPause()
@@ -1281,7 +1281,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 										(void 0 === self.catId || void 0 === self.id || isNaN(self.catId) || isNaN(self.id)) && (self.catId = self.data.startAtPlaylist, self.id = self.data.startAtTrack, e = !0),
                     (self.catId < 0 || self.catId > self.data.totalCategories - 1 && !e) && (self.catId = self.data.startAtPlaylist, self.id = self.data.startAtTrack, e = !0),
 										self.data.playlist_ar && (self.id < 0 && !e ? (self.id = self.data.startAtTrack, e = !0) : self.prevCatId == self.catId && self.id > self.data.playlist_ar.length - 1 && !e && (self.id = self.data.playlist_ar.length - 1, e = !0)),
-                    e ? location.hash = self.instanceName_str + "?catid=" + self.catId + "&trackid=" + self.id : self.prevCatId != self.catId ? (self.loadInternalPlaylist(), self.prevCatId = self.catId) : (self.isPlaylistItemClicked_bl = !0, self.setSource(!1), self.changeHLS_bl = !0, self.isShoutcast_bl || self.isIcecast_bl || self.play())
+                    e ? location.hash = self.instanceName_str + "?catid=" + self.catId + "&trackid=" + self.id : self.prevCatId != self.catId ? (self.loadInternalPlaylist(), self.prevCatId = self.catId) : (self.isPlaylistItemClicked_bl = !0, self.setSource(!1), self.isShoutcast_bl || self.isIcecast_bl || self.play())
 									}
 							}, this.setupPreloader = function() {
 								FWDMSPPreloader.setPrototype(),
@@ -1363,7 +1363,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 								e.id == self.id
 								? self.audioType_str == FWDMSP.AUDIO && self.audioScreen_do.isPlaying_bl
 								? self.pause() : self.audioType_str != FWDMSP.AUDIO || self.audioScreen_do.isStopped_bl && !self.audioScreen_do.isStopped_bl
-								? self.audioType_str != FWDMSP.HLS
+								//? self.audioType_str != FWDMSP.HLS
 								? self.audioType_str != FWDMSP.VIDEO
 								? self.ytb_do.isPlaying_bl
 								? self.pause() : self.play() : self.play() : self.pause() : self.play() : self.useDeepLinking_bl &&
