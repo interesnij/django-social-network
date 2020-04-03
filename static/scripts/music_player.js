@@ -1684,11 +1684,24 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 											self.isATBJsLoaded_bl = !0, self.setupAtbWindow(),
 												self.setSource(self.audioPath)
 										});
-									if (!(self.isMobile_bl || FWDMSP.hasHTMLHLS || -1 == self.audioPath.indexOf(".m3u8") || self.isHLSJsLoaded_bl || FWDMSP.isHLSJsLoaded_bl)) return -1 != location.protocol.indexOf("file:") ? (self.main_do.addChild(self.info_do), self.info_do.showText("This browser dosen't allow playing HLS / live streaming videos local, please test online."), void self.resizeHandler()) : ((t = document.createElement("script")).src = self.data.hlsPath_str, document.head.appendChild(t), t.onerror = function() {
-										self.main_do.addChild(self.info_do),
-											self.info_do.showText("Error loading HLS library <font color='#FF0000'>" + self.data.hlsPath_str + "</font>."), self.preloader_do && self.preloader_do.hide()
-									}, void(t.onload = function() {
-										self.isHLSJsLoaded_bl = !0, FWDMSP.isHLSJsLoaded_bl = !0, self.setupHLS(),
+									if (!(self.isMobile_bl || FWDMSP.hasHTMLHLS
+										                     || -1 == self.audioPath.indexOf(".m3u8")
+																				 || self.isHLSJsLoaded_bl
+																				 || FWDMSP.isHLSJsLoaded_bl))
+										  return -1 != location.protocol.indexOf("file:") ? (self.main_do.addChild(self.info_do),
+											                                                   self.info_do.showText("This browser dosen't allow playing HLS / live streaming videos local, please test online."),
+																																				 void self.resizeHandler())
+																																			: ((t = document.createElement("script")).src = self.data.hlsPath_str,
+																																			   document.head.appendChild(t),
+																																				 t.onerror = function() {
+																																					 self.main_do.addChild(self.info_do),
+																																					 self.info_do.showText("Error loading HLS library <font color='#FF0000'>" + self.data.hlsPath_str + "</font>."),
+																																					 self.preloader_do && self.preloader_do.hide()
+									},
+									void(t.onload = function() {
+										self.isHLSJsLoaded_bl = !0,
+										FWDMSP.isHLSJsLoaded_bl = !0,
+										self.setupHLS(),
 											self.setSource(self.audioPath)
 									}));
 									self.audioScreen_do.setSource(self.audioPath),
@@ -1698,9 +1711,12 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 										self.controller_do.setTitle(self.data.playlist_ar[self.id].title), null == self.data.playlist_ar[self.id].duration ? self.controller_do.updateTime("00:00", "00:00") : self.controller_do.updateTime("00:00", FWDMSP.formatTotalTime(self.data.playlist_ar[self.id].duration)), self.controller_do.loadThumb(self.data.playlist_ar[self.id].thumbPath), self.playlist_do ? self.playlist_do.activateItems(self.id, self.itemClicked) : self.loadID3IfPlaylistDisabled(),
 										self.setPlaybackRate(self.data.defaultPlaybackRate)
 								}
-							}, this.destroyHLS = function() {
-								self.hlsJS && (self.hlsJS.destroy(), self.hlsJS = null)
-							}, this.setupHLS = function() {
+							},
+							this.destroyHLS = function() {
+								self.hlsJS && (self.hlsJS.destroy(),
+															 self.hlsJS = null)
+							},
+							this.setupHLS = function() {
 								self.hlsJS || (self.isHLSJsLoaded_bl = !0, self.hlsJS = new Hls, self.hlsJS.on(Hls.Events.ERROR, function(e, t) {
 									switch (self.HLSError_str, t.details) {
 										case Hls.ErrorDetails.MANIFEST_LOAD_ERROR:

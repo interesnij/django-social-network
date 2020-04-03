@@ -1529,74 +1529,179 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 							},
               this.audioScreenPlayHandler = function() {
 								self.sendGAPlayedEvent(),
-                (FWDMSP.keyboardCurInstance = self).controller_do && (self.controller_do.showPauseButton(), self.controller_do.startEqulizer()), self.opener_do && self.opener_do.showPauseButton(), self.playlist_do && self.playlist_do.setCurItemPauseState(), self.largePlayButton_do && self.largePlayButton_do.hide(), self.hider && self.isFullScreen_bl && self.hider.start(), self.openInPopup_bl && setTimeout(function() {
-									self.scrubbedFirstTimeInPopup_bl || self.scrub(self.lastPercentPlayed), self.scrubbedFirstTimeInPopup_bl = !0
-								}, 600), self.hasStartedToPlay_bl || self.data.playlist_ar[self.id].startAtTime && self.scrubbAtTime(self.data.playlist_ar[self.id].startAtTime), setTimeout(function() {
+                (FWDMSP.keyboardCurInstance = self).controller_do && (self.controller_do.showPauseButton(),
+																																			self.controller_do.startEqulizer()),
+								self.opener_do && self.opener_do.showPauseButton(),
+								self.playlist_do && self.playlist_do.setCurItemPauseState(),
+								self.largePlayButton_do && self.largePlayButton_do.hide(),
+								self.hider && self.isFullScreen_bl && self.hider.start(),
+								self.openInPopup_bl && setTimeout(function() {
+									self.scrubbedFirstTimeInPopup_bl || self.scrub(self.lastPercentPlayed),
+									self.scrubbedFirstTimeInPopup_bl = !0
+								}, 600),
+								self.hasStartedToPlay_bl || self.data.playlist_ar[self.id].startAtTime && self.scrubbAtTime(self.data.playlist_ar[self.id].startAtTime), setTimeout(function() {
 									self.isPlaylistItemClicked_bl = !1
-								}, 500), self.ppPplayedOnce = !0, self.hasStartedToPlay_bl = !0, self.dispatchEvent(FWDMSP.PLAY)
-							}, this.audioScreenPauseHandler = function() {
-								self.isPlaying_bl = !1, self.opener_do && self.opener_do.showPlayButton(), self.largePlayButton_do && self.isFullScreen_bl && self.largePlayButton_do.show(), self.hider && (self.hider.reset(), self.hider.stop()), !FWDMSPUtils.isIphone && self.largePlayButton_do && self.isFullScreen_bl && (self.isMobile_bl || self.largePlayButton_do && self.isFullScreen_bl && self.largePlayButton_do.show()),
-									self.showCursor(), self.controller_do && (self.controller_do.showPlayButton(), self.controller_do.stopEqulizer()), self.playlist_do && self.playlist_do.setCurItemPlayState(), self.dispatchEvent(FWDMSP.PAUSE)
-							}, this.audioScreenUpdateHandler = function(e) {
+								}, 500),
+								self.ppPplayedOnce = !0,
+								self.hasStartedToPlay_bl = !0,
+								self.dispatchEvent(FWDMSP.PLAY)
+							},
+							this.audioScreenPauseHandler = function() {
+								self.isPlaying_bl = !1,
+								self.opener_do && self.opener_do.showPlayButton(),
+								self.largePlayButton_do && self.isFullScreen_bl && self.largePlayButton_do.show(),
+								self.hider && (self.hider.reset(), self.hider.stop()),
+								!FWDMSPUtils.isIphone && self.largePlayButton_do
+								                      && self.isFullScreen_bl
+																			&& (self.isMobile_bl || self.largePlayButton_do && self.isFullScreen_bl && self.largePlayButton_do.show()),
+								self.showCursor(),
+								self.controller_do && (self.controller_do.showPlayButton(),
+																			 self.controller_do.stopEqulizer()),
+								self.playlist_do && self.playlist_do.setCurItemPlayState(),
+								self.dispatchEvent(FWDMSP.PAUSE)
+							},
+							this.audioScreenUpdateHandler = function(e) {
 								var t;
-								t = FWDMSP.hasHTML5Audio ? e.percent : e, self.controller_do && self.controller_do.updateMainScrubber(t), self.playlist_do && self.playlist_do.updateCurItemProgress(t), self.dispatchEvent(FWDMSP.UPDATE, {
+								t = FWDMSP.hasHTML5Audio ? e.percent : e,
+								self.controller_do && self.controller_do.updateMainScrubber(t),
+								self.playlist_do && self.playlist_do.updateCurItemProgress(t),
+								self.dispatchEvent(FWDMSP.UPDATE, {
 									percent: t
 								})
-							}, this.audioScreenUpdateTimeHandler = function(e, t) {
-								if (self.prevSeconds != e.seconds && (self.totalTimePlayed += 1), self.totalTimeInSeconds = e.totalTimeInSeconds, self.curTimeInSecond = e.seconds, self.totalTime = e.totalTime, self.curTime = e.curTime, self.prevSeconds = e.seconds, self.totalPercentPlayed = self.totalTimePlayed / e.totalTimeInSeconds, isFinite(self.totalPercentPlayed) || (self.totalPercentPlayed = 0), self.controller_do && !self.controller_do.isMainScrubberScrubbing_bl && self.atb_do && self.atb_do.isShowed_bl && !self.atb_do.scrub) {
-									var o = self.totalTimeInSeconds * self.atb_do.pa,
-										s = self.totalTimeInSeconds * self.atb_do.pb;
-									self.prevCurTimeInSeconds != self.curTimeInSecond && (self.prevCurTimeInSeconds = self.curTimeInSecond, self.curTimeInSecond < o ? self.scrub(self.atb_do.pa) : self.curTimeInSecond > s && self.scrub(self.atb_do.pa))
+							},
+							this.audioScreenUpdateTimeHandler = function(e, t) {
+								if (self.prevSeconds != e.seconds && (self.totalTimePlayed += 1),
+								    self.totalTimeInSeconds = e.totalTimeInSeconds,
+										self.curTimeInSecond = e.seconds,
+										self.totalTime = e.totalTime,
+										self.curTime = e.curTime,
+										self.prevSeconds = e.seconds,
+										self.totalPercentPlayed = self.totalTimePlayed / e.totalTimeInSeconds,
+										isFinite(self.totalPercentPlayed) || (self.totalPercentPlayed = 0),
+										self.controller_do && !self.controller_do.isMainScrubberScrubbing_bl
+										                   && self.atb_do
+																			 && self.atb_do.isShowed_bl
+																			 && !self.atb_do.scrub) {
+																				 var o = self.totalTimeInSeconds * self.atb_do.pa,
+																				 s = self.totalTimeInSeconds * self.atb_do.pb;
+																				 self.prevCurTimeInSeconds != self.curTimeInSecond && (self.prevCurTimeInSeconds = self.curTimeInSecond,
+																					                                                     self.curTimeInSecond < o ? self.scrub(self.atb_do.pa)
+																																															                          : self.curTimeInSecond > s && self.scrub(self.atb_do.pa))
 								}
 								var i, n;
-								FWDMSP.hasHTML5Audio ? (i = e.curTime, n = e.totalTime) : (i = e, (n = t).length > i.length && (i = parseInt(n.substring(0, 1)) - 1 + ":" + i)), self.controller_do && self.controller_do.updateTime(i, n),
-									FWDMSPUtils.getSecondsFromString(self.data.playlist_ar[self.id].stopAtTime) <= e.seconds && self.stop(), 5 < n.length ? self.totalDuration = FWDMSPUtils.getSecondsFromString(n) : self.totalDuration = FWDMSPUtils.getSecondsFromString("00:" + n),
+								FWDMSP.hasHTML5Audio ? (i = e.curTime, n = e.totalTime)
+								                     : (i = e, (n = t).length > i.length && (i = parseInt(n.substring(0, 1)) - 1 + ":" + i)),
+								self.controller_do && self.controller_do.updateTime(i, n),
+								FWDMSPUtils.getSecondsFromString(self.data.playlist_ar[self.id].stopAtTime) <= e.seconds && self.stop(),
+								5 < n.length ? self.totalDuration = FWDMSPUtils.getSecondsFromString(n)
+								             : self.totalDuration = FWDMSPUtils.getSecondsFromString("00:" + n),
 									self.dispatchEvent(FWDMSP.UPDATE_TIME, {
 										curTime: i,
 										totalTime: n
 									})
-							}, this.audioScreenLoadProgressHandler = function(e) {
-								FWDMSP.hasHTML5Audio ? self.controller_do && self.controller_do.updatePreloaderBar(e.percent) : self.controller_do && self.controller_do.updatePreloaderBar(e)
-							}, this.audioScreenPlayCompleteHandler = function() {
-								self.data.playlist_ar && (self.videoNameGa = self.data.playlist_ar[self.id].titleText, self.videoCat = self.data.cats_ar[self.catId]), FWDMSP.hasHTML5Audio && (self.data.loop_bl ? "hls_flash" == self.audioType_str ? setTimeout(function() {
-									self.scrub(0), self.resume()
-								}, 50) : (self.scrub(0), self.play()) : self.data.shuffle_bl ? self.playShuffle() : 1 == self.playlist_do.items_ar.length ? (self.stop(), self.playlist_do && self.playlist_do.updateCurItemProgress(0)) : self.playNext()), self.dispatchEvent(FWDMSP.PLAY_COMPLETE)
-							}, this.loadID3IfPlaylistDisabled = function() {
+							},
+							this.audioScreenLoadProgressHandler = function(e) {
+								FWDMSP.hasHTML5Audio ? self.controller_do && self.controller_do.updatePreloaderBar(e.percent)
+								                     : self.controller_do && self.controller_do.updatePreloaderBar(e)
+							},
+							this.audioScreenPlayCompleteHandler = function() {
+								self.data.playlist_ar && (self.videoNameGa = self.data.playlist_ar[self.id].titleText,
+									                        self.videoCat = self.data.cats_ar[self.catId]),
+								FWDMSP.hasHTML5Audio && (self.data.loop_bl ? "hls_flash" == self.audioType_str
+																													 ? setTimeout(function() {
+																															self.scrub(0), self.resume()
+																															}, 50)
+																														: (self.scrub(0), self.play())
+																														: self.data.shuffle_bl ? self.playShuffle() : 1 == self.playlist_do.items_ar.length
+																														? (self.stop(), self.playlist_do && self.playlist_do.updateCurItemProgress(0))
+																														: self.playNext()),
+																														self.dispatchEvent(FWDMSP.PLAY_COMPLETE)
+							},
+							this.loadID3IfPlaylistDisabled = function() {
 								var o = self.data.playlist_ar[self.id].source;
 								"..." == self.data.playlist_ar[self.id].title && (o = o + "?rand=" + parseInt(99999999 * Math.random()), ID3.loadTags(o, function() {
 									var e = self.data.playlist_ar[self.id],
 										t = ID3.getAllTags(o);
 									e.title = t.artist + " - " + t.title, e.titleText = e.title, self.controller_do.setTitle(e.title)
 								}))
-							}, this.setSource = function(e) {
+							},
+							this.setSource = function(e) {
 								if (self.stop(!0),
-								    FWDMSPUtils.getCookie("FWDMSPusePP") && !self.playedOnceCP_bl && self.setVolume(Number(FWDMSPUtils.getCookie("FWDMSPVolume"))))
+								    FWDMSPUtils.getCookie("FWDMSPusePP") && !self.playedOnceCP_bl
+										                                     && self.setVolume(Number(FWDMSPUtils.getCookie("FWDMSPVolume"))))
 										return self.main_do.addChild(self.info_do),
 										self.info_do.showText(self.data.loggedInMessage_str),
 									void(self.info_do.allowToRemove_bl = !1);
 
 								else {
-									if (e && (self.itemClicked = e), self.passWindow_do && self.passWindow_do.hide(), self.id < 0 ? self.id = 0 : self.id > self.totalAudio - 1 && (self.id = self.totalAudio - 1), self.audioPath = self.data.playlist_ar[self.id].source, self.isShoutcast_bl = self.data.playlist_ar[self.id].isShoutcast_bl, self.isIcecast_bl = self.data.playlist_ar[self.id].isIcecast_bl, self.data.shoutcastVersion = self.data.playlist_ar[self.id].shoutcastVersion, !self.isShoutcastLoaded_bl && self.isShoutcast_bl && self.prevAudioPath != self.audioPath) return self.isShoutcastLoaded_bl = !0, self.playlist_do && self.playlist_do.activateItems(self.id, self.itemClicked),
-										self.resizeHandler(),
-										void self.data.getShoutcastRadioNameAndStream(self.audioPath);
-									if (!self.isIcecastLoaded_bl && self.isIcecast_bl && self.prevAudioPath != self.audioPath) return self.isIcecastLoaded_bl = !0,
-										self.playlist_do && self.playlist_do.activateItems(self.id, self.itemClicked),
-										self.resizeHandler(),
-										void self.data.getIcecastRadioNameAndStream(self.audioPath);
+									if (e && (self.itemClicked = e),
+									    self.passWindow_do && self.passWindow_do.hide(),
+											self.id < 0 ? self.id = 0 : self.id > self.totalAudio - 1 && (self.id = self.totalAudio - 1),
+											self.audioPath = self.data.playlist_ar[self.id].source,
+											self.isShoutcast_bl = self.data.playlist_ar[self.id].isShoutcast_bl,
+											self.isIcecast_bl = self.data.playlist_ar[self.id].isIcecast_bl,
+											self.data.shoutcastVersion = self.data.playlist_ar[self.id].shoutcastVersion,
+											!self.isShoutcastLoaded_bl && self.isShoutcast_bl && self.prevAudioPath != self.audioPath)
+											  return self.isShoutcastLoaded_bl = !0,
+												self.playlist_do && self.playlist_do.activateItems(self.id, self.itemClicked),
+												self.resizeHandler(),
+												void self.data.getShoutcastRadioNameAndStream(self.audioPath);
+									if (!self.isIcecastLoaded_bl && self.isIcecast_bl && self.prevAudioPath != self.audioPath)
+									   return self.isIcecastLoaded_bl = !0,
+									self.playlist_do && self.playlist_do.activateItems(self.id, self.itemClicked),
+									self.resizeHandler(),
+									void self.data.getIcecastRadioNameAndStream(self.audioPath);
 									var t;
-									if ((self.isShoutcast_bl || self.isIcecast_bl) && (self.audioPath = self.radioSource_str), self.prevAudioPath = self.audioPath, self.data.playlist_ar[self.id].controlerThumbnailPath && self.controller_do.loadThumb(self.data.playlist_ar[self.id].controlerThumbnailPath), self.data.playlist_ar[self.id].title && self.controller_do.setTitle(self.data.playlist_ar[self.id].title), (self.isShoutcast_bl || self.isIcecast_bl) && (self.audioPath = self.radioSource_str), self.stop(), self.isShoutcast_bl = self.data.playlist_ar[self.id].isShoutcast_bl, self.isIcecast_bl = self.data.playlist_ar[self.id].isIcecast_bl, self.videoPosterPath = self.data.playlist_ar[self.id].videoPosterPath, -1 != self.audioPath.indexOf("soundcloud.") && -1 == self.audioPath.indexOf("https://api.soundcloud.") ? (self.data.getSoundcloudUrl(self.audioPath), self.isLoadingSoundcloudTrack_bl = !0, self.audioType_str = FWDMSP.AUDIO) : (self.audioType_str = FWDMSP.AUDIO, self.isLoadingSoundcloudTrack_bl = !1), self.finalAudioPath_str = self.audioPath, FWDMSP.hasHTMLHLS || -1 == self.audioPath.indexOf(".m3u8") ? self.audioType_str = FWDMSP.AUDIO : self.audioType_str = FWDMSP.HLS, self.isMobile_bl ? self.largePlayButton_do && self.largePlayButton_do.hide() : self.largePlayButton_do && self.isFullScreen_bl && self.largePlayButton_do.show(), self.data.playlist_ar[self.id].atb && !self.isATBJsLoaded_bl) return (t = document.createElement("script")).src = self.data.mainFolderPath_str + "java/FWDMSPATB.js",
-										document.head.appendChild(t), t.onerror = function() {
+									if ((self.isShoutcast_bl || self.isIcecast_bl) && (self.audioPath = self.radioSource_str),
+									    self.prevAudioPath = self.audioPath,
+											self.data.playlist_ar[self.id].controlerThumbnailPath && self.controller_do.loadThumb(self.data.playlist_ar[self.id].controlerThumbnailPath),
+											self.data.playlist_ar[self.id].title && self.controller_do.setTitle(self.data.playlist_ar[self.id].title),
+											(self.isShoutcast_bl || self.isIcecast_bl) && (self.audioPath = self.radioSource_str),
+											self.stop(),
+											self.isShoutcast_bl = self.data.playlist_ar[self.id].isShoutcast_bl,
+											self.isIcecast_bl = self.data.playlist_ar[self.id].isIcecast_bl,
+											self.videoPosterPath = self.data.playlist_ar[self.id].videoPosterPath,
+											-1 != self.audioPath.indexOf("soundcloud.")
+											&&
+											-1 == self.audioPath.indexOf("https://api.soundcloud.") ? (self.data.getSoundcloudUrl(self.audioPath),
+											                                                           self.isLoadingSoundcloudTrack_bl = !0,
+																																								 self.audioType_str = FWDMSP.AUDIO)
+																																							: (self.audioType_str = FWDMSP.AUDIO,
+																																								 self.isLoadingSoundcloudTrack_bl = !1),
+						          self.finalAudioPath_str = self.audioPath,
+											FWDMSP.hasHTMLHLS || -1 == self.audioPath.indexOf(".m3u8") ? self.audioType_str = FWDMSP.AUDIO
+											                                                           : self.audioType_str = FWDMSP.HLS,
+											self.isMobile_bl ? self.largePlayButton_do && self.largePlayButton_do.hide()
+											                 : self.largePlayButton_do && self.isFullScreen_bl && self.largePlayButton_do.show(),
+											self.data.playlist_ar[self.id].atb && !self.isATBJsLoaded_bl)
+											 return (t = document.createElement("script")).src = self.data.mainFolderPath_str + "java/FWDMSPATB.js",
+										document.head.appendChild(t),
+										t.onerror = function() {
 											self.main_do.addChild(self.info_do),
-												self.info_do.showText('A to B plugin js file named <font color="#FF0000">FWDMSPATB.js</font> is not found. Please make sure that the content folder contains the java folder that contains the <font color="#FF0000">FWDMSPATB.js</font> file.'), self.preloader_do && self.preloader_do.hide()
+												self.info_do.showText('A to B plugin js file named <font color="#FF0000">FWDMSPATB.js</font> file.'),
+												self.preloader_do && self.preloader_do.hide()
 										}, void(t.onload = function() {
 											self.isATBJsLoaded_bl = !0, self.setupAtbWindow(),
 												self.setSource(self.audioPath)
 										});
-									if (!(self.isMobile_bl || FWDMSP.hasHTMLHLS || -1 == self.audioPath.indexOf(".m3u8") || self.isHLSJsLoaded_bl || FWDMSP.isHLSJsLoaded_bl)) return -1 != location.protocol.indexOf("file:") ? (self.main_do.addChild(self.info_do), self.info_do.showText("This browser dosen't allow playing HLS / live streaming videos local, please test online."), void self.resizeHandler()) : ((t = document.createElement("script")).src = self.data.hlsPath_str, document.head.appendChild(t), t.onerror = function() {
-										self.main_do.addChild(self.info_do),
-											self.info_do.showText("Error loading HLS library <font color='#FF0000'>" + self.data.hlsPath_str + "</font>."), self.preloader_do && self.preloader_do.hide()
-									}, void(t.onload = function() {
-										self.isHLSJsLoaded_bl = !0, FWDMSP.isHLSJsLoaded_bl = !0, self.setupHLS(),
+									if (!(self.isMobile_bl || FWDMSP.hasHTMLHLS
+										                     || -1 == self.audioPath.indexOf(".m3u8")
+																				 || self.isHLSJsLoaded_bl
+																				 || FWDMSP.isHLSJsLoaded_bl))
+										  return -1 != location.protocol.indexOf("file:") ? (self.main_do.addChild(self.info_do),
+											                                                   self.info_do.showText("This browser dosen't allow playing HLS / live streaming videos local, please test online."),
+																																				 void self.resizeHandler())
+																																			: ((t = document.createElement("script")).src = self.data.hlsPath_str,
+																																			   document.head.appendChild(t),
+																																				 t.onerror = function() {
+																																					 self.main_do.addChild(self.info_do),
+																																					 self.info_do.showText("Error loading HLS library <font color='#FF0000'>" + self.data.hlsPath_str + "</font>."),
+																																					 self.preloader_do && self.preloader_do.hide()
+									},
+									void(t.onload = function() {
+										self.isHLSJsLoaded_bl = !0,
+										FWDMSP.isHLSJsLoaded_bl = !0,
+										self.setupHLS(),
 											self.setSource(self.audioPath)
 									}));
 									self.audioScreen_do.setSource(self.audioPath),
@@ -1606,9 +1711,12 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 										self.controller_do.setTitle(self.data.playlist_ar[self.id].title), null == self.data.playlist_ar[self.id].duration ? self.controller_do.updateTime("00:00", "00:00") : self.controller_do.updateTime("00:00", FWDMSP.formatTotalTime(self.data.playlist_ar[self.id].duration)), self.controller_do.loadThumb(self.data.playlist_ar[self.id].thumbPath), self.playlist_do ? self.playlist_do.activateItems(self.id, self.itemClicked) : self.loadID3IfPlaylistDisabled(),
 										self.setPlaybackRate(self.data.defaultPlaybackRate)
 								}
-							}, this.destroyHLS = function() {
-								self.hlsJS && (self.hlsJS.destroy(), self.hlsJS = null)
-							}, this.setupHLS = function() {
+							},
+							this.destroyHLS = function() {
+								self.hlsJS && (self.hlsJS.destroy(),
+															 self.hlsJS = null)
+							},
+							this.setupHLS = function() {
 								self.hlsJS || (self.isHLSJsLoaded_bl = !0, self.hlsJS = new Hls, self.hlsJS.on(Hls.Events.ERROR, function(e, t) {
 									switch (self.HLSError_str, t.details) {
 										case Hls.ErrorDetails.MANIFEST_LOAD_ERROR:
@@ -1887,83 +1995,225 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 									self.id = e, self.id < 0 ? self.id = self.totalAudio - 1 : self.id > self.totalAudio - 1 && (self.id = 0), self.useDeepLinking_bl ? FWDAddress.setValue(self.instanceName_str + "?catid=" + self.catId + "&trackid=" + self.id) : (self.setSource(), self.changeHLS_bl = !0, self.audioType_str != FWDMSP.HLS && self.play()), self.prevId = self.id, self.data.playlist_ar
 								}
 							}, this.playSpecificTrack = function(e, t) {
-								self.isAPIReady_bl && self.isPlaylistLoaded_bl && (self.isPlaylistItemClicked_bl = !0, self.catId = e, self.id = t, self.catId < 0 ? self.catId = 0 : self.catId > self.data.totalCategories - 1 && (self.catId = self.data.totalCategories - 1), self.id < 0 && (self.id = 0), self.useDeepLinking_bl ? FWDAddress.setValue(self.instanceName_str + "?catid=" + self.catId + "&trackid=" + self.id) : (self.setSource(), self.play()), self.prevId = self.id, self.data.playlist_ar )
-							}, this.play = function() {
+								self.isAPIReady_bl && self.isPlaylistLoaded_bl
+								                   && (self.isPlaylistItemClicked_bl = !0,
+									                     self.catId = e,
+																			 self.id = t,
+																			 self.catId < 0 ? self.catId = 0 : self.catId > self.data.totalCategories - 1 && (self.catId = self.data.totalCategories - 1),
+																			 self.id < 0 && (self.id = 0),
+																			 self.useDeepLinking_bl ? FWDAddress.setValue(self.instanceName_str + "?catid=" + self.catId + "&trackid=" + self.id)
+																			                        : (self.setSource(), self.play()),
+																			 self.prevId = self.id,
+																			 self.data.playlist_ar )
+							},
+							this.play = function() {
 								if (self.isAPIReady_bl && self.isPlaylistLoaded_bl && !self.isLoadingSoundcloudTrack_bl) {
-									if (self.isPlaylistItemClicked_bl = !0, self.audioType_str == FWDMSP.HLS && 0 <= location.protocol.indexOf("file:")) return self.main_do.addChild(self.info_do), self.info_do.showText("HLS m3u8 videos can't be played local on this browser, please test it online!."), void self.info_do.positionAndResize();
-									if (self.data.playlist_ar[self.id].isPrivate && !self.hasPassedPassowrd_bl && self.passWindow_do) return self.resizeHandler(),
-										void self.passWindow_do.show();
+									if (self.isPlaylistItemClicked_bl = !0,
+										  self.audioType_str == FWDMSP.HLS && 0 <= location.protocol.indexOf("file:"))
+											return
+									void self.info_do.positionAndResize();
+									if (self.data.playlist_ar[self.id].isPrivate && !self.hasPassedPassowrd_bl && self.passWindow_do)
+									  return self.resizeHandler(),
+									void self.passWindow_do.show();
 									self.hasPassedPassowrd_bl = !0,
-										self.largePlayButton_do && self.largePlayButton_do.hide(), FWDMSP.pauseAllAudio(self), self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS || !self.videoScreen_do ? self.audioScreen_do && self.audioScreen_do.play() : self.audioType_str != FWDMSP.HLS_JS || self.isHLSManifestReady_bl ? self.videoScreen_do && self.videoScreen_do.play() : (self.videoScreen_do.initVideo(), self.setupHLS(), self.hlsJS.loadSource(self.audioPath), self.hlsJS.attachMedia(self.videoScreen_do.video_el), self.hlsJS.on(Hls.Events.MANIFEST_PARSED, function(e) {
-											self.isHLSManifestReady_bl = !0, self.audioType_str == FWDMSP.HLS_JS && self.play()
-										}))
+										self.largePlayButton_do && self.largePlayButton_do.hide(),
+										FWDMSP.pauseAllAudio(self),
+										self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS
+										                                   || !self.videoScreen_do ? self.audioScreen_do && self.audioScreen_do.play()
+																											                         : self.audioType_str != FWDMSP.HLS_JS
+																											 || self.isHLSManifestReady_bl ? self.videoScreen_do && self.videoScreen_do.play()
+																											                         : (self.videoScreen_do.initVideo(),
+																																							    self.setupHLS(),
+																																									self.hlsJS.loadSource(self.audioPath),
+																																									self.hlsJS.attachMedia(self.videoScreen_do.video_el),
+																																									self.hlsJS.on(Hls.Events.MANIFEST_PARSED,
+																																										function(e) {
+																																											self.isHLSManifestReady_bl = !0,
+																																											self.audioType_str == FWDMSP.HLS_JS && self.play()
+																																										}))
 								}
-							}, this.resume = function() {
-								self.isAPIReady_bl && FWDMSP.hasHTML5Audio && self.audioType_str == FWDMSP.HLS && self.flashObject.playerResume()
-							}, this.pause = function() {
-								self.isAPIReady_bl && self.isPlaylistLoaded_bl && (self.isPlaylistItemClicked_bl = !0, self.largePlayButton_do && self.isFullScreen_bl && self.largePlayButton_do.show(), self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS|| !self.videoScreen_do ? FWDMSP.hasHTML5Audio && self.audioScreen_do && self.audioScreen_do.pause() : self.videoScreen_do.pause())
-							}, this.stop = function(e) {
-								self.isAPIReady_bl && (e || (self.isIcecastLoaded_bl = !1, self.isShoutcastLoaded_bl = !1), self.isRadioLoaded_bl = !1, self.hasStartedToPlay_bl = !1, self.hasPassedPassowrd_bl = !1, self.isShoutcast_bl = !1, self.isIcecast_bl = !1, self.destroyHLS(), self.atb_do && self.atb_do.hide(!0), self.opener_do && self.opener_do.showPlayButton(), self.largePlayButton_do && self.largePlayButton_do.hide(), self.playlist_do && (self.playlist_do.setCurItemPlayState(), self.playlist_do.updateCurItemProgress(0)), self.controller_do && self.controller_do.ttm && self.controller_do.ttm.hide(), self.showCursor(), self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS || !self.videoScreen_do ? FWDMSP.hasHTML5Audio && self.audioScreen_do.stop() : self.videoScreen_do.stop(), self.controller_do && self.controller_do.disableAtbButton(), self.setPlaybackRate(self.data.defaultPlaybackRate), self.hasHlsPlayedOnce_bl = !1, self.isSafeToScrub_bl = !1, self.hlsState = void 0, self.changeHLS_bl = !1)
-							}, this.startToScrub = function() {
-								self.isAPIReady_bl && self.isPlaylistLoaded_bl && (self.audioType_str == FWDMSP.VIDEO ? self.videoScreen_do.startToScrub() : FWDMSP.hasHTML5Audio ? self.audioScreen_do.startToScrub() : self.isFlashScreenReady_bl && self.flashObject.startToScrub())
-							}, this.stopToScrub = function() {
-								self.isAPIReady_bl && self.isPlaylistLoaded_bl && (self.audioType_str == FWDMSP.VIDEO ? self.videoScreen_do.stopToScrub() : FWDMSP.hasHTML5Audio ? self.audioScreen_do.stopToScrub() : self.isFlashScreenReady_bl && self.flashObject.stopToScrub())
-							}, this.scrub = function(e) {
-								self.isAPIReady_bl && self.isPlaylistLoaded_bl && (isNaN(e) || (e < 0 ? e = 0 : 1 < e && (e = 1), self.audioType_str == FWDMSP.VIDEO ? self.videoScreen_do.scrub(e) : FWDMSP.hasHTML5Audio ? self.audioType_str == FWDMSP.HLS ? self.flashObject.playerSeek(e * self.HLSDuration) : self.audioScreen_do && self.audioScreen_do.scrub(e) : self.isFlashScreenReady_bl && self.flashObject.scrub(e)))
-							}, this.setPlaybackRate = function(e) {
-								self.isAPIReady_bl && (self.data.defaultPlaybackRate = e, self.audioType_str == FWDMSP.AUDIO && self.audioScreen_do, self.audioScreen_do.setPlaybackRate(e))
-							}, this.setVolume = function(e) {
-								self.isAPIReady_bl && (self.volume = e, self.controller_do && self.controller_do.updateVolume(e, !0), self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS || !self.videoScreen_do ? FWDMSP.hasHTML5Audio && self.audioScreen_do && self.audioScreen_do.setVolume(e) : self.videoScreen_do.setVolume(e))
-							}, this.showCategories = function() {
-								self.isAPIReady_bl && self.categories_do && (self.categories_do.show(self.catId), self.customContextMenu_do && self.customContextMenu_do.updateParent(self.categories_do), self.controller_do.setCategoriesButtonState("selected"))
-							}, this.hideCategories = function() {
-								self.isAPIReady_bl && self.categories_do && (self.categories_do.hide(), self.controller_do.setCategoriesButtonState("unselected"))
-							}, this.showPlaylist = function() {
-								self.isAPIReady_bl && (self.playlist_do && (self.isPlaylistShowed_bl = !0, self.playlist_do.show(!0), self.controller_do.setPlaylistButtonState("selected"), clearTimeout(self.disablePlaylistForAWhileId_to), self.disablePlaylistForAWhileId_to = setTimeout(function() {
-									self.playlist_do.hideDisable()
-								}, 150), self.playlist_do.showDisable()), self.setStageContainerFinalHeightAndPosition(self.animate_bl))
-							}, this.hidePlaylist = function() {
-								self.isAPIReady_bl && (self.playlist_do && (self.isPlaylistShowed_bl = !1, self.playlist_do.hide(), self.controller_do.setPlaylistButtonState("unselected"), self.setStageContainerFinalHeightAndPosition(self.animate_bl)))
-							}, this.getIsAPIReady = function() {
+							},
+							this.resume = function() {
+								self.isAPIReady_bl && FWDMSP.hasHTML5Audio
+								                   && self.audioType_str == FWDMSP.HLS
+																	 && self.flashObject.playerResume()
+							},
+							this.pause = function() {
+								self.isAPIReady_bl && self.isPlaylistLoaded_bl
+								                   && (self.isPlaylistItemClicked_bl = !0,
+																		   self.largePlayButton_do && self.isFullScreen_bl
+																			                         && self.largePlayButton_do.show(),
+																															 self.audioType_str != FWDMSP.VIDEO
+																															 && self.audioType_str != FWDMSP.HLS
+																															 || !self.videoScreen_do ? FWDMSP.hasHTML5Audio && self.audioScreen_do && self.audioScreen_do.pause()
+																															                         : self.videoScreen_do.pause())
+							},
+							this.stop = function(e) {
+								self.isAPIReady_bl && (e || (self.isIcecastLoaded_bl = !1, self.isShoutcastLoaded_bl = !1),
+								                       self.isRadioLoaded_bl = !1,
+																			 self.hasStartedToPlay_bl = !1,
+																			 self.hasPassedPassowrd_bl = !1,
+																			 self.isShoutcast_bl = !1,
+																			 self.isIcecast_bl = !1,
+																			 self.destroyHLS(),
+																			 self.atb_do && self.atb_do.hide(!0),
+																			 self.opener_do && self.opener_do.showPlayButton(),
+																			 self.largePlayButton_do && self.largePlayButton_do.hide(),
+																			 self.playlist_do && (self.playlist_do.setCurItemPlayState(),
+																			                      self.playlist_do.updateCurItemProgress(0)),
+																			 self.controller_do && self.controller_do.ttm && self.controller_do.ttm.hide(),
+																			 self.showCursor(),
+																			 self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS
+																			                                    || !self.videoScreen_do ? FWDMSP.hasHTML5Audio && self.audioScreen_do.stop()
+																																					                        : self.videoScreen_do.stop(),
+																				self.controller_do && self.controller_do.disableAtbButton(),
+																				self.setPlaybackRate(self.data.defaultPlaybackRate),
+																				self.hasHlsPlayedOnce_bl = !1,
+																				self.isSafeToScrub_bl = !1,
+																				self.hlsState = void 0,
+																				self.changeHLS_bl = !1)
+							},
+							this.startToScrub = function() {
+								self.isAPIReady_bl && self.isPlaylistLoaded_bl
+								                   && (self.audioType_str == FWDMSP.VIDEO ? self.videoScreen_do.startToScrub()
+								                                                          : FWDMSP.hasHTML5Audio
+																																					? self.audioScreen_do.startToScrub()
+																																					: self.isFlashScreenReady_bl && self.flashObject.startToScrub())
+							},
+							this.stopToScrub = function() {
+								self.isAPIReady_bl && self.isPlaylistLoaded_bl
+								                   && (self.audioType_str == FWDMSP.VIDEO ? self.videoScreen_do.stopToScrub()
+																	                                        : FWDMSP.hasHTML5Audio
+																																					? self.audioScreen_do.stopToScrub()
+																																					: self.isFlashScreenReady_bl && self.flashObject.stopToScrub())
+							},
+							this.scrub = function(e) {
+								self.isAPIReady_bl && self.isPlaylistLoaded_bl
+								                   && (isNaN(e) || (e < 0 ? e = 0 : 1 < e && (e = 1),
+																	                  self.audioType_str == FWDMSP.VIDEO ? self.videoScreen_do.scrub(e)
+																										                                   : FWDMSP.hasHTML5Audio
+																																											 ? self.audioType_str == FWDMSP.HLS
+																																											 ? self.flashObject.playerSeek(e * self.HLSDuration)
+																																											 : self.audioScreen_do && self.audioScreen_do.scrub(e)
+																																											 : self.isFlashScreenReady_bl && self.flashObject.scrub(e)))
+							},
+							this.setPlaybackRate = function(e) {
+								self.isAPIReady_bl && (self.data.defaultPlaybackRate = e,
+									                     self.audioType_str == FWDMSP.AUDIO && self.audioScreen_do,
+																			 self.audioScreen_do.setPlaybackRate(e))
+							},
+							this.setVolume = function(e) {
+								self.isAPIReady_bl && (self.volume = e,
+									                     self.controller_do && self.controller_do.updateVolume(e, !0),
+																			 self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS
+																			                                    || !self.videoScreen_do ? FWDMSP.hasHTML5Audio && self.audioScreen_do && self.audioScreen_do.setVolume(e)
+																																					                        : self.videoScreen_do.setVolume(e))
+							},
+							this.showCategories = function() {
+								self.isAPIReady_bl && self.categories_do
+								                   && (self.categories_do.show(self.catId),
+																	     self.customContextMenu_do && self.customContextMenu_do.updateParent(self.categories_do),
+																			 self.controller_do.setCategoriesButtonState("selected"))
+							},
+							this.hideCategories = function() {
+								self.isAPIReady_bl && self.categories_do
+								                   && (self.categories_do.hide(),
+																	     self.controller_do.setCategoriesButtonState("unselected"))
+							},
+							this.showPlaylist = function() {
+								self.isAPIReady_bl && (self.playlist_do && (self.isPlaylistShowed_bl = !0,
+									                                          self.playlist_do.show(!0),
+																														self.controller_do.setPlaylistButtonState("selected"),
+																														clearTimeout(self.disablePlaylistForAWhileId_to),
+																														self.disablePlaylistForAWhileId_to = setTimeout(function() {
+																															self.playlist_do.hideDisable()
+																														}, 150),
+																														self.playlist_do.showDisable()),
+																		self.setStageContainerFinalHeightAndPosition(self.animate_bl))
+							},
+							this.hidePlaylist = function() {
+								self.isAPIReady_bl && (self.playlist_do && (self.isPlaylistShowed_bl = !1,
+									                                          self.playlist_do.hide(),
+																														self.controller_do.setPlaylistButtonState("unselected"),
+																														self.setStageContainerFinalHeightAndPosition(self.animate_bl)))
+							},
+							this.getIsAPIReady = function() {
 								return self.isAPIReady_bl
-							}, this.getCatId = function() {
+							},
+							this.getCatId = function() {
 								return self.catId
-							}, this.getTrackId = function() {
+							},
+							this.getTrackId = function() {
 								return self.id
-							}, this.getTrackTitle = function() {
+							},
+							this.getTrackTitle = function() {
 								if (self.isAPIReady_bl) return self.data.playlist_ar[self.id].title
-							}, this.getThumbnailPath = function() {
+							},
+							this.getThumbnailPath = function() {
 								return self.data.playlist_ar[self.id].thumbPath
-							}, this.getCurrentTime = function() {
-								if (self.isAPIReady_bl) return self.audioType_str == FWDMSP.AUDIO ? self.audioScreen_do.getCurrentTime() : self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS || !self.videoScreen_do ? void 0 : self.videoScreen_do.getCurrentTime()
-							}, this.getDuration = function() {
-								if (self.isAPIReady_bl) return self.audioType_str == FWDMSP.AUDIO ? self.audioScreen_do.getDuration() : self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS || !self.videoScreen_do ? void 0 : self.videoScreen_do.getDuration()
-							}, this.scrubbAtTime = function(e) {
-								self.isAPIReady_bl && e && (-1 != String(e).indexOf(":") && (e = FWDMSPUtils.getSecondsFromString(e)), self.audioType_str == FWDMSP.AUDIO ? self.audioScreen_do && self.audioScreen_do.scrubbAtTime(e) : self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS || !self.videoScreen_do || self.videoScreen_do && self.videoScreen_do.scrubbAtTime(e))
-							}, this.buy = function(pId) {
+							},
+							this.getCurrentTime = function() {
+								if (self.isAPIReady_bl)
+								  return self.audioType_str == FWDMSP.AUDIO ? self.audioScreen_do.getCurrentTime()
+								                                                                  : self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS
+																																									|| !self.videoScreen_do
+																																									? void 0
+																																									: self.videoScreen_do.getCurrentTime()
+							},
+							this.getDuration = function() {
+								if (self.isAPIReady_bl)
+								  return self.audioType_str == FWDMSP.AUDIO ? self.audioScreen_do.getDuration()
+								                                                                  : self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS
+																																									|| !self.videoScreen_do
+																																									? void 0
+																																									: self.videoScreen_do.getDuration()
+							},
+							this.scrubbAtTime = function(e) {
+								self.isAPIReady_bl && e
+								                   && (-1 != String(e).indexOf(":") && (e = FWDMSPUtils.getSecondsFromString(e)),
+																	    self.audioType_str == FWDMSP.AUDIO ? self.audioScreen_do && self.audioScreen_do.scrubbAtTime(e)
+																			                                   : self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS
+																																				 || !self.videoScreen_do
+																																				 || self.videoScreen_do && self.videoScreen_do.scrubbAtTime(e))
+							},
+							this.buy = function(pId) {
 								if (self.isAPIReady_bl) {
 									null == pId && (pId = self.id);
 									var track_id = self.data.playlist_ar[pId].buy;
 									var can_add = self.data.playlist_ar[pId].can_add;
 									console.log("номер дорожки: " + pId, "id трека: " + track_id, "возможность добавить: " + can_add);
 								}
-							}, this.playFirstTrack = function() {
+							},
+							this.playFirstTrack = function() {
 								self.playSpecificTrack(self.catId, 0)
-							}, this.playLastTrack = function() {
+							},
+							this.playLastTrack = function() {
 								self.playSpecificTrack(self.catId, self.data.playlist_ar.length - 1)
-							}, this.addTrack = function(e, t, o, s, i, n, l) {
-								self.isReady_bl || (self.useDeepLinking_bl && (location.hash = self.instanceName_str + "?catid=" + self.catId + "&trackid=" + (self.id + 1)), self.playlist_do && self.playlist_do.addTrack(e, t, o, s, i, n, l), self.useDeepLinking_bl && (location.hash = self.instanceName_str + "?catid=" + self.catId + "&trackid=0"))
-							}, this.updateHEXColors = function(e, t) {
-								self.isAPIReady_bl && (self.controller_do.updateHEXColors(e, t), self.largePlayButton_do && self.largePlayButton_do.updateHEXColors(e, "#FFFFFF"), self.playlist_do && self.playlist_do.updateHEXColors(e, t), self.opener_do && self.opener_do.updateHEXColors(e, "#FFFFFF"), self.playbackRateWindow_do && self.playbackRateWindow_do.updateHEXColors(e, t))
-							}, this.addListener = function(e, t) {
+							},
+							this.addTrack = function(e, t, o, s, i, n, l) {
+								self.isReady_bl || (self.useDeepLinking_bl && (location.hash = self.instanceName_str + "?catid=" + self.catId + "&trackid=" + (self.id + 1)),
+								                                               self.playlist_do && self.playlist_do.addTrack(e, t, o, s, i, n, l),
+																															 self.useDeepLinking_bl && (location.hash = self.instanceName_str + "?catid=" + self.catId + "&trackid=0"))
+							},
+							this.updateHEXColors = function(e, t) {
+								self.isAPIReady_bl && (self.controller_do.updateHEXColors(e, t),
+								                       self.largePlayButton_do && self.largePlayButton_do.updateHEXColors(e, "#FFFFFF"),
+																			 self.playlist_do && self.playlist_do.updateHEXColors(e, t),
+																			 self.opener_do && self.opener_do.updateHEXColors(e, "#FFFFFF"),
+																			 self.playbackRateWindow_do && self.playbackRateWindow_do.updateHEXColors(e, t))
+							},
+							this.addListener = function(e, t) {
 								if (this.listeners) {
 									if (null == e) throw Error("type is required.");
 									if ("object" == typeof e) throw Error("type must be of type String.");
 									if ("function" != typeof t) throw Error("listener must be of type Function.");
 									var o = {};
-									o.type = e, o.listener = t, (o.target = this).listeners.events_ar.push(o)
+									o.type = e,
+									o.listener = t,
+									(o.target = this).listeners.events_ar.push(o)
 								}
-							}, this.dispatchEvent = function(e, t) {
+							},
+							this.dispatchEvent = function(e, t) {
 								if (null != this.listeners) {
 									if (null == e) throw Error("type is required.");
 									if ("object" == typeof e) throw Error("type must be of type String.");
@@ -1974,7 +2224,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 											this.listeners.events_ar[o].listener.call(this, this.listeners.events_ar[o])
 										}
 								}
-							}, this.removeListener = function(e, t) {
+							},
+							this.removeListener = function(e, t) {
 								if (null == e) throw Error("type is required.");
 								if ("object" == typeof e) throw Error("type must be of type String.");
 								if ("function" != typeof t) throw Error("listener must be of type Function." + e);
@@ -1983,8 +2234,16 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 										this.listeners.events_ar.splice(o, 1);
 										break
 									}
-							}, self.useYoutube_bl && (-1 != location.protocol.indexOf("file:") && FWDMSPUtils.isIE || -1 != location.protocol.indexOf("file:") && FWDMSPUtils.isOpera)) return self.stageContainer = FWDMSPUtils.getChildById(props.parentId), self.setupMainDo(),
-							self.setupInfo(), self.main_do.addChild(self.info_do), self.info_do.allowToRemove_bl = !1, self.info_do.showText('This browser dosen\'t allow the Youtube API to run local, please test it online or in another browser like Firefox or Chrome! If you don\'t want to use Youtube set <font color="#FF000000">useYoutube:"no"</font>.'), void self.resizeHandler();
+							},
+							self.useYoutube_bl && (-1 != location.protocol.indexOf("file:") && FWDMSPUtils.isIE
+							                       || -1 != location.protocol.indexOf("file:") && FWDMSPUtils.isOpera))
+							return self.stageContainer = FWDMSPUtils.getChildById(props.parentId),
+							self.setupMainDo(),
+							self.setupInfo(),
+							self.main_do.addChild(self.info_do),
+							self.info_do.allowToRemove_bl = !1,
+							self.info_do.showText('This Youtube:"no"</font>.'),
+							void self.resizeHandler();
 						setTimeout(FWDMSP.checkIfHasYoutube, 100)
 					}
 				} else alert("FWDMSP instance name is requires please make sure that the instanceName parameter exsists and it's value is uinique.");
