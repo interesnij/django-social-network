@@ -420,7 +420,7 @@ function save_playlist(suffix, post_link, get_link, track_id){
           music_player.loadPlaylist(0);
           if (FWDMSP.LOAD_PLAYLIST_COMPLETE){
             console.log("Плейдист загружен!");
-          setTimeout(function() {music_player.playSpecificTrack("list_" + list_pk, track_id)}, 50);
+          setTimeout(function() {music_player.playSpecificTrack(suffix, track_id)}, 50);
         }
       }};
       _link.send( null );
