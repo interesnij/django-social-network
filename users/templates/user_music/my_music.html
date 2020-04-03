@@ -41,7 +41,7 @@
                               </figure>
                               <div class="media-body">
                                   <h6 class="music_list_item" style="cursor:pointer"><a>{{ object.title }}</a></h6>
-                                  <p class="small"><a href="{% url 'tag_all_music' pk=object.tag.pk %}">{{ object.tag }}</a></p>
+                                  <a class="small ajax" href="{% url 'tag_all_music' pk=object.tag.pk %}">{{ object.tag }}</a>
                                     <span class='span_btn' style="float:right;" data-pk="{{ object.pk }}">
                                       <span style="cursor:pointer">
                                         {% if not request_user|is_track_exists:object.id %}
