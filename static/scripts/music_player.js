@@ -1042,7 +1042,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 										e.preventDefault && e.preventDefault(),
 										self == FWDMSP.keyboardCurInstance)) {
 									if (32 == e.keyCode) {
-										if (self.audioType_str != FWDMSP.VIDEO || !self.videoScreen_do) {
+										if (self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS || !self.videoScreen_do) {
 											if (!self.audioScreen_do.isSafeToBeControlled_bl)
 											  return;
 											self.audioScreen_do.togglePlayPause()
@@ -1281,7 +1281,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 										(void 0 === self.catId || void 0 === self.id || isNaN(self.catId) || isNaN(self.id)) && (self.catId = self.data.startAtPlaylist, self.id = self.data.startAtTrack, e = !0),
                     (self.catId < 0 || self.catId > self.data.totalCategories - 1 && !e) && (self.catId = self.data.startAtPlaylist, self.id = self.data.startAtTrack, e = !0),
 										self.data.playlist_ar && (self.id < 0 && !e ? (self.id = self.data.startAtTrack, e = !0) : self.prevCatId == self.catId && self.id > self.data.playlist_ar.length - 1 && !e && (self.id = self.data.playlist_ar.length - 1, e = !0)),
-                    e ? location.hash = self.instanceName_str + "?catid=" + self.catId + "&trackid=" + self.id : self.prevCatId != self.catId ? (self.loadInternalPlaylist(), self.prevCatId = self.catId) : (self.isPlaylistItemClicked_bl = !0, self.setSource(!1), self.isShoutcast_bl || self.isIcecast_bl || self.play())
+                    e ? location.hash = self.instanceName_str + "?catid=" + self.catId + "&trackid=" + self.id : self.prevCatId != self.catId ? (self.loadInternalPlaylist(), self.prevCatId = self.catId) : (self.isPlaylistItemClicked_bl = !0, self.setSource(!1), self.changeHLS_bl = !0, self.isShoutcast_bl || self.isIcecast_bl || self.play())
 									}
 							}, this.setupPreloader = function() {
 								FWDMSPPreloader.setPrototype(),
@@ -1369,7 +1369,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 								? self.pause() : self.play() : self.play() : self.pause() : self.play() : self.useDeepLinking_bl &&
 								self.id != e.id ? (FWDAddress.setValue(self.instanceName_str + "?catid=" + self.catId + "&trackid=" + e.id), self.id = e.id)
 								: (self.id = e.id, self.setSource(!0),
-										self.play()
+										self.changeHLS_bl = !0,
+										self.autioType_str != FWDMSP.HLS
+										&& self.play()
 									)
 
 							},
@@ -1603,7 +1605,17 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 								                     : self.controller_do && self.controller_do.updatePreloaderBar(e)
 							},
 							this.audioScreenPlayCompleteHandler = function() {
-								self.dispatchEvent(FWDMSP.PLAY_COMPLETE)
+								self.data.playlist_ar && (self.videoNameGa = self.data.playlist_ar[self.id].titleText,
+									                        self.videoCat = self.data.cats_ar[self.catId]),
+								FWDMSP.hasHTML5Audio && (self.data.loop_bl ? "hls_flash" == self.audioType_str
+																													 ? setTimeout(function() {
+																															self.scrub(0), self.resume()
+																															}, 50)
+																														: (self.scrub(0), self.play())
+																														: self.data.shuffle_bl ? self.playShuffle() : 1 == self.playlist_do.items_ar.length
+																														? (self.stop(), self.playlist_do && self.playlist_do.updateCurItemProgress(0))
+																														: self.playNext()),
+																														self.dispatchEvent(FWDMSP.PLAY_COMPLETE)
 							},
 							this.loadID3IfPlaylistDisabled = function() {
 								var o = self.data.playlist_ar[self.id].source;
@@ -1657,6 +1669,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 																																							: (self.audioType_str = FWDMSP.AUDIO,
 																																								 self.isLoadingSoundcloudTrack_bl = !1),
 						          self.finalAudioPath_str = self.audioPath,
+											FWDMSP.hasHTMLHLS || -1 == self.audioPath.indexOf(".m3u8") ? self.audioType_str = FWDMSP.AUDIO
+											                                                           : self.audioType_str = FWDMSP.HLS,
 											self.isMobile_bl ? self.largePlayButton_do && self.largePlayButton_do.hide()
 											                 : self.largePlayButton_do && self.isFullScreen_bl && self.largePlayButton_do.show(),
 											self.data.playlist_ar[self.id].atb && !self.isATBJsLoaded_bl)
@@ -1670,16 +1684,24 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 											self.isATBJsLoaded_bl = !0, self.setupAtbWindow(),
 												self.setSource(self.audioPath)
 										});
-									if (!(self.isMobile_bl -1 == self.audioPath.indexOf(".m3u8")))
+									if (!(self.isMobile_bl || FWDMSP.hasHTMLHLS
+										                     || -1 == self.audioPath.indexOf(".m3u8")
+																				 || self.isHLSJsLoaded_bl
+																				 || FWDMSP.isHLSJsLoaded_bl))
 										  return -1 != location.protocol.indexOf("file:") ? (self.main_do.addChild(self.info_do),
-											                                                   self.info_do.showText("This browser dosen't allow playing / live streaming videos local, please test online."),
+											                                                   self.info_do.showText("This browser dosen't allow playing HLS / live streaming videos local, please test online."),
 																																				 void self.resizeHandler())
 																																			: ((t = document.createElement("script")).src = self.data.hlsPath_str,
 																																			   document.head.appendChild(t),
 																																				 t.onerror = function() {
+																																					 self.main_do.addChild(self.info_do),
+																																					 self.info_do.showText("Error loading HLS library <font color='#FF0000'>" + self.data.hlsPath_str + "</font>."),
 																																					 self.preloader_do && self.preloader_do.hide()
 									},
 									void(t.onload = function() {
+										self.isHLSJsLoaded_bl = !0,
+										FWDMSP.isHLSJsLoaded_bl = !0,
+										self.setupHLS(),
 											self.setSource(self.audioPath)
 									}));
 									self.audioScreen_do.setSource(self.audioPath),
@@ -1689,6 +1711,69 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 										self.controller_do.setTitle(self.data.playlist_ar[self.id].title), null == self.data.playlist_ar[self.id].duration ? self.controller_do.updateTime("00:00", "00:00") : self.controller_do.updateTime("00:00", FWDMSP.formatTotalTime(self.data.playlist_ar[self.id].duration)), self.controller_do.loadThumb(self.data.playlist_ar[self.id].thumbPath), self.playlist_do ? self.playlist_do.activateItems(self.id, self.itemClicked) : self.loadID3IfPlaylistDisabled(),
 										self.setPlaybackRate(self.data.defaultPlaybackRate)
 								}
+							},
+							this.destroyHLS = function() {
+								self.hlsJS && (self.hlsJS.destroy(),
+															 self.hlsJS = null)
+							},
+							this.setupHLS = function() {
+								self.hlsJS || (self.isHLSJsLoaded_bl = !0, self.hlsJS = new Hls, self.hlsJS.on(Hls.Events.ERROR, function(e, t) {
+									switch (self.HLSError_str, t.details) {
+										case Hls.ErrorDetails.MANIFEST_LOAD_ERROR:
+											try {
+												self.HLSError_str = 'cannot load <a href="' + t.context.url + '">' + url + "</a><br>HTTP response code:" + t.response.code + " <br>" + t.response.text,
+													0 === t.response.code && (self.HLSError_str += 'this might be a CORS issue, consider installing <a href="https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi">Allow-Control-Allow-Origin</a> Chrome Extension')
+											} catch (e) {
+												self.HLSError_str = "cannot load " + self.audioPath
+											}
+											break;
+										case Hls.ErrorDetails.MANIFEST_LOAD_TIMEOUT:
+											self.HLSError_str = "timeout while loading manifest";
+											break;
+										case Hls.ErrorDetails.MANIFEST_PARSING_ERROR:
+											self.HLSError_str = "error while parsing manifest:" + t.reason;
+											break;
+										case Hls.ErrorDetails.LEVEL_LOAD_ERROR:
+											self.HLSError_str = "error while loading level playlist";
+											break;
+										case Hls.ErrorDetails.LEVEL_LOAD_TIMEOUT:
+											self.HLSError_str = "timeout while loading level playlist";
+											break;
+										case Hls.ErrorDetails.LEVEL_SWITCH_ERROR:
+											self.HLSError_str = "error while trying to switch to level " + t.level;
+											break;
+										case Hls.ErrorDetails.FRAG_LOAD_ERROR:
+											self.HLSError_str = "error while loading fragment " + t.frag.url;
+											break;
+										case Hls.ErrorDetails.FRAG_LOAD_TIMEOUT:
+											self.HLSError_str = "timeout while loading fragment " + t.frag.url;
+											break;
+										case Hls.ErrorDetails.FRAG_LOOP_LOADING_ERROR:
+											self.HLSError_str = "Frag Loop Loading Error";
+											break;
+										case Hls.ErrorDetails.FRAG_DECRYPT_ERROR:
+											self.HLSError_str = "Decrypting Error:" + t.reason;
+											break;
+										case Hls.ErrorDetails.FRAG_PARSING_ERROR:
+											self.HLSError_str = "Parsing Error:" + t.reason;
+											break;
+										case Hls.ErrorDetails.KEY_LOAD_ERROR:
+											self.HLSError_str = "error while loading key " + t.frag.decryptdata.uri;
+											break;
+										case Hls.ErrorDetails.KEY_LOAD_TIMEOUT:
+											self.HLSError_str = "timeout while loading key " + t.frag.decryptdata.uri;
+											break;
+										case Hls.ErrorDetails.BUFFER_APPEND_ERROR:
+											self.HLSError_str = "Buffer Append Error";
+											break;
+										case Hls.ErrorDetails.BUFFER_ADD_CODEC_ERROR:
+											self.HLSError_str = "Buffer Add Codec Error for " + t.mimeType + ":" + t.err.message;
+											break;
+										case Hls.ErrorDetails.BUFFER_APPENDING_ERROR:
+											self.HLSError_str = "Buffer Appending Error"
+									}
+									self.HLSError_str && (console && console.log(self.HLSError_str), self.main_do.addChild(self.info_do), self.info_do.showText(self.HLSError_str), self.resizeHandler())
+								}))
 							},
 							this.setupClickScreen = function() {
 								self.dumyClick_do = new FWDMSPDisplayObject("div"),
@@ -1896,18 +1981,18 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 																																									: self.id = self.playlist_do.items_ar[0].id
 																																									: (self.id++, self.id < 0 ? self.id = self.totalAudio - 1 : self.id > self.totalAudio - 1 && (self.id = 0)),
 																		  self.useDeepLinking_bl ? FWDAddress.setValue(self.instanceName_str + "?catid=" + self.catId + "&trackid=" + self.id)
-																			                       : (self.setSource(), self.play()),
+																			                       : (self.setSource(), self.changeHLS_bl = !0, self.audioType_str != FWDMSP.HLS && self.play()),
 																      self.prevId = self.id,
 																			self.data.playlist_ar && (self.videoNameGa = self.data.playlist_ar[self.id].titleText,
 																			self.videoCat = self.data.cats_ar[self.catId]))
 							},
 							this.playPrev = function() {
-								self.isAPIReady_bl && self.isPlaylistLoaded_bl && (self.data.showPlayListButtonAndPlaylist_bl ? self.playlist_do.items_ar[self.playlist_do.curItem_do.sortId - 1] ? self.id = self.playlist_do.items_ar[self.playlist_do.curItem_do.sortId - 1].id : self.id = self.playlist_do.items_ar[self.totalAudio - 1].id : (self.id--, self.id < 0 ? self.id = self.totalAudio - 1 : self.id > self.totalAudio - 1 && (self.id = 0)), self.useDeepLinking_bl ? FWDAddress.setValue(self.instanceName_str + "?catid=" + self.catId + "&trackid=" + self.id) : (self.setSource(), self.play()), self.prevId = self.id, self.data.playlist_ar && (self.videoNameGa = self.data.playlist_ar[self.id].titleText, self.videoCat = self.data.cats_ar[self.catId]))
+								self.isAPIReady_bl && self.isPlaylistLoaded_bl && (self.data.showPlayListButtonAndPlaylist_bl ? self.playlist_do.items_ar[self.playlist_do.curItem_do.sortId - 1] ? self.id = self.playlist_do.items_ar[self.playlist_do.curItem_do.sortId - 1].id : self.id = self.playlist_do.items_ar[self.totalAudio - 1].id : (self.id--, self.id < 0 ? self.id = self.totalAudio - 1 : self.id > self.totalAudio - 1 && (self.id = 0)), self.useDeepLinking_bl ? FWDAddress.setValue(self.instanceName_str + "?catid=" + self.catId + "&trackid=" + self.id) : (self.setSource(), self.changeHLS_bl = !0, self.audioType_str != FWDMSP.HLS && self.play()), self.prevId = self.id, self.data.playlist_ar && (self.videoNameGa = self.data.playlist_ar[self.id].titleText, self.videoCat = self.data.cats_ar[self.catId]))
 							}, this.playShuffle = function() {
 								if (self.isAPIReady_bl && self.isPlaylistLoaded_bl) {
 									self.isPlaylistItemClicked_bl = !0;
 									for (var e = parseInt(Math.random() * self.data.playlist_ar.length); e == self.id;) e = parseInt(Math.random() * self.data.playlist_ar.length);
-									self.id = e, self.id < 0 ? self.id = self.totalAudio - 1 : self.id > self.totalAudio - 1 && (self.id = 0), self.useDeepLinking_bl ? FWDAddress.setValue(self.instanceName_str + "?catid=" + self.catId + "&trackid=" + self.id) : (self.setSource(), self.play()), self.prevId = self.id, self.data.playlist_ar
+									self.id = e, self.id < 0 ? self.id = self.totalAudio - 1 : self.id > self.totalAudio - 1 && (self.id = 0), self.useDeepLinking_bl ? FWDAddress.setValue(self.instanceName_str + "?catid=" + self.catId + "&trackid=" + self.id) : (self.setSource(), self.changeHLS_bl = !0, self.audioType_str != FWDMSP.HLS && self.play()), self.prevId = self.id, self.data.playlist_ar
 								}
 							}, this.playSpecificTrack = function(e, t) {
 								self.isAPIReady_bl && self.isPlaylistLoaded_bl
@@ -1924,7 +2009,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 							this.play = function() {
 								if (self.isAPIReady_bl && self.isPlaylistLoaded_bl && !self.isLoadingSoundcloudTrack_bl) {
 									if (self.isPlaylistItemClicked_bl = !0,
-										  0 <= location.protocol.indexOf("file:"))
+										  self.audioType_str == FWDMSP.HLS && 0 <= location.protocol.indexOf("file:"))
 											return
 									void self.info_do.positionAndResize();
 									if (self.data.playlist_ar[self.id].isPrivate && !self.hasPassedPassowrd_bl && self.passWindow_do)
@@ -1950,6 +2035,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 							},
 							this.resume = function() {
 								self.isAPIReady_bl && FWDMSP.hasHTML5Audio
+								                   && self.audioType_str == FWDMSP.HLS
 																	 && self.flashObject.playerResume()
 							},
 							this.pause = function() {
@@ -1969,6 +2055,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 																			 self.hasPassedPassowrd_bl = !1,
 																			 self.isShoutcast_bl = !1,
 																			 self.isIcecast_bl = !1,
+																			 self.destroyHLS(),
 																			 self.atb_do && self.atb_do.hide(!0),
 																			 self.opener_do && self.opener_do.showPlayButton(),
 																			 self.largePlayButton_do && self.largePlayButton_do.hide(),
@@ -1976,11 +2063,15 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 																			                      self.playlist_do.updateCurItemProgress(0)),
 																			 self.controller_do && self.controller_do.ttm && self.controller_do.ttm.hide(),
 																			 self.showCursor(),
-																			 self.audioType_str != FWDMSP.VIDEO || !self.videoScreen_do ? FWDMSP.hasHTML5Audio && self.audioScreen_do.stop()
+																			 self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS
+																			                                    || !self.videoScreen_do ? FWDMSP.hasHTML5Audio && self.audioScreen_do.stop()
 																																					                        : self.videoScreen_do.stop(),
 																				self.controller_do && self.controller_do.disableAtbButton(),
 																				self.setPlaybackRate(self.data.defaultPlaybackRate),
-																				self.isSafeToScrub_bl = !1)
+																				self.hasHlsPlayedOnce_bl = !1,
+																				self.isSafeToScrub_bl = !1,
+																				self.hlsState = void 0,
+																				self.changeHLS_bl = !1)
 							},
 							this.startToScrub = function() {
 								self.isAPIReady_bl && self.isPlaylistLoaded_bl
@@ -2014,7 +2105,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 							this.setVolume = function(e) {
 								self.isAPIReady_bl && (self.volume = e,
 									                     self.controller_do && self.controller_do.updateVolume(e, !0),
-																			 self.audioType_str != FWDMSP.VIDEO || !self.videoScreen_do ? FWDMSP.hasHTML5Audio && self.audioScreen_do && self.audioScreen_do.setVolume(e)
+																			 self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS
+																			                                    || !self.videoScreen_do ? FWDMSP.hasHTML5Audio && self.audioScreen_do && self.audioScreen_do.setVolume(e)
 																																					                        : self.videoScreen_do.setVolume(e))
 							},
 							this.showCategories = function() {
@@ -2063,7 +2155,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 							this.getCurrentTime = function() {
 								if (self.isAPIReady_bl)
 								  return self.audioType_str == FWDMSP.AUDIO ? self.audioScreen_do.getCurrentTime()
-								                                                                  : self.audioType_str != FWDMSP.VIDEO
+								                                                                  : self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS
 																																									|| !self.videoScreen_do
 																																									? void 0
 																																									: self.videoScreen_do.getCurrentTime()
@@ -2159,7 +2251,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 				function handleMediaError() {
 					if (autoRecoverError) {
 						var e = performance.now();
+						!recoverDecodingErrorDate || 3e3 < e - recoverDecodingErrorDate ? (recoverDecodingErrorDate = performance.now(), self.HLSError_str = "try to recover media Error ...", self.hlsJS.recoverMediaError()) : !recoverSwapAudioCodecDate || 3e3 < e - recoverSwapAudioCodecDate ? (recoverSwapAudioCodecDate = performance.now(), self.HLSError_str = "try to swap Audio Codec and recover media Error ...", self.hlsJS.swapAudioCodec(), self.hlsJS.recoverMediaError()) : self.HLSError_str = "cannot recover, last media error recovery failed ..."
 					}
+					self.HLSError_str && (console && console.log(self.HLSError_str), self.main_do.addChild(self.info_do), self.info_do.showText(self.HLSError_str), self.resizeHandler())
 				}
 			},
 			TZ, UZ, f$, g$;
@@ -2214,6 +2308,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 					return "probably" != e.canPlayType("audio/mpeg") && "maybe" != e.canPlayType("audio/mpeg") || (t += ".mp3"), "probably" != e.canPlayType("audio/ogg") && "maybe" != e.canPlayType("audio/ogg") || (t += ".ogg"), "probably" != e.canPlayType("audio/mp4") && "maybe" != e.canPlayType("audio/mp4") || (t += ".webm"), (o = t.split(".")).shift(), e = null, o
 				}
 			}(),
+			FWDMSP.hasHTMLHLS = (f$ = document.createElement("video"),
+			g$ = !1,
+			f$.canPlayType && (g$ = Boolean("probably" === f$.canPlayType("application/vnd.apple.mpegurl") || "maybe" === f$.canPlayType("application/vnd.apple.mpegurl"))), g$),
 			FWDMSP.instaces_ar = [],
 			FWDMSP.CENTER = "center",
 			FWDMSP.LEFT = "left",
@@ -2236,6 +2333,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 			FWDMSP.ERROR = "error",
 			FWDMSP.PLAY_COMPLETE = "playComplete",
 			FWDMSP.PLAYLIST_LOAD_COMPLETE = "onPlayListLoadComplete",
+			FWDMSP.HLS = "hls_flash",
 			window.FWDMSP = FWDMSP
 	}(window),
 	function(window) {
@@ -2441,6 +2539,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 										self.proxyPath_str = self.mainFolderPath_str,
 										self.proxyFolderPath_str = self.mainFolderPath_str,
 										self.mailPath_str = self.mainFolderPath_str,
+										self.hlsPath_str = self.mainFolderPath_str,
 										self.categories_el = document.getElementById(self.categoriesId_str),
 										self.categories_el)
 										{
