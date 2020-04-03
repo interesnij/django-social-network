@@ -5,7 +5,7 @@
       data-thumbpath="{{ object.artwork_url }}"
       data-title="{{ object.title }}"
       data-duration="{{ object.duration }}"
-      
+      data-add="{% if not request.user|is_track_exists:object.id %}true{% else %}false{% endif %}"
 			data-track-id="{{ object.pk }}">
   </li>
 

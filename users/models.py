@@ -280,7 +280,7 @@ class User(AbstractUser):
     def is_user_playlist(self):
         from music.models import UserTempSoundList
         try:
-            UserTempSoundList.objects.get(list__creator=self, tag=None, genre=None)
+            UserTempSoundList.objects.get(user=self, tag=None, genre=None)
             return True
         except:
             return False
@@ -289,7 +289,7 @@ class User(AbstractUser):
         from music.models import UserTempSoundList
 
         try:
-            UserTempSoundList.objects.get(list__creator=self, tag=tag, genre=None)
+            UserTempSoundList.objects.get(user=self, tag=tag, genre=None)
             return True
         except:
             return False
@@ -298,7 +298,7 @@ class User(AbstractUser):
         from music.models import UserTempSoundList
 
         try:
-            UserTempSoundList.objects.get(list__creator=self, tag=None, list=None, genre=genre)
+            UserTempSoundList.objects.get(user=self, tag=None, list=None, genre=genre)
             return True
         except:
             return False
