@@ -2190,7 +2190,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 				}
 			}(),
 			g$ = !1,
-			f$.canPlayType && (g$ = Boolean("probably" === f$.canPlayType("application/vnd.apple.mpegurl") || "maybe" === f$.canPlayType("application/vnd.apple.mpegurl")), g$),
+			f$.canPlayType && (g$ = Boolean("probably" === f$.canPlayType("application/vnd.apple.mpegurl") || "maybe" === f$.canPlayType("application/vnd.apple.mpegurl"))), g$),
 			FWDMSP.instaces_ar = [],
 			FWDMSP.CENTER = "center",
 			FWDMSP.LEFT = "left",
