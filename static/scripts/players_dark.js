@@ -418,7 +418,9 @@ function save_playlist(suffix, post_link, get_link, track_id){
             music_player.addTrack(_source, _title, _thumbPath, time, true, false, null);
           }
           music_player.loadPlaylist(0);
+          if (FWDMSP.LOAD_PLAYLIST_COMPLETE){
           music_player.playSpecificTrack(suffix, track_id);
+        }
       }};
       _link.send( null );
     }};
@@ -449,7 +451,9 @@ on('#ajax', 'click', '.music_list_item', function() {
     save_playlist("list_" + list_pk, '/music/manage/temp_list/' + list_pk, '/music/get/list/' + list_pk, track_id)
   }else{
     music_player.loadPlaylist(0);
+    if (FWDMSP.LOAD_PLAYLIST_COMPLETE){
     music_player.playSpecificTrack("list_" + list_pk, track_id);
+  }
   }
 });
 
