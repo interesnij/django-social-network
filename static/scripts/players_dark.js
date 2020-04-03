@@ -454,7 +454,7 @@ on('#ajax', 'click', '.music_list_item', function() {
       music_player.loadPlaylist(0)
     }
     music_player.playSpecificTrack("list_" + list_pk, track_id);
-    console.log(music_player.getCatId)}
+    console.log(FWDMSP.getCatId)}
 });
 
 
