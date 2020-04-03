@@ -2189,8 +2189,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 					return "probably" != e.canPlayType("audio/mpeg") && "maybe" != e.canPlayType("audio/mpeg") || (t += ".mp3"), "probably" != e.canPlayType("audio/ogg") && "maybe" != e.canPlayType("audio/ogg") || (t += ".ogg"), "probably" != e.canPlayType("audio/mp4") && "maybe" != e.canPlayType("audio/mp4") || (t += ".webm"), (o = t.split(".")).shift(), e = null, o
 				}
 			}(),
-			//g$ = !1,
-			//f$.canPlayType && (g$ = Boolean("probably" === f$.canPlayType("application/vnd.apple.mpegurl") || "maybe" === f$.canPlayType("application/vnd.apple.mpegurl"))), g$),
+			FWDMSP.hasHTMLHLS = (f$ = document.createElement("video"),
+			g$ = !1,
+			f$.canPlayType && (g$ = Boolean("probably" === f$.canPlayType("application/vnd.apple.mpegurl") || "maybe" === f$.canPlayType("application/vnd.apple.mpegurl"))), g$),
 			FWDMSP.instaces_ar = [],
 			FWDMSP.CENTER = "center",
 			FWDMSP.LEFT = "left",
