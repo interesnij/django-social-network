@@ -2129,18 +2129,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 										break
 									}
 							},
-							self.useYoutube_bl && (-1 != location.protocol.indexOf("file:") && FWDMSPUtils.isIE
-							                       || -1 != location.protocol.indexOf("file:") && FWDMSPUtils.isOpera))
-							return self.stageContainer = FWDMSPUtils.getChildById(props.parentId),
-							self.setupMainDo(),
-							self.setupInfo(),
-							self.main_do.addChild(self.info_do),
-							self.info_do.allowToRemove_bl = !1,
-							self.info_do.showText('This Youtube:"no"</font>.'),
-							void self.resizeHandler();
-						setTimeout(FWDMSP.checkIfHasYoutube, 100)
-					}
-				} else alert("FWDMSP instance name is requires please make sure that the instanceName parameter exsists and it's value is uinique.");
+							
 
 				function handleMediaError() {
 					if (autoRecoverError) {
