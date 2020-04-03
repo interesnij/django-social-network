@@ -616,7 +616,7 @@ class User(AbstractUser):
         elif genre_music:
             return genre_music.playlist_too()
         else:
-            queryset = reversed(self.get_my_music())
+            queryset = reversed(self.get_music())
             return queryset
 
     def get_avatar(self):
