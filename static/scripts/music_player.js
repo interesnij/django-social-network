@@ -1903,8 +1903,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 									if (self.isPlaylistItemClicked_bl = !0,
 										  self.audioType_str == FWDMSP.HLS && 0 <= location.protocol.indexOf("file:"))
 											return
-									self.main_do.addChild(self.info_do),
-									self.info_do.showText("HLS m3u8 videos can't be played local on this browser, please test it online!."),
+									//self.main_do.addChild(self.info_do),
+									//self.info_do.showText("HLS m3u8 videos can't be played local on this browser, please test it online!."),
 									void self.info_do.positionAndResize();
 									if (self.data.playlist_ar[self.id].isPrivate && !self.hasPassedPassowrd_bl && self.passWindow_do)
 									  return self.resizeHandler(),
