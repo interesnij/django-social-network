@@ -1668,8 +1668,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 																																							: (self.audioType_str = FWDMSP.AUDIO,
 																																								 self.isLoadingSoundcloudTrack_bl = !1),
 						          self.finalAudioPath_str = self.audioPath,
-											FWDMSP.hasHTMLHLS || -1 == self.audioPath.indexOf(".m3u8") ? self.audioType_str = FWDMSP.AUDIO
-											                                                           : self.audioType_str = FWDMSP.HLS,
+											self.audioType_str = FWDMSP.AUDIO
+										//	FWDMSP.hasHTMLHLS || -1 == self.audioPath.indexOf(".m3u8") ? self.audioType_str = FWDMSP.AUDIO
+										//	                                                           : self.audioType_str = FWDMSP.HLS,
 											self.isMobile_bl ? self.largePlayButton_do && self.largePlayButton_do.hide()
 											                 : self.largePlayButton_do && self.isFullScreen_bl && self.largePlayButton_do.show(),
 											self.data.playlist_ar[self.id].atb && !self.isATBJsLoaded_bl)
