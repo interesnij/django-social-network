@@ -7098,9 +7098,21 @@ var FWDUVPAddress = new function() {
                             self.showSourceError("Error loading MPEG DASH library <font color='#FF0000'>" + self.data.dashPath_str + "</font>.")
                         }, n.onload = function() {
                             self.isDASHLoaded_bl = !0, FWDUVPlayer.isDASHLoaded_bl = !0, self.setupDASH(), self.setSource(t, !1, self.is360)
-                        }, self.isThumbClick_bl = !1, void(self.autoPlay_bl || self.isThumbClick_bl || (self.setPosterSource(self.posterPath_str), self.videoPoster_do && self.videoPoster_do.show(), self.lrgPlayBtn && self.lrgPlayBtn.show())));
-                        if (!(self.isMbl || FWDUVPlayer.hasHTMLHLS || -1 == t.indexOf(".m3u8") || self.isHLSJsLoaded_bl || FWDUVPlayer.isHLSJsLoaded_bl)) return -1 != location.protocol.indexOf("file:") ? void self.showSourceError("This browser doesn't allow playing HLS videos local, please test online.") : ((n = document.createElement("script")).src = self.data.hlsPath_str, document.head.appendChild(n), n.onerror = function() {
-                            self.showSourceError("Error loading HLS library <font color='#FF0000'>" + self.data.hlsPath_str + "</font>.")
+                        },
+                        self.isThumbClick_bl = !1,
+                        void(self.autoPlay_bl || self.isThumbClick_bl
+                                              || (self.setPosterSource(self.posterPath_str),
+                                                  self.videoPoster_do && self.videoPoster_do.show(),
+                                                  self.lrgPlayBtn && self.lrgPlayBtn.show())));
+                        if (!(self.isMbl || FWDUVPlayer.hasHTMLHLS
+                                         || -1 == t.indexOf(".m3u8")
+                                         || self.isHLSJsLoaded_bl
+                                         || FWDUVPlayer.isHLSJsLoaded_bl))
+                            return -1 != location.protocol.indexOf("file:") ? void self.showSourceError("This browser doesn't allow playing HLS videos local, please test online.")
+                                                                            : ((n = document.createElement("script")).src = self.data.hlsPath_str,
+                                                                              document.head.appendChild(n),
+                                                                              n.onerror = function() {
+                                                                                self.showSourceError("Error loading HLS library <font color='#FF0000'>" + self.data.hlsPath_str + "</font>.")
                         }, n.onload = function() {
                             self.isHLSJsLoaded_bl = !0, FWDUVPlayer.isHLSJsLoaded_bl = !0, self.setupHLS(), self.setSource(t, !1, self.is360)
                         }, void(self.autoPlay_bl || self.isThumbClick_bl || (self.setPosterSource(self.posterPath_str), self.videoPoster_do && self.videoPoster_do.show(), self.lrgPlayBtn && self.lrgPlayBtn.show())));
