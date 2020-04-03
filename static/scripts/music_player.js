@@ -1281,7 +1281,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 										(void 0 === self.catId || void 0 === self.id || isNaN(self.catId) || isNaN(self.id)) && (self.catId = self.data.startAtPlaylist, self.id = self.data.startAtTrack, e = !0),
                     (self.catId < 0 || self.catId > self.data.totalCategories - 1 && !e) && (self.catId = self.data.startAtPlaylist, self.id = self.data.startAtTrack, e = !0),
 										self.data.playlist_ar && (self.id < 0 && !e ? (self.id = self.data.startAtTrack, e = !0) : self.prevCatId == self.catId && self.id > self.data.playlist_ar.length - 1 && !e && (self.id = self.data.playlist_ar.length - 1, e = !0)),
-                    e ? location.hash = self.instanceName_str + "?catid=" + self.catId + "&trackid=" + self.id : self.prevCatId != self.catId ? (self.loadInternalPlaylist(), self.prevCatId = self.catId) : (self.isPlaylistItemClicked_bl = !0, self.setSource(!1), self.changeHLS_bl = !0, self.isShoutcast_bl || self.isIcecast_bl || self.play())
+                    e ? location.hash = self.instanceName_str + "?catid=" + self.catId + "&trackid=" + self.id : self.prevCatId != self.catId ? (self.loadInternalPlaylist(), self.prevCatId = self.catId) : (self.isPlaylistItemClicked_bl = !0, self.setSource(!1), self.isShoutcast_bl || self.isIcecast_bl || self.play())
 									}
 							}, this.setupPreloader = function() {
 								FWDMSPPreloader.setPrototype(),
@@ -1369,9 +1369,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 								? self.pause() : self.play() : self.play() : self.pause() : self.play() : self.useDeepLinking_bl &&
 								self.id != e.id ? (FWDAddress.setValue(self.instanceName_str + "?catid=" + self.catId + "&trackid=" + e.id), self.id = e.id)
 								: (self.id = e.id, self.setSource(!0),
-										self.changeHLS_bl = !0,
-										self.autioType_str != FWDMSP.HLS
-										&& self.play()
+										self.play()
 									)
 
 							},
@@ -1711,69 +1709,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 										self.controller_do.setTitle(self.data.playlist_ar[self.id].title), null == self.data.playlist_ar[self.id].duration ? self.controller_do.updateTime("00:00", "00:00") : self.controller_do.updateTime("00:00", FWDMSP.formatTotalTime(self.data.playlist_ar[self.id].duration)), self.controller_do.loadThumb(self.data.playlist_ar[self.id].thumbPath), self.playlist_do ? self.playlist_do.activateItems(self.id, self.itemClicked) : self.loadID3IfPlaylistDisabled(),
 										self.setPlaybackRate(self.data.defaultPlaybackRate)
 								}
-							},
-							this.destroyHLS = function() {
-								self.hlsJS && (self.hlsJS.destroy(),
-															 self.hlsJS = null)
-							},
-							this.setupHLS = function() {
-								self.hlsJS || (self.isHLSJsLoaded_bl = !0, self.hlsJS = new Hls, self.hlsJS.on(Hls.Events.ERROR, function(e, t) {
-									switch (self.HLSError_str, t.details) {
-										case Hls.ErrorDetails.MANIFEST_LOAD_ERROR:
-											try {
-												self.HLSError_str = 'cannot load <a href="' + t.context.url + '">' + url + "</a><br>HTTP response code:" + t.response.code + " <br>" + t.response.text,
-													0 === t.response.code && (self.HLSError_str += 'this might be a CORS issue, consider installing <a href="https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi">Allow-Control-Allow-Origin</a> Chrome Extension')
-											} catch (e) {
-												self.HLSError_str = "cannot load " + self.audioPath
-											}
-											break;
-										case Hls.ErrorDetails.MANIFEST_LOAD_TIMEOUT:
-											self.HLSError_str = "timeout while loading manifest";
-											break;
-										case Hls.ErrorDetails.MANIFEST_PARSING_ERROR:
-											self.HLSError_str = "error while parsing manifest:" + t.reason;
-											break;
-										case Hls.ErrorDetails.LEVEL_LOAD_ERROR:
-											self.HLSError_str = "error while loading level playlist";
-											break;
-										case Hls.ErrorDetails.LEVEL_LOAD_TIMEOUT:
-											self.HLSError_str = "timeout while loading level playlist";
-											break;
-										case Hls.ErrorDetails.LEVEL_SWITCH_ERROR:
-											self.HLSError_str = "error while trying to switch to level " + t.level;
-											break;
-										case Hls.ErrorDetails.FRAG_LOAD_ERROR:
-											self.HLSError_str = "error while loading fragment " + t.frag.url;
-											break;
-										case Hls.ErrorDetails.FRAG_LOAD_TIMEOUT:
-											self.HLSError_str = "timeout while loading fragment " + t.frag.url;
-											break;
-										case Hls.ErrorDetails.FRAG_LOOP_LOADING_ERROR:
-											self.HLSError_str = "Frag Loop Loading Error";
-											break;
-										case Hls.ErrorDetails.FRAG_DECRYPT_ERROR:
-											self.HLSError_str = "Decrypting Error:" + t.reason;
-											break;
-										case Hls.ErrorDetails.FRAG_PARSING_ERROR:
-											self.HLSError_str = "Parsing Error:" + t.reason;
-											break;
-										case Hls.ErrorDetails.KEY_LOAD_ERROR:
-											self.HLSError_str = "error while loading key " + t.frag.decryptdata.uri;
-											break;
-										case Hls.ErrorDetails.KEY_LOAD_TIMEOUT:
-											self.HLSError_str = "timeout while loading key " + t.frag.decryptdata.uri;
-											break;
-										case Hls.ErrorDetails.BUFFER_APPEND_ERROR:
-											self.HLSError_str = "Buffer Append Error";
-											break;
-										case Hls.ErrorDetails.BUFFER_ADD_CODEC_ERROR:
-											self.HLSError_str = "Buffer Add Codec Error for " + t.mimeType + ":" + t.err.message;
-											break;
-										case Hls.ErrorDetails.BUFFER_APPENDING_ERROR:
-											self.HLSError_str = "Buffer Appending Error"
-									}
-									self.HLSError_str && (console && console.log(self.HLSError_str), self.main_do.addChild(self.info_do), self.info_do.showText(self.HLSError_str), self.resizeHandler())
-								}))
 							},
 							this.setupClickScreen = function() {
 								self.dumyClick_do = new FWDMSPDisplayObject("div"),
