@@ -453,7 +453,7 @@ on('#ajax', 'click', '.music_list_item', function() {
     if (music_player.getCatId != 0){
       music_player.loadPlaylist(0)
     }
-    music_player.playSpecificTrack("list_" + list_pk, track_id)ж
+    music_player.playSpecificTrack("list_" + list_pk, track_id);
     console.log(music_player.getCatId)}
 });
 
