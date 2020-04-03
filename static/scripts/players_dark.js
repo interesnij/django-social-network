@@ -438,7 +438,7 @@ on('#ajax', 'click', '.tag_item', function() {
     music_player.loadPlaylist(0);
     if (FWDMSP.LOAD_PLAYLIST_COMPLETE){
       console.log("Плейдист загружен!");
-    setTimeout(function() {music_player.playSpecificTrack("tag_" + list_pk, track_id)}, 50);
+    setTimeout(function() {music_player.playSpecificTrack("tag_" + tag_pk, track_id)}, 50);
   }
   }
   });
