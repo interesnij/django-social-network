@@ -1925,7 +1925,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 							this.play = function() {
 								if (self.isAPIReady_bl && self.isPlaylistLoaded_bl && !self.isLoadingSoundcloudTrack_bl) {
 									if (self.isPlaylistItemClicked_bl = !0,
-										  0 <= location.protocol.indexOf("file:"))
+										  self.audioType_str == FWDMSP.HLS && 0 <= location.protocol.indexOf("file:"))
 											return
 									void self.info_do.positionAndResize();
 									if (self.data.playlist_ar[self.id].isPrivate && !self.hasPassedPassowrd_bl && self.passWindow_do)
@@ -1934,11 +1934,24 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 									self.hasPassedPassowrd_bl = !0,
 										self.largePlayButton_do && self.largePlayButton_do.hide(),
 										FWDMSP.pauseAllAudio(self),
-										self.audioType_str != FWDMSP.VIDEO
+										self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS
+										                                   || !self.videoScreen_do ? self.audioScreen_do && self.audioScreen_do.play()
+																											                         : self.audioType_str != FWDMSP.HLS_JS
+																											 || self.isHLSManifestReady_bl ? self.videoScreen_do && self.videoScreen_do.play()
+																											                         : (self.videoScreen_do.initVideo(),
+																																							    self.setupHLS(),
+																																									self.hlsJS.loadSource(self.audioPath),
+																																									self.hlsJS.attachMedia(self.videoScreen_do.video_el),
+																																									self.hlsJS.on(Hls.Events.MANIFEST_PARSED,
+																																										function(e) {
+																																											self.isHLSManifestReady_bl = !0,
+																																											self.audioType_str == FWDMSP.HLS_JS && self.play()
+																																										}))
 								}
 							},
 							this.resume = function() {
 								self.isAPIReady_bl && FWDMSP.hasHTML5Audio
+								                   && self.audioType_str == FWDMSP.HLS
 																	 && self.flashObject.playerResume()
 							},
 							this.pause = function() {
@@ -1965,11 +1978,15 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 																			                      self.playlist_do.updateCurItemProgress(0)),
 																			 self.controller_do && self.controller_do.ttm && self.controller_do.ttm.hide(),
 																			 self.showCursor(),
-																			 self.audioType_str != FWDMSP.VIDEO || !self.videoScreen_do ? FWDMSP.hasHTML5Audio && self.audioScreen_do.stop()
+																			 self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS
+																			                                    || !self.videoScreen_do ? FWDMSP.hasHTML5Audio && self.audioScreen_do.stop()
 																																					                        : self.videoScreen_do.stop(),
 																				self.controller_do && self.controller_do.disableAtbButton(),
 																				self.setPlaybackRate(self.data.defaultPlaybackRate),
-																				self.isSafeToScrub_bl = !1)
+																				self.hasHlsPlayedOnce_bl = !1,
+																				self.isSafeToScrub_bl = !1,
+																				self.hlsState = void 0,
+																				self.changeHLS_bl = !1)
 							},
 							this.startToScrub = function() {
 								self.isAPIReady_bl && self.isPlaylistLoaded_bl
@@ -2003,7 +2020,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 							this.setVolume = function(e) {
 								self.isAPIReady_bl && (self.volume = e,
 									                     self.controller_do && self.controller_do.updateVolume(e, !0),
-																			 self.audioType_str != FWDMSP.VIDEO || !self.videoScreen_do ? FWDMSP.hasHTML5Audio && self.audioScreen_do && self.audioScreen_do.setVolume(e)
+																			 self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS
+																			                                    || !self.videoScreen_do ? FWDMSP.hasHTML5Audio && self.audioScreen_do && self.audioScreen_do.setVolume(e)
 																																					                        : self.videoScreen_do.setVolume(e))
 							},
 							this.showCategories = function() {
@@ -2052,7 +2070,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 							this.getCurrentTime = function() {
 								if (self.isAPIReady_bl)
 								  return self.audioType_str == FWDMSP.AUDIO ? self.audioScreen_do.getCurrentTime()
-								                                                                  : self.audioType_str != FWDMSP.VIDEO
+								                                                                  : self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS
 																																									|| !self.videoScreen_do
 																																									? void 0
 																																									: self.videoScreen_do.getCurrentTime()
@@ -2060,7 +2078,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 							this.getDuration = function() {
 								if (self.isAPIReady_bl)
 								  return self.audioType_str == FWDMSP.AUDIO ? self.audioScreen_do.getDuration()
-								                                                                  : self.audioType_str != FWDMSP.VIDEO
+								                                                                  : self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS
 																																									|| !self.videoScreen_do
 																																									? void 0
 																																									: self.videoScreen_do.getDuration()
@@ -2069,7 +2087,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 								self.isAPIReady_bl && e
 								                   && (-1 != String(e).indexOf(":") && (e = FWDMSPUtils.getSecondsFromString(e)),
 																	    self.audioType_str == FWDMSP.AUDIO ? self.audioScreen_do && self.audioScreen_do.scrubbAtTime(e)
-																			                                   : self.audioType_str != FWDMSP.VIDEO && self.audioType_str
+																			                                   : self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS
 																																				 || !self.videoScreen_do
 																																				 || self.videoScreen_do && self.videoScreen_do.scrubbAtTime(e))
 							},
@@ -2148,7 +2166,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 				function handleMediaError() {
 					if (autoRecoverError) {
 						var e = performance.now();
+						!recoverDecodingErrorDate || 3e3 < e - recoverDecodingErrorDate ? (recoverDecodingErrorDate = performance.now(), self.HLSError_str = "try to recover media Error ...", self.hlsJS.recoverMediaError()) : !recoverSwapAudioCodecDate || 3e3 < e - recoverSwapAudioCodecDate ? (recoverSwapAudioCodecDate = performance.now(), self.HLSError_str = "try to swap Audio Codec and recover media Error ...", self.hlsJS.swapAudioCodec(), self.hlsJS.recoverMediaError()) : self.HLSError_str = "cannot recover, last media error recovery failed ..."
 					}
+					self.HLSError_str && (console && console.log(self.HLSError_str), self.main_do.addChild(self.info_do), self.info_do.showText(self.HLSError_str), self.resizeHandler())
 				}
 			},
 			TZ, UZ, f$, g$;
@@ -2228,6 +2248,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 			FWDMSP.ERROR = "error",
 			FWDMSP.PLAY_COMPLETE = "playComplete",
 			FWDMSP.PLAYLIST_LOAD_COMPLETE = "onPlayListLoadComplete",
+			FWDMSP.HLS = "hls_flash",
 			window.FWDMSP = FWDMSP
 	}(window),
 	function(window) {
@@ -2433,6 +2454,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 										self.proxyPath_str = self.mainFolderPath_str,
 										self.proxyFolderPath_str = self.mainFolderPath_str,
 										self.mailPath_str = self.mainFolderPath_str,
+										self.hlsPath_str = self.mainFolderPath_str,
 										self.categories_el = document.getElementById(self.categoriesId_str),
 										self.categories_el)
 										{
