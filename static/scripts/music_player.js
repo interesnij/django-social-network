@@ -4316,57 +4316,155 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 							0 == p.simpleText_do.getHeight() ? p.positionTitleId_to = setTimeout(e, 200) : (p.simpleText_do.setY(parseInt((p.mainTitlebar_do.h - p.simpleText_do.getHeight()) / 2) + 1), p.animText1_do.setY(parseInt((p.mainTitlebar_do.h - p.simpleText_do.getHeight()) / 2) + 1), p.animText2_do.setY(parseInt((p.mainTitlebar_do.h - p.simpleText_do.getHeight()) / 2) + 1))
 						}, 1e3), p.mainTitlebar_do.addChild(p.titleBarLeft_do), p.mainTitlebar_do.addChild(p.titleBarRight_do), p.mainTitlebar_do.addChild(p.simpleText_do), p.mainTitlebar_do.addChild(p.animText1_do), p.mainTitlebar_do.addChild(p.animText2_do),
 						p.showSoundAnimation_bl && (p.mainTitlebar_do.addChild(p.animationBackground_do), p.mainTitlebar_do.addChild(p.animation_do)), p.mainTitlebar_do.addChild(p.titleBarGradLeft_do), p.mainTitlebar_do.addChild(p.titlebarGradRight_do), p.mainHolder_do.addChild(p.mainTitlebar_do)
-				}, this.setTitle = function(e) {
-					p.simpleText_do.setInnerHTML(e), p.animText1_do.setInnerHTML(e + "***"), p.animText2_do.setInnerHTML(e + "***"), p.animText1_do.setX(-1e3), p.animText2_do.setX(-1e3), p.startToCheckIfAnimTitle(!0)
-				}, this.startToCheckIfAnimTitle = function(e) {
-					e && p.stopToAnimateText(), clearTimeout(p.animateTextId_to), clearTimeout(p.startToAnimateTextId_to), p.animateTextId_to = setTimeout(p.checkIfAnimTitle, 10)
-				}, this.checkIfAnimTitle = function() {
+				},
+				this.setTitle = function(e) {
+					p.simpleText_do.setInnerHTML(e),
+					p.animText1_do.setInnerHTML(e + "***"),
+					p.animText2_do.setInnerHTML(e + "***"),
+					p.animText1_do.setX(-1e3),
+					p.animText2_do.setX(-1e3),
+					p.startToCheckIfAnimTitle(!0)
+				},
+				this.startToCheckIfAnimTitle = function(e) {
+					e && p.stopToAnimateText(),
+					clearTimeout(p.animateTextId_to),
+					clearTimeout(p.startToAnimateTextId_to),
+					p.animateTextId_to = setTimeout(p.checkIfAnimTitle, 10)
+				},
+				this.checkIfAnimTitle = function() {
 					var e = p.mainTitlebar_do.w - 5 - p.titlebarGradRight_do.w;
 					if (e -= p.animationHolderWidth, p.simpleText_do.getWidth() > e) {
 						if (p.isTextAnimating_bl) return;
-						p.showSoundAnimation_bl ? p.titleBarGradLeft_do.setX(p.animationHolderWidth) : p.titleBarGradLeft_do.setX(0), p.titlebarGradRight_do.setY(0),
-							clearTimeout(p.startToAnimateTextId_to), p.startToAnimateTextId_to = setTimeout(p.startToAnimateText, 300)
+						p.showSoundAnimation_bl ? p.titleBarGradLeft_do.setX(p.animationHolderWidth) : p.titleBarGradLeft_do.setX(0),
+						p.titlebarGradRight_do.setY(0),
+						clearTimeout(p.startToAnimateTextId_to),
+						p.startToAnimateTextId_to = setTimeout(p.startToAnimateText, 300)
 					} else p.titleBarGradLeft_do.setX(-50), p.titlebarGradRight_do.setY(-50), p.stopToAnimateText()
-				}, this.startToAnimateText = function() {
-					p.isTextAnimating_bl || (p.isTextAnimating_bl = !0, p.animTextWidth = p.animText1_do.getWidth(), p.simpleText_do.setX(-1e3), p.animText1_do.setX(p.animationHolderWidth + 5), p.animText2_do.setX(p.animationHolderWidth + p.animTextWidth + 10), clearInterval(p.animateTextId_int), p.animateTextId_int = setInterval(p.animateText, 40))
-				}, this.stopToAnimateText = function() {
-					p.isTextAnimating_bl && (p.isTextAnimating_bl = !1, p.simpleText_do.setX(p.animationHolderWidth + 5), p.animText1_do.setX(-1e3), p.animText2_do.setX(-1e3), clearInterval(p.animateTextId_int))
-				}, this.animateText = function() {
-					p.animText1_do.setX(p.animText1_do.x - 1), p.animText2_do.setX(p.animText2_do.x - 1),
-						p.animText1_do.x < -(p.animTextWidth - p.animationHolderWidth) && p.animText1_do.setX(p.animText2_do.x + p.animTextWidth + 5), p.animText2_do.x < -(p.animTextWidth - p.animationHolderWidth) && p.animText2_do.setX(p.animText1_do.x + p.animTextWidth + 5)
-				}, this.stopEqulizer = function() {
+				},
+				this.startToAnimateText = function() {
+					p.isTextAnimating_bl || (p.isTextAnimating_bl = !0,
+						                       p.animTextWidth = p.animText1_do.getWidth(),
+																	 p.simpleText_do.setX(-1e3),
+																	 p.animText1_do.setX(p.animationHolderWidth + 5),
+																	 p.animText2_do.setX(p.animationHolderWidth + p.animTextWidth + 10),
+																	 clearInterval(p.animateTextId_int),
+																	 p.animateTextId_int = setInterval(p.animateText, 40))
+				},
+				this.stopToAnimateText = function() {
+					p.isTextAnimating_bl && (p.isTextAnimating_bl = !1,
+						                       p.simpleText_do.setX(p.animationHolderWidth + 5),
+																	 p.animText1_do.setX(-1e3),
+																	 p.animText2_do.setX(-1e3), clearInterval(p.animateTextId_int))
+				},
+				this.animateText = function() {
+					p.animText1_do.setX(p.animText1_do.x - 1),
+					p.animText2_do.setX(p.animText2_do.x - 1),
+					p.animText1_do.x < -(p.animTextWidth - p.animationHolderWidth) && p.animText1_do.setX(p.animText2_do.x + p.animTextWidth + 5),
+					p.animText2_do.x < -(p.animTextWidth - p.animationHolderWidth) && p.animText2_do.setX(p.animText1_do.x + p.animTextWidth + 5)
+				},
+				this.stopEqulizer = function() {
 					p.animation_do && p.animation_do.stop()
-				}, this.startEqulizer = function() {
+				},
+				this.startEqulizer = function() {
 					p.animation_do && p.animation_do.start()
-				}, this.setupMainScrubber = function() {
-					p.mainScrubber_do = new FWDMSPDisplayObject("div"), p.mainScrubber_do.setY(parseInt((p.stageHeight - p.scrubbersHeight) / 2)), p.mainScrubber_do.setHeight(p.scrubbersHeight), p.mainScrubberBkLeft_do = new FWDMSPDisplayObject("img"), p.mainScrubberBkLeft_do.setScreen(p.mainScrubberBkLeft_img), p.mainScrubberBkRight_do = new FWDMSPDisplayObject("img"), p.mainScrubberBkRight_do.setScreen(p.mainScrubberBkRight_img);
+				},
+				this.setupMainScrubber = function() {
+					p.mainScrubber_do = new FWDMSPDisplayObject("div"),
+					p.mainScrubber_do.setY(parseInt((p.stageHeight - p.scrubbersHeight) / 2)),
+					p.mainScrubber_do.setHeight(p.scrubbersHeight),
+					p.mainScrubberBkLeft_do = new FWDMSPDisplayObject("img"),
+					p.mainScrubberBkLeft_do.setScreen(p.mainScrubberBkLeft_img),
+					p.mainScrubberBkRight_do = new FWDMSPDisplayObject("img"),
+					p.mainScrubberBkRight_do.setScreen(p.mainScrubberBkRight_img);
 					var e = new Image;
-					e.src = p.mainScrubberBkMiddlePath_str, p.mainScrubberBkMiddle_do = new FWDMSPDisplayObject("div"), p.mainScrubberBkMiddle_do.getStyle().background = "url('" + p.mainScrubberBkMiddlePath_str + "')", p.mainScrubberBkMiddle_do.setHeight(p.scrubbersHeight), p.mainScrubberBkMiddle_do.setX(p.scrubbersBkLeftAndRightWidth), p.mainProgress_do = new FWDMSPDisplayObject("div"), p.mainProgress_do.setHeight(p.scrubbersHeight), p.progressLeft_do = new FWDMSPDisplayObject("img"), p.progressLeft_do.setScreen(p.mainScrubberLeftProgress_img), (e = new Image).src = p.progressMiddlePath_str, p.progressMiddle_do = new FWDMSPDisplayObject("div"), p.progressMiddle_do.getStyle().background = "url('" + p.progressMiddlePath_str + "')",
-						p.progressMiddle_do.setHeight(p.scrubbersHeight), p.progressMiddle_do.setX(p.mainScrubberDragLeftWidth), p.mainScrubberDrag_do = new FWDMSPDisplayObject("div"), p.mainScrubberDrag_do.setHeight(p.scrubbersHeight), p.useHEXColorsForSkin_bl ? (p.mainScrubberDragLeft_do = new FWDMSPDisplayObject("div"), p.mainScrubberDragLeft_do.setWidth(p.mainScrubberDragLeft_img.width), p.mainScrubberDragLeft_do.setHeight(p.mainScrubberDragLeft_img.height), p.mainScrubberDragLeft_canvas = FWDMSPUtils.getCanvasWithModifiedColor(p.mainScrubberDragLeft_img, p.normalButtonsColor_str).canvas, p.mainScrubberDragLeft_do.screen.appendChild(p.mainScrubberDragLeft_canvas)) : (p.mainScrubberDragLeft_do = new FWDMSPDisplayObject("img"), p.mainScrubberDragLeft_do.setScreen(p.mainScrubberDragLeft_img)), p.mainScrubberMiddleImage = new Image, p.mainScrubberMiddleImage.src = p.mainScrubberDragMiddlePath_str, p.volumeScrubberDragMiddle_do = new FWDMSPDisplayObject("div"), p.useHEXColorsForSkin_bl ? (p.mainScrubberDragMiddle_do = new FWDMSPDisplayObject("div"), p.mainScrubberMiddleImage.onload = function() {
-							var e = FWDMSPUtils.getCanvasWithModifiedColor(p.mainScrubberMiddleImage, p.normalButtonsColor_str, !0);
-							p.mainSCrubberMiddleCanvas = e.canvas, p.mainSCrubberDragMiddleImageBackground = e.image, p.mainScrubberDragMiddle_do.getStyle().background = "url('" + p.mainSCrubberDragMiddleImageBackground.src + "') repeat-x",
-								setTimeout(function() {
-									p.volumeScrubberDragMiddle_do.getStyle().background = "url('" + p.mainSCrubberDragMiddleImageBackground.src + "') repeat-x"
-								}, 50)
-						}) : (p.mainScrubberDragMiddle_do = new FWDMSPDisplayObject("div"), p.mainScrubberDragMiddle_do.getStyle().background = "url('" + p.mainScrubberDragMiddlePath_str + "') repeat-x"), p.mainScrubberDragMiddle_do.setHeight(p.scrubbersHeight), p.mainScrubberDragMiddle_do.setX(p.mainScrubberDragLeftWidth), p.mainScrubberBarLine_do = new FWDMSPDisplayObject("img"), p.mainScrubberBarLine_do.setScreen(p.mainScrubberLine_img), p.mainScrubberBarLine_do.setAlpha(0), p.mainScrubberBarLine_do.hasTransform3d_bl = !1, p.mainScrubberBarLine_do.hasTransform2d_bl = !1, p.mainScrubber_do.addChild(p.mainScrubberBkLeft_do), p.mainScrubber_do.addChild(p.mainScrubberBkMiddle_do), p.mainScrubber_do.addChild(p.mainScrubberBkRight_do), p.mainScrubberDrag_do.addChild(p.mainScrubberDragLeft_do), p.mainScrubberDrag_do.addChild(p.mainScrubberDragMiddle_do), p.mainProgress_do.addChild(p.progressLeft_do), p.mainProgress_do.addChild(p.progressMiddle_do), p.mainScrubber_do.addChild(p.mainProgress_do), p.mainScrubber_do.addChild(p.mainScrubberDrag_do), p.mainScrubber_do.addChild(p.mainScrubberBarLine_do), p.mainHolder_do.addChild(p.mainScrubber_do), p.disableScrubber_bl || (p.hasPointerEvent_bl ? (p.mainScrubber_do.screen.addEventListener("pointerover", p.mainScrubberOnOverHandler), p.mainScrubber_do.screen.addEventListener("pointerout", p.mainScrubberOnOutHandler), p.mainScrubber_do.screen.addEventListener("pointerdown", p.mainScrubberOnDownHandler)) : p.screen.addEventListener && (p.isMobile_bl || (p.mainScrubber_do.screen.addEventListener("mouseover", p.mainScrubberOnOverHandler), p.mainScrubber_do.screen.addEventListener("mouseout", p.mainScrubberOnOutHandler), p.mainScrubber_do.screen.addEventListener("mousedown", p.mainScrubberOnDownHandler)), p.mainScrubber_do.screen.addEventListener("touchstart", p.mainScrubberOnDownHandler))),
+					e.src = p.mainScrubberBkMiddlePath_str,
+					p.mainScrubberBkMiddle_do = new FWDMSPDisplayObject("div"),
+					p.mainScrubberBkMiddle_do.getStyle().background = "url('" + p.mainScrubberBkMiddlePath_str + "')",
+					p.mainScrubberBkMiddle_do.setHeight(p.scrubbersHeight),
+					p.mainScrubberBkMiddle_do.setX(p.scrubbersBkLeftAndRightWidth),
+					p.mainProgress_do = new FWDMSPDisplayObject("div"),
+					p.mainProgress_do.setHeight(p.scrubbersHeight),
+					p.progressLeft_do = new FWDMSPDisplayObject("img"),
+					p.progressLeft_do.setScreen(p.mainScrubberLeftProgress_img),
+					(e = new Image).src = p.progressMiddlePath_str,
+					p.progressMiddle_do = new FWDMSPDisplayObject("div"),
+					p.progressMiddle_do.getStyle().background = "url('" + p.progressMiddlePath_str + "')",
+					p.progressMiddle_do.setHeight(p.scrubbersHeight),
+					p.progressMiddle_do.setX(p.mainScrubberDragLeftWidth),
+					p.mainScrubberDrag_do = new FWDMSPDisplayObject("div"),
+					p.mainScrubberDrag_do.setHeight(p.scrubbersHeight),
+					p.useHEXColorsForSkin_bl ? (p.mainScrubberDragLeft_do = new FWDMSPDisplayObject("div"),
+					                            p.mainScrubberDragLeft_do.setWidth(p.mainScrubberDragLeft_img.width),
+																			p.mainScrubberDragLeft_do.setHeight(p.mainScrubberDragLeft_img.height),
+																			p.mainScrubberDragLeft_canvas = FWDMSPUtils.getCanvasWithModifiedColor(p.mainScrubberDragLeft_img, p.normalButtonsColor_str).canvas,
+																			p.mainScrubberDragLeft_do.screen.appendChild(p.mainScrubberDragLeft_canvas))
+																	 : (p.mainScrubberDragLeft_do = new FWDMSPDisplayObject("img"),
+																	    p.mainScrubberDragLeft_do.setScreen(p.mainScrubberDragLeft_img)),
+					p.mainScrubberMiddleImage = new Image,
+					p.mainScrubberMiddleImage.src = p.mainScrubberDragMiddlePath_str,
+					p.volumeScrubberDragMiddle_do = new FWDMSPDisplayObject("div"),
+					p.useHEXColorsForSkin_bl ? (p.mainScrubberDragMiddle_do = new FWDMSPDisplayObject("div"),
+					                            p.mainScrubberMiddleImage.onload = function() {
+							                        var e = FWDMSPUtils.getCanvasWithModifiedColor(p.mainScrubberMiddleImage, p.normalButtonsColor_str, !0);
+																			p.mainSCrubberMiddleCanvas = e.canvas,
+																			p.mainSCrubberDragMiddleImageBackground = e.image,
+																			p.mainScrubberDragMiddle_do.getStyle().background = "url('" + p.mainSCrubberDragMiddleImageBackground.src + "') repeat-x",
+																			setTimeout(function() {
+																				p.volumeScrubberDragMiddle_do.getStyle().background = "url('" + p.mainSCrubberDragMiddleImageBackground.src + "') repeat-x"
+																			}, 50)
+																			})
+																		: (p.mainScrubberDragMiddle_do = new FWDMSPDisplayObject("div"),
+																		  p.mainScrubberDragMiddle_do.getStyle().background = "url('" + p.mainScrubberDragMiddlePath_str + "') repeat-x"),
+																			p.mainScrubberDragMiddle_do.setHeight(p.scrubbersHeight),
+																			p.mainScrubberDragMiddle_do.setX(p.mainScrubberDragLeftWidth),
+																			p.mainScrubberBarLine_do = new FWDMSPDisplayObject("img"),
+																			p.mainScrubberBarLine_do.setScreen(p.mainScrubberLine_img),
+																			p.mainScrubberBarLine_do.setAlpha(0),
+																			p.mainScrubberBarLine_do.hasTransform3d_bl = !1,
+																			p.mainScrubberBarLine_do.hasTransform2d_bl = !1,
+																			p.mainScrubber_do.addChild(p.mainScrubberBkLeft_do),
+																			p.mainScrubber_do.addChild(p.mainScrubberBkMiddle_do),
+																			p.mainScrubber_do.addChild(p.mainScrubberBkRight_do),
+																			p.mainScrubberDrag_do.addChild(p.mainScrubberDragLeft_do),
+																			p.mainScrubberDrag_do.addChild(p.mainScrubberDragMiddle_do),
+																			p.mainProgress_do.addChild(p.progressLeft_do),
+																			p.mainProgress_do.addChild(p.progressMiddle_do),
+																			p.mainScrubber_do.addChild(p.mainProgress_do),
+																			p.mainScrubber_do.addChild(p.mainScrubberDrag_do),
+																			p.mainScrubber_do.addChild(p.mainScrubberBarLine_do),
+																			p.mainHolder_do.addChild(p.mainScrubber_do),
+																			p.disableScrubber_bl
+																		|| (p.hasPointerEvent_bl
+																				? (p.mainScrubber_do.screen.addEventListener("pointerover", p.mainScrubberOnOverHandler),
+																		   		p.mainScrubber_do.screen.addEventListener("pointerout", p.mainScrubberOnOutHandler),
+																			 		p.mainScrubber_do.screen.addEventListener("pointerdown", p.mainScrubberOnDownHandler))
+																				: p.screen.addEventListener && (p.isMobile_bl || (p.mainScrubber_do.screen.addEventListener("mouseover", p.mainScrubberOnOverHandler),
+																		                                                  p.mainScrubber_do.screen.addEventListener("mouseout", p.mainScrubberOnOutHandler),
+																																											p.mainScrubber_do.screen.addEventListener("mousedown", p.mainScrubberOnDownHandler)),
+																																	  p.mainScrubber_do.screen.addEventListener("touchstart", p.mainScrubberOnDownHandler))),
 						p.disableMainScrubber()
-				}, this.mainScrubberOnOverHandler = function(e) {
+				},
+				this.mainScrubberOnOverHandler = function(e) {
 					if (!p.isMainScrubberDisabled_bl) {
 						0 != f.totalDuration, !p.isMobile_bl && p.ttm && window.addEventListener("mousemove", p.mainScrubberWMouseMove);
 						var t = FWDMSPUtils.getViewportMouseCoordinates(e).screenX - p.mainScrubber_do.getGlobalX();
 						t < 0 ? t = 0 : t > p.mainScrubberWidth - p.scrubbersOffsetWidth && (t = p.mainScrubberWidth - p.scrubbersOffsetWidth);
 						var o = t / p.mainScrubberWidth;
 					}
-				}, p.mainScrubberWMouseMove = function(e) {
+				},
+				p.mainScrubberWMouseMove = function(e) {
 					var t = FWDMSPUtils.getViewportMouseCoordinates(e);
-					p.vcX = t.screenX, p.vcY = t.screenY,
-						FWDMSPUtils.hitTest(p.mainScrubber_do.screen, p.vcX, p.vcY) || p.isMainScrubberScrubbing_bl || (window.removeEventListener("mousemove", p.mainScrubberWMouseMove), p.ttm.hide());
+					p.vcX = t.screenX,
+					p.vcY = t.screenY,
+					FWDMSPUtils.hitTest(p.mainScrubber_do.screen, p.vcX, p.vcY) || p.isMainScrubberScrubbing_bl || (window.removeEventListener("mousemove", p.mainScrubberWMouseMove), p.ttm.hide());
 					var o = FWDMSPUtils.getViewportMouseCoordinates(e).screenX - p.mainScrubber_do.getGlobalX();
 					o < 0 ? o = 0 : o > p.mainScrubberWidth - p.scrubbersOffsetWidth && (o = p.mainScrubberWidth - p.scrubbersOffsetWidth);
 					var s = o / p.mainScrubberWidth;
-				}, this.mainScrubberOnOutHandler = function(e) {
+				},
+				this.mainScrubberOnOutHandler = function(e) {
 					p.isMainScrubberDisabled_bl || p.isMainScrubberScrubbing_bl || p.ttm && p.ttm.hide()
-				}, this.mainScrubberOnDownHandler = function(e) {
+				},
+				this.mainScrubberOnDownHandler = function(e) {
 					if (!p.isMainScrubberDisabled_bl) {
 						e.preventDefault && e.preventDefault(), p.isMainScrubberScrubbing_bl = !0;
 						var t = FWDMSPUtils.getViewportMouseCoordinates(e).screenX - p.mainScrubber_do.getGlobalX();
@@ -4381,35 +4479,46 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 								percent: o
 							}), p.hasPointerEvent_bl ? (window.addEventListener("pointermove", p.mainScrubberMoveHandler), window.addEventListener("pointerup", p.mainScrubberEndHandler)) : (window.addEventListener("mousemove", p.mainScrubberMoveHandler), window.addEventListener("mouseup", p.mainScrubberEndHandler), window.addEventListener("touchmove", p.mainScrubberMoveHandler), window.addEventListener("touchend", p.mainScrubberEndHandler))
 					}
-				}, this.mainScrubberMoveHandler = function(e) {
+				},
+				this.mainScrubberMoveHandler = function(e) {
 					e.preventDefault && e.preventDefault();
 					var t = FWDMSPUtils.getViewportMouseCoordinates(e);
-					p.vcX = t.screenX, p.vcY = t.screenY,
-						FWDMSPUtils.hitTest(p.mainScrubber_do.screen, p.vcX, p.vcY) || p.isMainScrubberScrubbing_bl || (window.removeEventListener("mousemove", p.mainScrubberWMouseMove), p.ttm.hide());
+					p.vcX = t.screenX,
+					p.vcY = t.screenY,
+					FWDMSPUtils.hitTest(p.mainScrubber_do.screen, p.vcX, p.vcY) || p.isMainScrubberScrubbing_bl
+					                                                            || (window.removeEventListener("mousemove", p.mainScrubberWMouseMove), p.ttm.hide());
 					var o = FWDMSPUtils.getViewportMouseCoordinates(e).screenX - p.mainScrubber_do.getGlobalX();
-					FWDMSPUtils.hitTest(p.mainScrubber_do.screen, p.vcX, p.vcY) || p.isMainScrubberScrubbing_bl || (window.removeEventListener("mousemove", p.mainScrubberWMouseMove), p.ttm.hide()), o < 0 ? o = 0 : o > p.mainScrubberWidth - p.scrubbersOffsetWidth && (o = p.mainScrubberWidth - p.scrubbersOffsetWidth);
+					FWDMSPUtils.hitTest(p.mainScrubber_do.screen, p.vcX, p.vcY) || p.isMainScrubberScrubbing_bl
+					                                                            || (window.removeEventListener("mousemove", p.mainScrubberWMouseMove), p.ttm.hide()),
+					o < 0 ? o = 0 : o > p.mainScrubberWidth - p.scrubbersOffsetWidth && (o = p.mainScrubberWidth - p.scrubbersOffsetWidth);
 					var s = o / p.mainScrubberWidth;
 					!FWDMSP.hasHTML5Audio && o >= p.mainProgress_do.w && (o = p.mainProgress_do.w);
 					var i = o / p.mainScrubberWidth;
-					p.updateMainScrubber(s), p.dispatchEvent(n.SCRUB_PLAYLIST_ITEM, {
+					p.updateMainScrubber(s),
+					p.dispatchEvent(n.SCRUB_PLAYLIST_ITEM, {
 						percent: i
 					}), p.dispatchEvent(n.SCRUB, {
 						percent: s
 					})
-				}, this.mainScrubberEndHandler = function(e) {
+				},
+				this.mainScrubberEndHandler = function(e) {
 					if (p.disable_do && p.contains(p.disable_do) && p.removeChild(p.disable_do), p.isMainScrubberScrubbing_bl = !1, e) {
 						var t = FWDMSPUtils.getViewportMouseCoordinates(e);
 						FWDMSPUtils.hitTest(p.mainScrubber_do.screen, t.screenX, t.screenY) || p.ttm && p.ttm.hide()
 					}
 					p.dispatchEvent(n.STOP_TO_SCRUB), p.hasPointerEvent_bl ? (window.removeEventListener("pointermove", p.mainScrubberMoveHandler), window.removeEventListener("pointerup", p.mainScrubberEndHandler)) : (window.removeEventListener("mousemove", p.mainScrubberMoveHandler), window.removeEventListener("mouseup", p.mainScrubberEndHandler), window.removeEventListener("touchmove", p.mainScrubberMoveHandler), window.removeEventListener("touchend", p.mainScrubberEndHandler))
-				}, this.disableMainScrubber = function() {
+				},
+				this.disableMainScrubber = function() {
 					p.mainScrubber_do && (p.isMainScrubberDisabled_bl = !0, p.mainScrubber_do.setButtonMode(!1), p.updateMainScrubber(0), p.updatePreloaderBar(0), p.mainScrubberEndHandler(), p.disableAtbButton())
-				}, this.enableMainScrubber = function() {
+				},
+				this.enableMainScrubber = function() {
 					p.mainScrubber_do && (p.isMainScrubberDisabled_bl = !1, p.disableScrubber_bl || p.mainScrubber_do.setButtonMode(!0), p.enableAtbButton())
-				}, this.updateMainScrubber = function(e) {
+				},
+				this.updateMainScrubber = function(e) {
 					if (p.mainScrubber_do && !isNaN(e)) {
 						var t = parseInt(e * p.mainScrubberWidth);
-						p.percentPlayed = e, !FWDMSP.hasHTML5Audio && t >= p.mainProgress_do.w && (t = p.mainProgress_do.w), t < 1 && p.isMainScrubberLineVisible_bl ? (p.isMainScrubberLineVisible_bl = !1, FWDAnimation.to(p.mainScrubberBarLine_do, .5, {
+						p.percentPlayed = e,
+						!FWDMSP.hasHTML5Audio && t >= p.mainProgress_do.w && (t = p.mainProgress_do.w), t < 1 && p.isMainScrubberLineVisible_bl ? (p.isMainScrubberLineVisible_bl = !1, FWDAnimation.to(p.mainScrubberBarLine_do, .5, {
 								alpha: 0
 							})) : 2 < t && !p.isMainScrubberLineVisible_bl && (p.isMainScrubberLineVisible_bl = !0, FWDAnimation.to(p.mainScrubberBarLine_do, .5, {
 								alpha: 1
@@ -4419,24 +4528,61 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 								ease: Expo.easeOut
 							})
 					}
-				}, this.updatePreloaderBar = function(e) {
+				},
+				this.updatePreloaderBar = function(e) {
 					if (p.mainProgress_do) {
 						var t = parseInt(e * p.mainScrubberWidth);
 						1 == e ? p.mainProgress_do.setY(-30) : 0 != p.mainProgress_do.y && 1 != e && p.mainProgress_do.setY(0), t > p.mainScrubberWidth - p.scrubbersOffsetWidth && (t = p.mainScrubberWidth - p.scrubbersOffsetWidth), t < 0 && (t = 0), p.mainProgress_do.setWidth(t)
 					}
-				}, this.setupTime = function() {
-					p.currentTime_do = new FWDMSPDisplayObject("div"), p.currentTime_do.hasTransform3d_bl = !1, p.currentTime_do.hasTransform2d_bl = !1, p.currentTime_do.getStyle().fontFamily = "Arial", p.currentTime_do.getStyle().fontSize = "12px", p.currentTime_do.getStyle().whiteSpace = "nowrap", p.currentTime_do.getStyle().textAlign = "left", p.currentTime_do.getStyle().color = p.timeColor_str, p.currentTime_do.getStyle().fontSmoothing = "antialiased",
-						p.currentTime_do.getStyle().webkitFontSmoothing = "antialiased", p.currentTime_do.getStyle().textRendering = "optimizeLegibility", p.currentTime_do.setInnerHTML("00"), p.mainHolder_do.addChild(p.currentTime_do), p.totalTime_do = new FWDMSPDisplayObject("div"), p.totalTime_do.hasTransform3d_bl = !1, p.totalTime_do.hasTransform2d_bl = !1, p.totalTime_do.getStyle().fontFamily = "Arial", p.totalTime_do.getStyle().fontSize = "12px", p.totalTime_do.getStyle().whiteSpace = "nowrap", p.totalTime_do.getStyle().textAlign = "right", p.totalTime_do.getStyle().color = p.timeColor_str, p.totalTime_do.getStyle().fontSmoothing = "antialiased", p.totalTime_do.getStyle().webkitFontSmoothing = "antialiased", p.totalTime_do.getStyle().textRendering = "optimizeLegibility", p.mainHolder_do.addChild(p.totalTime_do), p.updateTime(),
+				},
+				this.setupTime = function() {
+					p.currentTime_do = new FWDMSPDisplayObject("div"),
+					p.currentTime_do.hasTransform3d_bl = !1,
+					p.currentTime_do.hasTransform2d_bl = !1,
+					p.currentTime_do.getStyle().fontFamily = "Arial",
+					p.currentTime_do.getStyle().fontSize = "12px",
+					p.currentTime_do.getStyle().whiteSpace = "nowrap",
+					p.currentTime_do.getStyle().textAlign = "left",
+					p.currentTime_do.getStyle().color = p.timeColor_str,
+					p.currentTime_do.getStyle().fontSmoothing = "antialiased",
+					p.currentTime_do.getStyle().webkitFontSmoothing = "antialiased",
+					p.currentTime_do.getStyle().textRendering = "optimizeLegibility",
+					p.currentTime_do.setInnerHTML("00"),
+					p.mainHolder_do.addChild(p.currentTime_do),
+					p.totalTime_do = new FWDMSPDisplayObject("div"),
+					p.totalTime_do.hasTransform3d_bl = !1,
+					p.totalTime_do.hasTransform2d_bl = !1,
+					p.totalTime_do.getStyle().fontFamily = "Arial",
+					p.totalTime_do.getStyle().fontSize = "12px",
+					p.totalTime_do.getStyle().whiteSpace = "nowrap",
+					p.totalTime_do.getStyle().textAlign = "right",
+					p.totalTime_do.getStyle().color = p.timeColor_str,
+					p.totalTime_do.getStyle().fontSmoothing = "antialiased",
+					p.totalTime_do.getStyle().webkitFontSmoothing = "antialiased",
+					p.totalTime_do.getStyle().textRendering = "optimizeLegibility",
+					p.mainHolder_do.addChild(p.totalTime_do),
+					p.updateTime(),
 						setTimeout(function() {
-							null != p && (p.timeHeight = p.currentTime_do.getHeight(), p.currentTime_do.h = p.timeHeight, p.totalTime_do.h = p.timeHeight, p.stageWidth = f.stageWidth, p.positionButtons())
+							null != p && (p.timeHeight = p.currentTime_do.getHeight(),
+							              p.currentTime_do.h = p.timeHeight,
+														p.totalTime_do.h = p.timeHeight,
+														p.stageWidth = f.stageWidth,
+														p.positionButtons())
 						}, 100)
-				}, this.updateTime = function(e, t) {
+				},
+				this.updateTime = function(e, t) {
 					if (p.currentTime_do && t && ("00:00" == t && (t = e), p.currentTime_do.setInnerHTML(e), p.totalTime_do.setInnerHTML(t), e.length != p.lastTotalTimeLength || t.length != p.lastCurTimeLength)) {
 						var o = p.currentTime_do.offsetWidth,
 							s = p.totalTime_do.offsetWidth;
-						p.currentTime_do.w = o, p.totalTime_do.w = s, p.positionButtons(), setTimeout(function() {
-							p.currentTime_do.w = p.currentTime_do.getWidth(), p.totalTime_do.w = p.totalTime_do.getWidth(), p.positionButtons()
-						}, 50), p.lastCurTimeLength = e.length, p.lastTotalTimeLength = t.length
+						p.currentTime_do.w = o,
+						p.totalTime_do.w = s, p.positionButtons(),
+						setTimeout(function() {
+							p.currentTime_do.w = p.currentTime_do.getWidth(),
+							p.totalTime_do.w = p.totalTime_do.getWidth(),
+							p.positionButtons()
+						}, 50),
+						p.lastCurTimeLength = e.length,
+						p.lastTotalTimeLength = t.length
 					}
 				},
 				this.setupVolumeScrubber = function() {
