@@ -31,8 +31,8 @@
                     <ul>
                       {% for object in object_list %}
                       <li class="list-group-item infinite-item id_{{ object.id }}" data-counter="{{ forloop.counter0 }}">
-                          <div class="media">
-                              <figure class="music_list_item" data-counter="{{ forloop.counter0 }}" style="cursor:pointer">
+                          <div class="media" data-counter="{{ forloop.counter0 }}">
+                              <figure class="music_list_item" style="cursor:pointer">
                                 <a>
                                   {% if object.artwork_url %}
                                     <img style="width:50px;heigth:auto" src="{{ object.artwork_url }}" />
@@ -42,8 +42,8 @@
                                 </a>
                               </figure>
                               <div class="media-body">
-                                  <h6 class="user_track music_list_item" style="cursor:pointer">{{ object.title }}</h6>
-                                  <p class="small">{{ object.genre }}
+                                  <h6 class="music_list_item" style="cursor:pointer"><a>{{ object.title }}</a></h6>
+                                  <p class="small">{{ object.tag }}
                                     <span class='span_btn' style="float:right;" data-pk="{{ object.pk }}">
                                       <span style="cursor:pointer">
                                         {% if not request_user|is_track_exists:object.id %}

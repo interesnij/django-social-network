@@ -171,7 +171,7 @@
                         </figure>
                         <div class="media-body">
                             <h6 class="track_item music_list_item" style="cursor:pointer"><a>{{ object.title }}</a></h6>
-                            <p class="small">{{ object.genre }}
+                            <p class="small">{{ object.tag }}
                               <span class='span_btn' style="float:right;" data-pk="{{ object.pk }}">
                                 <span style="cursor:pointer">
                                   {% if not request_user|is_track_exists:object.id %}

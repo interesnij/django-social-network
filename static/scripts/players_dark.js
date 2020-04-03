@@ -426,7 +426,7 @@ function save_playlist(suffix, post_link, get_link, track_id){
 
 
 on('#ajax', 'click', '.tag_item', function() {
-  var track_id = this.getAttribute('data-counter');
+  var track_id = this.parentElement.parentElement.getAttribute('data-counter');
   var tag_pk = document.querySelector(".tag_playlist").getAttribute('data-pk');
   if (!document.body.classList.contains("tag_" + tag_pk)){
     save_playlist("tag_" + tag_pk, '/music/manage/temp_tag/' + tag_pk, '/music/get/tag/' + tag_pk, track_id)
@@ -434,7 +434,7 @@ on('#ajax', 'click', '.tag_item', function() {
   });
 
 on('#ajax', 'click', '.genre_item', function() {
-  var track_id = this.getAttribute('data-counter');
+  var track_id = this.parentElement.parentElement.getAttribute('data-counter');
   var genre_pk = document.querySelector(".genre_playlist").getAttribute('data-pk');
   if (!document.body.classList.contains("genre_" + genre_pk)){
     save_playlist("genre_" + genre_pk, '/music/manage/temp_genre/' + genre_pk, '/music/get/genre/' + genre_pk, track_id)
