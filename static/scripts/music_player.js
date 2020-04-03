@@ -778,60 +778,141 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 										this.isMobile_bl = FWDMSPUtils.isMobile,
 										this.hasPointerEvent_bl = FWDMSPUtils.hasPointerEvent;
 									try {
-										window.opener && window.opener[this.instanceName_str] && window.opener[this.instanceName_str].instanceName_str == this.instanceName_str && (window.opener[this.instanceName_str].removeAndDisablePlayer(), self.isMobile_bl || (document.cookie = "FWDMSP=" + self.instanceName_str + "; expires=Thu, 18 Dec 2030 12:00:00 UTC; path=/", window.onbeforeunload = function(e) {
+										window.opener && window.opener[this.instanceName_str]
+										              && window.opener[this.instanceName_str].instanceName_str == this.instanceName_str
+																	&& (window.opener[this.instanceName_str].removeAndDisablePlayer(),
+										self.isMobile_bl || (document.cookie = "FWDMSP=" + self.instanceName_str + "; expires=Thu, 18 Dec 2030 12:00:00 UTC; path=/", window.onbeforeunload = function(e) {
 											document.cookie = "FWDMSP=; expires=Thu, 01-Jan-70 00:00:01 GMT; path=/"
 										}))
-									} catch (e) {}
+									}
+									catch (e) {}
+
 									var e, t, o, s, i;
 									this.setupMainDo(),
-										this.startResizeHandler(),
-										this.setupInfo(),
-										this.setupData()
+									this.startResizeHandler(),
+									this.setupInfo(),
+									this.setupData()
 								} else alert("FWDMSP constructor properties object is not defined!")
-							}, this.removeAndDisablePlayer = function() {
+							},
+							this.removeAndDisablePlayer = function() {
 								self.stageContainer.style.display = "none"
-							}, self.setupMainDo = function() {
-								self.showMainBackground_bl && (self.background_do = new FWDMSPDisplayObject("div"), self.background_do.getStyle().width = "100%"),
-									self.main_do = new FWDMSPDisplayObject("div"),
-									self.main_do.getStyle().msTouchAction = "none", self.main_do.getStyle().webkitTapHighlightColor = "rgba(0, 0, 0, 0)", self.main_do.setBackfaceVisibility(), (!FWDMSPUtils.isMobile || FWDMSPUtils.isMobile && FWDMSPUtils.hasPointerEvent) && self.main_do.setSelectable(!1), self.background_do && self.stageContainer.appendChild(self.background_do.screen), self.stageContainer.appendChild(self.main_do.screen)
-							}, self.setupInfo = function() {
-								FWDMSPInfo.setPrototype(), self.info_do = new FWDMSPInfo(self, self.warningIconPath_str),
-									FWDMSPUtils.isIEAndLessThen9 ? self.info_do.getStyle().zIndex = "2147483632" : self.info_do.getStyle().zIndex = "99999999992"
-							}, self.startResizeHandler = function() {
-								window.addEventListener ? (window.addEventListener("resize", self.onResizeHandler), FWDMSPUtils.isAndroid && window.addEventListener("orientationchange", self.orientationChange)) : window.attachEvent && window.attachEvent("onresize", self.onResizeHandler)
-							}, self.stopResizeHandler = function() {
+							},
+							self.setupMainDo = function() {
+								self.showMainBackground_bl && (self.background_do = new FWDMSPDisplayObject("div"),
+								                               self.background_do.getStyle().width = "100%"),
+								self.main_do = new FWDMSPDisplayObject("div"),
+								self.main_do.getStyle().msTouchAction = "none",
+								self.main_do.getStyle().webkitTapHighlightColor = "rgba(0, 0, 0, 0)",
+								self.main_do.setBackfaceVisibility(),
+								(!FWDMSPUtils.isMobile || FWDMSPUtils.isMobile && FWDMSPUtils.hasPointerEvent) && self.main_do.setSelectable(!1),
+								self.background_do && self.stageContainer.appendChild(self.background_do.screen),
+								self.stageContainer.appendChild(self.main_do.screen)
+							},
+							self.setupInfo = function() {
+								FWDMSPInfo.setPrototype(),
+								self.info_do = new FWDMSPInfo(self, self.warningIconPath_str),
+								FWDMSPUtils.isIEAndLessThen9 ? self.info_do.getStyle().zIndex = "2147483632" : self.info_do.getStyle().zIndex = "99999999992"
+							},
+							self.startResizeHandler = function() {
+								window.addEventListener ? (window.addEventListener("resize", self.onResizeHandler),
+								                           FWDMSPUtils.isAndroid && window.addEventListener("orientationchange", self.orientationChange))
+																				: window.attachEvent && window.attachEvent("onresize", self.onResizeHandler)
+							},
+							self.stopResizeHandler = function() {
 								clearTimeout(self.resizeHandlerId_to),
-									clearTimeout(self.resizeHandler2Id_to),
-									clearTimeout(self.orientationChangeId_to),
-									window.removeEventListener ? (window.removeEventListener("resize", self.onResizeHandler), window.removeEventListener("orientationchange", self.orientationChange)) : window.detachEvent && window.detachEvent("onresize", self.onResizeHandler)
-							}, self.onScrollHandler = function() {
+								clearTimeout(self.resizeHandler2Id_to),
+								clearTimeout(self.orientationChangeId_to),
+								window.removeEventListener ? (window.removeEventListener("resize", self.onResizeHandler),
+																							window.removeEventListener("orientationchange", self.orientationChange))
+																					 : window.detachEvent && window.detachEvent("onresize", self.onResizeHandler)
+							},
+							self.onScrollHandler = function() {
 								self.onResizeHandler()
-							}, self.onResizeHandler = function(e) {
+							},
+							self.onResizeHandler = function(e) {
 								self.resizeHandler()
-							}, this.orientationChange = function() {
+							},
+							this.orientationChange = function() {
 								self.orintationChangeComplete_bl = !1,
-									clearTimeout(self.resizeHandlerId_to),
-									clearTimeout(self.resizeHandler2Id_to),
-									clearTimeout(self.orientationChangeId_to), self.orientationChangeId_to = setTimeout(function() {
-										self.orintationChangeComplete_bl = !0, self.resizeHandler(!0)
-									}, 1e3), self.stageContainer.style.left = "-5000px", self.preloader_do && self.preloader_do.setX(-5e3)
-							}, self.resizeHandler = function(e, t) {
-								self.orintationChangeComplete_bl && (self.ws = FWDMSPUtils.getViewportSize(), self.stageWidth = document.documentElement.offsetWidth, self.stageContainer.style.left = "0px", self.stageWidth > self.maxWidth && (self.stageWidth = self.maxWidth), self.controller_do && (self.maxHeight = self.controller_do.h), self.stageHeight = self.maxHeight, self.main_do.setWidth(self.stageWidth), self.preloader_do && self.positionPreloader(), self.controller_do && self.controller_do.resizeAndPosition(e), self.categories_do && self.categories_do.resizeAndPosition(), self.playlist_do && self.playlist_do.resizeAndPosition(), self.isFirstPlaylistLoaded_bl && self.setStageContainerFinalHeightAndPosition(!1), self.info_do && self.info_do.isShowed_bl && self.info_do.positionAndResize(), self.atb_do && self.atb_do.isShowed_bl && self.atb_do.positionAndResize(), self.passWindow_do && self.passWindow_do.isShowed_bl && self.passWindow_do.positionAndResize(), self.playbackRateWindow_do && self.playbackRateWindow_do.isShowed_bl && self.playbackRateWindow_do.positionAndResize())
-							}, this.setStageContainerFinalHeightAndPosition = function(e) {
-								if (self.ws || (self.ws = FWDMSPUtils.getViewportSize()), self.controller_do && self.allowToResizeAndPosition_bl) {
+								clearTimeout(self.resizeHandlerId_to),
+								clearTimeout(self.resizeHandler2Id_to),
+								clearTimeout(self.orientationChangeId_to),
+								self.orientationChangeId_to = setTimeout(function() {
+									self.orintationChangeComplete_bl = !0, self.resizeHandler(!0)
+									}, 1e3),
+							  self.stageContainer.style.left = "-5000px",
+								self.preloader_do && self.preloader_do.setX(-5e3)
+							},
+							self.resizeHandler = function(e, t) {
+								self.orintationChangeComplete_bl && (self.ws = FWDMSPUtils.getViewportSize(),
+								                                     self.stageWidth = document.documentElement.offsetWidth,
+																										 self.stageContainer.style.left = "0px",
+																										 self.stageWidth > self.maxWidth && (self.stageWidth = self.maxWidth),
+																										 self.controller_do && (self.maxHeight = self.controller_do.h),
+																										 self.stageHeight = self.maxHeight,
+																										 self.main_do.setWidth(self.stageWidth),
+																										 self.preloader_do && self.positionPreloader(),
+																										 self.controller_do && self.controller_do.resizeAndPosition(e),
+																										 self.categories_do && self.categories_do.resizeAndPosition(),
+																										 self.playlist_do && self.playlist_do.resizeAndPosition(),
+																										 self.isFirstPlaylistLoaded_bl && self.setStageContainerFinalHeightAndPosition(!1),
+																										 self.info_do && self.info_do.isShowed_bl && self.info_do.positionAndResize(),
+																										 self.atb_do && self.atb_do.isShowed_bl && self.atb_do.positionAndResize(),
+																										 self.passWindow_do && self.passWindow_do.isShowed_bl && self.passWindow_do.positionAndResize(),
+																										 self.playbackRateWindow_do && self.playbackRateWindow_do.isShowed_bl && self.playbackRateWindow_do.positionAndResize())
+							},
+							this.setStageContainerFinalHeightAndPosition = function(e) {
+								if (self.ws || (self.ws = FWDMSPUtils.getViewportSize()),
+								    self.controller_do && self.allowToResizeAndPosition_bl) {
 									if (self.openInPopup_bl) return self.main_do.setX(0),
-										self.main_do.setY(0), self.main_do.getStyle().width = "100%", self.main_do.setHeight(self.ws.h), self.controller_do.setX(0),
+										self.main_do.setY(0),
+										self.main_do.getStyle().width = "100%",
+										self.main_do.setHeight(self.ws.h),
+										self.controller_do.setX(0),
 										FWDAnimation.killTweensOf(self.controller_do),
 										e ? 0 != self.controller_do.y && FWDAnimation.to(self.controller_do, .8, {
-											y: 0,
-											ease: Expo.easeInOut
-										}) : self.controller_do.setY(0),
-										self.isFullScreen_bl || self.controller_do.setY(0), void(self.playlist_do && (FWDAnimation.killTweensOf(self.playlist_do), self.playlist_do.setX(0), self.playlist_do.setY(self.controller_do.h)));
-									clearTimeout(self.showPlaylistWithDelayId_to), self.playlist_do && self.playlist_do.isShowed_bl && (addToHeight = self.playlist_do.h), self.position_str == FWDMSP.POSITION_TOP ? self.playlist_do ? (self.background_do && self.background_do.setHeight(self.playlist_do.h + self.controller_do.h), self.playlist_do.setY(0), self.isFullScreen_bl ? self.controller_do.setY(0) : self.controller_do.setY(self.playlist_do.h), self.main_do.setHeight(self.playlist_do.h + self.controller_do.h)) : (self.background_do && self.background_do.setHeight(self.controller_do.h), self.controller_do.setY(0), self.main_do.setHeight(self.controller_do.h)) : self.playlist_do ? (self.background_do && self.background_do.setHeight(self.playlist_do.h + self.controller_do.h + 150), self.playlist_do.setY(self.controller_do.h), self.controller_do.setY(0), self.main_do.setHeight(self.playlist_do.h + self.controller_do.h)) : (self.background_do && self.background_do.setHeight(self.controller_do.h), self.controller_do.setY(0), self.main_do.setHeight(self.controller_do.h)),
-										self.horizontalPosition_str == FWDMSP.LEFT ? (self.main_do.setX(0), self.opener_do && ("right" == self.data.openerAlignment_str ? self.opener_do.setX(Math.round(self.stageWidth - self.opener_do.w)) : self.opener_do.setX(0))) : self.horizontalPosition_str == FWDMSP.CENTER ? (self.main_do.setX(Math.round((self.ws.w - self.stageWidth) / 2)), self.opener_do && ("right" == self.data.openerAlignment_str ? self.opener_do.setX(parseInt((self.ws.w - self.stageWidth) / 2) + self.stageWidth - self.opener_do.w) : self.opener_do.setX(self.main_do.x))) : self.horizontalPosition_str == FWDMSP.RIGHT && (self.main_do.setX(Math.round(self.ws.w - self.stageWidth)), "right" == self.data.openerAlignment_str ? self.opener_do.setX(Math.round(self.ws.w - self.opener_do.w)) : self.opener_do.setX(Math.round(self.ws.w - self.stageWidth))),
-										FWDAnimation.killTweensOf(self.stageContainer), self.background_do && FWDAnimation.killTweensOf(self.background_do),
+												y: 0,
+												ease: Expo.easeInOut
+												})
+											: self.controller_do.setY(0),
+									self.isFullScreen_bl || self.controller_do.setY(0),
+									void(self.playlist_do && (FWDAnimation.killTweensOf(self.playlist_do),
+																						self.playlist_do.setX(0),
+																						self.playlist_do.setY(self.controller_do.h)));
+									clearTimeout(self.showPlaylistWithDelayId_to),
+									self.playlist_do && self.playlist_do.isShowed_bl && (addToHeight = self.playlist_do.h),
+									self.position_str == FWDMSP.POSITION_TOP ? self.playlist_do
+									                                         ? (self.background_do && self.background_do.setHeight(self.playlist_do.h + self.controller_do.h),
+																													    self.playlist_do.setY(0),
+																															self.isFullScreen_bl ? self.controller_do.setY(0) : self.controller_do.setY(self.playlist_do.h),
+																															self.main_do.setHeight(self.playlist_do.h + self.controller_do.h))
+																													 : (self.background_do && self.background_do.setHeight(self.controller_do.h),
+																													    self.controller_do.setY(0),
+																															self.main_do.setHeight(self.controller_do.h))
+																													 : self.playlist_do ? (self.background_do && self.background_do.setHeight(self.playlist_do.h + self.controller_do.h + 150),
+																													   self.playlist_do.setY(self.controller_do.h),
+																														 self.controller_do.setY(0),
+																														 self.main_do.setHeight(self.playlist_do.h + self.controller_do.h))
+																													 : (self.background_do && self.background_do.setHeight(self.controller_do.h),
+																													   self.controller_do.setY(0),
+																														 self.main_do.setHeight(self.controller_do.h)),
+										self.horizontalPosition_str == FWDMSP.LEFT ? (self.main_do.setX(0),
+										                                              self.opener_do && ("right" == self.data.openerAlignment_str ? self.opener_do.setX(Math.round(self.stageWidth - self.opener_do.w)) : self.opener_do.setX(0)))
+																															 : self.horizontalPosition_str == FWDMSP.CENTER
+																															 ? (self.main_do.setX(Math.round((self.ws.w - self.stageWidth) / 2)),
+																															    self.opener_do && ("right" == self.data.openerAlignment_str
+																																	? self.opener_do.setX(parseInt((self.ws.w - self.stageWidth) / 2) + self.stageWidth - self.opener_do.w)
+																																	: self.opener_do.setX(self.main_do.x)))
+																															 : self.horizontalPosition_str == FWDMSP.RIGHT && (self.main_do.setX(Math.round(self.ws.w - self.stageWidth)),
+																															   																								 "right" == self.data.openerAlignment_str
+																																																								 ? self.opener_do.setX(Math.round(self.ws.w - self.opener_do.w))
+																																																								 : self.opener_do.setX(Math.round(self.ws.w - self.stageWidth))),
+										FWDAnimation.killTweensOf(self.stageContainer),
+										self.background_do && FWDAnimation.killTweensOf(self.background_do),
 										FWDAnimation.killTweensOf(self.controller_do),
-										FWDAnimation.killTweensOf(self.opener_do), self.center(), e ? self.position_str == FWDMSP.POSITION_TOP ? self.playlist_do && self.playlist_do.isShowed_bl && self.controller_do.isShowed_bl ? (FWDAnimation.to(self.stageContainer, .8, {
+										FWDAnimation.killTweensOf(self.opener_do),
+										self.center(),
+										e ? self.position_str == FWDMSP.POSITION_TOP ? self.playlist_do && self.playlist_do.isShowed_bl && self.controller_do.isShowed_bl ? (FWDAnimation.to(self.stageContainer, .8, {
 											css: {
 												top: 0
 											},
@@ -900,52 +981,105 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 											ease: Expo.easeInOut
 										})) : self.position_str == FWDMSP.POSITION_TOP ? self.playlist_do && self.playlist_do.isShowed_bl && self.controller_do.isShowed_bl ? (self.stageContainer.style.top = "0px", self.opener_do.setY(self.playlist_do.h + self.controller_do.h)) : self.controller_do.isShowed_bl && self.playlist_do ? (self.stageContainer.style.top = -self.playlist_do.h + "px", self.opener_do.setY(self.playlist_do.h + self.controller_do.h)) : !self.controller_do.isShowed_bl && self.playlist_do ? (self.stageContainer.style.top = -self.playlist_do.h - self.controller_do.h + "px", self.opener_do.setY(self.playlist_do.h + self.controller_do.h)) : self.controller_do.isShowed_bl ? (self.stageContainer.style.top = "0px", self.opener_do.setY(self.controller_do.h)) : (self.stageContainer.style.top = -self.controller_do.h + "px", self.opener_do.setY(self.controller_do.h), self.moveWheyLeft()) : (self.playlist_do && self.playlist_do.isShowed_bl && self.controller_do.isShowed_bl ? self.stageContainer.style.top = self.ws.h - self.controller_do.h - self.playlist_do.h + "px" : self.controller_do.isShowed_bl && self.playlist_do ? self.stageContainer.style.top = self.ws.h - self.controller_do.h + "px" : self.controller_do.isShowed_bl ? self.stageContainer.style.top = self.ws.h - self.controller_do.h + "px" : (self.stageContainer.style.top = self.ws.h + "px", self.moveWheyLeft()), self.opener_do.setY(-self.opener_do.h))
 								}
-							}, this.moveWheyLeft = function() {
-								self.main_do.setX(-5e3), self.background_do && self.background_do.setWidth(0)
-							}, this.center = function() {
-								self.isFullScreen_bl && self.main_do.setX(0), self.background_do && (self.background_do.getStyle().width = "100%")
-							}, this.setupContextMenu = function() {
+							},
+							this.moveWheyLeft = function() {
+								self.main_do.setX(-5e3),
+								self.background_do && self.background_do.setWidth(0)
+							},
+							this.center = function() {
+								self.isFullScreen_bl && self.main_do.setX(0),
+								self.background_do && (self.background_do.getStyle().width = "100%")
+							},
+							this.setupContextMenu = function() {
 								self.customContextMenu_do = new FWDMSPContextMenu(self.main_do, self.data.rightClickContextMenu_str)
-							}, this.setupMainInstances = function() {
-								self.controller_do || (FWDMSP.hasHTML5Audio && self.setupAudioScreen(), self.data.showPlaylistsButtonAndPlaylists_bl && self.setupCategories(), self.data.showPlayListButtonAndPlaylist_bl && self.setupPlaylist(), self.setupController(), self.setupHider(), self.data.showPlaybackRateButton_bl && self.setupPlaybackRateWindow(), self.setupPasswordWindow(), self.setupOpener(), self.controller_do.resizeAndPosition(), self.data.addKeyboardSupport_bl && self.addKeyboardSupport())
-							}, this.setInputs = function() {
+							},
+							this.setupMainInstances = function() {
+								self.controller_do || (FWDMSP.hasHTML5Audio && self.setupAudioScreen(),
+								                      self.data.showPlaylistsButtonAndPlaylists_bl && self.setupCategories(),
+																			self.data.showPlayListButtonAndPlaylist_bl && self.setupPlaylist(),
+																			self.setupController(),
+																			self.setupHider(),
+																			self.data.showPlaybackRateButton_bl && self.setupPlaybackRateWindow(),
+																			self.setupPasswordWindow(),
+																			self.setupOpener(),
+																			self.controller_do.resizeAndPosition(),
+																			self.data.addKeyboardSupport_bl && self.addKeyboardSupport())
+							},
+							this.setInputs = function() {
 								for (var e = document.querySelectorAll("input"),
-										t = 0; t < e.length; t++) self.hasPointerEvent_bl ? e[t].addEventListener("pointerdown", self.inputFocusInHandler) : e[t].addEventListener && (e[t].addEventListener("mousedown", self.inputFocusInHandler), e[t].addEventListener("touchstart", self.inputFocusInHandler))
-							}, this.inputFocusInHandler = function(e) {
-								self.curInput = e.target, setTimeout(function() {
-									self.hasPointerEvent_bl ? window.addEventListener("pointerdown", self.inputFocusOutHandler) : window.addEventListener && (window.addEventListener("mousedown", self.inputFocusOutHandler), window.addEventListener("touchstart", self.inputFocusOutHandler)), FWDMSP.isSearchedFocused_bl = !0
+										 t = 0;
+										 t < e.length; t++)
+										 	self.hasPointerEvent_bl ? e[t].addEventListener("pointerdown", self.inputFocusInHandler)
+										                                            : e[t].addEventListener && (e[t].addEventListener("mousedown", self.inputFocusInHandler),
+																																                            e[t].addEventListener("touchstart", self.inputFocusInHandler))
+							},
+							this.inputFocusInHandler = function(e) {
+								self.curInput = e.target,
+								setTimeout(function() {
+									self.hasPointerEvent_bl ? window.addEventListener("pointerdown", self.inputFocusOutHandler)
+									                        : window.addEventListener && (window.addEventListener("mousedown", self.inputFocusOutHandler),
+																					                              window.addEventListener("touchstart", self.inputFocusOutHandler)),
+									FWDMSP.isSearchedFocused_bl = !0
 								}, 50)
-							}, this.inputFocusOutHandler = function(e) {
+							},
+							this.inputFocusOutHandler = function(e) {
 								var t = FWDUVPUtils.getViewportMouseCoordinates(e);
-								if (!FWDUVPUtils.hitTest(self.curInput, t.screenX, t.screenY)) return self.hasPointerEvent_bl ? window.removeEventListener("pointerdown", self.inputFocusOutHandler) : window.removeEventListener && (window.removeEventListener("mousedown", self.inputFocusOutHandler), window.removeEventListener("touchstart", self.inputFocusOutHandler)), void(FWDMSP.isSearchedFocused_bl = !1)
-							}, this.addKeyboardSupport = function() {
-								self.setInputs(), document.addEventListener("keydown", this.onKeyDownHandler), document.addEventListener("keyup", this.onKeyUpHandler)
-							}, this.onKeyDownHandler = function(e) {
-								if (!self.isSpaceDown_bl && self.hasStartedToPlay_bl && !FWDMSP.isSearchedFocused_bl && (self.isSpaceDown_bl = !0, e.preventDefault && e.preventDefault(), self == FWDMSP.keyboardCurInstance)) {
+								if (!FWDUVPUtils.hitTest(self.curInput, t.screenX, t.screenY))
+								   return self.hasPointerEvent_bl ? window.removeEventListener("pointerdown", self.inputFocusOutHandler)
+									                                : window.removeEventListener && (window.removeEventListener("mousedown", self.inputFocusOutHandler),
+																																									 window.removeEventListener("touchstart", self.inputFocusOutHandler)),
+																									void(FWDMSP.isSearchedFocused_bl = !1)
+							},
+							this.addKeyboardSupport = function() {
+								self.setInputs(),
+								document.addEventListener("keydown", this.onKeyDownHandler),
+								document.addEventListener("keyup", this.onKeyUpHandler)
+							},
+							this.onKeyDownHandler = function(e) {
+								if (!self.isSpaceDown_bl && self.hasStartedToPlay_bl
+									                       && !FWDMSP.isSearchedFocused_bl
+																				 && (self.isSpaceDown_bl = !0,
+										e.preventDefault && e.preventDefault(),
+										self == FWDMSP.keyboardCurInstance)) {
 									if (32 == e.keyCode) {
 										if (self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS || !self.videoScreen_do) {
-											if (!self.audioScreen_do.isSafeToBeControlled_bl) return;
+											if (!self.audioScreen_do.isSafeToBeControlled_bl)
+											  return;
 											self.audioScreen_do.togglePlayPause()
 										} else {
-											if (!self.videoScreen_do.isSafeToBeControlled_bl) return;
+											if (!self.videoScreen_do.isSafeToBeControlled_bl)
+											  return;
 											self.videoScreen_do && self.videoScreen_do.togglePlayPause()
 										}
 										return e.preventDefault && e.preventDefault(), !1
 									}
-									if (77 == e.keyCode) 0 != self.volume && (self.lastVolume = self.volume), 0 != self.volume ? self.volume = 0 : self.volume = self.lastVolume,
+									if (77 == e.keyCode) 0 != self.volume && (self.lastVolume = self.volume),
+									0 != self.volume ? self.volume = 0 : self.volume = self.lastVolume,
+									self.setVolume(self.volume);
+									else if (38 == e.keyCode) self.volume += .1,
+										1 < self.volume && (self.volume = 1),
 										self.setVolume(self.volume);
-									else if (38 == e.keyCode) self.volume += .1, 1 < self.volume && (self.volume = 1),
+									else if (40 == e.keyCode) self.volume -= .1,
+										self.volume < 0 && (self.volume = 0),
 										self.setVolume(self.volume);
-									else if (40 == e.keyCode) self.volume -= .1, self.volume < 0 && (self.volume = 0), self.setVolume(self.volume);
-									else if (77 == e.keyCode) self.volume < 0 && (self.volume = 0), self.setVolume(self.volume);
+									else if (77 == e.keyCode) self.volume < 0 && (self.volume = 0),
+									  self.setVolume(self.volume);
 									else if (39 != e.keyCode || self.isAdd_bl) {
 										if (37 == e.keyCode && !self.isAdd_bl) {
-											5 == (t = self.getCurrentTime()).length && (t = "00:" + t), 7 == t.length && (t = "0" + t), t = FWDMSPUtils.getSecondsFromString(t), t -= 5, 5 == (t = FWDMSPUtils.formatTime(t)).length && (t = "00:" + t), 7 == t.length && (t = "0" + t), self.scrubbAtTime(t)
+											5 == (t = self.getCurrentTime()).length && (t = "00:" + t), 7 == t.length
+											                                        && (t = "0" + t),
+											t = FWDMSPUtils.getSecondsFromString(t),
+											t -= 5, 5 == (t = FWDMSPUtils.formatTime(t)).length && (t = "00:" + t), 7 == t.length && (t = "0" + t),
+											self.scrubbAtTime(t)
 										}
 									} else {
 										var t;
-										5 == (t = self.getCurrentTime()).length && (t = "00:" + t), 7 == t.length && (t = "0" + t), t = FWDMSPUtils.getSecondsFromString(t),
-											t += 5, 5 == (t = FWDMSPUtils.formatTime(t)).length && (t = "00:" + t), 7 == t.length && (t = "0" + t), self.scrubbAtTime(t)
+										5 == (t = self.getCurrentTime()).length && (t = "00:" + t),
+										7 == t.length && (t = "0" + t),
+										t = FWDMSPUtils.getSecondsFromString(t),
+										t += 5, 5 == (t = FWDMSPUtils.formatTime(t)).length && (t = "00:" + t),
+										7 == t.length && (t = "0" + t),
+										self.scrubbAtTime(t)
 									}
 								}
 							},
@@ -955,7 +1089,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
               this.setupAopw = function() {
 								FWDMSPOPWindow.setPrototype(),
                 self.popw_do = new FWDMSPOPWindow(self.data, self)
-							}, this.setupPasswordWindow = function() {
+							},
+							this.setupPasswordWindow = function() {
 								FWDMSPPassword.setPrototype(),
                 self.passWindow_do = new FWDMSPPassword(self.data, self),
                 self.passWindow_do.addListener(FWDMSPPassword.CORRECT, self.passordCorrect)
@@ -1531,71 +1666,219 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 									}
 									self.HLSError_str && (console && console.log(self.HLSError_str), self.main_do.addChild(self.info_do), self.info_do.showText(self.HLSError_str), self.resizeHandler())
 								}))
-							}, this.setupClickScreen = function() {
+							},
+							this.setupClickScreen = function() {
 								self.dumyClick_do = new FWDMSPDisplayObject("div"),
-									self.dumyClick_do.getStyle().width = "100%", self.dumyClick_do.getStyle().height = "100%",
-									FWDMSPUtils.isIE && (self.dumyClick_do.setBkColor("#00FF00"), self.dumyClick_do.setAlpha(1e-5)),
-									self.dumyClick_do.screen.addEventListener ? self.dumyClick_do.screen.addEventListener("click", self.playPauseClickHandler) : self.dumyClick_do.screen.attachEvent && self.dumyClick_do.screen.attachEvent("onclick", self.playPauseClickHandler)
-							}, this.playPauseClickHandler = function(e) {
+								self.dumyClick_do.getStyle().width = "100%",
+								self.dumyClick_do.getStyle().height = "100%",
+								FWDMSPUtils.isIE && (self.dumyClick_do.setBkColor("#00FF00"),
+																		 self.dumyClick_do.setAlpha(1e-5)),
+								self.dumyClick_do.screen.addEventListener ? self.dumyClick_do.screen.addEventListener("click", self.playPauseClickHandler)
+								                                          : self.dumyClick_do.screen.attachEvent && self.dumyClick_do.screen.attachEvent("onclick", self.playPauseClickHandler)
+							},
+							this.playPauseClickHandler = function(e) {
 								2 != e.button && (self.disableClick_bl || (self.firstTapPlaying_bl = self.isPlaying_bl))
-							}, this.addDoubleClickSupport = function() {
-								!self.isMobile_bl && self.dumyClick_do.screen.addEventListener ? (self.dumyClick_do.screen.addEventListener("mousedown", self.onFirstDown), FWDMSPUtils.isIEWebKit && self.dumyClick_do.screen.addEventListener("dblclick", self.onSecondDown)) : self.isMobile_bl ? self.dumyClick_do.screen.addEventListener("touchstart", self.onFirstDown) : self.dumyClick_do.screen.addEventListener && self.dumyClick_do.screen.addEventListener("mousedown", self.onFirstDown)
-							}, this.onFirstDown = function(e) {
+							},
+							this.addDoubleClickSupport = function() {
+								!self.isMobile_bl && self.dumyClick_do.screen.addEventListener ? (self.dumyClick_do.screen.addEventListener("mousedown", self.onFirstDown), FWDMSPUtils.isIEWebKit && self.dumyClick_do.screen.addEventListener("dblclick", self.onSecondDown))
+								                                                               : self.isMobile_bl
+																																							 ? self.dumyClick_do.screen.addEventListener("touchstart", self.onFirstDown)
+																																							 : self.dumyClick_do.screen.addEventListener && self.dumyClick_do.screen.addEventListener("mousedown", self.onFirstDown)
+							},
+							this.onFirstDown = function(e) {
 								if (2 != e.button) {
 									self.isFullscreen_bl && e.preventDefault && e.preventDefault();
 									var t = FWDMSPUtils.getViewportMouseCoordinates(e);
-									self.firstTapX = t.screenX, self.firstTapY = t.screenY, self.firstTapPlaying_bl = self.isPlaying_bl, FWDMSPUtils.isIEWebKit || (self.isMobile_bl ? (self.dumyClick_do.screen.addEventListener("touchstart", self.onSecondDown), self.dumyClick_do.screen.removeEventListener("touchstart", self.onFirstDown)) : self.dumyClick_do.screen.addEventListener && (self.dumyClick_do.screen.addEventListener("mousedown", self.onSecondDown), self.dumyClick_do.screen.removeEventListener("mousedown", self.onFirstDown)), clearTimeout(self.secondTapId_to), self.secondTapId_to = setTimeout(self.doubleTapExpired, 250))
+									self.firstTapX = t.screenX,
+									self.firstTapY = t.screenY,
+									self.firstTapPlaying_bl = self.isPlaying_bl,
+									FWDMSPUtils.isIEWebKit || (self.isMobile_bl ? (self.dumyClick_do.screen.addEventListener("touchstart", self.onSecondDown),
+									                                               self.dumyClick_do.screen.removeEventListener("touchstart", self.onFirstDown))
+																															: self.dumyClick_do.screen.addEventListener && (self.dumyClick_do.screen.addEventListener("mousedown", self.onSecondDown),
+																															  																							self.dumyClick_do.screen.removeEventListener("mousedown", self.onFirstDown)),
+																						clearTimeout(self.secondTapId_to),
+																						self.secondTapId_to = setTimeout(self.doubleTapExpired, 250))
 								}
-							}, this.doubleTapExpired = function() {
+							},
+							this.doubleTapExpired = function() {
 								clearTimeout(self.secondTapId_to),
-									self.isMobile_bl ? (self.dumyClick_do.screen.removeEventListener("touchstart", self.onSecondDown), self.dumyClick_do.screen.addEventListener("touchstart", self.onFirstDown)) : self.dumyClick_do.screen.addEventListener && (self.dumyClick_do.screen.removeEventListener("mousedown", self.onSecondDown), self.dumyClick_do.screen.addEventListener("mousedown", self.onFirstDown))
-							}, this.onSecondDown = function(e) {
+									self.isMobile_bl ? (self.dumyClick_do.screen.removeEventListener("touchstart", self.onSecondDown),
+									                    self.dumyClick_do.screen.addEventListener("touchstart", self.onFirstDown))
+																	 : self.dumyClick_do.screen.addEventListener && (self.dumyClick_do.screen.removeEventListener("mousedown", self.onSecondDown),
+																	 																								 self.dumyClick_do.screen.addEventListener("mousedown", self.onFirstDown))
+							},
+							this.onSecondDown = function(e) {
 								e.preventDefault && e.preventDefault();
 								var t, o, s = FWDMSPUtils.getViewportMouseCoordinates(e);
-								FWDMSPUtils.isIEWebKit && (self.firstTapPlaying_bl = self.isPlaying_bl), e.touches && 1 != e.touches.length || (t = Math.abs(s.screenX - self.firstTapX), o = Math.abs(s.screenY - self.firstTapY), self.isMobile_bl && (10 < t || 10 < o) || !self.isMobile_bl && (2 < t || 2 < o) || (self.switchFullScreenOnDoubleClick(), FWDMSPUtils.isIEWebKit || (self.firstTapPlaying_bl ? self.play() : self.pause())))
-							}, this.setupHider = function() {
-								FWDMSPHider.setPrototype(), self.hider = new FWDMSPHider(self.main_do, self.controller_do.videoControllerHolder_do, 2e3), self.hider.addListener(FWDMSPHider.SHOW, self.hiderShowHandler), self.hider.addListener(FWDMSPHider.HIDE, self.hiderHideHandler), self.hider.addListener(FWDMSPHider.HIDE_COMPLETE, self.hiderHideCompleteHandler)
-							}, this.hiderShowHandler = function() {
+								FWDMSPUtils.isIEWebKit && (self.firstTapPlaying_bl = self.isPlaying_bl),
+								e.touches && 1 != e.touches.length || (t = Math.abs(s.screenX - self.firstTapX),
+								o = Math.abs(s.screenY - self.firstTapY),
+								self.isMobile_bl && (10 < t || 10 < o) || !self.isMobile_bl && (2 < t || 2 < o) || (self.switchFullScreenOnDoubleClick(),
+								FWDMSPUtils.isIEWebKit || (self.firstTapPlaying_bl ? self.play() : self.pause())))
+							},
+							this.setupHider = function() {
+								FWDMSPHider.setPrototype(),
+								self.hider = new FWDMSPHider(self.main_do, self.controller_do.videoControllerHolder_do, 2e3),
+								self.hider.addListener(FWDMSPHider.SHOW, self.hiderShowHandler),
+								self.hider.addListener(FWDMSPHider.HIDE, self.hiderHideHandler),
+								self.hider.addListener(FWDMSPHider.HIDE_COMPLETE, self.hiderHideCompleteHandler)
+							},
+							this.hiderShowHandler = function() {
 								self.controller_do, self.showCursor()
-							}, this.hiderHideHandler = function() {
+							},
+							this.hiderHideHandler = function() {
 								FWDMSPUtils.isIphone
-							}, this.hiderHideCompleteHandler = function() {}, this.setupVideosHolder = function() {
+							},
+							this.hiderHideCompleteHandler = function() {},
+							this.setupVideosHolder = function() {
 								this.videosHolder_do = new FWDMSPDisplayObject("div"),
-									self.videosHolder_do.getStyle().background = "url('" + self.data.thumbnailBkPath_str + "')", this.videosHolder_do.setWidth(self.data.controllerHeight), this.videosHolder_do.setHeight(self.data.controllerHeight), this.controller_do.mainHolder_do.addChild(this.videosHolder_do),
-									self.data.showVideoFullScreenButton_bl && (this.setupClickScreen(), this.setupDisableClick(), this.addDoubleClickSupport(), this.fullScreenButtonOverlay_do = new FWDMSPDisplayObject("div"), self.fullScreenButtonOverlay_do.getStyle().background = "url('" + self.data.thumbnailBkPath_str + "')", this.fullScreenButtonOverlay_do.setWidth(self.data.controllerHeight), this.fullScreenButtonOverlay_do.setHeight(self.data.controllerHeight), FWDMSPSimpleButton.setPrototype(), -1 != this.skinPath_str.indexOf("hex_white") ? self.largePlayButton_do = new FWDMSPSimpleButton(self.data.largePlayN_img, self.data.largePlayS_str, void 0, !0, self.data.useHEXColorsForSkin_bl, self.data.normalButtonsColor_str, "#FFFFFF") : self.largePlayButton_do = new FWDMSPSimpleButton(self.data.largePlayN_img, self.data.largePlayS_str, void 0, !0, self.data.useHEXColorsForSkin_bl, self.data.normalButtonsColor_str, self.data.selectedButtonsColor_str), self.largePlayButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, self.largePlayButtonUpHandler), self.largePlayButton_do.hide(), FWDMSPComplexButton.setPrototype(), self.fullScreenButton_do = new FWDMSPComplexButton(self.data.fullScreenN_img, self.data.fullScreenS_str, self.data.normalScreenN_img, self.data.normalScreenS_str, !0, self.data.useHEXColorsForSkin_bl, self.data.normalButtonsColor_str, self.data.selectedButtonsColor_str), self.fullScreenButton_do.addListener(FWDMSPComplexButton.MOUSE_UP, self.toggleFullScreen), self.checkShowFullScreenButtonHitTest(), setTimeout(function() {
-										self.videosHolder_do.addChild(self.dumyClick_do), self.disableClick_do && self.main_do.addChild(self.disableClick_do), self.videosHolder_do.addChild(self.fullScreenButtonOverlay_do), self.controller_do.mainHolder_do.contains(self.fullScreenButton_do) || self.videosHolder_do.addChild(self.fullScreenButton_do), self.videosHolder_do.addChild(self.largePlayButton_do), self.hideFullScreenButtonAndOverlay(!1, !0)
+								self.videosHolder_do.getStyle().background = "url('" + self.data.thumbnailBkPath_str + "')",
+								this.videosHolder_do.setWidth(self.data.controllerHeight),
+								this.videosHolder_do.setHeight(self.data.controllerHeight),
+								this.controller_do.mainHolder_do.addChild(this.videosHolder_do),
+								self.data.showVideoFullScreenButton_bl && (this.setupClickScreen(),
+								                                           this.setupDisableClick(),
+																													 this.addDoubleClickSupport(),
+																													 this.fullScreenButtonOverlay_do = new FWDMSPDisplayObject("div"),
+																													 self.fullScreenButtonOverlay_do.getStyle().background = "url('" + self.data.thumbnailBkPath_str + "')",
+																													 this.fullScreenButtonOverlay_do.setWidth(self.data.controllerHeight),
+																													 this.fullScreenButtonOverlay_do.setHeight(self.data.controllerHeight),
+																													 FWDMSPSimpleButton.setPrototype(),
+																													 -1 != this.skinPath_str.indexOf("hex_white") ? self.largePlayButton_do = new FWDMSPSimpleButton(self.data.largePlayN_img,
+																														                                                                                               self.data.largePlayS_str,
+																																																																													 void 0, !0,
+																																																																													 self.data.useHEXColorsForSkin_bl,
+																																																																													 self.data.normalButtonsColor_str, "#FFFFFF")
+																																																				: self.largePlayButton_do = new FWDMSPSimpleButton(self.data.largePlayN_img,
+																																																					                                                 self.data.largePlayS_str,
+																																																																													 void 0,
+																																																																													 !0,
+																																																																													 self.data.useHEXColorsForSkin_bl,
+																																																																													 self.data.normalButtonsColor_str,
+																																																																													 self.data.selectedButtonsColor_str),
+							   self.largePlayButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, self.largePlayButtonUpHandler),
+								 self.largePlayButton_do.hide(),
+								 FWDMSPComplexButton.setPrototype(),
+								 self.fullScreenButton_do = new FWDMSPComplexButton(self.data.fullScreenN_img,
+									                                                  self.data.fullScreenS_str,
+																																		self.data.normalScreenN_img,
+																																		self.data.normalScreenS_str,
+																																		!0,
+																																		self.data.useHEXColorsForSkin_bl,
+																																		self.data.normalButtonsColor_str,
+																																		self.data.selectedButtonsColor_str),
+									self.fullScreenButton_do.addListener(FWDMSPComplexButton.MOUSE_UP, self.toggleFullScreen),
+									self.checkShowFullScreenButtonHitTest(),
+									setTimeout(function() {
+										self.videosHolder_do.addChild(self.dumyClick_do),
+										self.disableClick_do && self.main_do.addChild(self.disableClick_do),
+										self.videosHolder_do.addChild(self.fullScreenButtonOverlay_do),
+										self.controller_do.mainHolder_do.contains(self.fullScreenButton_do) || self.videosHolder_do.addChild(self.fullScreenButton_do),
+										self.videosHolder_do.addChild(self.largePlayButton_do),
+										self.hideFullScreenButtonAndOverlay(!1, !0)
 									}, 50))
-							}, this.setupDisableClick = function() {
+							},
+							this.setupDisableClick = function() {
 								self.disableClick_do = new FWDMSPDisplayObject("div")
-							}, this.disableClick = function() {
+							},
+							this.disableClick = function() {
 								self.disableClick_bl = !0,
-									clearTimeout(self.disableClickId_to), self.disableClick_do && (self.disableClick_do.getStyle().width = "5000px", self.disableClick_do.getStyle().height = "5000px"), self.disableClickId_to = setTimeout(function() {
+									clearTimeout(self.disableClickId_to),
+									self.disableClick_do && (self.disableClick_do.getStyle().width = "5000px",
+									self.disableClick_do.getStyle().height = "5000px"),
+									self.disableClickId_to = setTimeout(function() {
 										self.disableClick_do && (self.disableClick_do.setWidth(0), self.disableClick_do.setHeight(0)),
 											self.disableClick_bl = !1
 									}, 500)
-							}, this.disableFullScreenOnMobileHandler = function(e) {
+							},
+							this.disableFullScreenOnMobileHandler = function(e) {
 								e.preventDefault && e.preventDefault()
-							}, this.addMainDoToTheOriginalParent = function() {
-								self.isFullScreen_bl && (document.removeEventListener && (document.removeEventListener("fullscreenchange", self.onFullScreenChange), document.removeEventListener("mozfullscreenchange", self.onFullScreenChange), document.removeEventListener("webkitfullscreenchange", self.onFullScreenChange), document.removeEventListener("MSFullscreenChange", self.onFullScreenChange)), self.isFullScreen_bl = !1, self.isEmbedded_bl || (FWDMSPUtils.isIEAndLessThen9 ? document.documentElement.style.overflow = "auto" : document.documentElement.style.overflow = "visible", self.main_do.getStyle().position = "relative"), self.controller_do.setOverflow("hidden"), self.controller_do.mainHolder_do.setOverflow("hidden"), self.opener_do && self.opener_do.setVisible(!0), self.videosHolder_do.addChild(self.fullScreenButton_do), document.documentElement.style.overflow = "visible", self.main_do.getStyle().zIndex = 0, self.playlist_do && (self.playlist_do.setVisible(!0), self.playlist_do.ascDscButton_do && self.playlist_do.ascDscButton_do.setAlpha(1)), self.hideFullScreenButtonAndOverlay(!1), self.fullScreenButtonOverlay_do.setVisible(!0), self.checkShowFullScreenButtonHitTest(), self.largePlayButton_do && self.largePlayButton_do.hide(), self.hider && (self.hider.reset(), self.hider.stop()), FWDMSP.setInstancesInvisible(this, !0), self.resizeHandler(!0), window.scrollTo(self.lastX, self.lastY), FWDMSPUtils.isIE || setTimeout(function() {
-									window.scrollTo(self.lastX, self.lastY)
-								}, 150), self.isMobile_bl && window.removeEventListener("touchmove", self.disableFullScreenOnMobileHandler))
-							}, this.onFullScreenChange = function(e) {
-								document.fullScreen || document.msFullscreenElement || document.mozFullScreen || document.webkitIsFullScreen || document.msieFullScreen || (self.fullScreenButton_do.setButtonState(1), self.addMainDoToTheOriginalParent(), self.isFullScreen_bl = !1, self.resizeHandler(!0))
-							}, this.hideCursor = function() {
-								document.documentElement.style.cursor = "none", self.dumyClick_do && (self.dumyClick_do.getStyle().cursor = "none"), document.getElementsByTagName("body")[0].style.cursor = "none"
-							}, this.showCursor = function() {
-								document.documentElement.style.cursor = "auto", document.getElementsByTagName("body")[0].style.cursor = "auto", self.dumyClick_do && (self.dumyClick_do.getStyle().cursor = "auto")
-							}, this.showPlayer = function() {
-								self.isAPIReady_bl && (self.controller_do.isShowed_bl = !0, self.opener_do.showCloseButton(), self.setStageContainerFinalHeightAndPosition(self.animate_bl), self.playlist_do && (clearTimeout(self.disablePlaylistForAWhileId_to), self.disablePlaylistForAWhileId_to = setTimeout(function() {
-									self.playlist_do.hideDisable()
-								}, 500), self.playlist_do.showDisable()))
-							}, this.hidePlayer = function() {
-								self.isAPIReady_bl && (self.controller_do.isShowed_bl = !1, self.opener_do.showOpenButton(), self.setStageContainerFinalHeightAndPosition(self.animate_bl))
-							}, this.loadPlaylist = function(e) {
-								self.isAPIReady_bl && self.data.prevId != e && (self.catId = e, self.categories_do && (self.categories_do.id = self.catId), self.id = 0, self.catId < 0 ? self.catId = 0 : self.catId > self.data.totalCategories - 1 && (self.catId = self.data.totalCategories - 1), self.useDeepLinking_bl ? FWDAddress.setValue(self.instanceName_str + "?catid=" + self.catId + "&trackid=" + self.id) : self.loadInternalPlaylist(), self.data.playlist_ar)
-							}, this.playNext = function() {
-								self.isAPIReady_bl && self.isPlaylistLoaded_bl && (self.data.showPlayListButtonAndPlaylist_bl ? self.playlist_do.items_ar[self.playlist_do.curItem_do.sortId + 1] ? self.id = self.playlist_do.items_ar[self.playlist_do.curItem_do.sortId + 1].id : self.id = self.playlist_do.items_ar[0].id : (self.id++, self.id < 0 ? self.id = self.totalAudio - 1 : self.id > self.totalAudio - 1 && (self.id = 0)), self.useDeepLinking_bl ? FWDAddress.setValue(self.instanceName_str + "?catid=" + self.catId + "&trackid=" + self.id) : (self.setSource(), self.changeHLS_bl = !0, self.audioType_str != FWDMSP.HLS && self.play()), self.prevId = self.id, self.data.playlist_ar && (self.videoNameGa = self.data.playlist_ar[self.id].titleText, self.videoCat = self.data.cats_ar[self.catId]))
-							}, this.playPrev = function() {
+							},
+							this.addMainDoToTheOriginalParent = function() {
+								self.isFullScreen_bl && (document.removeEventListener && (document.removeEventListener("fullscreenchange", self.onFullScreenChange),
+								                        																	document.removeEventListener("mozfullscreenchange", self.onFullScreenChange),
+																																					document.removeEventListener("webkitfullscreenchange", self.onFullScreenChange),
+																																					document.removeEventListener("MSFullscreenChange", self.onFullScreenChange)),
+																			  self.isFullScreen_bl = !1,
+																				self.isEmbedded_bl || (FWDMSPUtils.isIEAndLessThen9 ? document.documentElement.style.overflow = "auto" : document.documentElement.style.overflow = "visible", self.main_do.getStyle().position = "relative"),
+																				self.controller_do.setOverflow("hidden"),
+																				self.controller_do.mainHolder_do.setOverflow("hidden"),
+																				self.opener_do && self.opener_do.setVisible(!0),
+																				self.videosHolder_do.addChild(self.fullScreenButton_do),
+																				document.documentElement.style.overflow = "visible",
+																				self.main_do.getStyle().zIndex = 0,
+																				self.playlist_do && (self.playlist_do.setVisible(!0),
+																														 self.playlist_do.ascDscButton_do && self.playlist_do.ascDscButton_do.setAlpha(1)),
+																				self.hideFullScreenButtonAndOverlay(!1),
+																				self.fullScreenButtonOverlay_do.setVisible(!0),
+																				self.checkShowFullScreenButtonHitTest(),
+																				self.largePlayButton_do && self.largePlayButton_do.hide(),
+																				self.hider && (self.hider.reset(), self.hider.stop()),
+																				FWDMSP.setInstancesInvisible(this, !0),
+																				self.resizeHandler(!0),
+																				window.scrollTo(self.lastX, self.lastY),
+																				FWDMSPUtils.isIE || setTimeout(function() {
+																					window.scrollTo(self.lastX, self.lastY)
+																				}, 150),
+																				self.isMobile_bl && window.removeEventListener("touchmove", self.disableFullScreenOnMobileHandler))
+							},
+							this.onFullScreenChange = function(e) {
+								document.fullScreen || document.msFullscreenElement
+								                    || document.mozFullScreen
+																		|| document.webkitIsFullScreen
+																		|| document.msieFullScreen
+																		|| (self.fullScreenButton_do.setButtonState(1),
+																		    self.addMainDoToTheOriginalParent(),
+																				self.isFullScreen_bl = !1,
+																				self.resizeHandler(!0))
+							},
+							this.hideCursor = function() {
+								document.documentElement.style.cursor = "none",
+								self.dumyClick_do && (self.dumyClick_do.getStyle().cursor = "none"),
+								document.getElementsByTagName("body")[0].style.cursor = "none"
+							},
+							this.showCursor = function() {
+								document.documentElement.style.cursor = "auto",
+								document.getElementsByTagName("body")[0].style.cursor = "auto",
+								self.dumyClick_do && (self.dumyClick_do.getStyle().cursor = "auto")
+							},
+							this.showPlayer = function() {
+								self.isAPIReady_bl && (self.controller_do.isShowed_bl = !0,
+									                     self.opener_do.showCloseButton(),
+																			 self.setStageContainerFinalHeightAndPosition(self.animate_bl),
+																			 self.playlist_do && (clearTimeout(self.disablePlaylistForAWhileId_to),
+																			 self.disablePlaylistForAWhileId_to = setTimeout(function() {
+																				 self.playlist_do.hideDisable()
+																			 }, 500),
+																			 self.playlist_do.showDisable()))
+							},
+							this.hidePlayer = function() {
+								self.isAPIReady_bl && (self.controller_do.isShowed_bl = !1,
+									                     self.opener_do.showOpenButton(),
+																			 self.setStageContainerFinalHeightAndPosition(self.animate_bl))
+							},
+							this.loadPlaylist = function(e) {
+								self.isAPIReady_bl && self.data.prevId != e
+								                   && (self.catId = e,
+																		   self.categories_do && (self.categories_do.id = self.catId),
+																			 self.id = 0,
+																			 self.catId < 0 ? self.catId = 0 : self.catId > self.data.totalCategories - 1 && (self.catId = self.data.totalCategories - 1),
+																			 self.useDeepLinking_bl ? FWDAddress.setValue(self.instanceName_str + "?catid=" + self.catId + "&trackid=" + self.id) : self.loadInternalPlaylist(),
+																			 self.data.playlist_ar)
+							},
+							this.playNext = function() {
+								self.isAPIReady_bl && self.isPlaylistLoaded_bl
+								                   && (self.data.showPlayListButtonAndPlaylist_bl ? self.playlist_do.items_ar[self.playlist_do.curItem_do.sortId + 1]
+																		                                              ? self.id = self.playlist_do.items_ar[self.playlist_do.curItem_do.sortId + 1].id
+																																									: self.id = self.playlist_do.items_ar[0].id
+																																									: (self.id++, self.id < 0 ? self.id = self.totalAudio - 1 : self.id > self.totalAudio - 1 && (self.id = 0)),
+																		  self.useDeepLinking_bl ? FWDAddress.setValue(self.instanceName_str + "?catid=" + self.catId + "&trackid=" + self.id)
+																			                       : (self.setSource(), self.changeHLS_bl = !0, self.audioType_str != FWDMSP.HLS && self.play()),
+																      self.prevId = self.id,
+																			self.data.playlist_ar && (self.videoNameGa = self.data.playlist_ar[self.id].titleText,
+																			self.videoCat = self.data.cats_ar[self.catId]))
+							},
+							this.playPrev = function() {
 								self.isAPIReady_bl && self.isPlaylistLoaded_bl && (self.data.showPlayListButtonAndPlaylist_bl ? self.playlist_do.items_ar[self.playlist_do.curItem_do.sortId - 1] ? self.id = self.playlist_do.items_ar[self.playlist_do.curItem_do.sortId - 1].id : self.id = self.playlist_do.items_ar[self.totalAudio - 1].id : (self.id--, self.id < 0 ? self.id = self.totalAudio - 1 : self.id > self.totalAudio - 1 && (self.id = 0)), self.useDeepLinking_bl ? FWDAddress.setValue(self.instanceName_str + "?catid=" + self.catId + "&trackid=" + self.id) : (self.setSource(), self.changeHLS_bl = !0, self.audioType_str != FWDMSP.HLS && self.play()), self.prevId = self.id, self.data.playlist_ar && (self.videoNameGa = self.data.playlist_ar[self.id].titleText, self.videoCat = self.data.cats_ar[self.catId]))
 							}, this.playShuffle = function() {
 								if (self.isAPIReady_bl && self.isPlaylistLoaded_bl) {
