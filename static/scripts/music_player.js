@@ -1434,7 +1434,10 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 									e.title = t.artist + " - " + t.title, e.titleText = e.title, self.controller_do.setTitle(e.title)
 								}))
 							}, this.setSource = function(e) {
-								if (self.stop(!0), FWDMSPUtils.getCookie("FWDMSPusePP") && !self.playedOnceCP_bl && self.setVolume(Number(FWDMSPUtils.getCookie("FWDMSPVolume"))), self.data.playVideoOnlyWhenLoggedIn_bl && !self.data.isLoggedIn_bl) return self.main_do.addChild(self.info_do), self.info_do.showText(self.data.loggedInMessage_str),
+								if (self.stop(!0),
+								    FWDMSPUtils.getCookie("FWDMSPusePP") && !self.playedOnceCP_bl && self.setVolume(Number(FWDMSPUtils.getCookie("FWDMSPVolume")))) 
+										return self.main_do.addChild(self.info_do),
+										self.info_do.showText(self.data.loggedInMessage_str),
 									void(self.info_do.allowToRemove_bl = !1);
 
 								else {
