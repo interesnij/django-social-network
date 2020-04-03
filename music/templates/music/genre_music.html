@@ -30,8 +30,8 @@
                       {% for object in object_list %}
                       <li class="list-group-item" data-counter="{{ forloop.counter0 }}">
                           <div class="media">
-                              <figure class="genre_item" style="cursor:pointer">
-                                <a>
+                              <figure style="cursor:pointer">
+                                <a class="genre_item">
                                   {% if object.artwork_url %}
                                     <img style="width:50px;heigth:auto" src="{{ object.artwork_url }}" />
                                   {% else %}
