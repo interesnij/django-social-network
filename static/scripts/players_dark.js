@@ -439,7 +439,7 @@ on('#ajax', 'click', '.genre_item', function() {
   if (!document.body.classList.contains("genre_" + genre_pk)){
     save_playlist("genre_" + genre_pk, '/music/manage/temp_genre/' + genre_pk, '/music/get/genre/' + genre_pk, track_id)
   }else{music_player.playSpecificTrack("genre_" + genre_pk, track_id)}
-}); 
+});
 
 on('#ajax', 'click', '.music_list_item', function() {
   var track_id = this.getAttribute('data-counter');
@@ -468,7 +468,7 @@ on('#ajax', 'click', '.track_add', function(e) {
   _link.onreadystatechange = function () {
     if ( _link.readyState == 4 && _link.status == 200 ) {
       block.innerHTML = "";
-      block.innerHTML = "<span class='track_remove' title='Удалить'><svg xmlns='http://www.w3.org/2000/svg' fill='currentColor' style='width:20px;' class='svg_default' viewBox='0 0 2424'><path fill='none' d='M0 0h24v24H0z'/><path d='M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z'/></svg></span>"
+      block.innerHTML = "<span class='track_remove' title='Удалить'><svg xmlns='http://www.w3.org/2000/svg' fill='currentColor' style='width:25px;height:25px;' class='svg_default' viewBox='0 0 2424'><path fill='none' d='M0 0h24v24H0z'/><path d='M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z'/></svg></span>"
   }};
   _link.send( null );
 });
@@ -481,7 +481,7 @@ on('#ajax', 'click', '.track_remove', function(e) {
   _link.onreadystatechange = function () {
     if ( _link.readyState == 4 && _link.status == 200 ) {
       block.innerHTML = "";
-      block.innerHTML = "<span class='track_add' title='Добавить'><svg fill='currentColor' style='width:25px;' class='svg_default' xmlns='http://www.w3.org/2000/svg' viewBox='0 024 24'><path d='M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z'/><path d='M0 0h24v24H0z' fill='none'/></svg></span>"
+      block.innerHTML = "<span class='track_add' title='Добавить'><svg fill='currentColor' style='width:25px;height:25px;' class='svg_default' xmlns='http://www.w3.org/2000/svg' viewBox='0 024 24'><path d='M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z'/><path d='M0 0h24v24H0z' fill='none'/></svg></span>"
   }};
   _link.send( null );
 });
