@@ -1682,7 +1682,20 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 											self.isATBJsLoaded_bl = !0, self.setupAtbWindow(),
 												self.setSource(self.audioPath)
 										});
-									
+									if (!(self.isMobile_bl || FWDMSP.hasHTMLHLS
+										                     || -1 == self.audioPath.indexOf(".m3u8")
+																				 || self.isHLSJsLoaded_bl
+																				 || FWDMSP.isHLSJsLoaded_bl))
+										  return -1 != location.protocol.indexOf("file:") ? (self.main_do.addChild(self.info_do),
+											                                                   self.info_do.showText("This browser dosen't allow playing HLS / live streaming videos local, please test online."),
+																																				 void self.resizeHandler())
+																																			: ((t = document.createElement("script")).src = self.data.hlsPath_str,
+																																			   document.head.appendChild(t),
+																																				 t.onerror = function() {
+																																					 self.main_do.addChild(self.info_do),
+																																					 self.info_do.showText("Error loading HLS library <font color='#FF0000'>" + self.data.hlsPath_str + "</font>."),
+																																					 self.preloader_do && self.preloader_do.hide()
+									},
 									void(t.onload = function() {
 										self.isHLSJsLoaded_bl = !0,
 										FWDMSP.isHLSJsLoaded_bl = !0,
