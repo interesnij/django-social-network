@@ -1683,12 +1683,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 												self.setSource(self.audioPath)
 										});
 
-									void(t.onload = function() {
-										self.isHLSJsLoaded_bl = !0,
-										FWDMSP.isHLSJsLoaded_bl = !0,
-										self.setupHLS(),
-											self.setSource(self.audioPath)
-									});
+									
 									self.audioScreen_do.setSource(self.audioPath),
 									(self.data.autoPlay_bl || self.isPlaylistItemClicked_bl) && self.play(),
 									!Boolean("true" == FWDMSPUtils.getCookie("FWDMSPppPlay")) || self.isMobile_bl || self.ppPplayedOnce || self.play();
