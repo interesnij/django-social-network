@@ -417,10 +417,12 @@ function save_playlist(suffix, post_link, get_link, track_id){
             time = msToTime(_duration);
             music_player.addTrack(_source, _title, _thumbPath, time, true, false, null);
           }
+          music_player.loadPlaylist(0);
           music_player.playSpecificTrack(suffix, track_id);
       }};
       _link.send( null );
     }};
+  //  music_player.loadPlaylist(0);
     playlist_link.send( null );
     };
 
