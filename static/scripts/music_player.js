@@ -1281,7 +1281,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 										(void 0 === self.catId || void 0 === self.id || isNaN(self.catId) || isNaN(self.id)) && (self.catId = self.data.startAtPlaylist, self.id = self.data.startAtTrack, e = !0),
                     (self.catId < 0 || self.catId > self.data.totalCategories - 1 && !e) && (self.catId = self.data.startAtPlaylist, self.id = self.data.startAtTrack, e = !0),
 										self.data.playlist_ar && (self.id < 0 && !e ? (self.id = self.data.startAtTrack, e = !0) : self.prevCatId == self.catId && self.id > self.data.playlist_ar.length - 1 && !e && (self.id = self.data.playlist_ar.length - 1, e = !0)),
-                    e ? location.hash = self.instanceName_str + "?catid=" + self.catId + "&trackid=" + self.id : self.prevCatId != self.catId ? (self.loadInternalPlaylist(), self.prevCatId = self.catId) : (self.isPlaylistItemClicked_bl = !0, self.setSource(!1), self.changeHLS_bl = !0, self.isShoutcast_bl || self.isIcecast_bl || self.play())
+                    e ? location.hash = self.instanceName_str + "?catid=" + self.catId + "&trackid=" + self.id : self.prevCatId != self.catId ? (self.loadInternalPlaylist(), self.prevCatId = self.catId) : (self.isPlaylistItemClicked_bl = !0, self.setSource(!1), self.isShoutcast_bl || self.isIcecast_bl || self.play())
 									}
 							}, this.setupPreloader = function() {
 								FWDMSPPreloader.setPrototype(),
@@ -1369,9 +1369,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 								? self.pause() : self.play() : self.play() : self.pause() : self.play() : self.useDeepLinking_bl &&
 								self.id != e.id ? (FWDAddress.setValue(self.instanceName_str + "?catid=" + self.catId + "&trackid=" + e.id), self.id = e.id)
 								: (self.id = e.id, self.setSource(!0),
-										self.changeHLS_bl = !0,
-										self.autioType_str != FWDMSP.HLS
-										&& self.play()
+									self.play()
 									)
 
 							},
@@ -1607,15 +1605,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 							this.audioScreenPlayCompleteHandler = function() {
 								self.data.playlist_ar && (self.videoNameGa = self.data.playlist_ar[self.id].titleText,
 									                        self.videoCat = self.data.cats_ar[self.catId]),
-								FWDMSP.hasHTML5Audio && (self.data.loop_bl ? "hls_flash" == self.audioType_str
-																													 ? setTimeout(function() {
-																															self.scrub(0), self.resume()
-																															}, 50)
-																														: (self.scrub(0), self.play())
-																														: self.data.shuffle_bl ? self.playShuffle() : 1 == self.playlist_do.items_ar.length
-																														? (self.stop(), self.playlist_do && self.playlist_do.updateCurItemProgress(0))
-																														: self.playNext()),
-																														self.dispatchEvent(FWDMSP.PLAY_COMPLETE)
+								FWDMSP.hasHTML5Audio
+								//self.dispatchEvent(FWDMSP.PLAY_COMPLETE)
 							},
 							this.loadID3IfPlaylistDisabled = function() {
 								var o = self.data.playlist_ar[self.id].source;
