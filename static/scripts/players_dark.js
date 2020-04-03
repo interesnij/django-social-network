@@ -422,8 +422,9 @@ function save_playlist(suffix, post_link, get_link, track_id){
       }};
       _link.send( null );
     }};
-  //  music_player.loadPlaylist(0);
     playlist_link.send( null );
+    if (music_player.getCatId != 0){
+      music_player.loadPlaylist(0)}
     };
 
 
@@ -448,7 +449,11 @@ on('#ajax', 'click', '.music_list_item', function() {
   var list_pk = document.querySelector(".music_playlist").getAttribute('data-pk');
   if (!document.body.classList.contains("list_" + list_pk)){
     save_playlist("list_" + list_pk, '/music/manage/temp_list/' + list_pk, '/music/get/list/' + list_pk, track_id)
-  }else{music_player.playSpecificTrack("list_" + list_pk, track_id)}
+  }else{
+    if (music_player.getCatId != 0){
+      music_player.loadPlaylist(0)
+    }
+    music_player.playSpecificTrack("list_" + list_pk, track_id)}
 });
 
 
