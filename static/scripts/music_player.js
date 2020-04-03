@@ -1360,9 +1360,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 							},
               this.palylistItemOnUpHandler = function(e) {
 								self.isPlaylistItemClicked_bl = !0,
-								e.id == self.id
+								e.id == self.id,
+								self.play()
 								
-
 							},
               this.palylistUpdateFolderTrackTitle = function(e) {
 								self.controller_do.setTitle(e.title)
