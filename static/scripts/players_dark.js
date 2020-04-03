@@ -452,6 +452,7 @@ on('#ajax', 'click', '.music_list_item', function() {
   }else{
     music_player.loadPlaylist(0);
     if (FWDMSP.LOAD_PLAYLIST_COMPLETE){
+      console.log("Плейдист загружен!");
     music_player.playSpecificTrack("list_" + list_pk, track_id);
   }
   }
