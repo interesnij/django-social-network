@@ -2,9 +2,11 @@ if (! function(t) {
         function r() {}
         r.dumy = document.createElement("div"), r.trim = function(e) {
             return e.replace(/\s/gi, "")
-        }, r.trimAndFormatUrl = function(e) {
+        },
+        r.trimAndFormatUrl = function(e) {
             return e = (e = e.toLocaleLowerCase()).replace(/ /g, "-")
-        }, r.storArrayBasedOnObjectValue = function(e, t) {
+        },
+        r.storArrayBasedOnObjectValue = function(e, t) {
             e.sort(function(s) {
                 var o = 1;
                 "-" === s[0] && (o = -1, s = s.substr(1));
@@ -12,14 +14,16 @@ if (! function(t) {
                     return (e[s] < t[s] ? -1 : e[s] > t[s] ? 1 : 0) * o
                 }
             }(t))
-        }, r.getCookie = function(e) {
+        },
+        r.getCookie = function(e) {
             for (var t = e + "=", s = document.cookie.split(";"), o = 0; o < s.length; o++) {
                 for (var i = s[o];
                     " " == i.charAt(0);) i = i.substring(1, i.length);
                 if (0 == i.indexOf(t)) return i.substring(t.length, i.length)
             }
             return null
-        }, r.hexToRgb = function(e) {
+        },
+        r.hexToRgb = function(e) {
             e = e.replace(/^#?([a-f\d])([a-f\d])([a-f\d])$/i, function(e, t, s, o) {
                 return t + t + s + s + o + o
             });
@@ -29,22 +33,27 @@ if (! function(t) {
                 g: parseInt(t[2], 16),
                 b: parseInt(t[3], 16)
             } : null).r + "," + t.g + "," + t.b + ")"
-        }, r.splitAndTrim = function(e, t) {
+        },
+        r.splitAndTrim = function(e, t) {
             for (var s = e.split(","), o = s.length, i = 0; i < o; i++) t && (s[i] = r.trim(s[i]));
             return s
-        }, r.checkTime = function(e) {
+        },
+         r.checkTime = function(e) {
             return !!/^(?:2[0-3]|[01][0-9]):[0-5][0-9]:[0-5][0-9]$/.test(e)
-        }, r.formatTimeWithMiliseconds = function(e) {
+        },
+        r.formatTimeWithMiliseconds = function(e) {
             var t = 60 * parseInt(e.split(":")[0]) * 60 + 60 * parseInt(e.split(":")[1]) + parseInt(e.split(":")[2]) + parseInt(e.split(",")[1] || e.split(".")[1]) / 1e3;
             return t = Math.round(100 * t) / 100
-        }, r.formatTime = function(e, t) {
+        },
+        r.formatTime = function(e, t) {
             var s = Math.floor(e / 3600),
                 o = e % 3600,
                 i = Math.floor(o / 60),
                 l = o % 60,
                 n = Math.ceil(l);
             return i = 10 <= i ? i : "0" + i, n = 10 <= n ? n : "0" + n, isNaN(n) ? "00:00" : s || t ? "0" + s + ":" + i + ":" + n : i + ":" + n
-        }, r.MD5 = function(e) {
+        },
+        r.MD5 = function(e) {
             function r(e, t) {
                 return e << t | e >>> 32 - t
             }
@@ -91,12 +100,14 @@ if (! function(t) {
                     return t
                 }(e)), _ = 1732584193, f = 4023233417, p = 2562383102, m = 271733878, n = 0; n < b.length; n += 16) _ = t(a = _, u = f, h = p, c = m, b[n + 0], 7, 3614090360), m = t(m, _, f, p, b[n + 1], 12, 3905402710), p = t(p, m, _, f, b[n + 2], 17, 606105819), f = t(f, p, m, _, b[n + 3], 22, 3250441966), _ = t(_, f, p, m, b[n + 4], 7, 4118548399), m = t(m, _, f, p, b[n + 5], 12, 1200080426), p = t(p, m, _, f, b[n + 6], 17, 2821735955), f = t(f, p, m, _, b[n + 7], 22, 4249261313), _ = t(_, f, p, m, b[n + 8], 7, 1770035416), m = t(m, _, f, p, b[n + 9], 12, 2336552879), p = t(p, m, _, f, b[n + 10], 17, 4294925233), f = t(f, p, m, _, b[n + 11], 22, 2304563134), _ = t(_, f, p, m, b[n + 12], 7, 1804603682), m = t(m, _, f, p, b[n + 13], 12, 4254626195), p = t(p, m, _, f, b[n + 14], 17, 2792965006), _ = s(_, f = t(f, p, m, _, b[n + 15], 22, 1236535329), p, m, b[n + 1], 5, 4129170786), m = s(m, _, f, p, b[n + 6], 9, 3225465664), p = s(p, m, _, f, b[n + 11], 14, 643717713), f = s(f, p, m, _, b[n + 0], 20, 3921069994), _ = s(_, f, p, m, b[n + 5], 5, 3593408605), m = s(m, _, f, p, b[n + 10], 9, 38016083), p = s(p, m, _, f, b[n + 15], 14, 3634488961), f = s(f, p, m, _, b[n + 4], 20, 3889429448), _ = s(_, f, p, m, b[n + 9], 5, 568446438), m = s(m, _, f, p, b[n + 14], 9, 3275163606), p = s(p, m, _, f, b[n + 3], 14, 4107603335), f = s(f, p, m, _, b[n + 8], 20, 1163531501), _ = s(_, f, p, m, b[n + 13], 5, 2850285829), m = s(m, _, f, p, b[n + 2], 9, 4243563512), p = s(p, m, _, f, b[n + 7], 14, 1735328473), _ = o(_, f = s(f, p, m, _, b[n + 12], 20, 2368359562), p, m, b[n + 5], 4, 4294588738), m = o(m, _, f, p, b[n + 8], 11, 2272392833), p = o(p, m, _, f, b[n + 11], 16, 1839030562), f = o(f, p, m, _, b[n + 14], 23, 4259657740), _ = o(_, f, p, m, b[n + 1], 4, 2763975236), m = o(m, _, f, p, b[n + 4], 11, 1272893353), p = o(p, m, _, f, b[n + 7], 16, 4139469664), f = o(f, p, m, _, b[n + 10], 23, 3200236656), _ = o(_, f, p, m, b[n + 13], 4, 681279174), m = o(m, _, f, p, b[n + 0], 11, 3936430074), p = o(p, m, _, f, b[n + 3], 16, 3572445317), f = o(f, p, m, _, b[n + 6], 23, 76029189), _ = o(_, f, p, m, b[n + 9], 4, 3654602809), m = o(m, _, f, p, b[n + 12], 11, 3873151461), p = o(p, m, _, f, b[n + 15], 16, 530742520), _ = i(_, f = o(f, p, m, _, b[n + 2], 23, 3299628645), p, m, b[n + 0], 6, 4096336452), m = i(m, _, f, p, b[n + 7], 10, 1126891415), p = i(p, m, _, f, b[n + 14], 15, 2878612391), f = i(f, p, m, _, b[n + 5], 21, 4237533241), _ = i(_, f, p, m, b[n + 12], 6, 1700485571), m = i(m, _, f, p, b[n + 3], 10, 2399980690), p = i(p, m, _, f, b[n + 10], 15, 4293915773), f = i(f, p, m, _, b[n + 1], 21, 2240044497), _ = i(_, f, p, m, b[n + 8], 6, 1873313359), m = i(m, _, f, p, b[n + 15], 10, 4264355552), p = i(p, m, _, f, b[n + 6], 15, 2734768916), f = i(f, p, m, _, b[n + 13], 21, 1309151649), _ = i(_, f, p, m, b[n + 4], 6, 4149444226), m = i(m, _, f, p, b[n + 11], 10, 3174756917), p = i(p, m, _, f, b[n + 2], 15, 718787259), f = i(f, p, m, _, b[n + 9], 21, 3951481745), _ = d(_, a), f = d(f, u), p = d(p, h), m = d(m, c);
             return (l(_) + l(f) + l(p) + l(m)).toLowerCase()
-        }, r.getSecondsFromString = function(e) {
+        },
+        r.getSecondsFromString = function(e) {
             var t = 0,
                 s = 0,
                 o = 0;
             if (e) return "0" == (t = (e = e.split(":"))[0])[0] && "0" != t[1] && (t = parseInt(t[1])), "00" == t && (t = 0), "0" == (s = e[1])[0] && "0" != s[1] && (s = parseInt(s[1])), "00" == s && (s = 0), secs = parseInt(e[2].replace(/,.*/gi, "")), "0" == secs[0] && "0" != secs[1] && (secs = parseInt(secs[1])), "00" == secs && (secs = 0), 0 != t && (o += 60 * t * 60), 0 != s && (o += 60 * s), o += secs
-        }, r.getCanvasWithModifiedColor = function(e, t, s, o, i) {
+        },
+        r.getCanvasWithModifiedColor = function(e, t, s, o, i) {
             if (e) {
                 var l, n, a = document.createElement("canvas"),
                     r = a.getContext("2d"),
@@ -105,9 +116,33 @@ if (! function(t) {
                     h = u >>> 16 & 255,
                     c = u >>> 8 & 255,
                     _ = 255 & u;
-                a.style.position = "absolute", a.style.left = "0px", a.style.top = "0px", a.style.margin = "0px", a.style.padding = "0px", a.style.maxWidth = "none", a.style.maxHeight = "none", a.style.border = "none", a.style.lineHeight = "1", a.style.backgroundColor = "transparent", a.style.backfaceVisibility = "hidden", a.style.webkitBackfaceVisibility = "hidden", a.style.MozBackfaceVisibility = "hidden", a.style.MozImageRendering = "optimizeSpeed", a.style.WebkitImageRendering = "optimizeSpeed", null == o && (o = e.width, i = e.height), a.width = o, a.height = i, r.drawImage(e, 0, 0, e.naturalWidth, e.naturalHeight, 0, 0, o, i), n = r.getImageData(0, 0, o, i), d = r.getImageData(0, 0, o, i);
-                for (var f = 0, p = n.data.length; f < p; f += 4) 0 < d.data[f + 3] && (d.data[f] = n.data[f] / 255 * h, d.data[f + 1] = n.data[f + 1] / 255 * c, d.data[f + 2] = n.data[f + 2] / 255 * _);
-                return r.globalAlpha = .5, r.putImageData(d, 0, 0), r.drawImage(a, 0, 0), s && ((l = new Image).src = a.toDataURL()), {
+                a.style.position = "absolute",
+                a.style.left = "0px",
+                a.style.top = "0px",
+                a.style.margin = "0px",
+                a.style.padding = "0px",
+                a.style.maxWidth = "none",
+                a.style.maxHeight = "none",
+                a.style.border = "none",
+                a.style.lineHeight = "1",
+                a.style.backgroundColor = "transparent",
+                a.style.backfaceVisibility = "hidden",
+                a.style.webkitBackfaceVisibility = "hidden",
+                a.style.MozBackfaceVisibility = "hidden",
+                a.style.MozImageRendering = "optimizeSpeed",
+                a.style.WebkitImageRendering = "optimizeSpeed",
+                null == o && (o = e.width, i = e.height),
+                a.width = o,
+                a.height = i,
+                r.drawImage(e, 0, 0, e.naturalWidth, e.naturalHeight, 0, 0, o, i),
+                n = r.getImageData(0, 0, o, i),
+                d = r.getImageData(0, 0, o, i);
+                for (var f = 0, p = n.data.length; f < p; f += 4)
+                   0 < d.data[f + 3] && (d.data[f] = n.data[f] / 255 * h, d.data[f + 1] = n.data[f + 1] / 255 * c, d.data[f + 2] = n.data[f + 2] / 255 * _);
+                return r.globalAlpha = .5,
+                r.putImageData(d, 0, 0),
+                r.drawImage(a, 0, 0),
+                s && ((l = new Image).src = a.toDataURL()), {
                     canvas: a,
                     image: l
                 }
@@ -235,7 +270,9 @@ if (! function(t) {
             } catch (e) {
                 return !1
             }
-        }(), r.isLocal = "file:" == document.location.protocol, r.getScrollOffsets = function() {
+        }(),
+
+        r.isLocal = "file:" == document.location.protocol, r.getScrollOffsets = function() {
             return null != t.pageXOffset ? {
                 x: t.pageXOffset,
                 y: t.pageYOffset
@@ -273,10 +310,14 @@ if (! function(t) {
                 var e = navigator.userAgent.toLowerCase();
                 if (!e.match(/browser/gi)) return e.match(/chrome/gi)
             }
-        }(), r.isSafari = -1 != navigator.userAgent.toLowerCase().indexOf("safari") && -1 == navigator.userAgent.toLowerCase().indexOf("chrome"), r.isOpera = -1 != navigator.userAgent.toLowerCase().indexOf("opr"), r.isFirefox = -1 != navigator.userAgent.toLowerCase().indexOf("firefox"), r.isIEWebKit = Boolean(document.documentElement.msRequestFullscreen), r.isIEAndLessThen9 = Boolean(-1 != navigator.userAgent.toLowerCase().indexOf("msie 7")) || Boolean(-1 != navigator.userAgent.toLowerCase().indexOf("msie 8")), r.isIEAnd9OrLess = Boolean(-1 != navigator.userAgent.toLowerCase().indexOf("msie 7")) || Boolean(-1 != navigator.userAgent.toLowerCase().indexOf("msie 8")) || Boolean(-1 != navigator.userAgent.toLowerCase().indexOf("msie 9")), r.isIE7 = Boolean(-1 != navigator.userAgent.toLowerCase().indexOf("msie 7")), r.isMac = Boolean(-1 != navigator.appVersion.toLowerCase().indexOf("mac")), r.isWin = Boolean(-1 != navigator.appVersion.toLowerCase().indexOf("win")), r.isIOS = "MacIntel" === navigator.platform && 1 < navigator.maxTouchPoints || navigator.userAgent.match(/(iPad|iPhone|iPod)/g), r.isIphone = navigator.userAgent.match(/(iPhone|iPod)/g), r.hasFullScreen = r.dumy.requestFullScreen || r.dumy.mozRequestFullScreen || r.dumy.webkitRequestFullScreen || r.dumy.msieRequestFullScreen, r.volumeCanBeSet = function() {
+        }(),
+
+        r.isSafari = -1 != navigator.userAgent.toLowerCase().indexOf("safari") && -1 == navigator.userAgent.toLowerCase().indexOf("chrome"), r.isOpera = -1 != navigator.userAgent.toLowerCase().indexOf("opr"), r.isFirefox = -1 != navigator.userAgent.toLowerCase().indexOf("firefox"), r.isIEWebKit = Boolean(document.documentElement.msRequestFullscreen), r.isIEAndLessThen9 = Boolean(-1 != navigator.userAgent.toLowerCase().indexOf("msie 7")) || Boolean(-1 != navigator.userAgent.toLowerCase().indexOf("msie 8")), r.isIEAnd9OrLess = Boolean(-1 != navigator.userAgent.toLowerCase().indexOf("msie 7")) || Boolean(-1 != navigator.userAgent.toLowerCase().indexOf("msie 8")) || Boolean(-1 != navigator.userAgent.toLowerCase().indexOf("msie 9")), r.isIE7 = Boolean(-1 != navigator.userAgent.toLowerCase().indexOf("msie 7")), r.isMac = Boolean(-1 != navigator.appVersion.toLowerCase().indexOf("mac")), r.isWin = Boolean(-1 != navigator.appVersion.toLowerCase().indexOf("win")), r.isIOS = "MacIntel" === navigator.platform && 1 < navigator.maxTouchPoints || navigator.userAgent.match(/(iPad|iPhone|iPod)/g), r.isIphone = navigator.userAgent.match(/(iPhone|iPod)/g), r.hasFullScreen = r.dumy.requestFullScreen || r.dumy.mozRequestFullScreen || r.dumy.webkitRequestFullScreen || r.dumy.msieRequestFullScreen, r.volumeCanBeSet = function() {
             var e = document.createElement("audio");
             if (e) return (e.volume = 0) == e.volume
-        }(), r.getVideoFormat = function() {
+        }(),
+
+        r.getVideoFormat = function() {
             var e, t = document.createElement("video");
             if (t.canPlayType) return "probably" == t.canPlayType("video/mp4") || "maybe" == t.canPlayType("video/mp4") ? e = ".mp4" : "probably" == t.canPlayType("video/ogg") || "maybe" == t.canPlayType("video/ogg") ? e = ".ogg" : "probably" != t.canPlayType("video/webm") && "maybe" != t.canPlayType("video/webm") || (e = ".webm"), t = null, e
         }(), r.onReady = function(e) {
