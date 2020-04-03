@@ -1682,7 +1682,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 											self.isATBJsLoaded_bl = !0, self.setupAtbWindow(),
 												self.setSource(self.audioPath)
 										});
-									if (!(self.isMobile_bl)
+									if (!(self.isMobile_bl))
 										  return -1 != location.protocol.indexOf("file:") void self.resizeHandler()
 										  self.setSource(self.audioPath);
 									self.audioScreen_do.setSource(self.audioPath),
