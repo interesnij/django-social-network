@@ -1670,7 +1670,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 											self.isATBJsLoaded_bl = !0, self.setupAtbWindow(),
 												self.setSource(self.audioPath)
 										});
-									if (!(self.isMobile_bl -1 == self.audioPath.indexOf(".m3u8"))
+									if (!(self.isMobile_bl -1 == self.audioPath.indexOf(".m3u8")))
 										  return -1 != location.protocol.indexOf("file:") ? (self.main_do.addChild(self.info_do),
 											                                                   self.info_do.showText("This browser dosen't allow playing / live streaming videos local, please test online."),
 																																				 void self.resizeHandler())
