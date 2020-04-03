@@ -450,11 +450,11 @@ on('#ajax', 'click', '.music_list_item', function() {
   if (!document.body.classList.contains("list_" + list_pk)){
     save_playlist("list_" + list_pk, '/music/manage/temp_list/' + list_pk, '/music/get/list/' + list_pk, track_id)
   }else{
-    if (music_player.getCatId != 0){
+    if (music_player.playlistId != 0){
       music_player.loadPlaylist(0)
     }
     music_player.playSpecificTrack("list_" + list_pk, track_id);
-    console.log(FWDMSP.getCatId)}
+    console.log(music_player.playlistId)}
 });
 
 
