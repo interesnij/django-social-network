@@ -1990,7 +1990,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 																			 self.hasPassedPassowrd_bl = !1,
 																			 self.isShoutcast_bl = !1,
 																			 self.isIcecast_bl = !1,
-																			 self.destroyHLS(),
 																			 self.atb_do && self.atb_do.hide(!0),
 																			 self.opener_do && self.opener_do.showPlayButton(),
 																			 self.largePlayButton_do && self.largePlayButton_do.hide(),
