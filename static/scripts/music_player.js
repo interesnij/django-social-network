@@ -1920,7 +1920,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 								self.isAPIReady_bl && self.isPlaylistLoaded_bl && self.audioScreen_do.startToScrub()
 							},
 							this.stopToScrub = function() {
-								self.isAPIReady_bl && self.isPlaylistLoaded_bl && self.flashObject.stopToScrub())
+								self.isAPIReady_bl && self.isPlaylistLoaded_bl && self.flashObject.stopToScrub()
 							},
 							this.scrub = function(e) {
 								self.isAPIReady_bl && self.isPlaylistLoaded_bl
