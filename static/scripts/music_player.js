@@ -5022,14 +5022,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 													: p.showThumbnail_bl = Boolean(_.playlist_ar[f.id].thumbPath)
 													: p.showThumbnail_bl = !0, _.showThumbnail_bl || (p.showThumbnail_bl = !1),
 						_.showThumbnail_bl || (p.showThumbnail_bl = !1),
-						f.audioType_str == FWDMSP.YOUTUBE && f.useYoutube_bl || f.audioType_str == FWDMSP.VIDEO
-						                                  && f.useVideo_bl ? (p.showThumbnail_bl = !0,
-																								                  f.videosHolder_do.setX(0),
-																																	f.audioType_str == FWDMSP.YOUTUBE
-																																? (f.ytb_do && f.ytb_do.setX(0),
-																																   f.videoScreen_do && f.videoScreen_do.setX(-1e4))
-																																: f.audioType_str == FWDMSP.VIDEO && (f.ytb_do && f.ytb_do.setX(-1e5), f.videoScreen_do && f.videoScreen_do.setX(0)))
-																																: (_.showThumbnail_bl || (p.showThumbnail_bl = !1), f.videosHolder_do && f.videosHolder_do.setX(-1e5)),
+						f.audioType_str == FWDMSP.AUDIO,
 						p.showThumbnail_bl ? (o += p.thumbWidthAndHeight, p.thumb_do.setX(0)) : p.thumb_do.setX(-300);
 						for (l = 0; l < i; l++) o += (e = p.buttons_ar[l]).w + p.spaceBetweenButtons;
 						if (3 < i) {
@@ -5112,7 +5105,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 						} else {
 
 							p.thumb_do.setX(-300),
-							f.videosHolder_do && f.videosHolder_do.setX(-1e5),
 							p.firstSeparator_do.setX(-300),
 							p.secondSeparator_do.setX(-300),
 							p.mainTitlebar_do.setWidth(p.stageWidth),
@@ -5615,13 +5607,26 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 						var t = FWDMSPUtils.getViewportMouseCoordinates(e);
 						FWDMSPUtils.hitTest(p.mainScrubber_do.screen, t.screenX, t.screenY) || p.ttm && p.ttm.hide()
 					}
-					p.dispatchEvent(n.STOP_TO_SCRUB), p.hasPointerEvent_bl ? (window.removeEventListener("pointermove", p.mainScrubberMoveHandler), window.removeEventListener("pointerup", p.mainScrubberEndHandler)) : (window.removeEventListener("mousemove", p.mainScrubberMoveHandler), window.removeEventListener("mouseup", p.mainScrubberEndHandler), window.removeEventListener("touchmove", p.mainScrubberMoveHandler), window.removeEventListener("touchend", p.mainScrubberEndHandler))
+					p.dispatchEvent(n.STOP_TO_SCRUB),
+					p.hasPointerEvent_bl ? (window.removeEventListener("pointermove", p.mainScrubberMoveHandler),
+					                        window.removeEventListener("pointerup", p.mainScrubberEndHandler))
+															 : (window.removeEventListener("mousemove", p.mainScrubberMoveHandler),
+															    window.removeEventListener("mouseup", p.mainScrubberEndHandler),
+																	window.removeEventListener("touchmove", p.mainScrubberMoveHandler),
+																	window.removeEventListener("touchend", p.mainScrubberEndHandler))
 				},
 				this.disableMainScrubber = function() {
-					p.mainScrubber_do && (p.isMainScrubberDisabled_bl = !0, p.mainScrubber_do.setButtonMode(!1), p.updateMainScrubber(0), p.updatePreloaderBar(0), p.mainScrubberEndHandler(), p.disableAtbButton())
+					p.mainScrubber_do && (p.isMainScrubberDisabled_bl = !0,
+						                    p.mainScrubber_do.setButtonMode(!1),
+																p.updateMainScrubber(0),
+																p.updatePreloaderBar(0),
+																p.mainScrubberEndHandler(),
+																p.disableAtbButton())
 				},
 				this.enableMainScrubber = function() {
-					p.mainScrubber_do && (p.isMainScrubberDisabled_bl = !1, p.disableScrubber_bl || p.mainScrubber_do.setButtonMode(!0), p.enableAtbButton())
+					p.mainScrubber_do && (p.isMainScrubberDisabled_bl = !1,
+						                    p.disableScrubber_bl || p.mainScrubber_do.setButtonMode(!0),
+																p.enableAtbButton())
 				},
 				this.updateMainScrubber = function(e) {
 					if (p.mainScrubber_do && !isNaN(e)) {
@@ -7948,8 +7953,15 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 						var o = 0, s = 0;
 						b.addAtThePlaylistEnd_bl ? b.sortId = b.totalPlayListItems - 1 : b.addAtThePlaylistBeggingin_bl && (b.sortId = 0),
 						b.prevSortId = b.sortId,
-						b.isDragging_bl && !b.isMobile_bl ? ("Infinity" == (o = b.scrHandler_do.y / (b.scrMainHolder_do.h - b.scrHandler_do.h)) ? o = 0 : 1 <= o && (scrollPercent = 1),
-						b.playListFinalY = Math.round(o * (b.totalSearchedItems - b.nrOfVisiblePlaylistItems)) * b.itemHeight * -1) : ((s = b.totalSearchedItems != b.totalPlayListItems ? 0 : parseInt(b.sortId / b.nrOfVisiblePlaylistItems) * b.nrOfVisiblePlaylistItems) + b.nrOfVisiblePlaylistItems >= b.totalPlayListItems && (s = b.totalPlayListItems - b.nrOfVisiblePlaylistItems), s < 0 && (s = 0), b.playListFinalY = parseInt(s * b.itemHeight * -1), b.scrMainHolder_do && (b.scrollBarHandlerFinalY = -1 * Math.round((b.scrMainHolder_do.h - b.scrHandler_do.h) * (b.playListFinalY / ((b.totalSearchedItems - b.nrOfVisiblePlaylistItems) * b.itemHeight))), b.scrollBarHandlerFinalY < 0 ? b.scrollBarHandlerFinalY = 0 : b.scrollBarHandlerFinalY > b.scrMainHolder_do.h - b.scrHandler_do.h - 1 && (b.scrollBarHandlerFinalY = b.scrMainHolder_do.h - b.scrHandler_do.h - 1), FWDAnimation.killTweensOf(b.scrHandler_do), FWDAnimation.killTweensOf(b.scrHandlerLines_do), e ? (FWDAnimation.to(b.scrHandler_do, .5, {
+						b.isDragging_bl && !b.isMobile_bl ? ("Infinity" == (o = b.scrHandler_do.y / (b.scrMainHolder_do.h - b.scrHandler_do.h))
+						                                    ? o = 0
+																								: 1 <= o && (scrollPercent = 1),
+																								b.playListFinalY = Math.round(o * (b.totalSearchedItems - b.nrOfVisiblePlaylistItems)) * b.itemHeight * -1)
+																							: ((s = b.totalSearchedItems != b.totalPlayListItems ? 0
+																								                                                   : parseInt(b.sortId / b.nrOfVisiblePlaylistItems) * b.nrOfVisiblePlaylistItems) + b.nrOfVisiblePlaylistItems >= b.totalPlayListItems && (s = b.totalPlayListItems - b.nrOfVisiblePlaylistItems),
+																																																	   s < 0 && (s = 0),
+																																																		 b.playListFinalY = parseInt(s * b.itemHeight * -1),
+																																																		 b.scrMainHolder_do && (b.scrollBarHandlerFinalY = -1 * Math.round((b.scrMainHolder_do.h - b.scrHandler_do.h) * (b.playListFinalY / ((b.totalSearchedItems - b.nrOfVisiblePlaylistItems) * b.itemHeight))), b.scrollBarHandlerFinalY < 0 ? b.scrollBarHandlerFinalY = 0 : b.scrollBarHandlerFinalY > b.scrMainHolder_do.h - b.scrHandler_do.h - 1 && (b.scrollBarHandlerFinalY = b.scrMainHolder_do.h  					b.scrHandler_do.h - 1), FWDAnimation.killTweensOf(b.scrHandler_do), FWDAnimation.killTweensOf(b.scrHandlerLines_do), e ? (FWDAnimation.to(b.scrHandler_do, .5, {
 							y: b.scrollBarHandlerFinalY,
 							ease: Quart.easeOut
 						}), FWDAnimation.to(b.scrHandlerLines_do, .8, {
@@ -7983,16 +7995,23 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 					}
 				},
         b.setupMobileScrollbar = function() {
-					b.hasPointerEvent_bl ? b.screen.addEventListener("pointerdown", b.scrollBarTouchStartHandler) : b.screen.addEventListener("touchstart", b.scrollBarTouchStartHandler), b.updateMobileScrollBarId_int = setInterval(b.updateMobileScrollBar, 16)
+					b.hasPointerEvent_bl ? b.screen.addEventListener("pointerdown", b.scrollBarTouchStartHandler)
+					                     : b.screen.addEventListener("touchstart", b.scrollBarTouchStartHandler), b.updateMobileScrollBarId_int = setInterval(b.updateMobileScrollBar, 16)
 				},
         b.scrollBarTouchStartHandler = function(e) {
 					if (!(b.stageHeight > b.itemsTotalHeight || b.comboBox_do && b.comboBox_do.isShowed_bl)) {
 						e.preventDefault && e.preventDefault(),
-							FWDAnimation.killTweensOf(b.itemsHolder_do);
+						FWDAnimation.killTweensOf(b.itemsHolder_do);
 						var t = FWDMSPUtils.getViewportMouseCoordinates(e);
-						b.isDragging_bl = !0, b.isScrollingOnMove_bl = !1, b.lastPresedY = t.screenY, b.checkLastPresedY = t.screenY, b.hasPointerEvent_bl ? (window.addEventListener("pointerup", b.scrollBarTouchEndHandler), window.addEventListener("pointermove", b.scrollBarTouchMoveHandler)) : (window.addEventListener("touchend", b.scrollBarTouchEndHandler), window.addEventListener("touchmove", b.scrollBarTouchMoveHandler)),
-							clearInterval(b.updateMoveMobileScrollbarId_int),
-							b.updateMoveMobileScrollbarId_int = setInterval(b.updateMoveMobileScrollbar, 20)
+						b.isDragging_bl = !0,
+						b.isScrollingOnMove_bl = !1,
+						b.lastPresedY = t.screenY,
+						b.checkLastPresedY = t.screenY,
+						b.hasPointerEvent_bl ? (window.addEventListener("pointerup", b.scrollBarTouchEndHandler),
+																		window.addEventListener("pointermove", b.scrollBarTouchMoveHandler))
+																 : (window.addEventListener("touchend", b.scrollBarTouchEndHandler), window.addEventListener("touchmove", b.scrollBarTouchMoveHandler)),
+																		clearInterval(b.updateMoveMobileScrollbarId_int),
+						b.updateMoveMobileScrollbarId_int = setInterval(b.updateMoveMobileScrollbar, 20)
 					}
 				},
         b.scrollBarTouchMoveHandler = function(e) {
@@ -8122,16 +8141,18 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 												   O.grad_do.getStyle().background = "url('" + O.playlistItemGrad2_img.src + "')",
 													 O.progress_do.getStyle().background = "url('" + O.playlistItemProgress2_img.src + "')",
 													 O.type = 2),
-          O.isMobile_bl ? O.hasPointerEvent_bl ? (O.dumy_do.screen.addEventListener("pointerup", O.onMouseUp),
-					                                        O.dumy_do.screen.addEventListener("pointerover", O.onMouseOver),
-																									O.dumy_do.screen.addEventListener("pointerout", O.onMouseOut))
-																							: O.dumy_do.screen.addEventListener("touchend", O.onMouseUp)
-																							: O.dumy_do.screen.addEventListener
-																							? (O.dumy_do.screen.addEventListener("mouseover", O.onMouseOver),
-	        O.dumy_do.screen.addEventListener("mouseout", O.onMouseOut),
-					O.dumy_do.screen.addEventListener("mouseup", O.onMouseUp)) : O.screen.attachEvent && (O.dumy_do.screen.attachEvent("onmouseover", O.onMouseOver),
-																																																O.dumy_do.screen.attachEvent("onmouseout", O.onMouseOut),
-																																																O.dumy_do.screen.attachEvent("onmouseup", O.onMouseUp))
+          O.isMobile_bl ? O.hasPointerEvent_bl
+					                ? (O.dumy_do.screen.addEventListener("pointerup", O.onMouseUp),
+					                   O.dumy_do.screen.addEventListener("pointerover", O.onMouseOver),
+														 O.dumy_do.screen.addEventListener("pointerout", O.onMouseOut))
+													: O.dumy_do.screen.addEventListener("touchend", O.onMouseUp)
+												: O.dumy_do.screen.addEventListener
+													? (O.dumy_do.screen.addEventListener("mouseover", O.onMouseOver),
+	        									 O.dumy_do.screen.addEventListener("mouseout", O.onMouseOut),
+														 O.dumy_do.screen.addEventListener("mouseup", O.onMouseUp))
+													: O.screen.attachEvent && (O.dumy_do.screen.attachEvent("onmouseover", O.onMouseOver),
+														O.dumy_do.screen.attachEvent("onmouseout", O.onMouseOut),
+														O.dumy_do.screen.attachEvent("onmouseup", O.onMouseUp))
 				},
         O.onMouseOver = function(e, t) {
 					O.isActive_bl || e.pointerType && "mouse" != e.pointerType || O.setSelectedState(!0)
@@ -8145,15 +8166,71 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 					}))
 				},
         O.changeSource = function(e) {
-					0 == e ? 1 != O.type && (O.grad_do.getStyle().background = "url('" + O.playlistItemGrad1_img.src + "')", O.getStyle().background = "url('" + O.playlistItemBk1Path_str + "')", O.progress_do.getStyle().background = "url('" + O.playlistItemProgress_img.src + "')", O.type = 1) : 2 != O.type && (O.grad_do.getStyle().background = "url('" + O.playlistItemGrad2_img.src + "')", O.getStyle().background = "url('" + O.playlistItemBk2Path_str + "')", O.progress_do.getStyle().background = "url('" + O.playlistItemProgress2_img.src + "')", O.type = 2)
+					0 == e ? 1 != O.type && (O.grad_do.getStyle().background = "url('" + O.playlistItemGrad1_img.src + "')",
+					                         O.getStyle().background = "url('" + O.playlistItemBk1Path_str + "')",
+																	 O.progress_do.getStyle().background = "url('" + O.playlistItemProgress_img.src + "')",
+																	 O.type = 1)
+					       : 2 != O.type && (O.grad_do.getStyle().background = "url('" + O.playlistItemGrad2_img.src + "')",
+								   								 O.getStyle().background = "url('" + O.playlistItemBk2Path_str + "')",
+									 							   O.progress_do.getStyle().background = "url('" + O.playlistItemProgress2_img.src + "')",
+									 						 	   O.type = 2)
 				},
         O.resize = function(e, t) {
 					if ((!FWDMSPUtils.isIEAndLessThen9 || O.textHeight) && null != O) {
 						O.stageWidth = e;
 						var o = 0,
 							s = parseInt((t - O.textHeight) / 2) + 1;
-						O.playPause_do ? (O.titleText_do.setX(2 * O.playPauseButtonOffsetLeftAndRight + O.playPause_do.w + O.trackTitleOffsetLeft - 2), O.playPause_do.setY(parseInt((t - O.playPause_do.h) / 2))) : O.titleText_do.setX(O.trackTitleOffsetLeft), O.titleText_do.setY(s), O.buyButton_do && O.downloadButton_do ? (o = O.durationText_do ? (O.durationText_do.setX(e - O.durationWidth - O.durationOffsetRight + 1), O.durationText_do.setY(s), O.durationText_do.x) : e, O.downloadButton_do.setX(o - O.downloadButton_do.w - O.downloadButtonOffsetRight + 3), O.downloadButton_do.setY(parseInt((t - O.downloadButton_do.h) / 2)), O.buyButton_do.setX(O.downloadButton_do.x - O.buyButton_do.w - 4), O.buyButton_do.setY(parseInt((t - O.buyButton_do.h) / 2)), O.titleText_do.x + O.titleWidth + O.downloadButton_do.w + O.buyButton_do.w + O.downloadButtonOffsetRight + 4 > o ? O.grad_do.setX(O.buyButton_do.x - O.downloadButtonOffsetRight + 2) : O.grad_do.setX(-300)) : O.downloadButton_do ? (o = O.durationText_do ? (O.durationText_do.setX(e - O.durationWidth - O.durationOffsetRight + 1), O.durationText_do.setY(s), O.durationText_do.x) : e, O.downloadButton_do.setX(o - O.downloadButton_do.w - O.downloadButtonOffsetRight + 3), O.downloadButton_do.setY(parseInt((t - O.downloadButton_do.h) / 2)), O.titleText_do.x + O.titleWidth + O.downloadButton_do.w + O.downloadButtonOffsetRight > o ? O.grad_do.setX(O.downloadButton_do.x - O.downloadButtonOffsetRight + 2) : O.grad_do.setX(-300)) : O.buyButton_do ? (o = O.durationText_do ? (O.durationText_do.setX(e - O.durationWidth - O.durationOffsetRight + 1), O.durationText_do.setY(s), O.durationText_do.x) : e, O.buyButton_do.setX(o - O.buyButton_do.w - O.downloadButtonOffsetRight + 3), O.buyButton_do.setY(parseInt((t - O.buyButton_do.h) / 2)), O.titleText_do.x + O.titleWidth + O.buyButton_do.w + O.downloadButtonOffsetRight > o ? O.grad_do.setX(O.buyButton_do.x - O.downloadButtonOffsetRight + 2) : O.grad_do.setX(-300)) : O.durationText_do ? (O.durationText_do.setX(e - O.durationWidth - O.durationOffsetRight + 1), O.durationText_do.setY(s), O.titleText_do.x + O.titleWidth > O.durationText_do.x ? O.grad_do.setX(O.durationText_do.x - O.durationOffsetRight + 2) : O.grad_do.setX(-300)) : O.downloadButton_do ? (O.downloadButton_do.setX(e - O.downloadButton_do.w - O.downloadButtonOffsetRight + 2), O.titleText_do.x + O.titleWidth > O.downloadButton_do.x ? O.grad_do.setX(O.downloadButton_do.x - O.downloadButtonOffsetRight + 2) : O.grad_do.setX(-300), O.downloadButton_do.setY(parseInt((t - O.downloadButton_do.h) / 2))) : O.titleText_do.x + O.titleWidth > e - 10 ? O.grad_do.setX(e - 15) : O.grad_do.setX(-300),
-							O.dumy_do.setWidth(e), O.dumy_do.setHeight(t), O.setWidth(e), O.setHeight(t)
+						O.playPause_do ? (O.titleText_do.setX(2 * O.playPauseButtonOffsetLeftAndRight + O.playPause_do.w + O.trackTitleOffsetLeft - 2),
+						                  O.playPause_do.setY(parseInt((t - O.playPause_do.h) / 2)))
+													 : O.titleText_do.setX(O.trackTitleOffsetLeft),
+						O.titleText_do.setY(s),
+						O.buyButton_do && O.downloadButton_do ? (o = O.durationText_do
+							                                      ? (O.durationText_do.setX(e - O.durationWidth - O.durationOffsetRight + 1),
+																										   O.durationText_do.setY(s),
+																											 O.durationText_do.x)
+																										: e,
+																										O.downloadButton_do.setX(o - O.downloadButton_do.w - O.downloadButtonOffsetRight + 3),
+																										O.downloadButton_do.setY(parseInt((t - O.downloadButton_do.h) / 2)),
+																										O.buyButton_do.setX(O.downloadButton_do.x - O.buyButton_do.w - 4),
+																										O.buyButton_do.setY(parseInt((t - O.buyButton_do.h) / 2)),
+																										O.titleText_do.x + O.titleWidth + O.downloadButton_do.w + O.buyButton_do.w + O.downloadButtonOffsetRight + 4 > o
+																										? O.grad_do.setX(O.buyButton_do.x - O.downloadButtonOffsetRight + 2)
+																										: O.grad_do.setX(-300))
+																								 : O.downloadButton_do
+																								   ? (o = O.durationText_do
+																									  ? (O.durationText_do.setX(e - O.durationWidth - O.durationOffsetRight + 1),
+																										   O.durationText_do.setY(s), O.durationText_do.x)
+																										: e,
+																									  O.downloadButton_do.setX(o - O.downloadButton_do.w - O.downloadButtonOffsetRight + 3),
+																										O.downloadButton_do.setY(parseInt((t - O.downloadButton_do.h) / 2)),
+																										O.titleText_do.x + O.titleWidth + O.downloadButton_do.w + O.downloadButtonOffsetRight > o
+																										? O.grad_do.setX(O.downloadButton_do.x - O.downloadButtonOffsetRight + 2)
+																										: O.grad_do.setX(-300))
+																									 : O.buyButton_do
+																									  ? (o = O.durationText_do
+																											? (O.durationText_do.setX(e - O.durationWidth - O.durationOffsetRight + 1),
+																											   O.durationText_do.setY(s), O.durationText_do.x)
+																											: e, O.buyButton_do.setX(o - O.buyButton_do.w - O.downloadButtonOffsetRight + 3),
+																											  O.buyButton_do.setY(parseInt((t - O.buyButton_do.h) / 2)),
+																												O.titleText_do.x + O.titleWidth + O.buyButton_do.w + O.downloadButtonOffsetRight > o
+																												? O.grad_do.setX(O.buyButton_do.x - O.downloadButtonOffsetRight + 2)
+																												: O.grad_do.setX(-300))
+																									  : O.durationText_do
+																										  ? (O.durationText_do.setX(e - O.durationWidth - O.durationOffsetRight + 1),
+																											   O.durationText_do.setY(s), O.titleText_do.x + O.titleWidth > O.durationText_do.x
+																												 ? O.grad_do.setX(O.durationText_do.x - O.durationOffsetRight + 2)
+																												 : O.grad_do.setX(-300))
+																											: O.downloadButton_do
+																											  ? (O.downloadButton_do.setX(e - O.downloadButton_do.w - O.downloadButtonOffsetRight + 2),
+																												   O.titleText_do.x + O.titleWidth > O.downloadButton_do.x
+																													 ? O.grad_do.setX(O.downloadButton_do.x - O.downloadButtonOffsetRight + 2)
+																													 : O.grad_do.setX(-300),
+																													   O.downloadButton_do.setY(parseInt((t - O.downloadButton_do.h) / 2)))
+																												: O.titleText_do.x + O.titleWidth > e - 10 ? O.grad_do.setX(e - 15) : O.grad_do.setX(-300),
+																													O.dumy_do.setWidth(e),
+																													O.dumy_do.setHeight(t),
+																													O.setWidth(e),
+																													O.setHeight(t)
 					}
 				},
         this.setupDownloadButton = function() {
