@@ -2821,7 +2821,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 						|| -1 != t.indexOf("http:")
 						|| -1 != t.indexOf("https:")
 						|| -1 != t.indexOf("www.")
-						|| -1 != t.indexOf(".pls") ? self.loadXMLPlaylist(t) : self.parseDOMPlaylist(t), self.prevId = e
+						|| self.parseDOMPlaylist(t), self.prevId = e
 					}
 				}, this.loadSoundCloudList = function(e) {
 					if (!self.isPlaylistDispatchingError_bl) {
