@@ -9243,4 +9243,4 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 		d.setPrototype = function() {
 			d.prototype = null, d.prototype = new FWDMSPDisplayObject("div", "fixed")
 		}, d.CLICK = "onClick", d.MOUSE_DOWN = "onMouseDown", d.prototype = null
-	}(window),
+	}(window)
