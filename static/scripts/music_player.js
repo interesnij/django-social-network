@@ -1515,13 +1515,10 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 								self.main_do && self.main_do.contains(self.info_do) && self.main_do.removeChild(self.info_do), self.opener_do && self.opener_do.showPlayButton(), self.controller_do && (self.controller_do.showPlayButton(), self.controller_do.stopEqulizer(), self.controller_do.disableMainScrubber()), self.hider && (self.hider.reset(), self.hider.stop()), self.dispatchEvent(FWDMSP.STOP)
 							},
               this.audioScreenPlayHandler = function() {
-								self.sendGAPlayedEvent(),
                 (FWDMSP.keyboardCurInstance = self).controller_do && (self.controller_do.showPauseButton(),
 																																			self.controller_do.startEqulizer()),
 								self.opener_do && self.opener_do.showPauseButton(),
 								self.playlist_do && self.playlist_do.setCurItemPauseState(),
-								self.largePlayButton_do && self.largePlayButton_do.hide(),
-								self.hider && self.isFullScreen_bl && self.hider.start(),
 								self.openInPopup_bl && setTimeout(function() {
 									self.scrubbedFirstTimeInPopup_bl || self.scrub(self.lastPercentPlayed),
 									self.scrubbedFirstTimeInPopup_bl = !0
