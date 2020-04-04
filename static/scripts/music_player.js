@@ -1349,13 +1349,14 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 							},
               this.palylistItemOnUpHandler = function(e) {
 								self.isPlaylistItemClicked_bl = !0,
-								e.id == self.id ? (self.audioScreen_do.isPlaying_bl
-																		? self.pause()
-																		: !self.audioScreen_do.isStopped_bl)
-
-																: self.useDeepLinking_bl &&
-								self.id != e.id
-								? (FWDAddress.setValue(self.instanceName_str + "?catid=" + self.catId + "&trackid=" + e.id), self.id = e.id)
+								e.id == self.id
+								? self.audioType_str == FWDMSP.AUDIO && self.audioScreen_do.isPlaying_bl
+								? self.pause() : self.audioType_str != FWDMSP.AUDIO || self.audioScreen_do.isStopped_bl && !self.audioScreen_do.isStopped_bl
+								? self.audioType_str != FWDMSP.HLS
+								? self.audioType_str != FWDMSP.VIDEO
+								? self.ytb_do.isPlaying_bl
+								? self.pause() : self.play() : self.play() : self.pause() : self.play() : self.useDeepLinking_bl &&
+								self.id != e.id ? (FWDAddress.setValue(self.instanceName_str + "?catid=" + self.catId + "&trackid=" + e.id), self.id = e.id)
 								: (self.id = e.id, self.setSource(!0),
 										self.play()
 									)
@@ -3619,15 +3620,25 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 						y: 0,
 						ease: Expo.easeInOut
 					})))
-				}, this.showCompleteHandler = function() {
-					p.mainHolder_do.setY(0), p.hideDisable(),
-						FWDMSPUtils.isIphone && (e.videoScreen_do && e.videoScreen_do.setY(-5e3), e.ytb_do && e.ytb_do.setY(-5e3)), p.resizeAndPosition(!0),
+				},
+				this.showCompleteHandler = function() {
+					p.mainHolder_do.setY(0),
+					p.hideDisable(),
+						FWDMSPUtils.isIphone, p.resizeAndPosition(!0),
 						p.areThumbnailsLoaded_bl || (p.loadImages(), p.areThumbnailsLoaded_bl = !0)
-				}, this.hide = function() {
-					p.isShowed_bl && (p.isShowed_bl = !1, FWDMSPUtils.isIphone && (e.videoScreen_do && e.videoScreen_do.setY(0), e.ytb_do && e.ytb_do.setY(0)), clearTimeout(p.hideCompleteId_to), clearTimeout(p.showCompleteId_to), p.showDisable(), p.hideCompleteId_to = setTimeout(p.hideCompleteHandler, 800), FWDAnimation.killTweensOf(p.mainHolder_do), FWDAnimation.to(p.mainHolder_do, .8, {
+				},
+				this.hide = function() {
+					p.isShowed_bl,
+					clearTimeout(p.hideCompleteId_to),
+					clearTimeout(p.showCompleteId_to),
+					p.showDisable(),
+					p.hideCompleteId_to = setTimeout(p.hideCompleteHandler, 800),
+					FWDAnimation.killTweensOf(p.mainHolder_do),
+					FWDAnimation.to(p.mainHolder_do, .8, {
 						y: -p.stageHeight,
 						ease: Expo.easeInOut
-					}), window.addEventListener ? window.removeEventListener("scroll", p.onScrollHandler) : window.detachEvent && window.detachEvent("onscroll", p.onScrollHandler), p.resizeAndPosition())
+					}),
+					window.addEventListener ? window.removeEventListener("scroll", p.onScrollHandler) : window.detachEvent && window.detachEvent("onscroll", p.onScrollHandler), p.resizeAndPosition())
 				}, this.hideCompleteHandler = function() {
 					FWDMSPUtils.isChrome && p.isMobile_bl ? p.setVisible(!1) : FWDMSPUtils.isIEAndLessThen9 ? document.getElementsByTagName("body")[0].removeChild(p.screen) : document.documentElement.removeChild(p.screen), p.isOnDOM_bl = !1, p.dispatchEvent(t.HIDE_COMPLETE)
 				}, this.updateHEXColors = function(e, t) {
@@ -5021,14 +5032,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 													: p.showThumbnail_bl = Boolean(_.playlist_ar[f.id].thumbPath)
 													: p.showThumbnail_bl = !0, _.showThumbnail_bl || (p.showThumbnail_bl = !1),
 						_.showThumbnail_bl || (p.showThumbnail_bl = !1),
-						f.audioType_str == FWDMSP.YOUTUBE && f.useYoutube_bl || f.audioType_str == FWDMSP.VIDEO
-						                                  && f.useVideo_bl ? (p.showThumbnail_bl = !0,
-																								                  f.videosHolder_do.setX(0),
-																																	f.audioType_str == FWDMSP.YOUTUBE
-																																? (f.ytb_do && f.ytb_do.setX(0),
-																																   f.videoScreen_do && f.videoScreen_do.setX(-1e4))
-																																: f.audioType_str == FWDMSP.VIDEO && (f.ytb_do && f.ytb_do.setX(-1e5), f.videoScreen_do && f.videoScreen_do.setX(0)))
-																																: (_.showThumbnail_bl || (p.showThumbnail_bl = !1), f.videosHolder_do && f.videosHolder_do.setX(-1e5)),
+						f.audioType_str == FWDMSP.AUDIO,
 						p.showThumbnail_bl ? (o += p.thumbWidthAndHeight, p.thumb_do.setX(0)) : p.thumb_do.setX(-300);
 						for (l = 0; l < i; l++) o += (e = p.buttons_ar[l]).w + p.spaceBetweenButtons;
 						if (3 < i) {
@@ -5111,7 +5115,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 						} else {
 
 							p.thumb_do.setX(-300),
-							f.videosHolder_do && f.videosHolder_do.setX(-1e5),
 							p.firstSeparator_do.setX(-300),
 							p.secondSeparator_do.setX(-300),
 							p.mainTitlebar_do.setWidth(p.stageWidth),
@@ -5128,18 +5131,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 							i = p.buttons_ar.length,
 							-1 == FWDMSPUtils.indexOfArray(p.buttons_ar),
 							p.buyButton_do && -1 == FWDMSPUtils.indexOfArray(p.buttons_ar, p.buyButton_do) && (h -= p.buyButton_do.w),
-							!p.showVideoFullScreenButton_bl
-								|| f.audioType_str != FWDMSP.VIDEO && f.audioType_str != FWDMSP.YOUTUBE
-								? -1 != FWDMSPUtils.indexOfArray(p.buttons_ar, f.fullScreenButton_do)
+							-1 != FWDMSPUtils.indexOfArray(p.buttons_ar, f.fullScreenButton_do)
 								 && (p.buttons_ar.splice(FWDMSPUtils.indexOfArray(p.buttons_ar, f.fullScreenButton_do), 1),
-								 f.fullScreenButton_do.setX(-500))
-								: (-1 == FWDMSPUtils.indexOfArray(p.buttons_ar, f.fullScreenButton_do)
-								 && (p.mainHolder_do.addChild(f.fullScreenButton_do),
-								 FWDAnimation.killTweensOf(f.fullScreenButton_do),
-								 p.buttons_ar.splice(0, 0, f.fullScreenButton_do)),
-								 h += f.fullScreenButton_do.w,
-								 FWDAnimation.killTweensOf(p.fullScreenButton_do),
-								 f.fullScreenButton_do.setAlpha(1)),
+								 f.fullScreenButton_do.setX(-500)),
 							i = p.buttons_ar.length,
 							s = parseInt((p.stageWidth - h) / i);
 							for (l = 0; l < i; l++)
