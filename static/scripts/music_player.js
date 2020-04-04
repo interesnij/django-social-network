@@ -8717,7 +8717,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
           n.text_do = new FWDMSPDisplayObject("div"),
           n.text_do.hasTransform3d_bl = !1,
           n.text_do.hasTransform2d_bl = !1,
-          n.text_do.setBackfaceVisibility(),
+      //    n.text_do.setBackfaceVisibility(),
           n.text_do.setDisplay("inline-block"),
           n.text_do.getStyle().fontFamily = "Arial",
           n.text_do.getStyle().fontSize = "12px",
@@ -8796,11 +8796,11 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
       this.isShowed_bl = !1,
       this.isMobile_bl = FWDMSPUtils.isMobile,
       this.init = function() {
-					f.setBackfaceVisibility(),
+				//	f.setBackfaceVisibility(),
           f.mainHolder_do = new FWDMSPDisplayObject("div"),
           f.mainHolder_do.hasTransform3d_bl = !1,
           f.mainHolder_do.hasTransform2d_bl = !1,
-          f.mainHolder_do.setBackfaceVisibility(),
+      //    f.mainHolder_do.setBackfaceVisibility(),
           f.bk_do = new FWDMSPDisplayObject("div"),
           f.bk_do.getStyle().width = "100%",
           f.bk_do.getStyle().height = "100%",
@@ -9229,7 +9229,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 					r.text_do = new FWDMSPDisplayObject("div"),
           r.text_do.hasTransform3d_bl = !1,
           r.text_do.hasTransform2d_bl = !1,
-          r.text_do.setBackfaceVisibility(),
+        //  r.text_do.setBackfaceVisibility(),
           r.text_do.setDisplay("inline"),
           r.text_do.getStyle().fontFamily = "Arial",
           r.text_do.getStyle().fontSize = "12px",
@@ -9354,9 +9354,9 @@ window.FWDMSPTransformDisplayObject = function(e, t, o, s) {
         this.screen.style.border = "none",
         this.screen.style.lineHeight = "1",
         this.screen.style.backgroundColor = "transparent",
-        this.screen.style.backfaceVisibility = "hidden",
-        this.screen.style.webkitBackfaceVisibility = "hidden",
-        this.screen.style.MozBackfaceVisibility = "hidden",
+      //  this.screen.style.backfaceVisibility = "hidden",
+      //  this.screen.style.webkitBackfaceVisibility = "hidden",
+      //  this.screen.style.MozBackfaceVisibility = "hidden",
 				this.screen.style.MozImageRendering = "optimizeSpeed",
         this.screen.style.WebkitImageRendering = "optimizeSpeed",
         "img" == e && (this.setWidth(this.screen.width),
@@ -9365,16 +9365,16 @@ window.FWDMSPTransformDisplayObject = function(e, t, o, s) {
 						return !1
 					})
 			},
-      i.setBackfaceVisibility = function() {
-				i.screen.style.backfaceVisibility = "visible",
-        i.screen.style.webkitBackfaceVisibility = "visible",
-        i.screen.style.MozBackfaceVisibility = "visible"
-			},
-      i.removeBackfaceVisibility = function() {
-				i.screen.style.backfaceVisibility = "hidden",
-        i.screen.style.webkitBackfaceVisibility = "hidden",
-        i.screen.style.MozBackfaceVisibility = "hidden"
-			},
+    //  i.setBackfaceVisibility = function() {
+		//		i.screen.style.backfaceVisibility = "visible",
+    //    i.screen.style.webkitBackfaceVisibility = "visible",
+    //    i.screen.style.MozBackfaceVisibility = "visible"
+		//	},
+    //  i.removeBackfaceVisibility = function() {
+		//		i.screen.style.backfaceVisibility = "hidden",
+    //    i.screen.style.webkitBackfaceVisibility = "hidden",
+    //    i.screen.style.MozBackfaceVisibility = "hidden"
+		//	},
       this.setSelectable = function(e) {
 				if (!e) {
 					try {
