@@ -29,7 +29,6 @@ audio_player = new MUSIC({
 		showLoopButton:"yes",                 // показывать кнопку повтора треков
 		showShuffleButton:"yes",              // показывать кнопку перемешивания треков
 		showDownloadMp3Button:"yes",          // показывать кнопку скачивания mp3
-		showShareButton:"no",									// показывать кнопку расшаривания треков
 		expandBackground:"no",              	// развернуть фон
 		titleColor:"#000000",                 // цвет названия
 		timeColor:"#919191",                  // цвет времени
