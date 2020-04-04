@@ -1577,8 +1577,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 							},
 							this.audioScreenPlayCompleteHandler = function() {
 								self.data.playlist_ar
-								FWDMSP.hasHTML5Audio && (self.data.loop_bl,
-									                       self.data.shuffle_bl,
+								FWDMSP.hasHTML5Audio && (self.data.loop_bl && self.data.shuffle_bl
 																				 ? self.playShuffle() : 1 == self.playlist_do.items_ar.length
 																				 ? (self.stop(), self.playlist_do && self.playlist_do.updateCurItemProgress(0)) : self.playNext()),
 																				 self.dispatchEvent(FWDMSP.PLAY_COMPLETE)
