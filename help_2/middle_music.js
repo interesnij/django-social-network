@@ -705,8 +705,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             this.skinPath_str = props.skinPath,
             self.skinPath_str.lastIndexOf("/") + 1 != self.skinPath_str.length && (self.skinPath_str += "/"),
             this.warningIconPath_str = self.mainFolderPath_str + this.skinPath_str + "warningIcon.png",
-            this.useVideo_bl = props.useVideo || "no",
-            this.useVideo_bl = "yes" == self.useVideo_bl,
             this.instanceName_str = props.instanceName,
             this.instanceName_str)
             {
@@ -1046,10 +1044,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 											if (!self.audioScreen_do.isSafeToBeControlled_bl)
 											  return;
 											self.audioScreen_do.togglePlayPause()
-										} else {
-											if (!self.videoScreen_do.isSafeToBeControlled_bl)
-											  return;
-											self.videoScreen_do && self.videoScreen_do.togglePlayPause()
+										}
 										}
 										return e.preventDefault && e.preventDefault(), !1
 									}
@@ -1081,7 +1076,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 										7 == t.length && (t = "0" + t),
 										self.scrubbAtTime(t)
 									}
-								}
+
 							},
               this.onKeyUpHandler = function(e) {
 								self.isSpaceDown_bl = !1
@@ -1210,26 +1205,34 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
               this.updatePlaylist = function() {
 								if (self.main_do && self.main_do.contains(self.info_do) && self.main_do.removeChild(self.info_do),
                     self.id > self.data.playlist_ar.length && (self.id = 0),
-                    self.data.playlist_ar && (self.videoNameGa = self.data.playlist_ar[self.id].titleText,
-                      self.videoCat = self.data.cats_ar[self.catId]),
-                    self.preloader_do.hide(!0),
-                    self.prevId = -1,
-                    self.totalAudio = self.data.playlist_ar.length,
-                    self.controller_do.enableControllerWhileLoadingPlaylist(),
-                    self.controller_do.cleanThumbnails(!0),
-                    self.playlist_do && (self.playlist_do.updatePlaylist(self.data.playlist_ar),
+                    self.data.playlist_ar
+										  &&
+											(self.preloader_do.hide(!0),
+                    	 self.prevId = -1,
+                    	 self.totalAudio = self.data.playlist_ar.length,
+                    	 self.controller_do.enableControllerWhileLoadingPlaylist(),
+                    	 self.controller_do.cleanThumbnails(!0),
+                       self.playlist_do && (self.playlist_do.updatePlaylist(self.data.playlist_ar),
                                          self.playlist_do.resizeAndPosition(),
                                          self.playlist_do.isShowed_bl && self.controller_do.setPlaylistButtonState("selected")
                                         ),
-                    self.openInPopup_bl && self.popupWindow.audioScreen_do && (self.lastPercentPlayed = self.popupWindow.audioScreen_do.lastPercentPlayed),
-                    self.playlist_do && self.playlist_do.comboBox_do && self.playlist_do.comboBox_do.setButtonsStateBasedOnId(self.catId),
-                    self.setSource(),
-                    (self.data.autoPlay_bl || self.data.playTrackAfterPlaylistLoad_bl) && setTimeout(self.play, 1e3), self.openInPopup_bl && !self.showedFirstTime_bl ? (self.controller_do.setY(-self.controller_do.h), self.playlist_do && self.playlist_do.setY(-self.playlist_do.h)) : self.playlist_do && self.playlist_do.setY(-self.playlist_do.h + self.controller_do.h), self.setStageContainerFinalHeightAndPosition(!0), self.openInPopup_bl) return clearTimeout(self.showPlaylistWithDelayId_to),
+                    	self.openInPopup_bl && self.popupWindow.audioScreen_do && (self.lastPercentPlayed = self.popupWindow.audioScreen_do.lastPercentPlayed),
+                    	self.playlist_do && self.playlist_do.comboBox_do && self.playlist_do.comboBox_do.setButtonsStateBasedOnId(self.catId),
+                    	self.setSource(),
+                    	(self.data.autoPlay_bl || self.data.playTrackAfterPlaylistLoad_bl) && setTimeout(self.play, 1e3),
+											self.openInPopup_bl && !self.showedFirstTime_bl ? (self.controller_do.setY(-self.controller_do.h),
+										                                                   self.playlist_do && self.playlist_do.setY(-self.playlist_do.h))
+																																		: self.playlist_do && self.playlist_do.setY(-self.playlist_do.h + self.controller_do.h),
+											self.setStageContainerFinalHeightAndPosition(!0),
+											self.openInPopup_bl
+										))
+										return clearTimeout(self.showPlaylistWithDelayId_to),
 									self.showedFirstTime_bl ? self.showPlaylistWithDelayId_to = setTimeout(function() {
-										self.setStageContainerFinalHeightAndPosition(!0)
-									}, 100) : self.showPlaylistWithDelayId_to = setTimeout(function() {
-										self.setStageContainerFinalHeightAndPosition(!0)
-									}, 900),
+																						self.setStageContainerFinalHeightAndPosition(!0)
+																						}, 100)
+																					: self.showPlaylistWithDelayId_to = setTimeout(function() {
+																						self.setStageContainerFinalHeightAndPosition(!0)
+																					}, 900),
                 self.showedFirstTime_bl = !0,
 								void(self.allowToResizeAndPosition_bl = !0);
 								self.allowToResizeAndPosition_bl = !0,
@@ -1434,7 +1437,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 								self.playlist_do && self.playlist_do.showDisable(), self.ytb_do ? self.ytb_do.startToScrub() : self.audioType_str == FWDMSP.VIDEO && self.videoScreen_do ? self.videoScreen_do.startToScrub() : FWDMSP.hasHTML5Audio ? self.audioScreen_do.startToScrub() : self.isFlashScreenReady_bl && (FWDMSP.pauseAllAudio(self), self.flashObject.startToScrub())
 							},
               this.controllerScrubbHandler = function(e) {
-								self.ytb_do ? self.ytb_do.scrub(e.percent) : self.audioType_str == FWDMSP.VIDEO && self.videoScreen_do ? self.videoScreen_do.scrub(e.percent) : FWDMSP.hasHTML5Audio ? self.audioScreen_do.scrub(e.percent) : self.isFlashScreenReady_bl && self.flashObject.scrub(e.percent)
+								self.audioScreen_do.scrub(e.percent)
 							},
               this.controllerPlaylistItemScrubbHandler = function(e) {
 								self.playlist_do && self.playlist_do.updateCurItemProgress(e.percent)
