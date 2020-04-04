@@ -996,7 +996,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 								                      self.data.showPlaylistsButtonAndPlaylists_bl && self.setupCategories(),
 																			self.data.showPlayListButtonAndPlaylist_bl && self.setupPlaylist(),
 																			self.setupController(),
-																			self.setupHider(),
 																			self.data.showPlaybackRateButton_bl && self.setupPlaybackRateWindow(),
 																			self.setupPasswordWindow(),
 																			self.setupOpener(),
