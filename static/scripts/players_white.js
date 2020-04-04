@@ -11,8 +11,6 @@ audio_player = new MUSIC({
 		position:"bottom",                    // расположение плеера
 		rightClickContextMenu:"developer",
 		useDeepLinking:"no",									// использовать глубокие ссылки - защита от перехвата. Не будет работать с souncloud
-		useYoutube:"no",											// использовать youtube файлы
-		useVideo:"no",												// использовать видео файлы
 		rightClickContextMenu:"no",           // показ контекстног меню по щелчку правой кнопкой мыши
 		addKeyboardSupport:"yes",             // добавить поддержку клавиатуры
 		animate:"yes",												// фнимация

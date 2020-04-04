@@ -1443,7 +1443,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 							},
               this.controllerStopToScrubbHandler = function(e) {
 								self.playlist_do && self.playlist_do.hideDisable(),
-								self.audioScreen_do.stopToScrub() 
+								self.audioScreen_do.stopToScrub()
 							},
               this.controllerChangeVolumeHandler = function(e) {
 								self.setVolume(e.percent)
@@ -1514,19 +1514,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 							},
               this.audioScreenStopHandler = function(e) {
 								self.main_do && self.main_do.contains(self.info_do) && self.main_do.removeChild(self.info_do), self.opener_do && self.opener_do.showPlayButton(), self.controller_do && (self.controller_do.showPlayButton(), self.controller_do.stopEqulizer(), self.controller_do.disableMainScrubber()), self.hider && (self.hider.reset(), self.hider.stop()), self.dispatchEvent(FWDMSP.STOP)
-							},
-              this.sendGAPlayedEvent = function() {
-								if (window.ga && self.videoNameGa && self.videoNameGa != self.prevVideoNameGa) {
-									var e = "trackName:" + self.videoNameGa;
-									ga("send", {
-										hitType: "event",
-										eventCategory: self.videoCat,
-										eventAction: "played",
-										eventLabel: e,
-										nonInteraction: !0
-									})
-								}
-								self.prevVideoNameGa = self.videoNameGa
 							},
               this.audioScreenPlayHandler = function() {
 								self.sendGAPlayedEvent(),
@@ -1606,8 +1593,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 								                     : self.controller_do && self.controller_do.updatePreloaderBar(e)
 							},
 							this.audioScreenPlayCompleteHandler = function() {
-								self.data.playlist_ar && (self.videoNameGa = self.data.playlist_ar[self.id].titleText,
-									                        self.videoCat = self.data.cats_ar[self.catId]),
+								self.data.playlist_ar
 								FWDMSP.hasHTML5Audio && (self.data.loop_bl ? "hls_flash" == self.audioType_str
 																													 ? setTimeout(function() {
 																															self.scrub(0), self.resume()
@@ -1743,16 +1729,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 								self.isMobile_bl && (10 < t || 10 < o) || !self.isMobile_bl && (2 < t || 2 < o) || (self.switchFullScreenOnDoubleClick(),
 								FWDMSPUtils.isIEWebKit || (self.firstTapPlaying_bl ? self.play() : self.pause())))
 							},
-							this.setupHider = function() {
-								FWDMSPHider.setPrototype(),
-								self.hider = new FWDMSPHider(self.main_do, self.controller_do.videoControllerHolder_do, 2e3),
-								self.hider.addListener(FWDMSPHider.SHOW, self.hiderShowHandler),
-								self.hider.addListener(FWDMSPHider.HIDE, self.hiderHideHandler),
-								self.hider.addListener(FWDMSPHider.HIDE_COMPLETE, self.hiderHideCompleteHandler)
-							},
-							this.hiderShowHandler = function() {
-								self.controller_do, self.showCursor()
-							},
 							this.hiderHideHandler = function() {
 								FWDMSPUtils.isIphone
 							},
@@ -1784,7 +1760,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 																				self.controller_do.setOverflow("hidden"),
 																				self.controller_do.mainHolder_do.setOverflow("hidden"),
 																				self.opener_do && self.opener_do.setVisible(!0),
-																				self.videosHolder_do.addChild(self.fullScreenButton_do),
 																				document.documentElement.style.overflow = "visible",
 																				self.main_do.getStyle().zIndex = 0,
 																				self.playlist_do && (self.playlist_do.setVisible(!0),
@@ -1853,13 +1828,21 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 																																									: self.id = self.playlist_do.items_ar[0].id
 																																									: (self.id++, self.id < 0 ? self.id = self.totalAudio - 1 : self.id > self.totalAudio - 1 && (self.id = 0)),
 																		  self.useDeepLinking_bl ? FWDAddress.setValue(self.instanceName_str + "?catid=" + self.catId + "&trackid=" + self.id)
-																			                       : (self.setSource(), self.changeHLS_bl = !0, self.audioType_str != FWDMSP.HLS && self.play()),
+																			                       : (self.setSource(), self.play()),
 																      self.prevId = self.id,
-																			self.data.playlist_ar && (self.videoNameGa = self.data.playlist_ar[self.id].titleText,
-																			self.videoCat = self.data.cats_ar[self.catId]))
+																			self.data.playlist_ar)
 							},
 							this.playPrev = function() {
-								self.isAPIReady_bl && self.isPlaylistLoaded_bl && (self.data.showPlayListButtonAndPlaylist_bl ? self.playlist_do.items_ar[self.playlist_do.curItem_do.sortId - 1] ? self.id = self.playlist_do.items_ar[self.playlist_do.curItem_do.sortId - 1].id : self.id = self.playlist_do.items_ar[self.totalAudio - 1].id : (self.id--, self.id < 0 ? self.id = self.totalAudio - 1 : self.id > self.totalAudio - 1 && (self.id = 0)), self.useDeepLinking_bl ? FWDAddress.setValue(self.instanceName_str + "?catid=" + self.catId + "&trackid=" + self.id) : (self.setSource(), self.changeHLS_bl = !0, self.audioType_str != FWDMSP.HLS && self.play()), self.prevId = self.id, self.data.playlist_ar && (self.videoNameGa = self.data.playlist_ar[self.id].titleText, self.videoCat = self.data.cats_ar[self.catId]))
+								self.isAPIReady_bl && self.isPlaylistLoaded_bl
+								                   && (self.data.showPlayListButtonAndPlaylist_bl ? self.playlist_do.items_ar[self.playlist_do.curItem_do.sortId - 1]
+																		                                              ? self.id = self.playlist_do.items_ar[self.playlist_do.curItem_do.sortId - 1].id
+																																									: self.id = self.playlist_do.items_ar[self.totalAudio - 1].id
+																																									: (self.id--, self.id < 0 ? self.id = self.totalAudio - 1
+																																										                        : self.id > self.totalAudio - 1 && (self.id = 0)),
+								 self.useDeepLinking_bl ? FWDAddress.setValue(self.instanceName_str + "?catid=" + self.catId + "&trackid=" + self.id)
+								                        : (self.setSource(), self.changeHLS_bl = !0, self.audioType_str != FWDMSP.HLS && self.play()),
+								 self.prevId = self.id,
+								 self.data.playlist_ar)
 							}, this.playShuffle = function() {
 								if (self.isAPIReady_bl && self.isPlaylistLoaded_bl) {
 									self.isPlaylistItemClicked_bl = !0;
