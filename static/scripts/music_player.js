@@ -2816,10 +2816,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 						}, 50));
 						self.closeData(),
 						-1 != t.indexOf("soundcloud.com") ? self.loadSoundCloudList(t)
-						                                  : -1 != t.indexOf("list=") && -1 != t.indexOf("official.fm") ? self.loadOfficialFmList(t)
-																							                                                             : -1 != t.indexOf("folder:")
-																																																					 ? self.loadFolderPlaylist(t) :
-																																																					 -1 != t.indexOf(".xml")
+						                                  : -1 != t.indexOf("list=") && -1 != ? self.loadFolderPlaylist(t) : -1 != t.indexOf(".xml")
 						|| -1 != t.indexOf("http:")
 						|| -1 != t.indexOf("https:")
 						|| -1 != t.indexOf("www.")
@@ -2873,24 +2870,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 						showLoadPlaylistErrorId_to = setTimeout(function() {
 							self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, {
 								text: "Error loading soundcloud track url!<font color='#FF0000'>" + self.sourceURL_str + "</font>"
-							}), self.isPlaylistDispatchingError_bl = !1
-						}, 50)
-				}, this.loadOfficialFmList = function(e) {
-					if (!self.isPlaylistDispatchingError_bl) {
-						self.closeXHR();
-						e = "http://api.official.fm/playlists/" + (self.sourceURL_str = e).substr(e.indexOf("/") + 1) + "/tracks?format=jsonp&fields=streaming&api_version=2&callback=" + parent.instanceName_str + ".data.parseOfficialFM";
-						if (null == self.scs_el) try {
-							self.scs_el = document.createElement("script"), self.scs_el.src = e, self.scs_el.id = parent.instanceName_str + ".data.parseOfficialFM",
-								document.documentElement.appendChild(self.scs_el)
-						}
-						catch (e) {}
-						self.JSONPRequestTimeoutId_to = setTimeout(self.JSONPRequestTimeoutError, 8e3)
-					}
-				}, this.JSONPRequestTimeoutError = function() {
-					self.isPlaylistDispatchingError_bl = !0,
-						showLoadPlaylistErrorId_to = setTimeout(function() {
-							self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, {
-								text: "Error loading official.fm url!<font color='#FF0000'>" + self.sourceURL_str + "</font>"
 							}), self.isPlaylistDispatchingError_bl = !1
 						}, 50)
 				}, this.closeJsonPLoader = function() {
@@ -3108,18 +3087,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 					clearTimeout(self.dispatchPlaylistLoadCompleteWidthDelayId_to), self.dispatchPlaylistLoadCompleteWidthDelayId_to = setTimeout(function() {
 						self.dispatchEvent(FWDMSPAudioData.PLAYLIST_LOAD_COMPLETE)
 					}, 50), self.isDataLoaded_bl = !0
-				}, this.parseOfficialFM = function(e) {
-					var t, o;
-					self.closeJsonPLoader(), self.playlist_ar = [];
-					for (var s = e.tracks, i = 0; i < s.length; i++) {
-						o = e.tracks[i].track, (t = {}).id = i, t.source = encodeURI(o.streaming.http),
-							t.buy = void 0, t.thumbPath = void 0;
-						var n = "";
-						if (self.showTracksNumbers_bl ? (i < 9 && (n = "0"), n = n + (i + 1) + ". ", t.title = n + "<span style='font-weight:bold;'>" + o.artist + "</span> - " + o.title) : t.title = "<span style='font-weight:bold;'>" + o.artist + "</span> - " + o.title, t.titleText = o.artist + " - " + o.title, t.duration = 1e3 * o.duration, self.playlist_ar[i] = t, i > self.maxPlaylistItems - 1) break
-					}
-					clearTimeout(self.dispatchPlaylistLoadCompleteWidthDelayId_to), self.dispatchPlaylistLoadCompleteWidthDelayId_to = setTimeout(function() {
-						self.dispatchEvent(FWDMSPAudioData.PLAYLIST_LOAD_COMPLETE)
-					}, 50), self.isDataLoaded_bl = !0
 				}, this.parsePodcast = function(e) {
 					var t;
 					self.playlist_ar = [];
@@ -3137,47 +3104,56 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 					clearTimeout(self.dispatchPlaylistLoadCompleteWidthDelayId_to), self.dispatchPlaylistLoadCompleteWidthDelayId_to = setTimeout(function() {
 						self.dispatchEvent(FWDMSPAudioData.PLAYLIST_LOAD_COMPLETE)
 					}, 50), self.isDataLoaded_bl = !0
-				}, this.parseXML = function(e) {
+				},
+				this.parseXML = function(e) {
 					var t;
 					self.playlist_ar = [];
 					var o = e.li;
 					o.length || (o = [o]);
 					for (var s = 0; s < o.length; s++) {
-						(t = {}).source = o[s]["@attributes"]["data-path"], -1 != t.source.indexOf("encrypt:") && (t.source = atob(t.source.substr(8)));
+						(t = {}).source = o[s]["@attributes"]["data-path"],
+						-1 != t.source.indexOf("encrypt:") && (t.source = atob(t.source.substr(8)));
 						var i = encodeURI(t.source.substr(0, t.source.lastIndexOf("/") + 1)),
 							n = t.source.substr(t.source.lastIndexOf("/") + 1);
-						if (-1 != t.source.indexOf("youtube.")) {
-							var l = t.source.match(/^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/);
-							t.source = l[2]
-						} else n = -1 != n.indexOf(";.mp3") || FWDMSPUtils.isURLEncoded(n) ? t.source.substr(t.source.lastIndexOf("/") + 1) : encodeURIComponent(t.source.substr(t.source.lastIndexOf("/") + 1)), t.source = i + n;
-						t.buy = o[s]["@attributes"]["data-track-id"], t.can_add = o[s]["@attributes"]["data-add"], null == t.buy && (t.buy = ""), t.thumbPath = o[s]["@attributes"]["data-thumbpath"];
+						n = -1 != n.indexOf(";.mp3") || FWDMSPUtils.isURLEncoded(n) ? t.source.substr(t.source.lastIndexOf("/") + 1)
+						                                                            : encodeURIComponent(t.source.substr(t.source.lastIndexOf("/") + 1)),
+																																				 t.source = i + n;
+						t.buy = o[s]["@attributes"]["data-track-id"],
+						t.can_add = o[s]["@attributes"]["data-add"],
+						null == t.buy && (t.buy = ""),
+						t.thumbPath = o[s]["@attributes"]["data-thumbpath"];
 						var r = "";
-						if (self.showTracksNumbers_bl ? (s < 9 && (r = "0"), r = r + (s + 1) + ". ", t.title = r + o[s]["@attributes"]["data-title"])
+						if (self.showTracksNumbers_bl ? (s < 9 && (r = "0"),
+						                                 r = r + (s + 1) + ". ",
+																						 t.title = r + o[s]["@attributes"]["data-title"])
 						                              : t.title = o[s]["@attributes"]["data-title"],
-										t.titleText = o[s]["@attributes"]["data-title"],
-										t.duration = o[s]["@attributes"]["data-duration"],
-										t.atb = o[s]["@attributes"]["data-use-a-to-b"],
-										t.isPrivate = o[s]["@attributes"]["data-is-private"],
-										"yes" == t.isPrivate ? t.isPrivate = !0 : t.isPrivate = !1,
-										t.startAtTime = o[s]["@attributes"]["data-start-at-time"],
-										"00:00:00" != t.startAtTime
-						        && FWDMSPUtils.checkTime(t.startAtTime) || (t.startAtTime = void 0),
-										   t.stopAtTime = o[s]["@attributes"]["data-stop-at-time"],
-										   "00:00:00" != t.stopAtTime && FWDMSPUtils.checkTime(t.stopAtTime) || (t.stopAtTime = void 0),
-											 t.isShoutcast_bl = o[s]["@attributes"]["data-type"],
-											 t.isShoutcast_bl && (-1 != t.isShoutcast_bl.toLowerCase().indexOf("shoutcastv1") ? (t.shoutcastVersion = 1, t.isShoutcast_bl = !0)
-											                                                                                  : -1 != t.isShoutcast_bl.toLowerCase().indexOf("shoutcastv2")
-																																																				? (t.shoutcastVersion = 2, t.isShoutcast_bl = !0)
-																																																				: t.isShoutcast_bl = !1),
+																						t.titleText = o[s]["@attributes"]["data-title"],
+																						t.duration = o[s]["@attributes"]["data-duration"],
+																						t.atb = o[s]["@attributes"]["data-use-a-to-b"],
+																						t.isPrivate = o[s]["@attributes"]["data-is-private"],
+																						"yes" == t.isPrivate ? t.isPrivate = !0 : t.isPrivate = !1,
+																						t.startAtTime = o[s]["@attributes"]["data-start-at-time"],
+																						"00:00:00" != t.startAtTime
+						        												&& FWDMSPUtils.checkTime(t.startAtTime) || (t.startAtTime = void 0),
+										   										t.stopAtTime = o[s]["@attributes"]["data-stop-at-time"],
+										   										"00:00:00" != t.stopAtTime && FWDMSPUtils.checkTime(t.stopAtTime) || (t.stopAtTime = void 0),
+											 										t.isShoutcast_bl = o[s]["@attributes"]["data-type"],
+											 										t.isShoutcast_bl && (-1 != t.isShoutcast_bl.toLowerCase().indexOf("shoutcastv1") ? (t.shoutcastVersion = 1, t.isShoutcast_bl = !0)
+											                                                                                  									 : -1 != t.isShoutcast_bl.toLowerCase().indexOf("shoutcastv2")
+																																																													 ? (t.shoutcastVersion = 2, t.isShoutcast_bl = !0)
+																																																													 : t.isShoutcast_bl = !1),
 											 t.isIcecast_bl = o[s]["@attributes"]["data-type"],
 											 t.isIcecast_bl && (-1 != t.isIcecast_bl.toLowerCase().indexOf("icecast") ? t.isIcecast_bl = !0 : t.isIcecast_bl = !1),
-											 self.playlist_ar[s] = t, s > self.maxPlaylistItems - 1
+											 self.playlist_ar[s] = t,
+											 s > self.maxPlaylistItems - 1
 								)
 									break
 					}
-					clearTimeout(self.dispatchPlaylistLoadCompleteWidthDelayId_to), self.dispatchPlaylistLoadCompleteWidthDelayId_to = setTimeout(function() {
+					clearTimeout(self.dispatchPlaylistLoadCompleteWidthDelayId_to),
+					self.dispatchPlaylistLoadCompleteWidthDelayId_to = setTimeout(function() {
 						self.dispatchEvent(FWDMSPAudioData.PLAYLIST_LOAD_COMPLETE)
-					}, 50), self.isDataLoaded_bl = !0
+					}, 50),
+					self.isDataLoaded_bl = !0
 				}, this.parsePLS = function(e) {
 					var t;
 					self.playlist_ar = [];

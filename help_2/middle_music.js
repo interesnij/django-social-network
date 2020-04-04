@@ -2113,7 +2113,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 			var self = this,
 			prototype = FWDMSPAudioData.prototype;
 			this.xhr = null,
-			this.emailXHR = null,
 			this.playlist_ar = null,
 			this.dlIframe = null,
 			this.mainPreloader_img = null,
@@ -2795,29 +2794,32 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 					self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, {
 						text: "The property called <font color='#FF0000'>" + e + "</font> is not defined."
 					})
-				}, this.getValidEmail = function() {
-					for (var e = prompt("Please enter your email address where the mp3  link will be sent:"), t = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/; !t.test(e) || "" == e;) {
-						if (null === e) return;
-						e = prompt("Please enter a valid email address:")
-					}
-					return e
 				}, this.loadPlaylist = function(e) {
 					if (!self.isPlaylistDispatchingError_bl) {
 						clearTimeout(self.dispatchPlaylistLoadCompleteWidthDelayId_to);
 						var t = self.cats_ar[e].source;
-						if (!t) return self.isPlaylistDispatchingError_bl = !0, void(showLoadPlaylistErrorId_to = setTimeout(function() {
-							self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, {
-								text: "<font color='#FF0000'>loadPlaylist()</font> - Please specify an html elementid, podcast link, soudcloud link or xml path"
-							}), self.isPlaylistDispatchingError_bl = !1
+						if (!t)
+						   return self.isPlaylistDispatchingError_bl = !0,
+							 void(showLoadPlaylistErrorId_to = setTimeout(function() {
+								 self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, {
+									 text: "<font color='#FF0000'>loadPlaylist()</font> - Please specify an html elementid, podcast link, soudcloud link or xml path"
+								 }),
+								 self.isPlaylistDispatchingError_bl = !1
 						}, 50));
-						if (!isNaN(t)) return self.isPlaylistDispatchingError_bl = !0, void(showLoadPlaylistErrorId_to = setTimeout(function() {
-							self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, {
-								text: "<font color='#FF0000'>loadPlaylist()</font> - The parameter must be of type string!"
-							}), self.isPlaylistDispatchingError_bl = !1
+						if (!isNaN(t))
+						   return self.isPlaylistDispatchingError_bl = !0,
+							 void(showLoadPlaylistErrorId_to = setTimeout(function() {
+								 self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, {
+									 text: "<font color='#FF0000'>loadPlaylist()</font> - The parameter must be of type string!"
+								 }),
+								 self.isPlaylistDispatchingError_bl = !1
 						}, 50));
 						self.closeData(),
-						self.isYoutbe_bl = !1,
-						-1 != t.indexOf("soundcloud.com") ? self.loadSoundCloudList(t) : -1 != t.indexOf("list=") && self.useYoutube_bl ? (self.isYoutbe_bl = !0, self.loadYoutubePlaylist(t)) : -1 != t.indexOf("official.fm") ? self.loadOfficialFmList(t) : -1 != t.indexOf("folder:") ? self.loadFolderPlaylist(t) : -1 != t.indexOf(".xml")
+						-1 != t.indexOf("soundcloud.com") ? self.loadSoundCloudList(t)
+						                                  : -1 != t.indexOf("list=") && -1 != t.indexOf("official.fm") ? self.loadOfficialFmList(t)
+																							                                                             : -1 != t.indexOf("folder:")
+																																																					 ? self.loadFolderPlaylist(t) :
+																																																					 -1 != t.indexOf(".xml")
 						|| -1 != t.indexOf("http:")
 						|| -1 != t.indexOf("https:")
 						|| -1 != t.indexOf("www.")
