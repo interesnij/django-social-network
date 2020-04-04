@@ -1872,7 +1872,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 							},
 							this.resume = function() {
 								self.isAPIReady_bl && FWDMSP.hasHTML5Audio
-								                   && self.audioType_str == FWDMSP.HLS
 																	 && self.flashObject.playerResume()
 							},
 							this.pause = function() {
