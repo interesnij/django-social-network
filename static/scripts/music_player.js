@@ -3638,7 +3638,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 						y: -p.stageHeight,
 						ease: Expo.easeInOut
 					}),
-					window.addEventListener ? window.removeEventListener("scroll", p.onScrollHandler) : window.detachEvent && window.detachEvent("onscroll", p.onScrollHandler), p.resizeAndPosition())
+					window.addEventListener ? window.removeEventListener("scroll", p.onScrollHandler)
+					                        : window.detachEvent && window.detachEvent("onscroll", p.onScrollHandler),
+					p.resizeAndPosition()
 				}, this.hideCompleteHandler = function() {
 					FWDMSPUtils.isChrome && p.isMobile_bl ? p.setVisible(!1) : FWDMSPUtils.isIEAndLessThen9 ? document.getElementsByTagName("body")[0].removeChild(p.screen) : document.documentElement.removeChild(p.screen), p.isOnDOM_bl = !1, p.dispatchEvent(t.HIDE_COMPLETE)
 				}, this.updateHEXColors = function(e, t) {
