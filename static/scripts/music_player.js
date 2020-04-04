@@ -1874,7 +1874,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 								self.isAPIReady_bl
 							},
 							this.pause = function() {
-								self.isAPIReady_bl && self.isPlaylistLoaded_bl && self.isPlaylistItemClicked_bl = !0
+								self.isAPIReady_bl && (self.isPlaylistLoaded_bl && self.isPlaylistItemClicked_bl = !0)
 
 							},
 							this.stop = function(e) {
