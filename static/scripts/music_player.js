@@ -1937,7 +1937,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 							this.setVolume = function(e) {
 								self.isAPIReady_bl && (self.volume = e,
 									                     self.controller_do && self.controller_do.updateVolume(e, !0),
-																			 self.audioType_str == FWDMSP.hasHTML5Audio && self.audioScreen_do && self.audioScreen_do.setVolume(e))
+																			 self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS
+																			                                    || !self.videoScreen_do ? FWDMSP.hasHTML5Audio && self.audioScreen_do && self.audioScreen_do.setVolume(e)
+																																					                        : self.videoScreen_do.setVolume(e))
 							},
 							this.showCategories = function() {
 								self.isAPIReady_bl && self.categories_do
