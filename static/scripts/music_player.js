@@ -1076,7 +1076,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 										7 == t.length && (t = "0" + t),
 										self.scrubbAtTime(t)
 									}
-								}
+								
 							},
               this.onKeyUpHandler = function(e) {
 								self.isSpaceDown_bl = !1
