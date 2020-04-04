@@ -3620,10 +3620,10 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 					})))
 				}, this.showCompleteHandler = function() {
 					p.mainHolder_do.setY(0), p.hideDisable(),
-						FWDMSPUtils.isIphone && (e.videoScreen_do && e.videoScreen_do.setY(-5e3), e.ytb_do && e.ytb_do.setY(-5e3)), p.resizeAndPosition(!0),
+						FWDMSPUtils.isIphone, p.resizeAndPosition(!0),
 						p.areThumbnailsLoaded_bl || (p.loadImages(), p.areThumbnailsLoaded_bl = !0)
 				}, this.hide = function() {
-					p.isShowed_bl && (p.isShowed_bl = !1, FWDMSPUtils.isIphone && (e.videoScreen_do && e.videoScreen_do.setY(0), e.ytb_do && e.ytb_do.setY(0)), clearTimeout(p.hideCompleteId_to), clearTimeout(p.showCompleteId_to), p.showDisable(), p.hideCompleteId_to = setTimeout(p.hideCompleteHandler, 800), FWDAnimation.killTweensOf(p.mainHolder_do), FWDAnimation.to(p.mainHolder_do, .8, {
+					p.isShowed_bl && (p.isShowed_bl = !1, FWDMSPUtils.isIphone, clearTimeout(p.hideCompleteId_to), clearTimeout(p.showCompleteId_to), p.showDisable(), p.hideCompleteId_to = setTimeout(p.hideCompleteHandler, 800), FWDAnimation.killTweensOf(p.mainHolder_do), FWDAnimation.to(p.mainHolder_do, .8, {
 						y: -p.stageHeight,
 						ease: Expo.easeInOut
 					}), window.addEventListener ? window.removeEventListener("scroll", p.onScrollHandler) : window.detachEvent && window.detachEvent("onscroll", p.onScrollHandler), p.resizeAndPosition())
@@ -5020,14 +5020,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 													: p.showThumbnail_bl = Boolean(_.playlist_ar[f.id].thumbPath)
 													: p.showThumbnail_bl = !0, _.showThumbnail_bl || (p.showThumbnail_bl = !1),
 						_.showThumbnail_bl || (p.showThumbnail_bl = !1),
-						f.audioType_str == FWDMSP.YOUTUBE && f.useYoutube_bl || f.audioType_str == FWDMSP.VIDEO
-						                                  && f.useVideo_bl ? (p.showThumbnail_bl = !0,
-																								                  f.videosHolder_do.setX(0),
-																																	f.audioType_str == FWDMSP.YOUTUBE
-																																? (f.ytb_do && f.ytb_do.setX(0),
-																																   f.videoScreen_do && f.videoScreen_do.setX(-1e4))
-																																: f.audioType_str == FWDMSP.VIDEO && (f.ytb_do && f.ytb_do.setX(-1e5), f.videoScreen_do && f.videoScreen_do.setX(0)))
-																																: (_.showThumbnail_bl || (p.showThumbnail_bl = !1), f.videosHolder_do && f.videosHolder_do.setX(-1e5)),
+						f.audioType_str == FWDMSP.AUDIO,
 						p.showThumbnail_bl ? (o += p.thumbWidthAndHeight, p.thumb_do.setX(0)) : p.thumb_do.setX(-300);
 						for (l = 0; l < i; l++) o += (e = p.buttons_ar[l]).w + p.spaceBetweenButtons;
 						if (3 < i) {
