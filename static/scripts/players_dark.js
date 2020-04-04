@@ -16,7 +16,6 @@ function msToTime(duration) {
 				mainFolderPath:"/static/images/",
 				skinPath:"audio_dark",
 				showSoundCloudUserNameInTitle:"no",
-				privatePassword:"428c841430ea18a70f7b06525d4b748a",
 				showMainBackground:"yes",
 				verticalPosition:"bottom",
 				useDeepLinking:"no",
@@ -117,13 +116,7 @@ function msToTime(duration) {
 				searchBarHeight:38,
 				inputSearchTextOffsetTop:1,
 				inputSearchOffsetLeft:0,
-				//password window
-				borderColor:"#333333",
-				mainLabelsColor:"#FFFFFF",
-				secondaryLabelsColor:"#a1a1a1",
-				textColor:"#5a5a5a",
-				inputBackgroundColor:"#000000",
-				inputColor:"#FFFFFF",
+
 				//opener settings
 				openerAlignment:"right",
 				showOpener:"yes",

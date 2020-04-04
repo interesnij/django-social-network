@@ -856,7 +856,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 																										 self.isFirstPlaylistLoaded_bl && self.setStageContainerFinalHeightAndPosition(!1),
 																										 self.info_do && self.info_do.isShowed_bl && self.info_do.positionAndResize(),
 																										 self.atb_do && self.atb_do.isShowed_bl && self.atb_do.positionAndResize(),
-																										 self.passWindow_do && self.passWindow_do.isShowed_bl && self.passWindow_do.positionAndResize(),
 																										 self.playbackRateWindow_do && self.playbackRateWindow_do.isShowed_bl && self.playbackRateWindow_do.positionAndResize())
 							},
 							this.setStageContainerFinalHeightAndPosition = function(e) {
@@ -1349,18 +1348,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 							},
               this.palylistItemOnUpHandler = function(e) {
 								self.isPlaylistItemClicked_bl = !0,
-								e.id == self.id
-								? self.audioType_str == FWDMSP.AUDIO && self.audioScreen_do.isPlaying_bl
-								? self.pause() : self.audioType_str != FWDMSP.AUDIO || self.audioScreen_do.isStopped_bl && !self.audioScreen_do.isStopped_bl
-								? self.audioType_str != FWDMSP.HLS
-								? self.audioType_str != FWDMSP.VIDEO
-								? self.ytb_do.isPlaying_bl
-								? self.pause() : self.play() : self.play() : self.pause() : self.play() : self.useDeepLinking_bl &&
-								self.id != e.id ? (FWDAddress.setValue(self.instanceName_str + "?catid=" + self.catId + "&trackid=" + e.id), self.id = e.id)
-								: (self.id = e.id, self.setSource(!0),
-										self.play()
-									)
-
+								e.id == self.id ? self.pause() : self.play()
 							},
               this.palylistUpdateFolderTrackTitle = function(e) {
 								self.controller_do.setTitle(e.title)

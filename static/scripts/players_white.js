@@ -112,14 +112,6 @@ audio_player = new MUSIC({
 		inputSearchTextOffsetTop:1,           // смещение текста ввода поиска сверху
 		inputSearchOffsetLeft:0,              // смещение текста ввода поиска слева
 
-		//password window
-		borderColor:"#333333",                // цвет рамки
-		mainLabelsColor:"#FFFFFF",            // цвет вводимого текста
-		secondaryLabelsColor:"#a1a1a1",       // вторичный цвет вводимого текста
-		textColor:"#5a5a5a",                  // цвет текста
-		inputBackgroundColor:"#000000",       // фон поля ввода
-		inputColor:"#FFFFFF",                 // цвет поля ввода
-
 		//opener settings
 		openerAlignment:"right",              // открывание
 		showOpener:"yes",                     // показывать эффект

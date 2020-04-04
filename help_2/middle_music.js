@@ -997,7 +997,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 																			self.data.showPlayListButtonAndPlaylist_bl && self.setupPlaylist(),
 																			self.setupController(),
 																			self.data.showPlaybackRateButton_bl && self.setupPlaybackRateWindow(),
-																			self.setupPasswordWindow(),
 																			self.setupOpener(),
 																			self.controller_do.resizeAndPosition(),
 																			self.data.addKeyboardSupport_bl && self.addKeyboardSupport())
@@ -1081,16 +1080,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
               this.setupAopw = function() {
 								FWDMSPOPWindow.setPrototype(),
                 self.popw_do = new FWDMSPOPWindow(self.data, self)
-							},
-							this.setupPasswordWindow = function() {
-								FWDMSPPassword.setPrototype(),
-                self.passWindow_do = new FWDMSPPassword(self.data, self),
-                self.passWindow_do.addListener(FWDMSPPassword.CORRECT, self.passordCorrect)
-							},
-              this.passordCorrect = function() {
-								self.passWindow_do.hide(),
-                self.hasPassedPassowrd_bl = !0,
-                self.play()
 							},
 
               this.setupAtbWindow = function() {
@@ -1618,7 +1607,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 
 								else {
 									if (e && (self.itemClicked = e),
-									    self.passWindow_do && self.passWindow_do.hide(),
 											self.id < 0 ? self.id = 0 : self.id > self.totalAudio - 1 && (self.id = self.totalAudio - 1),
 											self.audioPath = self.data.playlist_ar[self.id].source,
 											self.isShoutcast_bl = self.data.playlist_ar[self.id].isShoutcast_bl,
@@ -1858,15 +1846,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 							},
 							this.play = function() {
 								if (self.isAPIReady_bl && self.isPlaylistLoaded_bl && !self.isLoadingSoundcloudTrack_bl) {
-									if (self.isPlaylistItemClicked_bl = !0,
-										  self.audioType_str == FWDMSP.HLS && 0 <= location.protocol.indexOf("file:"))
-											return
-									void self.info_do.positionAndResize();
-									if (self.data.playlist_ar[self.id].isPrivate && !self.hasPassedPassowrd_bl && self.passWindow_do)
-									  return self.resizeHandler(),
-									void self.passWindow_do.show();
-									self.hasPassedPassowrd_bl = !0,
-										self.largePlayButton_do && self.largePlayButton_do.hide(),
 										FWDMSP.pauseAllAudio(self),
 										self.audioScreen_do && self.audioScreen_do.play()
 								}
@@ -1883,7 +1862,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 								self.isAPIReady_bl && (e || (self.isIcecastLoaded_bl = !1, self.isShoutcastLoaded_bl = !1),
 								                       self.isRadioLoaded_bl = !1,
 																			 self.hasStartedToPlay_bl = !1,
-																			 self.hasPassedPassowrd_bl = !1,
 																			 self.isShoutcast_bl = !1,
 																			 self.isIcecast_bl = !1,
 																			 self.atb_do && self.atb_do.hide(!0),
@@ -2630,9 +2608,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 												img: self.soundAnimationPath_img = new Image,
 												src: self.skinPath_str + "equalizer.png"
 											}, {
-												img: self.passColoseN_img = new Image,
-												src: self.skinPath_str + "embed-close-button.png"
-											}, {
 												img: self.titleBarLeft_img = new Image,
 												src: self.skinPath_str + "titlebar-left-pattern.png"
 											}, {
@@ -2769,8 +2744,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 											self.shareSPath_str = self.skinPath_str + "share-over.png",
 											self.animationPath_str = self.skinPath_str + "equalizer.png",
 											self.titlebarBkMiddlePattern_str = self.skinPath_str + "titlebar-middle-pattern.png",
-											self.passButtonNPath_str = self.skinPath_str + "pass-button.png",
-											self.passButtonSPath_str = self.skinPath_str + "pass-button-over.png",
 											self.embedWindowClosePathS_str = self.skinPath_str + "embed-close-button-over.png",
 											self.showPlaybackRateButton_bl && (self.skinPaths_ar.push({
 												img: self.playbackRateWindowClooseN_img = new Image,
@@ -3312,7 +3285,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 								l.titleText = FWDMSPUtils.getChildren(o)[0].textContent || FWDMSPUtils.getChildren(o)[0].innerText
 							} catch (e) {}
 							FWDMSPUtils.hasAttribute(o, "data-duration") && (l.duration = FWDMSPUtils.getAttributeValue(o, "data-duration")),
-								FWDMSPUtils.hasAttribute(o, "data-use-a-to-b") && (l.atb = FWDMSPUtils.getAttributeValue(o, "data-use-a-to-b")), l.isPrivate = FWDMSPUtils.getAttributeValue(o, "data-is-private"), "yes" == l.isPrivate ? l.isPrivate = !0 : l.isPrivate = !1, l.privateVideoPassword_str = FWDMSPUtils.getAttributeValue(o, "data-private-video-password"), l.startAtTime = FWDMSPUtils.getAttributeValue(o, "data-start-at-time"), "00:00:00" != l.startAtTime && FWDMSPUtils.checkTime(l.startAtTime) || (l.startAtTime = void 0), l.stopAtTime = FWDMSPUtils.getAttributeValue(o, "data-stop-at-time"), "00:00:00" != l.stopAtTime && FWDMSPUtils.checkTime(l.stopAtTime) || (l.stopAtTime = void 0), self.playlist_ar[n] = l
+								FWDMSPUtils.hasAttribute(o, "data-use-a-to-b") && (l.atb = FWDMSPUtils.getAttributeValue(o, "data-use-a-to-b")), l.isPrivate = FWDMSPUtils.getAttributeValue(o, "data-is-private"), "yes" == l.isPrivate ? l.isPrivate = !0 : l.isPrivate = !1, l.startAtTime = FWDMSPUtils.getAttributeValue(o, "data-start-at-time"), "00:00:00" != l.startAtTime && FWDMSPUtils.checkTime(l.startAtTime) || (l.startAtTime = void 0), l.stopAtTime = FWDMSPUtils.getAttributeValue(o, "data-stop-at-time"), "00:00:00" != l.stopAtTime && FWDMSPUtils.checkTime(l.stopAtTime) || (l.stopAtTime = void 0), self.playlist_ar[n] = l
 						}
 						clearTimeout(self.dispatchPlaylistLoadCompleteWidthDelayId_to), self.dispatchPlaylistLoadCompleteWidthDelayId_to = setTimeout(function() {
 							self.dispatchEvent(FWDMSPAudioData.PLAYLIST_LOAD_COMPLETE)
@@ -4976,13 +4949,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 				this.show = function() {
 					p.mainHolder_do.setY(0)
 				},
-				this.hideVideoContoller = function() {
-					FWDAnimation.killTweensOf(p.videoControllerHolder_do),
-						FWDAnimation.to(p.videoControllerHolder_do, .8, {
-							y: p.stageHeight,
-							ease: Expo.easeInOut
-						})
-				},
 				p.positionButtons = function() {
 					var e, t, o = 0,
 						s = 0,
@@ -5000,10 +4966,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 						p.showVolumeScrubber_bl ? n.push(p.volumeScrubber_do) : p.volumeScrubber_do.setX(-1e3),
 						n.push(f.fullScreenButton_do),
 						i = n.length,
-						FWDAnimation.killTweensOf(p.videoControllerHolder_do),
-						p.videoControllerHolder_do.setWidth(p.stageWidth),
-						p.videoControllerHolder_do.setHeight(p.controllerHeight),
-						p.videoControllerHolder_do.setY(p.stageHeight - p.controllerHeight),
 						o -= p.playPauseButton_do.w + p.currentTime_do.w + p.totalTime_do.w + p.volumeButton_do.w + p.volumeScrubberWidth + f.fullScreenButton_do.w,
 						o -= 8 * p.spaceBetweenButtons,
 						p.showVolumeScrubber_bl || (o += p.volumeScrubberWidth, o += p.spaceBetweenButtons),
@@ -6921,21 +6883,13 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 			var o = this;
 			s.prototype;
 			this.xhr = null,
-      this.passColoseN_img = e.passColoseN_img,
-      this.privateVideoPassword_str = e.privateVideoPassword_str,
       this.bk_do = null,
 			this.mainHolder_do = null,
-      this.passMainHolder_do = null,
-      this.passMainHolderBk_do = null,
-      this.passLabel_do = null,
-      this.passInput_do = null,
       this.closeButton_do = null,
       this.backgrondPath_str = e.shareBkPath_str,
       this.secondaryLabelsColor_str = e.secondaryLabelsColor_str,
 			this.inputColor_str = e.inputColor_str,
       this.mainLabelsColor_str = e.mainLabelsColor_str,
-      this.passButtonNPath_str = e.passButtonNPath_str,
-			this.passButtonSPath_str = e.passButtonSPath_str,
       this.inputBackgroundColor_str = e.inputBackgroundColor_str,
       this.borderColor_str = e.borderColor_str,
       this.maxTextWidth = 0,
@@ -6959,52 +6913,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
           o.bk_do.getStyle().height = "100%",
           o.bk_do.setAlpha(.9),
           o.bk_do.getStyle().background = "url('" + o.backgrondPath_str + "')",
-          o.passMainHolder_do = new FWDMSPDisplayObject("div"),
-          o.passMainHolderBk_do = new FWDMSPDisplayObject("div"),
-          o.passMainHolderBk_do.getStyle().background = "url('" + o.backgrondPath_str + "')",
-          o.passMainHolderBk_do.getStyle().borderStyle = "solid",
-          o.passMainHolderBk_do.getStyle().borderWidth = "1px",
-          o.passMainHolderBk_do.getStyle().borderColor = o.borderColor_str,
-          o.passLabel_do = new FWDMSPDisplayObject("div"),
-          o.passLabel_do.setBackfaceVisibility(),
-          o.passLabel_do.getStyle().fontFamily = "Arial",
-          o.passLabel_do.getStyle().fontSize = "12px",
-          o.passLabel_do.getStyle().color = o.secondaryLabelsColor_str,
-          o.passLabel_do.getStyle().whiteSpace = "nowrap",
-          o.passLabel_do.getStyle().fontSmoothing = "antialiased",
-          o.passLabel_do.getStyle().webkitFontSmoothing = "antialiased",
-          o.passLabel_do.getStyle().textRendering = "optimizeLegibility",
-          o.passLabel_do.getStyle().padding = "0px",
-          o.passLabel_do.setInnerHTML("Please enter password:"),
-          o.passInput_do = new FWDMSPDisplayObject("input"),
-          o.passInput_do.setBackfaceVisibility(),
-          o.passInput_do.getStyle().fontFamily = "Arial",
-          o.passInput_do.getStyle().fontSize = "12px",
-					o.passInput_do.getStyle().backgroundColor = o.inputBackgroundColor_str,
-          o.passInput_do.getStyle().color = o.inputColor_str,
-          o.passInput_do.getStyle().outline = 0,
-          o.passInput_do.getStyle().whiteSpace = "nowrap",
-          o.passInput_do.getStyle().fontSmoothing = "antialiased",
-          o.passInput_do.getStyle().webkitFontSmoothing = "antialiased",
-          o.passInput_do.getStyle().textRendering = "optimizeLegibility",
-          o.passInput_do.getStyle().padding = "6px",
-          o.passInput_do.getStyle().paddingTop = "4px",
-          o.passInput_do.getStyle().paddingBottom = "4px",
-          o.passInput_do.screen.setAttribute("type", "password"),
 					FWDMSPSimpleSizeButton.setPrototype(),
-          o.passButton_do = new FWDMSPSimpleSizeButton(
-            o.passButtonNPath_str,
-            o.passButtonSPath_str,
-            o.buttonWidth,
-            o.buttonHeight,
-            e.useHEXColorsForSkin_bl,
-            e.normalButtonsColor_str,
-            e.selectedButtonsColor_str
-          ),
-          o.passButton_do.addListener(FWDMSPSimpleSizeButton.CLICK, o.passClickHandler),
           FWDMSPSimpleButton.setPrototype(),
           o.closeButton_do = new FWDMSPSimpleButton(
-            o.passColoseN_img,
             e.embedWindowClosePathS_str,
             void 0,
             !0,
@@ -7015,11 +6926,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
           o.closeButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, o.closeButtonOnMouseUpHandler),
           o.addChild(o.mainHolder_do),
           o.mainHolder_do.addChild(o.bk_do),
-          o.passMainHolder_do.addChild(o.passMainHolderBk_do),
-          o.passMainHolder_do.addChild(o.passLabel_do),
-          o.passMainHolder_do.addChild(o.passInput_do),
-          o.passMainHolder_do.addChild(o.passButton_do),
-          o.mainHolder_do.addChild(o.passMainHolder_do),
           o.mainHolder_do.addChild(o.closeButton_do)
 				}, this.closeButtonOnMouseUpHandler = function() {
 					o.isShowed_bl && o.hide()
@@ -7037,43 +6943,12 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
           o.setHeight(o.stageHeight),
           o.mainHolder_do.setWidth(o.stageWidth),
           o.mainHolder_do.setHeight(o.stageHeight)
-				}, this.positionFinal = function() {
-					var e, t = o.passLabel_do.getHeight();
-					o.passLabel_do.setX(12),
-          o.passLabel_do.setY(14),
-          o.passInput_do.setX(10),
-          o.passInput_do.setWidth(parseInt(o.totalWidth - 40 - o.buttonWidth)),
-          o.passInput_do.setY(o.passLabel_do.y + t + 5),
-          o.passButton_do.setX(10 + o.passInput_do.w + 20),
-          o.passButton_do.setY(o.passLabel_do.y + t + 6),
-          o.passMainHolderBk_do.setY(o.passLabel_do.y - 9),
-          o.passMainHolderBk_do.setWidth(o.totalWidth - 2),
-					o.passMainHolderBk_do.setHeight(o.passButton_do.y + o.passButton_do.h + 2),
-          o.passMainHolder_do.setWidth(o.totalWidth),
-          o.passMainHolder_do.setHeight(o.passButton_do.y + o.passButton_do.h + 14),
-          o.passMainHolder_do.setX(Math.round((o.stageWidth - o.totalWidth) / 2)),
-          e = o.passMainHolderBk_do.getHeight(),
-          o.passMainHolder_do.setY(Math.round((o.stageHeight - e) / 2) - 6)
-				}, this.passClickHandler = function() {
-					o.privateVideoPassword_str = e.privateVideoPassword_str,
-          e.playlist_ar[t.id].privateVideoPassword_str && (o.privateVideoPassword_str = e.playlist_ar[t.id].privateVideoPassword_str),
-          o.privateVideoPassword_str == FWDMSPUtils.MD5(o.passInput_do.screen.value) ? o.dispatchEvent(s.CORRECT) : FWDAnimation.isTweening(o.passInput_do.screen) || FWDAnimation.to(o.passInput_do.screen, .1, {
-						css: {
-							backgroundColor: "#FF0000"
-						},
-						yoyo: !0,
-						repeat: 3
-					})
 				}, this.updateHEXColors = function(e, t) {
-					o.passButton_do.updateHEXColors(e, t),
           o.closeButton_do.updateHEXColors(e, t)
 				}, this.showInfo = function(e, t) {
 					o.infoText_do.setInnerHTML(e),
-          o.passMainHolder_do.addChild(o.infoText_do),
           o.infoText_do.setWidth(o.buttonWidth),
           o.infoText_do.setHeight(o.buttonHeight - 4),
-          o.infoText_do.setX(o.passButton_do.x),
-          o.infoText_do.setY(o.passButton_do.y - 23),
 					o.infoText_do.setAlpha(0),
           o.infoText_do.getStyle().color = t ? "#FF0000" : o.mainLabelsColor_str,
           FWDAnimation.killTweensOf(o.infoText_do),
@@ -7086,8 +6961,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 					o.isShowed_bl || (o.isShowed_bl = !0,
           t.main_do.addChild(o),
           o.positionAndResize(),
-          o.passButton_do.setSelectedState(),
-          o.passInput_do.setInnerHTML(""),
           (!FWDMSPUtils.isMobile || FWDMSPUtils.isMobile && FWDMSPUtils.hasPointerEvent) && t.main_do.setSelectable(!0), clearTimeout(o.hideCompleteId_to),
           clearTimeout(o.showCompleteId_to),
           o.mainHolder_do.setY(-o.stageHeight),
@@ -7109,7 +6982,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 		};
 		s.setPrototype = function() {
 			s.prototype = new FWDMSPDisplayObject("div")
-		}, s.ERROR = "error", s.CORRECT = "correct", s.HIDE_COMPLETE = "hideComplete", s.prototype = null, e.FWDMSPPassword = s
+		}, s.ERROR = "error", s.CORRECT = "correct", s.HIDE_COMPLETE = "hideComplete", s.prototype = null
 	}(window),
 	function(n) {
 		var l = function(s, o) {
