@@ -1351,15 +1351,11 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 								self.isPlaylistItemClicked_bl = !0,
 								e.id == self.id ? self.audioType_str == FWDMSP.AUDIO && self.audioScreen_do.isPlaying_bl
 																	? self.pause()
-																	: self.audioType_str != FWDMSP.AUDIO || self.audioScreen_do.isStopped_bl && !self.audioScreen_do.isStopped_bl
+																	: self.audioScreen_do.isStopped_bl && !self.audioScreen_do.isStopped_bl
 																	? self.audioType_str != FWDMSP.HLS
-																	//	? self.audioType_str != FWDMSP.VIDEO
-
-																//		: self.pause()
 														  		: self.play()
-																: self.useDeepLinking_bl && self.id != e.id
-																  ? (FWDAddress.setValue(self.instanceName_str + "?catid=" + self.catId + "&trackid=" + e.id), self.id = e.id)
-																	: (self.id = e.id, self.setSource(!0), self.play()
+																: self.useDeepLinking_bl && self.id != e.id,
+																  self.id = e.id, self.setSource(!0), self.play()
 									)
 
 							},
