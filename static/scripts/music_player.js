@@ -2220,7 +2220,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 			this.trackDurationColor_str = null,
 			this.categoriesId_str = null,
 			this.thumbnailSelectedType_str = null,
-			this.facebookAppId_str = null,
+			//this.facebookAppId_str = null,
 			this.openerAlignment_str = null,
 			this.prevId = -1,
 			this.totalCats = 0,
@@ -2333,7 +2333,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 										}
 										self.playlistBackgroundColor_str = self.props_obj.playlistBackgroundColor || "transparent",
 										self.searchInputColor_str = self.props_obj.searchInputColor || "#FF0000",
-										self.facebookAppId_str = self.props_obj.facebookAppId || void 0,
+										//self.facebookAppId_str = self.props_obj.facebookAppId || void 0,
 										self.openerAlignment_str = self.props_obj.openerAlignment || "right",
 										"right" != self.openerAlignment_str && "left" != self.openerAlignment_str && (self.openerAlignment_str = "right"),
 										self.totalCategories = self.cats_ar.length,
