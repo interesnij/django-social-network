@@ -438,7 +438,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 			}
 			return t
 		}
-		var a = "32x32 pixels 'file icon' (PNG only);Other file icon;Cover (front);Cover (back);Leaflet page;Media (e.g. lable side of CD);Lead artist/lead performer/soloist;Artist/performer;Conductor;Band/Orchestra;Composer;Lyricist/text writer;Recording Location;During recording;During performance;Movie screen capture;A bright coloured fish;Illustration;Band/artist logotype;Publisher/Studio logotype".split(";");
+		var a = "32x32 pixels 'file icon' (PNG only);Other file icon;Cover (front);Cover (back);Leaflet page;Media (e.g. lable side of CD);Lead artist/lead performer/soloist;Artist/performer;Conductor;Band/Orchestra;Composer;Lyricist/text writer;Recording Location;During recording;During performance;Movie/video screen capture;A bright coloured fish;Illustration;Band/artist logotype;Publisher/Studio logotype".split(";");
 		ID3v2.b.APIC = function(e, t, o, s, i) {
 			i = i || "3", s = e;
 			var n = r(o.a(e));
@@ -1577,10 +1577,15 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 							},
 							this.audioScreenPlayCompleteHandler = function() {
 								self.data.playlist_ar
-								FWDMSP.hasHTML5Audio && (self.data.loop_bl && self.data.shuffle_bl
-																				 ? self.playShuffle() : 1 == self.playlist_do.items_ar.length
-																				 ? (self.stop(), self.playlist_do && self.playlist_do.updateCurItemProgress(0)) : self.playNext()),
-																				 self.dispatchEvent(FWDMSP.PLAY_COMPLETE)
+								FWDMSP.hasHTML5Audio && (self.data.loop_bl ? "hls_flash" == self.audioType_str
+																													 ? setTimeout(function() {
+																															self.scrub(0), self.resume()
+																															}, 50)
+																														: (self.scrub(0), self.play())
+																														: self.data.shuffle_bl ? self.playShuffle() : 1 == self.playlist_do.items_ar.length
+																														? (self.stop(), self.playlist_do && self.playlist_do.updateCurItemProgress(0))
+																														: self.playNext()),
+																														self.dispatchEvent(FWDMSP.PLAY_COMPLETE)
 							},
 							this.loadID3IfPlaylistDisabled = function() {
 								var o = self.data.playlist_ar[self.id].source;
