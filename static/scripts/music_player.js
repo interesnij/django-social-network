@@ -9243,4 +9243,307 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 		d.setPrototype = function() {
 			d.prototype = null, d.prototype = new FWDMSPDisplayObject("div", "fixed")
 		}, d.CLICK = "onClick", d.MOUSE_DOWN = "onMouseDown", d.prototype = null
-	}(window)
+	}(window),
+
+	window.FWDMSPTransformDisplayObject = function(e, t, o, s) {
+			this.listeners = {
+				events_ar: []
+			};
+			var i = this;
+			if ("div" != e && "img" != e && "canvas" != e) throw Error("Type is not valid! " + e);
+			this.type = e,
+	    this.children_ar = [],
+	    this.style,
+	    this.screen,
+			this.numChildren,
+	    this.transform,
+	    this.position = t || "absolute",
+	    this.overflow = o || "hidden",
+	    this.display = s || "block",
+	    this.visible = !0,
+			this.buttonMode,
+	    this.x = 0,
+	    this.y = 0,
+	    this.scale = 1,
+	    this.rotation = 0,
+	    this.w = 0,
+	    this.h = 0,
+	    this.rect,
+	    this.alpha = 1,
+	    this.innerHTML = "",
+			this.opacityType = "",
+	    this.isHtml5_bl = !1,
+	    this.hasTransform2d_bl = FWDMSPUtils.hasTransform2d,
+	    this.init = function() {
+					this.setScreen()
+				},
+	      this.getTransform = function() {
+					for (var e, t = ["transform", "msTransform", "WebkitTransform", "MozTransform", "OTransform"]; e = t.shift();)
+						if (void 0 !== this.screen.style[e]) return e;
+					return !1
+				},
+	      this.getOpacityType = function() {
+					return void 0 !== this.screen.style.opacity ? "opacity" : "filter"
+				},
+	      this.setScreen = function(e) {
+					"img" == this.type && e ? this.screen = e : this.screen = document.createElement(this.type), this.setMainProperties()
+				},
+	      this.setMainProperties = function() {
+					this.transform = this.getTransform(),
+	        this.setPosition(this.position),
+	        this.setOverflow(this.overflow),
+	        this.opacityType = this.getOpacityType(),
+	        "opacity" == this.opacityType && (this.isHtml5_bl = !0),
+	        "filter" == i.opacityType && (i.screen.style.filter = "inherit"),
+					this.screen.style.left = "0px",
+	        this.screen.style.top = "0px",
+	        this.screen.style.margin = "0px",
+	        this.screen.style.padding = "0px",
+	        this.screen.style.maxWidth = "none",
+	        this.screen.style.maxHeight = "none",
+	        this.screen.style.border = "none",
+	        this.screen.style.lineHeight = "1",
+	        this.screen.style.backgroundColor = "transparent",
+					this.screen.style.MozImageRendering = "optimizeSpeed",
+	        this.screen.style.WebkitImageRendering = "optimizeSpeed",
+	        "img" == e && (this.setWidth(this.screen.width),
+	        this.setHeight(this.screen.height),
+	        this.screen.onmousedown = function(e) {
+							return !1
+						})
+				},
+	      this.setSelectable = function(e) {
+					if (!e) {
+						try {
+							this.screen.style.userSelect = "none"
+						} catch (e) {}
+						try {
+							this.screen.style.MozUserSelect = "none"
+						} catch (e) {}
+						try {
+							this.screen.style.webkitUserSelect = "none"
+						} catch (e) {}
+						try {
+							this.screen.style.khtmlUserSelect = "none"
+						} catch (e) {}
+						try {
+							this.screen.style.oUserSelect = "none"
+						} catch (e) {}
+						try {
+							this.screen.style.msUserSelect = "none"
+						} catch (e) {}
+						try {
+							this.screen.msUserSelect = "none"
+						} catch (e) {}
+						this.screen.ondragstart = function(e) {
+							return !1
+						}, this.screen.onselectstart = function() {
+							return !1
+						}, this.screen.style.webkitTouchCallout = "none"
+					}
+				},
+	      this.getScreen = function() {
+					return i.screen
+				},
+	      this.setVisible = function(e) {
+					this.visible = e, 1 == this.visible ? this.screen.style.visibility = "visible" : this.screen.style.visibility = "hidden"
+				},
+	      this.getVisible = function() {
+					return this.visible
+				},
+	      this.setResizableSizeAfterParent = function() {
+					this.screen.style.width = "100%", this.screen.style.height = "100%"
+				},
+	      this.getStyle = function() {
+					return this.screen.style
+				},
+	      this.setOverflow = function(e) {
+					i.overflow = e, i.screen.style.overflow = i.overflow
+				},
+	      this.setPosition = function(e) {
+					i.position = e, i.screen.style.position = i.position
+				},
+	      this.setDisplay = function(e) {
+					this.display = e, this.screen.style.display = this.display
+				},
+	      this.setButtonMode = function(e) {
+					this.buttonMode = e, 1 == this.buttonMode ? this.screen.style.cursor = "pointer" : this.screen.style.cursor = "default"
+				},
+	      this.setBkColor = function(e) {
+					i.screen.style.backgroundColor = e
+				},
+	      this.setInnerHTML = function(e) {
+					i.innerHTML = e, i.screen.innerHTML = i.innerHTML
+				},
+	      this.getInnerHTML = function() {
+					return i.innerHTML
+				},
+	      this.getRect = function() {
+					return i.screen.getBoundingClientRect()
+				},
+	      this.setAlpha = function(e) {
+					i.alpha = e, "opacity" == i.opacityType ? i.screen.style.opacity = i.alpha : "filter" == i.opacityType && (i.screen.style.filter = "alpha(opacity=" + 100 * i.alpha + ")", i.screen.style.filter = "progid:DXImageTransform.Microsoft.Alpha(Opacity=" + Math.round(100 * i.alpha) + ")")
+				},
+	      this.getAlpha = function() {
+					return i.alpha
+				},
+	      this.getRect = function() {
+					return this.screen.getBoundingClientRect()
+				},
+	      this.getGlobalX = function() {
+					return this.getRect().left
+				},
+	      this.getGlobalY = function() {
+					return this.getRect().top
+				},
+	      this.setX = function(e) {
+					i.x = e, i.hasTransform2d_bl ? i.screen.style[i.transform] = "translate(" + i.x + "px," + i.y + "px) scale(" + i.scale + " , " + i.scale + ") rotate(" + i.rotation + "deg)" : i.screen.style.left = i.x + "px"
+				},
+	      this.getX = function() {
+					return i.x
+				},
+	      this.setY = function(e) {
+					i.y = e, i.hasTransform2d_bl ? i.screen.style[i.transform] = "translate(" + i.x + "px," + i.y + "px) scale(" + i.scale + " , " + i.scale + ") rotate(" + i.rotation + "deg)" : i.screen.style.top = i.y + "px"
+				},
+	      this.getY = function() {
+					return i.y
+				},
+	      this.setScale2 = function(e) {
+					i.scale = e, i.hasTransform2d_bl && (i.screen.style[i.transform] = "translate(" + i.x + "px," + i.y + "px) scale(" + i.scale + " , " + i.scale + ") rotate(" + i.rotation + "deg)")
+				},
+	      this.getScale = function() {
+					return i.scale
+				},
+	      this.setRotation = function(e) {
+					i.rotation = e, i.hasTransform2d_bl && (i.screen.style[i.transform] = "translate(" + i.x + "px," + i.y + "px) scale(" + i.scale + " , " + i.scale + ") rotate(" + i.rotation + "deg)")
+				},
+	      i.setWidth = function(e) {
+					i.w = e, "img" == i.type && (i.screen.width = i.w), i.screen.style.width = i.w + "px"
+				},
+	      this.getWidth = function() {
+					return "div" == i.type ? 0 != i.screen.offsetWidth ? i.screen.offsetWidth : i.w : "img" == i.type ? 0 != i.screen.offsetWidth ? i.screen.offsetWidth : 0 != i.screen.width ? i.screen.width : i._w : "canvas" == i.type ? 0 != i.screen.offsetWidth ? i.screen.offsetWidth : i.w : void 0
+				},
+	      i.setHeight = function(e) {
+					i.h = e, "img" == i.type && (i.screen.height = i.h), i.screen.style.height = i.h + "px"
+				},
+	      this.getHeight = function() {
+					return "div" == i.type ? 0 != i.screen.offsetHeight ? i.screen.offsetHeight : i.h : "img" == i.type ? 0 != i.screen.offsetHeight ? i.screen.offsetHeight : 0 != i.screen.height ? i.screen.height : i.h : "canvas" == i.type ? 0 != i.screen.offsetHeight ? i.screen.offsetHeight : i.h : void 0
+				},
+	      this.getNumChildren = function() {
+					return i.children_ar.length
+				},
+	      this.addChild = function(e) {
+					this.contains(e) && this.children_ar.splice(FWDMSPUtils.indexOfArray(this.children_ar, e), 1),
+					this.children_ar.push(e),
+					this.screen.appendChild(e.screen)
+				},
+	      this.removeChild = function(e) {
+					if (!this.contains(e)) throw Error("##removeChild()## Child doesn't exist, it can't be removed!");
+					this.children_ar.splice(FWDMSPUtils.indexOfArray(this.children_ar, e), 1),
+					this.screen.removeChild(e.screen)
+				},
+	      this.contains = function(e) {
+					return -1 != FWDMSPUtils.indexOfArray(this.children_ar, e)
+				},
+	      this.addChildAtZero = function(e) {
+					0 == this.numChildren ? (this.children_ar.push(e), this.screen.appendChild(e.screen)) : (this.screen.insertBefore(e.screen, this.children_ar[0].screen), this.contains(e) && this.children_ar.splice(FWDMSPUtils.indexOfArray(this.children_ar, e), 1), this.children_ar.unshift(e))
+				},
+	      this.getChildAt = function(e) {
+					if (e < 0 || e > this.numChildren - 1) throw Error("##getChildAt()## Index out of bounds!");
+					if (0 == this.numChildren) throw Errror("##getChildAt## Child dose not exist!");
+					return this.children_ar[e]
+				},
+	      this.removeChildAtZero = function() {
+					this.screen.removeChild(this.children_ar[0].screen),
+						this.children_ar.shift()
+				},
+	      this.addListener = function(e, t) {
+					if (null == e) throw Error("type is required.");
+					if ("object" == typeof e) throw Error("type must be of type String.");
+					if ("function" != typeof t) throw Error("listener must be of type Function.");
+					var o = {};
+					o.type = e, o.listener = t, (o.target = this).listeners.events_ar.push(o)
+				},
+	      this.dispatchEvent = function(e, t) {
+					if (null == e) throw Error("type is required.");
+					if ("object" == typeof e) throw Error("type must be of type String.");
+					for (var o = 0, s = this.listeners.events_ar.length; o < s; o++)
+						if (this.listeners.events_ar[o].target === this && this.listeners.events_ar[o].type === e) {
+							if (t)
+								for (var i in t) this.listeners.events_ar[o][i] = t[i];
+							this.listeners.events_ar[o].listener.call(this, this.listeners.events_ar[o]);
+							break
+						}
+				},
+	      this.removeListener = function(e, t) {
+					if (null == e) throw Error("type is required.");
+					if ("object" == typeof e) throw Error("type must be of type String.");
+					if ("function" != typeof t) throw Error("listener must be of type Function." + e);
+					for (var o = 0, s = this.listeners.events_ar.length; o < s; o++)
+						if (this.listeners.events_ar[o].target === this && this.listeners.events_ar[o].type === e && this.listeners.events_ar[o].listener === t) {
+							this.listeners.events_ar.splice(o, 1);
+							break
+						}
+				},
+	      this.disposeImage = function() {
+					"img" == this.type && (this.screen.src = null)
+				},
+	      this.destroy = function() {
+					try {
+						this.screen.parentNode.removeChild(this.screen)
+					} catch (e) {}
+					this.screen.onselectstart = null,
+	        this.screen.ondragstart = null,
+	        this.screen.ontouchstart = null,
+	        this.screen.ontouchmove = null,
+	        this.screen.ontouchend = null,
+	        this.screen.onmouseover = null,
+	        this.screen.onmouseout = null,
+	        this.screen.onmouseup = null,
+	        this.screen.onmousedown = null,
+					this.screen.onmousemove = null,
+	        this.screen.onclick = null,
+	        delete this.screen,
+	        delete this.style,
+	        delete this.rect,
+	        delete this.selectable,
+					delete this.buttonMode,
+	        delete this.position,
+					delete this.overflow,
+	        delete this.visible,
+					delete this.innerHTML,
+	        delete this.numChildren,
+					delete this.x,
+	        delete this.y,
+	        delete this.w,
+					delete this.h,
+	        delete this.opacityType,
+					delete this.isHtml5_bl,
+	        delete this.hasTransform2d_bl,
+	        this.children_ar = null,
+	        this.style = null,
+	        this.screen = null,
+	        this.numChildren = null,
+	        this.transform = null,
+	        this.position = null,
+	        this.overflow = null,
+	        this.display = null,
+	        this.visible = null,
+	        this.buttonMode = null,
+					this.globalX = null,
+	        this.globalY = null,
+	        this.x = null,
+	        this.y = null,
+					this.w = null,
+	        this.h = null,
+	        this.rect = null,
+					this.alpha = null,
+	        this.innerHTML = null,
+	        this.opacityType = null,
+	        this.isHtml5_bl = null,
+	        this.hasTransform3d_bl = null,
+	        this.hasTransform2d_bl = null,
+	        i = null
+				},
+	      this.init()
+		}
