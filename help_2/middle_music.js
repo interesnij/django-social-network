@@ -1757,54 +1757,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 								FWDMSPUtils.isIphone
 							},
 							this.hiderHideCompleteHandler = function() {},
-							this.setupVideosHolder = function() {
-								this.videosHolder_do = new FWDMSPDisplayObject("div"),
-								self.videosHolder_do.getStyle().background = "url('" + self.data.thumbnailBkPath_str + "')",
-								this.videosHolder_do.setWidth(self.data.controllerHeight),
-								this.videosHolder_do.setHeight(self.data.controllerHeight),
-								this.controller_do.mainHolder_do.addChild(this.videosHolder_do),
-								self.data.showVideoFullScreenButton_bl && (this.setupClickScreen(),
-								                                           this.setupDisableClick(),
-																													 this.addDoubleClickSupport(),
-																													 this.fullScreenButtonOverlay_do = new FWDMSPDisplayObject("div"),
-																													 self.fullScreenButtonOverlay_do.getStyle().background = "url('" + self.data.thumbnailBkPath_str + "')",
-																													 this.fullScreenButtonOverlay_do.setWidth(self.data.controllerHeight),
-																													 this.fullScreenButtonOverlay_do.setHeight(self.data.controllerHeight),
-																													 FWDMSPSimpleButton.setPrototype(),
-																													 -1 != this.skinPath_str.indexOf("hex_white") ? self.largePlayButton_do = new FWDMSPSimpleButton(self.data.largePlayN_img,
-																														                                                                                               self.data.largePlayS_str,
-																																																																													 void 0, !0,
-																																																																													 self.data.useHEXColorsForSkin_bl,
-																																																																													 self.data.normalButtonsColor_str, "#FFFFFF")
-																																																				: self.largePlayButton_do = new FWDMSPSimpleButton(self.data.largePlayN_img,
-																																																					                                                 self.data.largePlayS_str,
-																																																																													 void 0,
-																																																																													 !0,
-																																																																													 self.data.useHEXColorsForSkin_bl,
-																																																																													 self.data.normalButtonsColor_str,
-																																																																													 self.data.selectedButtonsColor_str),
-							   self.largePlayButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, self.largePlayButtonUpHandler),
-								 self.largePlayButton_do.hide(),
-								 FWDMSPComplexButton.setPrototype(),
-								 self.fullScreenButton_do = new FWDMSPComplexButton(self.data.fullScreenN_img,
-									                                                  self.data.fullScreenS_str,
-																																		self.data.normalScreenN_img,
-																																		self.data.normalScreenS_str,
-																																		!0,
-																																		self.data.useHEXColorsForSkin_bl,
-																																		self.data.normalButtonsColor_str,
-																																		self.data.selectedButtonsColor_str),
-									self.fullScreenButton_do.addListener(FWDMSPComplexButton.MOUSE_UP, self.toggleFullScreen),
-									self.checkShowFullScreenButtonHitTest(),
-									setTimeout(function() {
-										self.videosHolder_do.addChild(self.dumyClick_do),
-										self.disableClick_do && self.main_do.addChild(self.disableClick_do),
-										self.videosHolder_do.addChild(self.fullScreenButtonOverlay_do),
-										self.controller_do.mainHolder_do.contains(self.fullScreenButton_do) || self.videosHolder_do.addChild(self.fullScreenButton_do),
-										self.videosHolder_do.addChild(self.largePlayButton_do),
-										self.hideFullScreenButtonAndOverlay(!1, !0)
-									}, 50))
-							},
+
 							this.setupDisableClick = function() {
 								self.disableClick_do = new FWDMSPDisplayObject("div")
 							},
@@ -9155,7 +9108,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 		d.setPrototype = function() {
 			d.prototype = null, d.prototype = new FWDMSPDisplayObject("div", "fixed")
 		}, d.CLICK = "onClick", d.MOUSE_DOWN = "onMouseDown", d.prototype = null
-	}(window), window.FWDMSPTransformDisplayObject = function(e, t, o, s) {
+	}(window),
+
+window.FWDMSPTransformDisplayObject = function(e, t, o, s) {
 		this.listeners = {
 			events_ar: []
 		};
@@ -9467,44 +9422,19 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 			},
       this.init()
 	},
-
 	function(e) {
 		var s = function(t, e) {
 			var l = this;
 			s.prototype;
-			this.videoHolder_do = null, this.ytb = null, this.lastQuality_str = "auto", this.volume = e, this.updateVideoId_int, this.updatePreloadId_int,
+			this.ytb = null, this.lastQuality_str = "auto", this.volume = e, this.updateVideoId_int, this.updatePreloadId_int,
 				this.controllerHeight = t.data.controllerHeight, this.hasHours_bl = !1, this.hasBeenCreatedOnce_bl = !1, this.allowScrubing_bl = !1, this.hasError_bl = !1, this.isPlaying_bl = !1, this.isStopped_bl = !0, this.isStartEventDispatched_bl = !1, this.isSafeToBeControlled_bl = !1,
 				this.isPausedInEvent_bl = !0, this.isShowed_bl = !0,
 				this.isReady_bl = !1, this.isQualityArrayDisapatched_bl = !1, this.isMobile_bl = FWDMSPUtils.isMobile, this.init = function() {
 					l.getStyle().width = "100%", l.getStyle().height = "100%", l.hasTransform3d_bl = !1, l.hasTransform2d_bl = !1, l.setBkColor("#000000"),
 						l.setBackfaceVisibility(),
-						l.id = "youtubePlayer", t.main_do.addChild(l), l.resizeAndPosition(), l.setupVideo()
-				}, this.setupVideo = function() {
-					l.ytb || (l.videoHolder_do = new FWDMSPDisplayObject("div"), l.videoHolder_do.hasTransform3d_bl = !1, l.videoHolder_do.hasTransform2d_bl = !1, l.videoHolder_do.screen.setAttribute("id", t.instanceName_str + "youtube"), l.videoHolder_do.getStyle().width = "100%", l.videoHolder_do.getStyle().height = "100%", l.videoHolder_do.setBackfaceVisibility(), l.addChild(l.videoHolder_do), l.ytb = new YT.Player(t.instanceName_str + "youtube", {
-						width: "100%",
-						height: "100%",
-						playerVars: {
-							controls: 0,
-							disablekb: 0,
-							loop: 0,
-							autoplay: 0,
-							wmode: "opaque",
-							showinfo: 0,
-							rel: 0,
-							modestbranding: 1,
-							iv_load_policy: 3,
-							cc_load_policy: 0,
-							fs: 0,
-							html5: 0
-						},
-						events: {
-							onReady: l.playerReadyHandler,
-							onError: l.playerErrorHandler,
-							onStateChange: l.stateChangeHandler,
-							onPlaybackQualityChange: l.qualityChangeHandler
-						}
-					}))
-				}, this.playerReadyHandler = function() {
+						l.id = "youtubePlayer", t.main_do.addChild(l), l.resizeAndPosition()
+				},
+				this.playerReadyHandler = function() {
 					l.isReady_bl = !0, l.resizeAndPosition(), l.dispatchEvent(s.READY), l.hasBeenCreatedOnce_bl = !0
 				}, this.stateChangeHandler = function(e) {
 					if (-1 == e.data && l.isCued_bl && l.isMobile_bl && (l.isStopped_bl = !1, FWDMSP.stopAllAudio(t)), e.data == YT.PlayerState.PLAYING) l.isSafeToBeControlled_bl || (l.isStopped_bl = !1, l.isSafeToBeControlled_bl = !0, l.isPlaying_bl = !0, l.hasHours_bl = 0 < Math.floor(l.ytb.getDuration() / 3600), l.setVolume(l.volume), l.startToUpdate(), l.startToPreload(), l.scrub(1e-5), l.isMobile_bl || l.setQuality(l.lastQuality_str), l.ytb.getAvailableQualityLevels() && 0 != l.ytb.getAvailableQualityLevels().length && l.dispatchEvent(s.QUALITY_CHANGE, {
@@ -9592,10 +9522,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 						curTime: "00:00",
 						totalTime: "00:00"
 					}))
-				}, this.destroyYoutube = function() {
-					l.videoHolder_do && (l.videoHolder_do.screen.removeAttribute("id", t.instanceName_str + "youtube"), l.videoHolder_do.destroy(), l.videoHolder_do = null), l.ytb && l.ytb.destroy(), l.ytb = null
-				}, this.stopVideo = function() {
-					l.ytb.cueVideoById(l.sourcePath_str)
 				}, this.startToScrub = function() {
 					l.isSafeToBeControlled_bl && (l.allowScrubing_bl = !0)
 				}, this.stopToScrub = function() {

@@ -1040,11 +1040,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 										e.preventDefault && e.preventDefault(),
 										self == FWDMSP.keyboardCurInstance)) {
 									if (32 == e.keyCode) {
-										if (self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS || !self.videoScreen_do) {
 											if (!self.audioScreen_do.isSafeToBeControlled_bl)
 											  return;
 											self.audioScreen_do.togglePlayPause()
-										}
 										}
 										return e.preventDefault && e.preventDefault(), !1
 									}
@@ -1121,7 +1119,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 									var t = new Date;
 									t.setTime(t.getTime() + 2e4);
 									var o, s = 0;
-									self.ytb_do ? self.ytb_do && (s = self.ytb_do.lastPercentPlayed, o = self.ytb_do.isPlaying_bl) : self.audioType_str == FWDMSP.VIDEO && self.videoScreen_do ? self.videoScreen_do && (s = self.videoScreen_do.lastPercentPlayed, o = self.videoScreen_do.isPlaying_bl) : self.audioScreen_do && (s = self.audioScreen_do.lastPercentPlayed, o = self.audioScreen_do.isPlaying_bl),
+									self.audioScreen_do && (s = self.audioScreen_do.lastPercentPlayed, o = self.audioScreen_do.isPlaying_bl),
 										document.cookie = "FWDMSPusePP=true; expires=" + t.toGMTString() + ", 01-Jan-70 00:00:01 GMT; path=/",
 										document.cookie = "FWDMSPVolume=" + self.volume + "; expires=" + t.toGMTString() + ", 01-Jan-70 00:00:01 GMT; path=/",
 										document.cookie = "FWDMSPpp=" + s + "; expires=" + t.toGMTString() + ", 01-Jan-70 00:00:01 GMT; path=/",
@@ -1434,7 +1432,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 								self.playlist_do && self.playlist_do.hideDisable()
 							},
               this.controllerStartToScrubbHandler = function(e) {
-								self.playlist_do && self.playlist_do.showDisable(), self.ytb_do ? self.ytb_do.startToScrub() : self.audioType_str == FWDMSP.VIDEO && self.videoScreen_do ? self.videoScreen_do.startToScrub() : FWDMSP.hasHTML5Audio ? self.audioScreen_do.startToScrub() : self.isFlashScreenReady_bl && (FWDMSP.pauseAllAudio(self), self.flashObject.startToScrub())
+								self.playlist_do && self.playlist_do.showDisable(),
+								self.audioScreen_do.startToScrub()
 							},
               this.controllerScrubbHandler = function(e) {
 								self.audioScreen_do.scrub(e.percent)
@@ -1443,7 +1442,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 								self.playlist_do && self.playlist_do.updateCurItemProgress(e.percent)
 							},
               this.controllerStopToScrubbHandler = function(e) {
-								self.playlist_do && self.playlist_do.hideDisable(), self.ytb_do ? self.ytb_do.stopToScrub() : self.audioType_str == FWDMSP.VIDEO && self.videoScreen_do ? self.videoScreen_do.stopToScrub() : FWDMSP.hasHTML5Audio ? self.audioScreen_do.stopToScrub() : self.isFlashScreenReady_bl && self.flashObject.stopToScrub()
+								self.playlist_do && self.playlist_do.hideDisable(),
+								self.audioScreen_do.stopToScrub() 
 							},
               this.controllerChangeVolumeHandler = function(e) {
 								self.setVolume(e.percent)
