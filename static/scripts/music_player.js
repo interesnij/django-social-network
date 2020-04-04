@@ -8054,7 +8054,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
           b.scrHandlerLines_do = new FWDMSPDisplayObject("div"),
           b.scrHandlerLines_do.hasTransform3d_bl = !1,
           b.scrHandlerLines_do.hasTransform2d_bl = !1,
-          b.scrHandlerLines_do.setBackfaceVisibility(),
+        //  b.scrHandlerLines_do.setBackfaceVisibility(),
           b.scrHandlerLines_do.setWidth(b.scrHandlerLinesN_do.w),
           b.scrHandlerLines_do.setHeight(b.scrHandlerLinesN_do.h),
           b.scrHandlerLines_do.setButtonMode(!0),
