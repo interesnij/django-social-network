@@ -8674,10 +8674,10 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 					l.setVisible(!1),
 					l.dispatchEvent(r.HIDE_COMPLETE)
 				}, this.setForFixedPosition = function() {
-					l.setBackfaceVisibility(),
+			//		l.setBackfaceVisibility(),
 					l.hasTransform3d_bl = !1,
 					l.hasTransform2d_bl = !1,
-					l.image_sdo.setBackfaceVisibility(),
+			//		l.image_sdo.setBackfaceVisibility(),
 					l.image_sdo.hasTransform3d_bl = !1,
 					l.image_sdo.hasTransform2d_bl = !1
 				}, this.init()
