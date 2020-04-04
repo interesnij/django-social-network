@@ -4000,24 +4000,47 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 																																					l.scrHandler_do && l.updateScrollBarSizeActiveAndDeactivate(),
 																																					this.getMaxWidthResizeAndPosition(),
 																																					l.updateScrollBarHandlerAndContent()
-				}, this.hide = function(e, t) {
-					(l.isShowed_bl || t) && (FWDAnimation.killTweensOf(this), l.isShowed_bl = !1, FWDAnimation.killTweensOf(l.mainButtonsHolder_do), FWDAnimation.killTweensOf(l.bk_do), e ? (FWDAnimation.to(l.mainButtonsHolder_do, .8, {
-						y: -l.totalButtonsHeight,
-						ease: Expo.easeInOut,
-						onComplete: l.hideComplete
-					}), FWDAnimation.to(l.bk_do, .8, {
-						alpha: 0
-					})) : (l.bk_do.setVisible(!1), l.mainButtonsHolder_do.setY(l.buttonHeight - l.totalButtonsHeight), l.bk_do.setAlpha(0), l.setHeight(l.buttonHeight), l.hideComplete()))
-				}, this.hideComplete = function() {
-					l.mainButtonsHolder_do.setVisible(!1), l.bk_do.setVisible(!1)
-				}, this.show = function(e, t) {
-					l.isShowed_bl && !t || (FWDAnimation.killTweensOf(this), l.mainButtonsHolder_do.setY(-l.totalButtonsHeight), l.isShowed_bl = !0, l.mainButtonsHolder_do.setVisible(!0), l.bk_do.setVisible(!0), l.resizeAndPosition(), FWDAnimation.killTweensOf(l.mainButtonsHolder_do), FWDAnimation.killTweensOf(l.bk_do), l.scrMainHolder_do && l.allowToScrollAndScrollBarIsActive_bl && l.scrMainHolder_do.setVisible(!0), e ? (FWDAnimation.to(l.bk_do, .8, {
-						alpha: 1
-					}), FWDAnimation.to(l.mainButtonsHolder_do, .8, {
-						y: l.buttonHeight,
-						ease: Expo.easeInOut
-					})) : (l.bk_do.setAlpha(1), l.mainButtonsHolder_do.setY(l.buttonHeight)))
-				}, this.setupScrollLogic = function() {
+				},
+				this.hide = function(e, t) {
+					(l.isShowed_bl || t) && (FWDAnimation.killTweensOf(this),
+					                         l.isShowed_bl = !1,
+																	 FWDAnimation.killTweensOf(l.mainButtonsHolder_do),
+																	 FWDAnimation.killTweensOf(l.bk_do), e ? (FWDAnimation.to(l.mainButtonsHolder_do, .8, {
+																		 																					y: -l.totalButtonsHeight,
+																																							ease: Expo.easeInOut,
+																																							onComplete: l.hideComplete
+																																						}), FWDAnimation.to(l.bk_do, .8, {
+																																							alpha: 0
+																																						}))
+																																					: (l.bk_do.setVisible(!1),
+																																					   l.mainButtonsHolder_do.setY(l.buttonHeight - l.totalButtonsHeight),
+																																						 l.bk_do.setAlpha(0),
+																																						 l.setHeight(l.buttonHeight),
+																																						 l.hideComplete()))
+				},
+				this.hideComplete = function() {
+					l.mainButtonsHolder_do.setVisible(!1),
+					l.bk_do.setVisible(!1)
+				},
+				this.show = function(e, t) {
+					l.isShowed_bl && !t || (FWDAnimation.killTweensOf(this),
+					                        l.mainButtonsHolder_do.setY(-l.totalButtonsHeight),
+																	l.isShowed_bl = !0,
+																	l.mainButtonsHolder_do.setVisible(!0),
+																	l.bk_do.setVisible(!0),
+																	l.resizeAndPosition(),
+																	FWDAnimation.killTweensOf(l.mainButtonsHolder_do),
+																	FWDAnimation.killTweensOf(l.bk_do),
+																	l.scrMainHolder_do && l.allowToScrollAndScrollBarIsActive_bl && l.scrMainHolder_do.setVisible(!0),
+																	e ? (FWDAnimation.to(l.bk_do, .8, {
+																			alpha: 1
+																			}), FWDAnimation.to(l.mainButtonsHolder_do, .8, {
+																				y: l.buttonHeight,
+																				ease: Expo.easeInOut
+																			}))
+																		: (l.bk_do.setAlpha(1), l.mainButtonsHolder_do.setY(l.buttonHeight)))
+				},
+				this.setupScrollLogic = function() {
 					l.isMobile_bl ? l.setupMobileScrollbar() : (l.setupScrollbar(), l.addMouseWheelSupport_bl && l.addMouseWheelSupport())
 				}, this.setupMobileScrollbar = function() {
 					l.hasPointerEvent_bl ? l.mainButtonsHolder_do.screen.addEventListener("pointerdown", l.scrollBarTouchStartHandler) : l.mainButtonsHolder_do.screen.addEventListener("touchstart", l.scrollBarTouchStartHandler), l.mainButtonsHolder_do.screen.addEventListener("mousedown", l.scrollBarTouchStartHandler), l.updateMobileScrollBarId_int = setInterval(l.updateMobileScrollBar, 16)
