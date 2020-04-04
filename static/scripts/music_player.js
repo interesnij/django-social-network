@@ -1867,21 +1867,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 									  return self.resizeHandler(),
 									void self.passWindow_do.show();
 									self.hasPassedPassowrd_bl = !0,
-										self.largePlayButton_do && self.largePlayButton_do.hide(),
 										FWDMSP.pauseAllAudio(self),
-										self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS
-										                                   || !self.videoScreen_do ? self.audioScreen_do && self.audioScreen_do.play()
-																											                         : self.audioType_str != FWDMSP.HLS_JS
-																											 || self.isHLSManifestReady_bl ? self.videoScreen_do && self.videoScreen_do.play()
-																											                         : (self.videoScreen_do.initVideo(),
-																																							    self.setupHLS(),
-																																									self.hlsJS.loadSource(self.audioPath),
-																																									self.hlsJS.attachMedia(self.videoScreen_do.video_el),
-																																									self.hlsJS.on(Hls.Events.MANIFEST_PARSED,
-																																										function(e) {
-																																											self.isHLSManifestReady_bl = !0,
-																																											self.audioType_str == FWDMSP.HLS_JS && self.play()
-																																										}))
+										self.audioScreen_do && self.audioScreen_do.play()
 								}
 							},
 							this.resume = function() {
@@ -2127,15 +2114,12 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 					return "probably" != e.canPlayType("audio/mpeg") && "maybe" != e.canPlayType("audio/mpeg") || (t += ".mp3"), "probably" != e.canPlayType("audio/ogg") && "maybe" != e.canPlayType("audio/ogg") || (t += ".ogg"), "probably" != e.canPlayType("audio/mp4") && "maybe" != e.canPlayType("audio/mp4") || (t += ".webm"), (o = t.split(".")).shift(), e = null, o
 				}
 			}(),
-			FWDMSP.hasHTMLHLS = (f$ = document.createElement("video"),
 			g$ = !1,
 			f$.canPlayType && (g$ = Boolean("probably" === f$.canPlayType("application/vnd.apple.mpegurl") || "maybe" === f$.canPlayType("application/vnd.apple.mpegurl"))), g$),
 			FWDMSP.instaces_ar = [],
 			FWDMSP.CENTER = "center",
 			FWDMSP.LEFT = "left",
 			FWDMSP.RIGHT = "right",
-			FWDMSP.YOUTUBE = "youtube",
-			FWDMSP.VIDEO = "video",
 			FWDMSP.AUDIO = "audio",
 			FWDMSP.POPUP = "popup",
 			FWDMSP.POSITION_TOP = "positionTop",
@@ -2152,7 +2136,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 			FWDMSP.ERROR = "error",
 			FWDMSP.PLAY_COMPLETE = "playComplete",
 			FWDMSP.PLAYLIST_LOAD_COMPLETE = "onPlayListLoadComplete",
-			FWDMSP.HLS = "hls_flash",
 			window.FWDMSP = FWDMSP
 	}(window),
 	function(window) {
@@ -4934,15 +4917,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 			this.isShowed_bl = _.showControllerByDefault_bl,
 			this.isMobile_bl = FWDMSPUtils.isMobile,
 			this.hasPointerEvent_bl = FWDMSPUtils.hasPointerEvent,
-			this.showVideoFullScreenButton_bl = _.showVideoFullScreenButton_bl,
 			p.init = function() {
 					var e;
-					p.videoControllerHolder_do = new FWDMSPDisplayObject("div"),
-					p.videoControllerBk_do = new FWDMSPDisplayObject("div"),
-					p.videoControllerBk_do.getStyle().background = "url('" + p.controllerBkPath_str + "')",
-					p.videoControllerBk_do.getStyle().width = "100%",
-					p.videoControllerBk_do.getStyle().height = "100%",
-					p.videoControllerHolder_do.addChild(p.videoControllerBk_do),
 					p.mainHolder_do = new FWDMSPDisplayObject("div"),
 					p.expandControllerBackground_bl ? (p.bk_do = new FWDMSPDisplayObject("img"),
 					p.bk_do.setScreen(p.controllerBk_img),
