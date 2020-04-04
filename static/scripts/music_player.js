@@ -1871,7 +1871,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 								}
 							},
 							this.resume = function() {
-								self.isAPIReady_bl && FWDMSP.hasHTML5Audio && self.flashObject.playerResume()
+								self.isAPIReady_bl
 							},
 							this.pause = function() {
 								self.isAPIReady_bl && self.isPlaylistLoaded_bl && self.isPlaylistItemClicked_bl = !0
