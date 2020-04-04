@@ -1867,21 +1867,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 									  return self.resizeHandler(),
 									void self.passWindow_do.show();
 									self.hasPassedPassowrd_bl = !0,
-										self.largePlayButton_do && self.largePlayButton_do.hide(),
 										FWDMSP.pauseAllAudio(self),
-										self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS
-										                                   || !self.videoScreen_do ? self.audioScreen_do && self.audioScreen_do.play()
-																											                         : self.audioType_str != FWDMSP.HLS_JS
-																											 || self.isHLSManifestReady_bl ? self.videoScreen_do && self.videoScreen_do.play()
-																											                         : (self.videoScreen_do.initVideo(),
-																																							    self.setupHLS(),
-																																									self.hlsJS.loadSource(self.audioPath),
-																																									self.hlsJS.attachMedia(self.videoScreen_do.video_el),
-																																									self.hlsJS.on(Hls.Events.MANIFEST_PARSED,
-																																										function(e) {
-																																											self.isHLSManifestReady_bl = !0,
-																																											self.audioType_str == FWDMSP.HLS_JS && self.play()
-																																										}))
 								}
 							},
 							this.resume = function() {
@@ -1891,13 +1877,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 							},
 							this.pause = function() {
 								self.isAPIReady_bl && self.isPlaylistLoaded_bl
-								                   && (self.isPlaylistItemClicked_bl = !0,
-																		   self.largePlayButton_do && self.isFullScreen_bl
-																			                         && self.largePlayButton_do.show(),
-																															 self.audioType_str != FWDMSP.VIDEO
-																															 && self.audioType_str != FWDMSP.HLS
-																															 || !self.videoScreen_do ? FWDMSP.hasHTML5Audio && self.audioScreen_do && self.audioScreen_do.pause()
-																															                         : self.videoScreen_do.pause())
+								                   && self.isPlaylistItemClicked_bl = !0
+
 							},
 							this.stop = function(e) {
 								self.isAPIReady_bl && (e || (self.isIcecastLoaded_bl = !1, self.isShoutcastLoaded_bl = !1),
@@ -1913,9 +1894,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 																			                      self.playlist_do.updateCurItemProgress(0)),
 																			 self.controller_do && self.controller_do.ttm && self.controller_do.ttm.hide(),
 																			 self.showCursor(),
-																			 self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS
-																			                                    || !self.videoScreen_do ? FWDMSP.hasHTML5Audio && self.audioScreen_do.stop()
-																																					                        : self.videoScreen_do.stop(),
+
 																				self.controller_do && self.controller_do.disableAtbButton(),
 																				self.setPlaybackRate(self.data.defaultPlaybackRate),
 																				self.hasHlsPlayedOnce_bl = !1,
@@ -1925,17 +1904,12 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 							},
 							this.startToScrub = function() {
 								self.isAPIReady_bl && self.isPlaylistLoaded_bl
-								                   && (self.audioType_str == FWDMSP.VIDEO ? self.videoScreen_do.startToScrub()
-								                                                          : FWDMSP.hasHTML5Audio
-																																					? self.audioScreen_do.startToScrub()
-																																					: self.isFlashScreenReady_bl && self.flashObject.startToScrub())
+								                   && self.audioType_str == FWDMSP.hasHTML5Audio
 							},
 							this.stopToScrub = function() {
 								self.isAPIReady_bl && self.isPlaylistLoaded_bl
-								                   && (self.audioType_str == FWDMSP.VIDEO ? self.videoScreen_do.stopToScrub()
-																	                                        : FWDMSP.hasHTML5Audio
-																																					? self.audioScreen_do.stopToScrub()
-																																					: self.isFlashScreenReady_bl && self.flashObject.stopToScrub())
+								                   && self.audioScreen_do.stopToScrub()
+
 							},
 							this.scrub = function(e) {
 								self.isAPIReady_bl && self.isPlaylistLoaded_bl
