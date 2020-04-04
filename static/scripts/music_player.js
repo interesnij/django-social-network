@@ -801,7 +801,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 								self.main_do = new FWDMSPDisplayObject("div"),
 								self.main_do.getStyle().msTouchAction = "none",
 								self.main_do.getStyle().webkitTapHighlightColor = "rgba(0, 0, 0, 0)",
-								//self.main_do.setBackfaceVisibility(),
 								(!FWDMSPUtils.isMobile || FWDMSPUtils.isMobile && FWDMSPUtils.hasPointerEvent) && self.main_do.setSelectable(!1),
 								self.background_do && self.stageContainer.appendChild(self.background_do.screen),
 								self.stageContainer.appendChild(self.main_do.screen)
@@ -3658,7 +3657,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 					r.simpleText_do.getStyle().background = "url('" + r.catThumbTextBkPath_str + "')",
 					FWDMSPUtils.isFirefox && (r.simpleText_do.hasTransform3d_bl = !1,
 						                        r.simpleText_do.hasTransform2d_bl = !1),
-				 // r.simpleText_do.setBackfaceVisibility(),
 				  r.simpleText_do.getStyle().width = "100%",
 				  r.simpleText_do.getStyle().fontFamily = "Arial",
 				  r.simpleText_do.getStyle().fontSize = "12px",
@@ -3832,7 +3830,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 				},
 				this.setupSeparator = function() {
 					l.separator_do = new FWDMSPDisplayObject("div"),
-				//	l.separator_do.setBackfaceVisibility(),
 					l.separator_do.hasTransform3d_bl = !1,
 					l.separator_do.hasTransform2d_bl = !1,
 					l.separator_do.getStyle().background = "url('" + i.playlistSeparator_img.src + "')",
@@ -4207,7 +4204,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 			this.isMobile_bl = FWDMSPUtils.isMobile,
 			this.isDisabled_bl = !1,
 			u.init = function() {
-			//		u.setBackfaceVisibility(),
 					u.setButtonMode(!0),
 					u.setupMainContainers(),
 					u.setWidth(u.totalWidth),
@@ -4221,7 +4217,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 					u.addChild(u.bk_sdo),
 					u.text_sdo = new FWDMSPDisplayObject("div"),
 					u.text_sdo.getStyle().whiteSpace = "nowrap",
-				//	u.text_sdo.setBackfaceVisibility(),
 					u.text_sdo.setOverflow("visible"),
 					u.text_sdo.setDisplay("inline-block"),
 					u.text_sdo.getStyle().fontFamily = "Arial",
@@ -4380,7 +4375,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 			this.isMobile_bl = FWDMSPUtils.isMobile,
 			this.isDisabled_bl = !1,
 			_.init = function() {
-			//		_.setBackfaceVisibility(),
 					_.setButtonMode(!0),
 					_.setupMainContainers(),
 					_.setWidth(_.totalWidth),
@@ -4392,7 +4386,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 					_.addChild(_.bk_sdo),
 					_.text_sdo = new FWDMSPDisplayObject("div"),
 					_.text_sdo.getStyle().whiteSpace = "nowrap",
-				//	_.text_sdo.setBackfaceVisibility(),
 					_.text_sdo.setOverflow("visible"),
 					_.text_sdo.setDisplay("inline-block"),
 					_.text_sdo.getStyle().fontFamily = "Arial",
@@ -5545,7 +5538,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 					p.simpleText_do.setOverflow("visible"),
 					p.simpleText_do.hasTransform3d_bl = !1,
 					p.simpleText_do.hasTransform2d_bl = !1,
-				//	p.simpleText_do.setBackfaceVisibility(),
 					p.simpleText_do.getStyle().fontFamily = "Arial",
 					p.simpleText_do.getStyle().fontSize = "12px",
 					p.simpleText_do.getStyle().whiteSpace = "nowrap",
@@ -5558,7 +5550,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 					p.animText1_do.setOverflow("visible"),
 					p.animText1_do.hasTransform3d_bl = !1,
 					p.animText1_do.hasTransform2d_bl = !1,
-				//	p.animText1_do.setBackfaceVisibility(),
 					p.animText1_do.getStyle().fontFamily = "Arial",
 					p.animText1_do.getStyle().fontSize = "12px",
 					p.animText1_do.getStyle().whiteSpace = "nowrap",
@@ -5571,7 +5562,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 					p.animText2_do.setOverflow("visible"),
 					p.animText2_do.hasTransform3d_bl = !1,
 					p.animText2_do.hasTransform2d_bl = !1,
-			//		p.animText2_do.setBackfaceVisibility(),
 					p.animText2_do.getStyle().fontFamily = "Arial",
 					p.animText2_do.getStyle().fontSize = "12px",
 					p.animText2_do.getStyle().whiteSpace = "nowrap",
@@ -6344,18 +6334,10 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 				i.screen.style.border = "none",
 				i.screen.style.lineHeight = "1",
 				i.screen.style.backgroundColor = "transparent",
-			//	i.screen.style.backfaceVisibility = "hidden",
-			//	i.screen.style.webkitBackfaceVisibility = "hidden",
-			//	i.screen.style.MozBackfaceVisibility = "hidden",
 				i.screen.style.MozImageRendering = "optimizeSpeed",
 				i.screen.style.WebkitImageRendering = "optimizeSpeed",
 				"img" == e && (i.setWidth(i.screen.width), i.setHeight(i.screen.height))
 			},
-		//	i.setBackfaceVisibility = function() {
-		//		i.screen.style.backfaceVisibility = "visible",
-		//		i.screen.style.webkitBackfaceVisibility = "visible",
-		//		i.screen.style.MozBackfaceVisibility = "visible"
-		//	},
 			i.setSelectable = function(e) {
 				e || (i.screen.style.userSelect = "none",
 				      i.screen.style.MozUserSelect = "none",
@@ -6870,7 +6852,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 					-1 != e.skinPath_str.indexOf("hex_white") ? s.selectedButtonsColor_str = "#FFFFFF" : s.selectedButtonsColor_str = e.selectedButtonsColor_str,
 					s.hasTransform3d_bl = !1,
 					s.hasTransform2d_bl = !1,
-				//	s.setBackfaceVisibility(),
 					s.getStyle().msTouchAction = "none",
 					s.getStyle().webkitTapHighlightColor = "rgba(0, 0, 0, 0)",
 					s.setupStuff(),
@@ -6884,7 +6865,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 					s.mainHolder_do = new FWDMSPDisplayObject("div"),
 					s.mainHolder_do.hasTransform3d_bl = !1,
 					s.mainHolder_do.hasTransform2d_bl = !1,
-				//	s.mainHolder_do.setBackfaceVisibility(),
 					s.showOpenerPlayPauseButton_bl ? s.mainHolder_do.setWidth(s.totalWidth + s.openerPauseN_img.width + 1) : s.mainHolder_do.setWidth(s.totalWidth),
 					s.mainHolder_do.setHeight(s.totalHeight),
 					s.useHEXColorsForSkin_bl ? (s.openN_do = new FWDMSPDisplayObject("div"),
@@ -6917,7 +6897,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 						s.closeN_do.setHeight(s.closeN_img.height),
 						s.closeN_do.hasTransform3d_bl = !1,
 						s.closeN_do.hasTransform2d_bl = !1,
-					//	s.closeN_do.setBackfaceVisibility(),
 						s.closeS_img = new Image,
 						s.closeS_img.src = s.closeSPath_str,
 						s.useHEXColorsForSkin_bl ? (s.closeS_do = new FWDMSPDisplayObject("div"),
@@ -6945,7 +6924,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 						s.dumy_do.getStyle().zIndex = 2,
 						s.dumy_do.hasTransform3d_bl = !1,
 						s.dumy_do.hasTransform2d_bl = !1,
-					//	s.dumy_do.setBackfaceVisibility(),
 						s.dumy_do.setButtonMode(!0),
 						(FWDMSPUtils.isIE || FWDMSPUtils.isAndroid) && (s.dumy_do.setBkColor("#FF0000"), s.dumy_do.setAlpha(.01)),
 						s.isMobile_bl ? s.hasPointerEvent_bl
@@ -7091,11 +7069,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
       this.isShowed_bl = !1,
 			this.isMobile_bl = FWDMSPUtils.isMobile,
       this.init = function() {
-			//		o.setBackfaceVisibility(),
           o.mainHolder_do = new FWDMSPDisplayObject("div"),
           o.mainHolder_do.hasTransform3d_bl = !1,
           o.mainHolder_do.hasTransform2d_bl = !1,
-      //    o.mainHolder_do.setBackfaceVisibility(),
           o.bk_do = new FWDMSPDisplayObject("div"),
           o.bk_do.getStyle().width = "100%",
           o.bk_do.getStyle().height = "100%",
@@ -7209,11 +7185,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
       this.isShowed_bl = !1,
       this.isMobile_bl = FWDMSPUtils.isMobile,
       this.init = function() {
-			//		i.setBackfaceVisibility(),
           i.mainHolder_do = new FWDMSPDisplayObject("div"),
           i.mainHolder_do.hasTransform3d_bl = !1,
           i.mainHolder_do.hasTransform2d_bl = !1,
-        //  i.mainHolder_do.setBackfaceVisibility(),
           i.bk_do = new FWDMSPDisplayObject("div"),
           i.bk_do.getStyle().width = "100%",
           i.bk_do.getStyle().height = "100%",
@@ -7571,15 +7545,12 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
       b.init = function() {
 					if (b.hasTransform3d_bl = !1,
               b.hasTransform2d_bl = !1,
-          //    b.setBackfaceVisibility(),
               b.mainHolder_do = new FWDMSPDisplayObject("div"),
               b.mainHolder_do.hasTransform3d_bl = !1,
               b.mainHolder_do.hasTransform2d_bl = !1,
-          //    b.mainHolder_do.setBackfaceVisibility(),
               b.itemsHolder_do = new FWDMSPDisplayObject("div"),
               b.itemsHolder_do.setOverflow("visible"),
               b.itemsHolder_do.setY(0),
-        //      b.itemsHolder_do.setBackfaceVisibility(),
               b.setupSeparator(),
               b.itemsHolder_do.setY(0),
               b.mainHolder_do.addChild(b.itemsHolder_do),
@@ -7599,7 +7570,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             b.controllerBk_do.getStyle().background = "url('" + b.controllerBkPath_str + "')";
 						b.controllerBk_do.getStyle().width = "100%",
             b.searchSeparator_do = new FWDMSPDisplayObject("div"),
-          //  b.searchSeparator_do.setBackfaceVisibility(),
             b.searchSeparator_do.hasTransform3d_bl = !1,
             b.searchSeparator_do.hasTransform2d_bl = !1,
             b.searchSeparator_do.getStyle().background = "url('" + b.playlistSeparator_img.src + "')",
@@ -7982,7 +7952,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 				},
         this.setupSeparator = function() {
 					b.separator_do = new FWDMSPDisplayObject("div"),
-        //  b.separator_do.setBackfaceVisibility(),
           b.separator_do.hasTransform3d_bl = !1,
           b.separator_do.hasTransform2d_bl = !1,
           b.separator_do.getStyle().background = "url('" + b.playlistSeparator_img.src + "')",
@@ -8054,7 +8023,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
           b.scrHandlerLines_do = new FWDMSPDisplayObject("div"),
           b.scrHandlerLines_do.hasTransform3d_bl = !1,
           b.scrHandlerLines_do.hasTransform2d_bl = !1,
-        //  b.scrHandlerLines_do.setBackfaceVisibility(),
           b.scrHandlerLines_do.setWidth(b.scrHandlerLinesN_do.w),
           b.scrHandlerLines_do.setHeight(b.scrHandlerLinesN_do.h),
           b.scrHandlerLines_do.setButtonMode(!0),
@@ -8383,7 +8351,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 				},
         this.setupProgress = function() {
 					O.progress_do = new FWDMSPDisplayObject("div"),
-			//		O.progress_do.setBackfaceVisibility(),
 					O.progress_do.setHeight(a.height),
 					O.addChild(O.progress_do)
 				},
@@ -8450,7 +8417,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
           FWDMSPUtils.isApple && (O.titleText_do.hasTransform3d_bl = !1,
 						                      O.titleText_do.hasTransform2d_bl = !1),
 					O.titleText_do.setOverflow("visible"),
-				//	O.titleText_do.setBackfaceVisibility(),
 					O.titleText_do.getStyle().fontFamily = "Arial",
 					O.titleText_do.getStyle().fontSize = "12px",
 					O.titleText_do.getStyle().whiteSpace = "nowrap",
@@ -8471,7 +8437,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 					O.grad_do = new FWDMSPDisplayObject("div"),
           O.grad_do.setOverflow("visible"),
 					FWDMSPUtils.isApple && (O.grad_do.hasTransform3d_bl = !1, O.grad_do.hasTransform2d_bl = !1),
-      //    O.grad_do.setBackfaceVisibility(),
           O.grad_do.setHeight(O.itemHeight),
           O.addChild(O.grad_do)
 				},
@@ -8479,7 +8444,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 					O.durationText_do = new FWDMSPDisplayObject("div"),
           FWDMSPUtils.isApple && (O.durationText_do.hasTransform3d_bl = !1, O.durationText_do.hasTransform2d_bl = !1),
           O.durationText_do.setOverflow("visible"),
-      //    O.durationText_do.setBackfaceVisibility(),
 					O.durationText_do.getStyle().fontFamily = "Arial",
           O.durationText_do.getStyle().fontSize = "12px",
           O.durationText_do.getStyle().whiteSpace = "nowrap",
@@ -8674,10 +8638,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 					l.setVisible(!1),
 					l.dispatchEvent(r.HIDE_COMPLETE)
 				}, this.setForFixedPosition = function() {
-			//		l.setBackfaceVisibility(),
 					l.hasTransform3d_bl = !1,
 					l.hasTransform2d_bl = !1,
-			//		l.image_sdo.setBackfaceVisibility(),
 					l.image_sdo.hasTransform3d_bl = !1,
 					l.image_sdo.hasTransform2d_bl = !1
 				}, this.init()
@@ -8717,7 +8679,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
           n.text_do = new FWDMSPDisplayObject("div"),
           n.text_do.hasTransform3d_bl = !1,
           n.text_do.hasTransform2d_bl = !1,
-      //    n.text_do.setBackfaceVisibility(),
           n.text_do.setDisplay("inline-block"),
           n.text_do.getStyle().fontFamily = "Arial",
           n.text_do.getStyle().fontSize = "12px",
@@ -8796,11 +8757,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
       this.isShowed_bl = !1,
       this.isMobile_bl = FWDMSPUtils.isMobile,
       this.init = function() {
-				//	f.setBackfaceVisibility(),
           f.mainHolder_do = new FWDMSPDisplayObject("div"),
           f.mainHolder_do.hasTransform3d_bl = !1,
           f.mainHolder_do.hasTransform2d_bl = !1,
-      //    f.mainHolder_do.setBackfaceVisibility(),
           f.bk_do = new FWDMSPDisplayObject("div"),
           f.bk_do.getStyle().width = "100%",
           f.bk_do.getStyle().height = "100%",
@@ -9229,7 +9188,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 					r.text_do = new FWDMSPDisplayObject("div"),
           r.text_do.hasTransform3d_bl = !1,
           r.text_do.hasTransform2d_bl = !1,
-        //  r.text_do.setBackfaceVisibility(),
           r.text_do.setDisplay("inline"),
           r.text_do.getStyle().fontFamily = "Arial",
           r.text_do.getStyle().fontSize = "12px",
@@ -9354,9 +9312,6 @@ window.FWDMSPTransformDisplayObject = function(e, t, o, s) {
         this.screen.style.border = "none",
         this.screen.style.lineHeight = "1",
         this.screen.style.backgroundColor = "transparent",
-      //  this.screen.style.backfaceVisibility = "hidden",
-      //  this.screen.style.webkitBackfaceVisibility = "hidden",
-      //  this.screen.style.MozBackfaceVisibility = "hidden",
 				this.screen.style.MozImageRendering = "optimizeSpeed",
         this.screen.style.WebkitImageRendering = "optimizeSpeed",
         "img" == e && (this.setWidth(this.screen.width),
@@ -9365,16 +9320,6 @@ window.FWDMSPTransformDisplayObject = function(e, t, o, s) {
 						return !1
 					})
 			},
-    //  i.setBackfaceVisibility = function() {
-		//		i.screen.style.backfaceVisibility = "visible",
-    //    i.screen.style.webkitBackfaceVisibility = "visible",
-    //    i.screen.style.MozBackfaceVisibility = "visible"
-		//	},
-    //  i.removeBackfaceVisibility = function() {
-		//		i.screen.style.backfaceVisibility = "hidden",
-    //    i.screen.style.webkitBackfaceVisibility = "hidden",
-    //    i.screen.style.MozBackfaceVisibility = "hidden"
-		//	},
       this.setSelectable = function(e) {
 				if (!e) {
 					try {
