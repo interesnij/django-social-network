@@ -1888,14 +1888,10 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 																			 self.isIcecast_bl = !1,
 																			 self.atb_do && self.atb_do.hide(!0),
 																			 self.opener_do && self.opener_do.showPlayButton(),
-																			 self.largePlayButton_do && self.largePlayButton_do.hide(),
-																			 self.playlist_do && (self.playlist_do.setCurItemPlayState(),
-																			                      self.playlist_do.updateCurItemProgress(0)),
+																			 self.playlist_do && (self.playlist_do.setCurItemPlayState(), self.playlist_do.updateCurItemProgress(0)),
 																			 self.controller_do && self.controller_do.ttm && self.controller_do.ttm.hide(),
 																			 self.showCursor(),
-																			 self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS
-																			                                    || !self.videoScreen_do ? FWDMSP.hasHTML5Audio && self.audioScreen_do.stop()
-																																					                        : self.videoScreen_do.stop(),
+																			 self.audioType_str FWDMSP.hasHTML5Audio && self.audioScreen_do.stop()
 																				self.controller_do && self.controller_do.disableAtbButton(),
 																				self.setPlaybackRate(self.data.defaultPlaybackRate),
 																				self.hasHlsPlayedOnce_bl = !1,
@@ -2427,7 +2423,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 										self.separatorOffsetOutSpace = self.props_obj.separatorOffsetOutSpace || 0,
 										self.volumeScrubberWidth = self.props_obj.volumeScrubberWidth || 10,
 										200 < self.volumeScrubberWidth && (self.volumeScrubberWidth = 200),
-										self.privateVideoPassword_str = self.props_obj.privatePassword,
 										self.secondaryLabelsColor_str = self.props_obj.secondaryLabelsColor || "#FF0000",
 										self.mainLabelsColor_str = self.props_obj.mainLabelsColor || "#FF0000",
 										self.borderColor_str = self.props_obj.borderColor || "#FF0000",
@@ -2444,11 +2439,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 										self.shuffle_bl = "yes" == self.shuffle_bl,
 										self.useContinuousPlayback_bl = self.props_obj.useContinuousPlayback,
 										self.useContinuousPlayback_bl = "yes" == self.useContinuousPlayback_bl,
-										self.playVideoOnlyWhenLoggedIn_bl = self.props_obj.playTrackOnlyWhenLoggedIn,
-										self.playVideoOnlyWhenLoggedIn_bl = "yes" == self.playVideoOnlyWhenLoggedIn_bl,
 										self.isLoggedIn_bl = self.props_obj.isLoggedIn,
 										self.isLoggedIn_bl = "yes" == self.isLoggedIn_bl,
-										self.loggedInMessage_str = self.props_obj.loggedInMessage || "Only loggedin users can view this video",
 										self.useDeepLinking_bl = self.props_obj.useDeepLinking,
 										self.useDeepLinking_bl = "yes" == self.useDeepLinking_bl,
 										self.showSoundCloudUserNameInTitle_bl = self.props_obj.showSoundCloudUserNameInTitle,
@@ -2491,8 +2483,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 											self.showTracksNumbers_bl = "yes" == self.showTracksNumbers_bl,
 											self.disableScrubber_bl = self.props_obj.disableScrubber,
 											self.disableScrubber_bl = "yes" == self.disableScrubber_bl,
-											self.showVideoFullScreenButton_bl = self.props_obj.showFullScreenButton,
-											self.showVideoFullScreenButton_bl = "yes" == self.showVideoFullScreenButton_bl,
 											self.showPlaybackRateButton_bl = self.props_obj.showPlaybackRateButton,
 											self.showPlaybackRateButton_bl = "yes" == self.showPlaybackRateButton_bl,
 											self.playTrackAfterPlaylistLoad_bl = self.props_obj.playTrackAfterPlaylistLoad,
@@ -3226,9 +3216,28 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 						} else n = -1 != n.indexOf(";.mp3") || FWDMSPUtils.isURLEncoded(n) ? t.source.substr(t.source.lastIndexOf("/") + 1) : encodeURIComponent(t.source.substr(t.source.lastIndexOf("/") + 1)), t.source = i + n;
 						t.buy = o[s]["@attributes"]["data-track-id"], t.can_add = o[s]["@attributes"]["data-add"], null == t.buy && (t.buy = ""), t.thumbPath = o[s]["@attributes"]["data-thumbpath"];
 						var r = "";
-						if (self.showTracksNumbers_bl ? (s < 9 && (r = "0"), r = r + (s + 1) + ". ", t.title = r + o[s]["@attributes"]["data-title"]) : t.title = o[s]["@attributes"]
-							["data-title"], t.titleText = o[s]["@attributes"]["data-title"], t.duration = o[s]["@attributes"]["data-duration"], t.atb = o[s]
-							["@attributes"]["data-use-a-to-b"], t.isPrivate = o[s]["@attributes"]["data-is-private"], "yes" == t.isPrivate ? t.isPrivate = !0 : t.isPrivate = !1, t.privateVideoPassword_str = o[s]["@attributes"]["data-private-video-password"], t.startAtTime = o[s]["@attributes"]["data-start-at-time"], "00:00:00" != t.startAtTime && FWDMSPUtils.checkTime(t.startAtTime) || (t.startAtTime = void 0), t.stopAtTime = o[s]["@attributes"]["data-stop-at-time"], "00:00:00" != t.stopAtTime && FWDMSPUtils.checkTime(t.stopAtTime) || (t.stopAtTime = void 0), t.isShoutcast_bl = o[s]["@attributes"]["data-type"], t.isShoutcast_bl && (-1 != t.isShoutcast_bl.toLowerCase().indexOf("shoutcastv1") ? (t.shoutcastVersion = 1, t.isShoutcast_bl = !0) : -1 != t.isShoutcast_bl.toLowerCase().indexOf("shoutcastv2") ? (t.shoutcastVersion = 2, t.isShoutcast_bl = !0) : t.isShoutcast_bl = !1), t.isIcecast_bl = o[s]["@attributes"]["data-type"], t.isIcecast_bl && (-1 != t.isIcecast_bl.toLowerCase().indexOf("icecast") ? t.isIcecast_bl = !0 : t.isIcecast_bl = !1), self.playlist_ar[s] = t, s > self.maxPlaylistItems - 1) break
+						if (self.showTracksNumbers_bl ? (s < 9 && (r = "0"), r = r + (s + 1) + ". ", t.title = r + o[s]["@attributes"]["data-title"])
+						                              : t.title = o[s]["@attributes"]["data-title"],
+										t.titleText = o[s]["@attributes"]["data-title"],
+										t.duration = o[s]["@attributes"]["data-duration"],
+										t.atb = o[s]["@attributes"]["data-use-a-to-b"],
+										t.isPrivate = o[s]["@attributes"]["data-is-private"],
+										"yes" == t.isPrivate ? t.isPrivate = !0 : t.isPrivate = !1,
+										t.startAtTime = o[s]["@attributes"]["data-start-at-time"],
+										"00:00:00" != t.startAtTime
+						        && FWDMSPUtils.checkTime(t.startAtTime) || (t.startAtTime = void 0),
+										   t.stopAtTime = o[s]["@attributes"]["data-stop-at-time"],
+										   "00:00:00" != t.stopAtTime && FWDMSPUtils.checkTime(t.stopAtTime) || (t.stopAtTime = void 0),
+											 t.isShoutcast_bl = o[s]["@attributes"]["data-type"],
+											 t.isShoutcast_bl && (-1 != t.isShoutcast_bl.toLowerCase().indexOf("shoutcastv1") ? (t.shoutcastVersion = 1, t.isShoutcast_bl = !0)
+											                                                                                  : -1 != t.isShoutcast_bl.toLowerCase().indexOf("shoutcastv2")
+																																																				? (t.shoutcastVersion = 2, t.isShoutcast_bl = !0)
+																																																				: t.isShoutcast_bl = !1),
+											 t.isIcecast_bl = o[s]["@attributes"]["data-type"],
+											 t.isIcecast_bl && (-1 != t.isIcecast_bl.toLowerCase().indexOf("icecast") ? t.isIcecast_bl = !0 : t.isIcecast_bl = !1),
+											 self.playlist_ar[s] = t, s > self.maxPlaylistItems - 1
+								)
+									break
 					}
 					clearTimeout(self.dispatchPlaylistLoadCompleteWidthDelayId_to), self.dispatchPlaylistLoadCompleteWidthDelayId_to = setTimeout(function() {
 						self.dispatchEvent(FWDMSPAudioData.PLAYLIST_LOAD_COMPLETE)
@@ -4914,15 +4923,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 			this.isShowed_bl = _.showControllerByDefault_bl,
 			this.isMobile_bl = FWDMSPUtils.isMobile,
 			this.hasPointerEvent_bl = FWDMSPUtils.hasPointerEvent,
-			this.showVideoFullScreenButton_bl = _.showVideoFullScreenButton_bl,
 			p.init = function() {
 					var e;
-					p.videoControllerHolder_do = new FWDMSPDisplayObject("div"),
-					p.videoControllerBk_do = new FWDMSPDisplayObject("div"),
-					p.videoControllerBk_do.getStyle().background = "url('" + p.controllerBkPath_str + "')",
-					p.videoControllerBk_do.getStyle().width = "100%",
-					p.videoControllerBk_do.getStyle().height = "100%",
-					p.videoControllerHolder_do.addChild(p.videoControllerBk_do),
 					p.mainHolder_do = new FWDMSPDisplayObject("div"),
 					p.expandControllerBackground_bl ? (p.bk_do = new FWDMSPDisplayObject("img"),
 					p.bk_do.setScreen(p.controllerBk_img),

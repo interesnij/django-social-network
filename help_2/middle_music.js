@@ -1643,7 +1643,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 											self.stop(),
 											self.isShoutcast_bl = self.data.playlist_ar[self.id].isShoutcast_bl,
 											self.isIcecast_bl = self.data.playlist_ar[self.id].isIcecast_bl,
-											self.videoPosterPath = self.data.playlist_ar[self.id].videoPosterPath,
 											-1 != self.audioPath.indexOf("soundcloud.")
 											&&
 											-1 == self.audioPath.indexOf("https://api.soundcloud.") ? (self.data.getSoundcloudUrl(self.audioPath),
@@ -1869,19 +1868,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 									self.hasPassedPassowrd_bl = !0,
 										self.largePlayButton_do && self.largePlayButton_do.hide(),
 										FWDMSP.pauseAllAudio(self),
-										self.audioType_str != FWDMSP.VIDEO && self.audioType_str != FWDMSP.HLS
-										                                   || !self.videoScreen_do ? self.audioScreen_do && self.audioScreen_do.play()
-																											                         : self.audioType_str != FWDMSP.HLS_JS
-																											 || self.isHLSManifestReady_bl ? self.videoScreen_do && self.videoScreen_do.play()
-																											                         : (self.videoScreen_do.initVideo(),
-																																							    self.setupHLS(),
-																																									self.hlsJS.loadSource(self.audioPath),
-																																									self.hlsJS.attachMedia(self.videoScreen_do.video_el),
-																																									self.hlsJS.on(Hls.Events.MANIFEST_PARSED,
-																																										function(e) {
-																																											self.isHLSManifestReady_bl = !0,
-																																											self.audioType_str == FWDMSP.HLS_JS && self.play()
-																																										}))
+										self.audioScreen_do && self.audioScreen_do.play()
 								}
 							},
 							this.resume = function() {
@@ -2127,15 +2114,11 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 					return "probably" != e.canPlayType("audio/mpeg") && "maybe" != e.canPlayType("audio/mpeg") || (t += ".mp3"), "probably" != e.canPlayType("audio/ogg") && "maybe" != e.canPlayType("audio/ogg") || (t += ".ogg"), "probably" != e.canPlayType("audio/mp4") && "maybe" != e.canPlayType("audio/mp4") || (t += ".webm"), (o = t.split(".")).shift(), e = null, o
 				}
 			}(),
-			FWDMSP.hasHTMLHLS = (f$ = document.createElement("video"),
-			g$ = !1,
-			f$.canPlayType && (g$ = Boolean("probably" === f$.canPlayType("application/vnd.apple.mpegurl") || "maybe" === f$.canPlayType("application/vnd.apple.mpegurl"))), g$),
+
 			FWDMSP.instaces_ar = [],
 			FWDMSP.CENTER = "center",
 			FWDMSP.LEFT = "left",
 			FWDMSP.RIGHT = "right",
-			FWDMSP.YOUTUBE = "youtube",
-			FWDMSP.VIDEO = "video",
 			FWDMSP.AUDIO = "audio",
 			FWDMSP.POPUP = "popup",
 			FWDMSP.POSITION_TOP = "positionTop",
@@ -2152,7 +2135,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 			FWDMSP.ERROR = "error",
 			FWDMSP.PLAY_COMPLETE = "playComplete",
 			FWDMSP.PLAYLIST_LOAD_COMPLETE = "onPlayListLoadComplete",
-			FWDMSP.HLS = "hls_flash",
 			window.FWDMSP = FWDMSP
 	}(window),
 	function(window) {
@@ -2343,8 +2325,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 				self.parseProperties = function() {
 					if (this.addKeyboardSupport_bl = self.props_obj.addKeyboardSupport || "no",
 							this.addKeyboardSupport_bl = "yes" == self.addKeyboardSupport_bl,
-							this.useVideo_bl = self.props_obj.useVideo || "no",
-							this.useVideo_bl = "yes" == self.useVideo_bl,
 							self.useHEXColorsForSkin_bl = self.props_obj.useHEXColorsForSkin,
 							self.useHEXColorsForSkin_bl = "yes" == self.useHEXColorsForSkin_bl,
 							-1 != location.protocol.indexOf("file:") && (self.useHEXColorsForSkin_bl = !1),
