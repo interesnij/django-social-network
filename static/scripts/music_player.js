@@ -1386,7 +1386,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
                   self.controller_do.addListener(FWDMSPController.ENABLE_SHUFFLE, self.enableShuffleHandler),
                   self.controller_do.addListener(FWDMSPController.DISABLE_SHUFFLE, self.disableShuffleHandler),
                   self.controller_do.addListener(FWDMSPController.BUY, self.controllerButtonBuyHandler),
-									self.controller_do.addListener(FWDMSPController.FACEBOOK_SHARE, self.facebookShareHandler),
+									self.controller_do.addListener(FWDMSPController.REPOST, self.repostHandler),
                   self.controller_do.addListener(FWDMSPController.SHOW_PLAYBACKRATE, self.showPlaybacrateWindowHandler),
                   self.controller_do.addListener(FWDMSPController.SHOW_ATOB, self.showAtobWindowHandler),
                   self.main_do.addChild(self.controller_do),
@@ -1454,7 +1454,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
               this.disableShuffleHandler = function(e) {
 								self.data.shuffle_bl = !1, self.controller_do.setShuffleButtonState("unselected")
 							},
-              this.facebookShareHandler = function(e) {
+              this.repostHandler = function(e) {
 								console.log("Кнопка поделиться нажата!")
 							},
               this.showPlaybacrateWindowHandler = function(e) {
@@ -2154,7 +2154,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 			this.replayN_img = null,
 			this.playlistN_img = null,
 			this.shuffleN_img = null,
-			this.facebookN_img = null,
+			this.repostN_img = null,
 			this.titlebarAnimBkPath_img = null,
 			this.titlebarLeftPath_img = null,
 			this.titlebarRightPath_img = null,
@@ -2274,7 +2274,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 			this.showPlaylistsButtonAndPlaylists_bl = !1,
 			this.showPlaylistsByDefault_bl = !1,
 			this.showPlayListButtonAndPlaylist_bl = !1,
-			this.showFacebookButton_bl = !1,
+			this.showRepostButton_bl = !1,
 			this.showPopupButton_bl = !1,
 			this.animate_bl = !1,
 			this.showControllerByDefault_bl = !1,
@@ -2440,8 +2440,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 											self.randomizePlaylist_bl = "yes" == self.randomizePlaylist_bl,
 											self.showBuyButton_bl = self.props_obj.showBuyButton,
 											self.showBuyButton_bl = "no" != self.showBuyButton_bl,
-											self.showFacebookButton_bl = self.props_obj.showShareButton,
-											self.showFacebookButton_bl = "no" != self.showFacebookButton_bl,
+											self.showRepostButton_bl = self.props_obj.showRepostButton,
+											self.showRepostButton_bl = "no" != self.showRepostButton_bl,
 											self.showPopupButton_bl = self.props_obj.showPopupButton,
 											self.showPopupButton_bl = "no" != self.showPopupButton_bl,
 											self.showOpenerPlayPauseButton_bl = self.props_obj.showOpenerPlayPauseButton,
@@ -5077,7 +5077,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 			this.showPlaybackRateButton_bl = _.showPlaybackRateButton_bl,
 			this.showShuffleButton_bl = _.showShuffleButton_bl,
 			this.showPlayListButtonAndPlaylist_bl = _.showPlayListButtonAndPlaylist_bl,
-			this.showFacebookButton_bl = _.showFacebookButton_bl,
+			this.showRepostButton_bl = _.showRepostButton_bl,
 			this.showPopupButton_bl = _.showPopupButton_bl,
 			this.animateOnIntro_bl = _.animateOnIntro_bl,
 			this.showSoundAnimation_bl = _.showSoundAnimation_bl,
@@ -5117,7 +5117,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 					p.showShuffleButton_bl && p.setupShuffleButton(),
 					p.showPlaybackRateButton_bl && p.setupPlaybacRateButton(),
 					p.showBuyButton_bl && p.setupBuyButton(),
-					p.showFacebookButton_bl && p.setupFacebookButton(),
+					p.showRepostButton_bl && p.setupRepostButton(),
 					p.setupAtbButton(),
 					//p.showPopupButton_bl && p.setupPopupButton(),
 					p.isMobile_bl || p.setupDisable(),
@@ -5193,9 +5193,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 								- 1 != r && (p.buttons_ar.splice(r, 1), p.atbButton_do.setVisible(!1))
 							} if (p.showBuyButton_bl && _.playlist_ar[f.id])
 							if (_.playlist_ar[f.id].buy && f.isPlaylistLoaded_bl) - 1 == FWDMSPUtils.indexOfArray(p.buttons_ar, p.buyButton_do)
-							                                                      && (p.showFacebookButton_bl && p.showPopupButton_bl
+							                                                      && (p.showRepostButton_bl && p.showPopupButton_bl
 																																	  	? p.buttons_ar.splice(p.buttons_ar.length - 2, 0, p.buyButton_do)
-																																			: p.showFacebookButton_bl || p.showPopupButton_bl
+																																			: p.showRepostButton_bl || p.showPopupButton_bl
 																																			? p.buttons_ar.splice(p.buttons_ar.length - 1, 0, p.buyButton_do)
 																																			: p.buttons_ar.splice(p.buttons_ar.length, 0, p.buyButton_do),
 																																		p.buyButton_do.setVisible(!0));
@@ -6153,7 +6153,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 				this.setShuffleButtonState = function(e) {
 					p.shuffleButton_do && ("selected" == e ? p.shuffleButton_do.setSelected() : "unselected" == e && p.shuffleButton_do.setUnselected())
 				},
-				this.setupFacebookButton = function() {
+				this.setupRepostButton = function() {
 					FWDMSPSimpleButton.setPrototype(),
 					p.shareButton_do = new FWDMSPSimpleButton(p.shareN_img,
 						                                        _.shareSPath_str,
@@ -6163,13 +6163,13 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 																										_.normalButtonsColor_str,
 																										_.selectedButtonsColor_str),
 					p.shareButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP,
-						                           p.faceboolButtonOnMouseUpHandler),
+						                           p.repostButtonOnMouseUpHandler),
 																			 p.shareButton_do.setY(parseInt((p.stageHeight - p.shareButton_do.h) / 2)),
 																			 p.buttons_ar.push(p.shareButton_do),
 																			 p.mainHolder_do.addChild(p.shareButton_do)
 				},
-				this.faceboolButtonOnMouseUpHandler = function() {
-					p.dispatchEvent(n.FACEBOOK_SHARE)
+				this.repostButtonOnMouseUpHandler = function() {
+					p.dispatchEvent(n.REPOST)
 				},
 				this.setupPopupButton = function() {
 					FWDMSPSimpleButton.setPrototype(),
@@ -6250,7 +6250,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 				n.prototype = new FWDMSPDisplayObject("div")
 			},
 		n.SHOW_ATOB = "showAtob",
-		n.FACEBOOK_SHARE = "facebookShare",
+		n.REPOST = "repostShare",
 		n.SHOW_PLAYBACKRATE = "showPlaybackRate",
 		n.PLAY_NEXT = "playNext",
 		n.PLAY_PREV = "playPrev",

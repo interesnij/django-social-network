@@ -19,7 +19,6 @@ function msToTime(duration) {
 				showMainBackground:"yes",
 				verticalPosition:"bottom",
 				useDeepLinking:"no",
-				useYoutube:"no",
 				rightClickContextMenu:"developer",
 				addKeyboardSupport:"yes",
 				animate:"yes",

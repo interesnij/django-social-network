@@ -801,7 +801,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 								self.main_do = new FWDMSPDisplayObject("div"),
 								self.main_do.getStyle().msTouchAction = "none",
 								self.main_do.getStyle().webkitTapHighlightColor = "rgba(0, 0, 0, 0)",
-								self.main_do.setBackfaceVisibility(),
 								(!FWDMSPUtils.isMobile || FWDMSPUtils.isMobile && FWDMSPUtils.hasPointerEvent) && self.main_do.setSelectable(!1),
 								self.background_do && self.stageContainer.appendChild(self.background_do.screen),
 								self.stageContainer.appendChild(self.main_do.screen)
@@ -2220,7 +2219,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 			this.trackDurationColor_str = null,
 			this.categoriesId_str = null,
 			this.thumbnailSelectedType_str = null,
-			this.facebookAppId_str = null,
 			this.openerAlignment_str = null,
 			this.prevId = -1,
 			this.totalCats = 0,
@@ -2333,7 +2331,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 										}
 										self.playlistBackgroundColor_str = self.props_obj.playlistBackgroundColor || "transparent",
 										self.searchInputColor_str = self.props_obj.searchInputColor || "#FF0000",
-										self.facebookAppId_str = self.props_obj.facebookAppId || void 0,
 										self.openerAlignment_str = self.props_obj.openerAlignment || "right",
 										"right" != self.openerAlignment_str && "left" != self.openerAlignment_str && (self.openerAlignment_str = "right"),
 										self.totalCategories = self.cats_ar.length,
@@ -3654,10 +3651,22 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 				}, this.setupDumy = function() {
 					r.dumy_do = new FWDMSPDisplayObject("div"),
 						FWDMSPUtils.isIE && (r.dumy_do.setBkColor("#FFFFFF"), r.dumy_do.setAlpha(0)), r.addChild(r.dumy_do)
-				}, this.setupDescription = function() {
-					r.simpleText_do = new FWDMSPDisplayObject("div"), r.simpleText_do.getStyle().background = "url('" + r.catThumbTextBkPath_str + "')",
-						FWDMSPUtils.isFirefox && (r.simpleText_do.hasTransform3d_bl = !1, r.simpleText_do.hasTransform2d_bl = !1), r.simpleText_do.setBackfaceVisibility(), r.simpleText_do.getStyle().width = "100%", r.simpleText_do.getStyle().fontFamily = "Arial", r.simpleText_do.getStyle().fontSize = "12px", r.simpleText_do.getStyle().textAlign = "left", r.simpleText_do.getStyle().color = "#FFFFFF", r.simpleText_do.getStyle().fontSmoothing = "antialiased", r.simpleText_do.getStyle().webkitFontSmoothing = "antialiased",
-						r.simpleText_do.getStyle().textRendering = "optimizeLegibility", r.simpleText_do.setInnerHTML(r.htmlContent), r.addChild(r.simpleText_do)
+				},
+				this.setupDescription = function() {
+					r.simpleText_do = new FWDMSPDisplayObject("div"),
+					r.simpleText_do.getStyle().background = "url('" + r.catThumbTextBkPath_str + "')",
+					FWDMSPUtils.isFirefox && (r.simpleText_do.hasTransform3d_bl = !1,
+						                        r.simpleText_do.hasTransform2d_bl = !1),
+				  r.simpleText_do.getStyle().width = "100%",
+				  r.simpleText_do.getStyle().fontFamily = "Arial",
+				  r.simpleText_do.getStyle().fontSize = "12px",
+				  r.simpleText_do.getStyle().textAlign = "left",
+				  r.simpleText_do.getStyle().color = "#FFFFFF",
+				  r.simpleText_do.getStyle().fontSmoothing = "antialiased",
+				  r.simpleText_do.getStyle().webkitFontSmoothing = "antialiased",
+				  r.simpleText_do.getStyle().textRendering = "optimizeLegibility",
+				  r.simpleText_do.setInnerHTML(r.htmlContent),
+				  r.addChild(r.simpleText_do)
 				}, this.positionDescription = function() {
 					r.simpleText_do.setY(parseInt(r.finalH - r.simpleText_do.getHeight()))
 				}, this.setupBlackAndWhiteImage = function(e) {
@@ -3763,77 +3772,272 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 		var t = function(i, n) {
 			var l = this,
 				e = t.prototype;
-			this.categories_ar = n.categories_ar, this.buttons_ar = [], this.mainHolder_do = null, this.selector_do = null, this.mainButtonsHolder_do = null, this.buttonsHolder_do = null, this.arrowW = n.arrowW, this.arrowH = n.arrowH, l.useHEXColorsForSkin_bl = i.data.useHEXColorsForSkin_bl, l.normalButtonsColor_str = i.data.normalButtonsColor_str, l.selectedButtonsColor_str = i.data.selectedButtonsColor_str, this.arrowN_str = n.arrowN_str, this.arrowS_str = n.arrowS_str, this.bk1_str = n.bk1_str, this.bk2_str = n.bk2_str,
-				this.selectorLabel_str = n.selectorLabel, this.selectorBkColorN_str = n.selectorBackgroundNormalColor, this.selectorBkColorS_str = n.selectorBackgroundSelectedColor, this.selectorTextColorN_str = n.selectorTextNormalColor, this.selectorTextColorS_str = n.selectorTextSelectedColor, this.itemBkColorN_str = n.buttonBackgroundNormalColor,
-				this.itemBkColorS_str = n.buttonBackgroundSelectedColor, this.itemTextColorN_str = n.buttonTextNormalColor,
-				this.itemTextColorS_str = n.buttonTextSelectedColor, this.scrollBarHandlerFinalY = 0, this.finalX, this.finalY, this.totalButtons = l.categories_ar.length, this.curId = n.startAtPlaylist, this.buttonsHolderWidth = 0, this.buttonsHolderHeight = 0, this.totalWidth = i.stageWidth, this.buttonHeight = n.buttonHeight,
-				this.totalButtonsHeight = 0, this.sapaceBetweenButtons = 0, this.thumbnailsFinalY = 0, this.vy = 0, this.vy2 = 0, this.friction = .9,
-				this.hideMenuTimeOutId_to, this.getMaxWidthResizeAndPositionId_to, this.isShowed_bl = !1, this.addMouseWheelSupport_bl = i.data.addScrollBarMouseWheelSupport_bl, this.scollbarSpeedSensitivity = .5, this.isOpened_bl = !1, this.hasPointerEvent_bl = FWDMSPUtils.hasPointerEvent, this.isMobile_bl = FWDMSPUtils.isMobile, this.init = function() {
-					l.setOverflow("visible"), l.setupMainContainers(), l.setupScrollLogic(), l.getMaxWidthResizeAndPosition(), l.setupSeparator(), l.mainButtonsHolder_do.setVisible(!1), l.bk_do.setVisible(!1)
-				}, this.setupSeparator = function() {
-					l.separator_do = new FWDMSPDisplayObject("div"), l.separator_do.setBackfaceVisibility(), l.separator_do.hasTransform3d_bl = !1, l.separator_do.hasTransform2d_bl = !1, l.separator_do.getStyle().background = "url('" + i.playlistSeparator_img.src + "')", l.separator_do.setHeight(i.playlistSeparator_img.height), l.separator_do.setY(l.buttonHeight), l.addChild(l.separator_do)
-				}, this.setupMainContainers = function() {
+			this.categories_ar = n.categories_ar,
+			this.buttons_ar = [],
+			this.mainHolder_do = null,
+			this.selector_do = null,
+			this.mainButtonsHolder_do = null,
+			this.buttonsHolder_do = null,
+			this.arrowW = n.arrowW,
+			this.arrowH = n.arrowH,
+			l.useHEXColorsForSkin_bl = i.data.useHEXColorsForSkin_bl,
+			l.normalButtonsColor_str = i.data.normalButtonsColor_str,
+			l.selectedButtonsColor_str = i.data.selectedButtonsColor_str,
+			this.arrowN_str = n.arrowN_str,
+			this.arrowS_str = n.arrowS_str,
+			this.bk1_str = n.bk1_str,
+			this.bk2_str = n.bk2_str,
+			this.selectorLabel_str = n.selectorLabel,
+			this.selectorBkColorN_str = n.selectorBackgroundNormalColor,
+			this.selectorBkColorS_str = n.selectorBackgroundSelectedColor,
+			this.selectorTextColorN_str = n.selectorTextNormalColor,
+			this.selectorTextColorS_str = n.selectorTextSelectedColor,
+			this.itemBkColorN_str = n.buttonBackgroundNormalColor,
+			this.itemBkColorS_str = n.buttonBackgroundSelectedColor,
+			this.itemTextColorN_str = n.buttonTextNormalColor,
+			this.itemTextColorS_str = n.buttonTextSelectedColor,
+			this.scrollBarHandlerFinalY = 0,
+			this.finalX,
+			this.finalY,
+			this.totalButtons = l.categories_ar.length,
+			this.curId = n.startAtPlaylist,
+			this.buttonsHolderWidth = 0,
+			this.buttonsHolderHeight = 0,
+			this.totalWidth = i.stageWidth,
+			this.buttonHeight = n.buttonHeight,
+				this.totalButtonsHeight = 0,
+				this.sapaceBetweenButtons = 0,
+				this.thumbnailsFinalY = 0,
+				this.vy = 0,
+				this.vy2 = 0,
+				this.friction = .9,
+				this.hideMenuTimeOutId_to,
+				this.getMaxWidthResizeAndPositionId_to,
+				this.isShowed_bl = !1,
+				this.addMouseWheelSupport_bl = i.data.addScrollBarMouseWheelSupport_bl,
+				this.scollbarSpeedSensitivity = .5,
+				this.isOpened_bl = !1,
+				this.hasPointerEvent_bl = FWDMSPUtils.hasPointerEvent,
+				this.isMobile_bl = FWDMSPUtils.isMobile,
+				this.init = function() {
+					l.setOverflow("visible"),
+					l.setupMainContainers(),
+					l.setupScrollLogic(),
+					l.getMaxWidthResizeAndPosition(),
+					l.setupSeparator(),
+					l.mainButtonsHolder_do.setVisible(!1),
+					l.bk_do.setVisible(!1)
+				},
+				this.setupSeparator = function() {
+					l.separator_do = new FWDMSPDisplayObject("div"),
+					l.separator_do.hasTransform3d_bl = !1,
+					l.separator_do.hasTransform2d_bl = !1,
+					l.separator_do.getStyle().background = "url('" + i.playlistSeparator_img.src + "')",
+					l.separator_do.setHeight(i.playlistSeparator_img.height),
+					l.separator_do.setY(l.buttonHeight),
+					l.addChild(l.separator_do)
+				},
+				this.setupMainContainers = function() {
 					var e;
-					if (l.mainHolder_do = new FWDMSPDisplayObject("div"), l.mainHolder_do.setOverflow("visible"), l.addChild(l.mainHolder_do), l.bk_do = new FWDMSPDisplayObject("div"), l.bk_do.setY(l.buttonHeight), l.bk_do.setBkColor(i.playlistBackgroundColor_str), l.bk_do.setAlpha(0), l.mainHolder_do.addChild(l.bk_do), l.mainButtonsHolder_do = new FWDMSPDisplayObject("div"), l.mainButtonsHolder_do.setY(l.buttonHeight), l.mainHolder_do.addChild(l.mainButtonsHolder_do), i.expandPlaylistBackground_bl) {
-						l.dummyBk_do = new FWDMSPDisplayObject("img");
-						var t = new Image;
-						t.src = i.controllerBkPath_str, l.dummyBk_do.setScreen(t), l.dummyBk_do.getStyle().backgroundColor = "#000000"
-					} else l.dummyBk_do = new FWDMSPDisplayObject("div"), l.dummyBk_do.getStyle().background = "url('" + i.controllerBkPath_str + "')";
-					l.dummyBk_do.setHeight(l.buttonHeight), l.mainHolder_do.addChild(l.dummyBk_do), l.buttonsHolder_do = new FWDMSPDisplayObject("div"), l.mainButtonsHolder_do.addChild(l.buttonsHolder_do);
+					if (l.mainHolder_do = new FWDMSPDisplayObject("div"),
+					    l.mainHolder_do.setOverflow("visible"),
+							l.addChild(l.mainHolder_do),
+							l.bk_do = new FWDMSPDisplayObject("div"),
+							l.bk_do.setY(l.buttonHeight),
+							l.bk_do.setBkColor(i.playlistBackgroundColor_str),
+							l.bk_do.setAlpha(0),
+							l.mainHolder_do.addChild(l.bk_do),
+							l.mainButtonsHolder_do = new FWDMSPDisplayObject("div"),
+							l.mainButtonsHolder_do.setY(l.buttonHeight),
+							l.mainHolder_do.addChild(l.mainButtonsHolder_do),
+							i.expandPlaylistBackground_bl) {
+								l.dummyBk_do = new FWDMSPDisplayObject("img");
+								var t = new Image;
+								t.src = i.controllerBkPath_str,
+								l.dummyBk_do.setScreen(t),
+								l.dummyBk_do.getStyle().backgroundColor = "#000000"
+					}
+					else l.dummyBk_do = new FWDMSPDisplayObject("div"),
+					     l.dummyBk_do.getStyle().background = "url('" + i.controllerBkPath_str + "')";
+							 l.dummyBk_do.setHeight(l.buttonHeight),
+							 l.mainHolder_do.addChild(l.dummyBk_do),
+							 l.buttonsHolder_do = new FWDMSPDisplayObject("div"),
+							 l.mainButtonsHolder_do.addChild(l.buttonsHolder_do);
 					var o = l.selectorLabel_str;
 					"default" == l.selectorLabel_str && (o = l.categories_ar[l.curId]),
-						FWDMSPComboBoxSelector.setPrototype(), l.selector_do = new FWDMSPComboBoxSelector(11, 6, n.arrowN_str, n.arrowS_str, o, l.selectorBkColorN_str, l.selectorBkColorS_str, l.selectorTextColorN_str, l.selectorTextColorS_str, l.buttonHeight, l.useHEXColorsForSkin_bl, l.normalButtonsColor_str, l.selectedButtonsColor_str), l.mainHolder_do.addChild(l.selector_do), l.selector_do.setNormalState(!1), l.selector_do.addListener(FWDMSPComboBoxSelector.MOUSE_DOWN, l.openMenuHandler);
-					for (var s = 0; s < l.totalButtons; s++) FWDMSPComboBoxButton.setPrototype(), e = new FWDMSPComboBoxButton(l, l.categories_ar[s], l.bk1_str, l.bk2_str, l.itemBkColorN_str, l.itemBkColorS_str, l.itemTextColorN_str, l.itemTextColorS_str, s, l.buttonHeight), (l.buttons_ar[s] = e).addListener(FWDMSPComboBoxButton.MOUSE_DOWN, l.buttonOnMouseDownHandler), l.buttonsHolder_do.addChild(e)
-				}, this.buttonOnMouseDownHandler = function(e) {
-					l.curId = e.target.id, clearTimeout(l.hideMenuTimeOutId_to), l.hide(!1), l.selector_do.enable(), l.isMobile_bl ? l.hasPointerEvent_bl ? r.removeEventListener("MSPointerDown", l.checkOpenedMenu) : r.removeEventListener("touchstart", l.checkOpenedMenu) : r.addEventListener ? (r.removeEventListener("mousedown", l.checkOpenedMenu), r.removeEventListener("mousemove", l.checkOpenedMenu)) : document.attachEvent && document.detachEvent("onmousemove", l.checkOpenedMenu), i.data.showPlaylistsSelectBoxNumbers_bl ? l.selector_do.setText(l.buttons_ar[l.curId].label1_str.substr(4)) : l.selector_do.setText(l.buttons_ar[l.curId].label1_str), l.isButtonCliecked_bl = !0,
+					FWDMSPComboBoxSelector.setPrototype(),
+					l.selector_do = new FWDMSPComboBoxSelector(11, 6, n.arrowN_str,
+						                                         n.arrowS_str, o,
+																										 l.selectorBkColorN_str,
+																										 l.selectorBkColorS_str,
+																										 l.selectorTextColorN_str,
+																										 l.selectorTextColorS_str,
+																										 l.buttonHeight,
+																										 l.useHEXColorsForSkin_bl,
+																										 l.normalButtonsColor_str,
+																										 l.selectedButtonsColor_str),
+					l.mainHolder_do.addChild(l.selector_do),
+					l.selector_do.setNormalState(!1),
+					l.selector_do.addListener(FWDMSPComboBoxSelector.MOUSE_DOWN, l.openMenuHandler);
+					for (var s = 0; s < l.totalButtons; s++)
+					   FWDMSPComboBoxButton.setPrototype(),
+						 e = new FWDMSPComboBoxButton(l, l.categories_ar[s],
+							                            l.bk1_str,
+																					l.bk2_str,
+																					l.itemBkColorN_str,
+																					l.itemBkColorS_str,
+																					l.itemTextColorN_str,
+																					l.itemTextColorS_str, s,
+																					l.buttonHeight),
+						(l.buttons_ar[s] = e).addListener(FWDMSPComboBoxButton.MOUSE_DOWN,
+							                                l.buttonOnMouseDownHandler),
+																							l.buttonsHolder_do.addChild(e)
+				},
+				this.buttonOnMouseDownHandler = function(e) {
+					l.curId = e.target.id,
+					clearTimeout(l.hideMenuTimeOutId_to),
+					l.hide(!1),
+					l.selector_do.enable(),
+					l.isMobile_bl ? l.hasPointerEvent_bl
+					                 ? r.removeEventListener("MSPointerDown", l.checkOpenedMenu)
+													 : r.removeEventListener("touchstart", l.checkOpenedMenu)
+												: r.addEventListener
+												   ? (r.removeEventListener("mousedown", l.checkOpenedMenu),
+													    r.removeEventListener("mousemove", l.checkOpenedMenu))
+													 : document.attachEvent && document.detachEvent("onmousemove", l.checkOpenedMenu),
+													   i.data.showPlaylistsSelectBoxNumbers_bl ? l.selector_do.setText(l.buttons_ar[l.curId].label1_str.substr(4))
+														                                         : l.selector_do.setText(l.buttons_ar[l.curId].label1_str),
+													 l.isButtonCliecked_bl = !0,
 						l.dispatchEvent(t.BUTTON_PRESSED, {
 							id: l.curId
 						})
-				}, this.openMenuHandler = function(e) {
-					FWDAnimation.isTweening(l.mainButtonsHolder_do) || (l.isShowed_bl ? l.checkOpenedMenu(e.e, !0) : (l.selector_do.disable(), l.show(!0), l.startToCheckOpenedMenu(), l.dispatchEvent(t.OPEN)))
-				}, this.setButtonsStateBasedOnId = function(e) {
+				},
+				this.openMenuHandler = function(e) {
+					FWDAnimation.isTweening(l.mainButtonsHolder_do) || (l.isShowed_bl ? l.checkOpenedMenu(e.e, !0)
+					                                                                  : (l.selector_do.disable(),
+																																						   l.show(!0),
+																																							 l.startToCheckOpenedMenu(),
+																																							 l.dispatchEvent(t.OPEN)))
+				},
+				this.setButtonsStateBasedOnId = function(e) {
 					l.curId = e;
-					for (var t = 0; t < l.totalButtons; t++) button_do = l.buttons_ar[t], t == l.curId ? button_do.disable() : button_do.enable();
-					i.data.showPlaylistsSelectBoxNumbers_bl ? l.selector_do.setText(l.buttons_ar[l.curId].label1_str.substr(4)) : l.selector_do.setText(l.buttons_ar[l.curId].label1_str), l.scrHandler_do ? (l.updateScrollBarSizeActiveAndDeactivate(), l.updateScrollBarHandlerAndContent(!1, !0)) : l.thumbnailsFinalY = 0
-				}, this.setValue = function(e) {
-					l.curId = e, l.setButtonsStateBasedOnId()
-				}, this.startToCheckOpenedMenu = function(e) {
+					for (var t = 0; t < l.totalButtons; t++)
+					   button_do = l.buttons_ar[t],
+						 t == l.curId ? button_do.disable() : button_do.enable();
+						i.data.showPlaylistsSelectBoxNumbers_bl ? l.selector_do.setText(l.buttons_ar[l.curId].label1_str.substr(4))
+						                                        : l.selector_do.setText(l.buttons_ar[l.curId].label1_str),
+																										  l.scrHandler_do ? (l.updateScrollBarSizeActiveAndDeactivate(), l.updateScrollBarHandlerAndContent(!1, !0))
+																											                : l.thumbnailsFinalY = 0
+				},
+				this.setValue = function(e) {
+					l.curId = e,
+					l.setButtonsStateBasedOnId()
+				},
+				this.startToCheckOpenedMenu = function(e) {
 					l.isMobile_bl ? l.hasPointerEvent_bl ? r.addEventListener("MSPointerDown", l.checkOpenedMenu) : r.addEventListener("touchstart", l.checkOpenedMenu) : r.addEventListener ? r.addEventListener("mousedown", l.checkOpenedMenu) : document.attachEvent && document.attachEvent("onmousemove", l.checkOpenedMenu)
-				}, this.checkOpenedMenu = function(e, t) {
+				},
+				this.checkOpenedMenu = function(e, t) {
 					e.preventDefault && e.preventDefault();
 					var o = FWDMSPUtils.getViewportMouseCoordinates(e),
 						s = 1e3;
-					"mousedown" == e.type && (s = 0), !FWDMSPUtils.hitTest(l.screen, o.screenX, o.screenY) && !FWDMSPUtils.hitTest(l.mainButtonsHolder_do.screen, o.screenX, o.screenY) || t ? (l.isMobile_bl ? (l.hide(!0), l.selector_do.enable()) : (clearTimeout(l.hideMenuTimeOutId_to), l.hideMenuTimeOutId_to = setTimeout(function() {
-						l.hide(!0), l.selector_do.enable()
-					}, s)), l.isMobile_bl ? l.hasPointerEvent_bl ? r.removeEventListener("MSPointerDown", l.checkOpenedMenu) : r.removeEventListener("touchstart", l.checkOpenedMenu) : r.addEventListener ? (r.removeEventListener("mousemove", l.checkOpenedMenu), r.removeEventListener("mousedown", l.checkOpenedMenu)) : document.attachEvent && document.detachEvent("onmousemove", l.checkOpenedMenu)) : clearTimeout(l.hideMenuTimeOutId_to)
-				}, l.getMaxWidthResizeAndPosition = function() {
-					for (var e, t = l.totalButtonsHeight = 0; t < l.totalButtons; t++)(e = l.buttons_ar[t]).setY(1 + t * (e.totalHeight + l.sapaceBetweenButtons)), l.allowToScrollAndScrollBarIsActive_bl && !l.isMobile_bl ? l.totalWidth = i.stageWidth - 6 : l.totalWidth = i.stageWidth, e.totalWidth = l.totalWidth,
-						e.setWidth(l.totalWidth), e.centerText();
-					l.totalButtonsHeight = e.getY() + e.totalHeight - l.sapaceBetweenButtons, l.dummyBk_do.setWidth(l.totalWidth + 6), l.setWidth(l.totalWidth), l.setHeight(l.buttonHeight), l.selector_do.totalWidth = l.totalWidth + 6, l.selector_do.setWidth(l.totalWidth + 6), l.selector_do.centerText(), l.buttonsHolder_do.setWidth(l.totalWidth),
-						l.buttonsHolder_do.setHeight(l.totalButtonsHeight)
-				}, this.position = function() {
-					FWDMSPUtils.isAndroid ? (l.setX(Math.floor(l.finalX)), l.setY(Math.floor(l.finalY - 1)), setTimeout(l.poscombo - box, 100)) : (l.poscombo, box())
-				}, this.resizeAndPosition = function() {
-					l.stageWidth = i.stageWidth, l.stageHeight = i.stageHeight, l.bk_do.setWidth(l.stageWidth), l.bk_do.setHeight(l.stageHeight), l.mainButtonsHolder_do.setWidth(l.stageWidth), l.mainButtonsHolder_do.setHeight(l.stageHeight), l.totalButtonsHeight > l.mainButtonsHolder_do.h ? l.allowToScrollAndScrollBarIsActive_bl = !0 : l.allowToScrollAndScrollBarIsActive_bl = !1, !l.allowToScrollAndScrollBarIsActive_bl && l.scrMainHolder_do ? l.scrMainHolder_do.setVisible(!1) : l.allowToScrollAndScrollBarIsActive_bl && l.scrMainHolder_do && l.isShowed_bl && l.scrMainHolder_do.setVisible(!0), l.separator_do.setWidth(l.stageWidth), l.scrHandler_do && l.updateScrollBarSizeActiveAndDeactivate(),
-						this.getMaxWidthResizeAndPosition(), l.updateScrollBarHandlerAndContent()
-				}, this.hide = function(e, t) {
-					(l.isShowed_bl || t) && (FWDAnimation.killTweensOf(this), l.isShowed_bl = !1, FWDAnimation.killTweensOf(l.mainButtonsHolder_do), FWDAnimation.killTweensOf(l.bk_do), e ? (FWDAnimation.to(l.mainButtonsHolder_do, .8, {
-						y: -l.totalButtonsHeight,
-						ease: Expo.easeInOut,
-						onComplete: l.hideComplete
-					}), FWDAnimation.to(l.bk_do, .8, {
-						alpha: 0
-					})) : (l.bk_do.setVisible(!1), l.mainButtonsHolder_do.setY(l.buttonHeight - l.totalButtonsHeight), l.bk_do.setAlpha(0), l.setHeight(l.buttonHeight), l.hideComplete()))
-				}, this.hideComplete = function() {
-					l.mainButtonsHolder_do.setVisible(!1), l.bk_do.setVisible(!1)
-				}, this.show = function(e, t) {
-					l.isShowed_bl && !t || (FWDAnimation.killTweensOf(this), l.mainButtonsHolder_do.setY(-l.totalButtonsHeight), l.isShowed_bl = !0, l.mainButtonsHolder_do.setVisible(!0), l.bk_do.setVisible(!0), l.resizeAndPosition(), FWDAnimation.killTweensOf(l.mainButtonsHolder_do), FWDAnimation.killTweensOf(l.bk_do), l.scrMainHolder_do && l.allowToScrollAndScrollBarIsActive_bl && l.scrMainHolder_do.setVisible(!0), e ? (FWDAnimation.to(l.bk_do, .8, {
-						alpha: 1
-					}), FWDAnimation.to(l.mainButtonsHolder_do, .8, {
-						y: l.buttonHeight,
-						ease: Expo.easeInOut
-					})) : (l.bk_do.setAlpha(1), l.mainButtonsHolder_do.setY(l.buttonHeight)))
-				}, this.setupScrollLogic = function() {
+					"mousedown" == e.type && (s = 0),
+					!FWDMSPUtils.hitTest(l.screen, o.screenX, o.screenY) && !FWDMSPUtils.hitTest(l.mainButtonsHolder_do.screen, o.screenX, o.screenY) || t ? (l.isMobile_bl
+						                                                                                                                                          ? (l.hide(!0),
+																																																																											   l.selector_do.enable())
+																																																																											: (clearTimeout(l.hideMenuTimeOutId_to),
+																																																																											  l.hideMenuTimeOutId_to = setTimeout(function() {
+																																																																													l.hide(!0), l.selector_do.enable()
+																																																																												}, s)),
+																																																																										l.isMobile_bl ? l.hasPointerEvent_bl
+																																																																										                ? r.removeEventListener("MSPointerDown", l.checkOpenedMenu)
+																																																																																		: r.removeEventListener("touchstart", l.checkOpenedMenu)
+																																																																																	: r.addEventListener
+																																																																																	  ? (r.removeEventListener("mousemove", l.checkOpenedMenu),
+																																																																																		   r.removeEventListener("mousedown", l.checkOpenedMenu))
+																																																																																		: document.attachEvent && document.detachEvent("onmousemove", l.checkOpenedMenu))
+																																																																	               : clearTimeout(l.hideMenuTimeOutId_to)
+				},
+				l.getMaxWidthResizeAndPosition = function() {
+					for (var e, t = l.totalButtonsHeight = 0;
+						   t < l.totalButtons; t++)
+						 (e = l.buttons_ar[t]).setY(1 + t * (e.totalHeight + l.sapaceBetweenButtons)),
+						 l.allowToScrollAndScrollBarIsActive_bl && !l.isMobile_bl ? l.totalWidth = i.stageWidth - 6
+						 																													: l.totalWidth = i.stageWidth,
+																																			  e.totalWidth = l.totalWidth,
+																																				e.setWidth(l.totalWidth),
+																																				e.centerText();
+					l.totalButtonsHeight = e.getY() + e.totalHeight - l.sapaceBetweenButtons,
+					l.dummyBk_do.setWidth(l.totalWidth + 6),
+					l.setWidth(l.totalWidth),
+					l.setHeight(l.buttonHeight),
+					l.selector_do.totalWidth = l.totalWidth + 6,
+					l.selector_do.setWidth(l.totalWidth + 6),
+					l.selector_do.centerText(),
+					l.buttonsHolder_do.setWidth(l.totalWidth),
+					l.buttonsHolder_do.setHeight(l.totalButtonsHeight)
+				},
+				this.position = function() {
+					FWDMSPUtils.isAndroid ? (l.setX(Math.floor(l.finalX)),
+					                         l.setY(Math.floor(l.finalY - 1)),
+																	 setTimeout(l.poscombo - box, 100))
+																: (l.poscombo, box())
+				},
+				this.resizeAndPosition = function() {
+					l.stageWidth = i.stageWidth,
+					l.stageHeight = i.stageHeight,
+					l.bk_do.setWidth(l.stageWidth),
+					l.bk_do.setHeight(l.stageHeight),
+					l.mainButtonsHolder_do.setWidth(l.stageWidth),
+					l.mainButtonsHolder_do.setHeight(l.stageHeight),
+					l.totalButtonsHeight > l.mainButtonsHolder_do.h ? l.allowToScrollAndScrollBarIsActive_bl = !0
+					                                                : l.allowToScrollAndScrollBarIsActive_bl = !1,
+					!l.allowToScrollAndScrollBarIsActive_bl && l.scrMainHolder_do ? l.scrMainHolder_do.setVisible(!1)
+					                                                              : l.allowToScrollAndScrollBarIsActive_bl && l.scrMainHolder_do && l.isShowed_bl && l.scrMainHolder_do.setVisible(!0),
+																																				  l.separator_do.setWidth(l.stageWidth),
+																																					l.scrHandler_do && l.updateScrollBarSizeActiveAndDeactivate(),
+																																					this.getMaxWidthResizeAndPosition(),
+																																					l.updateScrollBarHandlerAndContent()
+				},
+				this.hide = function(e, t) {
+					(l.isShowed_bl || t) && (FWDAnimation.killTweensOf(this),
+					                         l.isShowed_bl = !1,
+																	 FWDAnimation.killTweensOf(l.mainButtonsHolder_do),
+																	 FWDAnimation.killTweensOf(l.bk_do), e ? (FWDAnimation.to(l.mainButtonsHolder_do, .8, {
+																		 																					y: -l.totalButtonsHeight,
+																																							ease: Expo.easeInOut,
+																																							onComplete: l.hideComplete
+																																						}), FWDAnimation.to(l.bk_do, .8, {
+																																							alpha: 0
+																																						}))
+																																					: (l.bk_do.setVisible(!1),
+																																					   l.mainButtonsHolder_do.setY(l.buttonHeight - l.totalButtonsHeight),
+																																						 l.bk_do.setAlpha(0),
+																																						 l.setHeight(l.buttonHeight),
+																																						 l.hideComplete()))
+				},
+				this.hideComplete = function() {
+					l.mainButtonsHolder_do.setVisible(!1),
+					l.bk_do.setVisible(!1)
+				},
+				this.show = function(e, t) {
+					l.isShowed_bl && !t || (FWDAnimation.killTweensOf(this),
+					                        l.mainButtonsHolder_do.setY(-l.totalButtonsHeight),
+																	l.isShowed_bl = !0,
+																	l.mainButtonsHolder_do.setVisible(!0),
+																	l.bk_do.setVisible(!0),
+																	l.resizeAndPosition(),
+																	FWDAnimation.killTweensOf(l.mainButtonsHolder_do),
+																	FWDAnimation.killTweensOf(l.bk_do),
+																	l.scrMainHolder_do && l.allowToScrollAndScrollBarIsActive_bl && l.scrMainHolder_do.setVisible(!0),
+																	e ? (FWDAnimation.to(l.bk_do, .8, {
+																			alpha: 1
+																			}), FWDAnimation.to(l.mainButtonsHolder_do, .8, {
+																				y: l.buttonHeight,
+																				ease: Expo.easeInOut
+																			}))
+																		: (l.bk_do.setAlpha(1), l.mainButtonsHolder_do.setY(l.buttonHeight)))
+				},
+				this.setupScrollLogic = function() {
 					l.isMobile_bl ? l.setupMobileScrollbar() : (l.setupScrollbar(), l.addMouseWheelSupport_bl && l.addMouseWheelSupport())
 				}, this.setupMobileScrollbar = function() {
 					l.hasPointerEvent_bl ? l.mainButtonsHolder_do.screen.addEventListener("pointerdown", l.scrollBarTouchStartHandler) : l.mainButtonsHolder_do.screen.addEventListener("touchstart", l.scrollBarTouchStartHandler), l.mainButtonsHolder_do.screen.addEventListener("mousedown", l.scrollBarTouchStartHandler), l.updateMobileScrollBarId_int = setInterval(l.updateMobileScrollBar, 16)
@@ -4000,7 +4204,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 			this.isMobile_bl = FWDMSPUtils.isMobile,
 			this.isDisabled_bl = !1,
 			u.init = function() {
-					u.setBackfaceVisibility(),
 					u.setButtonMode(!0),
 					u.setupMainContainers(),
 					u.setWidth(u.totalWidth),
@@ -4014,7 +4217,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 					u.addChild(u.bk_sdo),
 					u.text_sdo = new FWDMSPDisplayObject("div"),
 					u.text_sdo.getStyle().whiteSpace = "nowrap",
-					u.text_sdo.setBackfaceVisibility(),
 					u.text_sdo.setOverflow("visible"),
 					u.text_sdo.setDisplay("inline-block"),
 					u.text_sdo.getStyle().fontFamily = "Arial",
@@ -4173,7 +4375,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 			this.isMobile_bl = FWDMSPUtils.isMobile,
 			this.isDisabled_bl = !1,
 			_.init = function() {
-					_.setBackfaceVisibility(),
 					_.setButtonMode(!0),
 					_.setupMainContainers(),
 					_.setWidth(_.totalWidth),
@@ -4185,7 +4386,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 					_.addChild(_.bk_sdo),
 					_.text_sdo = new FWDMSPDisplayObject("div"),
 					_.text_sdo.getStyle().whiteSpace = "nowrap",
-					_.text_sdo.setBackfaceVisibility(),
 					_.text_sdo.setOverflow("visible"),
 					_.text_sdo.setDisplay("inline-block"),
 					_.text_sdo.getStyle().fontFamily = "Arial",
@@ -5338,7 +5538,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 					p.simpleText_do.setOverflow("visible"),
 					p.simpleText_do.hasTransform3d_bl = !1,
 					p.simpleText_do.hasTransform2d_bl = !1,
-					p.simpleText_do.setBackfaceVisibility(),
 					p.simpleText_do.getStyle().fontFamily = "Arial",
 					p.simpleText_do.getStyle().fontSize = "12px",
 					p.simpleText_do.getStyle().whiteSpace = "nowrap",
@@ -5351,7 +5550,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 					p.animText1_do.setOverflow("visible"),
 					p.animText1_do.hasTransform3d_bl = !1,
 					p.animText1_do.hasTransform2d_bl = !1,
-					p.animText1_do.setBackfaceVisibility(),
 					p.animText1_do.getStyle().fontFamily = "Arial",
 					p.animText1_do.getStyle().fontSize = "12px",
 					p.animText1_do.getStyle().whiteSpace = "nowrap",
@@ -5364,7 +5562,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 					p.animText2_do.setOverflow("visible"),
 					p.animText2_do.hasTransform3d_bl = !1,
 					p.animText2_do.hasTransform2d_bl = !1,
-					p.animText2_do.setBackfaceVisibility(),
 					p.animText2_do.getStyle().fontFamily = "Arial",
 					p.animText2_do.getStyle().fontSize = "12px",
 					p.animText2_do.getStyle().whiteSpace = "nowrap",
@@ -6137,17 +6334,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 				i.screen.style.border = "none",
 				i.screen.style.lineHeight = "1",
 				i.screen.style.backgroundColor = "transparent",
-				i.screen.style.backfaceVisibility = "hidden",
-				i.screen.style.webkitBackfaceVisibility = "hidden",
-				i.screen.style.MozBackfaceVisibility = "hidden",
 				i.screen.style.MozImageRendering = "optimizeSpeed",
 				i.screen.style.WebkitImageRendering = "optimizeSpeed",
 				"img" == e && (i.setWidth(i.screen.width), i.setHeight(i.screen.height))
-			},
-			i.setBackfaceVisibility = function() {
-				i.screen.style.backfaceVisibility = "visible",
-				i.screen.style.webkitBackfaceVisibility = "visible",
-				i.screen.style.MozBackfaceVisibility = "visible"
 			},
 			i.setSelectable = function(e) {
 				e || (i.screen.style.userSelect = "none",
@@ -6663,7 +6852,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 					-1 != e.skinPath_str.indexOf("hex_white") ? s.selectedButtonsColor_str = "#FFFFFF" : s.selectedButtonsColor_str = e.selectedButtonsColor_str,
 					s.hasTransform3d_bl = !1,
 					s.hasTransform2d_bl = !1,
-					s.setBackfaceVisibility(),
 					s.getStyle().msTouchAction = "none",
 					s.getStyle().webkitTapHighlightColor = "rgba(0, 0, 0, 0)",
 					s.setupStuff(),
@@ -6677,7 +6865,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 					s.mainHolder_do = new FWDMSPDisplayObject("div"),
 					s.mainHolder_do.hasTransform3d_bl = !1,
 					s.mainHolder_do.hasTransform2d_bl = !1,
-					s.mainHolder_do.setBackfaceVisibility(),
 					s.showOpenerPlayPauseButton_bl ? s.mainHolder_do.setWidth(s.totalWidth + s.openerPauseN_img.width + 1) : s.mainHolder_do.setWidth(s.totalWidth),
 					s.mainHolder_do.setHeight(s.totalHeight),
 					s.useHEXColorsForSkin_bl ? (s.openN_do = new FWDMSPDisplayObject("div"),
@@ -6710,7 +6897,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 						s.closeN_do.setHeight(s.closeN_img.height),
 						s.closeN_do.hasTransform3d_bl = !1,
 						s.closeN_do.hasTransform2d_bl = !1,
-						s.closeN_do.setBackfaceVisibility(),
 						s.closeS_img = new Image,
 						s.closeS_img.src = s.closeSPath_str,
 						s.useHEXColorsForSkin_bl ? (s.closeS_do = new FWDMSPDisplayObject("div"),
@@ -6738,7 +6924,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 						s.dumy_do.getStyle().zIndex = 2,
 						s.dumy_do.hasTransform3d_bl = !1,
 						s.dumy_do.hasTransform2d_bl = !1,
-						s.dumy_do.setBackfaceVisibility(),
 						s.dumy_do.setButtonMode(!0),
 						(FWDMSPUtils.isIE || FWDMSPUtils.isAndroid) && (s.dumy_do.setBkColor("#FF0000"), s.dumy_do.setAlpha(.01)),
 						s.isMobile_bl ? s.hasPointerEvent_bl
@@ -6884,11 +7069,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
       this.isShowed_bl = !1,
 			this.isMobile_bl = FWDMSPUtils.isMobile,
       this.init = function() {
-					o.setBackfaceVisibility(),
           o.mainHolder_do = new FWDMSPDisplayObject("div"),
           o.mainHolder_do.hasTransform3d_bl = !1,
           o.mainHolder_do.hasTransform2d_bl = !1,
-          o.mainHolder_do.setBackfaceVisibility(),
           o.bk_do = new FWDMSPDisplayObject("div"),
           o.bk_do.getStyle().width = "100%",
           o.bk_do.getStyle().height = "100%",
@@ -7002,11 +7185,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
       this.isShowed_bl = !1,
       this.isMobile_bl = FWDMSPUtils.isMobile,
       this.init = function() {
-					i.setBackfaceVisibility(),
           i.mainHolder_do = new FWDMSPDisplayObject("div"),
           i.mainHolder_do.hasTransform3d_bl = !1,
           i.mainHolder_do.hasTransform2d_bl = !1,
-          i.mainHolder_do.setBackfaceVisibility(),
           i.bk_do = new FWDMSPDisplayObject("div"),
           i.bk_do.getStyle().width = "100%",
           i.bk_do.getStyle().height = "100%",
@@ -7364,15 +7545,12 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
       b.init = function() {
 					if (b.hasTransform3d_bl = !1,
               b.hasTransform2d_bl = !1,
-              b.setBackfaceVisibility(),
               b.mainHolder_do = new FWDMSPDisplayObject("div"),
               b.mainHolder_do.hasTransform3d_bl = !1,
               b.mainHolder_do.hasTransform2d_bl = !1,
-              b.mainHolder_do.setBackfaceVisibility(),
               b.itemsHolder_do = new FWDMSPDisplayObject("div"),
               b.itemsHolder_do.setOverflow("visible"),
               b.itemsHolder_do.setY(0),
-              b.itemsHolder_do.setBackfaceVisibility(),
               b.setupSeparator(),
               b.itemsHolder_do.setY(0),
               b.mainHolder_do.addChild(b.itemsHolder_do),
@@ -7392,7 +7570,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
             b.controllerBk_do.getStyle().background = "url('" + b.controllerBkPath_str + "')";
 						b.controllerBk_do.getStyle().width = "100%",
             b.searchSeparator_do = new FWDMSPDisplayObject("div"),
-            b.searchSeparator_do.setBackfaceVisibility(),
             b.searchSeparator_do.hasTransform3d_bl = !1,
             b.searchSeparator_do.hasTransform2d_bl = !1,
             b.searchSeparator_do.getStyle().background = "url('" + b.playlistSeparator_img.src + "')",
@@ -7775,7 +7952,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 				},
         this.setupSeparator = function() {
 					b.separator_do = new FWDMSPDisplayObject("div"),
-          b.separator_do.setBackfaceVisibility(),
           b.separator_do.hasTransform3d_bl = !1,
           b.separator_do.hasTransform2d_bl = !1,
           b.separator_do.getStyle().background = "url('" + b.playlistSeparator_img.src + "')",
@@ -7847,7 +8023,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
           b.scrHandlerLines_do = new FWDMSPDisplayObject("div"),
           b.scrHandlerLines_do.hasTransform3d_bl = !1,
           b.scrHandlerLines_do.hasTransform2d_bl = !1,
-          b.scrHandlerLines_do.setBackfaceVisibility(),
           b.scrHandlerLines_do.setWidth(b.scrHandlerLinesN_do.w),
           b.scrHandlerLines_do.setHeight(b.scrHandlerLinesN_do.h),
           b.scrHandlerLines_do.setButtonMode(!0),
@@ -8176,7 +8351,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 				},
         this.setupProgress = function() {
 					O.progress_do = new FWDMSPDisplayObject("div"),
-					O.progress_do.setBackfaceVisibility(),
 					O.progress_do.setHeight(a.height),
 					O.addChild(O.progress_do)
 				},
@@ -8243,7 +8417,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
           FWDMSPUtils.isApple && (O.titleText_do.hasTransform3d_bl = !1,
 						                      O.titleText_do.hasTransform2d_bl = !1),
 					O.titleText_do.setOverflow("visible"),
-					O.titleText_do.setBackfaceVisibility(),
 					O.titleText_do.getStyle().fontFamily = "Arial",
 					O.titleText_do.getStyle().fontSize = "12px",
 					O.titleText_do.getStyle().whiteSpace = "nowrap",
@@ -8264,7 +8437,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 					O.grad_do = new FWDMSPDisplayObject("div"),
           O.grad_do.setOverflow("visible"),
 					FWDMSPUtils.isApple && (O.grad_do.hasTransform3d_bl = !1, O.grad_do.hasTransform2d_bl = !1),
-          O.grad_do.setBackfaceVisibility(),
           O.grad_do.setHeight(O.itemHeight),
           O.addChild(O.grad_do)
 				},
@@ -8272,7 +8444,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 					O.durationText_do = new FWDMSPDisplayObject("div"),
           FWDMSPUtils.isApple && (O.durationText_do.hasTransform3d_bl = !1, O.durationText_do.hasTransform2d_bl = !1),
           O.durationText_do.setOverflow("visible"),
-          O.durationText_do.setBackfaceVisibility(),
 					O.durationText_do.getStyle().fontFamily = "Arial",
           O.durationText_do.getStyle().fontSize = "12px",
           O.durationText_do.getStyle().whiteSpace = "nowrap",
@@ -8467,10 +8638,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 					l.setVisible(!1),
 					l.dispatchEvent(r.HIDE_COMPLETE)
 				}, this.setForFixedPosition = function() {
-					l.setBackfaceVisibility(),
 					l.hasTransform3d_bl = !1,
 					l.hasTransform2d_bl = !1,
-					l.image_sdo.setBackfaceVisibility(),
 					l.image_sdo.hasTransform3d_bl = !1,
 					l.image_sdo.hasTransform2d_bl = !1
 				}, this.init()
@@ -8510,7 +8679,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
           n.text_do = new FWDMSPDisplayObject("div"),
           n.text_do.hasTransform3d_bl = !1,
           n.text_do.hasTransform2d_bl = !1,
-          n.text_do.setBackfaceVisibility(),
           n.text_do.setDisplay("inline-block"),
           n.text_do.getStyle().fontFamily = "Arial",
           n.text_do.getStyle().fontSize = "12px",
@@ -8589,11 +8757,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
       this.isShowed_bl = !1,
       this.isMobile_bl = FWDMSPUtils.isMobile,
       this.init = function() {
-					f.setBackfaceVisibility(),
           f.mainHolder_do = new FWDMSPDisplayObject("div"),
           f.mainHolder_do.hasTransform3d_bl = !1,
           f.mainHolder_do.hasTransform2d_bl = !1,
-          f.mainHolder_do.setBackfaceVisibility(),
           f.bk_do = new FWDMSPDisplayObject("div"),
           f.bk_do.getStyle().width = "100%",
           f.bk_do.getStyle().height = "100%",
@@ -9022,7 +9188,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 					r.text_do = new FWDMSPDisplayObject("div"),
           r.text_do.hasTransform3d_bl = !1,
           r.text_do.hasTransform2d_bl = !1,
-          r.text_do.setBackfaceVisibility(),
           r.text_do.setDisplay("inline"),
           r.text_do.getStyle().fontFamily = "Arial",
           r.text_do.getStyle().fontSize = "12px",
@@ -9147,9 +9312,6 @@ window.FWDMSPTransformDisplayObject = function(e, t, o, s) {
         this.screen.style.border = "none",
         this.screen.style.lineHeight = "1",
         this.screen.style.backgroundColor = "transparent",
-        this.screen.style.backfaceVisibility = "hidden",
-        this.screen.style.webkitBackfaceVisibility = "hidden",
-        this.screen.style.MozBackfaceVisibility = "hidden",
 				this.screen.style.MozImageRendering = "optimizeSpeed",
         this.screen.style.WebkitImageRendering = "optimizeSpeed",
         "img" == e && (this.setWidth(this.screen.width),
@@ -9157,16 +9319,6 @@ window.FWDMSPTransformDisplayObject = function(e, t, o, s) {
         this.screen.onmousedown = function(e) {
 						return !1
 					})
-			},
-      i.setBackfaceVisibility = function() {
-				i.screen.style.backfaceVisibility = "visible",
-        i.screen.style.webkitBackfaceVisibility = "visible",
-        i.screen.style.MozBackfaceVisibility = "visible"
-			},
-      i.removeBackfaceVisibility = function() {
-				i.screen.style.backfaceVisibility = "hidden",
-        i.screen.style.webkitBackfaceVisibility = "hidden",
-        i.screen.style.MozBackfaceVisibility = "hidden"
 			},
       this.setSelectable = function(e) {
 				if (!e) {
