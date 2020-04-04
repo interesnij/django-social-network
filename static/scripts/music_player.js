@@ -2435,7 +2435,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 											self.showPlaylistsByDefault_bl = "yes" == self.showPlaylistsByDefault_bl,
 											self.showShuffleButton_bl = self.props_obj.showShuffleButton,
 											self.showShuffleButton_bl = "no" != self.showShuffleButton_bl,
-											self.showShareWindowButton_bl = "no" != self.showShareWindowButton_bl,
+										//	self.showShareWindowButton_bl = "no" != self.showShareWindowButton_bl,
 											self.randomizePlaylist_bl = self.props_obj.randomizePlaylist,
 											self.randomizePlaylist_bl = "yes" == self.randomizePlaylist_bl,
 											self.showBuyButton_bl = self.props_obj.showBuyButton,
@@ -2478,8 +2478,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 											self.showPlayListByDefault_bl = "no" != self.showPlayListByDefault_bl,
 											self.showSoundAnimation_bl = self.props_obj.showSoundAnimation,
 											self.showSoundAnimation_bl = "yes" == self.showSoundAnimation_bl,
-											self.showShareButton_bl = self.props_obj.showShareButton,
-											self.showShareButton_bl = "yes" == self.showShareButton_bl,
+									//		self.showShareButton_bl = self.props_obj.showShareButton,
+									//		self.showShareButton_bl = "yes" == self.showShareButton_bl,
 											self.expandControllerBackground_bl = self.props_obj.expandBackground,
 											self.expandControllerBackground_bl = "yes" == self.expandControllerBackground_bl,
 											self.showPlaylistItemPlayButton_bl = self.props_obj.showPlaylistItemPlayButton,
@@ -2511,7 +2511,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 											self.mainPreloader_img.onerror = self.onSkinLoadErrorHandler,
 											self.mainPreloader_img.onload = self.onPreloaderLoadHandler,
 											self.mainPreloader_img.src = self.skinPath_str + "preloader.png",
-											self.shareBkPath_str = self.skinPath_str + "categories-background.png",
+										//	self.shareBkPath_str = self.skinPath_str + "categories-background.png",
 											self.skinPaths_ar = [{
 												img: self.controllerBk_img = new Image,
 												src: self.skinPath_str + "controller-background.png"
@@ -2588,7 +2588,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 												img: self.shuffleN_img = new Image,
 												src: self.skinPath_str + "shuffle-button.png"
 											}, {
-												img: self.shareN_img = new Image,
+												img: self.repostN_img = new Image,
 												src: self.skinPath_str + "share.png"
 											}, {
 												img: self.titlebarAnimBkPath_img = new Image,
@@ -2736,7 +2736,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 										  self.skinPath_str;
 										  self.playlistSPath_str = self.skinPath_str + "playlist-button-over.png",
 											self.shuffleSPath_str = self.skinPath_str + "shuffle-button-over.png",
-											self.shareSPath_str = self.skinPath_str + "share-over.png",
+											self.repostSPath_str = self.skinPath_str + "share-over.png",
 											self.animationPath_str = self.skinPath_str + "equalizer.png",
 											self.titlebarBkMiddlePattern_str = self.skinPath_str + "titlebar-middle-pattern.png",
 											self.embedWindowClosePathS_str = self.skinPath_str + "embed-close-button-over.png",
@@ -4951,7 +4951,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 			this.replayN_img = _.replayN_img,
 			this.playlistN_img = _.playlistN_img,
 			this.shuffleN_img = _.shuffleN_img,
-			this.shareN_img = _.shareN_img,
+			this.repostN_img = _.repostN_img,
 			this.popupN_img = _.popupN_img,
 			p.useHEXColorsForSkin_bl = _.useHEXColorsForSkin_bl,
 			p.normalButtonsColor_str = _.normalButtonsColor_str,
@@ -5004,7 +5004,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 			this.loopButton_do = null,
 			this.shuffleButton_do = null,
 			this.buyButton_do = null,
-			this.shareButton_do = null,
+			this.repostButton_do = null,
 			this.popupButton_do = null,
 			this.simpleText_do = null,
 			this.animText1_do = null,
@@ -6155,18 +6155,18 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 				},
 				this.setupRepostButton = function() {
 					FWDMSPSimpleButton.setPrototype(),
-					p.shareButton_do = new FWDMSPSimpleButton(p.shareN_img,
-						                                        _.shareSPath_str,
+					p.repostButton_do = new FWDMSPSimpleButton(p.repostN_img,
+						                                        _.repostSPath_str,
 																										null,
 																										!0,
 																										_.useHEXColorsForSkin_bl,
 																										_.normalButtonsColor_str,
 																										_.selectedButtonsColor_str),
-					p.shareButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP,
+					p.repostButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP,
 						                           p.repostButtonOnMouseUpHandler),
-																			 p.shareButton_do.setY(parseInt((p.stageHeight - p.shareButton_do.h) / 2)),
-																			 p.buttons_ar.push(p.shareButton_do),
-																			 p.mainHolder_do.addChild(p.shareButton_do)
+																			 p.repostButton_do.setY(parseInt((p.stageHeight - p.repostButton_do.h) / 2)),
+																			 p.buttons_ar.push(p.repostButton_do),
+																			 p.mainHolder_do.addChild(p.repostButton_do)
 				},
 				this.repostButtonOnMouseUpHandler = function() {
 					p.dispatchEvent(n.REPOST)
@@ -6193,7 +6193,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 					p.downloadButton_do && p.downloadButton_do.disable(),
 					p.buyButton_do && p.buyButton_do.disable(),
 					p.playlistButton_do && p.playlistButton_do.disable(!0),
-					p.shareButton_do && p.shareButton_do.disable(),
+					p.repostButton_do && p.repostButton_do.disable(),
 					p.updateTime("...", "..."),
 					p.setTitle("...")
 				},
@@ -6204,7 +6204,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 					p.downloadButton_do && p.downloadButton_do.enable(),
 					p.buyButton_do && p.buyButton_do.enable(),
 					p.playlistButton_do && p.playlistButton_do.enable(),
-					p.shareButton_do && p.shareButton_do.enable()
+					p.repostButton_do && p.repostButton_do.enable()
 				},
 				p.updateHEXColors = function(e, t) {
 					p.normalColor_str = e,
@@ -6226,7 +6226,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 							p.infoButton_do && p.infoButton_do.updateHEXColors(e, t),
 							p.categoriesButton_do && p.categoriesButton_do.updateHEXColors(e, t),
 							p.nextButton_do && p.nextButton_do.updateHEXColors(e, t),
-							p.shareButton_do && p.shareButton_do.updateHEXColors(e, t),
+							p.repostButton_do && p.repostButton_do.updateHEXColors(e, t),
 							p.prevButton_do && p.prevButton_do.updateHEXColors(e, t),
 							f.fullScreenButton_do && f.fullScreenButton_do.updateHEXColors(e, t),
 							p.loopButton_do && p.loopButton_do.updateHEXColors(e, t),
@@ -7052,7 +7052,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
       this.bk_do = null,
 			this.mainHolder_do = null,
       this.closeButton_do = null,
-      this.backgrondPath_str = e.shareBkPath_str,
+    //  this.backgrondPath_str = e.shareBkPath_str,
       this.secondaryLabelsColor_str = e.secondaryLabelsColor_str,
 			this.inputColor_str = e.inputColor_str,
       this.mainLabelsColor_str = e.mainLabelsColor_str,
@@ -7157,7 +7157,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
       this.mainHolder_do = null,
       this.closeButton_do = null,
       this.buttons_ar = [],
-      this.embedWindowBackground_str = s.shareBkPath_str,
+    //  this.embedWindowBackground_str = s.shareBkPath_str,
 			this.embedWindowCloseButtonMargins = 0,
       this.scrubbersHeight = s.mainScrubberBkLeft_img.height,
       this.scrubberBkMiddlePath_str = s.mainScrubberBkMiddlePath_str,
@@ -8745,7 +8745,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
       this.mainHolder_do = null,
       this.closeButton_do = null,
       this.buttons_ar = [],
-      this.embedWindowBackground_str = o.shareBkPath_str,
+    //  this.embedWindowBackground_str = o.shareBkPath_str,
 			this.embedWindowCloseButtonMargins = 0,
       this.totalWidth = 0,
       this.stageWidth = 0,
@@ -8766,8 +8766,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
           f.bk_do.setAlpha(.9),
 					f.bk_do.getStyle().background = "url('" + f.embedWindowBackground_str + "')",
 					FWDMSPSimpleButton.setPrototype(),
-          f.closeButton_do = new FWDMSPSimpleButton(o.shareClooseN_img,
-						                                        o.embedWindowClosePathS_str,
+          f.closeButton_do = new FWDMSPSimpleButton(o.embedWindowClosePathS_str,
 																										void 0,
 																										!0,
 																										o.useHEXColorsForSkin_bl,
