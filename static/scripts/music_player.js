@@ -5103,7 +5103,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 						} else {
 
 							p.thumb_do.setX(-300),
-							f.videosHolder_do && f.videosHolder_do.setX(-1e5),
 							p.firstSeparator_do.setX(-300),
 							p.secondSeparator_do.setX(-300),
 							p.mainTitlebar_do.setWidth(p.stageWidth),
@@ -5120,18 +5119,9 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 							i = p.buttons_ar.length,
 							-1 == FWDMSPUtils.indexOfArray(p.buttons_ar),
 							p.buyButton_do && -1 == FWDMSPUtils.indexOfArray(p.buttons_ar, p.buyButton_do) && (h -= p.buyButton_do.w),
-							!p.showVideoFullScreenButton_bl
-								|| f.audioType_str != FWDMSP.VIDEO && f.audioType_str != FWDMSP.YOUTUBE
-								? -1 != FWDMSPUtils.indexOfArray(p.buttons_ar, f.fullScreenButton_do)
+							-1 != FWDMSPUtils.indexOfArray(p.buttons_ar, f.fullScreenButton_do)
 								 && (p.buttons_ar.splice(FWDMSPUtils.indexOfArray(p.buttons_ar, f.fullScreenButton_do), 1),
-								 f.fullScreenButton_do.setX(-500))
-								: (-1 == FWDMSPUtils.indexOfArray(p.buttons_ar, f.fullScreenButton_do)
-								 && (p.mainHolder_do.addChild(f.fullScreenButton_do),
-								 FWDAnimation.killTweensOf(f.fullScreenButton_do),
-								 p.buttons_ar.splice(0, 0, f.fullScreenButton_do)),
-								 h += f.fullScreenButton_do.w,
-								 FWDAnimation.killTweensOf(p.fullScreenButton_do),
-								 f.fullScreenButton_do.setAlpha(1)),
+								 f.fullScreenButton_do.setX(-500)),
 							i = p.buttons_ar.length,
 							s = parseInt((p.stageWidth - h) / i);
 							for (l = 0; l < i; l++)
