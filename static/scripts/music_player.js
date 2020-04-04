@@ -1356,8 +1356,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 														  		: self.play()
 																: self.useDeepLinking_bl && self.id != e.id,
 																  self.id = e.id, self.setSource(!0), self.play()
-									)
-
 							},
               this.palylistUpdateFolderTrackTitle = function(e) {
 								self.controller_do.setTitle(e.title)
