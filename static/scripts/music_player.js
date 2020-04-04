@@ -1891,7 +1891,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 																			 self.playlist_do && (self.playlist_do.setCurItemPlayState(), self.playlist_do.updateCurItemProgress(0)),
 																			 self.controller_do && self.controller_do.ttm && self.controller_do.ttm.hide(),
 																			 self.showCursor(),
-																			 self.audioType_str FWDMSP.hasHTML5Audio && self.audioScreen_do.stop()
+																			 self.audioType_str FWDMSP.hasHTML5Audio && self.audioScreen_do.stop(),
 																				self.controller_do && self.controller_do.disableAtbButton(),
 																				self.setPlaybackRate(self.data.defaultPlaybackRate),
 																				self.hasHlsPlayedOnce_bl = !1,
