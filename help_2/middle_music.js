@@ -2821,7 +2821,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 						|| -1 != t.indexOf("http:")
 						|| -1 != t.indexOf("https:")
 						|| -1 != t.indexOf("www.")
-						|| -1 != t.indexOf(".pls") ? self.loadXMLPlaylist(t) : self.parseDOMPlaylist(t), self.prevId = e
+						|| self.parseDOMPlaylist(t), self.prevId = e
 					}
 				}, this.loadSoundCloudList = function(e) {
 					if (!self.isPlaylistDispatchingError_bl) {
@@ -3037,36 +3037,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 					e.results && e.results[0] && self.dispatchEvent(FWDMSPAudioData.UPDATE_IMAGE, {
 						image: e.results[0].artworkUrl100
 					})
-				}, this.loadXMLPlaylist = function(e) {
-					if (!self.isPlaylistDispatchingError_bl) {
-						if ("file:" == document.location.protocol && -1 == e.indexOf("official.fm")) return self.isPlaylistDispatchingError_bl = !0, void(showLoadPlaylistErrorId_to = setTimeout(function() {
-							-1 != e.indexOf(".xml") ? self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, {
-								text: "Loading XML files local is not allowed or possible!. To function properly please test online."
-							}) : self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, {
-								text: "Loading PLS files local is not allowed or possible!. To function properly please test online."
-							}), self.isPlaylistDispatchingError_bl = !1
-						}, 50));
-						if (self.closeXHR(), self.loadFromFolder_bl = !1, self.sourceURL_str = e, self.xhr = new XMLHttpRequest, self.xhr.onreadystatechange = self.ajaxOnLoadHandler, self.xhr.onerror = self.ajaxOnErrorHandler, -1 != self.sourceURL_str.indexOf(".pls")) try {
-							self.xhr.open("GET", self.sourceURL_str, !0), self.xhr.send()
-						}
-						catch (e) {
-							var t = e;
-							e && e.message && (t = e.message),
-								self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, {
-									text: "PLS  file can't be loaded! <font color='#FF0000'>" + self.sourceURL_str + "</font>. " + t
-								})
-						} else try {
-							self.xhr.open("GET", self.proxyPath_str + "?url=" + self.sourceURL_str + "&rand=" + parseInt(99999999 * Math.random()), !0),
-								self.xhr.send()
-						}
-						catch (e) {
-							t = e;
-							e && e.message && (t = e.message),
-								self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, {
-									text: "XML file can't be loaded! <font color='#FF0000'>" + self.sourceURL_str + "</font>. " + t
-								})
-						}
-					}
 				}, this.loadFolderPlaylist = function(e) {
 					if (!self.isPlaylistDispatchingError_bl) {
 						if ("file:" == document.location.protocol && -1 == e.indexOf("official.fm")) return self.isPlaylistDispatchingError_bl = !0, void(showLoadPlaylistErrorId_to = setTimeout(function() {
