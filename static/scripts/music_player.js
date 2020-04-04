@@ -1076,7 +1076,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 										7 == t.length && (t = "0" + t),
 										self.scrubbAtTime(t)
 									}
-								
+
 							},
               this.onKeyUpHandler = function(e) {
 								self.isSpaceDown_bl = !1
@@ -1225,7 +1225,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 																																		: self.playlist_do && self.playlist_do.setY(-self.playlist_do.h + self.controller_do.h),
 											self.setStageContainerFinalHeightAndPosition(!0),
 											self.openInPopup_bl
-										)
+										))
 										return clearTimeout(self.showPlaylistWithDelayId_to),
 									self.showedFirstTime_bl ? self.showPlaylistWithDelayId_to = setTimeout(function() {
 																						self.setStageContainerFinalHeightAndPosition(!0)
