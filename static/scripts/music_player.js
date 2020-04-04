@@ -1867,7 +1867,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 									  return self.resizeHandler(),
 									void self.passWindow_do.show();
 									self.hasPassedPassowrd_bl = !0,
-										FWDMSP.pauseAllAudio(self),
+										FWDMSP.pauseAllAudio(self)
 								}
 							},
 							this.resume = function() {
