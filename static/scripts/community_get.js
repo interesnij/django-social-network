@@ -64,7 +64,7 @@ on('#ajax', 'click', '.c_item_comments', function() {
   parent = this.parentElement.parentElement.parentElement.parentElement;
   pk = parent.parentElement.getAttribute("community-pk");
   uuid = parent.getAttribute("item-uuid");
-  this.classList.add("c_item_comments_open");
+  this.classList.replace("c_item_comments", "c_item_comments_open");
   url = "/community/comment/" + uuid + "/" + pk + "/";
   list_load(parent.querySelector(".c_load_comments"), url);
 });
