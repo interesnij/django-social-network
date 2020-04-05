@@ -67,7 +67,7 @@ on('#ajax', 'click', '.c_item_comments.comments_close', function() {
   _this = parent.querySelector(".c_item_comments");
   _this.classList.remove();
   _this.classList.add("comments_open");
-  list_load(this.parentElement.parentElement.querySelector(".c_load_comments"), "/community/comment/" + uuid + "/" + pk + "/");
+  list_load(this.parentElement.parentElement.nextElementSibling, "/community/comment/" + uuid + "/" + pk + "/");
 });
 on('#ajax', 'click', '.c_item_comments.comments_open', function() {
   parent = this.parentElement.parentElement.parentElement;
