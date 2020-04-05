@@ -246,6 +246,18 @@ on('#ajax', 'click', '#community_article_add', function() {
     on('#ajax', 'click', '.good_fullscreen_hide', function() {document.querySelector(".good_fullscreen").style.display = "none";document.getElementById("good_loader").innerHTML=""});
     on('#ajax', 'click', '.stat_fullscreen_hide', function() {document.querySelector(".stat_fullscreen").style.display = "none";document.getElementById("stat_loader").innerHTML=""});
 
+
+  on('#ajax', 'click', '.c_item_comments.comments_close', function() {
+    var parent, pk, uuid, url
+    parent = this.parentElement.parentElement.parentElement.parentElement;
+    pk = parent.parentElement.getAttribute("community-pk");
+    uuid = parent.getAttribute("item-uuid");
+    _this = parent.querySelector(".c_item_comments");
+    _this.classList.add("comments_open");
+    _this.classList.remove("comments_close");
+    url = "/community/comment/" + uuid + "/" + pk + "/";
+    list_load(parent.querySelector(".c_load_comments"), url);
+  });
   /*!
      comments scripts
     */
