@@ -21,10 +21,10 @@ function open_fullscreen(link, block) {
 
 on('#ajax', 'click', '.u_good_detail', function() {
   var goods_container = this.parentElement;
-  var good = goods_container.querySelector(".u_good_detail");
-  var good_id = good.getAttribute('data-id');
   var user_uuid = goods_container.getAttribute('data-uuid');
-  open_fullscreen('/goods/user/good/' + good_id + '/' + user_uuid + '/', goods_container)
+  var good_id = this.getAttribute('data-id');
+  var block = document.getElementById("goods_container")
+  open_fullscreen('/goods/user/good/' + good_id + '/' + user_uuid + '/', block)
 });
 
 //$('#ajax').on('click', '.u_all_likes', function() {var btn = $(this); item = $(this).parents('.infinite-item');pk = item.attr("user-id");uuid = item.attr("item-id");$('#votes_loader').html('').load("/window/all_user_like/" + uuid + "/" + pk + "/"); $('.votes_fullscreen').show();console.log("likes user open")});
