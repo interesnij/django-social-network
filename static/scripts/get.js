@@ -20,7 +20,7 @@ function open_fullscreen(link, block) {
 }
 
 on('#ajax', 'click', '.u_good_detail', function() {
-  var goods_container = this.parentElement.getElementById("goods_container");
+  var goods_container = this.parentElement;
   var good = goods_container.querySelector(".u_good_detail");
   var good_id = good.getAttribute('data-id');
   var user_uuid = goods_container.getAttribute('data-uuid');
