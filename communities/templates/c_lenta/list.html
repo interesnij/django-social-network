@@ -13,7 +13,7 @@
     <a href=""><span class="new-posts"></span> Загрузить новые записи</a>
   </div>
 
-  <span class="community_stream" community-id="{{ community.pk }}">
+  <span class="community_stream" community-pk="{{ community.pk }}">
     {% if object_list %}
       {% for object in object_list %}
 
