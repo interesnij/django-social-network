@@ -12,8 +12,7 @@ function open_fullscreen(link, block) {
   if ( this.readyState == 4 && this.status == 200 ) {
     elem = link_.responseText;
     block.parentElement.style.display = "block";
-    block.innerHTML = elem;
-    eval(block.innerHTML)
+    block.innerHTML = elem
   }};
   link_.send();
 }
