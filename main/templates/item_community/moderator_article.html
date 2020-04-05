@@ -1,6 +1,6 @@
 {% load thumbnail humanize %}
 
-<div class="card mb-4 infinite-item" item-id="{{ object.uuid }}" item-pk="{{ object.pk }}">
+<div class="card mb-4" item-uuid="{{ object.uuid }}" item-pk="{{ object.pk }}" community-pk="{{ community.pk }}">
   <div class="card-header">
       <div class="media">
         <a href="{% url 'community_detail' pk=object.community.pk %}" class="ajax">
