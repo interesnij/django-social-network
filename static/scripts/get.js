@@ -23,7 +23,7 @@ on('#ajax', 'click', '.u_good_detail', function() {
   var goods_container = this.parentElement;
   var user_uuid = goods_container.getAttribute('data-uuid');
   var good_id = this.getAttribute('data-id');
-  var block = document.getElementById("goods_container")
+  var block = document.getElementById("goods_container");
   open_fullscreen('/goods/user/good/' + good_id + '/' + user_uuid + '/', block)
 });
 
