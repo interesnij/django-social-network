@@ -72,6 +72,8 @@ class Index {
   };
 }
 
+//--------------------------------------------------------------------//
+// FULLSCREENS //
 on('#ajax', 'click', '.u_album_photo_detail', function() {
   var container, uuid, uuid2, pk, loader;
   container = this.parentElement;
@@ -153,7 +155,6 @@ on('#ajax', 'click', '.show_staff_window', function() {
   open_fullscreen("/communities/manage/staff_window/" + pk + "/" + uuid + "/", loader)
 });
 
-
 on('#ajax', 'click', '.u_all_likes', function() {
   var container, uuid, pk, loader;
   container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
@@ -203,7 +204,13 @@ on('#ajax', 'click', '.c_all_reposts', function() {
   open_fullscreen("/item_window/all_community_reposts/" + uuid + "/" + pk + "/", loader)
 });
 
+on('#ajax', 'click', '#community_add', function() {
+  loader = document.getElementById("votes_loader");
+  open_fullscreen("/communities/progs/add/", document.getElementById("community_loader"))
+});
 
+// END FULLSCREENS //
+//--------------------------------------------------------------------//
 
 //$('.add_board_hide').on('click', function() {$('#for_settings').hide();});
 //$('#images_upload').on('click', function() {$('#for_images_upload').show();});
