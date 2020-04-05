@@ -72,8 +72,24 @@ class Index {
   };
 }
 
-//$('#ajax').on('click', '.u_album_photo_detail', function() {photo = $(this); pk = photo.data("pk"); uuid = photo.parent().data("uuid"); uuid2 = photo.parent().data("uuid2");$('#photo_loader').html('').load("/gallery/load/u_album_photo/" + pk + "/" + uuid + "/" + uuid2 + "/");$('.photo_fullscreen').show();console.log("user album photo open")});
+$('#ajax').on('click', '.u_album_photo_detail', function() {
+  photo = $(this);
+  pk = photo.data("pk");
+  uuid = photo.parent().data("uuid");
+  uuid2 = photo.parent().data("uuid2");
+  $('#photo_loader').html('').load("/gallery/load/u_album_photo/" + pk + "/" + uuid + "/" + uuid2 + "/");
+  $('.photo_fullscreen').show();
+});
 
+on('#ajax', 'click', '.u_album_photo_detail', function() {
+  var container, uuid, uuid2, pk, loader;
+  container = this.parentElement;
+  uuid = container.getAttribute('data-uuid');
+  uuid2 = container.getAttribute('data-uuid2');
+  pk = this.getAttribute('data-pk');
+  loader = document.getElementById("photo_loader");
+  open_fullscreen("/gallery/load/u_album_photo/" + pk + "/" + uuid + "/" + uuid2 + "/", loader)
+});
 on('#ajax', 'click', '.u_photo_detail', function() {
   var container, uuid, pk, loader;
   container = this.parentElement;
