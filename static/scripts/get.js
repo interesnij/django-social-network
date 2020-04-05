@@ -123,7 +123,7 @@ on('#ajax', 'click', '.show_replies', function() {
 });
 
 on('#ajax', 'click', '.reply_comment', function() {
-  var objectUser = this.previousElementSibling.text().trim();
+  var objectUser = this.previousElementSibling.innerHTML;
   var form = reply_comment_form.nextElementSibling.querySelector(".text-comment");
   form.val(objectUser + ', ');
   this.nextElementSibling.style.display = "block";
