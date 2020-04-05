@@ -9,7 +9,6 @@
 function open_fullscreen(link, block) {
   var link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'GET', link, true );
-  link_.send();
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
     var elem = document.createElement('span');
@@ -17,14 +16,15 @@ function open_fullscreen(link, block) {
     block.parentElement.style.display = "block";
     block.append(elem)
   }};
+  link_.send();
 }
 
 on('#ajax', 'click', '.u_good_detail', function() {
   var goods_container = this.parentElement;
   var user_uuid = goods_container.getAttribute('data-uuid');
   var good_id = this.getAttribute('data-id');
-  var block = document.getElementById("good_loader");
-  open_fullscreen('/goods/user/good/' + good_id + '/' + user_uuid + '/', block)
+  var loader = document.getElementById("good_loader");
+  open_fullscreen('/goods/user/good/' + good_id + '/' + user_uuid + '/', loader)
 });
 
 //$('#ajax').on('click', '.u_all_likes', function() {var btn = $(this); item = $(this).parents('.infinite-item');pk = item.attr("user-id");uuid = item.attr("item-id");$('#votes_loader').html('').load("/window/all_user_like/" + uuid + "/" + pk + "/"); $('.votes_fullscreen').show();console.log("likes user open")});
