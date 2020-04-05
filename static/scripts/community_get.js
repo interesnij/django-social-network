@@ -36,26 +36,6 @@ on('#ajax', 'click', '#community_add', function() {
   document.querySelector(".community_fullscreen").style.display = "block";
 });
 
-
-on('#ajax', 'click', '.show_staff_window', function() {
-  parent = this.parentElement.parentElement.parentElement.parentElement.parentElement;
-  pk = parent.getAttribute("data-pk");
-  uuid = parent.getAttribute("data-uuid");
-  loader = document.getElementById("load_staff_window");
-  url = "/communities/manage/staff_window/" + pk + "/" + uuid + "/";
-  list_load(loader, url);
-  loader.parentElement.style.display = "block";
-});
-
-on('#ajax', 'click', '.item_stat_f', function() {
-  parent = this.parentElement.parentElement.parentElement.parentElement.parentElement;
-  uuid = parent.getAttribute("item-id");
-  loader = document.getElementById("stat_loader");
-  url = "/stat/item/" + uuid + "/";
-  list_load(loader, url);
-  loader.parentElement.style.display = "block";
-});
-
 on('#ajax', 'click', '.c_fullscreen', function() {
   parent = this.parentElement; parent2 = parent.parentElement;
   pk = parent2.getAttribute("community-id");

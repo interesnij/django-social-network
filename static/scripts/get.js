@@ -120,6 +120,22 @@ on('#ajax', 'click', '.u_good_detail', function() {
   loader = document.getElementById("good_loader");
   open_fullscreen('/goods/user/good/' + pk + '/' + uuid + '/', loader)
 });
+on('#ajax', 'click', '.item_stat_f', function() {
+  var parent, pk, uuid, loader
+  parent = this.parentElement.parentElement.parentElement.parentElement.parentElement;
+  uuid = parent.getAttribute("item-id");
+  loader = document.getElementById("stat_loader");
+  open_fullscreen("/stat/item/" + uuid + "/", loader)
+});
+on('#ajax', 'click', '.show_staff_window', function() {
+  var parent, pk, uuid, loader
+  parent = this.parentElement.parentElement.parentElement.parentElement.parentElement;
+  pk = parent.getAttribute("data-pk");
+  uuid = parent.getAttribute("data-uuid");
+  loader = document.getElementById("load_staff_window");
+  open_fullscreen("/communities/manage/staff_window/" + pk + "/" + uuid + "/", loader)
+});
+
 
 on('#ajax', 'click', '.u_all_likes', function() {
   var container, uuid, pk, loader;
@@ -169,6 +185,8 @@ on('#ajax', 'click', '.c_all_reposts', function() {
   loader = document.getElementById("votes_loader");
   open_fullscreen("/item_window/all_community_reposts/" + uuid + "/" + pk + "/", loader)
 });
+
+
 
 //$('.add_board_hide').on('click', function() {$('#for_settings').hide();});
 //$('#images_upload').on('click', function() {$('#for_images_upload').show();});
