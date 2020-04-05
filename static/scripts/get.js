@@ -103,7 +103,7 @@ on('#ajax', 'click', '.fullscreen', function() {
   var container, uuid, pk, loader;
   container = this.parentElement;
   uuid = container.getAttribute('item-uuid');
-  pk = container.getAttribute('user-pk'); 
+  pk = container.parentElement.getAttribute('user-pk');
   loader = document.getElementById("item_loader");
   open_fullscreen("/users/detail/item/" + pk + "/" + uuid + "/", loader)
 })
@@ -119,7 +119,7 @@ on('#ajax', 'click', '.u_article_detail', function() {
   var container, uuid, pk, loader;
   container = this.parentElement;
   uuid = container.getAttribute('item-uuid');
-  pk = container.getAttribute('user-pk');
+  pk = container.parentElement.getAttribute('user-pk');
   loader = document.getElementById("article_loader");
   open_fullscreen("/users/detail/" + pk + "/" + uuid + "/", loader)
 });
@@ -158,7 +158,7 @@ on('#ajax', 'click', '.show_staff_window', function() {
 on('#ajax', 'click', '.u_all_likes', function() {
   var container, uuid, pk, loader;
   container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  pk = container.getAttribute('user-pk');
+  pk = container.parentElement.getAttribute('user-pk');
   uuid = container.getAttribute('item-uuid');
   loader = document.getElementById("votes_loader");
   open_fullscreen("/item_window/all_user_like/" + uuid + "/" + pk + "/", loader)
@@ -166,7 +166,7 @@ on('#ajax', 'click', '.u_all_likes', function() {
 on('#ajax', 'click', '.u_all_dislikes', function() {
   var container, uuid, pk, loader;
   container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  pk = container.getAttribute('user-pk');
+  pk = container.parentElement.getAttribute('user-pk');
   uuid = container.getAttribute('item-uuid');
   loader = document.getElementById("votes_loader");
   open_fullscreen("/item_window/all_user_dislike/" + uuid + "/" + pk + "/", loader)
@@ -174,7 +174,7 @@ on('#ajax', 'click', '.u_all_dislikes', function() {
 on('#ajax', 'click', '.u_all_reposts', function() {
   var container, uuid, pk, loader;
   container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  pk = container.getAttribute('user-pk');
+  pk = container.parentElement.getAttribute('user-pk');
   uuid = container.getAttribute('item-uuid');
   loader = document.getElementById("votes_loader");
   open_fullscreen("/item_window/all_user_reposts/" + uuid + "/" + pk + "/", loader)

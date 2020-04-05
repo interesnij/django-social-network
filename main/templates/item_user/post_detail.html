@@ -1,8 +1,8 @@
-<div class="card mb-4" item-uuid="{{ object.uuid }}" item-pk="{{ object.pk }}" user-pk="{{ user.pk }}">
+<div class="card mb-4" item-uuid="{{ object.uuid }}" item-pk="{{ object.pk }}">
 
     {% include 'item_user/card_header.html' %}
 
-    {% if object.is_repost %} 
+    {% if object.is_repost %}
     {% include 'item_user/repost_detail.html' %}
     {% endif %}
 
