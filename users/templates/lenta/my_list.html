@@ -14,7 +14,7 @@
         <a href=""><span class="new-posts"></span> Загрузить новые записи</a>
     </div>
 
-    <span class="stream">
+    <span class="stream" user-pk="{{ user.pk }}">
         {% for object in object_list %}
 
         {% if object.article %}
@@ -24,7 +24,7 @@
         {% if object.post %}
         {% include 'item_user/my_post.html' with post=post  %}
         {% endif %}
-        
+
         {% endfor %}
     </span>
     {% endif %}

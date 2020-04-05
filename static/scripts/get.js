@@ -103,7 +103,7 @@ on('#ajax', 'click', '.fullscreen', function() {
   var container, uuid, pk, loader;
   container = this.parentElement;
   uuid = container.getAttribute('item-uuid');
-  pk = container.getAttribute('user-pk');
+  pk = container.getAttribute('user-pk'); 
   loader = document.getElementById("item_loader");
   open_fullscreen("/users/detail/item/" + pk + "/" + uuid + "/", loader)
 })
@@ -257,6 +257,14 @@ on('#ajax', 'click', '#community_article_add', function() {
     _this.classList.remove("comments_close");
     url = "/community/comment/" + uuid + "/" + pk + "/";
     list_load(parent.querySelector(".c_load_comments"), url);
+  });
+  on('#ajax', 'click', '.c_item_comments.comments_open', function() {
+    parent = this.parentElement.parentElement.parentElement;
+    container = parent.querySelector(".load_comments");
+    container.innerHTML="";
+    _this = parent.querySelector(".c_comments");
+    _this.classList.add("comments_close");
+    _this.classList.remove("comments_open");
   });
   /*!
      comments scripts
