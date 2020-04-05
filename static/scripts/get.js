@@ -146,8 +146,8 @@ class Index {
     var ajax_link, url;
     ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     url = this.getAttribute('href')
-    ajax_link.open( 'GET', url, true );
-
+    if (url != window.location.href){
+      ajax_link.open( 'GET', url, true );
       ajax_link.onreadystatechange = function () {
         if ( this.readyState == 4 && this.status == 200 ) {
           var rtr, elem_, ajax;
@@ -157,14 +157,15 @@ class Index {
           ajax = elem_.querySelector("#reload_block");
           rtr.innerHTML = ajax.innerHTML;
           document.title = elem_.querySelector('title').innerHTML;
-          Index.initLink();
           window.history.pushState({route: url}, "network", url);
 
+          Index.initLink();
           if_list(rtr);
           load_chart();
         }
       }
       ajax_link.send();
+    }
   };
 }
 
