@@ -127,21 +127,11 @@
 </div>
 
 <script>
-
-  document.querySelector(".my_manage_communities").addEventListener("click", (e) => {
+ on('#ajax', 'click', 'my_manage_communities', function() {
     if (document.querySelector("#tabhome223-tab").classList.contains("my_manage_communities")) {
-      tab = document.getElementById("tabhome223-tab");tab.classList.remove('my_manage_communities');
-      var link_2 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-      link_2.open( 'GET', '/users/detail/manage_communities/{{ user.uuid }}', true );
-      link_2.onreadystatechange = function () {
-        if ( link_2.readyState == 4 ) {
-            if ( link_2.status == 200 ) {
-                var load_manage_cat_list = document.getElementById("load_manage_cat_list");
-                load_manage_cat_list.innerHTML = link_2.responseText;
-            }
-        }
-      };
-      link_2.send( null );
+      tab = document.getElementById("tabhome223-tab");
+      tab.classList.remove('my_manage_communities');
+      list_load(document.getElementById("load_manage_cat_list"),'/users/detail/manage_communities/{{ user.uuid }}')
     }
     });
 
