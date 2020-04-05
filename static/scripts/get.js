@@ -105,10 +105,10 @@ on('#ajax', 'click', '.fullscreen', function() {
   loader = document.getElementById("item_loader");
   open_fullscreen("/users/detail/item/" + pk + "/" + uuid + "/", loader)
 })
-on('#ajax', 'click', '.fullscreen', function() {
+on('#ajax', 'click', '.c_fullscreen', function() {
   var uuid, pk, loader;
   uuid = this.parentElement.parentElement.getAttribute('item-uuid');
-  pk = this.parentElement.getAttribute('user-pk');
+  pk = this.parentElement.getAttribute('community-pk');
   loader = document.getElementById("item_loader");
   open_fullscreen("/communities/item/" + pk + "/" + uuid + "/", loader)
 });
