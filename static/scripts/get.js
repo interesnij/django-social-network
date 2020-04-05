@@ -74,144 +74,14 @@ class Index {
 
 //--------------------------------------------------------------------//
 // FULLSCREENS //
-on('#ajax', 'click', '.u_album_photo_detail', function() {
-  var container, uuid, uuid2, pk, loader;
-  container = this.parentElement;
-  uuid = container.getAttribute('data-uuid');
-  uuid2 = container.getAttribute('data-uuid2');
-  pk = this.getAttribute('data-pk');
-  loader = document.getElementById("photo_loader");
-  open_fullscreen("/gallery/load/u_album_photo/" + pk + "/" + uuid + "/" + uuid2 + "/", loader)
-});
-on('#ajax', 'click', '.u_photo_detail', function() {
-  var container, uuid, pk, loader;
-  container = this.parentElement;
-  uuid = container.getAttribute('data-uuid');
-  pk = this.getAttribute('data-pk');
-  loader = document.getElementById("photo_loader");
-  open_fullscreen("/gallery/load/u_photo/" + pk + "/" + uuid + "/", loader)
-});
-on('#ajax', 'click', '.avatar_detail', function() {
-  var uuid, pk, loader;
-  uuid = this.getAttribute('data-uuid');
-  pk = this.getAttribute('data-pk');
-  loader = document.getElementById("photo_loader");
-  open_fullscreen("/gallery/load/avatar_detail/" + pk + "/" + uuid + "/", loader)
-});
 
-on('#ajax', 'click', '.fullscreen', function() {
-  var container, uuid, pk, loader;
-  container = this.parentElement;
-  uuid = container.getAttribute('item-uuid');
-  pk = container.parentElement.getAttribute('user-pk');
-  loader = document.getElementById("item_loader");
-  open_fullscreen("/users/detail/item/" + pk + "/" + uuid + "/", loader)
-})
-on('#ajax', 'click', '.c_fullscreen', function() {
-  var uuid, pk, loader;
-  uuid = this.parentElement.getAttribute('item-uuid');
-  pk = this.parentElement.getAttribute('community-pk');
-  loader = document.getElementById("item_loader");
-  open_fullscreen("/communities/item/" + pk + "/" + uuid + "/", loader)
-});
 
-on('#ajax', 'click', '.u_article_detail', function() {
-  var container, uuid, pk, loader;
-  container = this.parentElement;
-  uuid = container.getAttribute('item-uuid');
-  pk = container.parentElement.getAttribute('user-pk');
-  loader = document.getElementById("article_loader");
-  open_fullscreen("/users/detail/" + pk + "/" + uuid + "/", loader)
-});
-on('#ajax', 'click', '.c_article_detail', function() {
-  var uuid, pk, loader;
-  uuid = this.parentElement.getAttribute('item-uuid');
-  pk = this.parentElement.getAttribute('community-pk');
-  loader = document.getElementById("article_loader");
-  open_fullscreen("/article/read/" + pk + "/" + uuid + "/", loader)
-});
-
-on('#ajax', 'click', '.u_good_detail', function() {
-  var container, uuid, pk, loader;
-  container = this.parentElement;
-  uuid = container.getAttribute('data-uuid');
-  pk = this.getAttribute('data-id');
-  loader = document.getElementById("good_loader");
-  open_fullscreen('/goods/user/good/' + pk + '/' + uuid + '/', loader)
-});
 on('#ajax', 'click', '.item_stat_f', function() {
   var parent, pk, uuid, loader
   parent = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   uuid = parent.getAttribute("item-uuid");
   loader = document.getElementById("stat_loader");
   open_fullscreen("/stat/item/" + uuid + "/", loader)
-});
-on('#ajax', 'click', '.show_staff_window', function() {
-  var parent, pk, uuid, loader
-  parent = this.parentElement.parentElement.parentElement.parentElement.parentElement;
-  pk = parent.getAttribute("data-pk");
-  uuid = parent.getAttribute("data-uuid");
-  loader = document.getElementById("load_staff_window");
-  open_fullscreen("/communities/manage/staff_window/" + pk + "/" + uuid + "/", loader)
-});
-
-on('#ajax', 'click', '.u_all_likes', function() {
-  var container, uuid, pk, loader;
-  container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  pk = container.parentElement.getAttribute('user-pk');
-  uuid = container.getAttribute('item-uuid');
-  loader = document.getElementById("votes_loader");
-  open_fullscreen("/item_window/all_user_like/" + uuid + "/" + pk + "/", loader)
-});
-on('#ajax', 'click', '.u_all_dislikes', function() {
-  var container, uuid, pk, loader;
-  container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  pk = container.parentElement.getAttribute('user-pk');
-  uuid = container.getAttribute('item-uuid');
-  loader = document.getElementById("votes_loader");
-  open_fullscreen("/item_window/all_user_dislike/" + uuid + "/" + pk + "/", loader)
-});
-on('#ajax', 'click', '.u_all_reposts', function() {
-  var container, uuid, pk, loader;
-  container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  pk = container.parentElement.getAttribute('user-pk');
-  uuid = container.getAttribute('item-uuid');
-  loader = document.getElementById("votes_loader");
-  open_fullscreen("/item_window/all_user_reposts/" + uuid + "/" + pk + "/", loader)
-});
-on('#ajax', 'click', '.c_all_likes', function() {
-  var container, uuid, pk, loader;
-  container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  pk = container.getAttribute('community-pk');
-  uuid = container.getAttribute('item-uuid');
-  loader = document.getElementById("votes_loader");
-  open_fullscreen("/item_window/all_community_like/" + uuid + "/" + pk + "/", loader)
-});
-on('#ajax', 'click', '.c_all_dislikes', function() {
-  var container, uuid, pk, loader;
-  container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  pk = container.getAttribute('community-pk');
-  uuid = container.getAttribute('item-uuid');
-  loader = document.getElementById("votes_loader");
-  open_fullscreen("/item_window/all_community_dislike/" + uuid + "/" + pk + "/", loader)
-});
-on('#ajax', 'click', '.c_all_reposts', function() {
-  var container, uuid, pk, loader;
-  container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  pk = container.getAttribute('community-pk');
-  uuid = container.getAttribute('item-uuid');
-  loader = document.getElementById("votes_loader");
-  open_fullscreen("/item_window/all_community_reposts/" + uuid + "/" + pk + "/", loader)
-});
-
-on('#ajax', 'click', '#community_add', function() {
-  var loader = document.getElementById("votes_loader");
-  open_fullscreen("/communities/progs/add/", document.getElementById("community_loader"))
-});
-
-on('#ajax', 'click', '#community_article_add', function() {
-  var pk = this.getAttribute('community-pk');
-  open_fullscreen("/article/add_community/" + pk + "/", document.getElementById("community_loader"))
 });
 
 on('#ajax', 'click', '.article_fullscreen_hide', function() {document.querySelector(".article_fullscreen").style.display = "none";document.getElementById("article_loader").innerHTML=""});
@@ -245,49 +115,12 @@ on('#ajax', 'click', '.stat_fullscreen_hide', function() {document.querySelector
   //$("#u_albums_add").click(function() {$('#photos_add_window').show();console.log("user photo form open")})
   //$("#u_albums_add").click(function() {user = $(this);user_id = user.data("uuid");$('#photo_add_loader').html('').load("/gallery/user/add_album/" + user_id + "/");$('.photo_fullscreen').show();console.log("user album add open")})
 
-
-  on('#ajax', 'click', '.u_item_comments.comments_close', function() {
-    var parent, pk, uuid, url
-    parent = this.parentElement.parentElement.parentElement.parentElement;
-    pk = parent.parentElement.getAttribute("user-pk");
-    uuid = parent.getAttribute("item-uuid");
-    _this = parent.querySelector(".u_item_comments");
-    _this.classList.add("comments_open");
-    _this.classList.remove("comments_close");
-    url = "/user/comment/" + uuid + "/" + pk + "/";
-    list_load(parent.querySelector(".u_load_comments"), url);
-  });
-  on('#ajax', 'click', '.u_item_comments.comments_open', function() {
-    parent = this.parentElement.parentElement.parentElement;
-    container = parent.querySelector(".u_load_comments");
-    container.innerHTML="";
-    _this = parent.querySelector(".u_load_comments");
-    _this.classList.add("comments_close");
-    _this.classList.remove("comments_open");
-  });
-
-  on('#ajax', 'click', '.c_item_comments.comments_close', function() {
-    var parent, pk, uuid, url
-    parent = this.parentElement.parentElement.parentElement.parentElement;
-    pk = parent.parentElement.getAttribute("community-pk");
-    uuid = parent.getAttribute("item-uuid");
-    _this = parent.querySelector(".c_item_comments");
-    _this.classList.add("comments_open");
-    _this.classList.remove("comments_close");
-    url = "/community/comment/" + uuid + "/" + pk + "/";
-    list_load(parent.querySelector(".c_load_comments"), url);
-  });
-  on('#ajax', 'click', '.c_item_comments.comments_open', function() {
-    parent = this.parentElement.parentElement.parentElement;
-    _this = parent.querySelector(".c_load_comments");
-    _this.innerHTML="";
-    _this.classList.add("comments_close");
-    _this.classList.remove("comments_open");
-  });
   /*!
      comments scripts
     */
-//$('body').on('click', '.show_replies', function() { var element = $(this); element.next().toggleClass('replies_open');console.log("show comment replies") });
+on('#ajax', 'click', '.show_replies', function() {
+  this.nextElementSibling.classList.toggle('replies_open');
+});
 
 //$('body').on('click', '.comment_image', function() {photo = $(this);pk = photo.data("id");uuid = photo.data("uuid");$('#photo_loader').html('').load("/gallery/load/comment/" + pk + "/" + uuid + "/"); $('.photo_fullscreen').show();console.log("show user photos for select image")});
 
@@ -307,12 +140,6 @@ on('#ajax', 'click', '.stat_fullscreen_hide', function() {document.querySelector
 
 //$('body').on('click', '.select_photo', function() {uuid = $(this).data("uuid");$('#photo_loader').html("").load("/users/load/img_load/" + uuid + "/"); $('.photo_fullscreen').show();console.log("select image for comment form")});
 
-//$('body').on('click', '.c_item_repost', function() {item = $(this).parents('.infinite-item');item_id = item.attr("item-id"); $('#user_item_pk').html(item_id);});
-
-
-/*!
-     подгрузка лент и блоков
-  */
 
 
 Index.initLink();
