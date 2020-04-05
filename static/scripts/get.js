@@ -96,6 +96,7 @@ on('#ajax', 'click', '.avatar_detail', function() {
   loader = document.getElementById("photo_loader");
   open_fullscreen("/gallery/load/avatar_detail/" + pk + "/" + uuid + "/", loader)
 });
+
 on('#ajax', 'click', '.fullscreen', function() {
   var container, uuid, pk, loader;
   container = this.parentElement;
@@ -103,15 +104,31 @@ on('#ajax', 'click', '.fullscreen', function() {
   pk = container.getAttribute('user-pk');
   loader = document.getElementById("item_loader");
   open_fullscreen("/users/detail/item/" + pk + "/" + uuid + "/", loader)
+})
+on('#ajax', 'click', '.fullscreen', function() {
+  var uuid, pk, loader;
+  uuid = this.parentElement.parentElement.getAttribute('item-uuid');
+  pk = this.parentElement.getAttribute('user-pk');
+  loader = document.getElementById("item_loader");
+  open_fullscreen("/communities/item/" + pk + "/" + uuid + "/", loader)
 });
+
 on('#ajax', 'click', '.u_article_detail', function() {
   var container, uuid, pk, loader;
   container = this.parentElement;
   uuid = container.getAttribute('item-uuid');
   pk = container.getAttribute('user-pk');
   loader = document.getElementById("article_loader");
-  open_fullscreen("/article/detail/" + pk + "/" + uuid + "/", loader)
+  open_fullscreen("/users/detail/" + pk + "/" + uuid + "/", loader)
 });
+on('#ajax', 'click', '.c_article_detail', function() {
+  var uuid, pk, loader;
+  uuid = this.parentElement.getAttribute('item-uuid');
+  pk = this.parentElement.parentElement.getAttribute('user-pk');
+  loader = document.getElementById("article_loader");
+  open_fullscreen("/article/read/" + pk + "/" + uuid + "/", loader)
+});
+
 on('#ajax', 'click', '.u_good_detail', function() {
   var container, uuid, pk, loader;
   container = this.parentElement;

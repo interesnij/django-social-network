@@ -35,24 +35,6 @@ on('#ajax', 'click', '#community_add', function() {
   list_load(loader, url);
   document.querySelector(".community_fullscreen").style.display = "block";
 });
-
-on('#ajax', 'click', '.c_fullscreen', function() {
-  parent = this.parentElement; parent2 = parent.parentElement;
-  pk = parent2.getAttribute("community-id");
-  uuid = parent.getAttribute("item-id");
-  loader = document.getElementById("item_loader");
-  url = "/communities/item/" + pk + "/" + uuid + "/";
-  list_load(loader, url);
-  loader.parentElement.style.display = "block";
-});
-on('#ajax', 'click', '.c_article_detail', function() {
-  parent = this.parentElement; parent2 = parent.parentElement;
-  pk = parent2.getAttribute("community-id");
-  uuid = parent.getAttribute("item-id");
-  loader = document.getElementById("article_loader");
-  url = "/article/read/" + pk + "/" + uuid + "/"
-  list_load(loader, url);
-  loader.parentElement.style.display = "block";
 });
 on('#ajax', 'click', '.community_fullscreen_hide', function() {document.querySelector(".community_fullscreen").style.display = "none";document.getElementById("community_loader").innerHTML=""});
 on('#ajax', 'click', '.community_manage_fullscreen_hide', function() {document.querySelector(".manage_window_fullscreen").style.display = "none";document.getElementById("load_staff_window").innerHTML=""});
