@@ -1,9 +1,4 @@
-/*!
-   fullscreen open scripts for user
-  */
-//$('#avatar_reload').on('click', '.avatar_detail', function() {photo = $(this);photo_id = photo.data("id");user_uuid = photo.data("uuid");$('#photo_loader').html('').load("/gallery/load/avatar_detail/" + photo_id + "/" + user_uuid + "/");$('.photo_fullscreen').show();});
-//$('#ajax').on('click', '.u_photo_detail', function() {photo = $(this); photo_id = photo.data("id"); user_uuid = photo.parent().data("uuid");$('#photo_loader').html('').load("/gallery/load/u_photo/" + photo_id + "/" + user_uuid + "/");$('.photo_fullscreen').show();console.log("user photo open")});
-//$('#ajax').on('click', '.u_album_photo_detail', function() {photo = $(this); pk = photo.data("pk"); uuid = photo.parent().data("uuid"); uuid2 = photo.parent().data("uuid2");$('#photo_loader').html('').load("/gallery/load/u_album_photo/" + pk + "/" + uuid + "/" + uuid2 + "/");$('.photo_fullscreen').show();console.log("user album photo open")});
+
 function open_fullscreen(link, block) {
   var link_, elem;
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -16,7 +11,77 @@ function open_fullscreen(link, block) {
   }};
   link_.send();
 }
+function if_list(block){
+  // проверяем, если ли на странице блок с подгрузкой списка. Если есть, грузим список
+  if(block.querySelector('#news_load')){
+    var news_load, link;
+    news_load = block.querySelector('#news_load');link = news_load.getAttribute("data-link");
+    list_load(block.querySelector("#news_load"), link);
+  }else if(block.querySelector('#lenta_load')){
+    var lenta_load, link;
+    lenta_load = block.querySelector('#lenta_load');link = lenta_load.getAttribute("data-link");
+    list_load(block.querySelector("#lenta_load"), link);
+  }else if(block.querySelector('#lenta_community')){
+    var lenta_community, link;
+    lenta_community = block.querySelector('#lenta_community');link = lenta_community.getAttribute("data-link");
+    list_load(block.querySelector("#lenta_community"), link);
+  }else if(block.querySelector('#photo_load')){
+    var photo_load, link;
+    photo_load = block.querySelector('#photo_load');link = photo_load.getAttribute("data-link");
+    list_load(block.querySelector("#photo_load"), link);
+  }else if(block.querySelector('#album_photo_load')){
+    var album_photo_load, link;
+    album_photo_load = block.querySelector('#album_photo_load');link = album_photo_load.getAttribute("data-link");
+    list_load(block.querySelector("#album_photo_load"), link);
+  };
+}
 
+function list_load(block,link) {
+  // подгрузка списка
+  var request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );request.open( 'GET', link, true );request.onreadystatechange = function () {if ( request.readyState == 4 && request.status == 200 ) {block.innerHTML = request.responseText;}};request.send( null );
+}
+
+class Index {
+  // класс, работающий с подгрузкой блоков на сайте. Смена основного блока, листание отдельных элементов, и т.д.
+  static initLink() {document.body.querySelectorAll('.ajax').forEach( lin => lin.addEventListener('click', Index.push_url) );}
+  static push_url(event){
+    event.preventDefault();
+    var ajax_link, url;
+    ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    url = this.getAttribute('href');
+    if (url != window.location.pathname){
+      ajax_link.open( 'GET', url, true );
+      ajax_link.onreadystatechange = function () {
+        if ( this.readyState == 4 && this.status == 200 ) {
+          var rtr, elem_, ajax;
+          rtr = document.getElementById('ajax');
+          elem_ = document.createElement('span');
+          elem_.innerHTML = ajax_link.responseText;
+          ajax = elem_.querySelector("#reload_block");
+          rtr.innerHTML = ajax.innerHTML;
+          document.title = elem_.querySelector('title').innerHTML;
+          window.history.pushState({route: url}, "network", url);
+
+          Index.initLink();
+          if_list(rtr);
+          load_chart();
+        }
+      }
+      ajax_link.send();
+    }
+  };
+}
+
+//$('#ajax').on('click', '.u_photo_detail', function() {photo = $(this); photo_id = photo.data("id"); user_uuid = photo.parent().data("uuid");$('#photo_loader').html('').load("/gallery/load/u_photo/" + photo_id + "/" + user_uuid + "/");$('.photo_fullscreen').show();console.log("user photo open")});
+//$('#ajax').on('click', '.u_album_photo_detail', function() {photo = $(this); pk = photo.data("pk"); uuid = photo.parent().data("uuid"); uuid2 = photo.parent().data("uuid2");$('#photo_loader').html('').load("/gallery/load/u_album_photo/" + pk + "/" + uuid + "/" + uuid2 + "/");$('.photo_fullscreen').show();console.log("user album photo open")});
+
+on('#ajax', 'click', '.avatar_detail', function() {
+  var uuid, pk, loader;
+  uuid = this.getAttribute('data-uuid');
+  pk = this.getAttribute('data-pk');
+  loader = document.getElementById("photo_loader");
+  open_fullscreen("/gallery/load/avatar_detail/" + pk + "/" + uuid + "/", loader)
+});
 on('#ajax', 'click', '.fullscreen', function() {
   var container, uuid, pk, loader;
   container = this.parentElement;
@@ -114,79 +179,9 @@ on('#ajax', 'click', '.u_good_detail', function() {
      подгрузка лент и блоков
   */
 
-function if_list(block){
-  if(block.querySelector('#news_load')){
-    var news_load, link;
-    news_load = block.querySelector('#news_load');link = news_load.getAttribute("data-link");
-    list_load(block.querySelector("#news_load"), link);
-  }else if(block.querySelector('#lenta_load')){
-    var lenta_load, link;
-    lenta_load = block.querySelector('#lenta_load');link = lenta_load.getAttribute("data-link");
-    list_load(block.querySelector("#lenta_load"), link);
-  }else if(block.querySelector('#lenta_community')){
-    var lenta_community, link;
-    lenta_community = block.querySelector('#lenta_community');link = lenta_community.getAttribute("data-link");
-    list_load(block.querySelector("#lenta_community"), link);
-  }else if(block.querySelector('#photo_load')){
-    var photo_load, link;
-    photo_load = block.querySelector('#photo_load');link = photo_load.getAttribute("data-link");
-    list_load(block.querySelector("#photo_load"), link);
-  }else if(block.querySelector('#album_photo_load')){
-    var album_photo_load, link;
-    album_photo_load = block.querySelector('#album_photo_load');link = album_photo_load.getAttribute("data-link");
-    list_load(block.querySelector("#album_photo_load"), link);
-  };
-}
-function list_load(block,link) {var request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );request.open( 'GET', link, true );request.onreadystatechange = function () {if ( request.readyState == 4 && request.status == 200 ) {block.innerHTML = request.responseText;}};request.send( null );}
-
-class Index {
-  static initLink() {document.body.querySelectorAll('.ajax').forEach( lin => lin.addEventListener('click', Index.push_url) );}
-  static push_url(event){
-    event.preventDefault();
-    var ajax_link, url;
-    ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    url = this.getAttribute('href')
-    console.log(url, window.location.pathname);
-    if (url != window.location.pathname){
-      ajax_link.open( 'GET', url, true );
-      ajax_link.onreadystatechange = function () {
-        if ( this.readyState == 4 && this.status == 200 ) {
-          var rtr, elem_, ajax;
-          rtr = document.getElementById('ajax');
-          elem_ = document.createElement('span');
-          elem_.innerHTML = ajax_link.responseText;
-          ajax = elem_.querySelector("#reload_block");
-          rtr.innerHTML = ajax.innerHTML;
-          document.title = elem_.querySelector('title').innerHTML;
-          window.history.pushState({route: url}, "network", url);
-
-          Index.initLink();
-          if_list(rtr);
-          load_chart();
-        }
-      }
-      ajax_link.send();
-    }
-  };
-}
 
 Index.initLink();
 
 if_list(document.getElementById('ajax'));
 
 on('body', 'click', '.menu_drop', function() {var block = this.nextElementSibling;block.classList.toggle("show");});
-
-//function load_playlist(playlist_block, uuid) {list_load(playlist_block, '/users/load/playlist/' + uuid)};
-
-//function playlist_init(_playlist) {
-//  var cssSelector = {jPlayer: "#jquery_jplayer_1",cssSelectorAncestor: ".main-header"};
-//  var options = { swfPath: "/static/jquery.jplayer.swf", supplied: "oga, mp3", wmode: "window", smoothPlayBar: false, keyEnabled: true};
-//  var playlist = _playlist;
-//  var myPlaylist = new jPlayerPlaylist(cssSelector, playlist, options);
-//}
-//function my_playlist_play(track_id) {
-//  $("#jquery_jplayer_1").jPlayer("play", track_id);
-//};
-//function my_playlist_pause(track_id) {
-//  $("#jquery_jplayer_1").jPlayer("pause", track_id);
-//};
