@@ -7,10 +7,6 @@ on('#ajax', 'click', '.u_good_detail', function() {
   open_fullscreen('/goods/user/good/' + pk + '/' + uuid + '/', loader)
 });
 
-$('#ajax').on('click', '#c_good_add', function() {
-  $('#good_add_loader').html('').load("{% url 'good_add_community' pk=user.pk %}");
-  $('.good_add_fullscreen').show();
-})
 on('#ajax', 'click', '#c_good_add', function() {
   var container, pk, loader;
   container = this.parentElement;
