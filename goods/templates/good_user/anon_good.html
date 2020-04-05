@@ -1,7 +1,7 @@
 {% load liked_user %}
 
 {% if object %}
-<div class="mb-4 infinite-item" style="position: relative;" item-id="{{ object.uuid }}">
+<div class="mb-4" item-id="{{ object.uuid }}">
   {% if prev %}
     <a class="prev_item" href="{% url 'user_good' pk=prev.pk uuid=user.uuid %}">
       <svg class="svg_default" style="width:50px;height:50px;" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/><path fill="none" d="M0 0h24v24H0V0z"/></svg>
