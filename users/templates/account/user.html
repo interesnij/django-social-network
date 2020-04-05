@@ -18,7 +18,7 @@
                   <a class="col">
                       <figure class="mx-auto mb-3" id="avatar_reload">
                         {% if user.get_avatar %}
-                          <img src="{{ user.get_avatar.file.url }}" class="avatar_detail" style="cursor:pointer" data-uuid="{{ user.uuid }}" data-id="{{ user.get_avatar.id }}">
+                          <img src="{{ user.get_avatar.file.url }}" class="avatar_detail" style="cursor:pointer" data-uuid="{{ user.uuid }}" data-pk="{{ user.get_avatar.id }}">
                         {% else %}
                           <svg fill="currentColor" class="svg_default" style="width:100%;height: auto;"xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
                         {% endif %}

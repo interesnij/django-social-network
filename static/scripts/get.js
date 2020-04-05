@@ -72,9 +72,16 @@ class Index {
   };
 }
 
-//$('#ajax').on('click', '.u_photo_detail', function() {photo = $(this); photo_id = photo.data("id"); user_uuid = photo.parent().data("uuid");$('#photo_loader').html('').load("/gallery/load/u_photo/" + photo_id + "/" + user_uuid + "/");$('.photo_fullscreen').show();console.log("user photo open")});
 //$('#ajax').on('click', '.u_album_photo_detail', function() {photo = $(this); pk = photo.data("pk"); uuid = photo.parent().data("uuid"); uuid2 = photo.parent().data("uuid2");$('#photo_loader').html('').load("/gallery/load/u_album_photo/" + pk + "/" + uuid + "/" + uuid2 + "/");$('.photo_fullscreen').show();console.log("user album photo open")});
 
+on('#ajax', 'click', '.u_photo_detail', function() {
+  var container, uuid, pk, loader;
+  container = this.parentElement;
+  uuid = container.getAttribute('data-uuid');
+  pk = this.getAttribute('data-pk');
+  loader = document.getElementById("photo_loader");
+  open_fullscreen("/gallery/load/u_photo/" + pk + "/" + uuid + "/", loader)
+});
 on('#ajax', 'click', '.avatar_detail', function() {
   var uuid, pk, loader;
   uuid = this.getAttribute('data-uuid');
