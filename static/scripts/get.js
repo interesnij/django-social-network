@@ -120,35 +120,42 @@ class Index {
   static initLink() {document.body.querySelectorAll('.ajax').forEach( lin => lin.addEventListener('click', Index.push_url) );}
   static push_url(event){
     event.preventDefault();
-    var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    var url = this.getAttribute('href')
+    var ajax_link, url;
+    ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    url = this.getAttribute('href')
     ajax_link.open( 'GET', url, true );
       ajax_link.send();
       ajax_link.onreadystatechange = function () {
         if ( this.readyState == 4 && this.status == 200 ) {
-          var rtr = document.getElementById('ajax');
-          var elem_ = document.createElement('span');
+          var rtr, elem_, ajax;
+          rtr = document.getElementById('ajax');
+          elem_ = document.createElement('span');
           elem_.innerHTML = ajax_link.responseText;
-          var ajax = elem_.querySelector("#reload_block");
-          rtr.innerHTML = '';
+          ajax = elem_.querySelector("#reload_block");
+          //rtr.innerHTML = '';
+          rtr.innerHTML = ajax;
           document.title = elem_.querySelector('title').innerHTML;
-          rtr.append(ajax);
           Index.initLink();
           window.history.pushState({route: url}, "network", url);
           if(rtr.querySelector('#news_load')){
-            var news_load = rtr.querySelector('#news_load');var link = news_load.getAttribute("data-link");
+            var news_load, link;
+            news_load = rtr.querySelector('#news_load');link = news_load.getAttribute("data-link");
             list_load(rtr.querySelector("#news_load"), link);
           }else if(rtr.querySelector('#lenta_load')){
-            var lenta_load = rtr.querySelector('#lenta_load');var link = lenta_load.getAttribute("data-link");
+            var lenta_load, link;
+            lenta_load = rtr.querySelector('#lenta_load');link = lenta_load.getAttribute("data-link");
             list_load(rtr.querySelector("#lenta_load"), link);
           }else if(rtr.querySelector('#lenta_community')){
-            var lenta_community = rtr.querySelector('#lenta_community');var link = lenta_community.getAttribute("data-link");
+            var lenta_community, link;
+            lenta_community = rtr.querySelector('#lenta_community');link = lenta_community.getAttribute("data-link");
             list_load(rtr.querySelector("#lenta_community"), link);
           }else if(rtr.querySelector('#photo_load')){
-            var photo_load = rtr.querySelector('#photo_load');var link = photo_load.getAttribute("data-link");
+            var photo_load, link;
+            photo_load = rtr.querySelector('#photo_load');link = photo_load.getAttribute("data-link");
             list_load(rtr.querySelector("#photo_load"), link);
           }else if(rtr.querySelector('#album_photo_load')){
-            var album_photo_load = rtr.querySelector('#album_photo_load');var link = album_photo_load.getAttribute("data-link");
+            var album_photo_load, link;
+            album_photo_load = rtr.querySelector('#album_photo_load');link = album_photo_load.getAttribute("data-link");
             list_load(rtr.querySelector("#album_photo_load"), link);
           };
           load_chart();
