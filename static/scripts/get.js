@@ -20,14 +20,14 @@ function open_fullscreen(link, block) {
 on('#ajax', 'click', '.fullscreen', function() {
   var container = this.parentElement;
   var uuid = container.getAttribute('item-uuid');
-  var pk = this.getAttribute('user-pk');
+  var pk = container.getAttribute('user-pk');
   var loader = document.getElementById("item_loader");
   open_fullscreen("/users/detail/item/" + pk + "/" + uuid + "/", loader)
 });
 on('#ajax', 'click', '.u_article_detail', function() {
   var container = this.parentElement;
   var uuid = container.getAttribute('item-uuid');
-  var pk = this.getAttribute('user-pk');
+  var pk = container.getAttribute('user-pk');
   var loader = document.getElementById("article_loader");
   open_fullscreen("/article/detail/" + pk + "/" + uuid + "/", loader)
 });
