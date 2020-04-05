@@ -132,7 +132,7 @@ class Index {
           elem_ = document.createElement('span');
           elem_.innerHTML = ajax_link.responseText;
           ajax = elem_.querySelector("#reload_block");
-          rtr.innerHTML = ajax;
+          rtr.innerHTML = ajax.innerHTML;
           document.title = elem_.querySelector('title').innerHTML;
           Index.initLink();
           window.history.pushState({route: url}, "network", url);
