@@ -128,7 +128,7 @@ on('#ajax', 'click', '.reply_comment', function() {
   form.value = objectUser + ', ';
   this.nextElementSibling.style.display = "block";
   form.focus();
-})
+}) 
 
 //$('body').on('click', '.comment_image', function() {photo = $(this);pk = photo.data("id");uuid = photo.data("uuid");$('#photo_loader').html('').load("/gallery/load/comment/" + pk + "/" + uuid + "/"); $('.photo_fullscreen').show();console.log("show user photos for select image")});
 
