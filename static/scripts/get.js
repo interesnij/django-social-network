@@ -72,15 +72,6 @@ class Index {
   };
 }
 
-$('#ajax').on('click', '.u_album_photo_detail', function() {
-  photo = $(this);
-  pk = photo.data("pk");
-  uuid = photo.parent().data("uuid");
-  uuid2 = photo.parent().data("uuid2");
-  $('#photo_loader').html('').load("/gallery/load/u_album_photo/" + pk + "/" + uuid + "/" + uuid2 + "/");
-  $('.photo_fullscreen').show();
-});
-
 on('#ajax', 'click', '.u_album_photo_detail', function() {
   var container, uuid, uuid2, pk, loader;
   container = this.parentElement;
