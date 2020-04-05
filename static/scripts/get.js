@@ -1,7 +1,6 @@
 /*!
    fullscreen open scripts for user
   */
-//$('#ajax').on('click', '.u_article_detail', function() {item = $(this).parents(".infinite-item");pk = item.attr("user-id");uuid = item.attr("item-id"); $('#article_loader').html('').load("/article/detail/" + pk + "/" + uuid + "/"); $('.article_fullscreen').show().addClass("article_open_100");console.log("article user open")});
 //$('#ajax').on('click', '.fullscreen', function() {item = $(this).parents(".infinite-item");pk = item.attr("user-id");uuid = item.attr("item-id");$('#item_loader').html('').load("/users/detail/item/" + pk + "/" + uuid + "/"); $('.item_fullscreen').show();console.log("item user open")});
 //$('#avatar_reload').on('click', '.avatar_detail', function() {photo = $(this);photo_id = photo.data("id");user_uuid = photo.data("uuid");$('#photo_loader').html('').load("/gallery/load/avatar_detail/" + photo_id + "/" + user_uuid + "/");$('.photo_fullscreen').show();});
 //$('#ajax').on('click', '.u_photo_detail', function() {photo = $(this); photo_id = photo.data("id"); user_uuid = photo.parent().data("uuid");$('#photo_loader').html('').load("/gallery/load/u_photo/" + photo_id + "/" + user_uuid + "/");$('.photo_fullscreen').show();console.log("user photo open")});
@@ -19,6 +18,13 @@ function open_fullscreen(link, block) {
   link_.send();
 }
 
+on('#ajax', 'click', '.u_article_detail', function() {
+  var container = this.parentElement;
+  var uuid = container.getAttribute('item-uuid');
+  var pk = this.getAttribute('user-pk');
+  var loader = document.getElementById("article_loader");
+  open_fullscreen("/article/detail/" + pk + "/" + uuid + "/", loader)
+});
 on('#ajax', 'click', '.u_good_detail', function() {
   var goods_container = this.parentElement;
   var user_uuid = goods_container.getAttribute('data-uuid');
