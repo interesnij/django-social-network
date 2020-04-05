@@ -64,7 +64,7 @@ on('#ajax', 'click', '.u_item_comments.comments_open', function() {
   parent = this.parentElement.parentElement.parentElement;
   container = parent.querySelector(".u_load_comments");
   container.innerHTML="";
-  _this = parent.querySelector(".u_load_comments");
+  _this = parent.querySelector(".u_item_comments");
   _this.classList.add("comments_close");
   _this.classList.remove("comments_open");
 });

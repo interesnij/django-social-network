@@ -72,7 +72,7 @@ on('#ajax', 'click', '.c_item_comments.comments_close', function() {
 });
 on('#ajax', 'click', '.c_item_comments.comments_open', function() {
   parent = this.parentElement.parentElement.parentElement;
-  _this = parent.querySelector(".c_load_comments");
+  _this = parent.querySelector(".c_item_comments");
   _this.innerHTML="";
   _this.classList.add("comments_close");
   _this.classList.remove("comments_open");
