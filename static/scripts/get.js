@@ -124,15 +124,27 @@ on('#ajax', 'click', '.u_good_detail', function() {
 on('#ajax', 'click', '.u_all_likes', function() {
   var container, uuid, pk, loader;
   container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  pk = this.getAttribute('user-pk');
-  console.log(container);
+  pk = container.getAttribute('user-pk');
   uuid = container.getAttribute('item-uuid');
   loader = document.getElementById("votes_loader");
   open_fullscreen("/item_window/all_user_like/" + uuid + "/" + pk + "/", loader)
 });
-
-//$('#ajax').on('click', '.u_all_dislikes', function() {var btn = $(this); item = $(this).parents('.infinite-item');pk = item.attr("user-id");uuid = item.attr("item-id");$('#votes_loader').html('').load("/window/all_user_dislike/" + uuid + "/" + pk + "/"); $('.votes_fullscreen').show();console.log("dislikes user open")});
-//$('#ajax').on('click', '.u_all_reposts', function() {var btn = $(this); item = $(this).parents('.infinite-item');pk = item.attr("user-id");uuid = item.attr("item-id");$('#votes_loader').html('').load("/window/all_user_reposts/" + uuid + "/" + pk + "/"); $('.votes_fullscreen').show();console.log("reposts user open")});
+on('#ajax', 'click', '.u_all_dislikes', function() {
+  var container, uuid, pk, loader;
+  container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
+  pk = container.getAttribute('user-pk');
+  uuid = container.getAttribute('item-uuid');
+  loader = document.getElementById("votes_loader");
+  open_fullscreen("/item_window/all_user_dislike/" + uuid + "/" + pk + "/", loader)
+});
+on('#ajax', 'click', '.u_all_reposts', function() {
+  var container, uuid, pk, loader;
+  container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
+  pk = container.getAttribute('user-pk');
+  uuid = container.getAttribute('item-uuid');
+  loader = document.getElementById("votes_loader");
+  open_fullscreen("/item_window/all_user_reposts/" + uuid + "/" + pk + "/", loader)
+});
 
 
 //$('.add_board_hide').on('click', function() {$('#for_settings').hide();});
