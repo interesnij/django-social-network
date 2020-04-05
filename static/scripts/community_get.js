@@ -68,10 +68,10 @@ on('#ajax', 'click', '.c_item_comments.comments_close', function() {
   _this.classList.add("comments_open");
   _this.classList.remove("comments_close");
   url = "/community/comment/" + uuid + "/" + pk + "/";
-  list_load(this.parentElement.querySelector(".c_load_comments"), url);
+  list_load(parent.querySelector(".c_load_comments"), url);
 });
 on('#ajax', 'click', '.c_item_comments.comments_open', function() {
-  parent = this.parentElement.parentElement.parentElement;
+  parent = this.parentElement.parentElement;
   _this.innerHTML="";
   _this = parent.querySelector(".c_load_comments");
   _this.classList.add("comments_close");
