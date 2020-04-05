@@ -55,7 +55,7 @@ on('#ajax', 'click', '#community_add', function() {
 });
 
 on('#ajax', 'click', '#community_article_add', function() {
-  var pk = this.getAttribute('community-pk');
+  var pk = this.getAttribute('data-pk'); 
   open_fullscreen("/article/add_community/" + pk + "/", document.getElementById("community_loader"))
 });
 
