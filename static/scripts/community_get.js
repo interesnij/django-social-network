@@ -60,15 +60,14 @@ on('#ajax', 'click', '#community_article_add', function() {
 });
 
 on('#ajax', 'click', '.c_item_comments.comments_close', function() {
-  var parent, pk, uuid, url
+  var parent, pk, uuid
   parent = this.parentElement.parentElement.parentElement.parentElement;
   pk = parent.parentElement.getAttribute("community-pk");
   uuid = parent.getAttribute("item-uuid");
   _this = parent.querySelector(".c_item_comments");
   _this.classList.remove();
   _this.classList.add("comments_open");
-  url = "/community/comment/" + uuid + "/" + pk + "/";
-  list_load(parent.querySelector(".c_load_comments"), url); 
+  list_load(this.parentElement.parentElement.querySelector(".c_load_comments"), "/community/comment/" + uuid + "/" + pk + "/");
 });
 on('#ajax', 'click', '.c_item_comments.comments_open', function() {
   parent = this.parentElement.parentElement.parentElement;
