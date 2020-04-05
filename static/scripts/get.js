@@ -214,6 +214,15 @@ on('#ajax', 'click', '#community_article_add', function() {
   open_fullscreen("/article/add_community/" + pk + "/", document.getElementById("community_loader"))
 });
 
+on('#ajax', 'click', '.article_fullscreen_hide', function() {document.querySelector(".article_fullscreen").style.display = "none";document.getElementById("article_loader").innerHTML=""});
+on('#ajax', 'click', '.photo_fullscreen_hide', function() {document.querySelector(".photo_fullscreen").style.display = "none";document.getElementById("photo_loader").innerHTML=""});
+on('#ajax', 'click', '.votes_fullscreen_hide', function() {document.querySelector(".votes_fullscreen").style.display = "none";document.getElementById("votes_loader").innerHTML=""});
+on('#ajax', 'click', '.item_fullscreen_hide', function() {document.querySelector(".item_fullscreen").style.display = "none";document.getElementById("item_loader").innerHTML=""});
+on('#ajax', 'click', '.community_fullscreen_hide', function() {document.querySelector(".community_fullscreen").style.display = "none";document.getElementById("community_loader").innerHTML=""});
+on('#ajax', 'click', '.community_manage_fullscreen_hide', function() {document.querySelector(".manage_window_fullscreen").style.display = "none";document.getElementById("load_staff_window").innerHTML=""});
+on('#ajax', 'click', '.good_fullscreen_hide', function() {document.querySelector(".good_fullscreen").style.display = "none";document.getElementById("good_loader").innerHTML=""});
+on('#ajax', 'click', '.stat_fullscreen_hide', function() {document.querySelector(".stat_fullscreen").style.display = "none";document.getElementById("stat_loader").innerHTML=""});
+
 // END FULLSCREENS //
 //--------------------------------------------------------------------//
 
@@ -235,17 +244,27 @@ on('#ajax', 'click', '#community_article_add', function() {
   //$('body').on('click', '.u_photo_edit', function() {$('#block_description_form').show();console.log("user description photo open");});
   //$("#u_albums_add").click(function() {$('#photos_add_window').show();console.log("user photo form open")})
   //$("#u_albums_add").click(function() {user = $(this);user_id = user.data("uuid");$('#photo_add_loader').html('').load("/gallery/user/add_album/" + user_id + "/");$('.photo_fullscreen').show();console.log("user album add open")})
-  /*!
-     fullscreen close scripts
-    */
-    on('#ajax', 'click', '.article_fullscreen_hide', function() {document.querySelector(".article_fullscreen").style.display = "none";document.getElementById("article_loader").innerHTML=""});
-    on('#ajax', 'click', '.photo_fullscreen_hide', function() {document.querySelector(".photo_fullscreen").style.display = "none";document.getElementById("photo_loader").innerHTML=""});
-    on('#ajax', 'click', '.votes_fullscreen_hide', function() {document.querySelector(".votes_fullscreen").style.display = "none";document.getElementById("votes_loader").innerHTML=""});
-    on('#ajax', 'click', '.item_fullscreen_hide', function() {document.querySelector(".item_fullscreen").style.display = "none";document.getElementById("item_loader").innerHTML=""});
 
-    on('#ajax', 'click', '.good_fullscreen_hide', function() {document.querySelector(".good_fullscreen").style.display = "none";document.getElementById("good_loader").innerHTML=""});
-    on('#ajax', 'click', '.stat_fullscreen_hide', function() {document.querySelector(".stat_fullscreen").style.display = "none";document.getElementById("stat_loader").innerHTML=""});
 
+  on('#ajax', 'click', '.u_item_comments.comments_close', function() {
+    var parent, pk, uuid, url
+    parent = this.parentElement.parentElement.parentElement.parentElement;
+    pk = parent.parentElement.getAttribute("user-pk");
+    uuid = parent.getAttribute("item-uuid");
+    _this = parent.querySelector(".u_item_comments");
+    _this.classList.add("comments_open");
+    _this.classList.remove("comments_close");
+    url = "/user/comment/" + uuid + "/" + pk + "/";
+    list_load(parent.querySelector(".u_load_comments"), url);
+  });
+  on('#ajax', 'click', '.u_item_comments.comments_open', function() {
+    parent = this.parentElement.parentElement.parentElement;
+    container = parent.querySelector(".u_load_comments");
+    container.innerHTML="";
+    _this = parent.querySelector(".u_load_comments");
+    _this.classList.add("comments_close");
+    _this.classList.remove("comments_open");
+  });
 
   on('#ajax', 'click', '.c_item_comments.comments_close', function() {
     var parent, pk, uuid, url
@@ -260,9 +279,8 @@ on('#ajax', 'click', '#community_article_add', function() {
   });
   on('#ajax', 'click', '.c_item_comments.comments_open', function() {
     parent = this.parentElement.parentElement.parentElement;
-    container = parent.querySelector(".load_comments");
-    container.innerHTML="";
-    _this = parent.querySelector(".c_comments");
+    _this = parent.querySelector(".c_load_comments");
+    _this.innerHTML="";
     _this.classList.add("comments_close");
     _this.classList.remove("comments_open");
   });
@@ -292,21 +310,12 @@ on('#ajax', 'click', '#community_article_add', function() {
 //$('body').on('click', '.c_item_repost', function() {item = $(this).parents('.infinite-item');item_id = item.attr("item-id"); $('#user_item_pk').html(item_id);});
 
 
-
-/*!
-   user comments scripts
-  */
-//  $('body').on('click', '.u_comment.comments_close', function() {btn = $(this);item = btn.closest(".infinite-item");uuid = item.attr("item-id");pk = item.attr("user-id");container = item.find(".load_comments");$.ajax({url: "/user/comment/" + uuid + "/" + pk + "/", data: {'uuid': uuid}, cache: false,beforeSend: function() { item.find(".load_comments").html("<span style='display:flex;justify-content: center;'><img src='/static/images/loading.gif'></span>"); },success: function(data) {   //container.html(data.comments);btn.addClass("comments_open").removeClass("comments_close");console.log("show comments")}}); return false;});
-//  $('body').on('click', '.u_comment.comments_open', function() {btn = $(this);item = btn.closest(".infinite-item");container = item.find(".load_comments");container.empty();btn.removeClass('comments_open').addClass("comments_close");console.log("hide comments");});
-
-
 /*!
      подгрузка лент и блоков
   */
 
 
 Index.initLink();
-
 if_list(document.getElementById('ajax'));
 
 on('body', 'click', '.menu_drop', function() {var block = this.nextElementSibling;block.classList.toggle("show");});
