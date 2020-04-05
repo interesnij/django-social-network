@@ -114,6 +114,29 @@ on('#ajax', 'click', '.u_good_detail', function() {
      подгрузка лент и блоков
   */
 
+function if_list(block){
+  if(block.querySelector('#news_load')){
+    var news_load, link;
+    news_load = block.querySelector('#news_load');link = news_load.getAttribute("data-link");
+    list_load(block.querySelector("#news_load"), link);
+  }else if(block.querySelector('#lenta_load')){
+    var lenta_load, link;
+    lenta_load = block.querySelector('#lenta_load');link = lenta_load.getAttribute("data-link");
+    list_load(block.querySelector("#lenta_load"), link);
+  }else if(block.querySelector('#lenta_community')){
+    var lenta_community, link;
+    lenta_community = block.querySelector('#lenta_community');link = lenta_community.getAttribute("data-link");
+    list_load(block.querySelector("#lenta_community"), link);
+  }else if(block.querySelector('#photo_load')){
+    var photo_load, link;
+    photo_load = block.querySelector('#photo_load');link = photo_load.getAttribute("data-link");
+    list_load(block.querySelector("#photo_load"), link);
+  }else if(block.querySelector('#album_photo_load')){
+    var album_photo_load, link;
+    album_photo_load = block.querySelector('#album_photo_load');link = album_photo_load.getAttribute("data-link");
+    list_load(block.querySelector("#album_photo_load"), link);
+  };
+}
 function list_load(block,link) {var request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );request.open( 'GET', link, true );request.onreadystatechange = function () {if ( request.readyState == 4 && request.status == 200 ) {block.innerHTML = request.responseText;}};request.send( null );}
 
 class Index {
@@ -136,27 +159,8 @@ class Index {
           document.title = elem_.querySelector('title').innerHTML;
           Index.initLink();
           window.history.pushState({route: url}, "network", url);
-          if(rtr.querySelector('#news_load')){
-            var news_load, link;
-            news_load = rtr.querySelector('#news_load');link = news_load.getAttribute("data-link");
-            list_load(rtr.querySelector("#news_load"), link);
-          }else if(rtr.querySelector('#lenta_load')){
-            var lenta_load, link;
-            lenta_load = rtr.querySelector('#lenta_load');link = lenta_load.getAttribute("data-link");
-            list_load(rtr.querySelector("#lenta_load"), link);
-          }else if(rtr.querySelector('#lenta_community')){
-            var lenta_community, link;
-            lenta_community = rtr.querySelector('#lenta_community');link = lenta_community.getAttribute("data-link");
-            list_load(rtr.querySelector("#lenta_community"), link);
-          }else if(rtr.querySelector('#photo_load')){
-            var photo_load, link;
-            photo_load = rtr.querySelector('#photo_load');link = photo_load.getAttribute("data-link");
-            list_load(rtr.querySelector("#photo_load"), link);
-          }else if(rtr.querySelector('#album_photo_load')){
-            var album_photo_load, link;
-            album_photo_load = rtr.querySelector('#album_photo_load');link = album_photo_load.getAttribute("data-link");
-            list_load(rtr.querySelector("#album_photo_load"), link);
-          };
+
+          if_list(rtr);
           load_chart();
         }
       }
@@ -166,23 +170,7 @@ class Index {
 
 Index.initLink();
 
-rrr = document.getElementById('ajax');
-if(rrr.querySelector('#news_load')){
-  var news_load = rrr.querySelector('#news_load');var link = news_load.getAttribute("data-link");
-  list_load(rrr.querySelector("#news_load"), link);
-}else if(rrr.querySelector('#lenta_load')){
-  var lenta_load = rrr.querySelector('#lenta_load');var link = lenta_load.getAttribute("data-link");
-  list_load(rrr.querySelector("#lenta_load"), link);
-}else if(rrr.querySelector('#lenta_community')){
-  var lenta_community = rrr.querySelector('#lenta_community');var link = lenta_community.getAttribute("data-link");
-  list_load(rrr.querySelector("#lenta_community"), link);
-}else if(rrr.querySelector('#photo_load')){
-  var photo_load = rrr.querySelector('#photo_load');var link = photo_load.getAttribute("data-link");
-  list_load(rrr.querySelector("#photo_load"), link);
-}else if(rrr.querySelector('#album_photo_load')){
-  var album_photo_load = rrr.querySelector('#album_photo_load');var link = album_photo_load.getAttribute("data-link");
-  list_load(rrr.querySelector("#album_photo_load"), link);
-};
+if_list(document.getElementById('ajax'));
 
 on('body', 'click', '.menu_drop', function() {var block = this.nextElementSibling;block.classList.toggle("show");});
 
