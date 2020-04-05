@@ -13,7 +13,7 @@ function open_fullscreen(link, block) {
     elem.innerHTML = link_.responseText;
     block.parentElement.style.display = "block";
     var _elem;
-    _elem.innerHTML = elem;
+    _elem.innerHTML = link_.responseText;
     block.append(_elem)
   }};
   link_.send();
