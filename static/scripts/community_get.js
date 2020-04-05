@@ -65,14 +65,14 @@ on('#ajax', 'click', '.c_item_comments.comments_close', function() {
   pk = parent.parentElement.getAttribute("community-pk");
   uuid = parent.getAttribute("item-uuid");
   _this = parent.querySelector(".c_item_comments");
-  this.classList.remove();
-  this.classList.add("c_item_comments","comments_open");
+  this.classList.remove("comments_close");
+  this.classList.add("comments_open");
   list_load(this.parentElement.parentElement.parentElement.querySelector(".c_load_comments"), "/community/comment/" + uuid + "/" + pk + "/");
 });
 on('#ajax', 'click', '.c_item_comments.comments_open', function() {
   parent = this.parentElement.parentElement.parentElement;
   _this = parent.querySelector(".c_load_comments");
   _this.innerHTML="";
-  this.classList.remove();
-  this.classList.add("c_item_comments","comments_close");
+  this.classList.remove("comments_open");
+  this.classList.add("comments_close");
 });
