@@ -146,8 +146,8 @@ class Index {
     var ajax_link, url;
     ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     url = this.getAttribute('href')
-    console.log(url, window.location.href);
-    if (url != window.location.href){
+    console.log(url, window.location.pathname);
+    if (url != window.location.pathname){
       ajax_link.open( 'GET', url, true );
       ajax_link.onreadystatechange = function () {
         if ( this.readyState == 4 && this.status == 200 ) {
