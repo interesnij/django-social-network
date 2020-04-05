@@ -124,12 +124,12 @@ class Index {
     ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     url = this.getAttribute('href')
     ajax_link.open( 'GET', url, true );
-      ajax_link.send();
+
       ajax_link.onreadystatechange = function () {
         if ( this.readyState == 4 && this.status == 200 ) {
           var rtr, elem_, ajax;
           rtr = document.getElementById('ajax');
-          elem_.innerHTML = ajax_link.responseText;
+          elem_ = ajax_link.responseText;
           ajax = elem_.querySelector("#reload_block");
           rtr.innerHTML = ajax;
           document.title = elem_.querySelector('title').innerHTML;
@@ -159,6 +159,7 @@ class Index {
           load_chart();
         }
       }
+      ajax_link.send();
   };
 }
 
