@@ -127,7 +127,7 @@ on('#ajax', 'click', '.u_all_likes', function() {
   pk = this.getAttribute('user-pk');
   uuid = container.getAttribute('item-uuid');
   loader = document.getElementById("votes_loader");
-  open_fullscreen("/window/all_user_like/" + uuid + "/" + pk + "/", loader)
+  open_fullscreen("/item_window/all_user_like/" + uuid + "/" + pk + "/", loader)
 });
 
 //$('#ajax').on('click', '.u_all_dislikes', function() {var btn = $(this); item = $(this).parents('.infinite-item');pk = item.attr("user-id");uuid = item.attr("item-id");$('#votes_loader').html('').load("/window/all_user_dislike/" + uuid + "/" + pk + "/"); $('.votes_fullscreen').show();console.log("dislikes user open")});
