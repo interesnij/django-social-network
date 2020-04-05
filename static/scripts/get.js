@@ -11,7 +11,7 @@ function open_fullscreen(link, block) {
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
     elem = document.createElement('span');
-    elem.innerHTML = link_.responseText;
+    elem = link_.responseText;
     block.parentElement.style.display = "block";
     block.append(elem.innerHTML)
   }};
