@@ -123,7 +123,7 @@ on('#ajax', 'click', '.u_good_detail', function() {
 on('#ajax', 'click', '.item_stat_f', function() {
   var parent, pk, uuid, loader
   parent = this.parentElement.parentElement.parentElement.parentElement.parentElement;
-  uuid = parent.getAttribute("item-id");
+  uuid = parent.getAttribute("item-uuid");
   loader = document.getElementById("stat_loader");
   open_fullscreen("/stat/item/" + uuid + "/", loader)
 });
