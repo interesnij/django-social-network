@@ -59,18 +59,21 @@ on('#ajax', 'click', '#community_article_add', function() {
   open_fullscreen("/article/add_community/" + pk + "/", document.getElementById("community_loader"))
 });
 
-on('#ajax', 'click', '.c_item_comments', function() {
+on('#ajax', 'click', '.c_item_comments.comments_close', function() {
   var parent, pk, uuid, url
   parent = this.parentElement.parentElement.parentElement.parentElement;
   pk = parent.parentElement.getAttribute("community-pk");
   uuid = parent.getAttribute("item-uuid");
-  this.classList.add("c_item_comments_open");
+  _this = parent.querySelector(".c_item_comments");
+  _this.classList.add("comments_open");
+  _this.classList.remove("comments_close");
   url = "/community/comment/" + uuid + "/" + pk + "/";
   list_load(parent.querySelector(".c_load_comments"), url);
 });
-on('#ajax', 'click', '.c_item_comments_open', function() {
+on('#ajax', 'click', '.c_item_comments.comments_open', function() {
   parent = this.parentElement.parentElement.parentElement;
-  _this = parent.querySelector(".c_load_comments");
   _this.innerHTML="";
-  this.classList.replace("c_item_comments_open", "c_item_comments");
+  _this = parent.querySelector(".c_load_comments");
+  _this.classList.add("comments_close");
+  _this.classList.remove("comments_open");
 });
