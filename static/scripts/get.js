@@ -96,24 +96,27 @@ on('#ajax', 'click', '.stat_fullscreen_hide', function() {document.querySelector
 // END FULLSCREENS //
 //--------------------------------------------------------------------//
 
-//$('.add_board_hide').on('click', function() {$('#for_settings').hide();});
-//$('#images_upload').on('click', function() {$('#for_images_upload').show();});
-//$('#settings').on('click', function() {$('#for_settings').show();});
-//$('#gallery').on('click', function() {$('#for_gallery').show();});
-//$('#doc').on('click', function() {$('#for_doc').show();});
-//('#good').on('click', function() {$('#for_good').show();});
-//$('#question').on('click', function() {$('#for_question').show();});
-/*!
-   fullscreen open scripts for community
-  */
-
-  //$('#ajax').on('click', '#good_add', function() {$('#good_add_loader').html('').load("{% url 'good_add_community' pk=user.pk %}");$('.good_add_fullscreen').show();})
-  //$('#ajax').on('click', '#article_add', function() {$('#article_loader').html('').load("{% url 'article_add_user' pk=user.pk %}"); $('.article_fullscreen').show();})
-  //$('#ajax').on('click', '.u_photos_add', function() { $('#photos_add_window').show();console.log("user photos add open")})
-  //$('#ajax').on('click', '.u_albums_add', function() {user = $(this);user_id = user.data("uuid"); $('#photo_add_loader').html('').load("/gallery/user/add_album/" + user_id + "/"); $('.photofullscreen').show();console.log("user album photos add open")})
-  //$('body').on('click', '.u_photo_edit', function() {$('#block_description_form').show();console.log("user description photo open");});
-  //$("#u_albums_add").click(function() {$('#photos_add_window').show();console.log("user photo form open")})
-  //$("#u_albums_add").click(function() {user = $(this);user_id = user.data("uuid");$('#photo_add_loader').html('').load("/gallery/user/add_album/" + user_id + "/");$('.photo_fullscreen').show();console.log("user album add open")})
+on('#ajax', 'click', '#add_board_hide', function() {
+  document.querySelector('#for_settings').style.display = "block";
+});
+on('#ajax', 'click', '#images_upload', function() {
+  document.querySelector('#for_images_upload').style.display = "block";
+});
+on('#ajax', 'click', '#settings', function() {
+  document.querySelector('#for_settings').style.display = "block";
+});
+on('#ajax', 'click', '#gallery', function() {
+  document.querySelector('#for_gallery').style.display = "block";
+});
+on('#ajax', 'click', '#doc', function() {
+  document.querySelector('#for_doc').style.display = "block";
+});
+on('#ajax', 'click', '#good', function() {
+  document.querySelector('#for_good').style.display = "block";
+});
+on('#ajax', 'click', '#question', function() {
+  document.querySelector('#for_question').style.display = "block";
+});
 
   /*!
      comments scripts
@@ -128,7 +131,7 @@ on('#ajax', 'click', '.reply_comment', function() {
   form.value = objectUser + ', ';
   this.nextElementSibling.style.display = "block";
   form.focus();
-}) 
+})
 
 //$('body').on('click', '.comment_image', function() {photo = $(this);pk = photo.data("id");uuid = photo.data("uuid");$('#photo_loader').html('').load("/gallery/load/comment/" + pk + "/" + uuid + "/"); $('.photo_fullscreen').show();console.log("show user photos for select image")});
 

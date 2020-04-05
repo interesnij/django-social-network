@@ -15,3 +15,18 @@ on('#ajax', 'click', '.u_photo_detail', function() {
   loader = document.getElementById("photo_loader");
   open_fullscreen("/gallery/load/u_photo/" + pk + "/" + uuid + "/", loader)
 });
+on('#ajax', 'click', '.u_photos_add', function() {
+  document.querySelector('#photos_add_window').style.display =="none";
+})
+
+on('#ajax', 'click', '#u_albums_add', function() {
+  var container, uuid, loader;
+  container = this.parentElement;
+  uuid = this.getAttribute('data-uuid');
+  loader = document.getElementById("photo_loader");
+  open_fullscreen("/gallery/user/add_album/" + uuid + "/", loader)
+});
+
+on('#ajax', 'click', '.u_photo_edit', function() {
+  document.querySelector('#block_description_form').style.display =="none";
+})

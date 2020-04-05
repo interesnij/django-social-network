@@ -24,6 +24,11 @@ on('#ajax', 'click', '.u_article_detail', function() {
   open_fullscreen("/users/detail/" + pk + "/" + uuid + "/", loader)
 });
 
+on('#ajax', 'click', '#article_add', function() {
+  var pk = this.getAttribute('data-pk');
+  open_fullscreen("/article/add_user/" + pk + "/", document.getElementById("community_loader"))
+});
+
 on('#ajax', 'click', '.u_all_likes', function() {
   var container, uuid, pk, loader;
   container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
