@@ -7,6 +7,9 @@ canvas{
   -webkit-user-select: none;
   -ms-user-select: none;
 }
+.dropdown-menu a{
+  cursor:pointer
+}
 .stat_city{
   margin: 10px;
 }
