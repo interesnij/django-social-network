@@ -129,7 +129,8 @@ class Index {
         if ( this.readyState == 4 && this.status == 200 ) {
           var rtr, elem_, ajax;
           rtr = document.getElementById('ajax');
-          elem_ = ajax_link.responseText;
+          elem_ = document.createElement('span');
+          elem_.innerHTML = ajax_link.responseText;
           ajax = elem_.querySelector("#reload_block");
           rtr.innerHTML = ajax;
           document.title = elem_.querySelector('title').innerHTML;
