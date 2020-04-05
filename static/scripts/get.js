@@ -12,31 +12,35 @@ function open_fullscreen(link, block) {
   if ( this.readyState == 4 && this.status == 200 ) {
     elem = link_.responseText;
     block.parentElement.style.display = "block";
-    block.innerHTML = elem
+    block.innerHTML = elem;
+    eval(block.innerHTML)
   }};
   link_.send();
 }
 
 on('#ajax', 'click', '.fullscreen', function() {
-  var container = this.parentElement;
-  var uuid = container.getAttribute('item-uuid');
-  var pk = container.getAttribute('user-pk');
-  var loader = document.getElementById("item_loader");
+  var container, uuid, pk, loader;
+  container = this.parentElement;
+  uuid = container.getAttribute('item-uuid');
+  pk = container.getAttribute('user-pk');
+  loader = document.getElementById("item_loader");
   open_fullscreen("/users/detail/item/" + pk + "/" + uuid + "/", loader)
 });
 on('#ajax', 'click', '.u_article_detail', function() {
-  var container = this.parentElement;
-  var uuid = container.getAttribute('item-uuid');
-  var pk = container.getAttribute('user-pk');
-  var loader = document.getElementById("article_loader");
+  var container, uuid, pk, loader;
+  container = this.parentElement;
+  uuid = container.getAttribute('item-uuid');
+  pk = container.getAttribute('user-pk');
+  loader = document.getElementById("article_loader");
   open_fullscreen("/article/detail/" + pk + "/" + uuid + "/", loader)
 });
 on('#ajax', 'click', '.u_good_detail', function() {
-  var goods_container = this.parentElement;
-  var user_uuid = goods_container.getAttribute('data-uuid');
-  var good_id = this.getAttribute('data-id');
-  var loader = document.getElementById("good_loader");
-  open_fullscreen('/goods/user/good/' + good_id + '/' + user_uuid + '/', loader)
+  var container, uuid, pk, loader;
+  container = this.parentElement;
+  uuid = container.getAttribute('data-uuid');
+  pk = this.getAttribute('data-id');
+  loader = document.getElementById("good_loader");
+  open_fullscreen('/goods/user/good/' + pk + '/' + uuid + '/', loader)
 });
 
 //$('#ajax').on('click', '.u_all_likes', function() {var btn = $(this); item = $(this).parents('.infinite-item');pk = item.attr("user-id");uuid = item.attr("item-id");$('#votes_loader').html('').load("/window/all_user_like/" + uuid + "/" + pk + "/"); $('.votes_fullscreen').show();console.log("likes user open")});
