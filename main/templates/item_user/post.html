@@ -1,4 +1,4 @@
-<div class="card mb-4 infinite-item" item-pk="{{ object.pk }}" item-id="{{ object.uuid }}" user-id="{{ user.pk }}">
+<div class="card mb-4" item-uuid="{{ object.uuid }}" item-pk="{{ object.pk }}" user-pk="{{ user.pk }}">
     {% include 'item_user/card_header.html' %}
 
     {% if object.is_repost %}
