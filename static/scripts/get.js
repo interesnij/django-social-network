@@ -12,7 +12,8 @@ function open_fullscreen(link, block) {
     var elem = document.createElement('span');
     elem.innerHTML = link_.responseText;
     block.parentElement.style.display = "block";
-    var _elem = elem.innerHTML;
+    var _elem;
+    _elem.innerHTML = elem.innerHTML;
     block.append(_elem)
   }};
   link_.send();
