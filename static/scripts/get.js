@@ -5,16 +5,15 @@
 //$('#ajax').on('click', '.u_photo_detail', function() {photo = $(this); photo_id = photo.data("id"); user_uuid = photo.parent().data("uuid");$('#photo_loader').html('').load("/gallery/load/u_photo/" + photo_id + "/" + user_uuid + "/");$('.photo_fullscreen').show();console.log("user photo open")});
 //$('#ajax').on('click', '.u_album_photo_detail', function() {photo = $(this); pk = photo.data("pk"); uuid = photo.parent().data("uuid"); uuid2 = photo.parent().data("uuid2");$('#photo_loader').html('').load("/gallery/load/u_album_photo/" + pk + "/" + uuid + "/" + uuid2 + "/");$('.photo_fullscreen').show();console.log("user album photo open")});
 function open_fullscreen(link, block) {
-  var link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  var link_, elem;
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'GET', link, true );
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
-    var elem = document.createElement('span');
+    elem = document.createElement('span');
     elem.innerHTML = link_.responseText;
     block.parentElement.style.display = "block";
-    var _elem;
-    _elem.innerHTML = link_.responseText;
-    block.append(_elem)
+    block.append(elem.innerHTML)
   }};
   link_.send();
 }
