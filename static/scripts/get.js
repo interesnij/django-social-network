@@ -107,7 +107,7 @@ on('#ajax', 'click', '.fullscreen', function() {
 })
 on('#ajax', 'click', '.c_fullscreen', function() {
   var uuid, pk, loader;
-  uuid = this.parentElement.parentElement.getAttribute('item-uuid');
+  uuid = this.parentElement.getAttribute('item-uuid');
   pk = this.parentElement.getAttribute('community-pk');
   loader = document.getElementById("item_loader");
   open_fullscreen("/communities/item/" + pk + "/" + uuid + "/", loader)
@@ -124,7 +124,7 @@ on('#ajax', 'click', '.u_article_detail', function() {
 on('#ajax', 'click', '.c_article_detail', function() {
   var uuid, pk, loader;
   uuid = this.parentElement.getAttribute('item-uuid');
-  pk = this.parentElement.parentElement.getAttribute('community-pk');
+  pk = this.parentElement.getAttribute('community-pk');
   loader = document.getElementById("article_loader");
   open_fullscreen("/article/read/" + pk + "/" + uuid + "/", loader)
 });
