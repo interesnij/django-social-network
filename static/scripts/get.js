@@ -123,7 +123,7 @@ on('#ajax', 'click', '.u_good_detail', function() {
 
 on('#ajax', 'click', '.u_all_likes', function() {
   var container, uuid, pk, loader;
-  container = this.parentElement.parentElement.parentElement.parentElement.parentElement;
+  container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   pk = this.getAttribute('user-pk');
   console.log(container);
   uuid = container.getAttribute('item-uuid');
