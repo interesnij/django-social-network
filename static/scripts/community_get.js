@@ -2,8 +2,8 @@
 on('#ajax', 'click', '.c_comments.comments_close', function() {
   parent = this.parentElement.parentElement.parentElement.parentElement;
   container = parent.querySelector(".load_comments");
-  pk = parent.parentElement.getAttribute("community-id");
-  uuid = parent.getAttribute("item-id");
+  pk = parent.parentElement.getAttribute("community-pk");
+  uuid = parent.getAttribute("item-uuid");
   container = parent.querySelector(".load_comments");
   _this = parent.querySelector(".c_comments");
   _this.classList.add("comments_open");
