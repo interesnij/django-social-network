@@ -124,7 +124,7 @@ on('#ajax', 'click', '.u_article_detail', function() {
 on('#ajax', 'click', '.c_article_detail', function() {
   var uuid, pk, loader;
   uuid = this.parentElement.getAttribute('item-uuid');
-  pk = this.parentElement.parentElement.getAttribute('user-pk');
+  pk = this.parentElement.parentElement.getAttribute('community-pk');
   loader = document.getElementById("article_loader");
   open_fullscreen("/article/read/" + pk + "/" + uuid + "/", loader)
 });
