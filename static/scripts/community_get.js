@@ -68,7 +68,7 @@ on('#ajax', 'click', '.c_item_comments.comments_close', function() {
   _this.classList.remove();
   _this.classList.add("comments_open");
   url = "/community/comment/" + uuid + "/" + pk + "/";
-  list_load(parent.querySelector(".c_load_comments"), url);
+  list_load(parent.querySelector(".c_load_comments"), url); 
 });
 on('#ajax', 'click', '.c_item_comments.comments_open', function() {
   parent = this.parentElement.parentElement.parentElement;
