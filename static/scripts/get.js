@@ -125,6 +125,7 @@ on('#ajax', 'click', '.u_all_likes', function() {
   var container, uuid, pk, loader;
   container = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   pk = this.getAttribute('user-pk');
+  console.log(container);
   uuid = container.getAttribute('item-uuid');
   loader = document.getElementById("votes_loader");
   open_fullscreen("/item_window/all_user_like/" + uuid + "/" + pk + "/", loader)
