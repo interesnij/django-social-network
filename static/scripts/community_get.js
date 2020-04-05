@@ -65,8 +65,8 @@ on('#ajax', 'click', '.c_item_comments.comments_close', function() {
   pk = parent.parentElement.getAttribute("community-pk");
   uuid = parent.getAttribute("item-uuid");
   _this = parent.querySelector(".c_item_comments");
+  _this.classList.remove();
   _this.classList.add("comments_open");
-  _this.classList.remove("comments_close");
   url = "/community/comment/" + uuid + "/" + pk + "/";
   list_load(parent.querySelector(".c_load_comments"), url);
 });
@@ -74,6 +74,6 @@ on('#ajax', 'click', '.c_item_comments.comments_open', function() {
   parent = this.parentElement.parentElement.parentElement;
   _this = parent.querySelector(".c_item_comments");
   _this.innerHTML="";
+  _this.classList.remove();
   _this.classList.add("comments_close");
-  _this.classList.remove("comments_open");
 });
