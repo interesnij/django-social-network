@@ -28,39 +28,15 @@ on('#ajax', 'click', 'comments_open', function() {
   _this.classList.add("comments_close");
   _this.classList.remove("comments_open");
 });
-on('#ajax', 'click', '.c_all_likes', function() {
-  parent = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  pk = parent.parentElement.getAttribute("community-id");
-  uuid = parent.getAttribute("item-id");
-  loader = document.getElementById("votes_loader");
-  url = "/window/all_community_like/" + uuid + "/" + pk + "/";
-  list_load(loader, url);
-  loader.parentElement.style.display = "block";
-});
+
 on('#ajax', 'click', '#community_add', function() {
   loader = document.getElementById("community_loader");
   url = "/communities/progs/add/";
   list_load(loader, url);
   document.querySelector(".community_fullscreen").style.display = "block";
 });
-on('#ajax', 'click', '.c_all_dislikes', function() {
-  parent = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  pk = parent.parentElement.getAttribute("community-id");
-  uuid = parent.getAttribute("item-id");
-  loader = document.getElementById("votes_loader");
-  url = "/window/all_community_dislike/" + uuid + "/" + pk + "/";
-  list_load(loader, url);
-  loader.parentElement.style.display = "block";
-});
-on('#ajax', 'click', '.c_all_reposts', function() {
-  parent = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  pk = parent.parentElement.getAttribute("community-id");
-  uuid = parent.getAttribute("item-id");
-  loader = document.getElementById("votes_loader");
-  url = "/window/all_community_reposts/" + uuid + "/" + pk + "/";
-  list_load(loader, url);
-  loader.parentElement.style.display = "block";
-});
+
+
 on('#ajax', 'click', '.show_staff_window', function() {
   parent = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   pk = parent.getAttribute("data-pk");

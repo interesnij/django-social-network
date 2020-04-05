@@ -145,7 +145,30 @@ on('#ajax', 'click', '.u_all_reposts', function() {
   loader = document.getElementById("votes_loader");
   open_fullscreen("/item_window/all_user_reposts/" + uuid + "/" + pk + "/", loader)
 });
-
+on('#ajax', 'click', '.c_all_likes', function() {
+  var container, uuid, pk, loader;
+  container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
+  pk = container.getAttribute('community-pk');
+  uuid = container.getAttribute('item-uuid');
+  loader = document.getElementById("votes_loader");
+  open_fullscreen("/item_window/all_community_like/" + uuid + "/" + pk + "/", loader)
+});
+on('#ajax', 'click', '.c_all_dislikes', function() {
+  var container, uuid, pk, loader;
+  container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
+  pk = container.getAttribute('community-pk');
+  uuid = container.getAttribute('item-uuid');
+  loader = document.getElementById("votes_loader");
+  open_fullscreen("/item_window/all_community_dislike/" + uuid + "/" + pk + "/", loader)
+});
+on('#ajax', 'click', '.c_all_reposts', function() {
+  var container, uuid, pk, loader;
+  container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
+  pk = container.getAttribute('community-pk');
+  uuid = container.getAttribute('item-uuid');
+  loader = document.getElementById("votes_loader");
+  open_fullscreen("/item_window/all_community_reposts/" + uuid + "/" + pk + "/", loader)
+});
 
 //$('.add_board_hide').on('click', function() {$('#for_settings').hide();});
 //$('#images_upload').on('click', function() {$('#for_images_upload').show();});
