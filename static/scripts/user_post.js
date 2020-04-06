@@ -26,8 +26,8 @@ on('#ajax', 'click', '#form_post_btn', function() {
     response = new_post.querySelector(".card");
     if (link_.responseText.indexOf("Нужно") != -1){
       error = form_post.querySelector("#user_post_error");
-      error.append(new_post);
-      setTimeout(error.innerHTML = "", 4000);
+      error.append(link_.responseText);
+      //setTimeout(error.innerHTML = "", 4000);
     }else{
       lenta_load.querySelector(".stream").prepend(response)
     }
