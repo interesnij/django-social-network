@@ -13,6 +13,6 @@ urlpatterns = [
     url(r'^unfixed/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', login_required(community_unfixed)),
 	url(r'^off_comment/(?P<pk>\d+)/$', login_required(community_off_comment)),
     url(r'^on_comment/(?P<pk>\d+)/$', login_required(community_on_comment)),
-    url(r'^delete/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', login_required(community_item_delete))
+    url(r'^delete/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', login_required(community_item_delete)),
 	url(r'^abort_delete/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', login_required(community_item_abort_delete))
 ]
