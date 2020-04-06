@@ -1,6 +1,6 @@
 
 <div class="card mb-4" style="border:1px solid rgba(0, 0, 0, 0.125);">
-    <form action="" id="form_post" method="post" enctype="multipart/form-data">
+    <form action="" name="new_post" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="card-body p-0">
             <textarea name="text" class="id_text form-control bg-light-secondary border-0" rows="2" placeholder="Что у Вас нового?"></textarea>
