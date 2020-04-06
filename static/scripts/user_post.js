@@ -24,9 +24,9 @@ on('#ajax', 'click', '#form_post_btn', function() {
     new_post = document.createElement("span");
     new_post.innerHTML = elem;
     response = new_post.querySelector(".card");
-    if (response.responseText.indexOf("Нужно ввести") != -1){
+    if (link_.responseText.indexOf("Нужно ввести") != -1){
       error = form_post.querySelector("#user_post_error");
-      error.append(response);
+      error.append(link_.responseText);
       setTimeout(error.innerHTML = "", 4000);
     }else{
       lenta_load.querySelector(".stream").prepend(response)
