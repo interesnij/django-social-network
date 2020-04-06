@@ -156,21 +156,11 @@ class ItemCommunityNotification(models.Model):
 
 def item_notification_handler(actor, recipient, verb, item, comment, **kwargs):
     from users.models import User
-    
+
     key = kwargs.pop('key', 'notification')
-    if recipient == 'global':
-        users = User.objects.all().exclude(username=actor.username)
-        for user in users:
-            ItemNotification.objects.create(actor=actor, recipient=user, verb=verb, item=item, comment=comment)
-        item_notification_broadcast(actor, key)
-    elif isinstance(recipient, list):
-        for user in recipient:
-            ItemNotification.objects.create(actor=actor, recipient=User.objects.get(username=user.username), verb=verb, comment=comment)
-    elif isinstance(recipient, get_user_model()):
-        ItemNotification.objects.create(actor=actor, recipient=recipient, verb=verb, item=item, comment=comment)
-        item_notification_broadcast(actor, key, recipient=recipient.username)
-    else:
-        pass
+    ItemNotification.objects.create(actor=actor, recipient=recipient, verb=verb, item=item, comment=comment)
+    item_notification_broadcast(actor, key, recipient=recipient.username)
+
 
 def item_community_notification_handler(actor, community, recipient, item, verb, comment, **kwargs):
     key = kwargs.pop('key', 'notification')

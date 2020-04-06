@@ -131,7 +131,7 @@
 
                     <span class="stream_reply_comments">
                       {% for reply in comment.get_replies %}
-                        {% include 'u_item_comment/moderator_reply.html' with reply=reply  %}
+                        {% include 'u_item_comment/frend_reply.html' with reply=reply  %}
                         <br>
                       {% endfor %}
 
