@@ -1,6 +1,6 @@
 
 on('#ajax', 'click', '#form_post_btn', function() {
-  var form_post, formEntries, options, lenta_load, pk
+  var form_post, formEntries, options, lenta_load, pk, response
 
   form_post = document.getElementById('form_post');
   formEntries = new FormData(form_post);
@@ -16,7 +16,8 @@ on('#ajax', 'click', '#form_post_btn', function() {
     //document.getElementById('for_good').innerHTML = "";
     //document.getElementById('for_question').innerHTML = "";
     //document.getElementById('for_settings').innerHTML = "";
-    lenta_load.querySelector(".stream").prepend(data.Write);
+    response = data.write;
+    lenta_load.querySelector(".stream").prepend(response);
     console.log(data)
     //lenta_load.querySelector(".post_empty").style.display = "none";
 
