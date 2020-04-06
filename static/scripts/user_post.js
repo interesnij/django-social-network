@@ -121,8 +121,11 @@ on('#ajax', 'click', '.item_user_remove', function() {
   if ( this.readyState == 4 && this.status == 200 ) {
     item.style.display = "none";
     document.querySelector(".item_fullscreen").style.display = "none";
-    remove = "<p>Запись удалена. <span class='item_user_remove_abort' data-uuid='" + uuid + "'>Восстановить</span></p>"
-    item.nextElementSibling.append(remove)
+    p = document.createElement("p");
+
+    remove = "Запись удалена. <span class='item_user_remove_abort' data-uuid='" + uuid + "'>Восстановить</span>"
+    p.append(remove);
+    item.previousElementSibling.append(remove)
   }};
 
   link.send( );
