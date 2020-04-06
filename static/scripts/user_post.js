@@ -7,7 +7,7 @@ on('#ajax', 'click', '#form_post_btn', function() {
   options = {method: 'POST',body: formEntries,};
 
   lenta_load = form_post.parentElement.nextElementSibling;
-  pk = stream.querySelector(".stream").getAttribute("user-pk");
+  pk = lenta_load.querySelector(".stream").getAttribute("user-pk");
   fetch("/posts/add_post/" + pk + "/", options).then(data => {
     document.getElementById('id_text').value = "";
     document.getElementById('for_images_upload').innerHTML = "";
