@@ -125,7 +125,7 @@ on('#ajax', 'click', '.item_user_remove', function() {
     item.previousElementSibling.append(remove)
   }};
 
-  link.send(form_comment);
+  link.send( );
 });
 
 on('#ajax', 'click', '.item_user_remove_abort', function() {
@@ -140,5 +140,5 @@ on('#ajax', 'click', '.item_user_remove_abort', function() {
     item.style.display = "block";
   }};
 
-  link.send(form_comment);
+  link.send();
 });
