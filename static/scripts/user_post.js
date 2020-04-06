@@ -28,7 +28,7 @@ on('#ajax', 'click', '#form_post_btn', function() {
     }else{
       lenta_load.querySelector(".stream").prepend(response)
     }
-    console.log(link_.responseText);
+
     lenta_load.querySelector(".post_empty") ? lenta_load.querySelector(".post_empty").style.display = "none" : console.log("post_empty не обнаружен");
   }};
 
@@ -144,9 +144,51 @@ on('#ajax', 'click', '.item_user_remove_abort', function() {
 
   link.onreadystatechange = function () {
   if ( link.readyState == 4 && link.status == 200 ) {
-    console.log(block, uuid);
     block.remove();
   }};
 
   link.send();
 });
+
+$('body').on('click', '.item_user_fixed', function() {
+  fixed = $(this);
+  uuid = fixed.parents(".infinite-item").attr("item-id");
+  $.ajax({
+    url: "/user/fixed/" + uuid + "/",
+    success: function(data) {
+      fixed.parent().html("<span class='dropdown-item item_user_unfixed'>Открепить</span>");
+      }
+    })
+  });
+
+  on('#ajax', 'click', '.item_user_fixed', function() {
+    item = this.parentElement.parentElement.parentElement.parentElement.parentElement;
+    uuid = item.getAttribute("item-uuid");
+    parent = this.parentElement;
+
+    link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    link.open( 'GET', "/user/fixed/" + uuid + "/", true );
+
+    link.onreadystatechange = function () {
+    if ( link.readyState == 4 && link.status == 200 ) {
+      parent.innerHTML = "<span class='dropdown-item item_user_unfixed'>Открепить</span>";
+    }};
+
+    link.send();
+  });
+
+  on('#ajax', 'click', '.item_user_unfixed', function() {
+    item = this.parentElement.parentElement.parentElement.parentElement.parentElement;
+    uuid = item.getAttribute("item-uuid");
+    parent = this.parentElement;
+
+    link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    link.open( 'GET', "/user/unfixed/" + uuid + "/", true );
+
+    link.onreadystatechange = function () {
+    if ( link.readyState == 4 && link.status == 200 ) {
+      parent.innerHTML = "<span class='dropdown-item item_user_fixed'>Закрепить</span>";
+    }};
+
+    link.send();
+  });
