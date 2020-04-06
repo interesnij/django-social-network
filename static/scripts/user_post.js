@@ -1,6 +1,6 @@
 
 on('#ajax', 'click', '#form_post_btn', function() {
-  var form_post, form_data, lenta_load, pk, link_, elem
+  var form_post, form_data, lenta_load, pk, link_, elem, new_post;
 
   form_data = new FormData(document.forms.new_post);
   form_post = document.querySelector("#form_post");
@@ -12,6 +12,14 @@ on('#ajax', 'click', '#form_post_btn', function() {
 
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
+    document.querySelector('#id_text').value = "";
+    document.querySelector('#for_images_upload').innerHTML = "";
+    document.querySelector('#for_gallery').innerHTML = "";
+    document.querySelector('#for_doc').innerHTML = "";
+    document.querySelector('#for_good').innerHTML = "";
+    document.querySelector('#for_question').innerHTML = "";
+    document.querySelector('#for_settings').innerHTML = "";
+
     elem = link_.responseText;
     new_post = document.createElement("span");
     new_post.innerHTML = elem;
@@ -24,10 +32,26 @@ on('#ajax', 'click', '#form_post_btn', function() {
   link_.send(form_data);
 });
 
-    //document.getElementById('id_text').value = "";
-    //document.getElementById('for_images_upload').innerHTML = "";
-    //document.getElementById('for_gallery').innerHTML = "";
-    //document.getElementById('for_doc').innerHTML = "";
-    //document.getElementById('for_good').innerHTML = "";
-    //document.getElementById('for_question').innerHTML = "";
-    //document.getElementById('for_settings').innerHTML = "";
+
+on('#ajax', 'click', '.u_itemComment', function() {
+  var form_post, form_comment, lenta_load, pk, link_, elem, new_post;
+
+  form_comment = new FormData(this.parentElement.parentElement.parentElement);
+  upload_block = form_comment.querySelector(".upload_block");
+
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'POST', '/user/post-comment/', true );
+
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    form_comment.querySelector(".form-control-rounded").value="";
+    elem = link_.responseText;
+    new_post = document.createElement("span");
+    new_post.innerHTML = elem;
+    response = new_post.querySelector(".comment");
+
+    form_comment.parentElement.previousElementSibling.prepend(response)
+  }};
+
+  link_.send(form_comment);
+});

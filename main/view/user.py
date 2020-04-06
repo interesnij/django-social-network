@@ -4,7 +4,7 @@ from users.models import User
 from main.models import Item, ItemComment
 from django.http import HttpResponse, HttpResponseBadRequest
 from main.forms import CommentForm
-from django.template.loader import render_to_string
+from django.shortcuts import render_to_response
 from django.views import View
 from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
 from rest_framework.exceptions import PermissionDenied, ValidationError
@@ -69,8 +69,7 @@ class ItemCommentUserCreate(View):
 				upload_photo2 = Photo.objects.create(creator=request.user, file=photo2,community=None,is_public=True, album=album)
 				upload_photo2.item_comment.add(new_comment)
 			new_comment.notification_user_comment(request.user)
-			html = render_to_string('item_user/parent_comment.html',{'comment': new_comment, 'request_user': request.user, "form_reply": CommentForm(), 'request': request})
-			return JsonResponse(html, safe=False)
+			return render_to_response('item_user/parent_comment.html',{'comment': new_comment, 'request_user': request.user, "form_reply": CommentForm(), 'request': request})
 		else:
 			return HttpResponseBadRequest()
 
@@ -108,8 +107,7 @@ class ItemReplyUserCreate(View):
 				upload_photo2 = Photo.objects.create(creator=request.user, file=photo2, community=None, album=album)
 				upload_photo2.item_comment.add(new_comment)
 			new_comment.notification_user_reply_comment(request.user)
-			html = render_to_string('item_user/reply_comment.html',{'reply': new_comment, 'comment': parent, 'user': user, 'request_user': request.user, "form_reply": CommentForm(), 'request': request})
-			return JsonResponse(html, safe=False)
+			return render_to_response('item_user/reply_comment.html',{'reply': new_comment, 'comment': parent, 'user': user, 'request_user': request.user, "form_reply": CommentForm(), 'request': request})
 		else:
 			return HttpResponseBadRequest()
 

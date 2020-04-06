@@ -1,11 +1,9 @@
 from django.views.generic.base import TemplateView
 from users.models import User
-from django.template.loader import render_to_string
 from django.shortcuts import render_to_response
 from posts.models import Post
 from main.models import Item
-from posts.forms import PostCommunityForm
-from django.http import HttpResponse, HttpResponseBadRequest
+from django.http import HttpResponseBadRequest
 from django.views import View
 from common.checkers import check_is_not_blocked_with_user_with_id, check_is_connected_with_user_with_id
 
@@ -62,6 +60,7 @@ class PostCommunityCreate(View):
 
     def post(self,request,*args,**kwargs):
         from communities.models import Community
+        from posts.forms import PostCommunityForm
 
         form_post=PostCommunityForm(request.POST, request.FILES)
         community = Community.objects.get(pk=self.kwargs["pk"])
@@ -70,9 +69,7 @@ class PostCommunityCreate(View):
             post=form_post.save(commit=False)
             new_post = post.create_post(creator=request.user, text=post.text, community=community, comments_enabled=post.comments_enabled, status=post.status,)
 
-            if request.is_ajax() :
-                html = render_to_string('item_community/admin_post.html',{'object': new_post,'community': community,'request': request})
-                return HttpResponse(html)
+            return = render_to_response('item_community/admin_post.html',{'object': new_post,'community': community,'request': request})
         else:
             return HttpResponseBadRequest()
 

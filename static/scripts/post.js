@@ -1,29 +1,7 @@
 /*!
    item post scripts for user
   */
-$('.user_page').on('click', '#form_post_btn', function() {
-  pk = $(this).data('pk');
-  form_post = $('#form_post');
-  stream = form_post.parent().next();
-  $.ajax({type: form_post.attr('method'),
-  url: "/posts/add_post/" + pk + "/",
-  data: form_post.serialize(),
-  success: function(data) {
-    stream.find(".stream").prepend(data);
-    stream.find(".post_empty").hide();
-    $(".id_text").val("");
-    $(".add_board #for_images_upload").hide();
-    $(".add_board #for_gallery").hide();
-    $(".add_board #for_doc").hide();
-    $(".add_board #for_good").hide();
-    $(".add_board #for_question").hide();
-    $(".add_board #for_settings").hide();
-    }
-  });
-  return false;
-});
 
-$('body').on('click', '.u_itemComment', function() {button1 = $(this);form1 = button1.parent().parent().parent();upload_block = form1.find(".upload_block");$.ajax({url: '/user/post-comment/', data: new FormData($(form1)[0]),contentType:false,cache:false,processData:false,type:'POST',success:function(data){ $(".form-control-rounded").val(""); form1.parent().prev().append(data); upload_block.empty()},error: function(data) { $.toast({heading: 'Ошибка',text: 'Для публикации комментария нужно написать что-нибудь и/или вставить изображение(ия)',showHideTransition: 'fade',icon: 'error'}); },});return false;});
 $('body').on('click', '.u_replyComment', function() {button = $(this);form2 = button.parent().parent().parent().parent();block = form2.parent();upload_block = form2.find(".upload_block");reply_stream = block.next().next();pk = button.data('pk');uuid = button.data('uuid');$.ajax({url: '/user/reply-comment/' + uuid + "/" + pk + "/", data: new FormData($(form2)[0]), contentType: false, cache: false, processData: false, type: 'POST',success: function(data) { $(".form-control-rounded").val(""); reply_stream.append(data); reply_stream.addClass("replies_open"); block.hide(); upload_block.empty(); },error: function(data) { $.toast({heading: 'Ошибка',text: 'Для публикации ответа нужно написать что-нибудь и/или вставить изображение(ия)',showHideTransition:'fade',icon:'error'})},});return false;});
 $('body').on('click', '.u_replyParentComment', function() {button = $(this);form3 = button.parent().parent().parent().parent();block = form3.parent();upload_block = form3.find(".upload_block");pk = button.data('pk');uuid = button.data('uuid');reply_stream = block.parents('.stream_reply_comments');$.ajax({url: '/user/reply-comment/' + uuid + "/" + pk + "/",data: new FormData($(form3)[0]),contentType: false,cache: false,processData: false,type: 'POST',success: function(data) { $(".form-control-rounded").val(""); reply_stream.append(data); block.hide(); upload_block.empty();},error: function(data) { $.toast({heading: 'Ошибка',text: 'Для публикации ответа нужно написать что-нибудь и/или вставить изображение(ия)',showHideTransition: 'fade',icon: 'error'}) },});return false;});
 

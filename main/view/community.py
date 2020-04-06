@@ -8,7 +8,7 @@ from django.views import View
 from common.checkers import check_can_get_posts_for_community_with_name
 from rest_framework.exceptions import PermissionDenied, ValidationError
 from gallery.models import Album, Photo
-from django.template.loader import render_to_string
+from django.shortcuts import render_to_response
 
 
 class ItemCommunityCommentList(ListView):
@@ -66,8 +66,7 @@ class ItemCommunityCommentCreate(View):
 				upload_photo2 = Photo.objects.create(creator=request.user, file=photo2, community=community, is_public=True, album=album)
 				upload_photo2.item_comment.add(new_comment)
 			new_comment.notification_community_comment(request.user)
-			html = render_to_string('item_community/parent_comment.html',{'comment': new_comment, 'request_user': request.user, 'community': community, "form_reply": CommentForm(), 'request': request})
-			return JsonResponse(html, safe=False)
+			return render_to_response('item_community/parent_comment.html',{'comment': new_comment, 'request_user': request.user, 'community': community, "form_reply": CommentForm(), 'request': request})
 		else:
 			return HttpResponseBadRequest()
 
@@ -101,8 +100,7 @@ class ItemCommunityReplyCreate(View):
 				upload_photo2 = Photo.objects.create(creator=request.user, file=photo2, community=community, album=album)
 				upload_photo2.item_comment.add(new_comment)
 			new_comment.notification_community_reply_comment(request.user)
-			html = render_to_string('item_community/reply_comment.html',{'reply': new_comment, 'request_user': request.user, 'community': community, 'comment': parent,  "form_reply": CommentForm(), 'request': request})
-			return JsonResponse(html, safe=False)
+			return render_to_response('item_community/reply_comment.html',{'reply': new_comment, 'request_user': request.user, 'community': community, 'comment': parent,  "form_reply": CommentForm(), 'request': request})
 		else:
 			return HttpResponseBadRequest()
 

@@ -10,6 +10,14 @@ canvas{
 .dropdown-menu a{
   cursor:pointer
 }
+.comment{
+  margin-left:15px;
+  margin-right:15px;
+}
+.comment:nth-child(1){
+  margin-top:15px
+}
+
 .stat_city{
   margin: 10px;
 }
