@@ -151,7 +151,7 @@ on('#ajax', 'click', '.item_user_remove_abort', function() {
 });
 
 on('#ajax', 'click', '.item_user_fixed', function() {
-  item = this.parentElement.parentElement.parentElement.parentElement.parentElement;
+  item = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   uuid = item.getAttribute("item-uuid");
   parent = this.parentElement;
 
@@ -167,7 +167,7 @@ on('#ajax', 'click', '.item_user_fixed', function() {
 });
 
 on('#ajax', 'click', '.item_user_unfixed', function() {
-  item = this.parentElement.parentElement.parentElement.parentElement.parentElement;
+  item = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   uuid = item.getAttribute("item-uuid");
   parent = this.parentElement;
 
