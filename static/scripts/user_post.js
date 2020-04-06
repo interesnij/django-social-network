@@ -120,7 +120,7 @@ on('#ajax', 'click', '.item_user_remove', function() {
   link.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
     item.style.display = "none";
-    document.querySelector(".activefullscreen").style.display = "none";
+    document.querySelector(".item_fullscreen").style.display = "none";
     remove = "<p>Запись удалена. <span class='item_user_remove_abort' data-uuid='" + uuid + "'>Восстановить</span></p>"
     item.previousElementSibling.append(remove)
   }};
