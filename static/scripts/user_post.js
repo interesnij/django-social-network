@@ -37,7 +37,7 @@ on('#ajax', 'click', '.u_itemComment', function() {
   var form_post, form_comment, lenta_load, pk, link_, elem, new_post;
 
   form_comment = new FormData(this.parentElement.parentElement.parentElement);
-  upload_block = form_comment.querySelector(".upload_block");
+  upload_block = this.parentElement.parentElement.parentElement.querySelector(".upload_block");
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'POST', '/user/post-comment/', true );
