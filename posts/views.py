@@ -1,6 +1,7 @@
 from django.views.generic.base import TemplateView
 from users.models import User
 from django.template.loader import render_to_string
+from django.shortcuts import render_to_response
 from posts.models import Post
 from main.models import Item
 from posts.forms import PostCommunityForm
