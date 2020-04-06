@@ -3,6 +3,7 @@ on('#ajax', 'click', '#form_post_btn', function() {
   var form_post, lenta_load, pk, link_, elem
 
   form_post = new FormData(document.forms.new_post);
+  console.log(form_post);
   lenta_load = form_post.parentElement.nextElementSibling;
   pk = lenta_load.querySelector(".stream").getAttribute("user-pk");
 
@@ -15,7 +16,7 @@ on('#ajax', 'click', '#form_post_btn', function() {
     lenta_load.querySelector(".stream").prepend(elem)
     lenta_load.querySelector(".post_empty") ? lenta_load.querySelector(".post_empty").style.display = "none" : console.log("post_empty не обнаружен");
   }};
-  
+
   link_.send();
 });
 
