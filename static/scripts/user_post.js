@@ -15,7 +15,7 @@ on('#ajax', 'click', '#form_post_btn', function() {
     elem = link_.responseText;
     new_post = document.createElement("span");
     new_post.innerHTML = elem;
-    lenta_load.querySelector(".stream").prepend(new_post)
+    lenta_load.querySelector(".stream").prepend(new_post.innerHTML)
     lenta_load.querySelector(".post_empty") ? lenta_load.querySelector(".post_empty").style.display = "none" : console.log("post_empty не обнаружен");
   }};
 
