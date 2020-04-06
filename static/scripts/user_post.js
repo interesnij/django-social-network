@@ -121,10 +121,10 @@ on('#ajax', 'click', '.item_user_remove', function() {
   if ( this.readyState == 4 && this.status == 200 ) {
     item.style.display = "none";
     document.querySelector(".item_fullscreen").style.display = "none";
-    p = document.createElement("p");
-
+    p = document.createElement("div");
+    p.classList.add("card");
     remove = "Запись удалена. <span class='item_user_remove_abort' data-uuid='" + uuid + "'>Восстановить</span>"
-    p.append(remove);
+    p.innerHTML = remove;
     item.previousElementSibling.append(remove)
   }};
 
