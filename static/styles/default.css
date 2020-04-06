@@ -15,7 +15,8 @@ canvas{
   margin-right:15px;
 }
 .comment:nth-child(1){
-  margin-top:15px
+  margin-top:15px;
+  padding-top: 15px;
 }
 
 .stat_city{

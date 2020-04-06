@@ -24,7 +24,12 @@ on('#ajax', 'click', '#form_post_btn', function() {
     new_post = document.createElement("span");
     new_post.innerHTML = elem;
     response = new_post.querySelector(".card");
-
+    if (request.responseText.indexOf("Нужно ввести") != -1){
+      form_post.querySelector(".user_post_error").append(response)
+      setTimeout({form_post.querySelector(".user_post_error").innerHTML = ""}, 4000);
+    }else{
+      lenta_load.querySelector(".stream").prepend(response)
+    }
     lenta_load.querySelector(".stream").prepend(response)
     lenta_load.querySelector(".post_empty") ? lenta_load.querySelector(".post_empty").style.display = "none" : console.log("post_empty не обнаружен");
   }};

@@ -48,7 +48,7 @@ class PostUserCreate(View):
             new_post = post.create_post(creator=request.user, text=post.text, community=None, comments_enabled=post.comments_enabled, status=post.status,)
             return render_to_response('item_user/my_post.html', {'object': new_post,'request': request})
         else:
-            return HttpResponseBadRequest()
+            return "Нужно ввести текст, прикрепить фотографию, аудио/ видеофайлы, статью или товар"
 
 
 class PostCommunityCreate(View):
