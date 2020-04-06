@@ -151,7 +151,7 @@ on('#ajax', 'click', '.close_upload_block', function() {
 });
 
 on('#ajax', 'click', '.select_photo', function() {
-  var, uuid, loader;
+  var uuid, loader;
   uuid = this.getAttribute('data-uuid');
   pk = this.getAttribute('data-id');
   loader = document.getElementById("good_loader");
