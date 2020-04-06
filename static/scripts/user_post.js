@@ -12,7 +12,7 @@ on('#ajax', 'click', '#form_post_btn', function() {
 
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
-    document.querySelector('#id_text').value = "";
+    try{document.querySelector('#id_text').value = "";}catch{console.log("text null")};
     document.querySelector('#for_images_upload').innerHTML = "";
     document.querySelector('#for_gallery').innerHTML = "";
     document.querySelector('#for_doc').innerHTML = "";
