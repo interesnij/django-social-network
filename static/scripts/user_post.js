@@ -34,7 +34,7 @@ on('#ajax', 'click', '#form_post_btn', function() {
 
 
 on('#ajax', 'click', '.u_itemComment', function() {
-  var form_post, form_comment, lenta_load, pk, link_, elem, new_post;
+  var form, form_comment, pk, link_, elem, new_post;
   form = this.parentElement.parentElement.parentElement;
   form_comment = new FormData(form);
   upload_block = form.querySelector(".upload_block");
@@ -49,8 +49,33 @@ on('#ajax', 'click', '.u_itemComment', function() {
     new_post = document.createElement("span");
     new_post.innerHTML = elem;
     response = new_post.querySelector(".comment");
-
     form.parentElement.previousElementSibling.append(response)
+  }};
+
+  link_.send(form_comment);
+});
+
+on('#ajax', 'click', '.u_replyComment', function() {
+  var form, form_comment, pk, link_, elem, new_post;
+  form = this.parentElement.parentElement.parentElement.parentElement;
+  form_comment = new FormData(form);
+  upload_block = form.parentElement.querySelector(".upload_block");
+  reply_stream = form.parentElement.nextElementSibling.nextElementSibling;
+
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'POST', '/user/reply-comment/', true );
+
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    form.querySelector(".form-control-rounded").value="";
+    form.parentElement.style.display = "none";
+    upload_block.innerHTML = "";
+    elem = link_.responseText;
+    new_post = document.createElement("span");
+    new_post.innerHTML = elem;
+    response = new_post.querySelector(".comment");
+    reply_stream.append(response);
+    reply_stream.classList.add("replies_open");
   }};
 
   link_.send(form_comment);

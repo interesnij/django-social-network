@@ -77,8 +77,10 @@ class ItemCommentUserCreate(View):
 class ItemReplyUserCreate(View):
 	def post(self,request,*args,**kwargs):
 		form_post=CommentForm(request.POST, request.FILES)
-		user=User.objects.get(uuid=self.kwargs["uuid"])
-		parent = ItemComment.objects.get(pk=self.kwargs["pk"])
+        uuid = request.POST.get('uuid')
+        pk = request.POST.get('pk')
+		user=User.objects.get(uuid=uuid)
+		parent = ItemComment.objects.get(pk=pk)
 
 		if form_post.is_valid():
 			comment=form_post.save(commit=False)

@@ -74,8 +74,10 @@ class ItemCommunityCommentCreate(View):
 class ItemCommunityReplyCreate(View):
 	def post(self,request,*args,**kwargs):
 		form_post=CommentForm(request.POST, request.FILES)
-		community=Community.objects.get(uuid=self.kwargs["uuid"])
-		parent = ItemComment.objects.get(pk=self.kwargs["pk"])
+        uuid = request.POST.get('uuid')
+        pk = request.POST.get('pk')
+		community=Community.objects.get(uuid=uuid)
+		parent = ItemComment.objects.get(pk=pk)
 
 		if form_post.is_valid():
 			comment=form_post.save(commit=False)
