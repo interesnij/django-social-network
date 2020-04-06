@@ -32,6 +32,8 @@ height: inherit;
 }
 .dropdown-menu{
 transform: scale(1)!important;
+font-size: 80%;
+line-height: 1;
 }
 .stat_city .count{
   float: right;
