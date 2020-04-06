@@ -50,7 +50,7 @@ on('#ajax', 'click', '.u_itemComment', function() {
     new_post.innerHTML = elem;
     response = new_post.querySelector(".comment");
 
-    form.parentElement.previousElementSibling.prepend(response)
+    form.parentElement.previousElementSibling.append(response)
   }};
 
   link_.send(form_comment);
