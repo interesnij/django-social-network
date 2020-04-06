@@ -124,7 +124,7 @@ on('#ajax', 'click', '.item_user_remove', function() {
     p = document.createElement("div");
     p.classList.add("card");
     p.innerHTML = "Запись удалена. <span class='item_user_remove_abort' data-uuid='" + uuid + "'>Восстановить</span>";
-    item.previousElementSibling.append(p)
+    item.parentElement.insertBefore(item.previousElementSibling, p)
   }};
 
   link.send( );
