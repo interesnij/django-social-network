@@ -27,7 +27,7 @@ on('#ajax', 'click', '#form_post_btn', function() {
     if (link_.responseText.indexOf("Нужно") != -1){
       error = form_post.querySelector("#user_post_error");
       error.append(link_.responseText);
-      //setTimeout(error.innerHTML = "", 4000);
+      setTimeout(error.innerHTML = "", 4000);
     }else{
       lenta_load.querySelector(".stream").prepend(response)
     }
