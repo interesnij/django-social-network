@@ -123,8 +123,9 @@ on('#ajax', 'click', '.item_user_remove', function() {
     document.querySelector(".item_fullscreen").style.display = "none";
     p = document.createElement("div");
     p.classList.add("card");
-    p.innerHTML = "Запись удалена. <span class='item_user_remove_abort' data-uuid='" + uuid + "'>Восстановить</span>";
-    item.parentElement.insertBefore(item.previousElementSibling, p)
+    p.innerHTML = "Запись удалена. <span class='item_user_remove_abort' style='cursor:pointer' data-uuid='" + uuid + "'>Восстановить</span>";
+
+    item.nextSibling.append(p);
   }};
 
   link.send( );
