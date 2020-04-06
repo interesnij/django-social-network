@@ -143,7 +143,7 @@ on('#ajax', 'click', '.item_user_remove_abort', function() {
   link.onreadystatechange = function () {
   if ( link.readyState == 4 && link.status == 200 ) {
     parent = this.parentElement;
-    parent.style.display = "none";
+    this.parentElement.remove();
     item.style.display = "block";
   }};
 
