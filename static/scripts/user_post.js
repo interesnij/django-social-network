@@ -118,7 +118,7 @@ on('#ajax', 'click', '.item_user_remove', function() {
   link.open( 'GET', "/user/delete/" + uuid + "/", true );
 
   link.onreadystatechange = function () {
-  if ( this.readyState == 4 && this.status == 200 ) {
+  if ( link.readyState == 4 && link.status == 200 ) {
     item.style.display = "none";
     document.querySelector(".item_fullscreen").style.display = "none";
     p = document.createElement("div");
@@ -141,7 +141,7 @@ on('#ajax', 'click', '.item_user_remove_abort', function() {
   link.open( 'GET', "/user/abort_delete/" + uuid + "/", true );
 
   link.onreadystatechange = function () {
-  if ( this.readyState == 4 && this.status == 200 ) {
+  if ( link.readyState == 4 && link.status == 200 ) {
     this.parentElement.style.display = "none";
     item.style.display = "block";
   }};
