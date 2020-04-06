@@ -122,7 +122,8 @@ on('#ajax', 'click', '.item_user_remove', function() {
     item.style.display = "none";
     document.querySelector(".item_fullscreen").style.display = "none";
     p = document.createElement("div");
-    p.classList.add("card");
+    p.classList.add("card", "mb-4");
+    p.style.padding = "20px";
     p.innerHTML = "Запись удалена. <span class='item_user_remove_abort' style='cursor:pointer' data-uuid='" + uuid + "'>Восстановить</span>";
     item.parentElement.insertBefore(p, item);
     item.style.display = "none";
