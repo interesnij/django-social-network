@@ -80,3 +80,29 @@ on('#ajax', 'click', '.u_replyComment', function() {
 
   link_.send(form_comment);
 });
+
+
+on('#ajax', 'click', '.u_replyParentComment', function() {
+  var form, form_comment, pk, link_, elem, new_post;
+  form = this.parentElement.parentElement.parentElement.parentElement;
+  form_comment = new FormData(form);
+  upload_block = form.parentElement.querySelector(".upload_block");
+  reply_stream = form.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
+
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'POST', '/user/reply-comment/', true );
+
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    form.querySelector(".form-control-rounded").value="";
+    form.parentElement.style.display = "none";
+    upload_block.innerHTML = "";
+    elem = link_.responseText;
+    new_post = document.createElement("span");
+    new_post.innerHTML = elem;
+    response = new_post.querySelector(".comment");
+    reply_stream.append(response);
+  }};
+
+  link_.send(form_comment);
+});
