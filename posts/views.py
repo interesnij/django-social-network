@@ -48,7 +48,7 @@ class PostUserCreate(View):
             post=self.form_post.save(commit=False)
             new_post = post.create_post(creator=request.user, text=post.text, community=None, comments_enabled=post.comments_enabled, status=post.status,)
             html = render_to_string('item_user/my_post.html', {'object': new_post,'request': request})
-            return HttpResponse(html)
+            return html
         else:
             return HttpResponseBadRequest()
 
