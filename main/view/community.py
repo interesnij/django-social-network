@@ -72,39 +72,39 @@ class ItemCommunityCommentCreate(View):
 
 
 class ItemCommunityReplyCreate(View):
-	def post(self,request,*args,**kwargs):
-		form_post=CommentForm(request.POST, request.FILES)
+    def post(self,request,*args,**kwargs):
+        form_post=CommentForm(request.POST, request.FILES)
         uuid = request.POST.get('uuid')
         pk = request.POST.get('pk')
-		community=Community.objects.get(uuid=uuid)
-		parent = ItemComment.objects.get(pk=pk)
+        community=Community.objects.get(uuid=uuid)
+        parent = ItemComment.objects.get(pk=pk)
 
-		if form_post.is_valid():
-			comment=form_post.save(commit=False)
-			photo=form_post.cleaned_data['photo']
-			photo2=form_post.cleaned_data['photo2']
-			if not comment.text and not photo and not photo2:
-				raise ValidationError('Для добавления комментария необходимо написать что-то или прикрепить изображение')
-			check_can_get_posts_for_community_with_name(request.user,community.name)
-			new_comment = comment.create_comment(commenter=request.user, text=comment.text, parent_comment=parent)
-			if photo:
-				try:
-					album=Album.objects.get(creator=request.user, title="Сохраненные фото", is_generic=True, community=community)
-				except:
-					album=Album.objects.create(creator=request.user, title="Сохраненные фото", is_generic=True, community=community)
-				upload_photo = Photo.objects.create(creator=request.user, file=photo, community=community, album=album)
-				upload_photo.item_comment.add(new_comment)
-			if photo2:
-				try:
-					album=Album.objects.get(creator=request.user, title="Сохраненные фото", is_generic=True, community=community)
-				except:
-					album=Album.objects.create(creator=request.user, title="Сохраненные фото", is_generic=True, community=community)
-				upload_photo2 = Photo.objects.create(creator=request.user, file=photo2, community=community, album=album)
-				upload_photo2.item_comment.add(new_comment)
-			new_comment.notification_community_reply_comment(request.user)
-			return render_to_response('c_item_comment/admin_reply.html',{'reply': new_comment, 'request_user': request.user, 'community': community, 'comment': parent,  "form_reply": CommentForm(), 'request': request})
-		else:
-			return HttpResponseBadRequest()
+        if form_post.is_valid():
+            comment=form_post.save(commit=False)
+            photo=form_post.cleaned_data['photo']
+            photo2=form_post.cleaned_data['photo2']
+            if not comment.text and not photo and not photo2:
+                raise ValidationError('Для добавления комментария необходимо написать что-то или прикрепить изображение')
+            check_can_get_posts_for_community_with_name(request.user,community.name)
+            new_comment = comment.create_comment(commenter=request.user, text=comment.text, parent_comment=parent)
+            if photo:
+                try:
+                    album=Album.objects.get(creator=request.user, title="Сохраненные фото", is_generic=True, community=community)
+                except:
+                    album=Album.objects.create(creator=request.user, title="Сохраненные фото", is_generic=True, community=community)
+                upload_photo = Photo.objects.create(creator=request.user, file=photo, community=community, album=album)
+                upload_photo.item_comment.add(new_comment)
+            if photo2:
+                try:
+                    album=Album.objects.get(creator=request.user, title="Сохраненные фото", is_generic=True, community=community)
+                except:
+                    album=Album.objects.create(creator=request.user, title="Сохраненные фото", is_generic=True, community=community)
+                upload_photo2 = Photo.objects.create(creator=request.user, file=photo2, community=community, album=album)
+            upload_photo2.item_comment.add(new_comment)
+            new_comment.notification_community_reply_comment(request.user)
+            return render_to_response('c_item_comment/admin_reply.html',{'reply': new_comment, 'request_user': request.user, 'community': community, 'comment': parent,  "form_reply": CommentForm(), 'request': request})
+        else:
+            return HttpResponseBadRequest()
 
 
 def post_update_interactions(request):
