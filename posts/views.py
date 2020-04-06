@@ -68,8 +68,7 @@ class PostCommunityCreate(View):
         if form_post.is_valid() and request.user.is_staff_of_community_with_name(community.name):
             post=form_post.save(commit=False)
             new_post = post.create_post(creator=request.user, text=post.text, community=community, comments_enabled=post.comments_enabled, status=post.status,)
-
-            return = render_to_response('item_community/admin_post.html',{'object': new_post,'community': community,'request': request})
+            return render_to_response('item_community/admin_post.html',{'object': new_post,'community': community,'request': request})
         else:
             return HttpResponseBadRequest()
 
