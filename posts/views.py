@@ -49,7 +49,7 @@ class PostUserCreate(View):
             return render_to_response('item_user/my_post.html', {'object': new_post,'request': request})
         else:
             ok = "Нужно ввести текст, прикрепить фотографию, аудио/ видеофайлы, статью или товар"
-            response = render(request,'profile/post_add_error.html',{'ok':ok})
+            return render(request,'profile/post_add_error.html',{'ok':ok})
 
 
 class PostCommunityCreate(View):
