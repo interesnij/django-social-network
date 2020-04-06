@@ -135,7 +135,7 @@ on('#ajax', 'click', '.item_user_remove', function() {
 });
 
 on('#ajax', 'click', '.item_user_remove_abort', function() {
-  item = this.previousElementSibling.style.display = "block";
+  item = this.nextElementSibling.style.display = "block";
   uuid = this.getAttribute("data-uuid");
   block = this.parentElement;
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
