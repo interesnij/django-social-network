@@ -17,7 +17,7 @@ on('#ajax', 'click', '#form_post_btn', function() {
     new_post.classList.add("my_span");
     new_post.innerHTML = elem;
 
-    response = document.querySelector(.my_span).innerHTML;
+    response = document.querySelector('.my_span').innerHTML;
 
     lenta_load.querySelector(".stream").prepend(response)
     lenta_load.querySelector(".post_empty") ? lenta_load.querySelector(".post_empty").style.display = "none" : console.log("post_empty не обнаружен");
