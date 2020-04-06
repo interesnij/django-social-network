@@ -16,9 +16,7 @@ on('#ajax', 'click', '#form_post_btn', function() {
     //document.getElementById('for_good').innerHTML = "";
     //document.getElementById('for_question').innerHTML = "";
     //document.getElementById('for_settings').innerHTML = "";
-    response = data.write;
-    lenta_load.querySelector(".stream").prepend(response);
-    console.log(data)
+    lenta_load.querySelector(".stream").prepend(data.write(200,{"Content-Type" : "text/plain"}));
     //lenta_load.querySelector(".post_empty").style.display = "none";
 
   }).catch(error => {console.log("Все не ОК")})
