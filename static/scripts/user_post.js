@@ -5,7 +5,7 @@ on('#ajax', 'click', '#form_post_btn', function() {
   form_data = new FormData(document.forms.new_post);
   form_post = document.querySelector("#form_post");
   lenta_load = form_post.parentElement.nextElementSibling;
-  pk = lenta_load.querySelector(".stream").getAttribute("user-pk");
+  pk = this.getAttribute("user-pk");
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'POST', "/posts/add_post/" + pk + "/", true );
