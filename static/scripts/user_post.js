@@ -124,6 +124,8 @@ on('#ajax', 'click', '.item_user_remove', function() {
     p = document.createElement("div");
     p.classList.add("card", "mb-4");
     p.style.padding = "20px";
+    p.style.display =  "block";
+
     p.innerHTML = "Запись удалена. <span class='item_user_remove_abort' style='cursor:pointer' data-uuid='" + uuid + "'>Восстановить</span>";
     item.parentElement.insertBefore(p, item);
     item.style.display = "none";
@@ -134,7 +136,7 @@ on('#ajax', 'click', '.item_user_remove', function() {
 
 on('#ajax', 'click', '.item_user_remove_abort', function() {
   item = this.previousElementSibling;
-  uuid = this.getAttribute("item-uuid");
+  uuid = this.getAttribute("data-uuid");
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link.open( 'GET', "/user/abort_delete/" + uuid + "/", true );
 
