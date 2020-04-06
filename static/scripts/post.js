@@ -1,9 +1,6 @@
 /*!
    item post scripts for user
   */
-
-$('body').on('click', '.u_replyParentComment', function() {button = $(this);form3 = button.parent().parent().parent().parent();block = form3.parent();upload_block = form3.find(".upload_block");pk = button.data('pk');uuid = button.data('uuid');reply_stream = block.parents('.stream_reply_comments');$.ajax({url: '/user/reply-comment/' + uuid + "/" + pk + "/",data: new FormData($(form3)[0]),contentType: false,cache: false,processData: false,type: 'POST',success: function(data) { $(".form-control-rounded").val(""); reply_stream.append(data); block.hide(); upload_block.empty();},error: function(data) { $.toast({heading: 'Ошибка',text: 'Для публикации ответа нужно написать что-нибудь и/или вставить изображение(ия)',showHideTransition: 'fade',icon: 'error'}) },});return false;});
-
 $('body').on('click', '.item_user_remove', function() {remove = $(this);uuid = remove.parents(".infinite-item").attr("item-id");$.ajax({url: "/user/delete/" + uuid + "/",success: function(data) {$(remove).parents('.card').hide();$('.activefullscreen').hide();$.toast({heading: 'Информация',text: 'Запись успешно удалена!',showHideTransition: 'fade',icon: 'info'})}});});
 $('body').on('click', '.item_user_fixed', function() {fixed = $(this);uuid = fixed.parents(".infinite-item").attr("item-id");$.ajax({url: "/user/fixed/" + uuid + "/",success: function(data) {fixed.parent().html("<span class='dropdown-item item_user_unfixed'>Открепить</span>");$.toast({heading: 'Информация',text: 'Запись закреплена!',showHideTransition: 'fade',icon: 'info'})}});});
 $('body').on('click', '.item_user_unfixed', function() {unfixed = $(this);uuid = unfixed.parents(".infinite-item").attr("item-id");$.ajax({url: "/user/unfixed/" + uuid + "/",success: function(data) {unfixed.parent().html("<span class='dropdown-item item_user_fixed'>Закрепить</span>");$.toast({heading: 'Информация',text: 'Запись откреплена!',showHideTransition: 'fade',icon: 'info'})}});});
