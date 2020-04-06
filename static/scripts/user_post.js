@@ -24,7 +24,7 @@ on('#ajax', 'click', '#form_post_btn', function() {
     new_post = document.createElement("span");
     new_post.innerHTML = elem;
     response = new_post.querySelector(".card");
-    if (new_post.indexOf("Нужно") != -1){
+    if (link_.responseText.indexOf("Нужно") != -1){
       error = form_post.querySelector("#user_post_error");
       error.append(new_post);
       setTimeout(error.innerHTML = "", 4000);
