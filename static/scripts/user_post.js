@@ -137,14 +137,14 @@ on('#ajax', 'click', '.item_user_remove', function() {
 on('#ajax', 'click', '.item_user_remove_abort', function() {
   item = this.previousElementSibling;
   uuid = this.getAttribute("data-uuid");
+  block = this.parentElement;
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link.open( 'GET', "/user/abort_delete/" + uuid + "/", true );
 
   link.onreadystatechange = function () {
   if ( link.readyState == 4 && link.status == 200 ) {
-    parent = this.parentElement;
-    console.log(parent, uuid);
-    this.parentElement.remove();
+    console.log(block, uuid);
+    block.remove();
     item.style.display = "block";
   }};
 
