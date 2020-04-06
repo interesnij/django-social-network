@@ -122,7 +122,7 @@ on('#ajax', 'click', '.item_user_remove', function() {
     item.style.display = "none";
     document.querySelector(".item_fullscreen").style.display = "none";
     remove = "<p>Запись удалена. <span class='item_user_remove_abort' data-uuid='" + uuid + "'>Восстановить</span></p>"
-    item.previousElementSibling.append(remove)
+    item.nextElementSibling.append(remove)
   }};
 
   link.send( );
