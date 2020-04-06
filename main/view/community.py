@@ -66,7 +66,7 @@ class ItemCommunityCommentCreate(View):
 				upload_photo2 = Photo.objects.create(creator=request.user, file=photo2, community=community, is_public=True, album=album)
 				upload_photo2.item_comment.add(new_comment)
 			new_comment.notification_community_comment(request.user)
-			return render_to_response('item_community/parent_comment.html',{'comment': new_comment, 'request_user': request.user, 'community': community, "form_reply": CommentForm(), 'request': request})
+			return render_to_response('c_item_comment/admin_parent.html',{'comment': new_comment, 'request_user': request.user, 'community': community, "form_reply": CommentForm(), 'request': request})
 		else:
 			return HttpResponseBadRequest()
 
@@ -100,7 +100,7 @@ class ItemCommunityReplyCreate(View):
 				upload_photo2 = Photo.objects.create(creator=request.user, file=photo2, community=community, album=album)
 				upload_photo2.item_comment.add(new_comment)
 			new_comment.notification_community_reply_comment(request.user)
-			return render_to_response('item_community/reply_comment.html',{'reply': new_comment, 'request_user': request.user, 'community': community, 'comment': parent,  "form_reply": CommentForm(), 'request': request})
+			return render_to_response('c_item_comment/admin_reply.html',{'reply': new_comment, 'request_user': request.user, 'community': community, 'comment': parent,  "form_reply": CommentForm(), 'request': request})
 		else:
 			return HttpResponseBadRequest()
 
