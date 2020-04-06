@@ -150,6 +150,15 @@ on('#ajax', 'click', '.close_upload_block', function() {
   this.parentElement.innerHTML = ""
 });
 
+on('#ajax', 'click', '.select_photo', function() {
+  var, uuid, loader;
+  uuid = this.getAttribute('data-uuid');
+  pk = this.getAttribute('data-id');
+  loader = document.getElementById("good_loader");
+  open_fullscreen('/users/load/img_load/' + uuid + '/', loader)
+});
+
+
 //'#ajax', 'click', '.comment_photo1', function() {
 //mg = this;
 //ntrou = false;
@@ -191,9 +200,6 @@ on('#ajax', 'click', '.close_upload_block', function() {
 //    {if (typeof FileReader != "undefined") {image_holder = $(img); image_holder.empty();reader = new FileReader();reader.onload = function(e) { $img = $("<img />", { id: "targetImageCrop", src: e.target.result, class: "thumb-image" }).appendTo(image_holder); }; image_holder.show(); reader.readAsDataURL($(this)[0].files[0]);} } else { this.value = null; } } entrou = true; setTimeout(function() { entrou = false; }, 1000); img.prev().prev().show();console.log("upload comment image 2")});});
 
 //$('body').on('click', '.delete_thumb1', function(e) {e.preventDefault(); var a = $(this); a.parent().empty().append('<a href="#" style="display:none" class="delete_thumb1">Удалить</a><input class="file1 hide_image" type="file" name="photo" accept="image/*" id="id_item_comment_photo"><div class="comment_photo1"><h4 class="svg_default"><svg width="35" height="35" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none" /><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z" /></svg></h4></div>');console.log("comment image deleted")});
-
-//$('body').on('click', '.select_photo', function() {uuid = $(this).data("uuid");$('#photo_loader').html("").load("/users/load/img_load/" + uuid + "/"); $('.photo_fullscreen').show();console.log("select image for comment form")});
-
 
 
 Index.initLink();
