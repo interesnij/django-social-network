@@ -163,6 +163,16 @@ def community_item_delete(request, pk, uuid):
 	else:
 		return HttpResponse("Удаляйте, пожалуйста, свои записи!")
 
+def community_item_abort_delete(request, pk, uuid):
+	item = Item.objects.get(uuid=uuid)
+	community = Community.objects.get(pk=pk)
+	if request.user.is_staff_of_community_with_name(community.name):
+		item.is_deleted=False
+		item.save(update_fields=['is_deleted'])
+		return HttpResponse("!")
+	else:
+		return HttpResponse("Удаляйте, пожалуйста, свои записи!")
+
 
 class ItemCommunityDetail(TemplateView):
 	template_name = "item_community/detail.html"

@@ -1,7 +1,4 @@
-
 on('#ajax', 'click', '#form_post_btn', function() {
-  var form_post, form_data, lenta_load, pk, link_, elem, new_post;
-
   form_data = new FormData(document.forms.new_post);
   form_post = document.querySelector("#form_post");
   lenta_load = form_post.parentElement.nextElementSibling;
@@ -40,7 +37,6 @@ on('#ajax', 'click', '#form_post_btn', function() {
 
 
 on('#ajax', 'click', '.u_itemComment', function() {
-  var form, form_comment, pk, link_, elem, new_post;
   form = this.parentElement.parentElement.parentElement;
   form_comment = new FormData(form);
   upload_block = form.querySelector(".upload_block");
@@ -62,7 +58,6 @@ on('#ajax', 'click', '.u_itemComment', function() {
 });
 
 on('#ajax', 'click', '.u_replyComment', function() {
-  var form, form_comment, pk, link_, elem, new_post;
   form = this.parentElement.parentElement.parentElement.parentElement;
   form_comment = new FormData(form);
   upload_block = form.parentElement.querySelector(".upload_block");
@@ -89,7 +84,6 @@ on('#ajax', 'click', '.u_replyComment', function() {
 
 
 on('#ajax', 'click', '.u_replyParentComment', function() {
-  var form, form_comment, pk, link_, elem, new_post;
   form = this.parentElement.parentElement.parentElement.parentElement;
   form_comment = new FormData(form);
   upload_block = form.parentElement.querySelector(".upload_block");
@@ -111,4 +105,40 @@ on('#ajax', 'click', '.u_replyParentComment', function() {
   }};
 
   link_.send(form_comment);
+});
+
+
+/*!
+   item post scripts for user
+  */
+on('#ajax', 'click', '.item_user_remove', function() {
+  item = this.parentElement.parentElement.parentElement.parentElement.parentElement;
+  uuid = item.getAttribute("item-uuid");
+  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link.open( 'GET', "/user/delete/" + uuid + "/", true );
+
+  link.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    item.style.display = "none";
+    document.querySelector(".activefullscreen").style.display = "none";
+    remove = "<p>Запись удалена. <span class='item_user_remove_abort' data-uuid='" + uuid + "'>Восстановить</span></p>"
+    item.previousElementSibling.append(remove)
+  }};
+
+  link.send(form_comment);
+});
+
+on('#ajax', 'click', '.item_user_remove_abort', function() {
+  item = this.previousElementSibling;
+  uuid = this.getAttribute("item-uuid");
+  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link.open( 'GET', "/user/abort_delete/" + uuid + "/", true );
+
+  link.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    this.style.display = "none";
+    item.style.display = "block";
+  }};
+
+  link.send(form_comment);
 });

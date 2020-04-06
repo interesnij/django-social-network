@@ -165,6 +165,15 @@ def user_item_delete(request, uuid):
 	else:
 		return HttpResponse("Удаляйте, пожалуйста, свои записи!")
 
+def user_item_abort_delete(request, uuid):
+	item = Item.objects.get(uuid=uuid)
+	if request.user == item.creator:
+		item.is_deleted=False
+		item.save(update_fields=['is_deleted'])
+		return HttpResponse("!")
+	else:
+		return HttpResponse("Удаляйте, пожалуйста, свои записи!")
+
 
 class ItemUserDetail(TemplateView):
 	template_name = "item_user/detail.html"
