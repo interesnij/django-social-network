@@ -26,7 +26,7 @@ on('#ajax', 'click', '#form_post_btn', function() {
     response = new_post.querySelector(".card");
     if (link_.responseText.indexOf("ok") != -1){
       error = form_post.querySelector("#user_post_error");
-      error.append("Нужно ввести текст, прикрепить фотографию, аудио/ видеофайлы, статью или товар");
+      error.append(new_post);
       setTimeout(error.innerHTML = "", 4000);
     }else{
       lenta_load.querySelector(".stream").prepend(response)
