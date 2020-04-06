@@ -14,8 +14,12 @@ on('#ajax', 'click', '#form_post_btn', function() {
   if ( this.readyState == 4 && this.status == 200 ) {
     elem = link_.responseText;
     new_post = document.createElement("span");
+    new_post.classList.add("my_span");
     new_post.innerHTML = elem;
-    lenta_load.querySelector(".stream").prepend(new_post.innerHTML)
+
+    response = document.querySelector(.my_span).innerHTML;
+
+    lenta_load.querySelector(".stream").prepend(response)
     lenta_load.querySelector(".post_empty") ? lenta_load.querySelector(".post_empty").style.display = "none" : console.log("post_empty не обнаружен");
   }};
 
