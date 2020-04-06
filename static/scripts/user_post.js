@@ -145,8 +145,8 @@ on('#ajax', 'click', '.item_user_remove_abort', function() {
   if ( link.readyState == 4 && link.status == 200 ) {
     console.log(block, uuid);
     block.remove();
-    item.style.display = "block";
   }};
 
   link.send();
+  item.style.display = "block";
 });
