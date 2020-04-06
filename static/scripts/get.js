@@ -147,7 +147,7 @@ on('#ajax', 'click', '.upload_photo', function() {
 });
 
 on('#ajax', 'click', '.upload_photo', function() {
-  this.parentElement.parentElement.innerHTML = ""
+  this.this.parentElement.parentElement.parentElement.previousElementSibling.innerHTML = ""
 });
 
 //'#ajax', 'click', '.comment_photo1', function() {
