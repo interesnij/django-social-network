@@ -32,7 +32,6 @@ on('#ajax', 'click', '#form_post_btn', function() {
       lenta_load.querySelector(".stream").prepend(response)
     }
     console.log(link_.responseText);
-    lenta_load.querySelector(".stream").prepend(response)
     lenta_load.querySelector(".post_empty") ? lenta_load.querySelector(".post_empty").style.display = "none" : console.log("post_empty не обнаружен");
   }};
 
