@@ -47,7 +47,7 @@ class PostUserCreate(View):
         if self.form_post.is_valid() and request.user == self.user:
             post=self.form_post.save(commit=False)
             new_post = post.create_post(creator=request.user, text=post.text, community=None, comments_enabled=post.comments_enabled, status=post.status,)
-            return render_to_string('item_user/my_post.html', {'object': new_post,'request': request})
+            return render_to_response('item_user/my_post.html', {'object': new_post,'request': request})
         else:
             return HttpResponseBadRequest()
 
