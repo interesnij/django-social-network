@@ -25,7 +25,7 @@ on('#ajax', 'click', '#form_post_btn', function() {
     new_post.innerHTML = elem;
     response = new_post.querySelector(".card");
     if (request.responseText.indexOf("Нужно ввести") != -1){
-      error = form_post.querySelector(".user_post_error");
+      error = form_post.querySelector("#user_post_error");
       error.append(response);
       setTimeout(error.innerHTML = "", 4000);
     }else{
