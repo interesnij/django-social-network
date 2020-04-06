@@ -24,7 +24,7 @@ on('#ajax', 'click', '#form_post_btn', function() {
     new_post = document.createElement("span");
     new_post.innerHTML = elem;
     response = new_post.querySelector(".card");
-    if (link_.responseText.indexOf("Нужно ввести") != -1){
+    if (link_.responseText.indexOf("ok") != -1){
       error = form_post.querySelector("#user_post_error");
       error.append("Нужно ввести текст, прикрепить фотографию, аудио/ видеофайлы, статью или товар");
       setTimeout(error.innerHTML = "", 4000);
