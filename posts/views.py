@@ -1,6 +1,6 @@
 from django.views.generic.base import TemplateView
 from users.models import User
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, render
 from posts.models import Post
 from main.models import Item
 from django.http import HttpResponseBadRequest
@@ -49,7 +49,7 @@ class PostUserCreate(View):
             return render_to_response('item_user/my_post.html', {'object': new_post,'request': request})
         else:
             ok = "Нужно ввести текст, прикрепить фотографию, аудио/ видеофайлы, статью или товар"
-            return render_to_response('profile/post_add_error.html', {'ok': ok})
+            response = render(request,'profile/post_add_error.html',{'ok':ok})
 
 
 class PostCommunityCreate(View):
