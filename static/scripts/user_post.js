@@ -16,7 +16,7 @@ on('#ajax', 'click', '#form_post_btn', function() {
     //document.getElementById('for_good').innerHTML = "";
     //document.getElementById('for_question').innerHTML = "";
     //document.getElementById('for_settings').innerHTML = "";
-    lenta_load.querySelector(".stream").prepend(data);
+    lenta_load.querySelector(".stream").prepend(data.Write);
     console.log(data)
     //lenta_load.querySelector(".post_empty").style.display = "none";
 
