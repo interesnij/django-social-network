@@ -35,22 +35,22 @@ on('#ajax', 'click', '#form_post_btn', function() {
 
 on('#ajax', 'click', '.u_itemComment', function() {
   var form_post, form_comment, lenta_load, pk, link_, elem, new_post;
-
-  form_comment = new FormData(this.parentElement.parentElement.parentElement);
-  upload_block = this.parentElement.parentElement.parentElement.querySelector(".upload_block");
+  form = this.parentElement.parentElement.parentElement;
+  form_comment = new FormData(form);
+  upload_block = form.querySelector(".upload_block");
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'POST', '/user/post-comment/', true );
 
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
-    form_comment.querySelector(".form-control-rounded").value="";
+    form.querySelector(".form-control-rounded").value="";
     elem = link_.responseText;
     new_post = document.createElement("span");
     new_post.innerHTML = elem;
     response = new_post.querySelector(".comment");
 
-    form_comment.parentElement.previousElementSibling.prepend(response)
+    form.parentElement.previousElementSibling.prepend(response)
   }};
 
   link_.send(form_comment);
