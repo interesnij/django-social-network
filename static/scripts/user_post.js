@@ -272,7 +272,7 @@ on('#ajax', 'click', '.u_like', function() {
     item.parentElement.querySelector(".u_like").classList.toggle("btn_success", "btn_default");
 
     like_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    like_link.open( 'GET', "/window/u_like_window/" + uuid + "/" + pk + "/", true );
+    like_link.open( 'GET', "/item_window/u_like_window/" + uuid + "/" + pk + "/", true );
     like_link.onreadystatechange = function () {
     if ( like_link.readyState == 4 && like_link.status == 200 ) {
       span_1 = document.createElement("span");
@@ -283,7 +283,7 @@ on('#ajax', 'click', '.u_like', function() {
     like_link.send( null );
 
     dislike_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    dislike_link.open( 'GET', "/window/u_dislike_window/" + uuid + "/" + pk + "/", true );
+    dislike_link.open( 'GET', "/item_window/u_dislike_window/" + uuid + "/" + pk + "/", true );
     dislike_link.onreadystatechange = function () {
     if ( dislike_link.readyState == 4 && like_link.status == 200 ) {
       span_2 = document.createElement("span");
