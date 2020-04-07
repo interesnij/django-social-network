@@ -160,7 +160,7 @@ on('#ajax', 'click', '.item_user_fixed', function() {
   parent = this.parentElement;
 
   link__ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link__.open( 'POST', "/user/fixed/" + uuid + "/", true );
+  link__.open( 'GET', "/user/fixed/" + uuid + "/", true );
   new_span = document.createElement("span");
   new_span.classList.add("dropdown-item", "item_user_unfixed");
   new_span.innerHTML = "Открепить";
