@@ -55,7 +55,7 @@ class Item(models.Model):
         return i
 
     def __str__(self):
-        return "{0}/{1}".format(self.creator.get_full_name(), self.views)
+        return self.creator.get_full_name()
 
     def notification_user_repost(self, user):
         item_notification_handler(user, self.creator, verb=ItemNotification.REPOST, key='social_update', item=self, comment=None)
