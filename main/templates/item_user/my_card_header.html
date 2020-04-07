@@ -28,13 +28,11 @@
             <div class="dropdown-menu">
                 <span class="dropdown-item item_user_remove">Удалить запись</span>
                 <span class="dropdown-item">Редактировать</span>
-                <span>
-                  {% if object.is_fixed %}
-                    <span class="dropdown-item item_user_unfixed">Открепить</span>
-                  {% else %}
-                    <span class="dropdown-item item_user_unfixed">Закрепить</span>
-                  {% endif %}
-                </span>
+                {% if object.is_fixed %}
+                  <span class="dropdown-item item_user_unfixed">Открепить</span>
+                {% else %}
+                  <span class="dropdown-item item_user_unfixed">Закрепить</span>
+                {% endif %}
                 <span>
                   {% if object.comments_enabled %}
                     <span class="dropdown-item item_user_off_comment">Выключить комментарии</span>

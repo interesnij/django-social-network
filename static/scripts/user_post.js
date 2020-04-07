@@ -151,7 +151,7 @@ on('#ajax', 'click', '.item_user_remove_abort', function() {
 });
 
 on('#ajax', 'click', '.item_user_fixed', function() {
-  item = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
+  item = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   uuid = item.getAttribute("item-uuid");
 
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -163,19 +163,18 @@ on('#ajax', 'click', '.item_user_fixed', function() {
   }};
 
   link.send();
-  this.parentElement.innerHTML = "<span class='dropdown-item item_user_unfixed'>Открепить</span>";
+  this.innerHTML = "<span class='dropdown-item item_user_unfixed'>Открепить</span>";
 });
 
 on('#ajax', 'click', '.item_user_unfixed', function() {
-  item = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
+  item = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   uuid = item.getAttribute("item-uuid");
-  parent = this.parentElement;
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link.open( 'GET', "/user/unfixed/" + uuid + "/", true );
 
   link.onreadystatechange = function () {
   if ( link.readyState == 4 && link.status == 200 ) {
-    parent.innerHTML = "<span class='dropdown-item item_user_fixed'>Закрепить</span>";
+    this.innerHTML = "<span class='dropdown-item item_user_fixed'>Закрепить</span>";
   }};
 
   link.send();
