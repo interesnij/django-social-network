@@ -160,7 +160,8 @@ on('#ajax', 'click', '.item_user_fixed', function() {
 
   link.onreadystatechange = function () {
   if ( link.readyState == 4 && link.status == 200 ) {
-    parent.append("<span class='dropdown-item item_user_unfixed'>Открепить</span>");
+    parent.innerHTML = "";
+    parent.innerHTML = "<span class='dropdown-item item_user_unfixed'>Открепить</span>";
   }};
 
   link.send();
@@ -176,7 +177,8 @@ on('#ajax', 'click', '.item_user_unfixed', function() {
 
   link.onreadystatechange = function () {
   if ( link.readyState == 4 && link.status == 200 ) {
-    parent.append("<span class='dropdown-item item_user_fixed'>Закрепить</span>");
+    parent.innerHTML = "";
+    parent.innerHTML = "<span class='dropdown-item item_user_fixed'>Закрепить</span>";
   }};
 
   link.send();
