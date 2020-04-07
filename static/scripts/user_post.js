@@ -160,11 +160,11 @@ on('#ajax', 'click', '.item_user_fixed', function() {
 
   link.onreadystatechange = function () {
   if ( link.readyState == 4 && link.status == 200 ) {
-    parent.innerHTML = "";
-    parent.innerHTML = "<span class='dropdown-item item_user_unfixed'>Открепить</span>";
+
   }};
 
   link.send();
+  parent.innerHTML = "<span class='dropdown-item item_user_unfixed'>Открепить</span>";
 });
 
 on('#ajax', 'click', '.item_user_unfixed', function() {
@@ -177,7 +177,6 @@ on('#ajax', 'click', '.item_user_unfixed', function() {
 
   link.onreadystatechange = function () {
   if ( link.readyState == 4 && link.status == 200 ) {
-    parent.innerHTML = "";
     parent.innerHTML = "<span class='dropdown-item item_user_fixed'>Закрепить</span>";
   }};
 
