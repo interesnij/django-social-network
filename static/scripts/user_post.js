@@ -154,13 +154,13 @@ on('#ajax', 'click', '.item_user_fixed', function() {
   item = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   uuid = item.getAttribute("item-uuid");
   parent = this.parentElement;
-
+  parent.innerHTML = "<span class='dropdown-item item_user_unfixed'>Открепить</span>";
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link.open( 'GET', "/user/fixed/" + uuid + "/", true );
 
   link.onreadystatechange = function () {
   if ( link.readyState == 4 && link.status == 200 ) {
-    parent.innerHTML = "<span class='dropdown-item item_user_unfixed'>Открепить</span>";
+
   }};
 
   link.send();
@@ -170,13 +170,12 @@ on('#ajax', 'click', '.item_user_unfixed', function() {
   item = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   uuid = item.getAttribute("item-uuid");
   parent = this.parentElement;
-
+  parent.innerHTML = "<span class='dropdown-item item_user_fixed'>Закрепить</span>";
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link.open( 'GET', "/user/unfixed/" + uuid + "/", true );
 
   link.onreadystatechange = function () {
   if ( link.readyState == 4 && link.status == 200 ) {
-    parent.innerHTML = "<span class='dropdown-item item_user_fixed'>Закрепить</span>";
   }};
 
   link.send();
