@@ -358,7 +358,7 @@ on('#ajax', 'click', '.u_dislike2', function() {
   like = item.querySelector(".u_like2");
   dislike = item.querySelector(".u_dislike2");
   like_block = this.nextElementSibling;
-  dislike_block = this.previousElementSibling.previousElementSibling;
+  dislike_block = this.previousElementSibling;
 
   link__ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link__.overrideMimeType("application/json");
