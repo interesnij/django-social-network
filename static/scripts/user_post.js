@@ -159,11 +159,10 @@ on('#ajax', 'click', '.item_user_fixed', function() {
 
   link.onreadystatechange = function () {
   if ( link.readyState == 4 && link.status == 200 ) {
-
+    item.querySelector(".item_user_unfixed").innerHTML = "<span class='dropdown-item item_user_unfixed'>Открепить</span>";
   }};
 
   link.send();
-  this.innerHTML = "<span class='dropdown-item item_user_unfixed'>Открепить</span>";
 });
 
 on('#ajax', 'click', '.item_user_unfixed', function() {
@@ -174,7 +173,7 @@ on('#ajax', 'click', '.item_user_unfixed', function() {
 
   link.onreadystatechange = function () {
   if ( link.readyState == 4 && link.status == 200 ) {
-    this.innerHTML = "<span class='dropdown-item item_user_fixed'>Закрепить</span>";
+    item.querySelector(".item_user_unfixed").innerHTML = "<span class='dropdown-item item_user_fixed'>Закрепить</span>";
   }};
 
   link.send();
