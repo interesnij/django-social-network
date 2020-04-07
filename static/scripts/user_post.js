@@ -258,10 +258,16 @@ on('#ajax', 'click', '.u_like', function() {
   dislike_block = this.nextElementSibling.nextElementSibling.nextElementSibling;
 
   link__ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link__.overrideMimeType("application/json");
   link__.open( 'GET', "/votes/user_like/" + uuid + "/" + pk + "/", true );
-  link__.onreadystatechange = function (json) {
+
+  link__.onload  = function() {
+   var jsonResponse = JSON.parse(link__.responseText);
+   // do something with jsonResponse
+  };
+  link__.onreadystatechange = function () {
   if ( link__.readyState == 4 && link__.status == 200 ) {
-    this.parentElement.querySelector("[data-count='like']").text(json.like_count)
+    this.parentElement.querySelector("[data-count='like']").text(jsonResponse.like_count);
     item.parentElement.querySelector(".u_like").classList.toggle("btn_success", "btn_default");
 
     like_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
