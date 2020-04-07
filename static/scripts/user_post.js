@@ -261,11 +261,9 @@ on('#ajax', 'click', '.u_like', function() {
   link__.overrideMimeType("application/json");
   link__.open( 'GET', "/votes/user_like/" + uuid + "/" + pk + "/", true );
 
-  link__.onload  = function() {
-   var jsonResponse = JSON.parse(link__.responseText);
-  };
   link__.onreadystatechange = function () {
   if ( link__.readyState == 4 && link__.status == 200 ) {
+    jsonResponse = JSON.parse(link__.responseText);
     console.log(jsonResponse);
     this.previousElementSibling.innerHTML = jsonResponse.like_count;
     item.parentElement.querySelector(".u_like").classList.toggle("btn_success", "btn_default");
