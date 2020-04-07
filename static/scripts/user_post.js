@@ -259,7 +259,7 @@ on('#ajax', 'click', '.u_like', function() {
 
   link__ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link__.overrideMimeType("application/json");
-  link__.open( 'POST', "/votes/user_like/" + uuid + "/" + pk + "/", true );
+  link__.open( 'GET', "/votes/user_like/" + uuid + "/" + pk + "/", true );
 
   link__.onload  = function() {
    var jsonResponse = JSON.parse(link__.responseText);
