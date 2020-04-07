@@ -150,11 +150,6 @@ on('#ajax', 'click', '.item_user_remove_abort', function() {
   link.send();
 });
 
-function hot_change(par, el){
-  par.innerHTML = "";
-  par.append(el)
-}
-
 on('#ajax', 'click', '.item_user_fixed', function() {
   item = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   uuid = item.getAttribute("item-uuid");
@@ -168,7 +163,8 @@ on('#ajax', 'click', '.item_user_fixed', function() {
     new_span = document.createElement("span");
     new_span.classList.add("dropdown-item", "item_user_unfixed");
     new_span.innerHTML = "Открепить";
-    hot_change(parent, new_span)
+    parent.innerHTML = "";
+    parent.append(new_span)
   }};
   link__.send( null );
 });
@@ -186,7 +182,8 @@ on('#ajax', 'click', '.item_user_unfixed', function() {
     new_span = document.createElement("span");
     new_span.classList.add("dropdown-item", "item_user_fixed");
     new_span.innerHTML = "Закрепить";
-    hot_change(parent, new_span)
+    parent.innerHTML = "";
+    parent.append(new_span)
   }};
   link__.send( null );
 });
