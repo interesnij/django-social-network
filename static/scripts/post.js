@@ -1,9 +1,5 @@
 /*!
    item post scripts for user
-  */
-$('body').on('click', '.item_user_off_comment', function() {off = $(this);uuid = off.parents(".infinite-item").attr("item-id");$.ajax({url: "/user/off_comment/" + uuid + "/",success: function(data) {off.parent().html("<span class='dropdown-item item_user_on_comment'>Включить комментарии</span>");$.toast({heading: 'Информация',text: 'Комментарии выключены!',showHideTransition: 'fade',icon: 'info'})}});});
-$('body').on('click', '.item_user_on_comment', function() {on = $(this);uuid = on.parents(".infinite-item").attr("item-id");$.ajax({url: "/user/on_comment/" + uuid + "/",success: function(data) {on.parent().html("<span class='dropdown-item item_user_off_comment'>Выключить комментарии</span>");$.toast({heading: 'Информация',text: 'Комментарии включены!',showHideTransition: 'fade',icon: 'info'})}});});
-
 
 /*!
    item post scripts for community

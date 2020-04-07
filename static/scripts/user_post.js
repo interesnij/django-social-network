@@ -187,3 +187,41 @@ on('#ajax', 'click', '.item_user_unfixed', function() {
   }};
   link__.send( null );
 });
+
+
+on('#ajax', 'click', '.item_user_off_comment', function() {
+  item = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
+  uuid = item.getAttribute("item-uuid");
+  parent = this.parentElement;
+
+  link__ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link__.open( 'GET', "/user/off_comment/" + uuid + "/", true );
+
+  link__.onreadystatechange = function () {
+  if ( link__.readyState == 4 && link__.status == 200 ) {
+    new_span = document.createElement("span");
+    new_span.classList.add("dropdown-item", "item_user_on_comment");
+    new_span.innerHTML = "Включить комментарии";
+    parent.innerHTML = "";
+    parent.append(new_span)
+  }};
+  link__.send( null );
+});
+
+on('#ajax', 'click', '.item_user_on_comment', function() {
+  item = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
+  uuid = item.getAttribute("item-uuid");
+  parent = this.parentElement;
+
+  link__ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link__.open( 'GET', "/user/on_comment/" + uuid + "/", true );
+  link__.onreadystatechange = function () {
+  if ( link__.readyState == 4 && link__.status == 200 ) {
+    new_span = document.createElement("span");
+    new_span.classList.add("dropdown-item", "item_user_off_comment");
+    new_span.innerHTML = "Выключить комментарии";
+    parent.innerHTML = "";
+    parent.append(new_span)
+  }};
+  link__.send( null );
+});
