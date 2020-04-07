@@ -320,7 +320,6 @@ on('#ajax', 'click', '.u_dislike', function() {
   link__.send( null );
 });
 
-
 on('#ajax', 'click', '.u_like2', function() {
   item = this.parentElement;
   uuid = item.getAttribute("data-uuid");
@@ -350,4 +349,35 @@ on('#ajax', 'click', '.u_like2', function() {
 
   }};
 link__.send( null );
+});
+
+on('#ajax', 'click', '.u_dislike2', function() {
+  item = this.parentElement;
+  uuid = item.getAttribute("data-uuid");
+  pk = item.getAttribute("data-pk");
+  like = item.querySelector(".u_like2");
+  dislike = item.querySelector(".u_dislike2");
+  like_block = this.nextElementSibling;
+  dislike_block = this.previousElementSibling;
+
+  link__ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link__.overrideMimeType("application/json");
+  link__.open( 'GET', "/votes/user_comment/" + uuid + "/" + pk + "/dislike/", true );
+
+  link__.onreadystatechange = function () {
+  if ( link__.readyState == 4 && link__.status == 200 ) {
+    jsonResponse = JSON.parse(link__.responseText);
+    likes_count = item.querySelector(".likes_count");
+    dislikes_count = item.querySelector(".dislikes_count");
+    likes_count.innerHTML = jsonResponse.like_count;
+    dislikes_count.innerHTML = jsonResponse.dislike_count;
+    like.classList.toggle("btn_success");
+    like.classList.toggle("btn_default");
+    dislike.classList.add("btn_default");
+    dislike.classList.remove("btn_danger");
+
+    vote_reload("/item_window/u_comment_like_window/" + uuid + "/" + pk + "/", "/item_window/u_comment_dislike_window/" + uuid + "/" + pk + "/", like_block, dislike_block)
+
+  }};
+  link__.send( null );
 });
