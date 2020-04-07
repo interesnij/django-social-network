@@ -233,21 +233,21 @@ on('#ajax', 'click', '.item_user_on_comment', function() {
   }};
   link__.send( null );
 });
-//$("body").on('click', '.u_like', function() {
-//  $.ajax({
-//    url: "/votes/user_like/" + uuid + "/" + pk + "/",
-//    type: 'POST',
-//    data: {'obj': pk},
-//    success: function(json){
-//      like.find("[data-count='like']").text(json.like_count);
-//      like.toggleClass('btn_success btn_default');
-//      like.next().html('').load("/window/u_like_window/" + uuid + "/" + pk + "/");
-//      dislike.find("[data-count='dislike']").text(json.dislike_count);
-//      dislike.removeClass('btn_danger').addClass("btn_default");
-//      dislike.next().html('').load("/window/u_dislike_window/" + uuid + "/" + pk + "/")
-//}
-//});
-//});
+$("body").on('click', '.u_like', function() {
+  $.ajax({
+    url: "/votes/user_like/" + uuid + "/" + pk + "/",
+    type: 'POST',
+    data: {'obj': pk},
+    success: function(json){
+      like.find("[data-count='like']").text(json.like_count);
+      like.toggleClass('btn_success btn_default');
+      like.next().html('').load("/window/u_like_window/" + uuid + "/" + pk + "/");
+      dislike.find("[data-count='dislike']").text(json.dislike_count);
+      dislike.removeClass('btn_danger').addClass("btn_default");
+      dislike.next().html('').load("/window/u_dislike_window/" + uuid + "/" + pk + "/")
+}
+});
+});
 
 on('#ajax', 'click', '.u_like', function() {
   item = this.parentElement.parentElement.parentElement.parentElement;
@@ -268,7 +268,8 @@ on('#ajax', 'click', '.u_like', function() {
     dislikes_count = item.querySelector(".dislikes_count");
     likes_count.innerHTML = jsonResponse.like_count;
     dislikes_count.innerHTML = jsonResponse.dislike_count;
-    item.parentElement.querySelector(".u_like").classList.toggle("btn_success", "btn_default");
+    item.querySelector(".u_like").classList.toggle("btn_success", "btn_default");
+    item.querySelector(".u_dislike").classList.add("btn_default").remove("btn_danger");
 
     like_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     like_link.open( 'GET', "/item_window/u_like_window/" + uuid + "/" + pk + "/", true );
