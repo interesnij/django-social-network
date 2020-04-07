@@ -170,7 +170,7 @@ on('#ajax', 'click', '.item_user_fixed', function() {
     new_span.innerHTML = "Открепить";
     hot_change(parent, new_span)
   }};
-  link__.send();
+  link__.send( null );
 });
 
 on('#ajax', 'click', '.item_user_unfixed', function() {
@@ -178,8 +178,8 @@ on('#ajax', 'click', '.item_user_unfixed', function() {
   uuid = item.getAttribute("item-uuid");
   parent = this.parentElement;
 
-  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/user/unfixed/" + uuid + "/", true );
+  link__ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link__.open( 'GET', "/user/unfixed/" + uuid + "/", true );
 
   link__.onreadystatechange = function () {
   if ( link__.readyState == 4 && link__.status == 200 ) {
@@ -188,5 +188,5 @@ on('#ajax', 'click', '.item_user_unfixed', function() {
     new_span.innerHTML = "Закрепить";
     hot_change(parent, new_span)
   }};
-  link.send();
+  link__.send( null );
 });
