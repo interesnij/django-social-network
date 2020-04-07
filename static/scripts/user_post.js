@@ -266,7 +266,9 @@ on('#ajax', 'click', '.u_like', function() {
     jsonResponse = JSON.parse(link__.responseText);
     console.log(jsonResponse);
     likes_count = item.querySelector(".likes_count");
+    dislikes_count = item.querySelector(".dislikes_count");
     likes_count.innerHTML = jsonResponse.like_count;
+    dislikes_count.innerHTML = jsonResponse.dislike_count;
     item.parentElement.querySelector(".u_like").classList.toggle("btn_success", "btn_default");
 
     like_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -289,7 +291,7 @@ on('#ajax', 'click', '.u_like', function() {
       dislike_block.innerHTML = "";
       dislike_block.append(span_2);
     }}
-    like_link.send( null );
+    dislike_link.send( null );
 
   }};
   link__.send( null );
