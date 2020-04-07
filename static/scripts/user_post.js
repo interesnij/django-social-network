@@ -163,7 +163,7 @@ on('#ajax', 'click', '.item_user_fixed', function() {
   link__.open( 'GET', "/user/fixed/" + uuid + "/", true );
   new_span = document.createElement("span");
   new_span.classList.add("dropdown-item", "item_user_unfixed");
-  new_span.innerHTML = "Открепить"
+  new_span.innerHTML = "Открепить";
   link__.onreadystatechange = function () {
   if ( link__.readyState == 4 && link__.status == 200 ) {
     hot_change(parent, new_span)
