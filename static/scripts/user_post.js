@@ -154,6 +154,7 @@ on('#ajax', 'click', '.item_user_fixed', function() {
   item = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   uuid = item.getAttribute("item-uuid");
   parent = this.parentElement;
+  response = "<span class='dropdown-item item_user_unfixed'>Открепить</span>";
 
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link.open( 'GET', "/user/fixed/" + uuid + "/", true );
@@ -164,14 +165,15 @@ on('#ajax', 'click', '.item_user_fixed', function() {
   }};
 
   link.send();
-  parent.innerHTML = "<span class='dropdown-item item_user_unfixed'>Открепить</span>";
+  parent.innerHTML = "";
+  parent.append(response);
 });
 
 on('#ajax', 'click', '.item_user_unfixed', function() {
   item = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   uuid = item.getAttribute("item-uuid");
   parent = this.parentElement;
-
+  response = "<span class='dropdown-item item_user_fixed'>Закрепить</span>";
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link.open( 'GET', "/user/unfixed/" + uuid + "/", true );
 
