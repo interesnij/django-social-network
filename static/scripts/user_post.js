@@ -239,6 +239,7 @@ on('#ajax', 'click', '.u_like', function() {
   item = this.parentElement.parentElement.parentElement.parentElement;
   uuid = item.getAttribute("item-uuid");
   pk = item.parentElement.getAttribute("user-pk");
+  like = this;
   dislike = this.nextElementSibling.nextElementSibling;
   like_block = this.nextElementSibling;
   dislike_block = this.nextElementSibling.nextElementSibling.nextElementSibling;
@@ -254,9 +255,9 @@ on('#ajax', 'click', '.u_like', function() {
     dislikes_count = item.querySelector(".dislikes_count");
     likes_count.innerHTML = jsonResponse.like_count;
     dislikes_count.innerHTML = jsonResponse.dislike_count;
-    this.classList.toggle("btn_success", "btn_default");
-    item.querySelector(".u_dislike").classList.add("btn_default");
-    item.querySelector(".u_dislike").classList.remove("btn_danger")
+    like.classList.toggle("btn_success", "btn_default");
+    dislike.classList.add("btn_default");
+    dislike.classList.remove("btn_danger")
 
     like_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     like_link.open( 'GET', "/item_window/u_like_window/" + uuid + "/" + pk + "/", true );
