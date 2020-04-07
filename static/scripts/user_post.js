@@ -156,9 +156,12 @@ on('#ajax', 'click', '.item_user_fixed', function() {
 
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link.open( 'GET', "/user/fixed/" + uuid + "/", true );
+  new_span = document.createElement("span");
+  new_span.classList.add("dropdown-item", "item_user_unfixed");
+  new_span.innerHTML = "Открепить"
 
   link.send();
-  item.querySelector(".fixed_block").innerHTML = '<span class="dropdown-item item_user_unfixed">Открепить</span>';
+  this.parentElement.insertBefore(new_span, this);
 });
 
 on('#ajax', 'click', '.item_user_unfixed', function() {
