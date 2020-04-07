@@ -63,14 +63,12 @@
 
         </span>
           &nbsp;&nbsp;
-            {% if object.comments_enabled %}
-            <span title="Комментарий" class="c_item_comments comments_close" style="cursor:pointer">
+            <span title="Комментарий" class="c_item_comments comments_close" style="cursor:pointer{% if not object.comments_enabled %}display:none{% endif %}">
               <svg class="svg_info svg_default" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
                 <span class="comment-count">
                     {% if object.count_comments %} {{ object.count_comments }} {% endif %}
                 </span>
             </span>
-            {% endif %}
 
             &nbsp;&nbsp;
             <span title="Поделиться" data-toggle="modal" class="c_item_repost" data-target="#modal_community_repost" style="cursor:pointer">
