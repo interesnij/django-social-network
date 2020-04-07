@@ -78,7 +78,7 @@ class ItemCommentUserLikeCreate(View):
 
 
 class ItemUserDislikeCreate(View):
-    def post(self, request, **kwargs):
+    def get(self, request, **kwargs):
         item = Item.objects.get(uuid=self.kwargs["uuid"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
