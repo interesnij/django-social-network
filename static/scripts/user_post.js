@@ -268,6 +268,7 @@ on('#ajax', 'click', '.u_like', function() {
   link__.onreadystatechange = function () {
   if ( link__.readyState == 4 && link__.status == 200 ) {
     this.previousElementSibling.text(jsonResponse.like_count);
+    console.log(jsonResponse);
     item.parentElement.querySelector(".u_like").classList.toggle("btn_success", "btn_default");
 
     like_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
