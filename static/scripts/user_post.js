@@ -264,7 +264,6 @@ on('#ajax', 'click', '.u_like', function() {
   link__.onreadystatechange = function () {
   if ( link__.readyState == 4 && link__.status == 200 ) {
     jsonResponse = JSON.parse(link__.responseText);
-    console.log(jsonResponse);
     likes_count = item.querySelector(".likes_count");
     dislikes_count = item.querySelector(".dislikes_count");
     likes_count.innerHTML = jsonResponse.like_count;
@@ -277,8 +276,8 @@ on('#ajax', 'click', '.u_like', function() {
     if ( like_link.readyState == 4 && like_link.status == 200 ) {
       span_1 = document.createElement("span");
       span_1.innerHTML = like_link.responseText;
-      like_block.innerHTML = "";
-      like_block.append(span_1);
+      like_block.innerHTML = span_1;
+      //like_block.append(span_1);
     }}
     like_link.send( null );
 
@@ -288,8 +287,8 @@ on('#ajax', 'click', '.u_like', function() {
     if ( dislike_link.readyState == 4 && like_link.status == 200 ) {
       span_2 = document.createElement("span");
       span_2.innerHTML = dislike_link.responseText;
-      dislike_block.innerHTML = "";
-      dislike_block.append(span_2);
+      dislike_block.innerHTML = span_2;
+      //dislike_block.append(span_2);
     }}
     dislike_link.send( null );
 
