@@ -206,7 +206,8 @@ on('#ajax', 'click', '.item_user_off_comment', function() {
     new_span.innerHTML = "Включить комментарии";
     parent.innerHTML = "";
     parent.append(new_span);
-    comment_btn.style.display, comment_block.style.display = "none"
+    comment_btn.style.display = "none";
+    comment_block.style.display = "none"
   }};
   link__.send( null );
 });
@@ -227,7 +228,8 @@ on('#ajax', 'click', '.item_user_on_comment', function() {
     new_span.innerHTML = "Выключить комментарии";
     parent.innerHTML = "";
     parent.append(new_span);
-    comment_btn.style.display, comment_block.style.display = "block"
+    comment_btn.style.display = "block";
+    comment_block.style.display = "block"
   }};
   link__.send( null );
 });
