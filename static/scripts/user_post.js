@@ -193,6 +193,8 @@ on('#ajax', 'click', '.item_user_off_comment', function() {
   item = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   uuid = item.getAttribute("item-uuid");
   parent = this.parentElement;
+  comment_btn = item.querySelector(".u_item_comments");
+  comment_block = item.querySelector(".u_load_comments");
 
   link__ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link__.open( 'GET', "/user/off_comment/" + uuid + "/", true );
@@ -203,7 +205,8 @@ on('#ajax', 'click', '.item_user_off_comment', function() {
     new_span.classList.add("dropdown-item", "item_user_on_comment");
     new_span.innerHTML = "Включить комментарии";
     parent.innerHTML = "";
-    parent.append(new_span)
+    parent.append(new_span);
+    comment_btn.style.display, comment_block.style.display = "none"
   }};
   link__.send( null );
 });
@@ -212,6 +215,8 @@ on('#ajax', 'click', '.item_user_on_comment', function() {
   item = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   uuid = item.getAttribute("item-uuid");
   parent = this.parentElement;
+  comment_btn = item.querySelector(".u_item_comments");
+  comment_block = item.querySelector(".u_load_comments");
 
   link__ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link__.open( 'GET', "/user/on_comment/" + uuid + "/", true );
@@ -221,7 +226,8 @@ on('#ajax', 'click', '.item_user_on_comment', function() {
     new_span.classList.add("dropdown-item", "item_user_off_comment");
     new_span.innerHTML = "Выключить комментарии";
     parent.innerHTML = "";
-    parent.append(new_span)
+    parent.append(new_span);
+    comment_btn.style.display, comment_block.style.display = "block"
   }};
   link__.send( null );
 });
