@@ -1,12 +1,12 @@
-function vote_reload(link_1, link_2, like_block, dislike_block){
+function vote_reload(link_1, link_2, _like_block, _dislike_block){
   like_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   like_link.open( 'GET', link_1, true );
   like_link.onreadystatechange = function () {
   if ( like_link.readyState == 4 && like_link.status == 200 ) {
     span_1 = document.createElement("span");
     span_1.innerHTML = like_link.responseText;
-    like_block.innerHTML = "";
-    like_block.append(span_1);
+    _like_block.innerHTML = "";
+    _like_block.append(span_1);
   }}
   like_link.send( null );
 
@@ -16,8 +16,8 @@ function vote_reload(link_1, link_2, like_block, dislike_block){
   if ( dislike_link.readyState == 4 && like_link.status == 200 ) {
     span_2 = document.createElement("span");
     span_2.innerHTML = dislike_link.responseText;
-    dislike_block.innerHTML = "";
-    dislike_block.append(span_2);
+    _dislike_block.innerHTML = "";
+    _dislike_block.append(span_2);
   }}
   dislike_link.send( null );
 }
