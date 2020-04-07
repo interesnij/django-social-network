@@ -255,8 +255,9 @@ on('#ajax', 'click', '.u_like', function() {
     likes_count.innerHTML = jsonResponse.like_count;
     dislikes_count.innerHTML = jsonResponse.dislike_count;
     item.querySelector(".u_like").classList.toggle("btn_success", "btn_default");
-    item.querySelector(".u_dislike").classList.add("btn_default").remove("btn_danger");
-
+    item.querySelector(".u_dislike").classList.add("btn_default");
+    item.querySelector(".u_dislike").classList.remove("btn_danger")
+    
     like_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     like_link.open( 'GET', "/item_window/u_like_window/" + uuid + "/" + pk + "/", true );
     like_link.onreadystatechange = function () {
