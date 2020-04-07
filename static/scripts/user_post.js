@@ -265,7 +265,7 @@ on('#ajax', 'click', '.u_like', function() {
   like = item.querySelector(".u_like");
   dislike = item.querySelector(".u_dislike");
   like_block = this.nextElementSibling;
-  dislike_block = this.nextElementSibling.nextElementSibling;
+  dislike_block = this.nextElementSibling.nextElementSibling.nextElementSibling;
 
   link__ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link__.overrideMimeType("application/json");
@@ -295,7 +295,7 @@ on('#ajax', 'click', '.u_dislike', function() {
   pk = item.parentElement.getAttribute("user-pk");
   like = item.querySelector(".u_like");
   dislike = item.querySelector(".u_dislike");
-  like_block = this.previousElementSibling.previousElementSibling;
+  like_block = this.previousElementSibling;
   dislike_block = this.nextElementSibling;
 
   link__ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
