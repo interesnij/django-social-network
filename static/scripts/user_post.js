@@ -153,7 +153,7 @@ on('#ajax', 'click', '.item_user_remove_abort', function() {
 on('#ajax', 'click', '.item_user_fixed', function() {
   item = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   uuid = item.getAttribute("item-uuid");
-  parent = this.parentElement;
+  this.parentElement.innerHTML = "";
   response = "<span class='dropdown-item item_user_unfixed'>Открепить</span>";
 
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -165,8 +165,7 @@ on('#ajax', 'click', '.item_user_fixed', function() {
   }};
 
   link.send();
-  parent.innerHTML = "";
-  parent.append(response);
+  this.parentElement.innerHTML = response;
 });
 
 on('#ajax', 'click', '.item_user_unfixed', function() {
