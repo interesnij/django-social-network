@@ -153,6 +153,7 @@ on('#ajax', 'click', '.item_user_remove_abort', function() {
 on('#ajax', 'click', '.item_user_fixed', function() {
   item = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   uuid = item.getAttribute("item-uuid");
+  parent = this.parentElement;
 
   link__ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link__.open( 'GET', "/user/fixed/" + uuid + "/", true );
@@ -161,8 +162,8 @@ on('#ajax', 'click', '.item_user_fixed', function() {
   new_span.innerHTML = "Открепить"
   link__.onreadystatechange = function () {
   if ( link__.readyState == 4 && link__.status == 200 ) {
-    this.parentElement.innerHTML = "";
-    this.parentElement.append(new_span);
+    parent.innerHTML = "";
+    parent.append(new_span);
   }};
   link__.send();
 });
