@@ -264,9 +264,9 @@ on('#ajax', 'click', '.u_like', function() {
   link__.onload  = function() {
    var jsonResponse = JSON.parse(link__.responseText);
   };
-  console.log(jsonResponse);
   link__.onreadystatechange = function () {
   if ( link__.readyState == 4 && link__.status == 200 ) {
+    console.log(jsonResponse);
     this.previousElementSibling.innerHTML = jsonResponse.like_count;
     item.parentElement.querySelector(".u_like").classList.toggle("btn_success", "btn_default");
 
