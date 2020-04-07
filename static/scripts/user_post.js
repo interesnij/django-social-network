@@ -150,6 +150,10 @@ on('#ajax', 'click', '.item_user_remove_abort', function() {
   link.send();
 });
 
+function hot_change(par, el){
+  par.innerHTML = "";
+  par.append(el)
+}
 on('#ajax', 'click', '.item_user_fixed', function() {
   item = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   uuid = item.getAttribute("item-uuid");
@@ -162,8 +166,7 @@ on('#ajax', 'click', '.item_user_fixed', function() {
   new_span.innerHTML = "Открепить"
   link__.onreadystatechange = function () {
   if ( link__.readyState == 4 && link__.status == 200 ) {
-    parent.innerHTML = "";
-    parent.append(new_span);
+    hot_change(parent, new_span)
   }};
   link__.send();
 });
