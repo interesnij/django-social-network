@@ -265,7 +265,8 @@ on('#ajax', 'click', '.u_like', function() {
   if ( link__.readyState == 4 && link__.status == 200 ) {
     jsonResponse = JSON.parse(link__.responseText);
     console.log(jsonResponse);
-    this.previousElementSibling.innerHTML = jsonResponse.like_count;
+    likes_count = this.parentElement.querySelector(".likes_count");
+    likes_count.innerHTML = jsonResponse.like_count;
     item.parentElement.querySelector(".u_like").classList.toggle("btn_success", "btn_default");
 
     like_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
