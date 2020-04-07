@@ -253,7 +253,8 @@ on('#ajax', 'click', '.u_like', function() {
     dislikes_count = item.querySelector(".dislikes_count");
     likes_count.innerHTML = jsonResponse.like_count;
     dislikes_count.innerHTML = jsonResponse.dislike_count;
-    item.querySelector(".u_like").classList.toggle("btn_success", "btn_default");
+    item.querySelector(".u_like").classList.toggle("btn_success");
+    item.querySelector(".u_like").classList.toggle("btn_default");
     item.querySelector(".u_dislike").classList.add("btn_default");
     item.querySelector(".u_dislike").classList.remove("btn_danger")
 
