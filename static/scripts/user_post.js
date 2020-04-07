@@ -160,7 +160,7 @@ on('#ajax', 'click', '.item_user_fixed', function() {
   new_span.classList.add("dropdown-item", "item_user_unfixed");
   new_span.innerHTML = "Открепить"
   link.onreadystatechange = function () {
-  if ( link.readyState == 4 && link.status == 200 ) {
+  if ( link__.readyState == 4 && link__.status == 200 ) {
     this.parentElement.innerHTML = "";
     this.parentElement.append(new_span);
   }};
