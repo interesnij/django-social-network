@@ -265,8 +265,7 @@ on('#ajax', 'click', '.u_like', function() {
   if ( link__.readyState == 4 && link__.status == 200 ) {
     jsonResponse = JSON.parse(link__.responseText);
     console.log(jsonResponse);
-    likes_count = this.parentElement.querySelector(".likes_count");
-    console.log(likes_count);
+    likes_count = item.querySelector(".likes_count");
     likes_count.innerHTML = jsonResponse.like_count;
     item.parentElement.querySelector(".u_like").classList.toggle("btn_success", "btn_default");
 
