@@ -13,27 +13,6 @@ $('body').on('click', '.member_delete', function() {member_delete = $(this);pk =
 
 $('body').on('click', '.c_add_post', function() {var btn = $(this); var pk = btn.data('pk'); var frm_post = $('#COMM-POST'); var stream = frm_post.parent().next();$.ajax({type: frm_post.attr('method'), url: "/posts/add_post_community/" + pk + "/", data: frm_post.serialize(),success: function(data) {stream.find(".community_stream").prepend(data); stream.find(".post_empty").hide(); $(".id_text").val(""); $(".add_board #for_images_upload").hide(); $(".add_board #for_gallery").hide(); $(".add_board #for_doc").hide(); $(".add_board #for_good").hide(); $(".add_board #for_question").hide(); $(".add_board #for_settings").hide();$.toast({heading: 'Успешно',text: 'Запись успешно создана!',showHideTransition: 'fade',icon: 'success'})},error: function(data) {$.toast({heading: 'Ошибка',text: 'Для публикации записи нужно написать что-нибудь и/или вставить изображение(ия)',showHideTransition: 'fade',icon: 'error'})}}); return false;});
 
-$("body").on('click', '.u_like', function() {
-  like = $(this);
-  item = like.parents('.infinite-item');
-  pk = item.attr("user-id");
-  uuid = item.attr("item-id");
-  dislike = like.next().next();
-  $.ajax({
-    url: "/votes/user_like/" + uuid + "/" + pk + "/",
-    type: 'POST',
-    data: {'obj': pk},
-    success: function(json){
-      like.find("[data-count='like']").text(json.like_count);
-      like.toggleClass('btn_success btn_default');
-      like.next().html('').load("/window/u_like_window/" + uuid + "/" + pk + "/");
-      dislike.find("[data-count='dislike']").text(json.dislike_count);
-      dislike.removeClass('btn_danger').addClass("btn_default");
-      dislike.next().html('').load("/window/u_dislike_window/" + uuid + "/" + pk + "/")
-}
-});
-      return false;
-});
 
 $("body").on('click', '.u_dislike', function() {
   dislike = $(this);

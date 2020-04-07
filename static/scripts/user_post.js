@@ -233,3 +233,59 @@ on('#ajax', 'click', '.item_user_on_comment', function() {
   }};
   link__.send( null );
 });
+$("body").on('click', '.u_like', function() {
+  $.ajax({
+    url: "/votes/user_like/" + uuid + "/" + pk + "/",
+    type: 'POST',
+    data: {'obj': pk},
+    success: function(json){
+      like.find("[data-count='like']").text(json.like_count);
+      like.toggleClass('btn_success btn_default');
+      like.next().html('').load("/window/u_like_window/" + uuid + "/" + pk + "/");
+      dislike.find("[data-count='dislike']").text(json.dislike_count);
+      dislike.removeClass('btn_danger').addClass("btn_default");
+      dislike.next().html('').load("/window/u_dislike_window/" + uuid + "/" + pk + "/")
+}
+});
+});
+
+on('#ajax', 'click', '.u_like', function() {
+  item = this.parentElement.parentElement.parentElement.parentElement;
+  uuid = item.getAttribute("item-uuid");
+  pk = item.parentElement.getAttribute("user-pk");
+  dislike = this.nextElementSibling.nextElementSibling;
+  like_block = this.nextElementSibling;
+  dislike_block = this.nextElementSibling.nextElementSibling.nextElementSibling;
+
+  link__ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link__.open( 'GET', "/votes/user_like/" + uuid + "/" + pk + "/", true );
+  link__.onreadystatechange = function (json) {
+  if ( link__.readyState == 4 && link__.status == 200 ) {
+    this.parentElement.querySelector("[data-count='like']").text(json.like_count)
+    item.parentElement.querySelector(".u_like").classList.toggle("btn_success", "btn_default");
+
+    like_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    like_link.open( 'GET', "/window/u_like_window/" + uuid + "/" + pk + "/", true );
+    like_link.onreadystatechange = function () {
+    if ( like_link.readyState == 4 && like_link.status == 200 ) {
+      span_1 = document.createElement("span");
+      span_1.innerHTML = like_link.responseText;
+      like_block.innerHTML = "";
+      like_block.append(span_1);
+    }}
+    like_link.send( null );
+
+    dislike_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    dislike_link.open( 'GET', "/window/u_dislike_window/" + uuid + "/" + pk + "/", true );
+    dislike_link.onreadystatechange = function () {
+    if ( dislike_link.readyState == 4 && like_link.status == 200 ) {
+      span_2 = document.createElement("span");
+      span_2.innerHTML = dislike_link.responseText;
+      dislike_block.innerHTML = "";
+      dislike_block.append(span_2);
+    }}
+    like_link.send( null );
+
+  }};
+  link__.send( null );
+});
