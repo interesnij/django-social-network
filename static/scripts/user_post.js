@@ -154,14 +154,17 @@ on('#ajax', 'click', '.item_user_fixed', function() {
   item = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   uuid = item.getAttribute("item-uuid");
 
-  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/user/fixed/" + uuid + "/", true );
+  link__ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link__.open( 'GET', "/user/fixed/" + uuid + "/", true );
   new_span = document.createElement("span");
   new_span.classList.add("dropdown-item", "item_user_unfixed");
   new_span.innerHTML = "Открепить"
-
-  link.send();
-  this.parentElement.insertBefore(new_span, this);
+  link.onreadystatechange = function () {
+  if ( link.readyState == 4 && link.status == 200 ) {
+    this.parentElement.innerHTML = "";
+    this.parentElement.append(new_span);
+  }};
+  link__.send();
 });
 
 on('#ajax', 'click', '.item_user_unfixed', function() {
