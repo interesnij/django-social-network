@@ -55,7 +55,7 @@
             <div class="card border-top border-bottom">
                 <div class="card-body">
                     <div class="media">
-                      <a href="/users/{{object.pk }}/">
+                      <a href="{% url 'user' pk=object.pk %}" class="ajax">
                         <figure style="width:50px;">
                           {% if object.get_avatar %}
                             <img src="{{ object.get_avatar.file|thumbnail_url:'avatar' }}" style="border-radius:50px;" alt="image">
@@ -247,11 +247,7 @@
     <div class="col-lg-8 col-md-7 order-2 ">
         <div class="card mb-4" style="padding:10px">
             <h3 class="mb-0">{{ user.get_full_name }}</h3>
-            {% if user.get_online %}
-              <i class="text-success">Онлайн</i>
-            {% else %}
-              <i style="color:#888888">Был(а) {{ user.last_activity|naturaltime }}</i>
-            {% endif %}
+            <span class="user_status"></span>
             <br><br>
         </div>
 
