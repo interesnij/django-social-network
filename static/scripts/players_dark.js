@@ -30,7 +30,6 @@ function msToTime(duration) {
 				//controller settings
 				showControllerByDefault:"yes",
 				showThumbnail:"yes",
-				showFullScreenButton:"no",
 				showNextAndPrevButtons:"yes",
 				showSoundAnimation:"yes",
 				showLoopButton:"yes",
@@ -61,7 +60,7 @@ function msToTime(duration) {
 				scrubberOffsetBottom:10,
 				equlizerOffsetLeft:1,
 				//playlists window settings
-				showPlaylistsSearchInput:"yes",
+				showPlaylistsSearchInput:"no",
 				usePlaylistsSelectBox:"no",
 				showPlaylistsSelectBoxNumbers:"no",
 				showPlaylistsButtonAndPlaylists:"yes",
@@ -109,7 +108,7 @@ function msToTime(duration) {
 				defaultPlaybackRate:1, //min - 0.5 / max - 3
 				playbackRateWindowTextColor:"#888888",
 				//search bar settings
-				showSearchBar:"yes",
+				showSearchBar:"no",
 				showSortButtons:"yes",
 				searchInputColor:"#999999",
 				searchBarHeight:38,

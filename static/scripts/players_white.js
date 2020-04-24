@@ -38,8 +38,8 @@ audio_player = new FWDMSP({
 		showSoundAnimation:"yes",							// показывать анимацию музыкального воспроизведения
 		showLoopButton:"yes",                 // показывать кнопку повтора треков
 		showShuffleButton:"yes",              // показывать кнопку перемешивания треков
-		showDownloadMp3Button:"yes",          // показывать кнопку скачивания mp3
-		expandBackground:"no",              	// развернуть фон
+		expandBackground:"no",
+		showBuyButton:"yes",
 		titleColor:"#000000",                 // цвет названия
 		timeColor:"#919191",                  // цвет времени
 
@@ -64,9 +64,9 @@ audio_player = new FWDMSP({
 		equlizerOffsetLeft:1,                // смещение эквалайзера влево
 
 		//playlists window settings
-		showPlaylistsSearchInput:"yes",      // показывать поле поиска в плейлисте
-		usePlaylistsSelectBox:"yes",         // показывать поле плейлистов сверху выбранного плейлиста
-		showPlaylistsSelectBoxNumbers:"yes", // пронумеровать плейлисты в поле выбора плейлиста
+		showPlaylistsSearchInput:"no",      // показывать поле поиска в плейлисте
+		usePlaylistsSelectBox:"no",         // показывать поле плейлистов сверху выбранного плейлиста
+		showPlaylistsSelectBoxNumbers:"no", // пронумеровать плейлисты в поле выбора плейлиста
 		showPlaylistsButtonAndPlaylists:"yes", // показывать кнопку, вызывающую окно плейлистов сверху и сами плейлисты
 		showPlaylistsByDefault:"no",         // показывать плейлист по умолчанию
 		thumbnailSelectedType:"opacity",     // тип выбора миниатюры (к примеру прозрачность)
@@ -90,10 +90,6 @@ audio_player = new FWDMSP({
 		showPlayListOnAndroid:"yes",         // показывать плейлисты на android
 		showPlayListByDefault:"no",          // показывть плейлист по умолчанию
 		showPlaylistItemPlayButton:"yes",    // показать кнопку воспроизведения элемента плейлиста
-		showPlaylistItemDownloadButton:"yes",// показать кнопку загрузки элемента плейлиста
-		forceDisableDownloadButtonForPodcast:"yes", // принудительно отключить кнопку загрузки для подкаста
-		forceDisableDownloadButtonForOfficialFM:"yes", // принудительно отключить кнопку загрузки для радио передачи
-		forceDisableDownloadButtonForFolder:"yes", // принудительно отключить кнопку загрузки для попки
 		addScrollBarMouseWheelSupport:"yes",  // прокручивать колесиком мыши
 		showTracksNumbers:"yes",							// показывать номер трека
 		playlistBackgroundColor:"#000000",    // цвет фона плейлиста
@@ -114,7 +110,7 @@ audio_player = new FWDMSP({
 		playbackRateWindowTextColor:"#888888",// цвет текста на окне выбора скорости
 
 		//search bar settings
-		showSearchBar:"yes",                  // показывать секцию поиска треков
+		showSearchBar:"no",                  // показывать секцию поиска треков
 		showSortButtons:"yes",                // показывать секцию сортировки треков
 		searchInputColor:"#999999",						// цвет секции поиска
 		searchBarHeight:38,									  // высота секции поиска
