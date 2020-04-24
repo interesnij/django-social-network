@@ -381,3 +381,22 @@ on('#ajax', 'click', '.u_dislike2', function() {
   }};
   link__.send( null );
 });
+
+on('#ajax', 'click', '.custom-radio', function() {
+  var span = this;
+  var color = this.getAttribute('data-color');
+  var input = span.querySelector(".custom-control-input");
+  var list = document.querySelector(".theme-color");
+  var link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'GET', "/users/progs/color/" + color + "/", true );
+  link_.send();
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    var uncheck=document.getElementsByTagName('input');
+    for(var i=0;i<uncheck.length;i++)
+    {uncheck[i].checked=false;}
+    input.checked = true;
+    function addStyleSheets (href) {$head = document.head,$link = document.createElement('link');$link.rel = 'stylesheet';$link.href = href;$head.appendChild($link);};addStyleSheets("/static/styles/color/" + color + ".css");
+  }
+};
+});

@@ -385,7 +385,9 @@ function music_onPlay(){
     div.innerHTML = music_player.getTrackTitle();
     title = div.querySelector('span').innerHTML;
     document.title = title;
-    document.querySelector(".user_status").innerHTML = title;
+    if(document.querySelector(".user_status")){
+      document.querySelector(".user_status").innerHTML = title;
+    }
     try{video_player.pause();}catch{var a=0}
 };
 
