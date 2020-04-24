@@ -1,3 +1,7 @@
+.user_status{
+  min-height: 20px;
+}
+
 body,
 html {
   height: 100%;
