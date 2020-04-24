@@ -382,13 +382,14 @@ function video_onPlay(){
     music_player.pause();
 }
 function music_onPause(){
+  try{
   div = document.createElement("div");
   div.innerHTML = music_player.getTrackTitle();
   title = div.querySelector('span').innerHTML;
   document.title = "Музыка приостановлена";
   if(document.querySelector(".user_status")){
     document.querySelector(".user_status").innerHTML = "Музыка приостановлена";
-  }
+  }}catch{var a=0}
 }
 function music_onPlay(){
     console.log("Воспроизводится трек № : " + music_player.getTrackId());
