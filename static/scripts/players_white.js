@@ -17,7 +17,7 @@ music_player = new FWDMSP({
 		mainFolderPath:"/static/images/",
 		skinPath:"audio_white",
 		showSoundCloudUserNameInTitle:"no",   // показывать имя пользователя soundcloud
-		showMainBackground:"yes",  						// показать общий фон
+		showMainBackground:"no",  						// показать общий фон
 		verticalPosition:"bottom",                    // расположение плеера
 		rightClickContextMenu:"developer",
 		useDeepLinking:"no",									// использовать глубокие ссылки - защита от перехвата. Не будет работать с souncloud
@@ -290,11 +290,6 @@ video_player = new FWDUVPlayer({
 		shareAndEmbedTextColor:"#777777",         // цвет тектса овна расшаривания и вставки
 		inputBackgroundColor:"#c0c0c0",           // цвет фона поля ввода
 		inputColor:"#333333",                     // цвет фона текста ввода
-
-		//loggin
-		isLoggedIn:"no",
-		playVideoOnlyWhenLoggedIn:"no",
-		loggedInMessage:"Please login to view this video.",
 
 		//audio visualizer
 		audioVisualizerLinesColor:"#ff9f00",      // цвет линий аудио визуализатора
