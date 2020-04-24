@@ -489,3 +489,8 @@ on('#ajax', 'click', '.track_remove', function(e) {
   }};
   _link.send( null );
 });
+
+
+on('#ajax', 'click', '.chage_skin', function(e) {
+  music_player.skinPath = "audio_white"
+});
