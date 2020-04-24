@@ -371,7 +371,7 @@ function video_onPlay(){
 function music_onPlay(){
     console.log("Воспроизводится трек № : " + music_player.getTrackId());
     title = music_player.getTrackTitle();
-    document.title = title.innerHTML;
+    document.title = title.value;
     try{video_player.pause();}catch{var a=0}
 };
 
@@ -488,9 +488,4 @@ on('#ajax', 'click', '.track_remove', function(e) {
       block.innerHTML = "<span class='track_add' title='Добавить'><svg fill='currentColor' style='width:22px;height:22px;' class='svg_default' xmlns='http://www.w3.org/2000/svg' viewBox='0 024 24'><path d='M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z'/><path d='M0 0h24v24H0z' fill='none'/></svg></span>"
   }};
   _link.send( null );
-});
-
-
-on('#ajax', 'click', '.change_skin', function() {
-
 });
