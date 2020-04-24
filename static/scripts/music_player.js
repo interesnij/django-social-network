@@ -8280,7 +8280,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 																											O.normalButtonsColor_str,
 																											O.selectedButtonsColor_str),
 					O.buyButton_do.getStyle().position = "absolute",
-					O.buyButton_do.getStyle().right = "0 !important",
+					O.buyButton_do.style.right = "0 !important",
 					O.buyButton_do.addListener(FWDMSPSimpleSizeButton.CLICK, O.buyButtonClickHandler),
 					O.addChild(O.buyButton_do)
 				},
