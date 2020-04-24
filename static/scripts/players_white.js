@@ -10,7 +10,7 @@ function msToTime(duration) {
 }
 
 
-audio_player = new FWDMSP({
+music_player = new FWDMSP({
 		//main settings
 		instanceName:"player1",
 		playlistsId:"audio_playlists",
