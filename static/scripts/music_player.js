@@ -3067,42 +3067,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 					e.length || "track" == e.kind ? self.createSoundcloudPlaylist(e) : self.dispatchEvent(FWDMSPAudioData.LOAD_ERROR, {
 						text: "Please provide a playlist or track URL : <font color='#FF0000'>" + self.sourceURL_str + "</font>."
 					})
-				}, this.createSoundcloudPlaylist = function(e) {
-					if (e.length)
-						for (var t = 0; t < e.length; t++) {
-							if (track = e[t], obj = {}, obj.source = track.stream_url + "?consumer_key=" + self.scClientId_str, obj.buy = void 0, obj.thumbPath = track.artwork_url, self.showSoundCloudUserNameInTitle_bl) {
-								var o = "";
-								self.showTracksNumbers_bl ? (t < 9 && (o = "0"), o = o + (t + 1) + ". ", obj.title = o + "<span style='font-weight:bold;'>" + track.user.username + "</span> - " + track.title) : obj.title = "<span style='font-weight:bold;'>" + track.user.username + "</span> - " + track.title,
-									obj.titleText = track.user.username + " - " + track.title
-							} else {
-								o = "";
-								self.showTracksNumbers_bl ? (t < 9 && (o = "0"), o = o + (t + 1) + ". ", obj.title = o + track.title) : obj.title = track.title, obj.titleText = track.title
-							}
-							if (obj.duration = track.duration, track.streamable && self.playlist_ar.push(obj), t > self.maxPlaylistItems - 1) break
-						}
-					else track = e, obj = {}, obj.source = track.stream_url + "?consumer_key=" + self.scClientId_str, obj.buy = void 0, obj.thumbPath = track.artwork_url, self.showSoundCloudUserNameInTitle_bl ? (obj.title = "<span style='font-weight:bold;'>" + track.user.username + "</span> - " + track.title, obj.titleText = track.user.username + " - " + track.title) : (obj.title = track.title, obj.titleText = track.title), obj.duration = track.duration, track.streamable && self.playlist_ar.push(obj);
-					clearTimeout(self.dispatchPlaylistLoadCompleteWidthDelayId_to), self.dispatchPlaylistLoadCompleteWidthDelayId_to = setTimeout(function() {
-						self.dispatchEvent(FWDMSPAudioData.PLAYLIST_LOAD_COMPLETE)
-					}, 50), self.isDataLoaded_bl = !0
-				}, this.parsePodcast = function(e) {
-					var t;
-					self.playlist_ar = [];
-					var o = e.channel.item,
-						s = void 0;
-					try {
-						s = e.channel.image.url
-					} catch (e) {}
-					for (var i = 0; i < o.length; i++) {
-						t = {}, o[i].enclosure ? t.source = encodeURI(o[i].enclosure["@attributes"].url) : t.source = encodeURI(o[i].link), t.buy = void 0,
-							t.thumbPath = s;
-						var n = "";
-						if (self.showTracksNumbers_bl ? (i < 9 && (n = "0"), n = n + (i + 1) + ". ", t.title = n + o[i].title) : t.title = o[i].title, t.titleText = o[i].title, t.duration = void 0, self.playlist_ar[i] = t, i > self.maxPlaylistItems - 1) break
-					}
-					clearTimeout(self.dispatchPlaylistLoadCompleteWidthDelayId_to), self.dispatchPlaylistLoadCompleteWidthDelayId_to = setTimeout(function() {
-						self.dispatchEvent(FWDMSPAudioData.PLAYLIST_LOAD_COMPLETE)
-					}, 50), self.isDataLoaded_bl = !0
-				},
-				this.parseXML = function(e) {
+				}, this.parseXML = function(e) {
 					var t;
 					self.playlist_ar = [];
 					var o = e.li;
@@ -6039,23 +6004,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 				this.setLoopStateButton = function(e) {
 					p.loopButton_do && ("selected" == e ? p.loopButton_do.setSelected() : "unselected" == e && p.loopButton_do.setUnselected())
 				},
-				this.setupDownloadButton = function() {
-					FWDMSPSimpleButton.setPrototype(),
-					p.downloadButton_do = new FWDMSPSimpleButton(p.downloaderN_img,
-						                                           _.downloaderSPath_str,
-																											 null,
-																											 !0,
-																											 _.useHEXColorsForSkin_bl,
-																											 _.normalButtonsColor_str,
-																											 _.selectedButtonsColor_str),
-					p.downloadButton_do.addListener(FWDMSPSimpleButton.MOUSE_UP, p.downloadButtonOnMouseUpHandler),
-					p.downloadButton_do.setY(parseInt((p.stageHeight - p.downloadButton_do.h) / 2)),
-					p.buttons_ar.push(p.downloadButton_do),
-					p.mainHolder_do.addChild(p.downloadButton_do)
-				},
-				this.downloadButtonOnMouseUpHandler = function() {
-					p.dispatchEvent(n.DOWNLOAD_MP3)
-				},
 				this.setupBuyButton = function() {
 					FWDMSPSimpleButton.setPrototype(),
 					p.buyButton_do = new FWDMSPSimpleButton(_.buyN_img,
@@ -6131,7 +6079,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 					p.prevButton_do.disable(),
 					p.playPauseButton_do.disable(),
 					p.nextButton_do.disable(),
-					p.downloadButton_do && p.downloadButton_do.disable(),
 					p.buyButton_do && p.buyButton_do.disable(),
 					p.playlistButton_do && p.playlistButton_do.disable(!0),
 					p.repostButton_do && p.repostButton_do.disable(),
@@ -6142,7 +6089,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 					p.prevButton_do.enable(),
 					p.playPauseButton_do.enable(),
 					p.nextButton_do.enable(),
-					p.downloadButton_do && p.downloadButton_do.enable(),
 					p.buyButton_do && p.buyButton_do.enable(),
 					p.playlistButton_do && p.playlistButton_do.enable(),
 					p.repostButton_do && p.repostButton_do.enable()
@@ -6163,7 +6109,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 					if (p.playPauseButton_do.updateHEXColors(e, t),
 					    p.volumeButton_do && p.volumeButton_do.updateHEXColors(e, t),
 							p.playlistButton_do && p.playlistButton_do.updateHEXColors(e, t),
-							p.downloadButton_do && p.downloadButton_do.updateHEXColors(e, t),
 							p.infoButton_do && p.infoButton_do.updateHEXColors(e, t),
 							p.categoriesButton_do && p.categoriesButton_do.updateHEXColors(e, t),
 							p.nextButton_do && p.nextButton_do.updateHEXColors(e, t),
@@ -6212,7 +6157,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 		n.DISABLE_LOOP = "disableLoop",
 		n.ENABLE_SHUFFLE = "enableShuffle",
 		n.DISABLE_SHUFFLE = "disableShuffle",
-		n.DOWNLOAD_MP3 = "downloadMp3",
 		n.BUY = "buy",
 		n.prototype = null,
 		window.FWDMSPController = n
@@ -7398,7 +7342,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
       this.playlistPlayButtonN_img = p.playlistPlayButtonN_img,
       this.playlistScrLines_img = p.playlistScrLines_img,
 			this.playlistScrLinesOver_img = p.playlistScrLinesOver_img,
-      this.playlistDownloadButtonN_img = p.playlistDownloadButtonN_img,
       this.playlistBuyButtonN_img = p.playlistBuyButtonN_img,
       this.disable_do = null,
 			this.separator_do = null,
@@ -7441,7 +7384,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 			this.scrollbarOffestWidth = p.scrollbarOffestWidth,
       this.scrWidth = b.playlistScrBkTop_img.width,
       this.trackTitleOffsetLeft = p.trackTitleOffsetLeft,
-			this.downloadButtonOffsetRight = p.downloadButtonOffsetRight,
       this.itemHeight = b.playlistItemBk1_img.height,
       this.playPuaseIconWidth = b.playlistPlayButtonN_img.width,
       this.playPuaseIconHeight = b.playlistPlayButtonN_img.height,
@@ -7474,7 +7416,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 			this.allowToScrollAndScrollBarIsActive_bl = !1,
       this.isDragging_bl = !1,
       this.showPlaylistItemPlayButton_bl = p.showPlaylistItemPlayButton_bl,
-      this.showPlaylistItemDownloadButton_bl = p.showPlaylistItemDownloadButton_bl,
       this.isShowed_bl = p.showPlayListByDefault_bl,
       this.isShowedFirstTime_bl = !1,
       this.animateOnIntro_bl = p.animateOnIntro_bl,
@@ -7619,11 +7560,39 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 					b.itemsHolder_do.setHeight(b.totalPlayListItems * b.itemHeight), b.mainHolder_do.setBkColor(b.playlistBackgroundColor_str), b.items_ar = [];
 					for (var o = 0; o < b.totalPlayListItems; o++) {
 						t = null == b.playlist_ar[o].duration ? void 0 : FWDMSP.formatTotalTime(b.playlist_ar[o].duration);
-						var s = b.playlist_ar[o].downloadable;
-						b.showPlaylistItemDownloadButton_bl || (s = !1);
 						var i = Boolean(b.playlist_ar[o].buy);
 						b.showPlaylistItemBuyButton_bl || (i = !1), FWDMSPPlaylistItem.setPrototype(),
-							(e = new FWDMSPPlaylistItem(b.playlist_ar[o].title, b.playlist_ar[o].titleText, b.playlistDownloadButtonN_img, p.playlistDownloadButtonS_str, b.playlistBuyButtonN_img, p.playlistBuyButtonS_str, p.playlistItemGrad1_img, p.playlistItemGrad2_img, p.playlistItemProgress1_img, p.playlistItemProgress2_img, p.playlistPlayButtonN_img, p.playlistItemBk1_img.src, p.playlistItemBk2_img.src, b.playlistPlayButtonN_str, b.playlistPlayButtonS_str, b.playlistPauseButtonN_str, b.playlistPauseButtonS_str, p.trackTitleNormalColor_str, p.trackTitleSelected_str, p.trackDurationColor_str, o, p.playPauseButtonOffsetLeftAndRight, b.trackTitleOffsetLeft, b.durationOffsetRight, b.downloadButtonOffsetRight, b.showPlaylistItemPlayButton_bl, s, i, t, b.useHEXColorsForSkin_bl, b.normalButtonsColor_str, b.selectedButtonsColor_str, b)).addListener(FWDMSPPlaylistItem.MOUSE_UP, b.itemOnUpHandler), e.addListener(FWDMSPPlaylistItem.DOWNLOAD, b.downloadHandler), e.addListener(FWDMSPPlaylistItem.BUY, b.buyHandler), b.items_ar[o] = e, b.itemsHolder_do.addChild(e)
+							(e = new FWDMSPPlaylistItem(b.playlist_ar[o].title,
+								                          b.playlist_ar[o].titleText,
+																					b.playlistBuyButtonN_img,
+																					p.playlistBuyButtonS_str,
+																					p.playlistItemGrad1_img,
+																					p.playlistItemGrad2_img,
+																					p.playlistItemProgress1_img,
+																					p.playlistItemProgress2_img,
+																					p.playlistPlayButtonN_img,
+																					p.playlistItemBk1_img.src,
+																					p.playlistItemBk2_img.src,
+																					b.playlistPlayButtonN_str,
+																					b.playlistPlayButtonS_str,
+																					b.playlistPauseButtonN_str,
+																					b.playlistPauseButtonS_str,
+																					p.trackTitleNormalColor_str,
+																					p.trackTitleSelected_str,
+																					p.trackDurationColor_str,
+																					o,
+																					p.playPauseButtonOffsetLeftAndRight,
+																					b.trackTitleOffsetLeft,
+																					b.durationOffsetRight,
+																					b.showPlaylistItemPlayButton_bl,
+																					s,
+																					i,
+																					t,
+																					b.useHEXColorsForSkin_bl,
+																					b.normalButtonsColor_str,
+																					b.selectedButtonsColor_str, b)).addListener(FWDMSPPlaylistItem.MOUSE_UP, b.itemOnUpHandler),
+						e.addListener(FWDMSPPlaylistItem.BUY, b.buyHandler),
+						b.items_ar[o] = e, b.itemsHolder_do.addChild(e)
 					}
 				}, this.addTrack = function(e, t, o, s, i, n, l) {
 					var r;
@@ -7637,9 +7606,44 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 					var u = Boolean(l);
 					b.showPlaylistItemBuyButton_bl || (u = !1),
 						r = t = p.showTracksNumbers_bl ? (a < 9 && (d = "0" + (a + 1)), d + ". " + t) : t, FWDMSPPlaylistItem.setPrototype();
-					var c = new FWDMSPPlaylistItem(t, r, b.playlistDownloadButtonN_img, p.playlistDownloadButtonS_str, b.playlistBuyButtonN_img, p.playlistBuyButtonS_str, p.playlistItemGrad1_img, p.playlistItemGrad2_img, p.playlistItemProgress1_img, p.playlistItemProgress2_img, p.playlistPlayButtonN_img, p.playlistItemBk1_img.src, p.playlistItemBk2_img.src, b.playlistPlayButtonN_str, b.playlistPlayButtonS_str, b.playlistPauseButtonN_str, b.playlistPauseButtonS_str, p.trackTitleNormalColor_str, p.trackTitleSelected_str, p.trackDurationColor_str, a, p.playPauseButtonOffsetLeftAndRight, b.trackTitleOffsetLeft, b.durationOffsetRight, b.downloadButtonOffsetRight, b.showPlaylistItemPlayButton_bl, n, u, s, b.useHEXColorsForSkin_bl, b.normalButtonsColor_str, b.selectedButtonsColor_str, b),
+					var c = new FWDMSPPlaylistItem(t, r, b.playlistBuyButtonN_img,
+						                                   p.playlistBuyButtonS_str,
+																							 p.playlistItemGrad1_img,
+																							 p.playlistItemGrad2_img,
+																							 p.playlistItemProgress1_img,
+																							 p.playlistItemProgress2_img,
+																							 p.playlistPlayButtonN_img,
+																							 p.playlistItemBk1_img.src,
+																							 p.playlistItemBk2_img.src,
+																							 b.playlistPlayButtonN_str,
+																							 b.playlistPlayButtonS_str,
+																							 b.playlistPauseButtonN_str,
+																							 b.playlistPauseButtonS_str,
+																							 p.trackTitleNormalColor_str,
+																							 p.trackTitleSelected_str,
+																							 p.trackDurationColor_str,
+																							 a,
+																							 p.playPauseButtonOffsetLeftAndRight,
+																							 b.trackTitleOffsetLeft,
+																							 b.durationOffsetRight,
+																							 b.showPlaylistItemPlayButton_bl,
+																							 n,
+																							 u,
+																							 s,
+																							 b.useHEXColorsForSkin_bl,
+																							 b.normalButtonsColor_str,
+																							 b.selectedButtonsColor_str, b),
 						h = {};
-					h.title = t, h.titleText = t, h.source = e, h.duration = s, h.thumbPath = o, h.downloadable = n, h.buy = l, u && (h.buy = l), b.playlist_ar.splice(a, 0, h), b.items_ar.splice(a, 0, c), b.itemsHolder_do.addChild(c), b.totalPlayListItems = b.playlist_ar.length,
+					h.title = t,
+					h.titleText = t,
+					h.source = e,
+					h.duration = s,
+					h.thumbPath = o,
+					h.buy = l, u && (h.buy = l),
+					b.playlist_ar.splice(a, 0, h),
+					b.items_ar.splice(a, 0, c),
+					b.itemsHolder_do.addChild(c),
+					b.totalPlayListItems = b.playlist_ar.length,
 						m.totalAudio = b.totalPlayListItems;
 					for (var _ = 0; _ < b.totalPlayListItems; _++) {
 						var f = b.items_ar[_];
@@ -7671,15 +7675,11 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 								ease: Expo.easeOut,
 								overwrite: !1
 							}))
-						}, 50), c.addListener(FWDMSPPlaylistItem.MOUSE_UP, b.itemOnUpHandler), c.addListener(FWDMSPPlaylistItem.DOWNLOAD, b.downloadHandler), c.addListener(FWDMSPPlaylistItem.BUY, b.buyHandler),
+						}, 50), c.addListener(FWDMSPPlaylistItem.MOUSE_UP, b.itemOnUpHandler), c.addListener(FWDMSPPlaylistItem.BUY, b.buyHandler),
 						b.positionList(), b.updateScrollBarHandlerAndContent(!0, !0),
 						c.setAlpha(0)
 				}, this.itemOnUpHandler = function(e) {
 					b.dispatchEvent(FWDMSPPlaylistItem.MOUSE_UP, {
-						id: e.id
-					})
-				}, this.downloadHandler = function(e) {
-					b.dispatchEvent(FWDMSPPlaylistItem.DOWNLOAD, {
 						id: e.id
 					})
 				}, this.buyHandler = function(e) {
@@ -8146,8 +8146,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
       this.playlistItemProgress_img = a,
       this.playlistItemProgress2_img = d,
       this.playlistPlayButtonN_img = u,
-      this.playlistDownloadButtonN_img = o,
-      this.playlistDownloadButtonS_str = s,
       this.playlistBuyButtonN_img = i,
 			this.playlistBuyButtonS_str = n,
       this.progress_do = null,
@@ -8188,10 +8186,8 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
       this.playPauseButtonHeight = O.playlistPlayButtonN_img.height,
       this.progressPercent = 0,
       this.stageWidth = 0,
-      this.downloadButtonOffsetRight = w,
       this.type = -1,
 			this.setTextsSizeId_to,
-      this.showDownloadButton_bl = B,
       this.showBuyButton_bl = M,
       this.showPlayPauseButton_bl = D,
       this.showDuration_bl = F,
@@ -8207,7 +8203,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
           O.showDuration_bl && O.setupDuration(),
           O.setNormalState(!1, !0),
           O.setupDumy(),
-          O.showDownloadButton_bl && O.setupDownloadButton(),
           O.showBuyButton_bl && O.setupBuyButton(),
           O.id % 2 == 0 ? (O.getStyle().background = "url('" + O.playlistItemBk1Path_str + "')",
 					                 O.grad_do.getStyle().background = "url('" + O.playlistItemGrad1_img.src + "')",
@@ -8247,28 +8242,16 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 						O.stageWidth = e;
 						var o = 0,
 							s = parseInt((t - O.textHeight) / 2) + 1;
-						O.playPause_do ? (O.titleText_do.setX(2 * O.playPauseButtonOffsetLeftAndRight + O.playPause_do.w + O.trackTitleOffsetLeft - 2), O.playPause_do.setY(parseInt((t - O.playPause_do.h) / 2))) : O.titleText_do.setX(O.trackTitleOffsetLeft), O.titleText_do.setY(s), O.buyButton_do && O.downloadButton_do ? (o = O.durationText_do ? (O.durationText_do.setX(e - O.durationWidth - O.durationOffsetRight + 1), O.durationText_do.setY(s), O.durationText_do.x) : e, O.downloadButton_do.setX(o - O.downloadButton_do.w - O.downloadButtonOffsetRight + 3), O.downloadButton_do.setY(parseInt((t - O.downloadButton_do.h) / 2)), O.buyButton_do.setX(O.downloadButton_do.x - O.buyButton_do.w - 4), O.buyButton_do.setY(parseInt((t - O.buyButton_do.h) / 2)), O.titleText_do.x + O.titleWidth + O.downloadButton_do.w + O.buyButton_do.w + O.downloadButtonOffsetRight + 4 > o ? O.grad_do.setX(O.buyButton_do.x - O.downloadButtonOffsetRight + 2) : O.grad_do.setX(-300)) : O.downloadButton_do ? (o = O.durationText_do ? (O.durationText_do.setX(e - O.durationWidth - O.durationOffsetRight + 1), O.durationText_do.setY(s), O.durationText_do.x) : e, O.downloadButton_do.setX(o - O.downloadButton_do.w - O.downloadButtonOffsetRight + 3), O.downloadButton_do.setY(parseInt((t - O.downloadButton_do.h) / 2)), O.titleText_do.x + O.titleWidth + O.downloadButton_do.w + O.downloadButtonOffsetRight > o ? O.grad_do.setX(O.downloadButton_do.x - O.downloadButtonOffsetRight + 2) : O.grad_do.setX(-300)) : O.buyButton_do ? (o = O.durationText_do ? (O.durationText_do.setX(e - O.durationWidth - O.durationOffsetRight + 1), O.durationText_do.setY(s), O.durationText_do.x) : e, O.buyButton_do.setX(o - O.buyButton_do.w - O.downloadButtonOffsetRight + 3), O.buyButton_do.setY(parseInt((t - O.buyButton_do.h) / 2)), O.titleText_do.x + O.titleWidth + O.buyButton_do.w + O.downloadButtonOffsetRight > o ? O.grad_do.setX(O.buyButton_do.x - O.downloadButtonOffsetRight + 2) : O.grad_do.setX(-300)) : O.durationText_do ? (O.durationText_do.setX(e - O.durationWidth - O.durationOffsetRight + 1), O.durationText_do.setY(s), O.titleText_do.x + O.titleWidth > O.durationText_do.x ? O.grad_do.setX(O.durationText_do.x - O.durationOffsetRight + 2) : O.grad_do.setX(-300)) : O.downloadButton_do ? (O.downloadButton_do.setX(e - O.downloadButton_do.w - O.downloadButtonOffsetRight + 2), O.titleText_do.x + O.titleWidth > O.downloadButton_do.x ? O.grad_do.setX(O.downloadButton_do.x - O.downloadButtonOffsetRight + 2) : O.grad_do.setX(-300), O.downloadButton_do.setY(parseInt((t - O.downloadButton_do.h) / 2))) : O.titleText_do.x + O.titleWidth > e - 10 ? O.grad_do.setX(e - 15) : O.grad_do.setX(-300),
+						O.playPause_do ? (O.titleText_do.setX(2 * O.playPauseButtonOffsetLeftAndRight + O.playPause_do.w + O.trackTitleOffsetLeft - 2), O.playPause_do.setY(parseInt((t - O.playPause_do.h) / 2)))
+						               : O.titleText_do.setX(O.trackTitleOffsetLeft),
+						O.titleText_do.setY(s),
+						O.buyButton_do ? (o = O.durationText_do ? (O.durationText_do.setX(e - O.durationWidth - O.durationOffsetRight + 1), O.durationText_do.setY(s), O.durationText_do.x)
+						                                        : e,
+					  O.buyButton_do.setX(O.buyButton_do.w - 4),
+						O.buyButton_do.setY(parseInt((t - O.buyButton_do.h) / 2)),
+						O.titleText_do.x + O.titleWidth + O.buyButton_do.w + 4 > o ? O.grad_do.setX(O.buyButton_do.x + 2) : O.grad_do.setX(-300)) : O.buyButton_do ? (o = O.durationText_do ? (O.durationText_do.setX(e - O.durationWidth - O.durationOffsetRight + 1), O.durationText_do.setY(s), O.durationText_do.x) : e, O.buyButton_do.setX(o - O.buyButton_do.w + 3), O.buyButton_do.setY(parseInt((t - O.buyButton_do.h) / 2)), O.titleText_do.x + O.titleWidth + O.buyButton_do.w > o ? O.grad_do.setX(O.buyButton_do.x : O.grad_do.setX(-300)) : O.durationText_do ? (O.durationText_do.setX(e - O.durationWidth - O.durationOffsetRight + 1), O.durationText_do.setY(s), O.titleText_do.x + O.titleWidth > O.durationText_do.x ? O.grad_do.setX(O.durationText_do.x - O.durationOffsetRight + 2) : O.grad_do.setX(-300)) : O.titleText_do.x + O.titleWidth > e - 10 ? O.grad_do.setX(e - 15) : O.grad_do.setX(-300),
 							O.dumy_do.setWidth(e), O.dumy_do.setHeight(t), O.setWidth(e), O.setHeight(t)
 					}
-				},
-        this.setupDownloadButton = function() {
-					FWDMSPSimpleSizeButton.setPrototype(),
-					O.downloadButton_do = new FWDMSPSimpleSizeButton(O.playlistDownloadButtonS_str,
-						                                               O.playlistDownloadButtonN_img.src,
-																													 O.playlistDownloadButtonN_img.width,
-																													 O.playlistDownloadButtonN_img.height,
-																													 O.useHEXColorsForSkin_bl,
-																													 O.normalButtonsColor_str,
-																													 O.selectedButtonsColor_str),
-					O.downloadButton_do.getStyle().position = "absolute",
-					O.downloadButton_do.addListener(FWDMSPSimpleSizeButton.CLICK,
-						                              O.dwButtonClickHandler),
-																					O.addChild(O.downloadButton_do)
-				},
-        this.dwButtonClickHandler = function() {
-					O.dispatchEvent(k.DOWNLOAD, {
-						id: O.id
-					})
 				},
         this.setupBuyButton = function() {
 					FWDMSPSimpleSizeButton.setPrototype(),
@@ -8280,7 +8263,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 																											O.normalButtonsColor_str,
 																											O.selectedButtonsColor_str),
 					O.buyButton_do.getStyle().position = "absolute",
-					O.buyButton_do.style.display  = "none",
 					O.buyButton_do.addListener(FWDMSPSimpleSizeButton.CLICK, O.buyButtonClickHandler),
 					O.addChild(O.buyButton_do)
 				},
@@ -8463,8 +8445,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 					this.playlistItemGrad1_img = null,
           this.playlistItemProgress_img = null,
           this.playlistPlayButtonN_img = null,
-          this.playlistDownloadButtonN_img = null,
-          this.playlistDownloadButtonS_str = null,
           this.playlistBuyButtonN_img = null,
           this.playlistBuyButtonS_str = null,
           this.progress_do = null,
@@ -8491,7 +8471,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 				}, O.updateHEXColors = function(e, t) {
 					if (O.normalColor_str = e,
 						  O.selectedColor_str = t, O.buyButton_do && O.buyButton_do.updateHEXColors(e, t),
-							O.downloadButton_do && O.downloadButton_do.updateHEXColors(e, t),
 							O.playNImage_img)
 						{
 						var o = FWDMSPUtils.changeCanvasHEXColor(O.playNImage_img, O.playNImageCanvas, e, !0),
@@ -8511,7 +8490,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
     k.PLAY = "play",
     k.PAUSE = "pause",
     k.MOUSE_UP = "mouseUp",
-    k.DOWNLOAD = "download",
     k.BUY = "buy",
     k.prototype = null,
     window.FWDMSPPlaylistItem = k

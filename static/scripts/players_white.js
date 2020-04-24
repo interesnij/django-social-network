@@ -101,7 +101,6 @@ music_player = new FWDMSP({
 		trackTitleOffsetLeft:0,               // смещение слева заголовка трека
 		playPauseButtonOffsetLeftAndRight:11, // смещение слева и справа кнопки play
 		durationOffsetRight:9,							  // смещение справа продолжительности трека
-		downloadButtonOffsetRight:11,         // отступ справа кнопки загрузки трека (в плейлисте)
 		scrollbarOffestWidth:7,               // шмрмна смещения полосы прокрутки
 
 		//playback rate / speed
@@ -201,7 +200,6 @@ video_player = new FWDUVPlayer({
 		showPlaylistOnFullScreen:"no",            // показывать плейлист в режиме полного экрана
 		showNextAndPrevButtons:"yes",             // показывать кнопки пред/след видео
 		showThumbnail:"yes",                      // показывать миниатюры
-		forceDisableDownloadButtonForFolder:"yes",// принудительно скрывать кнопку загрузки видео из локальных папок
 		addMouseWheelSupport:"yes",               // поддержка управления мыши
 		startAtRandomVideo:"no",                  // начинать воспроиведение со случайного видео ролика
 		stopAfterLastVideoHasPlayed:"no",         // останавливать воспроизведение после последнего ролика
@@ -246,7 +244,6 @@ video_player = new FWDUVPlayer({
 		showTime:"yes",                           // показать время воспроизведения
 		showQualityButton:"yes",                  // показать время выбора качества видео
 		showInfoButton:"yes",                     // показывать кнопку информации ролика
-		showDownloadButton:"no",                  // показывать кнопку загрузки ролика
 		showShareButton:"no",                     // показывать кнопку расшаривания ролика
 		showEmbedButton:"yes",                    // показывать кнопку получения ссылки ролика и фрейма для вставки на другие сайты
 		showChromecastButton:"no",                // показывать кнопку подкастов
