@@ -392,13 +392,14 @@ function music_onPause(){
 }
 function music_onPlay(){
     console.log("Воспроизводится трек № : " + music_player.getTrackId());
+    try{
     div = document.createElement("div");
     div.innerHTML = music_player.getTrackTitle();
     title = div.querySelector('span').innerHTML;
     document.title = title;
     if(document.querySelector(".user_status")){
       document.querySelector(".user_status").innerHTML = title;
-    }
+    }}catch{var a=0};
     try{video_player.pause();}catch{var a=0}
 };
 
