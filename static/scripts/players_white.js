@@ -389,7 +389,7 @@ function music_onPause(){
   document.title = "Музыка приостановлена";
   if(document.querySelector(".user_status")){
     document.querySelector(".user_status").innerHTML = "Музыка приостановлена";
-  }}catch{var a=0}
+  }}catch{var a=0} 
 }
 function music_onPlay(){
     console.log("Воспроизводится трек № : " + music_player.getTrackId());
