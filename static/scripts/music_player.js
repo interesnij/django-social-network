@@ -2533,7 +2533,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 												src: self.skinPath_str + "popup-button.png"
 											}, {
 												img: self.buyN_img = new Image,
-												src: self.skinPath_str + "buy-button.png"
+												src: self.skinPath_str + "add.svg"
 											}, {
 												img: self.mainScrubberBkLeft_img = new Image,
 												src: self.skinPath_str + "scrubber-left-background.png"
@@ -2640,7 +2640,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 											self.openerPauseS_str = self.skinPath_str + "open-pause-button-selected.png",
 											self.openerPlayS_str = self.skinPath_str + "open-play-button-selected.png",
 											self.progressMiddlePath_str = self.skinPath_str + "progress-middle.png",
-											self.buySPath_str = self.skinPath_str + "buy-button-over.png",
+											self.buySPath_str = self.skinPath_str + "add_active.svg",
 											self.showPlayListButtonAndPlaylist_bl && (self.skinPaths_ar.push({
 												img: self.playlistItemBk1_img = new Image,
 												src: self.skinPath_str + "playlist-item-background1.png"

@@ -17,7 +17,7 @@ music_player = new FWDMSP({
 		mainFolderPath:"/static/images/",
 		skinPath:"audio_white",
 		showSoundCloudUserNameInTitle:"no",   // показывать имя пользователя soundcloud
-		showMainBackground:"no",  						// показать общий фон
+		showMainBackground:"yes",  						// показать общий фон
 		verticalPosition:"bottom",                    // расположение плеера
 		rightClickContextMenu:"developer",
 		useDeepLinking:"no",									// использовать глубокие ссылки - защита от перехвата. Не будет работать с souncloud
@@ -460,7 +460,7 @@ on('#ajax', 'click', '.music_list_item', function() {
   }else{
     music_player.loadPlaylist(0);
     if (FWDMSP.LOAD_PLAYLIST_COMPLETE){
-      console.log("Плейдист загружен!");
+      console.log("Плейлист загружен!");
     setTimeout(function() {music_player.playSpecificTrack("list_" + list_pk, track_id)}, 50);
   }
   }
