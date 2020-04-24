@@ -8256,9 +8256,7 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 																																				 ? (O.durationText_do.setX(e - O.durationWidth - O.durationOffsetRight + 1), O.durationText_do.setY(s), O.durationText_do.x)
 																																				 : e,
 																																				 O.buyButton_do.setX(o - O.buyButton_do.w + 3),
-																																				 O.buyButton_do.setY(parseInt((t - O.buyButton_do.h) / 2)),
-																																				 O.titleText_do.x + O.titleWidth + O.buyButton_do.w > o
-																																				 ? O.grad_do.setX(O.buyButton_do.x : O.grad_do.setX(-300))
+																																				 O.buyButton_do.setY(parseInt((t - O.buyButton_do.h) / 2)))
 																																				: O.durationText_do
 																																				? (O.durationText_do.setX(e - O.durationWidth - O.durationOffsetRight + 1),
 																																				   O.durationText_do.setY(s),
