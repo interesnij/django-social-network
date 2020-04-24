@@ -18,7 +18,7 @@ music_player = new FWDMSP({
 		skinPath:"audio_white",
 		showSoundCloudUserNameInTitle:"no",   // показывать имя пользователя soundcloud
 		showMainBackground:"yes",  						// показать общий фон
-		position:"bottom",                    // расположение плеера
+		verticalPosition:"bottom",                    // расположение плеера
 		rightClickContextMenu:"developer",
 		useDeepLinking:"no",									// использовать глубокие ссылки - защита от перехвата. Не будет работать с souncloud
 		rightClickContextMenu:"no",           // показ контекстног меню по щелчку правой кнопкой мыши
