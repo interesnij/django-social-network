@@ -491,6 +491,6 @@ on('#ajax', 'click', '.track_remove', function(e) {
 });
 
 
-on('#ajax', 'click', '.change_skin', function(e) {
-  FWDMSP({verticalPosition:"top"})
+on('#ajax', 'click', '.change_skin', function() {
+
 });
