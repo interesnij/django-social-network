@@ -2676,14 +2676,14 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 												src: self.skinPath_str + "playlist-item-progress2.png"
 											}, {
 												img: self.playlistBuyButtonN_img = new Image,
-												src: self.skinPath_str + "playlist-buy-button.png"
+												src: self.skinPath_str + "playlist_add.svg"
 											}),
 											self.scrBkMiddlePath_str = self.skinPath_str + "playlist-scrollbar-background-middle.png",
 											self.scrBkBottomPath_str = self.skinPath_str + "playlist-scrollbar-background-bottom.png",
 											self.scrDragMiddlePath_str = self.skinPath_str + "playlist-scrollbar-drag-middle.png",
 											self.scrDragBottomPath_str = self.skinPath_str + "playlist-scrollbar-drag-top.png",
 											self.scrLinesSPath_str = self.skinPath_str + "playlist-scrollbar-lines-over.png",
-											self.playlistBuyButtonS_str = self.skinPath_str + "playlist-buy-button-over.png",
+											self.playlistBuyButtonS_str = self.skinPath_str + "playlist_add_active.svg",
 											self.playlistPlayButtonN_str = self.skinPath_str + "playlist-play-button.png",
 											self.playlistPlayButtonS_str = self.skinPath_str + "playlist-play-button-over.png",
 											self.playlistPauseButtonN_str = self.skinPath_str + "playlist-pause-button.png",
