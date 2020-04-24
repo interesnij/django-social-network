@@ -383,7 +383,7 @@ function music_onPlay(){
     console.log("Воспроизводится трек № : " + music_player.getTrackId());
     title = music_player.getTrackTitle();
     div = document.createElement("div");
-    div = music_player.getTrackTitle();
+    div.append(music_player.getTrackTitle());
     document.title = div.querySelector('span').innerHTML;
     try{video_player.pause();}catch{var a=0}
 };
