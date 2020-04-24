@@ -66,7 +66,6 @@ class Index {
           if_list(rtr);
           load_chart();
           music_onPlay();
-          music_onPause()
         }
       }
       ajax_link.send();
