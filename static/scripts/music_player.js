@@ -7585,7 +7585,6 @@ document.write("<script type='text/vbscript'>\r\nFunction IEBinary_getByteAt(str
 																					b.trackTitleOffsetLeft,
 																					b.durationOffsetRight,
 																					b.showPlaylistItemPlayButton_bl,
-																					s,
 																					i,
 																					t,
 																					b.useHEXColorsForSkin_bl,
