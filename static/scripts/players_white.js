@@ -1,6 +1,16 @@
+function msToTime(duration) {
+  var milliseconds = parseInt((duration % 1000) / 100),
+    seconds = Math.floor((duration / 1000) % 60),
+    minutes = Math.floor((duration / (1000 * 60)) % 60);
+
+  minutes = (minutes < 10) ? "0" + minutes : minutes;
+  seconds = (seconds < 10) ? "0" + seconds : seconds;
+
+  return minutes + ":" + seconds;
+}
 
 
-audio_player = new MUSIC({
+audio_player = new FWDMSP({
 		//main settings
 		instanceName:"player1",
 		playlistsId:"audio_playlists",
@@ -128,7 +138,7 @@ audio_player = new MUSIC({
 		atbButtonBackgroundSelectedColor:"#000000", // цвет фона выбранной кнопки "от / до"
 	});
 
-
+if (document.querySelector("#video_player")) {
 video_player = new FWDUVPlayer({
 		//main settings
 		instanceName:"player_white",
@@ -363,13 +373,142 @@ video_player = new FWDUVPlayer({
 		contextMenuItemSelectedColor:"#000",
 		contextMenuItemDisabledColor:"#BBB"
 });
-if(audio_player.play()){
-	audio_player.parentElement.classList.add("audio_is_played")
+
+FWDUVPUtils.onReady(function(){
+    video_player.addListener(FWDUVPlayer.READY, video_onReady);
+    video_player.addListener(FWDUVPlayer.PLAY, video_onPlay);
+});
 }
-on('#ajax', 'click', '#video_stopped', function(e) {
-	video_player.pause();
+FWDMSPUtils.onReady(function(){
+        music_player.addListener(FWDMSP.READY, music_onReady);
+        music_player.addListener(FWDMSP.PLAY, music_onPlay);
+    });
+
+function music_onReady(){console.log("Аудио плеер готов");}
+function video_onReady(){console.log("Видео плеер готов");}
+
+function video_onPlay(){
+    console.log("Воспроизводится видео №: " + video_player.getVideoId());
+    music_player.pause();
+}
+function music_onPlay(){
+    console.log("Воспроизводится трек № : " + music_player.getTrackId());
+    title = music_player.getTrackTitle();
+    document.title = title.innerHTML;
+    try{video_player.pause();}catch{var a=0}
+};
+
+function save_playlist(suffix, post_link, get_link, track_id){
+    var playlist_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    playlist_link.open( 'GET', post_link, true );
+    playlist_link.onreadystatechange = function () {
+    if ( playlist_link.readyState == 4 && playlist_link.status == 200 ) {
+      document.querySelector("body").className = "";
+      document.querySelector("body").classList.add(suffix);
+
+      var _link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+      _link.open( 'GET', get_link, true );
+      _link.onreadystatechange = function () {
+        if ( _link.readyState == 4 && _link.status == 200 ) {
+          var response = document.createElement('span');
+          response.innerHTML = _link.responseText;
+          var list = response.querySelectorAll("li");
+          var count = list.length;
+          for(i=0; i<count; i++) {
+            _source=list[i].getAttribute("data-path") + '/stream?client_id=' + 'dce5652caa1b66331903493735ddd64d';
+            _title=list[i].getAttribute("data-title");
+            _thumbPath=list[i].getAttribute("data-thumbpath");
+            _duration=list[i].getAttribute("data-duration");
+            time = msToTime(_duration);
+            music_player.addTrack(_source, _title, _thumbPath, time, true, false, null);
+          }
+          music_player.loadPlaylist(0);
+          if (FWDMSP.LOAD_PLAYLIST_COMPLETE){
+            console.log("Плейдист загружен!");
+          setTimeout(function() {music_player.playSpecificTrack(suffix, track_id)}, 50);
+        }
+      }};
+      _link.send( null );
+    }};
+    playlist_link.send( null );
+    };
+
+
+on('#ajax', 'click', '.tag_item', function() {
+  var track_id = this.parentElement.parentElement.getAttribute('data-counter');
+  var tag_pk = document.querySelector(".tag_playlist").getAttribute('data-pk');
+  if (!document.body.classList.contains("tag_" + tag_pk)){
+    save_playlist("tag_" + tag_pk, '/music/manage/temp_tag/' + tag_pk, '/music/get/tag/' + tag_pk, track_id)
+  }else{
+    music_player.loadPlaylist(0);
+    if (FWDMSP.LOAD_PLAYLIST_COMPLETE){
+      console.log("Плейдист загружен!");
+    setTimeout(function() {music_player.playSpecificTrack("tag_" + tag_pk, track_id)}, 50);
+  }
+  }
+  });
+
+on('#ajax', 'click', '.genre_item', function() {
+  var track_id = this.parentElement.parentElement.getAttribute('data-counter');
+  var genre_pk = document.querySelector(".genre_playlist").getAttribute('data-pk');
+  if (!document.body.classList.contains("genre_" + genre_pk)){
+    save_playlist("genre_" + genre_pk, '/music/manage/temp_genre/' + genre_pk, '/music/get/genre/' + genre_pk, track_id)
+  }else{
+    music_player.loadPlaylist(0);
+    if (FWDMSP.LOAD_PLAYLIST_COMPLETE){
+      console.log("Плейдист загружен!");
+    setTimeout(function() {music_player.playSpecificTrack("genre_" + list_pk, track_id)}, 50);
+  }
+  }
+});
+
+on('#ajax', 'click', '.music_list_item', function() {
+  var track_id = this.parentElement.parentElement.getAttribute('data-counter');
+  var list_pk = document.querySelector(".music_playlist").getAttribute('data-pk');
+  if (!document.body.classList.contains("list_" + list_pk)){
+    save_playlist("list_" + list_pk, '/music/manage/temp_list/' + list_pk, '/music/get/list/' + list_pk, track_id)
+  }else{
+    music_player.loadPlaylist(0);
+    if (FWDMSP.LOAD_PLAYLIST_COMPLETE){
+      console.log("Плейдист загружен!");
+    setTimeout(function() {music_player.playSpecificTrack("list_" + list_pk, track_id)}, 50);
+  }
+  }
+});
+
+
+on('#ajax', 'click', '#load_1', function(e) {
+  music_player.loadPlaylist(0);
+})
+on('#ajax', 'click', '#load_2', function(e) {
+  music_player.loadPlaylist(1);
+})
+on('#ajax', 'click', '#load_3', function(e) {
+  music_player.loadPlaylist(2);
 })
 
-on('#ajax', 'click', '#video_player', function(e) {
-	audio_player.pause();
-})
+on('#ajax', 'click', '.track_add', function(e) {
+  block = this.parentElement;
+  pk = block.parentElement.getAttribute("data-pk");
+  var _link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  _link.open( 'GET', "/music/manage/add_track/" + pk, true );
+  _link.onreadystatechange = function () {
+    if ( _link.readyState == 4 && _link.status == 200 ) {
+      block.innerHTML = "";
+      block.innerHTML = "<span class='track_remove' title='Удалить'><svg xmlns='http://www.w3.org/2000/svg' fill='currentColor' style='width:22px;height:22px;' class='svg_default' viewBox='0 0 2424'><path fill='none' d='M0 0h24v24H0z'/><path d='M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z'/></svg></span>"
+  }};
+  _link.send( null );
+});
+
+on('#ajax', 'click', '.track_remove', function(e) {
+  block = this.parentElement;
+  pk = block.parentElement.getAttribute("data-pk");
+  var _link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  _link.open( 'GET', "/music/manage/remove_track/" + pk, true );
+  _link.onreadystatechange = function () {
+    if ( _link.readyState == 4 && _link.status == 200 ) {
+      block.innerHTML = "";
+      block.innerHTML = "<span class='track_add' title='Добавить'><svg fill='currentColor' style='width:22px;height:22px;' class='svg_default' xmlns='http://www.w3.org/2000/svg' viewBox='0 024 24'><path d='M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z'/><path d='M0 0h24v24H0z' fill='none'/></svg></span>"
+  }};
+  _link.send( null );
+});
