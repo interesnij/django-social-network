@@ -375,6 +375,7 @@ FWDMSPUtils.onReady(function(){
 function music_onReady(){console.log("Аудио плеер готов");}
 function video_onReady(){console.log("Видео плеер готов");}
 
+
 function video_onPlay(){
     console.log("Воспроизводится видео №: " + video_player.getVideoId());
     music_player.pause();
