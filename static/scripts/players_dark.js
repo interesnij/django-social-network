@@ -491,6 +491,7 @@ on('#ajax', 'click', '.track_remove', function(e) {
 });
 
 
-on('#ajax', 'click', '.chage_skin', function(e) {
-  music_player.skinPath = "audio_white"
+on('#ajax', 'click', '.change_skin', function(e) {
+  music_player.skinPath = "audio_white";
+  console.log("skin updated")
 });
