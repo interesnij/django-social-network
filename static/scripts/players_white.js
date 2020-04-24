@@ -370,6 +370,7 @@ FWDUVPUtils.onReady(function(){
 FWDMSPUtils.onReady(function(){
         music_player.addListener(FWDMSP.READY, music_onReady);
         music_player.addListener(FWDMSP.PLAY, music_onPlay);
+        music_player.addListener(FWDMSP.PAUSE, music_onPause);
     });
 
 function music_onReady(){console.log("Аудио плеер готов");}
@@ -379,6 +380,15 @@ function video_onReady(){console.log("Видео плеер готов");}
 function video_onPlay(){
     console.log("Воспроизводится видео №: " + video_player.getVideoId());
     music_player.pause();
+}
+function music_onPause(){
+  div = document.createElement("div");
+  div.innerHTML = music_player.getTrackTitle();
+  title = div.querySelector('span').innerHTML;
+  document.title = "Музыка приостановлена";
+  if(document.querySelector(".user_status")){
+    document.querySelector(".user_status").innerHTML = "Музыка приостановлена";
+  }
 }
 function music_onPlay(){
     console.log("Воспроизводится трек № : " + music_player.getTrackId());
