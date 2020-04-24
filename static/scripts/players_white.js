@@ -33,7 +33,6 @@ music_player = new FWDMSP({
 		// controller settings
 		showControllerByDefault:"yes",        // показать контроллер по умолчанию
 		showThumbnail:"yes",                  // показывать миниатюры
-		// showFullScreenButton:"yes",        // показывать кнопку включения полноэкранного режима
 		showNextAndPrevButtons:"yes",					// показывать кнопки переключения треков
 		showSoundAnimation:"yes",							// показывать анимацию музыкального воспроизведения
 		showLoopButton:"yes",                 // показывать кнопку повтора треков
