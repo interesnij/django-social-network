@@ -61,7 +61,7 @@ class Index {
           rtr.innerHTML = ajax.innerHTML;
           document.title = elem_.querySelector('title').innerHTML;
           window.history.pushState({route: url}, "network", url);
-          document.body.scrollTop = 0;
+          window.scrollTo(0,0);
           Index.initLink();
           if_list(rtr);
           load_chart();
