@@ -492,5 +492,5 @@ on('#ajax', 'click', '.track_remove', function(e) {
 
 
 on('#ajax', 'click', '.change_skin', function(e) {
-  FWDMSP.skinPath:"audio_white"
+  FWDMSP({skinPath:"audio_white"})
 });
