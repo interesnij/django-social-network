@@ -84,7 +84,7 @@ function msToTime(duration) {
 				showPlayListOnAndroid:"yes",
 				showPlayListByDefault:"no",
 				showPlaylistItemPlayButton:"yes",
-				showPlaylistItemBuyButton:"yes",
+				showPlaylistItemBuyButton:"no",
 				addScrollBarMouseWheelSupport:"yes",
 				showTracksNumbers:"yes",
 				playlistBackgroundColor:"#000000",

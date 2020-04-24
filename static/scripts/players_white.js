@@ -39,7 +39,7 @@ music_player = new FWDMSP({
 		showShuffleButton:"yes",              // показывать кнопку перемешивания треков
 		expandBackground:"no",
 		showBuyButton:"yes",
-    showPlaylistItemBuyButton:"yes",
+    showPlaylistItemBuyButton:"no",
 		titleColor:"#000000",                 // цвет названия
 		timeColor:"#919191",                  // цвет времени
 
