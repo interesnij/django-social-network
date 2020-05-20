@@ -6,7 +6,7 @@ from django.utils import timezone
 from communities.models import Community
 from pilkit.processors import ResizeToFill, ResizeToFit
 from imagekit.models import ProcessedImageField
-from gallery.helpers import upload_to_photo_directory
+from gallery.helpers import upload_to_video_directory
 from common.model.votes import VideoVotes, VideoCommentVotes
 
 
