@@ -90,7 +90,7 @@ class VideoTags(models.Model):
         verbose_name="тег"
         verbose_name_plural="теги"
 
-class UserTempSoundList(models.Model):
+class UserTempVideoList(models.Model):
     id = models.AutoField(primary_key=True)
     user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name='user_of_video', db_index=False, on_delete=models.CASCADE, verbose_name="Зритель")
     list = models.OneToOneField(VideoList, related_name='list_video', null=True, blank=True, on_delete=models.CASCADE, verbose_name="Связь на плейлист человека или сообщества")
