@@ -20,9 +20,9 @@ class UserVideoPlaylist(ListView):
     def get_context_data(self,**kwargs):
         context = super(UserVideoPlaylist,self).get_context_data(**kwargs)
         context['user'] = self.user
-        context['playlist'] = self.album
+        context['playlist'] = self.list
         return context
 
     def get_queryset(self):
-        video_list = playlist.playlist_too()
+        video_list = self.list.playlist_too()
         return video_list
