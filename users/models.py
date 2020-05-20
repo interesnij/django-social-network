@@ -530,6 +530,17 @@ class User(AbstractUser):
         music_list = SoundcloudParsing.objects.filter(music_query)
         return music_list
 
+    def get_music_count(self):
+        from music.models import SoundList, SoundcloudParsing
+        from moderation.models import ModeratedObject
+
+        exclude_reported_and_approved_music_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
+        list = SoundList.objects.get(creator_id=self.id, community=None, name="my_first_generic_playlist_number_12345678900000000")
+        music_query = Q(players=list, is_deleted=False)
+        music_query.add(exclude_reported_and_approved_music_query, Q.AND)
+        count = SoundcloudParsing.objects.filter(music_query).values("pk")
+        return count
+
     def get_last_music(self):
         from music.models import SoundList, SoundcloudParsing
         from moderation.models import ModeratedObject
@@ -541,57 +552,35 @@ class User(AbstractUser):
         music_list = SoundcloudParsing.objects.filter(music_query)
         return music_list[0:5]
 
+    def get_video_count(self):
+        from video.models import VideoList, Video
+
+        list = SoundList.objects.get(creator_id=self.id, community=None, name="my_first_generic_playlist_number_12345678900000000")
+        video_query = Q(video=list, is_deleted=False)
+        count = Video.objects.filter(video_query).values("pk")
+        return count
+
+    def get_video(self):
+        from video.models import VideoList, Video
+
+        list = SoundList.objects.get(creator_id=self.id, community=None, name="my_first_generic_playlist_number_12345678900000000")
+        video_query = Q(video=list, is_deleted=False)
+        video_list = Video.objects.filter(video_query)
+        return video_list
+
+    def get_last_video(self):
+        from video.models import VideoList, Video
+
+        list = SoundList.objects.get(creator_id=self.id, community=None, name="my_first_generic_playlist_number_12345678900000000")
+        video_query = Q(video=list, is_deleted=False)
+        video_list = Video.objects.filter(video_query)
+        return video_list[0:2]
+
     def get_music_list_id(self):
         from music.models import SoundList
 
         list = SoundList.objects.get(creator_id=self.id, community=None, name="my_first_generic_playlist_number_12345678900000000")
         return list.pk
-
-    def my_playlist(self):
-        from common.utils import safe_json
-        from music.models import SoundList, UserTempSoundList, SoundTags, SoundGenres
-
-        temp_list = UserTempSoundList.objects.get(user=self)
-        try:
-            list = SoundList.objects.get(pk=temp_list.list.pk)
-        except:
-            list = None
-        try:
-            tag_music = SoundTags.objects.get(pk=temp_list.tag.pk)
-        except:
-            tag_music = None
-        try:
-            genre_music = SoundGenres.objects.get(pk=temp_list.genre.pk)
-        except:
-            genre_music = None
-        if list:
-            return list.get_json_playlist()
-        elif tag_music:
-            return tag_music.get_json_playlist()
-        elif genre_music:
-            return genre_music.get_json_playlist()
-        else:
-            playlist = []
-            queryset = reversed(self.get_my_music())
-            for track in queryset:
-                url = track.uri + '/stream?client_id=' + 'dce5652caa1b66331903493735ddd64d'
-                genre = str(track.genre)
-                data = {}
-                data['title'] = track.title
-                data['artwork_url'] = track.artwork_url
-                data['mp3'] = url
-                data['genre'] = genre
-                if self.is_track_exists(track.pk):
-                    data['is_my_track'] = 1
-                else:
-                    data['is_my_track'] = 0
-                data['pk'] = track.pk
-                playlist.append(data)
-            if playlist:
-                cached_playlist = safe_json(playlist)
-                return playlist
-            else:
-                playlist = False
 
     def my_playlist_too(self):
         from music.models import SoundList, UserTempSoundList, SoundTags, SoundGenres

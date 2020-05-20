@@ -18,8 +18,8 @@
               <div class="card-header">
                 <div class="media">
                   <div class="media-body">
-                      <h5 class="mt-1">Моя музыка
-                        <small class="content-color-secondary float-right mr-2 mt-1">Всего {{ user.get_music.count }}</small>
+                      <h5 class="mt-1">Музыка {{ user.first_name|gent }} {{ user.last_name|gent }}
+                        <small class="content-color-secondary float-right mr-2 mt-1">Всего {{ user.get_music_count }}</small>
                       </h5>
                   </div>
                 </div>

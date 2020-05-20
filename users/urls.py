@@ -15,5 +15,6 @@ urlpatterns = [
     url(r'^(?P<pk>\d+)/staff_communities/$', UserStaffCommunities.as_view(), name='staff_communities'),
     url(r'^(?P<pk>\d+)/mob_staffed/$', UserMobStaffed.as_view(), name='mob_staffed_communities'),
     url(r'^(?P<pk>\d+)/music/$', UserMusic.as_view(), name='user_music'),
+    url(r'^(?P<pk>\d+)/video/$', UserVideo.as_view(), name='user_video'),
     url(r'^all-users/$', AllUsers.as_view(), name='all_users'),
 ]
