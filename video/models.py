@@ -145,8 +145,8 @@ class Video(models.Model):
     created = models.DateTimeField(default=timezone.now)
     duration = models.CharField(max_length=255, blank=True, null=True)
     description = models.CharField(max_length=500, blank=True, null=True)
-    category = models.ForeignKey(VideoCategory, related_name='video_category', on_delete=models.CASCADE, verbose_name="Категория ролика")
-    tag = models.ForeignKey(VideoTags, related_name='video_tag', on_delete=models.CASCADE, verbose_name="Тег ролика")
+    category = models.ForeignKey(VideoCategory, blank=True, null=True, related_name='video_category', on_delete=models.CASCADE, verbose_name="Категория ролика")
+    tag = models.ForeignKey(VideoTags, blank=True, null=True, related_name='video_tag', on_delete=models.CASCADE, verbose_name="Тег ролика")
     title = models.CharField(max_length=255, blank=True, null=True)
     uri = models.CharField(max_length=255, blank=True, null=True)
     is_deleted = models.BooleanField(verbose_name="Удален",default=False )
@@ -156,6 +156,7 @@ class Video(models.Model):
     community = models.ForeignKey('communities.Community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
     album = models.ForeignKey(VideoAlbum, related_name="video_album", blank=True, null=True, on_delete=models.CASCADE)
     comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Комментатор")
 
     def __str__(self):
         return self.title
