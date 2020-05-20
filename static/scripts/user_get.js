@@ -13,8 +13,8 @@ on('#ajax', 'click', '.u_video_detail', function() {
   pk = parent.getAttribute('data-pk');
   uuid = parent.getAttribute('data-uuid');
   loader = document.getElementById("video_loader");
-  open_fullscreen("/video/get_video_playlist/" + pk + "/" + uuid + "/", loader)
-  load_playlist(counter);
+  open_fullscreen("/video/get_video_playlist/" + pk + "/" + uuid + "/", loader);
+  setTimeout(function() { load_playlist(counter) }, 1000);
 });
 
 on('#ajax', 'click', '.fullscreen', function() {

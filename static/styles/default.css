@@ -4202,8 +4202,11 @@ cursor: pointer;
     .community_fullscreen,
     .stat_fullscreen,
     .add_fullscreen,
-    .video_fullscreen,
     .votes_fullscreen {left: 20%;width: 60%;padding-left: 5%;padding-right: 5%;}
+}
+
+@media screen and (min-width: 621px) {
+    .video_fullscreen{left: 10%;width: 80%;padding-left: 5%;padding-right: 5%;}
 }
 
 .photo_fullscreen_hide,
