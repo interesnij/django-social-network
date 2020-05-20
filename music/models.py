@@ -19,32 +19,6 @@ class SoundGenres(models.Model):
     def is_track_in_genre(self, track_id):
         self.track_genre.filter(id=track_id).exists()
 
-    def get_json_playlist(self):
-        from common.utils import safe_json
-
-        if not hasattr(self, '_cached_playlist'):
-            self._cached_playlist = safe_json(self.playlist())
-        return self._cached_playlist
-
-    def playlist(self):
-        playlist = []
-        queryset = self.track_genre.all()
-        for track in queryset:
-            url = track.uri + '/stream?client_id=' + 'dce5652caa1b66331903493735ddd64d'
-            genre = str(track.genre)
-            data = {}
-            data['title'] = track.title
-            data['artwork_url'] = track.artwork_url
-            data['mp3'] = url
-            data['genre'] = genre
-            data['pk'] = track.pk
-            if self.is_track_in_genre(track.pk):
-                data['is_my_track'] = 1
-            else:
-                data['is_my_track'] = None
-            playlist.append(data)
-        return playlist[:300]
-
     def playlist_too(self):
         queryset = self.track_genre.all()
         return queryset[:300]
@@ -92,32 +66,6 @@ class SoundList(models.Model):
     def is_track_in_list(self, track_id):
         self.track.filter(id=track_id).exists()
 
-    def get_json_playlist(self):
-        from common.utils import safe_json
-
-        if not hasattr(self, '_cached_playlist'):
-            self._cached_playlist = safe_json(self.playlist())
-        return self._cached_playlist
-
-    def playlist(self):
-        playlist = []
-        queryset = self.track.all()
-        for track in queryset:
-            url = track.uri + '/stream?client_id=' + 'dce5652caa1b66331903493735ddd64d'
-            genre = str(track.genre)
-            data = {}
-            data['title'] = track.title
-            data['artwork_url'] = track.artwork_url
-            data['mp3'] = url
-            data['genre'] = genre
-            if self.is_track_in_list(track.pk):
-                data['is_my_track'] = 1
-            else:
-                data['is_my_track'] = 0
-            data['pk'] = track.pk
-            playlist.append(data)
-        return playlist
-
     def playlist_too(self):
         queryset = self.track.all()
         return queryset
@@ -153,32 +101,6 @@ class SoundTags(models.Model):
         result = SoundGenres.objects.filter(genres_query)
         return result
 
-    def get_json_playlist(self):
-        from common.utils import safe_json
-
-        if not hasattr(self, '_cached_playlist'):
-            self._cached_playlist = safe_json(self.playlist())
-        return self._cached_playlist
-
-    def playlist(self):
-        playlist = []
-        queryset = self.track_tag.all()
-        for track in queryset:
-            url = track.uri + '/stream?client_id=' + 'dce5652caa1b66331903493735ddd64d'
-            genre = str(track.genre)
-            data = {}
-            data['title'] = track.title
-            data['artwork_url'] = track.artwork_url
-            data['mp3'] = url
-            data['genre'] = genre
-            data['pk'] = track.pk
-            if self.is_track_in_tag(track.pk):
-                data['is_my_track'] = 1
-            else:
-                data['is_my_track'] = None
-            playlist.append(data)
-        return playlist
-
     def playlist_too(self):
         queryset = self.track_tag.all()
         return queryset
@@ -192,7 +114,7 @@ class SoundTags(models.Model):
 
 class UserTempSoundList(models.Model):
     id = models.AutoField(primary_key=True)
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name='user_of_field', db_index=False, on_delete=models.CASCADE, verbose_name="Слушатель") 
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name='user_of_field', db_index=False, on_delete=models.CASCADE, verbose_name="Слушатель")
     list = models.OneToOneField(SoundList, related_name='list_field', null=True, blank=True, on_delete=models.CASCADE, verbose_name="Связь на плейлист человека или сообщества")
     tag = models.OneToOneField(SoundTags, related_name='tag_field', null=True, blank=True, on_delete=models.CASCADE, verbose_name="Связь на тег")
     genre = models.OneToOneField(SoundGenres, related_name='genre_field', null=True, blank=True, on_delete=models.CASCADE, verbose_name="Связь на жанр")
@@ -216,7 +138,6 @@ class SoundcloudParsing(models.Model):
         return self.title
 
     def get_mp3(self):
-
         url = self.uri + '/stream?client_id=3ddce5652caa1b66331903493735ddd64d'
         url.replace("\\?", "%3f")
         url.replace("=", "%3d")

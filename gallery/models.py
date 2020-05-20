@@ -8,6 +8,7 @@ from django.conf import settings
 from main.models import Item, ItemComment
 from notifications.model.photo import *
 from gallery.helpers import upload_to_photo_directory
+from common.model.votes import PhotoVotes, PhotoCommentVotes
 
 
 class Album(models.Model):

@@ -57,3 +57,22 @@ class GoodCommentVotes(models.Model):
     vote = models.IntegerField(verbose_name="Голос", choices=VOTES)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Пользователь")
     item = models.ForeignKey('goods.GoodComment', on_delete=models.CASCADE)
+
+
+class VideoVotes(models.Model):
+    LIKE = 1
+    DISLIKE = -1
+    VOTES = ((DISLIKE, 'Не нравится'),(LIKE, 'Нравится'))
+
+    vote = models.IntegerField(default=0, verbose_name="Голос", choices=VOTES)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Пользователь")
+    parent = models.ForeignKey('video.Video', on_delete=models.CASCADE)
+
+class VideoCommentVotes(models.Model):
+    LIKE = 1
+    DISLIKE = -1
+    VOTES = ((DISLIKE, 'Не нравится'),(LIKE, 'Нравится'))
+
+    vote = models.IntegerField(verbose_name="Голос", choices=VOTES)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Пользователь")
+    item = models.ForeignKey('video.VideoComment', on_delete=models.CASCADE)
