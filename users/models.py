@@ -539,7 +539,7 @@ class User(AbstractUser):
         music_query = Q(players=list, is_deleted=False)
         music_query.add(exclude_reported_and_approved_music_query, Q.AND)
         count = SoundcloudParsing.objects.filter(music_query).values("pk")
-        return count
+        return count.count()
 
     def get_last_music(self):
         from music.models import SoundList, SoundcloudParsing
@@ -557,7 +557,7 @@ class User(AbstractUser):
 
         video_query = Q(creator_id=self.id, community=None, is_deleted=False)
         count = Video.objects.filter(video_query).values("pk")
-        return count
+        return count.count()
 
     def get_video(self):
         from video.models import VideoList, Video
