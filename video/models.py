@@ -105,7 +105,6 @@ class VideoAlbum(models.Model):
     description = models.TextField(blank=True, null=True, verbose_name="Описание")
     cover_photo = ProcessedImageField(format='JPEG', options={'quality': 90}, upload_to=upload_to_video_directory, processors=[ResizeToFit(width=500, upscale=False)], blank=True, null=True)
     is_public = models.BooleanField(default=True, verbose_name="Виден другим")
-    is_generic = models.BooleanField(default=False, verbose_name="Сгенерированный альбом")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     order = models.PositiveIntegerField(default=0)
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='video_user_creator', verbose_name="Создатель")
@@ -131,10 +130,7 @@ class VideoAlbum(models.Model):
             return False
 
     def count_video(self):
-        if self.title == "Видео со страницы":
-            return self.video_album_2.filter(is_deleted=False).count()
-        else:
-            return self.video_album_1.filter(is_deleted=False).count()
+        return self.video_album_1.filter(is_deleted=False).count()
 
     def album_is_generic(self):
         if self.is_generic:
@@ -159,7 +155,6 @@ class Video(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, db_index=True,verbose_name="uuid")
     community = models.ForeignKey('communities.Community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
     album = models.ForeignKey(VideoAlbum, related_name="video_album", blank=True, null=True, on_delete=models.CASCADE)
-    album_2 = models.ForeignKey(VideoAlbum, related_name="video_album_2", blank=True, null=True, on_delete=models.CASCADE)
     comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
 
     def __str__(self):
