@@ -146,7 +146,7 @@ class Video(models.Model):
     duration = models.CharField(max_length=255, blank=True, null=True)
     description = models.CharField(max_length=500, blank=True, null=True)
     category = models.ForeignKey(VideoCategory, related_name='video_category', on_delete=models.CASCADE, verbose_name="Категория ролика")
-    tag = models.ForeignKey(SoundTags, related_name='video_tag', on_delete=models.CASCADE, verbose_name="Тег ролика")
+    tag = models.ForeignKey(VideoTags, related_name='video_tag', on_delete=models.CASCADE, verbose_name="Тег ролика")
     title = models.CharField(max_length=255, blank=True, null=True)
     uri = models.CharField(max_length=255, blank=True, null=True)
     is_deleted = models.BooleanField(verbose_name="Удален",default=False )
