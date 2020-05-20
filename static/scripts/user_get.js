@@ -6,6 +6,17 @@ on('#ajax', 'click', '.avatar_detail', function() {
   open_fullscreen("/gallery/load/avatar_detail/" + pk + "/" + uuid + "/", loader)
 });
 
+on('#ajax', 'click', '.u_video_detail', function() {
+  var uuid, pk, loader;
+  counter = this.getAttribute('data-counter');
+  parent = this.parentElement.parentElement;
+  pk = parent.getAttribute('data-pk');
+  uuid = parent.getAttribute('data-uuid');
+  loader = document.getElementById("video_loader");
+  open_fullscreen("/video/get_video_playlist/" + pk + "/" + uuid + "/", loader)
+  load_playlist(counter);
+});
+
 on('#ajax', 'click', '.fullscreen', function() {
   var container, uuid, pk, loader;
   container = this.parentElement;

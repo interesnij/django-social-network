@@ -27,10 +27,10 @@
               <div class="card-body">
                 {% if object_list %}
 
-                <div class="video_playlist" id="movies_container" data-pk="">
+                <div class="video_playlist" id="movies_container" data-pk="{{ user.get_video_list_id }}" data-pk="{{ user.uuid }}">
                   <div class="row">
                       {% for object in object_list %}
-                      <div class="col-sm-12 col-md-6 col-lg-6 u_video_detail" style="cursor:pointer" data-pk="{{ object.pk }}">
+                      <div class="col-sm-12 col-md-6 col-lg-6 u_video_detail" style="cursor:pointer" data-counter="{{ forloop.counter0 }}">
                           <div class="card rounded-0 border-0 mb-4">
                             <div class="card-body" style="margin-top: 10%;">
                             {% if object.image %}
