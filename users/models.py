@@ -562,14 +562,16 @@ class User(AbstractUser):
     def get_video(self):
         from video.models import VideoList, Video
 
-        video_query = Q(creator_id=self.id, community=None, is_deleted=False)
+        list = VideoList.objects.get(creator_id=self.id, community=None, name="my_first_generic_playlist_number_12345678900000000")
+        video_query = Q(players=list, is_deleted=False)
         video_list = Video.objects.filter(video_query)
         return video_list
 
     def get_last_video(self):
         from video.models import VideoList, Video
 
-        video_query = Q(creator_id=self.id, community=None, is_deleted=False)
+        list = VideoList.objects.get(creator_id=self.id, community=None, name="my_first_generic_playlist_number_12345678900000000")
+        video_query = Q(players=list, is_deleted=False)
         video_list = Video.objects.filter(video_query)
         return video_list[0:2]
 
