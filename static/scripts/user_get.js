@@ -14,7 +14,7 @@ on('#ajax', 'click', '.u_video_detail', function() {
   uuid = parent.getAttribute('data-uuid');
   loader = document.getElementById("video_loader");
   open_fullscreen("/video/get_video_playlist/" + pk + "/" + uuid + "/", loader)
-  //load_playlist(counter);
+  load_playlist(counter);
 });
 
 on('#ajax', 'click', '.fullscreen', function() {
