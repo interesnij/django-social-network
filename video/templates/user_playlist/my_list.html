@@ -11,9 +11,9 @@
 
 <ul id="my_playlist" style="display:none;">
 {% for object in object_list %}
-	<li data-thumb-source="{{ object.image }}"
+	<li data-thumb-source="{{ object.image.url }}"
 			data-video-source="{{ object.uri }}"
-			data-poster-source="{{ object.image }}"
+			data-poster-source="{{ object.image.url }}"
 			data-downloadable="no">
 	<div data-video-short-description="">
 			<div>
