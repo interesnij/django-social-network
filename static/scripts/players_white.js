@@ -282,7 +282,6 @@ on('#ajax', 'click', '.track_remove', function(e) {
 
 
 function load_playlist(counter) {
-if (document.querySelector("#video_player")) {
 video_player = new FWDUVPlayer({
 		//main settings
 		instanceName:"player_white",
@@ -510,4 +509,4 @@ video_player = new FWDUVPlayer({
 		contextMenuItemSelectedColor:"#000",
 		contextMenuItemDisabledColor:"#BBB"
 });
-}}
+}
