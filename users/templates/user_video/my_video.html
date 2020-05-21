@@ -39,8 +39,8 @@
                           {% endif %}
                         </div>
                         <div class="card-body">
-                          <h5 class="text-truncate w-100">{{ object.title }}</h5>          
-                          <span class="small">{{ object.created|naturaltime }} | {{ object.get_count_views }}</span>
+                          <h5 class="text-truncate w-100">{{ object.title }}</h5>
+                          <span class="small">{{ object.created|naturaltime }} | {{ object.all_visits_count }}</span>
                         </div>
                     </div>
                       {% endfor %}
