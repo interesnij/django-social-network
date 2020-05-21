@@ -293,7 +293,7 @@ video_player = new FWDUVPlayer({
 		useVectorIcons:"no",                      // использование векторной графики
 		fillEntireVideoScreen:"no",               // заполнение всего экрана видео-роликом
 		fillEntireposterScreen:"yes",             // заполнение всего экрана постером
-		goFullScreenOnButtonPlay:"yes",            // показывать кнопку включения полноэкранного режима
+		goFullScreenOnButtonPlay:"no",            // показывать кнопку включения полноэкранного режима
 		playsinline:"yes",                        // играет в ряд
 		initializeOnlyWhenVisible:"no",           // инициализировать плеер только тогда, когда он виден
 		youtubeAPIKey:'AIzaSyCgbixU3aIWCkiZ76h_E-XpEGig5mFhnVY', // ключ разработчика для ютуба
@@ -338,7 +338,7 @@ video_player = new FWDUVPlayer({
 		inputColor:"#000000",                     // цвет текста поля ввода
 
 		//playlist settings
-		showPlaylistButtonAndPlaylist:"no",      // показывать кнопку выбора плейлистов и сами плейлисты сверху
+		showPlaylistButtonAndPlaylist:"yes",      // показывать кнопку выбора плейлистов и сами плейлисты сверху
 		playlistPosition:"right",                 // расположение плейлиста
 		showPlaylistByDefault:"yes",              // показать плейлист по умолчанию
 		showPlaylistName:"no",                   // показывать название плейлиста
