@@ -516,5 +516,5 @@ music_player.pause();
 function get_resize_video(){
   video_player.maxWidth = 400;
   video_player.maxHeight = 250;
-  video_player.hideplaylist();
+  video_player.hidePlaylist();
 }
