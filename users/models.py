@@ -572,7 +572,7 @@ class User(AbstractUser):
 
         list = VideoList.objects.get(creator_id=self.id, community=None, name="my_first_generic_playlist_number_12345678900000000")
         video_query = Q(video=list, is_deleted=False, is_public=True)
-        video_list = Video.objects.filter(video_query)
+        video_list = Video.objects.filter(video_query).order_by("-created")
         return video_list[0:2]
 
     def get_music_list_id(self):
