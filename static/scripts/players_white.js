@@ -510,7 +510,7 @@ video_player = new FWDUVPlayer({
     contextMenuItemSelectedColor:"#000",
     contextMenuItemDisabledColor:"#BBB"
 });
-play_video_in_playlist(video_player,counter);
+
 music_player.pause();
 }
  function play_video_in_playlist(video_player, counter){
