@@ -20,7 +20,7 @@ on('#ajax', 'click', '.u_video_detail', function() {
   div.id = video_player_id + "a";
   video_saver.setAttribute('data-video', video_player_id + "a");
   loader.prepend(div);
-  setTimeout(function() { load_video_playlist(video_player_id, counter) }, 1000);
+  setTimeout(function() { load_video_playlist(video_player_id + "a", counter) }, 1000);
 });
 
 on('#ajax', 'click', '.fullscreen', function() {
