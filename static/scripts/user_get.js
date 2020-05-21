@@ -19,7 +19,7 @@ on('#ajax', 'click', '.u_video_detail', function() {
   video_saver.setAttribute('data-video', video_player_id + "a");
   setTimeout(function() {
     load_video_playlist(video_player_id + "a", counter);
-    console.log(fwduvPlayer0)
+    console.log(video_player) 
   }, 1000);
 });
 
