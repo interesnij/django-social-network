@@ -9,8 +9,8 @@ on('#ajax', 'click', '.avatar_detail', function() {
 
 function dragElement(elmnt) {
   var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-  document.getElementById(elmnt.id + "-header").onmousedown = dragMouseDown;
-	document.getElementById(elmnt.id + "-resize").onmousedown = resizeMouseDown;
+  document.getElementById("draggable-header").onmousedown = dragMouseDown;
+	document.getElementById("draggable-resize").onmousedown = resizeMouseDown;
 
   function dragMouseDown(e) {
     e = e || window.event;
