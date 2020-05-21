@@ -24,5 +24,5 @@ class UserVideoPlaylist(ListView):
         return context
 
     def get_queryset(self):
-        video_list = self.list.playlist_too().order_by("-created")
+        video_list = self.list.playlist_too()
         return video_list

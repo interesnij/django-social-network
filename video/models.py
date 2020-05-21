@@ -47,7 +47,7 @@ class VideoList(models.Model):
 
     def playlist_too(self):
         queryset = self.video.all()
-        return queryset
+        return queryset.order_by("-created")
 
     class Meta:
         verbose_name="список: весь, человека или сообщества"
