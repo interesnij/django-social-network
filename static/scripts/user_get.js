@@ -34,6 +34,12 @@ on('body', 'click', '.video_fullscreen_resize', function() {
   document.body.querySelector("#video_btn_big").style.display = "none";
   document.body.querySelector("#video_btn_small").style.display = "block";
 });
+on('body', 'click', '.video_fullscreen_normal', function() {
+  video_window = document.querySelector(".video_fullscreen");
+  video_window.classList.remove("video_fullscreen_resized");
+  document.body.querySelector("#video_btn_small").style.display = "none";
+  document.body.querySelector("#video_btn_big").style.display = "block";
+});
 
 on('#ajax', 'click', '.fullscreen', function() {
   var container, uuid, pk, loader;
