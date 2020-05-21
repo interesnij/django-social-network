@@ -22,7 +22,7 @@ on('#ajax', 'click', '.u_video_detail', function() {
     video_player.addListener(FWDUVPlayer.READY, onReady);
     function onReady(){
     console.log("video player ready");
-
+    video_player.hidePlaylist();
     setTimeout(function() {video_player.playVideo(counter);video_player.play()}, 1000);
     }
   }, 500);
