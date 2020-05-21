@@ -4209,7 +4209,7 @@ cursor: pointer;
     .video_fullscreen{left: 5%;width: 90%;padding-left: 5%;padding-right: 5%;}
 }
 @media screen and (min-width: 621px) {
-    .video_fullscreen_resized{height:270px;width:360px;padding: 0;top: 50px;}
+    .video_fullscreen_resized{float:right;height:270px;width:360px;padding: 0;top: 50px;}
 }
 
 .photo_fullscreen_hide,
