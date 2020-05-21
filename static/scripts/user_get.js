@@ -32,7 +32,7 @@ on('body', 'click', '.video_fullscreen_resize', function() {
   video_window.classList.add("video_fullscreen_resized");
   document.body.querySelector("#video_btn_big").style.display = "none";
   document.body.querySelector("#video_btn_small").style.display = "block";
-  get_fullscreen()
+  get_resize_video()
 });
 on('body', 'click', '.video_fullscreen_normal', function() {
   video_window = document.querySelector(".video_fullscreen");

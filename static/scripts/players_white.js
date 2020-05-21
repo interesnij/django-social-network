@@ -513,6 +513,7 @@ video_player = new FWDUVPlayer({
 music_player.pause();
 }
 
-function get_fullscreen(){
-  video_player.goFullScreen()
+function get_resize_video(){
+  video_player.maxWidth = 500;
+  video_player.maxHeight = 250;
 }
