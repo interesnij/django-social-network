@@ -281,7 +281,7 @@ on('#ajax', 'click', '.track_remove', function(e) {
 
 
 
-function load_playlist(counter) {
+function load_video_playlist(counter) {
 video_player = new FWDUVPlayer({
 		//main settings
 		instanceName:"player_white",
@@ -293,8 +293,8 @@ video_player = new FWDUVPlayer({
 		useVectorIcons:"no",                      // использование векторной графики
 		fillEntireVideoScreen:"no",               // заполнение всего экрана видео-роликом
 		fillEntireposterScreen:"yes",             // заполнение всего экрана постером
-		goFullScreenOnButtonPlay:"no",            // показывать кнопку включения полноэкранного режима
-		playsinline:"no",                        // играет в ряд
+		goFullScreenOnButtonPlay:"yes",            // показывать кнопку включения полноэкранного режима
+		playsinline:"yes",                        // играет в ряд
 		initializeOnlyWhenVisible:"yes",           // инициализировать плеер только тогда, когда он виден
 		youtubeAPIKey:'AIzaSyCgbixU3aIWCkiZ76h_E-XpEGig5mFhnVY', // ключ разработчика для ютуба
 		useHEXColorsForSkin:"no",                 // использование hex кодировки для скина
@@ -305,11 +305,11 @@ video_player = new FWDUVPlayer({
 		showPreloader:"yes",                      // gjrfpsdfnm ghtkjflth ghb pfuheprt gktthf
 		preloaderBackgroundColor:"#000000",       // цвет фона прелоадера
 		preloaderFillColor:"#FFFFFF",             // цвет прелоадера
-		addKeyboardSupport:"yes",                 // использовать поддержку клавиатуры
+		addKeyboardSupport:"no",                 // использовать поддержку клавиатуры
 		autoScale:"yes",                          // автоматическое масштабирование
 		stopVideoWhenPlayComplete:"no",           // остановить плеер после проигрывания последнего ролика
 		playAfterVideoStop:"yes",                 // воспроизведение после остановки видео
-		autoPlay:"no",                            // автоматический старт проигрывания
+		autoPlay:"yes",                            // автоматический старт проигрывания
 		loop:"no",                                // повтор видео сразу
 		shuffle:"no",                             // перемешивание видео сразу
 		showErrorInfo:"no",                       // показывать информацию об ошибках
@@ -325,7 +325,7 @@ video_player = new FWDUVPlayer({
 
 		//playlists/categories settings
 		showPlaylistsSearchInput:"no",            // показывать поле поиска плейлиста
-		usePlaylistsSelectBox:"yes",              // использовать выбор плейлистов в окне сверху
+		usePlaylistsSelectBox:"no",              // использовать выбор плейлистов в окне сверху
 		showPlaylistsByDefault:"no",              // показать плейлист по умолчанию
 		thumbnailSelectedType:"opacity",          // анимация выбранного плейлиста в окне сверху
 		startAtPlaylist:0,                        // проигрывать плейлист номер ...
@@ -341,8 +341,8 @@ video_player = new FWDUVPlayer({
 		showPlaylistButtonAndPlaylist:"yes",      // показывать кнопку выбора плейлистов и сами плейлисты сверху
 		playlistPosition:"right",                 // расположение плейлиста
 		showPlaylistByDefault:"yes",              // показать плейлист по умолчанию
-		showPlaylistName:"yes",                   // показывать название плейлиста
-		showSearchInput:"yes",                    // показывать поле поиска
+		showPlaylistName:"no",                   // показывать название плейлиста
+		showSearchInput:"no",                    // показывать поле поиска
 		showLoopButton:"yes",                     // показывать кнопку повтора
 		showShuffleButton:"yes",                  // показывать кнопку перемешивания
 		showPlaylistOnFullScreen:"no",            // показывать плейлист в режиме полного экрана
@@ -396,7 +396,7 @@ video_player = new FWDUVPlayer({
 		showEmbedButton:"yes",                    // показывать кнопку получения ссылки ролика и фрейма для вставки на другие сайты
 		showChromecastButton:"no",                // показывать кнопку подкастов
 		showFullScreenButton:"yes",               // показывать кнопку полноэкранного режима
-		disableVideoScrubber:"no",                // выключить ползунок переключения времени видео
+		disableVideoScrubber:"yes",                // выключить ползунок переключения времени видео
 		showScrubberWhenControllerIsHidden:"yes", // показывать ползунок времени воспроизведенного ролика при скрытом контроллере
 		showDefaultControllerForVimeo:"no",       // показывать контроллер vimeo
 		repeatBackground:"yes",                   // повтор бекгроунда
@@ -426,7 +426,7 @@ video_player = new FWDUVPlayer({
 		subtitlesOffLabel:"Субтитры откл.",       // надпись, когда субтитры отключены
 
 		//popup add windows
-		showPopupAdsCloseButton:"yes",            // показать кнопку закрытия окна подставки
+		showPopupAdsCloseButton:"no",            // показать кнопку закрытия окна подставки
 
 		//окно размещения и информации
 		embedAndInfoWindowCloseButtonMargins:15,  // отступ кнопки закрытия
@@ -500,7 +500,7 @@ video_player = new FWDUVPlayer({
 		thumbnailsPreviewLabelBackgroundColor:"#666", // цвет фона названия минатюры
 		thumbnailsPreviewLabelFontColor:"#FFF",
 		// context menu
-		showContextmenu:'yes',
+		showContextmenu:'no',
 		showScriptDeveloper:"no",
 		contextMenuBackgroundColor:"#ebebeb",
 		contextMenuBorderColor:"#ebebeb",
