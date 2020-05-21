@@ -28,6 +28,13 @@ on('#ajax', 'click', '.u_video_detail', function() {
   }, 500);
 });
 
+on('#ajax', 'click', '.video_fullscreen_resize', function() {
+  video_window = document.querySelector(".video_fullscreen");
+  video_window.classList.add("video_fullscreen_resized");
+  ducument.body.getElementById("video_btn_big").style.display = "none";
+  ducument.body.getElementById("video_btn_small").style.display = "block";
+});
+
 on('#ajax', 'click', '.fullscreen', function() {
   var container, uuid, pk, loader;
   container = this.parentElement;
