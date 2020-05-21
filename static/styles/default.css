@@ -4233,7 +4233,6 @@ cursor: pointer;
 .video_fullscreen_hide,
 .video_fullscreen_resize{
   cursor: pointer;
-  float: right;
   margin-bottom: 10px;
   margin-right: 10px
 }
