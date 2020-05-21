@@ -511,6 +511,6 @@ video_player = new FWDUVPlayer({
     contextMenuItemDisabledColor:"#BBB"
 });
 
-video_player.playVideo(counter);
+video_player.play();
 music_player.pause();
 }
