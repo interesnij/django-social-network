@@ -4235,6 +4235,7 @@ cursor: pointer;
   cursor: pointer;
   float: right;
   margin-bottom: 10px;
+  margin-right: 10px
 }
 
 .svg_info {width:22px;}
