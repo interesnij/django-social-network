@@ -511,17 +511,6 @@ video_player = new FWDUVPlayer({
     contextMenuItemDisabledColor:"#BBB"
 });
 
-FWDUVPUtils.onReady(function(){
-    video_player.addListener(FWDUVPlayer.READY, video_onReady);
-    video_player.addListener(FWDUVPlayer.PLAY, video_onPlay);
-});
-
-video_player.playVideo(counter)
+video_player.playVideo(counter);
+music_player.pause();
 }
-
-function video_onReady(){console.log("Видео плеер готов");}
-
-function video_onPlay(){
-    console.log("Воспроизводится видео №: " + video_player.getVideoId());
-    music_player.pause();
-};
