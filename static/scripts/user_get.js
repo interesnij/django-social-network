@@ -18,7 +18,7 @@ on('#ajax', 'click', '.u_video_detail', function() {
   video_saver = document.body.querySelector("#video_id_saver");
   video_player_id = video_saver.getAttribute('data-video');
   div.id = video_player_id + "a";
-  video_saver.setAttribute(video_player_id + "a");
+  video_saver.setAttribute('data-video', video_player_id + "a");
   loader.prepend(div);
   setTimeout(function() { load_video_playlist(counter) }, 1000);
 });
