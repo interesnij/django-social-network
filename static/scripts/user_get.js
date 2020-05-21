@@ -23,9 +23,9 @@ on('#ajax', 'click', '.u_video_detail', function() {
     function onReady(){
     console.log("video player ready");
 
-    setTimeout(function() {video_player.playVideo(counter)}, 5000);
+    setTimeout(function() {video_player.playVideo(counter)}, 1000);
     }
-  }, 1000);
+  }, 500);
 });
 
 on('#ajax', 'click', '.fullscreen', function() {

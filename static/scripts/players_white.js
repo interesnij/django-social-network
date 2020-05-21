@@ -510,12 +510,5 @@ video_player = new FWDUVPlayer({
     contextMenuItemSelectedColor:"#000",
     contextMenuItemDisabledColor:"#BBB"
 });
-console.log(video_player.getPosterSource())
 music_player.pause();
-}
-
-
-function video_onPlay(){
-    console.log("Воспроизводится видео №: " + video_player.getVideoId());
-    music_player.pause();
 }
