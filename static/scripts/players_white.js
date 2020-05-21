@@ -513,7 +513,7 @@ video_player = new FWDUVPlayer({
 play_video_in_playlist(video_player,counter);
 music_player.pause();
 }
- play_video_in_playlist(video_player, counter){
+ function play_video_in_playlist(video_player, counter){
    video_player.playVideo(counter);
  }
 
