@@ -22,7 +22,8 @@ on('#ajax', 'click', '.u_video_detail', function() {
     video_player.addListener(FWDUVPlayer.READY, onReady);
     function onReady(){
     console.log("video player ready");
-    video_player.play();
+    video_player.pause();
+    video_player.goFullScreen();
     }
   }, 1000);
 });
