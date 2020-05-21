@@ -22,7 +22,7 @@ music_player = new FWDMSP({
 		rightClickContextMenu:"developer",
 		useDeepLinking:"no",									// использовать глубокие ссылки - защита от перехвата. Не будет работать с souncloud
 		rightClickContextMenu:"no",           // показ контекстног меню по щелчку правой кнопкой мыши
-		addKeyboardSupport:"yes",             // добавить поддержку клавиатуры
+		addKeyboardSupport:"no",             // добавить поддержку клавиатуры
 		animate:"yes",												// фнимация
 		autoPlay:"no",												// автостарт плеера
 		loop:"no",														// повтор песни
@@ -295,7 +295,7 @@ video_player = new FWDUVPlayer({
 		fillEntireposterScreen:"yes",             // заполнение всего экрана постером
 		goFullScreenOnButtonPlay:"yes",            // показывать кнопку включения полноэкранного режима
 		playsinline:"yes",                        // играет в ряд
-		initializeOnlyWhenVisible:"yes",           // инициализировать плеер только тогда, когда он виден
+		initializeOnlyWhenVisible:"no",           // инициализировать плеер только тогда, когда он виден
 		youtubeAPIKey:'AIzaSyCgbixU3aIWCkiZ76h_E-XpEGig5mFhnVY', // ключ разработчика для ютуба
 		useHEXColorsForSkin:"no",                 // использование hex кодировки для скина
 		normalHEXButtonsColor:"#FF0000",          // цвет кнопки
@@ -391,12 +391,12 @@ video_player = new FWDUVPlayer({
 		showVolumeButton:"yes",                   // показать кнопку громкости
 		showTime:"yes",                           // показать время воспроизведения
 		showQualityButton:"yes",                  // показать время выбора качества видео
-		showInfoButton:"yes",                     // показывать кнопку информации ролика
+		showInfoButton:"no",                     // показывать кнопку информации ролика
 		showShareButton:"no",                     // показывать кнопку расшаривания ролика
-		showEmbedButton:"yes",                    // показывать кнопку получения ссылки ролика и фрейма для вставки на другие сайты
+		showEmbedButton:"no",                    // показывать кнопку получения ссылки ролика и фрейма для вставки на другие сайты
 		showChromecastButton:"no",                // показывать кнопку подкастов
 		showFullScreenButton:"yes",               // показывать кнопку полноэкранного режима
-		disableVideoScrubber:"yes",                // выключить ползунок переключения времени видео
+		disableVideoScrubber:"no",                // выключить ползунок переключения времени видео
 		showScrubberWhenControllerIsHidden:"yes", // показывать ползунок времени воспроизведенного ролика при скрытом контроллере
 		showDefaultControllerForVimeo:"no",       // показывать контроллер vimeo
 		repeatBackground:"yes",                   // повтор бекгроунда
