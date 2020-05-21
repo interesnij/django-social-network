@@ -512,10 +512,9 @@ video_player = new FWDUVPlayer({
 });
 console.log(video_player.getPosterSource())
 music_player.pause();
+video_player.playNext();
 }
- function play_video_in_playlist(video_player, counter){
-   video_player.playVideo(counter);
- }
+
 
 function video_onPlay(){
     console.log("Воспроизводится видео №: " + video_player.getVideoId());
