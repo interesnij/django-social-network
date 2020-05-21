@@ -512,12 +512,13 @@ video_player = new FWDUVPlayer({
 });
 video_player.playVideo(counter);
 music_player.pause();
-}
 
 FWDUVPUtils.onReady(function(){
     video_player.addListener(FWDUVPlayer.READY, video_onReady);
     video_player.addListener(FWDUVPlayer.PLAY, video_onPlay);
 });
+}
+
 
 function video_onPlay(){
     console.log("Воспроизводится видео №: " + video_player.getVideoId());
