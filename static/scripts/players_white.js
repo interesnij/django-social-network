@@ -516,12 +516,12 @@ FWDUVPUtils.onReady(function(){
     video_player.addListener(FWDUVPlayer.PLAY, video_onPlay);
 });
 
+video_player.playVideo(counter)
+}
+
 function video_onReady(){console.log("Видео плеер готов");}
 
 function video_onPlay(){
     console.log("Воспроизводится видео №: " + video_player.getVideoId());
     music_player.pause();
 };
-
-video_player.playVideo(counter)
-}
