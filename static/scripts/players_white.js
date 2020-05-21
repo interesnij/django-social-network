@@ -523,5 +523,5 @@ function video_onPlay(){
     music_player.pause();
 };
 
-playVideo(counter)
+video_player.playVideo(counter)
 }
