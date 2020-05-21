@@ -310,7 +310,7 @@ video_player = new FWDUVPlayer({
     autoScale:"yes",                          // автоматическое масштабирование
     stopVideoWhenPlayComplete:"no",           // остановить плеер после проигрывания последнего ролика
     playAfterVideoStop:"yes",                 // воспроизведение после остановки видео
-    autoPlay:"yes",                            // автоматический старт проигрывания
+    autoPlay:"no",                            // автоматический старт проигрывания
     loop:"no",                                // повтор видео сразу
     shuffle:"no",                             // перемешивание видео сразу
     showErrorInfo:"no",                       // показывать информацию об ошибках
@@ -510,4 +510,18 @@ video_player = new FWDUVPlayer({
     contextMenuItemSelectedColor:"#000",
     contextMenuItemDisabledColor:"#BBB"
 });
+
+FWDUVPUtils.onReady(function(){
+    video_player.addListener(FWDUVPlayer.READY, video_onReady);
+    video_player.addListener(FWDUVPlayer.PLAY, video_onPlay);
+});
+
+function video_onReady(){console.log("Видео плеер готов");}
+
+function video_onPlay(){
+    console.log("Воспроизводится видео №: " + video_player.getVideoId());
+    music_player.pause();
+};
+
+playVideo(counter)
 }
