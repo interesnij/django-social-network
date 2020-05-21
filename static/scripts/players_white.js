@@ -281,7 +281,8 @@ on('#ajax', 'click', '.track_remove', function(e) {
 
 
 function load_video_playlist(counter) {
-  var player_id = document.body.querySelector("#video_id_saver").getAttrubute("data-video");
+  video_saver = document.body.querySelector("#video_id_saver");
+  player_id = video_saver.getAttrubute("data-video");
 video_player = new FWDUVPlayer({
     //main settings
     instanceName:"player_white",

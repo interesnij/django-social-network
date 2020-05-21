@@ -15,9 +15,10 @@ on('#ajax', 'click', '.u_video_detail', function() {
   loader = document.getElementById("video_loader");
   open_fullscreen("/video/get_video_playlist/" + pk + "/" + uuid + "/", loader);
   div = document.createElement("div");
-  video_player_id = document.body.querySelector("#video_id_saver").getAttribute('data-video');
+  video_saver = document.body.querySelector("#video_id_saver");
+  video_player_id = video_saver.getAttribute('data-video');
   div.id = video_player_id + "a";
-  video_player_id +="a";
+  video_saver.setAttribute(video_player_id + "a");
   loader.prepend(div);
   setTimeout(function() { load_video_playlist(counter) }, 1000);
 });
