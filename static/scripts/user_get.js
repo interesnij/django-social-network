@@ -6,6 +6,61 @@ on('#ajax', 'click', '.avatar_detail', function() {
   open_fullscreen("/gallery/load/avatar_detail/" + pk + "/" + uuid + "/", loader)
 });
 
+
+function dragElement(elmnt) {
+  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+  document.getElementById(elmnt.id + "-header").onmousedown = dragMouseDown;
+	document.getElementById(elmnt.id + "-resize").onmousedown = resizeMouseDown;
+
+  function dragMouseDown(e) {
+    e = e || window.event;
+    e.preventDefault();
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    document.onmouseup = closeDragElement;
+    document.onmousemove = elementDrag;
+  }
+
+	function resizeMouseDown(e) {
+    e = e || window.event;
+    e.preventDefault();
+    pos3 = 0;
+    pos4 = 0;
+    document.onmouseup = closeDragElement;
+    document.onmousemove = elementResize;
+  }
+
+	function elementResize(e) {
+		e = e || window.event;
+    e.preventDefault();
+		var content = document.getElementById("draggable");
+		var width = content.offsetWidth;
+		var height = content.offsetHeight;
+
+		pos1 = (e.clientX - width) - content.offsetLeft;
+    pos2 = (e.clientY - height) - content.offsetTop;
+
+		content.style.width = width + pos1 + 'px';
+		content.style.height = height + pos2 + 'px';
+	}
+
+  function elementDrag(e) {
+    e = e || window.event;
+    e.preventDefault();
+    pos1 = pos3 - e.clientX;
+    pos2 = pos4 - e.clientY;
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+    elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+  }
+
+  function closeDragElement() {
+    document.onmouseup = null;
+    document.onmousemove = null;
+  }
+}
+
 on('#ajax', 'click', '.u_video_detail', function() {
   var uuid, pk, loader;
   counter = this.getAttribute('data-counter');
@@ -28,11 +83,13 @@ on('#ajax', 'click', '.u_video_detail', function() {
 });
 
 on('body', 'click', '.video_fullscreen_resize', function() {
+  this.classList.add("video_draggable");
   video_window = document.querySelector(".video_fullscreen");
   video_window.classList.add("video_fullscreen_resized");
   document.body.querySelector("#video_btn_big").style.display = "none";
   document.body.querySelector("#video_btn_small").style.display = "block";
-  get_resize_screen()
+  get_resize_screen()ж
+
 });
 on('body', 'click', '.video_fullscreen_normal', function() {
   video_window = document.querySelector(".video_fullscreen");
