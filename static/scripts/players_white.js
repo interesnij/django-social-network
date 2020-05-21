@@ -512,7 +512,6 @@ video_player = new FWDUVPlayer({
 });
 console.log(video_player.getPosterSource())
 music_player.pause();
-video_player.playNext();
 }
 
 

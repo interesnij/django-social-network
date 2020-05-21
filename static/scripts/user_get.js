@@ -21,6 +21,7 @@ on('#ajax', 'click', '.u_video_detail', function() {
     load_video_playlist(video_player_id + "a", counter);
 
   }, 1000);
+  video_player.playNext();
 });
 
 on('#ajax', 'click', '.fullscreen', function() {
