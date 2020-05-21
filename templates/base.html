@@ -18,8 +18,8 @@
     function elementInViewport(el){var bounds = el.getBoundingClientRect();return ((bounds.top + bounds.height > 0) && (window.innerHeight - bounds.top > 0));}
   </script>
 </head>
-  <body class="fixed-header" data-video="first_player">
-    <div class="wrapper">
+  <body class="fixed-header">
+    <div class="wrapper" id="video_id_saver" data-video="first_player">
         <div class="col-md-1"></div>
         <div class="col-md-10">
             {% include "base_block/navbar.html" %}
