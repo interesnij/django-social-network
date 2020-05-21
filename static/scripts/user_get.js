@@ -83,9 +83,8 @@ on('#ajax', 'click', '.u_video_detail', function() {
 });
 
 on('body', 'click', '.video_fullscreen_resize', function() {
-  this.classList.add("video_draggable");
   video_window = document.querySelector(".video_fullscreen");
-  video_window.classList.add("video_fullscreen_resized");
+  video_window.classList.add("video_fullscreen_resized", "video_draggable");
   document.body.querySelector(".video_btn_big").style.display = "none";
   document.body.querySelector(".video_btn_small").style.display = "block";
   get_resize_screen();
