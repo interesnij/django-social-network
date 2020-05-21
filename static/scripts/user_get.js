@@ -20,6 +20,7 @@ on('#ajax', 'click', '.u_video_detail', function() {
   setTimeout(function() {
     load_video_playlist(video_player_id + "a", counter);
     play_video_in_playlist(video_player,counter);
+    console.log(video_player.getPosterSource())
   }, 1000);
 });
 
