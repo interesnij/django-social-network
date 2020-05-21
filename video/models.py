@@ -198,6 +198,11 @@ class VideoComment(models.Model):
         verbose_name="комментарий к ролику"
         verbose_name_plural="комментарии к ролику"
 
+    def all_visits_count(self):
+        from stst.models import VideoNumbers
+
+        return VideoNumbers.objects.filter(video=self.pk).values('pk').count()
+
     def __str__(self):
         return "{0}/{1}".format(self.commenter.get_full_name(), self.text[:10])
 
