@@ -510,9 +510,8 @@ video_player = new FWDUVPlayer({
     contextMenuItemSelectedColor:"#000",
     contextMenuItemDisabledColor:"#BBB"
 });
-video_player.playVideo(counter);
+//video_player.playVideo(counter);
 music_player.pause();
-console.log(video_player, music_player)
 }
 
 
