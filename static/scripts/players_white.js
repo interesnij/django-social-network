@@ -338,7 +338,7 @@ video_player = new FWDUVPlayer({
 		inputColor:"#000000",                     // цвет текста поля ввода
 
 		//playlist settings
-		showPlaylistButtonAndPlaylist:"yes",      // показывать кнопку выбора плейлистов и сами плейлисты сверху
+		showPlaylistButtonAndPlaylist:"no",      // показывать кнопку выбора плейлистов и сами плейлисты сверху
 		playlistPosition:"right",                 // расположение плейлиста
 		showPlaylistByDefault:"yes",              // показать плейлист по умолчанию
 		showPlaylistName:"no",                   // показывать название плейлиста
