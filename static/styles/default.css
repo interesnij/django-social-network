@@ -4217,7 +4217,6 @@ cursor: pointer;
 .article_fullscreen_hide,
 .good_fullscreen_hide,
 .stat_fullscreen_hide,
-.video_fullscreen_hide,
 .votes_fullscreen_hide {cursor: pointer;float: right;}
 
 .prev_item { position: absolute; right: -10%; top: 160px; cursor: pointer; }
@@ -4230,6 +4229,12 @@ cursor: pointer;
 
 .hide_image {
     display: none;
+}
+.video_fullscreen_hide,
+.video_fullscreen_resize{
+  cursor: pointer;
+  float: right;
+  margin-bottom: 10px;
 }
 
 .svg_info {width:22px;}
