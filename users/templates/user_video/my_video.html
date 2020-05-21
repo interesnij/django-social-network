@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load liked_user get_key %}
+{% load humanize %}
 {% block title %}Мои видеоролики{% endblock %}
 {% block content %}
 
@@ -30,20 +30,22 @@
                 <div class="video_playlist" id="movies_container" data-pk="{{ user.get_video_list_id }}" data-uuid="{{ user.uuid }}">
                   <div class="row">
                       {% for object in object_list %}
-                      <div class="col-sm-12 col-md-6 col-lg-6 u_video_detail" style="cursor:pointer" data-counter="{{ forloop.counter0 }}">
-                          <div class="card rounded-0 border-0 mb-4">
-                            <div class="card-body" style="margin-top: 10%;">
-                            {% if object.image %}
-                              <img style="width: 100%;object-fit: cover;height: 200px;" class="lazyload" data-src="{{ object.image.url }}" alt="">
-                            {% else %}
-                              <svg class="svg_default" style="width: 100%;object-fit: cover;height: 200px;" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
-                            {% endif %}
-                            </div>
-                            <div class="card-footer border-top py-2">
-                              {{ object.description }}
-                            </div>
-                          </div>
-                      </div>
+                      <div class="col-12 col-md-6 u_video_detail" style="cursor:pointer" data-counter="{{ forloop.counter0 }}">
+                        <div class="blog-header-img">
+                          {% if object.image %}
+                            <img style="width: 100%;object-fit: cover;height: 200px;" class="lazyload" data-src="{{ object.image.url }}" alt="">
+                          {% else %}
+                            <svg class="svg_default" style="width: 100%;object-fit: cover;height: 200px;" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                          {% endif %}
+                        </div>
+                        <div class="card-body">
+                            <h5 class="text-truncate w-100">{{ object.title }}</h5>
+                            <p class="content-color-secondary">{{ object.description }}</p>
+                        </div>
+                        <div class="card-footer border-top no-gutters content-color-secondary small">
+                          {{ object.created|naturaltime }} | {{ object.get_count_views }}
+                        </div>
+                    </div>
                       {% endfor %}
                   </div>
                 </div>
