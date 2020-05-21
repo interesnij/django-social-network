@@ -280,13 +280,13 @@ on('#ajax', 'click', '.track_remove', function(e) {
 });
 
 
-function load_video_playlist(counter) {
+function load_video_playlist(video_saver_id, counter) {
   video_saver = document.body.querySelector("#video_id_saver");
-  player_id = video_saver.getAttrubute("data-video");
+
 video_player = new FWDUVPlayer({
     //main settings
     instanceName:"player_white",
-    parentId: player_id,
+    parentId: video_saver_id,
     playlistsId:"video_playlists",
     mainFolderPath:"/static",
     skinPath:"images/video_white/",
