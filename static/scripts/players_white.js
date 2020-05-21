@@ -512,3 +512,7 @@ video_player = new FWDUVPlayer({
 });
 music_player.pause();
 }
+
+function get_fullscreen(){
+  video_player.goFullScreen()
+}
