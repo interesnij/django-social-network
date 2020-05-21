@@ -21,9 +21,9 @@ on('#ajax', 'click', '.u_video_detail', function() {
     load_video_playlist(video_player_id + "a", counter);
     video_player.addListener(FWDUVPlayer.READY, onReady);
     function onReady(){
-    console.log("player ready");
+    console.log("video player ready");
+    video_player.play();
     }
-    video_player.playNext();
   }, 1000);
 });
 
