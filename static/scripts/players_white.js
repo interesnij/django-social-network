@@ -514,12 +514,12 @@ music_player.pause();
 }
 
 function get_resize_screen(){
-  video_player.maxWidth = 350;
-  video_player.maxHeight = 250;
+  video_player.maxWidth = 360;
+  video_player.maxHeight = 270;
   video_player.showPlaylist();
 }
 function get_normal_screen(){
   video_player.maxWidth = 1170;
   video_player.maxHeight = 659;
-  video_player.showPlaylist();
+  video_player.hidePlaylist();
 }
