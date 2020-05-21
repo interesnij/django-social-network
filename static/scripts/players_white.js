@@ -517,7 +517,6 @@ function get_resize_screen(){
   video_player.maxWidth = 360;
   video_player.maxHeight = 270;
   video_player.showPlaylist();
-  dragElement(document.querySelector(".video_draggable"));
 }
 function get_normal_screen(){
   video_player.maxWidth = 1170;
