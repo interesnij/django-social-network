@@ -9,8 +9,8 @@ on('#ajax', 'click', '.avatar_detail', function() {
 
 function dragElement(elmnt) {
   var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-  document.getElementById("draggable-header").onmousedown = dragMouseDown;
-	document.getElementById("draggable-resize").onmousedown = resizeMouseDown;
+  document.querySelector("#draggable-header").onmousedown = dragMouseDown;
+	document.querySelector("#draggable-resize").onmousedown = resizeMouseDown;
 
   function dragMouseDown(e) {
     e = e || window.event;
@@ -33,7 +33,7 @@ function dragElement(elmnt) {
 	function elementResize(e) {
 		e = e || window.event;
     e.preventDefault();
-		var content = document.getElementById("draggable");
+		var content = document.querySelector(".draggable");
 		var width = content.offsetWidth;
 		var height = content.offsetHeight;
 
@@ -84,11 +84,11 @@ on('#ajax', 'click', '.u_video_detail', function() {
 
 on('body', 'click', '.video_fullscreen_resize', function() {
   video_window = document.querySelector(".video_fullscreen");
-  video_window.classList.add("video_fullscreen_resized", "video_draggable");
+  video_window.classList.add("video_fullscreen_resized", "draggable");
   document.body.querySelector(".video_btn_big").style.display = "none";
   document.body.querySelector(".video_btn_small").style.display = "block";
   get_resize_screen();
-  dragElement(document.querySelector(".video_draggable"));
+  dragElement(document.querySelector(".draggable"));
 
 });
 on('body', 'click', '.video_fullscreen_normal', function() {
