@@ -14,8 +14,8 @@ on('#ajax', 'click', '.u_video_detail', function() {
   uuid = parent.getAttribute('data-uuid');
   loader = document.getElementById("video_loader");
   open_fullscreen("/video/get_video_playlist/" + pk + "/" + uuid + "/", loader);
-  div = ducument.createElement("div");
-  video_player_id = ducument.body.getAttribute('data-video');
+  div = document.createElement("div");
+  video_player_id = document.body.getAttribute('data-video');
   div.id = video_player_id + "a";
   loader.prepend(div);
   setTimeout(function() { load_video_playlist(counter) }, 1000);
