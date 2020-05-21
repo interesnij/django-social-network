@@ -286,7 +286,7 @@ function load_video_playlist(video_saver_id, counter) {
 video_player = new FWDUVPlayer({
     //main settings
     instanceName:video_saver_id,
-    parentId: video_saver_id,
+    parentId: "video_player",
     playlistsId:"video_playlists",
     mainFolderPath:"/static",
     skinPath:"images/video_white/",

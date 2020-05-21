@@ -16,11 +16,11 @@ on('#ajax', 'click', '.u_video_detail', function() {
   open_fullscreen("/video/get_video_playlist/" + pk + "/" + uuid + "/", loader);
   video_saver = document.body.querySelector("#video_id_saver");
   video_player_id = video_saver.getAttribute('data-video');
-  div = document.createElement("div");
-  div.id = video_player_id + "a";
-  div.innerHTML = "srgerg gt5et";
+  //div = document.createElement("div");
+  //div.id = video_player_id + "a";
+  //div.innerHTML = "srgerg gt5et";
   video_saver.setAttribute('data-video', video_player_id + "a");
-  loader.appendChild(div);
+  //loader.appendChild(div);
   setTimeout(function() { load_video_playlist(video_player_id + "a", counter) }, 1000);
 });
 
