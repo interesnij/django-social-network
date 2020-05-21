@@ -514,7 +514,7 @@ play_video_in_playlist(video_player,counter);
 music_player.pause();
 }
  function play_video_in_playlist(video_player, counter){
-   video_player.playVideo(counter);
+   FWDUVPlayer.playVideo(counter);
  }
 
 function video_onPlay(){
