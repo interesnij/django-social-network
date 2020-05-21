@@ -4206,7 +4206,7 @@ cursor: pointer;
 }
 
 @media screen and (min-width: 621px) {
-    .video_fullscreen{left: 10%;width: 80%;padding-left: 5%;padding-right: 5%;}
+    .video_fullscreen{left: 5%;width: 90%;padding-left: 5%;padding-right: 5%;}
 }
 
 .photo_fullscreen_hide,
