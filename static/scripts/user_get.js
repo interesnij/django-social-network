@@ -20,7 +20,7 @@ on('#ajax', 'click', '.u_video_detail', function() {
   div.id = video_player_id + "a";
   div.innerHTML = "srgerg gt5et";
   video_saver.setAttribute('data-video', video_player_id + "a");
-  loader.prepend(div);
+  loader.append(div);
   setTimeout(function() { load_video_playlist(video_player_id + "a", counter) }, 1000);
 });
 
