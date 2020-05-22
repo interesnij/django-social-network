@@ -104,7 +104,7 @@ class UserMusic(ListView):
 
 
 class UserVideo(ListView):
-    template_name = none
+    template_name = None
     paginate_by = 30
 
     def get(self,request,*args,**kwargs):
