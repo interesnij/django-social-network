@@ -6,8 +6,9 @@
                 <h5 class="content-color-primary mb-0">Создание видео-ролика</h5>
             </div>
             <div class="card-body">
+
               <div class="row">
-                <div class="col-lg-6 col-md-6">
+                <div class="col-lg-6 col-md-6"
                   <div class="form-group">
                     <label>Название</label>
                     <input type="text" name="title" class="form-control" id="id_title">
@@ -16,12 +17,13 @@
                     {{ form_post.description.label }}
                     {{ form_post.description }}
                   </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6">
                   <div class="form-group">
-                    {{ form_post.category.label }}
+                    <label>Категория</label>
                     {{ form_post.category }}
                   </div>
-                </div>
-                <div class="col-lg-6 col-md-6">
                   <div class="form-group">
                     {{ form_post.tag.label }}
                     {{ form_post.tag }}
@@ -32,14 +34,15 @@
                     {{ form_post.album }}
                   </div>
                   {% endif %}
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-6 col-md-6">
                   <div class="form-group">
                     {{ form_post.image.label }}
                     {{ form_post.image }}
                   </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-lg-6 col-md-6">
                 </div>
                 <div class="col-lg-6 col-md-6">
                   <div class="form-group">
@@ -62,6 +65,7 @@
                   </div>
                 </div>
             </div>
+
             <div class="card-footer">
                 <button type="button" class="btn btn-success float-right" id="create_video_btn" data-pk="{{ user.pk }}">Создать</button>
             </div>
