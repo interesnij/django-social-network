@@ -15,13 +15,19 @@
                     {{ form_post.description }}
                   </div>
                   <div class="form-group">
+                    {{ form_post.category.label }}
+                    {{ form_post.category }}
+                  </div>
+                  <div class="form-group">
                     {{ form_post.tag.label }}
                     {{ form_post.tag }}
                   </div>
+                  {% if user.my_user_video_album_exists %}
                   <div class="form-group">
                     {{ form_post.album.label }}
                     {{ form_post.album }}
                   </div>
+                  {% endif %}
                   <div class="form-group">
                     {{ form_post.image.label }}
                     {{ form_post.image }}
