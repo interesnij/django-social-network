@@ -30,7 +30,7 @@ class UserVideoList(ListView):
 		return super(UserVideoList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context = super(AllPossibleUsersList,self).get_context_data(**kwargs)
+		context = super(UserVideoList,self).get_context_data(**kwargs)
 		context['user'] = self.user
 		context['album'] = self.album
 		return context
