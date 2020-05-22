@@ -16,8 +16,6 @@ class UserVideoListCreate(View):
         return context
 
     def post(self,request,*args,**kwargs):
-        from posts.forms import PostForm
-
         form_post = AlbumForm(request.POST)
         user = User.objects.get(pk=self.kwargs["pk"])
 
@@ -39,8 +37,6 @@ class UserVideoCreate(View):
         return context
 
     def post(self,request,*args,**kwargs):
-        from posts.forms import VideoForm
-
         form_post = VideoForm(request.POST, request.FILES)
         user = User.objects.get(pk=self.kwargs["pk"])
 
