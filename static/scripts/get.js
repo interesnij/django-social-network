@@ -23,7 +23,7 @@ on('#ajax', 'click', '.stat_fullscreen_hide', function() {document.querySelector
 on('body', 'click', '.video_fullscreen_hide', function() {document.querySelector(".video_fullscreen").style.display = "none";document.getElementById("video_loader").innerHTML=""});
 on('body', 'click', '.small_video_fullscreen_hide', function() {
   //document.querySelector(".video_fullscreen").style.display = "none";
-  get_normal_screen();
+  get_resize_screen();
   //document.getElementById("video_loader").innerHTML=""
 });
 
