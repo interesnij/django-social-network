@@ -22,11 +22,10 @@ on('#ajax', 'click', '.good_fullscreen_hide', function() {document.querySelector
 on('#ajax', 'click', '.stat_fullscreen_hide', function() {document.querySelector(".stat_fullscreen").style.display = "none";document.getElementById("stat_loader").innerHTML=""});
 on('body', 'click', '.video_fullscreen_hide', function() {document.querySelector(".video_fullscreen").style.display = "none";document.getElementById("video_loader").innerHTML=""});
 on('body', 'click', '.small_video_fullscreen_hide', function() {
-  //document.querySelector(".video_fullscreen").style.display = "none";
-  video_player.maxWidth = 1170;
-  video_player.maxHeight = 659;
-  video_player.showPlaylist();
-  //document.getElementById("video_loader").innerHTML=""
+  document.querySelector(".video_fullscreen").style.display = "none";
+  video_window = document.querySelector(".video_fullscreen");
+  video_window.classList.remove("video_fullscreen_resized", "draggable");
+  document.getElementById("video_loader").innerHTML=""
 });
 
 // END FULLSCREENS //
