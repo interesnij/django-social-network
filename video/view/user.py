@@ -10,6 +10,10 @@ class UserBasicVideoList(ListView):
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.template_name = self.user.get_template_user(folder="user_basic_list/", template="list.html", request=request)
+        if self.user == request.user:
+            self.video_list = self.user.get_my_video()
+        else:
+            self.video_list = self.user.get_video()
         return super(UserBasicVideoList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -19,7 +23,7 @@ class UserBasicVideoList(ListView):
         return context
 
     def get_queryset(self):
-        video_list = self.list.playlist_too()
+        video_list = self.video_list
         return video_list
 
 
@@ -30,6 +34,10 @@ class UserVideoList(ListView):
         self.user = User.objects.get(uuid=self.kwargs["uuid"])
         self.album = VideoAlbum.objects.get(pk=self.kwargs["pk"])
         self.template_name = self.user.get_template_user(folder="user_album_list/", template="list.html", request=request)
+        if self.user == request.user:
+			self.video_list = self.album.get_my_queryset()
+		else:
+			self.video_list = self.album.get_queryset()
         return super(UserVideoList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -39,5 +47,5 @@ class UserVideoList(ListView):
         return context
 
     def get_queryset(self):
-        video_list = self.album.playlist_too()
+        video_list = self.video_list
         return video_list
