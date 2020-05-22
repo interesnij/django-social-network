@@ -126,10 +126,15 @@ on('#ajax', 'click', '#create_video_list_btn', function() {
 
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
-    elem = link_.responseText;
-    new_post = document.createElement("span");
-    new_post.innerHTML = elem;
-
+    rtr = document.getElementById('ajax');
+    elem_ = document.createElement('span');
+    elem_.innerHTML = link_.responseText;
+    ajax = elem_.querySelector("#reload_block");
+    rtr.innerHTML = ajax.innerHTML;
+    document.title = elem_.querySelector('title').innerHTML;
+    //window.history.pushState({route: url}, "network", url);
+    window.scrollTo(0,0);
+    Index.initLink();
   }};
 
   link_.send(form_data);

@@ -1,9 +1,10 @@
 from django.views.generic.base import TemplateView
 from users.models import User
 from video.models import VideoAlbum
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseBadRequest
 from django.views import View
 from video.forms import AlbumForm, VideoForm
+from django.shortcuts import render_to_response
 
 
 class UserVideoListCreate(View):
@@ -24,7 +25,9 @@ class UserVideoListCreate(View):
             new_album = form_post.save(commit=False)
             new_album.creator = request.user
             new_album.save()
-            return HttpResponse("")
+            return render_to_response('user_video_list/my_list.html',{'album': new_album, 'user': request.user, 'request': request})
+        else:
+            return HttpResponseBadRequest()
 
 
 class UserVideoCreate(View):
