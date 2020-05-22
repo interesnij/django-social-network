@@ -36,7 +36,7 @@ class UserVideoList(ListView):
 		return context
 
 	def get_queryset(self):
-		video_list = self.list.playlist_too()
+		video_list = self.album.playlist_too()
 		return video_list
 
 
