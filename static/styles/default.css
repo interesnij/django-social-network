@@ -4179,11 +4179,10 @@ cursor: pointer;
 
 .photo_fullscreen,
 .votes_fullscreen,
-.add_fullscreen,
+.create_fullscreen,
 .community_fullscreen,
 .article_fullscreen,
 .item_fullscreen,
-.good_add_fullscreen,
 .stat_fullscreen,
 .video_fullscreen,
 .good_fullscreen { position: fixed;top: 0;left: 0;width: 100%;height: 100%;z-index: 20;padding: 5%;display: block;overflow: auto; }
@@ -4195,13 +4194,12 @@ cursor: pointer;
 
 @media screen and (min-width: 621px) {
     .photo_fullscreen,
-    .good_add_fullscreen,
+    .create_fullscreen,
     .good_fullscreen,
     .item_fullscreen,
     .article_fullscreen,
     .community_fullscreen,
     .stat_fullscreen,
-    .add_fullscreen,
     .votes_fullscreen {left: 20%;width: 60%;padding-left: 5%;padding-right: 5%;}
 }
 
@@ -4213,7 +4211,7 @@ cursor: pointer;
 }
 
 .photo_fullscreen_hide,
-.add_fullscreen_hide,
+.create_fullscreen_hide,
 .community_fullscreen_hide,
 .community_manage_fullscreen_hide,
 .item_fullscreen_hide,

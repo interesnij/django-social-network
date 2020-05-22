@@ -1,7 +1,7 @@
 on('#ajax', 'click', '.user_video_list_create_window', function(e) {
   e.preventDefault();
   pk = this.getAttribute("data-pk");
-  loader = document.getElementById("stat_loader");
+  loader = document.getElementById("create_loader");
   open_fullscreen("/video/user/create_list_window/" + pk + "/", loader)
 });
 
