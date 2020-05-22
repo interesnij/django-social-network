@@ -43,7 +43,6 @@ class UserVideoCreate(View):
         if form_post.is_valid() and request.user == user:
             new_video = form_post.save(commit=False)
             new_video.creator = request.user
-            new_video.pk = Video.get_pk()
             new_video.save()
             return render_to_response('video_new/video.html',{'object': new_video, 'request': request})
         else:
