@@ -13,10 +13,15 @@ on('#ajax', 'click', '.u_video_detail', function() {
     video_player.addListener(FWDUVPlayer.READY, onReady);
     function onReady(){
     console.log("video player ready");
+    video_player.addListener(FWDUVPlayer.PLAY, video_onPlay);
     setTimeout(function() {video_player.playVideo(counter);video_player.play()}, 1000);
     }
   }, 500);
 });
+function video_onPlay(){
+    console.log("Воспроизводится ролик № : " + video_player.getVideoId());
+    music_player.pause()
+  }
 on('#ajax', 'click', '.u_video_list_detail', function() {
   var uuid, pk, loader;
   counter = this.getAttribute('data-counter');
@@ -53,7 +58,7 @@ on('body', 'click', '.video_fullscreen_normal', function() {
   video_window.classList.remove("video_fullscreen_resized", "draggable");
   document.body.querySelector(".video_btn_small").style.display = "none";
   document.body.querySelector(".video_btn_big").style.display = "block";
-  get_normal_screen() 
+  get_normal_screen()
 });
 
 on('#ajax', 'click', '.user_video_list_create', function() {

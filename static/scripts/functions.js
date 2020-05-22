@@ -433,7 +433,6 @@ video_player = new FWDUVPlayer({
     contextMenuItemSelectedColor:"#000",
     contextMenuItemDisabledColor:"#BBB"
 });
-music_player.pause();
 }
 
 function get_resize_screen(){

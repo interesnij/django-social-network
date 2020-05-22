@@ -43,17 +43,6 @@ on('#ajax', 'click', '.music_list_item', function() {
   }
 });
 
-
-on('#ajax', 'click', '#load_1', function(e) {
-  music_player.loadPlaylist(0);
-})
-on('#ajax', 'click', '#load_2', function(e) {
-  music_player.loadPlaylist(1);
-})
-on('#ajax', 'click', '#load_3', function(e) {
-  music_player.loadPlaylist(2);
-})
-
 on('#ajax', 'click', '.track_add', function(e) {
   block = this.parentElement;
   pk = block.parentElement.getAttribute("data-pk");
