@@ -68,13 +68,6 @@ class VideoTags(models.Model):
         verbose_name="тег"
         verbose_name_plural="теги"
 
-class UserTempVideoList(models.Model):
-    id = models.AutoField(primary_key=True)
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name='user_of_video', db_index=False, on_delete=models.CASCADE, verbose_name="Зритель")
-    list = models.OneToOneField(VideoList, related_name='list_video', null=True, blank=True, on_delete=models.CASCADE, verbose_name="Связь на плейлист человека или сообщества")
-    tag = models.OneToOneField(VideoTags, related_name='tag_video', null=True, blank=True, on_delete=models.CASCADE, verbose_name="Связь на тег")
-    category = models.OneToOneField(VideoCategory, related_name='category_video', null=True, blank=True, on_delete=models.CASCADE, verbose_name="Связь на категорию")
-
 
 class VideoAlbum(models.Model):
     community = models.ForeignKey('communities.Community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
