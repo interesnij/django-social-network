@@ -72,5 +72,5 @@ class UserCreateVideoWindow(TemplateView):
 
     def get_context_data(self,**kwargs):
         context = super(UserCreateVideoWindow,self).get_context_data(**kwargs)
-        context['post_form'] = VideoForm()
+        context['form_post'] = VideoForm()
         return context
