@@ -57,4 +57,4 @@ class UserCreateListWindow(TemplateView):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.template_name = self.user.get_settings_template(folder="user_create_list/", template="create.html", request=request)
 
-        return super(UserVideoList,self).get(request,*args,**kwargs)
+        return super(UserCreateListWindow,self).get(request,*args,**kwargs)
