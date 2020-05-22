@@ -139,7 +139,7 @@ on('#ajax', 'click', '#create_video_list_btn', function() {
   link_.send(form_data);
 });
 
-on('body', 'click', '#image_holder', function() {
+on('body', 'click', '#video_holder', function() {
 entrou = false;
 ggg = this;
 img = this.previousElementSibling.querySelector("#id_image");
