@@ -73,7 +73,6 @@ class VideoAlbum(models.Model):
     community = models.ForeignKey('communities.Community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
     uuid = models.UUIDField(default=uuid.uuid4, db_index=True,verbose_name="uuid")
     title = models.CharField(max_length=250, verbose_name="Название")
-    description = models.TextField(blank=True, null=True, verbose_name="Описание")
     cover_photo = ProcessedImageField(format='JPEG', options={'quality': 90}, upload_to=upload_to_video_directory, processors=[ResizeToFit(width=500, upscale=False)], blank=True, null=True)
     is_public = models.BooleanField(default=True, verbose_name="Виден другим")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")

@@ -95,3 +95,42 @@ on('body', 'click', '#create_video_album_btn', function() {
     }};
   link.send(form_data);
 })
+
+
+on('#ajax', 'click', '#create_video_btn', function() {
+  form_data = new FormData(document.querySelector(".video_create"));
+  form_post = document.querySelector("#create_video_form");
+  pk = this.getAttribute("data-pk");
+
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'POST', "/video/progs/create_video/" + pk + "/", true );
+
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    elem = link_.responseText;
+    new_post = document.createElement("span");
+    new_post.innerHTML = elem;
+
+  }};
+
+  link_.send(form_data);
+});
+
+on('#ajax', 'click', '#create_video_list_btn', function() {
+  form_data = new FormData(document.querySelector("#video_list_create"));
+  form_post = document.querySelector("#create_video_list_form");
+  pk = this.getAttribute("data-pk");
+
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'POST', "/video/progs/create_list/" + pk + "/", true );
+
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    elem = link_.responseText;
+    new_post = document.createElement("span");
+    new_post.innerHTML = elem;
+
+  }};
+
+  link_.send(form_data);
+});
