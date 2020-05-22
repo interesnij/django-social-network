@@ -1,3 +1,11 @@
+on('#ajax', 'click', '.user_video_list_create_window', function(e) {
+  e.preventDefault();
+  parent = this.parentElement.parentElement.parentElement.parentElement.parentElement;
+  uuid = parent.getAttribute("item-uuid");
+  loader = document.getElementById("stat_loader");
+  open_fullscreen("/video/user/create_list_window/" + pk + "/", loader)
+});
+
 on('#ajax', 'click', '.u_video_detail', function() {
   var uuid, pk, loader;
   counter = this.getAttribute('data-counter');
@@ -59,14 +67,6 @@ on('body', 'click', '.video_fullscreen_normal', function() {
   document.body.querySelector(".video_btn_small").style.display = "none";
   document.body.querySelector(".video_btn_big").style.display = "block";
   get_normal_screen()
-});
-
-on('#ajax', 'click', '.user_video_list_create', function() {
-  var parent, pk, uuid, loader
-  parent = this.parentElement.parentElement.parentElement.parentElement.parentElement;
-  uuid = parent.getAttribute("item-uuid");
-  loader = document.getElementById("stat_loader");
-  open_fullscreen("/stat/item/" + uuid + "/", loader)
 });
 
 on('#ajax', 'click', '.user_video_list_create', function() {
