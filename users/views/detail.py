@@ -114,7 +114,6 @@ class UserVideo(ListView):
             self.video_list = self.user.get_my_video()
         else:
             self.video_list = self.user.get_video()
-        else:
 		return super(UserVideo,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
