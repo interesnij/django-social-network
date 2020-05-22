@@ -22,9 +22,9 @@ on('#ajax', 'click', '.good_fullscreen_hide', function() {document.querySelector
 on('#ajax', 'click', '.stat_fullscreen_hide', function() {document.querySelector(".stat_fullscreen").style.display = "none";document.getElementById("stat_loader").innerHTML=""});
 on('body', 'click', '.video_fullscreen_hide', function() {document.querySelector(".video_fullscreen").style.display = "none";document.getElementById("video_loader").innerHTML=""});
 on('body', 'click', '.small_video_fullscreen_hide', function() {
-  document.querySelector(".video_fullscreen").style.display = "none";
+  //document.querySelector(".video_fullscreen").style.display = "none";
   get_normal_screen();
-  document.getElementById("video_loader").innerHTML=""
+  //document.getElementById("video_loader").innerHTML=""
 });
 
 // END FULLSCREENS //
