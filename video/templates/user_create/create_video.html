@@ -1,31 +1,13 @@
-<style>
-  select{
-    background-color: #fafafc;
-    border-color: rgba(0, 0, 0, 0.2);
-    color: #000000;
-    display: block;
-    width: 100%;
-    height: calc(2.25rem + 2px);
-    padding: 0.375rem 0.75rem;
-    font-size: 1rem;
-    line-height: 1.5;
-    color: #495057;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid #ced4da;
-    border-radius: 0.25rem;
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-}
-</style>
 
-<div class="col-md-8 col-lg-6 col-xl-5 mx-auto">
     <form action="" id="create_video_form">
       {% csrf_token %}
         <div class="card">
             <div class="card-header border-bottom">
-                <h5 class="content-color-primary mb-0">Создание списка видео</h5>
+                <h5 class="content-color-primary mb-0">Создание видео-ролика</h5>
             </div>
             <div class="card-body">
+              <div class="row">
+                <div class="col-lg-6 col-md-6">
                   <div class="form-group">
                     <label>Название</label>
                     <input type="text" name="title" class="form-control" id="id_title">
@@ -38,6 +20,8 @@
                     {{ form_post.category.label }}
                     {{ form_post.category }}
                   </div>
+                </div>
+                <div class="col-lg-6 col-md-6">
                   <div class="form-group">
                     {{ form_post.tag.label }}
                     {{ form_post.tag }}
@@ -52,6 +36,12 @@
                     {{ form_post.image.label }}
                     {{ form_post.image }}
                   </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-6 col-md-6">
+                </div>
+                <div class="col-lg-6 col-md-6">
                   <div class="form-group">
                     <div class="custom-control custom-checkbox">
                       <input type="checkbox" name="is_public" class="custom-control-input" checked id="id_is_public">
@@ -70,10 +60,10 @@
                       <label class="custom-control-label" for="id_comments_enabled">Комментарии включены</label>
                     </div>
                   </div>
+                </div>
             </div>
             <div class="card-footer">
                 <button type="button" class="btn btn-success float-right" id="create_video_btn" data-pk="{{ user.pk }}">Создать</button>
             </div>
         </div>
     </form>
-</div>
