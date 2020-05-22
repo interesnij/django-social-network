@@ -121,7 +121,7 @@ class VideoAlbum(models.Model):
 
 
 class Video(models.Model):
-    id = models.IntegerField(primary_key=True)
+    id = models.BigIntegerField(unique=True, primary_key=True)
     image = ProcessedImageField(format='JPEG', options={'quality': 90}, upload_to=upload_to_video_directory, processors=[ResizeToFit(width=500, upscale=False)], verbose_name="Обложка")
     created = models.DateTimeField(default=timezone.now)
     duration = models.CharField(max_length=255, blank=True, null=True)
