@@ -2,6 +2,7 @@ from django.views.generic.base import TemplateView
 from users.models import User
 from video.models import VideoAlbum
 from django.views.generic import ListView
+from video.forms import VideoForm
 
 
 class UserBasicVideoList(ListView):
@@ -68,3 +69,8 @@ class UserCreateVideoWindow(TemplateView):
         self.template_name = self.user.get_settings_template(folder="user_create/", template="create_video.html", request=request)
 
         return super(UserCreateVideoWindow,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(UserBasicVideoList,self).get_context_data(**kwargs)
+        context['post_form'] = VideoForm()
+        return context
