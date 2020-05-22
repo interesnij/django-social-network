@@ -573,7 +573,7 @@ class User(AbstractUser):
         return music_list[0:5]
 
     def get_video_count(self):
-        from video.models import VideoList, Video
+        from video.models import Video
 
         video_query = Q(creator_id=self.id, community=None, is_deleted=False)
         count = Video.objects.filter(video_query).values("pk")
