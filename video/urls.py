@@ -4,5 +4,6 @@ from video.views import AllVideoView, UserVideoPlaylist
 
 urlpatterns = [
     url(r'^$', AllVideoView.as_view(), name='all_video'),
-    url(r'^get_video_playlist/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', UserVideoPlaylist.as_view()),
+    url(r'^user_basic_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', UserBasicVideoList.as_view()),
+    url(r'^user_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', UserVideoList.as_view()),
 ]

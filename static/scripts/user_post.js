@@ -1,26 +1,3 @@
-function vote_reload(link_1, link_2, _like_block, _dislike_block){
-  like_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  like_link.open( 'GET', link_1, true );
-  like_link.onreadystatechange = function () {
-  if ( like_link.readyState == 4 && like_link.status == 200 ) {
-    span_1 = document.createElement("span");
-    span_1.innerHTML = like_link.responseText;
-    _like_block.innerHTML = "";
-    _like_block.append(span_1);
-  }}
-  like_link.send( null );
-
-  dislike_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  dislike_link.open( 'GET', link_2, true );
-  dislike_link.onreadystatechange = function () {
-  if ( dislike_link.readyState == 4 && like_link.status == 200 ) {
-    span_2 = document.createElement("span");
-    span_2.innerHTML = dislike_link.responseText;
-    _dislike_block.innerHTML = "";
-    _dislike_block.append(span_2);
-  }}
-  dislike_link.send( null );
-}
 
 on('#ajax', 'click', '#form_post_btn', function() {
   form_data = new FormData(document.forms.new_post);
