@@ -3,7 +3,7 @@ from users.models import User
 from video.models import VideoAlbum
 from django.http import HttpResponse
 from django.views import View
-from video.forms import AlbumForm
+from video.forms import AlbumForm, VideoForm
 
 
 class UserVideoListCreate(View):
@@ -18,6 +18,27 @@ class UserVideoListCreate(View):
         from posts.forms import PostForm
 
         form_post = AlbumForm(request.POST)
+        user = User.objects.get(pk=self.kwargs["pk"])
+
+        if form_post.is_valid() and request.user == user:
+            new_album = form_post.save(commit=False)
+            new_album.creator = request.user
+            new_album.save()
+            return HttpResponse("")
+
+
+class UserVideoCreate(View):
+    form_post = None
+
+    def get_context_data(self,**kwargs):
+        context = super(UserVideoCreate,self).get_context_data(**kwargs)
+        context["form_post"] = VideoForm()
+        return context
+
+    def post(self,request,*args,**kwargs):
+        from posts.forms import VideoForm
+
+        form_post = VideoForm(request.POST, request.FILES)
         user = User.objects.get(pk=self.kwargs["pk"])
 
         if form_post.is_valid() and request.user == user:

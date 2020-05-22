@@ -4,6 +4,12 @@ on('#ajax', 'click', '.user_video_list_create_window', function(e) {
   loader = document.getElementById("create_loader");
   open_fullscreen("/video/user/create_list_window/" + pk + "/", loader)
 });
+on('#ajax', 'click', '.user_video_create_window', function(e) {
+  e.preventDefault();
+  pk = this.getAttribute("data-pk");
+  loader = document.getElementById("create_loader");
+  open_fullscreen("/video/user/create_video_window/" + pk + "/", loader)
+});
 
 on('#ajax', 'click', '.u_video_detail', function() {
   var uuid, pk, loader;
