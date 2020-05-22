@@ -11,17 +11,20 @@
                     <input type="text" name="title" class="form-control" id="id_title">
                   </div>
                   <div class="form-group">
-                    <label>Описание</label>
-                    <input type="text" name="description" class="form-control" id="id_description">
+                    {{ form_post.description.label }}
+                    {{ form_post.description }}
                   </div>
                   <div class="form-group">
+                    {{ form_post.tag.label }}
                     {{ form_post.tag }}
                   </div>
                   <div class="form-group">
+                    {{ form_post.album.label }}
                     {{ form_post.album }}
                   </div>
                   <div class="form-group">
-                    {{ form_post.album }}
+                    {{ form_post.image.label }}
+                    {{ form_post.image }}
                   </div>
                   <div class="form-group">
                     <div class="custom-control custom-checkbox">
