@@ -25,6 +25,7 @@ on('body', 'click', '.small_video_fullscreen_hide', function() {
   //document.querySelector(".video_fullscreen").style.display = "none";
   video_player.maxWidth = 1170;
   video_player.maxHeight = 659;
+  video_player.showPlaylist();
   //document.getElementById("video_loader").innerHTML=""
 });
 
