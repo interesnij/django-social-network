@@ -1,7 +1,6 @@
 on('#ajax', 'click', '.user_video_list_create_window', function(e) {
   e.preventDefault();
-  parent = this.parentElement.parentElement.parentElement.parentElement.parentElement;
-  uuid = parent.getAttribute("item-uuid");
+  pk = this.getAttribute("data-pk");
   loader = document.getElementById("stat_loader");
   open_fullscreen("/video/user/create_list_window/" + pk + "/", loader)
 });
