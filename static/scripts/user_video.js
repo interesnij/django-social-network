@@ -103,8 +103,7 @@ on('body', 'click', '#create_video_album_btn', function() {
 
 
 on('#ajax', 'click', '#create_video_btn', function() {
-  form_data = new FormData(document.querySelector(".video_create"));
-  form_post = document.querySelector("#create_video_form");
+  form_data = new FormData(document.querySelector("#create_video_form"));
   pk = this.getAttribute("data-pk");
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -123,7 +122,6 @@ on('#ajax', 'click', '#create_video_btn', function() {
 
 on('#ajax', 'click', '#create_video_list_btn', function() {
   form_data = new FormData(document.querySelector("#video_list_create"));
-  form_post = document.querySelector("#create_video_list_form");
   pk = this.getAttribute("data-pk");
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
