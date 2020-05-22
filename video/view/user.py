@@ -35,9 +35,9 @@ class UserVideoList(ListView):
         self.album = VideoAlbum.objects.get(pk=self.kwargs["pk"])
         self.template_name = self.user.get_template_user(folder="user_album_list/", template="list.html", request=request)
         if self.user == request.user:
-			self.video_list = self.album.get_my_queryset()
-		else:
-			self.video_list = self.album.get_queryset()
+            self.video_list = self.album.get_my_queryset()
+        else:
+            self.video_list = self.album.get_queryset()
         return super(UserVideoList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
