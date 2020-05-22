@@ -29,6 +29,7 @@ on('body', 'click', '.small_video_fullscreen_hide', function() {
   document.body.querySelector(".video_btn_big").style.display = "block";
   document.getElementById("video_loader").innerHTML=""
 });
+on('body', 'click', '.create_fullscreen_hide', function() {document.querySelector(".create_fullscreen").style.display = "none";document.getElementById("create_loader").innerHTML=""});
 
 // END FULLSCREENS //
 //--------------------------------------------------------------------//
