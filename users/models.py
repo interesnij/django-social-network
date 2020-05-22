@@ -490,6 +490,7 @@ class User(AbstractUser):
         albums_query.add(exclude_reported_and_approved_albums_query, Q.AND)
         albums = Album.objects.filter(albums_query)
         return albums
+
     def get_my_albums(self):
         from gallery.models import Album
         from moderation.models import ModeratedObject
@@ -498,6 +499,25 @@ class User(AbstractUser):
         exclude_reported_and_approved_albums_query = ~Q(moderated_object__status=ModeratedObject.STATUS_APPROVED)
         albums_query.add(exclude_reported_and_approved_albums_query, Q.AND)
         albums = Album.objects.filter(albums_query)
+        return albums
+
+    def get_video_albums(self): 
+        from video.models import VideoAlbum
+
+        albums_query = Q(creator_id=self.id, is_deleted=False, is_public=True, community=None)
+        albums = VideoAlbum.objects.filter(albums_query)
+        return albums
+
+    def my_user_video_album_exists(self):
+        return self.video_user_creator.filter(creator_id=self.id).exists()
+    def user_video_album_exists(self):
+        return self.video_user_creator.filter(creator_id=self.id, is_public=True).exists()
+
+    def get_my_video_albums(self):
+        from video.models import VideoAlbum
+
+        albums_query = Q(creator_id=self.id, is_deleted=False, community=None)
+        albums = VideoAlbum.objects.filter(albums_query)
         return albums
 
     def get_goods(self):

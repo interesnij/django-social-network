@@ -6,6 +6,7 @@ from main.models import Item
 
 class UserVisitCommunities(ListView):
 	template_name = None
+	paginate_by = 30
 
 	def get(self,request,*args,**kwargs):
 		self.template_name = request.user.get_settings_template(folder="user_community/", template="visits.html", request=request)
@@ -14,6 +15,29 @@ class UserVisitCommunities(ListView):
 	def get_queryset(self):
 		communities = self.request.user.get_visited_communities()
 		return communities
+
+
+class UserVideoList(ListView):
+	template_name = None
+	paginate_by = 30
+
+	def get(self,request,*args,**kwargs):
+		from video.models import VideoAlbum
+
+		self.template_name = request.user.get_template_user(folder="user_video_list/", template="list.html", request=request)
+		self.user = User.objects.get(pk=self.kwargs["pk"])
+		self.album = VideoAlbum.objects.get(uuid=self.kwargs["uuid"])
+		return super(UserVideoList,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(AllPossibleUsersList,self).get_context_data(**kwargs)
+		context['user'] = self.user
+		context['album'] = self.album
+		return context
+
+	def get_queryset(self):
+		video_list = self.list.playlist_too()
+		return video_list
 
 
 class AllPossibleUsersList(ListView):

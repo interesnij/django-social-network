@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load humanize %}
-{% block title %}Мои видеоролики{% endblock %}
+{% block title %}{{ album.title }} : Мои видеоролики{% endblock %}
 {% block content %}
 
 <div class="container mt-3 main-container">
@@ -18,8 +18,8 @@
               <div class="card-header">
                 <div class="media">
                   <div class="media-body">
-                      <h5 class="mt-1">Мои видеоролики
-                        <small class="content-color-secondary float-right mr-2 mt-1">Всего {{ user.get_video_count }}</small>
+                      <h5 class="mt-1">{{ album.title }} : Мои видеоролики
+                        <small class="content-color-secondary float-right mr-2 mt-1">Всего {{ album.get_playlist_count }}</small>
                       </h5>
                   </div>
                 </div>
@@ -27,10 +27,10 @@
               <div class="card-body">
                 {% if object_list %}
 
-                <div class="video_playlist" id="movies_container" data-pk="{{ user.get_video_list_id }}" data-uuid="{{ user.uuid }}">
+                <div class="video_playlist" id="movies_container" data-pk="{{ album.pk }}" data-uuid="{{ user.uuid }}">
                   <div class="row">
                       {% for object in object_list %}
-                      <div class="col-12 col-md-6 u_video_detail" style="cursor:pointer" data-counter="{{ forloop.counter0 }}">
+                      <div class="col-12 col-md-6 u_video_list_detail" style="cursor:pointer" data-counter="{{ forloop.counter0 }}">
                         <div class="blog-header-img">
                           {% if object.image %}
                             <img style="width: 100%;object-fit: cover;height: 200px;" class="lazyload" data-src="{{ object.image.url }}" alt="">
@@ -52,7 +52,7 @@
                   <div class="card-body" style="margin-top: 10%;">
                   <svg class='svg_default thumb_big' fill='currentColor' viewBox='0 0 24 24'><path fill='none' d='M0 0h24v24H0z'/><path d='M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z'/></svg>
                   </div>
-                  <h6 style="margin: 20px;text-align: center;">У Вас пока нет видео. <a href="" style="text-decoration:underline;" class="ajax">Перейдите в видео каталог</a> и выбирайте из сотен тысяч роликов</h6>
+                  <h6 style="margin: 20px;text-align: center;">У списке пока нет видео. <a href="" style="text-decoration:underline;" class="ajax">Перейдите в видео каталог</a> и выбирайте из сотен тысяч роликов</h6>
                 </div>
                 {% endif %}
               </div>
@@ -82,7 +82,6 @@
                 </div>
               </div>
           </div>
-          {% if user.my_user_video_album_exists %}
           <div class="card">
             <div class="card-header">
               <div class="media">
@@ -103,7 +102,6 @@
               </div>
             </div>
           </div>
-          {% endif %}
         </div>
     </div>
 </div>

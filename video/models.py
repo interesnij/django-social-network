@@ -49,6 +49,10 @@ class VideoList(models.Model):
         queryset = self.video.all()
         return queryset
 
+    def get_playlist_count(self):
+        count = self.video.all().values("pk").count()
+        return count
+
     class Meta:
         verbose_name="список: весь, человека или сообщества"
         verbose_name_plural="списки: весь, человека или сообщества"
@@ -133,11 +137,9 @@ class VideoAlbum(models.Model):
     def count_video(self):
         return self.video_album_1.filter(is_deleted=False).count()
 
-    def album_is_generic(self):
-        if self.is_generic:
-            return True
-        else:
-            return False
+    def playlist_too(self):
+        queryset = self.video_album.all()
+        return queryset
 
 
 class Video(models.Model):
