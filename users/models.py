@@ -582,8 +582,14 @@ class User(AbstractUser):
     def get_video(self):
         from video.models import Video
 
-        list = VideoList.objects.get(creator_id=self.id, community=None, name="my_first_generic_playlist_number_12345678900000000")
         video_query = Q(creator_id=self.id, community=None, is_deleted=False, is_public=True)
+        video_list = Video.objects.filter(video_query).order_by("-created")
+        return video_list
+
+    def get_my_video(self):
+        from video.models import Video
+
+        video_query = Q(creator_id=self.id, community=None, is_deleted=False)
         video_list = Video.objects.filter(video_query).order_by("-created")
         return video_list
 
@@ -599,7 +605,7 @@ class User(AbstractUser):
 
         list = SoundList.objects.get(creator_id=self.id, community=None, name="my_first_generic_playlist_number_12345678900000000")
         return list.pk
-        
+
     def my_playlist_too(self):
         from music.models import SoundList, UserTempSoundList, SoundTags, SoundGenres
 
