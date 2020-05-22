@@ -6,19 +6,16 @@
                 <h5 class="content-color-primary mb-0">Создание списка видео</h5>
             </div>
             <div class="card-body">
-                    <div class="form-group ">
-                        <label>Название</label>
-                        <input type="text" name="title" class="form-control" id="id_title">
-                    </div>
-                <div class="row ">
+                  <div class="form-group ">
+                    <label>Название</label>
+                    <input type="text" name="title" class="form-control" id="id_title">
+                  </div>
                   <div class="form-group ">
                     <div class="custom-control custom-checkbox">
                       <input type="checkbox" name="is_public" class="custom-control-input" cheked id="id_is_public">
                       <label class="custom-control-label" for="id_is_public">Виден всем</label>
                     </div>
                   </div>
-                </div>
-
             </div>
             <div class="card-footer">
                 <button type="button" class="btn btn-success float-right" id="create_video_list_btn" data-pk="{{ user.pk }}">Создать</button>

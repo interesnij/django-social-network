@@ -111,6 +111,14 @@ class VideoAlbum(models.Model):
         queryset = self.video_album.filter(is_public=True)
         return queryset
 
+    def get_video_count(self):
+        count = self.video_album.filter(is_public=True).values("pk").count()
+        return count
+
+    def get_my_video_count(self):
+        count = self.video_album.all().values("pk").count()
+        return count
+
 
 class Video(models.Model):
     id = models.IntegerField(primary_key=True)
