@@ -8,7 +8,12 @@ on('#ajax', 'click', '.user_video_create_window', function(e) {
   e.preventDefault();
   pk = this.getAttribute("data-pk");
   loader = document.getElementById("create_loader");
-  open_fullscreen("/video/user/create_video_window/" + pk + "/", loader)
+  open_fullscreen("/video/user/create_video_window/" + pk + "/", loader);
+  var list = document.querySelectorAll('select');
+  var count = list.length;
+  for(i=0; i<count; i++) {
+    list[i].classList.add("form-control")
+  }
 });
 
 on('#ajax', 'click', '.u_video_detail', function() {
