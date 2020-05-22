@@ -1,5 +1,5 @@
-from django.conf.urls import url, include
-from video.view.progs import UserVideoListCreate, UserVideoList
+from django.conf.urls import url
+from video.view.progs import UserVideoListCreate
 
 
 urlpatterns = [
