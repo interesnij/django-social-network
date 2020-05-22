@@ -6,7 +6,7 @@ class AlbumForm(forms.ModelForm):
 
 	class Meta:
 		model = VideoAlbum
-		fields = ['title', 'description', 'is_public']
+		fields = ['title', 'is_public']
 
 
 class VideoForm(forms.ModelForm):
