@@ -1,5 +1,4 @@
 @media print {
-
     *,
     ::before,
     ::after {
@@ -4147,4 +4146,304 @@ button.bg-dark:focus {
 
 .align-self-stretch {
     align-self: stretch !important
+}
+
+.fwduvp-playlist .fwdicon-shuffle:before{
+	top: -2px;
+	font-size: 25px;
+}
+
+.fwduvp-playlist .fwdicon-loop:before{
+	font-size: 20px;
+	top: 0;
+	left: 6px;
+}
+
+.fwduvp-playlist .fwdicon-FF-left:before,
+.fwduvp-playlist .fwdicon-FF-right:before{
+	top: 0;
+}
+
+
+.UVPLargePlayButtonSelectedState{
+	position: absolute;
+	font-size: 30px !important;
+	width: 86px !important;
+	height:59px !important;
+	cursor: pointer;
+	background-color: #1f1f1f;
+	color:#FFF !important;
+}
+
+.UVPLargePlayButtonNormalState .fwdicon-play:before,
+.UVPLargePlayButtonSelectedState .fwdicon-play:before{
+	position: relative;
+	top: 2px;
+	left: 2px;
+}
+
+.UVPCloseButtonNormalState,
+.UVPCategoriesNextAndPrevNormalState{
+	position:absolute;
+	font-size:16px;
+	width:40px;
+	height:39px;
+	cursor: pointer;
+	background-color:#1f1f1f;
+	color:#FFF;
+}
+
+.UVPCloseButtonSelectedState,
+.UVPCategoriesNextAndPrevSelectedState{
+	position:absolute;
+	font-size:16px;
+	width:40px;
+	height:39px;
+	cursor: pointer;
+	background-color:#1f1f1f;
+	color:#F00;
+}
+
+
+.fwduvp-categories-background .fwdicon-FF-right:before{
+	position: relative;
+	left: 2px;
+}
+
+.fwduvp-categories-background .fwdicon-close:before{
+	position: relative;
+	top: 2px;
+}
+
+.UVPCategoriesNextAndPrevNormalState{
+	background-color:#000000;
+	color:#666666;
+}
+
+.UVPCategoriesNextAndPrevSelectedState{
+	background-color:#000000;
+	color:#FFFFFF;
+}
+
+.fwduvp .arrow{
+	left:-4px !important;
+}
+
+.fwduvp p{
+	line-height: 1.8;
+}
+
+.UVP-tooltip-text{
+	padding: 5px 8px 5px !important;
+}
+
+
+.fwduvp-ytb-title{
+	line-height:16px !important;
+	margin: 2px 0 3px!important;
+	padding: 3px 0 0 1px !important;
+	transition: all .25s ease-out !important;
+
+}
+
+.fwduvp-ytb-p{
+	font-size: 13px !important;
+    line-height: 15px !important;
+	margin:0px !important;
+}
+
+
+.fwduvp-playlist-name,
+.fwduvp-cb-selector{
+	font: 500 14px Roboto, Arial !important;
+}
+
+.fwduvp-cb-button{
+	font: 400 14px Roboto, Arial !important;
+}
+
+/* Embed window */
+.UVP-main-label{
+	font-family: Roboto, Arial !important;
+}
+
+/* Subtitle. */
+video::cue,
+.fwduvp-subtitle{
+	font: 600 20px Roboto, Arial !important;
+	text-align:center !important;
+	color:#FFFFFF !important;
+	text-shadow: 0px 0px 1px #000000 !important;
+	line-height:24px !important;
+	margin:0 20px 20px !important;
+	padding: 0px !important;
+}
+
+@media screen and (max-width: 700px){
+	video::cue,
+	.fwduvp-subtitle{
+		font-size: 16px !important;
+		line-height:20px !important;
+		margin:0 20px 14px !important;
+	}
+}
+
+/* Dark Skins. */
+.fwduvp-thumbnail-title{
+	font: 400 14px Roboto, Arial !important;
+	color: #FFFFFF !important;
+	line-height: 16px !important;
+	margin: 2px 0 3px !important;
+	padding: 3px 0 0 1px !important;
+	transition: all .25s ease-out !important;
+}
+
+.fwduvp-thumbnail-title.large{
+	font-size: 16px !important;
+	line-height: 22px !important;
+}
+
+.fwduvp-playlist-thumbnail-dark-text.active .fwduvp-thumbnail-title{
+	color: #FFFFFF !important;
+}
+
+.fwduvp-playlist-thumbnail-dark-text.active .fwduvp-ytb-title{
+	color: #FFFFFF !important;
+}
+
+.fwduvp-playlist-thumbnail-dark-text .fwduvp-thumbnail-description{
+	font-family: Roboto, Arial !important;
+	color:#888888 !important;
+	font-size: 13px !important;
+    line-height: 15px !important;
+	margin:0px !important;
+}
+
+.fwduvp-playlist-thumbnail-dark-text .fwduvp-thumbnail-description.large{
+	font-size: 14px !important;
+	line-height: 18px !important;
+}
+
+.fwduvp-categories-dark-text{
+	font: 400 14px Roboto, Arial !important;
+}
+
+.fwduvp-categories-dark-text .fwduvp-header{
+	color: #FFFFFF !important;
+}
+
+.fwduvp-categories-dark-text.active .fwduvp-title{
+	color: #FFFFFF !important;
+}
+
+.fwduvp-categories-dark-text .fwduvp-categories-title{
+	margin: 10px 15px 0 !important;
+	line-height: 1.8 !important;
+}
+
+.fwduvp-categories-dark-text .fwduvp-title{
+	font-weight: bold;
+	line-height: 18px !important;
+	color:#999 !important;
+	transition: all .3s ease-out !important;
+}
+
+.fwduvp-categories-dark-text .fwduvp-categories-type{
+	color:#999 !important;
+	line-height: 18px !important;
+	margin: 2px 15px 0 !important;
+}
+
+.fwduvp-categories-dark-text .fwduvp-categories-description{
+	color:#999 !important;
+	line-height: 18px !important;
+	margin: 5px 15px 13px !important;
+}
+
+.fwduvp-link a:link    {color:#0099FF !important;}
+.fwduvp-link a:visited {color:#0099FF !important;}
+.fwduvp-link a:hover   {color:#DDDDDD !important;}
+.fwduvp-link a:active  {color:#0099FF !important;}
+
+
+/* White Skins. */
+.fwduvp-white-thumbnail-title{
+	font-family:  Roboto, Arial !important;
+	color:#000000 !important;
+	line-height:16px !important;
+	margin: 2px 0 3px!important;
+	padding:0px !important;
+	transition: all .25s ease-out !important;
+}
+
+.fwduvp-playlist-thumbnail-text.white-active .fwduvp-white-thumbnail-title{
+	color: #000000 !important;
+}
+
+
+.fwduvp-playlist-thumbnail-text.white-active .fwduvp-ytb-title{
+	color: #000000 !important;
+}
+
+.fwduvp-playlist-thumbnail-text.white-active .fwduvp-ytb-title{
+	color: #FFFFFF !important;
+}
+
+.fwduvp-playlist-thumbnail-white-text .fwduvp-thumbnail-description{
+	font-family: Roboto, Arial !important;
+	font-size: 13px !important;
+    line-height: 15px !important;
+	margin:0px !important;
+	color:#919191 !important;
+}
+
+.fwduvp-playlist-thumbnail-white-text .fwduvp-thumbnail-title{
+	color: #000000 !important;
+}
+
+.fwduvp-info-window-white .fwduvp-link,
+.fwduvp-playlist-thumbnail-white-text .fwduvp-link{
+	font-family: Roboto, Arial !important;
+	margin: -4px 12px 11px !important;
+	font-size: 13px !important;
+	line-height: 16px !important;
+	color: #888888 !important;
+}
+
+.fwduvp-categories-white-text{
+	font: 400 14px Roboto, Arial !important;
+}
+
+.fwduvp-categories-white-text .fwduvp-header{
+	font-weight: 500;
+	color: #000000 !important;
+}
+
+.fwduvp-categories-white-text.active .fwduvp-title{
+	color: #000000 !important;
+}
+
+.fwduvp-categories-white-text .fwduvp-categories-title{
+	font-weight: 500;
+	margin: 10px 15px 0 !important;
+	line-height: 1.8 !important;
+}
+
+.fwduvp-categories-white-text .fwduvp-title{
+	font-weight: bold;
+	line-height: 18px !important;
+	color:#666 !important;
+	transition: all .3s ease-out !important;
+}
+
+.fwduvp-categories-white-text .fwduvp-categories-type{
+	color:#666 !important;
+	line-height: 18px !important;
+	margin: 2px 15px 0 !important;
+}
+
+.fwduvp-categories-white-text .fwduvp-categories-description{
+	color:#666 !important;
+	line-height: 18px !important;
+	margin: 5px 15px 13px !important;
 }

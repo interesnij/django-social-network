@@ -1,0 +1,28 @@
+
+
+<div id="video_player" class="col-xs-12"></div>
+
+<ul id="video_playlists" style="display:none;">
+		<li data-source="my_playlist" data-playlist-name="{{ album.title }}" data-thumbnail-path="/static/images/demo_video/p-html.jpg">
+			<p class="fwduvp-categories-title"><span class="fwduvp-header">Название: </span><span class="fwduvp-title">{{ album.title }}</span></p>
+			<p class="fwduvp-categories-type"><span class="fwduvp-header">Тип: </span>Видеокаталог</p>
+			<p class="fwduvp-categories-description"><span class="fwduvp-header">Описание: </span>Это Ваш плейлист "{{ album.title }}"</p>
+		</li>
+</ul>
+
+
+<ul id="my_playlist" style="display:none;">
+{% for object in object_list %}
+	<li data-thumb-source="{{ object.image.url }}"
+			data-video-source="{{ object.uri }}"
+			data-poster-source="{{ object.image.url }}"
+			data-downloadable="no">
+	<div data-video-short-description="">
+			<div>
+				<p class="fwduvp-thumbnail-title">{{ object.title }}</p>
+				<p class="fwduvp-thumbnail-description">{{ object.description }}</p>
+			</div>
+		</div>
+	</li>
+{% endfor %}
+</ul>

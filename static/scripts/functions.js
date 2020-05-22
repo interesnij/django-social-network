@@ -473,7 +473,7 @@ function save_playlist(suffix, post_link, get_link, track_id){
           }
           music_player.loadPlaylist(0);
           if (FWDMSP.LOAD_PLAYLIST_COMPLETE){
-            console.log("Плейдист загружен!");
+            console.log("Плейлист загружен!");
           setTimeout(function() {music_player.playSpecificTrack(suffix, track_id)}, 50);
         }
       }};
