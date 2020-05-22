@@ -53,7 +53,7 @@ on('body', 'click', '.video_fullscreen_normal', function() {
   video_window.classList.remove("video_fullscreen_resized", "draggable");
   document.body.querySelector(".video_btn_small").style.display = "none";
   document.body.querySelector(".video_btn_big").style.display = "block";
-  get_normal_screen()
+  get_normal_screen() 
 });
 
 on('#ajax', 'click', '.user_video_list_create', function() {
