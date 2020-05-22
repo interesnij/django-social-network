@@ -1,19 +1,15 @@
 <div class="col-md-8 col-lg-6 col-xl-5 mx-auto">
     <form action="" id="video_list_create">
       {% csrf_token %}
-        <div class="card mb-4">
+        <div class="card">
             <div class="card-header border-bottom">
                 <h5 class="content-color-primary mb-0">Создание списка видео</h5>
             </div>
             <div class="card-body">
-                <br>
-                <hr>
-                <div class="row ">
                     <div class="form-group ">
                         <label>Название</label>
                         <input type="text" name="title" class="form-control" id="id_title">
                     </div>
-                </div>
                 <div class="row ">
                   <div class="form-group ">
                     <div class="custom-control custom-checkbox">
