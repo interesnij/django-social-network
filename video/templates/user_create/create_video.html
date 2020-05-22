@@ -1,4 +1,22 @@
-
+<style>
+  #video_holder{
+  width: 200px;
+  min-width: 200px;
+  border: 2px dashed #FF0000;
+  color: rgba(0,0,0,0.8);
+  padding: 10px;
+  text-align: center;
+  margin:10px;
+  }
+  #video_holder{
+  cursor: pointer;
+  margin:9px;
+  }
+  #video_holder img{
+  width: 172px;
+  height: auto;
+  }
+</style>
     <form action="" id="create_video_form">
       {% csrf_token %}
         <div class="card">
@@ -41,7 +59,16 @@
                 <div class="col-lg-6 col-md-6">
                   <div class="form-group">
                     <label>Обложка</label>
-                    {{ form_post.image }}
+                    <div class="id_image">
+                      <input type="file" name="image" accept="image/*" id="id_image">
+                    </div>
+                    <div id="video_holder">
+                      <h4 style="font-weight:bold;font-size:70px;color:#CECECE">№ 1</h4>
+                      <p>Обложка</p>
+
+                      <i style="color:#CECECE">(обязательно)</i>
+
+                    </div>
                   </div>
                 </div>
                 <div class="col-lg-6 col-md-6">
