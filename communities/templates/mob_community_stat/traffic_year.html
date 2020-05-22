@@ -32,7 +32,7 @@
         		  {% for object in sities %}
         		    <div class="stat_city">
         		     <span class="city">{{ object }}</span>
-        		     <span class="count"><svg fill="currentColor" class="svg_default" style="width:20px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+        		     <span class="count"><svg fill="currentColor" class="svg_default" style="width:20px" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
         	      {{ community|c_sity_count:object }}
         		     </span>
         		     </div>
@@ -41,62 +41,4 @@
         </div>
     </div>
 
-
-<script>
-		var config = {
-			type: 'line',
-			data: {
-				labels:[{% for object in years %} "{{ object|date:'Y' }} г.", {% endfor %}],
-				datasets: [{
-					label: 'Уникальные просмотры',
-					backgroundColor: 'rgb(255, 99, 132)',
-					borderColor: 'rgb(255, 99, 132)',
-          data: {{ un_views }},
-					fill: false,
-				}, {
-					label: 'Все просмотры',
-					fill: false,
-					backgroundColor: 'rgb(54, 162, 235)',
-					borderColor: 'rgb(54, 162, 235)',
-					data: {{ views }},
-				}]
-			},
-			options: {
-				responsive: true,
-				title: {
-					display: true,
-					text: ''
-				},
-				tooltips: {
-					mode: 'index',
-					intersect: false,
-				},
-				hover: {
-					mode: 'nearest',
-					intersect: true
-				},
-				scales: {
-					xAxes: [{
-						display: true,
-						scaleLabel: {
-							display: true,
-							labelString: ''
-						}
-					}],
-					yAxes: [{
-						display: true,
-						scaleLabel: {
-							display: true,
-							labelString: ''
-						}
-					}]
-				}
-			}
-		};
-
-		window.onload = function() {
-			var ctx = document.getElementById('canvas').getContext('2d');
-			window.myLine = new Chart(ctx, config);
-		};
-	</script>
 {% endblock %}

@@ -35,7 +35,7 @@
                             {% if object.image %}
                               <img style="width: 100%;object-fit: cover;height: 200px;" class="lazyload" data-src="{{ object.image.url }}" alt="">
                             {% else %}
-                              <svg class="svg_default" style="width: 100%;object-fit: cover;height: 200px;" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                              <svg class="svg_default" style="width: 100%;object-fit: cover;height: 200px;" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
                             {% endif %}
 
                             <div class="card-footer border-top py-2">
@@ -50,9 +50,9 @@
                 {% else %}
                 <div class="card" style="align-items: center;justify-content:center;">
                   <div class="card-body" style="margin-top: 10%;">
-                  <svg class='svg_default thumb_big' fill='currentColor' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='none' d='M0 0h24v24H0z'/><path d='M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z'/></svg>
+                  <svg class='svg_default thumb_big' fill='currentColor' viewBox='0 0 24 24'><path fill='none' d='M0 0h24v24H0z'/><path d='M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z'/></svg>
                   </div>
-                  <h6 style="margin: 20px;text-align: center;">У Вас пока нет музыки. <a href="{% url 'all_music' %}" style="text-decoration:underline;" class="ajax">Перейдите в каталог</a> музыкальных композиций и выбирайте из сотен тысяч треков</h6>
+                  <h6 style="margin: 20px;text-align: center;">У Вас пока нет видеороликов. <a href="{% url 'all_music' %}" style="text-decoration:underline;" class="ajax">Перейдите в каталог</a> музыкальных композиций и выбирайте из сотен тысяч треков</h6>
                 </div>
                 {% endif %}
               </div>
