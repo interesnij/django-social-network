@@ -1,6 +1,6 @@
 from django.views.generic.base import TemplateView
 from users.models import User
-from video.models import VideoList, VideoAlbum
+from video.models import VideoAlbum
 from django.views.generic import ListView
 
 
@@ -8,8 +8,7 @@ class UserBasicVideoList(ListView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.user = User.objects.get(uuid=self.kwargs["uuid"])
-        self.list = VideoList.objects.get(pk=self.kwargs["pk"])
+        self.user = User.objects.get(pk=self.kwargs["pk"])
         self.template_name = self.user.get_template_user(folder="user_basic_list/", template="list.html", request=request)
         return super(UserBasicVideoList,self).get(request,*args,**kwargs)
 

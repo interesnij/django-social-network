@@ -501,7 +501,7 @@ class User(AbstractUser):
         albums = Album.objects.filter(albums_query)
         return albums
 
-    def get_video_albums(self): 
+    def get_video_albums(self):
         from video.models import VideoAlbum
 
         albums_query = Q(creator_id=self.id, is_deleted=False, is_public=True, community=None)
@@ -580,18 +580,17 @@ class User(AbstractUser):
         return count.count()
 
     def get_video(self):
-        from video.models import VideoList, Video
+        from video.models import Video
 
         list = VideoList.objects.get(creator_id=self.id, community=None, name="my_first_generic_playlist_number_12345678900000000")
-        video_query = Q(video=list, is_deleted=False, is_public=True)
+        video_query = Q(creator_id=self.id, community=None, is_deleted=False, is_public=True)
         video_list = Video.objects.filter(video_query).order_by("-created")
         return video_list
 
     def get_last_video(self):
-        from video.models import VideoList, Video
+        from video.models import  Video
 
-        list = VideoList.objects.get(creator_id=self.id, community=None, name="my_first_generic_playlist_number_12345678900000000")
-        video_query = Q(video=list, is_deleted=False, is_public=True)
+        video_query = Q(creator_id=self.id, community=None, is_deleted=False, is_public=True)
         video_list = Video.objects.filter(video_query).order_by("-created")
         return video_list[0:2]
 
@@ -600,13 +599,7 @@ class User(AbstractUser):
 
         list = SoundList.objects.get(creator_id=self.id, community=None, name="my_first_generic_playlist_number_12345678900000000")
         return list.pk
-
-    def get_video_list_id(self):
-        from video.models import VideoList
-
-        list = VideoList.objects.get(creator_id=self.id, community=None, name="my_first_generic_playlist_number_12345678900000000")
-        return list.pk
-
+        
     def my_playlist_too(self):
         from music.models import SoundList, UserTempSoundList, SoundTags, SoundGenres
 

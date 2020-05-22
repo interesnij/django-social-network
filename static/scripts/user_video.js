@@ -3,9 +3,8 @@ on('#ajax', 'click', '.u_video_detail', function() {
   counter = this.getAttribute('data-counter');
   parent = this.parentElement.parentElement;
   pk = parent.getAttribute('data-pk');
-  uuid = parent.getAttribute('data-uuid');
   loader = document.getElementById("video_loader");
-  open_fullscreen("/video/user/basic_list/" + pk + "/" + uuid + "/", loader);
+  open_fullscreen("/video/user/basic_list/" + pk + "/", loader);
   video_saver = document.body.querySelector("#video_id_saver");
   video_player_id = video_saver.getAttribute('data-video');
   video_saver.setAttribute('data-video', video_player_id + "a");

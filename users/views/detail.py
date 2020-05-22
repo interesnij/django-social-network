@@ -110,6 +110,11 @@ class UserVideo(ListView):
 	def get(self,request,*args,**kwargs):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
 		self.template_name = self.user.get_template_user(folder="user_video/", template="video.html", request=request)
+        if self.user == request.user:
+            self.video_list = self.user.get_my_video()
+        else:
+            self.video_list = self.user.get_video()
+        else:
 		return super(UserVideo,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -118,7 +123,7 @@ class UserVideo(ListView):
 		return context
 
 	def get_queryset(self):
-		video_list = self.user.get_video()
+        video_list = self.video_list
 		return video_list
 
 

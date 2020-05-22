@@ -32,32 +32,6 @@ class VideoCategory(models.Model):
         verbose_name_plural="Категории ролика"
 
 
-class VideoList(models.Model):
-    id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=255)
-    video = models.ManyToManyField('video.Video', related_name='video', blank="True")
-    community = models.ForeignKey('communities.Community', related_name='community_videos', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
-    creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_videos', db_index=False, on_delete=models.CASCADE, verbose_name="Создатель")
-
-    def __str__(self):
-        return self.name
-
-    def is_track_in_list(self, track_id):
-        self.video.filter(id=track_id).exists()
-
-    def playlist_too(self):
-        queryset = self.video.all()
-        return queryset
-
-    def get_playlist_count(self):
-        count = self.video.all().values("pk").count()
-        return count
-
-    class Meta:
-        verbose_name="список: весь, человека или сообщества"
-        verbose_name_plural="списки: весь, человека или сообщества"
-
-
 class VideoTags(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255, unique=True)
@@ -135,10 +109,14 @@ class VideoAlbum(models.Model):
             return False
 
     def count_video(self):
-        return self.video_album_1.filter(is_deleted=False).count()
+        return self.video_album.filter(is_deleted=False).count()
 
-    def playlist_too(self):
+    def get_queryset(self):
         queryset = self.video_album.all()
+        return queryset
+
+    def get_my_queryset(self):
+        queryset = self.video_album.filter(is_public=True)
         return queryset
 
 
