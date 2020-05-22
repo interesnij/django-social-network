@@ -121,7 +121,7 @@ class VideoAlbum(models.Model):
 
 
 class Video(models.Model):
-    id = models.BigIntegerField(unique=True, primary_key=True)
+    id = models.BigIntegerField(unique=True)
     image = ProcessedImageField(format='JPEG', options={'quality': 90}, upload_to=upload_to_video_directory, processors=[ResizeToFit(width=500, upscale=False)], verbose_name="Обложка")
     created = models.DateTimeField(default=timezone.now)
     duration = models.CharField(max_length=255, blank=True, null=True)
@@ -162,6 +162,11 @@ class Video(models.Model):
     def window_dislikes(self):
         dislikes = VideoVotes.objects.filter(parent=self, vote__lt=0)
         return dislikes[0:6]
+
+    def get_pk():
+        video = Video.objects.last()
+        pk = video.pk + 1
+        return pk
 
 
 class VideoComment(models.Model):
