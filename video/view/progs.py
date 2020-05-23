@@ -47,3 +47,25 @@ class UserVideoCreate(View):
             return render_to_response('video_new/video.html',{'object': new_video, 'request': request})
         else:
             return HttpResponseBadRequest()
+
+
+class UserVideoInListCreate(View):
+    form_post = None
+
+    def get_context_data(self,**kwargs):
+        context = super(UserVideoInListCreate,self).get_context_data(**kwargs)
+        context["form_post"] = VideoForm()
+        context["album"] = VideoAlbum.objects.get(uuid=self.kwargs["uuid"])
+        return context
+
+    def post(self,request,*args,**kwargs):
+        form_post = VideoForm(request.POST, request.FILES)
+        user = User.objects.get(uuid=self.kwargs["uuid"])
+
+        if form_post.is_valid() and request.user == user:
+            new_video = form_post.save(commit=False)
+            new_video.creator = request.user
+            new_video.save()
+            return render_to_response('video_new/video.html',{'object': new_video, 'request': request})
+        else:
+            return HttpResponseBadRequest()

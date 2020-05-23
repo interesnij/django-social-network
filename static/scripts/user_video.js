@@ -80,11 +80,10 @@ on('body', 'click', '.video_fullscreen_normal', function() {
 });
 
 on('#ajax', 'click', '.user_video_list_create', function() {
-  var parent, pk, uuid, loader
-  parent = this.parentElement.parentElement.parentElement.parentElement.parentElement;
-  uuid = parent.getAttribute("item-uuid");
-  loader = document.getElementById("stat_loader");
-  open_fullscreen("/stat/item/" + uuid + "/", loader)
+  uuid = this.getAttribute("data-uuid");
+  pk = this.getAttribute("data-pk");
+  loader = document.getElementById("create_loader");
+  open_fullscreen("/video/user/create_video_list_window/" + pk + "/" + uuid + "/", loader)
 });
 
 on('#ajax', 'click', '#create_video_btn', function() {
@@ -105,6 +104,32 @@ on('#ajax', 'click', '#create_video_btn', function() {
       elem_.style.cursor = "pointer";
       container = document.body.querySelector(".movies_list");
       container.prepend(elem_)
+    }
+    document.querySelector(".create_fullscreen").style.display = "none";
+    document.getElementById("create_loader").innerHTML="";
+  }};
+
+  link_.send(form_data);
+});
+
+on('#ajax', 'click', '#create_video_in_list_btn', function() {
+  form_data = new FormData(document.querySelector("#create_video_list_form"));
+  pk = this.getAttribute("data-pk");
+  uuid = this.getAttribute("data-uuid");
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'POST', "/video/progs/create_video_in_list/" + pk + "/" + uuid + "/", true );
+
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    album = document.body.querySelector("#id_album");
+    if (album.value == pk){
+      elem_ = document.createElement('div');
+      elem_.innerHTML = link_.responseText;
+      elem_.classList.add("col-12", "col-md-6", "u_video_detail");
+      elem_.setAttribute("data-counter", "0");
+      elem_.style.cursor = "pointer";
+      container = document.body.querySelector(".movies_list");
+      container.prepend(elem_) 
     }
     document.querySelector(".create_fullscreen").style.display = "none";
     document.getElementById("create_loader").innerHTML="";
