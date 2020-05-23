@@ -47,7 +47,7 @@ function load_community_subcats(element){
   };
 }
 on('#ajax', 'change', '#sub_category', function() {
-  var val = element.value;
+  var val = this.value;
   if (val == '') {
     document.getElementById('subcat').innerHTML = "";
   } else {
