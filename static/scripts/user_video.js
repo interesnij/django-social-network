@@ -134,14 +134,14 @@ on('#ajax', 'click', '#create_video_list_btn', function() {
         ajax = elem_.querySelector("#reload_block");
         rtr = document.getElementById('ajax');
         rtr.innerHTML = ajax.innerHTML;
+        uuid = rtr.querySelector("#movies_container").getAttribute("albom-uuid");
         window.scrollTo(0,0);
         document.title = elem_.querySelector('title').innerHTML;
         Index.initLink();
       }
     }
     ajax_link.send(form_data);
-    uuid = document.getElementById('ajax').querySelector("#movies_container").getAttribute("albom-uuid");
-    window.history.pushState({route: 'users/video_list/' + pk + '/' + uuid + '/'}, "network", 'users/video_list/' + pk + '/' + uuid + '/');
+    window.history.pushState({route: '/users/video_list/' + pk + '/' + uuid + '/'}, "network", 'users/video_list/' + pk + '/' + uuid + '/');
 });
 
 on('body', 'click', '#video_holder', function() {
