@@ -125,10 +125,23 @@ on('#ajax', 'click', '#create_video_list_btn', function() {
   form_data = new FormData(document.querySelector("#video_list_create"));
   pk = this.getAttribute("data-pk");
   uuid = this.getAttribute("data-uuid");
-  ajax_post_reload("/video/progs/create_list/" + pk + "/", form_data);
-  container = elem_.querySelector("#movies_container");
-  uuid = container.getAttribute("albom-uuid");
-  window.history.pushState({route: 'users/video_list/' + pk + '/' + uuid + '/'}, "network", 'users/video_list/' + pk + '/' + uuid + '/');
+  var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    ajax_link.open( 'POST', "/video/progs/create_list/" + pk + "/", true );
+    ajax_link.onreadystatechange = function () {
+      if ( this.readyState == 4 && this.status == 200 ) {
+        elem_ = document.createElement('span');
+        elem_.innerHTML = ajax_link.responseText;
+        ajax = elem_.querySelector("#reload_block");
+        rtr = document.getElementById('ajax');
+        uuid = elem_.querySelector("#movies_container").getAttribute("albom-uuid");
+        rtr.innerHTML = ajax.innerHTML;
+        window.scrollTo(0,0);
+        document.title = elem_.querySelector('title').innerHTML;
+        Index.initLink();
+        window.history.pushState({route: 'users/video_list/' + pk + '/' + uuid + '/'}, "network", 'users/video_list/' + pk + '/' + uuid + '/');
+      }
+    }
+    ajax_link.send(form_data);
 });
 
 on('body', 'click', '#video_holder', function() {
