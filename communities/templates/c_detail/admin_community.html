@@ -59,17 +59,14 @@
                     {% endif %}
                     <br><br>
                     <div class="btn-group">
-                        <button type="button" class="btn btn-sm btn-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <button type="button" class="btn btn-sm btn-secondary drop">
                             Вы подписаны
                         </button>
-                        <div class="dropdown-menu" x-placement="bottom-start">
+                        <div class="dropdown-menu">
                             <span style="cursor:pointer" data-id="{{ community.pk }}" class="dropdown-item member_delete">Отписаться</span>
+                            <a class="btn btn-sm btn-secondary ajax" href="{% url 'community_general_form' pk=community.pk %}">Управление</a>
                         </div>
                     </div>
-                    <span style="display: flex;align-items: center;justify-content: center;">
-                      <a class="btn btn-sm btn-secondary ajax" href="{% url 'community_general_form' pk=community.pk %}">Управление</a>
-                    </span>
-
                 </div>
             </div>
         </div>
