@@ -156,23 +156,6 @@ function ajax_get_reload(url) {
     ajax_link.send();
 }
 
-function ajax_post_reload(url, form_data) {
-  var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    ajax_link.open( 'POST', url, true );
-    ajax_link.onreadystatechange = function () {
-      if ( this.readyState == 4 && this.status == 200 ) {
-        elem_ = document.createElement('span');
-        elem_.innerHTML = ajax_link.responseText;
-        ajax = elem_.querySelector("#reload_block");
-        rtr = document.getElementById('ajax');
-        rtr.innerHTML = ajax.innerHTML;
-        window.scrollTo(0,0);
-        document.title = elem_.querySelector('title').innerHTML;
-        Index.initLink();
-      }
-    }
-    ajax_link.send(form_data);
-}
 
 class Index {
   // класс, работающий с подгрузкой блоков на сайте. Смена основного блока, листание отдельных элементов, и т.д.

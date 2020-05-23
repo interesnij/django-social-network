@@ -75,24 +75,3 @@ class CommunityDetail(TemplateView):
         context["community"]=self.community
         context["common_friends"]=self.common_friends
         return context
-
-
-class CommunityDetailReload(TemplateView):
-    template_name = None
-
-    def get(self,request,*args,**kwargs):
-        self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.membersheeps=self.community.get_community_with_name_members(self.community.name)[0:6]
-        try:
-            self.common_friends = request.user.get_common_friends_of_community(self.community.pk)[0:6]
-        except:
-            self.common_friends = None
-        self.template_name = self.community.get_template(folder="c_detail/", template="community.html", request=request)
-        return super(CommunityDetailReload,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        context=super(CommunityDetailReload,self).get_context_data(**kwargs)
-        context["membersheeps"]=self.membersheeps
-        context["community"]=self.community
-        context["common_friends"]=self.common_friends
-        return context

@@ -61,7 +61,7 @@
 
     <div class="col-12 col-md-4">
         <br>
-          <button id="community_add" class="btn btn-outline-success" style="margin-bottom:15px;width:100%;" type="button">Создать сообщество</button>
+          <button class="btn btn-outline-success user_community_create_window" style="margin-bottom:15px;width:100%;" data-pk="{{ user.pk }}">Создать сообщество</button>
 
           {% if user.get_last_visited_communities %}
           <div class="card mb-2">

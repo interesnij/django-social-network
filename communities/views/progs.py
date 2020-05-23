@@ -5,12 +5,27 @@ from django.http import HttpResponse, HttpResponseBadRequest
 from communities.forms import CommunityForm
 from gallery.models import Album
 from users.models import User
+from django.shortcuts import render_to_response
+
+
+class UserCreateCommunityWindow(TemplateView):
+    template_name = None
+
+    def get(self,request,*args,**kwargs):
+        self.user = User.objects.get(pk=self.kwargs["pk"])
+        self.template_name = self.user.get_settings_template(folder="manage/", template="create_community.html", request=request)
+
+        return super(UserCreateCommunityWindow,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(UserCreateCommunityWindow,self).get_context_data(**kwargs)
+		context["form"] = CommunityForm()
+		context["categories"] = CommunityCategory.objects.only("id")
+		return context
 
 
 class CommunityCreate(TemplateView):
 	template_name="community_add.html"
-	form=None
-	categories = CommunityCategory.objects.only("id")
 
 	def get(self,request,*args,**kwargs):
 		self.form=CommunityForm()
@@ -26,9 +41,8 @@ class CommunityCreate(TemplateView):
 		self.form=CommunityForm(request.POST)
 		if self.form.is_valid():
 			new_community=self.form.save(commit=False)
-			community = Community.create_community(name=new_community.name,category=new_community.category,type=new_community.type,creator=request.user)
-			return HttpResponse("!")
-		return super(CommunityCreate,self).post(request,*args,**kwargs)
+			community = Community.create_community(name=new_community.name, category=new_community.category, type=new_community.type, creator=request.user)
+			return render_to_response('c_detail/admin_community.html',{'community': new_community, 'user': request.user, 'request': request})
 
 
 class CommunitiesCatsView(TemplateView):

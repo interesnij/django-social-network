@@ -49,13 +49,8 @@ on('#ajax', 'click', '.c_all_reposts', function() {
   open_fullscreen("/item_window/all_community_reposts/" + uuid + "/" + pk + "/", loader)
 });
 
-on('#ajax', 'click', '#community_add', function() {
-  var loader = document.getElementById("votes_loader");
-  open_fullscreen("/communities/progs/add/", document.getElementById("community_loader"))
-});
-
 on('#ajax', 'click', '#community_article_add', function() {
-  var pk = this.getAttribute('data-pk'); 
+  var pk = this.getAttribute('data-pk');
   open_fullscreen("/article/add_community/" + pk + "/", document.getElementById("community_loader"))
 });
 

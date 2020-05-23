@@ -4,11 +4,12 @@ from django.contrib.auth.decorators import login_required
 
 
 urlpatterns = [
-    url(r'^add/$', CommunityCreate.as_view(), name="add_community"),
-    url(r'^cat/(?P<order>\d+)/$',CommunitiesCatsView.as_view(), name="communities_cats"),
-    url(r'^gygyg/$', GygView.as_view(), name="community_ggg"),
     url(r'^add_member/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityMemberCreate.as_view()),
     url(r'^delete_member/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityMemberDelete.as_view()),
+
+    url(r'^create_community_window/(?P<pk>\d+)/$', UserCreateCommunityWindow.as_view()),
+    url(r'^add/(?P<pk>\d+)/$', CommunityCreate.as_view(), name="add_community"),
+    url(r'^cat/(?P<order>\d+)/$',CommunitiesCatsView.as_view(), name="communities_cats"),
 
     url(r'^add_admin/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityAdminCreate.as_view()),
     url(r'^delete_admin/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityAdminDelete.as_view()),

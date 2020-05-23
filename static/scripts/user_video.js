@@ -87,21 +87,6 @@ on('#ajax', 'click', '.user_video_list_create', function() {
   open_fullscreen("/stat/item/" + uuid + "/", loader)
 });
 
-on('body', 'click', '#create_video_album_btn', function() {
-  _this = this;
-  pk = _this.getAttribute("data-pk");
-  form_data = new FormData(document.querySelector("#create_video_album"));
-  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'POST', "/video/progs/create_list/", true );
-
-  link.onreadystatechange = function () {
-  if ( link.readyState == 4 && link.status == 200 ) {
-    console.log("vse ok")
-    }};
-  link.send(form_data);
-})
-
-
 on('#ajax', 'click', '#create_video_btn', function() {
   form_data = new FormData(document.querySelector("#create_video_form"));
   pk = this.getAttribute("data-pk");
