@@ -36,6 +36,26 @@ on('#ajax', 'click', '#form_post_btn', function() {
   link_.send(form_data);
 });
 
+on('#ajax', 'click', '#article_post', function() {
+  pk = this.getAttribute("user-pk");
+  form_data = new FormData(document.forms.new_post);
+  form_post = document.querySelector("#user_article_form");
+  CKEDITOR.instances.id_content.updateElement();
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'POST', "/article/add_user/" + pk + "/", true );
+
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    elem = link_.responseText;
+    new_post = document.createElement("span");
+    new_post.innerHTML = elem;
+    response = new_post.querySelector(".card");
+    document.querySelector(".stream").prepend(response)
+    document.querySelector(".post_empty") ? lenta_load.querySelector(".post_empty").style.display = "none" : null;
+  }};
+
+  link_.send(form_data);
+});
 
 on('#ajax', 'click', '.u_itemComment', function() {
   form = this.parentElement.parentElement.parentElement;
@@ -57,7 +77,9 @@ on('#ajax', 'click', '.u_itemComment', function() {
 
   link_.send(form_comment);
 });
-
+on('#ajax', 'click', '.holder_article_image', function() {
+  get_image_priview(this, this.previousElementSibling.querySelector("#id_g_image"))
+});
 on('#ajax', 'click', '.u_replyComment', function() {
   form = this.parentElement.parentElement.parentElement.parentElement;
   form_comment = new FormData(form);
