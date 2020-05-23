@@ -146,6 +146,8 @@ function ajax_reload(url) {
         ajax = elem_.querySelector("#reload_block");
         rtr.innerHTML = ajax.innerHTML;
         window.scrollTo(0,0);
+        document.title = elem_.querySelector('title').innerHTML;
+        window.history.pushState({route: url}, "network", url);
       }
     }
     ajax_link.send();
@@ -158,8 +160,6 @@ class Index {
     var url = this.getAttribute('href');
     if (url != window.location.pathname){
         ajax_reload(url);
-        document.title = elem_.querySelector('title').innerHTML;
-        window.history.pushState({route: url}, "network", url);
         Index.initLink();
         if_list(document.getElementById('ajax'));
         load_chart();
