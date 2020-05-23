@@ -64,3 +64,12 @@ class UserCreateVideoWindow(TemplateView):
         context = super(UserCreateVideoWindow,self).get_context_data(**kwargs)
         context['form_post'] = VideoForm()
         return context
+
+
+class UserCreateListWindow(TemplateView):
+    template_name = None
+
+    def get(self,request,*args,**kwargs):
+        self.user = User.objects.get(pk=self.kwargs["pk"])
+        self.template_name = self.user.get_settings_template(folder="user_create/", template="create_list.html", request=request)
+        return super(UserCreateListWindow,self).get(request,*args,**kwargs)
