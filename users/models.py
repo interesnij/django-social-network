@@ -832,7 +832,7 @@ class User(AbstractUser):
             template_name = folder + template
             if self.is_closed_profile():
                 check_is_connected_with_user_with_id(user=request.user, user_id=self.id)
-                template_name = folder + "frend_" + template
+                template_name = folder + template
         elif request.user.is_anonymous and not self.is_closed_profile():
             template_name = folder + "anon_" + template
         elif request.user.is_anonymous and self.is_closed_profile():

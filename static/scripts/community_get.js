@@ -51,8 +51,9 @@ on('#ajax', 'click', '.c_all_reposts', function() {
 
 on('#ajax', 'click', '#community_article_add', function() {
   var pk = this.getAttribute('data-pk');
-  open_fullscreen("/article/add_community/" + pk + "/", document.getElementById("community_loader"))
+  open_fullscreen("/article/c_article_window/" + pk + "/", document.getElementById("create_loader"))
 });
+
 
 on('#ajax', 'click', '.c_item_comments.comments_close', function() {
   var parent, pk, uuid

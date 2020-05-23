@@ -26,7 +26,7 @@ on('#ajax', 'click', '.u_article_detail', function() {
 
 on('#ajax', 'click', '#article_add', function() {
   var pk = this.getAttribute('data-pk');
-  open_fullscreen("/article/add_user/" + pk + "/", document.getElementById("community_loader"))
+  open_fullscreen("/article/u_article_window/" + pk + "/", document.getElementById("create_loader"))
 });
 
 on('#ajax', 'click', '.u_all_likes', function() {
