@@ -640,7 +640,6 @@ function music_onReady(){console.log("Аудио плеер готов");}
 
     function get_image_priview(ggg, img) {
     entrou = false;
-    ggg = this;
     img.click();
 
     img.onchange = function() {
