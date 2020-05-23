@@ -27,7 +27,7 @@
               <div class="card-body uuid_saver" album-uuid="{{ album.uuid }}">
                 {% if object_list %}
 
-                <div class="video_playlist" id="movies_container" data-pk="{{ album.pk }}">
+                <div class="video_playlist" id="movies_container" data-pk="{{ user.pk }}" data-uuid="{{ album.uuid }}"> 
                   <div class="row">
                       {% for object in object_list %}
                       <div class="col-12 col-md-6 u_video_list_detail" style="cursor:pointer" data-counter="{{ forloop.counter0 }}">
