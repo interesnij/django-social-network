@@ -151,7 +151,7 @@ function ajax_get_reload(url) {
         window.history.pushState({route: url}, "network", url);
         if_list(rtr);
         Index.initLink();
-        try{CKEDITOR.instances.id_content.updateElement()}catch{null}
+        try{setTimeout(function() { CKEDITOR.instances.id_content.updateElement()}, 1000)}catch{null}
       }
     }
     ajax_link.send();
