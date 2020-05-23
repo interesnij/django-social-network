@@ -134,7 +134,7 @@ on('#ajax', 'click', '#create_video_list_btn', function() {
         ajax = elem_.querySelector("#reload_block");
         rtr = document.getElementById('ajax');
         rtr.innerHTML = ajax.innerHTML;
-        uuid = rtr.querySelector("#movies_container").getAttribute("albom-uuid");
+        uuid = rtr.querySelector(".uuid_saver").getAttribute("albom-uuid");
         window.scrollTo(0,0);
         document.title = elem_.querySelector('title').innerHTML;
         Index.initLink();

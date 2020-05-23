@@ -24,10 +24,10 @@
                   </div>
                 </div>
               </div>
-              <div class="card-body">
+              <div class="card-body uuid_saver" albom-uuid="{{ albom.uuid }}">
                 {% if object_list %}
 
-                <div class="video_playlist" id="movies_container" data-pk="{{ album.pk }}" data-uuid="{{ user.uuid }}" albom-uuid="{{ albom.uuid }}">
+                <div class="video_playlist" id="movies_container" data-pk="{{ album.pk }}">
                   <div class="row">
                       {% for object in object_list %}
                       <div class="col-12 col-md-6 u_video_list_detail" style="cursor:pointer" data-counter="{{ forloop.counter0 }}">
