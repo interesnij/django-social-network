@@ -100,6 +100,8 @@ on('#ajax', 'click', '#create_video_btn', function() {
     elem_.innerHTML = link_.responseText;
     container = document.body.querySelector("#video_playlist");
     row = container.querySelector(".row");
+    document.querySelector(".video_fullscreen").style.display = "none";
+    document.getElementById("video_loader").innerHTML=""
     container.prepend(row);
   }};
 
