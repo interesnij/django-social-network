@@ -52,24 +52,3 @@
         </div>
     </form>
 </div>
-
-<script>
-    document.querySelector("#sub_category").addEventListener( 'change', function() {
-        var val = this.value;
-        if (val == '') {
-          document.getElementById('subcat').innerHTML = "";
-        } else {
-          var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-          link.open( 'GET', "/communities/progs/cat/" + val + "/", true );
-          link.onreadystatechange = function () {
-            if ( link.readyState == 4 ) {
-                if ( link.status == 200 ) {
-                    var sub = document.getElementById("subcat");
-                    sub.innerHTML = link.responseText;
-                }
-            }
-        };
-        link.send( null );
-        };
-    });
-</script>
