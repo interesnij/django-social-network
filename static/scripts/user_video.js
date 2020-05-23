@@ -111,10 +111,11 @@ on('#ajax', 'click', '#create_video_btn', function() {
 
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
-    elem = link_.responseText;
-    new_post = document.createElement("span");
-    new_post.innerHTML = elem;
-
+    elem_ = document.createElement('span');
+    elem_.innerHTML = link_.responseText;
+    container = document.body.querySelector("#video_playlist");
+    row = container.querySelector(".row");
+    container.prepend(row);
   }};
 
   link_.send(form_data);
@@ -129,11 +130,12 @@ on('#ajax', 'click', '#create_video_list_btn', function() {
 
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
+    rtr = document.getElementById('ajax');
     elem_ = document.createElement('span');
     elem_.innerHTML = link_.responseText;
-    container = document.body.querySelector("#video_playlist");
-    row = container.querySelector(".row");
-    container.prepend(row);
+    ajax = elem_.querySelector("#reload_block");
+    rtr.innerHTML = ajax.innerHTML;
+    window.scrollTo(0,0);
   }};
 
   link_.send(form_data);
