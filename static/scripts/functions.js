@@ -144,14 +144,18 @@ function ajax_reload(url) {
         elem_ = document.createElement('span');
         elem_.innerHTML = ajax_link.responseText;
         ajax = elem_.querySelector("#reload_block");
-        document.getElementById('ajax').innerHTML = ajax.innerHTML;
+        rtr = document.getElementById('ajax');
+        rtr.innerHTML = ajax.innerHTML;
         window.scrollTo(0,0);
         document.title = elem_.querySelector('title').innerHTML;
         window.history.pushState({route: url}, "network", url);
+        if_list(rtr);
+        Index.initLink();
       }
     }
     ajax_link.send();
 }
+
 class Index {
   // класс, работающий с подгрузкой блоков на сайте. Смена основного блока, листание отдельных элементов, и т.д.
   static initLink() {document.body.querySelectorAll('.ajax').forEach( lin => lin.addEventListener('click', Index.push_url) );}
@@ -159,12 +163,10 @@ class Index {
     event.preventDefault();
     var url = this.getAttribute('href');
     if (url != window.location.pathname){
-        ajax_reload(url);
-        Index.initLink();
-        if_list(document.getElementById('ajax'));
-        load_chart();
+      ajax_reload(url)
+      load_chart();
     }
-  };
+  }
 }
 
 function msToTime(duration) {
