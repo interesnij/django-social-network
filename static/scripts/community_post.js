@@ -28,7 +28,7 @@ on('#ajax', 'click', '#create_video_list_btn', function() {
     ajax_link.send(form_data);
 });
 
-load_community_subcats(element){
+function load_community_subcats(element){
   var val = element.value;
   if (val == '') {
     document.getElementById('subcat').innerHTML = "";
