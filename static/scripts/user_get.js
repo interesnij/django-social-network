@@ -27,8 +27,6 @@ on('#ajax', 'click', '.u_article_detail', function() {
 on('#ajax', 'click', '#article_add', function() {
   var pk = this.getAttribute('data-pk');
   open_fullscreen("/article/u_article_window/" + pk + "/", document.getElementById("create_loader"));
-  document.body.querySelector(".loads_scripts").innerHTML = '<script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script><script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>';
-  CKEDITOR.replace('id_content');
 });
 
 on('#ajax', 'click', '.u_all_likes', function() {
