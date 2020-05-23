@@ -98,10 +98,11 @@ on('#ajax', 'click', '#create_video_btn', function() {
   if ( this.readyState == 4 && this.status == 200 ) {
     elem_ = document.createElement('span');
     elem_.innerHTML = link_.responseText;
-    container = document.body.querySelector(".movies_list"); 
-    document.querySelector(".video_fullscreen").style.display = "none";
-    document.getElementById("video_loader").innerHTML=""
-    container.prepend(elem_);
+    block = elem_.querySelector("#new_movie_generate");
+    container = document.body.querySelector(".movies_list");
+    document.querySelector(".create_fullscreen").style.display = "none";
+    document.getElementById("create_loader").innerHTML="";
+    container.prepend(block);
   }};
 
   link_.send(form_data);

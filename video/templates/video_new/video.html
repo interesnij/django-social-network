@@ -1,5 +1,6 @@
 {% load humanize %}
 
+<div id="new_movie_generate">
 <div class="col-12 col-md-6 u_video_detail" style="cursor:pointer" data-counter="{{ forloop.counter0 }}">
   <div class="blog-header-img">
     {% if object.image %}
@@ -12,4 +13,5 @@
     <h5 class="text-truncate w-100">{{ object.title }}</h5>
     <span class="small">{{ object.created|naturaltime }} | {{ object.all_visits_count }}</span>
   </div>
+</div>
 </div>
