@@ -78,7 +78,7 @@ on('#ajax', 'click', '.u_itemComment', function() {
   link_.send(form_comment);
 });
 
-on('#ajax', 'click', '.holder_article_image', function() {
+on('#ajax', 'click', '#holder_article_image', function() {
   img = this.previousElementSibling.querySelector("#id_g_image")
   get_image_priview(this, img)
 });
