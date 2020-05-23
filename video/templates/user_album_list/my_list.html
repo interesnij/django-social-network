@@ -1,6 +1,6 @@
 
 
-<div id="video_player"></div> 
+<div id="video_player"></div>
 
 <ul id="video_playlists" style="display:none;">
 		<li data-source="my_playlist" data-playlist-name="{{ album.title }}" data-thumbnail-path="/static/images/demo_video/p-html.jpg">
@@ -20,7 +20,7 @@
 	<div data-video-short-description="">
 			<div>
 				<p class="fwduvp-thumbnail-title">{{ object.title }}</p>
-				<p class="fwduvp-thumbnail-description">{% if object.description %}{{ object.description }}{% else %}Без описания</p>
+				<p class="fwduvp-thumbnail-description">{% if object.description %}{{ object.description }}{% else %}Без описания{% endif %}</p>
 			</div>
 		</div>
 	</li>
