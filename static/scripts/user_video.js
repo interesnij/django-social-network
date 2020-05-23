@@ -102,7 +102,7 @@ on('#ajax', 'click', '#create_video_btn', function() {
     container = document.body.querySelector(".movies_list");
     document.querySelector(".create_fullscreen").style.display = "none";
     document.getElementById("create_loader").innerHTML="";
-    container.prepend(block);
+    container.prepend(block.innerHTML);
   }};
 
   link_.send(form_data);
