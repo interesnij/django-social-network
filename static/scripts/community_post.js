@@ -22,7 +22,8 @@ on('#ajax', 'click', '#add_community_btn', function() {
         window.scrollTo(0,0);
         document.title = elem_.querySelector('title').innerHTML;
         Index.initLink();
-        window.history.pushState({route: '/communities/' + community_pk + '/'}, "network", '/users/detail/video_list/' + community_pk + '/');
+        if_list(rtr);
+        window.history.pushState({route: '/communities/' + community_pk + '/'}, "network", '/communities/' + community_pk + '/');
       }
     }
     ajax_link.send(form_data);
