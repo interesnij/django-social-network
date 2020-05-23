@@ -88,4 +88,5 @@ class UserCreateVideoListWindow(TemplateView):
         context = super(UserCreateVideoListWindow,self).get_context_data(**kwargs)
         context['user'] = self.user
         context['album'] = self.album
+        context["form_post"] = VideoForm({'album': self.album})
         return context
