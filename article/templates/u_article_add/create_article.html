@@ -1,4 +1,7 @@
-{% load staticfiles %}
+{% extends "base.html" %}
+{% block title %}Добавление статьи{% endblock %}
+
+{% block content %}
 <style>
   .id_g_image input { display: none; }
   #holder_article_image {border: 2px dashed #FF0000;color: rgba(0, 0, 0, 0.8);padding: 10px;text-align: center;margin: 10px;}
@@ -6,6 +9,7 @@
   #holder_article_image img {height: auto;width: 100%;}
 </style>
 
+<div class="container mt-3 main-container">
 <br>
 <h5 class="m-0">Добавление статьи</h5>
 <br><br>
@@ -44,3 +48,6 @@
         <button type="button" id="article_post" class="btn btn-success float-right" data-pk="{{ request.user.pk }}">Опубликовать</button>
     </div>
 </form>
+
+</div>
+{% endblock %}
