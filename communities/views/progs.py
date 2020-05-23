@@ -42,6 +42,8 @@ class CommunityCreate(TemplateView):
 			new_community=self.form.save(commit=False)
 			community = Community.create_community(name=new_community.name, category=new_community.category, type=new_community.type, creator=request.user)
 			return render_to_response('c_detail/admin_community.html',{'community': new_community, 'user': request.user, 'request': request})
+		else:
+			HttpResponseBadRequest()
 
 
 class CommunitiesCatsView(TemplateView):
