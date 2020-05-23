@@ -155,7 +155,7 @@ class Index {
   static initLink() {document.body.querySelectorAll('.ajax').forEach( lin => lin.addEventListener('click', Index.push_url) );}
   static push_url(event){
     event.preventDefault();
-    url = this.getAttribute('href');
+    url = event.getAttribute('href');
     if (url != window.location.pathname){
         ajax_reload(url);
         document.title = elem_.querySelector('title').innerHTML;
