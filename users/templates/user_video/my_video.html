@@ -28,7 +28,7 @@
                 {% if object_list %}
 
                 <div class="video_playlist" id="movies_container" data-pk="{{ user.pk }}">
-                  <div class="row">
+                  <div class="row movies_list">
                       {% for object in object_list %}
                       <div class="col-12 col-md-6 u_video_detail" style="cursor:pointer" data-counter="{{ forloop.counter0 }}">
                         <div class="blog-header-img">
