@@ -181,7 +181,7 @@ class Index {
     event.preventDefault();
     var url = this.getAttribute('href');
     if (url != window.location.pathname){
-      ajax_reload(url);
+      ajax_get_reload(url);
       load_chart();
     }
   }
