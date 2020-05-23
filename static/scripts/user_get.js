@@ -27,8 +27,7 @@ on('#ajax', 'click', '.u_article_detail', function() {
 on('#ajax', 'click', '#article_add', function() {
   var pk = this.getAttribute('data-pk');
   open_fullscreen("/article/u_article_window/" + pk + "/", document.getElementById("create_loader"));
-  for(var instanceName in CKEDITOR.instances){
-    CKEDITOR.instances[instanceName].updateElement()};
+  setTimeout(function() { CKEDITOR.instances.id_content.updateElement(); }, 1000);
 });
 
 on('#ajax', 'click', '.u_all_likes', function() {
