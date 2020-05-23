@@ -138,10 +138,10 @@ on('#ajax', 'click', '#create_video_list_btn', function() {
         window.scrollTo(0,0);
         document.title = elem_.querySelector('title').innerHTML;
         Index.initLink();
+        window.history.pushState({route: '/users/video_list/' + pk + '/' + uuid + '/'}, "network", 'users/video_list/' + pk + '/' + uuid + '/');
       }
     }
     ajax_link.send(form_data);
-    window.history.pushState({route: '/users/video_list/' + pk + '/' + uuid + '/'}, "network", 'users/video_list/' + pk + '/' + uuid + '/');
 });
 
 on('body', 'click', '#video_holder', function() {
