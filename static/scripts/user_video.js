@@ -133,15 +133,15 @@ on('#ajax', 'click', '#create_video_list_btn', function() {
         elem_.innerHTML = ajax_link.responseText;
         ajax = elem_.querySelector("#reload_block");
         rtr = document.getElementById('ajax');
-        uuid = elem_.querySelector("#movies_container").getAttribute("albom-uuid");
         rtr.innerHTML = ajax.innerHTML;
         window.scrollTo(0,0);
         document.title = elem_.querySelector('title').innerHTML;
         Index.initLink();
-        window.history.pushState({route: 'users/video_list/' + pk + '/' + uuid + '/'}, "network", 'users/video_list/' + pk + '/' + uuid + '/');
       }
     }
     ajax_link.send(form_data);
+    uuid = elem_.querySelector("#movies_container").getAttribute("albom-uuid");
+    window.history.pushState({route: 'users/video_list/' + pk + '/' + uuid + '/'}, "network", 'users/video_list/' + pk + '/' + uuid + '/');
 });
 
 on('body', 'click', '#video_holder', function() {
