@@ -104,11 +104,11 @@ class VideoAlbum(models.Model):
         return self.video_album.filter(is_deleted=False).count()
 
     def get_queryset(self):
-        queryset = self.video_album.all()
+        queryset = self.video_album.all().order_by("-created")
         return queryset
 
     def get_my_queryset(self):
-        queryset = self.video_album.filter(is_public=True)
+        queryset = self.video_album.filter(is_public=True).order_by("-created")
         return queryset
 
     def get_video_count(self):
