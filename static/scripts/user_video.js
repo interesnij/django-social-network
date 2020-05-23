@@ -45,7 +45,7 @@ on('#ajax', 'click', '.u_video_list_detail', function() {
   counter = this.getAttribute('data-counter');
   parent = this.parentElement.parentElement;
   pk = parent.getAttribute('data-pk');
-  uuid = parent.getAttribute('data-uuid'); 
+  uuid = parent.getAttribute('data-uuid');
   loader = document.getElementById("video_loader");
   open_fullscreen("/video/user/list/" + pk + "/" + uuid + "/", loader);
   video_saver = document.body.querySelector("#video_id_saver");
@@ -96,15 +96,18 @@ on('#ajax', 'click', '#create_video_btn', function() {
 
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
-    elem_ = document.createElement('div');
-    elem_.innerHTML = link_.responseText;
-    elem_.classList.add("col-12", "col-md-6", "u_video_detail");
-    elem_.setAttribute("data-counter", "0");
-    elem_.style.cursor = "pointer";
-    container = document.body.querySelector(".movies_list");
+    album = document.body.querySelector("#id_album");
+    if (album.value == ""){
+      elem_ = document.createElement('div');
+      elem_.innerHTML = link_.responseText;
+      elem_.classList.add("col-12", "col-md-6", "u_video_detail");
+      elem_.setAttribute("data-counter", "0");
+      elem_.style.cursor = "pointer";
+      container = document.body.querySelector(".movies_list");
+      container.prepend(elem_)
+    }
     document.querySelector(".create_fullscreen").style.display = "none";
     document.getElementById("create_loader").innerHTML="";
-    container.prepend(elem_);
   }};
 
   link_.send(form_data);

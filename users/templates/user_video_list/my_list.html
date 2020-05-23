@@ -27,7 +27,7 @@
               <div class="card-body uuid_saver" album-uuid="{{ album.uuid }}">
                 {% if object_list %}
 
-                <div class="video_playlist" id="movies_container" data-pk="{{ album.pk }}" data-uuid="{{ user.uuid }}"> 
+                <div class="video_playlist" id="movies_container" data-pk="{{ album.pk }}" data-uuid="{{ user.uuid }}">
                   <div class="row">
                       {% for object in object_list %}
                       <div class="col-12 col-md-6 u_video_list_detail" style="cursor:pointer" data-counter="{{ forloop.counter0 }}">
@@ -67,7 +67,7 @@
                 <div class="media">
                     <div class="media-body">
                       <h5 class="mt-1">
-                        <a href="" class="ajax">Видеокаталог</a>
+                        <a href="#" class="user_video_create_window" data-pk="{{ user.pk }}">Добавить видео</a>
                       </h5>
                     </div>
                 </div>
@@ -78,7 +78,18 @@
                 <div class="media">
                     <div class="media-body">
                       <h5 class="mt-1">
-                        <a href="">Создать список</a>
+                        <a href="#" class="user_video_list_create_window" data-pk="{{ user.pk }}">Создать список</a>
+                      </h5>
+                    </div>
+                </div>
+              </div>
+          </div>
+          <div class="card mb-3">
+              <div class="card-header">
+                <div class="media">
+                    <div class="media-body">
+                      <h5 class="mt-1">
+                        <a href="" class="ajax">Видеокаталог</a>
                       </h5>
                     </div>
                 </div>
