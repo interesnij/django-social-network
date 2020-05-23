@@ -22,7 +22,9 @@ on('#ajax', 'click', '#add_community_btn', function() {
         window.scrollTo(0,0);
         document.title = elem_.querySelector('title').innerHTML;
         Index.initLink();
-        if_list(rtr);
+        lenta_community = rtr.querySelector('#lenta_community');
+        link = lenta_community.getAttribute("data-link");
+        list_load(lenta_community, link);
         window.history.pushState({route: '/communities/' + community_pk + '/'}, "network", '/communities/' + community_pk + '/');
       }
     }
