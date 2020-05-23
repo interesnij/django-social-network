@@ -24,11 +24,11 @@ on('#ajax', 'click', '.u_article_detail', function() {
   open_fullscreen("/users/detail/" + pk + "/" + uuid + "/", loader)
 });
 
-//on('#ajax', 'click', '#article_add', function() {
-//  var pk = this.getAttribute('data-pk');
-//  open_fullscreen("/article/u_article_window/" + pk + "/", document.getElementById("create_loader"));
-//  setTimeout(function() { CKEDITOR.replace('id_content'); CKEDITOR.instances.id_content.updateElement(); }, 1000);
-//});
+on('#ajax', 'click', '#article_add', function() {
+  var pk = this.getAttribute('data-pk');
+  open_fullscreen("/article/u_article_window/" + pk + "/", document.getElementById("create_loader"));
+  setTimeout(function() { CKEDITOR.replace('id_content'); CKEDITOR.instances.id_content.updateElement(); }, 1000);
+});
 
 on('#ajax', 'click', '.u_all_likes', function() {
   var container, uuid, pk, loader;
