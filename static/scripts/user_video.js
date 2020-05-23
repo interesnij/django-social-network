@@ -96,13 +96,15 @@ on('#ajax', 'click', '#create_video_btn', function() {
 
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
-    elem_ = document.createElement('span');
+    elem_ = document.createElement('div');
     elem_.innerHTML = link_.responseText;
-    block = elem_.querySelector("#new_movie_generate");
+    elem_.classList.add("col-12", "col-md-6", "u_video_detail");
+    elem_.setAttribute("data-counter", "0");
+    elem_.style.cursor = "pointer";
     container = document.body.querySelector(".movies_list");
     document.querySelector(".create_fullscreen").style.display = "none";
     document.getElementById("create_loader").innerHTML="";
-    container.prepend(block.innerHTML);
+    container.prepend(elem_);
   }};
 
   link_.send(form_data);
