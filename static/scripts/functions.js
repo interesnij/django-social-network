@@ -168,7 +168,6 @@ function ajax_post_reload(url, form_data) {
         rtr.innerHTML = ajax.innerHTML;
         window.scrollTo(0,0);
         document.title = elem_.querySelector('title').innerHTML;
-        window.history.pushState({route: url}, "network", url);
         Index.initLink();
       }
     }

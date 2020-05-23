@@ -124,7 +124,11 @@ on('#ajax', 'click', '#create_video_btn', function() {
 on('#ajax', 'click', '#create_video_list_btn', function() {
   form_data = new FormData(document.querySelector("#video_list_create"));
   pk = this.getAttribute("data-pk");
-  ajax_post_reload("/video/progs/create_list/" + pk + "/", form_data)
+  uuid = this.getAttribute("data-uuid");
+  ajax_post_reload("/video/progs/create_list/" + pk + "/", form_data);
+  container = elem_.querySelector("#movies_container");
+  uuid = container.getAttribute("albom-uuid");
+  window.history.pushState({route: 'users/video_list/' + pk + '/' + uuid + '/'}, "network", 'users/video_list/' + pk + '/' + uuid + '/');
 });
 
 on('body', 'click', '#video_holder', function() {
