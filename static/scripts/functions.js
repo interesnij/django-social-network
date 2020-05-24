@@ -228,7 +228,7 @@ video_player = new FWDUVPlayer({
     maxWidth:1170,                            // максимальная ширина
     maxHeight:659,                            // максимальная высота
     volume:.8,                                // начальная громкость плеера (1 - 100%)
-    backgroundColor:"#eeeeee",                // цвет фона
+    backgroundColor:"#000000",                // цвет фона
     videoBackgroundColor:"#000000",           // цвет фона видео-секции
     posterBackgroundColor:"#000000",          // цвет фона постера
 
@@ -276,7 +276,7 @@ video_player = new FWDUVPlayer({
     spaceBetweenThumbnails:1,                 // расстояние между миниатюрами
     scrollbarOffestWidth:8,                   // отступ ширины скроллбара
     scollbarSpeedSensitivity:.5,              // скорость отклика скроллбара
-    playlistBackgroundColor:"#000000",        // цвет фона плейлиста
+    playlistBackgroundColor:"#eeeeee",        // цвет фона плейлиста
     playlistNameColor:"#000000",              // цвет названия плейлиста
     thumbnailNormalBackgroundColor:"#ffffff", // цвет фона миниатюры
     thumbnailHoverBackgroundColor:"#eeeeee",  // цвет фона активной миниатюры
