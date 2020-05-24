@@ -17,11 +17,11 @@ function get_video_skinpath(){
   }else if (style.href.indexOf("color_dark") != -1){
     return "video_dark"
   }else{
-    return "video_white";
-    console.log(style, style.href)
+    return "video_white"
   }
 }
 console.log("images/" + get_video_skinpath());
+console.log(style, style.href);
 function dragElement(elmnt) {
   var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
   document.querySelector("#draggable-header").onmousedown = dragMouseDown;
