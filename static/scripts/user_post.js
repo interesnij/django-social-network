@@ -384,7 +384,7 @@ on('#ajax', 'click', '.u_dislike2', function() {
   link__.send( null );
 });
 
-on('#ajax', 'click', '.custom-radio', function() {
+on('#ajax', 'click', '.color_change', function() { 
   var span = this;
   var color = this.getAttribute('data-color');
   var input = span.querySelector(".custom-control-input");
@@ -398,7 +398,7 @@ on('#ajax', 'click', '.custom-radio', function() {
     for(var i=0;i<uncheck.length;i++)
     {uncheck[i].checked=false;}
     input.checked = true;
-    
+
     addStyleSheets("/static/styles/color/" + color + ".css");
   }
 };

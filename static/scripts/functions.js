@@ -1,4 +1,12 @@
-
+function addStyleSheets (href) {
+  $head = document.head,
+  $link = document.createElement('link');
+  $link.rel = 'stylesheet';
+  $link.classList.add("my_color_settings");
+  $link.href = href;
+  $head.appendChild($link);
+  console.log("added!")
+}
 
 function dragElement(elmnt) {
   var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
