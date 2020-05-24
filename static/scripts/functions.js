@@ -10,6 +10,15 @@ function addStyleSheets (href) {
   console.log("added!")
 }
 
+function get_video_skinpath(){
+  style = document.head.querySelector(".my_color_settings");
+  if (style.href.indexOf("white") != -1){
+    return "video_white"
+  }else if (style.href.indexOf("color_dark") != -1){
+    return "video_dark"
+  }
+}
+
 function dragElement(elmnt) {
   var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
   document.querySelector("#draggable-header").onmousedown = dragMouseDown;
@@ -134,7 +143,7 @@ class Index {
     event.preventDefault();
     var url = this.getAttribute('href');
     if (url != window.location.pathname){
-      ajax_get_reload(url);  
+      ajax_get_reload(url);
     }
   }
 }
@@ -174,6 +183,7 @@ function vote_reload(link_1, link_2, _like_block, _dislike_block){
   dislike_link.send( null );
 }
 
+
 function load_video_playlist(video_saver_id, counter) {
   video_saver = document.body.querySelector("#video_id_saver");
 
@@ -183,7 +193,7 @@ video_player = new FWDUVPlayer({
     parentId: "video_player",
     playlistsId:"video_playlists",
     mainFolderPath:"/static",
-    skinPath:"images/video_white/",
+    skinPath:"images/" + get_video_skinpath(),
     displayType:"responsive",                 // тип дисплея (выбран отзывчивый к размерам экрана)
     useVectorIcons:"no",                      // использование векторной графики
     fillEntireVideoScreen:"no",               // заполнение всего экрана видео-роликом

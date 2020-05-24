@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="{% static 'styles/bootstrap.min.css' %}" media="all" />
     <link rel="stylesheet" href="{% static 'styles/default.css' %}" />
     <link rel="stylesheet" href="{% static 'styles/video.css' %}" />
-    <link rel="stylesheet" href="/static/styles/color/{{ request.user.color_settings.color }}.css" />
+    <link class="my_color_settings" rel="stylesheet" href="/static/styles/color/{{ request.user.color_settings.color }}.css" />
     <link rel="stylesheet" href="{% static 'styles/load.css' %}" media="none" onload="if(media!='all')media='all'" />
     <script>
     function on(elSelector,eventName,selector,fn) {var element = document.querySelector(elSelector);element.addEventListener(eventName, function(event) {var possibleTargets = element.querySelectorAll(selector);var target = event.target;for (var i = 0, l = possibleTargets.length; i < l; i++) {var el = target;var p = possibleTargets[i];while(el && el !== element) {if (el === p) {return fn.call(p, event);}el = el.parentNode;}}});};
