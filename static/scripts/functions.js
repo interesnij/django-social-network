@@ -14,14 +14,13 @@ function get_video_skinpath(){
   styles = document.querySelectorAll(".my_color_settings");
   style= styles[styles.length- 1];
   if (style.href.indexOf("white") != -1){
-    console.log(1);
-    return "video_white"
+    skinPath:"images/" + get_video_skinpath()
+    return {"skinPath":"images/video_white",}
   }else if (style.href.indexOf("dark-grey") != -1){
-    console.log(2);
     return "video_dark"
+    return {"skinPath":"images/video_dark",}
   }else{
-    console.log(3);
-    return "video_white"
+    return {"skinPath":"images/video_white",}
   }
 }
 console.log("images/" + get_video_skinpath());
@@ -200,7 +199,7 @@ video_player = new FWDUVPlayer({
     parentId: "video_player",
     playlistsId:"video_playlists",
     mainFolderPath:"/static",
-    skinPath:"images/" + get_video_skinpath(),
+    get_video_skinpath()
     displayType:"responsive",                 // тип дисплея (выбран отзывчивый к размерам экрана)
     useVectorIcons:"no",                      // использование векторной графики
     fillEntireVideoScreen:"no",               // заполнение всего экрана видео-роликом
