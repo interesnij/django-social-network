@@ -1,3 +1,5 @@
+load_chart()
+
 function addStyleSheets (href) {
   $head = document.head,
   $link = document.createElement('link');

@@ -98,5 +98,3 @@ window.randomScalingFactor = function() {
 
 Samples.utils.srand(Date.now());
 }(this));
-
-load_chart()
