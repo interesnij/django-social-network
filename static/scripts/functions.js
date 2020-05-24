@@ -422,9 +422,9 @@ video_player = new FWDUVPlayer({
 });
 
 if (style.href.indexOf("white") != -1){
-  FWDUVPlayer.skinPath:"images/video_white"
+  FWDUVPlayer.skinPath == "images/video_white"
 }else if (style.href.indexOf("dark-grey") != -1){
-  FWDUVPlayer.skinPath:"images/video_dark"
+  FWDUVPlayer.skinPath == "images/video_dark"
 }
 }
 
