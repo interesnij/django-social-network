@@ -398,15 +398,7 @@ on('#ajax', 'click', '.custom-radio', function() {
     for(var i=0;i<uncheck.length;i++)
     {uncheck[i].checked=false;}
     input.checked = true;
-    function addStyleSheets (href) {
-      $head = document.head,
-      $link = document.createElement('link');
-      $link.rel = 'stylesheet';
-      $link.classList.add("my_color_settings");
-      $link.href = href;
-      $head.appendChild($link);
-      console.log("added!")
-    }
+    
     addStyleSheets("/static/styles/color/" + color + ".css");
   }
 };
