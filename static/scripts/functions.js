@@ -194,12 +194,18 @@ function load_video_playlist(video_saver_id, counter) {
   video_saver = document.body.querySelector("#video_id_saver");
 
 video_player = new FWDUVPlayer({
-    //main settings
+  styles = document.querySelectorAll(".my_color_settings");
+  style= styles[styles.length- 1];
+  if (style.href.indexOf("white") != -1){
+    skinPath:"images/video_white"
+  }else if (style.href.indexOf("dark-grey") != -1){
+    skinPath:"images/video_dark"
+  },
     instanceName:video_saver_id,
     parentId: "video_player",
     playlistsId:"video_playlists",
     mainFolderPath:"/static",
-    get_video_skinpath(),
+    get_video_skinpath()
     displayType:"responsive",                 // тип дисплея (выбран отзывчивый к размерам экрана)
     useVectorIcons:"no",                      // использование векторной графики
     fillEntireVideoScreen:"no",               // заполнение всего экрана видео-роликом
