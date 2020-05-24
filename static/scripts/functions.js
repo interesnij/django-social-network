@@ -192,10 +192,11 @@ function vote_reload(link_1, link_2, _like_block, _dislike_block){
 
 function load_video_playlist(video_saver_id, counter) {
   video_saver = document.body.querySelector("#video_id_saver");
+  styles = document.querySelectorAll(".my_color_settings");
+  style = styles[styles.length- 1];
 
 video_player = new FWDUVPlayer({
-  styles = document.querySelectorAll(".my_color_settings");
-  style= styles[styles.length- 1];
+
   if (style.href.indexOf("white") != -1){
     skinPath:"images/video_white"
   }else if (style.href.indexOf("dark-grey") != -1){
