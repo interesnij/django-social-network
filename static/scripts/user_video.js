@@ -104,7 +104,7 @@ on('#ajax', 'click', '#create_video_btn', function() {
       elem_.style.cursor = "pointer";
       container = document.body.querySelector(".movies_list");
       container.prepend(elem_);
-      container.querySelector(".video_none").style.display = "none";
+      try{container.querySelector(".video_none").style.display = "none"}catch{null};
     }
     document.querySelector(".create_fullscreen").style.display = "none";
     document.getElementById("create_loader").innerHTML="";
@@ -131,7 +131,7 @@ on('#ajax', 'click', '#create_video_in_list_btn', function() {
       elem_.style.cursor = "pointer";
       container = document.body.querySelector(".movies_list_in_list");
       container.prepend(elem_);
-      container.querySelector(".video_none").style.display = "none";
+      try{container.querySelector(".video_none").style.display = "none"}catch{null};
     }
     document.querySelector(".create_fullscreen").style.display = "none";
     document.getElementById("create_loader").innerHTML="";
