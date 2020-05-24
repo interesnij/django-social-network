@@ -225,7 +225,7 @@ video_player = new FWDUVPlayer({
     maxWidth:1170,                            // максимальная ширина
     maxHeight:659,                            // максимальная высота
     volume:.8,                                // начальная громкость плеера (1 - 100%)
-    backgroundColor:"#eeeeee",                // цвет фона
+    backgroundColor:get_video_dop()[1],                // цвет фона
     videoBackgroundColor:"#000000",           // цвет фона видео-секции
     posterBackgroundColor:"#000000",          // цвет фона постера
 
@@ -274,12 +274,10 @@ video_player = new FWDUVPlayer({
     scrollbarOffestWidth:8,                   // отступ ширины скроллбара
     scollbarSpeedSensitivity:.5,              // скорость отклика скроллбара
     playlistBackgroundColor:get_video_dop()[1],         // цвет фона плейлиста
-    playlistNameColor:"#000000",              // цвет названия плейлиста
+    playlistNameColor:get_video_dop()[1],              // цвет названия плейлиста
     thumbnailNormalBackgroundColor:get_video_dop()[2], // цвет фона миниатюры
     thumbnailHoverBackgroundColor:get_video_dop()[1],  // цвет фона активной миниатюры
     thumbnailDisabledBackgroundColor:get_video_dop()[1], // цвет фона disabled миниатюры
-    searchInputBackgroundColor:"#F3F3F3",     // цвет фона поля поиска
-    searchInputColor:"#888888",               // цвет фона текста поиска
     youtubeAndFolderVideoTitleColor:get_video_dop()[1],// цвет плейлиста роликов с папок и ютуба
     youtubeOwnerColor:"#919191",              // цвет названия ролика я ютуба
     youtubeDescriptionColor:"#919191",        // цвет описания ролика я ютуба
@@ -289,7 +287,7 @@ video_player = new FWDUVPlayer({
     mainButtonBackgroundNormalColor:get_video_dop()[2],// цвет фона кнопок
     mainButtonBackgroundSelectedColor:get_video_dop()[2],// цвет фона нажатой кнопки
     mainButtonTextNormalColor:get_video_dop()[2],      // цвет текста кнопок
-    mainButtonTextSelectedColor:"#FFFFFF",    // цвет текста нажатой кнопки
+    mainButtonTextSelectedColor:get_video_dop()[2],    // цвет текста нажатой кнопки
 
     //controller settings
     showController:"yes",                     // показывать контроллер
@@ -404,7 +402,7 @@ video_player = new FWDUVPlayer({
     //thumbnails preview
     thumbnailsPreviewWidth:196,              // ширина предпросмотра миниатюры
     thumbnailsPreviewHeight:110,             // высота предпросмотра миниатюры
-    thumbnailsPreviewBackgroundColor:"#000000",// цвет фона  миниатюры
+    thumbnailsPreviewBackgroundColor:get_video_dop()[1],// цвет фона  миниатюры
     thumbnailsPreviewBorderColor:"#666",     // цвет названия миниатюры
     thumbnailsPreviewLabelBackgroundColor:"#666", // цвет фона названия минатюры
     thumbnailsPreviewLabelFontColor:"#FFF",
