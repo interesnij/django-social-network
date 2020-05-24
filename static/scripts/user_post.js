@@ -384,7 +384,7 @@ on('#ajax', 'click', '.u_dislike2', function() {
   link__.send( null );
 });
 
-on('.theme-color', 'click', '.color_change', function() {
+on('#ajax', 'click', '.color_change', function() {
   var span = this;
   var color = this.getAttribute('data-color');
   var input = span.querySelector(".custom-control-input");
