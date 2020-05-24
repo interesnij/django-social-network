@@ -181,7 +181,7 @@ function get_video_dop(){
   if (style.href.indexOf("white") != -1){
     settings += ["images/video_white",'#eeeeee','#FFFFFF']
   }else if (style.href.indexOf("dark-grey") != -1){
-    settings += ["images/video_dark",'#000000','#eeeeee']
+    settings += ["images/video_dark",'#000000','#000000']
   }
   return settings.split(',')
 }
