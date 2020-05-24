@@ -16,6 +16,8 @@ function get_video_skinpath(){
     return "video_white"
   }else if (style.href.indexOf("color_dark") != -1){
     return "video_dark"
+  }else{
+    return "video_white"
   }
 }
 console.log("images/" + get_video_skinpath());
