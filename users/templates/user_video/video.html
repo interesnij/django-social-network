@@ -25,7 +25,6 @@
                 </div>
               </div>
               <div class="card-body">
-                {% if object_list %}
 
                 <div class="video_playlist" id="movies_container" data-pk="">
                   <div class="row">
@@ -43,18 +42,18 @@
                             </div>
                           </div>
                       </div>
+                      {% empty %}
+                      <div class="card" style="align-items: center;justify-content:center;">
+                        <div class="card-body" style="margin-top: 10%;">
+                        <svg class='svg_default thumb_big' fill='currentColor' viewBox='0 0 24 24'>
+                          <path d="M18 3v2h-2V3H8v2H6V3H4v18h2v-2h2v2h8v-2h2v2h2V3h-2zM8 17H6v-2h2v2zm0-4H6v-2h2v2zm0-4H6V7h2v2zm10 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V7h2v2z"/><path d="M0 0h24v24H0z" fill="none"/>
+                        </svg>
+                        </div>
+                        <h6 style="margin: 20px;text-align: center;">У списке пока нет видео. <a href="" style="text-decoration:underline;" class="ajax">Перейдите в видео каталог</a> и выбирайте из сотен тысяч роликов</h6>
+                      </div>
                       {% endfor %}
                   </div>
                 </div>
-
-                {% else %}
-                <div class="card" style="align-items: center;justify-content:center;">
-                  <div class="card-body" style="margin-top: 10%;">
-                  <svg class='svg_default thumb_big' fill='currentColor' viewBox='0 0 24 24'><path fill='none' d='M0 0h24v24H0z'/><path d='M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z'/></svg>
-                  </div>
-                  <h6 style="margin: 20px;text-align: center;">У Вас пока нет видеороликов. <a href="{% url 'all_music' %}" style="text-decoration:underline;" class="ajax">Перейдите в каталог</a> музыкальных композиций и выбирайте из сотен тысяч треков</h6>
-                </div>
-                {% endif %}
               </div>
           </div>
         </div>
