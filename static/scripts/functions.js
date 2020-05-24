@@ -18,7 +18,7 @@ function get_video_skinpath(){
     return "video_dark"
   }
 }
-
+console.log("images/" + get_video_skinpath());
 function dragElement(elmnt) {
   var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
   document.querySelector("#draggable-header").onmousedown = dragMouseDown;
