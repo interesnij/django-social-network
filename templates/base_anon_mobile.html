@@ -45,9 +45,6 @@
     <script defer src="{% static 'scripts/get.js' %}" type="text/javascript"></script>
 
     <script>
-    ready(() => {
-    function addStyleSheets (href) {$head = document.head,$link = document.createElement('link');$link.rel = 'stylesheet';$link.href = href;$head.appendChild($link);};addStyleSheets("/static/styles/color/white.css");
-    });
 
     on('body', 'click', '.drop', function() {
       var block = this.nextElementSibling;
