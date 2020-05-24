@@ -12,12 +12,13 @@ function addStyleSheets (href) {
 
 function get_video_skinpath(){
   style = document.head.querySelector(".my_color_settings");
-  if (style.indexOf("white") != -1){
+  if (style.href.indexOf("white") != -1){
     return "video_white"
-  }else if (style.indexOf("color_dark") != -1){
+  }else if (style.href.indexOf("color_dark") != -1){
     return "video_dark"
   }else{
-    return "video_white"
+    return "video_white";
+    console.log(style, style.href)
   }
 }
 console.log("images/" + get_video_skinpath());
