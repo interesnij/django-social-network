@@ -276,7 +276,7 @@ video_player = new FWDUVPlayer({
     spaceBetweenThumbnails:1,                 // расстояние между миниатюрами
     scrollbarOffestWidth:8,                   // отступ ширины скроллбара
     scollbarSpeedSensitivity:.5,              // скорость отклика скроллбара
-    playlistBackgroundColor:"#eeeeee",        // цвет фона плейлиста
+    playlistBackgroundColor:"#000000",        // цвет фона плейлиста
     playlistNameColor:"#000000",              // цвет названия плейлиста
     thumbnailNormalBackgroundColor:"#ffffff", // цвет фона миниатюры
     thumbnailHoverBackgroundColor:"#eeeeee",  // цвет фона активной миниатюры
