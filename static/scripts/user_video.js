@@ -126,7 +126,7 @@ on('#ajax', 'click', '#create_video_in_list_btn', function() {
     if (album.value == pk){
       elem_ = document.createElement('div');
       elem_.innerHTML = link_.responseText;
-      elem_.classList.add("col-12", "col-md-6", "u_video_detail");
+      elem_.classList.add("col-12", "col-md-6", "u_video_list_detail");
       elem_.setAttribute("data-counter", "0");
       elem_.style.cursor = "pointer";
       container = document.body.querySelector(".movies_list_in_list");
