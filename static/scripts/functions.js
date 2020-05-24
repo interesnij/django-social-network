@@ -179,9 +179,9 @@ function get_video_dop(){
   style= styles[styles.length- 1];
   settings = [];
   if (style.href.indexOf("white") != -1){
-    settings += ["images/video_white",]
+    settings += ["images/video_white",'#eeeeee','#FFFFFF']
   }else if (style.href.indexOf("dark-grey") != -1){
-    settings += ["images/video_dark",]
+    settings += ["images/video_dark",'#000000','#eeeeee']
   }
   return settings.split(',')
 }
@@ -273,22 +273,22 @@ video_player = new FWDUVPlayer({
     spaceBetweenThumbnails:1,                 // расстояние между миниатюрами
     scrollbarOffestWidth:8,                   // отступ ширины скроллбара
     scollbarSpeedSensitivity:.5,              // скорость отклика скроллбара
-    playlistBackgroundColor:"#000000",         // цвет фона плейлиста !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    playlistBackgroundColor:get_video_dop()[1],         // цвет фона плейлиста
     playlistNameColor:"#000000",              // цвет названия плейлиста
-    thumbnailNormalBackgroundColor:"#000000", // цвет фона миниатюры #ffffff !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    thumbnailHoverBackgroundColor:"#000000",  // цвет фона активной миниатюры!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    thumbnailDisabledBackgroundColor:"#000000", // цвет фона disabled миниатюры!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    thumbnailNormalBackgroundColor:get_video_dop()[2], // цвет фона миниатюры
+    thumbnailHoverBackgroundColor:get_video_dop()[1],  // цвет фона активной миниатюры
+    thumbnailDisabledBackgroundColor:get_video_dop()[1], // цвет фона disabled миниатюры
     searchInputBackgroundColor:"#F3F3F3",     // цвет фона поля поиска
     searchInputColor:"#888888",               // цвет фона текста поиска
-    youtubeAndFolderVideoTitleColor:"#000000",// цвет плейлиста роликов с папок и ютуба
+    youtubeAndFolderVideoTitleColor:get_video_dop()[1],// цвет плейлиста роликов с папок и ютуба
     youtubeOwnerColor:"#919191",              // цвет названия ролика я ютуба
     youtubeDescriptionColor:"#919191",        // цвет описания ролика я ютуба
-    mainSelectorBackgroundSelectedColor:"#000000", // цвет фона плейлиста при наведении #ffffff !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    mainSelectorTextNormalColor:"#000000",    // цвет текста плейлиста
-    mainSelectorTextSelectedColor:"#000000", // цвет текста плейлиста при наведении
-    mainButtonBackgroundNormalColor:"#FFFFFF",// цвет фона кнопок
-    mainButtonBackgroundSelectedColor:"#000000",// цвет фона нажатой кнопки
-    mainButtonTextNormalColor:"#000000",      // цвет текста кнопок
+    mainSelectorBackgroundSelectedColor:get_video_dop()[2], // цвет фона плейлиста при наведении
+    mainSelectorTextNormalColor:get_video_dop()[1],    // цвет текста плейлиста
+    mainSelectorTextSelectedColor:get_video_dop()[2],
+    mainButtonBackgroundNormalColor:get_video_dop()[2],// цвет фона кнопок
+    mainButtonBackgroundSelectedColor:get_video_dop()[2],// цвет фона нажатой кнопки
+    mainButtonTextNormalColor:get_video_dop()[2],      // цвет текста кнопок
     mainButtonTextSelectedColor:"#FFFFFF",    // цвет текста нажатой кнопки
 
     //controller settings
