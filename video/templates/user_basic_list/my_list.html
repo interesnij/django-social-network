@@ -1,9 +1,9 @@
 <style>
-.color_dark .fwduvp-thumbnail-title,
-.color_dark .fwduvp-thumbnail-description{
+.color_dark,
+.color_dark{
 	color:white
 }
-.color_dark li{
+.color_dark_back{
 	background-color:black
 }
 </style>
@@ -26,7 +26,7 @@
 			data-poster-source="{{ object.image.url }}"
 			data-downloadable="no">
 	<div data-video-short-description="">
-			<div>
+			<div class="color_dark_back">
 				<p class="fwduvp-thumbnail-title color_dark">{{ object.title }}</p>
 				<p class="fwduvp-thumbnail-description color_dark">{% if object.description %}{{ object.description }}{% else %}Без описания{% endif %}</p>
 			</div>
