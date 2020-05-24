@@ -10,19 +10,6 @@ function addStyleSheets (href) {
   console.log("added!")
 }
 
-function get_video_dop(){
-  styles = document.querySelectorAll(".my_color_settings");
-  style= styles[styles.length- 1];
-  settings = [];
-  if (style.href.indexOf("white") != -1){
-    settings =+ ["images/video_white"]
-  }else if (style.href.indexOf("dark-grey") != -1){
-    settings =+ ["images/video_dark"]
-  }
-  return settings
-}
-console.log("images/" + get_video_skinpath());
-console.log(style, style.href);
 function dragElement(elmnt) {
   var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
   document.querySelector("#draggable-header").onmousedown = dragMouseDown;
@@ -187,6 +174,17 @@ function vote_reload(link_1, link_2, _like_block, _dislike_block){
   dislike_link.send( null );
 }
 
+function get_video_dop(){
+  styles = document.querySelectorAll(".my_color_settings");
+  style= styles[styles.length- 1];
+  settings = [];
+  if (style.href.indexOf("white") != -1){
+    settings =+ ["images/video_white"]
+  }else if (style.href.indexOf("dark-grey") != -1){
+    settings =+ ["images/video_dark"]
+  }
+  return settings
+}
 
 function load_video_playlist(video_saver_id, counter) {
   video_saver = document.body.querySelector("#video_id_saver");
