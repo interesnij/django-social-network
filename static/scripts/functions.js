@@ -200,7 +200,6 @@ video_player = new FWDUVPlayer({
     parentId: "video_player",
     playlistsId:"video_playlists",
     mainFolderPath:"/static",
-    get_video_skinpath()
     displayType:"responsive",                 // тип дисплея (выбран отзывчивый к размерам экрана)
     useVectorIcons:"no",                      // использование векторной графики
     fillEntireVideoScreen:"no",               // заполнение всего экрана видео-роликом
