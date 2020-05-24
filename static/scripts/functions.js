@@ -6,12 +6,13 @@ function addStyleSheets (href) {
   $link.rel = 'stylesheet';
   $link.classList.add("my_color_settings");
   $link.href = href;
-  $head.prepend($link);
+  $head.appendChild($link);
   console.log("added!")
 }
 
 function get_video_skinpath(){
-  style = document.querySelector(".my_color_settings");
+  styles = document.querySelectorAll(".my_color_settings");
+  style= styles[styles.length- 1];
   if (style.href.indexOf("white") != -1){
     console.log(1);
     return "video_white"
