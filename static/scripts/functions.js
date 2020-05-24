@@ -179,9 +179,9 @@ function get_video_dop(){
   style= styles[styles.length- 1];
   settings = [];
   if (style.href.indexOf("white") != -1){
-    settings += "images/video_white"
+    settings.add("images/video_white")
   }else if (style.href.indexOf("dark-grey") != -1){
-    settings += "images/video_dark"
+    settings.add("images/video_dark")
   }
   return settings
 }
