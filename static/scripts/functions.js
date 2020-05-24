@@ -196,12 +196,12 @@ function load_video_playlist(video_saver_id, counter) {
   style = styles[styles.length- 1];
 
 video_player = new FWDUVPlayer({
-
+  try{
   if (style.href.indexOf("white") != -1){
     skinPath:"images/video_white"
   }else if (style.href.indexOf("dark-grey") != -1){
     skinPath:"images/video_dark"
-  },
+  }}catch{null}
     instanceName:video_saver_id,
     parentId: "video_player",
     playlistsId:"video_playlists",
