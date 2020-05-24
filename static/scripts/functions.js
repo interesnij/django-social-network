@@ -185,7 +185,7 @@ function get_video_dop(){
   }
   return settings
 }
-console.log(get_video_dop()[0]);
+console.log(get_video_dop());
 
 function load_video_playlist(video_saver_id, counter) {
   video_saver = document.body.querySelector("#video_id_saver");
