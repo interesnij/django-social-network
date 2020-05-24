@@ -177,13 +177,11 @@ function vote_reload(link_1, link_2, _like_block, _dislike_block){
 function get_video_dop(){
   styles = document.querySelectorAll(".my_color_settings");
   style= styles[styles.length- 1];
-  settings = ();
+  settings = [];
   if (style.href.indexOf("white") != -1){
-    path = "images/video_white";
-    settings += path
+    settings += "images/video_white"
   }else if (style.href.indexOf("dark-grey") != -1){
-    path = "images/video_dark";
-    settings += path
+    settings += "images/video_dark"
   }
   return settings
 }
