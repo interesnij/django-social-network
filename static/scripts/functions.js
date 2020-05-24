@@ -276,11 +276,11 @@ video_player = new FWDUVPlayer({
     spaceBetweenThumbnails:1,                 // расстояние между миниатюрами
     scrollbarOffestWidth:8,                   // отступ ширины скроллбара
     scollbarSpeedSensitivity:.5,              // скорость отклика скроллбара
-    playlistBackgroundColor:"#000000",        // цвет фона плейлиста
+    playlistBackgroundColor:"#000000",         // цвет фона плейлиста !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     playlistNameColor:"#000000",              // цвет названия плейлиста
     thumbnailNormalBackgroundColor:"#ffffff", // цвет фона миниатюры
-    thumbnailHoverBackgroundColor:"#eeeeee",  // цвет фона активной миниатюры
-    thumbnailDisabledBackgroundColor:"#eeeeee", // цвет фона disabled миниатюры
+    thumbnailHoverBackgroundColor:"#000000",  // цвет фона активной миниатюры!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    thumbnailDisabledBackgroundColor:"#000000", // цвет фона disabled миниатюры!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     searchInputBackgroundColor:"#F3F3F3",     // цвет фона поля поиска
     searchInputColor:"#888888",               // цвет фона текста поиска
     youtubeAndFolderVideoTitleColor:"#000000",// цвет плейлиста роликов с папок и ютуба
