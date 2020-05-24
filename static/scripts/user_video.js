@@ -129,7 +129,7 @@ on('#ajax', 'click', '#create_video_in_list_btn', function() {
       elem_.setAttribute("data-counter", "0");
       elem_.style.cursor = "pointer";
       container = document.body.querySelector(".movies_list");
-      container.prepend(elem_) 
+      container.prepend(elem_)
     }
     document.querySelector(".create_fullscreen").style.display = "none";
     document.getElementById("create_loader").innerHTML="";

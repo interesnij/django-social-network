@@ -398,7 +398,7 @@ on('#ajax', 'click', '.custom-radio', function() {
     for(var i=0;i<uncheck.length;i++)
     {uncheck[i].checked=false;}
     input.checked = true;
-    function addStyleSheets (href) {$head = document.head,$link = document.createElement('link');$link.rel = 'stylesheet';$link.href = href;$head.appendChild($link);};addStyleSheets("/static/styles/color/" + color + ".css");
+    addStyleSheets("/static/styles/color/" + color + ".css");
   }
 };
 });
