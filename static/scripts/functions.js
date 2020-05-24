@@ -278,7 +278,7 @@ video_player = new FWDUVPlayer({
     scollbarSpeedSensitivity:.5,              // скорость отклика скроллбара
     playlistBackgroundColor:"#000000",         // цвет фона плейлиста !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     playlistNameColor:"#000000",              // цвет названия плейлиста
-    thumbnailNormalBackgroundColor:"#ffffff", // цвет фона миниатюры
+    thumbnailNormalBackgroundColor:"#000000", // цвет фона миниатюры #ffffff !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     thumbnailHoverBackgroundColor:"#000000",  // цвет фона активной миниатюры!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     thumbnailDisabledBackgroundColor:"#000000", // цвет фона disabled миниатюры!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     searchInputBackgroundColor:"#F3F3F3",     // цвет фона поля поиска
@@ -286,9 +286,9 @@ video_player = new FWDUVPlayer({
     youtubeAndFolderVideoTitleColor:"#000000",// цвет плейлиста роликов с папок и ютуба
     youtubeOwnerColor:"#919191",              // цвет названия ролика я ютуба
     youtubeDescriptionColor:"#919191",        // цвет описания ролика я ютуба
-    mainSelectorBackgroundSelectedColor:"#000000", // цвет фона плейлиста при наведении
+    mainSelectorBackgroundSelectedColor:"#000000", // цвет фона плейлиста при наведении #ffffff !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     mainSelectorTextNormalColor:"#000000",    // цвет текста плейлиста
-    mainSelectorTextSelectedColor:"#FFFFFFF", // цвет текста плейлиста при наведении
+    mainSelectorTextSelectedColor:"#000000", // цвет текста плейлиста при наведении
     mainButtonBackgroundNormalColor:"#FFFFFF",// цвет фона кнопок
     mainButtonBackgroundSelectedColor:"#000000",// цвет фона нажатой кнопки
     mainButtonTextNormalColor:"#000000",      // цвет текста кнопок
