@@ -18,16 +18,16 @@
 </ul>
 
 
-<ul id="my_playlist" style="display:none;" class="color_dark color_dark_back">
+<ul id="my_playlist" style="display:none;" class="">
 {% for object in object_list %}
 	<li data-thumb-source="{{ object.image.url }}"
 			data-video-source="{{ object.uri }}"
 			data-poster-source="{{ object.image.url }}"
 			data-downloadable="no">
 	<div data-video-short-description="">
-			<div class="color_dark_back" style="width:100%">
-				<p class="fwduvp-thumbnail-title color_dark">{{ object.title }}</p>
-				<p class="fwduvp-thumbnail-description color_dark">{% if object.description %}{{ object.description }}{% else %}Без описания{% endif %}</p>
+			<div style="width:100%">
+				<p class="fwduvp-thumbnail-title">{{ object.title }}</p>
+				<p class="fwduvp-thumbnail-description">{% if object.description %}{{ object.description }}{% else %}Без описания{% endif %}</p>
 			</div>
 		</div>
 	</li>
