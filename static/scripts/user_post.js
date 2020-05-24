@@ -384,7 +384,7 @@ on('#ajax', 'click', '.u_dislike2', function() {
   link__.send( null );
 });
 
-on('#ajax', 'click', '.color_change', function() { 
+on('.theme-color', 'click', '.color_change', function() {
   var span = this;
   var color = this.getAttribute('data-color');
   var input = span.querySelector(".custom-control-input");
@@ -393,12 +393,11 @@ on('#ajax', 'click', '.color_change', function() {
   link_.open( 'GET', "/users/progs/color/" + color + "/", true );
   link_.send();
   link_.onreadystatechange = function () {
-  if ( this.readyState == 4 && this.status == 200 ) {
+  if ( link_.readyState == 4 && link_.status == 200 ) {
     var uncheck=document.getElementsByTagName('input');
     for(var i=0;i<uncheck.length;i++)
     {uncheck[i].checked=false;}
     input.checked = true;
-
     addStyleSheets("/static/styles/color/" + color + ".css");
   }
 };
