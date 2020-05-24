@@ -11,7 +11,7 @@ function addStyleSheets (href) {
 }
 
 function get_video_skinpath(){
-  style = document.head.querySelector(".my_color_settings");
+  style = document.querySelector(".my_color_settings");
   if (style.href.indexOf("white") != -1){
     return "video_white"
   }else if (style.href.indexOf("color_dark") != -1){
