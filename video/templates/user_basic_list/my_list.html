@@ -1,145 +1,10 @@
 <style>
-	.fwduvp-categories-dark-text .fwduvp-header{
-	color: #FFFFFF !important;
+.color_dark .fwduvp-thumbnail-title,
+.color_dark .fwduvp-thumbnail-description{
+	color:white
 }
-
-.fwduvp-categories-dark-text.active .fwduvp-title{
-	color: #FFFFFF !important;
-}
-
-.fwduvp-categories-dark-text .fwduvp-categories-title{
-	margin: 10px 15px 0 !important;
-	line-height: 1.8 !important;
-}
-
-.fwduvp-categories-dark-text .fwduvp-title{
-	font-weight: bold;
-	line-height: 18px !important;
-	color:#999 !important;
-	transition: all .3s ease-out !important;
-}
-
-.fwduvp-categories-dark-text .fwduvp-categories-type{
-	color:#999 !important;
-	line-height: 18px !important;
-	margin: 2px 15px 0 !important;
-}
-
-.fwduvp-categories-dark-text .fwduvp-categories-description{
-	color:#999 !important;
-	line-height: 18px !important;
-	margin: 5px 15px 13px !important;
-}
-
-.fwduvp-link a:link    {color:#0099FF !important;}
-.fwduvp-link a:visited {color:#0099FF !important;}
-.fwduvp-link a:hover   {color:#DDDDDD !important;}
-.fwduvp-link a:active  {color:#0099FF !important;}
-
-
-/* White Skins. */
-.fwduvp-white-thumbnail-title{
-	font-family:  Roboto, Arial !important;
-	color:#000000 !important;
-	line-height:16px !important;
-	margin: 2px 0 3px!important;
-	padding:0px !important;
-	transition: all .25s ease-out !important;
-}
-
-.fwduvp-playlist-thumbnail-text.white-active .fwduvp-white-thumbnail-title{
-	color: #000000 !important;
-}
-
-
-.fwduvp-playlist-thumbnail-text.white-active .fwduvp-ytb-title{
-	color: #000000 !important;
-}
-
-.fwduvp-playlist-thumbnail-text.white-active .fwduvp-ytb-title{
-	color: #FFFFFF !important;
-}
-
-.fwduvp-playlist-thumbnail-white-text .fwduvp-thumbnail-description{
-	font-family: Roboto, Arial !important;
-	font-size: 13px !important;
-    line-height: 15px !important;
-	margin:0px !important;
-	color:#919191 !important;
-}
-
-.fwduvp-info-window-white .fwduvp-ytb-info-title,
-.fwduvp-info-window-white .fwduvp-video-title,
-.fwduvp-playlist-thumbnail-white-text .fwduvp-video-title{
-	font: 400 14px Roboto, Arial !important;
-	margin: 12px 12px 8px !important;
-	color: #000000 !important;
-}
-
-.fwduvp-playlist-thumbnail-white-text .fwduvp-thumbnail-title{
-	color: #000000 !important;
-}
-
-.fwduvp-info-window-white .fwduvp-link a:link    {color:#0099FF !important;}
-.fwduvp-info-window-white .fwduvp-link a:visited {color:#0099FF !important;}
-.fwduvp-info-window-white .fwduvp-link a:hover   {color:#000000 !important;}
-.fwduvp-info-window-white .fwduvp-link a:active  {color:#0099FF !important;}
-
-.fwduvp-info-window-white .fwduvp-ytb-info-p,
-.fwduvp-info-window-white .fwduvp-video-main-description,
-.fwduvp-playlist-thumbnail-white-text .fwduvp-video-main-description{
-	font-family: Roboto, Arial !important;
-	margin: 0 12px 11px !important;
-	font-size: 13px !important;
-	line-height:16px !important;
-	color:#888888 !important;
-}
-
-.fwduvp-info-window-white .fwduvp-link,
-.fwduvp-playlist-thumbnail-white-text .fwduvp-link{
-	font-family: Roboto, Arial !important;
-	margin: -4px 12px 11px !important;
-	font-size: 13px !important;
-	line-height: 16px !important;
-	color: #888888 !important;
-}
-
-.fwduvp-categories-white-text{
-	font: 400 14px Roboto, Arial !important;
-}
-
-.fwduvp-categories-white-text .fwduvp-header{
-	font-weight: 500;
-	color: #000000 !important;
-}
-
-.fwduvp-categories-white-text.active .fwduvp-title{
-	color: #000000 !important;
-}
-
-.fwduvp-categories-white-text .fwduvp-categories-title{
-	font-weight: 500;
-	margin: 10px 15px 0 !important;
-	line-height: 1.8 !important;
-}
-
-.fwduvp-categories-white-text .fwduvp-title{
-	font-weight: bold;
-	line-height: 18px !important;
-	color:#666 !important;
-	transition: all .3s ease-out !important;
-}
-
-.fwduvp-categories-white-text .fwduvp-categories-type{
-	color:#666 !important;
-	line-height: 18px !important;
-	margin: 2px 15px 0 !important;
-}
-
-.fwduvp-categories-white-text .fwduvp-categories-description{
-	color:#666 !important;
-	line-height: 18px !important;
-	margin: 5px 15px 13px !important;
+.color_dark li{
+	background-color:black
 }
 </style>
 
@@ -154,7 +19,7 @@
 </ul>
 
 
-<ul id="my_playlist" style="display:none;">
+<ul id="my_playlist" style="display:none;" class="color_dark">
 {% for object in object_list %}
 	<li data-thumb-source="{{ object.image.url }}"
 			data-video-source="{{ object.uri }}"
@@ -162,8 +27,8 @@
 			data-downloadable="no">
 	<div data-video-short-description="">
 			<div>
-				<p class="fwduvp-thumbnail-title">{{ object.title }}</p>
-				<p class="fwduvp-thumbnail-description">{% if object.description %}{{ object.description }}{% else %}Без описания{% endif %}</p>
+				<p class="fwduvp-thumbnail-title color_dark">{{ object.title }}</p>
+				<p class="fwduvp-thumbnail-description color_dark">{% if object.description %}{{ object.description }}{% else %}Без описания{% endif %}</p>
 			</div>
 		</div>
 	</li>
