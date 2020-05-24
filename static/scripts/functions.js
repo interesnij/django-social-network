@@ -183,7 +183,7 @@ function get_video_dop(){
   }else if (style.href.indexOf("dark-grey") != -1){
     settings += ["images/video_dark",]
   }
-  return settings
+  return settings.split(',')
 }
 console.log(get_video_dop()[0]);
 
