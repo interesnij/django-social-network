@@ -120,6 +120,7 @@ function ajax_get_reload(url) {
         window.history.pushState({route: url}, "network", url);
         if_list(rtr);
         Index.initLink();
+        load_chart()
       }
     }
     ajax_link.send();
